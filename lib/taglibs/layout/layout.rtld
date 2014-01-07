@@ -1,0 +1,22 @@
+<raptor-taglib>
+    <tlib-version>1.0</tlib-version>
+    <short-name>layout</short-name>
+    <uri>http://raptorjs.org/templates/layout</uri>
+
+    <tag name="use" renderer="raptor/templating/taglibs/layout/UseTag" dynamic-attributes="true" dynamic-attributes-remove-dashes="true">
+        <attribute name="template"/>
+        <variable name="_layout"/>
+    </tag>
+
+    <tag name="put" renderer="raptor/templating/taglibs/layout/PutTag">
+        <attribute name="into"/>
+        <attribute name="value"/>
+        <import-variable name="_layout"/>
+    </tag>
+
+    <tag name="placeholder" renderer="raptor/templating/taglibs/layout/PlaceholderTag">
+        <attribute name="name"/>
+        <import-variable expression="data.layoutContent" target-property="content"/>
+    </tag>
+
+</raptor-taglib>

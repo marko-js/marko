@@ -1,0 +1,8 @@
+{
+    "dependencies": [
+        {
+            "package": "raptor/render-context/async"
+        },
+        "AsyncFragmentTag.js"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "dependencies": [
+        {
+            "package": "raptor/render-context"
+        },
+        {
+            "package": "raptor/strings"
+        },
+        {
+            "package": "raptor/xml/utils"
+        },
+        "templating.js"
+    ]
+}

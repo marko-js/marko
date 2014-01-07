@@ -1,0 +1,20 @@
+<raptor-taglib>
+    
+    
+    <tlib-version>1.0</tlib-version>
+    
+    <uri>http://raptorjs.org/templates/caching</uri>
+    <short-name>caching</short-name>
+    <prefix>caching</prefix>
+    
+    <tag>
+        
+        <name>cached-fragment</name> 
+
+        <handler-class>raptor/templating/taglibs/caching/CachedFragmentTag</handler-class>
+
+        <attribute name="cache-key"/>
+        <attribute name="cache-name"/>
+    </tag>
+    
+</raptor-taglib>

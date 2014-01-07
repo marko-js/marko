@@ -1,0 +1,33 @@
+{
+  "name": "raptor-templates",
+  "version": "0.1.0-SNAPSHOT",
+  "description": "Raptor Templates",
+  "keywords": [
+    "templating",
+    "template",
+    "async",
+    "streaming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raptorjs/raptor-templates.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+  },
+  "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "maintainers": ["Patrick Steele-Idem <psteeleidem@ebay.com>"],
+  "dependencies": {
+    "raptor-logging": "~0.1.0-SNAPSHOT"
+  },
+  "devDependencies": {
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1"
+  },
+  "license": "Apache License v2.0",
+  "bin": {},
+  "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
