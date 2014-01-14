@@ -18,7 +18,13 @@
   "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
   "maintainers": ["Patrick Steele-Idem <psteeleidem@ebay.com>"],
   "dependencies": {
-    "raptor-logging": "~0.1.0-SNAPSHOT"
+    "raptor-logging": "~0.1.0-SNAPSHOT",
+    "raptor-strings": "~0.1.0-SNAPSHOT",
+    "raptor-regexp" : "~0.1.0-SNAPSHOT",
+    "raptor-util"   : "~0.1.0-SNAPSHOT",
+    "raptor-arrays" : "~0.1.0-SNAPSHOT",
+    "raptor-json"   : "~0.1.0-SNAPSHOT"
+
   },
   "devDependencies": {
     "mocha": "~1.15.1",
