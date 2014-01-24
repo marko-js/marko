@@ -1,0 +1,28 @@
+{
+    "name": "raptor-render-context",
+    "version": "0.1.0-SNAPSHOT",
+    "description": "Helper module for working with promises",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs/raptor-render-context.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    },
+    "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+    "maintainers": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+    "dependencies": {
+        "raptor-util": "0.1.0-SNAPSHOT",
+        "q": "~0.9.7"
+    },
+    "devDependencies": {
+        "mocha": "~1.15.1",
+        "chai": "~1.8.1"
+    },
+    "license": "Apache License v2.0",
+    "bin": {},
+    "main": "lib/promises.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}
