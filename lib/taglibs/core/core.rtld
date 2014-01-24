@@ -198,6 +198,10 @@
             <type>boolean</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
+        <attribute>
+            <name>iterator</name>
+            <type>expression</type>
+        </attribute>
     </tag>
     
     <tag>

@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "WidgetTag.js",
+        "WidgetFunctions.js"
+    ]
+}

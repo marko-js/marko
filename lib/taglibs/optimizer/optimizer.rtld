@@ -1,0 +1,69 @@
+<raptor-taglib>
+    
+    
+    <tlib-version>1.0</tlib-version>
+    <short-name>optimizer</short-name>
+    <uri>http://raptorjs.org/templates/optimizer</uri>
+
+    <tag>
+        <name>page</name>
+        <handler-class>raptor/templating/taglibs/optimizer/PageTag</handler-class>
+        
+        <!-- Add a transformer to provide the template path to the PageTag and to namespace dependencies -->
+        <transformer>
+            <class-name>raptor/templating/taglibs/optimizer/PageTagTransformer</class-name>
+            <before>raptor/templating/taglibs/core/CoreTagTransformer</before>
+        </transformer>
+        
+        <attribute name="name" type="string"/>
+        <attribute name="cache-key" type="string"/>
+        <attribute name="package-path" type="string"/>
+        <attribute name="base-path" type="string"/>
+        <attribute name="optimizer" type="expression"/>
+        <attribute name="dependencies" type="expression"/>
+        <attribute name="enabled-extensions" type="expression"/>
+        <variable name="_dependenciesParent"/>
+    </tag>
+
+    <tag>
+        <name>dependencies</name>
+        <handler-class>raptor/templating/taglibs/optimizer/DependenciesTag</handler-class>
+    </tag>
+
+    <tag>
+        <name>dependency</name>
+        <handler-class>raptor/templating/taglibs/optimizer/DependencyTag</handler-class>
+        <import-variable target-property="dependenciesParent" expression="_dependenciesParent"/>
+    </tag>
+    
+    <tag>
+        <name>slot</name>
+        <handler-class>raptor/templating/taglibs/optimizer/SlotTag</handler-class>
+        
+        <attribute name="name" type="string"/>
+    </tag>
+    
+    <tag>
+        <name>enable-extension</name>
+        <handler-class>raptor/templating/taglibs/optimizer/EnableExtensionTag</handler-class>
+        
+        <attribute name="name" type="string"/>
+    </tag>
+    
+    <tag>
+        <name>disable-extension</name>
+        <handler-class>raptor/templating/taglibs/optimizer/DisableExtensionTag</handler-class>
+        
+        <attribute name="name" type="string"/>
+    </tag>
+
+    <tag renderer="raptor/templating/taglibs/optimizer/ImgTag"
+        dynamic-attributes="true">
+        <name>img</name>
+        
+        <attribute name="src" type="string"/>
+        <attribute name="optimizer" type="expression"/>
+        <import-variable target-property="templateInfo" expression="templateInfo"/>
+    </tag>
+
+</raptor-taglib>
