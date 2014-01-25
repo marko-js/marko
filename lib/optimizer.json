@@ -1,0 +1,12 @@
+{
+    "dependencies": [
+        {
+            "package": "raptor-strings"
+        },
+        {
+            "package": "raptor-xml/util"
+        },
+        "Context.js",
+        "render-context.js"
+    ]
+}
