@@ -33,7 +33,7 @@
   },
   "license": "Apache License v2.0",
   "bin": {},
-  "main": "lib/index.js",
+  "main": "runtime/lib/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   }
