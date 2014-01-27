@@ -1,0 +1,6 @@
+{
+    "main": "lib/index",
+    "browser": {
+        "./lib/loader": "./lib/loader_browser"
+    }
+}
