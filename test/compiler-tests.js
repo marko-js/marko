@@ -41,7 +41,7 @@ describe('raptor-templates/compiler' , function() {
         done();
     });
 
-    it('should compile a simple template', function(done) {
+    it('should compile a simple template', function() {
         testCompiler('test-project/simple.rhtml');
     });
 
