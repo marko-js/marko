@@ -26,5 +26,8 @@
     "main": "lib/promises.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
+    },
+    "browser": {
+        "./lib/Context_server.js": null
     }
 }
