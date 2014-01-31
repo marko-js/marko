@@ -65,9 +65,3 @@ extend(exports, {
     
     defaultOptions: defaultOptions
 });
-
-require('raptor-detect/runtime', {
-    server: function() {
-        require('./index_server');
-    }
-});

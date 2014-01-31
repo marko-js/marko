@@ -1,0 +1,1 @@
+custom-tag.rhtml.expected.js

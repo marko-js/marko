@@ -47,8 +47,16 @@ TaglibXmlLoader.prototype = {
         var dirname = nodePath.dirname(filePath);
         var tagsById = {};
 
-        function resolve(path) {
-            return nodePath.resolve(dirname, path);
+        function resolvePath(path) {
+            var resolvedPath = nodePath.resolve(dirname, path);
+            if (!resolvedPath.endsWith('.js')) {
+                resolvedPath += '.js';
+            }
+
+            if (!fs.existsSync(resolvedPath)) {
+                throw new Error('File does not exist: ' + resolvedPath);
+            }
+            return resolvedPath;
         }
 
         function handleTagExtends(subTag) {
@@ -73,9 +81,6 @@ TaglibXmlLoader.prototype = {
                     return new Attribute();
                 },
                 _end: function (attr, parent) {
-                    if (attr.uri == null) {
-                        attr.uri = '';
-                    }
                     parent.addAttribute(attr);
                 },
                 'name': { _type: STRING },
@@ -90,7 +95,7 @@ TaglibXmlLoader.prototype = {
                     _type: STRING,
                     _targetProp: 'targetProperty'
                 },
-                'uri': { _type: STRING },
+                'namespace': { _type: STRING },
                 'deprecated': { _type: STRING },
                 'required': { _type: BOOLEAN },
                 'type': { _type: STRING },
@@ -160,7 +165,7 @@ TaglibXmlLoader.prototype = {
                 'raptor-taglib': {
                     _type: OBJECT,
                     _begin: function () {
-                        var newTaglib = new Taglib();
+                        var newTaglib = new Taglib(filePath);
                         if (!taglib) {
                             taglib = newTaglib;
                         }
@@ -174,22 +179,20 @@ TaglibXmlLoader.prototype = {
                     'alias': {
                         _type: STRING,
                         _set: function (taglib, name, value, context) {
-                            if (!taglib.uri) {
-                                taglib.uri = value;
-                            } else {
-                                taglib.addAlias(value);
-                            }
+                            taglib.addAlias(value);
                         }
                     },
                     'tag': {
                         _type: OBJECT,
                         _begin: function () {
-                            return new Tag();
+                            return new Tag(taglib);
                         },
                         _end: function (tag) {
-                            if (tag.uri === undefined) {
-                                tag.uri = taglib.uri;
+                            if (tag.namespace === undefined) {
+                                tag.namespace = taglib.namespace;
                             }
+                            tag.filename = filePath;
+                            tag.dirname = dirname;
                             taglib.addTag(tag);
                             if (tag.id) {
                                 tagsById[tag.id] = tag;
@@ -199,10 +202,10 @@ TaglibXmlLoader.prototype = {
                             _type: STRING,
                             _targetProp: 'name'
                         },
-                        'uri': {
+                        'namespace': {
                             _type: STRING,
                             _set: function (tag, name, value, context) {
-                                tag.uri = value || '';
+                                tag.namespace = value || '';
                             }
                         },
                         'id': { _type: STRING },
@@ -275,8 +278,8 @@ TaglibXmlLoader.prototype = {
                                 return new Tag();
                             },
                             _end: function (nestedTag, tag) {
-                                if (nestedTag.uri === null || nestedTag.uri === undefined) {
-                                    nestedTag.uri = taglib.uri;
+                                if (nestedTag.namespace === null || nestedTag.namespace === undefined) {
+                                    nestedTag.namespace = taglib.namespace;
                                 }
                                 nestedTag.targetProperty = nestedTag.targetProperty || nestedTag.name;
                                 if (!nestedTag.name) {
@@ -295,12 +298,12 @@ TaglibXmlLoader.prototype = {
                         'variable': variableHandler,
                         'imported-variable': importVariableHandler,
                         'import-variable': importVariableHandler,
-                        'transformer-class': {
+                        'transformer-path': {
                             _type: STRING,
                             _set: function (tag, name, path) {
-                                path = resolve(path);
                                 var transformer = new Transformer();
-                                transformer.filename = path;
+                                transformer.dirname = dirname;
+                                transformer.path = resolvePath(path);
                                 tag.addTransformer(transformer);
                             }
                         },
@@ -310,13 +313,13 @@ TaglibXmlLoader.prototype = {
                                 return new Transformer();
                             },
                             _end: function (transformer, tag) {
+                                transformer.dirname = dirname;
                                 tag.addTransformer(transformer);
                             },
-                            'class-name': {
+                            'path': {
                                 _type: STRING,
                                 _set: function (transformer, name, path) {
-                                    path = resolve(path);
-                                    transformer.filename = path;
+                                    transformer.path = resolvePath(path);
                                 }
                             },
                             'after': {
@@ -344,11 +347,10 @@ TaglibXmlLoader.prototype = {
                         _end: function (textTransformer) {
                             taglib.addTextTransformer(textTransformer);
                         },
-                        'class-name': {
+                        'path': {
                             _type: STRING,
                             _set: function (transformer, name, path) {
-                                path = resolve(path);
-                                transformer.filename = path;
+                                transformer.path = resolvePath(path);
                             }
                         }
                     },
@@ -358,7 +360,7 @@ TaglibXmlLoader.prototype = {
                             return {};
                         },
                         _end: function (importedTaglib) {
-                            var path = resolve(importedTaglib.path);
+                            var path = resolvePath(importedTaglib.path);
                             taglib.importPaths.push(path);
                             
                             if (!fs.existsSync(path)) {
@@ -367,7 +369,10 @@ TaglibXmlLoader.prototype = {
 
                             var importedXmlSource = fs.readFileSync(path);
                             require('../work-dir').recordLoadedTaglib(path);
+                            var oldDirname = dirname;
+                            dirname = nodePath.dirname(path);                            
                             objectMapper.read(importedXmlSource, path, handlers);
+                            dirname = oldDirname;
                         },
                         'path': { _type: STRING }
                     },
@@ -380,11 +385,10 @@ TaglibXmlLoader.prototype = {
                             taglib.addFunction(func);
                         },
                         'name': { _type: STRING },
-                        'class': {
+                        'path': {
                             _type: STRING,
                             _set: function (func, name, path) {
-                                path = resolve(path);
-                                func.filename = path;
+                                func.path = resolvePath(path);
                             }
                         },
                         'bind-to-context': {
@@ -400,19 +404,8 @@ TaglibXmlLoader.prototype = {
                         _end: function (helperObject) {
                             taglib.setHelperObject(helperObject);
                         },
-                        'module-name': {
-                            _type: STRING,
-                            _set: function (helperObject, name, path) {
-                                path = resolve(path);
-                                helperObject.moduleName = path;
-                            }
-                        },
-                        'class-name': {
-                            _type: STRING,
-                            _set: function (helperObject, name, path) {
-                                path = resolve(path);
-                                helperObject.className = path;
-                            }
+                        'path': {
+                            _type: STRING
                         }
                     }
                 }
@@ -421,6 +414,7 @@ TaglibXmlLoader.prototype = {
         taglib.forEachTag(function (tag) {
             handleTagExtends(tag);
         });
+        taglib.dirname = dirname;
         return taglib;
     }
 };

@@ -1,0 +1,6 @@
+{
+    "aliases": ["test"],
+    "import-tags": {
+        "hello": "hello-tag.json"
+    }
+}

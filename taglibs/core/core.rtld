@@ -26,19 +26,19 @@
         </attribute>
         
         <attribute>
-            <uri>*</uri>
+            <namespace>*</namespace>
             <name>functions</name>
             <allow-expressions>false</allow-expressions>
         </attribute>
 
         <attribute>
-            <uri>*</uri>
+            <namespace>*</namespace>
             <name>import-functions</name>
             <allow-expressions>false</allow-expressions>
         </attribute>
 
         <attribute>
-            <uri>*</uri>
+            <namespace>*</namespace>
             <name>import-helper-object</name>
             <allow-expressions>false</allow-expressions>
         </attribute>
@@ -48,7 +48,7 @@
     
     <tag extends="template">
     
-        <uri></uri>
+        <namespace></namespace>
         <name>template</name>
         
     </tag>
@@ -56,107 +56,107 @@
     <tag>
         
         <name>*</name> 
-        <uri>*</uri> <!-- Register attributes supported by all tags in all namespaces -->
+        <namespace>*</namespace> <!-- Register attributes supported by all tags in all namespaces -->
         
-        <attribute uri="core">
+        <attribute>
             <name>space</name>
             <type>custom</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>whitespace</name>
             <type>custom</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>for</name>
             <allow-expressions>false</allow-expressions>
         </attribute>
 
-        <attribute uri="core">
+        <attribute>
             <name>for-each</name>
             <allow-expressions>false</allow-expressions>
         </attribute>
 
-        <attribute uri="core">
+        <attribute>
             <name>if</name>
             <type>expression</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>else</name>
             <type>empty</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>else-if</name>
             <type>expression</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>attrs</name>
             <type>expression</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>when</name>
             <type>expression</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>with</name>
             <type>custom</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>otherwise</name>
             <type>empty</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>parse-body-text</name>
             <type>boolean</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
 
-        <attribute uri="core">
+        <attribute>
             <name>trim-body-indent</name>
             <type>boolean</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>strip</name>
             <type>boolean</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>bodyContent</name>
             <type>expression</type>
             <deprecated>Use "content" attribute instead. This will be removed in the future.</deprecated>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>content</name>
             <type>expression</type>
         </attribute>
         
-        <attribute uri="core">
+        <attribute>
             <name>replace</name>
             <type>expression</type>
         </attribute>
 
-        <attribute uri="core">
+        <attribute>
             <name>input</name>
             <type>expression</type>
         </attribute>
         
         <!-- Compiler that applies to all tags as well -->
         <transformer>
-            <class-name>./CoreTagTransformer</class-name>
+            <path>./CoreTagTransformer</path>
         </transformer>
     </tag>
     
@@ -248,7 +248,7 @@
         <node-class>./ElseNode</node-class>
         
         <transformer>
-            <class-name>./ElseTagTransformer</class-name>
+            <path>./ElseTagTransformer</path>
             <after>core/CoreTagTransformer</after>
             <properties>
                 <type>else</type>
@@ -263,7 +263,7 @@
         <node-class>./ElseIfNode</node-class>
         
         <transformer>
-            <class-name>./ElseTagTransformer</class-name>
+            <path>./ElseTagTransformer</path>
             <after>core/CoreTagTransformer</after>
             <properties>
                 <type>else-if</type>
@@ -286,7 +286,7 @@
 
         <attribute>
             <name>*</name>
-            <uri></uri>
+            <namespace></namespace>
             <type>string</type>
             <allow-expressions>true</allow-expressions>
         </attribute>
@@ -407,7 +407,7 @@
         </attribute>
         
         <attribute>
-            <name>uri</name>
+            <name>namespace</name>
             <type>string</type>
         </attribute>
 
@@ -468,8 +468,6 @@
         </attribute>
     </tag>
     
-    <text-transformer>
-        <class-name>./CoreTextTransformer</class-name>
-    </text-transformer>
+    <text-transformer path="./CoreTextTransformer"/>
     
 </raptor-taglib>

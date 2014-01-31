@@ -17,10 +17,13 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var forEachEntry = require('raptor-util').forEachEntry;
+var ok = require('assert').ok;
 
-function Taglib() {
-    this.uri = null;
-    this.shortName = null;
+function Taglib(id) {
+    ok(id, '"id" expected');
+    this.id = id;
+    this.dirname = null;
+    this.namespace = null;
     this.aliases = [];
     this.tags = {};
     this.textTransformers = [];
@@ -33,8 +36,8 @@ function Taglib() {
 
 Taglib.prototype = {
     addAttribute: function (attribute) {
-        if (attribute.uri) {
-            throw createError(new Error('"uri" is not allowed for taglib attributes'));
+        if (attribute.namespace) {
+            throw createError(new Error('"namespace" is not allowed for taglib attributes'));
         }
         if (attribute.name) {
             this.attributeMap[attribute.name] = attribute;
@@ -55,8 +58,7 @@ Taglib.prototype = {
         return attribute;
     },
     addTag: function (tag) {
-        var key = (tag.uri || '') + ':' + tag.name;
-        tag._taglib = this;
+        var key = (tag.namespace || '') + ':' + tag.name;
         this.tags[key] = tag;
     },
     addTextTransformer: function (transformer) {
@@ -81,7 +83,9 @@ Taglib.prototype = {
     }
 };
 Taglib.Tag = function () {
-    function Tag() {
+    function Tag(taglib) {
+        ok(taglib, '"taglib" expected');
+        this.taglib = taglib;
         // this.handlerClass = null;
         // this.nodeClass = null;
         // this.renderer = null;
@@ -93,7 +97,7 @@ Taglib.Tag = function () {
         this.nestedTags = {};
         this.staticProperties = {};
         this.patternAttributes = [];
-        this._taglib = null;
+        
     }
     Tag.prototype = {
         inheritFrom: function (superTag) {
@@ -126,8 +130,8 @@ Taglib.Tag = function () {
             subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
         },
         addNestedTag: function (nestedTag) {
-            var uri = nestedTag.uri || '';
-            this.nestedTags[uri + ':' + nestedTag.name] = nestedTag;
+            var namespace = nestedTag.namespace || '';
+            this.nestedTags[namespace + ':' + nestedTag.name] = nestedTag;
         },
         forEachNestedTag: function (callback, thisObj) {
             forEachEntry(this.nestedTags, function (key, nestedTag) {
@@ -165,36 +169,31 @@ Taglib.Tag = function () {
             if (attr.pattern) {
                 this.patternAttributes.push(attr);
             } else {
-                var uri = attr.uri || '';
-                this.attributeMap[uri + ':' + attr.name] = attr;
+                var namespace = attr.namespace;
+                if (namespace == null) {
+                    namespace = this.taglib.id;
+                }
+
+                this.attributeMap[namespace + ':' + attr.name] = attr;
             }
         },
-        getAttribute: function (uri, localName) {
-            if (uri == null) {
-                uri = '';
-            }
-            var attr = this.attributeMap[uri + ':' + localName] || this.attributeMap[uri + ':*'] || this.attributeMap['*:' + localName] || this.attributeMap['*:*'];
+        getAttribute: function (localName) {
+            
+            var attr = this.attributeMap[this.taglib.id + ':' + localName] || this.attributeMap[this.taglib.id + ':*'] || this.attributeMap['*:' + localName] || this.attributeMap['*:*'];
             if (!attr && this.patternAttributes.length) {
                 for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
                     var patternAttribute = this.patternAttributes[i];
-                    if (patternAttribute.uri !== uri) {
-                        continue;
-                    }
+                    
                     if (patternAttribute.pattern.test(localName)) {
                         attr = patternAttribute;
+                        break;
                     }
                 }
             }
             return attr;
         },
-        getTaglibUri: function () {
-            if (!this._taglib) {
-                throw createError(new Error('Taglib not set for tag. (uri=' + this.uri + ', name=' + this.name + ')'));
-            }
-            return this._taglib.uri;
-        },
         toString: function () {
-            return '[Tag: <' + this.uri + ':' + this.name + '>]';
+            return '[Tag: <' + this.namespace + ':' + this.name + '>]';
         },
         forEachAttribute: function (callback, thisObj) {
             forEachEntry(this.attributeMap, function (attrName, attr) {
@@ -210,7 +209,7 @@ Taglib.Tag = function () {
             this.importedVariables[key] = importedVariable;
         },
         addTransformer: function (transformer) {
-            var key = transformer.className;
+            var key = transformer.path;
             this.transformers[key] = transformer;
         },
         addStaticProperty: function (prop) {
@@ -223,7 +222,7 @@ Taglib.Tag = function () {
 Taglib.Attribute = function () {
     function Attribute() {
         this.name = null;
-        this.uri = null;
+        this.namespace = null;
         this.type = null;
         this.required = false;
         this.type = 'string';
@@ -261,7 +260,7 @@ Taglib.Transformer = function () {
     function Transformer() {
         this.id = uniqueId++;
         this.tag = null;
-        this.className = null;
+        this.path = null;
         this.after = null;
         this.before = null;
         this.instance = null;
@@ -291,7 +290,7 @@ Taglib.Transformer = function () {
 Taglib.Function = function () {
     function Func() {
         this.name = null;
-        this.functionClass = null;
+        this.path = null;
         this.bindToContext = false;
     }
     Func.prototype = {};
@@ -299,8 +298,7 @@ Taglib.Function = function () {
 }();
 Taglib.HelperObject = function () {
     function HelperObject() {
-        this.className = null;
-        this.moduleName = null;
+        this.path = null;
     }
     HelperObject.prototype = {};
     return HelperObject;

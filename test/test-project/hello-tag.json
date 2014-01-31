@@ -1,0 +1,6 @@
+{
+    "renderer": "./hello-renderer.js",
+    "attributes": {
+        "name": "string"
+    }
+}

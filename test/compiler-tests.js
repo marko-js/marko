@@ -45,6 +45,10 @@ describe('raptor-templates/compiler' , function() {
         testCompiler('test-project/simple.rhtml');
     });
 
+    it('should compile a simple template with custom tag', function() {
+        testCompiler('test-project/custom-tag.rhtml');
+    });
+
     
 });
 
