@@ -330,6 +330,10 @@ TaglibXmlLoader.prototype = {
                                 _type: STRING,
                                 _targetProp: 'before'
                             },
+                            'name': {
+                                _type: STRING,
+                                _targetProp: 'name'
+                            },
                             '<properties>': {
                                 _type: OBJECT,
                                 _begin: function (parent) {

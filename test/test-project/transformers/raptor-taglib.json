@@ -1,0 +1,19 @@
+{
+    "aliases": ["transform"],
+    "tags": {
+    	"foo": {
+    		"transformer": {
+                "name": "foo",
+                "path": "./foo-transformer.js",
+                "before": "core/CoreTagTransformer"
+            }
+    	},
+        "bar": {
+            "transformer": {
+                "name": "bar",
+                "path": "./bar-transformer.js",
+                "after": "core/CoreTagTransformer"
+            }
+        }
+    }
+}

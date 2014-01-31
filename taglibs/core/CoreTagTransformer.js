@@ -42,8 +42,6 @@ function getPropValue(value, type, allowExpressions) {
 function CoreTagTransformer() {
 }
 
-CoreTagTransformer.id = 'core/CoreTagTransformer';
-
 CoreTagTransformer.prototype = {
     process: function (node, compiler, template) {
         //Find and handle nested <c:attrs> elements

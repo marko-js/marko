@@ -47,10 +47,11 @@ function buildAttribute(attr, attrProps, path) {
     return attr;
 }
 
-function buildTag(tagObject, path, taglib) {
+function buildTag(tagObject, path, taglib, dirname) {
     ok(tagObject);
     ok(typeof path === 'string');
     ok(taglib);
+    ok(typeof dirname === 'string');
 
     var tag = new Taglib.Tag(taglib);
 
@@ -87,6 +88,45 @@ function buildTag(tagObject, path, taglib) {
                 tag.addAttribute(attr);
 
             });
+        },
+        transformer: function(value) {
+            var transformer = new Taglib.Transformer();
+
+            
+
+            if (typeof value === 'string') {
+                value = {
+                    path: value
+                };
+            }
+
+            invokeHandlers(value, {
+                path: function(value) {
+                    var path = nodePath.resolve(dirname, value);
+                    if (!fs.existsSync(path)) {
+                        throw new Error('Transformer at path "' + path + '" does not exist.');
+                    }
+
+                    transformer.path = path;
+                },
+
+                before: function(value) {
+                    transformer.before = value;
+                },
+
+                after: function(value) {
+                    transformer.after = value;
+                },
+
+                name: function(value) {
+                    transformer.name = value;
+                }
+
+            }, 'transformer in ' + path);
+
+            ok(transformer.path, '"path" is required for transformer');
+
+            tag.addTransformer(transformer);
         }
     }, path);
 
@@ -113,8 +153,11 @@ function load(path) {
                 ok(path, 'Invalid tag definition for "' + tagName + '"');
                 var tagObject;
 
+                var tagDirname;
+
                 if (typeof path === 'string') {
                     path = nodePath.resolve(dirname, path);
+                    tagDirname = nodePath.dirname(path);
                     if (!fs.existsSync(path)) {
                         throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.id);
                     }
@@ -129,12 +172,13 @@ function load(path) {
                     }
                 }
                 else {
+                    tagDirname = dirname; // Tag is in the same taglib file
                     tagObject = path;
                     path = '<' + tagName + '> in ' + taglib.id;
                 }
                 
 
-                var tag = buildTag(tagObject, path, taglib);
+                var tag = buildTag(tagObject, path, taglib, tagDirname);
                 tag.name = tagName;
 
                 taglib.addTag(tag);

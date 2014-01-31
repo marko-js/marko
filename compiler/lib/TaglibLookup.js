@@ -177,14 +177,21 @@ TaglibLookup.prototype = {
             this.forEachTextTransformer(callback, thisObj);
         }
     },
-    forEachTagTransformer: function (namespace, tagName, callback, thisObj) {
+    forEachTagTransformer: function (tagNS, tagName, callback, thisObj) {
         /*
          * If the node is an element node then we need to find all matching
          * transformers based on the URI and the local name of the element.
          */
-        if (namespace == null) {
-            namespace = '';
+        tagNS = this._resolveNamespace(tagNS);
+
+        var _this = this;
+
+        function resolveBeforeAfterName(name) {
+            var parts = name.split(/[:\/]/);
+            parts[0] = _this._resolveNamespace(parts[0]);
+            return parts.join(':');
         }
+
         var matchingTransformersByName = {};
         var matchingTransformers = [];
         var handled = {};
@@ -198,12 +205,18 @@ TaglibLookup.prototype = {
                 if (!transformer) {
                     throw createError(new Error('Invalid transformer'));
                 }
-                if (!matchingTransformersByName[transformer.className]) {
-                    matchingTransformersByName[transformer.className] = transformer;
-                    matchingTransformers.push(transformer);
-                    if (transformer.before) {
-                        (before[transformer.before] || (before[transformer.before] = [])).push(transformer);
-                    }
+
+                if (transformer.name) {
+                    var fullName = transformer.taglib.id + ':' + transformer.name;
+                    matchingTransformersByName[fullName] = transformer;
+                }
+
+                matchingTransformers.push(transformer);
+
+
+                if (transformer.before) {
+                    var beforeName = resolveBeforeAfterName(transformer.before);
+                    (before[beforeName] || (before[beforeName] = [])).push(transformer);
                 }
             });
         }
@@ -214,31 +227,36 @@ TaglibLookup.prototype = {
          */
         _addTransformers(this.tagTransformers['*:*']);
         //Wildcard for both URI and tag name (i.e. transformers that apply to every element)
-        _addTransformers(this.tagTransformers[namespace + ':*']);
+        _addTransformers(this.tagTransformers[tagNS + ':*']);
         //Wildcard for tag name but matching URI (i.e. transformers that apply to every element with a URI, regadless of tag name)
-        _addTransformers(this.tagTransformers[namespace + ':' + tagName]);
+        _addTransformers(this.tagTransformers[tagNS + ':' + tagName]);
+        
+
         function _handleTransformer(transformer) {
-            if (!handled[transformer.className]) {
-                handled[transformer.className] = true;
+            if (!handled[transformer.id]) {
+                handled[transformer.id] = true;
+
                 if (transformer.after) {
+                    var afterName = resolveBeforeAfterName(transformer.after);
                     //Check if this transformer is required to run
-                    if (!matchingTransformersByName[transformer.after]) {
+                    if (!matchingTransformersByName[afterName]) {
                         throw createError(new Error('After transformers not found for "' + transformer.after + '"'));
                     }
-                    _handleTransformer(matchingTransformersByName[transformer.after]);    //Handle any transformers that this transformer is supposed to run after
+                    _handleTransformer(matchingTransformersByName[afterName]);    //Handle any transformers that this transformer is supposed to run after
                 }
 
-                if (before[transformer.className]) {
-                    before[transformer.className].forEach(_handleTransformer);    
+                if (transformer.name) {
+                    var transformerId = transformer.taglib.id + ':' + transformer.name;
+                    if (before[transformerId]) {
+                        before[transformerId].forEach(_handleTransformer);    
+                    }
                 }
-                
+
                 //Handle any transformers that are configured to run before this transformer
                 callback.call(thisObj, transformer);
             }
         }
-        matchingTransformers.forEach(function (transformer) {
-            _handleTransformer(transformer);
-        }, this);
+        matchingTransformers.forEach(_handleTransformer, this);
     },
     forEachTextTransformer: function (callback, thisObj) {
         this.textTransformers.forEach(function(textTransformer) {

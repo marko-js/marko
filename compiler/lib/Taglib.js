@@ -213,6 +213,7 @@ Taglib.Tag = function () {
         },
         addTransformer: function (transformer) {
             var key = transformer.path;
+            transformer.taglib = this.taglib;
             this.transformers[key] = transformer;
         },
         addStaticProperty: function (prop) {
@@ -262,6 +263,7 @@ Taglib.Transformer = function () {
     var uniqueId = 0;
     function Transformer() {
         this.id = uniqueId++;
+        this.name = null;
         this.tag = null;
         this.path = null;
         this.after = null;
