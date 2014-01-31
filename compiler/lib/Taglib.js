@@ -58,6 +58,9 @@ Taglib.prototype = {
         return attribute;
     },
     addTag: function (tag) {
+        ok(arguments.length === 1, 'Invalid args');
+        ok(tag.name, '"tag.name" is required');
+        
         var key = (tag.namespace || '') + ':' + tag.name;
         this.tags[key] = tag;
     },
@@ -220,9 +223,9 @@ Taglib.Tag = function () {
     return Tag;
 }();
 Taglib.Attribute = function () {
-    function Attribute() {
-        this.name = null;
-        this.namespace = null;
+    function Attribute(namespace, name) {
+        this.namespace = namespace;
+        this.name = name;
         this.type = null;
         this.required = false;
         this.type = 'string';

@@ -3,11 +3,11 @@ var createError = require('raptor-util').createError;
 
 function TaglibLookup() {
     this.aliases = {};
-    this.tagTransformersLookup = {};
+    this.tagTransformers = {};
     this.tags = {};
     this.textTransformers = [];
-    this.functionsLookup = {};
-    this.attributeLookup = {};
+    this.functions = {};
+    this.attributes = {};
     this.nestedTags = {};
     this.taglibsById = {};
 }
@@ -73,7 +73,7 @@ TaglibLookup.prototype = {
 
             //Register the tag using the combination of URI and tag name so that it can easily be looked up
             if (tag.hasTransformers()) {
-                var tagTransformersForTags = this.tagTransformersLookup[key] || (this.tagTransformersLookup[key] = []);
+                var tagTransformersForTags = this.tagTransformers[key] || (this.tagTransformers[key] = []);
                 //A reference to the array of the tag transformers with the same key
                 //Now add all of the transformers for the node (there will typically only be one...)
                 tag.forEachTransformer(function (transformer) {
@@ -91,7 +91,11 @@ TaglibLookup.prototype = {
 
             tag.forEachAttribute(function (attr) {
                 var attrNS = resolveNamespaceWithDefault(attr.namespace);
-                this.attributeLookup[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;
+                if (attrNS === tagNS) {
+                    attrNS = '';
+                }
+
+                this.attributes[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;
             }, this);
         }, this);
         /*
@@ -106,7 +110,7 @@ TaglibLookup.prototype = {
                 throw createError(new Error('Function name not set.'));
             }
 
-            this.functionsLookup[taglib.id + ':' + func.name] = func;
+            this.functions[taglib.id + ':' + func.name] = func;
             
         }, this);
 
@@ -116,12 +120,23 @@ TaglibLookup.prototype = {
     getAttribute: function (tagNS, tagName, attrNS, attrName) {
         var tags = this.tags;
         tagNS = this._resolveNamespace(tagNS);
+
         attrNS = this._resolveNamespace(attrNS);
 
-        var attributeLookup = this.attributeLookup;
+        if (attrNS === tagNS) {
+            attrNS = '';
+        }
+
+        var attributes = this.attributes;
         
         function _findAttrForTag(tagLookupKey) {
-            var attr = attributeLookup[tagLookupKey + ':' + attrNS + ':' + attrName] || attributeLookup[tagLookupKey + ':' + attrNS + ':*'] || attributeLookup[tagLookupKey + ':*:' + attrName] || attributeLookup[tagLookupKey + ':*:*'];
+            
+
+            var attr = attributes[tagLookupKey + ':' + attrNS + ':' + attrName] ||
+                attributes[tagLookupKey + ':' + attrNS + ':*'] ||
+                attributes[tagLookupKey + ':*:' + attrName] ||
+                attributes[tagLookupKey + ':*:*'];
+
             if (!attr) {
                 var tag = tags[tagLookupKey];
                 if (tag) {
@@ -130,7 +145,10 @@ TaglibLookup.prototype = {
             }
             return attr;
         }
-        var attr = _findAttrForTag(tagNS + ':' + tagName) || _findAttrForTag(tagNS + ':*') || _findAttrForTag('*:*');
+
+        var attr = _findAttrForTag(tagNS + ':' + tagName) ||
+            _findAttrForTag(tagNS + ':*') ||
+            _findAttrForTag('*:*');
         
         if (attr && attr.namespace && attr.namespace !== '*') {
             var sourceTaglibId = this._resolveNamespace(attr.namespace);
@@ -194,11 +212,11 @@ TaglibLookup.prototype = {
          * 
          * Start with the least specific and end with the most specific.
          */
-        _addTransformers(this.tagTransformersLookup['*:*']);
+        _addTransformers(this.tagTransformers['*:*']);
         //Wildcard for both URI and tag name (i.e. transformers that apply to every element)
-        _addTransformers(this.tagTransformersLookup[namespace + ':*']);
+        _addTransformers(this.tagTransformers[namespace + ':*']);
         //Wildcard for tag name but matching URI (i.e. transformers that apply to every element with a URI, regadless of tag name)
-        _addTransformers(this.tagTransformersLookup[namespace + ':' + tagName]);
+        _addTransformers(this.tagTransformers[namespace + ':' + tagName]);
         function _handleTransformer(transformer) {
             if (!handled[transformer.className]) {
                 handled[transformer.className] = true;
@@ -233,23 +251,24 @@ TaglibLookup.prototype = {
         });
     },
     getTag: function (namespace, localName) {
-        namespace = this.resolve(namespace);
+        namespace = this._resolveNamespace(namespace);
         var tag = this.tags[namespace + ':' + localName];
         if (!tag) {
             tag = this.tags[namespace + ':*'];    //See if there was a wildcard tag definition in the taglib
         }
         return tag;
     },
-    getNestedTag: function (parentTagUri, parentTagName, nestedTagNS, nestedTagName) {
-        parentTagUri = parentTagUri || '';
-        nestedTagNS = nestedTagNS || '';
-        return this.nestedTags[parentTagUri + ':' + parentTagName + ':' + nestedTagNS + ':' + nestedTagName];
+    getNestedTag: function (parentTagNS, parentTagName, nestedTagNS, nestedTagName) {
+        parentTagNS = this._resolveNamespace(parentTagNS);
+        nestedTagNS = this._resolveNamespace(nestedTagNS);
+        return this.nestedTags[parentTagNS + ':' + parentTagName + ':' + nestedTagNS + ':' + nestedTagName];
     },
     getFunction: function (namespace, functionName) {
-        return this.functionsLookup[namespace + ':' + functionName];
+        namespace = this._resolveNamespace(namespace);
+        return this.functions[namespace + ':' + functionName];
     },
     getHelperObject: function (namespace) {
-        namespace = this.resolve(namespace);
+        namespace = this._resolveNamespace(namespace);
         var taglib = this.taglibsById[namespace];
         if (!taglib) {
             throw new Error('Invalid taglib URI: ' + namespace);

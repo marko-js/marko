@@ -1,3 +1,11 @@
 {
-    "aliases": ["nested"]
+    "aliases": ["nested"],
+    "tags": {
+    	"a": {
+    		"renderer": "./a-renderer.js",
+    		"attributes": {
+    			"attr1": "string"
+    		}
+    	}
+    }
 }

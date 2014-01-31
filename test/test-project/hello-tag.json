@@ -1,6 +1,10 @@
 {
     "renderer": "./hello-renderer.js",
     "attributes": {
-        "name": "string"
+        "name": "string",
+        "expr": {
+        	"type": "expression"
+        },
+        "*": "number"
     }
 }

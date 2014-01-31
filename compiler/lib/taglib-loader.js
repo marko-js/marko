@@ -1,4 +1,5 @@
 var fs = require('fs');
+var ok = require('assert').ok;
 var nodePath = require('path');
 var Taglib = require('./Taglib');
 var cache = {};
@@ -36,6 +37,62 @@ function invokeHandlers(config, handlers, path) {
     }
 }
 
+function buildAttribute(attr, attrProps, path) {
+    invokeHandlers(attrProps, {
+        type: function(value) {
+            attr.type = value;
+        }
+    }, path);
+
+    return attr;
+}
+
+function buildTag(tagObject, path, taglib) {
+    ok(tagObject);
+    ok(typeof path === 'string');
+    ok(taglib);
+
+    var tag = new Taglib.Tag(taglib);
+
+    invokeHandlers(tagObject, {
+        renderer: function(value) {
+            tag.renderer = value;
+        },
+        attributes: function(value) {
+            forEachEntry(value, function(attrName, attrProps) {
+                var parts = attrName.split(':');
+                var namespace = null;
+                var localName = null;
+
+                if (parts.length === 2) {
+                    namespace = parts[0];
+                    localName = parts[1];
+                } else if (parts.length === 1) {
+                    localName = attrName;
+                } else {
+                    throw new Error('Invalid attribute name: ' + attrName);
+                }
+
+                
+                var attr = new Taglib.Attribute(namespace, localName);
+
+                if (typeof attrProps === 'string') {
+                    
+                    attr.type = attrProps;
+                }
+                else {
+                    buildAttribute(attr, attrProps, attrName + '@' + path);
+                }
+
+                tag.addAttribute(attr);
+
+            });
+        }
+    }, path);
+
+    return tag;
+}
+
 function load(path) {
     if (cache[path]) {
         return cache[path];
@@ -51,12 +108,36 @@ function load(path) {
                 taglib.addAlias(alias);
             });
         },
-        'import-tags': function(tags) {
+        'tags': function(tags) {
             forEachEntry(tags, function(tagName, path) {
-                // path = nodePath.resolve(dirname, path);
-                // if (!fs.existsSync(path)) {
-                //     throw new Error('Tag at path "' + path + '" does not exist');
-                // }
+                ok(path, 'Invalid tag definition for "' + tagName + '"');
+                var tagObject;
+
+                if (typeof path === 'string') {
+                    path = nodePath.resolve(dirname, path);
+                    if (!fs.existsSync(path)) {
+                        throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.id);
+                    }
+
+                    var tagJSON = fs.readFileSync(path, {encoding: 'utf8'});
+
+                    try {
+                        tagObject = JSON.parse(tagJSON);
+                    }
+                    catch(e) {
+                        throw new Error('Unable to parse tag JSON for tag at path "' + path + '"');
+                    }
+                }
+                else {
+                    tagObject = path;
+                    path = '<' + tagName + '> in ' + taglib.id;
+                }
+                
+
+                var tag = buildTag(tagObject, path, taglib);
+                tag.name = tagName;
+
+                taglib.addTag(tag);
             });
         }
         
