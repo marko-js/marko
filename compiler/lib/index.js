@@ -34,7 +34,7 @@ var defaultOptions = {
     };
 
 extend(exports, {
-    createCompiler: function (options) {
+    createCompiler: function (path, options) {
         var TemplateCompiler = require('./TemplateCompiler');
         //Get a reference to the TemplateCompiler class 
         if (options) {
@@ -47,12 +47,11 @@ extend(exports, {
             options = defaultOptions;    //Otherwise, no options were provided so use the default options
         }
 
-        var taglibs = require('./taglibs').getTaglibCollection();
-        return new TemplateCompiler(taglibs, options);
+        return new TemplateCompiler(path, options);
     },
 
     compile: function (src, path, options) {
-        return this.createCompiler(options).compile(src, path);
+        return this.createCompiler(path, options).compile(src);
     },
 
     Node: require('./Node'),

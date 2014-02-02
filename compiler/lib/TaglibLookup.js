@@ -20,6 +20,10 @@ TaglibLookup.prototype = {
         return this.namespaces[namespace];
     },
 
+    isTaglib: function(namespace) {
+        return this.namespaces[namespace] != null;
+    },
+
     addTaglib: function (taglib) {
         ok(taglib, '"taglib" is required');
         ok(taglib.id, '"taglib.id" expected');

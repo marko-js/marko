@@ -40,6 +40,16 @@ describe('raptor-templates/compiler/taglibs' , function() {
         expect(ifTag.namespace).to.equal(null);
     });
 
+    it('should lookup core template for top-level template', function() {
+        var taglibLookup = require('../compiler/lib/taglib-lookup');
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        // console.log(Object.keys(lookup.tags));
+        var templateTag = lookup.getTag('c', 'template');
+        expect(templateTag != null).to.equal(true);
+        expect(templateTag.name).to.equal('template');
+        expect(templateTag.namespace).to.equal(null);
+    });
+
     it('should lookup custom tag for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));

@@ -19,14 +19,22 @@ var TemplateBuilder = require('./TemplateBuilder');
 var ParseTreeBuilder = require('./ParseTreeBuilder');
 var Expression = require('./Expression');
 var TypeConverter = require('./TypeConverter');
+var taglibLookup = require('./taglib-lookup');
+var nodePath = require('path');
 
-function TemplateCompiler(taglibs, options) {
-    this.taglibs = taglibs;
+function TemplateCompiler(path, options) {
+    this.dirname = nodePath.dirname(path);
+    this.path = path;
+    this.taglibs = taglibLookup.buildLookup(this.dirname);
     this.options = options || {};
     this.errors = [];
 }
 
 TemplateCompiler.prototype = {
+    isTaglib: function(ns) {
+        return this.taglibs.isTaglib(ns);
+    },
+
     transformTree: function (rootNode, templateBuilder) {
         if (!templateBuilder) {
             throw createError(new Error('The templateBuilder argument is required'));
@@ -76,8 +84,9 @@ TemplateCompiler.prototype = {
             transformTreeHelper(rootNode);    //Run the transforms on the tree                 
         } while (this._transformerApplied);
     },
-    compile: function (xmlSrc, filePath, callback, thisObj) {
+    compile: function (xmlSrc, callback, thisObj) {
         var _this = this;
+        var filePath = this.path;
         var rootNode;
         var templateBuilder;
         function handleErrors() {
@@ -135,9 +144,9 @@ TemplateCompiler.prototype = {
     isExpression: function (expression) {
         return expression instanceof Expression;
     },
-    createTagHandlerNode: function (uri, localName) {
+    createTagHandlerNode: function (ns, localName) {
         var TagHandlerNode = require('../taglibs/core/TagHandlerNode');
-        var tag = this.taglibs.getTag(uri, localName);
+        var tag = this.taglibs.getTag(ns, localName);
         var tagHandlerNode = new TagHandlerNode(tag);
         return tagHandlerNode;
     },
@@ -156,12 +165,12 @@ TemplateCompiler.prototype = {
     getErrors: function () {
         return this.errors;
     },
-    getNodeClass: function (uri, localName) {
-        var tag = this.taglibs.getTag(uri, localName);
+    getNodeClass: function (ns, localName) {
+        var tag = this.taglibs.getTag(ns, localName);
         if (tag && tag.nodeClass) {
             return require(tag.nodeClass);
         }
-        throw createError(new Error('Node class not found for uri "' + uri + '" and localName "' + localName + '"'));
+        throw createError(new Error('Node class not found for namespace "' + ns + '" and localName "' + localName + '"'));
     },
     createTag: function () {
         var Taglib = require('./Taglib');

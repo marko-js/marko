@@ -13,7 +13,7 @@
     "url": "https://github.com/raptorjs/raptor-templates.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test"
   },
   "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
   "maintainers": ["Patrick Steele-Idem <psteeleidem@ebay.com>"],

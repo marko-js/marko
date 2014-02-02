@@ -12,12 +12,13 @@ function testCompiler(path) {
     var expectedPath = nodePath.join(__dirname, path + '.expected.js');
     var actualPath = nodePath.join(__dirname, path + '.actual.js');
 
-    var compiler = require('../compiler').createCompiler();
+    var compiler = require('../compiler').createCompiler(inputPath);
     var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-    var expected = fs.readFileSync(expectedPath, {encoding: 'utf8'});
-
-    var output = compiler.compile(src, path);
+    
+    var output = compiler.compile(src);
     fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
+
+    var expected = fs.readFileSync(expectedPath, {encoding: 'utf8'});
 
     if (output !== expected) {
         throw new Error('Unexpected output for "' + inputPath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +

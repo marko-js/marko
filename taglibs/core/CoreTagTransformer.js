@@ -128,6 +128,7 @@ CoreTagTransformer.prototype = {
             }
         }
         tag = node.tag || compiler.taglibs.getTag(uri, node.localName);
+        console.log(uri + ':' + node.localName + ' --> ', tag);
         if (node.getAttributeNS(coreNS, 'space') === 'preserve' || node.getAttributeNS(coreNS, 'whitespace') === 'preserve') {
             node.setPreserveWhitespace(true);
         }
@@ -296,7 +297,7 @@ CoreTagTransformer.prototype = {
                     node.setPropertyNS(uri, name, value);
                 });
             }
-        } else if (uri && template.isTaglib(uri)) {
+        } else if (uri && compiler.isTaglib(uri)) {
             node.addError('Tag ' + node.toString() + ' is not allowed for taglib "' + uri + '"');
         }
     },

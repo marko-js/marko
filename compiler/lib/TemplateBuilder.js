@@ -177,28 +177,10 @@ CodeWriter.prototype = {
         return this._code.toString();
     }
 };
-function TemplateBuilder(compiler, resource, rootNode) {
-    this.resource = resource;
+function TemplateBuilder(compiler, path, rootNode) {
     this.rootNode = rootNode;
     this.compiler = compiler;
-    if (this.rootNode) {
-        this.rootNode.compiler = compiler;
-        this.rootNode.forEachNamespace(function (prefix, uri) {
-            if (!this.compiler.taglibs.isTaglib(uri)) {
-                require('raptor-templates/compiler').findAndLoadTaglib(uri);
-                if (!this.compiler.taglibs.isTaglib(uri)) {
-                    this.rootNode.addError('Taglib with URI "' + uri + '" (prefix: "' + prefix + '") not found.');
-                }
-            }
-        }, this);
-    }
-    if (typeof resource === 'string') {
-        this.resource = null;
-        this.filePath = this.path = resource;
-    } else if (require('raptor-resources').isResource(resource)) {
-        this.filePath = resource.getURL();
-        this.path = resource.getPath();
-    }
+    this.path = this.path;
     this.options = compiler.options;
     this.templateName = null;
     this.attributes = {};
@@ -212,13 +194,6 @@ function TemplateBuilder(compiler, resource, rootNode) {
     this.getStaticHelperFunction('notEmpty', 'ne');
 }
 TemplateBuilder.prototype = {
-    isTaglib: function (uri) {
-        return this.rootNode.hasNamespacePrefix(uri);
-    },
-    getTemplateName: function () {
-        var options = this.options || {};
-        return options.templateName || this.templateName || options.defaultTemplateName;
-    },
     _getHelperFunction: function (varName, propName, isStatic) {
         var key = propName + ':' + (isStatic ? 'static' : 'context');
         var added = this.helperFunctionsAdded[key];
@@ -398,18 +373,12 @@ TemplateBuilder.prototype = {
     getPath: function () {
         return this.path;
     },
-    getFilePath: function () {
-        return this.filePath;
-    },
     getOutput: function () {
         if (this.hasErrors()) {
             return '';
         }
         var out = new StringBuilder();
-        var templateName = this.getTemplateName();
-        if (!templateName) {
-            this.addError('Template name not defined in template at path "' + this.getFilePath() + '"');
-        }
+        
         var params = this.params;
         if (params) {
             params = ['context'].concat(params);

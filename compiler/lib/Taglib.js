@@ -61,7 +61,7 @@ Taglib.prototype = {
         ok(arguments.length === 1, 'Invalid args');
         ok(tag.name, '"tag.name" is required');
         
-        var key = (tag.namespace || '') + ':' + tag.name;
+        var key = (tag.namespace == null ? this.id : tag.namespace) + ':' + tag.name;
         this.tags[key] = tag;
     },
     addTextTransformer: function (transformer) {
@@ -273,11 +273,11 @@ Taglib.Transformer = function () {
     }
     Transformer.prototype = {
         getInstance: function () {
-            if (!this.filename) {
+            if (!this.path) {
                 throw createError(new Error('Transformer class not defined for tag transformer (tag=' + this.tag + ')'));
             }
             if (!this.instance) {
-                var Clazz = require(this.filename);
+                var Clazz = require(this.path);
                 if (Clazz.process) {
                     return Clazz;
                 }

@@ -18,6 +18,8 @@ var createError = require('raptor-util').createError;
 var sax = require('raptor-xml/sax');
 var TextNode = require('./TextNode');
 var ElementNode = require('./ElementNode');
+var Imports = require('./Imports');
+
 function ParseTreeBuilder() {
 }
 ParseTreeBuilder.parse = function (src, filePath, taglibs) {
@@ -40,6 +42,7 @@ ParseTreeBuilder.prototype = {
             if (!parentNode) {
                 return;    //Some bad XML parsers allow text after the ending element...
             }
+
             if (prevTextNode) {
                 prevTextNode.text += t;
             } else {
@@ -63,24 +66,27 @@ ParseTreeBuilder.prototype = {
                 var importsAttr;
                 var importedAttr;
                 var importedTag;
-                var elementNode = new ElementNode(el.getLocalName(), taglibs.resolveURI(el.getNamespaceURI()), el.getPrefix());
+                var elementNode = new ElementNode(el.getLocalName(), el.getNamespaceURI(), el.getPrefix());
                 elementNode.addNamespaceMappings(el.getNamespaceMappings());
                 elementNode.pos = parser.getPos();
+
                 el.getAttributes().forEach(function (attr) {
                     if (attr.getLocalName() === 'imports' && !attr.getNamespaceURI()) {
                         importsAttr = attr.getValue();
                     }
                 }, this);
+
                 if (parentNode) {
                     parentNode.appendChild(elementNode);
                 } else {
                     rootNode = elementNode;
                     if (importsAttr) {
-                        imports = taglibs.getImports(importsAttr);
+                        imports = new Imports(taglibs, importsAttr);
                     }
                 }
+
                 el.getAttributes().forEach(function (attr) {
-                    var attrURI = taglibs.resolveURI(attr.getNamespaceURI());
+                    var attrURI = attr.getNamespaceURI();
                     var attrLocalName = attr.getLocalName();
                     var attrPrefix = attr.getPrefix();
                     if (!attrURI && imports && (importedAttr = imports.getImportedAttribute(attrLocalName))) {
