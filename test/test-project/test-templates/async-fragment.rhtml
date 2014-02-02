@@ -1,0 +1,28 @@
+<c:template 
+    xmlns:c="core" 
+    xmlns:async="async">
+
+    A    
+    <async:fragment dependency="user" var="user">
+        asyncB1
+        Hello $user.name! 
+        <async:fragment dependency="messages" arg-user="${user}" var="messages">
+            You have $messages.length new messages. Messages:
+            <ul>
+                <li c:for="message in messages">$message.text</li>
+            </ul>
+        </async:fragment>
+        asyncB2
+    </async:fragment>
+    B
+    <async:fragment dependency="todos" var="todos">
+        asyncA1
+        <ul>
+            <li c:for="todo in todos">$todo.text (status: $todo.status)</li>
+        </ul>
+        asyncA2
+    </async:fragment>
+    C
+</c:template>
+
+

@@ -1,0 +1,7 @@
+{
+
+    "includes": [
+        {"module": "test.optimizer.moduleA"},
+        {"module": "test.optimizer.moduleB"}
+    ]
+}

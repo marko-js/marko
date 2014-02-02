@@ -1,0 +1,21 @@
+<c:template 
+    xmlns:c="http://raptorjs.org/templates/core"
+    xmlns:test="http://raptorjs.org/templates/test" 
+    xmlns:w="http://raptorjs.org/templates/widgets">
+    
+    <div w:widget="TestAttrWidget" id="${'myId'}">
+        ${widget.elId()} - ${widget.elId('test')}
+    </div>
+    
+    <w:widget jsClass="TestWidget">
+        <test:container title="My Container">
+            <test:button label="Submit" type="submit" disabled="true" w:id="submitButton"/>
+            <test:button label="Cancel"/>
+        </test:container>
+    </w:widget>
+    
+    <c:include template="/test-templates/widgets_nested"/>
+    
+    <w:init-widgets/>
+    
+</c:template>

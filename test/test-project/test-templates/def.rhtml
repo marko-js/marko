@@ -1,0 +1,30 @@
+<c:template 
+    xmlns:c="http://raptorjs.org/templates/core">
+    
+    <c:def function="greeting(name)">
+        <p class="greeting">Hello, ${name}!</p>
+    </c:def>
+    
+    ${greeting("World")},
+    ${greeting("Frank")}
+
+
+    <c:def function="section(url, title, body)" body-param="body">
+        <div class="section">
+            <h1>
+                <a href="$url">
+                    $title
+                </a>
+            </h1>
+            <p>
+                ${body}
+            </p>
+        </div>
+    </c:def>
+
+    <c:invoke function="section" url="http://www.ebay.com/" title="ebay">
+        <i>
+            Visit eBay
+        </i>
+    </c:invoke>
+</c:template>

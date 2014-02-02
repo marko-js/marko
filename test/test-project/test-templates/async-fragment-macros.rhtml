@@ -1,0 +1,11 @@
+<c:template 
+    xmlns:c="core" 
+    xmlns:async="async">
+    <c:def function="asyncMacro(num)">
+        $num
+    </c:def>1    
+    <async:fragment dependency="D1">
+        <c:invoke function="asyncMacro" num="2"/>
+    </async:fragment>
+    3
+</c:template>
