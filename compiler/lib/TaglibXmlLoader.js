@@ -179,7 +179,7 @@ TaglibXmlLoader.prototype = {
                     'alias': {
                         _type: STRING,
                         _set: function (taglib, name, value, context) {
-                            taglib.addAlias(value);
+                            taglib.addNamespace(value);
                         }
                     },
                     'tag': {

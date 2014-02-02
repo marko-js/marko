@@ -2,7 +2,7 @@ var ok = require('assert').ok;
 var createError = require('raptor-util').createError;
 
 function TaglibLookup() {
-    this.aliases = {};
+    this.namespaces = {};
     this.tagTransformers = {};
     this.tags = {};
     this.textTransformers = [];
@@ -17,7 +17,7 @@ TaglibLookup.prototype = {
             return '';
         }
 
-        return this.aliases[namespace];
+        return this.namespaces[namespace];
     },
 
     addTaglib: function (taglib) {
@@ -33,8 +33,8 @@ TaglibLookup.prototype = {
 
         var _this = this;
 
-        taglib.aliases.forEach(function(alias) {
-            _this.aliases[alias] = id;
+        taglib.namespaces.forEach(function(ns) {
+            _this.namespaces[ns] = id;
         });
 
         function resolveNamespaceWithDefault(namespace) {
@@ -46,7 +46,7 @@ TaglibLookup.prototype = {
                 return id;
             }
 
-            var target = _this.aliases[namespace];
+            var target = _this.namespaces[namespace];
             if (!target) {
                 throw new Error('Invalid namespace of "' + namespace + '" in taglib "' + taglib.id + '"');
             }

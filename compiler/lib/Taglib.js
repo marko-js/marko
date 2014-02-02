@@ -24,7 +24,7 @@ function Taglib(id) {
     this.id = id;
     this.dirname = null;
     this.namespace = null;
-    this.aliases = [];
+    this.namespaces = [];
     this.tags = {};
     this.textTransformers = [];
     this.attributeMap = {};
@@ -81,8 +81,8 @@ Taglib.prototype = {
     getHelperObject: function () {
         return this.helperObject;
     },
-    addAlias: function (alias) {
-        this.aliases.push(alias);
+    addNamespace: function (ns) {
+        this.namespaces.push(ns);
     }
 };
 Taglib.Tag = function () {

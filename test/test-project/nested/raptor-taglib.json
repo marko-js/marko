@@ -1,5 +1,5 @@
 {
-    "aliases": ["nested"],
+    "namespace": "nested",
     "tags": {
     	"foo": {
     		"renderer": "./foo-renderer.js",

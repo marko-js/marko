@@ -142,12 +142,20 @@ function load(path) {
     var taglib = new Taglib(path);
     var dirname = nodePath.dirname(path);
 
-    invokeHandlers(JSON.parse(src), {
-        'aliases': function(aliases) {
-            aliases.forEach(function(alias) {
-                taglib.addAlias(alias);
+    function handleNS(ns) {
+        if (Array.isArray(ns)) {
+            ns.forEach(function(ns) {
+                taglib.addNamespace(ns);
             });
-        },
+        }
+        else {
+            taglib.addNamespace(ns); 
+        }
+    }
+
+    invokeHandlers(JSON.parse(src), {
+        'namespace': handleNS,
+        'namespaces': handleNS,
         'tags': function(tags) {
             forEachEntry(tags, function(tagName, path) {
                 ok(path, 'Invalid tag definition for "' + tagName + '"');
