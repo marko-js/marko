@@ -23,7 +23,7 @@
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "lib/promises.js",
+    "main": "lib/index.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
