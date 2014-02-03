@@ -18,11 +18,9 @@ function _getHandler(name) {
 
 function notEmpty(o) {
     if (Array.isArray(o) === true) {
-        module.exports = o.length !== 0;
-        return;
+        return o.length !== 0;
     }
-    module.exports = o;
-    return;
+    return o;
 }
 
 module.exports = {
