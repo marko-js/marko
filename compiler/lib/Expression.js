@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var createError = require('raptor-util').createError;
 'use strict';
+var createError = require('raptor-util').createError;
 var operatorsRegExp = /"(?:[^"]|\\")*"|'(?:[^']|\\')*'|\s+(?:and|or|lt|gt|eq|ne|lt|gt|ge|le)\s+/g;
 var strings = require('raptor-strings');
 var replacements = {
@@ -28,10 +28,9 @@ var replacements = {
         'le': ' <= '
     };
 function handleBinaryOperators(str) {
-    module.exports = str.replace(operatorsRegExp, function (match) {
+    return str.replace(operatorsRegExp, function (match) {
         return replacements[strings.trim(match)] || match;
     });
-    return;
 }
 function Expression(expression, replaceSpecialOperators) {
     if (expression == null) {

@@ -23,7 +23,7 @@ describe('raptor-templates' , function() {
         done();
     });
 
-    it('should load raptor templates', function(done) {
+    it('should load raptor templates', function() {
         var raptorTemplates = require('../');
 
     });

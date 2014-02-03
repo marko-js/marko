@@ -24,7 +24,9 @@
     "raptor-regexp" : "~0.1.0-SNAPSHOT",
     "raptor-util"   : "~0.1.0-SNAPSHOT",
     "raptor-arrays" : "~0.1.0-SNAPSHOT",
-    "raptor-json"   : "~0.1.0-SNAPSHOT"
+    "raptor-json"   : "~0.1.0-SNAPSHOT",
+    "raptor-modules": "~0.1.0-SNAPSHOT",
+    "raptor-render-context": "~0.1.0-SNAPSHOT"
 
   },
   "devDependencies": {

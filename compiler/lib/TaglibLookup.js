@@ -12,12 +12,16 @@ function TaglibLookup() {
     this.taglibsById = {};
 }
 TaglibLookup.prototype = {
-    _resolveNamespace: function(namespace) {
+    resolveNamespace: function(namespace) {
         if (namespace == null || namespace === '') {
             return '';
         }
 
         return this.namespaces[namespace];
+    },
+
+    resolveNamespaceForTag: function(tag) {
+        return tag.namespace ? this.resolveNamespace(tag.namespace) : tag.taglib.id;
     },
 
     isTaglib: function(namespace) {
@@ -123,9 +127,9 @@ TaglibLookup.prototype = {
 
     getAttribute: function (tagNS, tagName, attrNS, attrName) {
         var tags = this.tags;
-        tagNS = this._resolveNamespace(tagNS);
+        tagNS = this.resolveNamespace(tagNS);
 
-        attrNS = this._resolveNamespace(attrNS);
+        attrNS = this.resolveNamespace(attrNS);
 
         if (attrNS === tagNS) {
             attrNS = '';
@@ -155,7 +159,7 @@ TaglibLookup.prototype = {
             _findAttrForTag('*:*');
         
         if (attr && attr.namespace && attr.namespace !== '*') {
-            var sourceTaglibId = this._resolveNamespace(attr.namespace);
+            var sourceTaglibId = this.resolveNamespace(attr.namespace);
 
             var taglib = this.taglibsById[sourceTaglibId];
             if (!taglib) {
@@ -186,13 +190,13 @@ TaglibLookup.prototype = {
          * If the node is an element node then we need to find all matching
          * transformers based on the URI and the local name of the element.
          */
-        tagNS = this._resolveNamespace(tagNS);
+        tagNS = this.resolveNamespace(tagNS);
 
         var _this = this;
 
         function resolveBeforeAfterName(name) {
             var parts = name.split(/[:\/]/);
-            parts[0] = _this._resolveNamespace(parts[0]);
+            parts[0] = _this.resolveNamespace(parts[0]);
             return parts.join(':');
         }
 
@@ -273,7 +277,7 @@ TaglibLookup.prototype = {
         });
     },
     getTag: function (namespace, localName) {
-        namespace = this._resolveNamespace(namespace);
+        namespace = this.resolveNamespace(namespace);
         var tag = this.tags[namespace + ':' + localName];
         if (!tag) {
             tag = this.tags[namespace + ':*'];    //See if there was a wildcard tag definition in the taglib
@@ -281,16 +285,16 @@ TaglibLookup.prototype = {
         return tag;
     },
     getNestedTag: function (parentTagNS, parentTagName, nestedTagNS, nestedTagName) {
-        parentTagNS = this._resolveNamespace(parentTagNS);
-        nestedTagNS = this._resolveNamespace(nestedTagNS);
+        parentTagNS = this.resolveNamespace(parentTagNS);
+        nestedTagNS = this.resolveNamespace(nestedTagNS);
         return this.nestedTags[parentTagNS + ':' + parentTagName + ':' + nestedTagNS + ':' + nestedTagName];
     },
     getFunction: function (namespace, functionName) {
-        namespace = this._resolveNamespace(namespace);
+        namespace = this.resolveNamespace(namespace);
         return this.functions[namespace + ':' + functionName];
     },
     getHelperObject: function (namespace) {
-        namespace = this._resolveNamespace(namespace);
+        namespace = this.resolveNamespace(namespace);
         var taglib = this.taglibsById[namespace];
         if (!taglib) {
             throw new Error('Invalid taglib URI: ' + namespace);

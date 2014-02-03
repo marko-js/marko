@@ -1,7 +1,8 @@
 var renderContext = require('raptor-render-context');
 var Context = renderContext.Context;
-var escapeXml = require('raptor-xml/utils').escapeXml;
-var escapeXmlAttr = require('raptor-xml/utils').escapeXmlAttr;
+var xmlUtil = require('raptor-xml/util');
+var escapeXml = xmlUtil.escapeXml;
+var escapeXmlAttr = xmlUtil.escapeXmlAttr;
 
 function _getHandler(name) {
     var Handler = require(name);

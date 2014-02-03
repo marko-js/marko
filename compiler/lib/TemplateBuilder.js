@@ -15,11 +15,12 @@
  */
 'use strict';
 var createError = require('raptor-util').createError;
-var INDENT = '  ';
+var nodePath = require('path');
 var stringify = require('raptor-json/stringify');
 var StringBuilder = require('raptor-strings/StringBuilder');
 var Expression = require('./Expression');
 var arrayFromArguments = require('raptor-util').arrayFromArguments;
+var INDENT = '  ';
 
 function CodeWriter(indent) {
     this._indent = indent != null ? indent : INDENT + INDENT;
@@ -180,7 +181,8 @@ CodeWriter.prototype = {
 function TemplateBuilder(compiler, path, rootNode) {
     this.rootNode = rootNode;
     this.compiler = compiler;
-    this.path = this.path;
+    this.path = path;
+    this.dirname = nodePath.dirname(path);
     this.options = compiler.options;
     this.templateName = null;
     this.attributes = {};

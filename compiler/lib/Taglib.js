@@ -89,10 +89,9 @@ Taglib.Tag = function () {
     function Tag(taglib) {
         ok(taglib, '"taglib" expected');
         this.taglib = taglib;
-        // this.handlerClass = null;
-        // this.nodeClass = null;
-        // this.renderer = null;
-        // this.template = null;
+        this.renderer = null;
+        this.nodeClass = null;
+        this.template = null;
         this.attributeMap = {};
         this.transformers = {};
         this.nestedVariables = {};
@@ -196,7 +195,8 @@ Taglib.Tag = function () {
             return attr;
         },
         toString: function () {
-            return '[Tag: <' + this.namespace + ':' + this.name + '>]';
+            var qName = this.namespace ? this.namespace + ':' + this.name : this.name;
+            return '[Tag: <' + qName + '@' + this.taglib.id + '>]';
         },
         forEachAttribute: function (callback, thisObj) {
             forEachEntry(this.attributeMap, function (attrName, attr) {

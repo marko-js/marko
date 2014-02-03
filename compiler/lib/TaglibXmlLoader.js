@@ -231,11 +231,11 @@ TaglibXmlLoader.prototype = {
                         },
                         'handler-class': {
                             _type: STRING,
-                            _targetProp: 'handlerClass'
+                            _targetProp: 'renderer'
                         },
                         'renderer': {
                             _type: STRING,
-                            _targetProp: 'handlerClass'
+                            _targetProp: 'renderer'
                         },
                         'template': {
                             _type: STRING,

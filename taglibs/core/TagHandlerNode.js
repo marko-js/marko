@@ -19,15 +19,16 @@ var extend = require('raptor-util').extend;
 var forEachEntry = require('raptor-util').forEachEntry;
 var stringify = require('raptor-json/stringify');
 var Expression = require('../../compiler').Expression;
-function addHandlerVar(template, handlerClass) {
+var raptorModulesResolver = require('raptor-modules/resolver');
+
+function addHandlerVar(template, renderer) {
     var handlerVars = template._handlerVars || (template._handlerVars = {});
-    var handlerVar = handlerVars[handlerClass];
+    var handlerVar = handlerVars[renderer];
     if (!handlerVar) {
-        handlerVars[handlerClass] = handlerVar = handlerClass.replace(/[.\-\/]/g, '_');
-        template.addStaticVar(handlerVar, template.getStaticHelperFunction('getTagHandler', 't') + '(' + stringify(handlerClass) + ')');
+        handlerVars[renderer] = handlerVar = renderer.replace(/[.\-\/]/g, '_').replace(/^[_]+/g, '');
+        template.addStaticVar(handlerVar, 'require(' + stringify(renderer) + ')');
     }
-    module.exports = handlerVar;
-    return;
+    return handlerVar;
 }
 function getPropsStr(props, template) {
     var propsArray = [];
@@ -46,15 +47,12 @@ function getPropsStr(props, template) {
             }
         });
         if (propsArray.length) {
-            module.exports = '{\n' + propsArray.join(',\n') + '\n' + template.indentStr() + '}';
-            return;
+            return '{\n' + propsArray.join(',\n') + '\n' + template.indentStr() + '}';
         } else {
-            module.exports = '{}';
-            return;
+            return '{}';
         }
     } else {
-        module.exports = '{}';
-        return;
+        return '{}';
     }
 }
 function TagHandlerNode(tag) {
@@ -88,7 +86,9 @@ TagHandlerNode.prototype = {
         this.inputExpression = expression;
     },
     doGenerateCode: function (template) {
-        var handlerVar = addHandlerVar(template, this.tag.handlerClass);
+        var rendererPath = raptorModulesResolver.deresolve(this.tag.renderer, template.dirname);
+        var handlerVar = addHandlerVar(template, rendererPath);
+
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, new Expression(importedVariable.expression));
         }, this);

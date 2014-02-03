@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var createError = require('raptor-util').createError;
 'use strict';
+var createError = require('raptor-util').createError;
 var ExpressionParser = require('./ExpressionParser');
 var stringify = require('raptor-json/stringify');
 var Expression = require('./Expression');
@@ -53,7 +53,7 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
         value = processedText;
     }
     if (targetType === 'string') {
-        return allowExpressions ? new Expression(value ? stringify(value) : 'null') : value;
+        return allowExpressions ? new Expression(value != null ? stringify(value) : 'null') : value;
     } else if (targetType === 'boolean') {
         if (allowExpressions) {
             return new Expression(value);

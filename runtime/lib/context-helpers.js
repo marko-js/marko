@@ -1,7 +1,9 @@
-var forEachEntry = require('raptor-util').forEachEntry;
-var escapeXmlAttr = require('raptor-xml/utils').escapeXmlAttr;
-var createError = require('raptor-util').createError;
-var extend = require('raptor-util').extend;
+var raptorUtil = require('raptor-util');
+var forEachEntry = raptorUtil.forEachEntry;
+var createError = raptorUtil.createError;
+var extend = raptorUtil.extend;
+var escapeXmlAttr = require('raptor-xml/util').escapeXmlAttr;
+
 var Context = require('raptor-render-context').Context;
 
 function classFunc(className, name) {

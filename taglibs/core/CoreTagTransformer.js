@@ -68,20 +68,30 @@ CoreTagTransformer.prototype = {
                     return;    //Skip xmlns attributes
                 }
                 var prefix = attr.prefix;
-                var attrUri = compiler.taglibs.resolveURI(attr.uri);
+                var attrUri = attr.uri;
                 attrUri = attr.prefix && attrUri != tag.getTaglibUri() ? attr.uri : null;
                 var attrDef = compiler.taglibs.getAttribute(uri, node.localName, attrUri, attr.localName);
                 var type = attrDef ? attrDef.type || 'string' : 'string';
+
+                var taglibIdForTag = compiler.taglibs.resolveNamespaceForTag(tag);
+
                 var value;
-                if (attrUri === tag.getTaglibUri()) {
+
+                // Check if the attribute and tag are part of the same taglib
+                if (attrUri && compiler.taglibs.resolveNamespace(attrUri) === taglibIdForTag) {
+                    // If so, then don't repeat prefix
                     prefix = '';
                 }
-                var isTaglibUri = template.isTaglib(attrUri);
-                if (!attrDef && (isTaglibUri || !tag.dynamicAttributes)) {
+
+                var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
+                if (!attrDef && (isAttrForTaglib || !tag.dynamicAttributes)) {
                     //Tag doesn't allow dynamic attributes
                     node.addError('The tag "' + tag.name + '" in taglib "' + tag.getTaglibUri() + '" does not support attribute "' + attr + '"');
                     return;
                 }
+
+                
+
                 if (attr.value instanceof Expression) {
                     value = attr.value;
                 } else {
@@ -91,6 +101,7 @@ CoreTagTransformer.prototype = {
                         node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
                         value = attr.value;
                     }
+
                 }
                 var propName;
                 if (attrDef) {
@@ -128,7 +139,7 @@ CoreTagTransformer.prototype = {
             }
         }
         tag = node.tag || compiler.taglibs.getTag(uri, node.localName);
-        console.log(uri + ':' + node.localName + ' --> ', tag);
+        
         if (node.getAttributeNS(coreNS, 'space') === 'preserve' || node.getAttributeNS(coreNS, 'whitespace') === 'preserve') {
             node.setPreserveWhitespace(true);
         }
@@ -262,8 +273,8 @@ CoreTagTransformer.prototype = {
             if (tag.preserveWhitespace) {
                 node.setPreserveWhitespace(true);
             }
-            if (tag.handlerClass || tag.template) {
-                if (tag.handlerClass) {
+            if (tag.renderer || tag.template) {
+                if (tag.renderer) {
                     //Instead of compiling as a static XML element, we'll
                     //make the node render as a tag handler node so that
                     //writes code that invokes the handler
@@ -279,6 +290,7 @@ CoreTagTransformer.prototype = {
                     IncludeNode.convertNode(node, tag.template);
                 }
                 forEachProp(function (uri, name, value, prefix, attrDef) {
+
                     if (attrDef) {
                         node.setPropertyNS(uri, name, value);
                     } else {

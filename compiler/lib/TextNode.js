@@ -27,10 +27,9 @@ var replacements = {
         '\'': '&apos;'
     };
 function escapeXmlAttr(str) {
-    module.exports = str.replace(attrReplace, function (match) {
+    return str.replace(attrReplace, function (match) {
         return replacements[match];
     });
-    return;
 }
 
 function TextNode(text, escapeXml) {

@@ -57,7 +57,12 @@ function buildTag(tagObject, path, taglib, dirname) {
 
     invokeHandlers(tagObject, {
         renderer: function(value) {
-            tag.renderer = value;
+            var path = nodePath.resolve(dirname, value);
+            if (!fs.existsSync(path)) {
+                throw new Error('Transformer at path "' + path + '" does not exist.');
+            }
+                    
+            tag.renderer = path;
         },
         attributes: function(value) {
             forEachEntry(value, function(attrName, attrProps) {
