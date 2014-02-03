@@ -7,7 +7,7 @@ function create(helpers) {
     context.t(
       hello_renderer,
       {
-        "name": "world"
+        "name": "World"
       });
   };
 }

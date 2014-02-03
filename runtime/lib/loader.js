@@ -7,6 +7,7 @@ function loadSource(templatePath, compiledSrc) {
     var templateModulePath = templatePath + '.js';
     var templateModule = new Module(templateModulePath, module);
     templateModule.paths = Module._nodeModulePaths(nodePath.dirname(templateModulePath));
+    templateModule.filename = templateModulePath;
 
     templateModule._compile(
         'module.exports=' + compiledSrc,

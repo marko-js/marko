@@ -21,38 +21,15 @@
  * in the {@link raptor/templating/compiler} module.
  */
 'use strict';
-var cache = {};
-
 var StringBuilder = require('raptor-strings/StringBuilder');
 var renderContext = require('raptor-render-context');
 var createError = require('raptor-util').createError;
 var Context = renderContext.Context;
 var helpers = require('./helpers');
+var loader = require('./loader');
 require('./context-helpers');
 
-function getTemplateFunc(templatePath) {
-    var templateFunc = cache[templatePath];
-    //Look for the template function in the loaded templates lookup
-    if (!templateFunc) {
-        //See if the template has already been loaded
-        /*
-         * If we didn't find the template function in the loaded template lookup
-         * then it means that the template has not been fully loaded and initialized.
-         * Therefore, check if the template has been registerd with the name provided
-         */
-        templateFunc = getRegisteredTemplate(templatePath);
-        if (!templateFunc && this.findTemplate) {
-            this.findTemplate(templatePath);
-            templateFunc = getRegisteredTemplate(templatePath);
-        }
-
-        if (!templateFunc) {
-            throw new Error('Template not found: ' + templatePath);
-        }
-        cache[templatePath] = templateFunc;    //Store the template rendering function in the lookup
-    }
-    return templateFunc;
-}
+var cache = {};
 
 module.exports = {
     
@@ -67,11 +44,15 @@ module.exports = {
             context = new Context(new StringBuilder());
         }
 
-        var templateFunc = getTemplateFunc(templatePath);
+        var templateFunc = cache[templatePath];
+        if (!templateFunc) {
+            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
+        }
         
         try {
             templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
         } catch (e) {
+            // context.emit('error', e);
             throw createError(new Error('Unable to render template with name "' + templatePath + '". Exception: ' + e), e);
         }
 
@@ -85,11 +66,6 @@ module.exports = {
         var attributes = context.attributes;
         var asyncAttributes = attributes.async || (attributes.async = {});
         asyncAttributes.remaining = 0;
-        try {
-            this.render(templatePath, data, context);
-        } catch (e) {
-            context.emit('error', e);
-        }
         asyncAttributes.firstPassComplete = true;
         if (asyncAttributes.remaining === 0) {
             context.emit('end');

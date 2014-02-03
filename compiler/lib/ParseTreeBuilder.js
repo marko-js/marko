@@ -83,6 +83,10 @@ ParseTreeBuilder.prototype = {
                     if (importsAttr) {
                         imports = new Imports(taglibs, importsAttr);
                     }
+
+                    if (el.getLocalName() === 'template' && !el.getNamespaceURI()) {
+                        rootNode.uri = 'core';
+                    }
                 }
 
                 el.getAttributes().forEach(function (attr) {

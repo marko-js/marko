@@ -3,6 +3,7 @@
     
     <tlib-version>1.0</tlib-version>
     
+    <alias>http://raptorjs.org/templates/core</alias>
     <alias>core</alias>
     <alias>c</alias>
     
