@@ -32,6 +32,8 @@ require('./context-helpers');
 var cache = {};
 
 module.exports = {
+
+    Context: Context,
     
     render: function (templatePath, data, callback, context) {
         if (typeof callback !== 'function') {
@@ -40,7 +42,22 @@ module.exports = {
             callback = null;
         }
 
+        var isTopLevelContext;
+        var attributes = context.attributes;
+
+        if (!attributes.async) {
+            isTopLevelContext = true;
+            attributes.async = {
+                remaining: 0,
+                firstPassComplete: true
+            };
+        }
+        else {
+            isTopLevelContext = false;
+        }
+
         if (!context) {
+            isTopLevelContext = true;
             context = new Context(new StringBuilder());
         }
 
@@ -57,17 +74,14 @@ module.exports = {
         }
 
         if (callback) {
-            context.on('end', function() {
+            context
+                .on('end', function() {
                     callback(null, context.getOutput());
                 })
                 .on('error', callback);
         }
 
-        var attributes = context.attributes;
-        var asyncAttributes = attributes.async || (attributes.async = {});
-        asyncAttributes.remaining = 0;
-        asyncAttributes.firstPassComplete = true;
-        if (asyncAttributes.remaining === 0) {
+        if (isTopLevelContext && attributes.async.remaining === 0) {
             context.emit('end');
         }
 
@@ -76,7 +90,9 @@ module.exports = {
     unload: function (templatePath) {
         delete cache[templatePath];
     },
-    createContext: renderContext.createContext,
+    createContext: function(writer) {
+        return new Context(writer);
+    },
     helpers: helpers
 };
 

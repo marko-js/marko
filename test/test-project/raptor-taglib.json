@@ -1,6 +1,27 @@
 {
-    "namespace": "test",
+    "namespace": ["test", "http://raptorjs.org/templates/test"],
     "tags": {
-        "hello": "hello-tag.json"
+        "hello": "hello-tag.json",
+        "simpleHello": {
+            "renderer": "./simple-hello-tag.js",
+            "attributes": {
+                "name": "string",
+                "adult": "boolean"
+            }
+        },
+        "tabs": {
+            "renderer": "./tabs-tag.js",
+            "var": "tabs"
+        },
+        "tab": {
+            "renderer": "./tab-tag.js",
+            "import-var": {
+                "target-property": "tabs",
+                "expression": "tabs"
+            },
+            "attributes": {
+                "title": "string"
+            }
+        }
     }
 }

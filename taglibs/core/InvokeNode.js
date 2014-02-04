@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-var forEach = raptor.forEach;
+var forEach = require('raptor-util').forEach;
 function InvokeNode(props) {
     InvokeNode.$super.call(this);
     if (props) {

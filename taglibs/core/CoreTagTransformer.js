@@ -86,7 +86,7 @@ CoreTagTransformer.prototype = {
                 var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                 if (!attrDef && (isAttrForTaglib || !tag.dynamicAttributes)) {
                     //Tag doesn't allow dynamic attributes
-                    node.addError('The tag "' + tag.name + '" in taglib "' + tag.getTaglibUri() + '" does not support attribute "' + attr + '"');
+                    node.addError('The tag "' + tag.name + '" in taglib "' + taglibIdForTag + '" does not support attribute "' + attr + '"');
                     return;
                 }
 

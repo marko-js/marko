@@ -5,6 +5,12 @@ var Taglib = require('./Taglib');
 var cache = {};
 var forEachEntry = require('raptor-util').forEachEntry;
 
+function removeDashes(str) {
+    return str.replace(/-([a-z])/g, function (match, lower) {
+        return lower.toUpperCase();
+    });
+}
+
 function invokeHandlers(config, handlers, path) {
     if (!config) {
         throw new Error('"config" argument is required');
@@ -14,14 +20,18 @@ function invokeHandlers(config, handlers, path) {
         throw new Error('Object expected for ' + path);
     }
 
+
+
     for (var k in config) {
         if (config.hasOwnProperty(k)) {
+            var value = config[k];
+            k = removeDashes(k);
             var handler = handlers[k];
             if (!handler) {
                 throw new Error('Invalid option of "' + k + '" for ' + path + '. Allowed: ' + Object.keys(handlers).join(', '));
             }
             try {
-                handler(config[k]);    
+                handler(value);    
             }
             catch(e) {
                 if (!e.invokeHandlerError) {
@@ -32,6 +42,22 @@ function invokeHandlers(config, handlers, path) {
                 else {
                     throw e;
                 }
+            }
+        }
+    }
+
+    if (handlers._end) {
+        try {
+            handlers._end(); 
+        }
+        catch(e) {
+            if (!e.invokeHandlerError) {
+                var error = new Error('Error for option ' + path + '. Exception: ' + (e.stack || e));
+                error.invokeHandlerError = e;
+                throw error;
+            }
+            else {
+                throw e;
             }
         }
     }
@@ -59,7 +85,7 @@ function buildTag(tagObject, path, taglib, dirname) {
         renderer: function(value) {
             var path = nodePath.resolve(dirname, value);
             if (!fs.existsSync(path)) {
-                throw new Error('Transformer at path "' + path + '" does not exist.');
+                throw new Error('Renderer at path "' + path + '" does not exist.');
             }
                     
             tag.renderer = path;
@@ -132,6 +158,56 @@ function buildTag(tagObject, path, taglib, dirname) {
             ok(transformer.path, '"path" is required for transformer');
 
             tag.addTransformer(transformer);
+        },
+        var: function(value) {
+            var varName = value;
+            tag.addNestedVariable({
+                name: varName
+            });
+        },
+        importVar: function(value) {
+            var importedVar = {};
+            
+            if (typeof value === 'string') {
+                importedVar = {
+                    targetProperty: value,
+                    expression: value
+                };
+            }
+            else {
+                invokeHandlers(value, {
+                    targetProperty: function(value) {
+                        importedVar.targetProperty = value;
+                    },
+
+                    expression: function(value) {
+                        importedVar.expression = value;
+                    },
+
+                    name: function(value) {
+                        importedVar.expression = value;
+                    },
+
+                    _end: function() {
+                        if (importedVar.name) {
+                            if (!importedVar.targetProperty) {
+                                importedVar.targetProperty = importedVar.name;
+                            }
+                            importedVar.expression = importedVar.name;
+                            delete importedVar.name;
+                        }
+                        if (!importedVar.targetProperty) {
+                            throw new Error('The "target-property" attribute is required for an imported variable');
+                        }
+                        if (!importedVar.expression) {
+                            throw new Error('The "expression" attribute is required for an imported variable');
+                        }
+                    }
+
+                }, 'import-var in ' + path);
+            }
+
+            tag.addImportedVariable(importedVar);
         }
     }, path);
 

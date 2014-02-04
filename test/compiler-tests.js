@@ -50,6 +50,10 @@ describe('raptor-templates/compiler' , function() {
         testCompiler('test-project/custom-tag.rhtml');
     });
 
+    it('should compile a template with <c:invoke>', function() {
+        testCompiler('test-project/tabs.rhtml');
+    });
+
     
 });
 
