@@ -168,7 +168,11 @@ TemplateCompiler.prototype = {
     getNodeClass: function (ns, localName) {
         var tag = this.taglibs.getTag(ns, localName);
         if (tag && tag.nodeClass) {
-            return require(tag.nodeClass);
+            var nodeClass = require(tag.nodeClass);
+            if (nodeClass.prototype.constructor !== nodeClass) {
+                throw new Error('constructor not set correctly');
+            }
+            return nodeClass;
         }
         throw createError(new Error('Node class not found for namespace "' + ns + '" and localName "' + localName + '"'));
     },
