@@ -285,7 +285,7 @@ TemplateBuilder.prototype = {
     },
     include: function (templateName, dataExpression) {
         if (!this.hasErrors()) {
-            this.contextMethodCall('i', templateName, dataExpression);
+            this.contextMethodCall('i', templateName, dataExpression, new Expression('require'));
         }
         return this;
     },
