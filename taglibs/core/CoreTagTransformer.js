@@ -20,7 +20,7 @@ function removeDashes(str) {
     });
 }
 var extend = require('raptor-util').extend;
-var coreNS = 'http://raptorjs.org/templates/core';
+
 var WriteNode = require('./WriteNode');
 var ForNode = require('./ForNode');
 var IfNode = require('./IfNode');
@@ -34,6 +34,7 @@ var IncludeNode = require('./IncludeNode');
 var Expression = require('../../compiler').Expression;
 var AttributeSplitter = require('../../compiler').AttributeSplitter;
 var TypeConverter = require('../../compiler').TypeConverter;
+var EscapeXmlContext = require('../../compiler').EscapeXmlContext;
 
 function getPropValue(value, type, allowExpressions) {
     return TypeConverter.convert(value, type, allowExpressions);
@@ -46,22 +47,13 @@ CoreTagTransformer.prototype = {
     process: function (node, compiler, template) {
         //Find and handle nested <c:attrs> elements
         this.findNestedAttrs(node, compiler, template);
-        var forEachAttr;
-        var ifAttr;
-        var elseIfAttr;
-        var attrsAttr;
-        var whenAttr;
-        var withAttr;
-        var escapeXmlAttr;
-        var parseBodyTextAttr;
-        var stripAttr;
-        var contentAttr;
-        var replaceAttr;
         var inputAttr;
         var forEachNode;
         var uri;
         var tag;
         var nestedTag;
+        var coreNS = compiler.taglibs.resolveNamespace('core');
+
         function forEachProp(callback, thisObj) {
             node.forEachAttributeAnyNS(function (attr) {
                 if (attr.uri === 'http://www.w3.org/2000/xmlns/' || attr.uri === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
@@ -69,7 +61,9 @@ CoreTagTransformer.prototype = {
                 }
                 var prefix = attr.prefix;
                 var attrUri = attr.uri;
-                attrUri = attr.prefix && attrUri != tag.getTaglibUri() ? attr.uri : null;
+                var resolvedAttrNamespace = attrUri ? compiler.taglibs.resolveNamespace(attrUri) : null;
+                attrUri = attr.prefix && attrUri != tag.taglib.id ? attr.uri : null;
+
                 var attrDef = compiler.taglibs.getAttribute(uri, node.localName, attrUri, attr.localName);
                 var type = attrDef ? attrDef.type || 'string' : 'string';
 
@@ -125,7 +119,7 @@ CoreTagTransformer.prototype = {
         }
         uri = node.uri;
         if (!uri && node.isRoot() && node.localName === 'template') {
-            uri = coreNS;
+            uri = 'core';
         }
         if (node.parentNode) {
             var parentUri = node.parentNode.uri;
@@ -139,136 +133,155 @@ CoreTagTransformer.prototype = {
             }
         }
         tag = node.tag || compiler.taglibs.getTag(uri, node.localName);
-        
-        if (node.getAttributeNS(coreNS, 'space') === 'preserve' || node.getAttributeNS(coreNS, 'whitespace') === 'preserve') {
-            node.setPreserveWhitespace(true);
-        }
-        node.removeAttributeNS(coreNS, 'space');
-        node.removeAttributeNS(coreNS, 'whitespace');
-        if ((escapeXmlAttr = node.getAttributeNS(coreNS, 'escape-xml')) != null) {
-            node.removeAttributeNS(coreNS, 'escape-xml');
-            node.setEscapeXmlBodyText(escapeXmlAttr !== 'false');
-        }
-        if ((parseBodyTextAttr = node.getAttributeNS(coreNS, 'parse-body-text')) != null) {
-            node.removeAttributeNS(coreNS, 'parse-body-text');
-            node.parseBodyText = parseBodyTextAttr !== 'false';
-        }
-        if ((whenAttr = node.getAttributeNS(coreNS, 'when')) != null) {
-            node.removeAttributeNS(coreNS, 'when');
-            var whenNode = new WhenNode({
-                    test: new Expression(whenAttr),
-                    pos: node.getPosition()
-                });
-            node.parentNode.replaceChild(whenNode, node);
-            whenNode.appendChild(node);
-        }
-        if (node.getAttributeNS(coreNS, 'otherwise') != null) {
-            node.removeAttributeNS(coreNS, 'otherwise');
-            var otherwiseNode = new OtherwiseNode({ pos: node.getPosition() });
-            node.parentNode.replaceChild(otherwiseNode, node);
-            otherwiseNode.appendChild(node);
-        }
-        if ((attrsAttr = node.getAttributeNS(coreNS, 'attrs')) != null) {
-            node.removeAttributeNS(coreNS, 'attrs');
-            node.dynamicAttributesExpression = attrsAttr;
-        }
-        if (((forEachAttr = node.getAttributeNS(coreNS, 'for')) || (forEachAttr = node.getAttributeNS(coreNS, 'for-each'))) != null) {
-            node.removeAttributeNS(coreNS, 'for');
-            node.removeAttributeNS(coreNS, 'for-each');
-            var forEachProps = AttributeSplitter.parse(forEachAttr, {
-                    each: { type: 'custom' },
-                    separator: { type: 'expression' },
-                    'iterator': { type: 'expression' },
-                    'status-var': { type: 'identifier' },
-                    'for-loop': {
-                        type: 'boolean',
-                        allowExpressions: false
-                    }
-                }, {
-                    removeDashes: true,
-                    defaultName: 'each',
-                    errorHandler: function (message) {
-                        node.addError('Invalid c:for attribute of "' + forEachAttr + '". Error: ' + message);
-                    }
-                });
-            forEachProps.pos = node.getPosition();
-            //Copy the position property
-            forEachNode = new ForNode(forEachProps);
-            //Surround the existing node with an "forEach" node by replacing the current
-            //node with the new "forEach" node and then adding the current node as a child
-            node.parentNode.replaceChild(forEachNode, node);
-            forEachNode.appendChild(node);
-        }
-        if ((ifAttr = node.getAttributeNS(coreNS, 'if')) != null) {
-            node.removeAttributeNS(coreNS, 'if');
-            var ifNode = new IfNode({
-                    test: new Expression(ifAttr),
-                    pos: node.getPosition()
-                });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(ifNode, node);
-            ifNode.appendChild(node);
-        }
-        if ((elseIfAttr = node.getAttributeNS(coreNS, 'else-if')) != null) {
-            node.removeAttributeNS(coreNS, 'else-if');
-            var elseIfNode = new ElseIfNode({
-                    test: new Expression(elseIfAttr),
-                    pos: node.getPosition()
-                });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(elseIfNode, node);
-            elseIfNode.appendChild(node);
-        }
-        if (node.getAttributeNS(coreNS, 'else') != null) {
-            node.removeAttributeNS(coreNS, 'else');
-            var elseNode = new ElseNode({ pos: node.getPosition() });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(elseNode, node);
-            elseNode.appendChild(node);
-        }
-        if ((withAttr = node.getAttributeNS(coreNS, 'with')) != null) {
-            node.removeAttributeNS(coreNS, 'with');
-            var withNode = new WithNode({
-                    vars: withAttr,
-                    pos: node.getPosition()
-                });
-            node.parentNode.replaceChild(withNode, node);
-            withNode.appendChild(node);
-        }
-        if ((contentAttr = node.getAttributeNS(coreNS, 'bodyContent') || node.getAttributeNS(coreNS, 'content')) != null) {
-            node.removeAttributeNS(coreNS, 'bodyContent');
-            node.removeAttributeNS(coreNS, 'content');
-            var newChild = new WriteNode({
-                    expression: contentAttr,
-                    pos: node.getPosition()
-                });
-            node.removeChildren();
-            node.appendChild(newChild);
-        }
-        if (node.getAttributeNS(coreNS, 'trim-body-indent') === 'true') {
-            node.removeAttributeNS(coreNS, 'trim-body-indent');
-            node.trimBodyIndent = true;
-        }
-        if (node.getAttributeNS && (stripAttr = node.getAttributeNS(coreNS, 'strip')) != null) {
-            node.removeAttributeNS(coreNS, 'strip');
-            if (!node.setStripExpression) {
-                node.addError('The c:strip directive is not allowed for target node');
+
+        var coreAttrHandlers = {
+            'space': function(attr) {
+                this.whitespace(attr);
+            },
+            'whitespace': function(attr) {
+                if (attr.value === 'preserve') {
+                    node.setPreserveWhitespace(true);    
+                }
+            },
+            'escape-xml': function(attr) {
+                node.setEscapeXmlBodyText(attr.value !== 'false');
+            },
+            'parse-body-text': function(attr) {
+                node.parseBodyText = attr.value !== 'false';
+            },
+            'when': function(attr) {
+                var whenNode = new WhenNode({
+                        test: new Expression(attr.value),
+                        pos: node.getPosition()
+                    });
+                node.parentNode.replaceChild(whenNode, node);
+                whenNode.appendChild(node);
+            },
+            'otherwise': function(attr) {
+                var otherwiseNode = new OtherwiseNode({ pos: node.getPosition() });
+                node.parentNode.replaceChild(otherwiseNode, node);
+                otherwiseNode.appendChild(node);
+            },
+            'attrs': function(attr) {
+                node.dynamicAttributesExpression = attr.value;
+            },
+            'for-each': function(attr) {
+                this['for'](attr);
+            },
+            'for': function(attr) {
+                var forEachProps = AttributeSplitter.parse(attr.value, {
+                        each: { type: 'custom' },
+                        separator: { type: 'expression' },
+                        'iterator': { type: 'expression' },
+                        'status-var': { type: 'identifier' },
+                        'for-loop': {
+                            type: 'boolean',
+                            allowExpressions: false
+                        }
+                    }, {
+                        removeDashes: true,
+                        defaultName: 'each',
+                        errorHandler: function (message) {
+                            node.addError('Invalid c:for attribute of "' + attr.value + '". Error: ' + message);
+                        }
+                    });
+                forEachProps.pos = node.getPosition();
+                //Copy the position property
+                forEachNode = new ForNode(forEachProps);
+                //Surround the existing node with an "forEach" node by replacing the current
+                //node with the new "forEach" node and then adding the current node as a child
+                node.parentNode.replaceChild(forEachNode, node);
+                forEachNode.appendChild(node);
+            },
+            'if': function(attr) {
+                var ifNode = new IfNode({
+                        test: new Expression(attr.value),
+                        pos: node.getPosition()
+                    });
+                //Surround the existing node with an "if" node by replacing the current
+                //node with the new "if" node and then adding the current node as a child
+                node.parentNode.replaceChild(ifNode, node);
+                ifNode.appendChild(node);
+            },
+            'else-if': function(attr) {
+                var elseIfNode = new ElseIfNode({
+                        test: new Expression(attr.value),
+                        pos: node.getPosition()
+                    });
+                //Surround the existing node with an "if" node by replacing the current
+                //node with the new "if" node and then adding the current node as a child
+                node.parentNode.replaceChild(elseIfNode, node);
+                elseIfNode.appendChild(node);
+            },
+            'else': function(attr) {
+                var elseNode = new ElseNode({ pos: node.getPosition() });
+                //Surround the existing node with an "if" node by replacing the current
+                //node with the new "if" node and then adding the current node as a child
+                node.parentNode.replaceChild(elseNode, node);
+                elseNode.appendChild(node);
+            },
+            'with': function(attr) {
+                var withNode = new WithNode({
+                        vars: attr.value,
+                        pos: node.getPosition()
+                    });
+                node.parentNode.replaceChild(withNode, node);
+                withNode.appendChild(node);
+            },
+            'body-content': function(attr) {
+                this.content(attr);
+            },
+            'content': function(attr) {
+                var newChild = new WriteNode({
+                        expression: attr.value,
+                        pos: node.getPosition()
+                    });
+                node.removeChildren();
+                node.appendChild(newChild);
+            },
+            'trim-body-indent': function(attr) {
+                if (attr.value === 'true') {
+                    node.trimBodyIndent = true;    
+                }
+            },
+            'strip': function(attr) {
+                if (!node.setStripExpression) {
+                    node.addError('The c:strip directive is not allowed for target node');
+                }
+                node.setStripExpression(attr.value);
+            },
+            'replace': function(attr) {
+                var replaceWriteNode = new WriteNode({
+                        expression: attr.value,
+                        pos: node.getPosition()
+                    });
+                //Replace the existing node with an node that only has children
+                node.parentNode.replaceChild(replaceWriteNode, node);
+                node = replaceWriteNode;
+            },
+            'input': function(attr) {
+                inputAttr = attr.value;
             }
-            node.setStripExpression(stripAttr);
-        }
-        if (node.getAttributeNS && (replaceAttr = node.getAttributeNS(coreNS, 'replace')) != null) {
-            node.removeAttributeNS(coreNS, 'replace');
-            var replaceWriteNode = new WriteNode({
-                    expression: replaceAttr,
-                    pos: node.getPosition()
-                });
-            //Replace the existing node with an node that only has children
-            node.parentNode.replaceChild(replaceWriteNode, node);
-            node = replaceWriteNode;
-        }
+        };
+
+        node.forEachAttributeAnyNS(function(attr) {
+            var attrNS = attr.uri;
+            if (!attrNS) {
+                return;
+            }
+
+            attrNS = compiler.taglibs.resolveNamespace(attrNS);
+
+            if (attrNS === coreNS) {
+                node.removeAttributeNS(attr.uri, attr.localName);
+                var handler = coreAttrHandlers[attr.localName];
+                if (!handler) {
+                    node.addError('Unsupported attribute: ' + attr.qName);
+                }
+                coreAttrHandlers[attr.localName](attr);
+            }
+        });
+
         if (tag) {
             if (tag.preserveWhitespace) {
                 node.setPreserveWhitespace(true);
@@ -279,8 +292,7 @@ CoreTagTransformer.prototype = {
                     //make the node render as a tag handler node so that
                     //writes code that invokes the handler
                     TagHandlerNode.convertNode(node, tag);
-                    if ((inputAttr = node.getAttributeNS(coreNS, 'input')) != null) {
-                        node.removeAttributeNS(coreNS, 'input');
+                    if (inputAttr) {
                         node.setInputExpression(template.makeExpression(inputAttr));
                     }
                 } else {
@@ -314,6 +326,8 @@ CoreTagTransformer.prototype = {
         }
     },
     findNestedAttrs: function (node, compiler, template) {
+        var coreNS = compiler.taglibs.resolveNamespace('core');
+
         node.forEachChild(function (child) {
             if (child.uri === coreNS && child.localName === 'attr') {
                 this.handleAttr(child, compiler, template);
@@ -362,7 +376,7 @@ CoreTagTransformer.prototype = {
         if (hasValue) {
             parentNode.setAttributeNS(attrUri, attrName, attrValue, attrPrefix);
         } else {
-            node.setEscapeXmlContext(require('../../compiler/EscapeXmlContext').Attribute);
+            node.setEscapeXmlContext(EscapeXmlContext.Attribute);
             //Escape body text and expressions as attributes
             parentNode.setAttributeNS(attrUri, attrName, node.getBodyContentExpression(template), attrPrefix, false);
         }
