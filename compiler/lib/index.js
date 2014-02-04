@@ -61,6 +61,6 @@ extend(exports, {
     ExpressionParser: require('./ExpressionParser'),
     Expression: require('./Expression'),
     TypeConverter: require('./TypeConverter'),
-    
+    EscapeXmlContext: require('./EscapeXmlContext'),
     defaultOptions: defaultOptions
 });
