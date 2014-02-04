@@ -522,7 +522,7 @@ Node.prototype = {
         forEachEntry(this.namespaceMappings, callback, thisObj);
     },
     getNodeClass: function () {
-        return this.nodeClass || this.getClass();
+        return this.nodeClass || this.constructor;
     },
     setNodeClass: function (nodeClass) {
         this.nodeClass = nodeClass;
@@ -533,7 +533,7 @@ Node.prototype = {
             out.push(indent + node.toString() + '\n');
             node.forEachChild(function (child) {
                 printNode(child, indent + '  ');
-            }, this);
+            });
         }
         printNode(this, '');
         return out.join('');
