@@ -15,6 +15,7 @@
  */
 'use strict';
 var stringify = require('raptor-json/stringify');
+var extend = require('raptor-util').extend;
 function IncludeNode(props) {
     IncludeNode.$super.call(this);
     if (props) {
@@ -28,12 +29,13 @@ IncludeNode.convertNode = function (node, template) {
 };
 IncludeNode.prototype = {
     doGenerateCode: function (template) {
-        var templateName = this.getProperty('template');
+        var templatePath = this.getProperty('template');
         var templateData = this.getProperty('templateData') || this.getProperty('template-data');
         var resourcePath;
         var _this = this;
-        if (templateName) {
+        if (templatePath) {
             this.removeProperty('template');
+
             var dataExpression;
             if (templateData) {
                 dataExpression = templateData;
@@ -54,7 +56,7 @@ IncludeNode.prototype = {
                     }
                 };
             }
-            template.include(templateName, dataExpression);
+            template.include(templatePath, dataExpression);
         } else if (resourcePath = this.getAttribute('resource')) {
             var isStatic = this.getProperty('static') !== false;
             if (isStatic) {
