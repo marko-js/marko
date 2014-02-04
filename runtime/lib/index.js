@@ -27,7 +27,7 @@ var createError = require('raptor-util').createError;
 var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
-require('./context-helpers');
+
 
 var cache = {};
 
@@ -95,4 +95,6 @@ module.exports = {
     },
     helpers: helpers
 };
+
+require('./context-helpers').update(module.exports, Context);
 
