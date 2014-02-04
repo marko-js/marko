@@ -453,6 +453,24 @@
             <type>number</type>
         </attribute>
     </tag>
+
+    <tag>
+        
+        <name>require</name> 
+
+        <node-class>./RequireNode</node-class>
+
+        <attribute>
+            <name>module</name>
+            <type>string</type>
+        </attribute>
+        
+        <attribute>
+            <name>var</name>
+            <type>custom</type>
+            <allow-expressions>false</allow-expressions>
+        </attribute>
+    </tag>
     
     <tag>
         

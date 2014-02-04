@@ -217,9 +217,8 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/invoke.rhtml", {}, done);
     });
     
-    it.only("should allow for helper functions", function(done) {
-        testRender("test-project/test-templates/helper-functions-shortname.rhtml", {}, done);
-        testRender("test-project/test-templates/helper-functions-uri.rhtml", {}, done);
+    it("should allow for require", function(done) {
+        testRender("test-project/test-templates/require.rhtml", {}, done);
     });
     
     it("should allow for context helper functions", function(done) {
@@ -242,18 +241,6 @@ describe('raptor-templates' , function() {
 
     it("should allow for template simple imports", function(done) {
         testRender("test-project/test-templates/imports2.rhtml", {showConditionalTab: false}, done);
-    });
-    
-    it("should allow for context helper functions", function(done) {
-        
-        var context = new Context(new StringBuilder());
-        context.getAttributes().loggedInUser = {
-                firstName: "John",
-                lastName: "Doe"
-        };
-        
-        testRender("test-project/test-templates/imports3.rhtml", {}, done, {context: context});
-        
     });
     
     // it("should handle errors correctly", function(done) {

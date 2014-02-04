@@ -106,5 +106,6 @@ function addCoreTaglib(taglib) {
 }
 
 addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/core/core.rtld')));
+addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/html/html.rtld')));
 
 exports.buildLookup = buildLookup;

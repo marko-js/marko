@@ -15,27 +15,30 @@
  */
 'use strict';
 var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_]*$/;
-function VarNode(props) {
-    VarNode.$super.call(this);
+function RequireNode(props) {
+    RequireNode.$super.call(this);
     if (props) {
         this.setProperties(props);
     }
 }
-VarNode.prototype = {
+RequireNode.prototype = {
     javaScriptOnly: true,
+    
     doGenerateCode: function (template) {
-        var varName = this.getProperty('name');
-        var value = this.getProperty('value') || this.getProperty('string-value');
-        if (!varName) {
-            this.addError('"name" attribute is required');
-        } else if (!varNameRegExp.test(varName)) {
-            this.addError('Invalid variable name of "' + varName + '"');
-            varName = null;
+        var module = this.getProperty('module');
+        var varName = this.getProperty('var');
+
+        if (!module) {
+            this.addError('"module" attribute is required');
         }
-        if (varName) {
-            template.statement('var ' + varName + (value ? '=' + value : '') + ';');
+        if (!varName) {
+            this.addError('"varName" attribute is required');
+        }
+
+        if (module && varName) {
+            template.statement('var ' + varName + '=require(' + module + ');');
         }
     }
 };
-require('raptor-util').inherit(VarNode, require('../../compiler').Node);
-module.exports = VarNode;
+require('raptor-util').inherit(RequireNode, require('../../compiler').Node);
+module.exports = RequireNode;

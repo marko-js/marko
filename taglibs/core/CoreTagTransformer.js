@@ -62,7 +62,7 @@ CoreTagTransformer.prototype = {
                 var prefix = attr.prefix;
                 var attrUri = attr.uri;
                 var resolvedAttrNamespace = attrUri ? compiler.taglibs.resolveNamespace(attrUri) : null;
-                attrUri = attr.prefix && attrUri != tag.taglib.id ? attr.uri : null;
+                attrUri = attr.prefix && resolvedAttrNamespace === tag.taglib.id ? null : attr.uri;
 
                 var attrDef = compiler.taglibs.getAttribute(uri, node.localName, attrUri, attr.localName);
                 var type = attrDef ? attrDef.type || 'string' : 'string';
@@ -329,7 +329,7 @@ CoreTagTransformer.prototype = {
         var coreNS = compiler.taglibs.resolveNamespace('core');
 
         node.forEachChild(function (child) {
-            if (child.uri === coreNS && child.localName === 'attr') {
+            if (compiler.taglibs.resolveNamespace(child.uri) === coreNS && child.localName === 'attr') {
                 this.handleAttr(child, compiler, template);
             }
         }, this);

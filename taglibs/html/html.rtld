@@ -2,53 +2,54 @@
     
     
     <tlib-version>1.0</tlib-version>
-    <short-name>html</short-name>
-    <uri>http://raptorjs.org/templates/html</uri>
+
+    <alias>http://raptorjs.org/templates/html</alias>
+    <alias>html</alias>
 
     <tag>
         
         <name>pre</name> 
-        <uri></uri> <!-- Register attributes supported by all tags in all namespaces -->
+        <namespace></namespace> <!-- Register attributes supported by all tags in all namespaces -->
         
         <!-- Compiler that applies to all tags as well -->
         <transformer>
-            <class-name>raptor/templating/taglibs/html/HtmlTagTransformer</class-name>
+            <path>./HtmlTagTransformer</path>
         </transformer>
     </tag>
     
     <tag>
         
         <name>html</name> 
-        <uri></uri> <!-- Register attributes supported by all tags in all namespaces -->
+        <namespace></namespace> <!-- Register attributes supported by all tags in all namespaces -->
         
         <attribute name="doctype" type="string"/>
         
         <!-- Compiler that applies to all tags as well -->
         <transformer>
-            <class-name>raptor/templating/taglibs/html/HtmlTagTransformer</class-name>
+            <path>./HtmlTagTransformer</path>
         </transformer>
     </tag>
 
     <tag>
         <name>doctype</name>
         <attribute name="value" type="custom"/>
-        <node-class>raptor/templating/taglibs/html/DocTypeNode</node-class>
+        <node-class>./DocTypeNode</node-class>
     </tag>
     
     <tag>
         
         <name>*</name> 
-        <uri>*</uri> <!-- Register attributes supported by all tags in all namespaces -->
+        <namespace>*</namespace> <!-- Register attributes supported by all tags in all namespaces -->
         
         <!-- Compiler that applies to all tags as well -->
         <transformer>
-            <class-name>raptor/templating/taglibs/html/HtmlTagTransformer</class-name>
+            <path>./HtmlTagTransformer</path>
         </transformer>
     </tag>
 
     <tag>
         <name>comment</name>
-        <handler-class>raptor/templating/taglibs/html/CommentTag</handler-class>
+        <renderer>./CommentTag</renderer>
     </tag>
     
 </raptor-taglib>

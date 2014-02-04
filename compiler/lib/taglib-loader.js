@@ -273,7 +273,6 @@ function load(path) {
                 taglib.addTag(tag);
             });
         }
-        
     }, path);
 
     taglib.id = path;

@@ -45,7 +45,11 @@ TextNode.prototype = {
         var normalizedText = this.getEscapedText();
         var curChild = this.nextSibling;
         var nodeToRemove;
-        while (curChild && curChild.isTextNode()) {
+        while (curChild && (curChild.isTextNode() || curChild.javaScriptOnly)) {
+            if (curChild.javaScriptOnly) {
+                curChild = curChild.nextSibling;
+                continue;
+            }
             normalizedText += curChild.getEscapedText();
             nodeToRemove = curChild;
             curChild = curChild.nextSibling;
@@ -89,11 +93,22 @@ TextNode.prototype = {
         if (this.isPreserveWhitespace()) {
             return;
         }
-        if (!this.previousSibling) {
+
+        var previousSibling = this.previousSibling;
+        while (previousSibling && previousSibling.javaScriptOnly) {
+            previousSibling = previousSibling.previousSibling;
+        }
+
+        var nextSibling = this.nextSibling;
+        while (nextSibling && nextSibling.javaScriptOnly) {
+            nextSibling = nextSibling.nextSibling;
+        }
+
+        if (!previousSibling) {
             //First child
             text = text.replace(/^\n\s*/g, '');
         }
-        if (!this.nextSibling) {
+        if (!nextSibling) {
             //Last child
             text = text.replace(/\n\s*$/g, '');
         }
