@@ -62,11 +62,14 @@ ElementNode.prototype = {
         return allAttrs;
     },
     forEachAttributeAnyNS: function (callback, thisObj) {
+        var attributes = [];
         forEachEntry(this.attributesByNS, function (uri, attrs) {
             forEachEntry(attrs, function (name, attr) {
-                callback.call(thisObj, attr);
+                attributes.push(attr);
             });
         });
+
+        attributes.forEach(callback, thisObj);
     },
     forEachAttributeNS: function (uri, callback, thisObj) {
         var attrs = this.attributesByNS[uri || ''];
