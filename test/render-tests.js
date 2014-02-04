@@ -106,7 +106,7 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/simple-handlers.rhtml", {dynamic: "universe"}, done);
     });
     
-    it.only("should allow for template handlers with nested body content", function(done) {
+    it("should allow for template handlers with nested body content", function(done) {
         testRender("test-project/test-templates/nested-handlers.rhtml", {showConditionalTab: false}, done);
     });
 
@@ -217,7 +217,7 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/invoke.rhtml", {}, done);
     });
     
-    it("should allow for helper functions", function(done) {
+    it.only("should allow for helper functions", function(done) {
         testRender("test-project/test-templates/helper-functions-shortname.rhtml", {}, done);
         testRender("test-project/test-templates/helper-functions-uri.rhtml", {}, done);
     });

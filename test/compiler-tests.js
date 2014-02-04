@@ -18,7 +18,14 @@ function testCompiler(path) {
     var output = compiler.compile(src);
     fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
 
-    var expected = fs.readFileSync(expectedPath, {encoding: 'utf8'});
+    var expected;
+    try {
+        expected = fs.readFileSync(expectedPath, {encoding: 'utf8'});
+    }
+    catch(e) {
+        expected = 'TBD';
+        fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
+    }
 
     if (output !== expected) {
         throw new Error('Unexpected output for "' + inputPath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
@@ -52,6 +59,10 @@ describe('raptor-templates/compiler' , function() {
 
     it('should compile a template with <c:invoke>', function() {
         testCompiler('test-project/tabs.rhtml');
+    });
+
+    it.only('should compile a template with <c:include>', function() {
+        testCompiler('test-project/test-templates/include.rhtml');
     });
 
     

@@ -2,10 +2,10 @@
     xmlns:c="http://raptorjs.org/templates/core" 
     params="">
  
-    <c:include template="/test-templates/include-target.rhtml" name="${'Frank'}" count="20"/>
-    <c:include template="/test-templates/include-target.rhtml" name="Frank" count="${20}"/>
-    <c:include template="/test-templates/include-target.rhtml" template-data="{name: 'Frank', count: 20}"/>
-    <c:include template="/test-templates/include-nested-content.rhtml" name="Frank" count="${20}">
+    <c:include template="include-target.rhtml" name="${'Frank'}" count="20"/>
+    <c:include template="include-target.rhtml" name="Frank" count="${20}"/>
+    <c:include template="include-target.rhtml" template-data="{name: 'Frank', count: 20}"/>
+    <c:include template="include-nested-content.rhtml" name="Frank" count="${20}">
         Have a 
         <b>
             wonderful
