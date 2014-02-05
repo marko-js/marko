@@ -301,28 +301,6 @@ TaglibXmlLoader.prototype = {
                             'type': { _type: STRING },
                             'value': { _type: STRING }
                         },
-                        '<nested-tag>': {
-                            _type: OBJECT,
-                            _begin: function () {
-                                return new Tag();
-                            },
-                            _end: function (nestedTag, tag) {
-                                if (nestedTag.namespace === null || nestedTag.namespace === undefined) {
-                                    nestedTag.namespace = taglib.namespace;
-                                }
-                                nestedTag.targetProperty = nestedTag.targetProperty || nestedTag.name;
-                                if (!nestedTag.name) {
-                                    throw createError(new Error('The "name" property is required for a <nested-tag>'));
-                                }
-                                tag.addNestedTag(nestedTag);
-                            },
-                            'name': { _type: STRING },
-                            'type': { _type: STRING },
-                            'target-property': {
-                                _type: STRING,
-                                _targetProp: 'targetProperty'
-                            }
-                        },
                         'nested-variable': variableHandler,
                         'variable': variableHandler,
                         'imported-variable': importVariableHandler,

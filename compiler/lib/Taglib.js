@@ -96,7 +96,6 @@ Taglib.Tag = function () {
         this.transformers = {};
         this.nestedVariables = {};
         this.importedVariables = {};
-        this.nestedTags = {};
         this.staticProperties = {};
         this.patternAttributes = [];
         
@@ -130,15 +129,6 @@ Taglib.Tag = function () {
                 inheritProps(subTag[propName], superTag[propName]);
             });
             subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
-        },
-        addNestedTag: function (nestedTag) {
-            var namespace = nestedTag.namespace || '';
-            this.nestedTags[namespace + ':' + nestedTag.name] = nestedTag;
-        },
-        forEachNestedTag: function (callback, thisObj) {
-            forEachEntry(this.nestedTags, function (key, nestedTag) {
-                callback.call(thisObj, nestedTag);
-            });
         },
         forEachVariable: function (callback, thisObj) {
             forEachEntry(this.nestedVariables, function (key, variable) {

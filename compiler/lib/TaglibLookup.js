@@ -93,11 +93,6 @@ TaglibLookup.prototype = {
                 }, this);
             }
 
-            tag.forEachNestedTag(function (nestedTag) {
-                var nestedTagNS = resolveNamespaceWithDefault(nestedTag.namespace);
-                this.nestedTags[tagNS + ':' + tag.name + ':' + nestedTagNS + ':' + nestedTag.name] = nestedTag;
-            }, this);
-
             tag.forEachAttribute(function (attr) {
                 var attrNS = resolveNamespaceWithDefault(attr.namespace);
                 if (attrNS === tagNS) {
