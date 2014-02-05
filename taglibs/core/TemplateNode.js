@@ -34,38 +34,7 @@ TemplateNode.prototype = {
         } else {
             params = null;
         }
-        this.forEachProperty(function (uri, name, value) {
-            if (!uri) {
-                uri = this.uri;
-            }
-            if (name === 'functions' || name === 'importFunctions' || name === 'importHelperFunctions') {
-                value.split(/\s*[,;]\s*/g).forEach(function (funcName) {
-                    var func = template.compiler.taglibs.getFunction(uri, funcName);
-                    if (!func) {
-                        this.addError('Function with name "' + funcName + '" not found in taglib "' + uri + '"');
-                    } else {
-                        template.addHelperFunction(func.functionClass, funcName, func.bindToContext === true);
-                    }
-                }, this);
-            } else if (name === 'importHelperObject') {
-                var varName = value;
-                if (!template.compiler.taglibs.isTaglib(uri)) {
-                    this.addError('Helper object not found for taglib "' + uri + '". Taglib with URI "' + uri + '" not found.');
-                } else {
-                    var helperObject = template.compiler.taglibs.getHelperObject(uri);
-                    if (!helperObject) {
-                        this.addError('Helper object not found for taglib "' + uri + '"');
-                    } else {
-                        if (helperObject.className) {
-                            template.addVar(varName, 'context.o(' + JSON.stringify(helperObject.className) + ')');
-                        } else if (helperObject.moduleName) {
-                            template.addStaticVar(varName, 'require(' + JSON.stringify(helperObject.moduleName) + ')');
-                        }
-                    }
-                }
-            }
-        }, this);
-
+        
         this.generateCodeForChildren(template);
     }
 };

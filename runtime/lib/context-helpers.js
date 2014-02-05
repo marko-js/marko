@@ -82,16 +82,13 @@ exports.update = function(runtime, Context) {
             return this;
         },
         attrs: attrs,
-        t: function (handler, props, body, dynamicAttributes, namespacedProps) {
+        t: function (handler, props, body, namespacedProps) {
             if (!props) {
                 props = {};
             }
             props._tag = true;
             if (body) {
                 props.invokeBody = body;
-            }
-            if (dynamicAttributes) {
-                props.dynamicAttributes = dynamicAttributes;
             }
             if (namespacedProps) {
                 extend(props, namespacedProps);

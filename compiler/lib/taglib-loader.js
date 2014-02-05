@@ -67,6 +67,9 @@ function buildAttribute(attr, attrProps, path) {
     invokeHandlers(attrProps, {
         type: function(value) {
             attr.type = value;
+        },
+        targetProperty: function(value) {
+            attr.targetProperty = value;
         }
     }, path);
 
@@ -108,12 +111,27 @@ function buildTag(tagObject, path, taglib, dirname) {
                 
                 var attr = new Taglib.Attribute(namespace, localName);
 
-                if (typeof attrProps === 'string') {
-                    
-                    attr.type = attrProps;
+                if (attrProps == null) {
+                    attrProps = {
+                        type: 'string'
+                    };
                 }
-                else {
-                    buildAttribute(attr, attrProps, attrName + '@' + path);
+                else if (typeof attrProps === 'string') {
+                    attrProps = {
+                        type: attrProps
+                    };
+                }
+
+                buildAttribute(attr, attrProps, attrName + '@' + path);
+
+                if (localName === '*') {
+                    attr.dynamicAttribute = true;
+                    if (attr.targetProperty === undefined) {
+                        attr.targetProperty = '*';
+                    }
+                    else if (!attr.targetProperty) {
+                        attr.targetProperty = null;
+                    }
                 }
 
                 tag.addAttribute(attr);

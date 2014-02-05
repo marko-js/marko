@@ -49,22 +49,22 @@ CoreTagTransformer.prototype = {
         this.findNestedAttrs(node, compiler, template);
         var inputAttr;
         var forEachNode;
-        var uri;
+        var namespace;
         var tag;
         var nestedTag;
         var coreNS = compiler.taglibs.resolveNamespace('core');
 
         function forEachProp(callback, thisObj) {
             node.forEachAttributeAnyNS(function (attr) {
-                if (attr.uri === 'http://www.w3.org/2000/xmlns/' || attr.uri === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
+                if (attr.namespace === 'http://www.w3.org/2000/xmlns/' || attr.namespace === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
                     return;    //Skip xmlns attributes
                 }
                 var prefix = attr.prefix;
-                var attrUri = attr.uri;
+                var attrUri = attr.namespace;
                 var resolvedAttrNamespace = attrUri ? compiler.taglibs.resolveNamespace(attrUri) : null;
-                attrUri = attr.prefix && resolvedAttrNamespace === tag.taglib.id ? null : attr.uri;
+                attrUri = attr.prefix && resolvedAttrNamespace === tag.taglib.id ? null : attr.namespace;
 
-                var attrDef = compiler.taglibs.getAttribute(uri, node.localName, attrUri, attr.localName);
+                var attrDef = compiler.taglibs.getAttribute(namespace, node.localName, attrUri, attr.localName);
                 var type = attrDef ? attrDef.type || 'string' : 'string';
 
                 var taglibIdForTag = compiler.taglibs.resolveNamespaceForTag(tag);
@@ -77,8 +77,9 @@ CoreTagTransformer.prototype = {
                     prefix = '';
                 }
 
-                var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
-                if (!attrDef && (isAttrForTaglib || !tag.dynamicAttributes)) {
+                
+                if (!attrDef) {
+                    // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                     //Tag doesn't allow dynamic attributes
                     node.addError('The tag "' + tag.name + '" in taglib "' + taglibIdForTag + '" does not support attribute "' + attr + '"');
                     return;
@@ -98,7 +99,9 @@ CoreTagTransformer.prototype = {
 
                 }
                 var propName;
-                if (attrDef) {
+                if (attrDef.dynamicAttribute) {
+                    propName = attr.localName;
+                } else {
                     if (attrDef.targetProperty) {
                         propName = attrDef.targetProperty;
                     } else if (attrDef.preserveName) {
@@ -106,8 +109,6 @@ CoreTagTransformer.prototype = {
                     } else {
                         propName = removeDashes(attr.localName);
                     }
-                } else {
-                    propName = attr.localName;
                 }
                 callback.call(thisObj, attrUri, propName, value, prefix, attrDef);
             });
@@ -117,14 +118,14 @@ CoreTagTransformer.prototype = {
                 callback.call(thisObj, '', staticProp.name, value, '', staticProp);
             });
         }
-        uri = node.uri;
-        if (!uri && node.isRoot() && node.localName === 'template') {
-            uri = 'core';
+        namespace = node.namespace;
+        if (!namespace && node.isRoot() && node.localName === 'template') {
+            namespace = 'core';
         }
         if (node.parentNode) {
-            var parentUri = node.parentNode.uri;
+            var parentUri = node.parentNode.namespace;
             var parentName = node.parentNode.localName;
-            nestedTag = compiler.taglibs.getNestedTag(parentUri, parentName, uri, node.localName);
+            nestedTag = compiler.taglibs.getNestedTag(parentUri, parentName, namespace, node.localName);
             if (nestedTag) {
                 node.setWordWrapEnabled(false);
                 node.parentNode.setProperty(nestedTag.targetProperty, node.getBodyContentExpression(template));
@@ -132,7 +133,7 @@ CoreTagTransformer.prototype = {
                 return;
             }
         }
-        tag = node.tag || compiler.taglibs.getTag(uri, node.localName);
+        tag = node.tag || compiler.taglibs.getTag(namespace, node.localName);
 
         var coreAttrHandlers = {
             'space': function(attr) {
@@ -265,7 +266,7 @@ CoreTagTransformer.prototype = {
         };
 
         node.forEachAttributeAnyNS(function(attr) {
-            var attrNS = attr.uri;
+            var attrNS = attr.namespace;
             if (!attrNS) {
                 return;
             }
@@ -273,7 +274,7 @@ CoreTagTransformer.prototype = {
             attrNS = compiler.taglibs.resolveNamespace(attrNS);
 
             if (attrNS === coreNS) {
-                node.removeAttributeNS(attr.uri, attr.localName);
+                node.removeAttributeNS(attr.namespace, attr.localName);
                 var handler = coreAttrHandlers[attr.localName];
                 if (!handler) {
                     node.addError('Unsupported attribute: ' + attr.qName);
@@ -301,15 +302,15 @@ CoreTagTransformer.prototype = {
                     // be used to include the output of rendering a template
                     IncludeNode.convertNode(node, tag.template);
                 }
-                forEachProp(function (uri, name, value, prefix, attrDef) {
-
-                    if (attrDef) {
-                        node.setPropertyNS(uri, name, value);
-                    } else {
-                        if (tag.dynamicAttributesRemoveDashes === true) {
+                forEachProp(function (namespace, name, value, prefix, attrDef) {
+                    if (attrDef.dynamicAttribute && attrDef.targetProperty) {
+                        if (attrDef.removeDashes === true) {
                             name = removeDashes(name);
                         }
                         node.addDynamicAttribute(prefix ? prefix + ':' + name : name, value);
+                        node.setDynamicAttributesProperty(attrDef.targetProperty);
+                    } else {
+                        node.setPropertyNS(namespace, name, value);
                     }
                 });
             } else if (tag.nodeClass) {
@@ -317,19 +318,19 @@ CoreTagTransformer.prototype = {
                 extend(node, NodeCompilerClass.prototype);
                 NodeCompilerClass.call(node);
                 node.setNodeClass(NodeCompilerClass);
-                forEachProp(function (uri, name, value) {
-                    node.setPropertyNS(uri, name, value);
+                forEachProp(function (namespace, name, value) {
+                    node.setPropertyNS(namespace, name, value);
                 });
             }
-        } else if (uri && compiler.isTaglib(uri)) {
-            node.addError('Tag ' + node.toString() + ' is not allowed for taglib "' + uri + '"');
+        } else if (namespace && compiler.isTaglib(namespace)) {
+            node.addError('Tag ' + node.toString() + ' is not allowed for taglib "' + namespace + '"');
         }
     },
     findNestedAttrs: function (node, compiler, template) {
         var coreNS = compiler.taglibs.resolveNamespace('core');
 
         node.forEachChild(function (child) {
-            if (compiler.taglibs.resolveNamespace(child.uri) === coreNS && child.localName === 'attr') {
+            if (compiler.taglibs.resolveNamespace(child.namespace) === coreNS && child.localName === 'attr') {
                 this.handleAttr(child, compiler, template);
             }
         }, this);
@@ -343,7 +344,7 @@ CoreTagTransformer.prototype = {
         var hasValue = node.hasAttribute('value');
         var attrName = node.getAttribute('name');
         var attrValue = node.getAttribute('value');
-        var attrUri = node.getAttribute('uri') || '';
+        var attrUri = node.getAttribute('namespace') || '';
         var attrPrefix = node.getAttribute('prefix') || '';
         if (parentNode.hasAttributeNS(attrUri, attrName)) {
             node.addError(node.toString() + ' tag adds duplicate attribute with name "' + attrName + '"' + (attrUri ? ' and URI "' + attrUri + '"' : ''));
@@ -351,7 +352,7 @@ CoreTagTransformer.prototype = {
         }
         node.removeAttribute('name');
         node.removeAttribute('value');
-        node.removeAttribute('uri');
+        node.removeAttribute('namespace');
         node.removeAttribute('prefix');
         if (node.hasAttributesAnyNS()) {
             var invalidAttrs = node.getAllAttributes().map(function (attr) {

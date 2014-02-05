@@ -36,7 +36,7 @@ WithNode.prototype = {
                 }
             });
         var varDefs = [];
-        raptor.forEach(withVars, function (withVar, i) {
+        withVars.forEach(function (withVar, i) {
             if (!varNameRegExp.test(withVar.name)) {
                 this.addError('Invalid variable name of "' + withVar.name + '" in "' + vars + '"');
             }

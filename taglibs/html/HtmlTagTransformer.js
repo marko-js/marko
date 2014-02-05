@@ -24,7 +24,7 @@ HtmlTagTransformer.prototype = {
             var preserveWhitespace = options.preserveWhitespace || {};
             var allowSelfClosing = options.allowSelfClosing || {};
             var startTagOnly = options.startTagOnly || {};
-            var lookupKey = node.uri ? node.uri + ':' + node.localName : node.localName;
+            var lookupKey = node.namespace ? node.namespace + ':' + node.localName : node.localName;
             if (node.isPreserveWhitespace() == null) {
                 if (preserveWhitespace[lookupKey] === true) {
                     node.setPreserveWhitespace(true);

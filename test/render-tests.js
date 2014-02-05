@@ -59,15 +59,15 @@ function testRender(path, data, done, options) {
 describe('raptor-templates' , function() {
 
     beforeEach(function(done) {
-        for (var k in require.cache) {
-            if (require.cache.hasOwnProperty(k)) {
-                delete require.cache[k];
-            }
-        }
+        // for (var k in require.cache) {
+        //     if (require.cache.hasOwnProperty(k)) {
+        //         delete require.cache[k];
+        //     }
+        // }
 
-        require('raptor-logging').configureLoggers({
-            'raptor-templates': 'INFO'
-        });
+        // require('raptor-logging').configureLoggers({
+        //     'raptor-templates': 'INFO'
+        // });
 
         done();
     });
@@ -206,7 +206,7 @@ describe('raptor-templates' , function() {
     });
     
     it("should allow for an element to be replaced with the result of an expression", function(done) {
-        testRender("test-project/test-templates/replace.rhtml", {message: "Hello World!"});
+        testRender("test-project/test-templates/replace.rhtml", {message: "Hello World!"}, done);
     });
     
     it("should allow for includes", function(done) {
@@ -221,27 +221,6 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/require.rhtml", {}, done);
     });
     
-    it("should allow for context helper functions", function(done) {
-
-        var context = require('raptor/templating').createContext();
-        context.getAttributes().loggedInUser = {
-                firstName: "John",
-                lastName: "Doe"
-        };
-        
-        testRender("test-project/test-templates/context-helper-functions-shortname.rhtml", {}, context, done);
-        
-        
-        testRender("test-project/test-templates/context-helper-functions-uri.rhtml", {}, context, done);
-    });
-    
-    it("should allow for template imports", function(done) {
-        testRender("test-project/test-templates/imports1.rhtml", {showConditionalTab: false}, done);
-    });
-
-    it("should allow for template simple imports", function(done) {
-        testRender("test-project/test-templates/imports2.rhtml", {showConditionalTab: false}, done);
-    });
     
     // it("should handle errors correctly", function(done) {
 
@@ -308,8 +287,12 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/conditional-attributes.rhtml", {}, done);
     });
     
-    it("should allow for dynamic attributes", function(done) {
+    it("should allow for dynamic attributes to be passed to tag renderer using a custom property name", function(done) {
         testRender("test-project/test-templates/dynamic-attributes.rhtml", {}, done);
+    });
+
+    it("should allow for dynamic attributes to be passed to tag renderer", function(done) {
+        testRender("test-project/test-templates/dynamic-attributes2.rhtml", {}, done);
     });
     
     // it("should allow for nodes to be converted to expressions", function(done) {

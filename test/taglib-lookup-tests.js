@@ -125,7 +125,7 @@ describe('raptor-templates/compiler/taglibs' , function() {
             transformers.push(transformer);
         });
 
-        expect(transformers.length).to.equal(1);
+        expect(transformers.length).to.equal(2);
     });
 
     it('should lookup tag transformers correctly for namespaced tag with transformer', function() {
@@ -139,7 +139,7 @@ describe('raptor-templates/compiler/taglibs' , function() {
             transformers.push(transformer);
         });
 
-        expect(transformers.length).to.equal(1);
+        expect(transformers.length).to.equal(2);
 
         lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/transformers'));
 
@@ -148,18 +148,36 @@ describe('raptor-templates/compiler/taglibs' , function() {
             transformers.push(transformer);
         });
         
-        expect(transformers.length).to.equal(2);
-        expect(transformers[0].name).to.equal('foo');
-        expect(transformers[1].name).to.equal('CoreTagTransformer');
+        expect(transformers.length).to.equal(3);
+        expect(transformers[0].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
+        expect(transformers[1].name).to.equal('foo');
+        expect(transformers[2].name).to.equal('CoreTagTransformer');
 
         transformers = [];
         lookup.forEachTagTransformer('transform', 'bar', function(transformer) {
             transformers.push(transformer);
         });
         
-        expect(transformers.length).to.equal(2);
-        expect(transformers[0].name).to.equal('CoreTagTransformer');
-        expect(transformers[1].name).to.equal('bar');
+        expect(transformers.length).to.equal(3);
+        expect(transformers[0].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
+        expect(transformers[1].name).to.equal('CoreTagTransformer');
+        expect(transformers[2].name).to.equal('bar');
+    });
+
+    it('should lookup tag transformers core tag with custom node', function() {
+        var transformers = [];
+
+        var taglibLookup = require('../compiler/lib/taglib-lookup');
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+
+        lookup.forEachTagTransformer('c', 'else', function(transformer) {
+            transformers.push(transformer);
+        });
+
+        expect(transformers.length).to.equal(3);
+        // expect(transformers[0].name).to.equal('HTagTransformer');
+        expect(transformers[1].name).to.equal('CoreTagTransformer');
+        expect(transformers[2].name).to.equal('ElseTagTransformer');
     });
     
 });

@@ -3,9 +3,8 @@
     
     <tlib-version>1.0</tlib-version>
     
-    <uri>http://raptorjs.org/templates/caching</uri>
-    <short-name>caching</short-name>
-    <prefix>caching</prefix>
+    <namespace>http://raptorjs.org/templates/caching</namespace>
+    <namespace>caching</namespace>
     
     <tag>
         

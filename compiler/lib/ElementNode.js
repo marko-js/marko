@@ -23,7 +23,7 @@ var XML_URI_ALT = 'http://www.w3.org/XML/1998/namespace';
 var ExpressionParser = require('./ExpressionParser');
 var forEachEntry = require('raptor-util').forEachEntry;
 
-function ElementNode(localName, uri, prefix) {
+function ElementNode(localName, namespace, prefix) {
     ElementNode.$super.call(this, 'element');
     if (!this._elementNode) {
         this._elementNode = true;
@@ -31,7 +31,7 @@ function ElementNode(localName, uri, prefix) {
         this.attributesByNS = {};
         this.prefix = prefix;
         this.localName = this.tagName = localName;
-        this.uri = uri;
+        this.namespace = namespace;
         this.allowSelfClosing = false;
         this.startTagOnly = false;
     }
@@ -54,7 +54,7 @@ ElementNode.prototype = {
     },
     getAllAttributes: function () {
         var allAttrs = [];
-        forEachEntry(this.attributesByNS, function (uri, attrs) {
+        forEachEntry(this.attributesByNS, function (namespace, attrs) {
             forEachEntry(attrs, function (name, attr) {
                 allAttrs.push(attr);
             });
@@ -63,7 +63,7 @@ ElementNode.prototype = {
     },
     forEachAttributeAnyNS: function (callback, thisObj) {
         var attributes = [];
-        forEachEntry(this.attributesByNS, function (uri, attrs) {
+        forEachEntry(this.attributesByNS, function (namespace, attrs) {
             forEachEntry(attrs, function (name, attr) {
                 attributes.push(attr);
             });
@@ -71,8 +71,8 @@ ElementNode.prototype = {
 
         attributes.forEach(callback, thisObj);
     },
-    forEachAttributeNS: function (uri, callback, thisObj) {
-        var attrs = this.attributesByNS[uri || ''];
+    forEachAttributeNS: function (namespace, callback, thisObj) {
+        var attrs = this.attributesByNS[namespace || ''];
         if (attrs) {
             forEachEntry(attrs, function (name, attr) {
                 callback.call(thisObj, attr);
@@ -89,24 +89,24 @@ ElementNode.prototype = {
     getAttribute: function (name) {
         return this.getAttributeNS(null, name);
     },
-    getAttributeNS: function (uri, localName) {
-        var attrNS = this.attributesByNS[uri || ''];
+    getAttributeNS: function (namespace, localName) {
+        var attrNS = this.attributesByNS[namespace || ''];
         var attr = attrNS ? attrNS[localName] : undefined;
         return attr ? attr.value : undefined;
     },
     setAttribute: function (localName, value, escapeXml) {
         this.setAttributeNS(null, localName, value, null, escapeXml);
     },
-    setAttributeNS: function (uri, localName, value, prefix, escapeXml) {
-        var attrNS = this.attributesByNS[uri || ''] || (this.attributesByNS[uri || ''] = {});
+    setAttributeNS: function (namespace, localName, value, prefix, escapeXml) {
+        var attrNS = this.attributesByNS[namespace || ''] || (this.attributesByNS[namespace || ''] = {});
         attrNS[localName] = {
             localName: localName,
             value: value,
             prefix: prefix,
-            uri: uri,
+            namespace: namespace,
             escapeXml: escapeXml,
             qName: prefix ? prefix + ':' + localName : localName,
-            name: uri ? uri + ':' + localName : localName,
+            name: namespace ? namespace + ':' + localName : localName,
             toString: function () {
                 return this.name;
             }
@@ -118,17 +118,17 @@ ElementNode.prototype = {
     removeAttribute: function (localName) {
         this.removeAttributeNS(null, localName);
     },
-    removeAttributeNS: function (uri, localName) {
-        var attrNS = this.attributesByNS[uri || ''] || (this.attributesByNS[uri || ''] = {});
+    removeAttributeNS: function (namespace, localName) {
+        var attrNS = this.attributesByNS[namespace || ''] || (this.attributesByNS[namespace || ''] = {});
         if (attrNS) {
             delete attrNS[localName];
             if (objects.isEmpty(attrNS)) {
-                delete this.attributesByNS[uri || ''];
+                delete this.attributesByNS[namespace || ''];
             }
         }
     },
-    removeAttributesNS: function (uri) {
-        delete this.attributesByNS[uri || ''];
+    removeAttributesNS: function (namespace) {
+        delete this.attributesByNS[namespace || ''];
     },
     isPreserveWhitespace: function () {
         var preserveSpace = ElementNode.$super.prototype.isPreserveWhitespace.call(this);
@@ -147,14 +147,14 @@ ElementNode.prototype = {
     hasAttributes: function () {
         return this.hasAttributesNS('');
     },
-    hasAttributesNS: function (uri) {
-        return this.attributesByNS[uri || ''] !== undefined;
+    hasAttributesNS: function (namespace) {
+        return this.attributesByNS[namespace || ''] !== undefined;
     },
     hasAttribute: function (localName) {
         return this.hasAttributeNS('', localName);
     },
-    hasAttributeNS: function (uri, localName) {
-        var attrsNS = this.attributesByNS[uri || ''];
+    hasAttributeNS: function (namespace, localName) {
+        var attrsNS = this.attributesByNS[namespace || ''];
         return attrsNS ? attrsNS.hasOwnProperty(localName) : false;
     },
     removePreserveSpaceAttr: function () {
@@ -179,8 +179,8 @@ ElementNode.prototype = {
         template.text('<' + name);
         this.forEachAttributeAnyNS(function (attr) {
             var prefix = attr.prefix;
-            if (!prefix && attr.uri) {
-                prefix = this.resolveNamespacePrefix(attr.uri);
+            if (!prefix && attr.namespace) {
+                prefix = this.resolveNamespacePrefix(attr.namespace);
             }
             if (prefix) {
                 name = prefix + (attr.localName ? ':' + attr.localName : '');

@@ -45,6 +45,7 @@ TemplateCompiler.prototype = {
         function transformTreeHelper(node) {
             try {
                 _this.taglibs.forEachNodeTransformer(node, function (transformer) {
+                    
                     if (!node.isTransformerApplied(transformer)) {
                         //Check to make sure a transformer of a certain type is only applied once to a node
                         node.setTransformerApplied(transformer);

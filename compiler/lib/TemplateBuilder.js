@@ -430,8 +430,8 @@ TemplateBuilder.prototype = {
     getErrors: function () {
         return this.compiler.getErrors();
     },
-    getNodeClass: function (uri, localName) {
-        return this.compiler.getNodeClass(uri, localName);
+    getNodeClass: function (namespace, localName) {
+        return this.compiler.getNodeClass(namespace, localName);
     },
     transformTree: function (node) {
         this.compiler.transformTree(node, this);

@@ -15,6 +15,9 @@
  */
 'use strict';
 var stringify = require('raptor-json/stringify');
+var nodePath = require('path');
+var fs = require('fs');
+
 var extend = require('raptor-util').extend;
 function IncludeNode(props) {
     IncludeNode.$super.call(this);
@@ -60,12 +63,12 @@ IncludeNode.prototype = {
         } else if (resourcePath = this.getAttribute('resource')) {
             var isStatic = this.getProperty('static') !== false;
             if (isStatic) {
-                var resource = require('raptor-resources').findResource(resourcePath);
-                if (!resource.exists()) {
-                    this.addError('"each" attribute is required');
+                resourcePath = nodePath.resolve(template.dirname, resourcePath);
+                if (!fs.existsSync(resourcePath)) {
+                    this.addError('Resource not found: ' + resourcePath);
                     return;
                 }
-                template.write(stringify(resource.readAsString()));
+                template.write(stringify(fs.readFileSync(resourcePath, {encoding: 'utf8'})));
             }
         } else {
             this.addError('"template" or "resource" attribute is required');

@@ -14,8 +14,8 @@ module.exports = {
         }
         var argProps = [];
         var propsToRemove = [];
-        node.forEachProperty(function (uri, name, value) {
-            if (uri === '' && name.startsWith('arg-')) {
+        node.forEachProperty(function (namespace, name, value) {
+            if (namespace === '' && name.startsWith('arg-')) {
                 var argName = name.substring('arg-'.length);
                 argProps.push(JSON.stringify(argName) + ': ' + value);
                 propsToRemove.push(name);

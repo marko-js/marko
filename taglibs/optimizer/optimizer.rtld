@@ -2,8 +2,8 @@
     
     
     <tlib-version>1.0</tlib-version>
-    <short-name>optimizer</short-name>
-    <uri>http://raptorjs.org/templates/optimizer</uri>
+    <namespace>optimizer</namespace>
+    <namespace>http://raptorjs.org/templates/optimizer</namespace>
 
     <tag>
         <name>page</name>

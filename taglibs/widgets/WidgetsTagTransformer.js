@@ -156,7 +156,7 @@ WidgetsTagTransformer.prototype = {
                 node.setAttribute('id', template.makeExpression('widget.elId(' + JSON.stringify(widgetElIdAttr) + ')'));
             }
         }
-        if (node.localName === 'widget' && node.uri === widgetsNS) {
+        if (node.localName === 'widget' && node.namespace === widgetsNS) {
             if (node.getAttribute('id') != null) {
                 node.setProperty('scope', template.makeExpression('widget'));
             }

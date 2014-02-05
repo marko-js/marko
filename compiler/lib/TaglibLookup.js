@@ -1,5 +1,6 @@
 var ok = require('assert').ok;
 var createError = require('raptor-util').createError;
+var forEachEntry = require('raptor-util').forEachEntry;
 
 function TaglibLookup() {
     this.namespaces = {};
@@ -174,6 +175,16 @@ TaglibLookup.prototype = {
         }
 
         return attr;
+    },
+    forEachTag: function (namespace, callback, thisObj) {
+        var taglibId = this.resolveNamespace(namespace);
+        var taglib = this.taglibsById[taglibId];
+        if (!taglib) {
+            return;
+        }
+        forEachEntry(taglib.tags, function (key, tag) {
+            callback.call(thisObj, tag, taglib);
+        });
     },
     forEachNodeTransformer: function (node, callback, thisObj) {
         /*

@@ -33,19 +33,24 @@ function addHandlerVar(template, renderer) {
 function getPropsStr(props, template) {
     var propsArray = [];
     if (props) {
-        forEachEntry(props, function (name, value) {
-            if (value instanceof Expression) {
-                var expressionStr;
-                template.indent(function () {
-                    expressionStr = value.expression.toString();
-                });
-                propsArray.push(template.indentStr(1) + stringify(name) + ': ' + expressionStr);
-            } else if (typeof value === 'string' || typeof value === 'object') {
-                propsArray.push(template.indentStr(1) + stringify(name) + ': ' + stringify(value));
-            } else {
-                propsArray.push(template.indentStr(1) + stringify(name) + ': ' + value);
-            }
+        template.indent(function () {
+            forEachEntry(props, function (name, value) {
+                if (value instanceof Expression) {
+
+                    var expressionStr;
+                    template.indent(function () {
+                        expressionStr = value.expression.toString();
+                    });
+                    propsArray.push(template.indentStr() + stringify(name) + ': ' + expressionStr);
+                } else if (typeof value === 'string' || typeof value === 'object') {
+                    propsArray.push(template.indentStr() + stringify(name) + ': ' + stringify(value));
+                } else {
+                    propsArray.push(template.indentStr() + stringify(name) + ': ' + value);
+                }
+            });
         });
+
+        
         if (propsArray.length) {
             return '{\n' + propsArray.join(',\n') + '\n' + template.indentStr() + '}';
         } else {
@@ -75,6 +80,9 @@ TagHandlerNode.prototype = {
             this.dynamicAttributes = {};
         }
         this.dynamicAttributes[name] = value;
+    },
+    setDynamicAttributesProperty: function(name) {
+        this.dynamicAttributesProperty = name;
     },
     addPreInvokeCode: function (code) {
         this.preInvokeCode.push(code);
@@ -135,12 +143,21 @@ TagHandlerNode.prototype = {
                 template.indent().code(code).code('\n');
             });
         }
+
+        
+
         template.contextMethodCall('t', function () {
             template.code('\n').indent(function () {
                 template.line(handlerVar + ',').indent();
                 if (_this.inputExpression) {
                     template.code(_this.inputExpression);
                 } else {
+                    if (_this.dynamicAttributes) {
+                        template.indent(function() {
+                            _this.getProperties()[_this.dynamicAttributesProperty] = template.makeExpression(getPropsStr(_this.dynamicAttributes, template));
+                        });
+                    }
+
                     template.code(getPropsStr(_this.getProperties(), template));
                 }
                 if (_this.hasChildren()) {
@@ -152,13 +169,6 @@ TagHandlerNode.prototype = {
                         _this.generateCodeForChildren(template);
                     }).indent().code('}');
                 } else {
-                    if (hasNamespacedProps || _this.dynamicAttributes) {
-                        template.code(',\n').indent().code('null');
-                    }
-                }
-                if (_this.dynamicAttributes) {
-                    template.code(',\n').indent().code(getPropsStr(_this.dynamicAttributes, template));
-                } else {
                     if (hasNamespacedProps) {
                         template.code(',\n').indent().code('null');
                     }
@@ -166,11 +176,11 @@ TagHandlerNode.prototype = {
                 if (hasNamespacedProps) {
                     template.code(',\n').line('{').indent(function () {
                         var first = true;
-                        forEachEntry(namespacedProps, function (uri, props) {
+                        forEachEntry(namespacedProps, function (namespace, props) {
                             if (!first) {
                                 template.code(',\n');
                             }
-                            template.code(template.indentStr() + '"' + uri + '": ' + getPropsStr(props, template));
+                            template.code(template.indentStr() + '"' + namespace + '": ' + getPropsStr(props, template));
                             first = false;
                         });
                     }).indent().code('}');

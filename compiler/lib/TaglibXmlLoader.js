@@ -176,7 +176,25 @@ TaglibXmlLoader.prototype = {
                         _type: STRING,
                         _targetProp: 'version'
                     },
-                    'alias': {
+                    'uri': {
+                        _type: STRING,
+                        _set: function (taglib, name, value, context) {
+                            taglib.addNamespace(value);
+                        }
+                    },
+                    'namespace': {
+                        _type: STRING,
+                        _set: function (taglib, name, value, context) {
+                            taglib.addNamespace(value);
+                        }
+                    },
+                    'short-name': {
+                        _type: STRING,
+                        _set: function (taglib, name, value, context) {
+                            taglib.addNamespace(value);
+                        }
+                    },
+                    'prefix': {
                         _type: STRING,
                         _set: function (taglib, name, value, context) {
                             taglib.addNamespace(value);
@@ -243,11 +261,22 @@ TaglibXmlLoader.prototype = {
                         },
                         'node-class': {
                             _type: STRING,
-                            _targetProp: 'nodeClass'
+                            _set: function (tag, name, path) {
+                                tag.nodeClass = resolvePath(path);
+                            }
                         },
                         'dynamic-attributes': {
                             _type: BOOLEAN,
-                            _targetProp: 'dynamicAttributes'
+                            _set: function(tag, name, isDynamicAttributes) {
+                                if (isDynamicAttributes === true || isDynamicAttributes === 'true') {
+                                    var attr = new Attribute();
+                                    attr.name = '*';
+                                    attr.dynamicAttribute = true;
+                                    attr.type = 'string';
+                                    tag.addAttribute(attr);    
+                                }
+                                
+                            }
                         },
                         'dynamic-attributes-remove-dashes': {
                             _type: BOOLEAN,

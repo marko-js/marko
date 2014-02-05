@@ -1,7 +1,7 @@
 <raptor-taglib>
     <tlib-version>1.0</tlib-version>
-    <short-name>layout</short-name>
-    <uri>http://raptorjs.org/templates/layout</uri>
+    <namespace>layout</namespace>
+    <namespace>http://raptorjs.org/templates/layout</namespace>
 
     <tag name="use" renderer="raptor/templating/taglibs/layout/UseTag" dynamic-attributes="true" dynamic-attributes-remove-dashes="true">
         <attribute name="template"/>

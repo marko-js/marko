@@ -57,13 +57,13 @@ describe('raptor-templates/compiler' , function() {
         testCompiler('test-project/custom-tag.rhtml');
     });
 
-    it('should compile a template with <c:invoke>', function() {
-        testCompiler('test-project/tabs.rhtml');
-    });
+    // it.only('should compile a template with <c:invoke>', function() {
+    //     testCompiler('test-project/tabs.rhtml');
+    // });
 
-    it.only('should compile a template with <c:include>', function() {
-        testCompiler('test-project/test-templates/include.rhtml');
-    });
+    // it('should compile a template with <c:include>', function() {
+    //     testCompiler('test-project/test-templates/include.rhtml');
+    // });
 
     
 });

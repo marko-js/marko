@@ -18,7 +18,6 @@ var createError = require('raptor-util').createError;
 var sax = require('raptor-xml/sax');
 var TextNode = require('./TextNode');
 var ElementNode = require('./ElementNode');
-var Imports = require('./Imports');
 
 function ParseTreeBuilder() {
 }
@@ -32,7 +31,6 @@ ParseTreeBuilder.prototype = {
         var parentNode = null;
         var rootNode = null;
         var prevTextNode = null;
-        var imports;
         var parser = sax.createParser({
                 trim: false,
                 normalize: false,
@@ -63,29 +61,18 @@ ParseTreeBuilder.prototype = {
             },
             startElement: function (el) {
                 prevTextNode = null;
-                var importsAttr;
-                var importedAttr;
-                var importedTag;
+                
                 var elementNode = new ElementNode(el.getLocalName(), el.getNamespaceURI(), el.getPrefix());
                 elementNode.addNamespaceMappings(el.getNamespaceMappings());
                 elementNode.pos = parser.getPos();
-
-                el.getAttributes().forEach(function (attr) {
-                    if (attr.getLocalName() === 'imports' && !attr.getNamespaceURI()) {
-                        importsAttr = attr.getValue();
-                    }
-                }, this);
 
                 if (parentNode) {
                     parentNode.appendChild(elementNode);
                 } else {
                     rootNode = elementNode;
-                    if (importsAttr) {
-                        imports = new Imports(taglibs, importsAttr);
-                    }
 
                     if (el.getLocalName() === 'template' && !el.getNamespaceURI()) {
-                        rootNode.uri = 'core';
+                        rootNode.namespace = 'core';
                     }
                 }
 
@@ -93,18 +80,9 @@ ParseTreeBuilder.prototype = {
                     var attrURI = attr.getNamespaceURI();
                     var attrLocalName = attr.getLocalName();
                     var attrPrefix = attr.getPrefix();
-                    if (!attrURI && imports && (importedAttr = imports.getImportedAttribute(attrLocalName))) {
-                        attrURI = importedAttr.uri;
-                        attrLocalName = importedAttr.name;
-                        attrPrefix = importedAttr.prefix;
-                    }
                     elementNode.setAttributeNS(attrURI, attrLocalName, attr.getValue(), attrPrefix);
                 }, this);
-                if (!elementNode.uri && imports && (importedTag = imports.getImportedTag(elementNode.localName))) {
-                    elementNode.uri = importedTag.uri;
-                    elementNode.localName = importedTag.name;
-                    elementNode.prefix = importedTag.prefix;
-                }
+                
                 parentNode = elementNode;
             },
             endElement: function () {

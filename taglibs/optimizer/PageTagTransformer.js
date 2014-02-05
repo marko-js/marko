@@ -5,7 +5,7 @@ module.exports = {
         node.setProperty('templatePath', templatePath);
         function convertDependencyTags(parent) {
             parent.forEachChild(function (child) {
-                if (child.isElementNode() && !child.uri) {
+                if (child.isElementNode() && !child.namespace) {
                     // Convert unnamespaced element nodes to "DependencyTag" nodes
                     child.tag = compiler.taglibs.getTag('optimizer', 'dependency');
                     if (child.localName !== 'dependency') {
@@ -29,7 +29,7 @@ module.exports = {
             });
         }
         node.forEachChild(function (child) {
-            if (!child.uri && (child.tagName === 'dependencies' || child.tagName === 'includes')) {
+            if (!child.namespace && (child.tagName === 'dependencies' || child.tagName === 'includes')) {
                 child.tag = compiler.taglibs.getTag('optimizer', 'dependencies');
                 convertDependencyTags(child);
             }
