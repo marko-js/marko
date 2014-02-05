@@ -126,11 +126,13 @@ function buildTag(tagObject, path, taglib, dirname) {
 
                 if (localName === '*') {
                     attr.dynamicAttribute = true;
-                    if (attr.targetProperty === undefined) {
-                        attr.targetProperty = '*';
+
+                    if (attr.targetProperty === null || attr.targetProperty === '') {
+                        attr.targetProperty = null;
+                        
                     }
                     else if (!attr.targetProperty) {
-                        attr.targetProperty = null;
+                        attr.targetProperty = '*';
                     }
                 }
 

@@ -294,6 +294,10 @@ describe('raptor-templates' , function() {
     it("should allow for dynamic attributes to be passed to tag renderer", function(done) {
         testRender("test-project/test-templates/dynamic-attributes2.rhtml", {}, done);
     });
+
+    it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
+        testRender("test-project/test-templates/dynamic-attributes3.rhtml", {}, done);
+    });
     
     // it("should allow for nodes to be converted to expressions", function(done) {
     //     var ElementNode = require('raptor/templating/compiler/ElementNode');

@@ -39,6 +39,16 @@
                 "test": "string",
                 "*": "string"
             }
+        },
+        "dynamic-attributes3": {
+            "renderer": "./dynamic-attributes-tag3.js",
+            "attributes": {
+                "test": "string",
+                "*": {
+                    "type": "string",
+                    "target-property": null
+                }
+            }
         }
     }
 }
