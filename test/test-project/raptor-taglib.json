@@ -49,6 +49,13 @@
                     "target-property": null
                 }
             }
+        },
+        "popover": {
+            "renderer": "./popover-tag.js",
+            "attributes": {
+                "title": "string",
+                "content": "string"
+            }
         }
     }
 }

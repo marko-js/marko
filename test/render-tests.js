@@ -324,7 +324,7 @@ describe('raptor-templates' , function() {
         
     // });
     
-    it.only("should allow for nested attributes", function(done) {
+    it("should allow for nested attributes", function(done) {
         testRender("test-project/test-templates/nested-attrs.rhtml", {active: true}, done);
     });
     
