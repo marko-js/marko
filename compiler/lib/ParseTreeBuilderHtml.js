@@ -43,12 +43,15 @@ function ParseTreeBuilderHtml(taglibs) {
 
 ParseTreeBuilderHtml.prototype = {
     getPos: function() {
-        return this.createPos(this.parser.startIndex);
+        return this.parser ? this.createPos(this.parser.startIndex) : null;
     },
 
     doParse: function (src, filePath) {
 
         var _this = this;
+
+        // Create a pseudo root node
+        this.handleStartElement(splitName('c:template'), []);
 
         var parser = this.parser = new htmlparser.Parser({
             onopentag: function(name, attribs){
@@ -78,6 +81,9 @@ ParseTreeBuilderHtml.prototype = {
         }, parserOptions);
         parser.write(src);
         parser.end();
+
+        // End the pseudo root node:
+        _this.handleEndElement();
     }
 };
 

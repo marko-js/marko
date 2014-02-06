@@ -1,8 +1,8 @@
 <template 
     xmlns:c="http://raptorjs.org/templates/core" 
+    xmlns:test="test"
     params="rootClass,colors,message">
-    
-    
+
     <test:hello name="World"/>
 
     <div class="hello-world ${rootClass}">${message}</div>
