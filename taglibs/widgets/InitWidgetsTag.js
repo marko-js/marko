@@ -16,7 +16,7 @@ InitWidgetsTag.prototype = {
         if (funcName) {
             context.write('function ' + funcName + '(){\n');
         }
-        widgets.writeInitWidgetsCode(context, true);
+        widgets.writeInitWidgetsCode(widgetsContext, context, true);
         if (funcName) {
             context.write('\n}');
         }
