@@ -16,7 +16,7 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var TemplateBuilder = require('./TemplateBuilder');
-var ParseTreeBuilder = require('./ParseTreeBuilder');
+var parser = require('./parser');
 var Expression = require('./Expression');
 var TypeConverter = require('./TypeConverter');
 var taglibLookup = require('./taglib-lookup');
@@ -105,7 +105,7 @@ TemplateCompiler.prototype = {
             /*
              * First build the parse tree for the tempate
              */
-            rootNode = ParseTreeBuilder.parse(xmlSrc, filePath, this.taglibs);
+            rootNode = parser.parse(xmlSrc, filePath, this.taglibs);
             //Build a parse tree from the input XML
             templateBuilder = new TemplateBuilder(this, filePath, rootNode);
             //The templateBuilder object is need to manage the compiled JavaScript output              
@@ -130,16 +130,9 @@ TemplateCompiler.prototype = {
         //console.error('COMPILED TEMPLATE (' + filePath + ')\n', '\n' + output, '\n------------------');
 
         if (callback) {
-            callback.call(thisObj, {
-                source: output,
-                templateName: templateBuilder.getTemplateName()
-            });
+            callback.call(thisObj, output);
         }
         
-        var options = this.options;
-        if (options && options.nameCallback) {
-            options.nameCallback(templateBuilder.getTemplateName());
-        }
         return output;
     },
     isExpression: function (expression) {
