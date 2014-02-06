@@ -45,9 +45,6 @@ function getHelperObject(className) {
 exports.update = function(runtime, Context) {
     function renderTemplate(path, data, require) {
         if (typeof require === 'function') {
-            if (path.charAt(0) !== '.') {
-                path = './' + path;
-            }
             path = require.resolve(path);
         }
         runtime.render(path, data, this);

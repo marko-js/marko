@@ -93,6 +93,14 @@ function buildTag(tagObject, path, taglib, dirname) {
                     
             tag.renderer = path;
         },
+        template: function(value) {
+            var path = nodePath.resolve(dirname, value);
+            if (!fs.existsSync(path)) {
+                throw new Error('Template at path "' + path + '" does not exist.');
+            }
+                    
+            tag.template = path;
+        },
         attributes: function(value) {
             forEachEntry(value, function(attrName, attrProps) {
                 var parts = attrName.split(':');

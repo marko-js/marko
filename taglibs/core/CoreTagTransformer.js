@@ -35,6 +35,7 @@ var Expression = require('../../compiler').Expression;
 var AttributeSplitter = require('../../compiler').AttributeSplitter;
 var TypeConverter = require('../../compiler').TypeConverter;
 var EscapeXmlContext = require('../../compiler').EscapeXmlContext;
+var resolver = require('raptor-modules/resolver');
 
 function getPropValue(value, type, allowExpressions) {
     return TypeConverter.convert(value, type, allowExpressions);
@@ -51,7 +52,6 @@ CoreTagTransformer.prototype = {
         var forEachNode;
         var namespace;
         var tag;
-        var nestedTag;
         var coreNS = compiler.taglibs.resolveNamespace('core');
 
         function forEachProp(callback, thisObj) {
@@ -122,17 +122,7 @@ CoreTagTransformer.prototype = {
         if (!namespace && node.isRoot() && node.localName === 'template') {
             namespace = 'core';
         }
-        if (node.parentNode) {
-            var parentUri = node.parentNode.namespace;
-            var parentName = node.parentNode.localName;
-            nestedTag = compiler.taglibs.getNestedTag(parentUri, parentName, namespace, node.localName);
-            if (nestedTag) {
-                node.setWordWrapEnabled(false);
-                node.parentNode.setProperty(nestedTag.targetProperty, node.getBodyContentExpression(template));
-                node.detach();
-                return;
-            }
-        }
+
         tag = node.tag || compiler.taglibs.getTag(namespace, node.localName);
 
         var coreAttrHandlers = {
@@ -297,11 +287,13 @@ CoreTagTransformer.prototype = {
                         node.setInputExpression(template.makeExpression(inputAttr));
                     }
                 } else {
+                    var templatePath = resolver.deresolve(tag.template, compiler.dirname);
                     // The tag is mapped to a template that will be used to perform
                     // the rendering so convert the node into a "IncludeNode" that can
                     // be used to include the output of rendering a template
-                    IncludeNode.convertNode(node, tag.template);
+                    IncludeNode.convertNode(node, templatePath);
                 }
+
                 forEachProp(function (namespace, name, value, prefix, attrDef) {
                     if (attrDef.dynamicAttribute && attrDef.targetProperty) {
                         if (attrDef.removeDashes === true) {

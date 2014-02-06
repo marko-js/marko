@@ -26,7 +26,7 @@ TaglibLookup.prototype = {
     },
 
     isTaglib: function(namespace) {
-        return this.namespaces[namespace] != null;
+        return this.taglibsById[namespace] !=null || this.namespaces[namespace] != null;
     },
 
     addTaglib: function (taglib) {
