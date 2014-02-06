@@ -349,7 +349,7 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/caching.rhtml", {}, done);
     });
 
-    it("should allow for using templates to render custom tags", function(done) {
+    it("should allow for taglib aliases", function(done) {
         testRender("test-project/test-templates/taglib-alias.rhtml", {}, done);
     });
     
