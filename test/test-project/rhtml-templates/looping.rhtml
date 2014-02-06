@@ -1,14 +1,9 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
-    params="">
-
-    <c:for each="item in ['a', 'b', 'c']">
-        ${item}
-    </c:for>
-    <c:for each="item in ['a', 'b', 'c']" separator=", " status-var="loop">
-        ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
-    </c:for>
-    <div c:for="item in ['red', 'green', 'blue']; separator = ', '; status-var=loop" >
-        ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
-    </div>
-</c:template>
+<c:for each="item in ['a', 'b', 'c']">
+    ${item}
+</c:for>
+<c:for each="item in ['a', 'b', 'c']" separator=", " status-var="loop">
+    ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
+</c:for>
+<div c:for="item in ['red', 'green', 'blue']; separator = ', '; status-var=loop" >
+    ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
+</div>

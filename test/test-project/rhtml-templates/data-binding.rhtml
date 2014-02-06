@@ -1,23 +1,16 @@
-<c:template 
-    xmlns:c="core"
-    xmlns:ui="ui"
-    xmlns:bind="bind">
+<!-- Data binding with span insertion -->
+<div>${bind:data.person.name}</div>
+<div>${bind:data.person.name; watch=data; event=update}</div>
+
+<div><span bind:content="data.person.name"></span></div>
+<div><span bind:content="data.person.name; watch=data; event=update"></span></div>
+
+<div bind:class="data.divClass">
+</div>
+
+<div bind:attrs="data.divAttrs">
+</div>
+
+<div bind:fragment="watch=data; event=update">
     
-    <!-- Data binding with span insertion -->
-    <div>${bind:data.person.name}</div>
-    <div>${bind:data.person.name; watch=data; event=update}</div>
-    
-    <div><span bind:content="data.person.name"></span></div>
-    <div><span bind:content="data.person.name; watch=data; event=update"></span></div>
-    
-    <div bind:class="data.divClass">
-    </div>
-    
-    <div bind:attrs="data.divAttrs">
-    </div>
-    
-    <div bind:fragment="watch=data; event=update">
-        
-    </div>
-    
-</c:template>
+</div>

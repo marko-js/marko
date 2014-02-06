@@ -1,14 +1,12 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
-    params="name,count,invokeBody">
+<c:var name="name" value="data.name"/>
+<c:var name="count" value="data.count"/>
+<c:var name="invokeBody" value="data.invokeBody"/>
 
-    <div class="nested">
-        <h1>
-            Hello $name! You have $count new messages.
-        </h1>
-        <p>
-            ${invokeBody()}
-        </p>
-    </div>
-    
-</c:template>
+<div class="nested">
+    <h1>
+        Hello $name! You have $count new messages.
+    </h1>
+    <p>
+        ${invokeBody()}
+    </p>
+</div>

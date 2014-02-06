@@ -1,18 +1,13 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:t="http://raptorjs.org/templates/test"
-    params="dynamic">
-    
-    <ul>
-        <li>
-            <t:simpleHello name="world"/>
-        </li>
-        <li>
-            <t:simpleHello name="${dynamic}" adult="true"/>
-        </li>
-        <li>
-            <t:simpleHello name="Dynamic: ${dynamic}" adult="false"/>
-        </li>
-    </ul>
-    
-</c:template>
+<c:var name="dynamic" value="data.dynamic"/>
+
+<ul>
+    <li>
+        <t:simpleHello name="world"/>
+    </li>
+    <li>
+        <t:simpleHello name="${dynamic}" adult="true"/>
+    </li>
+    <li>
+        <t:simpleHello name="Dynamic: ${dynamic}" adult="false"/>
+    </li>
+</ul>

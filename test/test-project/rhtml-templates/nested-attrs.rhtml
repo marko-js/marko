@@ -1,23 +1,19 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:test="http://raptorjs.org/templates/test" 
-    params="active">
+<c:var name="active" value="data.active"/>
+
+<test:popover>
+    <c:attr name="title">Popover Title</c:attr>
+    <c:attr name="content">Popover Content</c:attr>
     
-    <test:popover>
-        <c:attr name="title">Popover Title</c:attr>
-        <c:attr name="content">Popover Content</c:attr>
-        
-        Link Text
-    </test:popover>
-    
-    <div>
-        <c:attr name="class" value="{?active;tab-active}"/>
-        <c:attr name="align">center</c:attr>
-    </div>
-    
-    <div>
-        <c:attr name="title">
-            <c:for each="color in ['red', 'green', 'blue']"> $color! </c:for>
-        </c:attr>
-    </div>
-</c:template>
+    Link Text
+</test:popover>
+
+<div>
+    <c:attr name="class" value="{?active;tab-active}"/>
+    <c:attr name="align">center</c:attr>
+</div>
+
+<div>
+    <c:attr name="title">
+        <c:for each="color in ['red', 'green', 'blue']"> $color! </c:for>
+    </c:attr>
+</div>

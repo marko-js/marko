@@ -1,15 +1,13 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
-    params="rootClass,colors,message">
+<c:var name="rootClass" value="data.rootClass"/>
+<c:var name="colors" value="data.colors"/>
+<c:var name="message" value="data.message"/>
 
-    <div class="hello-world ${rootClass}">${message}</div>
-    
-    <ul c:if="notEmpty(colors)">
-        <li class="color" c:for="color in colors">${color}</li>
-    </ul>
-    
-    <div c:if="empty(colors)">
-        No colors!
-    </div>
-    
-</c:template>
+<div class="hello-world ${rootClass}">${message}</div>
+
+<ul c:if="notEmpty(colors)">
+    <li class="color" c:for="color in colors">${color}</li>
+</ul>
+
+<div c:if="empty(colors)">
+    No colors!
+</div>

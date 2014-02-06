@@ -1,23 +1,17 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
-    params="">
+<c:for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
+    ${item}
+</c:for>
 
-    <c:for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
-        ${item}
-    </c:for>
-    
 
-    <c:for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
-        ${status.index}-${item}
-    </c:for>
+<c:for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
+    ${status.index}-${item}
+</c:for>
 
-    <div c:for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
-        ${item}
-    </div>
-    
+<div c:for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
+    ${item}
+</div>
 
-    <div c:for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
-        ${status.index}-${item}
-    </div>
 
-</c:template>
+<div c:for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
+    ${status.index}-${item}
+</div>

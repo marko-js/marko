@@ -1,9 +1,7 @@
-<c:template
-    xmlns:c="core"
-    params="tag,content,title">
-    
-    <span title="$title" data-content="$content">
-        <c:invoke function="tag.invokeBody()" c:if="tag.invokeBody"/>
-    </span>
+<c:var name="tag" value="data.tag"/>
+<c:var name="content" value="data.content"/>
+<c:var name="title" value="data.title"/>
 
-</c:template>
+<span title="$title" data-content="$content">
+    <c:invoke function="tag.invokeBody()" c:if="tag.invokeBody"/>
+</span>

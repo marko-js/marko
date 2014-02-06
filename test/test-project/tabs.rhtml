@@ -1,21 +1,16 @@
-<c:template 
-    xmlns:c="core"
-    xmlns:t="http://raptorjs.org/templates/test"
-    params="tabs">
-    
-    <div class="tabs">
-        <ul class="nav nav-tabs">
-            <li class="${tab.liClass}" c:for="tab in tabs">
-                <a href="#${tab.id}" data-toggle="tab">
-                    ${tab.title}
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div id="${tab.id}" class="${tab.divClass}" c:for="tab in tabs">
-                <c:invoke function="tab.invokeBody()"/>
-            </div>
+<c:var name="tabs" value="data.tabs"/>
+
+<div class="tabs">
+    <ul class="nav nav-tabs">
+        <li class="${tab.liClass}" c:for="tab in tabs">
+            <a href="#${tab.id}" data-toggle="tab">
+                ${tab.title}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="${tab.id}" class="${tab.divClass}" c:for="tab in tabs">
+            <c:invoke function="tab.invokeBody()"/>
         </div>
     </div>
-    
-</c:template>
+</div>
