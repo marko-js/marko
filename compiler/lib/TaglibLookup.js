@@ -18,7 +18,7 @@ TaglibLookup.prototype = {
             return '';
         }
 
-        return this.namespaces[namespace];
+        return this.taglibsById[namespace] ? namespace : this.namespaces[namespace];
     },
 
     resolveNamespaceForTag: function(tag) {

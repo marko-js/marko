@@ -36,6 +36,8 @@ HtmlTagTransformer.prototype = {
             if (compiler.options.xhtml !== true && startTagOnly[lookupKey] === true) {
                 node.setStartTagOnly(true);
             }
+
+            
             if (node.getQName() === 'html' && node.hasAttributeNS('raptor-templates/html', 'doctype')) {
                 var doctype = node.getAttributeNS('raptor-templates/html', 'doctype');
                 var docTypeNode = new DocTypeNode({
@@ -43,7 +45,7 @@ HtmlTagTransformer.prototype = {
                         pos: node.getPosition()
                     });
                 node.parentNode.insertBefore(docTypeNode, node);
-                node.removeAttributeNS('raptor-templates/templates/html', 'doctype');
+                node.removeAttributeNS('raptor-templates/html', 'doctype');
             }
         }
     }

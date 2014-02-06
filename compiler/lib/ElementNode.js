@@ -72,7 +72,9 @@ ElementNode.prototype = {
         attributes.forEach(callback, thisObj);
     },
     forEachAttributeNS: function (namespace, callback, thisObj) {
-        var attrs = this.attributesByNS[namespace || ''];
+        namespace = this.resolveNamespace(namespace);
+
+        var attrs = this.attributesByNS[namespace];
         if (attrs) {
             forEachEntry(attrs, function (name, attr) {
                 callback.call(thisObj, attr);
@@ -89,8 +91,18 @@ ElementNode.prototype = {
     getAttribute: function (name) {
         return this.getAttributeNS(null, name);
     },
+    resolveNamespace: function(namespace) {
+        if (namespace == null) {
+            namespace = '';
+        }
+
+        return this.compiler ?
+            this.compiler.taglibs.resolveNamespace(namespace) || namespace :
+            namespace;
+    },
     getAttributeNS: function (namespace, localName) {
-        var attrNS = this.attributesByNS[namespace || ''];
+        namespace = this.resolveNamespace(namespace);
+        var attrNS = this.attributesByNS[namespace];
         var attr = attrNS ? attrNS[localName] : undefined;
         return attr ? attr.value : undefined;
     },
@@ -98,7 +110,8 @@ ElementNode.prototype = {
         this.setAttributeNS(null, localName, value, null, escapeXml);
     },
     setAttributeNS: function (namespace, localName, value, prefix, escapeXml) {
-        var attrNS = this.attributesByNS[namespace || ''] || (this.attributesByNS[namespace || ''] = {});
+        namespace = this.resolveNamespace(namespace);
+        var attrNS = this.attributesByNS[namespace] || (this.attributesByNS[namespace] = {});
         attrNS[localName] = {
             localName: localName,
             value: value,
@@ -119,16 +132,18 @@ ElementNode.prototype = {
         this.removeAttributeNS(null, localName);
     },
     removeAttributeNS: function (namespace, localName) {
-        var attrNS = this.attributesByNS[namespace || ''] || (this.attributesByNS[namespace || ''] = {});
+        namespace = this.resolveNamespace(namespace);
+        var attrNS = this.attributesByNS[namespace] || (this.attributesByNS[namespace] = {});
         if (attrNS) {
             delete attrNS[localName];
             if (objects.isEmpty(attrNS)) {
-                delete this.attributesByNS[namespace || ''];
+                delete this.attributesByNS[namespace];
             }
         }
     },
     removeAttributesNS: function (namespace) {
-        delete this.attributesByNS[namespace || ''];
+        namespace = this.resolveNamespace(namespace);
+        delete this.attributesByNS[namespace];
     },
     isPreserveWhitespace: function () {
         var preserveSpace = ElementNode.$super.prototype.isPreserveWhitespace.call(this);
@@ -148,13 +163,15 @@ ElementNode.prototype = {
         return this.hasAttributesNS('');
     },
     hasAttributesNS: function (namespace) {
-        return this.attributesByNS[namespace || ''] !== undefined;
+        namespace = this.resolveNamespace(namespace);
+        return this.attributesByNS[namespace] !== undefined;
     },
     hasAttribute: function (localName) {
         return this.hasAttributeNS('', localName);
     },
     hasAttributeNS: function (namespace, localName) {
-        var attrsNS = this.attributesByNS[namespace || ''];
+        namespace = this.resolveNamespace(namespace);
+        var attrsNS = this.attributesByNS[namespace];
         return attrsNS ? attrsNS.hasOwnProperty(localName) : false;
     },
     removePreserveSpaceAttr: function () {

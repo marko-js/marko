@@ -3,8 +3,10 @@
     
     <tlib-version>1.0</tlib-version>
 
+    <namespace>raptor-templates/html</namespace>
     <namespace>http://raptorjs.org/templates/html</namespace>
     <namespace>html</namespace>
+
 
     <tag>
         

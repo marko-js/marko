@@ -62,7 +62,13 @@ ParseTreeBuilder.prototype = {
             startElement: function (el) {
                 prevTextNode = null;
                 
-                var elementNode = new ElementNode(el.getLocalName(), el.getNamespaceURI(), el.getPrefix());
+                var elNS = taglibs.resolveNamespace(el.getNamespaceURI()) || el.getNamespaceURI();
+
+                var elementNode = new ElementNode(
+                    el.getLocalName(),
+                    elNS,
+                    el.getPrefix());
+
                 elementNode.addNamespaceMappings(el.getNamespaceMappings());
                 elementNode.pos = parser.getPos();
 
@@ -77,10 +83,12 @@ ParseTreeBuilder.prototype = {
                 }
 
                 el.getAttributes().forEach(function (attr) {
-                    var attrURI = attr.getNamespaceURI();
+                    var attrNS = attr.getNamespaceURI();
+                    attrNS = taglibs.resolveNamespace(attrNS) || attrNS;
+
                     var attrLocalName = attr.getLocalName();
                     var attrPrefix = attr.getPrefix();
-                    elementNode.setAttributeNS(attrURI, attrLocalName, attr.getValue(), attrPrefix);
+                    elementNode.setAttributeNS(attrNS, attrLocalName, attr.getValue(), attrPrefix);
                 }, this);
                 
                 parentNode = elementNode;
