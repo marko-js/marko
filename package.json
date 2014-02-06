@@ -16,18 +16,21 @@
     "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test"
   },
   "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
-  "maintainers": ["Patrick Steele-Idem <psteeleidem@ebay.com>"],
+  "maintainers": [
+    "Patrick Steele-Idem <psteeleidem@ebay.com>"
+  ],
   "dependencies": {
     "raptor-detect": "~0.1.0-SNAPSHOT",
     "raptor-logging": "~0.1.0-SNAPSHOT",
     "raptor-strings": "~0.1.0-SNAPSHOT",
-    "raptor-regexp" : "~0.1.0-SNAPSHOT",
-    "raptor-util"   : "~0.1.0-SNAPSHOT",
-    "raptor-arrays" : "~0.1.0-SNAPSHOT",
-    "raptor-json"   : "~0.1.0-SNAPSHOT",
+    "raptor-regexp": "~0.1.0-SNAPSHOT",
+    "raptor-util": "~0.1.0-SNAPSHOT",
+    "raptor-arrays": "~0.1.0-SNAPSHOT",
+    "raptor-json": "~0.1.0-SNAPSHOT",
     "raptor-modules": "~0.1.0-SNAPSHOT",
-    "raptor-render-context": "~0.1.0-SNAPSHOT"
-
+    "raptor-render-context": "~0.1.0-SNAPSHOT",
+    "htmlparser2": "~3.4.0",
+    "char-props": "~0.1.5"
   },
   "devDependencies": {
     "mocha": "~1.15.1",

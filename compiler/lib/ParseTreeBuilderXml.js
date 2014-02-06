@@ -11,7 +11,7 @@ ParseTreeBuilderXml.prototype = {
         return this.parser.getPos();
     },
 
-    parse: function (src, filePath) {
+    doParse: function (src, filePath) {
         
         var parser = this.parser = sax.createParser({
                 trim: false,
@@ -35,8 +35,7 @@ ParseTreeBuilderXml.prototype = {
                 var el = {
                     namespace: elNode.getNamespaceURI(),
                     prefix: elNode.getPrefix(),
-                    localName: elNode.getLocalName(),
-                    namespaceMappings: elNode.getNamespaceMappings()
+                    localName: elNode.getLocalName()
                 };
 
                 var attributes = elNode.getAttributes().map(function (attr) {
@@ -56,8 +55,6 @@ ParseTreeBuilderXml.prototype = {
         }, this);
 
         parser.parse(src, filePath);
-        
-        return this.getRootNode();
     }
 };
 

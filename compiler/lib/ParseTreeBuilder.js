@@ -17,15 +17,67 @@
 
 var TextNode = require('./TextNode');
 var ElementNode = require('./ElementNode');
+var charProps = require('char-props');
+
+
+
+function Pos(filePath, line, column) {
+    this.filePath = filePath;
+    this.line = line;
+    this.column = column;
+}
+
+Pos.prototype = {
+    toString: function() {
+        return this.filePath + ":" + this.line + ":" + this.column;
+    }
+};
 
 function ParseTreeBuilder(taglibs) {
+    this.taglibs = taglibs;
+
     this.rootNode = null;
     this.prevTextNode = null;
     this.parentNode = null;
-    this.taglibs = taglibs;
+    this.src = null;
+    this.filePath = null;
+    this.charProps = null;
+
+    this.nsStack = [];
 }
 
 ParseTreeBuilder.prototype = {
+    createPos: function(line, column) {
+        if (arguments.length === 1) {
+            var index = arguments[0];
+            if (!this.charProps) {
+                this.charProps = charProps(this.src);
+            }
+            line = this.charProps.lineAt(index)+1;
+            column = this.charProps.columnAt(index);
+        }
+
+        return new Pos(this.filePath, line, column);
+    },
+    parse: function(src, filePath) {
+        this.src = src;
+        this.filePath = filePath;
+
+        this.doParse(src, filePath);
+
+        var rootNode = this.rootNode;
+
+        // Cleanup
+        this.src = null;
+        this.filePath = null;
+        this.charProps = null;
+        this.rootNode = null;
+        this.prevTextNode = null;
+        this.parentNode = null;
+        this.nsStack = [];
+
+        return rootNode;
+    },
 
     handleCharacters: function(t) {
         if (!this.parentNode) {
@@ -44,19 +96,44 @@ ParseTreeBuilder.prototype = {
     handleStartElement: function(el, attributes) {
         this.prevTextNode = null;
 
+        var namespaceMappings = this.nsStack.length ? Object.create(this.nsStack[this.nsStack.length-1]) : {};
+        this.nsStack.push(namespaceMappings);
+
+        attributes.forEach(function (attr) {
+            if (attr.prefix === 'xmlns') {
+                var nsPrefix = attr.localName;
+                var targetNS = attr.value;
+                namespaceMappings[nsPrefix] = targetNS;
+            }
+        }, this);
+
+        function getNS(node) {
+            if (node.namespace) {
+                return node.namespace;
+            }
+            else if (node.prefix) {
+                if (node.prefix === 'xml') {
+                    return 'http://www.w3.org/XML/1998/namespace';
+                }
+                return namespaceMappings[node.prefix] || node.prefix;
+            }
+            else {
+                return '';
+            }
+        }
+
         var taglibs = this.taglibs;
         
-        var elNS = taglibs.resolveNamespace(el.namespace) || el.namespace;
+        var elNS = getNS(el);
+        elNS = taglibs.resolveNamespace(elNS) || elNS;
+
+        el.localName = el.localName.toLowerCase();
 
         var elementNode = new ElementNode(
             el.localName,
             elNS,
             el.prefix);
 
-        if (el.namespaceMappings) {
-            elementNode.addNamespaceMappings(el.namespaceMappings);    
-        }
-        
         elementNode.pos = this.getPos();
 
         if (this.parentNode) {
@@ -73,10 +150,13 @@ ParseTreeBuilder.prototype = {
         }
 
         attributes.forEach(function (attr) {
-            var attrNS = attr.namespace;
+            if (attr.prefix === 'xmlns') {
+                return; // Skip xmlns attributes
+            }
+            var attrNS = getNS(attr);
             attrNS = taglibs.resolveNamespace(attrNS) || attrNS;
 
-            var attrLocalName = attr.localName;
+            var attrLocalName = attr.localName.toLowerCase();
             var attrPrefix = attr.prefix;
             elementNode.setAttributeNS(attrNS, attrLocalName, attr.value, attrPrefix);
         }, this);
@@ -87,10 +167,12 @@ ParseTreeBuilder.prototype = {
     handleEndElement: function() {
         this.prevTextNode = null;
         this.parentNode = this.parentNode.parentNode;
+        this.nsStack.pop();
     },
 
     getRootNode: function () {
         return this.rootNode;
     }
 };
+
 module.exports = ParseTreeBuilder;

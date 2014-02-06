@@ -58,7 +58,7 @@ CoreTagTransformer.prototype = {
             var foundProps = {};
 
             node.forEachAttributeAnyNS(function (attr) {
-                if (attr.namespace === 'http://www.w3.org/2000/xmlns/' || attr.namespace === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
+                if (attr.namespace === 'xml' || attr.namespace === 'http://www.w3.org/2000/xmlns/' || attr.namespace === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
                     return;    //Skip xmlns attributes
                 }
                 var prefix = attr.prefix;

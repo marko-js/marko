@@ -40,6 +40,7 @@ Taglib.prototype = {
             throw createError(new Error('"namespace" is not allowed for taglib attributes'));
         }
         if (attribute.name) {
+            attribute.name = attribute.name.toLowerCase();
             this.attributeMap[attribute.name] = attribute;
         } else {
             this.patternAttributes.push(attribute);
@@ -60,6 +61,8 @@ Taglib.prototype = {
     addTag: function (tag) {
         ok(arguments.length === 1, 'Invalid args');
         ok(tag.name, '"tag.name" is required');
+
+        tag.name = tag.name.toLowerCase();
         
         var key = (tag.namespace == null ? this.id : tag.namespace) + ':' + tag.name;
         this.tags[key] = tag;
