@@ -107,7 +107,11 @@ TaglibXmlLoader.prototype = {
                     _type: BOOLEAN,
                     _targetProp: 'preserveName'
                 },
-                'description': { _type: STRING }
+                'description': { _type: STRING },
+                'remove-dashes': {
+                    _type: BOOLEAN,
+                    _targetProp: 'removeDashes'
+                }
             };
         var importVariableHandler = {
                 _type: OBJECT,
@@ -249,11 +253,16 @@ TaglibXmlLoader.prototype = {
                         },
                         'handler-class': {
                             _type: STRING,
-                            _targetProp: 'renderer'
+                            _set: function (tag, name, value, context) {
+                                tag.renderer = resolvePath(value);
+                            }
                         },
                         'renderer': {
                             _type: STRING,
-                            _targetProp: 'renderer'
+                            _targetProp: 'renderer',
+                            _set: function (tag, name, value, context) {
+                                tag.renderer = resolvePath(value);
+                            }
                         },
                         'template': {
                             _type: STRING,
@@ -265,42 +274,7 @@ TaglibXmlLoader.prototype = {
                                 tag.nodeClass = resolvePath(path);
                             }
                         },
-                        'dynamic-attributes': {
-                            _type: BOOLEAN,
-                            _set: function(tag, name, isDynamicAttributes) {
-                                if (isDynamicAttributes === true || isDynamicAttributes === 'true') {
-                                    var attr = new Attribute();
-                                    attr.name = '*';
-                                    attr.dynamicAttribute = true;
-                                    attr.type = 'string';
-                                    tag.addAttribute(attr);    
-                                }
-                                
-                            }
-                        },
-                        'dynamic-attributes-remove-dashes': {
-                            _type: BOOLEAN,
-                            _targetProp: 'dynamicAttributesRemoveDashes'
-                        },
                         '<attribute>': attributeHandler,
-                        '<static-property>': {
-                            _type: OBJECT,
-                            _begin: function () {
-                                return new Property();
-                            },
-                            _end: function (prop, tag) {
-                                if (!prop.name) {
-                                    throw createError(new Error('The "name" property is required for a <static-property>'));
-                                }
-                                if (!prop.hasOwnProperty('value')) {
-                                    throw createError(new Error('The "value" property is required for a <static-property>'));
-                                }
-                                tag.addStaticProperty(prop);
-                            },
-                            'name': { _type: STRING },
-                            'type': { _type: STRING },
-                            'value': { _type: STRING }
-                        },
                         'nested-variable': variableHandler,
                         'variable': variableHandler,
                         'imported-variable': importVariableHandler,

@@ -1,8 +1,0 @@
-{
-    "dependencies": [
-        {
-            "package": "raptor/caching"
-        },
-        "CachedFragmentTag.js"
-    ]
-}

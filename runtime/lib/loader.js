@@ -10,7 +10,7 @@ function loadSource(templatePath, compiledSrc) {
     templateModule.filename = templateModulePath;
 
     templateModule._compile(
-        'module.exports=' + compiledSrc,
+        compiledSrc,
         templateModulePath);
 
     return templateModule.exports;

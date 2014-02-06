@@ -55,6 +55,8 @@ CoreTagTransformer.prototype = {
         var coreNS = compiler.taglibs.resolveNamespace('core');
 
         function forEachProp(callback, thisObj) {
+            var foundProps = {};
+
             node.forEachAttributeAnyNS(function (attr) {
                 if (attr.namespace === 'http://www.w3.org/2000/xmlns/' || attr.namespace === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
                     return;    //Skip xmlns attributes
@@ -110,12 +112,15 @@ CoreTagTransformer.prototype = {
                         propName = removeDashes(attr.localName);
                     }
                 }
+
+                foundProps[propName] = true;
                 callback.call(thisObj, attrUri, propName, value, prefix, attrDef);
             });
 
-            tag.forEachStaticProperty(function (staticProp) {
-                var value = getPropValue(staticProp.value, staticProp.type, false);
-                callback.call(thisObj, '', staticProp.name, value, '', staticProp);
+            tag.forEachAttribute(function (attr) {
+                if (attr.hasOwnProperty('defaultValue') && !foundProps[attr.name]) {
+                    callback.call(thisObj, '', attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
+                }
             });
         }
         namespace = node.namespace;

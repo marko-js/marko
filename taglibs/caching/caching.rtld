@@ -5,12 +5,13 @@
     
     <namespace>http://raptorjs.org/templates/caching</namespace>
     <namespace>caching</namespace>
+    <namespace>raptor-templates/caching</namespace>
     
     <tag>
         
         <name>cached-fragment</name> 
 
-        <handler-class>raptor/templating/taglibs/caching/CachedFragmentTag</handler-class>
+        <renderer>./CachedFragmentTag</renderer>
 
         <attribute name="cache-key"/>
         <attribute name="cache-name"/>

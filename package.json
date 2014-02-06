@@ -31,7 +31,8 @@
   },
   "devDependencies": {
     "mocha": "~1.15.1",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "raptor-cache": "~0.1.0-SNAPSHOT"
   },
   "license": "Apache License v2.0",
   "bin": {},

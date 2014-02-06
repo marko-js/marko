@@ -348,10 +348,6 @@ describe('raptor-templates' , function() {
     it("should allow for caching HTML fragments", function(done) {
         testRender("test-project/test-templates/caching.rhtml", {}, done);
     });
-
-    it("should allow for taglib aliases", function(done) {
-        testRender("test-project/test-templates/taglib-alias.rhtml", {}, done);
-    });
     
     it("should escape XML in text node when enabled", function(done) {
         testRender("test-project/test-templates/escape-xml-enabled.rhtml", {}, done);
@@ -361,28 +357,17 @@ describe('raptor-templates' , function() {
         testRender("test-project/test-templates/escape-xml-disabled.rhtml", {}, done);
     });
 
-    it("should allow for static properties to be applied to tag handlers", function(done) {
-        testRender("test-project/test-templates/tag-with-static-props.rhtml", {title: "My Page Title"}, done);
+    it("should allow for attributes with default values", function(done) {
+        testRender("test-project/test-templates/default-attributes.rhtml", {}, done);
     });
 
     it("should allow for input expressions to be provided to tag handler nodes", function(done) {
         testRender("test-project/test-templates/tag-input-expressions.rhtml", {name: "Frank", adult: true}, done);
     });
 
-    it("should allow for using helper objects", function(done) {
-        testRender("test-project/test-templates/helper-objects.rhtml", {}, done);
-    });
-
     it("should allow for using layouts", function(done) {
         testRender("test-project/test-templates/layout-use.rhtml", {}, done);
     });
-
-    it("should expose the template resource associated with a rendered template", function(done) {
-        testRender("test-project/test-templates/template-info.rhtml", {}, done, {
-            expected: ''
-        });
-    });
-
 
 });
 

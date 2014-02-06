@@ -391,8 +391,11 @@
             <type>boolean</type>
             <allow-expressions>false</allow-expressions>
         </attribute>
-        
-        <dynamic-attributes>true</dynamic-attributes>
+
+        <attribute>
+            <name>*</name>
+            <type>string</type>
+        </attribute>
         
     </tag>
     

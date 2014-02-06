@@ -74,6 +74,8 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
             }
             return value;
         }
+    } else if (targetType === 'path') {
+        return new Expression('require.resolve(' + JSON.stringify(value) + ')');
     } else {
         throw createError(new Error('Unsupported attribute type: ' + targetType));
     }

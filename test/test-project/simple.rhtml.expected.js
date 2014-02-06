@@ -1,4 +1,4 @@
-function create(helpers) {
+module.exports = function create(helpers) {
   var empty = helpers.e,
       notEmpty = helpers.ne;
 

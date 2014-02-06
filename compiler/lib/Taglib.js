@@ -96,7 +96,6 @@ Taglib.Tag = function () {
         this.transformers = {};
         this.nestedVariables = {};
         this.importedVariables = {};
-        this.staticProperties = {};
         this.patternAttributes = [];
         
     }
@@ -122,9 +121,7 @@ Taglib.Tag = function () {
                 'attributeMap',
                 'transformers',
                 'nestedVariables',
-                'importedVariables',
-                'nestedTags',
-                'staticProperties'
+                'importedVariables'
             ].forEach(function (propName) {
                 inheritProps(subTag[propName], superTag[propName]);
             });
@@ -145,11 +142,6 @@ Taglib.Tag = function () {
                 callback.call(thisObj, transformer);
             });
         },
-        forEachStaticProperty: function (callback, thisObj) {
-            forEachEntry(this.staticProperties, function (key, staticProp) {
-                callback.call(thisObj, staticProp);
-            });
-        },
         hasTransformers: function () {
             /*jshint unused:false */
             for (var k in this.transformers) {
@@ -164,6 +156,18 @@ Taglib.Tag = function () {
                 var namespace = attr.namespace;
                 if (namespace == null) {
                     namespace = this.taglib.id;
+                }
+
+                if (attr.name === '*') {
+                    attr.dynamicAttribute = true;
+
+                    if (attr.targetProperty === null || attr.targetProperty === '') {
+                        attr.targetProperty = null;
+                        
+                    }
+                    else if (!attr.targetProperty) {
+                        attr.targetProperty = '*';
+                    }
                 }
 
                 this.attributeMap[namespace + ':' + attr.name] = attr;
@@ -205,10 +209,6 @@ Taglib.Tag = function () {
             var key = transformer.path;
             transformer.taglib = this.taglib;
             this.transformers[key] = transformer;
-        },
-        addStaticProperty: function (prop) {
-            var key = prop.name;
-            this.staticProperties[key] = prop;
         }
     };
     return Tag;

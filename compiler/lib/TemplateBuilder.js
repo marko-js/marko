@@ -387,7 +387,7 @@ TemplateBuilder.prototype = {
         } else {
             params = ['context'];
         }
-        out.append('function create(helpers) {\n');
+        out.append('module.exports = function create(helpers) {\n');
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);

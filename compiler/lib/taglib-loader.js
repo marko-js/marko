@@ -70,6 +70,9 @@ function buildAttribute(attr, attrProps, path) {
         },
         targetProperty: function(value) {
             attr.targetProperty = value;
+        },
+        defaultValue: function(value) {
+            attr.defaultValue = value;
         }
     }, path);
 
@@ -130,19 +133,7 @@ function buildTag(tagObject, path, taglib, dirname) {
                     };
                 }
 
-                buildAttribute(attr, attrProps, attrName + '@' + path);
-
-                if (localName === '*') {
-                    attr.dynamicAttribute = true;
-
-                    if (attr.targetProperty === null || attr.targetProperty === '') {
-                        attr.targetProperty = null;
-                        
-                    }
-                    else if (!attr.targetProperty) {
-                        attr.targetProperty = '*';
-                    }
-                }
+                buildAttribute(attr, attrProps, '"' + attrName + '" attribute as part of ' + path);
 
                 tag.addAttribute(attr);
 
@@ -291,7 +282,7 @@ function load(path) {
                 else {
                     tagDirname = dirname; // Tag is in the same taglib file
                     tagObject = path;
-                    path = '<' + tagName + '> in ' + taglib.id;
+                    path = '<' + tagName + '> tag in ' + taglib.id;
                 }
                 
 
