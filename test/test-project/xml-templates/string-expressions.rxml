@@ -1,0 +1,7 @@
+<template 
+    xmlns:c="http://raptorjs.org/templates/core" 
+    params="name,count">
+    
+    ${name != null ? "Hello ${name.toUpperCase()}! You have $count new messages." : null}
+    
+</template>

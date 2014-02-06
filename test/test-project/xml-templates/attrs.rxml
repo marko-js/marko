@@ -1,0 +1,7 @@
+<c:template 
+    xmlns:c="http://raptorjs.org/templates/core" 
+    params="myAttrs">
+    <div c:attrs="myAttrs" data-encoding="&quot;hello&quot;">
+        Hello World!
+    </div>
+</c:template>

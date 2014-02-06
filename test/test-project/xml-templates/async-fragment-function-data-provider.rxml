@@ -1,0 +1,9 @@
+<c:template 
+    xmlns:c="core" 
+    xmlns:async="async">
+
+    <async:fragment data-provider="${data.userInfo}" var="userInfo">
+        Hello $userInfo.name
+    </async:fragment>
+    
+</c:template>

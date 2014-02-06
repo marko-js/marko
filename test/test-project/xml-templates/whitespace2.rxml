@@ -1,0 +1,5 @@
+<c:template 
+    xmlns:c="http://raptorjs.org/templates/core"
+    xmlns:t="http://raptorjs.org/templates/test">
+    A ${'B'} C
+</c:template>

@@ -1,0 +1,8 @@
+<c:template 
+    xmlns:c="http://raptorjs.org/templates/core"
+    params="message">
+    
+    <div c:replace="'Hello'"><b>This content and parent DIV will be replaced with the text "Hello"</b></div>,
+    <div c:replace="message"><b>This content and parent DIV will be replaced with the value of the "message" variable</b></div>
+    
+</c:template>

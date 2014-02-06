@@ -1,0 +1,38 @@
+<c:template 
+    xmlns:c="core" 
+    xmlns:async="async">
+
+    1    
+    <async:fragment dependency="D1">
+        2
+        <async:fragment dependency="D2" var="d2">
+            3
+        </async:fragment>
+        4
+        <async:fragment dependency="D3" var="d3">
+            5
+            <async:fragment dependency="D4" var="d4">
+                6
+            </async:fragment>
+            7
+        </async:fragment>
+        8
+    </async:fragment>
+    9
+    <async:fragment dependency="D5" var="d5">
+        10
+        <async:fragment dependency="D6" var="d6">
+            11
+        </async:fragment>
+        12
+        <async:fragment dependency="D7" var="d7">
+            13
+        </async:fragment>
+        14
+        <async:fragment dependency="D7" var="d7">
+            15
+        </async:fragment>
+        16
+    </async:fragment>
+    17
+</c:template>

@@ -1,0 +1,6 @@
+<c:template
+    xmlns:c="core">
+    <c:require module="./test-helpers" var="testHelpers" />
+    Hello ${testHelpers.upperCase("world")}!
+    Hello ${testHelpers.trim("   World   ")}!
+</c:template>

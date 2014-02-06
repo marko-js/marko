@@ -1,0 +1,13 @@
+<c:template 
+    xmlns:c="core" 
+    xmlns:h="html">
+
+    <h:doctype value="HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;"/>
+
+    <html h:doctype="html">
+        <head>
+            <title>DOCTYPE Test</title>
+        </head>
+        <body></body>
+    </html>
+</c:template>

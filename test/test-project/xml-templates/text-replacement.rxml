@@ -1,0 +1,8 @@
+<template 
+    xmlns:c="http://raptorjs.org/templates/core" 
+    params="person">
+    
+    
+    Hello $person.name. You are from ${person.address.city}, $person.address.state
+    
+</template>
