@@ -15,7 +15,7 @@
  */
 'use strict';
 function TemplateNode(props) {
-    TemplateNode.$super.call(this);
+    TemplateNode.$super.call(this, 'template', 'core', 'c');
     if (props) {
         this.setProperties(props);
     }
@@ -38,5 +38,5 @@ TemplateNode.prototype = {
         this.generateCodeForChildren(template);
     }
 };
-require('raptor-util').inherit(TemplateNode, require('../../compiler').Node);
+require('raptor-util').inherit(TemplateNode, require('../../compiler').ElementNode);
 module.exports = TemplateNode;
