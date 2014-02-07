@@ -31,8 +31,8 @@ var entities = {
 };
 
 function decodeEntities(data) {
-    return data.replace(/&(quot|lt|gt|amp);/g, function(match, entityName) {
-        return entities[entityName];
+    return data.replace(/&([^;]+);/g, function(match, entityName) {
+        return entities[entityName] || '${entity:' + entityName + '}';
     });
 }
 
