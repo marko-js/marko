@@ -5,6 +5,7 @@ var parserOptions  = {
     recognizeSelfClosing: true,
     recognizeCDATA: true,
     lowerCaseTags: false,
+    lowerCaseAttributeNames: false,
     xmlMode: false
 };
 

@@ -127,8 +127,6 @@ ParseTreeBuilder.prototype = {
         var elNS = getNS(el);
         elNS = taglibs.resolveNamespace(elNS) || elNS;
 
-        el.localName = el.localName.toLowerCase();
-
         var elementNode = new ElementNode(
             el.localName,
             elNS,
@@ -156,7 +154,7 @@ ParseTreeBuilder.prototype = {
             var attrNS = getNS(attr);
             attrNS = taglibs.resolveNamespace(attrNS) || attrNS;
 
-            var attrLocalName = attr.localName.toLowerCase();
+            var attrLocalName = attr.localName;
             var attrPrefix = attr.prefix;
             elementNode.setAttributeNS(attrNS, attrLocalName, attr.value, attrPrefix);
         }, this);

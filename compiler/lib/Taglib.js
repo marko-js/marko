@@ -40,7 +40,6 @@ Taglib.prototype = {
             throw createError(new Error('"namespace" is not allowed for taglib attributes'));
         }
         if (attribute.name) {
-            attribute.name = attribute.name.toLowerCase();
             this.attributeMap[attribute.name] = attribute;
         } else {
             this.patternAttributes.push(attribute);
@@ -61,8 +60,6 @@ Taglib.prototype = {
     addTag: function (tag) {
         ok(arguments.length === 1, 'Invalid args');
         ok(tag.name, '"tag.name" is required');
-
-        tag.name = tag.name.toLowerCase();
         
         var key = (tag.namespace == null ? this.id : tag.namespace) + ':' + tag.name;
         this.tags[key] = tag;
@@ -88,7 +85,7 @@ Taglib.prototype = {
         this.namespaces.push(ns);
     }
 };
-Taglib.Tag = function () {
+Taglib.Tag = (function () {
     function Tag(taglib) {
         ok(taglib, '"taglib" expected');
         this.taglib = taglib;
@@ -176,14 +173,23 @@ Taglib.Tag = function () {
                 this.attributeMap[namespace + ':' + attr.name] = attr;
             }
         },
-        getAttribute: function (localName) {
+        getAttribute: function (tagNS, localName) {
             
-            var attr = this.attributeMap[this.taglib.id + ':' + localName] || this.attributeMap[this.taglib.id + ':*'] || this.attributeMap['*:' + localName] || this.attributeMap['*:*'];
+            if (tagNS == null) {
+                tagNS = this.taglib.id;
+            }
+
+            var attr = this.attributeMap[tagNS + ':' + localName] || this.attributeMap[tagNS + ':*'] || this.attributeMap['*:' + localName] || this.attributeMap['*:*'];
             if (!attr && this.patternAttributes.length) {
                 for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
                     var patternAttribute = this.patternAttributes[i];
+
+                    var attrNS = patternAttribute.namespace;
+                    if (attrNS == null) {
+                        attrNS = tagNS;
+                    }
                     
-                    if (patternAttribute.pattern.test(localName)) {
+                    if (attrNS === tagNS && patternAttribute.pattern.test(localName)) {
                         attr = patternAttribute;
                         break;
                     }
@@ -215,8 +221,8 @@ Taglib.Tag = function () {
         }
     };
     return Tag;
-}();
-Taglib.Attribute = function () {
+}());
+Taglib.Attribute = (function () {
     function Attribute(namespace, name) {
         this.namespace = namespace;
         this.name = name;
@@ -227,8 +233,8 @@ Taglib.Attribute = function () {
     }
     Attribute.prototype = {};
     return Attribute;
-}();
-Taglib.Property = function () {
+}());
+Taglib.Property = (function () {
     function Property() {
         this.name = null;
         this.type = 'string';
@@ -236,23 +242,23 @@ Taglib.Property = function () {
     }
     Property.prototype = {};
     return Property;
-}();
-Taglib.NestedVariable = function () {
+}());
+Taglib.NestedVariable = (function () {
     function NestedVariable() {
         this.name = null;
     }
     NestedVariable.prototype = {};
     return NestedVariable;
-}();
-Taglib.ImportedVariable = function () {
+}());
+Taglib.ImportedVariable = (function () {
     function ImportedVariable() {
         this.targetProperty = null;
         this.expression = null;
     }
     ImportedVariable.prototype = {};
     return ImportedVariable;
-}();
-Taglib.Transformer = function () {
+}());
+Taglib.Transformer = (function () {
     var uniqueId = 0;
     function Transformer() {
         this.id = uniqueId++;
@@ -284,8 +290,8 @@ Taglib.Transformer = function () {
         }
     };
     return Transformer;
-}();
-Taglib.Function = function () {
+}());
+Taglib.Function = (function () {
     function Func() {
         this.name = null;
         this.path = null;
@@ -293,12 +299,12 @@ Taglib.Function = function () {
     }
     Func.prototype = {};
     return Func;
-}();
-Taglib.HelperObject = function () {
+}());
+Taglib.HelperObject = (function () {
     function HelperObject() {
         this.path = null;
     }
     HelperObject.prototype = {};
     return HelperObject;
-}();
+}());
 module.exports = Taglib;

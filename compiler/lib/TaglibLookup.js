@@ -99,7 +99,11 @@ TaglibLookup.prototype = {
                     attrNS = '';
                 }
 
-                this.attributes[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;
+                if (attr.name) {
+                    this.attributes[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;    
+                }
+
+                
             }, this);
         }, this);
         /*
@@ -123,13 +127,9 @@ TaglibLookup.prototype = {
 
     getAttribute: function (tagNS, tagName, attrNS, attrName) {
         var tags = this.tags;
+
         tagNS = this.resolveNamespace(tagNS);
-
         attrNS = this.resolveNamespace(attrNS);
-
-        if (attrNS === tagNS) {
-            attrNS = '';
-        }
 
         var attributes = this.attributes;
         

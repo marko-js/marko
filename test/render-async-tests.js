@@ -204,5 +204,160 @@ describe('raptor-templates/rhtml-async' , function() {
         });
     });
 
+    it("should allow for data args", function(done) {
+
+        var users = {
+            "0": {
+                name: "John B. Flowers",
+                occupation: "Clock repairer",
+                gender: "Male"
+            },
+            "1": {
+                name: "Pamela R. Rice",
+                occupation: "Cartographer",
+                gender: "Female"
+            },
+            "2": {
+                name: "Barbara C. Rigsby",
+                occupation: "Enrollment specialist",
+                gender: "Female"
+            },
+            "3": {
+                name: "Anthony J. Ward",
+                occupation: "Clinical laboratory technologist",
+                gender: "Male"
+            }
+        };
+
+
+        testRender('test-project/rhtml-templates/async-fragment-args.rhtml', {}, done, {
+            dataProviders: {
+                'userInfo': function(arg, done) {
+                    setTimeout(function() {
+                        done(null, users[arg.userId]);
+                    }, 100);
+                }
+            }
+        });
+    });
+
+    it("should allow a data provider to be a promise", function(done) {
+
+        var deferred = require('raptor-promises').defer();
+        setTimeout(function() {
+            deferred.resolve('Test promise');
+        }, 200);
+
+        testRender('test-project/rhtml-templates/async-fragment-promise.rhtml', {}, done, {
+            dataProviders: {
+                'promiseData': function(arg, done) {
+                    return deferred.promise;
+                }
+            }
+        });
+    });
+
+    it("should allow beginAsyncFragment to return a promise with a non-null resolved value", function(done) {
+
+        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+            helper: {
+                beginAsyncFragment: function(context) {
+                    context.beginAsyncFragment(function(context) {
+                        var deferred = require('raptor-promises').defer();
+                        setTimeout(function() {
+                            deferred.resolve('B');
+                        }, 200);
+                        return deferred.promise;
+                    });
+                }
+            }
+        }, done);
+    });
+
+    it("should allow beginAsyncFragment to return a promise with a null resolved value (1)", function(done) {
+        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+            helper: {
+                beginAsyncFragment: function(context) {
+                    context.beginAsyncFragment(function(context) {
+                        var deferred = require('raptor-promises').defer();
+                        setTimeout(function() {
+                            context.write('B');
+                            deferred.resolve();
+                        }, 200);
+                        return deferred.promise;
+                    });
+                }
+            }
+        }, done);
+    });
+
+    it("should allow beginAsyncFragment to return a promise with a null resolved value (2)", function(done) {
+        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+            helper: {
+                beginAsyncFragment: function(context) {
+                    context.beginAsyncFragment(function(context) {
+                        context.write('B');
+
+                        var deferred = require('raptor-promises').defer();
+                        setTimeout(function() {
+                            deferred.resolve();
+                        }, 200);
+                        return deferred.promise;
+                    });
+                }
+            }
+        }, done);
+    });
+
+    it("should allow beginAsyncFragment to return a promise with a null resolved value that is immediately resolved", function(done) {
+        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+            helper: {
+                beginAsyncFragment: function(context) {
+                    context.beginAsyncFragment(function(context) {
+                        context.write('B');
+
+                        var deferred = require('raptor-promises').defer();
+                        deferred.resolve();
+                        return deferred.promise;
+                    });
+                }
+            }
+        }, done);
+    });
+
+    it("should allow functions that return promises as data providers", function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+            userInfo: function() {
+                var deferred = require('raptor-promises').defer();
+                setTimeout(function() {
+                    deferred.resolve({
+                        name: 'John'
+                    });
+                }, 200);
+                return deferred.promise;
+            }
+        }, done);
+    });
+
+    it("should allow functions that return non-promises as data providers", function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+            userInfo: function() {
+                return {
+                    name: 'John'
+                };
+            }
+        }, done);
+    });
+
+    it("should allow functions that use done callback", function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+            userInfo: function(arg, done) {
+                done(null, {
+                    name: 'John'
+                });
+            }
+        }, done);
+    });
+
 });
 
