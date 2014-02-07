@@ -15,7 +15,7 @@
  */
 'use strict';
 function IfNode(props) {
-    IfNode.$super.call(this);
+    IfNode.$super.call(this, 'if', 'http://raptorjs.org/templates/core', 'c');
     if (props) {
         this.setProperties(props);
     }
@@ -31,5 +31,5 @@ IfNode.prototype = {
         }, this).line('}');
     }
 };
-require('raptor-util').inherit(IfNode, require('../../compiler').Node);
+require('raptor-util').inherit(IfNode, require('../../compiler').ElementNode);
 module.exports = IfNode;
