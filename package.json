@@ -30,6 +30,8 @@
     "raptor-modules": "~0.1.0-SNAPSHOT",
     "raptor-render-context": "~0.1.0-SNAPSHOT",
     "raptor-data-providers": "~0.1.0-SNAPSHOT",
+    "raptor-xml": "~0.1.0-SNAPSHOT",
+    "raptor-objects": "~0.1.0-SNAPSHOT",
     "htmlparser2": "~3.4.0",
     "char-props": "~0.1.5"
   },

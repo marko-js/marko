@@ -72,7 +72,7 @@ function testRender(path, data, done, options) {
         
 }
 
-describe('raptor-templates/rhtml' , function() {
+describe('raptor-templates/rhtml-async' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -88,19 +88,49 @@ describe('raptor-templates/rhtml' , function() {
         done();
     });
 
-    it('should render a simple template', function(done) {
-
+    it('should render a simple with async fragments correctly (1)', function(done) {
         testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
             dataProviders: {
-                'D1': delayedDataProvider({delay: 100}),
-                'D2': delayedDataProvider({delay: 300}),
-                'D3': delayedDataProvider({delay: 200}),
-                'D4': delayedDataProvider({delay: 800})
+                'D1': delayedDataProvider(100),
+                'D2': delayedDataProvider(300),
+                'D3': delayedDataProvider(200),
+                'D4': delayedDataProvider(800)
             }
-        });
+        });        
     });
 
-    
+    it('should render a simple with async fragments correctly (2)', function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+            dataProviders: {
+                'D1': delayedDataProvider(100),
+                'D2': delayedDataProvider(200),
+                'D3': delayedDataProvider(300),
+                'D4': delayedDataProvider(150)
+            }
+        });        
+    });
+
+    it('should render a simple with async fragments correctly (3)', function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+            dataProviders: {
+                'D1': delayedDataProvider(800),
+                'D2': delayedDataProvider(200),
+                'D3': delayedDataProvider(300),
+                'D4': delayedDataProvider(100)
+            }
+        });        
+    });
+
+    it('should render a simple with async fragments correctly (4)', function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+            dataProviders: {
+                'D1': delayedDataProvider(800),
+                'D2': delayedDataProvider(300),
+                'D3': delayedDataProvider(200),
+                'D4': delayedDataProvider(100)
+            }
+        });        
+    });
 
 });
 

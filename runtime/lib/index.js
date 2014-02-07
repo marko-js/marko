@@ -81,6 +81,7 @@ module.exports = {
                 .on('error', callback);
         }
 
+        // console.log(attributes.async);
         if (isTopLevelContext && attributes.async.remaining === 0) {
             context.emit('end');
         }

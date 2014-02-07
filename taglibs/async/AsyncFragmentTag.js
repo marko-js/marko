@@ -1,8 +1,14 @@
 'use strict';
+var raptorDataProviders = require('raptor-data-providers');
+
 module.exports = {
     render: function (input, context) {
         var dataProvider = input.dataProvider;
+        
+        var dataProviders = raptorDataProviders.forContext(context, false /* don't create if missing */);
+
         var arg = input.arg || {};
+
         arg.context = context;
         context.beginAsyncFragment(function (asyncContext, asyncFragment) {
             function onError(e) {
@@ -24,9 +30,9 @@ module.exports = {
                 }
             }
             try {
-                context.requestData(dataProvider, arg, function(err, data) {
+                dataProviders.requestData(dataProvider, arg, function(err, data) {
                     if (err) {
-                        return onError(e);
+                        return onError(err);
                     }
 
                     renderBody(data);
