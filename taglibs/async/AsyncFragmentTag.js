@@ -1,5 +1,4 @@
 'use strict';
-var promises = require('raptor-promises');
 module.exports = {
     render: function (input, context) {
         var dataProvider = input.dataProvider;
@@ -25,21 +24,13 @@ module.exports = {
                 }
             }
             try {
-                var promise;
-                if (typeof dataProvider === 'function') {
-                    // The data provider is a function we can call to
-                    // get the data or a promise
-                    promise = dataProvider(arg);
-                } else {
-                    promise = promises.isPromise(dataProvider) ? dataProvider : context.requestData(dataProvider, arg);    // Otherwise request the data using a data provider
-                                                                                                                           // associated with the context
-                }
-                if (promise.resolvedValue) {
-                    // Legacy "resolvedValue" support
-                    renderBody(promise.resolvedValue);
-                } else {
-                    promises.immediateThen(promise, renderBody, onError).fail(onError);
-                }
+                context.requestData(dataProvider, arg, function(err, data) {
+                    if (err) {
+                        return onError(e);
+                    }
+
+                    renderBody(data);
+                });
             } catch (e) {
                 onError(e);
             }

@@ -109,5 +109,6 @@ addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../..
 addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/html/html.rtld')));
 addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/caching/caching.rtld')));
 addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/layout/layout.rtld')));
+addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/async/async.rtld')));
 
 exports.buildLookup = buildLookup;

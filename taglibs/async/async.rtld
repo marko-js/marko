@@ -3,6 +3,7 @@
     
     <tlib-version>1.0</tlib-version>
     
+    <namespace>raptor-templates/async</namespace>
     <namespace>http://raptorjs.org/templates/async</namespace>
     <namespace>async</namespace>
     
@@ -10,7 +11,7 @@
         
         <name>fragment</name> 
 
-        <handler-class>raptor/templating/taglibs/async/AsyncFragmentTag</handler-class>
+        <handler-class>./AsyncFragmentTag</handler-class>
 
         <attribute name="dependency" type="string" target-property="dataProvider" deprecated="Use 'data-provider' instead"/>
         <attribute name="data-provider" type="string" />
@@ -23,8 +24,8 @@
         <variable name-from-attribute="var OR dependency OR data-provider|keep"/>
 
         <transformer>
-            <class-name>raptor/templating/taglibs/async/AsyncFragmentTagTransformer</class-name>
-            <after>raptor/templating/taglibs/core/CoreTagTransformer</after>
+            <path>./AsyncFragmentTagTransformer</path>
+            <after>core/CoreTagTransformer</after>
         </transformer>
     </tag>
     
