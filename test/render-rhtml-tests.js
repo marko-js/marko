@@ -369,5 +369,17 @@ describe('raptor-templates/rhtml' , function() {
         testRender("test-project/rhtml-templates/layout-use.rhtml", {}, done);
     });
 
+    it("should work with custom iteration", function(done) {
+        testRender("test-project/rhtml-templates/looping-iterator.rhtml", {
+            reverseIterator: function(arrayList, callback){
+                var statusVar = {first: 0, last: arrayList.length-1};
+                for(var i=arrayList.length-1; i>=0; i--){
+                    statusVar.index = i;
+                    callback(arrayList[i], statusVar);
+                }
+            }
+        }, done);
+    });
+
 });
 
