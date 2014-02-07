@@ -313,7 +313,8 @@ Node.prototype = {
             replacedChild.nextSibling.previousSibling = newChild;
             this.firstChild = newChild;
         } else if (this.lastChild === replacedChild) {
-            newChild.previousSibling = replacedChild;
+            newChild.previousSibling = replacedChild.previousSibling;
+            newChild.nextSibling = null;
             replacedChild.previousSibling.nextSibling = newChild;
             this.lastChild = newChild;
         } else {
