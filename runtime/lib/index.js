@@ -28,6 +28,10 @@ var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
 
+function _require(moduleName) {
+    return require(moduleName);
+}
+
 
 var cache = {};
 
@@ -37,7 +41,7 @@ module.exports = {
     
     render: function (templatePath, data, callback, context) {
         if (typeof callback !== 'function') {
-            // A callback function was provided
+            // A context object was provided instead of a callback
             context = callback;
             callback = null;
         }
@@ -87,6 +91,9 @@ module.exports = {
         }
 
         return context;
+    },
+    stream: function(templatePath, data) {
+        return require('../../stream').stream(templatePath, data);
     },
     unload: function (templatePath) {
         delete cache[templatePath];
