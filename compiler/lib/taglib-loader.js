@@ -73,6 +73,9 @@ function buildAttribute(attr, attrProps, path) {
         },
         defaultValue: function(value) {
             attr.defaultValue = value;
+        },
+        namespace: function(value) {
+            attr.namespace = value;
         }
     }, path);
 
@@ -89,6 +92,11 @@ function buildTag(tagObject, path, taglib, dirname) {
 
     invokeHandlers(tagObject, {
         renderer: function(value) {
+            var ext = nodePath.extname(value);
+            if (ext === '') {
+                value += '.js';
+            }
+
             var path = nodePath.resolve(dirname, value);
             if (!fs.existsSync(path)) {
                 throw new Error('Renderer at path "' + path + '" does not exist.');
@@ -142,8 +150,6 @@ function buildTag(tagObject, path, taglib, dirname) {
         transformer: function(value) {
             var transformer = new Taglib.Transformer();
 
-            
-
             if (typeof value === 'string') {
                 value = {
                     path: value
@@ -152,6 +158,11 @@ function buildTag(tagObject, path, taglib, dirname) {
 
             invokeHandlers(value, {
                 path: function(value) {
+                    var ext = nodePath.extname(value);
+                    if (ext === '') {
+                        value += '.js';
+                    }
+
                     var path = nodePath.resolve(dirname, value);
                     if (!fs.existsSync(path)) {
                         throw new Error('Transformer at path "' + path + '" does not exist.');
