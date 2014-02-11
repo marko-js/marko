@@ -1,0 +1,11 @@
+{
+    "namespace": "test",
+    "tags": {
+        "foo": {
+            "template": "./foo/view.rhtml"
+        },
+        "bar": {
+            "template": "./bar/view.rhtml"
+        }
+    }
+}

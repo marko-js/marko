@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./widgets_server.js": null
+    }
+}

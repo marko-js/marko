@@ -1,0 +1,10 @@
+/work
+/build
+/.idea/
+/npm-debug.log
+/node_modules
+!/test/test-project/node_modules/raptor-widgets
+/*.sublime-workspace
+*.orig
+.DS_Store
+coverage

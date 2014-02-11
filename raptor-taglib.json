@@ -1,0 +1,48 @@
+{
+    "namespace": ["raptor-widgets", "widgets", "w"],
+    "attributes": {
+        "id": "string",
+        "event-*": {
+            "pattern": true,
+            "type": "custom",
+            "allow-expressions": false,
+            "preserve-name": true
+        }
+    },
+    "tags": {
+        "*": {
+            "attributes": {
+                "widget": "string",
+                "config": "expression",
+                "id": "string",
+                "el-id": "string"
+            },
+            "transformer": {
+                "path": "./taglib/widgets-transformer.js",
+                "after": "core/CoreTagTransformer"
+            }
+        },
+        "widget": {
+            "renderer": "./taglib/widget-tag.js",
+            "attributes": {
+                "path": "string",
+                "config": "expression",
+                "id": {
+                    "type": "string",
+                    "target-property": "assignedId"
+                }
+            },
+            "var": "widget",
+            "import-var": {
+                "_cfg": "data.widgetConfig"
+            }
+        },
+        "init-widgets": {
+            "renderer": "./taglib/init-widgets-tag.js",
+            "attributes": {
+                "function-name": "string",
+                "include-script-tag": "boolean"
+            }
+        }
+    }
+}
