@@ -4,6 +4,7 @@ var nodePath = require('path');
 var Taglib = require('./Taglib');
 var cache = {};
 var forEachEntry = require('raptor-util').forEachEntry;
+var raptorRegexp = require('raptor-regexp');
 
 function removeDashes(str) {
     return str.replace(/-([a-z])/g, function (match, lower) {
@@ -76,10 +77,57 @@ function buildAttribute(attr, attrProps, path) {
         },
         namespace: function(value) {
             attr.namespace = value;
+        },
+        pattern: function(value) {
+            if (value === true) {
+                var patternRegExp = raptorRegexp.simple(attr.name);
+                attr.pattern = patternRegExp;    
+            }
+        },
+        allowExpressions: function(value) {
+            attr.allowExpressions = value;
+        },
+        preserveName: function(value) {
+            attr.preserveName = value;
         }
     }, path);
 
     return attr;
+}
+
+function handleAttributes(value, parent, path) {
+    forEachEntry(value, function(attrName, attrProps) {
+        var parts = attrName.split(':');
+        var namespace = null;
+        var localName = null;
+
+        if (parts.length === 2) {
+            namespace = parts[0];
+            localName = parts[1];
+        } else if (parts.length === 1) {
+            localName = attrName;
+        } else {
+            throw new Error('Invalid attribute name: ' + attrName);
+        }
+
+        
+        var attr = new Taglib.Attribute(namespace, localName);
+
+        if (attrProps == null) {
+            attrProps = {
+                type: 'string'
+            };
+        }
+        else if (typeof attrProps === 'string') {
+            attrProps = {
+                type: attrProps
+            };
+        }
+
+        buildAttribute(attr, attrProps, '"' + attrName + '" attribute as part of ' + path);
+
+        parent.addAttribute(attr);
+    });
 }
 
 function buildTag(tagObject, path, taglib, dirname) {
@@ -113,39 +161,7 @@ function buildTag(tagObject, path, taglib, dirname) {
             tag.template = path;
         },
         attributes: function(value) {
-            forEachEntry(value, function(attrName, attrProps) {
-                var parts = attrName.split(':');
-                var namespace = null;
-                var localName = null;
-
-                if (parts.length === 2) {
-                    namespace = parts[0];
-                    localName = parts[1];
-                } else if (parts.length === 1) {
-                    localName = attrName;
-                } else {
-                    throw new Error('Invalid attribute name: ' + attrName);
-                }
-
-                
-                var attr = new Taglib.Attribute(namespace, localName);
-
-                if (attrProps == null) {
-                    attrProps = {
-                        type: 'string'
-                    };
-                }
-                else if (typeof attrProps === 'string') {
-                    attrProps = {
-                        type: attrProps
-                    };
-                }
-
-                buildAttribute(attr, attrProps, '"' + attrName + '" attribute as part of ' + path);
-
-                tag.addAttribute(attr);
-
-            });
+            handleAttributes(value, tag, path);
         },
         transformer: function(value) {
             var transformer = new Taglib.Transformer();
@@ -196,48 +212,27 @@ function buildTag(tagObject, path, taglib, dirname) {
             });
         },
         importVar: function(value) {
-            var importedVar = {};
-            
-            if (typeof value === 'string') {
-                importedVar = {
-                    targetProperty: value,
-                    expression: value
+            forEachEntry(value, function(varName, varValue) {
+                var importedVar = {
+                    targetProperty: varName
                 };
-            }
-            else {
-                invokeHandlers(value, {
-                    targetProperty: function(value) {
-                        importedVar.targetProperty = value;
-                    },
 
-                    expression: function(value) {
-                        importedVar.expression = value;
-                    },
+                var expression = varValue;
 
-                    name: function(value) {
-                        importedVar.expression = value;
-                    },
+                if (!expression) {
+                    expression = varName;
+                }
+                else if (typeof expression === 'object') {
+                    expression = expression.expression;
+                }
 
-                    _end: function() {
-                        if (importedVar.name) {
-                            if (!importedVar.targetProperty) {
-                                importedVar.targetProperty = importedVar.name;
-                            }
-                            importedVar.expression = importedVar.name;
-                            delete importedVar.name;
-                        }
-                        if (!importedVar.targetProperty) {
-                            throw new Error('The "target-property" attribute is required for an imported variable');
-                        }
-                        if (!importedVar.expression) {
-                            throw new Error('The "expression" attribute is required for an imported variable');
-                        }
-                    }
+                if (!expression) {
+                    throw new Error('Invalid "import-var": ' + require('util').inspect(varValue));
+                }
 
-                }, 'import-var in ' + path);
-            }
-
-            tag.addImportedVariable(importedVar);
+                importedVar.expression = expression;
+                tag.addImportedVariable(importedVar);
+            });
         }
     }, path);
 
@@ -267,6 +262,9 @@ function load(path) {
     invokeHandlers(JSON.parse(src), {
         'namespace': handleNS,
         'namespaces': handleNS,
+        'attributes': function(value) {
+            handleAttributes(value, taglib, path);
+        },
         'tags': function(tags) {
             forEachEntry(tags, function(tagName, path) {
                 ok(path, 'Invalid tag definition for "' + tagName + '"');

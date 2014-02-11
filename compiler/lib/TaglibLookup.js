@@ -75,7 +75,7 @@ TaglibLookup.prototype = {
             var tagNS = resolveNamespaceWithDefault(tag.namespace);
             
             var name = tag.name;
-            var key = tagNS + ':' + name;
+            var key = name.indexOf('*') === -1 ? tagNS + ':' + name : name;
 
             //The taglib will be registered using the combination of URI and tag name
             this.tags[key] = tag;
@@ -239,6 +239,7 @@ TaglibLookup.prototype = {
          * 
          * Start with the least specific and end with the most specific.
          */
+        _addTransformers(this.tagTransformers['*']);
         _addTransformers(this.tagTransformers['*:*']);
         //Wildcard for both URI and tag name (i.e. transformers that apply to every element)
         _addTransformers(this.tagTransformers[tagNS + ':*']);

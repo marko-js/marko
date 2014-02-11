@@ -46,24 +46,12 @@ module.exports = {
             callback = null;
         }
 
-        var isTopLevelContext;
-        var attributes = context.attributes;
-
-        if (!attributes.async) {
-            isTopLevelContext = true;
-            attributes.async = {
-                remaining: 0,
-                firstPassComplete: true
-            };
-        }
-        else {
-            isTopLevelContext = false;
-        }
-
         if (!context) {
-            isTopLevelContext = true;
             context = new Context(new StringBuilder());
         }
+
+        context.beginRender();
+
 
         var templateFunc = cache[templatePath];
         if (!templateFunc) {
@@ -85,15 +73,12 @@ module.exports = {
                 .on('error', callback);
         }
 
-        // console.log(attributes.async);
-        if (isTopLevelContext && attributes.async.remaining === 0) {
-            context.emit('end');
-        }
+        context.endRender();
 
         return context;
     },
     stream: function(templatePath, data) {
-        return require('../../stream').stream(templatePath, data);
+        return _require('../../stream').stream(templatePath, data);
     },
     unload: function (templatePath) {
         delete cache[templatePath];

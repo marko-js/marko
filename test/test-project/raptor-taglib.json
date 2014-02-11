@@ -16,8 +16,7 @@
         "tab": {
             "renderer": "./tab-tag.js",
             "import-var": {
-                "target-property": "tabs",
-                "expression": "tabs"
+                "tabs": "tabs"
             },
             "attributes": {
                 "title": "string"
