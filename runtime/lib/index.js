@@ -27,6 +27,7 @@ var createError = require('raptor-util').createError;
 var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
+var contextHelpers = require('./context-helpers');
 
 function _require(moduleName) {
     return require(moduleName);
@@ -46,7 +47,12 @@ module.exports = {
             callback = null;
         }
 
-        if (!context) {
+        if (context) {
+            if (!context.__rtmpl) {
+                contextHelpers.extend(module.exports, context.constructor.prototype);
+            }
+        }
+        else {
             context = new Context(new StringBuilder());
         }
 
@@ -89,5 +95,5 @@ module.exports = {
     helpers: helpers
 };
 
-require('./context-helpers').update(module.exports, Context);
+contextHelpers.extend(module.exports, Context.prototype);
 

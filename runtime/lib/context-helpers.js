@@ -4,15 +4,6 @@ var createError = raptorUtil.createError;
 var extend = raptorUtil.extend;
 var escapeXmlAttr = require('raptor-xml/util').escapeXmlAttr;
 
-function classFunc(className, name) {
-    var Clazz = require(className);
-    var func = Clazz[name] || Clazz.prototype && Clazz.prototype[name];
-    if (!func) {
-        throw createError(new Error('Helper function not found with name "' + name + '" in class "' + className + '"'));
-    }
-    return func;
-}
-
 function attrs(_attrs) {
     if (arguments.length !== 1) {
         this.attr.apply(this, arguments);
@@ -42,7 +33,7 @@ function getHelperObject(className) {
     return new Helper(this);
 }
 
-exports.update = function(runtime, Context) {
+exports.extend = function(runtime, target) {
     function renderTemplate(path, data, require) {
         if (typeof require === 'function') {
             path = require.resolve(path);
@@ -51,9 +42,8 @@ exports.update = function(runtime, Context) {
         return this;
     }
 
-    Context.classFunc = classFunc;
-
-    extend(Context.prototype, {
+    extend(target, {
+        __rtmpl: true,
         invokeHandler: function (handler, input) {
             if (typeof handler === 'string') {
                 handler = require(handler);
