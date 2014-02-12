@@ -205,11 +205,20 @@ function buildTag(tagObject, path, taglib, dirname) {
 
             tag.addTransformer(transformer);
         },
-        var: function(value) {
+        'var': function(value) {
             var varName = value;
             tag.addNestedVariable({
                 name: varName
             });
+        },
+        vars: function(value) {
+            if (value) {
+                value.forEach(function(varName) {
+                    tag.addNestedVariable({
+                        name: varName
+                    });
+                });
+            }
         },
         importVar: function(value) {
             forEachEntry(value, function(varName, varValue) {
