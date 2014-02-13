@@ -67,6 +67,11 @@ ParseTreeBuilderHtml.prototype = {
 
                 _this.handleStartElement(el, attributes);
             },
+            onprocessinginstruction: function(name, data) {
+                _this.handleCharacters('${startTag:' + data + '}');
+                // _this.handleCharacters(data);
+                // _this.handleCharacters('${entity:gt}');
+            },
             // oncdatastart: function() {
             //     console.log('oncdatastart: ', arguments);
             // },
