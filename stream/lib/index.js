@@ -12,10 +12,16 @@ Writer.prototype.write = function(data) {
 function Readable() {
     Readable.$super.call(this);
     this._args = arguments;
+    this._rendered = false;
 }
 
 Readable.prototype = {
     _read: function() {
+        if (this._rendered) {
+            return;
+        }
+
+        this._rendered = true;
         var writer = new Writer(this);
 
         var args = this._args;
