@@ -268,7 +268,16 @@ function load(path) {
         }
     }
 
-    invokeHandlers(JSON.parse(src), {
+    var taglibObject;
+
+    try {
+        taglibObject = JSON.parse(src);
+    }
+    catch(e) {
+        throw new Error('Unable to parse taglib JSON at path "' + path + '". Exception: ' + e);
+    }
+
+    invokeHandlers(taglibObject, {
         'namespace': handleNS,
         'namespaces': handleNS,
         'attributes': function(value) {
