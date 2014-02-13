@@ -15,7 +15,8 @@
         "raptor-util": "0.1.0-SNAPSHOT",
         "raptor-logging": "0.1.0-SNAPSHOT",
         "raptor-detect": "0.1.0-SNAPSHOT",
-        "raptor-promises": "0.1.0-SNAPSHOT"
+        "raptor-promises": "0.1.0-SNAPSHOT",
+        "raptor-strings": "0.1.0-SNAPSHOT"
     },
     "devDependencies": {
         "mocha": "~1.15.1",
