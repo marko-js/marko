@@ -1,8 +1,17 @@
+<optimizer:page name="page1">
+    <optimizer:dependencies>
+        <package path="raptor-modules/client"/>
+        <require path="./foo"/>
+        <require path="./bar"/>
+    </optimizer:dependencies>
+</optimizer:page>
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Widgets Test (1)</title>
+    <optimizer:slot name="head"/>
 </head>
 <body>
     <test:foo>
@@ -12,6 +21,8 @@
         <test:bar/>
     </test:foo>
     <test:bar/>
+    
+    <optimizer:slot name="body"/>
 
     <w:init-widgets/>    
 </body>
