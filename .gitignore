@@ -8,3 +8,5 @@
 *.orig
 .DS_Store
 coverage
+*.actual.js
+*.actual.html
