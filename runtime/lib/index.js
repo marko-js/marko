@@ -21,7 +21,6 @@
  * in the {@link raptor/templating/compiler} module.
  */
 'use strict';
-var StringBuilder = require('raptor-strings/StringBuilder');
 var renderContext = require('raptor-render-context');
 var createError = require('raptor-util').createError;
 var Context = renderContext.Context;
@@ -49,11 +48,11 @@ module.exports = {
 
         if (context) {
             if (!context.__rtmpl) {
-                contextHelpers.extend(module.exports, context.constructor.prototype);
+                contextHelpers.extend(context.constructor.prototype, module.exports);
             }
         }
         else {
-            context = new Context(new StringBuilder());
+            context = new Context();
         }
 
         context.beginRender();
