@@ -1,33 +1,35 @@
 {
-    "name": "raptor-widgets",
-    "version": "0.1.0-SNAPSHOT",
-    "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/raptorjs/raptor-widgets.git"
-    },
-    "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
-    },
-    "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
-    "maintainers": "Patrick Steele-Idem <psteeleidem@ebay.com>",
-    "dependencies": {
-        "raptor-listeners": "~0.1.0-SNAPSHOT",
-        "raptor-pubsub": "~0.1.0-SNAPSHOT",
-        "raptor-dom": "~0.1.0-SNAPSHOT",
-        "raptor-util": "~0.1.0-SNAPSHOT",
-        "raptor-detect": "~0.1.0-SNAPSHOT",
-        "raptor-modules": "~0.1.0-SNAPSHOT",
-        "raptor-templates": "~0.1.0-SNAPSHOT"
-    },
-    "devDependencies": {
-        "mocha": "~1.15.1",
-        "chai": "~1.8.1"
-    },
-    "license": "Apache License v2.0",
-    "bin": {},
-    "main": "lib/index.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    }
+  "name": "raptor-widgets",
+  "version": "0.1.0-SNAPSHOT",
+  "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raptorjs/raptor-widgets.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+  },
+  "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "maintainers": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "dependencies": {
+    "raptor-listeners": "~0.1.0-SNAPSHOT",
+    "raptor-pubsub": "~0.1.0-SNAPSHOT",
+    "raptor-dom": "~0.1.0-SNAPSHOT",
+    "raptor-util": "~0.1.0-SNAPSHOT",
+    "raptor-detect": "~0.1.0-SNAPSHOT",
+    "raptor-modules": "~0.1.0-SNAPSHOT",
+    "raptor-templates": "~0.1.0-SNAPSHOT"
+  },
+  "devDependencies": {
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1",
+    "raptor-optimizer": "~0.1.0-SNAPSHOT",
+    "jsdom": "~0.10.1"
+  },
+  "license": "Apache License v2.0",
+  "bin": {},
+  "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }
