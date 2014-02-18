@@ -1,5 +1,6 @@
 {
+    "main": "raptor-widgets.js",
     "browser": {
-        "./widgets_server.js": null
+        "./raptor-widgets_server.js": null
     }
 }

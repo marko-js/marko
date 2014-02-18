@@ -1,7 +1,7 @@
 {
     "dependencies": [
         { "require": "./events.js", "run": true },
-        { "require": "./widgets_jquery.js", "if-extension": "jquery" },
+        { "require": "./raptor-widgets_jquery.js", "if-extension": "jquery" },
         { "require": "./Widget_jquery.js", "if-extension": "jquery" }
     ]
 }
