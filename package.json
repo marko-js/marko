@@ -44,7 +44,7 @@
   },
   "license": "Apache License v2.0",
   "bin": {},
-  "main": "runtime/lib/index.js",
+  "main": "runtime/lib/raptor-templates.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   }

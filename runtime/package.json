@@ -1,5 +1,5 @@
 {
-    "main": "lib/index",
+    "main": "lib/raptor-templates",
     "browser": {
         "./lib/loader.js": "./lib/loader_browser.js"
     }
