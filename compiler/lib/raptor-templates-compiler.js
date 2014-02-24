@@ -15,6 +15,7 @@
  */
 'use strict';
 var extend = require('raptor-util').extend;
+var fs = require('fs');
 
 var defaultOptions = {
         minify: false,
@@ -52,6 +53,27 @@ extend(exports, {
 
     compile: function (src, path, options) {
         return this.createCompiler(path, options).compile(src);
+    },
+
+    compileFile: function(path, options, callback) {
+        if (typeof options === 'function') {
+            callback = options;
+            options = null;
+        }
+
+        var compiler = this.createCompiler(path, options);
+
+        fs.readFile(path, {encoding: 'utf8'}, function(err, src) {
+            if (err) {
+                return callback(err);
+            }
+
+            try {
+                callback(null, compiler.compile(src));
+            } catch(e) {
+                callback(e);
+            }
+        });
     },
 
     Node: require('./Node'),
