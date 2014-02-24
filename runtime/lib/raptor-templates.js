@@ -48,7 +48,7 @@ module.exports = {
 
         if (context) {
             if (!context.__rtmpl) {
-                contextHelpers.extend(context.constructor.prototype, module.exports);
+                contextHelpers.extend(module.exports, context.constructor.prototype);
             }
         }
         else {
