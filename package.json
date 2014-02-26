@@ -1,6 +1,6 @@
 {
   "name": "raptor-render-context",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.2.0-beta",
   "description": "Helper module for working with promises",
   "repository": {
     "type": "git",
@@ -9,14 +9,14 @@
   "scripts": {
     "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
   },
-  "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
-  "maintainers": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
   "dependencies": {
-    "raptor-util": "0.1.0-SNAPSHOT",
-    "raptor-logging": "0.1.0-SNAPSHOT",
-    "raptor-detect": "0.1.0-SNAPSHOT",
-    "raptor-promises": "0.1.0-SNAPSHOT",
-    "raptor-strings": "0.1.0-SNAPSHOT",
+    "raptor-util": "^0.2.0-beta",
+    "raptor-logging": "^0.2.0-beta",
+    "raptor-detect": "^0.2.0-beta",
+    "raptor-promises": "^0.2.0-beta",
+    "raptor-strings": "^0.2.0-beta",
     "events-browserify": "0.0.1"
   },
   "devDependencies": {
