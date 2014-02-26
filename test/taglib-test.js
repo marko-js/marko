@@ -76,7 +76,7 @@ function testRender(path, data, done, options) {
         
 }
 
-describe('raptor-widgets/taglib' , function() {
+xdescribe('raptor-widgets/taglib' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -96,7 +96,7 @@ describe('raptor-widgets/taglib' , function() {
         testCompiler('test-project/foo/view.rhtml');
     });
 
-    it.only('should render a simple page', function(done) {
+    it('should render a simple page', function(done) {
         testRender('test-project/page1.rhtml', {}, done);
     });
 
