@@ -4,10 +4,10 @@ module.exports = {
         var attributes = context.attributes;
         var cacheProvider = attributes.cacheProvider;
         var cache;
-        var cachedHtml;
+        
         var cacheKey = input.cacheKey;
         if (!cacheKey) {
-            throw require('raptor').createError(new Error('cache-key is required for <caching:cached-fragment>'));
+            throw new Error('cache-key is required for <caching:cached-fragment>');
         }
         if (!cacheProvider) {
             var raptorCacheModulePath;
@@ -20,13 +20,21 @@ module.exports = {
             cacheProvider = require(raptorCacheModulePath).getDefaultProvider();
         }
         cache = cacheProvider.getCache(input.cacheName);
-        cachedHtml = cache.get(cacheKey, function () {
-            return context.captureString(function () {
-                if (input.invokeBody) {
-                    input.invokeBody();
+        var cachePromise = cache.get(
+            cacheKey,
+            {
+                builder: function() {
+                    var result = context.captureString(function () {
+                        if (input.invokeBody) {
+                            input.invokeBody();
+                        }
+                    });
+                    return result;
                 }
             });
+
+        context.beginAsyncFragment(function() {
+            return cachePromise;
         });
-        context.write(cachedHtml);
     }
 };
