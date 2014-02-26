@@ -1,6 +1,6 @@
 {
   "name": "raptor-templates",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.2.0-beta",
   "description": "Raptor Templates",
   "keywords": [
     "templating",
@@ -15,32 +15,32 @@
   "scripts": {
     "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test"
   },
-  "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
-    "Patrick Steele-Idem <psteeleidem@ebay.com>"
+    "Patrick Steele-Idem <pnidem@gmail.com>"
   ],
   "dependencies": {
-    "raptor-detect": "~0.1.0-SNAPSHOT",
-    "raptor-logging": "~0.1.0-SNAPSHOT",
-    "raptor-strings": "~0.1.0-SNAPSHOT",
-    "raptor-regexp": "~0.1.0-SNAPSHOT",
-    "raptor-util": "~0.1.0-SNAPSHOT",
-    "raptor-arrays": "~0.1.0-SNAPSHOT",
-    "raptor-json": "~0.1.0-SNAPSHOT",
-    "raptor-modules": "~0.1.0-SNAPSHOT",
-    "raptor-render-context": "~0.1.0-SNAPSHOT",
-    "raptor-data-providers": "~0.1.0-SNAPSHOT",
-    "raptor-xml": "~0.1.0-SNAPSHOT",
-    "raptor-objects": "~0.1.0-SNAPSHOT",
-    "raptor-ecma": "~0.1.0-SNAPSHOT",
-    "raptor-files": "~0.1.0-SNAPSHOT",
+    "raptor-detect": "^0.2.0-beta",
+    "raptor-logging": "^0.2.0-beta",
+    "raptor-strings": "^0.2.0-beta",
+    "raptor-regexp": "^0.2.0-beta",
+    "raptor-util": "^0.2.0-beta",
+    "raptor-arrays": "^0.2.0-beta",
+    "raptor-json": "^0.2.0-beta",
+    "raptor-modules": "^0.2.0-beta",
+    "raptor-render-context": "^0.2.0-beta",
+    "raptor-data-providers": "^0.2.0-beta",
+    "raptor-xml": "^0.2.0-beta",
+    "raptor-objects": "^0.2.0-beta",
+    "raptor-ecma": "^0.2.0-beta",
+    "raptor-files": "^0.2.0-beta",
     "htmlparser2": "~3.4.0",
     "char-props": "~0.1.5"
   },
   "devDependencies": {
     "mocha": "~1.15.1",
     "chai": "~1.8.1",
-    "raptor-cache": "~0.1.0-SNAPSHOT"
+    "raptor-cache": "^0.2.0-beta"
   },
   "license": "Apache License v2.0",
   "bin": {},
