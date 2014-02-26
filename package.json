@@ -1,6 +1,6 @@
 {
   "name": "raptor-widgets",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.2.0-beta",
   "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
   "repository": {
     "type": "git",
@@ -9,21 +9,21 @@
   "scripts": {
     "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
   },
-  "author": "Patrick Steele-Idem <psteeleidem@ebay.com>",
-  "maintainers": "Patrick Steele-Idem <psteeleidem@ebay.com>",
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
   "dependencies": {
-    "raptor-listeners": "~0.1.0-SNAPSHOT",
-    "raptor-pubsub": "~0.1.0-SNAPSHOT",
-    "raptor-dom": "~0.1.0-SNAPSHOT",
-    "raptor-util": "~0.1.0-SNAPSHOT",
-    "raptor-detect": "~0.1.0-SNAPSHOT",
-    "raptor-modules": "~0.1.0-SNAPSHOT",
-    "raptor-templates": "~0.1.0-SNAPSHOT"
+    "raptor-listeners": "^0.2.0-beta",
+    "raptor-pubsub": "^0.2.0-beta",
+    "raptor-dom": "^0.2.0-beta",
+    "raptor-util": "^0.2.0-beta",
+    "raptor-detect": "^0.2.0-beta",
+    "raptor-modules": "^0.2.0-beta",
+    "raptor-templates": "^0.2.0-beta"
   },
   "devDependencies": {
     "mocha": "~1.15.1",
     "chai": "~1.8.1",
-    "raptor-optimizer": "~0.1.0-SNAPSHOT",
+    "raptor-optimizer": "^0.2.0-beta",
     "jsdom": "~0.10.1"
   },
   "license": "Apache License v2.0",
