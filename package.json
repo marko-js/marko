@@ -1,36 +1,37 @@
 {
-  "name": "raptor-render-context",
-  "version": "0.2.0-beta",
-  "description": "Helper module for working with promises",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs/raptor-render-context.git"
-  },
-  "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
-  },
-  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "dependencies": {
-    "raptor-util": "^0.2.0-beta",
-    "raptor-logging": "^0.2.0-beta",
-    "raptor-detect": "^0.2.0-beta",
-    "raptor-promises": "^0.2.0-beta",
-    "raptor-strings": "^0.2.0-beta",
-    "events-browserify": "0.0.1"
-  },
-  "devDependencies": {
-    "mocha": "~1.15.1",
-    "chai": "~1.8.1"
-  },
-  "license": "Apache License v2.0",
-  "bin": {},
-  "main": "lib/raptor-render-context.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "browser": {
-    "./lib/Context_server.js": null,
-    "events": "events-browserify"
-  }
+    "path": "/Users/psteeleidem/development/github/raptorjs3/raptor-render-context/package.json",
+    "name": "raptor-render-context",
+    "description": "Helper module for working with promises",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs/raptor-render-context.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "dependencies": {
+        "raptor-util": "^0.2.0-beta",
+        "raptor-logging": "^0.2.0-beta",
+        "raptor-detect": "^0.2.0-beta",
+        "raptor-promises": "^0.2.0-beta",
+        "raptor-strings": "^0.2.0-beta",
+        "events-browserify": "0.0.1"
+    },
+    "devDependencies": {
+        "mocha": "~1.15.1",
+        "chai": "~1.8.1"
+    },
+    "license": "Apache License v2.0",
+    "bin": {},
+    "main": "lib/raptor-render-context.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "browser": {
+        "./lib/Context_server.js": null,
+        "events": "events-browserify"
+    },
+    "version": "0.2.1-beta"
 }
