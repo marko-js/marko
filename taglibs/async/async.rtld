@@ -11,7 +11,7 @@
         
         <name>fragment</name> 
 
-        <handler-class>./AsyncFragmentTag</handler-class>
+        <handler-class>./async-fragment-tag</handler-class>
 
         <attribute name="dependency" type="string" target-property="dataProvider" deprecated="Use 'data-provider' instead"/>
         <attribute name="data-provider" type="string" />
