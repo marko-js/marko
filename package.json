@@ -34,7 +34,7 @@
         "raptor-objects": "^0.2.0-beta",
         "raptor-ecma": "^0.2.0-beta",
         "raptor-files": "^0.2.0-beta",
-        "htmlparser2": "~3.4.0",
+        "htmlparser2": "~3.5.1",
         "char-props": "~0.1.5"
     },
     "devDependencies": {
