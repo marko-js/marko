@@ -1,5 +1,5 @@
 var extend = require('raptor-util').extend;
-var raptorTemplates = require('raptor-templates');
+var raptorTemplates = require('../../');
 module.exports = {
     render: function (input, context) {
         var content = {};
