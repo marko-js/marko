@@ -1,3 +1,3 @@
 module.exports = function(optimizer, config) {
-    optimizer.dependencies.registerPackageType('rhtml', require('./dependency-rhtml'));   
+    optimizer.dependencies.registerPackageType('rhtml', require('./dependency-rhtml'));
 };
