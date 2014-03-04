@@ -1,37 +1,37 @@
 {
-  "path": "/Users/psteeleidem/development/github/raptorjs3/raptor-widgets/package.json",
-  "name": "raptor-widgets",
-  "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs/raptor-widgets.git"
-  },
-  "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
-  },
-  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "dependencies": {
-    "raptor-listeners": "^0.2.0-beta",
-    "raptor-pubsub": "^0.2.0-beta",
-    "raptor-dom": "^0.2.0-beta",
-    "raptor-util": "^0.2.0-beta",
-    "raptor-detect": "^0.2.0-beta",
-    "raptor-modules": "^0.2.0-beta",
-    "raptor-templates": "^0.2.0-beta",
-    "raptor-strings": "^0.2.0-beta"
-  },
-  "devDependencies": {
-    "mocha": "~1.15.1",
-    "chai": "~1.8.1",
-    "raptor-optimizer": "^0.2.0-beta",
-    "jsdom": "~0.10.1"
-  },
-  "license": "Apache License v2.0",
-  "bin": {},
-  "main": "lib/raptor-widgets.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "version": "0.2.1-beta"
+    "path": "/Users/psteeleidem/development/github/raptorjs3/raptor-widgets/package.json",
+    "name": "raptor-widgets",
+    "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs/raptor-widgets.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "dependencies": {
+        "raptor-listeners": "^0.2.0-beta",
+        "raptor-pubsub": "^0.2.0-beta",
+        "raptor-dom": "^0.2.0-beta",
+        "raptor-util": "^0.2.0-beta",
+        "raptor-detect": "^0.2.0-beta",
+        "raptor-modules": "^0.2.0-beta",
+        "raptor-templates": "^0.2.0-beta",
+        "raptor-strings": "^0.2.0-beta"
+    },
+    "devDependencies": {
+        "mocha": "~1.15.1",
+        "chai": "~1.8.1",
+        "raptor-optimizer": "^0.2.0-beta",
+        "jsdom": "~0.10.1"
+    },
+    "license": "Apache License v2.0",
+    "bin": {},
+    "main": "lib/raptor-widgets.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "version": "0.2.2-beta"
 }
