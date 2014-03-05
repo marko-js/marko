@@ -280,6 +280,11 @@ Taglib.Transformer = (function () {
                 if (Clazz.process) {
                     return Clazz;
                 }
+
+                if (typeof Clazz !== 'function') {
+                    console.error('Invalid transformer: ', Clazz);
+                    throw new Error('Invalid transformer at path "' + this.path + '": ' + Clazz);
+                }
                 this.instance = new Clazz();
                 this.instance.id = this.id;
             }
