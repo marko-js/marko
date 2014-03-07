@@ -1,5 +1,4 @@
 {
-    "path": "/Users/psteeleidem/development/github/raptorjs3/raptor-templates/package.json",
     "name": "raptor-templates",
     "description": "Raptor Templates",
     "keywords": [
@@ -49,5 +48,5 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "0.2.6-beta"
+    "version": "0.2.7-beta"
 }
