@@ -5,6 +5,7 @@ var Taglib = require('./Taglib');
 var cache = {};
 var forEachEntry = require('raptor-util').forEachEntry;
 var raptorRegexp = require('raptor-regexp');
+var tagDefFromCode = require('./tag-def-from-code');
 
 function removeDashes(str) {
     return str.replace(/-([a-z])/g, function (match, lower) {
@@ -315,9 +316,49 @@ function load(path) {
 
                 var tag = buildTag(tagObject, path, taglib, tagDirname);
                 tag.name = tagName;
-
                 taglib.addTag(tag);
             });
+        },
+        tagsDir: function(dir) {
+            dir = nodePath.resolve(dirname, dir);
+            var children = fs.readdirSync(dir);
+            for (var i=0, len=children.length; i<len; i++) {
+                var childFilename = children[i];
+                var tagDirname = nodePath.join(dir, childFilename);
+                var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
+                var tagObject;
+                var tag;
+
+                if (fs.existsSync(tagFile)) {
+                    // raptor-tag.json exists in the directory, use that as the tag definition
+                    tagObject = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
+                    tag = buildTag(tagObject, path, taglib, tagDirname);
+                    tag.name = childFilename;
+                    taglib.addTag(tag);
+                } else {
+                    // raptor-tag.json does *not* exist... checking for a 'renderer.js'
+                    var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
+                    if (fs.existsSync(rendererFile)) {
+                        var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
+                        var tagDef = tagDefFromCode.extractTagDef(rendererCode);
+                        if (!tagDef) {
+                             tagDef = {
+                                attributes: {
+                                    '*': {
+                                        type: 'string',
+                                        targetProperty: null
+                                    }
+                                }
+                             };
+                        }
+
+                        tagDef.renderer  = rendererFile;
+                        tag = buildTag(tagDef, path, taglib, tagDirname);
+                        tag.name = childFilename;
+                        taglib.addTag(tag);
+                    }
+                }
+            }
         }
     }, path);
 
