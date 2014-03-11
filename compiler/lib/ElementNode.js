@@ -91,15 +91,6 @@ ElementNode.prototype = {
     getAttribute: function (name) {
         return this.getAttributeNS(null, name);
     },
-    resolveNamespace: function(namespace) {
-        if (namespace == null) {
-            namespace = '';
-        }
-
-        return this.compiler ?
-            this.compiler.taglibs.resolveNamespace(namespace) || namespace :
-            namespace;
-    },
     getAttributeNS: function (namespace, localName) {
         namespace = this.resolveNamespace(namespace);
         var attrNS = this.attributesByNS[namespace];

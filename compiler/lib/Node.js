@@ -68,13 +68,20 @@ Node.prototype = {
         var pos = this.getPosition();
         compiler.addError(error + ' (' + this.toString() + ')', pos);
     },
+    resolveNamespace: function(namespace) {
+        if (namespace == null) {
+            namespace = '';
+        }
+
+        return this.compiler ?
+            this.compiler.taglibs.resolveNamespace(namespace) || namespace :
+            namespace;
+    },
     setProperty: function (name, value) {
         this.setPropertyNS(null, name, value);
     },
     setPropertyNS: function (namespace, name, value) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         var namespacedProps = this.properties[namespace];
         if (!namespacedProps) {
             namespacedProps = this.properties[namespace] = {};
@@ -85,9 +92,7 @@ Node.prototype = {
         this.setPropertiesNS(null, props);
     },
     setPropertiesNS: function (namespace, props) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         forEachEntry(props, function (name, value) {
             this.setPropertyNS(namespace, name, value);
         }, this);
@@ -95,16 +100,14 @@ Node.prototype = {
     getPropertyNamespaces: function () {
         return Object.keys(this.properties);
     },
-    getProperties: function (namespace) {
+    getProperties: function () {
         return this.getPropertiesNS(null);
     },
     hasProperty: function (name) {
         return this.hasPropertyNS('', name);
     },
     hasPropertyNS: function (namespace, name) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         var namespaceProps = this.properties[namespace];
         return namespaceProps.hasOwnProperty(name);
     },
@@ -112,9 +115,7 @@ Node.prototype = {
         return this.properties;
     },
     getPropertiesNS: function (namespace) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         return this.properties[namespace];
     },
     forEachProperty: function (callback, thisObj) {
@@ -128,9 +129,7 @@ Node.prototype = {
         return this.getPropertyNS(null, name);
     },
     getPropertyNS: function (namespace, name) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         var namespaceProps = this.properties[namespace];
         return namespaceProps ? namespaceProps[name] : undefined;
     },
@@ -138,9 +137,7 @@ Node.prototype = {
         this.removePropertyNS('', name);
     },
     removePropertyNS: function (namespace, name) {
-        if (!namespace) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         var namespaceProps = this.properties[namespace];
         if (namespaceProps) {
             delete namespaceProps[name];
@@ -150,12 +147,11 @@ Node.prototype = {
         }
     },
     removePropertiesNS: function (namespace) {
+        namespace = this.resolveNamespace(namespace);
         delete this.properties[namespace];
     },
     forEachPropertyNS: function (namespace, callback, thisObj) {
-        if (namespace == null) {
-            namespace = '';
-        }
+        namespace = this.resolveNamespace(namespace);
         var props = this.properties[namespace];
         if (props) {
             forEachEntry(props, function (name, value) {
