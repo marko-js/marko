@@ -39,10 +39,12 @@ Taglib.prototype = {
         if (attribute.namespace) {
             throw createError(new Error('"namespace" is not allowed for taglib attributes'));
         }
-        if (attribute.name) {
+        if (attribute.pattern) {
+            this.patternAttributes.push(attribute);
+        } else if (attribute.name) {
             this.attributeMap[attribute.name] = attribute;
         } else {
-            this.patternAttributes.push(attribute);
+            throw new Error('Invalid attribute: ' + require('util').inspect(attribute));
         }
     },
     getAttribute: function (name) {
@@ -202,9 +204,11 @@ Taglib.Tag = (function () {
             return '[Tag: <' + qName + '@' + this.taglib.id + '>]';
         },
         forEachAttribute: function (callback, thisObj) {
-            forEachEntry(this.attributeMap, function (attrName, attr) {
-                callback.call(thisObj, attr);
-            });
+            for (var attrName in this.attributeMap) {
+                if (this.attributeMap.hasOwnProperty(attrName)) {
+                    callback.call(thisObj, this.attributeMap[attrName]);    
+                }
+            }
         },
         addNestedVariable: function (nestedVariable) {
             var key = nestedVariable.nameFromAttribute ? 'attr:' + nestedVariable.nameFromAttribute : nestedVariable.name;
