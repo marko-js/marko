@@ -7,7 +7,7 @@ var nodePath = require('path');
 var fs = require('fs');
 var logger = require('raptor-logging').logger(module);
 
-describe('raptor-templates/compiler/taglibs' , function() {
+describe('raptor-templates/taglib-lookup' , function() {
 
     beforeEach(function(done) {
         for (var k in require.cache) {
@@ -26,6 +26,7 @@ describe('raptor-templates/compiler/taglibs' , function() {
     it('should lookup core attributes for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        // console.log('LOOKUP: ', Object.keys(lookup.attributes));
         var ifAttr = lookup.getAttribute('', 'div', 'c', 'if');
         expect(ifAttr != null).to.equal(true);
         expect(ifAttr.type).to.equal('expression');
