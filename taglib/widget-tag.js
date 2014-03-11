@@ -22,6 +22,7 @@ exports.render = function (input, context) {
         throw new Error('Invalid widget ID for "' + path + '"');
     }
     var widgetsContext = widgets.getWidgetsContext(context);
+    
     if (path) {
         widgetsContext.beginWidget({
             path: path,
