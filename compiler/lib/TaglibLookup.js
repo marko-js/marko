@@ -11,8 +11,26 @@ function TaglibLookup() {
     this.attributes = {};
     this.nestedTags = {};
     this.taglibsById = {};
+    this.unresolvedAttributes = [];
 }
+
 TaglibLookup.prototype = {
+    resolveNamespaceWithDefault: function(namespace, defaultTaglibId) {
+        if (namespace === '*' || namespace === '') {
+            return namespace;
+        }
+
+        if (namespace == null) {
+            return defaultTaglibId;
+        }
+
+        var target = this.namespaces[namespace];
+        if (!target) {
+            throw new Error('Invalid namespace of "' + namespace + '" in taglib "' + defaultTaglibId + '"');
+        }
+        return target;
+    },
+
     resolveNamespace: function(namespace) {
         if (namespace == null || namespace === '') {
             return '';
@@ -46,21 +64,7 @@ TaglibLookup.prototype = {
             _this.namespaces[ns] = id;
         });
 
-        function resolveNamespaceWithDefault(namespace) {
-            if (namespace === '*' || namespace === '') {
-                return namespace;
-            }
-
-            if (namespace == null) {
-                return id;
-            }
-
-            var target = _this.namespaces[namespace];
-            if (!target) {
-                throw new Error('Invalid namespace of "' + namespace + '" in taglib "' + taglib.id + '"');
-            }
-            return target;
-        }
+        
 
         /*
          * Index all of the tags in the taglib by registering them
@@ -72,7 +76,7 @@ TaglibLookup.prototype = {
             // For example:
             // core --> /development/raptor-templates/taglibs/core/core.rtld
             
-            var tagNS = resolveNamespaceWithDefault(tag.namespace);
+            var tagNS = tag.taglibId = this.resolveNamespaceWithDefault(tag.namespace, id);
             
             var name = tag.name;
             var key = name.indexOf('*') === -1 ? tagNS + ':' + name : name;
@@ -94,15 +98,14 @@ TaglibLookup.prototype = {
             }
 
             tag.forEachAttribute(function (attr) {
-                var attrNS = resolveNamespaceWithDefault(attr.namespace);
-                if (attrNS === tagNS) {
-                    attrNS = '';
+                if (attr.namespace) {
+                    this.unresolvedAttributes.push({
+                        tag: tag,
+                        attr: attr
+                    });   
+                } else {
+                    this.addAttribute(tag, attr);
                 }
-
-                if (attr.name) {
-                    this.attributes[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;    
-                }
-
                 
             }, this);
         }, this);
@@ -123,6 +126,26 @@ TaglibLookup.prototype = {
         }, this);
 
         this.taglibsById[id] = taglib;
+    },
+
+    finish: function() {
+        for (var i=0; i<this.unresolvedAttributes.length; i++) {
+            var unresolvedAttribute = this.unresolvedAttributes[i];
+            this.addAttribute(unresolvedAttribute.tag, unresolvedAttribute.attr);
+        }
+
+        this.unresolvedAttributes.length = 0;
+    },
+
+    addAttribute: function(tag, attr) {
+        var attrNS = this.resolveNamespaceWithDefault(attr.namespace, tag.taglibId);
+        if (attrNS === tag.taglibId) {
+            attrNS = '';
+        }
+
+        if (attr.name) {
+            this.attributes[tag.taglibId + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;    
+        }
     },
 
     getAttribute: function (tagNS, tagName, attrNS, attrName) {
@@ -159,11 +182,11 @@ TaglibLookup.prototype = {
 
             var taglib = this.taglibsById[sourceTaglibId];
             if (!taglib) {
-                throw createError(new Error('Taglib with namespace "' + attr.namespace + '" not found for imported attribute with name "' + attrName + '"'));
+                throw new Error('Taglib with namespace "' + attr.namespace + '" not found for imported attribute with name "' + attrName + '"');
             }
             var importedAttr = taglib.getAttribute(attrName);
             if (!importedAttr) {
-                throw createError(new Error('Attribute "' + attrName + '" imported from taglib with namespace "' + attr.namespace + '" not found in taglib.'));
+                throw new Error('Attribute "' + attrName + '" imported from taglib with namespace "' + attr.namespace + '" not found in taglib "' + taglib.id + '".');
             }
 
             attr = importedAttr;

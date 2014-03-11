@@ -95,6 +95,7 @@ function buildLookup(dirname) {
 		for (var i=taglibs.length-1; i>=0; i--) {
 			lookup.addTaglib(taglibs[i]);
 		}
+        lookup.finish(); // Handle all of the imports
 		lookupCache[lookupCacheKey] = lookup;
 	}
 
