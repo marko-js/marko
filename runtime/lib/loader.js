@@ -19,6 +19,7 @@ function loadSource(templatePath, compiledSrc) {
 module.exports = function load(templatePath) {
 	var templateSrc = fs.readFileSync(templatePath, {encoding: 'utf8'});
 	var compiledSrc = compiler.compile(templateSrc, templatePath);
+    // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 	return loadSource(templatePath, compiledSrc);
 };
 
