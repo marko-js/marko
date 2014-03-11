@@ -26,6 +26,7 @@ exports.process =function (node, compiler, template) {
     var widgetAttr = node.getAttributeNS(WIDGETS_NS, 'widget');
     var widgetElIdAttr;
     var widgetProps = widgetAttr ? null : node.getPropertiesNS(WIDGETS_NS);
+
     var widgetArgs = {};
     var widgetEvents = [];
     if (widgetProps) {
@@ -77,8 +78,8 @@ exports.process =function (node, compiler, template) {
             }).join(',') + ']';
         }
         if (!objects.isEmpty(widgetArgs)) {
-            template.addHelperFunction('raptor/templating/taglibs/widgets/WidgetFunctions', 'widgetArgs', true, '_widgetArgs');
-            template.addHelperFunction('raptor/templating/taglibs/widgets/WidgetFunctions', 'cleanupWidgetArgs', true, '_cleanupWidgetArgs');
+            template.addVar('_widgetArgs', 'require("raptor-widgets/taglib/helpers").widgetArgs');
+            template.addVar('_cleanupWidgetArgs', 'require("raptor-widgets/taglib/helpers").cleanupWidgetArgs');
             var widgetArgsParts = [];
             if (widgetArgs.id) {
                 widgetArgsParts.push(widgetArgs.id.toString());
@@ -90,8 +91,8 @@ exports.process =function (node, compiler, template) {
             if (widgetArgs.events) {
                 widgetArgsParts.push(widgetArgs.events);
             }
-            node.addPreInvokeCode(template.makeExpression('_widgetArgs(' + widgetArgsParts.join(', ') + ')'));
-            node.addPostInvokeCode(template.makeExpression('_cleanupWidgetArgs();'));
+            node.addPreInvokeCode(template.makeExpression('_widgetArgs(context,' + widgetArgsParts.join(', ') + ')'));
+            node.addPostInvokeCode(template.makeExpression('_cleanupWidgetArgs(context);'));
         }
     }
     if (widgetAttr) {
