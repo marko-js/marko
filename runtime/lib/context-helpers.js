@@ -1,6 +1,5 @@
 var raptorUtil = require('raptor-util');
 var forEachEntry = raptorUtil.forEachEntry;
-var createError = raptorUtil.createError;
 var extend = raptorUtil.extend;
 var escapeXmlAttr = require('raptor-xml/util').escapeXmlAttr;
 
@@ -11,26 +10,6 @@ function attrs(_attrs) {
         forEachEntry(_attrs, this.attr, this);
     }
     return this;
-}
-
-function getFunction(className, name) {
-    if (!this._helpers) {
-        this._helpers = {};
-    }
-    var key = className + ':' + name;
-    var helper = this._helpers[key];
-    if (!helper) {
-        helper = this._helpers[key] = classFunc(className, name).bind(this);
-    }
-    return helper;
-}
-
-function getHelperObject(className) {
-    if (!this._helpers) {
-        this._helpers = {};
-    }
-    var Helper = this._helpers[className] || (this._helpers[className] = require(className));
-    return new Helper(this);
 }
 
 exports.extend = function(runtime, target) {
@@ -51,8 +30,6 @@ exports.extend = function(runtime, target) {
             var func = handler.process || handler.render;
             func.call(handler, input, this);
         },
-        getFunction: getFunction,
-        getHelperObject: getHelperObject,
         isTagInput: function (input) {
             return input && input.hasOwnProperty('_tag');
         },
@@ -93,8 +70,6 @@ exports.extend = function(runtime, target) {
         },
 
         a: attrs,
-        f: getFunction,
-        o: getHelperObject,
         i: renderTemplate
     });
 };

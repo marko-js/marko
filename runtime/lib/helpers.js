@@ -1,20 +1,6 @@
-var renderContext = require('raptor-render-context');
-var Context = renderContext.Context;
 var xmlUtil = require('raptor-xml/util');
 var escapeXml = xmlUtil.escapeXml;
 var escapeXmlAttr = xmlUtil.escapeXmlAttr;
-
-function _getHandler(name) {
-    var Handler = require(name);
-    var instance;
-    if (Handler.process || Handler.render) {
-        instance = Handler;
-    } else if (!(instance = Handler.instance)) {
-        //See if an instance has already been created
-        instance = Handler.instance = new Handler();    //If not, create and store a new instance
-    }
-    return instance;
-}
 
 function notEmpty(o) {
     if (Array.isArray(o) === true) {
@@ -24,8 +10,6 @@ function notEmpty(o) {
 }
 
 module.exports = {
-    h: Context.classFunc,
-    t: _getHandler,
     fv: function (array, callback) {
         if (!array) {
             return;
