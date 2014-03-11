@@ -295,30 +295,6 @@ TemplateBuilder.prototype = {
         }
         return this;
     },
-    addClassNameVar: function (className) {
-        var classVarName = className.replace(/[^a-zA-Z0-9]+/g, '_');
-        if (!this.hasStaticVar(classVarName)) {
-            this.addStaticVar(classVarName, JSON.stringify(className));
-        }
-        return classVarName;
-    },
-    addHelperFunction: function (className, functionName, bindToContext, targetVarName) {
-        var classVarName = this.addClassNameVar(className);
-        if (!targetVarName) {
-            targetVarName = functionName;
-        }
-        if (bindToContext === true) {
-            if (this.hasVar(targetVarName)) {
-                return;
-            }
-            this.addVar(targetVarName, 'context.f(' + classVarName + ',' + JSON.stringify(functionName) + ')');
-        } else {
-            if (this.hasStaticVar(targetVarName)) {
-                return;
-            }
-            this.addStaticVar(targetVarName, this.getStaticHelperFunction('getHelper', 'h') + '(' + classVarName + ',' + JSON.stringify(functionName) + ')');
-        }
-    },
     write: function (expression, options) {
         if (!this.hasErrors()) {
             if (options) {
