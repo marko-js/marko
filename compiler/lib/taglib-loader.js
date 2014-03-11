@@ -324,6 +324,9 @@ function load(path) {
             var children = fs.readdirSync(dir);
             for (var i=0, len=children.length; i<len; i++) {
                 var childFilename = children[i];
+                if (childFilename === 'node_modules') {
+                    continue;
+                }
                 var tagDirname = nodePath.join(dir, childFilename);
                 var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
                 var tagObject;
