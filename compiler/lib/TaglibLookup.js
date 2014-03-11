@@ -76,7 +76,8 @@ TaglibLookup.prototype = {
             // For example:
             // core --> /development/raptor-templates/taglibs/core/core.rtld
             
-            var tagNS = tag.taglibId = this.resolveNamespaceWithDefault(tag.namespace, id);
+            var tagNS = this.resolveNamespaceWithDefault(tag.namespace, id);
+            tag.taglibId = id;
             
             var name = tag.name;
             var key = name.indexOf('*') === -1 ? tagNS + ':' + name : name;
@@ -139,12 +140,14 @@ TaglibLookup.prototype = {
 
     addAttribute: function(tag, attr) {
         var attrNS = this.resolveNamespaceWithDefault(attr.namespace, tag.taglibId);
-        if (attrNS === tag.taglibId) {
+        var tagNS = this.resolveNamespaceWithDefault(tag.namespace, tag.taglibId);
+
+        if (attrNS !== '*' && attrNS === tagNS) {
             attrNS = '';
         }
 
         if (attr.name) {
-            this.attributes[tag.taglibId + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;    
+            this.attributes[tagNS + ':' + tag.name + ':' + attrNS + ':' + attr.name] = attr;    
         }
     },
 
