@@ -207,9 +207,8 @@ function buildTag(tagObject, path, taglib, dirname) {
             tag.addTransformer(transformer);
         },
         'var': function(value) {
-            var varName = value;
             tag.addNestedVariable({
-                name: varName
+                name: value
             });
         },
         vars: function(value) {
