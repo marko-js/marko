@@ -24,10 +24,18 @@ exports.extend = function(runtime, target) {
     extend(target, {
         __rtmpl: true,
         invokeHandler: function (handler, input) {
+
             if (typeof handler === 'string') {
                 handler = require(handler);
             }
-            var func = handler.process || handler.render;
+
+            var func;
+            if (typeof handler === 'function') {
+                func = handler;
+            } else {
+                func = handler.process || handler.render;
+            }
+
             func.call(handler, input, this);
         },
         isTagInput: function (input) {
