@@ -154,7 +154,7 @@ TagHandlerNode.prototype = {
                 } else {
                     if (_this.dynamicAttributes) {
                         template.indent(function() {
-                            _this.getProperties()[_this.dynamicAttributesProperty] = template.makeExpression(getPropsStr(_this.dynamicAttributes, template));
+                            _this.setProperty(_this.dynamicAttributesProperty, template.makeExpression(getPropsStr(_this.dynamicAttributes, template)));
                         });
                     }
 
