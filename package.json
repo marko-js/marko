@@ -3,7 +3,7 @@
     "description": "Helper module for working with promises",
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs/raptor-render-context.git"
+        "url": "https://github.com/raptorjs3/raptor-render-context.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
