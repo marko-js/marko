@@ -27,18 +27,10 @@ var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
 var contextHelpers = require('./context-helpers');
-
-function _require(moduleName) {
-    return require(moduleName);
-}
-
-
 var cache = {};
 
-module.exports = {
-
+module.exports = exports = {
     Context: Context,
-    
     render: function (templatePath, data, callback, context) {
         if (typeof callback !== 'function') {
             // A context object was provided instead of a callback
@@ -82,9 +74,6 @@ module.exports = {
 
         return context;
     },
-    stream: function(templatePath, data) {
-        return _require('../../stream').stream(templatePath, data);
-    },
     unload: function (templatePath) {
         delete cache[templatePath];
     },
@@ -94,5 +83,7 @@ module.exports = {
     helpers: helpers
 };
 
-contextHelpers.extend(module.exports, Context.prototype);
+exports.stream = require('./render-stream')(module.exports);
+
+contextHelpers.extend(exports, Context.prototype);
 
