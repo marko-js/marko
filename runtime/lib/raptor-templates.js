@@ -38,17 +38,16 @@ module.exports = exports = {
             callback = null;
         }
 
+        var shouldEnd = false;
+
         if (context) {
             if (!context.__rtmpl) {
                 contextHelpers.extend(module.exports, context.constructor.prototype);
             }
-        }
-        else {
+        } else {
             context = new Context();
+            shouldEnd = true;
         }
-
-        context.beginRender();
-
 
         var templateFunc = cache[templatePath];
         if (!templateFunc) {
@@ -70,7 +69,9 @@ module.exports = exports = {
                 .on('error', callback);
         }
 
-        context.endRender();
+        if (shouldEnd) {
+            context.end();    
+        }
 
         return context;
     },
