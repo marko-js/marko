@@ -29,6 +29,7 @@ require('raptor-render-context').create(stream);
     .beginAsync(function(context, done) {
         setTimeout(function() {
             context.write('B');
+            done();
         }, 1000);
     })
     .write('C')
