@@ -25,13 +25,12 @@ require('raptor-render-context').create(stream);
     .on('end', function() {
         // Value of output: "ABC"
     })
-    .beginRender()
     .write('A')
-    .beginAsyncFragment(function(context, done) {
+    .beginAsync(function(context, done) {
         setTimeout(function() {
             context.write('B');
         }, 1000);
     })
     .write('C')
-    .endRender();
+    .end();
 ```
