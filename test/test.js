@@ -3,7 +3,8 @@ var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
-var path = require('path');
+var nodePath = require('path');
+var fs = require('fs');
 
 describe('raptor-render-context' , function() {
 
@@ -193,6 +194,67 @@ describe('raptor-render-context' , function() {
             .beginAsyncFragment(function(asyncContext, done) {
                 setTimeout(function() {
                     done(new Error('test'));    
+                }, 10);
+            })
+            .write('3')
+            .endRender();
+    });
+
+    it('should support writing to a through stream', function(done) {
+
+        var output = '';
+        var through = require('through')(
+            function write(data) {
+                output += data;
+            }
+        );
+
+        var errors = [];
+        require('../').create(through)
+            .on('error', function(e) {
+                errors.push(e);
+            })
+            .on('end', function() {
+                expect(errors.length).to.equal(0);
+                expect(output).to.equal('123');
+                done();
+            })
+            .beginRender()
+            .write('1')
+            .beginAsyncFragment(function(asyncContext, done) {
+                setTimeout(function() {
+                    done(null, '2');
+                }, 10);
+            })
+            .write('3')
+            .endRender();
+    });
+
+    it('should support writing to a file output stream', function(done) {
+
+        var outFile = nodePath.join(__dirname, 'test.out');
+        var out = fs.createWriteStream(outFile, 'utf8');
+
+        out.on('close', function() {
+            var output  = fs.readFileSync(outFile, 'utf8');
+            expect(errors.length).to.equal(0);
+            expect(output).to.equal('123');
+            fs.unlinkSync(outFile);
+            done(); 
+        });
+
+        var errors = [];
+        require('../').create(out)
+            .on('error', function(e) {
+                errors.push(e);
+            })
+            .on('end', function() {
+            })
+            .beginRender()
+            .write('1')
+            .beginAsyncFragment(function(asyncContext, done) {
+                setTimeout(function() {
+                    done(null, '2');
                 }, 10);
             })
             .write('3')
