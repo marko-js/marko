@@ -52,8 +52,8 @@ function testRender(path, data, done, options) {
 
             done();
         })
-        .on('error', done);
-        
+        .on('error', done)
+        .end();
 }
 
 describe('raptor-templates/rxml' , function() {

@@ -68,7 +68,9 @@ function testRender(path, data, done, options) {
 
             done();
         })
-        .on('error', done);
+        .on('error', done)
+        .end();
+
         
 }
 
@@ -257,12 +259,12 @@ describe('raptor-templates/rhtml-async' , function() {
         });
     });
 
-    it("should allow beginAsyncFragment to return a promise with a non-null resolved value", function(done) {
+    it("should allow beginAsync to return a promise with a non-null resolved value", function(done) {
 
-        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+        testRender('test-project/rhtml-templates/beginAsync.rhtml', {
             helper: {
-                beginAsyncFragment: function(context) {
-                    context.beginAsyncFragment(function(context) {
+                beginAsync: function(context) {
+                    context.beginAsync(function(context) {
                         var deferred = require('raptor-promises').defer();
                         setTimeout(function() {
                             deferred.resolve('B');
@@ -274,11 +276,11 @@ describe('raptor-templates/rhtml-async' , function() {
         }, done);
     });
 
-    it("should allow beginAsyncFragment to return a promise with a null resolved value (1)", function(done) {
-        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+    it("should allow beginAsync to return a promise with a null resolved value (1)", function(done) {
+        testRender('test-project/rhtml-templates/beginAsync.rhtml', {
             helper: {
-                beginAsyncFragment: function(context) {
-                    context.beginAsyncFragment(function(context) {
+                beginAsync: function(context) {
+                    context.beginAsync(function(context) {
                         var deferred = require('raptor-promises').defer();
                         setTimeout(function() {
                             context.write('B');
@@ -291,11 +293,11 @@ describe('raptor-templates/rhtml-async' , function() {
         }, done);
     });
 
-    it("should allow beginAsyncFragment to return a promise with a null resolved value (2)", function(done) {
-        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+    it("should allow beginAsync to return a promise with a null resolved value (2)", function(done) {
+        testRender('test-project/rhtml-templates/beginAsync.rhtml', {
             helper: {
-                beginAsyncFragment: function(context) {
-                    context.beginAsyncFragment(function(context) {
+                beginAsync: function(context) {
+                    context.beginAsync(function(context) {
                         context.write('B');
 
                         var deferred = require('raptor-promises').defer();
@@ -309,11 +311,11 @@ describe('raptor-templates/rhtml-async' , function() {
         }, done);
     });
 
-    it("should allow beginAsyncFragment to return a promise with a null resolved value that is immediately resolved", function(done) {
-        testRender('test-project/rhtml-templates/beginAsyncFragment.rhtml', {
+    it("should allow beginAsync to return a promise with a null resolved value that is immediately resolved", function(done) {
+        testRender('test-project/rhtml-templates/beginAsync.rhtml', {
             helper: {
-                beginAsyncFragment: function(context) {
-                    context.beginAsyncFragment(function(context) {
+                beginAsync: function(context) {
+                    context.beginAsync(function(context) {
                         context.write('B');
 
                         var deferred = require('raptor-promises').defer();

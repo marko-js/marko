@@ -2,7 +2,7 @@
     xmlns:c="core" 
     params="helper">
 
-    A<c:invoke function="helper.beginAsyncFragment(context)"/>C
+    A<c:invoke function="helper.beginAsync(context)"/>C
 
 </c:template>
 

@@ -33,7 +33,7 @@ module.exports = {
                 }
             });
 
-        context.beginAsyncFragment(function() {
+        context.beginAsync(function() {
             return cachePromise;
         });
     }

@@ -10,21 +10,16 @@ module.exports = {
         var arg = input.arg || {};
 
         arg.context = context;
-        context.beginAsyncFragment(function (asyncContext, asyncFragment) {
+        context.beginAsync(function (asyncContext, done) {
             function onError(e) {
-                asyncFragment.end(e);
+                done(e || 'Async fragment failed');
             }
             function renderBody(data) {
-                if (asyncFragment.finished) {
-                    // It looks like the fragment timed out and has already
-                    // been marked as finished... do not render the body
-                    return;
-                }
                 try {
                     if (input.invokeBody) {
                         input.invokeBody(asyncContext, data);
                     }
-                    asyncFragment.end();
+                    done();
                 } catch (e) {
                     onError(e);
                 }
