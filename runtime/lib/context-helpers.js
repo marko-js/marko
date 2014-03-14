@@ -21,6 +21,22 @@ exports.extend = function(runtime, target) {
         return this;
     }
 
+    if (typeof window === 'undefined') {
+        target.uniqueId = function () {
+            var attrs = this.attributes;
+            if (!attrs._nextId) {
+                attrs._nextId = 0;
+            }
+            return attrs._nextId++;
+        };
+    } else {
+        var nextUniqueId = 0;
+
+        target.uniqueId = function() {
+            return 'c' + nextUniqueId++;
+        };
+    }
+
     extend(target, {
         __rtmpl: true,
         invokeHandler: function (handler, input) {
