@@ -176,28 +176,27 @@ describe('raptor-render-context' , function() {
         });
     });
 
-    it('should handle async errors correctly', function(done) {
-        var context = require('../').create();
+    it('should support chaining', function(done) {
         var errors = [];
-        context.on('error', function(e) {
-            errors.push(e);
-        });
-
-        context.beginRender();
-        context.write('1');
-        context.beginAsyncFragment(function(asyncContext, done) {
-            setTimeout(function() {
-                done(new Error('test'));    
-            }, 10);
-        });
-        context.write('3');
-        context.endRender();
-        context.on('end', function() {
-            var output = context.getOutput();
-            expect(errors.length).to.equal(1);
-            expect(output).to.equal('13');
-            done();
-        });
+        var context = require('../').create()
+            .on('error', function(e) {
+                errors.push(e);
+            })
+            .on('end', function() {
+                var output = context.getOutput();
+                expect(errors.length).to.equal(1);
+                expect(output).to.equal('13');
+                done();
+            })
+            .beginRender()
+            .write('1')
+            .beginAsyncFragment(function(asyncContext, done) {
+                setTimeout(function() {
+                    done(new Error('test'));    
+                }, 10);
+            })
+            .write('3')
+            .endRender();
     });
 });
 
