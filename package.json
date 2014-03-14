@@ -11,10 +11,7 @@
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
     "dependencies": {
-        "raptor-util": "^0.2.0-beta",
         "raptor-logging": "^0.2.0-beta",
-        "raptor-detect": "^0.2.0-beta",
-        "raptor-promises": "^0.2.0-beta",
         "raptor-strings": "^0.2.0-beta",
         "events": "^1.0.0"
     },

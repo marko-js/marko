@@ -35,19 +35,21 @@ describe('raptor-render-context' , function() {
     it('should render a series of sync and async calls correctly', function(done) {
         var context = require('../').create();
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
-            setTimeout(function() {
-                asyncContext.write('2');
-                done();
-            }, 200);
-        });
+
+        var asyncContext1 = context.beginAsync();
+        setTimeout(function() {
+            asyncContext1.write('2');
+            asyncContext1.end();
+        }, 100);
+        
         context.write('3');
-        context.beginAsync(function(asyncContext, done) {
-            setTimeout(function() {
-                asyncContext.write('4');
-                done();
-            }, 10);
-        });
+
+        var asyncContext2 = context.beginAsync();
+        setTimeout(function() {
+            asyncContext2.write('4');
+            asyncContext2.end();
+        }, 10);
+
         context.end();
         context.on('end', function() {
             var output = context.getOutput();
@@ -59,10 +61,13 @@ describe('raptor-render-context' , function() {
     it('should allow an async fragment to complete synchronously', function(done) {
         var context = require('../').create();
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
             asyncContext.write('2');
-            done();
-        });
+            asyncContext.end();
+        }, 10);
+
         context.write('3');
         context.end();
         context.on('end', function() {
@@ -75,11 +80,12 @@ describe('raptor-render-context' , function() {
     it('should allow the async callback to provide data', function(done) {
         var context = require('../').create();
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
-            setTimeout(function() {
-                done(null, 2);
-            }, 10);
-        });
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.end('2');
+        }, 10);
+
         context.write('3');
         context.end();
         context.on('end', function() {
@@ -97,11 +103,13 @@ describe('raptor-render-context' , function() {
         });
 
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
-            setTimeout(function() {
-                done(null, '2');
-            }, 200);
-        }, 100);
+
+        var asyncContext = context.beginAsync(100);
+        setTimeout(function() {
+            asyncContext.write('2');
+            asyncContext.end();
+        }, 200);
+
         context.write('3');
         context.end();
         
@@ -115,32 +123,43 @@ describe('raptor-render-context' , function() {
     it('should render nested async calls correctly', function(done) {
         var context = require('../').create();
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.write('2a');
+
+            var nestedAsyncContext = asyncContext.beginAsync();
             setTimeout(function() {
-                asyncContext.write('2a');
-                asyncContext.beginAsync(function(asyncContext, done) {
-                    asyncContext.write('2b');
-                    done();
-                });
-                asyncContext.write('2c');
-                done();
-            }, 30);
-        });
+                nestedAsyncContext.write('2b');
+                nestedAsyncContext.end();
+            }, 10);
+            
+
+            asyncContext.write('2c');
+            asyncContext.end();
+        }, 10);
+
         context.write('3');
-        context.beginAsync(function(asyncContext, done) {
+
+        var asyncContext2 = context.beginAsync();
+        setTimeout(function() {
+            var nestedAsyncContext = asyncContext2.beginAsync();
             setTimeout(function() {
-                asyncContext.beginAsync(function(asyncContext, done) {
-                    asyncContext.write('4a');
-                    done();
-                });
-                asyncContext.beginAsync(function(asyncContext, done) {
-                    asyncContext.write('4b');
-                    done();
-                });
-                asyncContext.write('4c');
-                done();
-            }, 30);
-        });
+                nestedAsyncContext.write('4a');
+                nestedAsyncContext.end();
+            }, 10);
+
+            var nestedAsyncContext2 = asyncContext2.beginAsync();
+            setTimeout(function() {
+                nestedAsyncContext2.write('4b');
+                nestedAsyncContext2.end();
+            }, 10);
+            
+
+            asyncContext2.write('4c');
+            asyncContext2.end();
+        }, 10);
+
         context.end();
         context.on('end', function() {
             var output = context.getOutput();
@@ -157,9 +176,11 @@ describe('raptor-render-context' , function() {
         });
 
         context.write('1');
-        context.beginAsync(function(asyncContext, done) {
-            throw new Error('test');
-        });
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.error(new Error('test'));
+        }, 10);
         context.write('3');
         context.end();
         context.on('end', function() {
@@ -182,13 +203,14 @@ describe('raptor-render-context' , function() {
                 expect(output).to.equal('13');
                 done();
             })
-            .write('1')
-            .beginAsync(function(asyncContext, done) {
-                setTimeout(function() {
-                    done(new Error('test'));    
-                }, 10);
-            })
-            .write('3')
+            .write('1');
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.error(new Error('test'));
+        }, 10);
+
+        context.write('3')
             .end();
     });
 
@@ -202,7 +224,7 @@ describe('raptor-render-context' , function() {
         );
 
         var errors = [];
-        require('../').create(through)
+        var context = require('../').create(through)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -211,13 +233,15 @@ describe('raptor-render-context' , function() {
                 expect(output).to.equal('123');
                 done();
             })
-            .write('1')
-            .beginAsync(function(asyncContext, done) {
-                setTimeout(function() {
-                    done(null, '2');
-                }, 10);
-            })
-            .write('3')
+            .write('1');
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.write('2');
+            asyncContext.end();
+        }, 10);
+
+        context.write('3')
             .end();
     });
 
@@ -235,19 +259,21 @@ describe('raptor-render-context' , function() {
         });
 
         var errors = [];
-        require('../').create(out)
+        var context = require('../').create(out)
             .on('error', function(e) {
                 errors.push(e);
             })
             .on('end', function() {
             })
-            .write('1')
-            .beginAsync(function(asyncContext, done) {
-                setTimeout(function() {
-                    done(null, '2');
-                }, 10);
-            })
-            .write('3')
+            .write('1');
+
+        var asyncContext = context.beginAsync();
+        setTimeout(function() {
+            asyncContext.write('2');
+            asyncContext.end();
+        }, 10);
+
+        context.write('3')
             .end();
     });
 });

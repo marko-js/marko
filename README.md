@@ -18,20 +18,22 @@ var stream = through(function write(data) {
         output += data;
     });
 
-require('raptor-render-context').create(stream);
+var context = require('raptor-render-context').create(stream);
     .on('error', function(err) {
         // Something went wrong during rendering
     })
     .on('end', function() {
         // Value of output: "ABC"
     })
-    .write('A')
-    .beginAsync(function(context, done) {
-        setTimeout(function() {
-            context.write('B');
-            done();
-        }, 1000);
-    })
-    .write('C')
+    .write('A');
+
+var asyncContext = context.beginAsync();
+setTimeout(function() {
+    asyncContext.write('B');
+    asyncContext.end();
+}, 1000);
+
+    
+context.write('C')
     .end();
 ```
