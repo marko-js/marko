@@ -9,6 +9,12 @@ module.exports = function(runtime) {
     }
 
     Readable.prototype = {
+        write: function(data) {
+            this.push(data);
+        },
+        end: function() {
+            this.push(null);
+        },
         _read: function() {
             if (this._rendered) {
                 return;
@@ -22,6 +28,7 @@ module.exports = function(runtime) {
 
             var context = runtime.createContext(this);
             runtime.render(templatePath, data, context);
+            context.end();
         }
     };
 
