@@ -10,31 +10,32 @@ module.exports = {
         var arg = input.arg || {};
 
         arg.context = context;
-        context.beginAsync(function (asyncContext, done) {
-            function onError(e) {
-                done(e || 'Async fragment failed');
-            }
-            function renderBody(data) {
-                try {
-                    if (input.invokeBody) {
-                        input.invokeBody(asyncContext, data);
-                    }
-                    done();
-                } catch (e) {
-                    onError(e);
-                }
-            }
+        var asyncContext =context.beginAsync(input.timeout);
+        
+        function onError(e) {
+            asyncContext.error(e || 'Async fragment failed');
+        }
+        
+        function renderBody(data) {
             try {
-                dataProviders.requestData(dataProvider, arg, function(err, data) {
-                    if (err) {
-                        return onError(err);
-                    }
-
-                    renderBody(data);
-                });
+                if (input.invokeBody) {
+                    input.invokeBody(asyncContext, data);
+                }
+                asyncContext.end();
             } catch (e) {
                 onError(e);
             }
-        }, input.timeout);
+        }
+        try {
+            dataProviders.requestData(dataProvider, arg, function(err, data) {
+                if (err) {
+                    return onError(err);
+                }
+
+                renderBody(data);
+            });
+        } catch (e) {
+            onError(e);
+        }
     }
 };

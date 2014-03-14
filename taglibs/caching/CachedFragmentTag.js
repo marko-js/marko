@@ -1,4 +1,6 @@
 'use strict';
+var promiseUtil = require('raptor-promises/util');
+
 module.exports = {
     render: function (input, context) {
         var attributes = context.attributes;
@@ -33,8 +35,15 @@ module.exports = {
                 }
             });
 
-        context.beginAsync(function() {
-            return cachePromise;
-        });
+        var asyncContext = context.beginAsync();
+        
+        promiseUtil.immediateThen(
+            cachePromise,
+            function (result) {
+                asyncContext.end(result);
+            },
+            function (e) {
+                asyncContext.error(e);
+            });
     }
 };
