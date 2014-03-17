@@ -33,7 +33,7 @@ function invokeHandlers(config, handlers, path) {
                 throw new Error('Invalid option of "' + k + '" for ' + path + '. Allowed: ' + Object.keys(handlers).join(', '));
             }
             try {
-                handler(value);    
+                handler(value);
             }
             catch(e) {
                 if (!e.invokeHandlerError) {
@@ -50,7 +50,7 @@ function invokeHandlers(config, handlers, path) {
 
     if (handlers._end) {
         try {
-            handlers._end(); 
+            handlers._end();
         }
         catch(e) {
             if (!e.invokeHandlerError) {
@@ -82,7 +82,7 @@ function buildAttribute(attr, attrProps, path) {
         pattern: function(value) {
             if (value === true) {
                 var patternRegExp = raptorRegexp.simple(attr.name);
-                attr.pattern = patternRegExp;    
+                attr.pattern = patternRegExp;
             }
         },
         allowExpressions: function(value) {
@@ -111,7 +111,7 @@ function handleAttributes(value, parent, path) {
             throw new Error('Invalid attribute name: ' + attrName);
         }
 
-        
+
         var attr = new Taglib.Attribute(namespace, localName);
 
         if (attrProps == null) {
@@ -140,6 +140,10 @@ function buildTag(tagObject, path, taglib, dirname) {
     var tag = new Taglib.Tag(taglib);
 
     invokeHandlers(tagObject, {
+        name: function(value) {
+            tag.name = value;
+        },
+
         renderer: function(value) {
             var ext = nodePath.extname(value);
             if (ext === '') {
@@ -150,7 +154,7 @@ function buildTag(tagObject, path, taglib, dirname) {
             if (!fs.existsSync(path)) {
                 throw new Error('Renderer at path "' + path + '" does not exist.');
             }
-                    
+
             tag.renderer = path;
         },
         template: function(value) {
@@ -158,11 +162,19 @@ function buildTag(tagObject, path, taglib, dirname) {
             if (!fs.existsSync(path)) {
                 throw new Error('Template at path "' + path + '" does not exist.');
             }
-                    
+
             tag.template = path;
         },
         attributes: function(value) {
             handleAttributes(value, tag, path);
+        },
+        nodeClass: function(value) {
+            var path = nodePath.resolve(dirname, value);
+            if (!fs.existsSync(path)) {
+                throw new Error('Node module at path "' + path + '" does not exist.');
+            }
+
+            tag.nodeClass = path;
         },
         transformer: function(value) {
             var transformer = new Taglib.Transformer();
@@ -248,6 +260,57 @@ function buildTag(tagObject, path, taglib, dirname) {
     return tag;
 }
 
+/**
+ * @param {String} tagsConfigPath path to tag definition file
+ * @param {String} tagsConfigDirname path to directory of tags config file (should be path.dirname(tagsConfigPath))
+ * @param {String} dir the path to directory to scan
+ * @param {String} taglib the taglib that is being loaded
+ */
+function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
+    dir = nodePath.resolve(tagsConfigDirname, dir);
+    var children = fs.readdirSync(dir);
+    for (var i=0, len=children.length; i<len; i++) {
+        var childFilename = children[i];
+        if (childFilename === 'node_modules') {
+            continue;
+        }
+        var tagDirname = nodePath.join(dir, childFilename);
+        var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
+        var tagObject;
+        var tag;
+
+        if (fs.existsSync(tagFile)) {
+            // raptor-tag.json exists in the directory, use that as the tag definition
+            tagObject = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
+            tag = buildTag(tagObject, tagsConfigPath, taglib, tagDirname);
+            tag.name = childFilename;
+            taglib.addTag(tag);
+        } else {
+            // raptor-tag.json does *not* exist... checking for a 'renderer.js'
+            var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
+            if (fs.existsSync(rendererFile)) {
+                var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
+                var tagDef = tagDefFromCode.extractTagDef(rendererCode);
+                if (!tagDef) {
+                     tagDef = {
+                        attributes: {
+                            '*': {
+                                type: 'string',
+                                targetProperty: null
+                            }
+                        }
+                     };
+                }
+
+                tagDef.renderer  = rendererFile;
+                tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
+                tag.name = childFilename;
+                taglib.addTag(tag);
+            }
+        }
+    }
+}
+
 function load(path) {
     if (cache[path]) {
         return cache[path];
@@ -264,7 +327,7 @@ function load(path) {
             });
         }
         else {
-            taglib.addNamespace(ns); 
+            taglib.addNamespace(ns);
         }
     }
 
@@ -311,55 +374,23 @@ function load(path) {
                     tagObject = path;
                     path = '<' + tagName + '> tag in ' + taglib.id;
                 }
-                
+
 
                 var tag = buildTag(tagObject, path, taglib, tagDirname);
-                tag.name = tagName;
+                if (tag.name === undefined) {
+                    tag.name = tagName;
+                }
                 taglib.addTag(tag);
             });
         },
         tagsDir: function(dir) {
-            dir = nodePath.resolve(dirname, dir);
-            var children = fs.readdirSync(dir);
-            for (var i=0, len=children.length; i<len; i++) {
-                var childFilename = children[i];
-                if (childFilename === 'node_modules') {
-                    continue;
-                }
-                var tagDirname = nodePath.join(dir, childFilename);
-                var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
-                var tagObject;
-                var tag;
 
-                if (fs.existsSync(tagFile)) {
-                    // raptor-tag.json exists in the directory, use that as the tag definition
-                    tagObject = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
-                    tag = buildTag(tagObject, path, taglib, tagDirname);
-                    tag.name = childFilename;
-                    taglib.addTag(tag);
-                } else {
-                    // raptor-tag.json does *not* exist... checking for a 'renderer.js'
-                    var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
-                    if (fs.existsSync(rendererFile)) {
-                        var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
-                        var tagDef = tagDefFromCode.extractTagDef(rendererCode);
-                        if (!tagDef) {
-                             tagDef = {
-                                attributes: {
-                                    '*': {
-                                        type: 'string',
-                                        targetProperty: null
-                                    }
-                                }
-                             };
-                        }
-
-                        tagDef.renderer  = rendererFile;
-                        tag = buildTag(tagDef, path, taglib, tagDirname);
-                        tag.name = childFilename;
-                        taglib.addTag(tag);
-                    }
+            if (Array.isArray(dir)) {
+                for (var i = 0; i < dir.length; i++) {
+                    scanTagsDir(path, dirname, dir[i], taglib);
                 }
+            } else {
+                scanTagsDir(path, dirname, dir, taglib);
             }
         }
     }, path);
