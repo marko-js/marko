@@ -20,7 +20,6 @@ var regexp = require('raptor-regexp');
 var Taglib = require('./Taglib');
 var Tag = Taglib.Tag;
 var Attribute = Taglib.Attribute;
-var Property = Taglib.Property;
 var NestedVariable = Taglib.NestedVariable;
 var ImportedVariable = Taglib.ImportedVariable;
 var Transformer = Taglib.Transformer;
@@ -347,7 +346,7 @@ TaglibXmlLoader.prototype = {
                         _end: function (importedTaglib) {
                             var path = resolvePath(importedTaglib.path);
                             taglib.importPaths.push(path);
-                            
+
                             if (!fs.existsSync(path)) {
                                 throw createError(new Error('Imported taglib with path "' + path + '" not found in taglib at path "' + filePath + '"'));
                             }
@@ -355,7 +354,7 @@ TaglibXmlLoader.prototype = {
                             var importedXmlSource = fs.readFileSync(path);
                             require('../work-dir').recordLoadedTaglib(path);
                             var oldDirname = dirname;
-                            dirname = nodePath.dirname(path);                            
+                            dirname = nodePath.dirname(path);
                             objectMapper.read(importedXmlSource, path, handlers);
                             dirname = oldDirname;
                         },
