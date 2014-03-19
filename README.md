@@ -18,14 +18,15 @@ var stream = through(function write(data) {
         output += data;
     });
 
-var context = require('raptor-render-context').create(stream);
+var context = require('raptor-render-context').create(stream)
     .on('error', function(err) {
         // Something went wrong during rendering
     })
     .on('end', function() {
         // Value of output: "ABC"
-    })
-    .write('A');
+    });
+    
+context.write('A');
 
 var asyncContext = context.beginAsync();
 setTimeout(function() {
@@ -34,6 +35,6 @@ setTimeout(function() {
 }, 1000);
 
     
-context.write('C')
-    .end();
+context.write('C');
+context.end();
 ```
