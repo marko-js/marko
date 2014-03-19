@@ -29,5 +29,5 @@
     "browser": {
         "./lib/Context_server.js": null
     },
-    "version": "0.2.5-beta"
+    "version": "0.2.6-beta"
 }
