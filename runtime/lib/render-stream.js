@@ -1,6 +1,23 @@
+var stream;
+var STREAM = 'stream';
+
+var streamPath;
+try {
+    streamPath = require.resolve(STREAM);
+} catch(e) {}
+
+if (streamPath) {
+    stream = require(streamPath);
+}
+
 module.exports = function(runtime) {
 
-    var STREAM_MODULE = 'stream';
+    if (!stream) {
+        return function() {
+            throw new Error('Module not found: stream');
+        };
+    }
+    
 
     function Readable() {
         Readable.$super.call(this);
@@ -32,7 +49,7 @@ module.exports = function(runtime) {
         }
     };
 
-    require('raptor-util').inherit(Readable, require(STREAM_MODULE).Readable);
+    require('raptor-util').inherit(Readable, stream.Readable);
 
     return function stream(templatePath, data) {
         return new Readable(templatePath, data);
