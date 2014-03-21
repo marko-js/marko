@@ -43,7 +43,9 @@
         "raptor-cache": "^0.2.0-beta"
     },
     "license": "Apache License v2.0",
-    "bin": {},
+    "bin": {
+      "rhtmlc": "bin/rhtmlc"
+    },
     "main": "runtime/lib/raptor-templates.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
