@@ -1,6 +1,6 @@
 {
-    "main": "lib/raptor-templates",
+    "main": "lib/raptor-templates.js",
     "browser": {
-        "./lib/loader.js": "./lib/loader_browser"
+        "./lib/loader.js": "./lib/loader_browser.js"
     }
 }
