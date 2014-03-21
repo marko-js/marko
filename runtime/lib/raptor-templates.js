@@ -49,10 +49,18 @@ module.exports = exports = {
             shouldEnd = true;
         }
 
-        var templateFunc = cache[templatePath];
-        if (!templateFunc) {
-            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
+        var templateFunc;
+
+        if (typeof templatePath === 'string') {
+            templateFunc = cache[templatePath];
+            if (!templateFunc) {
+                templateFunc = cache[templatePath] = loader(templatePath)(helpers);
+            }
+        } else {
+            // Instead of a path, assume we got a compiled template module
+            templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
         }
+
         
         try {
             templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
