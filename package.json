@@ -44,11 +44,11 @@
     },
     "license": "Apache License v2.0",
     "bin": {
-      "rhtmlc": "bin/rhtmlc"
+        "rhtmlc": "bin/rhtmlc"
     },
     "main": "runtime/lib/raptor-templates.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "0.2.13-beta"
+    "version": "0.2.14-beta"
 }
