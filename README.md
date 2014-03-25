@@ -809,11 +809,11 @@ Tags can be defined by adding a `"tags"` property to your `raptor-taglib.json`:
 }
 ```
 
-Every tag should be associated with a renderer. When a custom tag is used in a template, the renderer will be invoked at render time to produce the HTML/output (if any).
+Every tag should be associated with a renderer. When a custom tag is used in a template, the renderer will be invoked at render time to produce the HTML/output.
 
 #### Defining Attributes
 
-If you provide attributes then the Raptor Templates compiler will do validation to make sure only the supported attributes are provided. A "*" attribute is a special wildcard attribute that allows any attribute to be passed in. Below are sample attribute definitions:
+If you provide attributes then the Raptor Templates compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
 
 _Multiple attributes:_
 ```json
