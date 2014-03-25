@@ -16,6 +16,7 @@ raptor-templates
 		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
 		- [Using Browserify](#using-browserify)
 	- [Template Compilation](#template-compilation)
+		- [Sample Compiled Template](#sample-compiled-template)
 - [Language Guide](#language-guide)
 	- [Template Directives Overview](#template-directives-overview)
 	- [Text Replacement](#text-replacement)
@@ -37,7 +38,15 @@ raptor-templates
 		- [strip](#strip)
 	- [Helpers](#helpers)
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
-	- [Taglibs](#taglibs)
+- [Taglibs](#taglibs)
+	- [Tag Renderer](#tag-renderer)
+	- [raptor-taglib.json](#raptor-taglibjson)
+		- [Sample Taglib](#sample-taglib)
+		- [Taglib Namespace](#taglib-namespace)
+		- [Defining Tags](#defining-tags)
+			- [Defining Attributes](#defining-attributes)
+		- [Scanning for Tags](#scanning-for-tags)
+	- [Taglib Discovery](#taglib-discovery)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -50,7 +59,7 @@ A basic template with text replacement, looping and conditionals is shown below:
 ```html
 Hello ${data.name}!
 
-<ul c:if="notEmpty(colors)">
+<ul c:if="notEmpty(data.colors)">
     <li style="color: $color" c:for="color in data.colors">
         $color
     </li>
@@ -195,8 +204,7 @@ browserify -t rhtmlify run.js > browser.js
 
 ## Template Compilation
 
-The Raptor Templates compiler produces a CommonJS module as output. This makes it easier to load Raptor Template files from other modules.
-
+The Raptor Templates compiler produces a CommonJS module as output. This makes it easier to load Raptor Template files from other modules. 
 
 You can either use the command line interface or the JavaScript API to compile a Raptor Template file. To use the CLI you must first install the `raptor-templates` module globally using the following command:
 ```bash
@@ -222,6 +230,50 @@ require('raptor-templates/compiler').compileFile(path, function(err, src) {
     // Do something with the compiled output 
 });
 ```
+
+### Sample Compiled Template
+```javascript
+module.exports = function create(helpers) {
+  var empty = helpers.e,
+      notEmpty = helpers.ne,
+      escapeXml = helpers.x,
+      forEach = helpers.f,
+      escapeXmlAttr = helpers.xa;
+
+  return function render(data, context) {
+    context.w('Hello ')
+      .w(escapeXml(data.name))
+      .w('! ');
+
+    if (notEmpty(colors)) {
+      context.w('<ul>');
+
+      forEach(data.colors, function(color) {
+        context.w('<li style="color: ')
+          .w(escapeXmlAttr(color))
+          .w('">')
+          .w(escapeXml(color))
+          .w('</li>');
+      });
+
+      context.w('</ul>');
+    }
+    else {
+      context.w('<div>No colors!</div>');
+    }
+  };
+}
+```
+
+The compiled output is designed to be extremely minifiable. The minified code is shown below:
+
+
+```javascript
+module.exports=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello ").w(c(a.name)).w("! ");d(colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: ').w(f(a)).w('">').w(c(a)).w("</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
+```
+
+_File size: 193 bytes gzipped (267 bytes uncompressed)_
+
 
 # Language Guide
 
@@ -667,6 +719,274 @@ The output of the above template might be the following:
 
 For information on how to use and create taglibs, please see the [Taglibs](#taglibs) section below.
 
-## Taglibs
+# Taglibs
 
-TODO
+
+## Tag Renderer
+
+Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`input` and `context`). The `input` argument is an arbitrary object that contains the input data for the renderer. The `context` argument is an [asynchronous rendering context](https://github.com/raptorjs3/raptor-render-context) that wraps an output stream. Output can be produced using `context.write(someString)` There is no class hierarchy or tie-ins to Raptor Templates when implementing a tag renderer. A simple tag renderer is shown below:
+
+```javascript
+module.exports = function(input, context) {
+    context.write('Hello ' + input.name + '!');
+}
+```
+
+If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `input` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
+
+```javascript
+module.exports = function(input, context) {
+    context.write('BEFORE BODY');
+    if (input.invokeBody) {
+        invoke.invokeBody();
+    }
+    context.write('AFTER BODY');
+}
+```
+
+A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.json` as shown in the next few sections.
+
+## raptor-taglib.json
+
+### Sample Taglib
+
+```json
+{
+    "namespace": "my-taglib",
+    "tags": {
+        "hello": {
+            "renderer": "./hello-renderer.js",
+            "attributes": {
+                "name": "string"
+            }
+        }
+    }
+}
+```
+
+### Taglib Namespace
+
+Every taglib should be associated with one or more namespaces as shown below:
+
+```json
+{
+    "namespace": "my-taglib",
+    ...
+}
+```
+
+Multiple aliases can be offered:
+
+```json
+{
+    "namespace": ["my-taglib", "my"],
+    ...
+}
+```
+
+### Defining Tags
+
+Tags can be defined by adding a `"tags"` property to your `raptor-taglib.json`:
+
+```json
+{
+    "namespace": "my-taglib",
+    "tags": {
+        "hello": {
+            "renderer": "./hello-renderer.js",
+            "attributes": {
+                "name": "string"
+            }
+        },
+        "foo": {
+            "renderer": "./foo-renderer.js",
+            "attributes": {
+                "*": "string"
+            }
+        }
+    }
+}
+```
+
+Every tag should be associated with a renderer. When a custom tag is used in a template, the renderer will be invoked at render time to produce the HTML/output (if any).
+
+#### Defining Attributes
+
+If you provide attributes then the Raptor Templates compiler will do validation to make sure only the supported attributes are provided. A "*" attribute is a special wildcard attribute that allows any attribute to be passed in. Below are sample attribute definitions:
+
+_Multiple attributes:_
+```json
+"attributes": {
+    "message": "string",     // String
+    "my-data": "expression", // JavaScript expression
+    "*": "string"            // Everything else will be added to a special "*" property
+}
+```
+
+### Scanning for Tags
+
+Raptor Templates supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
+
+* One tag per directory
+* All tag directories should be direct children of a parent directory
+* Every tag directory must contain a `renderer.js` that is used as the tag renderer
+* Each tag directory may contain a `raptor-tag.json` file or the tag definition can be embedded into `renderer.js`
+
+With this approach, `raptor-taglib.json` will be much simpler:
+
+```json
+{
+    "namespace": "my-taglib",
+    "tags-dir": "./components"
+}
+```
+
+Given the following directory structure:
+
+* __components/__
+    * __hello/__
+        * renderer.js
+    * __foo/__
+        * renderer.js
+    * __bar/__
+        * renderer.js
+        * raptor-tag.json
+* raptor-taglib.json
+
+The following three tags will be exported as part of the "my-taglib" namespace:
+
+* `<my-taglib:hello>`
+* `<my-taglib:foo>`
+* `<my-taglib:bar>`
+
+Directory scanning only supports one tag per directory and it will only look at directories one level deep. The tag definition can be embedded into the `renderer.js` file or it can be put into a separate `raptor-tag.json`. For example:
+
+_In `renderer.js`:_
+
+```javascript
+exports.tag = {
+    "attributes": {
+        "name": "string"
+    }
+}
+```
+
+_In `raptor-tag.json`:_
+
+```javascript
+{
+    "attributes": {
+        "name": "string"
+    }
+}
+```
+
+_NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
+
+### Nested Tags
+
+It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
+
+```html
+<ui:tabs>
+    <ui:tab label="Overview"></ui:tab>
+    <ui:tab label="Language Guide"></ui:tab>
+    <ui:tab label="JavaScript API"></ui:tab>
+</ui:tabs>
+```
+
+Raptor Templates supports this by leveraging JavaScript closures in the compiled output. A tag can introduce scoped variables that are available to nested tags. This is shown in the sample `raptor-taglib.json` below:
+
+```json
+{
+    "namespace": "ui",
+    "tags": {
+        "tabs": {
+            "renderer": "./tabs-tag.js",
+            "var": "tabs"
+        },
+        "tab": {
+            "renderer": "./tab-tag.js",
+            "import-var": {
+                "tabs": "tabs"
+            },
+            "attributes": {
+                "title": "string"
+            }
+        }
+    }
+}
+```
+
+In the above example, the `<ui:tabs>` tag will introduce a scoped variable named `tabs` that is then automatically imported by the nested `<ui:tab>` tags. When the nested `<ui:tab>` tags render they can use the scoped variable to communicate with the renderer for the `<ui:tabs>` tag.
+
+The complete code for this example is shown below:
+
+_components/tabs/renderer.js:_
+
+```javascript
+var raptorTemplates = require('raptor-templates');
+
+exports.render = function(input, context) {
+    var nestedTabs = [];  
+    
+    // Invoke the body function to discover nested <ui:tab> tags
+    input.invokeBody({ // Invoke the body with the scoped "tabs" variable
+        addTab: function(tab) {
+            tab.id = tab.id || ("tab" + tabs.length);
+            nestedTabs.push(tab);
+        }
+    });
+    
+    // Now render the markup for the tabs:
+    raptorTemplates.render(require.resolve('./template.rhtml'), {
+        tabs: nestedTabs
+    }, context);
+    
+};
+```
+
+_components/tab/renderer.js:_
+
+```javascript
+exports.render = function(input, context) {
+    // Register with parent but don't render anything
+    input.tabs.addTab(input); 
+};
+```
+
+_components/tabs/template.rhtml:_
+
+```html
+<div class="tabs">
+    <ul class="nav nav-tabs">
+        <li class="tab" c:for="tab in data.tabs">
+            <a href="#${tab.id}" data-toggle="tab">
+                ${tab.title}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="${tab.id}" class="tab-pane" c:for="tab in data.tabs">
+            <c:invoke function="tab.invokeBody()"/>
+        </div>
+    </div>
+</div>
+```
+
+
+## Taglib Discovery
+
+Given a template file, the `raptor-templates` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs. 
+
+As an example, given a template at path `/my-project/src/pages/login/template.rhtml`, the search path will be the following:
+
+1. `/my-project/src/pages/login/raptor-taglib.json`
+2. `/my-project/src/pages/login/node_modules/*/raptor-taglib.json`
+3. `/my-project/src/pages/raptor-taglib.json`
+4. `/my-project/src/pages/node_modules/*/raptor-taglib.json`
+5. `/my-project/src/raptor-taglib.json`
+6. `/my-project/src/node_modules/*/raptor-taglib.json`
+7. `/my-project/raptor-taglib.json`
+8. `/my-project/node_modules/*/raptor-taglib.json`
+
