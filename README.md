@@ -115,7 +115,10 @@ You can then bundle up the above program for running in the browser using either
 
 The `raptor-optimizer` CLI can be used to generate a browser bundle that includes all application modules and all referenced Raptor Template files using a command similar to the following:
 ```bash
-raptor-optimizer require-run:run.js --name browser
+# First install the raptor-optimizer
+npm install raptor-optimizer --global
+
+raptor-optimizer --main run.js --name my-page
 ```
 
 ### Using Browserify
