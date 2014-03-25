@@ -46,6 +46,7 @@ raptor-templates
 		- [Defining Tags](#defining-tags)
 			- [Defining Attributes](#defining-attributes)
 		- [Scanning for Tags](#scanning-for-tags)
+		- [Nested Tags](#nested-tags)
 	- [Taglib Discovery](#taglib-discovery)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
