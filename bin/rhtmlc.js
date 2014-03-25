@@ -29,6 +29,8 @@ function compile(path) {
         return;
     }
 
+    found[path] = true;
+
     var deferred = raptorPromises.defer();
 
     var outPath = path + '.js';
@@ -72,7 +74,6 @@ globPatterns.forEach(function(globPattern) {
     promises.push(deferred.promise);
 });
 
-console.log('Promises: ', promises.length);
 raptorPromises.all(promises).then(
     function() {
         console.log('Done!');
