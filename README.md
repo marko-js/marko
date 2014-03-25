@@ -21,6 +21,7 @@ raptor-templates
 	- [Template Directives Overview](#template-directives-overview)
 	- [Text Replacement](#text-replacement)
 	- [Expressions](#expressions)
+	- [Includes](#includes)
 	- [Variables](#variables)
 	- [Conditionals](#conditionals)
 		- [if...else-if...else](#ifelse-ifelse)
@@ -28,6 +29,9 @@ raptor-templates
 		- [Shorthand conditionals](#shorthand-conditionals)
 	- [Looping](#looping)
 		- [for](#for)
+			- [Loop Status Variable](#loop-status-variable)
+			- [Loop Separator](#loop-separator)
+			- [Property Looping](#property-looping)
 	- [Macros](#macros)
 		- [def](#def)
 		- [invoke](#invoke)
@@ -36,9 +40,11 @@ raptor-templates
 		- [content](#content)
 		- [replace](#replace)
 		- [strip](#strip)
+	- [Comments](#comments)
 	- [Helpers](#helpers)
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
-- [Taglibs](#taglibs)
+	- [Layouts Taglib](#layouts-taglib)
+- [Custom Taglibs](#custom-taglibs)
 	- [Tag Renderer](#tag-renderer)
 	- [raptor-taglib.json](#raptor-taglibjson)
 		- [Sample Taglib](#sample-taglib)
@@ -337,9 +343,18 @@ By default, all special HTML characters will be escaped in dynamic text to preve
 Hello $!{data.name}! <!-- Do not escape -->
 ```
 
+If necessary, you can escape `$` using a forward slash to have it be treated as text instead of a placeholder token:
+
+```html
+Test: \${hello}
+<!-- Rendered Ouptut: 
+Test: ${hello}
+-->
+```
+
 ## Expressions
 
-Wherever expressions are allowed, they are treated as JavaScript expressions copied out to the compiled template verbatim. However, you can choose to use alternate versions of the following JavaScript operators:
+Wherever expressions are allowed, they are treated as JavaScript expressions and copied out to the compiled template verbatim. However, you can choose to use alternate versions of the following JavaScript operators:
 
 JavaScript Operator | Raptor Equivalent
 ------------------- | -----------------
@@ -351,6 +366,14 @@ JavaScript Operator | Raptor Equivalent
 `>` | `gt`
 `<=` | `le`
 `>=` | `ge`
+
+## Includes
+
+Other Raptor Template files can be included using the `<c:include>` tag and a relative path. For example:
+
+```html
+<c:include template="./greeting" name="Frank" count="30"/>
+```
 
 ## Variables
 
@@ -528,9 +551,44 @@ The output would be the following:
 </ul>
 ```
 
+#### Loop Status Variable
+
+The `c:for` directive also supports a loop status variable in case you need to know the current loop index. For example:
+
+```html
+<ul>
+    <li c:for="color in colors; status-var=loop">
+        ${loop.getIndex()+1}) $color
+        <c:if test="loop.isFirst()"> - FIRST</c:if>
+        <c:if test="loop.isLast()"> - LAST</c:if>
+    </li>
+</ul>
+```
+
+#### Loop Separator
+
+```html
+<c:for each="color in colors" separator=", ">$color</c:for>
+    
+<div>
+    <span c:for="color in colors; separator=', '" style="color: $color">$color</span>
+</div>
+```
+
+#### Property Looping
+
+```html
+<ul>
+    <li c:for="(name,value) in settings">
+        <b>$name</b>:
+        $value
+    </li>
+</ul>
+```
+
 ## Macros
 
-Macros allow for reusable fragments within an HTML template. Macros can also be parameterized. A macro can be defined using the `<c:def>` directive and a macro when defining a macro.
+Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<c:def>` directive.
 
 ### def
 
@@ -668,6 +726,17 @@ _Output:_
 </div>
 ```
 
+## Comments
+
+Standard HTML comments can be used to add comments to your template. The HTML comments will not show up in the rendered HTML.
+
+Example comments:
+
+```html
+<!-- This is a comment that will not be rendered -->
+<h1>Hello</h1>
+```
+
 ## Helpers
 
 Since Raptor Template files compile into CommonJS modules, any Node.js module can be "imported" into a template for use as a helper module. For example, given the following helper module:
@@ -718,9 +787,47 @@ The output of the above template might be the following:
 </div>
 ```
 
-For information on how to use and create taglibs, please see the [Taglibs](#taglibs) section below.
+For information on how to use and create taglibs, please see the [Custom Taglibs](#custom-taglibs) section below.
 
-# Taglibs
+## Layouts Taglib
+
+Raptor Templates provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
+
+_default-layout.rhtml:_
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><layout:placeholder name="title"/></title>
+</head>
+<body>
+    <h1 c:if="data.showHeader !== false">
+        <layout:placeholder name="title"/>
+    </h1>
+    <p>
+        <layout:placeholder name="body"/>
+    </p>
+    <div>
+        <layout:placeholder name="footer">
+            Default Footer
+        </layout:placeholder>
+    </div>
+</body>
+</html>
+```
+
+_Usage of `default-layout.rhtml`:_
+
+```html
+<layout:use template="./default-layout.rhtml" show-header="$true">
+    <layout:put into="title">My Page</layout:put>
+    <layout:put into="body">BODY CONTENT</layout:put>
+</layout:use>
+```
+
+# Custom Taglibs
 
 
 ## Tag Renderer
