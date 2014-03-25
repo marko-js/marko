@@ -3,19 +3,17 @@ raptor-templates
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Overview](#raptor-templates)
+- [Overview](#overview)
 - [Sample Templates](#sample-templates)
 - [Installation](#installation)
 - [Usage](#usage)
 	- [Template Rendering](#template-rendering)
 		- [Callback API](#callback-api)
 		- [Streaming API](#streaming-api)
-	- [Template Compilation](#template-compilation)
 	- [Browser-side Rendering](#browser-side-rendering)
 		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
 		- [Using Browserify](#using-browserify)
+	- [Template Compilation](#template-compilation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -86,9 +84,9 @@ raptorTemplates.render('template.rhtml', {
 ### Streaming API
 ```javascript
 var raptorTemplates = require('raptor-templates');
-var out = require('fs').createWriteStream('template.html', 'utf8');
+var out = require('fs').createWriteStream('index.html', 'utf8');
 
-// Render the template to 'template.rhtml'
+// Render the template to 'index.html'
 raptorTemplates
     .stream('template.rhtml', {
         name: 'Frank',
@@ -153,7 +151,7 @@ This will produce a file named `hello.rhtml.js` next to the original file.
 You can also compile multiple templates using a glob pattern as shown in the following sample command:
 
 ```bash
-rhtmlc **/*.rhtml
+rhtmlc src/**/*.rhtml
 ```
 
 Alternatively, you can use the JavaScript API to compile a module as shown in the following sample code:
