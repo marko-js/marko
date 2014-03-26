@@ -20,79 +20,75 @@
  * <p>The code for the Raptor Templates compiler is kept separately
  * in the {@link raptor/templating/compiler} module.
  */
-'use strict';
 var renderContext = require('raptor-render-context');
 var createError = require('raptor-util').createError;
 var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
-var contextHelpers = require('./context-helpers');
 var cache = {};
 
-module.exports = exports = {
-    Context: Context,
-    render: function (templatePath, data, callback, context) {
-        if (typeof callback !== 'function') {
-            // A context object was provided instead of a callback
-            context = callback;
-            callback = null;
+exports.Context = Context;
+
+exports.render = function (templatePath, data, callback, context) {
+    if (typeof callback !== 'function') {
+        // A context object was provided instead of a callback
+        context = callback;
+        callback = null;
+    }
+
+    var shouldEnd = false;
+
+    if (!context) {
+        context = new Context();
+        shouldEnd = true;
+    }
+
+    var templateFunc;
+
+    if (typeof templatePath === 'string') {
+        templateFunc = cache[templatePath];
+        if (!templateFunc) {
+            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
         }
+    } else {
+        // Instead of a path, assume we got a compiled template module
+        templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
+    }
 
-        var shouldEnd = false;
+    
+    try {
+        templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
+    } catch (e) {
+        // context.emit('error', e);
+        throw createError(new Error('Unable to render template with name "' + templatePath + '". Exception: ' + e), e);
+    }
 
-        if (context) {
-            if (!context.__rtmpl) {
-                contextHelpers.extend(module.exports, context.constructor.prototype);
-            }
-        } else {
-            context = new Context();
-            shouldEnd = true;
-        }
+    if (callback) {
+        context
+            .on('end', function() {
+                callback(null, context.getOutput());
+            })
+            .on('error', callback);
+    }
 
-        var templateFunc;
+    if (shouldEnd) {
+        context.end();    
+    }
 
-        if (typeof templatePath === 'string') {
-            templateFunc = cache[templatePath];
-            if (!templateFunc) {
-                templateFunc = cache[templatePath] = loader(templatePath)(helpers);
-            }
-        } else {
-            // Instead of a path, assume we got a compiled template module
-            templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
-        }
-
-        
-        try {
-            templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
-        } catch (e) {
-            // context.emit('error', e);
-            throw createError(new Error('Unable to render template with name "' + templatePath + '". Exception: ' + e), e);
-        }
-
-        if (callback) {
-            context
-                .on('end', function() {
-                    callback(null, context.getOutput());
-                })
-                .on('error', callback);
-        }
-
-        if (shouldEnd) {
-            context.end();    
-        }
-
-        return context;
-    },
-    unload: function (templatePath) {
-        delete cache[templatePath];
-    },
-    createContext: function(writer) {
-        return new Context(writer);
-    },
-    helpers: helpers
+    return context;
 };
 
-exports.stream = require('./render-stream')(module.exports);
+exports.unload = function(templatePath) {
+    delete cache[templatePath];
+};
 
-contextHelpers.extend(exports, Context.prototype);
+exports.createContext = function(writer) {
+    return new Context(writer);
+};
+
+
+exports.helpers = helpers;
+
+exports.stream = require('./render-stream')(exports);
+
 

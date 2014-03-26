@@ -146,7 +146,7 @@ TagHandlerNode.prototype = {
 
         
 
-        template.contextMethodCall('t', function () {
+        template.contextHelperMethodCall('t', function () {
             template.code('\n').indent(function () {
                 template.line(handlerVar + ',').indent();
                 if (_this.inputExpression) {

@@ -4,7 +4,7 @@ module.exports = function create(helpers) {
       hello_renderer = require("./hello-renderer");
 
   return function render(data, context) {
-    context.t(
+    helpers.t(context, 
       hello_renderer,
       {
         "name": "World"

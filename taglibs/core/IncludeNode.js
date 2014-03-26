@@ -60,7 +60,7 @@ IncludeNode.prototype = {
                 };
             }
             template.include(templatePath, dataExpression);
-        } else if (resourcePath = this.getAttribute('resource')) {
+        } else if ((resourcePath = this.getAttribute('resource'))) {
             var isStatic = this.getProperty('static') !== false;
             if (isStatic) {
                 resourcePath = nodePath.resolve(template.dirname, resourcePath);

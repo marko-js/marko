@@ -184,11 +184,20 @@ Node.prototype = {
             throw createError(new Error('template argument is required'));
         }
         var _this = this;
+
+        var methodCall;
+
+        if (escapeXml !== false) {
+            methodCall = 'context.captureString(';
+        } else {
+            methodCall = 'helpers.c(context, ';
+        }
+
         return template.makeExpression({
             toString: function () {
                 return template.captureCode(function () {
                     if (asFunction) {
-                        template.code('function() {\n').code(template.indentStr(2) + 'return context.' + (escapeXml !== false ? 'captureString' : 'c') + '(function() {\n').indent(3, function () {
+                        template.code('function() {\n').code(template.indentStr(2) + 'return ' + methodCall + 'function() {\n').indent(3, function () {
                             if (childrenOnly === true) {
                                 _this.generateCodeForChildren(template);
                             } else {
@@ -196,7 +205,7 @@ Node.prototype = {
                             }
                         }).code(template.indentStr(2) + '});\n').code(template.indentStr() + '}');
                     } else {
-                        template.code('context.' + (escapeXml !== false ? 'captureString' : 'c') + '(function() {\n').indent(function () {
+                        template.code(methodCall + 'function() {\n').indent(function () {
                             if (childrenOnly === true) {
                                 _this.generateCodeForChildren(template);
                             } else {

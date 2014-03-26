@@ -22,6 +22,29 @@ var Expression = require('./Expression');
 var arrayFromArguments = require('raptor-util').arrayFromArguments;
 var INDENT = '  ';
 
+function writeArgs(writer, args) {
+    for (var i=0, len=args.length; i<len; i++) {
+        var arg = args[i];
+        if (i !== 0) {
+            writer._code.append(', ');
+        }
+
+        if (typeof arg === 'string') {
+            writer._code.append(arg);
+        } else if (typeof arg === 'boolean') {
+            writer._code.append(arg ? 'true' : 'false');
+        } else if (typeof arg === 'function') {
+            arg();
+        } else if (arg instanceof Expression) {
+            writer._code.append(arg.toString());
+        } else if (arg) {
+            writer._code.append(arg.toString());
+        } else {
+            throw createError(new Error('Illegal arg: ' + arg.toString() + ' (' + i + ')'));
+        }
+    }
+}
+
 function CodeWriter(indent) {
     this._indent = indent != null ? indent : INDENT + INDENT;
     this._code = new StringBuilder();
@@ -31,7 +54,15 @@ function CodeWriter(indent) {
 }
 CodeWriter.prototype = {
     write: function (expression) {
-        this.contextMethodCall('w', expression);
+        this.flushText();
+        if (!this._bufferedContextMethodCalls) {
+            this._bufferedContextMethodCalls = [];
+        }
+        
+        this._bufferedContextMethodCalls.push([
+            'w',
+            [expression]
+        ]);
     },
     text: function (text) {
         if (this._bufferedText === null) {
@@ -40,16 +71,18 @@ CodeWriter.prototype = {
             this._bufferedText += text;
         }
     },
-    contextMethodCall: function (methodName, args) {
-        this.flushText();
-        if (!this._bufferedContextMethodCalls) {
-            this._bufferedContextMethodCalls = [];
-        }
+    contextHelperMethodCall: function (methodName, args) {
         args = arrayFromArguments(arguments, 1);
-        this._bufferedContextMethodCalls.push([
-            methodName,
-            args
-        ]);
+
+        this.flush();
+        this._code.append(this._indent + 'helpers.' + methodName + '(context');
+
+        if (args.length) {
+            this._code.append(', ');    
+        }
+
+        writeArgs(this, args);
+        this._code.append(');\n');
     },
     code: function (code) {
         this.flush();
@@ -102,7 +135,7 @@ CodeWriter.prototype = {
     },
     flush: function () {
         this.flushText();
-        this.flushMethodCalls();
+        this.flushContextHelperMethodCalls();
     },
     flushText: function () {
         var curText = this._bufferedText;
@@ -111,7 +144,7 @@ CodeWriter.prototype = {
             this.write(stringify(curText, { useSingleQuote: true }));
         }
     },
-    flushMethodCalls: function () {
+    flushContextHelperMethodCalls: function () {
         var _bufferedContextMethodCalls = this._bufferedContextMethodCalls;
         if (_bufferedContextMethodCalls) {
             if (!this.firstStatement) {
@@ -128,24 +161,9 @@ CodeWriter.prototype = {
                     this.incIndent();
                     this._code.append(this.indentStr() + '.' + methodName + '(');
                 }
-                args.forEach(function (arg, i) {
-                    if (i !== 0) {
-                        this._code.append(', ');
-                    }
-                    if (typeof arg === 'string') {
-                        this._code.append(arg);
-                    } else if (typeof arg === 'boolean') {
-                        this._code.append(arg ? 'true' : 'false');
-                    } else if (typeof arg === 'function') {
-                        arg();
-                    } else if (arg instanceof Expression) {
-                        this._code.append(arg.toString());
-                    } else if (arg) {
-                        this._code.append(arg.toString());
-                    } else {
-                        throw createError(new Error('Illegal arg for method call "' + methodName + '": ' + arg.toString() + ' (' + i + ')'));
-                    }
-                }, this);
+
+                writeArgs(this, args);
+
                 if (i < _bufferedContextMethodCalls.length - 1) {
                     this._code.append(')\n');
                 } else {
@@ -196,24 +214,7 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.getStaticHelperFunction('notEmpty', 'ne');
 }
 TemplateBuilder.prototype = {
-    _getHelperFunction: function (varName, propName, isStatic) {
-        var key = propName + ':' + (isStatic ? 'static' : 'context');
-        var added = this.helperFunctionsAdded[key];
-        if (added) {
-            return added;
-        } else {
-            if (isStatic) {
-                this.addStaticVar(varName, 'helpers.' + propName);
-            } else {
-                this.addVar(varName, 'contextHelpers.' + propName);
-            }
-            this.helperFunctionsAdded[key] = varName;
-            return varName;
-        }
-    },
-    getContextHelperFunction: function (varName, propName) {
-        return this._getHelperFunction(varName, propName, false);
-    },
+
     captureCode: function (func, thisObj) {
         var oldWriter = this.writer;
         var newWriter = new CodeWriter(oldWriter.indentStr());
@@ -226,7 +227,15 @@ TemplateBuilder.prototype = {
         }
     },
     getStaticHelperFunction: function (varName, propName) {
-        return this._getHelperFunction(varName, propName, true);
+        
+        var added = this.helperFunctionsAdded[propName];
+        if (added) {
+            return added;
+        } else {
+            this.addStaticVar(varName, 'helpers.' + propName);
+            this.helperFunctionsAdded[propName] = varName;
+            return varName;
+        }
     },
     hasStaticVar: function (name) {
         return this.staticVarsLookup[name] === true;
@@ -270,28 +279,28 @@ TemplateBuilder.prototype = {
     attr: function (name, valueExpression, escapeXml) {
         if (!this.hasErrors()) {
             if (escapeXml === false) {
-                this.contextMethodCall('a', stringify(name), valueExpression, false);
+                this.contextHelperMethodCall('a', stringify(name), valueExpression, false);
             } else {
-                this.contextMethodCall('a', stringify(name), valueExpression);
+                this.contextHelperMethodCall('a', stringify(name), valueExpression);
             }
         }
         return this;
     },
     attrs: function (attrsExpression) {
         if (!this.hasErrors()) {
-            this.contextMethodCall('a', attrsExpression);
+            this.contextHelperMethodCall('a', attrsExpression);
         }
         return this;
     },
     include: function (templateName, dataExpression) {
         if (!this.hasErrors()) {
-            this.contextMethodCall('i', templateName, dataExpression, new Expression('require'));
+            this.contextHelperMethodCall('i', templateName, dataExpression, new Expression('require'));
         }
         return this;
     },
-    contextMethodCall: function (methodName, args) {
+    contextHelperMethodCall: function (methodName, args) {
         if (!this.hasErrors()) {
-            this.writer.contextMethodCall.apply(this.writer, arguments);
+            this.writer.contextHelperMethodCall.apply(this.writer, arguments);
         }
         return this;
     },
