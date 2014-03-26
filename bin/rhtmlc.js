@@ -1,26 +1,46 @@
 var raptorTemplatesCompiler = require('../compiler');
 var glob = require("glob");
-var optimist = require('optimist');
 var fs = require('fs');
 var globPatterns;
 var raptorPromises = require('raptor-promises');
 
-var argv = optimist
-    .alias('n', 'name')
-            .describe('n', 'The name of the page being optimized (e.g. "my-page")')
-    .usage('Usage: $0 <pattern> [options]\nExamples:\n' + 
-       '  Compile a single template:\n' + 
-       '   $0 rhtml template.rhtml\n\n' + 
-       '  Compile all templates in the directory tree:\n' + 
-       '   $0 rhtml **/*.rhtml')
-    .check(function(argv) {
-        if (!argv._) {
-            throw '';
+var argv = require('raptor-args').createParser({
+        '--help': {
+            type: 'boolean',
+            description: 'Show this help message'
+        },
+        '--templates --template -t *': {
+            type: 'string[]',
+            description: 'The path to a template to compile'
         }
     })
-    .argv;
+    .usage('Usage: $0 <pattern> [options]')
+    .example('Compile a single template', '$0 rhtml template.rhtml')
+    .example('Compile all templates in the directory tree', '$0 rhtml **/*.rhtml')
+    .validate(function(result) {
+        if (result.help) {
+            this.printUsage();
+            process.exit(0);
+        }
 
-globPatterns = argv._;
+        if (!result.templates || result.templates.length === 0) {
+            this.printUsage();
+            process.exit(1);
+        }
+    })
+    .onError(function(err) {
+        this.printUsage();
+
+        if (err) {
+            console.log();
+            console.log(err);
+        }
+
+        process.exit(1);
+    })
+    .parse();
+
+globPatterns = argv.templates;
 var found = {};
 var promises = [];
 
