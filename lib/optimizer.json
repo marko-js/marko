@@ -1,7 +1,4 @@
 {
     "dependencies": [
-        { "require": "raptor-pubsub" },
-        { "require": "./raptor-widgets_browser.js" },
-        { "require": "./Widget_jquery.js", "if-extension": "jquery" }
     ]
 }

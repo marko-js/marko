@@ -1,6 +1,7 @@
 {
     "main": "raptor-widgets.js",
     "browser": {
-        "./raptor-widgets_server.js": null
+        "./raptor-widgets.js": "./raptor-widgets-browser.js",
+        "./uniqueId.js": "./uniqueId-browser.js"
     }
 }
