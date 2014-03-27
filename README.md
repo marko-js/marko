@@ -1,11 +1,12 @@
 raptor-templates
 ================
 
+Raptor Templates is an asynchronous, high performance, _HTML-based_ templating language that can be used in Node.js or in the browser. The directives in Raptor Template files are less obtrusive and more powerful because the templating language understands the structure of the HTML document.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Overview](#overview)
 - [Sample Template](#sample-template)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -56,10 +57,6 @@ raptor-templates
 	- [Taglib Discovery](#taglib-discovery)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-
-# Overview
-Raptor Templates is an asynchronous, high performance, _HTML-based_ templating language that can be used in Node.js or in the browser. The directives in Raptor Template files are less obtrusive and more powerful because the templating language understands the structure of the HTML document.
 
 # Sample Template
 A basic template with text replacement, looping and conditionals is shown below:
@@ -923,7 +920,7 @@ Every tag should be associated with a renderer. When a custom tag is used in a t
 If you provide attributes then the Raptor Templates compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
 
 _Multiple attributes:_
-```json
+```javascript
 "attributes": {
     "message": "string",     // String
     "my-data": "expression", // JavaScript expression
