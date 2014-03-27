@@ -355,14 +355,14 @@ Wherever expressions are allowed, they are treated as JavaScript expressions and
 
 JavaScript Operator | Raptor Equivalent
 ------------------- | -----------------
-`&&` | `and`
-`||` | `or`
-`===` | `eq`
-`!==` | `ne`
-`<` | `lt`
-`>` | `gt`
-`<=` | `le`
-`>=` | `ge`
+`&&` 	            | `and`
+<code>&#124;&#124;</code>                | `or`
+`===`               | `eq`
+`!==`               | `ne`
+`<`                 | `lt`
+`>`                 | `gt`
+`<=`                | `le`
+`>=`                | `ge`
 
 ## Includes
 
@@ -1032,7 +1032,7 @@ _components/tabs/renderer.js:_
 ```javascript
 var raptorTemplates = require('raptor-templates');
 
-exports.render = function(input, context) {
+module.exports = function render(input, context) {
     var nestedTabs = [];  
     
     // Invoke the body function to discover nested <ui:tab> tags
@@ -1054,7 +1054,7 @@ exports.render = function(input, context) {
 _components/tab/renderer.js:_
 
 ```javascript
-exports.render = function(input, context) {
+module.exports = function render(input, context) {
     // Register with parent but don't render anything
     input.tabs.addTab(input); 
 };
