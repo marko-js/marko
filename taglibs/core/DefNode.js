@@ -15,7 +15,7 @@
  */
 'use strict';
 var strings = require('raptor-strings');
-var funcDefRegExp = /^([A-Za-z_][A-Za-z0-9_]*)\(((?:[A-Za-z_][A-Za-z0-9_]*,\s*)*[A-Za-z_][A-Za-z0-9_]*)?\)$/;
+var funcDefRegExp = /^([A-Za-z_][A-Za-z0-9_]*)(?:\(((?:[A-Za-z_][A-Za-z0-9_]*,\s*)*[A-Za-z_][A-Za-z0-9_]*)?\))?$/;
 function DefNode(props) {
     DefNode.$super.call(this);
     if (props) {
@@ -48,6 +48,11 @@ DefNode.prototype = {
             this.generateCodeForChildren(template);
             return;
         }
+
+        if (func.indexOf('(') === -1) {
+            func += '()';
+        }
+        
         template.statement('function ' + func + ' {').indent(function () {
             template.line('return helpers.c(context, function() {').indent(function () {
                 this.generateCodeForChildren(template);
