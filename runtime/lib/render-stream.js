@@ -42,12 +42,8 @@ module.exports = function(runtime) {
             var args = this._args;
             var templatePath = args[0];
             var data = args[1];
-            var _this = this;
 
-            var context = runtime.createContext(this)
-                .on('end', function() {
-                    _this.end();
-                });
+            var context = runtime.createContext(this);
 
             runtime.render(templatePath, data, context);
             context.end();
