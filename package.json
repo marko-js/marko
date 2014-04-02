@@ -36,7 +36,6 @@
     "htmlparser2": "~3.5.1",
     "char-props": "~0.1.5",
     "raptor-promises": "^0.2.0-beta",
-    "glob": "^3.2.9",
     "raptor-args": "^0.1.9-beta",
     "minimatch": "^0.2.14"
   },
