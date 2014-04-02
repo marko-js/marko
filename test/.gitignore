@@ -1,2 +1,4 @@
+*.rhtml.js
+*.rxml.js
 *.actual.js
 *.actual.html

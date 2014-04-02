@@ -85,7 +85,7 @@ TemplateCompiler.prototype = {
             transformTreeHelper(rootNode);    //Run the transforms on the tree                 
         } while (this._transformerApplied);
     },
-    compile: function (xmlSrc, callback, thisObj) {
+    compile: function (src, callback, thisObj) {
         var _this = this;
         var filePath = this.path;
         var rootNode;
@@ -105,7 +105,7 @@ TemplateCompiler.prototype = {
             /*
              * First build the parse tree for the tempate
              */
-            rootNode = parser.parse(xmlSrc, filePath, this.taglibs);
+            rootNode = parser.parse(src, filePath, this.taglibs);
             //Build a parse tree from the input XML
             templateBuilder = new TemplateBuilder(this, filePath, rootNode);
             //The templateBuilder object is need to manage the compiled JavaScript output              
@@ -173,6 +173,46 @@ TemplateCompiler.prototype = {
     createTag: function () {
         var Taglib = require('./Taglib');
         return new Taglib.Tag();
+    },
+    checkUpToDate: function(sourceFile, targetFile) {
+        var fs = require('fs');
+
+        
+        var statTarget;
+
+        try {
+            statTarget = fs.statSync(targetFile);
+        } catch(e) {
+            return false;
+        }
+
+        var statSource = fs.statSync(sourceFile);
+
+        if (statSource.mtime.getTime() > statTarget.mtime.getTime()) {
+            return false;
+        }
+
+        // Now check if any of the taglib files have been modified after the target file was generated
+        
+        var taglibFiles = this.taglibs.getInputFiles();
+        var len = taglibFiles.length;
+        for (var i=0; i<len; i++) {
+            var taglibFileStat;
+            var taglibFile = taglibFiles[i];
+
+            try {
+                taglibFileStat = fs.statSync(taglibFile);
+            } catch(e) {
+                continue;
+            }
+
+            if (taglibFileStat.mtime.getTime() > statTarget.mtime.getTime()) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 };
 module.exports = TemplateCompiler;

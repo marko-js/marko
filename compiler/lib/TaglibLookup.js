@@ -12,6 +12,7 @@ function TaglibLookup() {
     this.nestedTags = {};
     this.taglibsById = {};
     this.unresolvedAttributes = [];
+    this._inputFiles = null;
 }
 
 TaglibLookup.prototype = {
@@ -333,6 +334,30 @@ TaglibLookup.prototype = {
             throw new Error('Invalid taglib URI: ' + namespace);
         }
         return taglib.getHelperObject();
+    },
+
+    getInputFiles: function() {
+        if (!this._inputFiles) {
+            var inputFilesSet = {};
+
+            for (var taglibId in this.taglibsById) {
+                if (this.taglibsById.hasOwnProperty(taglibId)) {
+
+                    var taglibInputFiles = this.taglibsById[taglibId].getInputFiles();
+                    var len = taglibInputFiles.length;
+                    if (len) {
+                        for (var i=0; i<len; i++) {
+                            inputFilesSet[taglibInputFiles[i]] = true;
+                        }
+                    }
+                }
+            }
+
+            this._inputFiles = Object.keys(inputFilesSet); 
+        }
+
+        return this._inputFiles;
+        
     }
 };
 module.exports = TaglibLookup;

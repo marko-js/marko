@@ -32,9 +32,19 @@ function Taglib(id) {
     this.helperObject = null;
     this.patternAttributes = [];
     this.importPaths = [];
+    this.inputFilesLookup = {};
 }
 
 Taglib.prototype = {
+
+    addInputFile: function(path) {
+        this.inputFilesLookup[path] = true;
+    },
+
+    getInputFiles: function() {
+        return Object.keys(this.inputFilesLookup);
+    },
+
     addAttribute: function (attribute) {
         if (attribute.namespace) {
             throw createError(new Error('"namespace" is not allowed for taglib attributes'));

@@ -1,22 +1,37 @@
- $rtmpl("simple", function (templating) {
-     var empty = templating.e,
-         notEmpty = templating.ne,
-         forEach = templating.f;
-     return function (data, context) {
-         var write = context.w,
-             rootClass = data.rootClass,
-             colors = data.colors,
-             message = data.message;
-         write('<div class="hello-world ', rootClass, '">', message, '</div>');
-         if (notEmpty(colors)) {
-             write('<ul>');
-             forEach(colors, function (color) {
-                 write('<li class="color">', color, '</li>');
-             });
-             write('</ul>');
-         }
-         if (empty(colors)) {
-             write('<div>No colors!</div>');
-         }
-     }
- });
+module.exports = function create(helpers) {
+  var empty = helpers.e,
+      notEmpty = helpers.ne,
+      escapeXmlAttr = helpers.xa,
+      escapeXml = helpers.x,
+      forEach = helpers.f;
+
+  return function render(data, context) {
+    var rootClass=data.rootClass;
+
+    var colors=data.colors;
+
+    var message=data.message;
+
+    context.w('<div class="hello-world ')
+      .w(escapeXmlAttr(rootClass))
+      .w('">')
+      .w(escapeXml(message))
+      .w('</div>');
+
+    if (notEmpty(colors)) {
+      context.w('<ul>');
+
+      forEach(colors, function(color) {
+        context.w('<li class="color">')
+          .w(escapeXml(color))
+          .w('</li>');
+      });
+
+      context.w('</ul>');
+    }
+
+    if (empty(colors)) {
+      context.w('<div>No colors!</div>');
+    }
+  };
+}

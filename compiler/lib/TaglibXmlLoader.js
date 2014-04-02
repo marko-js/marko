@@ -172,6 +172,7 @@ TaglibXmlLoader.prototype = {
                         if (!taglib) {
                             taglib = newTaglib;
                         }
+                        taglib.addInputFile(filePath);
                         return newTaglib;
                     },
                     'attribute': attributeHandler,

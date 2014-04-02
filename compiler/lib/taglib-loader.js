@@ -278,6 +278,11 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
         var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
         var tagObject;
         var tag;
+        var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
+
+        // Record dependencies so that we can check if a template is up-to-date
+        taglib.addInputFile(tagFile);
+        taglib.addInputFile(rendererFile);
 
         if (fs.existsSync(tagFile)) {
             // raptor-tag.json exists in the directory, use that as the tag definition
@@ -287,7 +292,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             taglib.addTag(tag);
         } else {
             // raptor-tag.json does *not* exist... checking for a 'renderer.js'
-            var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
+            
             if (fs.existsSync(rendererFile)) {
                 var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
                 var tagDef = tagDefFromCode.extractTagDef(rendererCode);
@@ -318,6 +323,7 @@ function load(path) {
 
     var src = fs.readFileSync(path, {encoding: 'utf8'});
     var taglib = new Taglib(path);
+    taglib.addInputFile(path);
     var dirname = nodePath.dirname(path);
 
     function handleNS(ns) {
@@ -355,6 +361,8 @@ function load(path) {
 
                 if (typeof path === 'string') {
                     path = nodePath.resolve(dirname, path);
+                    taglib.addInputFile(path);
+                    
                     tagDirname = nodePath.dirname(path);
                     if (!fs.existsSync(path)) {
                         throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.id);
@@ -368,8 +376,7 @@ function load(path) {
                     catch(e) {
                         throw new Error('Unable to parse tag JSON for tag at path "' + path + '"');
                     }
-                }
-                else {
+                } else {
                     tagDirname = dirname; // Tag is in the same taglib file
                     tagObject = path;
                     path = '<' + tagName + '> tag in ' + taglib.id;
