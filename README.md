@@ -1,18 +1,19 @@
 raptor-templates
 ================
 
-Raptor Templates is a streaming, asynchronous, high performance, _HTML-based_ templating language that can be used in Node.js or in the browser. The directives in Raptor Template files are less obtrusive and more powerful because the templating language understands the structure of the HTML document.
+Raptor Templates is a streaming, asynchronous, high performance, _HTML-based_ templating language that can be used in Node.js or in the browser. Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful .
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Sample Template](#sample-template)
+- [Sample](#sample)
 - [Installation](#installation)
 - [Usage](#usage)
 	- [Template Rendering](#template-rendering)
 		- [Callback API](#callback-api)
 		- [Streaming API](#streaming-api)
+		- [Asynchronous Render Context API](#asynchronous-render-context-api)
 	- [Browser-side Rendering](#browser-side-rendering)
 		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
 		- [Using Browserify](#using-browserify)
@@ -58,7 +59,8 @@ Raptor Templates is a streaming, asynchronous, high performance, _HTML-based_ te
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Sample Template
+# Sample
+
 A basic template with text replacement, looping and conditionals is shown below:
 ```html
 Hello ${data.name}!
@@ -73,22 +75,36 @@ Hello ${data.name}!
 </div>
 ```
 
-If rendering using the following input data:
-```javascript
-{
-    colors: ["red", "green", "blue"]
-}
+The template can then be rendered as shown in the following sample code:
+
+```
+var raptorTemplates = require('raptor-templates');
+var templatePath = require.resolve('./hello.rhtml');
+
+raptorTemplates.render(templatePath, {
+        name: 'World',
+        colors: ["red", "green", "blue"]
+    }, function(err, output) {
+        console.log(output);
+    });
 ```
 
-The output of rendering the above sample template would be the following:
+The output of running the above program will be the following (formatted for readability):
 ```html
-<ul><li>red</li><li>green</li><li>blue</li></ul>
+Hello World!
+
+<ul>
+    <li>red</li>
+    <li>green</li>
+    <li>blue</li>
+</ul>
 ```
 
 For comparison, given the following input data consisting of an empty array of colors:
 
 ```javascript
 {
+    name: 'World',
     colors: []
 }
 ```
@@ -96,6 +112,8 @@ For comparison, given the following input data consisting of an empty array of c
 The output would be the following:
 
 ```html
+Hello World!
+
 <div>No colors!</div>
 ```
 
@@ -105,11 +123,48 @@ Raptor Templates also supports custom tags so you can easily extend the HTML gra
 Welcome to Raptor Templates!
 
 <ui:tabs>
-    <ui:tab label="Overview"></ui:tab>
-    <ui:tab label="Language Guide"></ui:tab>
-    <ui:tab label="JavaScript API"></ui:tab>
+    <ui:tab label="Home">
+        Content for Home
+    </ui:tab>
+    <ui:tab label="Profile">
+        Content for Profile
+    </ui:tab>
+    <ui:tab label="Messages">
+        Content for Messages
+    </ui:tab>
 </ui:tabs>
 ```
+
+The above template is a very simple way to generate the much more complicated HTML output shown below:
+
+```html
+<div class="tabs">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab0" data-toggle="tab">Home</a>
+        </li>
+        <li>
+            <a href="#tab1" data-toggle="tab">Profile</a>
+        </li>
+        <li>
+            <a href="#tab2" data-toggle="tab">Messages</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab0" class="tab-pane active">
+            Content for Home
+        </div>
+        <div id="tab1" class="tab-pane">
+            Content for Profile
+        </div>
+        <div id="tab2" class="tab-pane">
+            Content for Messages
+        </div>
+    </div>
+</div>
+```
+
+The custom tags encapsulate rendering logic and help avoid repeating the same HTML (and potentially the same mistakes).
 
 # Installation
 
@@ -157,6 +212,46 @@ raptorTemplates
     })
     .pipe(out);
 ```
+
+
+### Asynchronous Render Context API
+
+```javascript
+var raptorTemplates = require('raptor-templates');
+var out = require('fs').createWriteStream('index.html', 'utf8');
+
+var context = raptorTemplates.createContext(out);
+
+// Render the first chunk asynchronously (after 1s delay):
+var asyncContext = context.beginAsync();
+setTimeout(function() {
+    asyncContext.write('BEGIN ');
+    asyncContext.end();
+}, 1000);
+
+// Render the template to the existing render context:
+raptorTemplates
+    .render(
+        'template.rhtml',
+        {
+            name: 'World'
+        },
+        context);
+
+// Write the last chunk synchronously:
+context.write(' END');
+
+// End the rendering context
+context.end();
+```
+
+Despite rendering the first chunk asynchronously, the above program will stream out the output in the correct order to `index.html`:
+
+```html
+BEGIN Hello World! END
+```
+
+For more details, please see the documentation for the [raptor-render-context](https://github.com/raptorjs3/raptor-render-context) module.
 
 ## Browser-side Rendering
 
@@ -208,7 +303,9 @@ browserify -t rhtmlify run.js > browser.js
 
 ## Template Compilation
 
-The Raptor Templates compiler produces a CommonJS module as output. This makes it easier to load Raptor Template files from other modules. 
+The Raptor Templates compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/raptor-optimizer) or [Browserify](https://github.com/substack/node-browserify).
+
+The `raptor-templates` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
 You can either use the command line interface or the JavaScript API to compile a Raptor Template file. To use the CLI you must first install the `raptor-templates` module globally using the following command:
 ```bash
@@ -222,11 +319,22 @@ rhtmlc hello.rhtml
 
 This will produce a file named `hello.rhtml.js` next to the original file.
 
-You can also compile multiple templates using a glob pattern as shown in the following sample command:
+You can also recursively compile all templates in the current directory (the `node_modules` and `.*` directories will be ignored by default)
 
 ```bash
-rhtmlc src/**/*.rhtml
+rhtmlc .
 ```
+
+You can also specify multiple directories or files
+```bash
+rhtmlc foo/ bar/ template.rhtml
+```
+
+To delete all of the generated `*.rhtml.js` files you can add the `--clean` argument. For example:
+```bash
+rhtmlc . --clean
+```
+
 
 Alternatively, you can use the JavaScript API to compile a module as shown in the following sample code:
 ```javascript
@@ -636,7 +744,7 @@ The output for the above template would be the following:
 </p>
 ```
 
-_NOTE: By default, the arguments will be of type "string" when using `<c:invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
+_NOTE:_ By default, the arguments will be of type "string" when using `<c:invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
 ```html
 count="10" <!-- string argument -->
 count="${10}"  <!-- number argument -->
