@@ -36,7 +36,7 @@ RequireNode.prototype = {
         }
 
         if (module && varName) {
-            template.statement('var ' + varName + '=require(' + module + ');');
+            template.addStaticVar(varName, 'require(' + module + ')');
         }
     }
 };
