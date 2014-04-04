@@ -77,7 +77,7 @@ Hello ${data.name}!
 
 The template can then be rendered as shown in the following sample code:
 
-```
+```javascript
 var raptorTemplates = require('raptor-templates');
 var templatePath = require.resolve('./hello.rhtml');
 
