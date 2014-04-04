@@ -32,8 +32,15 @@ VarNode.prototype = {
             this.addError('Invalid variable name of "' + varName + '"');
             varName = null;
         }
+
+        var isStatic = this.getProperty('static');
+
         if (varName) {
-            template.statement('var ' + varName + (value ? '=' + value : '') + ';');
+            if (isStatic) {
+                template.addStaticVar(varName, value);
+            } else {
+                template.statement('var ' + varName + (value ? '=' + value : '') + ';');    
+            }
         }
     }
 };
