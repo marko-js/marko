@@ -442,6 +442,11 @@
         </attribute>
 
         <attribute>
+            <name>static</name>
+            <type>boolean</type>
+        </attribute>
+
+        <attribute>
             <name>string-value</name>
             <type>string</type>
         </attribute>
