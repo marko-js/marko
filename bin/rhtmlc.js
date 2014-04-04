@@ -127,18 +127,24 @@ function walk(files, options, done) {
 
     var fileCallback = options.file;
     var context = {
+        errors: [],
         beginAsync: function() {
             pending++;
         },
         endAsync: function(err) {
-            pending--;
-
             if (err) {
-                return done(err);
+                this.errors.push(err);
             }
 
+            pending--;
+
             if (pending === 0) {
-                done(null);
+                if (this.errors.length) {
+                    done(this.errors);
+                } else {
+                    done(null);
+                }
+                
             }
         }
     };
@@ -226,6 +232,7 @@ if (args.clean) {
 } else {
     var found = {};
     var compileCount = 0;
+    var failed
     var failed = [];
 
     var compile = function(path, context) {
@@ -276,6 +283,16 @@ if (args.clean) {
                 }
             },
             function(err) {
+                if (err) {
+                    if (failed.length) {
+                        console.error('The following errors occurred:\n- ' + failed.join('\n- '));
+                    } else {
+                        console.error(err);
+                    }
+
+                    return;
+                }
+
                 if (compileCount === 0) {
                     console.log('No templates found');
                 } else {
