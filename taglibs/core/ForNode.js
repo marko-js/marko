@@ -124,7 +124,6 @@ ForNode.prototype = {
                         template.statement(varName + '=__array[__index];');
                         this.generateCodeForChildren(template);
                     }, this).line('}');
-                    this.generateCodeForChildren(template);
                 }, this).line('});');
             } else {
                 forEachParams = nameVarName ? [
