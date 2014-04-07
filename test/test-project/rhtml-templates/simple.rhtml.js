@@ -12,19 +12,19 @@ module.exports = function create(helpers) {
 
     var message=data.message;
 
-    context.w('<div class="hello-world ')
-      .w(escapeXmlAttr(rootClass))
-      .w('">')
-      .w(escapeXml(message))
-      .w('</div>');
+    context.w('<div class="hello-world ' +
+      escapeXmlAttr(rootClass) +
+      '">' +
+      escapeXml(message) +
+      '</div>');
 
     if (notEmpty(colors)) {
       context.w('<ul>');
 
       forEach(colors, function(color) {
-        context.w('<li class="color">')
-          .w(escapeXml(color))
-          .w('</li>');
+        context.w('<li class="color">' +
+          escapeXml(color) +
+          '</li>');
       });
 
       context.w('</ul>');

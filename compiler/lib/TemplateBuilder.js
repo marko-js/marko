@@ -22,6 +22,22 @@ var Expression = require('./Expression');
 var arrayFromArguments = require('raptor-util').arrayFromArguments;
 var INDENT = '  ';
 
+function writeArg(writer, arg) {
+    if (typeof arg === 'string') {
+        writer._code.append(arg);
+    } else if (typeof arg === 'boolean') {
+        writer._code.append(arg ? 'true' : 'false');
+    } else if (typeof arg === 'function') {
+        arg();
+    } else if (arg instanceof Expression) {
+        writer._code.append(arg.toString());
+    } else if (arg) {
+        writer._code.append(arg.toString());
+    } else {
+        throw createError(new Error('Illegal arg: ' + arg.toString()));
+    }
+}
+
 function writeArgs(writer, args) {
     for (var i=0, len=args.length; i<len; i++) {
         var arg = args[i];
@@ -29,40 +45,28 @@ function writeArgs(writer, args) {
             writer._code.append(', ');
         }
 
-        if (typeof arg === 'string') {
-            writer._code.append(arg);
-        } else if (typeof arg === 'boolean') {
-            writer._code.append(arg ? 'true' : 'false');
-        } else if (typeof arg === 'function') {
-            arg();
-        } else if (arg instanceof Expression) {
-            writer._code.append(arg.toString());
-        } else if (arg) {
-            writer._code.append(arg.toString());
-        } else {
-            throw createError(new Error('Illegal arg: ' + arg.toString() + ' (' + i + ')'));
-        }
+        writeArg(writer, arg);
     }
 }
 
-function CodeWriter(indent) {
+function CodeWriter(concatWrites, indent) {
     this._indent = indent != null ? indent : INDENT + INDENT;
     this._code = new StringBuilder();
     this.firstStatement = true;
     this._bufferedText = null;
-    this._bufferedContextMethodCalls = null;
+    this._bufferedWrites = null;
+    this.concatWrites = concatWrites;
 }
 CodeWriter.prototype = {
     write: function (expression) {
         this.flushText();
-        if (!this._bufferedContextMethodCalls) {
-            this._bufferedContextMethodCalls = [];
+        if (!this._bufferedWrites) {
+            this._bufferedWrites = [];
         }
         
-        this._bufferedContextMethodCalls.push([
-            'w',
-            [expression]
-        ]);
+        this._bufferedWrites.push(expression);
+
+
     },
     text: function (text) {
         if (this._bufferedText === null) {
@@ -135,7 +139,7 @@ CodeWriter.prototype = {
     },
     flush: function () {
         this.flushText();
-        this.flushContextHelperMethodCalls();
+        this.flushWrites();
     },
     flushText: function () {
         var curText = this._bufferedText;
@@ -144,27 +148,43 @@ CodeWriter.prototype = {
             this.write(stringify(curText, { useSingleQuote: true }));
         }
     },
-    flushContextHelperMethodCalls: function () {
-        var _bufferedContextMethodCalls = this._bufferedContextMethodCalls;
-        if (_bufferedContextMethodCalls) {
-            if (!this.firstStatement) {
-                this._code.append('\n');
-            }
-            this.firstStatement = false;
-            this._bufferedContextMethodCalls = null;
-            _bufferedContextMethodCalls.forEach(function (curWrite, i) {
-                var methodName = curWrite[0];
-                var args = curWrite[1];
-                if (i === 0) {
-                    this._code.append(this.indentStr() + 'context.' + methodName + '(');
-                } else {
-                    this.incIndent();
-                    this._code.append(this.indentStr() + '.' + methodName + '(');
+    flushWrites: function () {
+        var _this = this;
+        var code = this._code;
+
+        function concat() {
+
+            code.append(_this.indentStr() + 'context.w(');
+
+            _bufferedWrites.forEach(function (expression, i) {
+                if (i !== 0) {
+                    _this.incIndent();
+                    code.append(' +\n' + this.indentStr());
                 }
 
-                writeArgs(this, args);
+                writeArg(_this, expression);
 
-                if (i < _bufferedContextMethodCalls.length - 1) {
+                if (i !== 0) {
+                    _this.decIndent();
+                }
+            }, _this);
+
+            code.append(');\n');
+        }
+
+        function chain() {
+            _bufferedWrites.forEach(function (arg, i) {
+                
+                if (i === 0) {
+                    this._code.append(this.indentStr() + 'context.w(');
+                } else {
+                    this.incIndent();
+                    this._code.append(this.indentStr() + '.w(');
+                }
+
+                writeArg(this, arg);
+
+                if (i < _bufferedWrites.length - 1) {
                     this._code.append(')\n');
                 } else {
                     this._code.append(');\n');
@@ -172,7 +192,22 @@ CodeWriter.prototype = {
                 if (i !== 0) {
                     this.decIndent();
                 }
-            }, this);
+            }, _this);
+        }
+
+        var _bufferedWrites = this._bufferedWrites;
+        if (_bufferedWrites) {
+            if (!this.firstStatement) {
+                this._code.append('\n');
+            }
+            this.firstStatement = false;
+            this._bufferedWrites = null;
+            if (this.concatWrites) {
+                concat();    
+            } else {
+                chain();
+            }
+            
         }
     },
     incIndent: function (delta) {
@@ -201,10 +236,11 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.compiler = compiler;
     this.path = path;
     this.dirname = nodePath.dirname(path);
-    this.options = compiler.options;
+    this.options = compiler.options || {};
     this.templateName = null;
     this.attributes = {};
-    this.writer = new CodeWriter();
+    this.concatWrites = this.options.concatWrites !== false;
+    this.writer = new CodeWriter(this.concatWrites);
     this.staticVars = [];
     this.staticVarsLookup = {};
     this.helperFunctionsAdded = {};
@@ -217,7 +253,7 @@ TemplateBuilder.prototype = {
 
     captureCode: function (func, thisObj) {
         var oldWriter = this.writer;
-        var newWriter = new CodeWriter(oldWriter.indentStr());
+        var newWriter = new CodeWriter(this.concatWrites, oldWriter.indentStr());
         try {
             this.writer = newWriter;
             func.call(thisObj);
@@ -278,17 +314,23 @@ TemplateBuilder.prototype = {
     },
     attr: function (name, valueExpression, escapeXml) {
         if (!this.hasErrors()) {
+            var expression;
+
             if (escapeXml === false) {
-                this.contextHelperMethodCall('a', stringify(name), valueExpression, false);
+                expression = this.getStaticHelperFunction('attr', 'a') + '(' + stringify(name) + ', ' + valueExpression + ', false)';
             } else {
-                this.contextHelperMethodCall('a', stringify(name), valueExpression);
+                expression = this.getStaticHelperFunction('attr', 'a') + '(' + stringify(name) + ', ' + valueExpression + ')';
             }
+
+            this.write(expression);
         }
+
         return this;
     },
     attrs: function (attrsExpression) {
         if (!this.hasErrors()) {
-            this.contextHelperMethodCall('a', attrsExpression);
+            var expression = this.getStaticHelperFunction('attrs', 'as') + '(' + attrsExpression + ')';
+            this.write(expression);
         }
         return this;
     },
@@ -309,8 +351,7 @@ TemplateBuilder.prototype = {
             if (options) {
                 if (options.escapeXml) {
                     expression = this.getStaticHelperFunction('escapeXml', 'x') + '(' + expression + ')';
-                }
-                if (options.escapeXmlAttr) {
+                } else if (options.escapeXmlAttr) {
                     expression = this.getStaticHelperFunction('escapeXmlAttr', 'xa') + '(' + expression + ')';
                 }
             }

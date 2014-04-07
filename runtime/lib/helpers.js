@@ -4,15 +4,15 @@ var escapeXmlAttr = xmlUtil.escapeXmlAttr;
 var runtime = require('./raptor-templates'); // Circular dependnecy, but that is okay
 var extend = require('raptor-util').extend;
 
-function attr(context, name, value, escapeXml) {
+function attr(name, value, escapeXml) {
     if (value === null || value === true) {
         value = '';
     } else if (value === undefined || value === false || typeof value === 'string' && value.trim() === '') {
-        return;
+        return '';
     } else {
         value = '="' + (escapeXml === false ? value : escapeXmlAttr(value)) + '"';
     }
-    context.write(' ' + name + value);
+    return ' ' + name + value;
 }
 
 function notEmpty(o) {
@@ -83,6 +83,17 @@ module.exports = {
             }
         };
     },
+    a: attr,
+
+    as: function(_attrs, value, escapeXml) {
+        var out = '';
+        for (var attrName in _attrs) {
+            if (_attrs.hasOwnProperty(attrName)) {
+                out += attr(attrName, _attrs[attrName]);
+            }
+        }
+        return out;
+    },
 
     /* Helpers that require a context below: */
     t: function (context, handler, props, body, namespacedProps) {
@@ -113,17 +124,6 @@ module.exports = {
                 return output;
             }
         };
-    },
-    a: function(context, _attrs) {
-        if (arguments.length !== 2) {
-            attr.apply(context, arguments);
-        } else if (_attrs) {
-            for (var attrName in _attrs) {
-                if (_attrs.hasOwnProperty(attrName)) {
-                    attr(context, attrName, _attrs[attrName]);
-                }
-            }
-        }
     },
     i: function(context, path, data, require) {
         if (typeof require === 'function') {
