@@ -119,10 +119,14 @@ function isIgnored(path, dir, stat) {
 }
 
 function walk(files, options, done) {
+    if (!files || files.length === 0) {
+        done('No files provided');
+    }
+
     var pending = 0;
 
     if (!Array.isArray(files)) {
-        files = [];
+        files = [files];
     }
 
     var fileCallback = options.file;
@@ -232,7 +236,7 @@ if (args.clean) {
 } else {
     var found = {};
     var compileCount = 0;
-    var failed
+    var failed;
     var failed = [];
 
     var compile = function(path, context) {
