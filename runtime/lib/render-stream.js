@@ -50,7 +50,7 @@ module.exports = function(runtime) {
         }
     };
 
-    require('raptor-util').inherit(Readable, stream.Readable);
+    require('raptor-util/inherit')(Readable, stream.Readable);
 
     return function stream(templatePath, data) {
         return new Readable(templatePath, data);

@@ -1,19 +1,10 @@
-var xmlUtil = require('raptor-xml/util');
-var escapeXml = xmlUtil.escapeXml;
-var escapeXmlAttr = xmlUtil.escapeXmlAttr;
+var escapeXml = require('raptor-util/escapeXml');
+var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./raptor-templates'); // Circular dependnecy, but that is okay
-var extend = require('raptor-util').extend;
-
-function attr(name, value, escapeXml) {
-    if (value === null || value === true) {
-        value = '';
-    } else if (value === undefined || value === false || typeof value === 'string' && value.trim() === '') {
-        return '';
-    } else {
-        value = '="' + (escapeXml === false ? value : escapeXmlAttr(value)) + '"';
-    }
-    return ' ' + name + value;
-}
+var extend = require('raptor-util/extend');
+var attr = require('raptor-util/attr');
+var attrs = require('raptor-util/attrs');
+var forEach = require('raptor-util/forEach');
 
 function notEmpty(o) {
     if (Array.isArray(o) === true) {
@@ -51,7 +42,7 @@ module.exports = {
             callback(o || '', loopStatus);
         }
     },
-    f: require('raptor-util').forEach,
+    f: forEach,
     fl: function (array, func) {
         if (array != null) {
             if (!Array.isArray(array)) {
@@ -85,15 +76,7 @@ module.exports = {
     },
     a: attr,
 
-    as: function(_attrs, value, escapeXml) {
-        var out = '';
-        for (var attrName in _attrs) {
-            if (_attrs.hasOwnProperty(attrName)) {
-                out += attr(attrName, _attrs[attrName]);
-            }
-        }
-        return out;
-    },
+    as: attrs,
 
     /* Helpers that require a context below: */
     t: function (context, handler, props, body, namespacedProps) {

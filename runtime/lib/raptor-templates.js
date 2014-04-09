@@ -21,7 +21,7 @@
  * in the {@link raptor/templating/compiler} module.
  */
 var renderContext = require('raptor-render-context');
-var createError = require('raptor-util').createError;
+var createError = require('raptor-util/createError');
 var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
@@ -88,7 +88,4 @@ exports.createContext = function(writer) {
 
 
 exports.helpers = helpers;
-
 exports.stream = require('./render-stream')(exports);
-
-
