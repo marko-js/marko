@@ -79,7 +79,7 @@ CodeWriter.prototype = {
         args = arrayFromArguments(arguments, 1);
 
         this.flush();
-        this._code.append(this._indent + 'helpers.' + methodName + '(context');
+        this._code.append(this._indent + '__helpers.' + methodName + '(context');
 
         if (args.length) {
             this._code.append(', ');    
@@ -268,7 +268,7 @@ TemplateBuilder.prototype = {
         if (added) {
             return added;
         } else {
-            this.addStaticVar(varName, 'helpers.' + propName);
+            this.addStaticVar(varName, '__helpers.' + propName);
             this.helperFunctionsAdded[propName] = varName;
             return varName;
         }
@@ -413,7 +413,7 @@ TemplateBuilder.prototype = {
         } else {
             params = ['context'];
         }
-        out.append('module.exports = function create(helpers) {\n');
+        out.append('module.exports = function create(__helpers) {\n');
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);

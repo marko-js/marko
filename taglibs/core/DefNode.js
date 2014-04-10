@@ -54,7 +54,7 @@ DefNode.prototype = {
         }
         
         template.statement('function ' + func + ' {').indent(function () {
-            template.line('return helpers.c(context, function() {').indent(function () {
+            template.line('return __helpers.c(context, function() {').indent(function () {
                 this.generateCodeForChildren(template);
             }, this).line('});');
         }, this).line('}');

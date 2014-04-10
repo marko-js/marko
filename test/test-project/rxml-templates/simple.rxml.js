@@ -1,17 +1,17 @@
-module.exports = function create(helpers) {
-  var empty = helpers.e,
-      notEmpty = helpers.ne,
+module.exports = function create(__helpers) {
+  var empty = __helpers.e,
+      notEmpty = __helpers.ne,
       hello_renderer = require("../hello-renderer"),
-      escapeXmlAttr = helpers.xa,
-      escapeXml = helpers.x,
-      forEach = helpers.f;
+      escapeXmlAttr = __helpers.xa,
+      escapeXml = __helpers.x,
+      forEach = __helpers.f;
 
   return function render(data, context) {
     var rootClass = data.rootClass,
         colors = data.colors,
         message = data.message;
 
-    helpers.t(context, 
+    __helpers.t(context, 
       hello_renderer,
       {
         "name": "World"

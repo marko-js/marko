@@ -190,7 +190,7 @@ Node.prototype = {
         if (escapeXml !== false) {
             methodCall = 'context.captureString(';
         } else {
-            methodCall = 'helpers.c(context, ';
+            methodCall = '__helpers.c(context, ';
         }
 
         return template.makeExpression({

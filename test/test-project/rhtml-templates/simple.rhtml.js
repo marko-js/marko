@@ -1,9 +1,9 @@
-module.exports = function create(helpers) {
-  var empty = helpers.e,
-      notEmpty = helpers.ne,
-      escapeXmlAttr = helpers.xa,
-      escapeXml = helpers.x,
-      forEach = helpers.f;
+module.exports = function create(__helpers) {
+  var empty = __helpers.e,
+      notEmpty = __helpers.ne,
+      escapeXmlAttr = __helpers.xa,
+      escapeXml = __helpers.x,
+      forEach = __helpers.f;
 
   return function render(data, context) {
     var rootClass=data.rootClass;

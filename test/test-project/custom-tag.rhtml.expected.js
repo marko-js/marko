@@ -1,10 +1,10 @@
-module.exports = function create(helpers) {
-  var empty = helpers.e,
-      notEmpty = helpers.ne,
+module.exports = function create(__helpers) {
+  var empty = __helpers.e,
+      notEmpty = __helpers.ne,
       hello_renderer = require("./hello-renderer");
 
   return function render(data, context) {
-    helpers.t(context, 
+    __helpers.t(context, 
       hello_renderer,
       {
         "name": "World"
