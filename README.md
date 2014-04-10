@@ -1,7 +1,7 @@
 raptor-templates
 ================
 
-Raptor Templates is a streaming, asynchronous, high performance, _HTML-based_ templating language that can be used in Node.js or in the browser. Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful .
+Raptor Templates is a streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful .
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
