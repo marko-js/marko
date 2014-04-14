@@ -998,7 +998,7 @@ A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.jso
 {
     "tags": {
         "my-hello": {
-            "renderer": "./hello-renderer.js",
+            "renderer": "./hello-renderer",
             "attributes": {
                 "name": "string"
             }
@@ -1015,13 +1015,13 @@ Tags can be defined by adding a `"tags"` property to your `raptor-taglib.json`:
 {
     "tags": {
         "my-hello": {
-            "renderer": "./hello-renderer.js",
+            "renderer": "./hello-renderer",
             "attributes": {
                 "name": "string"
             }
         },
         "my-foo": {
-            "renderer": "./foo-renderer.js",
+            "renderer": "./foo-renderer",
             "attributes": {
                 "*": "string"
             }
@@ -1122,11 +1122,11 @@ Raptor Templates supports this by leveraging JavaScript closures in the compiled
 {
     "tags": {
         "ui-tabs": {
-            "renderer": "./tabs-tag.js",
+            "renderer": "./tabs-tag",
             "var": "tabs"
         },
         "ui-tab": {
-            "renderer": "./tab-tag.js",
+            "renderer": "./tab-tag",
             "import-var": {
                 "tabs": "tabs"
             },
