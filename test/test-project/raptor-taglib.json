@@ -1,19 +1,18 @@
 {
-    "namespace": ["test", "http://raptorjs.org/templates/test"],
     "tags": {
-        "hello": "hello-tag.json",
-        "simpleHello": {
+        "test-hello": "hello-tag.json",
+        "test-simpleHello": {
             "renderer": "./simple-hello-tag.js",
             "attributes": {
                 "name": "string",
                 "adult": "boolean"
             }
         },
-        "tabs": {
+        "test-tabs": {
             "renderer": "./tabs-tag.js",
             "var": "tabs"
         },
-        "tab": {
+        "test-tab": {
             "renderer": "./tab-tag.js",
             "import-var": {
                 "tabs": "tabs"
@@ -22,7 +21,7 @@
                 "title": "string"
             }
         },
-        "dynamic-attributes": {
+        "test-dynamic-attributes": {
             "renderer": "./dynamic-attributes-tag.js",
             "attributes": {
                 "test": "string",
@@ -32,14 +31,14 @@
                 }
             }
         },
-        "dynamic-attributes2": {
+        "test-dynamic-attributes2": {
             "renderer": "./dynamic-attributes-tag2.js",
             "attributes": {
                 "test": "string",
                 "*": "string"
             }
         },
-        "dynamic-attributes3": {
+        "test-dynamic-attributes3": {
             "renderer": "./dynamic-attributes-tag3.js",
             "attributes": {
                 "test": "string",
@@ -49,21 +48,20 @@
                 }
             }
         },
-        "popover": {
+        "test-popover": {
             "renderer": "./popover-tag.js",
             "attributes": {
                 "title": "string",
                 "content": "string"
             }
         },
-        "page-title": {
+        "test-page-title": {
             "template": "./page-title-tag.rhtml",
             "attributes": {
                 "title": "string"
             }
         },
-
-        "default-attributes": {
+        "test-default-attributes": {
             "renderer": "./default-attributes-tag.js",
             "attributes": {
                 "prop1": "string",

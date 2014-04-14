@@ -1,21 +1,19 @@
-<c:template
-    xmlns:c="core" 
-    xmlns:caching="caching" 
+<c-template 
     params="">
 
-    <c:var name="count" value="0"/>
+    <c-var name="count" value="0"/>
     
-    <c:def function="foo(cacheName, cacheKey)">
-        <caching:cached-fragment cache-key="$cacheKey" cache-name="$cacheName">
+    <c-def function="foo(cacheName, cacheKey)">
+        <cached-fragment cache-key="$cacheKey" cache-name="$cacheName">
             Count: ${count++}
-        </caching:cached-fragment>
-    </c:def>
+        </cached-fragment>
+    </c-def>
     
-    <c:invoke function="foo('cacheA', 'keyA')"/>
-    <c:invoke function="foo('cacheA', 'keyA')"/>
-    <c:invoke function="foo('cacheA', 'keyB')"/>
+    <c-invoke function="foo('cacheA', 'keyA')"/>
+    <c-invoke function="foo('cacheA', 'keyA')"/>
+    <c-invoke function="foo('cacheA', 'keyB')"/>
     
-    <c:invoke function="foo('cacheB', 'keyA')"/>
-    <c:invoke function="foo('cacheB', 'keyA')"/>
-    <c:invoke function="foo('cacheB', 'keyB')"/>
-</c:template>
+    <c-invoke function="foo('cacheB', 'keyA')"/>
+    <c-invoke function="foo('cacheB', 'keyA')"/>
+    <c-invoke function="foo('cacheB', 'keyB')"/>
+</c-template>

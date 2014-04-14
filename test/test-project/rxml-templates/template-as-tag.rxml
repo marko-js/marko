@@ -1,5 +1,5 @@
-<c:template xmlns:c="core" xmlns:test="test">
+<c-template>
     <div>
-        <test:page-title title="My Page Title"/>
+        <test-page-title title="My Page Title"/>
     </div>
-</c:template>
+</c-template>

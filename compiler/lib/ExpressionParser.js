@@ -19,6 +19,8 @@ var Expression = require('./Expression');
 var strings = require('raptor-strings');
 var stringify = require('raptor-json/stringify');
 var regexp = require('raptor-regexp');
+var ok = require('assert').ok;
+
 var endingTokens = {
         '${': '}',
         '$!{': '}',
@@ -247,6 +249,9 @@ function ExpressionParser() {
  * @param thisObj
  */
 ExpressionParser.parse = function (str, callback, thisObj, options) {
+
+    ok(str != null, '"str" is required');
+    
     if (!options) {
         options = {};
     }

@@ -31,7 +31,8 @@ var defaultOptions = {
             'meta': true,
             'link': true,
             'hr': true
-        }
+        },
+        checkUpToDate: true
     };
 
 extend(exports, {
@@ -86,3 +87,5 @@ extend(exports, {
     EscapeXmlContext: require('./EscapeXmlContext'),
     defaultOptions: defaultOptions
 });
+
+exports.TemplateCompiler = require('./TemplateCompiler');

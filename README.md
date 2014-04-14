@@ -1,7 +1,7 @@
 raptor-templates
 ================
 
-Raptor Templates is a streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful .
+Raptor Templates is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Raptor Templates was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Raptor Templates allows you to introduce your own custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)--only you can use it now).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -50,12 +50,12 @@ Raptor Templates is a streaming, asynchronous, [high performance](https://github
 	- [Tag Renderer](#tag-renderer)
 	- [raptor-taglib.json](#raptor-taglibjson)
 		- [Sample Taglib](#sample-taglib)
-		- [Taglib Namespace](#taglib-namespace)
 		- [Defining Tags](#defining-tags)
 			- [Defining Attributes](#defining-attributes)
 		- [Scanning for Tags](#scanning-for-tags)
 		- [Nested Tags](#nested-tags)
 	- [Taglib Discovery](#taglib-discovery)
+- [FAQ](#faq)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -65,12 +65,12 @@ A basic template with text replacement, looping and conditionals is shown below:
 ```html
 Hello ${data.name}!
 
-<ul c:if="notEmpty(data.colors)">
-    <li style="color: $color" c:for="color in data.colors">
+<ul c-if="notEmpty(data.colors)">
+    <li style="color: $color" c-for="color in data.colors">
         $color
     </li>
 </ul>
-<div c:else>
+<div c-else>
     No colors!
 </div>
 ```
@@ -122,17 +122,17 @@ Raptor Templates also supports custom tags so you can easily extend the HTML gra
 ```html
 Welcome to Raptor Templates!
 
-<ui:tabs>
-    <ui:tab label="Home">
+<ui-tabs>
+    <ui-tab label="Home">
         Content for Home
-    </ui:tab>
-    <ui:tab label="Profile">
+    </ui-tab>
+    <ui-tab label="Profile">
         Content for Profile
-    </ui:tab>
-    <ui:tab label="Messages">
+    </ui-tab>
+    <ui-tab label="Messages">
         Content for Messages
-    </ui:tab>
-</ui:tabs>
+    </ui-tab>
+</ui-tabs>
 ```
 
 The above template is a very simple way to generate the much more complicated HTML output shown below:
@@ -396,14 +396,14 @@ Almost all of the Raptor templating directives can be used as either an attribut
 _Applying directives using attributes:_
 ```html
 <!-- Colors available -->
-<ul c:if="notEmpty(colors)">
-    <li c:for="color in colors">
+<ul c-if="notEmpty(colors)">
+    <li c-for="color in colors">
         $color
     </li>
 </ul>
  
 <!-- No colors available -->
-<div c:if="empty(colors)">
+<div c-if="empty(colors)">
     No colors!
 </div>
 ```
@@ -411,25 +411,25 @@ _Applying directives using attributes:_
 _Applying directives using elements:_
 ```html
 <!-- Colors available -->
-<c:if test="notEmpty(colors)">
+<c-if test="notEmpty(colors)">
     <ul>
-        <c:for each="color in colors">
+        <c-for each="color in colors">
             <li>
                 $color
             </li>
-        </c:for>
+        </c-for>
     </ul>
-</c:if>
+</c-if>
   
 <!-- No colors available -->
-<c:if test="empty(colors)">
+<c-if test="empty(colors)">
     <div>
         No colors!
     </div>
-</c:if>
+</c-if>
 ```
 
-The disadvantage of using elements to control structural logic is that they change the nesting of the elements which can impact readability. For this reason it is often more suitable to use attributes.
+The disadvantage of using elements to control structural logic is that they change the nesting of the elements which can impact readability. For this reason it is often more suitable to apply directives as attributes.
 
 ## Text Replacement
 
@@ -472,12 +472,26 @@ JavaScript Operator | Raptor Equivalent
 `<=`                | `le`
 `>=`                | `ge`
 
-## Includes
-
-Other Raptor Template files can be included using the `<c:include>` tag and a relative path. For example:
+For example, both of the following are valid and equivalent:
 
 ```html
-<c:include template="./greeting" name="Frank" count="30"/>
+<div c-if="searchResults.length > 100">
+    Show More
+</div>
+```
+
+```html
+<div c-if="searchResults.length gt 100">
+    Show More
+</div>
+```
+
+## Includes
+
+Other Raptor Template files can be included using the `<c-include>` tag and a relative path. For example:
+
+```html
+<c-include template="./greeting.rhtml" name="Frank" count="30"/>
 ```
 
 ## Variables
@@ -485,102 +499,102 @@ Other Raptor Template files can be included using the `<c:include>` tag and a re
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
 
 ```html
-<c:var name="name" value="data.name.toUpperCase()" />
+<c-var name="name" value="data.name.toUpperCase()" />
 ```
 
 ## Conditionals
 
 ### if...else-if...else
 
-Any element or fragment of HTML can be made conditional using the c:if, c:else-if or c:else directive.
+Any element or fragment of HTML can be made conditional using the `c-if`, `c-else-if` or `c-else` directive.
 
-_Applied as an attribute:_
+_Applied as attributes:_
 ```html
 <!--Simple if-->
-<div c:if="someCondition">
+<div c-if="someCondition">
     Hello World
 </div>
 
 <!--Complex if-->
-<div c:if="test === 'a'">
+<div c-if="test === 'a'">
     A
 </div>
-<div c:else-if="test === 'b'">
+<div c-else-if="test === 'b'">
     B
 </div>
-<div c:else-if="test === 'c'">
+<div c-else-if="test === 'c'">
     C
 </div>
-<div c:else>
+<div c-else>
     Something else
 </div>
 ```
 
-_Applied as an element:_
+_Applied as elements:_
 ```html
 <!-- Colors available -->
 <!--Simple if-->
-<c:if test="someCondition">
+<c-if test="someCondition">
     <div>
         Hello World
     </div>
-</c:if>
+</c-if>
 
 <!--Complex if-->
-<c:if test="test === 'a'">
+<c-if test="test === 'a'">
     <div>
         A
     </div>
-</c:if>
-<c:else-if test="test === 'b'">
+</c-if>
+<c-else-if test="test === 'b'">
     <div>
         B
     </div>
-</c:else-if>
-<c:else-if test="test === 'c'">
+</c-else-if>
+<c-else-if test="test === 'c'">
     <div>
         C
     </div>
-</c:else-if>
-<c:else>
+</c-else-if>
+<c-else>
     <div>
         Something else
     </div>
-</c:else>
+</c-else>
 ```
 
 ### choose…when…otherwise
 
-The `c:choose` directive, in combination with the directives `c:when` and `c:otherwise` provides advanced conditional processing for rendering one of several alternatives. The first matching `c:when` branch is rendered, or, if no `c:when` branch matches, the `c:otherwise` branch is rendered.
+The `c-choose` directive, in combination with the directives `c-when` and `c-otherwise` provides advanced conditional processing for rendering one of several alternatives. The first matching `c-when` branch is rendered, or, if no `c-when` branch matches, the `c-otherwise` branch is rendered.
 
 _Applied as an attribute:_
 ```html
-<c:choose>
-    <c:when test="myVar === 'A'">
+<c-choose>
+    <c-when test="myVar === 'A'">
         <div>A</div>
-    </c:when>
-    <c:when test="myVar === 'B'">
+    </c-when>
+    <c-when test="myVar === 'B'">
         <div>B</div>
-    </c:when>
-    <c:otherwise>
+    </c-when>
+    <c-otherwise>
         <div>Something else</div>
-    </c:otherwise>
-<c:choose>
+    </c-otherwise>
+<c-choose>
 ```
 
 _Applied as an element:_
 ```html
-<c:choose>
-    <div c:when="myVar === 'A'">
+<c-choose>
+    <div c-when="myVar === 'A'">
         A
     </div>
-    <div c:when="myVar === 'B'">
+    <div c-when="myVar === 'B'">
         B
     </div>
-    <div c:otherwise="">
+    <div c-otherwise="">
         Something else
     </div>
-<c:choose>
+<c-choose>
 ```
 
 ### Shorthand conditionals
@@ -623,21 +637,21 @@ With a value of `false` for `active`, the output would be the following:
 
 ### for
 
-Any element can be repeated for every item in an array using the `c:for` directive. The directive can be applied as an element or as an attribute.
+Any element can be repeated for every item in an array using the `c-for` directive. The directive can be applied as an element or as an attribute.
 
 _Applied as an attribute:_
 ```html
 <ul>
-    <li c:for="item in items">${item}</li>
+    <li c-for="item in items">${item}</li>
 </ul>
 ```
 
 _Applied as an element:_
 ```html
 <ul>
-    <c:for each="item in items">
+    <c-for each="item in items">
         <li>${item}</li>
-    </c:for>
+    </c-for>
 </ul>
 ```
 
@@ -658,14 +672,14 @@ The output would be the following:
 
 #### Loop Status Variable
 
-The `c:for` directive also supports a loop status variable in case you need to know the current loop index. For example:
+The `c-for` directive also supports a loop status variable in case you need to know the current loop index. For example:
 
 ```html
 <ul>
-    <li c:for="color in colors; status-var=loop">
+    <li c-for="color in colors; status-var=loop">
         ${loop.getIndex()+1}) $color
-        <c:if test="loop.isFirst()"> - FIRST</c:if>
-        <c:if test="loop.isLast()"> - LAST</c:if>
+        <c-if test="loop.isFirst()"> - FIRST</c-if>
+        <c-if test="loop.isLast()"> - LAST</c-if>
     </li>
 </ul>
 ```
@@ -673,10 +687,10 @@ The `c:for` directive also supports a loop status variable in case you need to k
 #### Loop Separator
 
 ```html
-<c:for each="color in colors" separator=", ">$color</c:for>
+<c-for each="color in colors" separator=", ">$color</c-for>
     
 <div>
-    <span c:for="color in colors; separator=', '" style="color: $color">$color</span>
+    <span c-for="color in colors; separator=', '" style="color: $color">$color</span>
 </div>
 ```
 
@@ -684,7 +698,7 @@ The `c:for` directive also supports a loop status variable in case you need to k
 
 ```html
 <ul>
-    <li c:for="(name,value) in settings">
+    <li c-for="(name,value) in settings">
         <b>$name</b>:
         $value
     </li>
@@ -693,24 +707,24 @@ The `c:for` directive also supports a loop status variable in case you need to k
 
 ## Macros
 
-Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<c:def>` directive.
+Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<c-def>` directive.
 
 ### def
 
-The `<c:def>` directive can be used to define a reusable function within a template.
+The `<c-def>` directive can be used to define a reusable function within a template.
 
 ```html
-<c:def function="greeting(name, count)">
+<c-def function="greeting(name, count)">
     Hello $name! You have $count new messages.
-</c:def>
+</c-def>
 ```
 
-The above macro can then be invoked as part of any expression. Alternatively, the [`<c:invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
+The above macro can then be invoked as part of any expression. Alternatively, the [`<c-invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
 
 ```html
-<c:def function="greeting(name, count)">
+<c-def function="greeting(name, count)">
     Hello $name! You have $count new messages.
-</c:def>
+</c-def>
 
 <p>
     ${greeting("John", 10)}
@@ -722,15 +736,15 @@ The above macro can then be invoked as part of any expression. Alternatively, th
 
 ### invoke
 
-The `<c:invoke>` directive can be used to invoke a function defined using the `<c:def>` directive or a function that is part of the input to a template. The `<c:invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<c:def>` directive.
+The `<c-invoke>` directive can be used to invoke a function defined using the `<c-def>` directive or a function that is part of the input to a template. The `<c-invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<c-def>` directive.
 
 ```html
-<c:def function="greeting(name, count)">
+<c-def function="greeting(name, count)">
     Hello ${name}! You have ${count} new messages.
-</c:def>
+</c-def>
  
-<c:invoke function="greeting" name="John" count="${10}"/>
-<c:invoke function="greeting('Frank', 20)"/> 
+<c-invoke function="greeting" name="John" count="${10}"/>
+<c-invoke function="greeting('Frank', 20)"/> 
 ```
 
 The output for the above template would be the following:
@@ -744,7 +758,7 @@ The output for the above template would be the following:
 </p>
 ```
 
-_NOTE:_ By default, the arguments will be of type "string" when using `<c:invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
+_NOTE:_ By default, the arguments will be of type "string" when using `<c-invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
 ```html
 count="10" <!-- string argument -->
 count="${10}"  <!-- number argument -->
@@ -755,10 +769,10 @@ count="${10}"  <!-- number argument -->
 
 ### attrs
 
-The `c:attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the c:attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
+The `c-attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the c-attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
 
 ```html
-<div c:attrs="myAttrs">
+<div c-attrs="myAttrs">
     Hello World!
 </div>
 ```
@@ -783,7 +797,7 @@ This directive replaces any nested content with the result of evaluating the exp
 
 ```html
 <ul>
-    <li c:content="myExpr">Hello</li>
+    <li c-content="myExpr">Hello</li>
 </ul>
 ```
 
@@ -801,7 +815,7 @@ This directive replaces the element itself with the result of evaluating the exp
 
 ```html
 <div>
-    <span c:replace="myExpr">Hello</span>
+    <span c-replace="myExpr">Hello</span>
 </div>
 ```
 
@@ -819,7 +833,7 @@ This directive conditionally strips the top-level element from the output. If th
 
 ```html
 <div>
-    <span c:strip="true"><b>Hello</b></span>
+    <span c-strip="true"><b>Hello</b></span>
 </div>
 ```
 
@@ -842,6 +856,19 @@ Example comments:
 <h1>Hello</h1>
 ```
 
+If you would like for your HTML comment to show up in the final output then you can use the custom `html-comment` tag:
+```html
+<html-comment>This is a comment that *will* be rendered</html-comment>
+<h1>Hello</h1>
+```
+
+Output:
+
+```html
+<!--This is a comment that *will* be rendered-->
+<h1>Hello</h1>
+```
+
 ## Helpers
 
 Since Raptor Template files compile into CommonJS modules, any Node.js module can be "imported" into a template for use as a helper module. For example, given the following helper module:
@@ -861,26 +888,26 @@ The above module can then be imported into a template as shown in the following 
 
 _src/template.rhtml_:
 ```html
-<c:require module="./util" var="util" />
+<c-require module="./util" var="util" />
 
 <div>${util.reverse('reverse test')}</div>
 ```
 
-The `c:require` directive is just short-hand for the following:
+The `c-require` directive is just short-hand for the following:
 ```html
-<c:var name="util" value="require('./util')" />
+<c-var name="util" value="require('./util')" />
 <div>${util.reverse('reverse test')}</div>
 ```
 
 ## Custom Tags and Attributes
 
-Raptor Templates supports extending the language with custom tags and attributes. A custom tag or a custom attribute should be prefixed with a namespace that matches a module name that exports the custom tag or custom attribute. Alternatively, the namespace can be a shorter alias defined by the taglib.
+Raptor Templates supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
 
 Below illustrates how to use a simple custom tag:
 
 ```html
 <div>
-    <app:hello name="World"/>
+    <my-hello name="World"/>
 </div>
 ```
 
@@ -905,19 +932,19 @@ _default-layout.rhtml:_
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><layout:placeholder name="title"/></title>
+    <title><layout-placeholder name="title"/></title>
 </head>
 <body>
-    <h1 c:if="data.showHeader !== false">
-        <layout:placeholder name="title"/>
+    <h1 c-if="data.showHeader !== false">
+        <layout-placeholder name="title"/>
     </h1>
     <p>
-        <layout:placeholder name="body"/>
+        <layout-placeholder name="body"/>
     </p>
     <div>
-        <layout:placeholder name="footer">
+        <layout-placeholder name="footer">
             Default Footer
-        </layout:placeholder>
+        </layout-placeholder>
     </div>
 </body>
 </html>
@@ -926,10 +953,10 @@ _default-layout.rhtml:_
 _Usage of `default-layout.rhtml`:_
 
 ```html
-<layout:use template="./default-layout.rhtml" show-header="$true">
-    <layout:put into="title">My Page</layout:put>
-    <layout:put into="body">BODY CONTENT</layout:put>
-</layout:use>
+<layout-use template="./default-layout.rhtml" show-header="$true">
+    <layout-put into="title">My Page</layout-put>
+    <layout-put into="body">BODY CONTENT</layout-put>
+</layout-use>
 ```
 
 # Custom Taglibs
@@ -965,9 +992,8 @@ A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.jso
 
 ```json
 {
-    "namespace": "my-taglib",
     "tags": {
-        "hello": {
+        "my-hello": {
             "renderer": "./hello-renderer.js",
             "attributes": {
                 "name": "string"
@@ -977,41 +1003,20 @@ A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.jso
 }
 ```
 
-### Taglib Namespace
-
-Every taglib should be associated with one or more namespaces as shown below:
-
-```json
-{
-    "namespace": "my-taglib",
-    ...
-}
-```
-
-Multiple aliases can be offered:
-
-```json
-{
-    "namespace": ["my-taglib", "my"],
-    ...
-}
-```
-
 ### Defining Tags
 
 Tags can be defined by adding a `"tags"` property to your `raptor-taglib.json`:
 
 ```json
 {
-    "namespace": "my-taglib",
     "tags": {
-        "hello": {
+        "my-hello": {
             "renderer": "./hello-renderer.js",
             "attributes": {
                 "name": "string"
             }
         },
-        "foo": {
+        "my-foo": {
             "renderer": "./foo-renderer.js",
             "attributes": {
                 "*": "string"
@@ -1049,7 +1054,6 @@ With this approach, `raptor-taglib.json` will be much simpler:
 
 ```json
 {
-    "namespace": "my-taglib",
     "tags-dir": "./components"
 }
 ```
@@ -1057,20 +1061,20 @@ With this approach, `raptor-taglib.json` will be much simpler:
 Given the following directory structure:
 
 * __components/__
-    * __hello/__
+    * __my-hello/__
         * renderer.js
-    * __foo/__
+    * __my-foo/__
         * renderer.js
-    * __bar/__
+    * __my-bar/__
         * renderer.js
         * raptor-tag.json
 * raptor-taglib.json
 
-The following three tags will be exported as part of the "my-taglib" namespace:
+The following three tags will be exported:
 
-* `<my-taglib:hello>`
-* `<my-taglib:foo>`
-* `<my-taglib:bar>`
+* `<my-hello>`
+* `<my-foo>`
+* `<my-bar>`
 
 Directory scanning only supports one tag per directory and it will only look at directories one level deep. The tag definition can be embedded into the `renderer.js` file or it can be put into a separate `raptor-tag.json`. For example:
 
@@ -1101,24 +1105,23 @@ _NOTE: It is not necessary to declare the `renderer` since the scanner will auto
 It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
 
 ```html
-<ui:tabs>
-    <ui:tab label="Overview"></ui:tab>
-    <ui:tab label="Language Guide"></ui:tab>
-    <ui:tab label="JavaScript API"></ui:tab>
-</ui:tabs>
+<ui-tabs>
+    <ui-tab label="Overview"></ui-tab>
+    <ui-tab label="Language Guide"></ui-tab>
+    <ui-tab label="JavaScript API"></ui-tab>
+</ui-tabs>
 ```
 
 Raptor Templates supports this by leveraging JavaScript closures in the compiled output. A tag can introduce scoped variables that are available to nested tags. This is shown in the sample `raptor-taglib.json` below:
 
 ```json
 {
-    "namespace": "ui",
     "tags": {
-        "tabs": {
+        "ui-tabs": {
             "renderer": "./tabs-tag.js",
             "var": "tabs"
         },
-        "tab": {
+        "ui-tab": {
             "renderer": "./tab-tag.js",
             "import-var": {
                 "tabs": "tabs"
@@ -1131,7 +1134,7 @@ Raptor Templates supports this by leveraging JavaScript closures in the compiled
 }
 ```
 
-In the above example, the `<ui:tabs>` tag will introduce a scoped variable named `tabs` that is then automatically imported by the nested `<ui:tab>` tags. When the nested `<ui:tab>` tags render they can use the scoped variable to communicate with the renderer for the `<ui:tabs>` tag.
+In the above example, the `<ui-tabs>` tag will introduce a scoped variable named `tabs` that is then automatically imported by the nested `<ui-tab>` tags. When the nested `<ui-tab>` tags render they can use the scoped variable to communicate with the renderer for the `<ui-tabs>` tag.
 
 The complete code for this example is shown below:
 
@@ -1143,7 +1146,7 @@ var raptorTemplates = require('raptor-templates');
 module.exports = function render(input, context) {
     var nestedTabs = [];  
     
-    // Invoke the body function to discover nested <ui:tab> tags
+    // Invoke the body function to discover nested <ui-tab> tags
     input.invokeBody({ // Invoke the body with the scoped "tabs" variable
         addTab: function(tab) {
             tab.id = tab.id || ("tab" + tabs.length);
@@ -1173,15 +1176,15 @@ _components/tabs/template.rhtml:_
 ```html
 <div class="tabs">
     <ul class="nav nav-tabs">
-        <li class="tab" c:for="tab in data.tabs">
+        <li class="tab" c-for="tab in data.tabs">
             <a href="#${tab.id}" data-toggle="tab">
                 ${tab.title}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div id="${tab.id}" class="tab-pane" c:for="tab in data.tabs">
-            <c:invoke function="tab.invokeBody()"/>
+        <div id="${tab.id}" class="tab-pane" c-for="tab in data.tabs">
+            <c-invoke function="tab.invokeBody()"/>
         </div>
     </div>
 </div>
@@ -1203,3 +1206,84 @@ As an example, given a template at path `/my-project/src/pages/login/template.rh
 7. `/my-project/raptor-taglib.json`
 8. `/my-project/node_modules/*/raptor-taglib.json`
 
+# FAQ
+
+__Question:__ _Is Raptor Templates ready for production use?_
+__Answer__: Yes, Raptor Templates has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind. However, the latest version of Raptor Templates is still being marked as beta as we nail down the final feature set as part of the [RaptorJS 3 initiative](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan).
+
+<hr>
+
+__Question:__ _Can templates be compiled on the client?_
+__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs3/raptor-optimizer) is recommended for including compiled templates as part of a web page.
+
+<hr>
+
+__Question:__ _Which web browsers are supported?_
+__Answer__: The runtime for template rendering is supported in all web browsers. If you find an issue please report a bug.
+
+<hr>
+
+__Question:__ _How can Raptor Templates be used with Express?_
+__Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead directly pipe the rendering output stream to the response stream as shown in the following code:
+
+```javascript
+var raptorTemplates = require('raptor-templates');
+var templatePath = require.resolve('./template.rhtml');
+
+app.get('/profile', function(req, res) {
+    raptorTemplates
+        .stream(templatePath, {
+            name: 'Frank'
+        })
+        .pipe(res); 
+});
+```
+
+With this approach, you can benefit from streaming and there is no middleman (less complexity).
+
+Alternatively, you can use the independent [view-engine](https://github.com/patrick-steele-idem/view-engine) module to provide an abstraction that allows pluggable view engines and provides full support for streaming. This is shown in the following sample code:
+
+```javascript
+var template = require('view-engine').load(require.resolve('./template.rhtml'));
+
+app.get('/profile', function(req, res) {
+    template.stream({
+            name: 'Frank'
+        })
+        .pipe(res);
+});
+
+```
+
+<hr>
+
+__Question:__ _I heard Raptor Templates is XML-based. What is that about?_
+__Answer__: Raptor Templates started out using an XML parser. This required that templates be well-formed XML (a major source of problems). This is no longer the case, as the compiler has been updated to use the awesome [htmlparser2](https://github.com/fb55/htmlparser2) module by [Felix Boehm](https://github.com/fb55). Also, XML namespaces are no longer used and all taglibs are now defined using simple JSON. If you are coming from the old XML-based version of Raptor Templates, please see the [Migration Guide](migration.md).
+
+<hr>
+
+__Question:__ _What is the recommended directory structure for templates and "partials"_
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Raptor Templates, please see [raptorjs-express-app](https://github.com/raptorjs3/samples/tree/master/raptorjs-express-app).
+
+<hr>
+
+__Question:__ _How is Raptor Templates related to [RaptorJS](http://raptorjs.org)?_
+__Answer__: Raptor Templates is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
+
+# Discuss
+
+Please post questions or comments on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
+
+# Contributors
+
+* [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
+* [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
+* Ramesh Mahadevan
+
+# Contribute
+
+Pull Requests welcome. Please submit Github issues for any feature enhancements, bugs or documentation problems.
+
+# License
+
+Apache License v2.0

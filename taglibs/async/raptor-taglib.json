@@ -1,0 +1,34 @@
+{
+    "tags": {
+        "async-fragment": {
+            "renderer": "./async-fragment-tag",
+            "attributes": {
+                "data-provider": {
+                    "type": "string"
+                },
+                "arg": {
+                    "type": "expression",
+                    "preserve-name": true
+                },
+                "arg-*": {
+                    "pattern": true,
+                    "type": "string",
+                    "preserve-name": true
+                },
+                "var": {
+                    "type": "identifier"
+                },
+                "timeout": {
+                    "type": "integer"
+                }
+            },
+            "vars": [
+                "context",
+                {
+                    "name-from-attribute": "var OR dependency OR data-provider|keep"
+                }
+            ],
+            "transformer": "./AsyncFragmentTagTransformer"
+        }
+    }
+}

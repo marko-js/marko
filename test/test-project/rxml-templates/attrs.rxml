@@ -1,7 +1,6 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
+<c-template 
     params="myAttrs">
-    <div c:attrs="myAttrs" data-encoding="&quot;hello&quot;">
+    <div c-attrs="myAttrs" data-encoding="&quot;hello&quot;">
         Hello World!
     </div>
-</c:template>
+</c-template>

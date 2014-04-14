@@ -15,7 +15,7 @@
  */
 'use strict';
 function ElseNode(props) {
-    ElseNode.$super.call(this, 'else', 'http://raptorjs.org/templates/core', 'c');
+    ElseNode.$super.call(this, 'c-else');
     if (props) {
         this.setProperties(props);
     }

@@ -92,10 +92,11 @@ function buildLookup(dirname) {
 	var lookup = lookupCache[lookupCacheKey];
 	if (lookup === undefined) {
 		lookup = new TaglibLookup();
-		for (var i=taglibs.length-1; i>=0; i--) {
+		
+        for (var i=taglibs.length-1; i>=0; i--) {
 			lookup.addTaglib(taglibs[i]);
 		}
-        lookup.finish(); // Handle all of the imports
+
 		lookupCache[lookupCacheKey] = lookup;
 	}
 
@@ -106,10 +107,10 @@ function addCoreTaglib(taglib) {
     exports.coreTaglibs.push(taglib);
 }
 
-addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/core/core.rtld')));
-addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/html/html.rtld')));
-addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/caching/caching.rtld')));
-addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/layout/layout.rtld')));
-addCoreTaglib(taglibLoader.loadTaglibXmlFromFile(nodePath.join(__dirname, '../../taglibs/async/async.rtld')));
+addCoreTaglib(taglibLoader.load(nodePath.join(__dirname, '../../taglibs/core/raptor-taglib.json')));
+addCoreTaglib(taglibLoader.load(nodePath.join(__dirname, '../../taglibs/html/raptor-taglib.json')));
+addCoreTaglib(taglibLoader.load(nodePath.join(__dirname, '../../taglibs/caching/raptor-taglib.json')));
+addCoreTaglib(taglibLoader.load(nodePath.join(__dirname, '../../taglibs/layout/raptor-taglib.json')));
+addCoreTaglib(taglibLoader.load(nodePath.join(__dirname, '../../taglibs/async/raptor-taglib.json')));
 
 exports.buildLookup = buildLookup;

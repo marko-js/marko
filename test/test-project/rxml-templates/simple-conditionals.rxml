@@ -1,5 +1,4 @@
 <template 
-    xmlns:c="http://raptorjs.org/templates/core" 
     params="name,count">
     <div class="{?count>50;over-50}"></div>
     <div class="{?count lt 50;under-50}"></div>

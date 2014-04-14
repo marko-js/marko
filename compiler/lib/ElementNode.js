@@ -31,6 +31,12 @@ function ElementNode(localName, namespace, prefix) {
         this.attributesByNS = {};
         this.prefix = prefix;
         this.localName = this.tagName = localName;
+        if (this.prefix) {
+            this.qName = this.prefix + ':' + localName;
+        } else {
+            this.qName = localName;
+        }
+        
         this.namespace = namespace;
         this.allowSelfClosing = false;
         this.startTagOnly = false;

@@ -1,11 +1,10 @@
 {
-    "namespace": "nested",
     "tags": {
-    	"foo": {
-    		"renderer": "./foo-renderer.js",
-    		"attributes": {
-    			"attr1": "string"
-    		}
-    	}
+        "nested-foo": {
+            "renderer": "./foo-renderer.js",
+            "attributes": {
+                "attr1": "string"
+            }
+        }
     }
 }

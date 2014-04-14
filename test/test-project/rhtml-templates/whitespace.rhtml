@@ -22,14 +22,14 @@ should   <!-- This whitespace should be normalized -->  retain spacing between l
    begin <!-- this whitespace should not be normalized -->     end     
 </pre>
 
-<div c:space="preserve">
+<div c-space="preserve">
    begin <!-- this whitespace should not be normalized -->     end     
 </div>
 
-<div xml:space="preserve">
+<div c-space="preserve">
    begin <!-- this whitespace should not be normalized -->     end     
 </div>
-<c:if test="true">begin <!-- this whitespace should be preserved -->end</c:if>
+<c-if test="true">begin <!-- this whitespace should be preserved -->end</c-if>
 <!-- 
 - In not "xml:space" === "preserve":
     - newline followed by whitespace should be removed

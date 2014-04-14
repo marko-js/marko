@@ -1,5 +1,5 @@
-<c:var name="name" value="data.name"/>
-<c:var name="welcome" value="data.welcome"/>
+<c-var name="name" value="data.name"/>
+<c-var name="welcome" value="data.welcome"/>
 
 $!welcome
 $!{welcome}
@@ -9,8 +9,8 @@ $name
 <div title="$welcome &lt;hello&gt;" data-name="$name"/>
 
 <div data-attr="Hello $name &lt;hello&gt;">
-    <c:attr name="data-nested-attr">&lt;Hello> $name <![CDATA[<hello>]]></c:attr>
-    <c:attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
+    <c-attr name="data-nested-attr">&lt;Hello> $name <![CDATA[<hello>]]></c-attr>
+    <c-attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
     Hello &lt;John&gt;© <![CDATA[<hello>]]>
     ${startTag:START}
 </div>

@@ -27,7 +27,7 @@ describe('raptor-templates/taglib-lookup' , function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
-        var ifAttr = lookup.getAttribute('', 'div', 'c', 'if');
+        var ifAttr = lookup.getAttribute('div', 'c-if');
         expect(ifAttr != null).to.equal(true);
         expect(ifAttr.type).to.equal('expression');
     });
@@ -35,44 +35,42 @@ describe('raptor-templates/taglib-lookup' , function() {
     it('should lookup core tag for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
-        var ifTag = lookup.getTag('c', 'if');
+        var ifTag = lookup.getTag('c-if');
         expect(ifTag != null).to.equal(true);
-        expect(ifTag.name).to.equal('if');
-        expect(ifTag.namespace).to.equal(null);
+        expect(ifTag.name).to.equal('c-if');
     });
 
     it('should lookup core template for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
         // console.log(Object.keys(lookup.tags));
-        var templateTag = lookup.getTag('c', 'template');
+        var templateTag = lookup.getTag('c-template');
         expect(templateTag != null).to.equal(true);
-        expect(templateTag.name).to.equal('template');
-        expect(templateTag.namespace).to.equal(null);
+        expect(templateTag.name).to.equal('c-template');
     });
 
     it('should lookup custom tag for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
-        var tag = lookup.getTag('test', 'hello');
+        var tag = lookup.getTag('test-hello');
         // console.log(Object.keys(lookup.tags));
         expect(tag != null).to.equal(true);
-        expect(tag.name).to.equal('hello');
-        expect(tag.namespace).to.equal(undefined);
+        expect(tag.name).to.equal('test-hello');
     });
 
     it('should lookup custom attributes for top-level template', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
         // console.log(Object.keys(lookup.attributes));
-        var attr = lookup.getAttribute('test', 'hello', '', 'name');
+        var attr = lookup.getAttribute('test-hello', 'name');
         expect(attr != null).to.equal(true);
         expect(attr.type).to.equal('string');
 
-        var attr2 = lookup.getAttribute('test', 'hello', 'test', 'name');
-        expect(attr2).to.equal(attr);
+        var attr2 = lookup.getAttribute('test-hello', 'splat');
+        expect(attr2 != null).to.equal(true);
+        expect(attr2.type).to.equal('number');
 
-        attr = lookup.getAttribute('test', 'hello', '', 'expr');
+        attr = lookup.getAttribute('test-hello', 'expr');
         expect(attr != null).to.equal(true);
         expect(attr.type).to.equal('expression');
     });
@@ -81,7 +79,7 @@ describe('raptor-templates/taglib-lookup' , function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
         // console.log(Object.keys(lookup.attributes));
-        var attr = lookup.getAttribute('test', 'hello', '', 'DYNAMIC');
+        var attr = lookup.getAttribute('test-hello', 'DYNAMIC');
         expect(attr != null).to.equal(true);
         expect(attr.type).to.equal('number');
     });
@@ -100,18 +98,17 @@ describe('raptor-templates/taglib-lookup' , function() {
     it('should lookup nested tags', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
-        var tag = lookup.getTag('nested', 'foo');
+        var tag = lookup.getTag('nested-foo');
         
         expect(tag != null).to.equal(true);
-        expect(tag.name).to.equal('foo');
-        expect(tag.namespace).to.equal(undefined);
+        expect(tag.name).to.equal('nested-foo');
     });
 
     it('should lookup attributes for nested tags', function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
         // console.log(Object.keys(lookup.attributes));
-        var attr = lookup.getAttribute('nested', 'foo', '', 'attr1');
+        var attr = lookup.getAttribute('nested-foo', 'attr1');
         expect(attr != null).to.equal(true);
         expect(attr.type).to.equal('string');
     });
@@ -122,7 +119,7 @@ describe('raptor-templates/taglib-lookup' , function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
 
-        lookup.forEachTagTransformer('', 'div', function(transformer) {
+        lookup.forEachTagTransformer('div', function(transformer) {
             transformers.push(transformer);
         });
 
@@ -133,36 +130,37 @@ describe('raptor-templates/taglib-lookup' , function() {
         var transformers;
 
         var taglibLookup = require('../compiler/lib/taglib-lookup');
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup;
+        // lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
 
-        transformers = [];
-        lookup.forEachTagTransformer('nested', 'foo', function(transformer) {
-            transformers.push(transformer);
-        });
+        // transformers = [];
+        // lookup.forEachTagTransformer('nested-foo', function(transformer) {
+        //     transformers.push(transformer);
+        // });
 
-        expect(transformers.length).to.equal(2);
+        // expect(transformers.length).to.equal(2);
 
         lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/transformers'));
 
         transformers = [];
-        lookup.forEachTagTransformer('transform', 'foo', function(transformer) {
+        lookup.forEachTagTransformer('transform-foo', function(transformer) {
             transformers.push(transformer);
         });
-        
-        expect(transformers.length).to.equal(3);
-        expect(transformers[0].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
-        expect(transformers[1].name).to.equal('foo');
-        expect(transformers[2].name).to.equal('CoreTagTransformer');
 
+        expect(transformers.length).to.equal(3);
+        expect(transformers[0].path.indexOf('foo')).to.not.equal(-1);
+        expect(transformers[1].path.indexOf('CoreTagTransformer')).to.not.equal(-1);
+        expect(transformers[2].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
+        
         transformers = [];
-        lookup.forEachTagTransformer('transform', 'bar', function(transformer) {
+        lookup.forEachTagTransformer('transform-bar', function(transformer) {
             transformers.push(transformer);
         });
         
         expect(transformers.length).to.equal(3);
-        expect(transformers[0].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
-        expect(transformers[1].name).to.equal('CoreTagTransformer');
-        expect(transformers[2].name).to.equal('bar');
+        expect(transformers[0].path.indexOf('CoreTagTransformer')).to.not.equal(-1);
+        expect(transformers[1].path.indexOf('bar')).to.not.equal(-1);
+        expect(transformers[2].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
     });
 
     it('should lookup tag transformers core tag with custom node', function() {
@@ -171,14 +169,14 @@ describe('raptor-templates/taglib-lookup' , function() {
         var taglibLookup = require('../compiler/lib/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
 
-        lookup.forEachTagTransformer('c', 'else', function(transformer) {
+        lookup.forEachTagTransformer('c-else', function(transformer) {
             transformers.push(transformer);
         });
 
         expect(transformers.length).to.equal(3);
-        // expect(transformers[0].name).to.equal('HTagTransformer');
-        expect(transformers[1].name).to.equal('CoreTagTransformer');
-        expect(transformers[2].name).to.equal('ElseTagTransformer');
+        expect(transformers[0].path.indexOf('CoreTagTransformer')).to.not.equal(-1);
+        expect(transformers[1].path.indexOf('ElseTagTransformer')).to.not.equal(-1);
+        expect(transformers[2].path.indexOf('HtmlTagTransformer')).to.not.equal(-1);
     });
     
 });

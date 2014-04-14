@@ -1,21 +1,19 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:test="http://raptorjs.org/templates/test" 
+<c-template 
     params="showConditionalTab">
     
-    <test:tabs>
-        <test:tab title="Tab 1">
+    <test-tabs>
+        <test-tab title="Tab 1">
             Tab 1 content
-        </test:tab>
+        </test-tab>
         
-        <test:tab title="Tab 2">
+        <test-tab title="Tab 2">
             Tab 2 content
-        </test:tab>
+        </test-tab>
         
-        <test:tab title="Tab 3" c:if="showConditionalTab">
+        <test-tab title="Tab 3" c-if="showConditionalTab">
             Tab 3 content
-        </test:tab>
-    </test:tabs>
+        </test-tab>
+    </test-tabs>
 
     
-</c:template>
+</c-template>

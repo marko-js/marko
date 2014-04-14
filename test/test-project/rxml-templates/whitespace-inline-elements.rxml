@@ -1,6 +1,4 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:t="http://raptorjs.org/templates/test">
+<c-template>
     <p>A <i>B</i> C</p>
     ---
     <p>
@@ -29,4 +27,4 @@
         
         <span>Q</span> <span>R</span> 
     </p>
-</c:template>
+</c-template>

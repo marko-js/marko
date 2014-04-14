@@ -1,13 +1,10 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:test="http://raptorjs.org/templates/test" 
-    xmlns:w="http://raptorjs.org/templates/widgets">
+<c-template>
     
-    <w:widget jsClass="widgets_nested">
+    <w-widget jsClass="widgets_nested">
         <div>
-            <test:button label="Nested Submit" type="submit" disabled="true" w:id="nestedSubmitButton" w:event-click="doSomething; arg=0"/>
-            <test:button label="Nested Cancel" w:id="nestedCancelButton" w:event-click="doSomethingElse; arg=1"/>
+            <test-button label="Nested Submit" type="submit" disabled="true" w-id="nestedSubmitButton" w-event-click="doSomething; arg=0"/>
+            <test-button label="Nested Cancel" w-id="nestedCancelButton" w-event-click="doSomethingElse; arg=1"/>
         </div>
-    </w:widget>
+    </w-widget>
     
-</c:template>
+</c-template>

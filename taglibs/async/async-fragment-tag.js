@@ -10,7 +10,7 @@ module.exports = {
         var arg = input.arg || {};
 
         arg.context = context;
-        var asyncContext =context.beginAsync(input.timeout);
+        var asyncContext = context.beginAsync(input.timeout);
         
         function onError(e) {
             asyncContext.error(e || 'Async fragment failed');
@@ -26,6 +26,12 @@ module.exports = {
                 onError(e);
             }
         }
+
+        var method = input.method;
+        if (method) {
+            dataProvider = dataProvider[method].bind(dataProvider);
+        }
+
         try {
             dataProviders.requestData(dataProvider, arg, function(err, data) {
                 if (err) {

@@ -1,8 +1,7 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
+<c-template 
     params="">
  
     BEGIN
-    <c:include resource="include-resource-target.txt" static="true"/>
+    <c-include resource="include-resource-target.txt" static="true"/>
     END
-</c:template>
+</c-template>

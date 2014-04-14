@@ -1,5 +1,4 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
+<c-template 
     params="name,count,invokeBody">
 
     <div class="nested">
@@ -11,4 +10,4 @@
         </p>
     </div>
     
-</c:template>
+</c-template>

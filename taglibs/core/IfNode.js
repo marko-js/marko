@@ -15,7 +15,7 @@
  */
 'use strict';
 function IfNode(props) {
-    IfNode.$super.call(this, 'if', 'http://raptorjs.org/templates/core', 'c');
+    IfNode.$super.call(this, 'c-if');
     if (props) {
         this.setProperties(props);
     }

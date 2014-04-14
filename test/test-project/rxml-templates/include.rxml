@@ -1,15 +1,14 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
+<c-template 
     params="">
  
-    <c:include template="./include-target.rxml" name="${'Frank'}" count="20"/>
-    <c:include template="./include-target.rxml" name="Frank" count="${20}"/>
-    <c:include template="./include-target.rxml" template-data="{name: 'Frank', count: 20}"/>
-    <c:include template="./include-nested-content.rxml" name="Frank" count="${20}">
+    <c-include template="./include-target.rxml" name="${'Frank'}" count="20"/>
+    <c-include template="./include-target.rxml" name="Frank" count="${20}"/>
+    <c-include template="./include-target.rxml" template-data="{name: 'Frank', count: 20}"/>
+    <c-include template="./include-nested-content.rxml" name="Frank" count="${20}">
         Have a 
         <b>
             wonderful
         </b>
         day!
-    </c:include>
-</c:template>
+    </c-include>
+</c-template>

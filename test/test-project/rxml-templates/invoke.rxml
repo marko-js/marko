@@ -1,4 +1,4 @@
-<c:template xmlns:c="core">
+<c-template>
 {%
     function test(name) {
         context.write("Hello " + name + "!");
@@ -13,18 +13,18 @@
     A
     
     <p>
-        <c:invoke function="test('World')"/>
-        <c:write value="test2('World')"/>
+        <c-invoke function="test('World')"/>
+        <c-write value="test2('World')"/>
     </p>
     
     B
     
     <p>
-        <c:def function="greeting(name, count)">
+        <c-def function="greeting(name, count)">
             Hello ${name}! You have ${count} new messages.
-        </c:def>
-        <c:invoke function="greeting" name="Frank" count="${10}"/>
-        <c:invoke function="greeting('John', 20)"/>
+        </c-def>
+        <c-invoke function="greeting" name="Frank" count="${10}"/>
+        <c-invoke function="greeting('John', 20)"/>
     </p>
 
-</c:template>
+</c-template>

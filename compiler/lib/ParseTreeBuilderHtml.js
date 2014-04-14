@@ -52,7 +52,7 @@ ParseTreeBuilderHtml.prototype = {
         var _this = this;
 
         // Create a pseudo root node
-        this.handleStartElement(splitName('c:template'), []);
+        this.handleStartElement(splitName('c-template'), []);
 
         var parser = this.parser = new htmlparser.Parser({
             onopentag: function(name, attribs){

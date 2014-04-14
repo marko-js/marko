@@ -1,18 +1,18 @@
-<layout:use template="./layout-default.rhtml" show-header="$false">
-    <layout:put into="body">BODY CONTENT</layout:put>
-    <layout:put into="footer">FOOTER CONTENT</layout:put>
-</layout:use>
-<layout:use template="./layout-default.rhtml" show-header="$true">
-    <layout:put into="header">HEADER CONTENT</layout:put>
-    <layout:put into="body">BODY CONTENT</layout:put>
-    <layout:put into="footer">FOOTER CONTENT</layout:put>
-</layout:use>
-<layout:use template="./layout-default.rhtml" show-header="$true">
-    <layout:put into="header" value="VALUE HEADER"/>
-    <layout:put into="body">BODY CONTENT</layout:put>
-    <layout:put into="footer">FOOTER CONTENT</layout:put>
-</layout:use>
-<layout:use template="${require.resolve('./layout-default.rhtml')}" show-header="$true">
-    <layout:put into="body">BODY CONTENT</layout:put>
-    <layout:put into="footer">FOOTER CONTENT</layout:put>
-</layout:use>
+<layout-use template="./layout-default.rhtml" show-header="$false">
+    <layout-put into="body">BODY CONTENT</layout-put>
+    <layout-put into="footer">FOOTER CONTENT</layout-put>
+</layout-use>
+<layout-use template="./layout-default.rhtml" show-header="$true">
+    <layout-put into="header">HEADER CONTENT</layout-put>
+    <layout-put into="body">BODY CONTENT</layout-put>
+    <layout-put into="footer">FOOTER CONTENT</layout-put>
+</layout-use>
+<layout-use template="./layout-default.rhtml" show-header="$true">
+    <layout-put into="header" value="VALUE HEADER"/>
+    <layout-put into="body">BODY CONTENT</layout-put>
+    <layout-put into="footer">FOOTER CONTENT</layout-put>
+</layout-use>
+<layout-use template="${require.resolve('./layout-default.rhtml')}" show-header="$true">
+    <layout-put into="body">BODY CONTENT</layout-put>
+    <layout-put into="footer">FOOTER CONTENT</layout-put>
+</layout-use>

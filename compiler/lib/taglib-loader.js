@@ -6,67 +6,13 @@ var cache = {};
 var forEachEntry = require('raptor-util').forEachEntry;
 var raptorRegexp = require('raptor-regexp');
 var tagDefFromCode = require('./tag-def-from-code');
-
-function removeDashes(str) {
-    return str.replace(/-([a-z])/g, function (match, lower) {
-        return lower.toUpperCase();
-    });
-}
-
-function invokeHandlers(config, handlers, path) {
-    if (!config) {
-        throw new Error('"config" argument is required');
-    }
-
-    if (typeof config !== 'object') {
-        throw new Error('Object expected for ' + path);
-    }
-
-
-
-    for (var k in config) {
-        if (config.hasOwnProperty(k)) {
-            var value = config[k];
-            k = removeDashes(k);
-            var handler = handlers[k];
-            if (!handler) {
-                throw new Error('Invalid option of "' + k + '" for ' + path + '. Allowed: ' + Object.keys(handlers).join(', '));
-            }
-            try {
-                handler(value);
-            }
-            catch(e) {
-                if (!e.invokeHandlerError) {
-                    var error = new Error('Error while applying option of "' + k + '" for ' + path + '. Exception: ' + (e.stack || e));
-                    error.invokeHandlerError = e;
-                    throw error;
-                }
-                else {
-                    throw e;
-                }
-            }
-        }
-    }
-
-    if (handlers._end) {
-        try {
-            handlers._end();
-        }
-        catch(e) {
-            if (!e.invokeHandlerError) {
-                var error = new Error('Error for option ' + path + '. Exception: ' + (e.stack || e));
-                error.invokeHandlerError = e;
-                throw error;
-            }
-            else {
-                throw e;
-            }
-        }
-    }
-}
+var resolve = require('raptor-modules/resolver').serverResolveRequire;
+var propertyHandlers = require('property-handlers');
 
 function buildAttribute(attr, attrProps, path) {
-    invokeHandlers(attrProps, {
+
+
+    propertyHandlers(attrProps, {
         type: function(value) {
             attr.type = value;
         },
@@ -75,9 +21,6 @@ function buildAttribute(attr, attrProps, path) {
         },
         defaultValue: function(value) {
             attr.defaultValue = value;
-        },
-        namespace: function(value) {
-            attr.namespace = value;
         },
         pattern: function(value) {
             if (value === true) {
@@ -90,6 +33,12 @@ function buildAttribute(attr, attrProps, path) {
         },
         preserveName: function(value) {
             attr.preserveName = value;
+        },
+        required: function(value) {
+            attr.required = value === true;
+        },
+        removeDashes: function(value) {
+            attr.removeDashes = value === true;
         }
     }, path);
 
@@ -98,21 +47,7 @@ function buildAttribute(attr, attrProps, path) {
 
 function handleAttributes(value, parent, path) {
     forEachEntry(value, function(attrName, attrProps) {
-        var parts = attrName.split(':');
-        var namespace = null;
-        var localName = null;
-
-        if (parts.length === 2) {
-            namespace = parts[0];
-            localName = parts[1];
-        } else if (parts.length === 1) {
-            localName = attrName;
-        } else {
-            throw new Error('Invalid attribute name: ' + attrName);
-        }
-
-
-        var attr = new Taglib.Attribute(namespace, localName);
+        var attr = new Taglib.Attribute(attrName);
 
         if (attrProps == null) {
             attrProps = {
@@ -139,18 +74,13 @@ function buildTag(tagObject, path, taglib, dirname) {
 
     var tag = new Taglib.Tag(taglib);
 
-    invokeHandlers(tagObject, {
+    propertyHandlers(tagObject, {
         name: function(value) {
             tag.name = value;
         },
 
         renderer: function(value) {
-            var ext = nodePath.extname(value);
-            if (ext === '') {
-                value += '.js';
-            }
-
-            var path = nodePath.resolve(dirname, value);
+            var path = resolve(value, dirname);
             if (!fs.existsSync(path)) {
                 throw new Error('Renderer at path "' + path + '" does not exist.');
             }
@@ -169,7 +99,7 @@ function buildTag(tagObject, path, taglib, dirname) {
             handleAttributes(value, tag, path);
         },
         nodeClass: function(value) {
-            var path = nodePath.resolve(dirname, value);
+            var path = resolve(value, dirname);
             if (!fs.existsSync(path)) {
                 throw new Error('Node module at path "' + path + '" does not exist.');
             }
@@ -185,14 +115,9 @@ function buildTag(tagObject, path, taglib, dirname) {
                 };
             }
 
-            invokeHandlers(value, {
+            propertyHandlers(value, {
                 path: function(value) {
-                    var ext = nodePath.extname(value);
-                    if (ext === '') {
-                        value += '.js';
-                    }
-
-                    var path = nodePath.resolve(dirname, value);
+                    var path = resolve(value, dirname);
                     if (!fs.existsSync(path)) {
                         throw new Error('Transformer at path "' + path + '" does not exist.');
                     }
@@ -200,16 +125,21 @@ function buildTag(tagObject, path, taglib, dirname) {
                     transformer.path = path;
                 },
 
-                before: function(value) {
-                    transformer.before = value;
-                },
-
-                after: function(value) {
-                    transformer.after = value;
+                priority: function(value) {
+                    transformer.priority = value;
                 },
 
                 name: function(value) {
                     transformer.name = value;
+                },
+
+                properties: function(value) {
+                    var properties = transformer.properties || (transformer.properties = {});
+                    for (var k in value) {
+                        if (value.hasOwnProperty(k)) {
+                            properties[k] = value[k];
+                        }
+                    }
                 }
 
             }, 'transformer in ' + path);
@@ -218,6 +148,7 @@ function buildTag(tagObject, path, taglib, dirname) {
 
             tag.addTransformer(transformer);
         },
+
         'var': function(value) {
             tag.addNestedVariable({
                 name: value
@@ -225,10 +156,34 @@ function buildTag(tagObject, path, taglib, dirname) {
         },
         vars: function(value) {
             if (value) {
-                value.forEach(function(varName) {
-                    tag.addNestedVariable({
-                        name: varName
-                    });
+                value.forEach(function(v, i) {
+                    var nestedVariable;
+
+                    if (typeof v === 'string') {
+                        nestedVariable = {
+                            name: v
+                        };
+                    } else {
+                        nestedVariable = {};
+
+                        propertyHandlers(v, {
+                            
+                            name: function(value) {
+                                nestedVariable.name = value;
+                            },
+
+                            nameFromAttribute: function(value) {
+                                nestedVariable.nameFromAttribute = value;
+                            }
+
+                        }, 'var at index ' + i);
+
+                        if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
+                            throw new Error('The "name" or "name-from-attribute" attribute is required for a nested variable');
+                        }
+                    }
+
+                    tag.addNestedVariable(nestedVariable);
                 });
             }
         },
@@ -326,17 +281,6 @@ function load(path) {
     taglib.addInputFile(path);
     var dirname = nodePath.dirname(path);
 
-    function handleNS(ns) {
-        if (Array.isArray(ns)) {
-            ns.forEach(function(ns) {
-                taglib.addNamespace(ns);
-            });
-        }
-        else {
-            taglib.addNamespace(ns);
-        }
-    }
-
     var taglibObject;
 
     try {
@@ -346,13 +290,11 @@ function load(path) {
         throw new Error('Unable to parse taglib JSON at path "' + path + '". Exception: ' + e);
     }
 
-    invokeHandlers(taglibObject, {
-        'namespace': handleNS,
-        'namespaces': handleNS,
-        'attributes': function(value) {
+    propertyHandlers(taglibObject, {
+        attributes: function(value) {
             handleAttributes(value, taglib, path);
         },
-        'tags': function(tags) {
+        tags: function(tags) {
             forEachEntry(tags, function(tagName, path) {
                 ok(path, 'Invalid tag definition for "' + tagName + '"');
                 var tagObject;
@@ -399,6 +341,31 @@ function load(path) {
             } else {
                 scanTagsDir(path, dirname, dir, taglib);
             }
+        },
+        textTransformer: function(value) {
+            var transformer = new Taglib.Transformer();
+
+            if (typeof value === 'string') {
+                value = {
+                    path: value
+                };
+            }
+
+            propertyHandlers(value, {
+                path: function(value) {
+                    var path = resolve(value, dirname);
+                    if (!fs.existsSync(path)) {
+                        throw new Error('Transformer at path "' + path + '" does not exist.');
+                    }
+
+                    transformer.path = path;
+                }
+
+            }, 'text-transformer in ' + path);
+
+            ok(transformer.path, '"path" is required for transformer');
+
+            taglib.addTextTransformer(transformer);
         }
     }, path);
 

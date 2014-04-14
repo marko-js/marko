@@ -24,7 +24,7 @@ function testRender(path, data, done, options) {
 
     // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
 
-    
+    require('../compiler').defaultOptions.checkUpToDate = false;
 
     var raptorTemplates = require('../');
     var Context = raptorTemplates.Context;

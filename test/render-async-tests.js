@@ -40,7 +40,8 @@ function testRender(path, data, done, options) {
     var Context = raptorTemplates.Context;
     var context = options.context || new Context(new StringBuilder());
 
-
+    require('../compiler').defaultOptions.checkUpToDate = false;
+    
     if (options.dataProviders) {
         var dataProviders = require('raptor-data-providers').forContext(context);
         dataProviders.register(options.dataProviders);

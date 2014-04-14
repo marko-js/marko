@@ -1,6 +1,4 @@
-<template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:test="http://raptorjs.org/templates/test">
+<template>
     
-    <test:dynamic-attributes3 test="World" class="my-class" id="myId"/>
+    <test-dynamic-attributes3 test="World" class="my-class" id="myId"/>
 </template>

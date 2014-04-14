@@ -1,19 +1,18 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core">
+<c-template>
 
     <div id="one">
-        <c:choose>
-            <div c:when="false">A</div>
-            <div c:when="false">B</div>
-            <div c:otherwise="">TRUE</div>
-        </c:choose>
+        <c-choose>
+            <div c-when="false">A</div>
+            <div c-when="false">B</div>
+            <div c-otherwise="">TRUE</div>
+        </c-choose>
     </div>
     <div id="two">
-        <c:choose>
-            <div c:when="false">A</div>
-            <div c:when="true">TRUE</div>
-            <div c:otherwise="">C</div>
-        </c:choose>
+        <c-choose>
+            <div c-when="false">A</div>
+            <div c-when="true">TRUE</div>
+            <div c-otherwise="">C</div>
+        </c-choose>
     </div>
     
-</c:template>
+</c-template>

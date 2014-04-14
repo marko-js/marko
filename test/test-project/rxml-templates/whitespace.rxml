@@ -1,6 +1,4 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:t="http://raptorjs.org/templates/test">
+<c-template>
     
     ${"BEGIN  this whitespace   should be retained   END"} 
     
@@ -26,14 +24,14 @@
    begin <!-- this whitespace should not be normalized -->     end     
 </pre>
 
-<div c:space="preserve">
+<div c-space="preserve">
    begin <!-- this whitespace should not be normalized -->     end     
 </div>
 
-<div xml:space="preserve">
+<div c-space="preserve">
    begin <!-- this whitespace should not be normalized -->     end     
 </div>
-    <c:if test="true">begin <!-- this whitespace should be preserved -->end</c:if>
+    <c-if test="true">begin <!-- this whitespace should be preserved -->end</c-if>
 <!-- 
     - In not "xml:space" === "preserve":
         - newline followed by whitespace should be removed
@@ -43,4 +41,4 @@
         - http://xhtml.com/en/css/reference/white-space/
     - When should whitespace removal happen? When generating code?
  -->
-</c:template>
+</c-template>

@@ -1,16 +1,15 @@
-<c:template 
-    xmlns:c="core">
+<c-template>
     
-    <c:var name="colors" value="['red', 'green', 'blue']"/>
+    <c-var name="colors" value="['red', 'green', 'blue']"/>
     
-    <div c:for="color in colors">
+    <div c-for="color in colors">
         $color
     </div>
     
-    <c:assign var="colors" value="['orange', 'purple', 'yellow']"/>
+    <c-assign var="colors" value="['orange', 'purple', 'yellow']"/>
     
-    <div c:for="color in colors">
+    <div c-for="color in colors">
         $color
     </div>
     
-</c:template>
+</c-template>

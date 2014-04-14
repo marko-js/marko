@@ -21,7 +21,6 @@
  * in the {@link raptor/templating/compiler} module.
  */
 var renderContext = require('raptor-render-context');
-var createError = require('raptor-util/createError');
 var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
@@ -56,12 +55,7 @@ exports.render = function (templatePath, data, callback, context) {
     }
 
     
-    try {
-        templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
-    } catch (e) {
-        // context.emit('error', e);
-        throw createError(new Error('Unable to render template with name "' + templatePath + '". Exception: ' + e), e);
-    }
+    templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
 
     if (callback) {
         context

@@ -1,20 +1,18 @@
-<c:template
-    xmlns:c="core"
-    xmlns:optimizer="optimizer">
+<c-template>
     
-    <optimizer:page name="optimizer-dynamic">
+    <optimizer-page name="optimizer-dynamic">
         <dependencies>
             <module name="${data.dependency}"/>
-            <module name="test/optimizer/mixedB" c:if="data.mixedBEnabled"/>
+            <module name="test/optimizer/mixedB" c-if="data.mixedBEnabled"/>
         </dependencies>
-    </optimizer:page>
+    </optimizer-page>
     
     <html>
         <head>
-            <optimizer:slot name="head"/>
+            <optimizer-slot name="head"/>
         </head>
         <body>
-            <optimizer:slot name="body"/>
+            <optimizer-slot name="body"/>
         </body>
     </html>
-</c:template>
+</c-template>

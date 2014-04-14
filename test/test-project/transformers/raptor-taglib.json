@@ -1,18 +1,17 @@
 {
-    "namespace": "transform",
     "tags": {
-    	"foo": {
-    		"transformer": {
+        "transform-foo": {
+            "transformer": {
                 "name": "foo",
                 "path": "./foo-transformer.js",
-                "before": "core/CoreTagTransformer"
+                "priority": -1
             }
-    	},
-        "bar": {
+        },
+        "transform-bar": {
             "transformer": {
                 "name": "bar",
                 "path": "./bar-transformer.js",
-                "after": "core/CoreTagTransformer"
+                "priority": 1
             }
         }
     }

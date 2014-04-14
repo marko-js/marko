@@ -58,7 +58,7 @@ InvokeNode.prototype = {
              * VALIDATION:
              * Loop over all of the provided attributes and make sure they are allowed 
              */
-            this.forEachPropertyNS('', function (name, value) {
+            this.forEachProperty(function (name, value) {
                 if (name === 'function') {
                     return;
                 }

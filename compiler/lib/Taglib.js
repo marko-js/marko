@@ -15,23 +15,18 @@
  */
 
 'use strict';
-var createError = require('raptor-util').createError;
 var forEachEntry = require('raptor-util').forEachEntry;
 var ok = require('assert').ok;
+var makeClass = require('raptor-util').makeClass;
 
 function Taglib(id) {
     ok(id, '"id" expected');
     this.id = id;
     this.dirname = null;
-    this.namespace = null;
-    this.namespaces = [];
     this.tags = {};
     this.textTransformers = [];
-    this.attributeMap = {};
-    this.functions = [];
-    this.helperObject = null;
+    this.attributes = {};
     this.patternAttributes = [];
-    this.importPaths = [];
     this.inputFilesLookup = {};
 }
 
@@ -46,19 +41,16 @@ Taglib.prototype = {
     },
 
     addAttribute: function (attribute) {
-        if (attribute.namespace) {
-            throw createError(new Error('"namespace" is not allowed for taglib attributes'));
-        }
         if (attribute.pattern) {
             this.patternAttributes.push(attribute);
         } else if (attribute.name) {
-            this.attributeMap[attribute.name] = attribute;
+            this.attributes[attribute.name] = attribute;
         } else {
             throw new Error('Invalid attribute: ' + require('util').inspect(attribute));
         }
     },
     getAttribute: function (name) {
-        var attribute = this.attributeMap[name];
+        var attribute = this.attributes[name];
         if (!attribute) {
             for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
                 var patternAttribute = this.patternAttributes[i];
@@ -72,9 +64,8 @@ Taglib.prototype = {
     addTag: function (tag) {
         ok(arguments.length === 1, 'Invalid args');
         ok(tag.name, '"tag.name" is required');
-        
-        var key = (tag.namespace == null ? this.id : tag.namespace) + ':' + tag.name;
-        this.tags[key] = tag;
+        this.tags[tag.name] = tag;
+        tag.taglibId = this.id;
     },
     addTextTransformer: function (transformer) {
         this.textTransformers.push(transformer);
@@ -83,247 +74,184 @@ Taglib.prototype = {
         forEachEntry(this.tags, function (key, tag) {
             callback.call(thisObj, tag);
         }, this);
-    },
-    addFunction: function (func) {
-        this.functions.push(func);
-    },
-    setHelperObject: function (helperObject) {
-        this.helperObject = helperObject;
-    },
-    getHelperObject: function () {
-        return this.helperObject;
-    },
-    addNamespace: function (ns) {
-        this.namespaces.push(ns);
     }
 };
-Taglib.Tag = (function () {
-    function Tag(taglib) {
-        ok(taglib, '"taglib" expected');
-        this.taglib = taglib;
+
+Taglib.Tag = makeClass({
+    $init: function(taglib) {
+        this.taglibId = taglib ? taglib.id : null;
         this.renderer = null;
         this.nodeClass = null;
         this.template = null;
-        this.attributeMap = {};
+        this.attributes = {};
         this.transformers = {};
         this.nestedVariables = {};
         this.importedVariables = {};
         this.patternAttributes = [];
-        
-    }
-    Tag.prototype = {
-        inheritFrom: function (superTag) {
-            var subTag = this;
-            /*
-             * Have the sub tag inherit any properties from the super tag that are not in the sub tag
-             */
-            forEachEntry(superTag, function (k, v) {
-                if (subTag[k] === undefined) {
-                    subTag[k] = v;
+    },
+    inheritFrom: function (superTag) {
+        var subTag = this;
+        /*
+         * Have the sub tag inherit any properties from the super tag that are not in the sub tag
+         */
+        forEachEntry(superTag, function (k, v) {
+            if (subTag[k] === undefined) {
+                subTag[k] = v;
+            }
+        });
+        function inheritProps(sub, sup) {
+            forEachEntry(sup, function (k, v) {
+                if (!sub[k]) {
+                    sub[k] = v;
                 }
             });
-            function inheritProps(sub, sup) {
-                forEachEntry(sup, function (k, v) {
-                    if (!sub[k]) {
-                        sub[k] = v;
-                    }
-                });
-            }
-            [
-                'attributeMap',
-                'transformers',
-                'nestedVariables',
-                'importedVariables'
-            ].forEach(function (propName) {
-                inheritProps(subTag[propName], superTag[propName]);
-            });
-            subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
-        },
-        forEachVariable: function (callback, thisObj) {
-            forEachEntry(this.nestedVariables, function (key, variable) {
-                callback.call(thisObj, variable);
-            });
-        },
-        forEachImportedVariable: function (callback, thisObj) {
-            forEachEntry(this.importedVariables, function (key, importedVariable) {
-                callback.call(thisObj, importedVariable);
-            });
-        },
-        forEachTransformer: function (callback, thisObj) {
-            forEachEntry(this.transformers, function (key, transformer) {
-                callback.call(thisObj, transformer);
-            });
-        },
-        hasTransformers: function () {
-            /*jshint unused:false */
-            for (var k in this.transformers) {
-                return true;
-            }
-            return false;
-        },
-        addAttribute: function (attr) {
-            if (attr.pattern) {
-                this.patternAttributes.push(attr);
-            } else {
-                var namespace = attr.namespace;
-                if (namespace == null) {
-                    namespace = this.taglib.id;
-                }
-
-                if (attr.name === '*') {
-                    attr.dynamicAttribute = true;
-
-                    if (attr.targetProperty === null || attr.targetProperty === '') {
-                        attr.targetProperty = null;
-                        
-                    }
-                    else if (!attr.targetProperty) {
-                        attr.targetProperty = '*';
-                    }
-                }
-
-                this.attributeMap[namespace + ':' + attr.name] = attr;
-            }
-        },
-        getAttribute: function (tagNS, localName) {
-            
-            if (tagNS == null) {
-                tagNS = this.taglib.id;
-            }
-
-            var attr = this.attributeMap[tagNS + ':' + localName] || this.attributeMap[tagNS + ':*'] || this.attributeMap['*:' + localName] || this.attributeMap['*:*'];
-            if (!attr && this.patternAttributes.length) {
-                for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
-                    var patternAttribute = this.patternAttributes[i];
-
-                    var attrNS = patternAttribute.namespace;
-                    if (attrNS == null) {
-                        attrNS = tagNS;
-                    }
-                    
-                    if (attrNS === tagNS && patternAttribute.pattern.test(localName)) {
-                        attr = patternAttribute;
-                        break;
-                    }
-                }
-            }
-            return attr;
-        },
-        toString: function () {
-            var qName = this.namespace ? this.namespace + ':' + this.name : this.name;
-            return '[Tag: <' + qName + '@' + this.taglib.id + '>]';
-        },
-        forEachAttribute: function (callback, thisObj) {
-            for (var attrName in this.attributeMap) {
-                if (this.attributeMap.hasOwnProperty(attrName)) {
-                    callback.call(thisObj, this.attributeMap[attrName]);    
-                }
-            }
-        },
-        addNestedVariable: function (nestedVariable) {
-            var key = nestedVariable.nameFromAttribute ? 'attr:' + nestedVariable.nameFromAttribute : nestedVariable.name;
-            this.nestedVariables[key] = nestedVariable;
-        },
-        addImportedVariable: function (importedVariable) {
-            var key = importedVariable.targetProperty;
-            this.importedVariables[key] = importedVariable;
-        },
-        addTransformer: function (transformer) {
-            var key = transformer.path;
-            transformer.taglib = this.taglib;
-            this.transformers[key] = transformer;
         }
-    };
-    return Tag;
-}());
-Taglib.Attribute = (function () {
-    function Attribute(namespace, name) {
-        this.namespace = namespace;
+        [
+            'attributes',
+            'transformers',
+            'nestedVariables',
+            'importedVariables'
+        ].forEach(function (propName) {
+            inheritProps(subTag[propName], superTag[propName]);
+        });
+        subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
+    },
+    forEachVariable: function (callback, thisObj) {
+        forEachEntry(this.nestedVariables, function (key, variable) {
+            callback.call(thisObj, variable);
+        });
+    },
+    forEachImportedVariable: function (callback, thisObj) {
+        forEachEntry(this.importedVariables, function (key, importedVariable) {
+            callback.call(thisObj, importedVariable);
+        });
+    },
+    forEachTransformer: function (callback, thisObj) {
+        forEachEntry(this.transformers, function (key, transformer) {
+            callback.call(thisObj, transformer);
+        });
+    },
+    hasTransformers: function () {
+        /*jshint unused:false */
+        for (var k in this.transformers) {
+            if (this.transformers.hasOwnProperty(k)) {
+                return true;    
+            }
+            
+        }
+        return false;
+    },
+    addAttribute: function (attr) {
+        if (attr.pattern) {
+            this.patternAttributes.push(attr);
+        } else {
+            if (attr.name === '*') {
+                attr.dynamicAttribute = true;
+
+                if (attr.targetProperty === null || attr.targetProperty === '') {
+                    attr.targetProperty = null;
+                    
+                }
+                else if (!attr.targetProperty) {
+                    attr.targetProperty = '*';
+                }
+            }
+
+            this.attributes[attr.name] = attr;
+        }
+    },
+    toString: function () {
+        return '[Tag: <' + this.name + '@' + this.taglibId + '>]';
+    },
+    forEachAttribute: function (callback, thisObj) {
+        for (var attrName in this.attributes) {
+            if (this.attributes.hasOwnProperty(attrName)) {
+                callback.call(thisObj, this.attributes[attrName]);    
+            }
+        }
+    },
+    addNestedVariable: function (nestedVariable) {
+        var key = nestedVariable.nameFromAttribute ? 'attr:' + nestedVariable.nameFromAttribute : nestedVariable.name;
+        this.nestedVariables[key] = nestedVariable;
+    },
+    addImportedVariable: function (importedVariable) {
+        var key = importedVariable.targetProperty;
+        this.importedVariables[key] = importedVariable;
+    },
+    addTransformer: function (transformer) {
+        var key = transformer.path;
+        transformer.taglibId = this.taglibId;
+        this.transformers[key] = transformer;
+    }
+});
+
+Taglib.Attribute = makeClass({
+    $init: function(name) {
         this.name = name;
         this.type = null;
         this.required = false;
         this.type = 'string';
         this.allowExpressions = true;
     }
-    Attribute.prototype = {};
-    return Attribute;
-}());
-Taglib.Property = (function () {
-    function Property() {
+});
+
+Taglib.Property = makeClass({
+    $init: function() {
         this.name = null;
         this.type = 'string';
         this.value = undefined;
     }
-    Property.prototype = {};
-    return Property;
-}());
-Taglib.NestedVariable = (function () {
-    function NestedVariable() {
+});
+
+Taglib.NestedVariable = makeClass({
+    $init: function() {
         this.name = null;
     }
-    NestedVariable.prototype = {};
-    return NestedVariable;
-}());
-Taglib.ImportedVariable = (function () {
-    function ImportedVariable() {
+});
+
+Taglib.ImportedVariable = makeClass({
+    $init: function() {
         this.targetProperty = null;
         this.expression = null;
     }
-    ImportedVariable.prototype = {};
-    return ImportedVariable;
-}());
-Taglib.Transformer = (function () {
-    var uniqueId = 0;
-    function Transformer() {
-        this.id = uniqueId++;
+});
+
+var nextTransformerId = 0;
+
+Taglib.Transformer = makeClass({
+    $init: function() {
+        this.id = nextTransformerId++;
         this.name = null;
         this.tag = null;
         this.path = null;
-        this.after = null;
-        this.before = null;
+        this.priority = null;
         this.instance = null;
         this.properties = {};
-    }
-    Transformer.prototype = {
-        getInstance: function () {
-            if (!this.path) {
-                throw createError(new Error('Transformer class not defined for tag transformer (tag=' + this.tag + ')'));
-            }
-            if (!this.instance) {
-                var Clazz = require(this.path);
-                if (Clazz.process) {
-                    return Clazz;
-                }
+    },
 
-                if (typeof Clazz !== 'function') {
-                    console.error('Invalid transformer: ', Clazz);
-                    throw new Error('Invalid transformer at path "' + this.path + '": ' + Clazz);
-                }
-                this.instance = new Clazz();
-                this.instance.id = this.id;
-            }
-            return this.instance;
-        },
-        toString: function () {
-            return '[Taglib.Transformer: ' + this.filename + ']';
+    getInstance: function () {
+        if (!this.path) {
+            throw new Error('Transformer class not defined for tag transformer (tag=' + this.tag + ')');
         }
-    };
-    return Transformer;
-}());
-Taglib.Function = (function () {
-    function Func() {
-        this.name = null;
-        this.path = null;
-        this.bindToContext = false;
+
+        if (!this.instance) {
+            var Clazz = require(this.path);
+            if (Clazz.process) {
+                return Clazz;
+            }
+
+            if (typeof Clazz !== 'function') {
+                console.error('Invalid transformer: ', Clazz);
+                throw new Error('Invalid transformer at path "' + this.path + '": ' + Clazz);
+            }
+            this.instance = new Clazz();
+            this.instance.id = this.id;
+        }
+        return this.instance;
+    },
+    toString: function () {
+        return '[Taglib.Transformer: ' + this.path + ']';
     }
-    Func.prototype = {};
-    return Func;
-}());
-Taglib.HelperObject = (function () {
-    function HelperObject() {
-        this.path = null;
-    }
-    HelperObject.prototype = {};
-    return HelperObject;
-}());
+});
+
 module.exports = Taglib;

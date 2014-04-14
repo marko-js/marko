@@ -1,9 +1,7 @@
-<c:template 
-    xmlns:c="core" 
-    xmlns:async="async">
+<c-template>
 
-    <async:fragment dependency="promiseData" var="promiseData">
+    <async-fragment dependency="promiseData" var="promiseData">
         $promiseData
-    </async:fragment>
+    </async-fragment>
     
-</c:template>
+</c-template>

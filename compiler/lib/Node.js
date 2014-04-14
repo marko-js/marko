@@ -16,6 +16,8 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var forEachEntry = require('raptor-util').forEachEntry;
+var extend = require('raptor-util').extend;
+
 var isArray = Array.isArray;
 var isEmpty = require('raptor-objects').isEmpty;
 function Node(nodeType) {
@@ -69,95 +71,31 @@ Node.prototype = {
         compiler.addError(error + ' (' + this.toString() + ')', pos);
     },
     resolveNamespace: function(namespace) {
-        if (namespace == null) {
-            namespace = '';
-        }
-
-        return this.compiler ?
-            this.compiler.taglibs.resolveNamespace(namespace) || namespace :
-            namespace;
+        return namespace || '';
     },
     setProperty: function (name, value) {
-        this.setPropertyNS(null, name, value);
-    },
-    setPropertyNS: function (namespace, name, value) {
-        namespace = this.resolveNamespace(namespace);
-        var namespacedProps = this.properties[namespace];
-        if (!namespacedProps) {
-            namespacedProps = this.properties[namespace] = {};
-        }
-        namespacedProps[name] = value;
+        this.properties[name] = value;
     },
     setProperties: function (props) {
-        this.setPropertiesNS(null, props);
-    },
-    setPropertiesNS: function (namespace, props) {
-        namespace = this.resolveNamespace(namespace);
-        forEachEntry(props, function (name, value) {
-            this.setPropertyNS(namespace, name, value);
-        }, this);
-    },
-    getPropertyNamespaces: function () {
-        return Object.keys(this.properties);
+        if (!props) {
+            return;
+        }
+        extend(this.properties, props);
     },
     getProperties: function () {
-        return this.getPropertiesNS(null);
-    },
-    hasProperty: function (name) {
-        return this.hasPropertyNS('', name);
-    },
-    hasPropertyNS: function (namespace, name) {
-        namespace = this.resolveNamespace(namespace);
-        var namespaceProps = this.properties[namespace];
-        return namespaceProps.hasOwnProperty(name);
-    },
-    getPropertiesByNS: function () {
         return this.properties;
     },
-    getPropertiesNS: function (namespace) {
-        namespace = this.resolveNamespace(namespace);
-        return this.properties[namespace];
+    hasProperty: function (name) {
+        return this.properties.hasOwnProperty(name);
     },
     forEachProperty: function (callback, thisObj) {
-        forEachEntry(this.properties, function (namespace, properties) {
-            forEachEntry(properties, function (name, value) {
-                callback.call(thisObj, namespace, name, value);
-            }, this);
-        }, this);
+        forEachEntry(this.properties, callback, this);
     },
     getProperty: function (name) {
-        return this.getPropertyNS(null, name);
-    },
-    getPropertyNS: function (namespace, name) {
-        namespace = this.resolveNamespace(namespace);
-        var namespaceProps = this.properties[namespace];
-        return namespaceProps ? namespaceProps[name] : undefined;
+        return this.properties[name];
     },
     removeProperty: function (name) {
-        this.removePropertyNS('', name);
-    },
-    removePropertyNS: function (namespace, name) {
-        namespace = this.resolveNamespace(namespace);
-        var namespaceProps = this.properties[namespace];
-        if (namespaceProps) {
-            delete namespaceProps[name];
-        }
-        if (isEmpty(namespaceProps)) {
-            delete this.properties[namespace];
-        }
-    },
-    removePropertiesNS: function (namespace) {
-        namespace = this.resolveNamespace(namespace);
-        delete this.properties[namespace];
-    },
-    forEachPropertyNS: function (namespace, callback, thisObj) {
-        namespace = this.resolveNamespace(namespace);
-        var props = this.properties[namespace];
-        if (props) {
-            forEachEntry(props, function (name, value) {
-                callback.call(thisObj, name, value);
-            }, this);
-        }
+        delete this.properties[name];
     },
     forEachChild: function (callback, thisObj) {
         if (!this.firstChild) {
@@ -443,7 +381,7 @@ Node.prototype = {
             } else {
                 //There is a strip expression
                 if (!this.generateBeforeCode || !this.generateAfterCode) {
-                    this.addError('The c:strip directive is not supported for node ' + this);
+                    this.addError('The c-strip directive is not supported for node ' + this);
                     this.generateCodeForChildren(template);
                     return;
                 }

@@ -1,6 +1,5 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core" 
+<c-template 
     params="name,count">
 
     Hello $name! You have $count new messages.
-</c:template>
+</c-template>

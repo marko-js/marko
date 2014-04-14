@@ -36,6 +36,7 @@ IncludeNode.prototype = {
         var templateData = this.getProperty('templateData') || this.getProperty('template-data');
         var resourcePath;
         var _this = this;
+
         if (templatePath) {
             this.removeProperty('template');
 
@@ -46,15 +47,18 @@ IncludeNode.prototype = {
                 dataExpression = {
                     toString: function () {
                         var propParts = [];
-                        _this.forEachPropertyNS('', function (name, value) {
+                        
+                        _this.forEachProperty(function (name, value) {
                             name = name.replace(/-([a-z])/g, function (match, lower) {
                                 return lower.toUpperCase();
                             });
                             propParts.push(stringify(name) + ': ' + value);
                         }, _this);
+
                         if (_this.hasChildren()) {
                             propParts.push(stringify('invokeBody') + ': ' + _this.getBodyContentFunctionExpression(template, false));
                         }
+
                         return '{' + propParts.join(', ') + '}';
                     }
                 };

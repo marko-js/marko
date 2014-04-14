@@ -1,9 +1,6 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:w="http://raptorjs.org/templates/widgets"
-    xmlns:test="http://raptorjs.org/templates/test" 
-    c:functions="invalidFunction"
-    w:functions="invalidWidgetFunction">
+<c-template 
+    c-functions="invalidFunction"
+    w-functions="invalidWidgetFunction">
     
     ${greeting("World")
     <div>
@@ -15,79 +12,79 @@
     
     
     
-    <c:for>
+    <c-for>
         Missing each attribute
-    </c:for>
+    </c-for>
     
-    <c:for each="item">
-    </c:for>
+    <c-for each="item">
+    </c-for>
     
-    <c:for each="item in items" invalid="true">
+    <c-for each="item in items" invalid="true">
         Invalid attribute
-    </c:for>
+    </c-for>
     
-    <c:for each="item in items" separator="${;">
+    <c-for each="item in items" separator="${;">
         Invalid separator
-    </c:for>
+    </c-for>
     
-    <c:invalidTag>
-    </c:invalidTag>
+    <c-invalidTag>
+    </c-invalidTag>
     
-    <div c:for="item in items; invalid=true">
+    <div c-for="item in items; invalid=true">
     </div>
     
-    <c:choose>
-        <c:when test="true">A</c:when>
-        <c:otherwise>INVALID</c:otherwise>
-        <c:when test="true">B</c:when>
-    </c:choose>
+    <c-choose>
+        <c-when test="true">A</c-when>
+        <c-otherwise>INVALID</c-otherwise>
+        <c-when test="true">B</c-when>
+    </c-choose>
     
-    <c:choose>
+    <c-choose>
         
-        <c:when test="false">A</c:when>
+        <c-when test="false">A</c-when>
         INVALID TEXT
-        <c:when test="true">TRUE</c:when>
-        <c:otherwise>C</c:otherwise>
-    </c:choose>
+        <c-when test="true">TRUE</c-when>
+        <c-otherwise>C</c-otherwise>
+    </c-choose>
     
-    <c:def>
-    </c:def>
+    <c-def>
+    </c-def>
     
-    <c:def function="invalid-function-name()">
-        <c:invalidTag2></c:invalidTag2>
-    </c:def>
+    <c-def function="invalid-function-name()">
+        <c-invalidTag2></c-invalidTag2>
+    </c-def>
     
-    <c:include>Missing template attribute</c:include>
+    <c-include>Missing template attribute</c-include>
     
-    <c:with vars="x=1;b=2;1">
-    </c:with>
+    <c-with vars="x=1;b=2;1">
+    </c-with>
     
-    <c:if test="false">
+    <c-if test="false">
         A
-    </c:if>
+    </c-if>
     INVALID
-    <c:else>
+    <c-else>
         C
-    </c:else>
+    </c-else>
     
-    <c:if test="false">
+    <c-if test="false">
         A
-    </c:if>
+    </c-if>
     INVALID
-    <c:else-if test="false">
+    <c-else-if test="false">
         A
-    </c:else-if>
-    <c:else>
+    </c-else-if>
+    <c-else>
         C
-    </c:else>
+    </c-else>
     
     <div class="test">
-        <c:attr name="class" value="duplicate"/>
+        <c-attr name="class" value="duplicate"/>
     </div>
     
-    <test:popover title="Popover Title" invalidAttr1="invalidValue1">
-        <c:attr name="invalidAttr2" value="invalidValue2"/>
-        <c:attr name="invalidAttr3">invalidValue3</c:attr>
-        <c:attr name="invalidAttr4" c:if="invalidIf">invalidValue4</c:attr>
-    </test:popover>
-</c:template>
+    <test-popover title="Popover Title" invalidAttr1="invalidValue1">
+        <c-attr name="invalidAttr2" value="invalidValue2"/>
+        <c-attr name="invalidAttr3">invalidValue3</c-attr>
+        <c-attr name="invalidAttr4" c-if="invalidIf">invalidValue4</c-attr>
+    </test-popover>
+</c-template>

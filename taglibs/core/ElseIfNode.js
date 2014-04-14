@@ -15,7 +15,7 @@
  */
 'use strict';
 function ElseIfNode(props) {
-    ElseIfNode.$super.call(this, 'http://raptorjs.org/templates/core', 'else-if', 'c');
+    ElseIfNode.$super.call(this, 'c-else-if');
     if (props) {
         this.setProperties(props);
     }

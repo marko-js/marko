@@ -1,13 +1,11 @@
-<c:template 
-    xmlns:c="core" 
-    xmlns:async="async">
+<c-template>
 
-    <async:fragment dependency="contextData" var="d1">
+    <async-fragment dependency="contextData" var="d1">
         $d1.name
-    </async:fragment>
+    </async-fragment>
     
-    <async:fragment dependency="sharedData" var="d2">
+    <async-fragment dependency="sharedData" var="d2">
         $d2.name
-    </async:fragment>
+    </async-fragment>
     
-</c:template>
+</c-template>

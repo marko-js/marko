@@ -1,5 +1,4 @@
-<c:template
-    xmlns:c="core"
+<c-template
     params="name">
     
     <html>
@@ -15,4 +14,4 @@
             </script>
         </body>
     </html>
-</c:template>
+</c-template>

@@ -25,6 +25,7 @@ HtmlTagTransformer.prototype = {
             var allowSelfClosing = options.allowSelfClosing || {};
             var startTagOnly = options.startTagOnly || {};
             var lookupKey = node.namespace ? node.namespace + ':' + node.localName : node.localName;
+
             if (node.isPreserveWhitespace() == null) {
                 if (preserveWhitespace[lookupKey] === true) {
                     node.setPreserveWhitespace(true);
@@ -36,16 +37,15 @@ HtmlTagTransformer.prototype = {
             if (compiler.options.xhtml !== true && startTagOnly[lookupKey] === true) {
                 node.setStartTagOnly(true);
             }
-
             
-            if (node.getQName() === 'html' && node.hasAttributeNS('raptor-templates/html', 'doctype')) {
-                var doctype = node.getAttributeNS('raptor-templates/html', 'doctype');
+            if (node.getQName() === 'html' && node.hasAttribute('html-doctype')) {
+                var doctype = node.getAttribute('html-doctype');
                 var docTypeNode = new DocTypeNode({
                         value: doctype,
                         pos: node.getPosition()
                     });
                 node.parentNode.insertBefore(docTypeNode, node);
-                node.removeAttributeNS('raptor-templates/html', 'doctype');
+                node.removeAttribute('html-doctype');
             }
         }
     }

@@ -114,5 +114,6 @@ module.exports = {
         }
         runtime.render(path, data, context);
         return this;
-    }
+    },
+    xt: extend
 };

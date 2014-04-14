@@ -100,15 +100,13 @@ TagHandlerNode.prototype = {
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, new Expression(importedVariable.expression));
         }, this);
-        var namespacedProps = extend({}, this.getPropertiesByNS());
-        delete namespacedProps[''];
-        var hasNamespacedProps = !objects.isEmpty(namespacedProps);
+        
         var _this = this;
         var variableNames = [];
-        _this.tag.forEachVariable(function (v) {
+        _this.tag.forEachVariable(function (nestedVar) {
             var varName;
-            if (v.nameFromAttribute) {
-                var possibleNameAttributes = v.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
+            if (nestedVar.nameFromAttribute) {
+                var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
                 for (var i = 0, len = possibleNameAttributes.length; i < len; i++) {
                     var attrName = possibleNameAttributes[i];
                     var keep = false;
@@ -130,7 +128,7 @@ TagHandlerNode.prototype = {
                     varName = '_var';    // Let it continue with errors
                 }
             } else {
-                varName = v.name;
+                varName = nestedVar.name;
                 if (!varName) {
                     this.addError('Variable name is required');
                     varName = '_var';    // Let it continue with errors
@@ -168,25 +166,10 @@ TagHandlerNode.prototype = {
                     template.code(',\n').line('function(' + bodyParams.join(',') + ') {').indent(function () {
                         _this.generateCodeForChildren(template);
                     }).indent().code('}');
-                } else {
-                    if (hasNamespacedProps) {
-                        template.code(',\n').indent().code('null');
-                    }
-                }
-                if (hasNamespacedProps) {
-                    template.code(',\n').line('{').indent(function () {
-                        var first = true;
-                        forEachEntry(namespacedProps, function (namespace, props) {
-                            if (!first) {
-                                template.code(',\n');
-                            }
-                            template.code(template.indentStr() + '"' + namespace + '": ' + getPropsStr(props, template));
-                            first = false;
-                        });
-                    }).indent().code('}');
                 }
             });
         });
+
         if (_this.postInvokeCode.length) {
             _this.postInvokeCode.forEach(function (code) {
                 template.indent().code(code).code('\n');

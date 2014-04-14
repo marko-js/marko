@@ -1,10 +1,8 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:t="http://raptorjs.org/templates/test">
+<c-template>
     
     <img src="test.jpg"/>
     <div class="self-closing-not-allowed" />
     <script src="test.js"></script>
     <br/>
 
-</c:template>
+</c-template>

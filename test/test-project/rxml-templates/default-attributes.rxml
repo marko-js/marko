@@ -1,9 +1,7 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
-    xmlns:test="http://raptorjs.org/templates/test" 
+<c-template 
     params="">
     
-    <test:default-attributes prop1="foo" prop2="50"/>
-    <test:default-attributes prop1="foo" prop2="50" default1="bar"/>
+    <test-default-attributes prop1="foo" prop2="50"/>
+    <test-default-attributes prop1="foo" prop2="50" default1="bar"/>
     
-</c:template>
+</c-template>

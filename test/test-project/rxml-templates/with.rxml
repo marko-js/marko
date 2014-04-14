@@ -1,9 +1,8 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core">
+<c-template>
     
-    <c:with vars="x=1; y=7; z=x+10; a">$x $y $z</c:with>
+    <c-with vars="x=1; y=7; z=x+10; a">$x $y $z</c-with>
 
-    <div c:for="i in [1, 2, 3]" c:with="message=i+ ') hello'">
+    <div c-for="i in [1, 2, 3]" c-with="message=i+ ') hello'">
         $message
     </div>
-</c:template>
+</c-template>

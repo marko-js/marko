@@ -27,6 +27,9 @@ function testRender(path, data, done, options) {
     
 
     var raptorTemplates = require('../');
+
+    require('../compiler').defaultOptions.checkUpToDate = false;
+
     var Context = raptorTemplates.Context;
     var context = options.context || new Context(new StringBuilder());
 

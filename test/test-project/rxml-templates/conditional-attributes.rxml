@@ -1,5 +1,4 @@
-<template 
-    xmlns:c="http://raptorjs.org/templates/core">
+<template>
     
     <div class="{?false;some-class}"></div>
     <div class="{?true;some-class}"></div>

@@ -1,5 +1,4 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core"
+<c-template
     params="name,welcome">
     
     $!welcome
@@ -10,9 +9,9 @@
     <div title="$welcome &lt;hello&gt;" data-name="$name"/>
 
     <div data-attr="Hello $name &lt;hello&gt;">
-        <c:attr name="data-nested-attr">&lt;Hello> $name <![CDATA[<hello>]]></c:attr>
-        <c:attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
+        <c-attr name="data-nested-attr">&lt;Hello> $name <![CDATA[<hello>]]></c-attr>
+        <c-attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
         Hello &lt;John&gt;© <![CDATA[<hello>]]>
         ${startTag:START}
     </div>
-</c:template>
+</c-template>

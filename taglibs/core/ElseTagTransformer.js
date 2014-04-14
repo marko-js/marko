@@ -21,8 +21,8 @@ ElseTagTransformer.prototype = {
     process: function (node, compiler) {
         var curNode = node.previousSibling;
         var matchingNode;
-        var IfNode = compiler.getNodeClass('http://raptorjs.org/templates/core', 'if');
-        var ElseIfNode = compiler.getNodeClass('http://raptorjs.org/templates/core', 'else-if');
+        var IfNode = compiler.getNodeClass('c-if');
+        var ElseIfNode = compiler.getNodeClass('c-else-if');
         var whitespaceNodes = [];
         while (curNode) {
             if (curNode.getNodeClass() === ElseIfNode || curNode.getNodeClass() === IfNode) {
@@ -42,7 +42,7 @@ ElseTagTransformer.prototype = {
             curNode = curNode.previousSibling;
         }
         if (!matchingNode) {
-            node.addError('<c:if> or <c:else-if> node not found immediately before ' + node.toString() + ' tag.');
+            node.addError('<c-if> or <c-else-if> node not found immediately before ' + node.toString() + ' tag.');
             return;
         }
         whitespaceNodes.forEach(function (whitespaceNode) {

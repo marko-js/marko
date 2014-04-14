@@ -1,12 +1,12 @@
-<c:template xmlns:c="core" xmlns:layout="layout">
-    <h1 c:if="data.showHeader !== false">
-        <layout:placeholder name="header">
+<c-template>
+    <h1 c-if="data.showHeader !== false">
+        <layout-placeholder name="header">
             DEFAULT TITLE
-        </layout:placeholder>
+        </layout-placeholder>
     </h1>
     <div>
-        <layout:placeholder name="body"/>
+        <layout-placeholder name="body"/>
     </div>
-    <layout:placeholder name="footer"/>
-    <layout:placeholder name="empty"/>
-</c:template>
+    <layout-placeholder name="footer"/>
+    <layout-placeholder name="empty"/>
+</c-template>

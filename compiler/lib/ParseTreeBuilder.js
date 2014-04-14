@@ -110,8 +110,7 @@ ParseTreeBuilder.prototype = {
         function getNS(node) {
             if (node.namespace) {
                 return node.namespace;
-            }
-            else if (node.prefix) {
+            } else if (node.prefix) {
                 if (node.prefix === 'xml') {
                     return 'http://www.w3.org/XML/1998/namespace';
                 }
@@ -121,11 +120,8 @@ ParseTreeBuilder.prototype = {
                 return '';
             }
         }
-
-        var taglibs = this.taglibs;
         
         var elNS = getNS(el);
-        elNS = taglibs.resolveNamespace(elNS) || elNS;
 
         var elementNode = new ElementNode(
             el.localName,
@@ -140,20 +136,15 @@ ParseTreeBuilder.prototype = {
             
             elementNode.setRoot(true);
 
-            if (!el.namespace && el.localName === 'template') {
-                elementNode.namespace = 'core';
+            if (!elNS && el.localName === 'template') {
+                elementNode.localName = 'c-template';
             }
 
             this.rootNode = elementNode;
         }
 
         attributes.forEach(function (attr) {
-            if (attr.prefix === 'xmlns') {
-                return; // Skip xmlns attributes
-            }
             var attrNS = getNS(attr);
-            attrNS = taglibs.resolveNamespace(attrNS) || attrNS;
-
             var attrLocalName = attr.localName;
             var attrPrefix = attr.prefix;
             elementNode.setAttributeNS(attrNS, attrLocalName, attr.value, attrPrefix);

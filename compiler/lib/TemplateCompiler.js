@@ -21,6 +21,7 @@ var Expression = require('./Expression');
 var TypeConverter = require('./TypeConverter');
 var taglibLookup = require('./taglib-lookup');
 var nodePath = require('path');
+var ok = require('assert').ok;
 
 function TemplateCompiler(path, options) {
     this.dirname = nodePath.dirname(path);
@@ -159,8 +160,10 @@ TemplateCompiler.prototype = {
     getErrors: function () {
         return this.errors;
     },
-    getNodeClass: function (ns, localName) {
-        var tag = this.taglibs.getTag(ns, localName);
+    getNodeClass: function (tagName) {
+        ok(arguments.length === 1, 'Invalid args');
+
+        var tag = this.taglibs.getTag(tagName);
         if (tag && tag.nodeClass) {
             var nodeClass = require(tag.nodeClass);
             if (nodeClass.prototype.constructor !== nodeClass) {
@@ -168,13 +171,17 @@ TemplateCompiler.prototype = {
             }
             return nodeClass;
         }
-        throw createError(new Error('Node class not found for namespace "' + ns + '" and localName "' + localName + '"'));
+        throw createError(new Error('Node class not found for tag "' + tagName + '"'));
     },
     createTag: function () {
         var Taglib = require('./Taglib');
         return new Taglib.Tag();
     },
     checkUpToDate: function(sourceFile, targetFile) {
+        if (this.options.checkUpToDate === false) {
+            return false;
+        }
+        
         var fs = require('fs');
 
         

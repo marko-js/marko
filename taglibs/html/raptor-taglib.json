@@ -1,0 +1,25 @@
+{
+    "tags": {
+        "html-html": {
+            "attributes": {
+                "doctype": {
+                    "type": "string"
+                }
+            }
+        },
+        "html-doctype": {
+            "attributes": {
+                "value": {
+                    "type": "custom"
+                }
+            },
+            "node-class": "./DocTypeNode"
+        },
+        "*": {
+            "transformer": "./HtmlTagTransformer"
+        },
+        "html-comment": {
+            "renderer": "./CommentTag"
+        }
+    }
+}

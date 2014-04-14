@@ -50,44 +50,23 @@ CoreTagTransformer.prototype = {
         this.findNestedAttrs(node, compiler, template);
         var inputAttr;
         var forEachNode;
-        var namespace;
         var tag;
-        var coreNS = compiler.taglibs.resolveNamespace('core');
 
         function forEachProp(callback, thisObj) {
             var foundProps = {};
 
             node.forEachAttributeAnyNS(function (attr) {
-                if (attr.namespace === 'xml' || attr.namespace === 'http://www.w3.org/2000/xmlns/' || attr.namespace === 'http://www.w3.org/XML/1998/namespace' || attr.prefix == 'xmlns') {
-                    return;    //Skip xmlns attributes
-                }
-                var prefix = attr.prefix;
-                var attrUri = attr.namespace;
-                var resolvedAttrNamespace = attrUri ? compiler.taglibs.resolveNamespace(attrUri) : null;
-                attrUri = attr.prefix && resolvedAttrNamespace === tag.taglib.id ? null : attr.namespace;
-
-                var attrDef = compiler.taglibs.getAttribute(namespace, node.localName, attrUri, attr.localName);
+                var attrDef = compiler.taglibs.getAttribute(node, attr);
                 var type = attrDef ? attrDef.type || 'string' : 'string';
 
-                var taglibIdForTag = compiler.taglibs.resolveNamespaceForTag(tag);
-
                 var value;
-
-                // Check if the attribute and tag are part of the same taglib
-                if (attrUri && compiler.taglibs.resolveNamespace(attrUri) === taglibIdForTag) {
-                    // If so, then don't repeat prefix
-                    prefix = '';
-                }
-
                 
                 if (!attrDef) {
                     // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                     //Tag doesn't allow dynamic attributes
-                    node.addError('The tag "' + tag.name + '" in taglib "' + taglibIdForTag + '" does not support attribute "' + attr + '"');
+                    node.addError('The tag "' + tag.name + '" in taglib "' + tag.taglibId + '" does not support attribute "' + attr + '"');
                     return;
                 }
-
-                
 
                 if (attr.value instanceof Expression) {
                     value = attr.value;
@@ -102,7 +81,7 @@ CoreTagTransformer.prototype = {
                 }
                 var propName;
                 if (attrDef.dynamicAttribute) {
-                    propName = attr.localName;
+                    propName = attr.qName;
                 } else {
                     if (attrDef.targetProperty) {
                         propName = attrDef.targetProperty;
@@ -114,38 +93,34 @@ CoreTagTransformer.prototype = {
                 }
 
                 foundProps[propName] = true;
-                callback.call(thisObj, attrUri, propName, value, prefix, attrDef);
+                callback.call(thisObj, propName, value, attrDef);
             });
 
             tag.forEachAttribute(function (attr) {
                 if (attr.hasOwnProperty('defaultValue') && !foundProps[attr.name]) {
-                    callback.call(thisObj, '', attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
+                    callback.call(thisObj, attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
                 }
             });
         }
-        namespace = node.namespace;
-        if (!namespace && node.isRoot() && node.localName === 'template') {
-            namespace = 'core';
-        }
 
-        tag = node.tag || compiler.taglibs.getTag(namespace, node.localName);
+        tag = node.tag || compiler.taglibs.getTag(node);
 
         var coreAttrHandlers = {
-            'space': function(attr) {
-                this.whitespace(attr);
+            'c-space': function(attr) {
+                this['c-whitespace'](attr);
             },
-            'whitespace': function(attr) {
+            'c-whitespace': function(attr) {
                 if (attr.value === 'preserve') {
                     node.setPreserveWhitespace(true);    
                 }
             },
-            'escape-xml': function(attr) {
+            'c-escape-xml': function(attr) {
                 node.setEscapeXmlBodyText(attr.value !== 'false');
             },
-            'parse-body-text': function(attr) {
+            'c-parse-body-text': function(attr) {
                 node.parseBodyText = attr.value !== 'false';
             },
-            'when': function(attr) {
+            'c-when': function(attr) {
                 var whenNode = new WhenNode({
                         test: new Expression(attr.value),
                         pos: node.getPosition()
@@ -153,18 +128,18 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(whenNode, node);
                 whenNode.appendChild(node);
             },
-            'otherwise': function(attr) {
+            'c-otherwise': function(attr) {
                 var otherwiseNode = new OtherwiseNode({ pos: node.getPosition() });
                 node.parentNode.replaceChild(otherwiseNode, node);
                 otherwiseNode.appendChild(node);
             },
-            'attrs': function(attr) {
+            'c-attrs': function(attr) {
                 node.dynamicAttributesExpression = attr.value;
             },
-            'for-each': function(attr) {
+            'c-for-each': function(attr) {
                 this['for'](attr);
             },
-            'for': function(attr) {
+            'c-for': function(attr) {
                 var forEachProps = AttributeSplitter.parse(attr.value, {
                         each: { type: 'custom' },
                         separator: { type: 'expression' },
@@ -189,7 +164,7 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(forEachNode, node);
                 forEachNode.appendChild(node);
             },
-            'if': function(attr) {
+            'c-if': function(attr) {
                 var ifNode = new IfNode({
                         test: new Expression(attr.value),
                         pos: node.getPosition()
@@ -199,7 +174,7 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(ifNode, node);
                 ifNode.appendChild(node);
             },
-            'else-if': function(attr) {
+            'c-else-if': function(attr) {
                 var elseIfNode = new ElseIfNode({
                         test: new Expression(attr.value),
                         pos: node.getPosition()
@@ -209,14 +184,14 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(elseIfNode, node);
                 elseIfNode.appendChild(node);
             },
-            'else': function(attr) {
+            'c-else': function(attr) {
                 var elseNode = new ElseNode({ pos: node.getPosition() });
                 //Surround the existing node with an "if" node by replacing the current
                 //node with the new "if" node and then adding the current node as a child
                 node.parentNode.replaceChild(elseNode, node);
                 elseNode.appendChild(node);
             },
-            'with': function(attr) {
+            'c-with': function(attr) {
                 var withNode = new WithNode({
                         vars: attr.value,
                         pos: node.getPosition()
@@ -224,10 +199,10 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(withNode, node);
                 withNode.appendChild(node);
             },
-            'body-content': function(attr) {
+            'c-body-content': function(attr) {
                 this.content(attr);
             },
-            'content': function(attr) {
+            'c-content': function(attr) {
                 var newChild = new WriteNode({
                         expression: attr.value,
                         pos: node.getPosition()
@@ -235,18 +210,18 @@ CoreTagTransformer.prototype = {
                 node.removeChildren();
                 node.appendChild(newChild);
             },
-            'trim-body-indent': function(attr) {
+            'c-trim-body-indent': function(attr) {
                 if (attr.value === 'true') {
                     node.trimBodyIndent = true;    
                 }
             },
-            'strip': function(attr) {
+            'c-strip': function(attr) {
                 if (!node.setStripExpression) {
                     node.addError('The c:strip directive is not allowed for target node');
                 }
                 node.setStripExpression(attr.value);
             },
-            'replace': function(attr) {
+            'c-replace': function(attr) {
                 var replaceWriteNode = new WriteNode({
                         expression: attr.value,
                         pos: node.getPosition()
@@ -255,26 +230,17 @@ CoreTagTransformer.prototype = {
                 node.parentNode.replaceChild(replaceWriteNode, node);
                 node = replaceWriteNode;
             },
-            'input': function(attr) {
+            'c-input': function(attr) {
                 inputAttr = attr.value;
             }
         };
 
-        node.forEachAttributeAnyNS(function(attr) {
-            var attrNS = attr.namespace;
-            if (!attrNS) {
-                return;
-            }
-
-            attrNS = compiler.taglibs.resolveNamespace(attrNS);
-
-            if (attrNS === coreNS) {
-                node.removeAttributeNS(attr.namespace, attr.localName);
-                var handler = coreAttrHandlers[attr.localName];
-                if (!handler) {
-                    node.addError('Unsupported attribute: ' + attr.qName);
-                }
-                coreAttrHandlers[attr.localName](attr);
+        node.forEachAttributeNS('', function(attr) {
+            
+            var handler = coreAttrHandlers[attr.qName];
+            if (handler) {
+                node.removeAttribute(attr.localName);
+                coreAttrHandlers[attr.localName](attr);    
             }
         });
 
@@ -299,35 +265,32 @@ CoreTagTransformer.prototype = {
                     IncludeNode.convertNode(node, templatePath);
                 }
 
-                forEachProp(function (namespace, name, value, prefix, attrDef) {
+                forEachProp(function (name, value, attrDef) {
                     if (attrDef.dynamicAttribute && attrDef.targetProperty) {
                         if (attrDef.removeDashes === true) {
                             name = removeDashes(name);
                         }
-                        node.addDynamicAttribute(prefix ? prefix + ':' + name : name, value);
+                        node.addDynamicAttribute(name, value);
                         node.setDynamicAttributesProperty(attrDef.targetProperty);
                     } else {
-                        node.setPropertyNS(namespace, name, value);
+                        node.setProperty(name, value);
                     }
                 });
+
             } else if (tag.nodeClass) {
                 var NodeCompilerClass = require(tag.nodeClass);
                 extend(node, NodeCompilerClass.prototype);
                 NodeCompilerClass.call(node);
                 node.setNodeClass(NodeCompilerClass);
-                forEachProp(function (namespace, name, value) {
-                    node.setPropertyNS(namespace, name, value);
+                forEachProp(function (name, value) {
+                    node.setProperty(name, value);
                 });
             }
-        } else if (namespace && compiler.isTaglib(namespace)) {
-            node.addError('Tag ' + node.toString() + ' is not allowed for taglib "' + namespace + '"');
         }
     },
     findNestedAttrs: function (node, compiler, template) {
-        var coreNS = compiler.taglibs.resolveNamespace('core');
-
         node.forEachChild(function (child) {
-            if (compiler.taglibs.resolveNamespace(child.namespace) === coreNS && child.localName === 'attr') {
+            if (child.qName === 'c-attr') {
                 this.handleAttr(child, compiler, template);
             }
         }, this);

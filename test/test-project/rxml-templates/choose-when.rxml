@@ -1,17 +1,16 @@
-<c:template 
-    xmlns:c="http://raptorjs.org/templates/core">
+<c-template>
     
-    <c:choose>
-        <c:when test="0">A</c:when>
-        <c:when test="false">B</c:when>
-        <c:when test="true">TRUE</c:when>
-        <c:otherwise>C</c:otherwise>
-    </c:choose>,
+    <c-choose>
+        <c-when test="0">A</c-when>
+        <c-when test="false">B</c-when>
+        <c-when test="true">TRUE</c-when>
+        <c-otherwise>C</c-otherwise>
+    </c-choose>,
     
-    <c:choose>
-        <c:when test="false">A</c:when>
-        <c:when test="false">B</c:when>
-        <c:otherwise>TRUE</c:otherwise>
-    </c:choose>
+    <c-choose>
+        <c-when test="false">A</c-when>
+        <c-when test="false">B</c-when>
+        <c-otherwise>TRUE</c-otherwise>
+    </c-choose>
     
-</c:template>
+</c-template>
