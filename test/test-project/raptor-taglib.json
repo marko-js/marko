@@ -1,10 +1,9 @@
 {
-    "namespace": "test",
     "tags": {
-        "foo": {
+        "test-foo": {
             "template": "./foo/view.rhtml"
         },
-        "bar": {
+        "test-bar": {
             "template": "./bar/view.rhtml"
         }
     }

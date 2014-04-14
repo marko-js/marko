@@ -1,28 +1,21 @@
 {
-    "namespace": ["raptor-widgets", "widgets", "w"],
-    "attributes": {
-        "id": "string",
-        "event-*": {
-            "pattern": true,
-            "type": "custom",
-            "allow-expressions": false,
-            "preserve-name": true
-        }
-    },
     "tags": {
         "*": {
             "attributes": {
-                "widget": "string",
-                "config": "expression",
-                "id": "string",
-                "el-id": "string"
+                "w-widget": "string",
+                "w-config": "expression",
+                "w-el-id": "string",
+                "w-id": "string",
+                "w-event-*": {
+                    "pattern": true,
+                    "type": "custom",
+                    "allow-expressions": false,
+                    "preserve-name": true
+                }
             },
-            "transformer": {
-                "path": "./taglib/widgets-transformer.js",
-                "after": "core/CoreTagTransformer"
-            }
+            "transformer": "./taglib/widgets-transformer.js"
         },
-        "widget": {
+        "w-widget": {
             "renderer": "./taglib/widget-tag.js",
             "attributes": {
                 "path": "string",
@@ -37,7 +30,7 @@
                 "_cfg": "data.widgetConfig"
             }
         },
-        "init-widgets": {
+        "w-init-widgets": {
             "renderer": "./taglib/init-widgets-tag.js",
             "attributes": {
                 "function-name": "string",
