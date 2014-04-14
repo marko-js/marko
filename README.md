@@ -56,6 +56,10 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 		- [Nested Tags](#nested-tags)
 	- [Taglib Discovery](#taglib-discovery)
 - [FAQ](#faq)
+- [Discuss](#discuss)
+- [Contributors](#contributors)
+- [Contribute](#contribute)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
