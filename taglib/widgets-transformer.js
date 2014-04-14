@@ -15,7 +15,6 @@
  */
 'use strict';
 var forEachEntry = require('raptor-util').forEachEntry;
-var WIDGETS_NS = 'raptor-widgets';
 var strings = require('raptor-strings');
 var objects = require('raptor-objects');
 var stringify = require('raptor-json/stringify');
@@ -23,20 +22,20 @@ var AttributeSplitter = require('raptor-templates/compiler').AttributeSplitter;
 
 
 exports.process =function (node, compiler, template) {
-    var widgetAttr = node.getAttributeNS(WIDGETS_NS, 'widget');
+    var widgetAttr = node.getAttribute('w-widget');
     var widgetElIdAttr;
-    var widgetProps = widgetAttr ? null : node.getPropertiesNS(WIDGETS_NS);
+    var widgetProps = widgetAttr ? null : node.getProperties();
 
     var widgetArgs = {};
     var widgetEvents = [];
     if (widgetProps) {
         var handledPropNames = [];
         forEachEntry(widgetProps, function (name, value) {
-            if (name === 'id') {
+            if (name === 'w-id') {
                 handledPropNames.push(name);
                 widgetArgs.scope = 'widget';
                 widgetArgs.id = value;
-            } else if (strings.startsWith(name, 'event-')) {
+            } else if (strings.startsWith(name, 'w-event-')) {
                 handledPropNames.push(name);
                 var eventProps = AttributeSplitter.parse(value, {
                         '*': { type: 'expression' },
@@ -61,9 +60,11 @@ exports.process =function (node, compiler, template) {
                 });
             }
         });
+
         handledPropNames.forEach(function (propName) {
-            node.removePropertyNS(WIDGETS_NS, propName);
+            node.removeProperty(propName);
         });
+
         if (widgetEvents.length) {
             widgetArgs.events = '[' + widgetEvents.map(function (widgetEvent) {
                 var widgetPropsJS;
@@ -95,20 +96,21 @@ exports.process =function (node, compiler, template) {
             node.addPostInvokeCode(template.makeExpression('_cleanupWidgetArgs(context);'));
         }
     }
+
     if (widgetAttr) {
-        node.removeAttributeNS(WIDGETS_NS, 'widget');
+        node.removeAttribute('w-widget');
         var widgetJsClass = compiler.convertType(widgetAttr, 'string', true);
         var config;
         var assignedId;
-        if ((assignedId = node.getAttributeNS(WIDGETS_NS, 'id'))) {
-            node.removeAttributeNS(WIDGETS_NS, 'id');
+        if ((assignedId = node.getAttribute('w-id'))) {
+            node.removeAttribute('w-id');
             assignedId = compiler.convertType(assignedId, 'string', true);
         }
-        if ((config = node.getAttributeNS(WIDGETS_NS, 'config'))) {
-            node.removeAttributeNS(WIDGETS_NS, 'config');
+        if ((config = node.getAttribute('w-config'))) {
+            node.removeAttribute('w-config');
             config = compiler.convertType(config, 'expression', true);
         }
-        var widgetNode = compiler.createTagHandlerNode(WIDGETS_NS, 'widget');
+        var widgetNode = compiler.createTagHandlerNode('w-widget');
         node.parentNode.replaceChild(widgetNode, node);
         widgetNode.appendChild(node);
         widgetNode.setProperty('path', template.makeExpression('require.resolve(' + widgetJsClass + ')'));
@@ -127,15 +129,17 @@ exports.process =function (node, compiler, template) {
             node.setAttribute('id', '${widget.elId()}');
         }
     }
-    if ((widgetElIdAttr = node.getAttributeNS(WIDGETS_NS, 'el-id'))) {
-        node.removeAttributeNS(WIDGETS_NS, 'el-id');
+
+    if ((widgetElIdAttr = node.getAttribute('w-el-id'))) {
+        node.removeAttribute('w-el-id');
         if (node.hasAttribute('id')) {
-            node.addError('The "w:el-id" attribute cannot be used in conjuction with the "id" attribute');
+            node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
         } else {
             node.setAttribute('id', template.makeExpression('widget.elId(' + JSON.stringify(widgetElIdAttr) + ')'));
         }
     }
-    if (node.localName === 'widget' && node.namespace === WIDGETS_NS) {
+
+    if (node.qName === 'w-widget') {
         if (node.getAttribute('id') != null) {
             node.setProperty('scope', template.makeExpression('widget'));
         }
