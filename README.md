@@ -1209,11 +1209,13 @@ As an example, given a template at path `/my-project/src/pages/login/template.rh
 # FAQ
 
 __Question:__ _Is Raptor Templates ready for production use?_
+
 __Answer__: Yes, Raptor Templates has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind. However, the latest version of Raptor Templates is still being marked as beta as we nail down the final feature set as part of the [RaptorJS 3 initiative](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan).
 
 <hr>
 
 __Question:__ _Can templates be compiled on the client?_
+
 __Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs3/raptor-optimizer) is recommended for including compiled templates as part of a web page.
 
 <hr>
@@ -1224,6 +1226,7 @@ __Answer__: The runtime for template rendering is supported in all web browsers.
 <hr>
 
 __Question:__ _How can Raptor Templates be used with Express?_
+
 __Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead directly pipe the rendering output stream to the response stream as shown in the following code:
 
 ```javascript
@@ -1258,16 +1261,19 @@ app.get('/profile', function(req, res) {
 <hr>
 
 __Question:__ _I heard Raptor Templates is XML-based. What is that about?_
+
 __Answer__: Raptor Templates started out using an XML parser. This required that templates be well-formed XML (a major source of problems). This is no longer the case, as the compiler has been updated to use the awesome [htmlparser2](https://github.com/fb55/htmlparser2) module by [Felix Boehm](https://github.com/fb55). Also, XML namespaces are no longer used and all taglibs are now defined using simple JSON. If you are coming from the old XML-based version of Raptor Templates, please see the [Migration Guide](migration.md).
 
 <hr>
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
+
 __Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Raptor Templates, please see [raptorjs-express-app](https://github.com/raptorjs3/samples/tree/master/raptorjs-express-app).
 
 <hr>
 
 __Question:__ _How is Raptor Templates related to [RaptorJS](http://raptorjs.org)?_
+
 __Answer__: Raptor Templates is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
 
 # Discuss
