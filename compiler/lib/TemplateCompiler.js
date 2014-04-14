@@ -139,9 +139,9 @@ TemplateCompiler.prototype = {
     isExpression: function (expression) {
         return expression instanceof Expression;
     },
-    createTagHandlerNode: function (ns, localName) {
+    createTagHandlerNode: function (tagName) {
         var TagHandlerNode = require('../../taglibs/core/TagHandlerNode');
-        var tag = this.taglibs.getTag(ns, localName);
+        var tag = this.taglibs.getTag(tagName);
         var tagHandlerNode = new TagHandlerNode(tag);
         return tagHandlerNode;
     },
