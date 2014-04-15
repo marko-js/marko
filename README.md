@@ -982,7 +982,7 @@ If, and only if, a tag has nested content, then a special `invokeBody` method wi
 module.exports = function(input, context) {
     context.write('BEFORE BODY');
     if (input.invokeBody) {
-        invoke.invokeBody();
+        input.invokeBody();
     }
     context.write('AFTER BODY');
 }
