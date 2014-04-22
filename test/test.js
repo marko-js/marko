@@ -276,5 +276,75 @@ describe('raptor-render-context' , function() {
         context.write('3')
             .end();
     });
+
+    it('should support piping to an async render context', function(done) {
+
+        var context = require('../').create();
+        context.write('1');
+
+        var asyncContext = context.beginAsync();
+
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
+        helloReadStream.pipe(asyncContext);
+
+        context.write('2');
+        context.end();
+        context.on('end', function() {
+            var output = context.getOutput();
+            expect(output).to.equal('1Hello World2');
+            done();
+        });
+    });
+
+    it('should allow an async fragment to flush last', function(done) {
+        var context = require('../').create();
+        context.write('1');
+
+        var asyncContext = context.beginAsync({last: true});
+        context.once('last', function() {
+            asyncContext.write('2');
+            asyncContext.end();
+        });
+
+        
+        context.write('3');
+        context.end();
+        context.on('end', function() {
+            var output = context.getOutput();
+            expect(output).to.equal('123');
+            done();
+        });
+    });
+
+    it('should allow an async fragment to flush last asynchronously', function(done) {
+        var context = require('../').create();
+        context.write('1');
+
+        var asyncContext = context.beginAsync({last: true});
+        context.on('last', function() {
+            lastFiredCount++;
+        });
+
+        context.once('last', function() {
+            setTimeout(function() {
+                asyncContext.write('2');
+                asyncContext.end();
+            }, 10);
+        });
+
+        var lastFiredCount = 0;
+
+        
+
+        
+        context.write('3');
+        context.end();
+        context.on('end', function() {
+            expect(lastFiredCount).to.equal(1);
+            var output = context.getOutput();
+            expect(output).to.equal('123');
+            done();
+        });
+    });
 });
 
