@@ -644,6 +644,7 @@ With a value of `false` for `active`, the output would be the following:
 Any element can be repeated for every item in an array using the `c-for` directive. The directive can be applied as an element or as an attribute.
 
 _Applied as an attribute:_
+
 ```html
 <ul>
     <li c-for="item in items">${item}</li>
@@ -651,6 +652,7 @@ _Applied as an attribute:_
 ```
 
 _Applied as an element:_
+
 ```html
 <ul>
     <c-for each="item in items">
@@ -661,11 +663,13 @@ _Applied as an element:_
 
 
 Given the following value for items:
+
 ```javascript
 ["red", "green", "blue"]
 ```
 
 The output would be the following:
+
 ```html
 <ul>
     <li>red</li>
