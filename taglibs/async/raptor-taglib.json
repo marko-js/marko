@@ -20,6 +20,9 @@
                 },
                 "timeout": {
                     "type": "integer"
+                },
+                "method": {
+                    "type": "string"
                 }
             },
             "vars": [
