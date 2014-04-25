@@ -296,6 +296,40 @@ describe('raptor-render-context' , function() {
         });
     });
 
+    it.only('should support a render context being piped to another stream', function(done) {
+
+        var through = require('through')();
+        var outStr = '';
+
+        var out = require('through')(
+            function write(str) {
+                outStr += str;
+            }
+        );
+
+        through
+            .pipe(out)
+            .on('end', function() {
+                expect(outStr).to.equal('1Hello World2');
+                done();
+            })
+            .on('error', function(e) {
+                done(e);
+            });
+
+        var context = require('../').create(through);
+        context.write('1');
+
+        var asyncContext = context.beginAsync();
+
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
+        helloReadStream.pipe(asyncContext);
+
+        context.write('2');
+        context.end();
+        
+    });
+
     it('should allow an async fragment to flush last', function(done) {
         var context = require('../').create();
         context.write('1');
