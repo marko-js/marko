@@ -77,8 +77,12 @@ module.exports = {
     a: attr,
 
     as: attrs,
+    l: function(path) {
+        return typeof path === 'string' ? runtime.load(path) : path;
+    },
 
     /* Helpers that require a context below: */
+
     t: function (context, handler, props, body, namespacedProps) {
         if (!props) {
             props = {};
@@ -108,10 +112,7 @@ module.exports = {
             }
         };
     },
-    i: function(context, path, data, require) {
-        if (typeof require === 'function') {
-            path = require.resolve(path);
-        }
+    i: function(context, path, data) {
         runtime.render(path, data, context);
         return this;
     },

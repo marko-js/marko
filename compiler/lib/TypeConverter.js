@@ -15,7 +15,7 @@
  */
 'use strict';
 var createError = require('raptor-util').createError;
-var ExpressionParser = require('./ExpressionParser');
+var expressionParser = require('./expression-parser');
 var stringify = require('raptor-json/stringify');
 var Expression = require('./Expression');
 function TypeConverter() {
@@ -29,6 +29,9 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
     if (targetType === 'custom' || targetType === 'identifier') {
         return value;
     }
+
+
+
     if (targetType === 'expression') {
         if (value === '') {
             value = 'null';
@@ -37,7 +40,7 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
     }
     var processedText = '';
     if (allowExpressions) {
-        ExpressionParser.parse(value, {
+        expressionParser.parse(value, {
             text: function (text) {
                 processedText += text;
                 expressionParts.push(stringify(text));
@@ -47,9 +50,17 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
                 hasExpression = true;
             }
         });
+
         if (hasExpression) {
-            return new Expression(expressionParts.join('+'));
+            value = new Expression(expressionParts.join('+'));
+
+            if (targetType === 'template') {
+                return new Expression('__helpers.l(' + value + ')');
+            } else {
+                return value;
+            }
         }
+
         value = processedText;
     }
     if (targetType === 'string') {
@@ -76,6 +87,8 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
         }
     } else if (targetType === 'path') {
         return new Expression('require.resolve(' + JSON.stringify(value) + ')');
+    } else if (targetType === 'template') {
+        return new Expression('__helpers.l(require.resolve(' + JSON.stringify(value) + '))');
     } else {
         throw createError(new Error('Unsupported attribute type: ' + targetType));
     }

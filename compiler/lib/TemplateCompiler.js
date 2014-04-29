@@ -19,14 +19,21 @@ var TemplateBuilder = require('./TemplateBuilder');
 var parser = require('./parser');
 var Expression = require('./Expression');
 var TypeConverter = require('./TypeConverter');
-var taglibLookup = require('./taglib-lookup');
+var raptorTaglibs = require('raptor-taglibs');
 var nodePath = require('path');
 var ok = require('assert').ok;
+var attributeParser = require('./attribute-parser');
+var expressionParser = require('./expression-parser');
+var inherit = require('raptor-util/inherit');
+var _Node = require('./Node');
+var ElementNode = require('./ElementNode');
+var TextNode = require('./TextNode');
+var TagHandlerNode = require('raptor-taglib-core/TagHandlerNode');
 
 function TemplateCompiler(path, options) {
     this.dirname = nodePath.dirname(path);
     this.path = path;
-    this.taglibs = taglibLookup.buildLookup(this.dirname);
+    this.taglibs = raptorTaglibs.buildLookup(this.dirname);
     this.options = options || {};
     this.errors = [];
 }
@@ -112,7 +119,7 @@ TemplateCompiler.prototype = {
             //The templateBuilder object is need to manage the compiled JavaScript output              
             this.transformTree(rootNode, templateBuilder);
         } catch (e) {
-            throw createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
+            throw createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
         }
         
         try {
@@ -139,10 +146,22 @@ TemplateCompiler.prototype = {
     isExpression: function (expression) {
         return expression instanceof Expression;
     },
+    makeExpression: function (expression) {
+        if (this.isExpression(expression)) {
+            return expression;
+        } else {
+            return new Expression(expression);
+        }
+    },
+    parseExpression: function(str, listeners, options) {
+        return expressionParser.parse(str, listeners, options);
+    },
+    parseAttribute: function(attr, types, options) {
+        return attributeParser.parse(attr, types, options);
+    },
     createTagHandlerNode: function (tagName) {
-        var TagHandlerNode = require('../../taglibs/core/TagHandlerNode');
         var tag = this.taglibs.getTag(tagName);
-        var tagHandlerNode = new TagHandlerNode(tag);
+        var tagHandlerNode = this.createNode(TagHandlerNode, tag);
         return tagHandlerNode;
     },
     convertType: function (value, type, allowExpressions) {
@@ -166,9 +185,7 @@ TemplateCompiler.prototype = {
         var tag = this.taglibs.getTag(tagName);
         if (tag && tag.nodeClass) {
             var nodeClass = require(tag.nodeClass);
-            if (nodeClass.prototype.constructor !== nodeClass) {
-                throw new Error('constructor not set correctly');
-            }
+            nodeClass.prototype.constructor = nodeClass;
             return nodeClass;
         }
         throw createError(new Error('Node class not found for tag "' + tagName + '"'));
@@ -177,6 +194,35 @@ TemplateCompiler.prototype = {
         var Taglib = require('./Taglib');
         return new Taglib.Tag();
     },
+
+    inheritNode: function(Ctor) {
+        if (!Ctor.prototype.__NODE) {
+            var nodeType = Ctor.nodeType || 'node';
+            nodeType = nodeType.toLowerCase();
+
+            if (nodeType === 'element') {
+                inherit(Ctor, ElementNode);
+            } else if (nodeType === 'node') {
+                inherit(Ctor, _Node);
+            } else {
+                throw new Error('Invalid node type: ' + nodeType);
+            }
+        }
+    },
+
+    createNode: function(Ctor, arg) {
+        ok(Ctor != null, 'Ctor is required');
+        ok(typeof Ctor === 'function', 'Ctor should be a function');
+
+        this.inheritNode(Ctor);
+
+        return new Ctor(arg);
+    },
+
+    createTextNode: function(text, escapeXml) {
+        return new TextNode(text, escapeXml);
+    },
+
     checkUpToDate: function(sourceFile, targetFile) {
         if (this.options.checkUpToDate === false) {
             return false;

@@ -15,7 +15,9 @@
  */
 'use strict';
 var extend = require('raptor-util').extend;
+var raptorTaglibs = require('raptor-taglibs');
 var fs = require('fs');
+var nodePath = require('path');
 
 var defaultOptions = {
         minify: false,
@@ -80,8 +82,7 @@ extend(exports, {
     Node: require('./Node'),
     ElementNode: require('./ElementNode'),
     TextNode: require('./TextNode'),
-    AttributeSplitter: require('./AttributeSplitter'),
-    ExpressionParser: require('./ExpressionParser'),
+    expressionParser: require('./expression-parser'),
     Expression: require('./Expression'),
     TypeConverter: require('./TypeConverter'),
     EscapeXmlContext: require('./EscapeXmlContext'),
@@ -89,3 +90,10 @@ extend(exports, {
 });
 
 exports.TemplateCompiler = require('./TemplateCompiler');
+
+raptorTaglibs.excludeDir(nodePath.join(__dirname, '../..'));
+raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-core/raptor-taglib.json'));
+raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-html/raptor-taglib.json'));
+raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-caching/raptor-taglib.json'));
+raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-layout/raptor-taglib.json'));
+raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-async/raptor-taglib.json'));

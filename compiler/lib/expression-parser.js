@@ -29,6 +29,9 @@ var endingTokens = {
         '$': null,
         '$!': null
     };
+
+var parse;
+
 function createStartRegExpStr(starts) {
     var parts = [];
     starts.forEach(function (start) {
@@ -54,6 +57,7 @@ function getLine(str, pos) {
     var lines = str.split('\n');
     var index = 0;
     var line;
+
     while (index < lines.length) {
         line = lines[index];
         if (pos - line.length + 1 < 0) {
@@ -63,13 +67,11 @@ function getLine(str, pos) {
         }
         index++;
     }
-    function ExpressionParser() {
-    }
-    ExpressionParser.prototype = {
+
+    return {
         str: line,
         pos: pos
     };
-    return ExpressionParser;
 }
 function errorContext(str, pos, length) {
     var line = getLine(str, pos);
@@ -104,7 +106,7 @@ function getConditionalExpression(expression) {
     var depth = 0;
     var parts = [];
     var partStart = 0;
-    while (matches = tokensRegExp.exec(expression)) {
+    while ((matches = tokensRegExp.exec(expression))) {
         if (matches[0] === '{') {
             depth++;
             continue;
@@ -141,7 +143,7 @@ function getConditionalExpression(expression) {
     }
     function getExpression(part) {
         var expressionParts = [];
-        ExpressionParser.parse(part, {
+        parse(part, {
             text: function (text) {
                 expressionParts.push(stringify(text));
             },
@@ -178,7 +180,7 @@ function processNestedStrings(expression, foundStrings) {
         }
         hasExpression = false;
         parts = [];
-        ExpressionParser.parse(foundString.value, {
+        parse(foundString.value, {
             text: handleText,
             expression: handleExpression
         });
@@ -188,59 +190,56 @@ function processNestedStrings(expression, foundStrings) {
     }
     return expression;
 }
-var ExpressionParserHelper = function () {
-        function Class(callback, callbackThisObj) {
-            this.callback = callback;
-            this.callbackThisObj = callbackThisObj;
+
+function ExpressionParserHelper(listeners) {
+    this.listeners = listeners;
+    this.prevText = null;
+    this.prevEscapeXml = null;
+}
+
+ExpressionParserHelper.prototype = {
+    _invokeCallback: function (name, value, escapeXml) {
+        if (!this.listeners[name]) {
+            throw createError(new Error(name + ' not allowed: ' + value));
+        }
+        this.listeners[name](value, escapeXml);
+    },
+    _endText: function () {
+        if (this.prevText !== null) {
+            this._invokeCallback('text', this.prevText, this.prevEscapeXml);
             this.prevText = null;
             this.prevEscapeXml = null;
         }
-        Class.prototype = {
-            _invokeCallback: function (name, value, escapeXml) {
-                if (!this.callback[name]) {
-                    throw createError(new Error(name + ' not allowed: ' + value));
-                }
-                this.callback[name].call(this.callbackThisObj, value, escapeXml);
-            },
-            _endText: function () {
-                if (this.prevText !== null) {
-                    this._invokeCallback('text', this.prevText, this.prevEscapeXml);
-                    this.prevText = null;
-                    this.prevEscapeXml = null;
-                }
-            },
-            addXmlText: function (xmlText) {
-                this.addText(xmlText, false);
-            },
-            addText: function (text, escapeXml) {
-                if (this.prevText !== null && this.prevEscapeXml === escapeXml) {
-                    this.prevText += text;
-                } else {
-                    this._endText();
-                    this.prevText = text;
-                    this.prevEscapeXml = escapeXml;
-                }
-            },
-            addXmlExpression: function (expression, escapeXml) {
-                this.addExpression(expression, false);
-            },
-            addExpression: function (expression, escapeXml) {
-                this._endText();
-                if (!(expression instanceof Expression)) {
-                    expression = new Expression(expression);
-                }
-                this._invokeCallback('expression', expression, escapeXml !== false);
-            },
-            addScriptlet: function (scriptlet) {
-                this._endText();
-                this._invokeCallback('scriptlet', scriptlet);
-            }
-        };
-        return Class;
-    }();
+    },
+    addXmlText: function (xmlText) {
+        this.addText(xmlText, false);
+    },
+    addText: function (text, escapeXml) {
+        if (this.prevText !== null && this.prevEscapeXml === escapeXml) {
+            this.prevText += text;
+        } else {
+            this._endText();
+            this.prevText = text;
+            this.prevEscapeXml = escapeXml;
+        }
+    },
+    addXmlExpression: function (expression, escapeXml) {
+        this.addExpression(expression, false);
+    },
+    addExpression: function (expression, escapeXml) {
+        this._endText();
+        if (!(expression instanceof Expression)) {
+            expression = new Expression(expression);
+        }
+        this._invokeCallback('expression', expression, escapeXml !== false);
+    },
+    addScriptlet: function (scriptlet) {
+        this._endText();
+        this._invokeCallback('scriptlet', scriptlet);
+    }
+};
 
-function ExpressionParser() {
-}
+
 /**
  * @memberOf raptor/templating/compiler$ExpressionParser
  * 
@@ -248,7 +247,7 @@ function ExpressionParser() {
  * @param callback
  * @param thisObj
  */
-ExpressionParser.parse = function (str, callback, thisObj, options) {
+parse = function (str, listeners, options) {
 
     ok(str != null, '"str" is required');
     
@@ -266,21 +265,21 @@ ExpressionParser.parse = function (str, callback, thisObj, options) {
     var startToken;
     var custom = options.custom || {};
     function handleError(message) {
-        if (callback.error) {
-            callback.error.call(thisObj, message);
+        if (listeners.error) {
+            listeners.error(message);
             return;
         } else {
             throw createError(new Error(message));
         }
     }
     var startRegExp = createStartRegExp();
-    var helper = new ExpressionParserHelper(callback, thisObj);
+    var helper = new ExpressionParserHelper(listeners);
     startRegExp.lastIndex = 0;
     /*
      * Look for any of the possible start tokens (including the escaped and double-escaped versions)
      */
     outer:
-        while (startMatches = startRegExp.exec(str)) {
+        while ((startMatches = startRegExp.exec(str))) {
             if (strings.startsWith(startMatches[0], '\\\\')) {
                 // \\${
                 /*
@@ -355,7 +354,7 @@ ExpressionParser.parse = function (str, callback, thisObj, options) {
             var depth = 0;
             var foundStrings = [];
             var handler;
-            while (endMatches = endRegExp.exec(str)) {
+            while ((endMatches = endRegExp.exec(str))) {
                 if (endMatches[0] === '{') {
                     depth++;
                     continue;
@@ -391,9 +390,9 @@ ExpressionParser.parse = function (str, callback, thisObj, options) {
                     var customType;
                     if (firstColon != -1) {
                         customType = expression.substring(0, firstColon);
-                        handler = custom[customType] || ExpressionParser.custom[customType];
+                        handler = custom[customType] || exports.custom[customType];
                         if (handler) {
-                            handler.call(ExpressionParser, expression.substring(firstColon + 1), helper);
+                            handler.call(exports, expression.substring(firstColon + 1), helper);
                         }
                     }
                 }
@@ -426,7 +425,9 @@ ExpressionParser.parse = function (str, callback, thisObj, options) {
     }
     helper._endText();
 };
-ExpressionParser.custom = {
+
+exports.parse = parse;
+exports.custom = {
     'xml': function (expression, helper) {
         helper.addXmlExpression(new Expression(expression));
     },
@@ -443,4 +444,3 @@ ExpressionParser.custom = {
         helper.addText('\n');
     }
 };
-module.exports = ExpressionParser;

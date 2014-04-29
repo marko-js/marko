@@ -32,18 +32,22 @@
         "raptor-xml": "^0.2.0-beta",
         "raptor-objects": "^0.2.0-beta",
         "raptor-ecma": "^0.2.0-beta",
-        "raptor-files": "^0.2.0-beta",
         "htmlparser2": "~3.5.1",
         "char-props": "~0.1.5",
         "raptor-promises": "^0.2.0-beta",
         "raptor-args": "^0.1.9-beta",
         "minimatch": "^0.2.14",
-        "property-handlers": "^0.2.1-beta"
+        "property-handlers": "^0.2.1-beta",
+        "raptor-taglibs": "^0.2.0-beta",
+        "raptor-taglib-async": "^0.2.0-beta",
+        "raptor-taglib-caching": "^0.2.0-beta",
+        "raptor-taglib-core": "^0.2.0-beta",
+        "raptor-taglib-html": "^0.2.0-beta",
+        "raptor-taglib-layout": "^0.2.0-beta"
     },
     "devDependencies": {
         "mocha": "~1.15.1",
-        "chai": "~1.8.1",
-        "raptor-cache": "^0.2.0-beta"
+        "chai": "~1.8.1"
     },
     "license": "Apache License v2.0",
     "bin": {

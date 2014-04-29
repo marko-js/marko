@@ -20,7 +20,6 @@ var objects = require('raptor-objects');
 var escapeXmlAttr = require('raptor-xml/util').escapeXmlAttr;
 var XML_URI = 'http://www.w3.org/XML/1998/namespace';
 var XML_URI_ALT = 'http://www.w3.org/XML/1998/namespace';
-var ExpressionParser = require('./ExpressionParser');
 var forEachEntry = require('raptor-util').forEachEntry;
 
 function ElementNode(localName, namespace, prefix) {
@@ -209,7 +208,7 @@ ElementNode.prototype = {
                 var attrParts = [];
                 var hasExpression = false;
                 var invalidAttr = false;
-                ExpressionParser.parse(attr.value, {
+                template.parseExpression(attr.value, {
                     text: function (text, escapeXml) {
                         attrParts.push({
                             text: text,
@@ -228,6 +227,7 @@ ElementNode.prototype = {
                         this.addError('Invalid expression found in attribute "' + name + '". ' + message);
                     }
                 }, this);
+                
                 if (invalidAttr) {
                     template.text(name + '="' + escapeXmlAttr(attr.value) + '"');
                 } else {

@@ -15,11 +15,11 @@ function testRender(path, data, done, options) {
     options = options || {};
     var compiledPath = nodePath.join(__dirname, path + '.actual.js');
 
-    var compiler = require('../compiler').createCompiler(inputPath);
-    var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
+    // var compiler = require('../compiler').createCompiler(inputPath);
+    // var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
     
-    var compiledSrc = compiler.compile(src);
-    fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
+    // var compiledSrc = compiler.compile(src);
+    // fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
 
 
     // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
@@ -383,6 +383,10 @@ describe('raptor-templates/rhtml' , function() {
                 }
             }
         }, done);
+    });
+
+    it("should support scanning a directory for tags", function(done) {
+        testRender("test-project/rhtml-templates/scanned-tags.rhtml", {}, done);
     });
 
 });

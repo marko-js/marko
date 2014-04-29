@@ -63,7 +63,7 @@ TextNode.prototype = {
         var parentNode = this.parentNode;
         var shouldEscapeXml = this.escapeXml !== false && parentNode && parentNode.isEscapeXmlBodyText() !== false;
         if (shouldEscapeXml) {
-            if (this.getEscapeXmlContext() === EscapeXmlContext.Attribute) {
+            if (this.getEscapeXmlContext() === EscapeXmlContext.ATTRIBUTE) {
                 return escapeXmlAttr(text);
             } else {
                 return escapeXml(text);

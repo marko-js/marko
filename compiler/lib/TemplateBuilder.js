@@ -334,9 +334,15 @@ TemplateBuilder.prototype = {
         }
         return this;
     },
-    include: function (templateName, dataExpression) {
+    include: function (templatePath, dataExpression) {
         if (!this.hasErrors()) {
-            this.contextHelperMethodCall('i', templateName, dataExpression, new Expression('require'));
+            this.contextHelperMethodCall('i', new Expression('require.resolve(' + templatePath + ')'), dataExpression);
+        }
+        return this;
+    },
+    load: function (templatePath) {
+        if (!this.hasErrors()) {
+            this.contextHelperMethodCall('l', new Expression('require.resolve(' + templatePath + ')'));
         }
         return this;
     },
@@ -431,14 +437,16 @@ TemplateBuilder.prototype = {
         this.templateName = templateName;
     },
     makeExpression: function (expression) {
-        if (expression instanceof Expression) {
-            return expression;
-        } else {
-            return new Expression(expression);
-        }
+        return this.compiler.makeExpression(expression);
     },
     isExpression: function (expression) {
-        return expression instanceof Expression;
+        return this.compiler.isExpression(expression);
+    },
+    parseExpression: function(str, listeners, options) {
+        return this.compiler.parseExpression(str, listeners, options);
+    },
+    parseAttribute: function(attr, types, options) {
+        return this.compiler.parseAttribute(attr, types, options);
     },
     getAttribute: function (name) {
         return this.attributes[name];

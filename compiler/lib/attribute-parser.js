@@ -31,8 +31,7 @@ var createError = require('raptor-util').createError;
 var strings = require('raptor-strings');
 var TypeConverter = require('./TypeConverter');
 var regExp = /"(?:[^"]|\\")*"|'(?:[^']|\\')*'|==|===|[;=]/g;
-function AttributeSplitter() {
-}
+
 /**
  * Parses the provided string to find the sub-attributes that it contains.
  * The parsed output can be either returned as an array or a map. By default,
@@ -54,7 +53,7 @@ function AttributeSplitter() {
  * @param options
  * @returns
  */
-AttributeSplitter.parse = function (attr, types, options) {
+exports.parse = function (attr, types, options) {
     if (!options) {
         options = {};
     }
@@ -136,7 +135,7 @@ AttributeSplitter.parse = function (attr, types, options) {
      *       but they are just ignored. This ensures that semicolons inside strings
      *       are not treated as
      */
-    while (matches = regExp.exec(attr)) {
+    while ((matches = regExp.exec(attr))) {
         //console.error(matches[0]);
         if (matches[0] == ';') {
             finishPart(matches.index);
@@ -152,4 +151,3 @@ AttributeSplitter.parse = function (attr, types, options) {
     //console.error("AttributeSplitter - result: ", result);
     return result;
 };
-module.exports = AttributeSplitter;

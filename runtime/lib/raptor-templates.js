@@ -28,6 +28,24 @@ var cache = {};
 
 exports.Context = Context;
 
+function load(templatePath) {
+    var templateFunc;
+
+    if (typeof templatePath === 'string') {
+        templateFunc = cache[templatePath];
+        if (!templateFunc) {
+            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
+        }
+    } else {
+        // Instead of a path, assume we got a compiled template module
+        templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
+    }
+
+    return templateFunc;
+}
+
+exports.load = load;
+
 exports.render = function (templatePath, data, callback, context) {
     if (typeof callback !== 'function') {
         // A context object was provided instead of a callback
@@ -42,20 +60,7 @@ exports.render = function (templatePath, data, callback, context) {
         shouldEnd = true;
     }
 
-    var templateFunc;
-
-    if (typeof templatePath === 'string') {
-        templateFunc = cache[templatePath];
-        if (!templateFunc) {
-            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
-        }
-    } else {
-        // Instead of a path, assume we got a compiled template module
-        templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
-    }
-
-    
-    templateFunc(data || {}, context);    //Invoke the template rendering function with the required arguments
+    load(templatePath)(data || {}, context);    //Invoke the template rendering function with the required arguments
 
     if (callback) {
         context

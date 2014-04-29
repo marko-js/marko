@@ -17,9 +17,9 @@
 var createError = require('raptor-util').createError;
 var forEachEntry = require('raptor-util').forEachEntry;
 var extend = require('raptor-util').extend;
-
 var isArray = Array.isArray;
-var isEmpty = require('raptor-objects').isEmpty;
+var EscapeXmlContext = require('./EscapeXmlContext');
+
 function Node(nodeType) {
     if (!this.nodeType) {
         this._isRoot = false;
@@ -39,7 +39,13 @@ function Node(nodeType) {
         this.properties = {};
     }
 }
+
+Node.isNode = function(node) {
+    return node.__NODE === true;
+};
+
 Node.prototype = {
+
     setRoot: function (isRoot) {
         this._isRoot = isRoot;
     },
@@ -343,6 +349,7 @@ Node.prototype = {
         }
         return true;
     },
+    __NODE: true,
     isTextNode: function () {
         return false;
     },
@@ -436,7 +443,7 @@ Node.prototype = {
                 childNode.setEscapeXmlBodyText(this.isEscapeXmlBodyText() !== false);
             }
             if (childNode.getEscapeXmlContext() == null) {
-                childNode.setEscapeXmlContext(this.getEscapeXmlContext() || require('./EscapeXmlContext').Element);
+                childNode.setEscapeXmlContext(this.getEscapeXmlContext() || require('./EscapeXmlContext').ELEMENT);
             }
             childNode.generateCode(template);
         }, this);
@@ -489,6 +496,10 @@ Node.prototype = {
         return this.escapeXmlBodyText;
     },
     setEscapeXmlContext: function (escapeXmlContext) {
+        if (typeof escapeXmlContext === 'string') {
+            escapeXmlContext = EscapeXmlContext[escapeXmlContext.toUpperCase()];
+        }
+
         this.escapeXmlContext = escapeXmlContext;
     },
     getEscapeXmlContext: function () {
