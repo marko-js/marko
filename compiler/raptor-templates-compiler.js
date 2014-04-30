@@ -15,9 +15,7 @@
  */
 'use strict';
 var extend = require('raptor-util').extend;
-var raptorTaglibs = require('raptor-taglibs');
 var fs = require('fs');
-var nodePath = require('path');
 
 var defaultOptions = {
         minify: false,
@@ -90,10 +88,10 @@ extend(exports, {
 });
 
 exports.TemplateCompiler = require('./TemplateCompiler');
+exports.taglibs = require('./taglibs');
 
-raptorTaglibs.excludeDir(nodePath.join(__dirname, '../..'));
-raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-core/raptor-taglib.json'));
-raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-html/raptor-taglib.json'));
-raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-caching/raptor-taglib.json'));
-raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-layout/raptor-taglib.json'));
-raptorTaglibs.registerTaglib(require.resolve('raptor-taglib-async/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/core/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/html/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/caching/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/layout/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/async/raptor-taglib.json'));

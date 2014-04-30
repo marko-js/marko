@@ -1,6 +1,6 @@
 var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
-var runtime = require('./raptor-templates'); // Circular dependnecy, but that is okay
+var runtime = require('./'); // Circular dependnecy, but that is okay
 var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');

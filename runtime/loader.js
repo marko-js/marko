@@ -1,7 +1,7 @@
 var nodePath = require('path');
 var fs = require('fs');
 var Module = require('module').Module;
-var raptorTemplatesCompiler = require('../../compiler');
+var raptorTemplatesCompiler = require('../compiler');
 var cwd = process.cwd();
 
 function loadSource(templatePath, compiledSrc) {

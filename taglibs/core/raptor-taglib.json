@@ -1,0 +1,289 @@
+{
+    "tags": {
+        "c-template": {
+            "attributes": {
+                "name": {
+                    "allow-expressions": false,
+                    "type": "string"
+                },
+                "params": {
+                    "allow-expressions": false,
+                    "type": "string"
+                }
+            },
+            "node-class": "./TemplateNode"
+        },
+        "*": {
+            "attributes": {
+                "c-space": {
+                    "type": "custom",
+                    "allow-expressions": false
+                },
+                "c-whitespace": {
+                    "type": "custom",
+                    "allow-expressions": false
+                },
+                "c-for": {
+                    "allow-expressions": false,
+                    "type": "string"
+                },
+                "c-for-each": {
+                    "allow-expressions": false,
+                    "type": "string"
+                },
+                "c-if": {
+                    "type": "expression"
+                },
+                "c-else": {
+                    "type": "empty"
+                },
+                "c-else-if": {
+                    "type": "expression"
+                },
+                "c-attrs": {
+                    "type": "expression"
+                },
+                "c-when": {
+                    "type": "expression"
+                },
+                "c-with": {
+                    "type": "custom"
+                },
+                "c-otherwise": {
+                    "type": "empty"
+                },
+                "c-parse-body-text": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                },
+                "c-trim-body-indent": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                },
+                "c-strip": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                },
+                "c-content": {
+                    "type": "expression"
+                },
+                "c-replace": {
+                    "type": "expression"
+                },
+                "c-input": {
+                    "type": "expression"
+                }
+            },
+            "transformer": {
+                "path": "./core-tag-transformer",
+                "priority": 0
+            }
+        },
+        "c-for": {
+            "node-class": "./ForNode",
+            "attributes": {
+                "each": {
+                    "required": false,
+                    "allow-expressions": false,
+                    "type": "string"
+                },
+                "separator": {
+                    "type": "string"
+                },
+                "status-var": {
+                    "type": "identifier",
+                    "allow-expressions": false
+                },
+                "for-loop": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                },
+                "iterator": {
+                    "type": "expression"
+                }
+            }
+        },
+        "c-write": {
+            "node-class": "./WriteNode",
+            "attributes": {
+                "value": {
+                    "required": true,
+                    "type": "expression"
+                },
+                "escape-xml": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                }
+            }
+        },
+        "c-if": {
+            "node-class": "./IfNode",
+            "attributes": {
+                "test": {
+                    "type": "expression"
+                }
+            }
+        },
+        "c-else": {
+            "node-class": "./ElseNode",
+            "transformer": {
+                "path": "./else-tag-transformer",
+                "properties": {
+                    "type": "else"
+                }
+            }
+        },
+        "c-else-if": {
+            "attributes": {
+                "test": {
+                    "type": "expression"
+                }
+            },
+            "node-class": "./ElseIfNode",
+            "transformer": {
+                "path": "./else-tag-transformer",
+                "properties": {
+                    "type": "else-if"
+                }
+            }
+        },
+        "c-invoke": {
+            "node-class": "./InvokeNode",
+            "attributes": {
+                "function": {
+                    "type": "custom",
+                    "allow-expressions": false,
+                    "required": true
+                },
+                "*": {
+                    "type": "string",
+                    "allow-expressions": true
+                }
+            }
+        },
+        "c-choose": {
+            "node-class": "./ChooseNode"
+        },
+        "c-when": {
+            "node-class": "./WhenNode",
+            "attributes": {
+                "test": {
+                    "type": "expression"
+                }
+            }
+        },
+        "c-otherwise": {
+            "node-class": "./OtherwiseNode"
+        },
+        "c-def": {
+            "node-class": "./DefNode",
+            "attributes": {
+                "function": {
+                    "type": "custom",
+                    "allow-expressions": false
+                },
+                "body-param": {
+                    "type": "custom",
+                    "allow-expressions": false
+                }
+            }
+        },
+        "c-with": {
+            "node-class": "./WithNode",
+            "attributes": {
+                "vars": {
+                    "type": "custom",
+                    "allow-expressions": false
+                }
+            }
+        },
+        "c-include": {
+            "node-class": "./IncludeNode",
+            "attributes": {
+                "template": {
+                    "type": "string"
+                },
+                "template-data": {
+                    "type": "expression"
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "static": {
+                    "type": "boolean",
+                    "allow-expressions": false
+                },
+                "*": {
+                    "type": "string"
+                }
+            }
+        },
+        "c-attr": {
+            "attributes": {
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "prefix": {
+                    "type": "string"
+                }
+            }
+        },
+        "c-var": {
+            "node-class": "./VarNode",
+            "attributes": {
+                "name": {
+                    "type": "custom",
+                    "allow-expressions": false
+                },
+                "value": {
+                    "type": "expression"
+                },
+                "static": {
+                    "type": "boolean"
+                },
+                "string-value": {
+                    "type": "string"
+                },
+                "boolean-value": {
+                    "type": "boolean"
+                },
+                "number-value": {
+                    "type": "number"
+                }
+            }
+        },
+        "c-require": {
+            "node-class": "./RequireNode",
+            "attributes": {
+                "module": {
+                    "type": "string"
+                },
+                "var": {
+                    "type": "custom",
+                    "allow-expressions": false
+                }
+            }
+        },
+        "c-assign": {
+            "node-class": "./AssignNode",
+            "attributes": {
+                "var": {
+                    "type": "custom",
+                    "allow-expressions": false
+                },
+                "value": {
+                    "type": "expression"
+                }
+            }
+        }
+    },
+    "text-transformer": {
+        "path": "./core-text-transformer"
+    }
+}

@@ -19,7 +19,7 @@ var TemplateBuilder = require('./TemplateBuilder');
 var parser = require('./parser');
 var Expression = require('./Expression');
 var TypeConverter = require('./TypeConverter');
-var raptorTaglibs = require('raptor-taglibs');
+var taglibs = require('./taglibs');
 var nodePath = require('path');
 var ok = require('assert').ok;
 var attributeParser = require('./attribute-parser');
@@ -28,12 +28,12 @@ var inherit = require('raptor-util/inherit');
 var _Node = require('./Node');
 var ElementNode = require('./ElementNode');
 var TextNode = require('./TextNode');
-var TagHandlerNode = require('raptor-taglib-core/TagHandlerNode');
+var TagHandlerNode = require('../taglibs/core/TagHandlerNode');
 
 function TemplateCompiler(path, options) {
     this.dirname = nodePath.dirname(path);
     this.path = path;
-    this.taglibs = raptorTaglibs.buildLookup(this.dirname);
+    this.taglibs = taglibs.buildLookup(this.dirname);
     this.options = options || {};
     this.errors = [];
 }
@@ -61,11 +61,12 @@ TemplateCompiler.prototype = {
                         _this._transformerApplied = true;
                         //Set the flag to indicate that a node was transformed
                         node.compiler = _this;
-                        transformer.getInstance().process(node, _this, templateBuilder);    //Have the transformer process the node (NOTE: Just because a node is being processed by the transformer doesn't mean that it has to modify the parse tree)
+                        var transformerFunc = transformer.getFunc();
+                        transformerFunc.call(transformer, node, _this, templateBuilder);    //Have the transformer process the node (NOTE: Just because a node is being processed by the transformer doesn't mean that it has to modify the parse tree)
                     }
                 });
             } catch (e) {
-                throw createError(new Error('Unable to compile template at path "' + templateBuilder.filePath + '. Error: ' + e.message), e);
+                throw createError(new Error('Unable to compile template at path "' + templateBuilder.filePath + '". Error: ' + e.message), e);
             }
             /*
              * Now process the child nodes by looping over the child nodes

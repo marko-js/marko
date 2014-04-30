@@ -1,0 +1,15 @@
+{
+    "tags": {
+        "cached-fragment": {
+            "renderer": "./cached-fragment-tag",
+            "attributes": {
+                "cache-key": {
+                    "type": "string"
+                },
+                "cache-name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
