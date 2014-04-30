@@ -1,6 +1,6 @@
 var raptorWidgets = require('../');
 
-exports.render = function (input, context) {
+module.exports = function render(input, context) {
     var widgetsContext = raptorWidgets.getWidgetsContext(context);
     if (!widgetsContext.hasWidgets()) {
         return;

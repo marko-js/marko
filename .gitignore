@@ -10,3 +10,4 @@
 coverage
 *.actual.js
 *.actual.html
+*.rhtml.js

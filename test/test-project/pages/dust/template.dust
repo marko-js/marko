@@ -1,0 +1,7 @@
+{@widget path=widgetPath }
+<div class="test" id="{widget.id}">
+    <button id="{widget.id}-btn">Hello World</button>
+</div>
+{/widget}
+
+{@init-widgets /}

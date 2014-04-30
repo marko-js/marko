@@ -13,17 +13,7 @@
         "waits",
         "waitsFor",
         "runs",
-        "raptor",
-        "$rset",
-        "$radd",
-        "$rget",
-        "$renv",
-        "$rwidgets",
         "$",
-        "dust",
-        "__rhinoHelpers",
-        "Packages",
-        "JavaAdapter",
         "unescape"
     ],
 

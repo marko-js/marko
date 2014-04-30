@@ -2,6 +2,7 @@
     "tags": {
         "*": {
             "attributes": {
+                "w-bind": "string",
                 "w-widget": "string",
                 "w-config": "expression",
                 "w-el-id": "string",

@@ -18,11 +18,9 @@ var forEachEntry = require('raptor-util').forEachEntry;
 var strings = require('raptor-strings');
 var objects = require('raptor-objects');
 var stringify = require('raptor-json/stringify');
-var AttributeSplitter = require('raptor-templates/compiler').AttributeSplitter;
-
 
 exports.process =function (node, compiler, template) {
-    var widgetAttr = node.getAttribute('w-widget');
+    var widgetAttr = node.getAttribute('w-widget') || node.getAttribute('w-bind');
     var widgetElIdAttr;
     var widgetProps = widgetAttr ? null : node.getProperties();
 
@@ -37,7 +35,7 @@ exports.process =function (node, compiler, template) {
                 widgetArgs.id = value;
             } else if (strings.startsWith(name, 'w-event-')) {
                 handledPropNames.push(name);
-                var eventProps = AttributeSplitter.parse(value, {
+                var eventProps = compiler.parseAttribute(value, {
                         '*': { type: 'expression' },
                         target: { type: 'custom' }
                     }, {
@@ -99,6 +97,7 @@ exports.process =function (node, compiler, template) {
 
     if (widgetAttr) {
         node.removeAttribute('w-widget');
+        node.removeAttribute('w-bind');
         var widgetJsClass = compiler.convertType(widgetAttr, 'string', true);
         var config;
         var assignedId;

@@ -4,7 +4,7 @@ var DUMMY_WIDGET_DEF = {
         elId: function () {
         }
     };
-exports.render = function (input, context) {
+module.exports = function render(input, context) {
     var path = input.path;
     var config = input.config || input._cfg;
     var widgetArgs = context.attributes.widgetArgs;
@@ -22,7 +22,7 @@ exports.render = function (input, context) {
         throw new Error('Invalid widget ID for "' + path + '"');
     }
     var widgetsContext = widgets.getWidgetsContext(context);
-    
+
     if (path) {
         widgetsContext.beginWidget({
             path: path,
