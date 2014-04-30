@@ -1,6 +1,6 @@
 // Rather than using a full-blown JavaScript parser, we are going to use a few regular expressions
 // to tokenize the code and find what we are interested in
-var tagStartRegExp = /(^\s*(?:exports.(?:tag|TAG))|(?:TAG)\s*=\s*)\{/m;
+var tagStartRegExp = /(^\s*(?:(?:exports.(?:tag|TAG))|(?:TAG))\s*=\s*)\{/m;
 
 // Tokens: "<string>", '<string>', /*<some comment*/, //<single line comment>, {, }, ;
 var tokensRegExp = /"(?:[^"]|\\")*"|'(?:[^'])|(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)|[\{\};]/g;
