@@ -47,7 +47,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 	- [Comments](#comments)
 	- [Helpers](#helpers)
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
-	- [Layouts Taglib](#layouts-taglib)
+	- [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
 	- [Tag Renderer](#tag-renderer)
 	- [raptor-taglib.json](#raptor-taglibjson)
@@ -945,7 +945,7 @@ The output of the above template might be the following:
 
 For information on how to use and create taglibs, please see the [Custom Taglibs](#custom-taglibs) section below.
 
-## Layouts Taglib
+## Layout Taglib
 
 Raptor Templates provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
 
