@@ -71,6 +71,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 - __Simple:__ The number of new concepts should be minimized to reduce the learning curve and complexity.
 - __Extensible:__ The template engine should be easily extensible at both compile time and runtime.
 - __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
+* __Not restrictive:__ Whether or not to go less logic or more logic is up to the developer.
 - __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
 - __Intuitive:__ The templating engine should introduce as few surprises as possible.
 - __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
