@@ -20,7 +20,10 @@ var fs = require('fs');
 
 var extend = require('raptor-util').extend;
 function IncludeNode(props) {
-    IncludeNode.$super.call(this);
+    if (IncludeNode.$super) {
+        IncludeNode.$super.call(this);    
+    }
+    
     if (props) {
         this.setProperties(props);
     }
