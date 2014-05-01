@@ -206,7 +206,7 @@ describe('raptor-templates/rxml' , function() {
         testRender("test-project/rxml-templates/include.rxml", {}, done);
     });
     
-    it("should allow for <c:invoke function... />", function(done) {        
+    it("should allow for <c:invoke function... />", function(done) {
         testRender("test-project/rxml-templates/invoke.rxml", {}, done);
     });
     
@@ -360,6 +360,10 @@ describe('raptor-templates/rxml' , function() {
 
     it("should allow for using layouts", function(done) {
         testRender("test-project/rxml-templates/layout-use.rxml", {}, done);
+    });
+
+    it("should add parentheses around each expression when using string concatenation to handle ternary operator", function(done) {
+        testRender("test-project/rxml-templates/string-concat-with-ternary-operator.rxml", {}, done);
     });
 
 });

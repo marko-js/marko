@@ -82,7 +82,7 @@ CodeWriter.prototype = {
         this._code.append(this._indent + '__helpers.' + methodName + '(context');
 
         if (args.length) {
-            this._code.append(', ');    
+            this._code.append(', ');
         }
 
         writeArgs(this, args);
@@ -162,7 +162,12 @@ CodeWriter.prototype = {
                     code.append(' +\n' + this.indentStr());
                 }
 
+                // The expression might be a ternary operator
+                // so we need to surround it with parentheses.
+                // Minification will remove unnecessary parentheses.
+                code.append('(');
                 writeArg(_this, expression);
+                code.append(')');
 
                 if (i !== 0) {
                     _this.decIndent();
@@ -203,7 +208,7 @@ CodeWriter.prototype = {
             this.firstStatement = false;
             this._bufferedWrites = null;
             if (this.concatWrites) {
-                concat();    
+                concat();
             } else {
                 chain();
             }
