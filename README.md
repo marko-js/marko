@@ -67,18 +67,18 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 
 # Design Philosophy
 
-- __Readable:__ Templates should be as close to the output HTML as possible to keep templates readable. Cryptic syntax and symbols should be avoided.
-- __Simple:__ The number of new concepts should be minimized to reduce the learning curve and complexity.
-- __Extensible:__ The template engine should be easily extensible at both compile time and runtime.
-- __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
-* __Not restrictive:__ Whether or not to go less logic or more logic is up to the developer.
-- __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
-- __Intuitive:__ The templating engine should introduce as few surprises as possible.
-- __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
-- __Debuggable:__ Compiled JavaScript should be debuggable and readable.
-- __Compile-Time Checks:__ Syntax, custom tags and custom attributes should be validated at compile-time.
-- __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
-- __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should resolved based on a template's file system path instead of relying on a shared registry.
+* __Readable:__ Templates should be as close to the output HTML as possible to keep templates readable. Cryptic syntax and symbols should be avoided.
+* __Simple:__ The number of new concepts should be minimized and complexity should be avoided.
+* __Extensible:__ The template engine should be easily extensible at both compile-time and runtime.
+* __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
+* __Not Restrictive:__ Whether or not to go less logic or more logic is up to the developer.
+* __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
+* __Intuitive:__ The templating engine should introduce as few surprises as possible.
+* __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
+* __Debuggable:__ Compiled JavaScript should be debuggable and readable.
+* __Compile-Time Checks:__ Syntax, custom tags and custom attributes should be validated at compile-time.
+* __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
+* __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a shared registry.
 
 # Sample
 
