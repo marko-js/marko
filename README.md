@@ -101,6 +101,7 @@ The template can then be rendered as shown in the following sample code:
 ```javascript
 var templatePath = require.resolve('./hello.rhtml');
 var template = require('raptor-templates').load(templatePath);
+
 template.render({
         name: 'World',
         colors: ["red", "green", "blue"]
@@ -206,6 +207,7 @@ npm install raptor-templates --global
 ### Callback API
 ```javascript
 var template = require('raptor-templates').load('template.rhtml');
+
 template.render({
         name: 'Frank',
         count: 30
@@ -239,6 +241,7 @@ template.stream({
 ```javascript
 var raptorTemplates = require('raptor-templates');
 var template = raptorTemplates.load('template.rhtml');
+
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
 var context = raptorTemplates.createContext(out);
