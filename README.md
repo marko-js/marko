@@ -254,11 +254,10 @@ setTimeout(function() {
 }, 1000);
 
 // Render the template to the existing render context:
-template
-    .render({
-            name: 'World'
-        },
-        context);
+template.render({
+        name: 'World'
+    },
+    context);
 
 // Write the last chunk synchronously:
 context.write(' END');
@@ -372,46 +371,46 @@ require('raptor-templates/compiler').compileFile(path, function(err, src) {
 
 ### Sample Compiled Template
 ```javascript
-module.exports = function create(helpers) {
-  var empty = helpers.e,
-      notEmpty = helpers.ne,
-      escapeXml = helpers.x,
-      forEach = helpers.f,
-      escapeXmlAttr = helpers.xa;
+module.exports = function create(__helpers) {
+  var empty = __helpers.e,
+      notEmpty = __helpers.ne,
+      escapeXml = __helpers.x,
+      forEach = __helpers.f,
+      escapeXmlAttr = __helpers.xa;
 
   return function render(data, context) {
-    context.w('Hello ')
-      .w(escapeXml(data.name))
-      .w('! ');
+    context.w(('Hello ') +
+      (escapeXml(data.name)) +
+      ('! '));
 
-    if (notEmpty(colors)) {
-      context.w('<ul>');
+    if (notEmpty(data.colors)) {
+      context.w(('<ul>'));
 
       forEach(data.colors, function(color) {
-        context.w('<li style="color: ')
-          .w(escapeXmlAttr(color))
-          .w('">')
-          .w(escapeXml(color))
-          .w('</li>');
+        context.w(('<li style="color: ') +
+          (escapeXmlAttr(color)) +
+          ('">') +
+          (escapeXml(color)) +
+          ('</li>'));
       });
 
-      context.w('</ul>');
+      context.w(('</ul>'));
     }
     else {
-      context.w('<div>No colors!</div>');
+      context.w(('<div>No colors!</div>'));
     }
   };
 }
 ```
 
-The compiled output is designed to be extremely minifiable. The minified code is shown below:
+The compiled output is designed to be both extremely readable and minifiable. The minified code is shown below:
 
 
 ```javascript
-module.exports=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello ").w(c(a.name)).w("! ");d(colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: ').w(f(a)).w('">').w(c(a)).w("</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
+module.exports=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
 ```
 
-_File size: 193 bytes gzipped (267 bytes uncompressed)_
+_File size: 190 bytes gzipped (251 bytes uncompressed)_
 
 
 # Language Guide
