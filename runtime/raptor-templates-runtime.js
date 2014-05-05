@@ -83,7 +83,7 @@ Template.prototype = {
             };
         }
 
-        return new Readable(this._, data);
+        return new Readable(this, data);
     }
 };
 

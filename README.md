@@ -99,13 +99,13 @@ Hello ${data.name}!
 The template can then be rendered as shown in the following sample code:
 
 ```javascript
-var raptorTemplates = require('raptor-templates');
 var templatePath = require.resolve('./hello.rhtml');
-
-raptorTemplates.render(templatePath, {
+var template = require('raptor-templates').load(templatePath);
+template.render({
         name: 'World',
         colors: ["red", "green", "blue"]
-    }, function(err, output) {
+    },
+    function(err, output) {
         console.log(output);
     });
 ```
@@ -205,8 +205,8 @@ npm install raptor-templates --global
 
 ### Callback API
 ```javascript
-var raptorTemplates = require('raptor-templates');
-raptorTemplates.render('template.rhtml', {
+var template = require('raptor-templates').load('template.rhtml');
+template.render({
         name: 'Frank',
         count: 30
     },
@@ -222,12 +222,11 @@ raptorTemplates.render('template.rhtml', {
 
 ### Streaming API
 ```javascript
-var raptorTemplates = require('raptor-templates');
+var template = require('raptor-templates').load('template.rhtml');
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
 // Render the template to 'index.html'
-raptorTemplates
-    .stream('template.rhtml', {
+template.stream({
         name: 'Frank',
         count: 30
     })
@@ -239,6 +238,7 @@ raptorTemplates
 
 ```javascript
 var raptorTemplates = require('raptor-templates');
+var template = raptorTemplates.load('template.rhtml');
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
 var context = raptorTemplates.createContext(out);
@@ -251,10 +251,8 @@ setTimeout(function() {
 }, 1000);
 
 // Render the template to the existing render context:
-raptorTemplates
-    .render(
-        'template.rhtml',
-        {
+template
+    .render({
             name: 'World'
         },
         context);
@@ -280,11 +278,16 @@ Given the following module code that will be used to render a template on the cl
 
 _run.js_:
 ```javascript
-var raptorTemplates = require('raptor-templates');
+
 var templatePath = require.resolve('./hello.rhtml');
-raptorTemplates.render(templatePath, {name: 'John'}, function(err, output) {
-    document.body.innerHTML = output;
-});
+var template = require('raptor-templates').load(templatePath);
+
+templatePath.render({
+        name: 'John'
+    },
+    function(err, output) {
+        document.body.innerHTML = output;
+    });
 ```
 
 You can then bundle up the above program for running in the browser using either [raptor-optimizer](https://github.com/raptorjs3/raptor-optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
@@ -1166,7 +1169,8 @@ The complete code for this example is shown below:
 _components/tabs/renderer.js:_
 
 ```javascript
-var raptorTemplates = require('raptor-templates');
+var templatePath = require.resolve('./template.rhtml');
+var template = require('raptor-templates').load(templatePath);
 
 module.exports = function render(input, context) {
     var nestedTabs = [];  
@@ -1180,10 +1184,9 @@ module.exports = function render(input, context) {
     });
     
     // Now render the markup for the tabs:
-    raptorTemplates.render(require.resolve('./template.rhtml'), {
+    template.render({
         tabs: nestedTabs
     }, context);
-    
 };
 ```
 
