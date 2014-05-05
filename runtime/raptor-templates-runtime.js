@@ -25,56 +25,126 @@ var Context = renderContext.Context;
 var helpers = require('./helpers');
 var loader = require('./loader');
 var cache = {};
+var Readable;
 
 exports.Context = Context;
 
+
+var stream;
+var STREAM = 'stream';
+
+var streamPath;
+try {
+    streamPath = require.resolve(STREAM);
+} catch(e) {}
+
+if (streamPath) {
+    stream = require(streamPath);
+}
+
+
+
+function Template(renderFunc) {
+    this._ = renderFunc;
+}
+
+Template.prototype = {
+    render: function(data, callback, context) {
+        if (data == null) {
+            data = {};
+        }
+
+        if (typeof callback === 'function') {
+            context = new Context();
+
+            context
+                .on('end', function() {
+                    callback(null, context.getOutput());
+                })
+                .on('error', callback);
+
+            this._(data, context);    //Invoke the template rendering function with the required arguments
+
+            context.end();
+        } else {
+            // A context object was provided instead of a callback
+            context = callback;
+            callback = null;
+
+            this._(data, context);    //Invoke the template rendering function with the required arguments
+        }
+
+        return context;
+    },
+    stream: function(data) {
+        if (!stream) {
+            return function() {
+                throw new Error('Module not found: stream');
+            };
+        }
+
+        return new Readable(this._, data);
+    }
+};
+
+if (stream) {
+    Readable = function(template, data) {
+        Readable.$super.call(this);
+        this._t = template;
+        this._d = data;
+        this._rendered = false;
+    };
+
+    Readable.prototype = {
+        write: function(data) {
+            this.push(data);
+        },
+        end: function() {
+            this.push(null);
+        },
+        _read: function() {
+            if (this._rendered) {
+                return;
+            }
+
+            this._rendered = true;
+
+            var template = this._t;
+            var data = this._d;
+
+            var context = exports.createContext(this);
+            template.render(data, context);
+            context.end();
+        }
+    };
+
+    require('raptor-util/inherit')(Readable, stream.Readable);
+}
+
 function load(templatePath) {
-    var templateFunc;
+    var template;
 
     if (typeof templatePath === 'string') {
-        templateFunc = cache[templatePath];
-        if (!templateFunc) {
-            templateFunc = cache[templatePath] = loader(templatePath)(helpers);
+        template = cache[templatePath];
+        if (!template) {
+            template = cache[templatePath] = new Template(loader(templatePath)(helpers));
         }
     } else {
         // Instead of a path, assume we got a compiled template module
-        templateFunc = templatePath._ || (templatePath._ = templatePath(helpers));
+        template = templatePath._ || (templatePath._ = new Template(templatePath(helpers)));
     }
 
-    return templateFunc;
+    return template;
 }
 
 exports.load = load;
 
-exports.render = function (templatePath, data, callback, context) {
-    if (typeof callback !== 'function') {
-        // A context object was provided instead of a callback
-        context = callback;
-        callback = null;
-    }
+exports.render = function (templatePath, data, context) {
+    return load(templatePath).render(data, context);
+};
 
-    var shouldEnd = false;
-
-    if (!context) {
-        context = new Context();
-        shouldEnd = true;
-    }
-
-    load(templatePath)(data || {}, context);    //Invoke the template rendering function with the required arguments
-
-    if (callback) {
-        context
-            .on('end', function() {
-                callback(null, context.getOutput());
-            })
-            .on('error', callback);
-    }
-
-    if (shouldEnd) {
-        context.end();    
-    }
-
-    return context;
+exports.stream = function(templatePath, data) {
+    return load(templatePath).stream(data);
 };
 
 exports.unload = function(templatePath) {
@@ -85,6 +155,4 @@ exports.createContext = function(writer) {
     return new Context(writer);
 };
 
-
 exports.helpers = helpers;
-exports.stream = require('./render-stream')(exports);

@@ -9,5 +9,5 @@ module.exports = function render(input, context) {
     });
 
     var viewModel = extend(input['*'] || {}, { layoutContent: content });
-    input.template(viewModel, context);
+    input.template.render(viewModel, context);
 };
