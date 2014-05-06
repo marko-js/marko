@@ -1,60 +1,88 @@
-var sax = require('raptor-xml/sax');
-var createError = require('raptor-util').createError;
+var sax = require("sax");
+var extend = require('raptor-util/extend');
 
 function ParseTreeBuilderXml(taglibs) {
     ParseTreeBuilderXml.$super.apply(this, arguments);
     this.parser = null;
+    this.filePath = null;
 }
 
 ParseTreeBuilderXml.prototype = {
     getPos: function() {
-        return this.parser.getPos();
+        var parser = this.parser;
+        var filePath = this.filePath;
+        
+        var line = parser.line + 1;
+        
+        return {
+            line: line,
+            column: parser.column,
+            filePath: filePath,
+            toString: function() {
+                return this.filePath + ":" + this.line + ":" + this.column;
+            }
+            
+        };
     },
 
     doParse: function (src, filePath) {
         
-        var parser = this.parser = sax.createParser({
-                trim: false,
-                normalize: false,
-                dom: src.documentElement != null
-            });
+        this.filePath = filePath;
+        var parser = this.parser = sax.parser(true /*strict*/, {
+            trim: false,
+            normalize: false,
+            lowercasetags: false,
+            xmlns: true
+        });
 
         var _this = this;
+    
+        extend(parser, {
+            onerror: function(e) {
+                throw e;
+            },
+            
+            ontext: function(text) {
+                text = text.replace(/\r\n|\r/g, "\n");
+                _this.handleCharacters(text);
+            },
 
-        parser.on({
-            error: function (e) {
-                throw createError(e);
+            oncdata: function(text) {
+                text = text.replace(/\r\n|\r/g, "\n");
+                _this.handleCharacters(text);
             },
-            characters: function (t) {
-                _this.handleCharacters(t);
-            },
-            cdata: function (t) {
-                _this.handleCharacters(t);
-            },
-            startElement: function (elNode) {
+            
+            onopentag: function (node) {
                 var el = {
-                    namespace: elNode.getNamespaceURI(),
-                    prefix: elNode.getPrefix(),
-                    localName: elNode.getLocalName()
+                    namespace: node.uri,
+                    prefix: node.prefix,
+                    localName: node.local
                 };
 
-                var attributes = elNode.getAttributes().map(function (attr) {
+                var attributes = Object.keys(node.attributes).map(function(attrName) {
+                    var attr = node.attributes[attrName];
                     return {
-                        namespace: attr.getNamespaceURI(),
-                        localName: attr.getLocalName(),
-                        prefix: attr.getPrefix(),
-                        value: attr.getValue()
+                        namespace: attr.uri,
+                        localName: attr.local,
+                        prefix: attr.prefix,
+                        value: attr.value
                     };
                 });
 
                 _this.handleStartElement(el, attributes);
             },
-            endElement: function () {
-                _this.handleEndElement();
-            }
-        }, this);
 
-        parser.parse(src, filePath);
+            
+            
+            onclosetag: function () {
+                _this.handleEndElement();
+            },
+
+            oncomment: function (comment) {
+            }
+        });
+
+        parser.write(src).close();
     }
 };
 

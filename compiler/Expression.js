@@ -16,7 +16,6 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var operatorsRegExp = /"(?:[^"]|\\")*"|'(?:[^']|\\')*'|\s+(?:and|or|lt|gt|eq|ne|lt|gt|ge|le)\s+/g;
-var strings = require('raptor-strings');
 var replacements = {
         'and': ' && ',
         'or': ' || ',
@@ -29,7 +28,7 @@ var replacements = {
     };
 function handleBinaryOperators(str) {
     return str.replace(operatorsRegExp, function (match) {
-        return replacements[strings.trim(match)] || match;
+        return replacements[match.trim()] || match;
     });
 }
 function Expression(expression, replaceSpecialOperators) {

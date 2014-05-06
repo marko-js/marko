@@ -15,7 +15,7 @@
  */
 'use strict';
 var createError = require('raptor-util').createError;
-var escapeXml = require('raptor-xml/util').escapeXml;
+var escapeXml = require('raptor-util/escapeXml');
 var EscapeXmlContext = require('./EscapeXmlContext');
 
 var attrReplace = /[&<>\"\']/g;

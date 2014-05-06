@@ -16,11 +16,23 @@
 
 'use strict';
 var createError = require('raptor-util').createError;
-var objects = require('raptor-objects');
-var escapeXmlAttr = require('raptor-xml/util').escapeXmlAttr;
+var escapeXmlAttr = require('raptor-util/escapeXml').attr;
 var XML_URI = 'http://www.w3.org/XML/1998/namespace';
 var XML_URI_ALT = 'http://www.w3.org/XML/1998/namespace';
 var forEachEntry = require('raptor-util').forEachEntry;
+
+function isEmpty(o) {
+    if (!o) {
+        return true;
+    }
+    
+    for (var k in o) {
+        if (o.hasOwnProperty(k)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 function ElementNode(localName, namespace, prefix) {
     ElementNode.$super.call(this, 'element');
@@ -132,7 +144,7 @@ ElementNode.prototype = {
         var attrNS = this.attributesByNS[namespace] || (this.attributesByNS[namespace] = {});
         if (attrNS) {
             delete attrNS[localName];
-            if (objects.isEmpty(attrNS)) {
+            if (isEmpty(attrNS)) {
                 delete this.attributesByNS[namespace];
             }
         }
@@ -153,7 +165,7 @@ ElementNode.prototype = {
         return preserveSpace;
     },
     hasAttributesAnyNS: function () {
-        return !objects.isEmpty(this.attributesByNS);
+        return !isEmpty(this.attributesByNS);
     },
     hasAttributes: function () {
         return this.hasAttributesNS('');
