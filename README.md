@@ -9,7 +9,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Design Philosophy](#design-philosophy)
-- [Sample](#sample)
+- [Sample Code](#sample-code)
 - [Installation](#installation)
 - [Usage](#usage)
 	- [Template Rendering](#template-rendering)
