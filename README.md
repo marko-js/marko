@@ -1,7 +1,7 @@
 Raptor Templates
 ================
 
-Raptor Templates is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Raptor Templates was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Raptor Templates allows you to introduce your own custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)--only you can use it now).
+Raptor Templates is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Raptor Templates was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Raptor Templates allows you to introduce your own custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
