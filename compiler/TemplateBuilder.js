@@ -30,7 +30,7 @@ function writeArg(writer, arg) {
     } else if (typeof arg === 'function') {
         arg();
     } else if (arg instanceof Expression) {
-        writer._code.append(arg.toString());
+        writer._code.append( arg.toString() );
     } else if (arg) {
         writer._code.append(arg.toString());
     } else {
@@ -162,12 +162,7 @@ CodeWriter.prototype = {
                     code.append(' +\n' + this.indentStr());
                 }
 
-                // The expression might be a ternary operator
-                // so we need to surround it with parentheses.
-                // Minification will remove unnecessary parentheses.
-                code.append('(');
                 writeArg(_this, expression);
-                code.append(')');
 
                 if (i !== 0) {
                     _this.decIndent();

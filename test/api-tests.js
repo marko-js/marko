@@ -7,13 +7,18 @@ var nodePath = require('path');
 var raptorTemplates = require('../');
 var through = require('through');
 
-describe('raptor-templates/rhtml' , function() {
+describe('raptor-templates/api' , function() {
+
+    before(function() {
+        require('../compiler').defaultOptions.checkUpToDate = false;
+    });
 
     beforeEach(function(done) {
+
         done();
     });
 
-    it('should allow a template to be loaded and rendered using a callback', function(done) {
+    it('should allow a template to be rendered using a callback', function(done) {
         raptorTemplates.render(
             nodePath.join(__dirname, 'test-project/hello.rhtml'),
             {
@@ -29,7 +34,7 @@ describe('raptor-templates/rhtml' , function() {
             });
     });
 
-    it('should allow a template to be loaded and rendered to a context wrapping a string builder', function(done) {
+    it('should allow a template to be rendered to a context wrapping a string builder', function(done) {
         var context = raptorTemplates.createContext();
         context
             .on('end', function() {
@@ -50,7 +55,7 @@ describe('raptor-templates/rhtml' , function() {
         context.end();
     });
 
-    it('should allow a template to be loaded and rendered to a context wrapping a stream', function(done) {
+    it('should allow a template to be rendered to a context wrapping a stream', function(done) {
         var output = '';
 
         var stream = through(function write(data) {
@@ -77,7 +82,7 @@ describe('raptor-templates/rhtml' , function() {
         context.end();
     });
 
-    it('should allow a template to be loaded and rendered to a stream', function(done) {
+    it('should allow a template to be rendered to a stream', function(done) {
         
 
         var output = '';

@@ -28,20 +28,23 @@ WriteNode.prototype = {
     doGenerateCode: function (template) {
         var expression = this.getExpression();
         var escapeXml;
+        var options = {};
+
         if (this.hasProperty('escapeXml')) {
             escapeXml = this.getProperty('escapeXml') !== false;
         } else {
             escapeXml = this.getProperty('escape-xml') !== false;
         }
+
         if (escapeXml === true) {
             if (this.getEscapeXmlContext() === 'ATTRIBUTE') {
-                expression = template.getStaticHelperFunction('escapeXmlAttr', 'xa') + '(' + expression + ')';
+                options.escapeXmlAttr = true;
             } else {
-                expression = template.getStaticHelperFunction('escapeXml', 'x') + '(' + expression + ')';
+                options.escapeXml = true;
             }
         }
         if (expression) {
-            template.write(expression);
+            template.write(expression, options);
         }
     },
     getExpression: function () {

@@ -223,12 +223,23 @@ ExpressionParserHelper.prototype = {
             this.prevEscapeXml = escapeXml;
         }
     },
-    addXmlExpression: function (expression, escapeXml) {
+    addUnescapedExpression: function (expression, escapeXml) {
         this.addExpression(expression, false);
     },
     addExpression: function (expression, escapeXml) {
         this._endText();
+        escapeXml = escapeXml !== false;
+
         if (!(expression instanceof Expression)) {
+            if (!escapeXml) {
+                // The expression might be a ternary operator
+                // so we need to surround it with parentheses.
+                // Minification will remove unnecessary parentheses.
+                // We don't need to surround with parentheses if
+                // the expression will be escaped since the expression
+                // is an argument to a function call
+                expression = '(' + expression + ')';
+            }
             expression = new Expression(expression);
         }
         this._invokeCallback('expression', expression, escapeXml !== false);
@@ -339,7 +350,7 @@ parse = function (str, listeners, options) {
                 }
                 var varName = variableMatches[1];
                 if (startToken === '$!') {
-                    helper.addXmlExpression(varName);    //Add the variable as an expression
+                    helper.addUnescapedExpression(varName);    //Add the variable as an expression
                 } else {
                     helper.addExpression(varName);    //Add the variable as an expression    
                 }
@@ -406,7 +417,7 @@ parse = function (str, listeners, options) {
                             expression = processNestedStrings(expression, foundStrings);
                         }
                         if (startToken === '$!{') {
-                            helper.addXmlExpression(expression);
+                            helper.addUnescapedExpression(expression);
                         } else {
                             helper.addExpression(expression);
                         }
@@ -429,7 +440,7 @@ parse = function (str, listeners, options) {
 exports.parse = parse;
 exports.custom = {
     'xml': function (expression, helper) {
-        helper.addXmlExpression(new Expression(expression));
+        helper.addUnescapedExpression(new Expression(expression));
     },
     'entity': function (expression, helper) {
         helper.addXmlText('&' + expression + ';');
