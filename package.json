@@ -19,7 +19,6 @@
         "Patrick Steele-Idem <pnidem@gmail.com>"
     ],
     "dependencies": {
-        "raptor-detect": "^0.2.0-beta",
         "raptor-logging": "^0.2.0-beta",
         "raptor-strings": "^0.2.0-beta",
         "raptor-regexp": "^0.2.0-beta",
