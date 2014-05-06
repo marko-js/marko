@@ -80,9 +80,10 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 * __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
 * __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a shared registry.
 
-# Sample
+# Sample Code
 
 A basic template with text replacement, looping and conditionals is shown below:
+
 ```html
 Hello ${data.name}!
 
@@ -954,7 +955,7 @@ For information on how to use and create taglibs, please see the [Custom Taglibs
 ## Layout Taglib
 
 Raptor Templates provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
-
+   
 _default-layout.rhtml:_
 
 ```html
@@ -1314,7 +1315,6 @@ Please post questions or comments on the [RaptorJS Google Groups Discussion Foru
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
-* Ramesh Mahadevan
 
 # Contribute
 
