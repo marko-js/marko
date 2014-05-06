@@ -155,7 +155,7 @@ describe('raptor-templates/rxml' , function() {
         testRender("test-project/rxml-templates/choose-when.rxml", {}, done);
     });
     
-    it("should not allow <c:otherwise> to be before a <c:when> tag", function(done) {
+    it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
         
         var e;
 
@@ -174,11 +174,11 @@ describe('raptor-templates/rxml' , function() {
         done();
     });
     
-    it("should allow for <c:def> functions", function(done) {
+    it("should allow for <c-def> functions", function(done) {
         testRender("test-project/rxml-templates/def.rxml", {}, done);
     });
     
-    it("should allow for <c:with> functions", function(done) {
+    it("should allow for <c-with> functions", function(done) {
         testRender("test-project/rxml-templates/with.rxml", {}, done);
     });
     
@@ -206,7 +206,7 @@ describe('raptor-templates/rxml' , function() {
         testRender("test-project/rxml-templates/include.rxml", {}, done);
     });
     
-    it("should allow for <c:invoke function... />", function(done) {
+    it("should allow for <c-invoke function... />", function(done) {
         testRender("test-project/rxml-templates/invoke.rxml", {}, done);
     });
     
