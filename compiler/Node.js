@@ -37,6 +37,8 @@ function Node(nodeType) {
         this.prefixMappings = {};
         this.transformersApplied = {};
         this.properties = {};
+        this.beforeCode = [];
+        this.afterCode = [];
     }
 }
 
@@ -359,8 +361,24 @@ Node.prototype = {
     setStripExpression: function (stripExpression) {
         this.stripExpression = stripExpression;
     },
+
+    addBeforeCode: function (code) {
+        this.beforeCode.push(code);
+    },
+    addAfterCode: function (code) {
+        this.afterCode.push(code);
+    },
+
     generateCode: function (template) {
         this.compiler = template.compiler;
+
+        if (this.beforeCode.length) {
+            this.beforeCode.forEach(function (code) {
+                template.indent().code(code).code('\n');
+            });
+        }
+
+
         var preserveWhitespace = this.isPreserveWhitespace();
         if (preserveWhitespace == null) {
             preserveWhitespace = template.options.preserveWhitespace;
@@ -408,6 +426,12 @@ Node.prototype = {
             }
         } catch (e) {
             throw createError(new Error('Unable to generate code for node ' + this + ' at position [' + this.getPosition() + ']. Exception: ' + e), e);
+        }
+
+        if (this.afterCode.length) {
+            this.afterCode.forEach(function (code) {
+                template.indent().code(code).code('\n');
+            });
         }
     },
     isPreserveWhitespace: function () {

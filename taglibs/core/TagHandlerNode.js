@@ -63,8 +63,6 @@ function TagHandlerNode(tag) {
     }
     this.tag = tag;
     this.dynamicAttributes = null;
-    this.preInvokeCode = [];
-    this.postInvokeCode = [];
     this.inputExpression = null;
 }
 TagHandlerNode.convertNode = function (node, tag) {
@@ -80,12 +78,6 @@ TagHandlerNode.prototype = {
     },
     setDynamicAttributesProperty: function(name) {
         this.dynamicAttributesProperty = name;
-    },
-    addPreInvokeCode: function (code) {
-        this.preInvokeCode.push(code);
-    },
-    addPostInvokeCode: function (code) {
-        this.postInvokeCode.push(code);
     },
     setInputExpression: function (expression) {
         this.inputExpression = expression;
@@ -133,13 +125,6 @@ TagHandlerNode.prototype = {
             }
             variableNames.push(varName);
         }, this);
-        if (_this.preInvokeCode.length) {
-            _this.preInvokeCode.forEach(function (code) {
-                template.indent().code(code).code('\n');
-            });
-        }
-
-        
 
         template.contextHelperMethodCall('t', function () {
             template.code('\n').indent(function () {
@@ -166,12 +151,6 @@ TagHandlerNode.prototype = {
                 }
             });
         });
-
-        if (_this.postInvokeCode.length) {
-            _this.postInvokeCode.forEach(function (code) {
-                template.indent().code(code).code('\n');
-            });
-        }
     }
 };
 

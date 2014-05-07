@@ -66,7 +66,7 @@ TemplateCompiler.prototype = {
                     }
                 });
             } catch (e) {
-                throw createError(new Error('Unable to compile template at path "' + templateBuilder.filePath + '". Error: ' + e.message), e);
+                throw createError(new Error('Unable to compile template at path "' + _this.path + '". Error: ' + e.message), e);
             }
             /*
              * Now process the child nodes by looping over the child nodes
