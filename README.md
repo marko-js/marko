@@ -140,6 +140,19 @@ Hello World!
 <div>No colors!</div>
 ```
 
+The streaming API can be used to stream the output to an HTTP response stream or any other writable stream. For example, with Express:
+
+```javascript
+var template = require('raptor-templates').load(require.resolve('./template.rhtml'));
+
+app.get('/profile', function(req, res) {
+    template.stream({
+            name: 'Frank'
+        })
+        .pipe(res);
+});
+```
+
 Raptor Templates also supports custom tags so you can easily extend the HTML grammar to support things like the following:
 
 ```html
@@ -1286,7 +1299,6 @@ app.get('/profile', function(req, res) {
         })
         .pipe(res);
 });
-
 ```
 
 <hr>
