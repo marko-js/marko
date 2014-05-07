@@ -380,25 +380,25 @@ module.exports = function create(__helpers) {
       escapeXmlAttr = __helpers.xa;
 
   return function render(data, context) {
-    context.w(('Hello ') +
-      (escapeXml(data.name)) +
-      ('! '));
+    context.w('Hello ' +
+      escapeXml(data.name) +
+      '! ');
 
     if (notEmpty(data.colors)) {
-      context.w(('<ul>'));
+      context.w('<ul>');
 
       forEach(data.colors, function(color) {
-        context.w(('<li style="color: ') +
-          (escapeXmlAttr(color)) +
-          ('">') +
-          (escapeXml(color)) +
-          ('</li>'));
+        context.w('<li style="color: ' +
+          escapeXmlAttr(color) +
+          '">' +
+          escapeXml(color) +
+          '</li>');
       });
 
-      context.w(('</ul>'));
+      context.w('</ul>');
     }
     else {
-      context.w(('<div>No colors!</div>'));
+      context.w('<div>No colors!</div>');
     }
   };
 }
