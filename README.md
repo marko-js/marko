@@ -610,21 +610,6 @@ The `c-choose` directive, in combination with the directives `c-when` and `c-oth
 _Applied as an attribute:_
 ```html
 <c-choose>
-    <c-when test="myVar === 'A'">
-        <div>A</div>
-    </c-when>
-    <c-when test="myVar === 'B'">
-        <div>B</div>
-    </c-when>
-    <c-otherwise>
-        <div>Something else</div>
-    </c-otherwise>
-<c-choose>
-```
-
-_Applied as an element:_
-```html
-<c-choose>
     <div c-when="myVar === 'A'">
         A
     </div>
@@ -634,6 +619,21 @@ _Applied as an element:_
     <div c-otherwise="">
         Something else
     </div>
+<c-choose>
+```
+
+_Applied as an element:_
+```html
+<c-choose>
+    <c-when test="myVar === 'A'">
+        <div>A</div>
+    </c-when>
+    <c-when test="myVar === 'B'">
+        <div>B</div>
+    </c-when>
+    <c-otherwise>
+        <div>Something else</div>
+    </c-otherwise>
 <c-choose>
 ```
 
@@ -1311,7 +1311,7 @@ __Answer__: Raptor Templates started out using an XML parser. This required that
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
 
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Raptor Templates, please see [raptorjs-express-app](https://github.com/raptorjs3/samples/tree/master/raptorjs-express-app).
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Raptor Templates, please see [raptor-templates-express-app](https://github.com/raptorjs3/raptor-samples/tree/master/raptor-templates-express-app).
 
 <hr>
 
