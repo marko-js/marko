@@ -281,6 +281,9 @@ module.exports = function transform(node, compiler, template) {
         },
         'c-input': function(attr) {
             inputAttr = attr.value;
+        },
+        'c-data': function(attr) {
+            inputAttr = attr.value;
         }
     };
 
