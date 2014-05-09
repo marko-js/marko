@@ -90,8 +90,8 @@ exports.process =function (node, compiler, template) {
             if (widgetArgs.events) {
                 widgetArgsParts.push(widgetArgs.events);
             }
-            node.addPreInvokeCode(template.makeExpression('_widgetArgs(context,' + widgetArgsParts.join(', ') + ')'));
-            node.addPostInvokeCode(template.makeExpression('_cleanupWidgetArgs(context);'));
+            node.addBeforeCode(template.makeExpression('_widgetArgs(context,' + widgetArgsParts.join(', ') + ');'));
+            node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(context);'));
         }
     }
 
