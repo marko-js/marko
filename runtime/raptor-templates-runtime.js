@@ -49,12 +49,15 @@ function Template(renderFunc) {
 }
 
 Template.prototype = {
-    render: function(data, callback, context) {
+    render: function(data, context) {
         if (data == null) {
             data = {};
         }
 
-        if (typeof callback === 'function') {
+        var callback;
+
+        if (typeof context === 'function') {
+            callback = context;
             context = new Context();
 
             context
@@ -67,11 +70,17 @@ Template.prototype = {
 
             context.end();
         } else {
+            var shouldEnd = false;
+            if (!context) {
+                context = new Context();
+                shouldEnd = true;
+            }
             // A context object was provided instead of a callback
-            context = callback;
-            callback = null;
-
             this._(data, context);    //Invoke the template rendering function with the required arguments
+            
+            if (shouldEnd) {
+                context.end();
+            }
         }
 
         return context;
