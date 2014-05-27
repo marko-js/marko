@@ -3,8 +3,8 @@
         
     ],
 
-    "globals": { 
-        "define": true, 
+    "globals": {
+        "define": true,
         "require": true
     },
 
@@ -35,6 +35,7 @@
     "latedef": true,
     "unused": "vars",
     "jquery": true,
+    "strict": false,
     
     /* Relaxing options: */
     "eqnull": true
