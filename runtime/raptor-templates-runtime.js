@@ -49,16 +49,27 @@ function Template(renderFunc) {
 }
 
 Template.prototype = {
-    render: function(data, context) {
+    render: function(data, context, callback) {
         if (data == null) {
             data = {};
         }
 
-        var callback;
+        // callback is last argument if provided
+        callback = arguments[arguments.length - 1];
+        if (typeof callback === 'function') {
+            
+            // found a callback function
+            if (arguments.length < 3) {
+                // context could not have been created so create
+                context = undefined;
 
-        if (typeof context === 'function') {
-            callback = context;
-            context = new Context();
+                if (arguments.length < 2) {
+                    // data could not have been provided
+                    data = undefined;
+                }
+            }
+
+            context = context || new Context();
 
             context
                 .on('end', function() {
