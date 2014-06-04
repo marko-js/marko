@@ -296,7 +296,7 @@ describe('raptor-render-context' , function() {
         });
     });
 
-    it.only('should support a render context being piped to another stream', function(done) {
+    it('should support a render context being piped to another stream', function(done) {
 
         var through = require('through')();
         var outStr = '';
