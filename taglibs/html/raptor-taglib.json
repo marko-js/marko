@@ -1,8 +1,8 @@
 {
     "tags": {
-        "html-html": {
+        "html": {
             "attributes": {
-                "doctype": {
+                "html-doctype": {
                     "type": "string"
                 }
             }
