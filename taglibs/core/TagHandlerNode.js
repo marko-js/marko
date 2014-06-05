@@ -65,10 +65,13 @@ function TagHandlerNode(tag) {
     this.dynamicAttributes = null;
     this.inputExpression = null;
 }
+TagHandlerNode.nodeType = 'element';
+
 TagHandlerNode.convertNode = function (node, tag) {
     extend(node, TagHandlerNode.prototype);
     TagHandlerNode.call(node, tag);
 };
+
 TagHandlerNode.prototype = {
     addDynamicAttribute: function (name, value) {
         if (!this.dynamicAttributes) {
@@ -85,6 +88,7 @@ TagHandlerNode.prototype = {
     doGenerateCode: function (template) {
         var rendererPath = raptorModulesResolver.deresolve(this.tag.renderer, template.dirname);
         var handlerVar = addHandlerVar(template, rendererPath);
+        var tagHelperVar = template.addStaticVar('_tag', '__helpers.t');
 
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
@@ -126,8 +130,8 @@ TagHandlerNode.prototype = {
             variableNames.push(varName);
         }, this);
 
-        template.contextHelperMethodCall('t', function () {
-            template.code('\n').indent(function () {
+        template.functionCall(tagHelperVar, function () {
+            template.code('context,\n').indent(function () {
                 template.line(handlerVar + ',').indent();
                 if (_this.inputExpression) {
                     template.code(_this.inputExpression);
