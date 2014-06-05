@@ -2,6 +2,7 @@ module.exports = function create(__helpers) {
   var empty = __helpers.e,
       notEmpty = __helpers.ne,
       hello_renderer = require("../hello-renderer"),
+      _tag = __helpers.t,
       escapeXmlAttr = __helpers.xa,
       escapeXml = __helpers.x,
       forEach = __helpers.f;
@@ -11,7 +12,7 @@ module.exports = function create(__helpers) {
         colors = data.colors,
         message = data.message;
 
-    __helpers.t(context, 
+    _tag(context,
       hello_renderer,
       {
         "name": "World"
