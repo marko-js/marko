@@ -38,7 +38,7 @@ function ElementNode(localName, namespace, prefix) {
     ElementNode.$super.call(this, 'element');
     if (!this._elementNode) {
         this._elementNode = true;
-        this.dynamicAttributesExpression = null;
+        this.dynamicAttributesExpressionArray = null;
         this.attributesByNS = {};
         this.prefix = prefix;
         this.localName = this.tagName = localName;
@@ -54,6 +54,13 @@ function ElementNode(localName, namespace, prefix) {
     }
 }
 ElementNode.prototype = {
+    addDynamicAttributes: function(expression) {
+        if (!this.dynamicAttributesExpressionArray) {
+            this.dynamicAttributesExpressionArray = [];
+        }
+
+        this.dynamicAttributesExpressionArray.push(expression);
+    },
     getQName: function () {
         return this.localName ? (this.prefix ? this.prefix + ':' : '') + this.localName : null;
     },
@@ -261,8 +268,10 @@ ElementNode.prototype = {
                 }
             }
         }, this);
-        if (this.dynamicAttributesExpression) {
-            template.attrs(this.dynamicAttributesExpression);
+        if (this.dynamicAttributesExpressionArray && this.dynamicAttributesExpressionArray.length) {
+            this.dynamicAttributesExpressionArray.forEach(function(expression) {
+                template.attrs(expression);
+            });
         }
         if (this.hasChildren()) {
             template.text('>');
