@@ -166,6 +166,7 @@ TemplateCompiler.prototype = {
     createTagHandlerNode: function (tagName) {
         var tag = this.taglibs.getTag(tagName);
         var tagHandlerNode = this.createNode(TagHandlerNode, tag);
+        tagHandlerNode.localName = tagName;
         return tagHandlerNode;
     },
     convertType: function (value, type, allowExpressions) {
