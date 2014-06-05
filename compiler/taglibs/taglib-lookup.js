@@ -46,19 +46,6 @@ function tryNodeModules(parent, discovered) {
                 taglib.moduleName = moduleDirBasename;
                 discovered.push(taglib);
             }
-
-
-            var stat;
-
-            try {
-                stat = fs.statSync(moduleDir);
-            } catch(e) {
-                return;
-            }
-
-            if (stat.isDirectory()) {
-                
-            }
         });
     }
 }
