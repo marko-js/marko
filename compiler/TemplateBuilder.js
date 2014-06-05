@@ -75,16 +75,9 @@ CodeWriter.prototype = {
             this._bufferedText += text;
         }
     },
-    contextHelperMethodCall: function (methodName, args) {
-        args = arrayFromArguments(arguments, 1);
-
+    functionCall: function (varName, args) {
         this.flush();
-        this._code.append(this._indent + '__helpers.' + methodName + '(context');
-
-        if (args.length) {
-            this._code.append(', ');
-        }
-
+        this._code.append(this._indent + varName + '(');
         writeArgs(this, args);
         this._code.append(');\n');
     },
@@ -346,9 +339,18 @@ TemplateBuilder.prototype = {
         }
         return this;
     },
+    functionCall: function(varName, args) {
+        if (!this.hasErrors()) {
+            args = arrayFromArguments(arguments, 1);
+            this.writer.functionCall(varName, args);
+        }
+        return this;
+    },
     contextHelperMethodCall: function (methodName, args) {
         if (!this.hasErrors()) {
-            this.writer.contextHelperMethodCall.apply(this.writer, arguments);
+            args = arrayFromArguments(arguments, 1);
+            args.unshift('context');
+            this.writer.functionCall('__helpers.' + methodName, args);
         }
         return this;
     },
