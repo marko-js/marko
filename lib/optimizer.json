@@ -1,4 +1,5 @@
 {
     "dependencies": [
+        "require-run: ./client-init"
     ]
 }
