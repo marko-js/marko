@@ -147,6 +147,9 @@ TemplateCompiler.prototype = {
     isExpression: function (expression) {
         return expression instanceof Expression;
     },
+    hasExpression: function(str) {
+        return expressionParser.hasExpression(str);
+    },
     makeExpression: function (expression) {
         if (this.isExpression(expression)) {
             return expression;
