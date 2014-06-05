@@ -120,13 +120,24 @@ module.exports = function transform(node, compiler, template) {
             if (compiler.isExpression(attr.value)) {
                 value = attr.value;
             } else {
-                try {
-                    value = compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
-                } catch (e) {
-                    node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
-                    value = attr.value;
-                }
 
+                if (type === 'path') {
+                    var pathVar;
+                    if (compiler.hasExpression(attr.value)) {
+                        value = compiler.convertType(attr.value, 'string', attrDef ? attrDef.allowExpressions !== false : true);
+                    } else {
+                        // Resolve the static string to a full path only once
+                        pathVar = template.addStaticVar(attr.value, 'require.resolve(' + compiler.convertType(attr.value, 'string', true) + ')');
+                        value = compiler.makeExpression(pathVar);
+                    }
+                } else {
+                    try {
+                        value = compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
+                    } catch (e) {
+                        node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
+                        value = attr.value;
+                    }
+                }
             }
             var propName;
             if (attrDef.dynamicAttribute) {
@@ -183,7 +194,11 @@ module.exports = function transform(node, compiler, template) {
             otherwiseNode.appendChild(node);
         },
         'c-attrs': function(attr) {
-            node.dynamicAttributesExpression = attr.value;
+            if (!node.addDynamicAttributes) {
+                node.addError('Node does not support the "c-attrs" attribute');
+            } else {
+                node.addDynamicAttributes(attr.value);
+            }
         },
         'c-for-each': function(attr) {
             this['for'](attr);
