@@ -31,7 +31,7 @@ RequireNode.prototype = {
             this.addError('"module" attribute is required');
         }
         if (!varName) {
-            this.addError('"varName" attribute is required');
+            this.addError('"var" attribute is required');
         }
 
         if (module && varName) {

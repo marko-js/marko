@@ -30,7 +30,7 @@ function merge(target, source) {
 
                     if (!Array.isArray(targetArray)) {
                         targetArray = [targetArray];
-                    } 
+                    }
 
                     if (!Array.isArray(sourceArray)) {
                         sourceArray = [sourceArray];
@@ -111,22 +111,14 @@ TaglibLookup.prototype = {
         }
 
         var tagKey = element.namespace ? element.namespace + ':' + element.localName : element.localName;
-
-        var tag = tags[tagKey];
-        if (!tag) {
-            tag = tags['*'];
-
-            if (!tag) {
-                return;
-            }
-        }
-
         var attrKey = attr.namespace ? attr.namespace + ':' + attr.localName : attr.localName;
 
-        function findAttribute(attributes) {
+        function findAttribute(tag, attributes) {
+            // try by exact match first
             var attribute = attributes[attrKey];
             if (attribute === undefined) {
                 if (tag.patternAttributes) {
+                    // try searching by pattern
                     for (var i = 0, len = tag.patternAttributes.length; i < len; i++) {
                         var patternAttribute = tag.patternAttributes[i];
                         if (patternAttribute.pattern.test(attrKey)) {
@@ -135,25 +127,27 @@ TaglibLookup.prototype = {
                         }
                     }
                 }
-
-                if (attribute === undefined) {
-                    attribute = tag.attributes['*'];
-                }
             }
 
             return attribute;
         }
 
+        function tryTag(tagName) {
+            var tag = tags[tagName];
+            if (!tag) {
+                return undefined;
+            }
 
-        var attribute = findAttribute(tag.attributes);
-
-        if (attribute === null) {
-            // This is an imported attribute
-            attribute = findAttribute(this.merged.attributes);
+            return findAttribute(tag, tag.attributes) ||
+                   findAttribute(tag, this.merged.attributes) ||
+                   tag.attributes['*'];
         }
 
-        return attribute;
+        // first, try looking up attribute by actual tag name
+        // next, try looking up attribute wildcard
+        return tryTag.call(this, tagKey) || tryTag.call(this, '*');
     },
+
     forEachNodeTransformer: function (node, callback, thisObj) {
         /*
          * Based on the type of node we have to choose how to transform it
@@ -189,7 +183,7 @@ TaglibLookup.prototype = {
 
         /*
          * Handle all of the transformers for all possible matching transformers.
-         * 
+         *
          * Start with the least specific and end with the most specific.
          */
 
@@ -226,11 +220,14 @@ TaglibLookup.prototype = {
                 }
             }
 
-            this._inputFiles = Object.keys(inputFilesSet); 
+            this._inputFiles = Object.keys(inputFilesSet);
         }
 
         return this._inputFiles;
-        
+    },
+
+    toString: function() {
+        return 'lookup: ' + this.getInputFiles().join(', ');
     }
 };
 module.exports = TaglibLookup;

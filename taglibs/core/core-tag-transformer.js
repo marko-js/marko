@@ -106,16 +106,16 @@ module.exports = function transform(node, compiler, template) {
 
         node.forEachAttributeAnyNS(function (attr) {
             var attrDef = compiler.taglibs.getAttribute(node, attr);
-            var type = attrDef ? attrDef.type || 'string' : 'string';
-
-            var value;
-            
             if (!attrDef) {
                 // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                 //Tag doesn't allow dynamic attributes
                 node.addError('The tag "' + tag.name + '" in taglib "' + tag.taglibId + '" does not support attribute "' + attr + '"');
                 return;
             }
+
+            var type = attrDef.type || 'string';
+
+            var value;
 
             if (compiler.isExpression(attr.value)) {
                 value = attr.value;
@@ -171,7 +171,7 @@ module.exports = function transform(node, compiler, template) {
         },
         'c-whitespace': function(attr) {
             if (attr.value === 'preserve') {
-                node.setPreserveWhitespace(true);    
+                node.setPreserveWhitespace(true);
             }
         },
         'c-escape-xml': function(attr) {
@@ -276,7 +276,7 @@ module.exports = function transform(node, compiler, template) {
         },
         'c-trim-body-indent': function(attr) {
             if (attr.value === 'true') {
-                node.trimBodyIndent = true;    
+                node.trimBodyIndent = true;
             }
         },
         'c-strip': function(attr) {
@@ -307,7 +307,7 @@ module.exports = function transform(node, compiler, template) {
         var handler = coreAttrHandlers[attr.qName];
         if (handler) {
             node.removeAttribute(attr.localName);
-            coreAttrHandlers[attr.localName](attr);    
+            coreAttrHandlers[attr.localName](attr);
         }
     });
 

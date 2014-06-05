@@ -96,10 +96,12 @@ module.exports = {
         }
 
         var func;
-        if (typeof handler === 'function') {
+
+        if ((func = handler.process || handler.render) === undefined) {
+            if (typeof handler !== 'function') {
+                throw new Error('Invalid handler: ' + handler);
+            }
             func = handler;
-        } else {
-            func = handler.process || handler.render;
         }
 
         func.call(handler, props, context);
