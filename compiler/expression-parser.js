@@ -437,6 +437,20 @@ parse = function (str, listeners, options) {
     helper._endText();
 };
 
+function hasExpression(str) {
+    var hasExpressionFlag = false;
+    parse(str, {
+        text: function (text) {
+        },
+        expression: function (expression) {
+            hasExpressionFlag = true;
+        }
+    });
+
+    return hasExpressionFlag;
+}
+
+exports.hasExpression = hasExpression;
 exports.parse = parse;
 exports.custom = {
     'xml': function (expression, helper) {
