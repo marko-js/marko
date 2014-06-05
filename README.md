@@ -1254,7 +1254,7 @@ As an example, given a template at path `/my-project/src/pages/login/template.rh
 
 __Question:__ _Is Raptor Templates ready for production use?_
 
-__Answer__: Yes, Raptor Templates has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind. However, the latest version of Raptor Templates is still being marked as beta as we nail down the final feature set as part of the [RaptorJS 3 initiative](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan).
+__Answer__: Yes, Raptor Templates has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind.
 
 <hr>
 
@@ -1274,12 +1274,11 @@ __Question:__ _How can Raptor Templates be used with Express?_
 __Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead directly pipe the rendering output stream to the response stream as shown in the following code:
 
 ```javascript
-var raptorTemplates = require('raptor-templates');
-var templatePath = require.resolve('./template.rhtml');
+var template = require('raptor-templates').load(require.resolve('./template.rhtml'));
 
 app.get('/profile', function(req, res) {
-    raptorTemplates
-        .stream(templatePath, {
+    template
+        .stream({
             name: 'Frank'
         })
         .pipe(res); 
