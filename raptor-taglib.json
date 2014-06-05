@@ -19,7 +19,7 @@
         "w-widget": {
             "renderer": "./taglib/widget-tag.js",
             "attributes": {
-                "path": "string",
+                "module": "path",
                 "config": "expression",
                 "id": {
                     "type": "string",

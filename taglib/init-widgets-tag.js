@@ -1,31 +1,26 @@
 var raptorWidgets = require('../');
 
 module.exports = function render(input, context) {
+    var widgetsContext = raptorWidgets.getWidgetsContext(context);
 
-    var asyncContext = context.beginAsync({ last: true });
-    context.on('last', function() {
-        var widgetsContext = raptorWidgets.getWidgetsContext(context);
-        if (!widgetsContext.hasWidgets()) {
-            return;
-        }
-        var includeScriptTag = input.includeScriptTag !== false;
-        if (includeScriptTag) {
-            asyncContext.write('<script type="text/javascript">');
-        }
-        var funcName = input.functionName;
-        if (funcName) {
-            asyncContext.write('function ' + funcName + '(){\n');
-        }
-        raptorWidgets.writeInitWidgetsCode(widgetsContext, asyncContext, true);
-        if (funcName) {
-            asyncContext.write('\n}');
-        }
-        if (includeScriptTag) {
-            asyncContext.write('</script>');
-        }
-        
-        asyncContext.end();
-    });
+    if (context.featureLastFlush === false) {
+        // If the rendering context doesn't support the ability to know when all of the asynchronous fragmnents
+        // have completed then we won't be able to know which widgets were rendered so we will
+        // need to scan the DOM to find the widgets
+        raptorWidgets.writeInitWidgetsCode(widgetsContext, context, {scanDOM: true});
+    } else {
+        var asyncContext = context.beginAsync({ last: true });
+        context.on('last', function() {
+            if (!widgetsContext.hasWidgets()) {
+                return asyncContext.end();
+            }
+            
+            raptorWidgets.writeInitWidgetsCode(widgetsContext, asyncContext);
+            asyncContext.end();
+        });
+    }
+
+    
 
     
 };

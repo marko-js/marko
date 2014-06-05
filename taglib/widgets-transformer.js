@@ -31,7 +31,6 @@ exports.process =function (node, compiler, template) {
         forEachEntry(widgetProps, function (name, value) {
             if (name === 'w-id') {
                 handledPropNames.push(name);
-                widgetArgs.scope = 'widget';
                 widgetArgs.id = value;
             } else if (strings.startsWith(name, 'w-event-')) {
                 handledPropNames.push(name);
@@ -77,8 +76,8 @@ exports.process =function (node, compiler, template) {
             }).join(',') + ']';
         }
         if (!objects.isEmpty(widgetArgs)) {
-            template.addVar('_widgetArgs', 'require("raptor-widgets/taglib/helpers").widgetArgs');
-            template.addVar('_cleanupWidgetArgs', 'require("raptor-widgets/taglib/helpers").cleanupWidgetArgs');
+            template.addStaticVar('_widgetArgs', 'require("raptor-widgets/taglib/helpers").widgetArgs');
+            template.addStaticVar('_cleanupWidgetArgs', 'require("raptor-widgets/taglib/helpers").cleanupWidgetArgs');
             var widgetArgsParts = [];
             if (widgetArgs.id) {
                 widgetArgsParts.push(widgetArgs.id.toString());
@@ -96,15 +95,22 @@ exports.process =function (node, compiler, template) {
     }
 
     if (widgetAttr) {
+        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("raptor-widgets").attrs');
+
         node.removeAttribute('w-widget');
         node.removeAttribute('w-bind');
-        var widgetJsClass = compiler.convertType(widgetAttr, 'string', true);
         var config;
         var assignedId;
-        if ((assignedId = node.getAttribute('w-id'))) {
-            node.removeAttribute('w-id');
+        var scope;
+        if ((assignedId = node.getAttribute('w-assigned-id'))) {
+            node.removeAttribute('w-assigned-id');
             assignedId = compiler.convertType(assignedId, 'string', true);
         }
+        if ((scope = node.getAttribute('w-scope'))) {
+            node.removeAttribute('w-scope');
+            scope = compiler.convertType(scope, 'expression', true);
+        }
+
         if ((config = node.getAttribute('w-config'))) {
             node.removeAttribute('w-config');
             config = compiler.convertType(config, 'expression', true);
@@ -112,13 +118,17 @@ exports.process =function (node, compiler, template) {
         var widgetNode = compiler.createTagHandlerNode('w-widget');
         node.parentNode.replaceChild(widgetNode, node);
         widgetNode.appendChild(node);
-        widgetNode.setProperty('path', template.makeExpression('require.resolve(' + widgetJsClass + ')'));
+
+        widgetNode.setAttribute('module', widgetAttr);
+
         if (config) {
             widgetNode.setProperty('config', config);
         }
         if (assignedId) {
             widgetNode.setProperty('assignedId', assignedId);
-            widgetNode.setProperty('scope', template.makeExpression('widget'));
+        }
+        if (scope) {
+            widgetNode.setProperty('scope', scope);
         }
         var elId = node.getAttribute('id');
         if (elId) {
@@ -127,6 +137,8 @@ exports.process =function (node, compiler, template) {
         } else {
             node.setAttribute('id', '${widget.elId()}');
         }
+
+        node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
     }
 
     if ((widgetElIdAttr = node.getAttribute('w-el-id'))) {

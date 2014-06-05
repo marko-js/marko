@@ -5,11 +5,11 @@ var DUMMY_WIDGET_DEF = {
         }
     };
 module.exports = function render(input, context) {
-    var path = input.path;
+    var modulePath = input.module;
     var config = input.config || input._cfg;
     var widgetArgs = context.attributes.widgetArgs;
     var elId = input.elId;
-    var scope = input.scope;
+    var scope = input.scope || context.getAttribute('widget');
     var assignedId = input.assignedId;
     var events;
     if (widgetArgs) {
@@ -19,22 +19,25 @@ module.exports = function render(input, context) {
         events = widgetArgs.events;
     }
     if (!elId && input.hasOwnProperty('elId')) {
-        throw new Error('Invalid widget ID for "' + path + '"');
+        throw new Error('Invalid widget ID for "' + modulePath + '"');
     }
     var widgetsContext = widgets.getWidgetsContext(context);
 
-    if (path) {
-        widgetsContext.beginWidget({
-            path: path,
+    if (modulePath) {
+
+        var widgetDef = widgetsContext.beginWidget({
+            module: modulePath,
             id: elId,
             assignedId: assignedId,
             config: config,
             scope: scope,
             events: events,
             createWidget: input.createWidget
-        }, function (widgetDef) {
-            input.invokeBody(widgetDef);
         });
+
+        input.invokeBody(widgetDef);
+
+        widgetDef.end();
     } else {
         input.invokeBody(DUMMY_WIDGET_DEF);
     }
