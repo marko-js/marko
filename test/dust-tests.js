@@ -18,7 +18,7 @@ dust.onLoad = function(path, callback) {
 };
 
 
-require('../dust').registerHelpers(dust);
+require('raptor-taglib-async/dust').registerHelpers(dust);
 
 function testRender(path, data, done, options) {
     options = options || {};
