@@ -49,6 +49,17 @@ function writeArgs(writer, args) {
     }
 }
 
+
+function safeVarName(varName) {
+    return varName.replace(/[^A-Za-z0-9_]/g, '_').replace(/^[0-9]+/, function(match) {
+        var str = '';
+        for (var i=0; i<match.length; i++) {
+            str += '_';
+        }
+        return str;
+    });
+}
+
 function CodeWriter(concatWrites, indent) {
     this._indent = indent != null ? indent : INDENT + INDENT;
     this._code = new StringBuilder();
@@ -270,6 +281,8 @@ TemplateBuilder.prototype = {
         return this.staticVarsLookup[name] === true;
     },
     addStaticVar: function (name, expression) {
+        name = safeVarName(name);
+
         if (!this.staticVarsLookup[name]) {
             this.staticVarsLookup[name] = true;
             this.staticVars.push({
@@ -277,11 +290,14 @@ TemplateBuilder.prototype = {
                 expression: expression
             });
         }
+        return name;
     },
     hasVar: function (name) {
         return this.vars[name] === true;
     },
     addVar: function (name, expression) {
+        name = safeVarName(name);
+        
         this.vars[name] = true;
         this.vars.push({
             name: name,
