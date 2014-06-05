@@ -12,7 +12,7 @@
         "url": "https://github.com/raptorjs3/raptor-templates.git"
     },
     "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/ dust/"
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": [
@@ -26,7 +26,6 @@
         "raptor-json": "^0.2.0-beta",
         "raptor-modules": "^0.2.0-beta",
         "raptor-render-context": "^0.2.0-beta",
-        "raptor-data-providers": "^0.2.0-beta",
         "raptor-ecma": "^0.2.0-beta",
         "htmlparser2": "~3.5.1",
         "char-props": "~0.1.5",
@@ -34,8 +33,9 @@
         "raptor-args": "^0.1.9-beta",
         "minimatch": "^0.2.14",
         "property-handlers": "^0.2.1-beta",
-        "raptor-dust": "^0.3.6-beta",
-        "sax": "^0.6.0"
+        "sax": "^0.6.0",
+        "raptor-taglib-async": "^0.1.0-beta",
+        "raptor-taglib-layout": "^0.1.0-beta"
     },
     "devDependencies": {
         "mocha": "~1.15.1",
