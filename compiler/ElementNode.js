@@ -41,13 +41,7 @@ function ElementNode(localName, namespace, prefix) {
         this.dynamicAttributesExpressionArray = null;
         this.attributesByNS = {};
         this.prefix = prefix;
-        this.localName = this.tagName = localName;
-        if (this.prefix) {
-            this.qName = this.prefix + ':' + localName;
-        } else {
-            this.qName = localName;
-        }
-        
+        this.localName = localName;
         this.namespace = namespace;
         this.allowSelfClosing = false;
         this.startTagOnly = false;
@@ -298,4 +292,33 @@ ElementNode.prototype = {
     }
 };
 require('raptor-util').inherit(ElementNode, require('./Node'));
+
+Object.defineProperty(ElementNode.prototype, 'tagName', {
+    get: function() {
+        return this._localName;
+    },
+    set: function(value) {
+        this._localName = value;
+    }
+});
+
+Object.defineProperty(ElementNode.prototype, 'localName', {
+    get: function() {
+        return this._localName;
+    },
+    set: function(value) {
+        this._localName = value;
+    }
+});
+
+Object.defineProperty(ElementNode.prototype, 'qName', {
+    get: function() {
+        if (this.prefix) {
+            return this.prefix + ':' + this.localName;
+        } else {
+            return this.localName;
+        }
+    }
+});
+
 module.exports = ElementNode;
