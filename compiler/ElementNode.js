@@ -99,11 +99,17 @@ ElementNode.prototype = {
             });
         }
     },
-    getAttributes: function () {
+    getAttributes: function() {
+        return this.getAttributesNS('');
+    },
+    getAttributesNS: function (namespace) {
         var attributes = [];
-        forEachEntry(this.attributes, function (name, attr) {
-            attributes.push(attr);
-        }, this);
+        if (this.attributesByNS[namespace]) {
+            forEachEntry(this.attributesByNS[namespace], function (name, attr) {
+                attributes.push(attr);
+            });    
+        }
+        
         return attributes;
     },
     getAttribute: function (name) {
