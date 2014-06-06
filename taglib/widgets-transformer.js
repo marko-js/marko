@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 'use strict';
-var forEachEntry = require('raptor-util').forEachEntry;
-var strings = require('raptor-strings');
-var objects = require('raptor-objects');
+require('raptor-ecma/es6');
+var forEachEntry = require('raptor-util/forEachEntry');
+var isObjectEmpty = require('raptor-util/isObjectEmpty');
 var stringify = require('raptor-json/stringify');
 
 exports.process =function (node, compiler, template) {
@@ -26,13 +26,18 @@ exports.process =function (node, compiler, template) {
 
     var widgetArgs = {};
     var widgetEvents = [];
+
+    // if (node.tagName === 'sample-button') {
+    //     console.log(node.tagName, node.getAttributes(), node.getProperties());
+    //     console.log(node.getAttributes());
+    // }
     if (widgetProps) {
         var handledPropNames = [];
         forEachEntry(widgetProps, function (name, value) {
             if (name === 'w-id') {
                 handledPropNames.push(name);
                 widgetArgs.id = value;
-            } else if (strings.startsWith(name, 'w-event-')) {
+            } else if (name.startsWith('w-event-')) {
                 handledPropNames.push(name);
                 var eventProps = compiler.parseAttribute(value, {
                         '*': { type: 'expression' },
@@ -65,7 +70,7 @@ exports.process =function (node, compiler, template) {
         if (widgetEvents.length) {
             widgetArgs.events = '[' + widgetEvents.map(function (widgetEvent) {
                 var widgetPropsJS;
-                if (!objects.isEmpty(widgetEvent.eventProps)) {
+                if (!isObjectEmpty(widgetEvent.eventProps)) {
                     widgetPropsJS = [];
                     forEachEntry(widgetEvent.eventProps, function (name, valueExpression) {
                         widgetPropsJS.push(stringify(name) + ': ' + valueExpression);
@@ -75,7 +80,7 @@ exports.process =function (node, compiler, template) {
                 return '[' + stringify(widgetEvent.sourceEvent) + ',' + stringify(widgetEvent.targetMessage) + (widgetPropsJS ? ',' + widgetPropsJS : '') + ']';
             }).join(',') + ']';
         }
-        if (!objects.isEmpty(widgetArgs)) {
+        if (!isObjectEmpty(widgetArgs)) {
             template.addStaticVar('_widgetArgs', 'require("raptor-widgets/taglib/helpers").widgetArgs');
             template.addStaticVar('_cleanupWidgetArgs', 'require("raptor-widgets/taglib/helpers").cleanupWidgetArgs');
             var widgetArgsParts = [];
