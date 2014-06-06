@@ -78,6 +78,15 @@ describe('raptor-taglibs/taglib-lookup' , function() {
         expect(attr.type).to.equal('number');
     });
 
+    it('should lookup global attributes correctly', function() {
+        var taglibLookup = require('../compiler').taglibs.lookup;
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        // console.log('LOOKUP: ', Object.keys(lookup.attributes));
+        var attrDef = lookup.getAttribute('test-dynamic-attributes', 'global-attribute');
+        expect(attrDef != null).to.equal(true);
+        expect(attrDef.type).to.equal('boolean');
+    });
+
     it('should cache a lookup', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup1 = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));

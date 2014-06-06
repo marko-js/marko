@@ -113,10 +113,10 @@ TaglibLookup.prototype = {
         var tagKey = element.namespace ? element.namespace + ':' + element.localName : element.localName;
         var attrKey = attr.namespace ? attr.namespace + ':' + attr.localName : attr.localName;
 
-        function findAttribute(tag, attributes) {
+        function findAttributeForTag(tag, attributes, attrKey) {
             // try by exact match first
             var attribute = attributes[attrKey];
-            if (attribute === undefined) {
+            if (attribute === undefined && attrKey !== '*') {
                 if (tag.patternAttributes) {
                     // try searching by pattern
                     for (var i = 0, len = tag.patternAttributes.length; i < len; i++) {
@@ -132,20 +132,23 @@ TaglibLookup.prototype = {
             return attribute;
         }
 
-        function tryTag(tagName) {
-            var tag = tags[tagName];
+        var globalAttributes = this.merged.attributes;
+
+        function tryAttribute(tagKey, attrKey) {
+            var tag = tags[tagKey];
             if (!tag) {
                 return undefined;
             }
 
-            return findAttribute(tag, tag.attributes) ||
-                   findAttribute(tag, this.merged.attributes) ||
-                   tag.attributes['*'];
+            return findAttributeForTag(tag, tag.attributes, attrKey) ||
+                   findAttributeForTag(tag, globalAttributes, attrKey);
         }
 
-        // first, try looking up attribute by actual tag name
-        // next, try looking up attribute wildcard
-        return tryTag.call(this, tagKey) || tryTag.call(this, '*');
+        var attrDef = tryAttribute(tagKey, attrKey) || // Look for an exact match at the tag level
+            tryAttribute('*', attrKey) || // If not there, see if there is a exact match on the attribute name for attributes that apply to all tags
+            tryAttribute(tagKey, '*'); // Otherwise, see if there is a splat attribute for the tag
+
+        return attrDef;
     },
 
     forEachNodeTransformer: function (node, callback, thisObj) {

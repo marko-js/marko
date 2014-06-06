@@ -1,5 +1,10 @@
 {
     "tags": {
+        "*": {
+            "attributes": {
+                "global-attribute": "boolean"
+            }
+        },
         "test-hello": "hello-tag.json",
         "test-simpleHello": {
             "renderer": "./simple-hello-tag.js",
