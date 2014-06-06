@@ -6,7 +6,10 @@
                 "w-widget": "string",
                 "w-config": "expression",
                 "w-el-id": "string",
-                "w-id": "string",
+                "w-id": {
+                    "type": "string",
+                    "preserve-name": true
+                },
                 "w-event-*": {
                     "pattern": true,
                     "type": "custom",
