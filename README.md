@@ -9,7 +9,7 @@ The `raptor-widgets` module provides a simple and efficient mechanism for bindin
 npm install raptor-widgets --save
 ```
 
-# Sample Code
+# Usage
 
 ## Binding Behavior
 
@@ -40,7 +40,7 @@ Using Raptor Templates, you can then bind this widget to a rendered DOM element 
 
 ```html
 <div class="my-component" w-bind="./widget">
-    <h1>My Component</h1>
+    <h1>Click Me</h1>
 </div>
 ```
 
@@ -61,7 +61,7 @@ __src/pages/index/template.rhtml:__
 <body>
     <!-- Bind a widget to a div element using the "w-bind" attribute -->
     <div class="my-component" w-bind="./widget">
-        <h1>My Component</h1>
+        <h1>Click Me</h1>
     </div>
 
     <optimizer-body/>
@@ -93,7 +93,7 @@ In the above example, the final HTML will be similar to the following:
     </head>
     <body>
         <div data-rwidget="/src/pages/index/widget" id="w0" class="my-component">
-            <h1>My Component</h1>
+            <h1>Click Me</h1>
         </div>
         <script src="static/index-8947595a.js" type="text/javascript"></script>
         <span style="display:none;" data-ids="w0" id="rwidgets"></span>
@@ -105,7 +105,7 @@ To try out and experiment with this code please see the source code for the foll
 
 ## Inter-widget Communication
 
-The `raptor-widgets` taglib also provides support for allowing a widget to communicate directly with its nested widgets.
+The `raptor-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets.
 
 TODO
 
