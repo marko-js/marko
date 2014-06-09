@@ -109,7 +109,7 @@ The `raptor-widgets` taglib also provides support for allowing a widget to commu
 
 TODO
 
-## Referencing Nested Elements
+## Referencing Widget DOM Elements
 
 TODO
 
