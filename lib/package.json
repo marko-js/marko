@@ -2,6 +2,7 @@
     "main": "raptor-widgets.js",
     "browser": {
         "./raptor-widgets.js": "./raptor-widgets-browser.js",
-        "./uniqueId.js": "./uniqueId-browser.js"
+        "./uniqueId.js": "./uniqueId-browser.js",
+        "./init-widgets.js": "./init-widgets-browser.js"
     }
 }
