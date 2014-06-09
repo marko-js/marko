@@ -132,7 +132,7 @@ In the above example, the final HTML will be similar to the following:
 </html>
 ```
 
-To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs3/raptor-samples/tree/master/widgets-bind-behavior) sample app.
+:arrow_forward: To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs3/raptor-samples/tree/master/widgets-bind-behavior) sample app.
 
 ## Referencing Widgets
 
