@@ -28,8 +28,6 @@ exports.registerHelpers = function(dust) {
                 var invokeBody = data.invokeBody;
                 var scope = data.scope || context.getAttribute('widget');
 
-                console.log('WIDGET: ', modulePath, scope, context._dustContext);
-
                 delete data.config;
                 delete data.tagName;
                 delete data.module;
