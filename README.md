@@ -8,14 +8,43 @@ The `raptor-widgets` module provides a simple and efficient mechanism for bindin
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [raptor-widgets](#raptor-widgets)
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
-    - [Binding Behavior](#binding-behavior)
-    - [Referencing Widgets](#referencing-widgets)
-    - [Referencing Widget DOM Elements](#referencing-widget-dom-elements)
-    - [Rendering Widgets in the Browser](#rendering-widgets-in-the-browser)
+	- [Binding Behavior](#binding-behavior)
+	- [Referencing Widgets](#referencing-widgets)
+	- [Referencing Widget DOM Elements](#referencing-widget-dom-elements)
+	- [Rendering Widgets in the Browser](#rendering-widgets-in-the-browser)
+- [API](#api)
+	- [Widget](#widget)
+		- [Methods](#methods)
+			- [$(querySelector)](#$queryselector)
+			- [addEventListener(eventType, listener)](#addeventlistenereventtype-listener)
+			- [appendTo(targetEl)](#appendtotargetel)
+			- [destroy()](#destroy)
+			- [detach()](#detach)
+			- [emit(eventType, arg1, arg2, ...)](#emiteventtype-arg1-arg2-)
+			- [getEl(widgetElId)](#getelwidgetelid)
+			- [getElId(widgetElId)](#getelidwidgetelid)
+			- [insertAfter(targetEl)](#insertaftertargetel)
+			- [insertBefore(targetEl)](#insertbeforetargetel)
+			- [isDestroyed()](#isdestroyed)
+			- [on(eventType, listener)](#oneventtype-listener)
+			- [prependTo(targetEl)](#prependtotargetel)
+			- [ready(callback)](#readycallback)
+			- [replace(targetEl)](#replacetargetel)
+			- [replaceChildrenOf(targetEl)](#replacechildrenoftargetel)
+			- [rerender(data, callback)](#rerenderdata-callback)
+			- [subscribeTo(target)](#subscribetotarget)
+		- [Properties](#properties)
+			- [this.el](#thisel)
+			- [this.id](#thisid)
+			- [this.widgets](#thiswidgets)
+	- [WidgetCollection](#widgetcollection)
+		- [Methods](#methods-1)
+			- [forEach([id], callback)](#foreachid-callback)
+		- [Properties](#properties-1)
+			- [this.*](#this)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -159,10 +188,204 @@ this.widgets.dangerButton.on('click', function() {
 });
 ```
 
+To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs3/raptor-samples/tree/master/widgets-communication) sample app.
+
 ## Referencing Widget DOM Elements
 
-TODO
+DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-el-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
+
+```html
+<form w-bind="./widget">
+    ...
+    <button type="submit" w-el-id="submitButton">Submit</button>
+    <button type="button" w-el-id="cancelButton">Cancel</button>
+</form>
+```
+
+Assuming the unique ID assigned to the widget is `w123`, the following would be the HTML output:
+
+```html
+<form id="w123">
+    ...
+    <button type="submit" id="w123-submitButton">Submit</button>
+    <button type="button" id="w123-cancelButton">Cancel</button>
+</form>
+```
+
+Finally, to reference a widget's nested DOM element's the following code can be used in the containing widget:
+
+```javascript
+var submitButton = this.getEl('submitButton'); // submitButton.id === 'w123-submitButton'
+var cancelButton = this.getEl('cancelButton'); // cancelButton.id === 'w123-cancelButton'
+
+submitButton.style.border = '1px solid red';
+```
+
+The object returned by `this.getEl()` will be a raw [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element). If you want a jQuery wrapped element you can do either of the following:
+
+
+Option 1) Use jQuery directly:
+
+```javascript
+var $submitButton = $(this.getEl('submitButton'));
+```
+
+Option 2) Use the `this.$()` method:
+
+```javascript
+var $submitButton = this.$('#submitButton');
+```
 
 ## Rendering Widgets in the Browser
 
 TODO
+
+# API
+
+## Widget
+
+### Methods
+
+#### $(querySelector)
+
+This is a convenience method for accessing a widget's DOM elements when jQuery is available. This mixin method serves as a proxy to jQuery to ease building queries based on widget element IDs.
+
+Internally, this jQuery proxy method will resolve widget element IDs to their actual DOM element ID by prefixing widget element IDs with the widget ID. For example, where this is a widget with an ID of `w123`:
+
+
+```javascript
+this.$() ➡ $("#w123")
+this.$("#myEl") ➡ $("#w123-myEl")
+```
+
+The usage of this mixin method is described below:
+
+__`$()`__
+
+Convenience usage to access the root widget DOM element wrapped as a jQuery object. All of the following are equivalent:
+
+```javascript
+this.$()
+$(this.el)
+$("#" + this.id)
+```
+
+__`$('#<widget-el-id>')`__
+
+Convenience usage to access a nested widget DOM element wrapped as a jQuery object. All of the following are equivalent:
+
+```javascript
+this.$("#myEl)
+$(this.getEl("myEl"))
+$("#" + this.getElId("myEl"))
+```
+
+__`$('<selector>')`__
+
+Convenience usage to query nested DOM elements scoped to the root widget DOM element. All of the following are equivalent:
+
+```javascript
+this.$("ul > li")
+$("ul > li", this.el)
+$("#" + this.id + " ul > li")
+```
+
+__`$('<selector>', '<widget-el-id>')`__
+
+Convenience usage to query nested DOM elements scoped to a nested widget DOM element. All of the following are equivalent:
+
+```javascript
+this.$("li.color", "colorsUL")
+this.$("#colorsUL li.color")
+$("li.color", this.getEl("colorsUL"))
+$("#" + this.getElId("colorsUL") + " li.color")
+```
+
+__`$('#<widget-el-id> <selector>')`__
+
+Convenience usage to query nested DOM elements scoped to a nested widget DOM element. All of the following are equivalent:
+
+```javascript
+this.$("#colorsUL li.color")
+this.$("li.color", "colorsUL")
+$("li.color", this.getEl("colorsUL"))
+$("#" + this.getElId("colorsUL") + " li.color")
+```
+
+__`$(callbackFunction)`__
+
+Convenience usage to add a listener for the "on DOM ready" event and have the this object for the provided callback function be the current widget instance. All of the following are equivalent:
+
+```javascript
+this.$(function() { /*...*/ });
+$(function() { /*...*/ }.bind(this));      // Using Function.prototype.bind
+$($.proxy(function() { /*...*/ }, this));
+```
+
+#### addEventListener(eventType, listener)
+
+#### appendTo(targetEl)
+
+Moves the widget's root DOM node from the current parent element to a new parent element. For example:
+
+```javascript
+this.appendTo(document.body);
+```
+
+#### destroy()
+
+#### detach()
+
+#### emit(eventType, arg1, arg2, ...)
+
+#### getEl(widgetElId)
+
+#### getElId(widgetElId)
+
+#### insertAfter(targetEl)
+
+#### insertBefore(targetEl)
+
+#### isDestroyed()
+
+#### on(eventType, listener)
+
+#### prependTo(targetEl)
+
+#### ready(callback)
+
+#### replace(targetEl)
+
+#### replaceChildrenOf(targetEl)
+
+#### rerender(data, callback)
+
+#### subscribeTo(target)
+
+### Properties
+
+#### this.el
+
+The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the widget is bound to.
+
+#### this.id
+
+The String ID of the root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the widget is bound to.
+
+#### this.widgets
+
+An instance of `WidgetCollection` (see below) that holds references to all nested widgets with an assigned widget ID (e.g., but using the `w-id` custom attribute). For example:
+
+```javascript
+var submitButton = this.widgets.submitButton;
+```
+
+## WidgetCollection
+
+### Methods
+
+#### forEach([id], callback)
+
+### Properties
+
+#### this.*
