@@ -165,7 +165,7 @@ In the above example, the final HTML will be similar to the following:
 
 ## Referencing Widgets
 
-The `raptor-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference then nested widget by the assigned widget ID using the `this.widgets` collection. For example;
+The `raptor-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.widgets` collection.
 
 The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/raptorjs3/raptor-sample-ui-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/raptorjs3/raptor-sample-ui-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 
@@ -188,7 +188,7 @@ this.widgets.dangerButton.on('click', function() {
 });
 ```
 
-To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs3/raptor-samples/tree/master/widgets-communication) sample app.
+:arrow_forward: To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs3/raptor-samples/tree/master/widgets-communication) sample app.
 
 ## Referencing Widget DOM Elements
 
@@ -334,13 +334,23 @@ this.appendTo(document.body);
 
 #### destroy()
 
+Destroys the widget by unsubscribing from all listeners made using the `subscribeTo` method and then detaching the widget's root element from the DOM. All nested widgets (discovered by querying the DOM) are also destroyed.
+
 #### detach()
+
+Detaches the widget's root element from the DOM by removing the node from its parent node.
 
 #### emit(eventType, arg1, arg2, ...)
 
+Emits an event. This method is inherited from EventEmitter (see [Node.js Events: EventsEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
+
 #### getEl(widgetElId)
 
+Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Raptor Templates, nested DOM elements should be assigned an ID using the `w-el-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
+
 #### getElId(widgetElId)
+
+Similar to `getEl`, but only returns the String ID of the DOM element instead of the actual DOM element. 
 
 #### insertAfter(targetEl)
 
