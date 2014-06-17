@@ -3,7 +3,8 @@ var fs = require('fs');
 var nodePath = require('path');
 var Minimatch = require('minimatch').Minimatch;
 var cwd = process.cwd();
-require('raptor-ecma/es6');
+require('raptor-polyfill/string/startsWith');
+require('raptor-polyfill/string/endsWith');
 
 var mmOptions = {
     matchBase: true,

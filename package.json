@@ -26,7 +26,7 @@
         "raptor-json": "^0.2.0-beta",
         "raptor-modules": "^0.2.0-beta",
         "raptor-render-context": "^0.2.0-beta",
-        "raptor-ecma": "^0.2.0-beta",
+        "raptor-polyfill": "^0.2.0-beta",
         "htmlparser2": "~3.5.1",
         "char-props": "~0.1.5",
         "raptor-promises": "^0.2.0-beta",

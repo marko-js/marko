@@ -1,4 +1,4 @@
-require('raptor-ecma/es6');
+require('raptor-polyfill/string/endsWith');
 var ParseTreeBuilderHtml = require('./ParseTreeBuilderHtml');
 var ParseTreeBuilderXml = require('./ParseTreeBuilderXml');
 
