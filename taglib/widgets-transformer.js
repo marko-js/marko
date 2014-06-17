@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-require('raptor-ecma/es6');
+require('raptor-polyfill/string/startsWith');
 var forEachEntry = require('raptor-util/forEachEntry');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
 var stringify = require('raptor-json/stringify');

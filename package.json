@@ -18,7 +18,7 @@
         "raptor-json": "^0.2.0-beta",
         "raptor-logging": "^0.2.1-beta",
         "raptor-dust": "^0.3.6-beta",
-        "raptor-ecma": "^0.2.0-beta",
+        "raptor-polyfill": "^0.2.0-beta",
         "events": "^1.0.0",
         "raptor-renderer": "^0.2.3-beta"
     },
