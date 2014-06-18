@@ -115,7 +115,18 @@ module.exports = {
         };
     },
     i: function(context, path, data) {
-        runtime.render(path, data, context);
+        if (!path) {
+            return;
+        }
+
+        if (typeof path === 'string') {
+            runtime.render(path, data, context);    
+        } else if (typeof path.render === 'function') {
+            path.render(data, context);
+        } else {
+            throw new Error('Invalid template');
+        }
+        
         return this;
     },
     xt: extend

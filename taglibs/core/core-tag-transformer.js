@@ -101,6 +101,18 @@ module.exports = function transform(node, compiler, template) {
     var forEachNode;
     var tag;
 
+
+    function convertAttrValue(attr, type, attrDef) {
+        type = type || (attrDef ? attrDef.type : 'string') || 'string';
+
+        try {
+            return compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
+        } catch (e) {
+            node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
+            return attr.value;
+        }
+    }
+
     function forEachProp(callback, thisObj) {
         var foundProps = {};
 
@@ -120,23 +132,26 @@ module.exports = function transform(node, compiler, template) {
             if (compiler.isExpression(attr.value)) {
                 value = attr.value;
             } else {
-
                 if (type === 'path') {
                     var pathVar;
                     if (compiler.hasExpression(attr.value)) {
-                        value = compiler.convertType(attr.value, 'string', attrDef ? attrDef.allowExpressions !== false : true);
+                        value = convertAttrValue(attr, 'string', attrDef);
                     } else {
                         // Resolve the static string to a full path only once
                         pathVar = template.addStaticVar(attr.value, 'require.resolve(' + compiler.convertType(attr.value, 'string', true) + ')');
                         value = compiler.makeExpression(pathVar);
                     }
-                } else {
-                    try {
-                        value = compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
-                    } catch (e) {
-                        node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
-                        value = attr.value;
+                } else if (type === 'template') {
+                    var templateVar;
+                    if (compiler.hasExpression(attr.value)) {
+                        value = compiler.makeExpression('__helpers.l(' + convertAttrValue(attr, 'string', attrDef) + ')');
+                    } else {
+                        // Resolve the static string to a full path only once
+                        templateVar = template.addStaticVar(attr.value, '__helpers.l(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
+                        value = compiler.makeExpression(templateVar);
                     }
+                } else {
+                    value = convertAttrValue(attr, type, attrDef);
                 }
             }
             var propName;

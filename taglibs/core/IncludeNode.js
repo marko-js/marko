@@ -31,11 +31,11 @@ function IncludeNode(props) {
 IncludeNode.convertNode = function (node, template) {
     extend(node, IncludeNode.prototype);
     IncludeNode.call(node);
-    node.setProperty('template', stringify(template));
+    node.setProperty('template', template);
 };
 IncludeNode.prototype = {
     doGenerateCode: function (template) {
-        var templatePath = this.getProperty('template');
+        var templatePath = this.getProperty('template') || this.getAttribute('template');
         var templateData = this.getProperty('templateData') || this.getProperty('template-data');
         var resourcePath;
         var _this = this;

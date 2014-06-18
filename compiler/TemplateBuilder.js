@@ -345,7 +345,18 @@ TemplateBuilder.prototype = {
     },
     include: function (templatePath, dataExpression) {
         if (!this.hasErrors()) {
-            this.contextHelperMethodCall('i', new Expression('require.resolve(' + templatePath + ')'), dataExpression);
+
+            if (typeof templatePath === 'string') {
+                var templateVar;
+                if (!this.hasExpression(templatePath)) {
+                    // Resolve the static string to a full path only once
+                    templateVar = this.addStaticVar(templatePath, '__helpers.l(require.resolve(' + this.compiler.convertType(templatePath, 'string', true) + '))');
+                    this.statement(this.makeExpression(templateVar + '.render(' + dataExpression + ', context)'));
+                    return;
+                }
+            }
+
+            this.contextHelperMethodCall('i', typeof templatePath === 'string' ? this.compiler.convertType(templatePath, 'string', true) : templatePath, dataExpression);
         }
         return this;
     },
@@ -456,6 +467,9 @@ TemplateBuilder.prototype = {
     },
     makeExpression: function (expression) {
         return this.compiler.makeExpression(expression);
+    },
+    hasExpression: function (str) {
+        return this.compiler.hasExpression(str);
     },
     isExpression: function (expression) {
         return this.compiler.isExpression(expression);

@@ -201,7 +201,7 @@
             "node-class": "./IncludeNode",
             "attributes": {
                 "template": {
-                    "type": "string"
+                    "type": "template"
                 },
                 "template-data": {
                     "type": "expression"
