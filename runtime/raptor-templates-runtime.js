@@ -43,6 +43,17 @@ if (streamPath) {
 }
 
 
+function renderWithCallback(template, data, context, callback) {
+    context
+        .on('end', function() {
+            callback(null, context.getOutput());
+        })
+        .on('error', callback);
+
+    template._(data, context);    //Invoke the template rendering function with the required arguments
+
+    context.end();
+}
 
 function Template(renderFunc) {
     this._ = renderFunc;
@@ -57,40 +68,19 @@ Template.prototype = {
         // callback is last argument if provided
         callback = arguments[arguments.length - 1];
         if (typeof callback === 'function') {
-            
-            // found a callback function
-            if (arguments.length < 3) {
-                // context could not have been created so create
-                context = undefined;
-
-                if (arguments.length < 2) {
-                    // data could not have been provided
-                    data = undefined;
-                }
-            }
-
-            context = context || new Context();
-
-            context
-                .on('end', function() {
-                    callback(null, context.getOutput());
-                })
-                .on('error', callback);
-
-            this._(data, context);    //Invoke the template rendering function with the required arguments
-
-            context.end();
-        } else {
-            var shouldEnd = false;
-            if (!context) {
+            if (arguments.length === 2) { // data, context, callback
+                callback = context;
                 context = new Context();
-                shouldEnd = true;
             }
-            // A context object was provided instead of a callback
-            this._(data, context);    //Invoke the template rendering function with the required arguments
-            
-            if (shouldEnd) {
-                context.end();
+            renderWithCallback(this, data, context, callback);
+        } else {
+            if (context.attributes) {
+                this._(data, context);
+            } else {
+                // Assume the "context" is really a stream
+                context = new Context(context);
+                this._(data, context);
+                context.end(); // End the context and the underlying stream
             }
         }
 
