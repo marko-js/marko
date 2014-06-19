@@ -1,58 +1,58 @@
 {
-  "name": "raptor-templates",
-  "description": "Raptor Templates",
-  "keywords": [
-    "templating",
-    "template",
-    "async",
-    "streaming"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs3/raptor-templates.git"
-  },
-  "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
-  },
-  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": [
-    "Patrick Steele-Idem <pnidem@gmail.com>"
-  ],
-  "dependencies": {
-    "raptor-logging": "^0.2.0-beta",
-    "raptor-strings": "^0.2.0-beta",
-    "raptor-regexp": "^0.2.0-beta",
-    "raptor-util": "^0.2.0-beta",
-    "raptor-json": "^0.2.0-beta",
-    "raptor-modules": "^0.2.0-beta",
-    "raptor-render-context": "^0.2.0-beta",
-    "raptor-polyfill": "^0.2.0-beta",
-    "htmlparser2": "^3.7.2",
-    "char-props": "~0.1.5",
-    "raptor-promises": "^0.2.0-beta",
-    "raptor-args": "^0.1.9-beta",
-    "minimatch": "^0.2.14",
-    "property-handlers": "^0.2.1-beta",
-    "sax": "^0.6.0",
-    "raptor-taglib-async": "^0.1.0-beta",
-    "raptor-taglib-layout": "^0.1.0-beta"
-  },
-  "devDependencies": {
-    "mocha": "~1.15.1",
-    "chai": "~1.8.1",
-    "jshint": "^2.5.0",
-    "raptor-cache": "^0.2.7-beta",
-    "dustjs-linkedin": "^2.3.4",
-    "through": "^2.3.4"
-  },
-  "license": "Apache License v2.0",
-  "bin": {
-    "rhtmlc": "bin/rhtmlc"
-  },
-  "main": "runtime/raptor-templates-runtime.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "ebay": {},
-  "version": "1.1.3-beta"
+    "name": "raptor-templates",
+    "description": "Raptor Templates",
+    "keywords": [
+        "templating",
+        "template",
+        "async",
+        "streaming"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs3/raptor-templates.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": [
+        "Patrick Steele-Idem <pnidem@gmail.com>"
+    ],
+    "dependencies": {
+        "raptor-logging": "^0.2.0-beta",
+        "raptor-strings": "^0.2.0-beta",
+        "raptor-regexp": "^0.2.0-beta",
+        "raptor-util": "^0.2.0-beta",
+        "raptor-json": "^0.2.0-beta",
+        "raptor-modules": "^0.2.0-beta",
+        "raptor-render-context": "^0.2.0-beta",
+        "raptor-polyfill": "^0.2.0-beta",
+        "htmlparser2": "^3.7.2",
+        "char-props": "~0.1.5",
+        "raptor-promises": "^0.2.0-beta",
+        "raptor-args": "^0.1.9-beta",
+        "minimatch": "^0.2.14",
+        "property-handlers": "^0.2.1-beta",
+        "sax": "^0.6.0",
+        "raptor-taglib-async": "^0.1.0-beta",
+        "raptor-taglib-layout": "^0.1.0-beta"
+    },
+    "devDependencies": {
+        "mocha": "~1.15.1",
+        "chai": "~1.8.1",
+        "jshint": "^2.5.0",
+        "raptor-cache": "^0.2.7-beta",
+        "dustjs-linkedin": "^2.3.4",
+        "through": "^2.3.4"
+    },
+    "license": "Apache License v2.0",
+    "bin": {
+        "rhtmlc": "bin/rhtmlc"
+    },
+    "main": "runtime/raptor-templates-runtime.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "ebay": {},
+    "version": "1.1.4-beta"
 }
