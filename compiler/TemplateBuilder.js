@@ -351,7 +351,7 @@ TemplateBuilder.prototype = {
                 if (!this.hasExpression(templatePath)) {
                     // Resolve the static string to a full path only once
                     templateVar = this.addStaticVar(templatePath, '__helpers.l(require.resolve(' + this.compiler.convertType(templatePath, 'string', true) + '))');
-                    this.statement(this.makeExpression(templateVar + '.render(' + dataExpression + ', context)'));
+                    this.statement(this.makeExpression(templateVar + '.render(' + dataExpression + ', context);'));
                     return;
                 }
             }
