@@ -83,25 +83,24 @@ module.exports = {
 
     /* Helpers that require a context below: */
 
-    t: function (context, handler, props, body, namespacedProps) {
+    t: function (context, handler, props, body) {
         if (!props) {
             props = {};
         }
-        props._tag = true;
+
         if (body) {
             props.invokeBody = body;
-        }
-        if (namespacedProps) {
-            extend(props, namespacedProps);
         }
 
         var func;
 
-        if ((func = handler.process || handler.render) === undefined) {
-            if (typeof handler !== 'function') {
+        if (typeof handler === 'function') {
+            func = handler;
+        } else {
+            func = handler.process || handler.render;
+            if (!func) {
                 throw new Error('Invalid handler: ' + handler);
             }
-            func = handler;
         }
 
         func.call(handler, props, context);
