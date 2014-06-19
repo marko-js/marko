@@ -237,6 +237,7 @@ template.render({
 ```
 
 ### Streaming API
+
 ```javascript
 var template = require('raptor-templates').load('template.rhtml');
 var out = require('fs').createWriteStream('index.html', 'utf8');
@@ -249,6 +250,19 @@ template.stream({
     .pipe(out);
 ```
 
+Alternatively, you can render directly to an existing stream to avoid creating an intermediate stream:
+
+```javascript
+var template = require('raptor-templates').load('template.rhtml');
+var out = require('fs').createWriteStream('index.html', 'utf8');
+
+// Render the template to 'index.html'
+template.render({
+        name: 'Frank',
+        count: 30
+    }, out);
+```
+_NOTE:_ This will end the target output stream.
 
 ### Asynchronous Render Context API
 
@@ -1271,23 +1285,22 @@ __Answer__: The runtime for template rendering is supported in all web browsers.
 
 __Question:__ _How can Raptor Templates be used with Express?_
 
-__Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead directly pipe the rendering output stream to the response stream as shown in the following code:
+__Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead have Raptor Templates render directly to the response stream as shown in the following code:
 
 ```javascript
 var template = require('raptor-templates').load(require.resolve('./template.rhtml'));
 
 app.get('/profile', function(req, res) {
     template
-        .stream({
+        .render({
             name: 'Frank'
-        })
-        .pipe(res); 
+        }, res);
 });
 ```
 
 With this approach, you can benefit from streaming and there is no middleman (less complexity).
 
-Alternatively, you can use the independent [view-engine](https://github.com/patrick-steele-idem/view-engine) module to provide an abstraction that allows pluggable view engines and provides full support for streaming. This is shown in the following sample code:
+Alternatively, you can use the streaming API to produce an intermediate stream that can then be piped to the response stream as shown below:
 
 ```javascript
 var template = require('view-engine').load(require.resolve('./template.rhtml'));

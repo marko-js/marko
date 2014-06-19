@@ -74,7 +74,7 @@ Template.prototype = {
             }
             renderWithCallback(this, data, context, callback);
         } else {
-            if (context.attributes) {
+            if (context.isRenderContext) {
                 this._(data, context);
             } else {
                 // Assume the "context" is really a stream
