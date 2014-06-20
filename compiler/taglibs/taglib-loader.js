@@ -50,6 +50,9 @@ function buildAttribute(attr, attrProps, path) {
         },
         removeDashes: function(value) {
             attr.removeDashes = value === true;
+        },
+        description: function() {
+            
         }
     }, path);
 
