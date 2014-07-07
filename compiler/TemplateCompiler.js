@@ -216,6 +216,11 @@ TemplateCompiler.prototype = {
     },
 
     createNode: function(Ctor, arg) {
+        if (typeof Ctor === 'string') {
+            var tagName = Ctor;
+            Ctor = this.getNodeClass(tagName);
+        }
+        
         ok(Ctor != null, 'Ctor is required');
         ok(typeof Ctor === 'function', 'Ctor should be a function');
 
