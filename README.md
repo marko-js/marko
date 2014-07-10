@@ -35,6 +35,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 		- [for](#for)
 			- [Loop Status Variable](#loop-status-variable)
 			- [Loop Separator](#loop-separator)
+			- [Range Looping](#range-looping)
 			- [Property Looping](#property-looping)
 	- [Macros](#macros)
 		- [def](#def)
@@ -751,6 +752,37 @@ The `c-for` directive also supports a loop status variable in case you need to k
     <span c-for="color in colors; separator=', '" style="color: $color">$color</span>
 </div>
 ```
+
+#### Range Looping
+
+A range can be provided in the following format; `<var-name> from <from> to <to>[ step <step>]`.
+
+The `from`, `to` and `step` values must be numerical expressions. If not specified, step defaults to 1.
+
+```html
+<ul>
+    <li c-for="i from 0 to 10">
+        $i
+    </li>
+</ul>
+```
+
+```html
+<ul>
+    <li c-for="i from 0 to 10 step 2">
+        $i
+    </li>
+</ul>
+```
+
+```html
+<ul>
+    <li c-for="i from 0 to myArray.length-1">
+        ${myArray[i]}
+    </li>
+</ul>
+```
+
 
 #### Property Looping
 

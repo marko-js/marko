@@ -157,6 +157,10 @@ describe('raptor-templates/rhtml' , function() {
     it("should allow for looping over properties", function(done) {
         testRender("test-project/rhtml-templates/looping-props.rhtml", {}, done);
     });
+
+    it.only("should allow for looping over ranges", function(done) {
+        testRender("test-project/rhtml-templates/looping-range.rhtml", {}, done);
+    });
     
     it("should allow for dynamic attributes", function(done) {
         testRender("test-project/rhtml-templates/attrs.rhtml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
