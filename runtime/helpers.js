@@ -94,11 +94,10 @@ module.exports = {
 
         var func;
 
-        if (typeof handler === 'function') {
-            func = handler;
-        } else {
-            func = handler.process || handler.render;
-            if (!func) {
+        if (!(func = handler.process || handler.render)) {
+            if (typeof handler === 'function') {
+                func = handler;
+            } else {
                 throw new Error('Invalid handler: ' + handler);
             }
         }
@@ -119,13 +118,13 @@ module.exports = {
         }
 
         if (typeof path === 'string') {
-            runtime.render(path, data, context);    
+            runtime.render(path, data, context);
         } else if (typeof path.render === 'function') {
             path.render(data, context);
         } else {
             throw new Error('Invalid template');
         }
-        
+
         return this;
     },
     xt: extend
