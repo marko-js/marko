@@ -25,19 +25,19 @@ module.exports = {
         // use the default cache manager
         var cacheManager = raptorCache.getDefaultCacheManager(context);
 
-        var cache = cacheManager.getCache(input.cacheName, FRAGMENT_CACHE_CONFIG);
+        var cache = cacheManager.getCacheByName(input.cacheName, FRAGMENT_CACHE_CONFIG);
         
         var asyncContext = context.beginAsync();
         
         cache.get(cacheKey,
             {
-                builder: function() {
+                builder: function(callback) {
                     var result = context.captureString(function () {
                         if (input.invokeBody) {
                             input.invokeBody();
                         }
                     });
-                    return result;
+                    callback(null, result);
                 }
             }, function(err, result) {
                 if (err) {
