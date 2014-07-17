@@ -1,29 +1,35 @@
 'use strict';
-var promiseUtil = require('raptor-promises/util');
+
+var FRAGMENT_CACHE_CONFIG = {
+    store: 'memory'
+};
+
+var raptorCache;
 
 module.exports = {
     render: function (input, context) {
-        var attributes = context.attributes;
-        var cacheProvider = attributes.cacheProvider;
-        var cache;
+        if (raptorCache === undefined) {
+            try {
+                raptorCache = require('raptor-cache');
+            }
+            catch(e) {
+                throw new Error('The "raptor-cache" module should be installed as an application-level dependency when using caching tags');
+            }
+        }
         
         var cacheKey = input.cacheKey;
         if (!cacheKey) {
             throw new Error('cache-key is required for <cached-fragment>');
         }
-        if (!cacheProvider) {
-            var raptorCacheModulePath;
-            try {
-                raptorCacheModulePath = require.resolve('raptor-cache');
-            }
-            catch(e) {
-                throw new Error('The "raptor-cache" module should be installed as an application-level dependency when using caching tags');
-            }
-            cacheProvider = require(raptorCacheModulePath).getDefaultProvider();
-        }
-        cache = cacheProvider.getCache(input.cacheName);
-        var cachePromise = cache.get(
-            cacheKey,
+    
+        // use the default cache manager
+        var cacheManager = raptorCache.getDefaultCacheManager(context);
+
+        var cache = cacheManager.getCache(input.cacheName, FRAGMENT_CACHE_CONFIG);
+        
+        var asyncContext = context.beginAsync();
+        
+        cache.get(cacheKey,
             {
                 builder: function() {
                     var result = context.captureString(function () {
@@ -33,17 +39,12 @@ module.exports = {
                     });
                     return result;
                 }
-            });
-
-        var asyncContext = context.beginAsync();
-        
-        promiseUtil.immediateThen(
-            cachePromise,
-            function (result) {
+            }, function(err, result) {
+                if (err) {
+                    return asyncContext.error(err);
+                }
+                
                 asyncContext.end(result);
-            },
-            function (e) {
-                asyncContext.error(e);
             });
     }
 };

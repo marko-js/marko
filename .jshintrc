@@ -36,6 +36,5 @@
     "unused": "vars",
     "strict": false,
     
-    /* Relaxing options: */
     "eqnull": true
 }

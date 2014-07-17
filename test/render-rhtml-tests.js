@@ -17,14 +17,14 @@ function testRender(path, data, done, options) {
 
     // var compiler = require('../compiler').createCompiler(inputPath);
     // var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-    
+
     // var compiledSrc = compiler.compile(src);
     // fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
 
 
     // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
 
-    
+
 
     var raptorTemplates = require('../');
 
@@ -57,7 +57,7 @@ function testRender(path, data, done, options) {
         })
         .on('error', done)
         .end();
-        
+
 }
 
 describe('raptor-templates/rhtml' , function() {
@@ -105,11 +105,11 @@ describe('raptor-templates/rhtml' , function() {
             colors: ["red", "green", "blue"]
         }, done);
     });
-    
+
     it("should allow for simple template handlers", function(done) {
         testRender("test-project/rhtml-templates/simple-handlers.rhtml", {dynamic: "universe"}, done);
     });
-    
+
     it("should allow for template handlers with nested body content", function(done) {
         testRender("test-project/rhtml-templates/nested-handlers.rhtml", {showConditionalTab: false}, done);
     });
@@ -117,39 +117,39 @@ describe('raptor-templates/rhtml' , function() {
     it("should allow entity expressions", function(done) {
         testRender("test-project/rhtml-templates/entities.rhtml", {}, done);
     });
-    
+
     it("should allow escaped expressions", function(done) {
         testRender("test-project/rhtml-templates/escaped.rhtml", {}, done);
     });
-    
+
     it("should allow complex expressions", function(done) {
         testRender("test-project/rhtml-templates/expressions.rhtml", {}, done);
     });
-    
+
     it("should allow whitespace to be removed", function(done) {
         testRender("test-project/rhtml-templates/whitespace.rhtml", {}, done);
     });
-    
+
     it("should handle whitespace when using expressions", function(done) {
         testRender("test-project/rhtml-templates/whitespace2.rhtml", {}, done);
     });
-    
+
     it("should handle whitespace when using expressions", function(done) {
         testRender("test-project/rhtml-templates/whitespace2.rhtml", {}, done);
     });
-    
+
     it("should normalize whitespace", function(done) {
         testRender("test-project/rhtml-templates/whitespace3.rhtml", {}, done);
     });
-    
+
     it("should handle whitespace correctly for mixed text and element children", function(done) {
         testRender("test-project/rhtml-templates/whitespace-inline-elements.rhtml", {}, done);
     });
-    
+
     it("should allow HTML output that is not well-formed XML", function(done) {
         testRender("test-project/rhtml-templates/html.rhtml", {}, done);
     });
-    
+
     it("should allow for looping", function(done) {
         testRender("test-project/rhtml-templates/looping.rhtml", {}, done);
     });
@@ -158,20 +158,20 @@ describe('raptor-templates/rhtml' , function() {
         testRender("test-project/rhtml-templates/looping-props.rhtml", {}, done);
     });
 
-    it.only("should allow for looping over ranges", function(done) {
+    it("should allow for looping over ranges", function(done) {
         testRender("test-project/rhtml-templates/looping-range.rhtml", {}, done);
     });
-    
+
     it("should allow for dynamic attributes", function(done) {
         testRender("test-project/rhtml-templates/attrs.rhtml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
-    
+
     it("should allow for choose...when statements", function(done) {
         testRender("test-project/rhtml-templates/choose-when.rhtml", {}, done);
     });
-    
+
     it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
-        
+
         var e;
 
         function fakeDone() {
@@ -184,56 +184,56 @@ describe('raptor-templates/rhtml' , function() {
         catch(_e) {
             e = _e;
         }
-        
+
         expect(e != null).to.equal(true);
         done();
     });
-    
+
     it("should allow for <c-def> functions", function(done) {
         testRender("test-project/rhtml-templates/def.rhtml", {}, done);
     });
-    
+
     it("should allow for <c-with> functions", function(done) {
         testRender("test-project/rhtml-templates/with.rhtml", {}, done);
     });
-    
+
     it("should allow for scriptlets", function(done) {
         testRender("test-project/rhtml-templates/scriptlet.rhtml", {}, done);
     });
-    
+
     it("should allow for when and otherwise as attributes", function(done) {
         testRender("test-project/rhtml-templates/choose-when-attributes.rhtml", {}, done);
     });
-    
+
     it("should allow for elements to be stripped out at compile time", function(done) {
         testRender("test-project/rhtml-templates/strip.rhtml", {}, done);
     });
-    
+
     it("should allow for body content to be replaced with the result of an expression", function(done) {
         testRender("test-project/rhtml-templates/content.rhtml", {}, done);
     });
-    
+
     it("should allow for an element to be replaced with the result of an expression", function(done) {
         testRender("test-project/rhtml-templates/replace.rhtml", {message: "Hello World!"}, done);
     });
-    
+
     it("should allow for includes", function(done) {
         testRender("test-project/rhtml-templates/include.rhtml", {}, done);
     });
-    
-    it("should allow for <c-invoke function... />", function(done) {        
+
+    it("should allow for <c-invoke function... />", function(done) {
         testRender("test-project/rhtml-templates/invoke.rhtml", {}, done);
     });
-    
+
     it("should allow for require", function(done) {
         testRender("test-project/rhtml-templates/require.rhtml", {}, done);
     });
-    
-    
+
+
     // it("should handle errors correctly", function(done) {
 
-        
-        
+
+
     //     var tryTemplate = function(path, callback) {
     //         try
     //         {
@@ -241,7 +241,7 @@ describe('raptor-templates/rhtml' , function() {
     //             callback("", []);
     //         }
     //         catch(e) {
-                
+
     //             if (!e.errors) {
     //                 logger.error('Error message for template at path "' + path + '": ' + e, e);
     //             }
@@ -251,50 +251,50 @@ describe('raptor-templates/rhtml' , function() {
     //             callback(e.toString(), e.errors);
     //         }
     //     };
-        
+
     //     tryTemplate("test-project/rhtml-templates/errors.rhtml", function(message, errors) {
     //         var len = errors ? errors.length : -1;
     //         expect(len).toEqual(25);
-            
-            
+
+
     //     });
-        
-        
+
+
     // });
-    
+
     it("should allow static file includes", function(done) {
         testRender("test-project/rhtml-templates/include-resource-static.rhtml", {}, done);
     });
-    
+
     it("should allow HTML pages with inline script", function(done) {
         testRender("test-project/rhtml-templates/inline-script.rhtml", {name: "World"}, done);
     });
-    
+
     it("should allow CDATA inside templates", function(done) {
         testRender("test-project/rhtml-templates/cdata.rhtml", {name: "World"}, done);
     });
-    
+
     // it("should allow type conversion", function(done) {
     //     var TypeConverter = require('raptor/templating/compiler/TypeConverter');
     //     expect(TypeConverter.convert('${entity:special}', "string", true).toString()).toEqual('"&special;"');
     // });
-    
+
     it("should allow for if...else", function(done) {
         testRender("test-project/rhtml-templates/if-else.rhtml", {}, done);
     });
-    
+
     it("should allow for expressions and variables inside JavaScript strings", function(done) {
         testRender("test-project/rhtml-templates/string-expressions.rhtml", {name: "John", count: 10}, done);
     });
-    
+
     it("should allow for simple conditionals", function(done) {
         testRender("test-project/rhtml-templates/simple-conditionals.rhtml", {name: "John", count: 51}, done);
     });
-    
+
     it("should allow for conditional attributes", function(done) {
         testRender("test-project/rhtml-templates/conditional-attributes.rhtml", {}, done);
     });
-    
+
     it("should allow for dynamic attributes to be passed to tag renderer using a custom property name", function(done) {
         testRender("test-project/rhtml-templates/dynamic-attributes.rhtml", {}, done);
     });
@@ -306,7 +306,7 @@ describe('raptor-templates/rhtml' , function() {
     it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
         testRender("test-project/rhtml-templates/dynamic-attributes3.rhtml", {}, done);
     });
-    
+
     // it("should allow for nodes to be converted to expressions", function(done) {
     //     var ElementNode = require('raptor/templating/compiler/ElementNode');
     //     var TextNode = require('raptor/templating/compiler/TextNode');
@@ -314,37 +314,37 @@ describe('raptor-templates/rhtml' , function() {
 
     //     var compiler = require('raptor/templating/compiler').createCompiler();
     //     var template = new TemplateBuilder(compiler);
-        
+
     //     var div = new ElementNode("div");
     //     var text = new TextNode("Hello World!");
     //     div.appendChild(text);
-        
+
     //     var expression = div.getExpression(template).toString();
     //     var bodyContentExpression = div.getBodyContentExpression(template).toString();
-        
+
     //     var sb = require('raptor/strings').createStringBuilder();
     //     var context = require('raptor/templating').createContext(sb);
     //     var output = eval(expression);
     //     expect(output.toString()).toEqual('<div>Hello World!</div>');
-        
+
     //     output = eval(bodyContentExpression);
     //     expect(output.toString()).toEqual('Hello World!');
-        
+
     // });
-    
+
     it("should allow for nested attributes", function(done) {
         testRender("test-project/rhtml-templates/nested-attrs.rhtml", {active: true}, done);
     });
-    
+
     it("should allow for new variables to be created and assigned values", function(done) {
         testRender("test-project/rhtml-templates/var.rhtml", {active: true}, done);
     });
-    
-    
+
+
     it("should handle XML escaping correctly", function(done) {
         testRender("test-project/rhtml-templates/xml-escaping.rhtml", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
     });
-    
+
     it("should allow for a doctype tag and a doctype attribute", function(done) {
         testRender("test-project/rhtml-templates/doctype.rhtml", {}, done);
     });
@@ -356,7 +356,7 @@ describe('raptor-templates/rhtml' , function() {
     it("should allow for caching HTML fragments", function(done) {
         testRender("test-project/rhtml-templates/caching.rhtml", {}, done);
     });
-    
+
     it("should escape XML in text node when enabled", function(done) {
         testRender("test-project/rhtml-templates/escape-xml-enabled.rhtml", {}, done);
     });
@@ -394,4 +394,3 @@ describe('raptor-templates/rhtml' , function() {
     });
 
 });
-
