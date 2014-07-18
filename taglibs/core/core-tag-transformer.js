@@ -34,6 +34,214 @@ var IncludeNode = require('./IncludeNode');
 
 var resolver = require('raptor-modules/resolver');
 
+var coreAttrHandlers = [
+    [
+        'c-space', function(attr, node) {
+            this['c-whitespace'](attr, node);
+        }
+    ],
+    [
+        'c-whitespace', function(attr, node) {
+            if (attr === 'preserve') {
+                node.setPreserveWhitespace(true);
+            }
+        }
+    ],
+    [
+        'c-escape-xml', function(attr, node) {
+            node.setEscapeXmlBodyText(attr !== 'false');
+        }
+    ],
+    [
+        'c-parse-body-text', function(attr, node) {
+            node.parseBodyText = attr !== 'false';
+        }
+    ],
+    [
+        'c-when', function(attr, node) {
+            var whenNode = this.compiler.createNode(WhenNode, {
+                    test: this.template.makeExpression(attr),
+                    pos: node.getPosition()
+                });
+            node.parentNode.replaceChild(whenNode, node);
+            whenNode.appendChild(node);
+        }
+    ],
+    [
+        'c-otherwise', function(attr, node) {
+            var otherwiseNode = this.compiler.createNode(OtherwiseNode, { pos: node.getPosition() });
+            node.parentNode.replaceChild(otherwiseNode, node);
+            otherwiseNode.appendChild(node);
+        }
+    ],
+    [
+        'c-attrs', function(attr, node) {
+            if (!node.addDynamicAttributes) {
+                node.addError('Node does not support the "c-attrs" attribute');
+            } else {
+                node.addDynamicAttributes(attr);
+            }
+        }
+    ],
+    [
+        'c-for-each', function(attr, node) {
+            this['for'](attr, node);
+        }
+    ],
+    [
+        'c-for', function(attr, node) {
+            var forEachProps = this.compiler.parseAttribute(attr, {
+                    each: { type: 'custom' },
+                    separator: { type: 'expression' },
+                    'iterator': { type: 'expression' },
+                    'status-var': { type: 'identifier' },
+                    'for-loop': {
+                        type: 'boolean',
+                        allowExpressions: false
+                    }
+                }, {
+                    removeDashes: true,
+                    defaultName: 'each',
+                    errorHandler: function (message) {
+                        node.addError('Invalid c-for attribute of "' + attr + '". Error: ' + message);
+                    }
+                });
+            forEachProps.pos = node.getPosition();
+            //Copy the position property
+            var forEachNode = this.compiler.createNode(ForNode, forEachProps);
+            //Surround the existing node with an "forEach" node by replacing the current
+            //node with the new "forEach" node and then adding the current node as a child
+            node.parentNode.replaceChild(forEachNode, node);
+            forEachNode.appendChild(node);
+        }
+    ],
+    [
+        'c-if', function(attr, node) {
+            var ifNode = this.compiler.createNode(IfNode, {
+                    test: this.template.makeExpression(attr),
+                    pos: node.getPosition()
+                });
+            //Surround the existing node with an "if" node by replacing the current
+            //node with the new "if" node and then adding the current node as a child
+            node.parentNode.replaceChild(ifNode, node);
+            ifNode.appendChild(node);
+        }
+    ],
+    [
+        'c-else-if', function(attr, node) {
+            var elseIfNode = this.compiler.createNode(ElseIfNode, {
+                    test: this.template.makeExpression(attr),
+                    pos: node.getPosition()
+                });
+            //Surround the existing node with an "if" node by replacing the current
+            //node with the new "if" node and then adding the current node as a child
+            node.parentNode.replaceChild(elseIfNode, node);
+            elseIfNode.appendChild(node);
+        }
+    ],
+    [
+        'c-else', function(attr, node) {
+            var elseNode = this.compiler.createNode(ElseNode, { pos: node.getPosition() });
+            //Surround the existing node with an "if" node by replacing the current
+            //node with the new "if" node and then adding the current node as a child
+            node.parentNode.replaceChild(elseNode, node);
+            elseNode.appendChild(node);
+        }
+    ],
+    [
+        'c-with', function(attr, node) {
+            var withNode = this.compiler.createNode(WithNode, {
+                    vars: attr,
+                    pos: node.getPosition()
+                });
+            node.parentNode.replaceChild(withNode, node);
+            withNode.appendChild(node);
+        }
+    ],
+    [
+        'c-body-content', function(attr, node) {
+            this.content(attr);
+        }
+    ],
+    [
+        'c-content', function(attr, node) {
+            var newChild = this.compiler.createNode(WriteNode, {
+                    expression: attr,
+                    pos: node.getPosition()
+                });
+            node.removeChildren();
+            node.appendChild(newChild);
+        }
+    ],
+    [
+        'c-trim-body-indent', function(attr, node) {
+            if (attr === 'true') {
+                node.trimBodyIndent = true;
+            }
+        }
+    ],
+    [
+        'c-strip', function(attr, node) {
+            if (!node.setStripExpression) {
+                node.addError('The c-strip directive is not allowed for target node');
+            }
+            node.setStripExpression(attr);
+        }
+    ],
+    [
+        'c-replace', function(attr, node) {
+            var replaceWriteNode = this.compiler.createNode(WriteNode, {
+                    expression: attr,
+                    pos: node.getPosition()
+                });
+            //Replace the existing node with an node that only has children
+            node.parentNode.replaceChild(replaceWriteNode, node);
+            return replaceWriteNode;
+        }
+    ],
+    [
+        'c-input', function(attr, node) {
+            this.inputAttr = attr;
+        }
+    ],
+    [
+        'c-data', function(attr, node) {
+            this.inputAttr = attr;
+        }
+    ]
+];
+
+
+function Transformer(template, compiler) {
+    this.template = template;
+    this.compiler = compiler;
+    this.inputAttr = null;
+}
+
+Transformer.prototype = {
+    transformNode: function(node) {
+
+        for (var i=0, len=coreAttrHandlers.length; i<len; i++) {
+            var attrHandler = coreAttrHandlers[i];
+            var name = attrHandler[0];
+            var attr = node.getAttribute(name);
+            if (attr != null) {
+                node.removeAttribute(name);
+                node = this[name](attr, node) || node;
+            }
+        }
+
+        return node;
+    }
+};
+
+coreAttrHandlers.forEach(function(attrHandler) {
+    var name = attrHandler[0];
+    var func = attrHandler[1];
+    Transformer.prototype[name] = func;
+});
+
+
 function handleAttr(node, compiler, template) {
     var parentNode = node.parentNode;
     if (!parentNode.isElementNode()) {
@@ -97,8 +305,6 @@ module.exports = function transform(node, compiler, template) {
     //Find and handle nested <c-attrs> elements
     findNestedAttrs(node, compiler, template);
 
-    var inputAttr;
-    var forEachNode;
     var tag;
 
 
@@ -180,151 +386,9 @@ module.exports = function transform(node, compiler, template) {
 
     tag = node.tag || compiler.taglibs.getTag(node);
 
-    var coreAttrHandlers = {
-        'c-space': function(attr) {
-            this['c-whitespace'](attr);
-        },
-        'c-whitespace': function(attr) {
-            if (attr.value === 'preserve') {
-                node.setPreserveWhitespace(true);
-            }
-        },
-        'c-escape-xml': function(attr) {
-            node.setEscapeXmlBodyText(attr.value !== 'false');
-        },
-        'c-parse-body-text': function(attr) {
-            node.parseBodyText = attr.value !== 'false';
-        },
-        'c-when': function(attr) {
-            var whenNode = compiler.createNode(WhenNode, {
-                    test: template.makeExpression(attr.value),
-                    pos: node.getPosition()
-                });
-            node.parentNode.replaceChild(whenNode, node);
-            whenNode.appendChild(node);
-        },
-        'c-otherwise': function(attr) {
-            var otherwiseNode = compiler.createNode(OtherwiseNode, { pos: node.getPosition() });
-            node.parentNode.replaceChild(otherwiseNode, node);
-            otherwiseNode.appendChild(node);
-        },
-        'c-attrs': function(attr) {
-            if (!node.addDynamicAttributes) {
-                node.addError('Node does not support the "c-attrs" attribute');
-            } else {
-                node.addDynamicAttributes(attr.value);
-            }
-        },
-        'c-for-each': function(attr) {
-            this['for'](attr);
-        },
-        'c-for': function(attr) {
-            var forEachProps = compiler.parseAttribute(attr.value, {
-                    each: { type: 'custom' },
-                    separator: { type: 'expression' },
-                    'iterator': { type: 'expression' },
-                    'status-var': { type: 'identifier' },
-                    'for-loop': {
-                        type: 'boolean',
-                        allowExpressions: false
-                    }
-                }, {
-                    removeDashes: true,
-                    defaultName: 'each',
-                    errorHandler: function (message) {
-                        node.addError('Invalid c-for attribute of "' + attr.value + '". Error: ' + message);
-                    }
-                });
-            forEachProps.pos = node.getPosition();
-            //Copy the position property
-            forEachNode = compiler.createNode(ForNode, forEachProps);
-            //Surround the existing node with an "forEach" node by replacing the current
-            //node with the new "forEach" node and then adding the current node as a child
-            node.parentNode.replaceChild(forEachNode, node);
-            forEachNode.appendChild(node);
-        },
-        'c-if': function(attr) {
-            var ifNode = compiler.createNode(IfNode, {
-                    test: template.makeExpression(attr.value),
-                    pos: node.getPosition()
-                });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(ifNode, node);
-            ifNode.appendChild(node);
-        },
-        'c-else-if': function(attr) {
-            var elseIfNode = compiler.createNode(ElseIfNode, {
-                    test: template.makeExpression(attr.value),
-                    pos: node.getPosition()
-                });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(elseIfNode, node);
-            elseIfNode.appendChild(node);
-        },
-        'c-else': function(attr) {
-            var elseNode = compiler.createNode(ElseNode, { pos: node.getPosition() });
-            //Surround the existing node with an "if" node by replacing the current
-            //node with the new "if" node and then adding the current node as a child
-            node.parentNode.replaceChild(elseNode, node);
-            elseNode.appendChild(node);
-        },
-        'c-with': function(attr) {
-            var withNode = compiler.createNode(WithNode, {
-                    vars: attr.value,
-                    pos: node.getPosition()
-                });
-            node.parentNode.replaceChild(withNode, node);
-            withNode.appendChild(node);
-        },
-        'c-body-content': function(attr) {
-            this.content(attr);
-        },
-        'c-content': function(attr) {
-            var newChild = compiler.createNode(WriteNode, {
-                    expression: attr.value,
-                    pos: node.getPosition()
-                });
-            node.removeChildren();
-            node.appendChild(newChild);
-        },
-        'c-trim-body-indent': function(attr) {
-            if (attr.value === 'true') {
-                node.trimBodyIndent = true;
-            }
-        },
-        'c-strip': function(attr) {
-            if (!node.setStripExpression) {
-                node.addError('The c-strip directive is not allowed for target node');
-            }
-            node.setStripExpression(attr.value);
-        },
-        'c-replace': function(attr) {
-            var replaceWriteNode = compiler.createNode(WriteNode, {
-                    expression: attr.value,
-                    pos: node.getPosition()
-                });
-            //Replace the existing node with an node that only has children
-            node.parentNode.replaceChild(replaceWriteNode, node);
-            node = replaceWriteNode;
-        },
-        'c-input': function(attr) {
-            inputAttr = attr.value;
-        },
-        'c-data': function(attr) {
-            inputAttr = attr.value;
-        }
-    };
-
-    node.forEachAttributeNS('', function(attr) {
-        
-        var handler = coreAttrHandlers[attr.qName];
-        if (handler) {
-            node.removeAttribute(attr.localName);
-            coreAttrHandlers[attr.localName](attr);
-        }
-    });
+    var transformer = new Transformer(template, compiler);
+    node = transformer.transformNode(node);
+    var inputAttr = transformer.inputAttr;
 
     if (tag) {
         if (tag.preserveWhitespace) {
