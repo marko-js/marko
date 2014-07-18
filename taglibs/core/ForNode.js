@@ -154,7 +154,6 @@ ForNode.prototype = {
             var step = parts.step;
             var comparison = '<=';
 
-            console.log("STEP!!!: ", step, from, to);
             if (typeof step === 'number') {
                 if (step < 0) {
                     comparison = '>=';
