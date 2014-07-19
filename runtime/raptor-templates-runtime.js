@@ -60,6 +60,13 @@ function Template(renderFunc) {
 }
 
 Template.prototype = {
+    renderSync: function(data) {
+        var context = new Context();
+        context.sync();
+        this._(data, context);
+        context.end();
+        return context.getOutput();
+    },
     render: function(data, context, callback) {
         if (data == null) {
             data = {};

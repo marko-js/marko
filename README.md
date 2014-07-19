@@ -15,6 +15,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 	- [Template Rendering](#template-rendering)
 		- [Callback API](#callback-api)
 		- [Streaming API](#streaming-api)
+		- [Synchronous API](#synchronous-api)
 		- [Asynchronous Render Context API](#asynchronous-render-context-api)
 	- [Browser-side Rendering](#browser-side-rendering)
 		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
@@ -264,6 +265,20 @@ template.render({
     }, out);
 ```
 _NOTE:_ This will end the target output stream.
+
+### Synchronous API
+
+If you know that your template rendering requires no asynchronous rendering then you can use the synchronous API to render a template to a String:
+
+```javascript
+var template = require('raptor-templates').load('template.rhtml');
+
+var output = template.renderSync({
+        name: 'Frank',
+        count: 30
+    });
+console.log('Output HTML: ' + output);
+```
 
 ### Asynchronous Render Context API
 

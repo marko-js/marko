@@ -193,5 +193,47 @@ describe('raptor-templates/api' , function() {
             });
     });
 
+    it('should allow a template to be rendered to a string synchronously using renderSync', function() {
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var output = template.renderSync({ name: 'John' });
+        expect(output).to.equal('Hello John!');
+    });
+
+    it('should throw an error if beginAsync is used with renderSync', function() {
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-async.rhtml'));
+        var output;
+        var e;
+
+        try {
+            output = template.renderSync({
+                nameDataProvider: function(arg, callback) {
+                    setTimeout(function() {
+                        callback(null, 'John');
+                    }, 100);
+                }
+            });
+        } catch(_e) {
+            e = _e;
+        }
+
+        expect(output).to.equal(undefined);
+        expect(e).to.not.equal(undefined);
+    });
+
+    it('should throw errors correctly with renderSync', function() {
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-error.rhtml'));
+        var output;
+        var e;
+
+        try {
+            output = template.renderSync();
+        } catch(_e) {
+            e = _e;
+        }
+
+        expect(output).to.equal(undefined);
+        expect(e).to.not.equal(undefined);
+    });
+
 });
 
