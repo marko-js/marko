@@ -22,7 +22,8 @@ var defaultOptions = {
         minify: false,
         preserveWhitespace: {
             'pre': true,
-            'textarea': true
+            'textarea': true,
+            'script': true
         },
         allowSelfClosing: {},
         startTagOnly: {
