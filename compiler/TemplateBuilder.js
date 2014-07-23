@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 'use strict';
-var raptorModulesResolver = require('raptor-modules/resolver');
 var createError = require('raptor-util').createError;
 var nodePath = require('path');
 var stringify = require('raptor-json/stringify');
@@ -504,7 +503,7 @@ TemplateBuilder.prototype = {
         this.compiler.transformTree(node, this);
     },
     getRequirePath: function(targetModuleFile) {
-        return raptorModulesResolver.deresolve(targetModuleFile, this.dirname);
+        return this.compiler.getRequirePath(targetModuleFile);
     },
     INDENT: INDENT
 };

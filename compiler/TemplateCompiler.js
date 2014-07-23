@@ -29,6 +29,7 @@ var _Node = require('./Node');
 var ElementNode = require('./ElementNode');
 var TextNode = require('./TextNode');
 var TagHandlerNode = require('../taglibs/core/TagHandlerNode');
+var raptorModulesResolver = require('raptor-modules/resolver');
 
 function TemplateCompiler(path, options) {
     this.dirname = nodePath.dirname(path);
@@ -276,6 +277,9 @@ TemplateCompiler.prototype = {
 
         return true;
 
+    },
+    getRequirePath: function(targetModuleFile) {
+        return raptorModulesResolver.deresolve(targetModuleFile, this.dirname);
     }
 };
 module.exports = TemplateCompiler;
