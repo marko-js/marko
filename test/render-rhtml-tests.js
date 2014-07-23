@@ -397,4 +397,12 @@ describe('raptor-templates/rhtml' , function() {
         testRender("test-project/rhtml-templates/template-tag-dynamic-attributes.rhtml", {}, done);
     });
 
+    it("should not escape HTML characters inside script tags", function(done) {
+        testRender("test-project/rhtml-templates/script-tag-entities.rhtml", {
+            name: '<script>evil<script>'
+        }, done);
+    });
+
+    
+
 });

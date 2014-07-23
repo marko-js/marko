@@ -65,6 +65,13 @@ ParseTreeBuilderHtml.prototype = {
                     attributes.push(attr);
                 });
 
+                if (name.toLowerCase() === 'script') {
+                    attributes.push({
+                        localName: 'c-escape-xml',
+                        value: 'false'
+                    });
+                }
+
                 _this.handleStartElement(el, attributes);
             },
             onprocessinginstruction: function(name, data) {
