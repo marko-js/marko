@@ -17,7 +17,6 @@
 var extend = require('raptor-util').extend;
 var forEachEntry = require('raptor-util').forEachEntry;
 var stringify = require('raptor-json/stringify');
-var raptorModulesResolver = require('raptor-modules/resolver');
 
 function addHandlerVar(template, renderer) {
     var handlerVars = template._handlerVars || (template._handlerVars = {});
@@ -86,7 +85,7 @@ TagHandlerNode.prototype = {
         this.inputExpression = expression;
     },
     doGenerateCode: function (template) {
-        var rendererPath = raptorModulesResolver.deresolve(this.tag.renderer, template.dirname);
+        var rendererPath = template.getRequirePath(this.tag.renderer); // Resolve a path to the renderer relative to the directory of the template
         var handlerVar = addHandlerVar(template, rendererPath);
         var tagHelperVar = template.addStaticVar('_tag', '__helpers.t');
 
