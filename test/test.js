@@ -104,7 +104,7 @@ describe('raptor-render-context' , function() {
 
         context.write('1');
 
-        var asyncContext = context.beginAsync(100);
+        var asyncContext = context.beginAsync({timeout: 100, name: 'test'});
         setTimeout(function() {
             asyncContext.write('2');
             asyncContext.end();
