@@ -100,10 +100,10 @@ TemplateCompiler.prototype = {
         var rootNode;
         var templateBuilder;
         function handleErrors() {
-            var message = 'An error occurred while trying to compile template at path "' + filePath + '". Error(s) in template: ';
+            var message = 'An error occurred while trying to compile template at path "' + filePath + '". Error(s) in template:\n';
             var errors = _this.getErrors();
             for (var i = 0, len = errors.length; i < len; i++) {
-                message += + '(' + (i + 1) + ') ' + (errors[i].pos ? '[' + errors[i].pos + '] ' : '') + errors[i].message + ' ';
+                message += (i + 1) + ') ' + (errors[i].pos ? '[' + errors[i].pos + '] ' : '') + errors[i].message + '\n';
             }
             var error = new Error(message);
             error.errors = _this.getErrors();

@@ -67,8 +67,7 @@ function handleAttributes(value, parent, path) {
             attrProps = {
                 type: 'string'
             };
-        }
-        else if (typeof attrProps === 'string') {
+        } else if (typeof attrProps === 'string') {
             attrProps = {
                 type: attrProps
             };
@@ -87,6 +86,13 @@ function buildTag(tagObject, path, taglib, dirname) {
     ok(typeof dirname === 'string');
 
     var tag = new Taglib.Tag(taglib);
+
+    if (tagObject.attributes == null) {
+        // allow any attributes if no attributes are declared
+        tagObject.attributes = {
+            '*': 'string'
+        };
+    }
 
     propertyHandlers(tagObject, {
         name: function(value) {

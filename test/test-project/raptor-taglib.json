@@ -80,6 +80,9 @@
                     "default-value": 100
                 }
             }
+        },
+        "test-template-tag-dynamic-attributes": {
+            "template": "./hello.rhtml"
         }
     },
     "tags-dir": "./scanned-tags"

@@ -392,4 +392,9 @@ describe('raptor-templates/rhtml' , function() {
     it("should support scanning a directory for tags", function(done) {
         testRender("test-project/rhtml-templates/scanned-tags.rhtml", {}, done);
     });
+
+    it("should support scanning a directory for tags", function(done) {
+        testRender("test-project/rhtml-templates/template-tag-dynamic-attributes.rhtml", {}, done);
+    });
+
 });

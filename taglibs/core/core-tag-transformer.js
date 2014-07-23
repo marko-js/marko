@@ -416,8 +416,12 @@ module.exports = function transform(node, compiler, template) {
                     if (attrDef.removeDashes === true) {
                         name = removeDashes(name);
                     }
-                    node.addDynamicAttribute(name, value);
-                    node.setDynamicAttributesProperty(attrDef.targetProperty);
+                    if (node.addDynamicAttribute) {
+                        node.addDynamicAttribute(name, value);
+                        node.setDynamicAttributesProperty(attrDef.targetProperty);    
+                    } else {
+                        node.setProperty(name, value);    
+                    }
                 } else {
                     node.setProperty(name, value);
                 }
