@@ -8,7 +8,7 @@ module.exports = function render(input, context) {
     var modulePath = input.module;
     var config = input.config || input._cfg;
     var widgetArgs = context.attributes.widgetArgs;
-    var elId = input.elId;
+    var id = input.id;
     var scope = input.scope || context.getAttribute('widget');
     var assignedId = input.assignedId;
     var events;
@@ -18,7 +18,7 @@ module.exports = function render(input, context) {
         assignedId = assignedId || widgetArgs.id;
         events = widgetArgs.events;
     }
-    if (!elId && input.hasOwnProperty('elId')) {
+    if (!id && input.hasOwnProperty('id')) {
         throw new Error('Invalid widget ID for "' + modulePath + '"');
     }
     var widgetsContext = widgets.getWidgetsContext(context);
@@ -27,7 +27,7 @@ module.exports = function render(input, context) {
 
         var widgetDef = widgetsContext.beginWidget({
             module: modulePath,
-            id: elId,
+            id: id,
             assignedId: assignedId,
             config: config,
             scope: scope,

@@ -135,10 +135,10 @@ exports.process =function (node, compiler, template) {
         if (scope) {
             widgetNode.setProperty('scope', scope);
         }
-        var elId = node.getAttribute('id');
-        if (elId) {
-            elId = compiler.convertType(elId, 'string', true);
-            widgetNode.setProperty('elId', elId);
+        var id = node.getAttribute('id');
+        if (id) {
+            id = compiler.convertType(id, 'string', true);
+            widgetNode.setProperty('id', id);
         } else {
             node.setAttribute('id', '${widget.elId()}');
         }
