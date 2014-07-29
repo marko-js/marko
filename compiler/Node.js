@@ -39,6 +39,7 @@ function Node(nodeType) {
         this.properties = {};
         this.beforeCode = [];
         this.afterCode = [];
+        this.data = {}; // Property for associating arbitrary data with a node
     }
 }
 
