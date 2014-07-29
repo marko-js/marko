@@ -9,7 +9,7 @@ module.exports = function render(input, context) {
         // need to scan the DOM to find the widgets
         raptorWidgets.writeInitWidgetsCode(widgetsContext, context, {scanDOM: true});
     } else {
-        var asyncContext = context.beginAsync({ last: true });
+        var asyncContext = context.beginAsync({ last: true, timeout: -1 });
         context.on('last', function() {
             if (!widgetsContext.hasWidgets()) {
                 return asyncContext.end();
@@ -18,9 +18,5 @@ module.exports = function render(input, context) {
             raptorWidgets.writeInitWidgetsCode(widgetsContext, asyncContext);
             asyncContext.end();
         });
-    }
-
-    
-
-    
+    }  
 };
