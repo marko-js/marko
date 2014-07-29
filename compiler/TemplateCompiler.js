@@ -105,7 +105,7 @@ TemplateCompiler.prototype = {
             if (callback) {
                 return callback.call(thisObj, err);
             } else {
-                throw error;
+                throw err;
             }
         }
 
