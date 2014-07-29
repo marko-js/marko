@@ -40,7 +40,7 @@ var defaultOptions = {
 extend(exports, {
     createCompiler: function (path, options) {
         var TemplateCompiler = require('./TemplateCompiler');
-        //Get a reference to the TemplateCompiler class 
+        //Get a reference to the TemplateCompiler class
         if (options) {
             /*
              * If options were provided then they should override the default options.
@@ -54,8 +54,13 @@ extend(exports, {
         return new TemplateCompiler(path, options);
     },
 
-    compile: function (src, path, options) {
-        return this.createCompiler(path, options).compile(src);
+    compile: function (src, path, options, callback) {
+        if (typeof options === 'function') {
+            callback = options;
+            options = undefined;
+        }
+
+        return this.createCompiler(path, options).compile(src, callback);
     },
 
     compileFile: function(path, options, callback) {

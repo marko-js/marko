@@ -71,8 +71,8 @@ TemplateCompiler.prototype = {
             }
             /*
              * Now process the child nodes by looping over the child nodes
-             * and transforming the subtree recursively 
-             * 
+             * and transforming the subtree recursively
+             *
              * NOTE: The length of the childNodes array might change as the tree is being performed.
              *       The checks to prevent transformers from being applied multiple times makes
              *       sure that this is not a problem.
@@ -85,14 +85,14 @@ TemplateCompiler.prototype = {
             });
         }
         /*
-         * The tree is continuously transformed until we go through an entire pass where 
+         * The tree is continuously transformed until we go through an entire pass where
          * there were no new nodes that needed to be transformed. This loop makes sure that
          * nodes added by transformers are also transformed.
          */
         do {
             this._transformerApplied = false;
             //Reset the flag to indicate that no transforms were yet applied to any of the nodes for this pass
-            transformTreeHelper(rootNode);    //Run the transforms on the tree                 
+            transformTreeHelper(rootNode);    //Run the transforms on the tree
         } while (this._transformerApplied);
     },
     compile: function (src, callback, thisObj) {
@@ -100,15 +100,13 @@ TemplateCompiler.prototype = {
         var filePath = this.path;
         var rootNode;
         var templateBuilder;
-        function handleErrors() {
-            var message = 'An error occurred while trying to compile template at path "' + filePath + '". Error(s) in template:\n';
-            var errors = _this.getErrors();
-            for (var i = 0, len = errors.length; i < len; i++) {
-                message += (i + 1) + ') ' + (errors[i].pos ? '[' + errors[i].pos + '] ' : '') + errors[i].message + '\n';
+
+        function returnError(err) {
+            if (callback) {
+                return callback.call(thisObj, err);
+            } else {
+                throw error;
             }
-            var error = new Error(message);
-            error.errors = _this.getErrors();
-            throw error;
         }
 
         try {
@@ -118,10 +116,11 @@ TemplateCompiler.prototype = {
             rootNode = parser.parse(src, filePath, this.taglibs);
             //Build a parse tree from the input XML
             templateBuilder = new TemplateBuilder(this, filePath, rootNode);
-            //The templateBuilder object is need to manage the compiled JavaScript output              
+            //The templateBuilder object is need to manage the compiled JavaScript output
             this.transformTree(rootNode, templateBuilder);
         } catch (e) {
-            throw createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
+            var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
+            return returnError(err);
         }
         
         try {
@@ -130,20 +129,26 @@ TemplateCompiler.prototype = {
              */
             rootNode.generateCode(templateBuilder);    //Generate the code and have all output be managed by the TemplateBuilder
         } catch (e) {
-            throw createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
-        }
-        if (this.hasErrors()) {
-            handleErrors();
-        }
-        var output = templateBuilder.getOutput();
-        //Get the compiled output from the template builder
-        //console.error('COMPILED TEMPLATE (' + filePath + ')\n', '\n' + output, '\n------------------');
-
-        if (callback) {
-            callback.call(thisObj, output);
+            var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
+            return returnError(err);
         }
         
-        return output;
+        if (this.hasErrors()) {
+            var message = 'An error occurred while trying to compile template at path "' + filePath + '". Error(s) in template:\n';
+            var errors = _this.getErrors();
+            for (var i = 0, len = errors.length; i < len; i++) {
+                message += (i + 1) + ') ' + (errors[i].pos ? '[' + errors[i].pos + '] ' : '') + errors[i].message + '\n';
+            }
+            var error = new Error(message);
+            error.errors = _this.getErrors();
+            return returnError(error);
+        } else {
+            var output = templateBuilder.getOutput();
+            if (callback) {
+                callback.call(thisObj, null, output);
+            }
+            return output;
+        }
     },
     isExpression: function (expression) {
         return expression instanceof Expression;
