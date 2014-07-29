@@ -32,6 +32,10 @@ function getPropsStr(props, template) {
     if (props) {
         template.indent(function () {
             forEachEntry(props, function (name, value) {
+                if (typeof value === 'function') {
+                    value = value();
+                }
+
                 if (template.isExpression(value)) {
                     var expressionStr;
                     template.indent(function () {
@@ -63,15 +67,26 @@ function TagHandlerNode(tag) {
     this.tag = tag;
     this.dynamicAttributes = null;
     this.inputExpression = null;
+    this.additionalVars = [];
 }
 TagHandlerNode.nodeType = 'element';
 
 TagHandlerNode.convertNode = function (node, tag) {
+    if (node._TagHandlerNode) {
+        return;
+    }
+
     extend(node, TagHandlerNode.prototype);
     TagHandlerNode.call(node, tag);
 };
 
 TagHandlerNode.prototype = {
+
+    _TagHandlerNode: true,
+
+    addNestedVariable: function(name) {
+        this.additionalVars.push(name);
+    },
     addDynamicAttribute: function (name, value) {
         if (!this.dynamicAttributes) {
             this.dynamicAttributes = {};
@@ -128,6 +143,10 @@ TagHandlerNode.prototype = {
             }
             variableNames.push(varName);
         }, this);
+
+        if (this.additionalVars.length) {
+            variableNames = variableNames.concat(this.additionalVars);
+        }
 
         template.functionCall(tagHelperVar, function () {
             template.code('context,\n').indent(function () {
