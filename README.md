@@ -1326,6 +1326,7 @@ __Answer__: Possibly, but it is not recommended and it will likely not work in o
 <hr>
 
 __Question:__ _Which web browsers are supported?_
+
 __Answer__: The runtime for template rendering is supported in all web browsers. If you find an issue please report a bug.
 
 <hr>
