@@ -503,7 +503,7 @@ The disadvantage of using elements to control structural logic is that they chan
 
 ## Text Replacement
 
-Dynamic text is supported using either `$<variable-reference>` or `${<javascript-expression}`.
+Dynamic text is supported using either `$<variable-reference>` or `${<javascript-expression>}`.
 
 Examples:
 ```html
