@@ -294,5 +294,13 @@ describe('raptor-templates/rhtml-async' , function() {
         }, done);
     });
 
+    it("should allow for a timeout message", function(done) {
+        testRender('test-project/rhtml-templates/async-fragment-timeout-message.rhtml', {
+            userInfo: function(arg, done) {
+                // Do nothing to trigger a timeout
+            }
+        }, done);
+    });
+
 });
 
