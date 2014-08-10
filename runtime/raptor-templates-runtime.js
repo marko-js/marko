@@ -114,7 +114,9 @@ if (stream) {
 
     Readable.prototype = {
         write: function(data) {
-            this.push(data);
+            if (data != null) {
+                this.push(data.toString());
+            }
         },
         end: function() {
             this.push(null);
