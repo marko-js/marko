@@ -9,6 +9,7 @@ exports.registeredTaglibs = [];
 var lookupCache = {};
 var discoverCache = {};
 var excludedDirs = {};
+var taglibsByPath = {};
 
 function existsCached(path) {
     var exists = existsCache[path];
@@ -32,9 +33,21 @@ function tryNodeModules(parent, discovered) {
     if (nodePath.basename(parent) === 'node_modules') {
         return;
     }
-    
+
     var nodeModulesDir = nodePath.join(parent, 'node_modules');
+    
+    var taglibs = taglibsByPath[nodeModulesDir];
+    if (taglibs !== undefined) {
+        if (taglibs !== null) {
+            for (var i = 0, len = taglibs.length; i < len; i++) {
+                discovered.push(taglibs[i]);
+            }
+        }
+        return;
+    }
+
     if (existsCached(nodeModulesDir)) {
+        taglibs = [];
         var children = fs.readdirSync(nodeModulesDir);
         children.forEach(function(moduleDirBasename) {
             var moduleDir = nodePath.join(nodeModulesDir, moduleDirBasename);
@@ -44,9 +57,14 @@ function tryNodeModules(parent, discovered) {
             if (existsCached(taglibPath)) {
                 var taglib = taglibLoader.load(taglibPath);
                 taglib.moduleName = moduleDirBasename;
+                taglibs.push(taglib);
                 discovered.push(taglib);
             }
         });
+
+        taglibsByPath[nodeModulesDir] = taglibs.length ? taglibs : null;
+    } else {
+        taglibsByPath[nodeModulesDir] = null;
     }
 }
 
@@ -54,12 +72,13 @@ function discoverHelper(dirname, discovered) {
 
     if (!excludedDirs[dirname]) {
         tryDir(dirname, discovered);
-        tryNodeModules(dirname, discovered);    
+        tryNodeModules(dirname, discovered);
     }
 
     var parent = nodePath.dirname(dirname);
     if (parent && parent !== dirname) {
-        discoverHelper(parent, discovered);   
+        // TODO: Don't use recursion (there's a simpler way)
+        discoverHelper(parent, discovered);
     }
 }
 
