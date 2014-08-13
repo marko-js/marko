@@ -1,5 +1,6 @@
 module.exports = function create(__helpers) {
-  var empty = __helpers.e,
+  var str = __helpers.s,
+      empty = __helpers.e,
       notEmpty = __helpers.ne,
       hello_renderer = require("./hello-renderer"),
       _tag = __helpers.t;

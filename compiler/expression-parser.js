@@ -238,7 +238,7 @@ ExpressionParserHelper.prototype = {
                 // We don't need to surround with parentheses if
                 // the expression will be escaped since the expression
                 // is an argument to a function call
-                expression = 'toString(' + expression + ')';
+                expression = 'str(' + expression + ')';
             }
             expression = new Expression(expression);
         }

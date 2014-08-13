@@ -251,7 +251,7 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.vars = [];
     this.varsLookup = {};
 
-    this.getStaticHelperFunction('toString', 's');
+    this.getStaticHelperFunction('str', 's');
     this.getStaticHelperFunction('empty', 'e');
     this.getStaticHelperFunction('notEmpty', 'ne');
 }

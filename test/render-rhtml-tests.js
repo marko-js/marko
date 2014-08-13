@@ -80,6 +80,10 @@ describe('raptor-templates/rhtml' , function() {
         testRender('test-project/simple.rhtml', {}, done);
     });
 
+    it('should render a simple template with expressions', function(done) {
+        testRender('test-project/hello-dynamic.rhtml', {name: 'John'}, done);
+    });
+
     it('should render a template with a custom tag', function(done) {
         testRender('test-project/custom-tag.rhtml', {}, done);
     });

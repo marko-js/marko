@@ -57,6 +57,10 @@ describe('raptor-templates/compiler' , function() {
         testCompiler('test-project/custom-tag.rhtml');
     });
 
+    it('should compile a simple template with expressions', function() {
+        testCompiler('test-project/hello-dynamic.rhtml');
+    });
+
     // it.only('should compile a template with <c:invoke>', function() {
     //     testCompiler('test-project/tabs.rhtml');
     // });
