@@ -118,7 +118,7 @@ function getConditionalExpression(expression) {
         } else if (matches[0] === '\\\\;') {
             /*
              * 1) Convert \\; --> \;
-             * 2) Start searching again after the single slash 
+             * 2) Start searching again after the single slash
              */
             expression = expression.substring(0, matches.index) + '\\;' + expression.substring(tokensRegExp.lastIndex);
             tokensRegExp.lastIndex = matches.index + 1;
@@ -126,7 +126,7 @@ function getConditionalExpression(expression) {
         } else if (matches[0] === '\\;') {
             /*
              * 1) Convert \; --> ;
-             * 2) Start searching again after the semicolon 
+             * 2) Start searching again after the semicolon
              */
             expression = expression.substring(0, matches.index) + ';' + expression.substring(tokensRegExp.lastIndex);
             tokensRegExp.lastIndex = matches.index + 1;
@@ -238,7 +238,7 @@ ExpressionParserHelper.prototype = {
                 // We don't need to surround with parentheses if
                 // the expression will be escaped since the expression
                 // is an argument to a function call
-                expression = '(' + expression + ')';
+                expression = 'toString(' + expression + ')';
             }
             expression = new Expression(expression);
         }
@@ -253,7 +253,7 @@ ExpressionParserHelper.prototype = {
 
 /**
  * @memberOf raptor/templating/compiler$ExpressionParser
- * 
+ *
  * @param str
  * @param callback
  * @param thisObj
@@ -295,7 +295,7 @@ parse = function (str, listeners, options) {
                 // \\${
                 /*
                  * We found a double-escaped start token.
-                 * 
+                 *
                  * We found a start token that is preceeded by an escaped backslash...
                  * The start token is a valid start token preceded by an escaped
                  * backslash. Add a single black slash and handle the expression
@@ -320,7 +320,7 @@ parse = function (str, listeners, options) {
                 continue;
             } else if (endingTokens.hasOwnProperty(startMatches[0])) {
                 /*
-                 * We found a valid start token 
+                 * We found a valid start token
                  */
                 startToken = startMatches[0];
                 //Record the start token
@@ -352,7 +352,7 @@ parse = function (str, listeners, options) {
                 if (startToken === '$!') {
                     helper.addUnescapedExpression(varName);    //Add the variable as an expression
                 } else {
-                    helper.addExpression(varName);    //Add the variable as an expression    
+                    helper.addExpression(varName);    //Add the variable as an expression
                 }
                 startRegExp.lastIndex = textStart = expressionStart = expressionStart + varName.length;
                 continue outer;

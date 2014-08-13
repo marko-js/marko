@@ -250,9 +250,12 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.helperFunctionsAdded = {};
     this.vars = [];
     this.varsLookup = {};
+
+    this.getStaticHelperFunction('toString', 's');
     this.getStaticHelperFunction('empty', 'e');
     this.getStaticHelperFunction('notEmpty', 'ne');
 }
+
 TemplateBuilder.prototype = {
 
     captureCode: function (func, thisObj) {
@@ -282,8 +285,8 @@ TemplateBuilder.prototype = {
     },
     addStaticVar: function (name, expression) {
         name = safeVarName(name);
-
-        if (!this.staticVarsLookup[name]) {
+        
+        if (!this.staticVarsLookup.hasOwnProperty(name)) {
             this.staticVarsLookup[name] = true;
             this.staticVars.push({
                 name: name,

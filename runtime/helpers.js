@@ -14,6 +14,10 @@ function notEmpty(o) {
 }
 
 module.exports = {
+    s: function(str) {
+        return (str == null) ? '' : str;
+    },
+
     fv: function (array, callback) {
         if (!array) {
             return;
