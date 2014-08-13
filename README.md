@@ -1239,9 +1239,10 @@ _Multiple attributes:_
 
 Raptor Templates supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
 
+* The name of the tag directory will be the name of the tag
 * One tag per directory
 * All tag directories should be direct children of a parent directory
-* Every tag directory must contain a `renderer.js` that is used as the tag renderer
+* Every tag directory must contain a `renderer.js` that is used as the tag renderer or, alternatively, a `template.rhtml`
 * Each tag directory may contain a `raptor-tag.json` file or the tag definition can be embedded into `renderer.js`
 
 With this approach, `raptor-taglib.json` will be much simpler:
@@ -1258,7 +1259,7 @@ Given the following directory structure:
     * __my-hello/__
         * renderer.js
     * __my-foo/__
-        * renderer.js
+        * template.rhtml
     * __my-bar/__
         * renderer.js
         * raptor-tag.json
