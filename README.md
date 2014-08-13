@@ -8,6 +8,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 
 # Table of Contents
 
+- [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
 - [Sample Code](#sample-code)
 - [Installation](#installation)
@@ -67,6 +68,59 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Another Templating Language?
+
+Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Raptor Templates introduced? 
+
+What makes Raptor Templates different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Raptor Template and vice-versa, and the Raptor Templates compiler uses an off-the-shelf HTML parser. Because Raptor Templates understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Raptor Templates allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
+
+Let's compare Raptor Templates with Handlebars (a text-based templating language):
+
+__Handlebars:__
+
+```html
+Hello {{name}}!
+   
+{{#if colors}}
+<ul>
+    {{#each colors}}
+    <li class="color">
+        {{this}}
+    </li>
+    {{/each}}
+</ul>
+{{else}}
+<div>
+    No colors!
+</div>
+{{/if}}
+```
+
+__Raptor Templates:__
+
+```html
+Hello ${data.name}!
+
+<ul c-if="notEmpty(data.colors)">
+    <li class="color" c-for="color in data.colors">
+        ${color}
+    </li>
+</ul>
+<div c-else>
+    No colors!
+</div>
+```
+
+A few things to note for the Raptor template:
+
+* Less lines of code
+* Less lines are "touched" to make the template dynamic
+* Only opening tags are modified for conditionals and looping
+
+Beyond Raptor Templates being an HTML-based templating language, it was also designed with extreme performance an extensibility in mind. The Raptor Templates compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Raptor Templates fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
+
+Finally, another distinguishing feature of Raptor Templates is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Raptor Template rendering engine ensures that the final HTML will be streamed out in the correct order.
 
 # Design Philosophy
 
