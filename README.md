@@ -6,7 +6,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+# Table of Contents
 
 - [Design Philosophy](#design-philosophy)
 - [Sample Code](#sample-code)
@@ -49,6 +49,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 	- [Comments](#comments)
 	- [Helpers](#helpers)
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
+	- [Async Taglib](#async-taglib)
 	- [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
 	- [Tag Renderer](#tag-renderer)
@@ -998,12 +999,6 @@ _src/template.rhtml_:
 <div>${util.reverse('reverse test')}</div>
 ```
 
-The `c-require` directive is just short-hand for the following:
-```html
-<c-var name="util" value="require('./util')" />
-<div>${util.reverse('reverse test')}</div>
-```
-
 ## Custom Tags and Attributes
 
 Raptor Templates supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
@@ -1025,6 +1020,43 @@ The output of the above template might be the following:
 ```
 
 For information on how to use and create taglibs, please see the [Custom Taglibs](#custom-taglibs) section below.
+
+## Async Taglib
+
+The async taglib allows portions of your template to be rendere asynchronously. An asynchronous fragment can be bound to a function that accepts an "args" objects and callback argument. When the data provider function completes and invokes the callback with the resulting data, the body of the async fragment is then rendered with the asynchronous data assigned to the specified variable. Asynchronous fragments allow parts of your page to render out-of-order while still providing the final HTML in the correct order.
+
+Example:
+
+```javascript
+template.render({
+        userProfileDataProvider: function(arg, callback) {
+            var userId = arg.userId;
+            userProfileService.getUserProfile(userId, callback);
+        }
+    }, ...);
+```
+
+```html
+<async-fragment data-providers="${data.userProfileDataProvider}"
+    var="userProfile"
+    arg-userId="${data.userId}">
+
+    <ul>
+        <li>
+            First name: ${userProfile.firstName}
+        </li>
+        <li>
+            Last name: ${userProfile.lastName}
+        </li>
+        <li>
+            Email address: ${userProfile.email}
+        </li>
+    </ul>
+
+</async-fragment>
+```
+
+For more details, please see [https://github.com/raptorjs3/raptor-taglib-async](https://github.com/raptorjs3/raptor-taglib-async).
 
 ## Layout Taglib
 
@@ -1063,6 +1095,9 @@ _Usage of `default-layout.rhtml`:_
     <layout-put into="body">BODY CONTENT</layout-put>
 </layout-use>
 ```
+
+
+For more details, please see [https://github.com/raptorjs3/raptor-taglib-layout](https://github.com/raptorjs3/raptor-taglib-layout).
 
 # Custom Taglibs
 
