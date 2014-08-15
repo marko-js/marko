@@ -398,10 +398,11 @@ You can then bundle up the above program for running in the browser using either
 
 The `raptor-optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Raptor Template files using a command similar to the following:
 ```bash
-# First install the raptor-optimizer
+# First install the raptor-optimizer and the raptor-optimizer-rhtml plugin
 npm install raptor-optimizer --global
+npm install raptor-optimizer-rhtml
 
-raptor-optimizer --main run.js --name my-page
+raptor-optimizer --main run.js --name my-page --plugins raptor-optimizer-rhtml
 ```
 
 This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization. 
@@ -409,7 +410,7 @@ This will produce a JSON file named `build/my-page.html.json` that contains the 
 Alternatively, you can inject the HTML markup into a static HTML file using the following command:
 
 ```bash
-raptor-optimizer --main run.js --name my-page --inject-into my-page.html
+raptor-optimizer --main run.js --name my-page --plugins raptor-optimizer-rhtml --inject-into my-page.html
 ```
 
 
