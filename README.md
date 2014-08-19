@@ -118,7 +118,7 @@ A few things to note for the Raptor template:
 * Less lines are "touched" to make the template dynamic
 * Only opening tags are modified for conditionals and looping
 
-Beyond Raptor Templates being an HTML-based templating language, it was also designed with extreme performance an extensibility in mind. The Raptor Templates compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Raptor Templates fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
+Beyond Raptor Templates being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Raptor Templates compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Raptor Templates fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
 
 Finally, another distinguishing feature of Raptor Templates is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Raptor Template rendering engine ensures that the final HTML will be streamed out in the correct order.
 
