@@ -84,6 +84,16 @@ extend(exports, {
         });
     },
 
+    getLastModified: function(path, options, callback) {
+        if (typeof options === 'function') {
+            callback = options;
+            options = null;
+        }
+
+        var compiler = this.createCompiler(path, options);
+        callback(null, compiler.getLastModified());
+    },
+
     Node: require('./Node'),
     ElementNode: require('./ElementNode'),
     TextNode: require('./TextNode'),

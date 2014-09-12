@@ -21,10 +21,10 @@ function loadSource(templatePath, compiledSrc) {
 
 module.exports = function load(templatePath) {
     templatePath = nodePath.resolve(cwd, templatePath);
-    
+
     var targetFile = templatePath + '.js';
     var compiler = raptorTemplatesCompiler.createCompiler(templatePath);
-    var isUpToDate = compiler.checkUpToDate(templatePath, targetFile);
+    var isUpToDate = compiler.checkUpToDate(targetFile);
     if (isUpToDate) {
         return require(targetFile);
     }
@@ -33,7 +33,7 @@ module.exports = function load(templatePath) {
 	var compiledSrc = compiler.compile(templateSrc);
 
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
-     
+
     fs.writeFileSync(targetFile, compiledSrc, {encoding: 'utf8'});
 
     return require(targetFile);

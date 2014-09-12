@@ -30,6 +30,7 @@ var ElementNode = require('./ElementNode');
 var TextNode = require('./TextNode');
 var TagHandlerNode = require('../taglibs/core/TagHandlerNode');
 var raptorModulesResolver = require('raptor-modules/resolver');
+var fs = require('fs');
 
 function TemplateCompiler(path, options) {
     this.dirname = nodePath.dirname(path);
@@ -54,7 +55,7 @@ TemplateCompiler.prototype = {
         function transformTreeHelper(node) {
             try {
                 _this.taglibs.forEachNodeTransformer(node, function (transformer) {
-                    
+
                     if (!node.isTransformerApplied(transformer)) {
                         //Check to make sure a transformer of a certain type is only applied once to a node
                         node.setTransformerApplied(transformer);
@@ -122,7 +123,7 @@ TemplateCompiler.prototype = {
             var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
             return returnError(err);
         }
-        
+
         try {
             /*
              * The tree has been transformed and we can now generate
@@ -132,7 +133,7 @@ TemplateCompiler.prototype = {
             var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
             return returnError(err);
         }
-        
+
         if (this.hasErrors()) {
             var message = 'An error occurred while trying to compile template at path "' + filePath + '". Error(s) in template:\n';
             var errors = _this.getErrors();
@@ -226,7 +227,7 @@ TemplateCompiler.prototype = {
             var tagName = Ctor;
             Ctor = this.getNodeClass(tagName);
         }
-        
+
         ok(Ctor != null, 'Ctor is required');
         ok(typeof Ctor === 'function', 'Ctor should be a function');
 
@@ -239,14 +240,38 @@ TemplateCompiler.prototype = {
         return new TextNode(text, escapeXml);
     },
 
-    checkUpToDate: function(sourceFile, targetFile) {
+    getLastModified: function() {
+        var sourceFile = this.path;
+
+        var statSource = fs.statSync(sourceFile);
+
+        var lastModifiedTime = statSource.mtime.getTime();
+
+        var taglibFiles = this.taglibs.getInputFiles();
+        var len = taglibFiles.length;
+        for (var i=0; i<len; i++) {
+            var taglibFileStat;
+            var taglibFile = taglibFiles[i];
+
+            try {
+                taglibFileStat = fs.statSync(taglibFile);
+            } catch(e) {
+                continue;
+            }
+
+            lastModifiedTime = Math.max(lastModifiedTime, taglibFileStat.mtime.getTime());
+        }
+
+        return lastModifiedTime;
+    },
+
+    checkUpToDate: function(targetFile) {
         if (this.options.checkUpToDate === false) {
             return false;
         }
-        
-        var fs = require('fs');
 
-        
+        var sourceFile = this.path;
+
         var statTarget;
 
         try {
@@ -262,7 +287,7 @@ TemplateCompiler.prototype = {
         }
 
         // Now check if any of the taglib files have been modified after the target file was generated
-        
+
         var taglibFiles = this.taglibs.getInputFiles();
         var len = taglibFiles.length;
         for (var i=0; i<len; i++) {
