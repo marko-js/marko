@@ -1,39 +1,39 @@
 {
-    "name": "raptor-widgets",
-    "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/raptorjs3/raptor-widgets.git"
-    },
-    "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib/ dust/ dust/"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "dependencies": {
-        "raptor-pubsub": "^1.0.0-beta",
-        "raptor-dom": "^1.0.0-beta",
-        "raptor-util": "^1.0.0-beta",
-        "raptor-modules": "^1.0.0-beta",
-        "raptor-json": "^1.0.0-beta",
-        "raptor-logging": "^1.0.0-beta",
-        "raptor-dust": "^1.0.0-beta",
-        "raptor-polyfill": "^1.0.0-beta",
-        "events": "^1.0.0",
-        "raptor-renderer": "^1.0.0-beta"
-    },
-    "devDependencies": {
-        "chai": "~1.8.1",
-        "dustjs-linkedin": "^2.3.4",
-        "jshint": "^2.5.0",
-        "mocha": "~1.15.1",
-        "raptor-strings": "^1.0.0-beta"
-    },
-    "license": "Apache License v2.0",
-    "bin": {},
-    "main": "lib/raptor-widgets.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "version": "1.0.1-beta"
+  "name": "raptor-widgets",
+  "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raptorjs3/raptor-widgets.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib/ dust/ dust/"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "dependencies": {
+    "events": "^1.0.2",
+    "raptor-dom": "^1.0.0-beta",
+    "raptor-dust": "^1.0.0-beta",
+    "raptor-json": "^1.0.0-beta",
+    "raptor-logging": "^1.0.0-beta",
+    "raptor-modules": "^1.0.0-beta",
+    "raptor-polyfill": "^1.0.0-beta",
+    "raptor-pubsub": "^1.0.0-beta",
+    "raptor-renderer": "^1.0.0-beta",
+    "raptor-util": "^1.0.0-beta"
+  },
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "dustjs-linkedin": "^2.3.4",
+    "jshint": "^2.5.0",
+    "mocha": "~1.15.1",
+    "raptor-strings": "^1.0.0-beta"
+  },
+  "license": "Apache License v2.0",
+  "bin": {},
+  "main": "lib/raptor-widgets.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "1.0.1-beta"
 }
