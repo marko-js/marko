@@ -1,30 +1,30 @@
 {
-    "name": "raptor-render-context",
-    "description": "Helper module for working with promises",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/raptorjs3/raptor-render-context.git"
-    },
-    "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "dependencies": {
-        "raptor-logging": "^1.0.0-beta",
-        "raptor-strings": "^1.0.0-beta",
-        "events": "^1.0.0"
-    },
-    "devDependencies": {
-        "mocha": "~1.15.1",
-        "chai": "~1.8.1",
-        "through": "^2.3.4"
-    },
-    "license": "Apache License v2.0",
-    "bin": {},
-    "main": "lib/raptor-render-context.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "version": "1.0.1-beta"
+  "name": "raptor-render-context",
+  "description": "Helper module for working with promises",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raptorjs3/raptor-render-context.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "dependencies": {
+    "events": "^1.0.2",
+    "raptor-logging": "^1.0.0-beta",
+    "raptor-strings": "^1.0.0-beta"
+  },
+  "devDependencies": {
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1",
+    "through": "^2.3.4"
+  },
+  "license": "Apache License v2.0",
+  "bin": {},
+  "main": "lib/raptor-render-context.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "1.0.1-beta"
 }
