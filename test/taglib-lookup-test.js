@@ -21,7 +21,7 @@ describe('taglib-lookup' , function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
-        var ifAttr = lookup.getAttribute('div', 'c-if');
+        var ifAttr = lookup.getAttribute('div', 'if');
         expect(ifAttr != null).to.equal(true);
         expect(ifAttr.type).to.equal('expression');
     });
@@ -29,9 +29,9 @@ describe('taglib-lookup' , function() {
     it('should lookup core tag for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
-        var ifTag = lookup.getTag('c-if');
+        var ifTag = lookup.getTag('if');
         expect(ifTag != null).to.equal(true);
-        expect(ifTag.name).to.equal('c-if');
+        expect(ifTag.name).to.equal('if');
     });
 
     it('should lookup core template for top-level template', function() {
@@ -172,7 +172,7 @@ describe('taglib-lookup' , function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
 
-        lookup.forEachTagTransformer('c-else', function(transformer) {
+        lookup.forEachTagTransformer('else', function(transformer) {
             transformers.push(transformer);
         });
 

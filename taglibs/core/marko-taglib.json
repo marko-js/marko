@@ -23,34 +23,31 @@
                     "type": "custom",
                     "allow-expressions": false
                 },
-                "c-for": {
+                "for": {
                     "allow-expressions": false,
                     "type": "string"
                 },
-                "c-for-each": {
+                "for-each": {
                     "allow-expressions": false,
                     "type": "string"
                 },
-                "c-if": {
+                "if": {
                     "type": "expression"
                 },
-                "c-else": {
+                "else": {
                     "type": "empty"
                 },
-                "c-else-if": {
+                "else-if": {
                     "type": "expression"
                 },
-                "c-attrs": {
+                "attrs": {
                     "type": "expression"
                 },
-                "c-when": {
+                "when": {
                     "type": "expression"
                 },
-                "c-with": {
+                "with": {
                     "type": "custom"
-                },
-                "c-otherwise": {
-                    "type": "empty"
                 },
                 "c-parse-body-text": {
                     "type": "boolean",
@@ -59,16 +56,6 @@
                 "c-trim-body-indent": {
                     "type": "boolean",
                     "allow-expressions": false
-                },
-                "c-strip": {
-                    "type": "boolean",
-                    "allow-expressions": false
-                },
-                "c-content": {
-                    "type": "expression"
-                },
-                "c-replace": {
-                    "type": "expression"
                 },
                 "c-input": {
                     "type": "expression"
@@ -79,7 +66,7 @@
                 "priority": 0
             }
         },
-        "c-for": {
+        "for": {
             "node-class": "./ForNode",
             "attributes": {
                 "each": {
@@ -116,7 +103,7 @@
                 }
             }
         },
-        "c-if": {
+        "if": {
             "node-class": "./IfNode",
             "attributes": {
                 "test": {
@@ -124,7 +111,7 @@
                 }
             }
         },
-        "c-else": {
+        "else": {
             "node-class": "./ElseNode",
             "transformer": {
                 "path": "./else-tag-transformer",
@@ -133,7 +120,7 @@
                 }
             }
         },
-        "c-else-if": {
+        "else-if": {
             "attributes": {
                 "test": {
                     "type": "expression"
@@ -147,7 +134,7 @@
                 }
             }
         },
-        "c-invoke": {
+        "invoke": {
             "node-class": "./InvokeNode",
             "attributes": {
                 "function": {
@@ -161,21 +148,7 @@
                 }
             }
         },
-        "c-choose": {
-            "node-class": "./ChooseNode"
-        },
-        "c-when": {
-            "node-class": "./WhenNode",
-            "attributes": {
-                "test": {
-                    "type": "expression"
-                }
-            }
-        },
-        "c-otherwise": {
-            "node-class": "./OtherwiseNode"
-        },
-        "c-def": {
+        "def": {
             "node-class": "./DefNode",
             "attributes": {
                 "function": {
@@ -188,7 +161,7 @@
                 }
             }
         },
-        "c-with": {
+        "with": {
             "node-class": "./WithNode",
             "attributes": {
                 "vars": {
@@ -197,7 +170,7 @@
                 }
             }
         },
-        "c-include": {
+        "include": {
             "node-class": "./IncludeNode",
             "attributes": {
                 "template": {
@@ -234,7 +207,7 @@
                 }
             }
         },
-        "c-var": {
+        "var": {
             "node-class": "./VarNode",
             "attributes": {
                 "name": {
@@ -258,7 +231,7 @@
                 }
             }
         },
-        "c-require": {
+        "require": {
             "node-class": "./RequireNode",
             "attributes": {
                 "module": {

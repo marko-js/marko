@@ -20,15 +20,11 @@ function removeDashes(str) {
     });
 }
 var extend = require('raptor-util').extend;
-
-var WriteNode = require('./WriteNode');
 var ForNode = require('./ForNode');
 var IfNode = require('./IfNode');
 var ElseIfNode = require('./ElseIfNode');
 var ElseNode = require('./ElseNode');
 var WithNode = require('./WithNode');
-var WhenNode = require('./WhenNode');
-var OtherwiseNode = require('./OtherwiseNode');
 var TagHandlerNode = require('./TagHandlerNode');
 var IncludeNode = require('./IncludeNode');
 
@@ -58,38 +54,21 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-when', function(attr, node) {
-            var whenNode = this.compiler.createNode(WhenNode, {
-                    test: this.template.makeExpression(attr),
-                    pos: node.getPosition()
-                });
-            node.parentNode.replaceChild(whenNode, node);
-            whenNode.appendChild(node);
-        }
-    ],
-    [
-        'c-otherwise', function(attr, node) {
-            var otherwiseNode = this.compiler.createNode(OtherwiseNode, { pos: node.getPosition() });
-            node.parentNode.replaceChild(otherwiseNode, node);
-            otherwiseNode.appendChild(node);
-        }
-    ],
-    [
-        'c-attrs', function(attr, node) {
+        'attrs', function(attr, node) {
             if (!node.addDynamicAttributes) {
-                node.addError('Node does not support the "c-attrs" attribute');
+                node.addError('Node does not support the "attrs" attribute');
             } else {
                 node.addDynamicAttributes(attr);
             }
         }
     ],
     [
-        'c-for-each', function(attr, node) {
+        'for-each', function(attr, node) {
             this['for'](attr, node);
         }
     ],
     [
-        'c-for', function(attr, node) {
+        'for', function(attr, node) {
             var forEachProps = this.compiler.parseAttribute(attr, {
                     each: { type: 'custom' },
                     separator: { type: 'expression' },
@@ -103,7 +82,7 @@ var coreAttrHandlers = [
                     removeDashes: true,
                     defaultName: 'each',
                     errorHandler: function (message) {
-                        node.addError('Invalid c-for attribute of "' + attr + '". Error: ' + message);
+                        node.addError('Invalid for attribute of "' + attr + '". Error: ' + message);
                     }
                 });
             forEachProps.pos = node.getPosition();
@@ -116,7 +95,7 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-if', function(attr, node) {
+        'if', function(attr, node) {
             var ifNode = this.compiler.createNode(IfNode, {
                     test: this.template.makeExpression(attr),
                     pos: node.getPosition()
@@ -128,7 +107,7 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-else-if', function(attr, node) {
+        'else-if', function(attr, node) {
             var elseIfNode = this.compiler.createNode(ElseIfNode, {
                     test: this.template.makeExpression(attr),
                     pos: node.getPosition()
@@ -140,7 +119,7 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-else', function(attr, node) {
+        'else', function(attr, node) {
             var elseNode = this.compiler.createNode(ElseNode, { pos: node.getPosition() });
             //Surround the existing node with an "if" node by replacing the current
             //node with the new "if" node and then adding the current node as a child
@@ -149,7 +128,7 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-with', function(attr, node) {
+        'with', function(attr, node) {
             var withNode = this.compiler.createNode(WithNode, {
                     vars: attr,
                     pos: node.getPosition()
@@ -159,44 +138,10 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'c-body-content', function(attr, node) {
-            this.content(attr);
-        }
-    ],
-    [
-        'c-content', function(attr, node) {
-            var newChild = this.compiler.createNode(WriteNode, {
-                    expression: attr,
-                    pos: node.getPosition()
-                });
-            node.removeChildren();
-            node.appendChild(newChild);
-        }
-    ],
-    [
         'c-trim-body-indent', function(attr, node) {
             if (attr === 'true') {
                 node.trimBodyIndent = true;
             }
-        }
-    ],
-    [
-        'c-strip', function(attr, node) {
-            if (!node.setStripExpression) {
-                node.addError('The c-strip directive is not allowed for target node');
-            }
-            node.setStripExpression(attr);
-        }
-    ],
-    [
-        'c-replace', function(attr, node) {
-            var replaceWriteNode = this.compiler.createNode(WriteNode, {
-                    expression: attr,
-                    pos: node.getPosition()
-                });
-            //Replace the existing node with an node that only has children
-            node.parentNode.replaceChild(replaceWriteNode, node);
-            return replaceWriteNode;
         }
     ],
     [
@@ -302,7 +247,7 @@ function findNestedAttrs(node, compiler, template) {
 
 module.exports = function transform(node, compiler, template) {
 
-    //Find and handle nested <c-attrs> elements
+    //Find and handle nested <attrs> elements
     findNestedAttrs(node, compiler, template);
 
     var tag;
@@ -418,9 +363,9 @@ module.exports = function transform(node, compiler, template) {
                     }
                     if (node.addDynamicAttribute) {
                         node.addDynamicAttribute(name, value);
-                        node.setDynamicAttributesProperty(attrDef.targetProperty);    
+                        node.setDynamicAttributesProperty(attrDef.targetProperty);
                     } else {
-                        node.setProperty(name, value);    
+                        node.setProperty(name, value);
                     }
                 } else {
                     node.setProperty(name, value);

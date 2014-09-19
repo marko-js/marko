@@ -17,8 +17,8 @@
 module.exports = function transform(node, compiler) {
     var curNode = node.previousSibling;
     var matchingNode;
-    var IfNode = compiler.getNodeClass('c-if');
-    var ElseIfNode = compiler.getNodeClass('c-else-if');
+    var IfNode = compiler.getNodeClass('if');
+    var ElseIfNode = compiler.getNodeClass('else-if');
     var whitespaceNodes = [];
     while (curNode) {
         if (curNode.getNodeClass() === ElseIfNode || curNode.getNodeClass() === IfNode) {
@@ -39,7 +39,7 @@ module.exports = function transform(node, compiler) {
         curNode = curNode.previousSibling;
     }
     if (!matchingNode) {
-        node.addError('<c-if> or <c-else-if> node not found immediately before ' + node.toString() + ' tag.');
+        node.addError('<if> or <else-if> node not found immediately before ' + node.toString() + ' tag.');
         return;
     }
     whitespaceNodes.forEach(function (whitespaceNode) {

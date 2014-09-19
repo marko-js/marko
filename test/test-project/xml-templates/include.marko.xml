@@ -1,14 +1,14 @@
 <c-template 
     params="">
  
-    <c-include template="./include-target.marko.xml" name="${'Frank'}" count="20"/>
-    <c-include template="./include-target.marko.xml" name="Frank" count="${20}"/>
-    <c-include template="./include-target.marko.xml" template-data="{name: 'Frank', count: 20}"/>
-    <c-include template="./include-nested-content.marko.xml" name="Frank" count="${20}">
+    <include template="./include-target.marko.xml" name="${'Frank'}" count="20"/>
+    <include template="./include-target.marko.xml" name="Frank" count="${20}"/>
+    <include template="./include-target.marko.xml" template-data="{name: 'Frank', count: 20}"/>
+    <include template="./include-nested-content.marko.xml" name="Frank" count="${20}">
         Have a 
         <b>
             wonderful
         </b>
         day!
-    </c-include>
+    </include>
 </c-template>

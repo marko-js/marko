@@ -12,71 +12,71 @@
     
     
     
-    <c-for>
+    <for>
         Missing each attribute
-    </c-for>
+    </for>
     
-    <c-for each="item">
-    </c-for>
+    <for each="item">
+    </for>
     
-    <c-for each="item in items" invalid="true">
+    <for each="item in items" invalid="true">
         Invalid attribute
-    </c-for>
+    </for>
     
-    <c-for each="item in items" separator="${;">
+    <for each="item in items" separator="${;">
         Invalid separator
-    </c-for>
+    </for>
     
     <c-invalidTag>
     </c-invalidTag>
     
-    <div c-for="item in items; invalid=true">
+    <div for="item in items; invalid=true">
     </div>
     
-    <c-choose>
-        <c-when test="true">A</c-when>
-        <c-otherwise>INVALID</c-otherwise>
-        <c-when test="true">B</c-when>
-    </c-choose>
+    <choose>
+        <when test="true">A</when>
+        <otherwise>INVALID</otherwise>
+        <when test="true">B</when>
+    </choose>
     
-    <c-choose>
+    <choose>
         
-        <c-when test="false">A</c-when>
+        <when test="false">A</when>
         INVALID TEXT
-        <c-when test="true">TRUE</c-when>
-        <c-otherwise>C</c-otherwise>
-    </c-choose>
+        <when test="true">TRUE</when>
+        <otherwise>C</otherwise>
+    </choose>
     
-    <c-def>
-    </c-def>
+    <def>
+    </def>
     
-    <c-def function="invalid-function-name()">
+    <def function="invalid-function-name()">
         <c-invalidTag2></c-invalidTag2>
-    </c-def>
+    </def>
     
-    <c-include>Missing template attribute</c-include>
+    <include>Missing template attribute</include>
     
-    <c-with vars="x=1;b=2;1">
-    </c-with>
+    <with vars="x=1;b=2;1">
+    </with>
     
-    <c-if test="false">
+    <if test="false">
         A
-    </c-if>
+    </if>
     INVALID
-    <c-else>
+    <else>
         C
-    </c-else>
+    </else>
     
-    <c-if test="false">
+    <if test="false">
         A
-    </c-if>
+    </if>
     INVALID
-    <c-else-if test="false">
+    <else-if test="false">
         A
-    </c-else-if>
-    <c-else>
+    </else-if>
+    <else>
         C
-    </c-else>
+    </else>
     
     <div class="test">
         <c-attr name="class" value="duplicate"/>
@@ -85,6 +85,6 @@
     <test-popover title="Popover Title" invalidAttr1="invalidValue1">
         <c-attr name="invalidAttr2" value="invalidValue2"/>
         <c-attr name="invalidAttr3">invalidValue3</c-attr>
-        <c-attr name="invalidAttr4" c-if="invalidIf">invalidValue4</c-attr>
+        <c-attr name="invalidAttr4" if="invalidIf">invalidValue4</c-attr>
     </test-popover>
 </c-template>

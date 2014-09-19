@@ -3,7 +3,7 @@
     <optimizer-page name="optimizer-dynamic">
         <dependencies>
             <module name="${data.dependency}"/>
-            <module name="test/optimizer/mixedB" c-if="data.mixedBEnabled"/>
+            <module name="test/optimizer/mixedB" if="data.mixedBEnabled"/>
         </dependencies>
     </optimizer-page>
     

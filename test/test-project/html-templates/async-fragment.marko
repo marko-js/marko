@@ -5,7 +5,7 @@ A
     <async-fragment data-provider="messages" arg-user="${user}" var="messages">
         You have $messages.length new messages. Messages:
         <ul>
-            <li c-for="message in messages">$message.text</li>
+            <li for="message in messages">$message.text</li>
         </ul>
     </async-fragment>
     asyncB2
@@ -14,7 +14,7 @@ B
 <async-fragment data-provider="todos" var="todos">
     asyncA1
     <ul>
-        <li c-for="todo in todos">$todo.text (status: $todo.status)</li>
+        <li for="todo in todos">$todo.text (status: $todo.status)</li>
     </ul>
     asyncA2
 </async-fragment>

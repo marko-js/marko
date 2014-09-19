@@ -1,17 +1,17 @@
-<c-for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
+<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
     ${item}
-</c-for>
+</for>
 
 
-<c-for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
+<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
     ${status.index}-${item}
-</c-for>
+</for>
 
-<div c-for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
+<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
     ${item}
 </div>
 
 
-<div c-for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
+<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
     ${status.index}-${item}
 </div>

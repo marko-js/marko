@@ -15,7 +15,7 @@
     
     <div>
         <c-attr name="title">
-            <c-for each="color in ['red', 'green', 'blue']"> $color! </c-for>
+            <for each="color in ['red', 'green', 'blue']"> $color! </for>
         </c-attr>
     </div>
 </c-template>

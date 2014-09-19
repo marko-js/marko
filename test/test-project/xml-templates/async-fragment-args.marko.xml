@@ -1,7 +1,7 @@
 <c-template>
 
     <ul>
-        <li c-for="userId in [0, 1, 2, 3]">
+        <li for="userId in [0, 1, 2, 3]">
             <async-fragment dependency="userInfo" var="userInfo" arg-userId="$userId">
                 <ul>
                     <li>

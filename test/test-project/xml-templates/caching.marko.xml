@@ -1,19 +1,19 @@
 <c-template 
     params="">
 
-    <c-var name="count" value="0"/>
+    <var name="count" value="0"/>
     
-    <c-def function="foo(cacheName, cacheKey)">
+    <def function="foo(cacheName, cacheKey)">
         <cached-fragment cache-key="$cacheKey" cache-name="$cacheName">
             Count: ${count++}
         </cached-fragment>
-    </c-def>
+    </def>
     
-    <c-invoke function="foo('cacheA', 'keyA')"/>
-    <c-invoke function="foo('cacheA', 'keyA')"/>
-    <c-invoke function="foo('cacheA', 'keyB')"/>
+    <invoke function="foo('cacheA', 'keyA')"/>
+    <invoke function="foo('cacheA', 'keyA')"/>
+    <invoke function="foo('cacheA', 'keyB')"/>
     
-    <c-invoke function="foo('cacheB', 'keyA')"/>
-    <c-invoke function="foo('cacheB', 'keyA')"/>
-    <c-invoke function="foo('cacheB', 'keyB')"/>
+    <invoke function="foo('cacheB', 'keyA')"/>
+    <invoke function="foo('cacheB', 'keyA')"/>
+    <invoke function="foo('cacheB', 'keyB')"/>
 </c-template>

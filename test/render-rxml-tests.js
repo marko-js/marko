@@ -151,34 +151,11 @@ describe('marko/xml' , function() {
         testRender("test-project/xml-templates/attrs.marko.xml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
 
-    it("should allow for choose...when statements", function(done) {
-        testRender("test-project/xml-templates/choose-when.marko.xml", {}, done);
-    });
-
-    it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
-
-        var e;
-
-        function fakeDone() {
-            done('Error expected');
-        }
-
-        try {
-            testRender("test-project/xml-templates/choose-when-invalid-otherwise-not-last.marko.xml", {}, fakeDone);
-        }
-        catch(_e) {
-            e = _e;
-        }
-
-        expect(e != null).to.equal(true);
-        done();
-    });
-
-    it("should allow for <c-def> functions", function(done) {
+    it("should allow for <def> functions", function(done) {
         testRender("test-project/xml-templates/def.marko.xml", {}, done);
     });
 
-    it("should allow for <c-with> functions", function(done) {
+    it("should allow for <with> functions", function(done) {
         testRender("test-project/xml-templates/with.marko.xml", {}, done);
     });
 
@@ -186,27 +163,11 @@ describe('marko/xml' , function() {
         testRender("test-project/xml-templates/scriptlet.marko.xml", {}, done);
     });
 
-    it("should allow for when and otherwise as attributes", function(done) {
-        testRender("test-project/xml-templates/choose-when-attributes.marko.xml", {}, done);
-    });
-
-    it("should allow for elements to be stripped out at compile time", function(done) {
-        testRender("test-project/xml-templates/strip.marko.xml", {}, done);
-    });
-
-    it("should allow for body content to be replaced with the result of an expression", function(done) {
-        testRender("test-project/xml-templates/content.marko.xml", {}, done);
-    });
-
-    it("should allow for an element to be replaced with the result of an expression", function(done) {
-        testRender("test-project/xml-templates/replace.marko.xml", {message: "Hello World!"}, done);
-    });
-
     it("should allow for includes", function(done) {
         testRender("test-project/xml-templates/include.marko.xml", {}, done);
     });
 
-    it("should allow for <c-invoke function... />", function(done) {
+    it("should allow for <invoke function... />", function(done) {
         testRender("test-project/xml-templates/invoke.marko.xml", {}, done);
     });
 

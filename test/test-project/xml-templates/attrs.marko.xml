@@ -1,6 +1,6 @@
 <c-template 
     params="myAttrs">
-    <div c-attrs="myAttrs" data-encoding="&quot;hello&quot;">
+    <div attrs="myAttrs" data-encoding="&quot;hello&quot;">
         Hello World!
     </div>
 </c-template>

@@ -1,7 +1,7 @@
 <c-template 
     params="helper">
 
-    A<c-invoke function="helper.beginAsync(context)"/>C
+    A<invoke function="helper.beginAsync(context)"/>C
 
 </c-template>
 

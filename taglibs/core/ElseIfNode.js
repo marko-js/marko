@@ -15,7 +15,7 @@
  */
 'use strict';
 function ElseIfNode(props) {
-    ElseIfNode.$super.call(this, 'c-else-if');
+    ElseIfNode.$super.call(this, 'else-if');
     if (props) {
         this.setProperties(props);
     }

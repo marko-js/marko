@@ -1,7 +1,7 @@
-<c-var name="tag" value="data.tag"/>
-<c-var name="content" value="data.content"/>
-<c-var name="title" value="data.title"/>
+<var name="tag" value="data.tag"/>
+<var name="content" value="data.content"/>
+<var name="title" value="data.title"/>
 
 <span title="$title" data-content="$content">
-    <c-invoke function="tag.invokeBody()" c-if="tag.invokeBody"/>
+    <invoke function="tag.invokeBody()" if="tag.invokeBody"/>
 </span>

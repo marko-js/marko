@@ -1,12 +1,12 @@
 <c-template 
     params="">
 
-    <c-for each="(name,value) in {'foo': 'low', 'bar': 'high'}">
+    <for each="(name,value) in {'foo': 'low', 'bar': 'high'}">
         [$name=$value]
-    </c-for>
+    </for>
 
     <ul>
-        <li c-for="(name, value) in {'foo': 'low', 'bar': 'high'}">
+        <li for="(name, value) in {'foo': 'low', 'bar': 'high'}">
             [$name=$value]
         </li>
     </ul>

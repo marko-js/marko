@@ -170,34 +170,11 @@ describe('marko/marko' , function() {
         testRender("test-project/html-templates/attrs.marko", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
 
-    it("should allow for choose...when statements", function(done) {
-        testRender("test-project/html-templates/choose-when.marko", {}, done);
-    });
-
-    it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
-
-        var e;
-
-        function fakeDone() {
-            done('Error expected');
-        }
-
-        try {
-            testRender("test-project/html-templates/choose-when-invalid-otherwise-not-last.marko", {}, fakeDone);
-        }
-        catch(_e) {
-            e = _e;
-        }
-
-        expect(e != null).to.equal(true);
-        done();
-    });
-
-    it("should allow for <c-def> functions", function(done) {
+    it("should allow for <def> functions", function(done) {
         testRender("test-project/html-templates/def.marko", {}, done);
     });
 
-    it("should allow for <c-with> functions", function(done) {
+    it("should allow for <with> functions", function(done) {
         testRender("test-project/html-templates/with.marko", {}, done);
     });
 
@@ -205,27 +182,12 @@ describe('marko/marko' , function() {
         testRender("test-project/html-templates/scriptlet.marko", {}, done);
     });
 
-    it("should allow for when and otherwise as attributes", function(done) {
-        testRender("test-project/html-templates/choose-when-attributes.marko", {}, done);
-    });
-
-    it("should allow for elements to be stripped out at compile time", function(done) {
-        testRender("test-project/html-templates/strip.marko", {}, done);
-    });
-
-    it("should allow for body content to be replaced with the result of an expression", function(done) {
-        testRender("test-project/html-templates/content.marko", {}, done);
-    });
-
-    it("should allow for an element to be replaced with the result of an expression", function(done) {
-        testRender("test-project/html-templates/replace.marko", {message: "Hello World!"}, done);
-    });
 
     it("should allow for includes", function(done) {
         testRender("test-project/html-templates/include.marko", {}, done);
     });
 
-    it("should allow for <c-invoke function... />", function(done) {
+    it("should allow for <invoke function... />", function(done) {
         testRender("test-project/html-templates/invoke.marko", {}, done);
     });
 
@@ -407,6 +369,6 @@ describe('marko/marko' , function() {
         }, done);
     });
 
-    
+
 
 });

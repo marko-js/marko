@@ -1,8 +1,8 @@
 <c-template>
     
-    <c-with vars="x=1; y=7; z=x+10; a">$x $y $z</c-with>
+    <with vars="x=1; y=7; z=x+10; a">$x $y $z</with>
 
-    <div c-for="i in [1, 2, 3]" c-with="message=i+ ') hello'">
+    <div for="i in [1, 2, 3]" with="message=i+ ') hello'">
         $message
     </div>
 </c-template>

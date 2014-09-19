@@ -2,6 +2,6 @@
     params="">
  
     BEGIN
-    <c-include resource="include-resource-target.txt" static="true"/>
+    <include resource="include-resource-target.txt" static="true"/>
     END
 </c-template>

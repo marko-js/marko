@@ -10,7 +10,7 @@
             Tab 2 content
         </test-tab>
         
-        <test-tab title="Tab 3" c-if="showConditionalTab">
+        <test-tab title="Tab 3" if="showConditionalTab">
             Tab 3 content
         </test-tab>
     </test-tabs>

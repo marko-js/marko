@@ -31,7 +31,6 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 	- [Variables](#variables)
 	- [Conditionals](#conditionals)
 		- [if...else-if...else](#ifelse-ifelse)
-		- [choose…when…otherwise](#choose…when…otherwise)
 		- [Shorthand conditionals](#shorthand-conditionals)
 	- [Looping](#looping)
 		- [for](#for)
@@ -44,9 +43,6 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 		- [invoke](#invoke)
 	- [Structure Manipulation](#structure-manipulation)
 		- [attrs](#attrs)
-		- [content](#content)
-		- [replace](#replace)
-		- [strip](#strip)
 	- [Comments](#comments)
 	- [Helpers](#helpers)
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
@@ -102,12 +98,12 @@ __Marko:__
 ```html
 Hello ${data.name}!
 
-<ul c-if="notEmpty(data.colors)">
-    <li class="color" c-for="color in data.colors">
+<ul if="notEmpty(data.colors)">
+    <li class="color" for="color in data.colors">
         ${color}
     </li>
 </ul>
-<div c-else>
+<div else>
     No colors!
 </div>
 ```
@@ -144,12 +140,12 @@ A basic template with text replacement, looping and conditionals is shown below:
 ```html
 Hello ${data.name}!
 
-<ul c-if="notEmpty(data.colors)">
-    <li style="color: $color" c-for="color in data.colors">
+<ul if="notEmpty(data.colors)">
+    <li style="color: $color" for="color in data.colors">
         $color
     </li>
 </ul>
-<div c-else>
+<div else>
     No colors!
 </div>
 ```
@@ -522,14 +518,14 @@ Almost all of the Raptor templating directives can be used as either an attribut
 _Applying directives using attributes:_
 ```html
 <!-- Colors available -->
-<ul c-if="notEmpty(colors)">
-    <li c-for="color in colors">
+<ul if="notEmpty(colors)">
+    <li for="color in colors">
         $color
     </li>
 </ul>
 
 <!-- No colors available -->
-<div c-if="empty(colors)">
+<div if="empty(colors)">
     No colors!
 </div>
 ```
@@ -537,22 +533,22 @@ _Applying directives using attributes:_
 _Applying directives using elements:_
 ```html
 <!-- Colors available -->
-<c-if test="notEmpty(colors)">
+<if test="notEmpty(colors)">
     <ul>
-        <c-for each="color in colors">
+        <for each="color in colors">
             <li>
                 $color
             </li>
-        </c-for>
+        </for>
     </ul>
-</c-if>
+</if>
 
 <!-- No colors available -->
-<c-if test="empty(colors)">
+<if test="empty(colors)">
     <div>
         No colors!
     </div>
-</c-if>
+</if>
 ```
 
 The disadvantage of using elements to control structural logic is that they change the nesting of the elements which can impact readability. For this reason it is often more suitable to apply directives as attributes.
@@ -601,23 +597,23 @@ JavaScript Operator | Raptor Equivalent
 For example, both of the following are valid and equivalent:
 
 ```html
-<div c-if="searchResults.length > 100">
+<div if="searchResults.length > 100">
     Show More
 </div>
 ```
 
 ```html
-<div c-if="searchResults.length gt 100">
+<div if="searchResults.length gt 100">
     Show More
 </div>
 ```
 
 ## Includes
 
-Other Marko files can be included using the `<c-include>` tag and a relative path. For example:
+Other Marko files can be included using the `<include>` tag and a relative path. For example:
 
 ```html
-<c-include template="./greeting.marko" name="Frank" count="30"/>
+<include template="./greeting.marko" name="Frank" count="30"/>
 ```
 
 ## Variables
@@ -625,33 +621,33 @@ Other Marko files can be included using the `<c-include>` tag and a relative pat
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
 
 ```html
-<c-var name="name" value="data.name.toUpperCase()" />
+<var name="name" value="data.name.toUpperCase()" />
 ```
 
 ## Conditionals
 
 ### if...else-if...else
 
-Any element or fragment of HTML can be made conditional using the `c-if`, `c-else-if` or `c-else` directive.
+Any element or fragment of HTML can be made conditional using the `if`, `else-if` or `else` directive.
 
 _Applied as attributes:_
 ```html
 <!--Simple if-->
-<div c-if="someCondition">
+<div if="someCondition">
     Hello World
 </div>
 
 <!--Complex if-->
-<div c-if="test === 'a'">
+<div if="test === 'a'">
     A
 </div>
-<div c-else-if="test === 'b'">
+<div else-if="test === 'b'">
     B
 </div>
-<div c-else-if="test === 'c'">
+<div else-if="test === 'c'">
     C
 </div>
-<div c-else>
+<div else>
     Something else
 </div>
 ```
@@ -660,67 +656,33 @@ _Applied as elements:_
 ```html
 <!-- Colors available -->
 <!--Simple if-->
-<c-if test="someCondition">
+<if test="someCondition">
     <div>
         Hello World
     </div>
-</c-if>
+</if>
 
 <!--Complex if-->
-<c-if test="test === 'a'">
+<if test="test === 'a'">
     <div>
         A
     </div>
-</c-if>
-<c-else-if test="test === 'b'">
+</if>
+<else-if test="test === 'b'">
     <div>
         B
     </div>
-</c-else-if>
-<c-else-if test="test === 'c'">
+</else-if>
+<else-if test="test === 'c'">
     <div>
         C
     </div>
-</c-else-if>
-<c-else>
+</else-if>
+<else>
     <div>
         Something else
     </div>
-</c-else>
-```
-
-### choose…when…otherwise
-
-The `c-choose` directive, in combination with the directives `c-when` and `c-otherwise` provides advanced conditional processing for rendering one of several alternatives. The first matching `c-when` branch is rendered, or, if no `c-when` branch matches, the `c-otherwise` branch is rendered.
-
-_Applied as an attribute:_
-```html
-<c-choose>
-    <div c-when="myVar === 'A'">
-        A
-    </div>
-    <div c-when="myVar === 'B'">
-        B
-    </div>
-    <div c-otherwise="">
-        Something else
-    </div>
-<c-choose>
-```
-
-_Applied as an element:_
-```html
-<c-choose>
-    <c-when test="myVar === 'A'">
-        <div>A</div>
-    </c-when>
-    <c-when test="myVar === 'B'">
-        <div>B</div>
-    </c-when>
-    <c-otherwise>
-        <div>Something else</div>
-    </c-otherwise>
-<c-choose>
+</else>
 ```
 
 ### Shorthand conditionals
@@ -763,13 +725,13 @@ With a value of `false` for `active`, the output would be the following:
 
 ### for
 
-Any element can be repeated for every item in an array using the `c-for` directive. The directive can be applied as an element or as an attribute.
+Any element can be repeated for every item in an array using the `for` directive. The directive can be applied as an element or as an attribute.
 
 _Applied as an attribute:_
 
 ```html
 <ul>
-    <li c-for="item in items">${item}</li>
+    <li for="item in items">${item}</li>
 </ul>
 ```
 
@@ -777,9 +739,9 @@ _Applied as an element:_
 
 ```html
 <ul>
-    <c-for each="item in items">
+    <for each="item in items">
         <li>${item}</li>
-    </c-for>
+    </for>
 </ul>
 ```
 
@@ -802,14 +764,14 @@ The output would be the following:
 
 #### Loop Status Variable
 
-The `c-for` directive also supports a loop status variable in case you need to know the current loop index. For example:
+The `for` directive also supports a loop status variable in case you need to know the current loop index. For example:
 
 ```html
 <ul>
-    <li c-for="color in colors; status-var=loop">
+    <li for="color in colors; status-var=loop">
         ${loop.getIndex()+1}) $color
-        <c-if test="loop.isFirst()"> - FIRST</c-if>
-        <c-if test="loop.isLast()"> - LAST</c-if>
+        <if test="loop.isFirst()"> - FIRST</if>
+        <if test="loop.isLast()"> - LAST</if>
     </li>
 </ul>
 ```
@@ -817,10 +779,10 @@ The `c-for` directive also supports a loop status variable in case you need to k
 #### Loop Separator
 
 ```html
-<c-for each="color in colors" separator=", ">$color</c-for>
+<for each="color in colors" separator=", ">$color</for>
 
 <div>
-    <span c-for="color in colors; separator=', '" style="color: $color">$color</span>
+    <span for="color in colors; separator=', '" style="color: $color">$color</span>
 </div>
 ```
 
@@ -832,7 +794,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```html
 <ul>
-    <li c-for="i from 0 to 10">
+    <li for="i from 0 to 10">
         $i
     </li>
 </ul>
@@ -840,7 +802,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```html
 <ul>
-    <li c-for="i from 0 to 10 step 2">
+    <li for="i from 0 to 10 step 2">
         $i
     </li>
 </ul>
@@ -848,7 +810,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```html
 <ul>
-    <li c-for="i from 0 to myArray.length-1">
+    <li for="i from 0 to myArray.length-1">
         ${myArray[i]}
     </li>
 </ul>
@@ -859,7 +821,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```html
 <ul>
-    <li c-for="(name,value) in settings">
+    <li for="(name,value) in settings">
         <b>$name</b>:
         $value
     </li>
@@ -868,24 +830,24 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ## Macros
 
-Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<c-def>` directive.
+Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<def>` directive.
 
 ### def
 
-The `<c-def>` directive can be used to define a reusable function within a template.
+The `<def>` directive can be used to define a reusable function within a template.
 
 ```html
-<c-def function="greeting(name, count)">
+<def function="greeting(name, count)">
     Hello $name! You have $count new messages.
-</c-def>
+</def>
 ```
 
-The above macro can then be invoked as part of any expression. Alternatively, the [`<c-invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
+The above macro can then be invoked as part of any expression. Alternatively, the [`<invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
 
 ```html
-<c-def function="greeting(name, count)">
+<def function="greeting(name, count)">
     Hello $name! You have $count new messages.
-</c-def>
+</def>
 
 <p>
     ${greeting("John", 10)}
@@ -897,15 +859,15 @@ The above macro can then be invoked as part of any expression. Alternatively, th
 
 ### invoke
 
-The `<c-invoke>` directive can be used to invoke a function defined using the `<c-def>` directive or a function that is part of the input to a template. The `<c-invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<c-def>` directive.
+The `<invoke>` directive can be used to invoke a function defined using the `<def>` directive or a function that is part of the input to a template. The `<invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<def>` directive.
 
 ```html
-<c-def function="greeting(name, count)">
+<def function="greeting(name, count)">
     Hello ${name}! You have ${count} new messages.
-</c-def>
+</def>
 
-<c-invoke function="greeting" name="John" count="${10}"/>
-<c-invoke function="greeting('Frank', 20)"/>
+<invoke function="greeting" name="John" count="${10}"/>
+<invoke function="greeting('Frank', 20)"/>
 ```
 
 The output for the above template would be the following:
@@ -919,7 +881,7 @@ The output for the above template would be the following:
 </p>
 ```
 
-_NOTE:_ By default, the arguments will be of type "string" when using `<c-invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
+_NOTE:_ By default, the arguments will be of type "string" when using `<invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
 ```html
 count="10" <!-- string argument -->
 count="${10}"  <!-- number argument -->
@@ -930,10 +892,10 @@ count="${10}"  <!-- number argument -->
 
 ### attrs
 
-The `c-attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the c-attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
+The `attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
 
 ```html
-<div c-attrs="myAttrs">
+<div attrs="myAttrs">
     Hello World!
 </div>
 ```
@@ -949,60 +911,6 @@ The output would then be the following:
 ```html
 <div style="background-color: #FF0000;" class="my-div">
     Hello World!
-</div>
-```
-
-### content
-
-This directive replaces any nested content with the result of evaluating the expression:
-
-```html
-<ul>
-    <li c-content="myExpr">Hello</li>
-</ul>
-```
-
-Given a value of `"Bye!"` for the value of `myExpr`, the output of the above template would be the following:
-
-```html
-<ul>
-    <li>Bye!</li>
-</ul>
-```
-
-### replace
-
-This directive replaces the element itself with the result of evaluating the expression:
-
-```html
-<div>
-    <span c-replace="myExpr">Hello</span>
-</div>
-```
-
-Given a value of "Bye!" for the value of "myExpr", the output of the above template would be the following:
-
-```html
-<div>
-    Bye!
-</div>
-```
-
-### strip
-
-This directive conditionally strips the top-level element from the output. If the expression provided as the attribute value evaluates to true then the element is stripped from the output:
-
-```html
-<div>
-    <span c-strip="true"><b>Hello</b></span>
-</div>
-```
-
-_Output:_
-
-```html
-<div>
-    <b>Hello</b>
 </div>
 ```
 
@@ -1049,7 +957,7 @@ The above module can then be imported into a template as shown in the following 
 
 _src/template.marko_:
 ```html
-<c-require module="./util" var="util" />
+<require module="./util" var="util" />
 
 <div>${util.reverse('reverse test')}</div>
 ```
@@ -1127,7 +1035,7 @@ _default-layout.marko:_
     <title><layout-placeholder name="title"/></title>
 </head>
 <body>
-    <h1 c-if="data.showHeader !== false">
+    <h1 if="data.showHeader !== false">
         <layout-placeholder name="title"/>
     </h1>
     <p>
@@ -1372,15 +1280,15 @@ _components/tabs/template.marko:_
 ```html
 <div class="tabs">
     <ul class="nav nav-tabs">
-        <li class="tab" c-for="tab in data.tabs">
+        <li class="tab" for="tab in data.tabs">
             <a href="#${tab.id}" data-toggle="tab">
                 ${tab.title}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div id="${tab.id}" class="tab-pane" c-for="tab in data.tabs">
-            <c-invoke function="tab.invokeBody()"/>
+        <div id="${tab.id}" class="tab-pane" for="tab in data.tabs">
+            <invoke function="tab.invokeBody()"/>
         </div>
     </div>
 </div>

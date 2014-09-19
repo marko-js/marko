@@ -15,7 +15,7 @@
  */
 'use strict';
 function IfNode(props) {
-    IfNode.$super.call(this, 'c-if');
+    IfNode.$super.call(this, 'if');
     if (props) {
         this.setProperties(props);
     }
