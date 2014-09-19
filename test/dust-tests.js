@@ -18,7 +18,7 @@ dust.onLoad = function(path, callback) {
 };
 
 
-require('marko-taglib-async/dust').registerHelpers(dust);
+require('marko-async/dust').registerHelpers(dust);
 
 function testRender(path, data, done, options) {
     options = options || {};

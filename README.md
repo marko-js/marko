@@ -1028,7 +1028,7 @@ template.render({
 </async-fragment>
 ```
 
-For more details, please see [https://github.com/raptorjs3/marko-taglib-async](https://github.com/raptorjs3/marko-taglib-async).
+For more details, please see [https://github.com/raptorjs3/marko-async](https://github.com/raptorjs3/marko-async).
 
 ## Layout Taglib
 
@@ -1069,7 +1069,7 @@ _Usage of `default-layout.marko`:_
 ```
 
 
-For more details, please see [https://github.com/raptorjs3/marko-taglib-layout](https://github.com/raptorjs3/marko-taglib-layout).
+For more details, please see [https://github.com/raptorjs3/marko-layout](https://github.com/raptorjs3/marko-layout).
 
 # Custom Taglibs
 
