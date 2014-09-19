@@ -71,7 +71,7 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 # Another Templating Language?
 
-Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced? 
+Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
 
 What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Raptor Template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
 
@@ -81,7 +81,7 @@ __Handlebars:__
 
 ```html
 Hello {{name}}!
-   
+
 {{#if colors}}
 <ul>
     {{#each colors}}
@@ -405,7 +405,7 @@ npm install optimizer-marko
 optimizer --main run.js --name my-page --plugins optimizer-marko
 ```
 
-This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization. 
+This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization.
 
 Alternatively, you can inject the HTML markup into a static HTML file using the following command:
 
@@ -465,7 +465,7 @@ markoc . --clean
 Alternatively, you can use the JavaScript API to compile a module as shown in the following sample code:
 ```javascript
 require('marko/compiler').compileFile(path, function(err, src) {
-    // Do something with the compiled output 
+    // Do something with the compiled output
 });
 ```
 
@@ -527,7 +527,7 @@ _Applying directives using attributes:_
         $color
     </li>
 </ul>
- 
+
 <!-- No colors available -->
 <div c-if="empty(colors)">
     No colors!
@@ -546,7 +546,7 @@ _Applying directives using elements:_
         </c-for>
     </ul>
 </c-if>
-  
+
 <!-- No colors available -->
 <c-if test="empty(colors)">
     <div>
@@ -578,7 +578,7 @@ If necessary, you can escape `$` using a forward slash to have it be treated as 
 
 ```html
 Test: \${hello}
-<!-- Rendered Ouptut: 
+<!-- Rendered Ouptut:
 Test: ${hello}
 -->
 ```
@@ -818,7 +818,7 @@ The `c-for` directive also supports a loop status variable in case you need to k
 
 ```html
 <c-for each="color in colors" separator=", ">$color</c-for>
-    
+
 <div>
     <span c-for="color in colors; separator=', '" style="color: $color">$color</span>
 </div>
@@ -903,9 +903,9 @@ The `<c-invoke>` directive can be used to invoke a function defined using the `<
 <c-def function="greeting(name, count)">
     Hello ${name}! You have ${count} new messages.
 </c-def>
- 
+
 <c-invoke function="greeting" name="John" count="${10}"/>
-<c-invoke function="greeting('Frank', 20)"/> 
+<c-invoke function="greeting('Frank', 20)"/>
 ```
 
 The output for the above template would be the following:
@@ -1039,7 +1039,7 @@ _src/util.js_:
 exports.reverse = function(str) {
     var out = "";
     for (var i=str.length-1; i>=0; i--) {
-        out += str.charAt(i); 
+        out += str.charAt(i);
     }
     return out;
 };
@@ -1116,7 +1116,7 @@ For more details, please see [https://github.com/raptorjs3/marko-taglib-async](h
 ## Layout Taglib
 
 Marko provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
-   
+
 _default-layout.marko:_
 
 ```html
@@ -1342,7 +1342,7 @@ var template = require('marko').load(templatePath);
 
 module.exports = function render(input, context) {
     var nestedTabs = [];  
-    
+
     // Invoke the body function to discover nested <ui-tab> tags
     input.invokeBody({ // Invoke the body with the scoped "tabs" variable
         addTab: function(tab) {
@@ -1350,7 +1350,7 @@ module.exports = function render(input, context) {
             nestedTabs.push(tab);
         }
     });
-    
+
     // Now render the markup for the tabs:
     template.render({
         tabs: nestedTabs
@@ -1363,7 +1363,7 @@ _components/tab/renderer.js:_
 ```javascript
 module.exports = function render(input, context) {
     // Register with parent but don't render anything
-    input.tabs.addTab(input); 
+    input.tabs.addTab(input);
 };
 ```
 
@@ -1389,7 +1389,7 @@ _components/tabs/template.marko:_
 
 ## Taglib Discovery
 
-Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs. 
+Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs.
 
 As an example, given a template at path `/my-project/src/pages/login/template.marko`, the search path will be the following:
 
@@ -1451,12 +1451,6 @@ app.get('/profile', function(req, res) {
         .pipe(res);
 });
 ```
-
-<hr>
-
-__Question:__ _I heard Marko is XML-based. What is that about?_
-
-__Answer__: Marko started out using an XML parser. This required that templates be well-formed XML (a major source of problems). This is no longer the case, as the compiler has been updated to use the awesome [htmlparser2](https://github.com/fb55/htmlparser2) module by [Felix Boehm](https://github.com/fb55). Also, XML namespaces are no longer used and all taglibs are now defined using simple JSON. If you are coming from the old XML-based version of Marko, please see the [Migration Guide](migration.md).
 
 <hr>
 
