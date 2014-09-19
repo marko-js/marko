@@ -1,9 +1,9 @@
 {
-    "name": "raptor-render-context",
-    "description": "Helper module for working with promises",
+    "name": "async-writer",
+    "description": "The async-writer module makes it possible to asynchronously write data to an output stream while still flushing out bytes in the correct order",
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs3/raptor-render-context.git"
+        "url": "https://github.com/raptorjs3/async-writer.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
@@ -11,9 +11,7 @@
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
     "dependencies": {
-        "events": "^1.0.2",
-        "raptor-logging": "^1.0.0-beta",
-        "raptor-strings": "^1.0.0-beta"
+        "events": "^1.0.2"
     },
     "devDependencies": {
         "mocha": "~1.15.1",
@@ -22,9 +20,9 @@
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "lib/raptor-render-context.js",
+    "main": "lib/async-writer.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "1.0.2-beta"
+    "version": "1.1.0"
 }

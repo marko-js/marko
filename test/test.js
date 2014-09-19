@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 
-describe('raptor-render-context' , function() {
+describe('async-writer' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -19,172 +19,172 @@ describe('raptor-render-context' , function() {
     });
 
     it('should render a series of sync calls correctly', function(done) {
-        var context = require('../').create();
-        context.write('1');
-        context.write('2');
-        context.write('3');
-        context.write('4');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        var out = require('../').create();
+        out.write('1');
+        out.write('2');
+        out.write('3');
+        out.write('4');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('1234');
             done();
         });
     });
 
     it('should render a series of sync and async calls correctly', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext1 = context.beginAsync();
+        var asyncOut1 = out.beginAsync();
         setTimeout(function() {
-            asyncContext1.write('2');
-            asyncContext1.end();
+            asyncOut1.write('2');
+            asyncOut1.end();
         }, 100);
-        
-        context.write('3');
 
-        var asyncContext2 = context.beginAsync();
+        out.write('3');
+
+        var asyncOut2 = out.beginAsync();
         setTimeout(function() {
-            asyncContext2.write('4');
-            asyncContext2.end();
+            asyncOut2.write('4');
+            asyncOut2.end();
         }, 10);
 
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('1234');
             done();
         });
     });
 
     it('should allow an async fragment to complete synchronously', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.write('2');
-            asyncContext.end();
+            asyncOut.write('2');
+            asyncOut.end();
         }, 10);
 
-        context.write('3');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.write('3');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('123');
             done();
         });
     });
 
     it('should allow the async callback to provide data', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.end('2');
+            asyncOut.end('2');
         }, 10);
 
-        context.write('3');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.write('3');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('123');
             done();
         });
     });
 
     it('should handle timeouts correctly', function(done) {
-        var context = require('../').create();
+        var out = require('../').create();
         var errors = [];
-        context.on('error', function(e) {
+        out.on('error', function(e) {
             errors.push(e);
         });
 
-        context.write('1');
+        out.write('1');
 
-        var asyncContext = context.beginAsync({timeout: 100, name: 'test'});
+        var asyncOut = out.beginAsync({timeout: 100, name: 'test'});
         setTimeout(function() {
-            asyncContext.write('2');
-            asyncContext.end();
+            asyncOut.write('2');
+            asyncOut.end();
         }, 200);
 
-        context.write('3');
-        context.end();
-        
-        context.on('end', function() {
+        out.write('3');
+        out.end();
+
+        out.on('end', function() {
             expect(errors.length).to.equal(1);
-            expect(context.getOutput()).to.equal('13');
+            expect(out.getOutput()).to.equal('13');
             done();
         });
     });
 
     it('should render nested async calls correctly', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.write('2a');
+            asyncOut.write('2a');
 
-            var nestedAsyncContext = asyncContext.beginAsync();
+            var nestedAsyncContext = asyncOut.beginAsync();
             setTimeout(function() {
                 nestedAsyncContext.write('2b');
                 nestedAsyncContext.end();
             }, 10);
-            
 
-            asyncContext.write('2c');
-            asyncContext.end();
+
+            asyncOut.write('2c');
+            asyncOut.end();
         }, 10);
 
-        context.write('3');
+        out.write('3');
 
-        var asyncContext2 = context.beginAsync();
+        var asyncOut2 = out.beginAsync();
         setTimeout(function() {
-            var nestedAsyncContext = asyncContext2.beginAsync();
+            var nestedAsyncContext = asyncOut2.beginAsync();
             setTimeout(function() {
                 nestedAsyncContext.write('4a');
                 nestedAsyncContext.end();
             }, 10);
 
-            var nestedAsyncContext2 = asyncContext2.beginAsync();
+            var nestedAsyncContext2 = asyncOut2.beginAsync();
             setTimeout(function() {
                 nestedAsyncContext2.write('4b');
                 nestedAsyncContext2.end();
             }, 10);
-            
 
-            asyncContext2.write('4c');
-            asyncContext2.end();
+
+            asyncOut2.write('4c');
+            asyncOut2.end();
         }, 10);
 
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('12a2b2c34a4b4c');
             done();
         });
     });
 
     it('should handle sync errors correctly', function(done) {
-        var context = require('../').create();
+        var out = require('../').create();
         var errors = [];
-        context.on('error', function(e) {
+        out.on('error', function(e) {
             errors.push(e);
         });
 
-        context.write('1');
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.error(new Error('test'));
+            asyncOut.error(new Error('test'));
         }, 10);
-        context.write('3');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.write('3');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(errors.length).to.equal(1);
             expect(output).to.equal('13');
             done();
@@ -193,24 +193,24 @@ describe('raptor-render-context' , function() {
 
     it('should support chaining', function(done) {
         var errors = [];
-        var context = require('../').create()
+        var out = require('../').create()
             .on('error', function(e) {
                 errors.push(e);
             })
             .on('end', function() {
-                var output = context.getOutput();
+                var output = out.getOutput();
                 expect(errors.length).to.equal(1);
                 expect(output).to.equal('13');
                 done();
             })
             .write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.error(new Error('test'));
+            asyncOut.error(new Error('test'));
         }, 10);
 
-        context.write('3')
+        out.write('3')
             .end();
     });
 
@@ -224,7 +224,7 @@ describe('raptor-render-context' , function() {
         );
 
         var errors = [];
-        var context = require('../').create(through)
+        var out = require('../').create(through)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -235,13 +235,13 @@ describe('raptor-render-context' , function() {
             })
             .write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.write('2');
-            asyncContext.end();
+            asyncOut.write('2');
+            asyncOut.end();
         }, 10);
 
-        context.write('3')
+        out.write('3')
             .end();
     });
 
@@ -255,11 +255,11 @@ describe('raptor-render-context' , function() {
             expect(errors.length).to.equal(0);
             expect(output).to.equal('123');
             fs.unlinkSync(outFile);
-            done(); 
+            done();
         });
 
         var errors = [];
-        var context = require('../').create(out)
+        out = require('../').create(out)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -267,36 +267,36 @@ describe('raptor-render-context' , function() {
             })
             .write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
         setTimeout(function() {
-            asyncContext.write('2');
-            asyncContext.end();
+            asyncOut.write('2');
+            asyncOut.end();
         }, 10);
 
-        context.write('3')
+        out.write('3')
             .end();
     });
 
-    it('should support piping to an async render context', function(done) {
+    it('should support piping to an async writer', function(done) {
 
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
 
         var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
-        helloReadStream.pipe(asyncContext);
+        helloReadStream.pipe(asyncOut);
 
-        context.write('2');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+        out.write('2');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('1Hello World2');
             done();
         });
     });
 
-    it('should support a render context being piped to another stream', function(done) {
+    it('should support a writer being piped to another stream', function(done) {
 
         var through = require('through')();
         var outStr = '';
@@ -317,68 +317,67 @@ describe('raptor-render-context' , function() {
                 done(e);
             });
 
-        var context = require('../').create(through);
-        context.write('1');
+        out = require('../').create(through);
+        out.write('1');
 
-        var asyncContext = context.beginAsync();
+        var asyncOut = out.beginAsync();
 
         var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
-        helloReadStream.pipe(asyncContext);
+        helloReadStream.pipe(asyncOut);
 
-        context.write('2');
-        context.end();
-        
+        out.write('2');
+        out.end();
+
     });
 
     it('should allow an async fragment to flush last', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync({last: true});
-        context.once('last', function() {
-            asyncContext.write('2');
-            asyncContext.end();
+        var asyncOut = out.beginAsync({last: true});
+        out.once('last', function() {
+            asyncOut.write('2');
+            asyncOut.end();
         });
 
-        
-        context.write('3');
-        context.end();
-        context.on('end', function() {
-            var output = context.getOutput();
+
+        out.write('3');
+        out.end();
+        out.on('end', function() {
+            var output = out.getOutput();
             expect(output).to.equal('123');
             done();
         });
     });
 
     it('should allow an async fragment to flush last asynchronously', function(done) {
-        var context = require('../').create();
-        context.write('1');
+        var out = require('../').create();
+        out.write('1');
 
-        var asyncContext = context.beginAsync({last: true});
-        context.on('last', function() {
+        var asyncOut = out.beginAsync({last: true});
+        out.on('last', function() {
             lastFiredCount++;
         });
 
-        context.once('last', function() {
+        out.once('last', function() {
             setTimeout(function() {
-                asyncContext.write('2');
-                asyncContext.end();
+                asyncOut.write('2');
+                asyncOut.end();
             }, 10);
         });
 
         var lastFiredCount = 0;
 
-        
 
-        
-        context.write('3');
-        context.end();
-        context.on('end', function() {
+
+
+        out.write('3');
+        out.end();
+        out.on('end', function() {
             expect(lastFiredCount).to.equal(1);
-            var output = context.getOutput();
+            var output = out.getOutput();
             expect(output).to.equal('123');
             done();
         });
     });
 });
-
