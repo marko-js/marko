@@ -1,0 +1,10 @@
+<c-include template="./include-target.marko" name="${'Frank'}" count="20"/>
+<c-include template="./include-target.marko" name="Frank" count="${20}"/>
+<c-include template="./include-target.marko" template-data="{name: 'Frank', count: 20}"/>
+<c-include template="./include-nested-content.marko" name="Frank" count="${20}">
+    Have a 
+    <b>
+        wonderful
+    </b>
+    day!
+</c-include>

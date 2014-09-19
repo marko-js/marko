@@ -7,7 +7,7 @@ var nodePath = require('path');
 var raptorTemplates = require('../');
 var through = require('through');
 
-describe('raptor-templates/api' , function() {
+describe('marko/api' , function() {
 
     before(function() {
         require('../compiler').defaultOptions.checkUpToDate = false;
@@ -20,7 +20,7 @@ describe('raptor-templates/api' , function() {
 
     it('should allow a template to be rendered using a callback', function(done) {
         raptorTemplates.render(
-            nodePath.join(__dirname, 'test-project/hello.rhtml'),
+            nodePath.join(__dirname, 'test-project/hello.marko'),
             {
                 name: 'John'
             },
@@ -46,7 +46,7 @@ describe('raptor-templates/api' , function() {
             });
 
         raptorTemplates.render(
-            nodePath.join(__dirname, 'test-project/hello.rhtml'),
+            nodePath.join(__dirname, 'test-project/hello.marko'),
             {
                 name: 'John'
             },
@@ -73,7 +73,7 @@ describe('raptor-templates/api' , function() {
             });
 
         raptorTemplates.render(
-            nodePath.join(__dirname, 'test-project/hello.rhtml'),
+            nodePath.join(__dirname, 'test-project/hello.marko'),
             {
                 name: 'John'
             },
@@ -92,7 +92,7 @@ describe('raptor-templates/api' , function() {
 
 
         raptorTemplates.stream(
-            nodePath.join(__dirname, 'test-project/hello.rhtml'),
+            nodePath.join(__dirname, 'test-project/hello.marko'),
             {
                 name: 'John'
             })
@@ -110,7 +110,7 @@ describe('raptor-templates/api' , function() {
     /// TEMPLATE LOADING:
 
     it('should allow a template to be loaded and rendered using a callback', function(done) {
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -135,7 +135,7 @@ describe('raptor-templates/api' , function() {
                 done(e);
             });
 
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -162,7 +162,7 @@ describe('raptor-templates/api' , function() {
                 done(e);
             });
 
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -172,7 +172,7 @@ describe('raptor-templates/api' , function() {
     });
 
     it('should allow a template to be loaded and rendered to a stream', function(done) {
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.marko'));
 
         var output = '';
         var outStream = through(function write(data) {
@@ -194,13 +194,13 @@ describe('raptor-templates/api' , function() {
     });
 
     it('should allow a template to be rendered to a string synchronously using renderSync', function() {
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello.marko'));
         var output = template.renderSync({ name: 'John' });
         expect(output).to.equal('Hello John!');
     });
 
     it('should throw an error if beginAsync is used with renderSync', function() {
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-async.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-async.marko'));
         var output;
         var e;
 
@@ -221,7 +221,7 @@ describe('raptor-templates/api' , function() {
     });
 
     it('should throw errors correctly with renderSync', function() {
-        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-error.rhtml'));
+        var template = raptorTemplates.load(nodePath.join(__dirname, 'test-project/hello-error.marko'));
         var output;
         var e;
 

@@ -5,7 +5,7 @@ require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
 
-describe('raptor-taglibs/taglib-lookup' , function() {
+describe('taglib-lookup' , function() {
 
     beforeEach(function(done) {
         for (var k in require.cache) {
@@ -102,7 +102,7 @@ describe('raptor-taglibs/taglib-lookup' , function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
         var tag = lookup.getTag('nested-foo');
-        
+
         expect(tag != null).to.equal(true);
         expect(tag.name).to.equal('nested-foo');
     });
@@ -154,12 +154,12 @@ describe('raptor-taglibs/taglib-lookup' , function() {
         expect(transformers[0].path.indexOf('foo')).to.not.equal(-1);
         expect(transformers[1].path.indexOf('core-tag-transformer')).to.not.equal(-1);
         expect(transformers[2].path.indexOf('html-tag-transformer')).to.not.equal(-1);
-        
+
         transformers = [];
         lookup.forEachTagTransformer('transform-bar', function(transformer) {
             transformers.push(transformer);
         });
-        
+
         expect(transformers.length).to.equal(3);
         expect(transformers[0].path.indexOf('core-tag-transformer')).to.not.equal(-1);
         expect(transformers[1].path.indexOf('bar')).to.not.equal(-1);
@@ -181,6 +181,5 @@ describe('raptor-taglibs/taglib-lookup' , function() {
         expect(transformers[1].path.indexOf('else-tag-transformer')).to.not.equal(-1);
         expect(transformers[2].path.indexOf('html-tag-transformer')).to.not.equal(-1);
     });
-    
-});
 
+});

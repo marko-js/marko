@@ -17,7 +17,7 @@
  * This module provides the runtime for rendering compiled templates.
  *
  *
- * <p>The code for the Raptor Templates compiler is kept separately
+ * <p>The code for the Marko compiler is kept separately
  * in the {@link raptor/templating/compiler} module.
  */
 var renderContext = require('raptor-render-context');

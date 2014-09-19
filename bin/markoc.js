@@ -33,14 +33,14 @@ var args = require('raptor-args').createParser({
         },
         '--clean -c': {
             type: 'boolean',
-            description: 'Clean all of the *.rhtml.js files'
+            description: 'Clean all of the *.marko.js files'
         }
     })
     .usage('Usage: $0 <pattern> [options]')
-    .example('Compile a single template', '$0 template.rhtml')
+    .example('Compile a single template', '$0 template.marko')
     .example('Compile all templates in the current directory', '$0 .')
-    .example('Compile multiple templates', '$0 template.rhtml src/ foo/')
-    .example('Delete all *.rhtml.js files in the current directory', '$0 . --clean')
+    .example('Compile multiple templates', '$0 template.marko src/ foo/')
+    .example('Delete all *.marko.js files in the current directory', '$0 . --clean')
     .validate(function(result) {
         if (result.help) {
             this.printUsage();
@@ -210,7 +210,7 @@ if (args.clean) {
             file: function(file, context) {
                 var basename = nodePath.basename(file);
 
-                if (basename.endsWith('.rhtml.js') || basename.endsWith('.rxml.js')) {
+                if (basename.endsWith('.marko.js') || basename.endsWith('.marko.xml.js')) {
                     context.beginAsync();
                     fs.unlink(file, function(err) {
                         if (err) {
@@ -227,7 +227,7 @@ if (args.clean) {
         },
         function(err) {
             if (deleteCount === 0) {
-                console.log('No *.rhtml.js files were found. Already clean.');
+                console.log('No *.marko.js files were found. Already clean.');
             } else {
                 console.log('Deleted ' + deleteCount + ' file(s)');
             }
@@ -282,7 +282,7 @@ if (args.clean) {
                 file: function(file, context) {
                     var basename = nodePath.basename(file);
 
-                    if (basename.endsWith('.rhtml') || basename.endsWith('.rxml')) {
+                    if (basename.endsWith('.marko') || basename.endsWith('.marko.xml')) {
                         compile(file, context);
                     }
                 }

@@ -1,7 +1,7 @@
-Raptor Templates
+Marko
 ================
 
-Raptor Templates is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Raptor Templates was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Raptor Templates compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Raptor Templates allows you to introduce your own custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
+Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows you to introduce your own custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -54,7 +54,7 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 	- [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
 	- [Tag Renderer](#tag-renderer)
-	- [raptor-taglib.json](#raptor-taglibjson)
+	- [marko-taglib.json](#marko-taglibjson)
 		- [Sample Taglib](#sample-taglib)
 		- [Defining Tags](#defining-tags)
 			- [Defining Attributes](#defining-attributes)
@@ -71,11 +71,11 @@ Raptor Templates is an extensible, streaming, asynchronous, [high performance](h
 
 # Another Templating Language?
 
-Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Raptor Templates introduced? 
+Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced? 
 
-What makes Raptor Templates different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Raptor Template and vice-versa, and the Raptor Templates compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Raptor Templates understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Raptor Templates allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
+What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Raptor Template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
 
-Let's compare Raptor Templates with Handlebars (a text-based templating language):
+Let's compare Marko with Handlebars (a text-based templating language):
 
 __Handlebars:__
 
@@ -97,7 +97,7 @@ Hello {{name}}!
 {{/if}}
 ```
 
-__Raptor Templates:__
+__Marko:__
 
 ```html
 Hello ${data.name}!
@@ -112,15 +112,15 @@ Hello ${data.name}!
 </div>
 ```
 
-A few things to note for the Raptor template:
+A few things to note for the Marko template:
 
 * Less lines of code
 * Less lines are "touched" to make the template dynamic
 * Only opening tags are modified for conditionals and looping
 
-Beyond Raptor Templates being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Raptor Templates compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Raptor Templates fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
+Beyond Marko being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Marko compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Marko fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
 
-Finally, another distinguishing feature of Raptor Templates is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Raptor Template rendering engine ensures that the final HTML will be streamed out in the correct order.
+Finally, another distinguishing feature of Marko is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Raptor Template rendering engine ensures that the final HTML will be streamed out in the correct order.
 
 # Design Philosophy
 
@@ -157,8 +157,8 @@ Hello ${data.name}!
 The template can then be rendered as shown in the following sample code:
 
 ```javascript
-var templatePath = require.resolve('./hello.rhtml');
-var template = require('raptor-templates').load(templatePath);
+var templatePath = require.resolve('./hello.marko');
+var template = require('marko').load(templatePath);
 
 template.render({
         name: 'World',
@@ -200,7 +200,7 @@ Hello World!
 The streaming API can be used to stream the output to an HTTP response stream or any other writable stream. For example, with Express:
 
 ```javascript
-var template = require('raptor-templates').load(require.resolve('./template.rhtml'));
+var template = require('marko').load(require.resolve('./template.marko'));
 
 app.get('/profile', function(req, res) {
     template.stream({
@@ -210,10 +210,10 @@ app.get('/profile', function(req, res) {
 });
 ```
 
-Raptor Templates also supports custom tags so you can easily extend the HTML grammar to support things like the following:
+Marko also supports custom tags so you can easily extend the HTML grammar to support things like the following:
 
 ```html
-Welcome to Raptor Templates!
+Welcome to Marko!
 
 <ui-tabs>
     <ui-tab label="Home">
@@ -261,14 +261,14 @@ The custom tags encapsulate rendering logic and help avoid repeating the same HT
 
 # Installation
 
-To install the `raptor-templates` module into your project you should use the following command:
+To install the `marko` module into your project you should use the following command:
 ```bash
-npm install raptor-templates --save
+npm install marko --save
 ```
 
-To install the optional `rhtmlc` command line interface to compile templates you can use the following command:
+To install the optional `markoc` command line interface to compile templates you can use the following command:
 ```bash
-npm install raptor-templates --global
+npm install marko --global
 ```
 
 # Usage
@@ -277,7 +277,7 @@ npm install raptor-templates --global
 
 ### Callback API
 ```javascript
-var template = require('raptor-templates').load('template.rhtml');
+var template = require('marko').load('template.marko');
 
 template.render({
         name: 'Frank',
@@ -296,7 +296,7 @@ template.render({
 ### Streaming API
 
 ```javascript
-var template = require('raptor-templates').load('template.rhtml');
+var template = require('marko').load('template.marko');
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
 // Render the template to 'index.html'
@@ -310,7 +310,7 @@ template.stream({
 Alternatively, you can render directly to an existing stream to avoid creating an intermediate stream:
 
 ```javascript
-var template = require('raptor-templates').load('template.rhtml');
+var template = require('marko').load('template.marko');
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
 // Render the template to 'index.html'
@@ -326,7 +326,7 @@ _NOTE:_ This will end the target output stream.
 If you know that your template rendering requires no asynchronous rendering then you can use the synchronous API to render a template to a String:
 
 ```javascript
-var template = require('raptor-templates').load('template.rhtml');
+var template = require('marko').load('template.marko');
 
 var output = template.renderSync({
         name: 'Frank',
@@ -338,8 +338,8 @@ console.log('Output HTML: ' + output);
 ### Asynchronous Render Context API
 
 ```javascript
-var raptorTemplates = require('raptor-templates');
-var template = raptorTemplates.load('template.rhtml');
+var raptorTemplates = require('marko');
+var template = raptorTemplates.load('template.marko');
 
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
@@ -380,8 +380,8 @@ Given the following module code that will be used to render a template on the cl
 _run.js_:
 ```javascript
 
-var templatePath = require.resolve('./hello.rhtml');
-var template = require('raptor-templates').load(templatePath);
+var templatePath = require.resolve('./hello.marko');
+var template = require('marko').load(templatePath);
 
 templatePath.render({
         name: 'John'
@@ -391,18 +391,18 @@ templatePath.render({
     });
 ```
 
-You can then bundle up the above program for running in the browser using either [raptor-optimizer](https://github.com/raptorjs3/raptor-optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
+You can then bundle up the above program for running in the browser using either [optimizer](https://github.com/raptorjs3/optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
 
 
 ### Using the RaptorJS Optimizer
 
-The `raptor-optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Raptor Template files using a command similar to the following:
+The `optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Raptor Template files using a command similar to the following:
 ```bash
-# First install the raptor-optimizer and the raptor-optimizer-rhtml plugin
-npm install raptor-optimizer --global
-npm install raptor-optimizer-rhtml
+# First install the optimizer and the optimizer-marko plugin
+npm install optimizer --global
+npm install optimizer-marko
 
-raptor-optimizer --main run.js --name my-page --plugins raptor-optimizer-rhtml
+optimizer --main run.js --name my-page --plugins optimizer-marko
 ```
 
 This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization. 
@@ -410,61 +410,61 @@ This will produce a JSON file named `build/my-page.html.json` that contains the 
 Alternatively, you can inject the HTML markup into a static HTML file using the following command:
 
 ```bash
-raptor-optimizer --main run.js --name my-page --plugins raptor-optimizer-rhtml --inject-into my-page.html
+optimizer --main run.js --name my-page --plugins optimizer-marko --inject-into my-page.html
 ```
 
 
 ### Using Browserify
 
-The `rhtmlify` transform for browserify must be enabled in order to automatically compile and include referenced Raptor Template files.
+The `markoify` transform for browserify must be enabled in order to automatically compile and include referenced Raptor Template files.
 
 ```bash
-# Install the rhtmlify plugin from npm:
-npm install rhtmlify --save
+# Install the markoify plugin from npm:
+npm install markoify --save
 
 # Build the browser bundle:
-browserify -t rhtmlify run.js > browser.js
+browserify -t markoify run.js > browser.js
 ```
 
 
 ## Template Compilation
 
-The Raptor Templates compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/raptor-optimizer) or [Browserify](https://github.com/substack/node-browserify).
+The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
 
-The `raptor-templates` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
+The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
-You can either use the command line interface or the JavaScript API to compile a Raptor Template file. To use the CLI you must first install the `raptor-templates` module globally using the following command:
+You can either use the command line interface or the JavaScript API to compile a Raptor Template file. To use the CLI you must first install the `marko` module globally using the following command:
 ```bash
-npm install raptor-templates --global
+npm install marko --global
 ```
 
 You can then compile single templates using the following command:
 ```bash
-rhtmlc hello.rhtml
+markoc hello.marko
 ```
 
-This will produce a file named `hello.rhtml.js` next to the original file.
+This will produce a file named `hello.marko.js` next to the original file.
 
 You can also recursively compile all templates in the current directory (the `node_modules` and `.*` directories will be ignored by default)
 
 ```bash
-rhtmlc .
+markoc .
 ```
 
 You can also specify multiple directories or files
 ```bash
-rhtmlc foo/ bar/ template.rhtml
+markoc foo/ bar/ template.marko
 ```
 
-To delete all of the generated `*.rhtml.js` files you can add the `--clean` argument. For example:
+To delete all of the generated `*.marko.js` files you can add the `--clean` argument. For example:
 ```bash
-rhtmlc . --clean
+markoc . --clean
 ```
 
 
 Alternatively, you can use the JavaScript API to compile a module as shown in the following sample code:
 ```javascript
-require('raptor-templates/compiler').compileFile(path, function(err, src) {
+require('marko/compiler').compileFile(path, function(err, src) {
     // Do something with the compiled output 
 });
 ```
@@ -617,7 +617,7 @@ For example, both of the following are valid and equivalent:
 Other Raptor Template files can be included using the `<c-include>` tag and a relative path. For example:
 
 ```html
-<c-include template="./greeting.rhtml" name="Frank" count="30"/>
+<c-include template="./greeting.marko" name="Frank" count="30"/>
 ```
 
 ## Variables
@@ -1047,7 +1047,7 @@ exports.reverse = function(str) {
 
 The above module can then be imported into a template as shown in the following sample template:
 
-_src/template.rhtml_:
+_src/template.marko_:
 ```html
 <c-require module="./util" var="util" />
 
@@ -1056,7 +1056,7 @@ _src/template.rhtml_:
 
 ## Custom Tags and Attributes
 
-Raptor Templates supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
+Marko supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
 
 Below illustrates how to use a simple custom tag:
 
@@ -1111,13 +1111,13 @@ template.render({
 </async-fragment>
 ```
 
-For more details, please see [https://github.com/raptorjs3/raptor-taglib-async](https://github.com/raptorjs3/raptor-taglib-async).
+For more details, please see [https://github.com/raptorjs3/marko-taglib-async](https://github.com/raptorjs3/marko-taglib-async).
 
 ## Layout Taglib
 
-Raptor Templates provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
+Marko provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
    
-_default-layout.rhtml:_
+_default-layout.marko:_
 
 ```html
 <!doctype html>
@@ -1142,24 +1142,24 @@ _default-layout.rhtml:_
 </html>
 ```
 
-_Usage of `default-layout.rhtml`:_
+_Usage of `default-layout.marko`:_
 
 ```html
-<layout-use template="./default-layout.rhtml" show-header="$true">
+<layout-use template="./default-layout.marko" show-header="$true">
     <layout-put into="title">My Page</layout-put>
     <layout-put into="body">BODY CONTENT</layout-put>
 </layout-use>
 ```
 
 
-For more details, please see [https://github.com/raptorjs3/raptor-taglib-layout](https://github.com/raptorjs3/raptor-taglib-layout).
+For more details, please see [https://github.com/raptorjs3/marko-taglib-layout](https://github.com/raptorjs3/marko-taglib-layout).
 
 # Custom Taglibs
 
 
 ## Tag Renderer
 
-Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`input` and `context`). The `input` argument is an arbitrary object that contains the input data for the renderer. The `context` argument is an [asynchronous rendering context](https://github.com/raptorjs3/raptor-render-context) that wraps an output stream. Output can be produced using `context.write(someString)` There is no class hierarchy or tie-ins to Raptor Templates when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`input` and `context`). The `input` argument is an arbitrary object that contains the input data for the renderer. The `context` argument is an [asynchronous rendering context](https://github.com/raptorjs3/raptor-render-context) that wraps an output stream. Output can be produced using `context.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
 module.exports = function(input, context) {
@@ -1179,9 +1179,9 @@ module.exports = function(input, context) {
 }
 ```
 
-A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.json` as shown in the next few sections.
+A tag renderer should be mapped to a custom tag by creating a `marko-taglib.json` as shown in the next few sections.
 
-## raptor-taglib.json
+## marko-taglib.json
 
 ### Sample Taglib
 
@@ -1200,7 +1200,7 @@ A tag renderer should be mapped to a custom tag by creating a `raptor-taglib.jso
 
 ### Defining Tags
 
-Tags can be defined by adding a `"tags"` property to your `raptor-taglib.json`:
+Tags can be defined by adding a `"tags"` property to your `marko-taglib.json`:
 
 ```json
 {
@@ -1225,7 +1225,7 @@ Every tag should be associated with a renderer. When a custom tag is used in a t
 
 #### Defining Attributes
 
-If you provide attributes then the Raptor Templates compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
+If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
 
 _Multiple attributes:_
 ```javascript
@@ -1238,15 +1238,15 @@ _Multiple attributes:_
 
 ### Scanning for Tags
 
-Raptor Templates supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
+Marko supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
 
 * The name of the tag directory will be the name of the tag
 * One tag per directory
 * All tag directories should be direct children of a parent directory
-* Every tag directory must contain a `renderer.js` that is used as the tag renderer or, alternatively, a `template.rhtml`
-* Each tag directory may contain a `raptor-tag.json` file or the tag definition can be embedded into `renderer.js`
+* Every tag directory must contain a `renderer.js` that is used as the tag renderer or, alternatively, a `template.marko`
+* Each tag directory may contain a `marko-tag.json` file or the tag definition can be embedded into `renderer.js`
 
-With this approach, `raptor-taglib.json` will be much simpler:
+With this approach, `marko-taglib.json` will be much simpler:
 
 ```json
 {
@@ -1260,11 +1260,11 @@ Given the following directory structure:
     * __my-hello/__
         * renderer.js
     * __my-foo/__
-        * template.rhtml
+        * template.marko
     * __my-bar/__
         * renderer.js
-        * raptor-tag.json
-* raptor-taglib.json
+        * marko-tag.json
+* marko-taglib.json
 
 The following three tags will be exported:
 
@@ -1272,7 +1272,7 @@ The following three tags will be exported:
 * `<my-foo>`
 * `<my-bar>`
 
-Directory scanning only supports one tag per directory and it will only look at directories one level deep. The tag definition can be embedded into the `renderer.js` file or it can be put into a separate `raptor-tag.json`. For example:
+Directory scanning only supports one tag per directory and it will only look at directories one level deep. The tag definition can be embedded into the `renderer.js` file or it can be put into a separate `marko-tag.json`. For example:
 
 _In `renderer.js`:_
 
@@ -1284,7 +1284,7 @@ exports.tag = {
 }
 ```
 
-_In `raptor-tag.json`:_
+_In `marko-tag.json`:_
 
 ```javascript
 {
@@ -1308,7 +1308,7 @@ It is often necessary for tags to have a parent/child or ancestor/descendent rel
 </ui-tabs>
 ```
 
-Raptor Templates supports this by leveraging JavaScript closures in the compiled output. A tag can introduce scoped variables that are available to nested tags. This is shown in the sample `raptor-taglib.json` below:
+Marko supports this by leveraging JavaScript closures in the compiled output. A tag can introduce scoped variables that are available to nested tags. This is shown in the sample `marko-taglib.json` below:
 
 ```json
 {
@@ -1337,8 +1337,8 @@ The complete code for this example is shown below:
 _components/tabs/renderer.js:_
 
 ```javascript
-var templatePath = require.resolve('./template.rhtml');
-var template = require('raptor-templates').load(templatePath);
+var templatePath = require.resolve('./template.marko');
+var template = require('marko').load(templatePath);
 
 module.exports = function render(input, context) {
     var nestedTabs = [];  
@@ -1367,7 +1367,7 @@ module.exports = function render(input, context) {
 };
 ```
 
-_components/tabs/template.rhtml:_
+_components/tabs/template.marko:_
 
 ```html
 <div class="tabs">
@@ -1389,30 +1389,30 @@ _components/tabs/template.rhtml:_
 
 ## Taglib Discovery
 
-Given a template file, the `raptor-templates` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs. 
+Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs. 
 
-As an example, given a template at path `/my-project/src/pages/login/template.rhtml`, the search path will be the following:
+As an example, given a template at path `/my-project/src/pages/login/template.marko`, the search path will be the following:
 
-1. `/my-project/src/pages/login/raptor-taglib.json`
-2. `/my-project/src/pages/login/node_modules/*/raptor-taglib.json`
-3. `/my-project/src/pages/raptor-taglib.json`
-4. `/my-project/src/pages/node_modules/*/raptor-taglib.json`
-5. `/my-project/src/raptor-taglib.json`
-6. `/my-project/src/node_modules/*/raptor-taglib.json`
-7. `/my-project/raptor-taglib.json`
-8. `/my-project/node_modules/*/raptor-taglib.json`
+1. `/my-project/src/pages/login/marko-taglib.json`
+2. `/my-project/src/pages/login/node_modules/*/marko-taglib.json`
+3. `/my-project/src/pages/marko-taglib.json`
+4. `/my-project/src/pages/node_modules/*/marko-taglib.json`
+5. `/my-project/src/marko-taglib.json`
+6. `/my-project/src/node_modules/*/marko-taglib.json`
+7. `/my-project/marko-taglib.json`
+8. `/my-project/node_modules/*/marko-taglib.json`
 
 # FAQ
 
-__Question:__ _Is Raptor Templates ready for production use?_
+__Question:__ _Is Marko ready for production use?_
 
-__Answer__: Yes, Raptor Templates has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind.
+__Answer__: Yes, Marko has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind.
 
 <hr>
 
 __Question:__ _Can templates be compiled on the client?_
 
-__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs3/raptor-optimizer) is recommended for including compiled templates as part of a web page.
+__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) is recommended for including compiled templates as part of a web page.
 
 <hr>
 
@@ -1422,12 +1422,12 @@ __Answer__: The runtime for template rendering is supported in all web browsers.
 
 <hr>
 
-__Question:__ _How can Raptor Templates be used with Express?_
+__Question:__ _How can Marko be used with Express?_
 
-__Answer__: The recommended way to use Raptor Templates with Express is to bypass the Express view engine and instead have Raptor Templates render directly to the response stream as shown in the following code:
+__Answer__: The recommended way to use Marko with Express is to bypass the Express view engine and instead have Marko render directly to the response stream as shown in the following code:
 
 ```javascript
-var template = require('raptor-templates').load(require.resolve('./template.rhtml'));
+var template = require('marko').load(require.resolve('./template.marko'));
 
 app.get('/profile', function(req, res) {
     template
@@ -1442,7 +1442,7 @@ With this approach, you can benefit from streaming and there is no middleman (le
 Alternatively, you can use the streaming API to produce an intermediate stream that can then be piped to the response stream as shown below:
 
 ```javascript
-var template = require('view-engine').load(require.resolve('./template.rhtml'));
+var template = require('view-engine').load(require.resolve('./template.marko'));
 
 app.get('/profile', function(req, res) {
     template.stream({
@@ -1454,21 +1454,21 @@ app.get('/profile', function(req, res) {
 
 <hr>
 
-__Question:__ _I heard Raptor Templates is XML-based. What is that about?_
+__Question:__ _I heard Marko is XML-based. What is that about?_
 
-__Answer__: Raptor Templates started out using an XML parser. This required that templates be well-formed XML (a major source of problems). This is no longer the case, as the compiler has been updated to use the awesome [htmlparser2](https://github.com/fb55/htmlparser2) module by [Felix Boehm](https://github.com/fb55). Also, XML namespaces are no longer used and all taglibs are now defined using simple JSON. If you are coming from the old XML-based version of Raptor Templates, please see the [Migration Guide](migration.md).
+__Answer__: Marko started out using an XML parser. This required that templates be well-formed XML (a major source of problems). This is no longer the case, as the compiler has been updated to use the awesome [htmlparser2](https://github.com/fb55/htmlparser2) module by [Felix Boehm](https://github.com/fb55). Also, XML namespaces are no longer used and all taglibs are now defined using simple JSON. If you are coming from the old XML-based version of Marko, please see the [Migration Guide](migration.md).
 
 <hr>
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
 
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Raptor Templates, please see [raptor-templates-express-app](https://github.com/raptorjs3/raptor-samples/tree/master/raptor-templates-express-app).
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express-app](https://github.com/raptorjs3/raptor-samples/tree/master/marko-express-app).
 
 <hr>
 
-__Question:__ _How is Raptor Templates related to [RaptorJS](http://raptorjs.org)?_
+__Question:__ _How is Marko related to [RaptorJS](http://raptorjs.org)?_
 
-__Answer__: Raptor Templates is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
+__Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
 
 # Discuss
 

@@ -251,10 +251,10 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             continue;
         }
         var tagDirname = nodePath.join(dir, childFilename);
-        var tagFile = nodePath.join(dir, childFilename, 'raptor-tag.json');
+        var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
         var tag = null;
         var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
-        var templateFile = nodePath.join(dir, childFilename, 'template.rhtml');
+        var templateFile = nodePath.join(dir, childFilename, 'template.marko');
         var tagDef = null;
 
         // Record dependencies so that we can check if a template is up-to-date
@@ -262,7 +262,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
         taglib.addInputFile(rendererFile);
 
         if (fs.existsSync(tagFile)) {
-            // raptor-tag.json exists in the directory, use that as the tag definition
+            // marko-tag.json exists in the directory, use that as the tag definition
             tagDef = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
             if (!tagDef.renderer || !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
@@ -278,7 +278,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             tag.name = childFilename;
             taglib.addTag(tag);
         } else {
-            // raptor-tag.json does *not* exist... checking for a 'renderer.js'
+            // marko-tag.json does *not* exist... checking for a 'renderer.js'
             
 
             if (fs.existsSync(rendererFile)) {

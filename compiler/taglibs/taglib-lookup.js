@@ -21,7 +21,7 @@ function existsCached(path) {
 }
 
 function tryDir(dirname, discovered) {
-    var taglibPath = nodePath.join(dirname, 'raptor-taglib.json');
+    var taglibPath = nodePath.join(dirname, 'marko-taglib.json');
     if (existsCached(taglibPath)) {
         var taglib = taglibLoader.load(taglibPath);
 
@@ -51,7 +51,7 @@ function tryNodeModules(parent, discovered) {
         var children = fs.readdirSync(nodeModulesDir);
         children.forEach(function(moduleDirBasename) {
             var moduleDir = nodePath.join(nodeModulesDir, moduleDirBasename);
-            var taglibPath = nodePath.join(moduleDir, 'raptor-taglib.json');
+            var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
 
 
             if (existsCached(taglibPath)) {

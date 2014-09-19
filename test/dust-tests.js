@@ -18,7 +18,7 @@ dust.onLoad = function(path, callback) {
 };
 
 
-require('raptor-taglib-async/dust').registerHelpers(dust);
+require('marko-taglib-async/dust').registerHelpers(dust);
 
 function testRender(path, data, done, options) {
     options = options || {};
@@ -55,14 +55,14 @@ function testRender(path, data, done, options) {
     }); 
 }
 
-describe('raptor-templates/dust' , function() {
+describe('marko/dust' , function() {
 
     beforeEach(function(done) {
         done();
     });
 
     // it('should compile a simple page template', function() {
-    //     testCompiler('test-project/src/pages/page1.rhtml');
+    //     testCompiler('test-project/src/pages/page1.marko');
     // });
 
     it('should allow the async-fragment tag to be used inside a Dust template', function(done) {

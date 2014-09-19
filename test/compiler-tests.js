@@ -33,7 +33,7 @@ function testCompiler(path) {
     }
 }
 
-describe('raptor-templates/compiler' , function() {
+describe('marko/compiler' , function() {
 
     beforeEach(function(done) {
         for (var k in require.cache) {
@@ -43,30 +43,30 @@ describe('raptor-templates/compiler' , function() {
         }
 
         require('raptor-logging').configureLoggers({
-            'raptor-templates': 'INFO'
+            'marko': 'INFO'
         });
 
         done();
     });
 
     it('should compile a simple template', function() {
-        testCompiler('test-project/simple.rhtml');
+        testCompiler('test-project/simple.marko');
     });
 
     it('should compile a simple template with custom tag', function() {
-        testCompiler('test-project/custom-tag.rhtml');
+        testCompiler('test-project/custom-tag.marko');
     });
 
     it('should compile a simple template with expressions', function() {
-        testCompiler('test-project/hello-dynamic.rhtml');
+        testCompiler('test-project/hello-dynamic.marko');
     });
 
     // it.only('should compile a template with <c:invoke>', function() {
-    //     testCompiler('test-project/tabs.rhtml');
+    //     testCompiler('test-project/tabs.marko');
     // });
 
     // it('should compile a template with <c:include>', function() {
-    //     testCompiler('test-project/test-templates/include.rhtml');
+    //     testCompiler('test-project/test-templates/include.marko');
     // });
 
     

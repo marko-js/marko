@@ -1,4 +1,4 @@
-*.rhtml.js
-*.rxml.js
+*.marko.js
+*.marko.xml.js
 *.actual.js
 *.actual.html

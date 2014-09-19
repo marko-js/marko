@@ -24,7 +24,7 @@ exports.render = function(input, context) {
         tab.divClass = tab.active ? "tab-pane active" : "tab-pane";
     });
     
-    raptorTemplates.render(require.resolve('./tabs.rhtml'), {
+    raptorTemplates.render(require.resolve('./tabs.marko'), {
         tabs: tabs
     }, context);
     

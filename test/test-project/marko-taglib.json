@@ -61,7 +61,7 @@
             }
         },
         "test-page-title": {
-            "template": "./page-title-tag.rhtml",
+            "template": "./page-title-tag.marko",
             "attributes": {
                 "title": "string"
             }
@@ -82,7 +82,7 @@
             }
         },
         "test-template-tag-dynamic-attributes": {
-            "template": "./hello.rhtml"
+            "template": "./hello.marko"
         }
     },
     "tags-dir": "./scanned-tags"

@@ -60,7 +60,7 @@ function testRender(path, data, done, options) {
 
 }
 
-describe('raptor-templates/rhtml' , function() {
+describe('marko/marko' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -70,26 +70,26 @@ describe('raptor-templates/rhtml' , function() {
         // }
 
         // require('raptor-logging').configureLoggers({
-        //     'raptor-templates': 'INFO'
+        //     'marko': 'INFO'
         // });
 
         done();
     });
 
     it('should render a simple template', function(done) {
-        testRender('test-project/simple.rhtml', {}, done);
+        testRender('test-project/simple.marko', {}, done);
     });
 
     it('should render a simple template with expressions', function(done) {
-        testRender('test-project/hello-dynamic.rhtml', {name: 'John'}, done);
+        testRender('test-project/hello-dynamic.marko', {name: 'John'}, done);
     });
 
     it('should render a template with a custom tag', function(done) {
-        testRender('test-project/custom-tag.rhtml', {}, done);
+        testRender('test-project/custom-tag.marko', {}, done);
     });
 
     it("should allow for text replacement", function(done) {
-        testRender("test-project/rhtml-templates/text-replacement.rhtml", {
+        testRender("test-project/html-templates/text-replacement.marko", {
             person: {
                 name: "John",
                 address: {
@@ -103,7 +103,7 @@ describe('raptor-templates/rhtml' , function() {
     });
 
     it("should render simple template with logic", function(done) {
-        testRender("test-project/rhtml-templates/simple.rhtml", {
+        testRender("test-project/html-templates/simple.marko", {
             message: "Hello World!",
             rootClass: "title",
             colors: ["red", "green", "blue"]
@@ -111,67 +111,67 @@ describe('raptor-templates/rhtml' , function() {
     });
 
     it("should allow for simple template handlers", function(done) {
-        testRender("test-project/rhtml-templates/simple-handlers.rhtml", {dynamic: "universe"}, done);
+        testRender("test-project/html-templates/simple-handlers.marko", {dynamic: "universe"}, done);
     });
 
     it("should allow for template handlers with nested body content", function(done) {
-        testRender("test-project/rhtml-templates/nested-handlers.rhtml", {showConditionalTab: false}, done);
+        testRender("test-project/html-templates/nested-handlers.marko", {showConditionalTab: false}, done);
     });
 
     it("should allow entity expressions", function(done) {
-        testRender("test-project/rhtml-templates/entities.rhtml", {}, done);
+        testRender("test-project/html-templates/entities.marko", {}, done);
     });
 
     it("should allow escaped expressions", function(done) {
-        testRender("test-project/rhtml-templates/escaped.rhtml", {}, done);
+        testRender("test-project/html-templates/escaped.marko", {}, done);
     });
 
     it("should allow complex expressions", function(done) {
-        testRender("test-project/rhtml-templates/expressions.rhtml", {}, done);
+        testRender("test-project/html-templates/expressions.marko", {}, done);
     });
 
     it("should allow whitespace to be removed", function(done) {
-        testRender("test-project/rhtml-templates/whitespace.rhtml", {}, done);
+        testRender("test-project/html-templates/whitespace.marko", {}, done);
     });
 
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/rhtml-templates/whitespace2.rhtml", {}, done);
+        testRender("test-project/html-templates/whitespace2.marko", {}, done);
     });
 
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/rhtml-templates/whitespace2.rhtml", {}, done);
+        testRender("test-project/html-templates/whitespace2.marko", {}, done);
     });
 
     it("should normalize whitespace", function(done) {
-        testRender("test-project/rhtml-templates/whitespace3.rhtml", {}, done);
+        testRender("test-project/html-templates/whitespace3.marko", {}, done);
     });
 
     it("should handle whitespace correctly for mixed text and element children", function(done) {
-        testRender("test-project/rhtml-templates/whitespace-inline-elements.rhtml", {}, done);
+        testRender("test-project/html-templates/whitespace-inline-elements.marko", {}, done);
     });
 
     it("should allow HTML output that is not well-formed XML", function(done) {
-        testRender("test-project/rhtml-templates/html.rhtml", {}, done);
+        testRender("test-project/html-templates/html.marko", {}, done);
     });
 
     it("should allow for looping", function(done) {
-        testRender("test-project/rhtml-templates/looping.rhtml", {}, done);
+        testRender("test-project/html-templates/looping.marko", {}, done);
     });
 
     it("should allow for looping over properties", function(done) {
-        testRender("test-project/rhtml-templates/looping-props.rhtml", {}, done);
+        testRender("test-project/html-templates/looping-props.marko", {}, done);
     });
 
     it("should allow for looping over ranges", function(done) {
-        testRender("test-project/rhtml-templates/looping-range.rhtml", {}, done);
+        testRender("test-project/html-templates/looping-range.marko", {}, done);
     });
 
     it("should allow for dynamic attributes", function(done) {
-        testRender("test-project/rhtml-templates/attrs.rhtml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
+        testRender("test-project/html-templates/attrs.marko", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
 
     it("should allow for choose...when statements", function(done) {
-        testRender("test-project/rhtml-templates/choose-when.rhtml", {}, done);
+        testRender("test-project/html-templates/choose-when.marko", {}, done);
     });
 
     it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
@@ -183,7 +183,7 @@ describe('raptor-templates/rhtml' , function() {
         }
 
         try {
-            testRender("test-project/rhtml-templates/choose-when-invalid-otherwise-not-last.rhtml", {}, fakeDone);
+            testRender("test-project/html-templates/choose-when-invalid-otherwise-not-last.marko", {}, fakeDone);
         }
         catch(_e) {
             e = _e;
@@ -194,43 +194,43 @@ describe('raptor-templates/rhtml' , function() {
     });
 
     it("should allow for <c-def> functions", function(done) {
-        testRender("test-project/rhtml-templates/def.rhtml", {}, done);
+        testRender("test-project/html-templates/def.marko", {}, done);
     });
 
     it("should allow for <c-with> functions", function(done) {
-        testRender("test-project/rhtml-templates/with.rhtml", {}, done);
+        testRender("test-project/html-templates/with.marko", {}, done);
     });
 
     it("should allow for scriptlets", function(done) {
-        testRender("test-project/rhtml-templates/scriptlet.rhtml", {}, done);
+        testRender("test-project/html-templates/scriptlet.marko", {}, done);
     });
 
     it("should allow for when and otherwise as attributes", function(done) {
-        testRender("test-project/rhtml-templates/choose-when-attributes.rhtml", {}, done);
+        testRender("test-project/html-templates/choose-when-attributes.marko", {}, done);
     });
 
     it("should allow for elements to be stripped out at compile time", function(done) {
-        testRender("test-project/rhtml-templates/strip.rhtml", {}, done);
+        testRender("test-project/html-templates/strip.marko", {}, done);
     });
 
     it("should allow for body content to be replaced with the result of an expression", function(done) {
-        testRender("test-project/rhtml-templates/content.rhtml", {}, done);
+        testRender("test-project/html-templates/content.marko", {}, done);
     });
 
     it("should allow for an element to be replaced with the result of an expression", function(done) {
-        testRender("test-project/rhtml-templates/replace.rhtml", {message: "Hello World!"}, done);
+        testRender("test-project/html-templates/replace.marko", {message: "Hello World!"}, done);
     });
 
     it("should allow for includes", function(done) {
-        testRender("test-project/rhtml-templates/include.rhtml", {}, done);
+        testRender("test-project/html-templates/include.marko", {}, done);
     });
 
     it("should allow for <c-invoke function... />", function(done) {
-        testRender("test-project/rhtml-templates/invoke.rhtml", {}, done);
+        testRender("test-project/html-templates/invoke.marko", {}, done);
     });
 
     it("should allow for require", function(done) {
-        testRender("test-project/rhtml-templates/require.rhtml", {}, done);
+        testRender("test-project/html-templates/require.marko", {}, done);
     });
 
 
@@ -256,7 +256,7 @@ describe('raptor-templates/rhtml' , function() {
     //         }
     //     };
 
-    //     tryTemplate("test-project/rhtml-templates/errors.rhtml", function(message, errors) {
+    //     tryTemplate("test-project/html-templates/errors.marko", function(message, errors) {
     //         var len = errors ? errors.length : -1;
     //         expect(len).toEqual(25);
 
@@ -267,15 +267,15 @@ describe('raptor-templates/rhtml' , function() {
     // });
 
     it("should allow static file includes", function(done) {
-        testRender("test-project/rhtml-templates/include-resource-static.rhtml", {}, done);
+        testRender("test-project/html-templates/include-resource-static.marko", {}, done);
     });
 
     it("should allow HTML pages with inline script", function(done) {
-        testRender("test-project/rhtml-templates/inline-script.rhtml", {name: "World"}, done);
+        testRender("test-project/html-templates/inline-script.marko", {name: "World"}, done);
     });
 
     it("should allow CDATA inside templates", function(done) {
-        testRender("test-project/rhtml-templates/cdata.rhtml", {name: "World"}, done);
+        testRender("test-project/html-templates/cdata.marko", {name: "World"}, done);
     });
 
     // it("should allow type conversion", function(done) {
@@ -284,31 +284,31 @@ describe('raptor-templates/rhtml' , function() {
     // });
 
     it("should allow for if...else", function(done) {
-        testRender("test-project/rhtml-templates/if-else.rhtml", {}, done);
+        testRender("test-project/html-templates/if-else.marko", {}, done);
     });
 
     it("should allow for expressions and variables inside JavaScript strings", function(done) {
-        testRender("test-project/rhtml-templates/string-expressions.rhtml", {name: "John", count: 10}, done);
+        testRender("test-project/html-templates/string-expressions.marko", {name: "John", count: 10}, done);
     });
 
     it("should allow for simple conditionals", function(done) {
-        testRender("test-project/rhtml-templates/simple-conditionals.rhtml", {name: "John", count: 51}, done);
+        testRender("test-project/html-templates/simple-conditionals.marko", {name: "John", count: 51}, done);
     });
 
     it("should allow for conditional attributes", function(done) {
-        testRender("test-project/rhtml-templates/conditional-attributes.rhtml", {}, done);
+        testRender("test-project/html-templates/conditional-attributes.marko", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer using a custom property name", function(done) {
-        testRender("test-project/rhtml-templates/dynamic-attributes.rhtml", {}, done);
+        testRender("test-project/html-templates/dynamic-attributes.marko", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer", function(done) {
-        testRender("test-project/rhtml-templates/dynamic-attributes2.rhtml", {}, done);
+        testRender("test-project/html-templates/dynamic-attributes2.marko", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
-        testRender("test-project/rhtml-templates/dynamic-attributes3.rhtml", {}, done);
+        testRender("test-project/html-templates/dynamic-attributes3.marko", {}, done);
     });
 
     // it("should allow for nodes to be converted to expressions", function(done) {
@@ -337,52 +337,52 @@ describe('raptor-templates/rhtml' , function() {
     // });
 
     it("should allow for nested attributes", function(done) {
-        testRender("test-project/rhtml-templates/nested-attrs.rhtml", {active: true}, done);
+        testRender("test-project/html-templates/nested-attrs.marko", {active: true}, done);
     });
 
     it("should allow for new variables to be created and assigned values", function(done) {
-        testRender("test-project/rhtml-templates/var.rhtml", {active: true}, done);
+        testRender("test-project/html-templates/var.marko", {active: true}, done);
     });
 
 
     it("should handle XML escaping correctly", function(done) {
-        testRender("test-project/rhtml-templates/xml-escaping.rhtml", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
+        testRender("test-project/html-templates/xml-escaping.marko", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
     });
 
     it("should allow for a doctype tag and a doctype attribute", function(done) {
-        testRender("test-project/rhtml-templates/doctype.rhtml", {}, done);
+        testRender("test-project/html-templates/doctype.marko", {}, done);
     });
 
     it("should allow for using templates to render custom tags", function(done) {
-        testRender("test-project/rhtml-templates/template-as-tag.rhtml", {title: "My Page Title"}, done);
+        testRender("test-project/html-templates/template-as-tag.marko", {title: "My Page Title"}, done);
     });
 
     it("should allow for caching HTML fragments", function(done) {
-        testRender("test-project/rhtml-templates/caching.rhtml", {}, done);
+        testRender("test-project/html-templates/caching.marko", {}, done);
     });
 
     it("should escape XML in text node when enabled", function(done) {
-        testRender("test-project/rhtml-templates/escape-xml-enabled.rhtml", {}, done);
+        testRender("test-project/html-templates/escape-xml-enabled.marko", {}, done);
     });
 
     it("should not escape XML in text node when disabled", function(done) {
-        testRender("test-project/rhtml-templates/escape-xml-disabled.rhtml", {}, done);
+        testRender("test-project/html-templates/escape-xml-disabled.marko", {}, done);
     });
 
     it("should allow for attributes with default values", function(done) {
-        testRender("test-project/rhtml-templates/default-attributes.rhtml", {}, done);
+        testRender("test-project/html-templates/default-attributes.marko", {}, done);
     });
 
     it("should allow for input expressions to be provided to tag handler nodes", function(done) {
-        testRender("test-project/rhtml-templates/tag-input-expressions.rhtml", {name: "Frank", adult: true}, done);
+        testRender("test-project/html-templates/tag-input-expressions.marko", {name: "Frank", adult: true}, done);
     });
 
     it("should allow for using layouts", function(done) {
-        testRender("test-project/rhtml-templates/layout-use.rhtml", {}, done);
+        testRender("test-project/html-templates/layout-use.marko", {}, done);
     });
 
     it("should work with custom iteration", function(done) {
-        testRender("test-project/rhtml-templates/looping-iterator.rhtml", {
+        testRender("test-project/html-templates/looping-iterator.marko", {
             reverseIterator: function(arrayList, callback){
                 var statusVar = {first: 0, last: arrayList.length-1};
                 for(var i=arrayList.length-1; i>=0; i--){
@@ -394,15 +394,15 @@ describe('raptor-templates/rhtml' , function() {
     });
 
     it("should support scanning a directory for tags", function(done) {
-        testRender("test-project/rhtml-templates/scanned-tags.rhtml", {}, done);
+        testRender("test-project/html-templates/scanned-tags.marko", {}, done);
     });
 
     it("should support scanning a directory for tags", function(done) {
-        testRender("test-project/rhtml-templates/template-tag-dynamic-attributes.rhtml", {}, done);
+        testRender("test-project/html-templates/template-tag-dynamic-attributes.marko", {}, done);
     });
 
     it("should not escape HTML characters inside script tags", function(done) {
-        testRender("test-project/rhtml-templates/script-tag-entities.rhtml", {
+        testRender("test-project/html-templates/script-tag-entities.marko", {
             name: '<script>evil<script>'
         }, done);
     });

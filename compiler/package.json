@@ -1,3 +1,3 @@
 {
-    "main": "./raptor-templates-compiler.js"
+    "main": "./marko-compiler.js"
 }

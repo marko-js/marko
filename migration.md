@@ -1,7 +1,7 @@
-Raptor Templates Migration Guide
+Marko Migration Guide
 ================================
 
-# Migration from XML-based Raptor Templates
+# Migration from XML-based Marko
 
 
 # Migration from Dust

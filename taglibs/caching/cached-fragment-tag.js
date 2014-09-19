@@ -1,7 +1,7 @@
 'use strict';
 var raptorCache;
 var defaultCacheManager;
-var req = require; // Fool the raptor-optimizer
+var req = require; // Fool the optimizer
 
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
             defaultCacheManager = raptorCache.createCacheManager({
                 profiles: {
                     '*': {
-                        'raptor-templates/cached-fragment': {
+                        'marko/cached-fragment': {
                             store: 'memory',
                             encoding: 'utf8'
                         }
@@ -33,7 +33,7 @@ module.exports = {
 
         var cacheManager = input.cacheManager || defaultCacheManager;
 
-        var cache = cacheManager.getCache(input.cacheName || 'raptor-templates/cached-fragment');
+        var cache = cacheManager.getCache(input.cacheName || 'marko/cached-fragment');
         
         var asyncContext = context.beginAsync();
         

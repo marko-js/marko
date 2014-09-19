@@ -17,7 +17,7 @@ function testRender(path, data, done, options) {
 
     var compiler = require('../compiler').createCompiler(inputPath);
     var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-    
+
     var compiledSrc = compiler.compile(src);
     fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
 
@@ -56,7 +56,7 @@ function testRender(path, data, done, options) {
         .end();
 }
 
-describe('raptor-templates/rxml' , function() {
+describe('marko/xml' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -66,7 +66,7 @@ describe('raptor-templates/rxml' , function() {
         // }
 
         // require('raptor-logging').configureLoggers({
-        //     'raptor-templates': 'INFO'
+        //     'marko': 'INFO'
         // });
 
         done();
@@ -74,7 +74,7 @@ describe('raptor-templates/rxml' , function() {
 
 
     it("should allow for text replacement", function(done) {
-        testRender("test-project/rxml-templates/text-replacement.rxml", {
+        testRender("test-project/xml-templates/text-replacement.marko.xml", {
             person: {
                 name: "John",
                 address: {
@@ -88,75 +88,75 @@ describe('raptor-templates/rxml' , function() {
     });
 
     it("should render simple template with logic", function(done) {
-        testRender("test-project/rxml-templates/simple.rxml", {
+        testRender("test-project/xml-templates/simple.marko.xml", {
             message: "Hello World!",
             rootClass: "title",
             colors: ["red", "green", "blue"]
         }, done);
     });
-    
+
     it("should allow for simple template handlers", function(done) {
-        testRender("test-project/rxml-templates/simple-handlers.rxml", {dynamic: "universe"}, done);
+        testRender("test-project/xml-templates/simple-handlers.marko.xml", {dynamic: "universe"}, done);
     });
-    
+
     it("should allow for template handlers with nested body content", function(done) {
-        testRender("test-project/rxml-templates/nested-handlers.rxml", {showConditionalTab: false}, done);
+        testRender("test-project/xml-templates/nested-handlers.marko.xml", {showConditionalTab: false}, done);
     });
 
     it("should allow entity expressions", function(done) {
-        testRender("test-project/rxml-templates/entities.rxml", {}, done);
+        testRender("test-project/xml-templates/entities.marko.xml", {}, done);
     });
-    
+
     it("should allow escaped expressions", function(done) {
-        testRender("test-project/rxml-templates/escaped.rxml", {}, done);
+        testRender("test-project/xml-templates/escaped.marko.xml", {}, done);
     });
-    
+
     it("should allow complex expressions", function(done) {
-        testRender("test-project/rxml-templates/expressions.rxml", {}, done);
+        testRender("test-project/xml-templates/expressions.marko.xml", {}, done);
     });
-    
+
     it("should allow whitespace to be removed", function(done) {
-        testRender("test-project/rxml-templates/whitespace.rxml", {}, done);
+        testRender("test-project/xml-templates/whitespace.marko.xml", {}, done);
     });
-    
+
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/rxml-templates/whitespace2.rxml", {}, done);
+        testRender("test-project/xml-templates/whitespace2.marko.xml", {}, done);
     });
-    
+
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/rxml-templates/whitespace2.rxml", {}, done);
+        testRender("test-project/xml-templates/whitespace2.marko.xml", {}, done);
     });
-    
+
     it("should normalize whitespace", function(done) {
-        testRender("test-project/rxml-templates/whitespace3.rxml", {}, done);
+        testRender("test-project/xml-templates/whitespace3.marko.xml", {}, done);
     });
-    
+
     it("should handle whitespace correctly for mixed text and element children", function(done) {
-        testRender("test-project/rxml-templates/whitespace-inline-elements.rxml", {}, done);
+        testRender("test-project/xml-templates/whitespace-inline-elements.marko.xml", {}, done);
     });
-    
+
     it("should allow HTML output that is not well-formed XML", function(done) {
-        testRender("test-project/rxml-templates/html.rxml", {}, done);
+        testRender("test-project/xml-templates/html.marko.xml", {}, done);
     });
-    
+
     it("should allow for looping", function(done) {
-        testRender("test-project/rxml-templates/looping.rxml", {}, done);
+        testRender("test-project/xml-templates/looping.marko.xml", {}, done);
     });
 
     it("should allow for looping over properties", function(done) {
-        testRender("test-project/rxml-templates/looping-props.rxml", {}, done);
+        testRender("test-project/xml-templates/looping-props.marko.xml", {}, done);
     });
-    
+
     it("should allow for dynamic attributes", function(done) {
-        testRender("test-project/rxml-templates/attrs.rxml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
+        testRender("test-project/xml-templates/attrs.marko.xml", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
-    
+
     it("should allow for choose...when statements", function(done) {
-        testRender("test-project/rxml-templates/choose-when.rxml", {}, done);
+        testRender("test-project/xml-templates/choose-when.marko.xml", {}, done);
     });
-    
+
     it("should not allow <c-otherwise> to be before a <c-when> tag", function(done) {
-        
+
         var e;
 
         function fakeDone() {
@@ -164,61 +164,61 @@ describe('raptor-templates/rxml' , function() {
         }
 
         try {
-            testRender("test-project/rxml-templates/choose-when-invalid-otherwise-not-last.rxml", {}, fakeDone);
+            testRender("test-project/xml-templates/choose-when-invalid-otherwise-not-last.marko.xml", {}, fakeDone);
         }
         catch(_e) {
             e = _e;
         }
-        
+
         expect(e != null).to.equal(true);
         done();
     });
-    
+
     it("should allow for <c-def> functions", function(done) {
-        testRender("test-project/rxml-templates/def.rxml", {}, done);
+        testRender("test-project/xml-templates/def.marko.xml", {}, done);
     });
-    
+
     it("should allow for <c-with> functions", function(done) {
-        testRender("test-project/rxml-templates/with.rxml", {}, done);
+        testRender("test-project/xml-templates/with.marko.xml", {}, done);
     });
-    
+
     it("should allow for scriptlets", function(done) {
-        testRender("test-project/rxml-templates/scriptlet.rxml", {}, done);
+        testRender("test-project/xml-templates/scriptlet.marko.xml", {}, done);
     });
-    
+
     it("should allow for when and otherwise as attributes", function(done) {
-        testRender("test-project/rxml-templates/choose-when-attributes.rxml", {}, done);
+        testRender("test-project/xml-templates/choose-when-attributes.marko.xml", {}, done);
     });
-    
+
     it("should allow for elements to be stripped out at compile time", function(done) {
-        testRender("test-project/rxml-templates/strip.rxml", {}, done);
+        testRender("test-project/xml-templates/strip.marko.xml", {}, done);
     });
-    
+
     it("should allow for body content to be replaced with the result of an expression", function(done) {
-        testRender("test-project/rxml-templates/content.rxml", {}, done);
+        testRender("test-project/xml-templates/content.marko.xml", {}, done);
     });
-    
+
     it("should allow for an element to be replaced with the result of an expression", function(done) {
-        testRender("test-project/rxml-templates/replace.rxml", {message: "Hello World!"}, done);
+        testRender("test-project/xml-templates/replace.marko.xml", {message: "Hello World!"}, done);
     });
-    
+
     it("should allow for includes", function(done) {
-        testRender("test-project/rxml-templates/include.rxml", {}, done);
+        testRender("test-project/xml-templates/include.marko.xml", {}, done);
     });
-    
+
     it("should allow for <c-invoke function... />", function(done) {
-        testRender("test-project/rxml-templates/invoke.rxml", {}, done);
+        testRender("test-project/xml-templates/invoke.marko.xml", {}, done);
     });
-    
+
     it("should allow for require", function(done) {
-        testRender("test-project/rxml-templates/require.rxml", {}, done);
+        testRender("test-project/xml-templates/require.marko.xml", {}, done);
     });
-    
-    
+
+
     // it("should handle errors correctly", function(done) {
 
-        
-        
+
+
     //     var tryTemplate = function(path, callback) {
     //         try
     //         {
@@ -226,7 +226,7 @@ describe('raptor-templates/rxml' , function() {
     //             callback("", []);
     //         }
     //         catch(e) {
-                
+
     //             if (!e.errors) {
     //                 logger.error('Error message for template at path "' + path + '": ' + e, e);
     //             }
@@ -236,62 +236,62 @@ describe('raptor-templates/rxml' , function() {
     //             callback(e.toString(), e.errors);
     //         }
     //     };
-        
-    //     tryTemplate("test-project/rxml-templates/errors.rxml", function(message, errors) {
+
+    //     tryTemplate("test-project/xml-templates/errors.marko.xml", function(message, errors) {
     //         var len = errors ? errors.length : -1;
     //         expect(len).toEqual(25);
-            
-            
+
+
     //     });
-        
-        
+
+
     // });
-    
+
     it("should allow static file includes", function(done) {
-        testRender("test-project/rxml-templates/include-resource-static.rxml", {}, done);
+        testRender("test-project/xml-templates/include-resource-static.marko.xml", {}, done);
     });
-    
+
     it("should allow HTML pages with inline script", function(done) {
-        testRender("test-project/rxml-templates/inline-script.rxml", {name: "World"}, done);
+        testRender("test-project/xml-templates/inline-script.marko.xml", {name: "World"}, done);
     });
-    
+
     it("should allow CDATA inside templates", function(done) {
-        testRender("test-project/rxml-templates/cdata.rxml", {name: "World"}, done);
+        testRender("test-project/xml-templates/cdata.marko.xml", {name: "World"}, done);
     });
-    
+
     // it("should allow type conversion", function(done) {
     //     var TypeConverter = require('raptor/templating/compiler/TypeConverter');
     //     expect(TypeConverter.convert('${entity:special}', "string", true).toString()).toEqual('"&special;"');
     // });
-    
+
     it("should allow for if...else", function(done) {
-        testRender("test-project/rxml-templates/if-else.rxml", {}, done);
+        testRender("test-project/xml-templates/if-else.marko.xml", {}, done);
     });
-    
+
     it("should allow for expressions and variables inside JavaScript strings", function(done) {
-        testRender("test-project/rxml-templates/string-expressions.rxml", {name: "John", count: 10}, done);
+        testRender("test-project/xml-templates/string-expressions.marko.xml", {name: "John", count: 10}, done);
     });
-    
+
     it("should allow for simple conditionals", function(done) {
-        testRender("test-project/rxml-templates/simple-conditionals.rxml", {name: "John", count: 51}, done);
+        testRender("test-project/xml-templates/simple-conditionals.marko.xml", {name: "John", count: 51}, done);
     });
-    
+
     it("should allow for conditional attributes", function(done) {
-        testRender("test-project/rxml-templates/conditional-attributes.rxml", {}, done);
+        testRender("test-project/xml-templates/conditional-attributes.marko.xml", {}, done);
     });
-    
+
     it("should allow for dynamic attributes to be passed to tag renderer using a custom property name", function(done) {
-        testRender("test-project/rxml-templates/dynamic-attributes.rxml", {}, done);
+        testRender("test-project/xml-templates/dynamic-attributes.marko.xml", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer", function(done) {
-        testRender("test-project/rxml-templates/dynamic-attributes2.rxml", {}, done);
+        testRender("test-project/xml-templates/dynamic-attributes2.marko.xml", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
-        testRender("test-project/rxml-templates/dynamic-attributes3.rxml", {}, done);
+        testRender("test-project/xml-templates/dynamic-attributes3.marko.xml", {}, done);
     });
-    
+
     // it("should allow for nodes to be converted to expressions", function(done) {
     //     var ElementNode = require('raptor/templating/compiler/ElementNode');
     //     var TextNode = require('raptor/templating/compiler/TextNode');
@@ -299,72 +299,71 @@ describe('raptor-templates/rxml' , function() {
 
     //     var compiler = require('raptor/templating/compiler').createCompiler();
     //     var template = new TemplateBuilder(compiler);
-        
+
     //     var div = new ElementNode("div");
     //     var text = new TextNode("Hello World!");
     //     div.appendChild(text);
-        
+
     //     var expression = div.getExpression(template).toString();
     //     var bodyContentExpression = div.getBodyContentExpression(template).toString();
-        
+
     //     var sb = require('raptor/strings').createStringBuilder();
     //     var context = require('raptor/templating').createContext(sb);
     //     var output = eval(expression);
     //     expect(output.toString()).toEqual('<div>Hello World!</div>');
-        
+
     //     output = eval(bodyContentExpression);
     //     expect(output.toString()).toEqual('Hello World!');
-        
+
     // });
-    
+
     it("should allow for nested attributes", function(done) {
-        testRender("test-project/rxml-templates/nested-attrs.rxml", {active: true}, done);
+        testRender("test-project/xml-templates/nested-attrs.marko.xml", {active: true}, done);
     });
-    
+
     it("should allow for new variables to be created and assigned values", function(done) {
-        testRender("test-project/rxml-templates/var.rxml", {active: true}, done);
+        testRender("test-project/xml-templates/var.marko.xml", {active: true}, done);
     });
-    
-    
+
+
     it("should handle XML escaping correctly", function(done) {
-        testRender("test-project/rxml-templates/xml-escaping.rxml", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
+        testRender("test-project/xml-templates/xml-escaping.marko.xml", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
     });
-    
+
     it("should allow for a doctype tag and a doctype attribute", function(done) {
-        testRender("test-project/rxml-templates/doctype.rxml", {}, done);
+        testRender("test-project/xml-templates/doctype.marko.xml", {}, done);
     });
 
     it("should allow for using templates to render custom tags", function(done) {
-        testRender("test-project/rxml-templates/template-as-tag.rxml", {title: "My Page Title"}, done);
+        testRender("test-project/xml-templates/template-as-tag.marko.xml", {title: "My Page Title"}, done);
     });
 
     it("should allow for caching HTML fragments", function(done) {
-        testRender("test-project/rxml-templates/caching.rxml", {}, done);
+        testRender("test-project/xml-templates/caching.marko.xml", {}, done);
     });
-    
+
     it("should escape XML in text node when enabled", function(done) {
-        testRender("test-project/rxml-templates/escape-xml-enabled.rxml", {}, done);
+        testRender("test-project/xml-templates/escape-xml-enabled.marko.xml", {}, done);
     });
 
     it("should not escape XML in text node when disabled", function(done) {
-        testRender("test-project/rxml-templates/escape-xml-disabled.rxml", {}, done);
+        testRender("test-project/xml-templates/escape-xml-disabled.marko.xml", {}, done);
     });
 
     it("should allow for attributes with default values", function(done) {
-        testRender("test-project/rxml-templates/default-attributes.rxml", {}, done);
+        testRender("test-project/xml-templates/default-attributes.marko.xml", {}, done);
     });
 
     it("should allow for input expressions to be provided to tag handler nodes", function(done) {
-        testRender("test-project/rxml-templates/tag-input-expressions.rxml", {name: "Frank", adult: true}, done);
+        testRender("test-project/xml-templates/tag-input-expressions.marko.xml", {name: "Frank", adult: true}, done);
     });
 
     it("should allow for using layouts", function(done) {
-        testRender("test-project/rxml-templates/layout-use.rxml", {}, done);
+        testRender("test-project/xml-templates/layout-use.marko.xml", {}, done);
     });
 
     it("should add parentheses around each expression when using string concatenation to handle ternary operator", function(done) {
-        testRender("test-project/rxml-templates/string-concat-with-ternary-operator.rxml", {}, done);
+        testRender("test-project/xml-templates/string-concat-with-ternary-operator.marko.xml", {}, done);
     });
 
 });
-

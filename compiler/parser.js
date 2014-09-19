@@ -3,7 +3,7 @@ var ParseTreeBuilderHtml = require('./ParseTreeBuilderHtml');
 var ParseTreeBuilderXml = require('./ParseTreeBuilderXml');
 
 function parse(src, filePath, taglibs) {
-    var ParseTreeBuilder = filePath.endsWith('.rxml') ?
+    var ParseTreeBuilder = filePath.endsWith('.marko.xml') ?
         ParseTreeBuilderXml :
         ParseTreeBuilderHtml;
 

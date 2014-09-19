@@ -1,1 +1,1 @@
-node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-rhtml-tests.js
+node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-marko-tests.js

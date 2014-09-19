@@ -75,7 +75,7 @@ function testRender(path, data, done, options) {
         
 }
 
-describe('raptor-templates/rhtml-async' , function() {
+describe('marko/marko-async' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -85,14 +85,14 @@ describe('raptor-templates/rhtml-async' , function() {
         // }
 
         // require('raptor-logging').configureLoggers({
-        //     'raptor-templates': 'INFO'
+        //     'marko': 'INFO'
         // });
 
         done();
     });
 
     it('should render a simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(100),
                 'D2': delayedDataProvider(300),
@@ -103,7 +103,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(100),
                 'D2': delayedDataProvider(200),
@@ -114,7 +114,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(800),
                 'D2': delayedDataProvider(200),
@@ -125,7 +125,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (4)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(800),
                 'D2': delayedDataProvider(300),
@@ -136,7 +136,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering2.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(100),
                 'D2': delayedDataProvider(300),
@@ -150,7 +150,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering2.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(100),
                 'D2': delayedDataProvider(300),
@@ -164,7 +164,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-ordering2.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(900),
                 'D2': delayedDataProvider(300),
@@ -178,7 +178,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it("should allow for using macros inside async fragments", function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-macros.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-macros.marko', {}, done, {
             dataProviders: {
                 'D1': delayedDataProvider(100)
             }
@@ -200,7 +200,7 @@ describe('raptor-templates/rhtml-async' , function() {
             }
         });
 
-        testRender('test-project/rhtml-templates/async-fragment-data-providers.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-data-providers.marko', {}, done, {
             dataProviders: {
                 'contextData': delayedDataProvider(100, {name: "testContextData"})
             }
@@ -233,7 +233,7 @@ describe('raptor-templates/rhtml-async' , function() {
         };
 
 
-        testRender('test-project/rhtml-templates/async-fragment-args.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-args.marko', {}, done, {
             dataProviders: {
                 'userInfo': function(arg, done) {
                     setTimeout(function() {
@@ -251,7 +251,7 @@ describe('raptor-templates/rhtml-async' , function() {
             deferred.resolve('Test promise');
         }, 200);
 
-        testRender('test-project/rhtml-templates/async-fragment-promise.rhtml', {}, done, {
+        testRender('test-project/html-templates/async-fragment-promise.marko', {}, done, {
             dataProviders: {
                 'promiseData': function(arg, done) {
                     return deferred.promise;
@@ -261,7 +261,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it("should allow functions that return promises as data providers", function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
             userInfo: function() {
                 var deferred = require('raptor-promises').defer();
                 setTimeout(function() {
@@ -275,7 +275,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it("should allow functions that return non-promises as data providers", function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
             userInfo: function() {
                 return {
                     name: 'John'
@@ -285,7 +285,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it("should allow functions that use done callback", function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-function-data-provider.rhtml', {
+        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
             userInfo: function(arg, done) {
                 done(null, {
                     name: 'John'
@@ -295,7 +295,7 @@ describe('raptor-templates/rhtml-async' , function() {
     });
 
     it("should allow for a timeout message", function(done) {
-        testRender('test-project/rhtml-templates/async-fragment-timeout-message.rhtml', {
+        testRender('test-project/html-templates/async-fragment-timeout-message.marko', {
             userInfo: function(arg, done) {
                 // Do nothing to trigger a timeout
             }

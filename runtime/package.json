@@ -1,5 +1,5 @@
 {
-    "main": "./raptor-templates-runtime.js",
+    "main": "./marko-runtime.js",
     "browser": {
         "./loader.js": "./loader_browser.js"
     }

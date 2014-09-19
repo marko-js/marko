@@ -108,8 +108,8 @@ exports.TemplateCompiler = require('./TemplateCompiler');
 exports.taglibs = require('./taglibs');
 exports.taglibs.excludeDir(nodePath.join(__dirname, '../'));
 
-exports.taglibs.registerTaglib(require.resolve('../taglibs/core/raptor-taglib.json'));
-exports.taglibs.registerTaglib(require.resolve('../taglibs/html/raptor-taglib.json'));
-exports.taglibs.registerTaglib(require.resolve('../taglibs/caching/raptor-taglib.json'));
-exports.taglibs.registerTaglib(require.resolve('raptor-taglib-layout/raptor-taglib.json'));
-exports.taglibs.registerTaglib(require.resolve('raptor-taglib-async/raptor-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/html/marko-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('../taglibs/caching/marko-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('marko-taglib-layout/marko-taglib.json'));
+exports.taglibs.registerTaglib(require.resolve('marko-taglib-async/marko-taglib.json'));
