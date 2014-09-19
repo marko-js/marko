@@ -20,14 +20,14 @@
  * <p>The code for the Marko compiler is kept separately
  * in the {@link raptor/templating/compiler} module.
  */
-var renderContext = require('raptor-render-context');
-var Context = renderContext.Context;
+var asyncWriter = require('async-writer');
 var helpers = require('./helpers');
 var loader = require('./loader');
 var cache = {};
 var Readable;
+var AsyncWriter = asyncWriter.AsyncWriter;
 
-exports.Context = Context;
+exports.AsyncWriter = AsyncWriter;
 
 
 var stream;
@@ -43,16 +43,16 @@ if (streamPath) {
 }
 
 
-function renderWithCallback(template, data, context, callback) {
-    context
+function renderWithCallback(template, data, out, callback) {
+    out
         .on('end', function() {
-            callback(null, context.getOutput());
+            callback(null, out.getOutput());
         })
         .on('error', callback);
 
-    template._(data, context);    //Invoke the template rendering function with the required arguments
+    template._(data, out);    //Invoke the template rendering function with the required arguments
 
-    context.end();
+    out.end();
 }
 
 function Template(renderFunc) {
@@ -61,13 +61,13 @@ function Template(renderFunc) {
 
 Template.prototype = {
     renderSync: function(data) {
-        var context = new Context();
-        context.sync();
-        this._(data, context);
-        context.end();
-        return context.getOutput();
+        var out = new AsyncWriter();
+        out.sync();
+        this._(data, out);
+        out.end();
+        return out.getOutput();
     },
-    render: function(data, context, callback) {
+    render: function(data, out, callback) {
         if (data == null) {
             data = {};
         }
@@ -75,23 +75,23 @@ Template.prototype = {
         // callback is last argument if provided
         callback = arguments[arguments.length - 1];
         if (typeof callback === 'function') {
-            if (arguments.length === 2) { // data, context, callback
-                callback = context;
-                context = new Context();
+            if (arguments.length === 2) { // data, out, callback
+                callback = out;
+                out = new AsyncWriter();
             }
-            renderWithCallback(this, data, context, callback);
+            renderWithCallback(this, data, out, callback);
         } else {
-            if (context.isRenderContext) {
-                this._(data, context);
+            if (out.isRenderContext) {
+                this._(data, out);
             } else {
-                // Assume the "context" is really a stream
-                context = new Context(context);
-                this._(data, context);
-                context.end(); // End the context and the underlying stream
+                // Assume the "out" is really a stream
+                out = new AsyncWriter(out);
+                this._(data, out);
+                out.end(); // End the out and the underlying stream
             }
         }
 
-        return context;
+        return out;
     },
     stream: function(data) {
         if (!stream) {
@@ -131,9 +131,9 @@ if (stream) {
             var template = this._t;
             var data = this._d;
 
-            var context = exports.createContext(this);
-            template.render(data, context);
-            context.end();
+            var out = exports.createWriter(this);
+            template.render(data, out);
+            out.end();
         }
     };
 
@@ -158,8 +158,8 @@ function load(templatePath) {
 
 exports.load = load;
 
-exports.render = function (templatePath, data, context) {
-    return load(templatePath).render(data, context);
+exports.render = function (templatePath, data, out) {
+    return load(templatePath).render(data, out);
 };
 
 exports.stream = function(templatePath, data) {
@@ -170,8 +170,8 @@ exports.unload = function(templatePath) {
     delete cache[templatePath];
 };
 
-exports.createContext = function(writer) {
-    return new Context(writer);
+exports.createWriter = function(writer) {
+    return new AsyncWriter(writer);
 };
 
 exports.helpers = helpers;

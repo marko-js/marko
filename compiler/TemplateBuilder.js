@@ -74,7 +74,7 @@ CodeWriter.prototype = {
         if (!this._bufferedWrites) {
             this._bufferedWrites = [];
         }
-        
+
         this._bufferedWrites.push(expression);
 
 
@@ -158,7 +158,7 @@ CodeWriter.prototype = {
 
         function concat() {
 
-            code.append(_this.indentStr() + 'context.w(');
+            code.append(_this.indentStr() + 'out.w(');
 
             _bufferedWrites.forEach(function (expression, i) {
                 if (i !== 0) {
@@ -178,9 +178,9 @@ CodeWriter.prototype = {
 
         function chain() {
             _bufferedWrites.forEach(function (arg, i) {
-                
+
                 if (i === 0) {
-                    this._code.append(this.indentStr() + 'context.w(');
+                    this._code.append(this.indentStr() + 'out.w(');
                 } else {
                     this.incIndent();
                     this._code.append(this.indentStr() + '.w(');
@@ -211,7 +211,7 @@ CodeWriter.prototype = {
             } else {
                 chain();
             }
-            
+
         }
     },
     incIndent: function (delta) {
@@ -270,7 +270,7 @@ TemplateBuilder.prototype = {
         }
     },
     getStaticHelperFunction: function (varName, propName) {
-        
+
         var added = this.helperFunctionsAdded[propName];
         if (added) {
             return added;
@@ -285,7 +285,7 @@ TemplateBuilder.prototype = {
     },
     addStaticVar: function (name, expression) {
         name = safeVarName(name);
-        
+
         if (!this.staticVarsLookup.hasOwnProperty(name)) {
             this.staticVarsLookup[name] = true;
             this.staticVars.push({
@@ -300,7 +300,7 @@ TemplateBuilder.prototype = {
     },
     addVar: function (name, expression) {
         name = safeVarName(name);
-        
+
         this.vars[name] = true;
         this.vars.push({
             name: name,
@@ -354,7 +354,7 @@ TemplateBuilder.prototype = {
                 if (!this.hasExpression(templatePath)) {
                     // Resolve the static string to a full path only once
                     templateVar = this.addStaticVar(templatePath, '__helpers.l(require.resolve(' + this.compiler.convertType(templatePath, 'string', true) + '))');
-                    this.statement(this.makeExpression(templateVar + '.render(' + dataExpression + ', context);'));
+                    this.statement(this.makeExpression(templateVar + '.render(' + dataExpression + ', out);'));
                     return;
                 }
             }
@@ -379,7 +379,7 @@ TemplateBuilder.prototype = {
     contextHelperMethodCall: function (methodName, args) {
         if (!this.hasErrors()) {
             args = arrayFromArguments(arguments, 1);
-            args.unshift('context');
+            args.unshift('out');
             this.writer.functionCall('__helpers.' + methodName, args);
         }
         return this;
@@ -444,18 +444,18 @@ TemplateBuilder.prototype = {
             return '';
         }
         var out = new StringBuilder();
-        
+
         var params = this.params;
         if (params) {
-            params = ['context'].concat(params);
+            params = ['out'].concat(params);
         } else {
-            params = ['context'];
+            params = ['out'];
         }
         out.append('module.exports = function create(__helpers) {\n');
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);
-        out.append('\n' + INDENT + 'return function render(data, context) {\n');
+        out.append('\n' + INDENT + 'return function render(data, out) {\n');
         //Write out the render variables
         if (this.vars && this.vars.length) {
             this._writeVars(this.vars, out, INDENT + INDENT);

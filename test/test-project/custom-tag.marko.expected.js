@@ -5,8 +5,8 @@ module.exports = function create(__helpers) {
       hello_renderer = require("./hello-renderer"),
       _tag = __helpers.t;
 
-  return function render(data, context) {
-    _tag(context,
+  return function render(data, out) {
+    _tag(out,
       hello_renderer,
       {
         "name": "World"

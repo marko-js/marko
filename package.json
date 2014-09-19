@@ -31,7 +31,7 @@
         "raptor-polyfill": "^1.0.0-beta",
         "raptor-promises": "^1.0.0-beta",
         "raptor-regexp": "^1.0.0-beta",
-        "raptor-render-context": "^1.0.0-beta",
+        "async-writer": "^1.0.0-beta",
         "raptor-strings": "^1.0.0-beta",
         "marko-taglib-async": "^1.1.0",
         "marko-taglib-layout": "^1.1.0",

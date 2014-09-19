@@ -17,7 +17,7 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 		- [Callback API](#callback-api)
 		- [Streaming API](#streaming-api)
 		- [Synchronous API](#synchronous-api)
-		- [Asynchronous Render Context API](#asynchronous-render-context-api)
+		- [Asynchronous Rendering API](#asynchronous-rendering-api)
 	- [Browser-side Rendering](#browser-side-rendering)
 		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
 		- [Using Browserify](#using-browserify)
@@ -69,7 +69,7 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
 
-What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
+What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows data templates to more closely resemble the final HTML structure.
 
 Let's compare Marko with Handlebars (a text-based templating language):
 
@@ -176,7 +176,7 @@ Hello World!
 </ul>
 ```
 
-For comparison, given the following input data consisting of an empty array of colors:
+For comparison, given the following data data consisting of an empty array of colors:
 
 ```javascript
 {
@@ -331,7 +331,7 @@ var output = template.renderSync({
 console.log('Output HTML: ' + output);
 ```
 
-### Asynchronous Render Context API
+### Asynchronous Rendering API
 
 ```javascript
 var marko = require('marko');
@@ -339,26 +339,26 @@ var template = marko.load('template.marko');
 
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
-var context = marko.createContext(out);
+var out = marko.createWriter(out);
 
 // Render the first chunk asynchronously (after 1s delay):
-var asyncContext = context.beginAsync();
+var asyncOut = out.beginAsync();
 setTimeout(function() {
-    asyncContext.write('BEGIN ');
-    asyncContext.end();
+    asyncOut.write('BEGIN ');
+    asyncOut.end();
 }, 1000);
 
-// Render the template to the existing render context:
+// Render the template to the original writer:
 template.render({
         name: 'World'
     },
-    context);
+    out);
 
 // Write the last chunk synchronously:
-context.write(' END');
+out.write(' END');
 
-// End the rendering context
-context.end();
+// End the rendering out
+out.end();
 ```
 
 Despite rendering the first chunk asynchronously, the above program will stream out the output in the correct order to `index.html`:
@@ -367,7 +367,7 @@ Despite rendering the first chunk asynchronously, the above program will stream 
 BEGIN Hello World! END
 ```
 
-For more details, please see the documentation for the [raptor-render-context](https://github.com/raptorjs3/raptor-render-context) module.
+For more details, please see the documentation for the [async-writer](https://github.com/raptorjs3/async-writer) module.
 
 ## Browser-side Rendering
 
@@ -425,7 +425,7 @@ browserify -t markoify run.js > browser.js
 
 ## Template Compilation
 
-The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
+The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a out-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
 
 The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
@@ -474,26 +474,26 @@ module.exports = function create(__helpers) {
       forEach = __helpers.f,
       escapeXmlAttr = __helpers.xa;
 
-  return function render(data, context) {
-    context.w('Hello ' +
+  return function render(data, out) {
+    out.w('Hello ' +
       escapeXml(data.name) +
       '! ');
 
     if (notEmpty(data.colors)) {
-      context.w('<ul>');
+      out.w('<ul>');
 
       forEach(data.colors, function(color) {
-        context.w('<li style="color: ' +
+        out.w('<li style="color: ' +
           escapeXmlAttr(color) +
           '">' +
           escapeXml(color) +
           '</li>');
       });
 
-      context.w('</ul>');
+      out.w('</ul>');
     }
     else {
-      context.w('<div>No colors!</div>');
+      out.w('<div>No colors!</div>');
     }
   };
 }
@@ -622,6 +622,15 @@ Input data passed to a template is made available using a special `data` variabl
 
 ```html
 <var name="name" value="data.name.toUpperCase()" />
+```
+
+The `<with>` directive can be used to create scoped variables as shown in the following sample code:
+
+```html
+<with vars="nameUpper=data.name.toUpperCase(); nameLower=data.name.toLowerCase()">
+    Hello $nameUpper!
+    Hello $nameLower!
+</with>
 ```
 
 ## Conditionals
@@ -859,7 +868,7 @@ The above macro can then be invoked as part of any expression. Alternatively, th
 
 ### invoke
 
-The `<invoke>` directive can be used to invoke a function defined using the `<def>` directive or a function that is part of the input to a template. The `<invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<def>` directive.
+The `<invoke>` directive can be used to invoke a function defined using the `<def>` directive or a function that is part of the input data to a template. The `<invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<def>` directive.
 
 ```html
 <def function="greeting(name, count)">
@@ -1067,23 +1076,23 @@ For more details, please see [https://github.com/raptorjs3/marko-taglib-layout](
 
 ## Tag Renderer
 
-Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`input` and `context`). The `input` argument is an arbitrary object that contains the input data for the renderer. The `context` argument is an [asynchronous rendering context](https://github.com/raptorjs3/raptor-render-context) that wraps an output stream. Output can be produced using `context.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs3/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
-module.exports = function(input, context) {
-    context.write('Hello ' + input.name + '!');
+module.exports = function(data, out) {
+    out.write('Hello ' + data.name + '!');
 }
 ```
 
-If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `input` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
+If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `data` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
 
 ```javascript
-module.exports = function(input, context) {
-    context.write('BEFORE BODY');
-    if (input.invokeBody) {
-        input.invokeBody();
+module.exports = function(data, out) {
+    out.write('BEFORE BODY');
+    if (data.invokeBody) {
+        data.invokeBody();
     }
-    context.write('AFTER BODY');
+    out.write('AFTER BODY');
 }
 ```
 
@@ -1248,11 +1257,11 @@ _components/tabs/renderer.js:_
 var templatePath = require.resolve('./template.marko');
 var template = require('marko').load(templatePath);
 
-module.exports = function render(input, context) {
+module.exports = function render(data, out) {
     var nestedTabs = [];  
 
     // Invoke the body function to discover nested <ui-tab> tags
-    input.invokeBody({ // Invoke the body with the scoped "tabs" variable
+    data.invokeBody({ // Invoke the body with the scoped "tabs" variable
         addTab: function(tab) {
             tab.id = tab.id || ("tab" + tabs.length);
             nestedTabs.push(tab);
@@ -1262,16 +1271,16 @@ module.exports = function render(input, context) {
     // Now render the markup for the tabs:
     template.render({
         tabs: nestedTabs
-    }, context);
+    }, out);
 };
 ```
 
 _components/tab/renderer.js:_
 
 ```javascript
-module.exports = function render(input, context) {
+module.exports = function render(data, out) {
     // Register with parent but don't render anything
-    input.tabs.addTab(input);
+    data.tabs.addTab(data);
 };
 ```
 

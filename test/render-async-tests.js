@@ -26,7 +26,7 @@ function testRender(path, data, done, options) {
 
     var compiler = require('../compiler').createCompiler(inputPath);
     var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-    
+
     var compiledSrc = compiler.compile(src);
     fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
 
@@ -34,22 +34,22 @@ function testRender(path, data, done, options) {
 
     // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
 
-    
+
 
     var marko = require('../');
-    var Context = marko.Context;
-    var context = options.context || new Context(new StringBuilder());
+    var AsyncWriter = marko.AsyncWriter;
+    var out = options.out || new AsyncWriter(new StringBuilder());
 
     require('../compiler').defaultOptions.checkUpToDate = false;
-    
+
     if (options.dataProviders) {
-        var dataProviders = require('raptor-data-providers').forContext(context);
+        var dataProviders = require('raptor-data-providers').forContext(out);
         dataProviders.register(options.dataProviders);
     }
 
-    marko.render(inputPath, data, context)
+    marko.render(inputPath, data, out)
         .on('end', function() {
-            var output = context.getOutput();
+            var output = out.getOutput();
 
             fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
 
@@ -72,7 +72,7 @@ function testRender(path, data, done, options) {
         .on('error', done)
         .end();
 
-        
+
 }
 
 describe('marko/marko-async' , function() {
@@ -99,7 +99,7 @@ describe('marko/marko-async' , function() {
                 'D3': delayedDataProvider(200),
                 'D4': delayedDataProvider(800)
             }
-        });        
+        });
     });
 
     it('should render a simple template with async fragments correctly (2)', function(done) {
@@ -110,7 +110,7 @@ describe('marko/marko-async' , function() {
                 'D3': delayedDataProvider(300),
                 'D4': delayedDataProvider(150)
             }
-        });        
+        });
     });
 
     it('should render a simple template with async fragments correctly (3)', function(done) {
@@ -121,7 +121,7 @@ describe('marko/marko-async' , function() {
                 'D3': delayedDataProvider(300),
                 'D4': delayedDataProvider(100)
             }
-        });        
+        });
     });
 
     it('should render a simple template with async fragments correctly (4)', function(done) {
@@ -132,7 +132,7 @@ describe('marko/marko-async' , function() {
                 'D3': delayedDataProvider(200),
                 'D4': delayedDataProvider(100)
             }
-        });        
+        });
     });
 
     it('should render a less simple template with async fragments correctly (1)', function(done) {
@@ -146,7 +146,7 @@ describe('marko/marko-async' , function() {
                 'D6': delayedDataProvider(100),
                 'D7': delayedDataProvider(50)
             }
-        });        
+        });
     });
 
     it('should render a less simple template with async fragments correctly (2)', function(done) {
@@ -160,7 +160,7 @@ describe('marko/marko-async' , function() {
                 'D6': delayedDataProvider(100),
                 'D7': delayedDataProvider(200)
             }
-        });        
+        });
     });
 
     it('should render a less simple template with async fragments correctly (3)', function(done) {
@@ -174,7 +174,7 @@ describe('marko/marko-async' , function() {
                 'D6': delayedDataProvider(100),
                 'D7': delayedDataProvider(200)
             }
-        });        
+        });
     });
 
     it("should allow for using macros inside async fragments", function(done) {
@@ -182,10 +182,10 @@ describe('marko/marko-async' , function() {
             dataProviders: {
                 'D1': delayedDataProvider(100)
             }
-        });  
+        });
     });
 
-    it("should allow for shared and context-specific data providers", function(done) {
+    it("should allow for global data providers", function(done) {
         require('raptor-data-providers').register({
             'sharedData': function(args, done) {
                 var deferred = require('raptor-promises').defer();
@@ -303,4 +303,3 @@ describe('marko/marko-async' , function() {
     });
 
 });
-

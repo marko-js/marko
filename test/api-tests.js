@@ -35,7 +35,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered to a context wrapping a string builder', function(done) {
-        var context = marko.createContext();
+        var context = marko.createWriter();
         context
             .on('end', function() {
                 expect(context.getOutput()).to.equal('Hello John!');
@@ -62,7 +62,7 @@ describe('marko/api' , function() {
             output += data;
         });
 
-        var context = marko.createContext(stream);
+        var context = marko.createWriter(stream);
         context
             .on('end', function() {
                 expect(output).to.equal('Hello John!');
@@ -125,7 +125,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be loaded and rendered to a context wrapping a string builder', function(done) {
-        var context = marko.createContext();
+        var context = marko.createWriter();
         context
             .on('end', function() {
                 expect(context.getOutput()).to.equal('Hello John!');
@@ -152,7 +152,7 @@ describe('marko/api' , function() {
             output += data;
         });
 
-        var context = marko.createContext(stream);
+        var context = marko.createWriter(stream);
         context
             .on('end', function() {
                 expect(output).to.equal('Hello John!');

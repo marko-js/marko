@@ -50,7 +50,7 @@ function getPropsStr(props, template) {
             });
         });
 
-        
+
         if (propsArray.length) {
             return '{\n' + propsArray.join(',\n') + '\n' + template.indentStr() + '}';
         } else {
@@ -107,7 +107,7 @@ TagHandlerNode.prototype = {
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
         }, this);
-        
+
         var _this = this;
         var variableNames = [];
         _this.tag.forEachVariable(function (nestedVar) {
@@ -149,7 +149,7 @@ TagHandlerNode.prototype = {
         }
 
         template.functionCall(tagHelperVar, function () {
-            template.code('context,\n').indent(function () {
+            template.code('out,\n').indent(function () {
                 template.line(handlerVar + ',').indent();
                 if (_this.inputExpression) {
                     template.code(_this.inputExpression);

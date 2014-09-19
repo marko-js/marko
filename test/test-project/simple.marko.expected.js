@@ -3,7 +3,7 @@ module.exports = function create(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne;
 
-  return function render(data, context) {
-    context.w('Hello John');
+  return function render(data, out) {
+    out.w('Hello John');
   };
 }

@@ -30,12 +30,12 @@ function testRender(path, data, done, options) {
 
     require('../compiler').defaultOptions.checkUpToDate = false;
 
-    var Context = marko.Context;
-    var context = options.context || new Context(new StringBuilder());
+    var AsyncWriter = marko.AsyncWriter;
+    var out = options.out || new AsyncWriter(new StringBuilder());
 
-    marko.render(inputPath, data, context)
+    marko.render(inputPath, data, out)
         .on('end', function() {
-            var output = context.getOutput();
+            var output = out.getOutput();
 
             fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
 
@@ -272,31 +272,6 @@ describe('marko/marko' , function() {
     it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
         testRender("test-project/html-templates/dynamic-attributes3.marko", {}, done);
     });
-
-    // it("should allow for nodes to be converted to expressions", function(done) {
-    //     var ElementNode = require('raptor/templating/compiler/ElementNode');
-    //     var TextNode = require('raptor/templating/compiler/TextNode');
-    //     var TemplateBuilder = require('raptor/templating/compiler/TemplateBuilder');
-
-    //     var compiler = require('raptor/templating/compiler').createCompiler();
-    //     var template = new TemplateBuilder(compiler);
-
-    //     var div = new ElementNode("div");
-    //     var text = new TextNode("Hello World!");
-    //     div.appendChild(text);
-
-    //     var expression = div.getExpression(template).toString();
-    //     var bodyContentExpression = div.getBodyContentExpression(template).toString();
-
-    //     var sb = require('raptor/strings').createStringBuilder();
-    //     var context = require('raptor/templating').createContext(sb);
-    //     var output = eval(expression);
-    //     expect(output.toString()).toEqual('<div>Hello World!</div>');
-
-    //     output = eval(bodyContentExpression);
-    //     expect(output.toString()).toEqual('Hello World!');
-
-    // });
 
     it("should allow for nested attributes", function(done) {
         testRender("test-project/html-templates/nested-attrs.marko", {active: true}, done);

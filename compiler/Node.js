@@ -135,9 +135,9 @@ Node.prototype = {
         var methodCall;
 
         if (escapeXml !== false) {
-            methodCall = 'context.captureString(';
+            methodCall = 'out.captureString(';
         } else {
-            methodCall = '__helpers.c(context, ';
+            methodCall = '__helpers.c(out, ';
         }
 
         return template.makeExpression({

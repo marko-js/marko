@@ -5,7 +5,7 @@ var req = require; // Fool the optimizer
 
 
 module.exports = {
-    render: function (input, context) {
+    render: function (input, out) {
         if (raptorCache === undefined) {
             try {
                 raptorCache = req('raptor-cache');
@@ -25,7 +25,7 @@ module.exports = {
                 }
             });
         }
-        
+
         var cacheKey = input.cacheKey;
         if (!cacheKey) {
             throw new Error('cache-key is required for <cached-fragment>');
@@ -34,13 +34,13 @@ module.exports = {
         var cacheManager = input.cacheManager || defaultCacheManager;
 
         var cache = cacheManager.getCache(input.cacheName || 'marko/cached-fragment');
-        
-        var asyncContext = context.beginAsync();
-        
+
+        var asyncContext = out.beginAsync();
+
         cache.get(cacheKey,
             {
                 builder: function(callback) {
-                    var result = context.captureString(function () {
+                    var result = out.captureString(function () {
                         if (input.invokeBody) {
                             input.invokeBody();
                         }
@@ -51,7 +51,7 @@ module.exports = {
                 if (err) {
                     return asyncContext.error(err);
                 }
-                
+
                 asyncContext.end(result);
             });
     }

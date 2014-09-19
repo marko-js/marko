@@ -52,7 +52,7 @@ function testRender(path, data, done, options) {
         } catch(e) {
             return done(e);
         }
-    }); 
+    });
 }
 
 describe('marko/dust' , function() {
@@ -98,4 +98,3 @@ describe('marko/dust' , function() {
     });
 
 });
-

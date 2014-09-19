@@ -51,9 +51,9 @@ DefNode.prototype = {
         if (func.indexOf('(') === -1) {
             func += '()';
         }
-        
+
         template.statement('function ' + func + ' {').indent(function () {
-            template.line('return __helpers.c(context, function() {').indent(function () {
+            template.line('return __helpers.c(out, function() {').indent(function () {
                 this.generateCodeForChildren(template);
             }, this).line('});');
         }, this).line('}');

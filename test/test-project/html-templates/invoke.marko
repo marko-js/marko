@@ -1,6 +1,6 @@
 {%
     function test(name) {
-        context.write("Hello " + name + "!");
+        out.write("Hello " + name + "!");
     }
 %}
 {%
@@ -8,16 +8,16 @@
         return "Hello " + name + "!";
     }
 %}
-    
+
     A
-    
+
     <p>
         <invoke function="test('World')"/>
         <c-write value="test2('World')"/>
     </p>
-    
+
     B
-    
+
     <p>
         <def function="greeting(name, count)">
             Hello ${name}! You have ${count} new messages.
