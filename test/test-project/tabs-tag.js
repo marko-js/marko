@@ -1,4 +1,4 @@
-var raptorTemplates = require('../../');
+var marko = require('../../');
 
 exports.render = function(input, context) {
     var tabs = [],  
@@ -24,7 +24,7 @@ exports.render = function(input, context) {
         tab.divClass = tab.active ? "tab-pane active" : "tab-pane";
     });
     
-    raptorTemplates.render(require.resolve('./tabs.marko'), {
+    marko.render(require.resolve('./tabs.marko'), {
         tabs: tabs
     }, context);
     

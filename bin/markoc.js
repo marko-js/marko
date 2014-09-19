@@ -1,4 +1,4 @@
-var raptorTemplatesCompiler = require('../compiler');
+var markoCompiler = require('../compiler');
 var fs = require('fs');
 var nodePath = require('path');
 var Minimatch = require('minimatch').Minimatch;
@@ -250,7 +250,7 @@ if (args.clean) {
         var outPath = path + '.js';
         console.log('Compiling:\n  Input: ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
         context.beginAsync();
-        raptorTemplatesCompiler.compileFile(path, function(err, src) {
+        markoCompiler.compileFile(path, function(err, src) {
             if (err) {
                 failed.push('Failed to compile "' + path + '". Error: ' + (err.stack || err));
                 context.endAsync(err);

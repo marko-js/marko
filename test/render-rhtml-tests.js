@@ -26,14 +26,14 @@ function testRender(path, data, done, options) {
 
 
 
-    var raptorTemplates = require('../');
+    var marko = require('../');
 
     require('../compiler').defaultOptions.checkUpToDate = false;
 
-    var Context = raptorTemplates.Context;
+    var Context = marko.Context;
     var context = options.context || new Context(new StringBuilder());
 
-    raptorTemplates.render(inputPath, data, context)
+    marko.render(inputPath, data, context)
         .on('end', function() {
             var output = context.getOutput();
 

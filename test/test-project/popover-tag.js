@@ -1,7 +1,7 @@
-var raptorTemplates = require('../../');
+var marko = require('../../');
 
 exports.render = function(input, context) {
-    raptorTemplates.render(require.resolve('./popover.marko'), {
+    marko.render(require.resolve('./popover.marko'), {
         content: input.content,
         title: input.title,
         tag: input

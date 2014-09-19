@@ -1,7 +1,7 @@
 var nodePath = require('path');
 var fs = require('fs');
 var Module = require('module').Module;
-var raptorTemplatesCompiler = require('../compiler');
+var markoCompiler = require('../compiler');
 var cwd = process.cwd();
 
 function loadSource(templatePath, compiledSrc) {
@@ -23,7 +23,7 @@ module.exports = function load(templatePath) {
     templatePath = nodePath.resolve(cwd, templatePath);
 
     var targetFile = templatePath + '.js';
-    var compiler = raptorTemplatesCompiler.createCompiler(templatePath);
+    var compiler = markoCompiler.createCompiler(templatePath);
     var isUpToDate = compiler.checkUpToDate(targetFile);
     if (isUpToDate) {
         return require(targetFile);

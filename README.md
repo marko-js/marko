@@ -73,7 +73,7 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
 
-What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Raptor Template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
+What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows input templates to more closely resemble the final HTML structure.
 
 Let's compare Marko with Handlebars (a text-based templating language):
 
@@ -120,7 +120,7 @@ A few things to note for the Marko template:
 
 Beyond Marko being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Marko compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Marko fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
 
-Finally, another distinguishing feature of Marko is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Raptor Template rendering engine ensures that the final HTML will be streamed out in the correct order.
+Finally, another distinguishing feature of Marko is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Marko rendering engine ensures that the final HTML will be streamed out in the correct order.
 
 # Design Philosophy
 
@@ -338,12 +338,12 @@ console.log('Output HTML: ' + output);
 ### Asynchronous Render Context API
 
 ```javascript
-var raptorTemplates = require('marko');
-var template = raptorTemplates.load('template.marko');
+var marko = require('marko');
+var template = marko.load('template.marko');
 
 var out = require('fs').createWriteStream('index.html', 'utf8');
 
-var context = raptorTemplates.createContext(out);
+var context = marko.createContext(out);
 
 // Render the first chunk asynchronously (after 1s delay):
 var asyncContext = context.beginAsync();
@@ -396,7 +396,7 @@ You can then bundle up the above program for running in the browser using either
 
 ### Using the RaptorJS Optimizer
 
-The `optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Raptor Template files using a command similar to the following:
+The `optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Marko template files using a command similar to the following:
 ```bash
 # First install the optimizer and the optimizer-marko plugin
 npm install optimizer --global
@@ -416,7 +416,7 @@ optimizer --main run.js --name my-page --plugins optimizer-marko --inject-into m
 
 ### Using Browserify
 
-The `markoify` transform for browserify must be enabled in order to automatically compile and include referenced Raptor Template files.
+The `markoify` transform for browserify must be enabled in order to automatically compile and include referenced Marko template files.
 
 ```bash
 # Install the markoify plugin from npm:
@@ -433,7 +433,7 @@ The Marko compiler produces a Node.js-compatible, CommonJS module as output. Thi
 
 The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
-You can either use the command line interface or the JavaScript API to compile a Raptor Template file. To use the CLI you must first install the `marko` module globally using the following command:
+You can either use the command line interface or the JavaScript API to compile a Marko template file. To use the CLI you must first install the `marko` module globally using the following command:
 ```bash
 npm install marko --global
 ```
@@ -614,7 +614,7 @@ For example, both of the following are valid and equivalent:
 
 ## Includes
 
-Other Raptor Template files can be included using the `<c-include>` tag and a relative path. For example:
+Other Marko files can be included using the `<c-include>` tag and a relative path. For example:
 
 ```html
 <c-include template="./greeting.marko" name="Frank" count="30"/>
@@ -1032,7 +1032,7 @@ Output:
 
 ## Helpers
 
-Since Raptor Template files compile into CommonJS modules, any Node.js module can be "imported" into a template for use as a helper module. For example, given the following helper module:
+Since Marko template files compile into CommonJS modules, any Node.js module can be "imported" into a template for use as a helper module. For example, given the following helper module:
 
 _src/util.js_:
 ```javascript

@@ -36,8 +36,8 @@ function testRender(path, data, done, options) {
 
     
 
-    var raptorTemplates = require('../');
-    var Context = raptorTemplates.Context;
+    var marko = require('../');
+    var Context = marko.Context;
     var context = options.context || new Context(new StringBuilder());
 
     require('../compiler').defaultOptions.checkUpToDate = false;
@@ -47,7 +47,7 @@ function testRender(path, data, done, options) {
         dataProviders.register(options.dataProviders);
     }
 
-    raptorTemplates.render(inputPath, data, context)
+    marko.render(inputPath, data, context)
         .on('end', function() {
             var output = context.getOutput();
 
