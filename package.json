@@ -33,8 +33,8 @@
         "raptor-regexp": "^1.0.0-beta",
         "raptor-render-context": "^1.0.0-beta",
         "raptor-strings": "^1.0.0-beta",
-        "marko-taglib-async": "^1.0.0-beta",
-        "marko-taglib-layout": "^1.0.0-beta",
+        "marko-taglib-async": "^1.1.0",
+        "marko-taglib-layout": "^1.1.0",
         "raptor-util": "^1.0.0-beta",
         "sax": "^0.6.0"
     },
