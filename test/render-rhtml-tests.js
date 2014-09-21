@@ -344,6 +344,11 @@ describe('marko/marko' , function() {
         }, done);
     });
 
+    it("should not interfer with a 'for' attribute assigned to a label element", function(done) {
+        testRender("test-project/html-templates/label-for.marko", {
+            name: '<label for="hello">Hello</label>'
+        }, done);
+    });
 
 
 });

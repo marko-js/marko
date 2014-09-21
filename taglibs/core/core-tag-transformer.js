@@ -169,6 +169,9 @@ Transformer.prototype = {
         for (var i=0, len=coreAttrHandlers.length; i<len; i++) {
             var attrHandler = coreAttrHandlers[i];
             var name = attrHandler[0];
+            if (name === 'for' && node.tagName === 'label') {
+                continue;
+            }
             var attr = node.getAttribute(name);
             if (attr != null) {
                 node.removeAttribute(name);
