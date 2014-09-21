@@ -104,7 +104,7 @@ Widget.prototype = {
 module.exports = Widget;
 ```
 
-In order for everything to work on the client-side we need to include the code for the `raptor-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [raptor-optimizer](https://github.com/raptorjs3/raptor-optimizer) module and the taglib that it provides. Our final page template is shown below:
+In order for everything to work on the client-side we need to include the code for the `raptor-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs3/optimizer) module and the taglib that it provides. Our final page template is shown below:
 
 __src/pages/index/template.rhtml:__
 
@@ -350,7 +350,7 @@ Returns a nested DOM element by prefixing the provided `widgetElId` with the wid
 
 #### getElId(widgetElId)
 
-Similar to `getEl`, but only returns the String ID of the DOM element instead of the actual DOM element. 
+Similar to `getEl`, but only returns the String ID of the DOM element instead of the actual DOM element.
 
 #### insertAfter(targetEl)
 
