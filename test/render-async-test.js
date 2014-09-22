@@ -2,7 +2,6 @@
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
-var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 
@@ -41,11 +40,6 @@ function testRender(path, data, done, options) {
     var out = options.out || new AsyncWriter(new StringBuilder());
 
     require('../compiler').defaultOptions.checkUpToDate = false;
-
-    if (options.dataProviders) {
-        var dataProviders = require('raptor-data-providers').forContext(out);
-        dataProviders.register(options.dataProviders);
-    }
 
     marko.render(inputPath, data, out)
         .on('end', function() {
@@ -92,101 +86,85 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(100),
-                'D2': delayedDataProvider(300),
-                'D3': delayedDataProvider(200),
-                'D4': delayedDataProvider(800)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+            'D1': delayedDataProvider(100),
+            'D2': delayedDataProvider(300),
+            'D3': delayedDataProvider(200),
+            'D4': delayedDataProvider(800)
+        }, done);
     });
 
     it('should render a simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(100),
-                'D2': delayedDataProvider(200),
-                'D3': delayedDataProvider(300),
-                'D4': delayedDataProvider(150)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+            'D1': delayedDataProvider(100),
+            'D2': delayedDataProvider(200),
+            'D3': delayedDataProvider(300),
+            'D4': delayedDataProvider(150)
+        }, done);
     });
 
     it('should render a simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(800),
-                'D2': delayedDataProvider(200),
-                'D3': delayedDataProvider(300),
-                'D4': delayedDataProvider(100)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+            'D1': delayedDataProvider(800),
+            'D2': delayedDataProvider(200),
+            'D3': delayedDataProvider(300),
+            'D4': delayedDataProvider(100)
+        }, done);
     });
 
     it('should render a simple template with async fragments correctly (4)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(800),
-                'D2': delayedDataProvider(300),
-                'D3': delayedDataProvider(200),
-                'D4': delayedDataProvider(100)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+            'D1': delayedDataProvider(800),
+            'D2': delayedDataProvider(300),
+            'D3': delayedDataProvider(200),
+            'D4': delayedDataProvider(100)
+        }, done);
     });
 
     it('should render a less simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(100),
-                'D2': delayedDataProvider(300),
-                'D3': delayedDataProvider(200),
-                'D4': delayedDataProvider(800),
-                'D5': delayedDataProvider(900),
-                'D6': delayedDataProvider(100),
-                'D7': delayedDataProvider(50)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+            'D1': delayedDataProvider(100),
+            'D2': delayedDataProvider(300),
+            'D3': delayedDataProvider(200),
+            'D4': delayedDataProvider(800),
+            'D5': delayedDataProvider(900),
+            'D6': delayedDataProvider(100),
+            'D7': delayedDataProvider(50)
+        }, done);
     });
 
     it('should render a less simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(100),
-                'D2': delayedDataProvider(300),
-                'D3': delayedDataProvider(200),
-                'D4': delayedDataProvider(800),
-                'D5': delayedDataProvider(900),
-                'D6': delayedDataProvider(100),
-                'D7': delayedDataProvider(200)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+            'D1': delayedDataProvider(100),
+            'D2': delayedDataProvider(300),
+            'D3': delayedDataProvider(200),
+            'D4': delayedDataProvider(800),
+            'D5': delayedDataProvider(900),
+            'D6': delayedDataProvider(100),
+            'D7': delayedDataProvider(200)
+        }, done);
     });
 
     it('should render a less simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(900),
-                'D2': delayedDataProvider(300),
-                'D3': delayedDataProvider(200),
-                'D4': delayedDataProvider(800),
-                'D5': delayedDataProvider(100),
-                'D6': delayedDataProvider(100),
-                'D7': delayedDataProvider(200)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+            'D1': delayedDataProvider(900),
+            'D2': delayedDataProvider(300),
+            'D3': delayedDataProvider(200),
+            'D4': delayedDataProvider(800),
+            'D5': delayedDataProvider(100),
+            'D6': delayedDataProvider(100),
+            'D7': delayedDataProvider(200)
+        }, done);
     });
 
     it("should allow for using macros inside async fragments", function(done) {
-        testRender('test-project/html-templates/async-fragment-macros.marko', {}, done, {
-            dataProviders: {
-                'D1': delayedDataProvider(100)
-            }
-        });
+        testRender('test-project/html-templates/async-fragment-macros.marko', {
+            'D1': delayedDataProvider(100)
+        }, done);
     });
 
     it("should allow for global data providers", function(done) {
-        require('raptor-data-providers').register({
+        testRender('test-project/html-templates/async-fragment-data-providers.marko', {
             'sharedData': function(args, done) {
                 var deferred = require('raptor-promises').defer();
 
@@ -197,14 +175,9 @@ describe('marko/marko-async' , function() {
                 }, 100);
 
                 return deferred.promise;
-            }
-        });
-
-        testRender('test-project/html-templates/async-fragment-data-providers.marko', {}, done, {
-            dataProviders: {
-                'contextData': delayedDataProvider(100, {name: "testContextData"})
-            }
-        });
+            },
+            'contextData': delayedDataProvider(100, {name: "testContextData"})
+        }, done);
     });
 
     it("should allow for data args", function(done) {
@@ -233,15 +206,13 @@ describe('marko/marko-async' , function() {
         };
 
 
-        testRender('test-project/html-templates/async-fragment-args.marko', {}, done, {
-            dataProviders: {
-                'userInfo': function(arg, done) {
-                    setTimeout(function() {
-                        done(null, users[arg.userId]);
-                    }, 100);
-                }
+        testRender('test-project/html-templates/async-fragment-args.marko', {
+            'userInfo': function(arg, done) {
+                setTimeout(function() {
+                    done(null, users[arg.userId]);
+                }, 100);
             }
-        });
+        }, done);
     });
 
     it("should allow a data provider to be a promise", function(done) {
@@ -251,13 +222,11 @@ describe('marko/marko-async' , function() {
             deferred.resolve('Test promise');
         }, 200);
 
-        testRender('test-project/html-templates/async-fragment-promise.marko', {}, done, {
-            dataProviders: {
-                'promiseData': function(arg, done) {
-                    return deferred.promise;
-                }
+        testRender('test-project/html-templates/async-fragment-promise.marko', {
+            'promiseData': function(arg, done) {
+                return deferred.promise;
             }
-        });
+        }, done);
     });
 
     it("should allow functions that return promises as data providers", function(done) {

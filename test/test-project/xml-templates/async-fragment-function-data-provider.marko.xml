@@ -1,7 +1,7 @@
 <c-template>
 
-    <async-fragment data-provider="${data.userInfo}" var="userInfo">
+    <async-fragment data-provider="data.userInfo" var="userInfo">
         Hello $userInfo.name
     </async-fragment>
-    
+
 </c-template>

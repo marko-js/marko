@@ -1011,7 +1011,7 @@ template.render({
 ```
 
 ```html
-<async-fragment data-providers="${data.userProfileDataProvider}"
+<async-fragment data-provider="data.userProfileDataProvider"
     var="userProfile"
     arg-userId="${data.userId}">
 

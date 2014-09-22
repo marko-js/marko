@@ -2,7 +2,7 @@
 
     <ul>
         <li for="userId in [0, 1, 2, 3]">
-            <async-fragment dependency="userInfo" var="userInfo" arg-userId="$userId">
+            <async-fragment data-provider="data.userInfo" var="userInfo" arg-userId="$userId">
                 <ul>
                     <li>
                         <b>Name:</b> $userInfo.name
