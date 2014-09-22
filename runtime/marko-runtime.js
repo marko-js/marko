@@ -81,7 +81,7 @@ Template.prototype = {
             }
             renderWithCallback(this, data, out, callback);
         } else {
-            if (out.isRenderContext) {
+            if (out.isAsyncWriter) {
                 this._(data, out);
             } else {
                 // Assume the "out" is really a stream
