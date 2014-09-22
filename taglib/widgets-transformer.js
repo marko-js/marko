@@ -81,8 +81,8 @@ exports.process =function (node, compiler, template) {
             }).join(',') + ']';
         }
         if (!isObjectEmpty(widgetArgs)) {
-            template.addStaticVar('_widgetArgs', 'require("raptor-widgets/taglib/helpers").widgetArgs');
-            template.addStaticVar('_cleanupWidgetArgs', 'require("raptor-widgets/taglib/helpers").cleanupWidgetArgs');
+            template.addStaticVar('_widgetArgs', 'require("marko-widgets/taglib/helpers").widgetArgs');
+            template.addStaticVar('_cleanupWidgetArgs', 'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
             var widgetArgsParts = [];
             if (widgetArgs.id) {
                 widgetArgsParts.push(widgetArgs.id.toString());
@@ -100,7 +100,7 @@ exports.process =function (node, compiler, template) {
     }
 
     if (widgetAttr) {
-        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("raptor-widgets").attrs');
+        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("marko-widgets").attrs');
 
         node.removeAttribute('w-widget');
         node.removeAttribute('w-bind');

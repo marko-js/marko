@@ -1,7 +1,7 @@
-raptor-widgets
+marko-widgets
 ==============
 
-The `raptor-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. Out of the box, bindings are provided for [Marko](https://github.com/raptorjs3/marko) and [Dust](https://github.com/linkedin/dustjs). There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
+The `marko-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. Out of the box, bindings are provided for [Marko](https://github.com/raptorjs3/marko) and [Dust](https://github.com/linkedin/dustjs). There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -51,7 +51,7 @@ The `raptor-widgets` module provides a simple and efficient mechanism for bindin
 # Installation
 
 ```bash
-npm install raptor-widgets --save
+npm install marko-widgets --save
 ```
 
 # Glossary
@@ -104,7 +104,7 @@ Widget.prototype = {
 module.exports = Widget;
 ```
 
-In order for everything to work on the client-side we need to include the code for the `raptor-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs3/optimizer) module and the taglib that it provides. Our final page template is shown below:
+In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs3/optimizer) module and the taglib that it provides. Our final page template is shown below:
 
 __src/pages/index/template.marko:__
 
@@ -137,7 +137,7 @@ __src/pages/index/optimizer.json:__
 ```javascript
 {
     "dependencies": [
-        "require raptor-widgets",
+        "require marko-widgets",
         "require ./widget"
     ]
 }
@@ -165,7 +165,7 @@ In the above example, the final HTML will be similar to the following:
 
 ## Referencing Widgets
 
-The `raptor-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.widgets` collection.
+The `marko-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.widgets` collection.
 
 The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/raptorjs3/raptor-sample-ui-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/raptorjs3/raptor-sample-ui-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 

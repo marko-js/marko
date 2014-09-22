@@ -1,9 +1,9 @@
 {
-    "name": "raptor-widgets",
+    "name": "marko-widgets",
     "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs3/raptor-widgets.git"
+        "url": "https://github.com/raptorjs3/marko-widgets.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib/ dust/ dust/"
@@ -31,9 +31,9 @@
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "lib/raptor-widgets.js",
+    "main": "lib/marko-widgets.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "1.0.2-beta"
+    "version": "1.1.0"
 }

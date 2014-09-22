@@ -76,7 +76,7 @@ function testRender(path, data, done, options) {
         
 }
 
-xdescribe('raptor-widgets/taglib' , function() {
+xdescribe('marko-widgets/taglib' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {

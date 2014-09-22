@@ -1,7 +1,7 @@
 {
-    "main": "raptor-widgets.js",
+    "main": "marko-widgets.js",
     "browser": {
-        "./raptor-widgets.js": "./raptor-widgets-browser.js",
+        "./marko-widgets.js": "./marko-widgets-browser.js",
         "./uniqueId.js": "./uniqueId-browser.js",
         "./init-widgets.js": "./init-widgets-browser.js"
     }

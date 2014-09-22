@@ -3,7 +3,7 @@
 /.idea/
 /npm-debug.log
 /node_modules
-!/test/test-project/node_modules/raptor-widgets
+!/test/test-project/node_modules/marko-widgets
 /*.sublime-workspace
 *.orig
 .DS_Store

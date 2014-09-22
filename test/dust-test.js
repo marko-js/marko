@@ -21,7 +21,7 @@ dust.onLoad = function(path, callback) {
 require('../dust').registerHelpers(dust);
 
 
-xdescribe('raptor-widgets/taglib' , function() {
+xdescribe('marko-widgets/taglib' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
