@@ -1375,7 +1375,7 @@ app.get('/profile', function(req, res) {
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
 
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express-app](https://github.com/raptorjs3/raptor-samples/tree/master/marko-express-app).
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/raptorjs3/raptor-samples/tree/master/marko-express).
 
 <hr>
 
