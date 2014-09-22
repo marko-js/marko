@@ -23,7 +23,7 @@
         "events": "^1.0.2",
         "htmlparser2": "^3.7.2",
         "minimatch": "^0.2.14",
-        "property-handlers": "^0.2.1",
+        "property-handlers": "^1.0.0",
         "raptor-args": "^1.0.0",
         "raptor-json": "^1.0.0",
         "raptor-logging": "^1.0.0",
