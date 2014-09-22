@@ -31,7 +31,7 @@ xdescribe('raptor-widgets/taglib' , function() {
         // }
 
         // require('raptor-logging').configureLoggers({
-        //     'raptor-templates': 'INFO'
+        //     'marko': 'INFO'
         // });
 
         done();

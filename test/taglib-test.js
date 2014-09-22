@@ -13,7 +13,7 @@ function testCompiler(path) {
     var expectedPath = nodePath.join(__dirname, path + '.expected.js');
     var actualPath = nodePath.join(__dirname, path + '.actual.js');
 
-    var compiler = require('raptor-templates/compiler').createCompiler(inputPath);
+    var compiler = require('marko/compiler').createCompiler(inputPath);
     var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
     
     var output = compiler.compile(src);
@@ -40,17 +40,17 @@ function testRender(path, data, done, options) {
     var actualPath = nodePath.join(__dirname, path + '.actual.html');
     options = options || {};
     // var compiledPath = nodePath.join(__dirname, path + '.actual.js');
-    // var compiler = require('raptor-templates/compiler').createCompiler(inputPath);
+    // var compiler = require('marko/compiler').createCompiler(inputPath);
     // var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
     
     // var compiledSrc = compiler.compile(src);
     // fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
 
-    var raptorTemplates = require('raptor-templates');
-    var Context = raptorTemplates.Context;
+    var marko = require('marko');
+    var Context = marko.Context;
     var context = options.context || new Context(new StringBuilder());
 
-    raptorTemplates.render(inputPath, data, context)
+    marko.render(inputPath, data, context)
         .on('end', function() {
             var output = context.getOutput();
 
@@ -86,18 +86,18 @@ xdescribe('raptor-widgets/taglib' , function() {
         // }
 
         // require('raptor-logging').configureLoggers({
-        //     'raptor-templates': 'INFO'
+        //     'marko': 'INFO'
         // });
 
         done();
     });
 
     it('should compile a simple template with a w:widget attribute', function() {
-        testCompiler('test-project/foo/view.rhtml');
+        testCompiler('test-project/foo/view.marko');
     });
 
     it('should render a simple page', function(done) {
-        testRender('test-project/page1.rhtml', {}, done);
+        testRender('test-project/page1.marko', {}, done);
     });
 
 });

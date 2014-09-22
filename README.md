@@ -1,7 +1,7 @@
 raptor-widgets
 ==============
 
-The `raptor-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. Out of the box, bindings are provided for [Raptor Templates](https://github.com/raptorjs3/raptor-templates) and [Dust](https://github.com/linkedin/dustjs). There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
+The `raptor-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. Out of the box, bindings are provided for [Marko](https://github.com/raptorjs3/marko) and [Dust](https://github.com/linkedin/dustjs). There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -73,7 +73,7 @@ A few definitions before you get started:
 
 ## Binding Behavior
 
-Using the bindings for Raptor Templates, you can bind a widget to a rendered DOM element using the custom `w-bind` attribute as shown in the following sample template:
+Using the bindings for Marko, you can bind a widget to a rendered DOM element using the custom `w-bind` attribute as shown in the following sample template:
 
 ```html
 <div class="my-component" w-bind="./widget">
@@ -106,7 +106,7 @@ module.exports = Widget;
 
 In order for everything to work on the client-side we need to include the code for the `raptor-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs3/optimizer) module and the taglib that it provides. Our final page template is shown below:
 
-__src/pages/index/template.rhtml:__
+__src/pages/index/template.marko:__
 
 ```html
 <optimizer-page name="index" package-path="./optimizer.json" />
@@ -346,7 +346,7 @@ Emits an event. This method is inherited from EventEmitter (see [Node.js Events:
 
 #### getEl(widgetElId)
 
-Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Raptor Templates, nested DOM elements should be assigned an ID using the `w-el-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
+Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Marko, nested DOM elements should be assigned an ID using the `w-el-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
 
 #### getElId(widgetElId)
 
