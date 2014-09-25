@@ -26,9 +26,9 @@ var loader = require('./loader');
 var cache = {};
 var Readable;
 var AsyncWriter = asyncWriter.AsyncWriter;
+var extend = require('raptor-util/extend');
 
 exports.AsyncWriter = AsyncWriter;
-
 
 var stream;
 var STREAM = 'stream';
@@ -40,19 +40,6 @@ try {
 
 if (streamPath) {
     stream = require(streamPath);
-}
-
-
-function renderWithCallback(template, data, out, callback) {
-    out
-        .on('end', function() {
-            callback(null, out.getOutput());
-        })
-        .on('error', callback);
-
-    template._(data, out);    //Invoke the template rendering function with the required arguments
-
-    out.end();
 }
 
 function Template(renderFunc) {
@@ -71,33 +58,44 @@ Template.prototype = {
         if (data == null) {
             data = {};
         }
+        var renderFunc = this._;
 
         // callback is last argument if provided
         callback = arguments[arguments.length - 1];
+        var shouldEnd = true;
         if (typeof callback === 'function') {
             if (arguments.length === 2) { // data, out, callback
                 callback = out;
                 out = new AsyncWriter();
             }
-            renderWithCallback(this, data, out, callback);
+            out.on('end', function() {
+                    callback(null, out.getOutput());
+                })
+                .on('error', callback);
         } else {
             if (out.isAsyncWriter) {
-                this._(data, out);
+                shouldEnd = false;
             } else {
                 // Assume the "out" is really a stream
                 out = new AsyncWriter(out);
-                this._(data, out);
-                out.end(); // End the out and the underlying stream
             }
+        }
+
+        var $global = data.$global;
+        if ($global) {
+            extend(out.global, $global);
+        }
+
+        renderFunc(data, out);
+        if (shouldEnd) {
+            out.end(); // End the async writer and the underlying stream
         }
 
         return out;
     },
     stream: function(data) {
         if (!stream) {
-            return function() {
-                throw new Error('Module not found: stream');
-            };
+            throw new Error('Module not found: stream');
         }
 
         return new Readable(this, data);
@@ -131,7 +129,7 @@ if (stream) {
             var template = this._t;
             var data = this._d;
 
-            var out = exports.createWriter(this);
+            var out = new AsyncWriter(this);
             template.render(data, out);
             out.end();
         }
