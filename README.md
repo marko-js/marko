@@ -427,7 +427,7 @@ browserify -t markoify run.js > browser.js
 
 ## Template Compilation
 
-The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a out-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
+The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
 
 The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
