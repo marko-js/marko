@@ -29,13 +29,12 @@ RequireNode.prototype = {
 
         if (!module) {
             this.addError('"module" attribute is required');
+            return;
         }
-        if (!varName) {
-            this.addError('"var" attribute is required');
-        }
-
-        if (module && varName) {
+        if (varName) {
             template.addStaticVar(varName, 'require(' + module + ')');
+        } else {
+            template.functionCall('require', module);
         }
     }
 };
