@@ -3,7 +3,7 @@
     "description": "The async-writer module makes it possible to asynchronously write data to an output stream while still flushing out bytes in the correct order",
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs3/async-writer.git"
+        "url": "https://github.com/raptorjs/async-writer.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
