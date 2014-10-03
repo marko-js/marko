@@ -1,7 +1,7 @@
 Marko
 ================
 
-Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs3/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
+Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
 
 ![Marko Syntax](syntax.png)
 
@@ -369,7 +369,7 @@ Despite rendering the first chunk asynchronously, the above program will stream 
 BEGIN Hello World! END
 ```
 
-For more details, please see the documentation for the [async-writer](https://github.com/raptorjs3/async-writer) module.
+For more details, please see the documentation for the [async-writer](https://github.com/raptorjs/async-writer) module.
 
 ## Browser-side Rendering
 
@@ -389,7 +389,7 @@ templatePath.render({
     });
 ```
 
-You can then bundle up the above program for running in the browser using either [optimizer](https://github.com/raptorjs3/optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
+You can then bundle up the above program for running in the browser using either [optimizer](https://github.com/raptorjs/optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
 
 
 ### Using the RaptorJS Optimizer
@@ -427,7 +427,7 @@ browserify -t markoify run.js > browser.js
 
 ## Template Compilation
 
-The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) or [Browserify](https://github.com/substack/node-browserify).
+The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) or [Browserify](https://github.com/substack/node-browserify).
 
 The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
@@ -1030,7 +1030,7 @@ template.render({
 </async-fragment>
 ```
 
-For more details, please see [https://github.com/raptorjs3/marko-async](https://github.com/raptorjs3/marko-async).
+For more details, please see [https://github.com/raptorjs/marko-async](https://github.com/raptorjs/marko-async).
 
 ## Layout Taglib
 
@@ -1071,14 +1071,14 @@ _Usage of `default-layout.marko`:_
 ```
 
 
-For more details, please see [https://github.com/raptorjs3/marko-layout](https://github.com/raptorjs3/marko-layout).
+For more details, please see [https://github.com/raptorjs/marko-layout](https://github.com/raptorjs/marko-layout).
 
 # Custom Taglibs
 
 
 ## Tag Renderer
 
-Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs3/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
 module.exports = function(data, out) {
@@ -1331,7 +1331,7 @@ __Answer__: Yes, Marko has been battle-tested at [eBay](http://www.ebay.com/) an
 
 __Question:__ _Can templates be compiled on the client?_
 
-__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs3/optimizer) is recommended for including compiled templates as part of a web page.
+__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) is recommended for including compiled templates as part of a web page.
 
 <hr>
 
@@ -1375,7 +1375,7 @@ app.get('/profile', function(req, res) {
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
 
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/raptorjs3/raptor-samples/tree/master/marko-express).
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/raptorjs/raptor-samples/tree/master/marko-express).
 
 <hr>
 
