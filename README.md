@@ -5,6 +5,8 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 ![Marko Syntax](syntax.png)
 
+![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
