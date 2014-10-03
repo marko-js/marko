@@ -3,7 +3,7 @@
     "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs3/marko-widgets.git"
+        "url": "https://github.com/raptorjs/marko-widgets.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint lib/ dust/ dust/"
