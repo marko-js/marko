@@ -22,8 +22,9 @@ function addHandlerVar(template, renderer) {
     var handlerVars = template._handlerVars || (template._handlerVars = {});
     var handlerVar = handlerVars[renderer];
     if (!handlerVar) {
-        handlerVars[renderer] = handlerVar = renderer.replace(/[.\-\/]/g, '_').replace(/^[_]+/g, '');
-        template.addStaticVar(handlerVar, 'require(' + stringify(renderer) + ')');
+        handlerVar = renderer.replace(/[.\-\/\\]/g, '_').replace(/^[_]+/g, '');
+        handlerVar = template.addStaticVar(handlerVar, 'require(' + stringify(renderer) + ')');
+        handlerVars[renderer] = handlerVar;
     }
     return handlerVar;
 }
