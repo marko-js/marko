@@ -515,7 +515,7 @@ _File size: 190 bytes gzipped (251 bytes uncompressed)_
 
 ## Template Directives Overview
 
-Almost all of the Raptor templating directives can be used as either an attribute or as an element. For example:
+Almost all of the Marko templating directives can be used as either an attribute or as an element. For example:
 
 _Applying directives using attributes:_
 ```html
@@ -585,7 +585,7 @@ Test: ${hello}
 
 Wherever expressions are allowed, they are treated as JavaScript expressions and copied out to the compiled template verbatim. However, you can choose to use alternate versions of the following JavaScript operators:
 
-JavaScript Operator | Raptor Equivalent
+JavaScript Operator | Marko Equivalent
 ------------------- | -----------------
 `&&` 	            | `and`
 <code>&#124;&#124;</code>                | `or`
