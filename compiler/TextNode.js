@@ -37,6 +37,11 @@ function TextNode(text, escapeXml) {
     if (text != null && typeof text !== 'string') {
         throw createError('Invalid text: ' + text);
     }
+
+    if (text) {
+        text = text.replace(/\r\n/g, '\n');
+    }
+
     this.text = text;
     this.escapeXml = escapeXml !== false;
 }
