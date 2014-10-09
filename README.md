@@ -89,7 +89,7 @@ out.write('A');
 
 var asyncOut = out.beginAsync();
 require('fs').createReadStream('b.txt', 'utf8')
-    .pipe(out);
+    .pipe(asyncOut);
 
 out.write('C');
 out.end();
