@@ -380,4 +380,34 @@ describe('async-writer' , function() {
             done();
         });
     });
+
+    it('should not crash the program if the underlying stream has an error listener', function(done) {
+        var stream = require('stream');
+        var PassThrough = stream.PassThrough;
+        var passthrough = new PassThrough();
+
+        passthrough.on('error', function(err) {
+            done();
+        });
+
+        var out = require('../').create(passthrough);
+        out.write('hello');
+        out.error('test');
+    });
+
+    it('should crash the program if the underlying stream does *not* have an error listener', function(done) {
+        var stream = require('stream');
+        var PassThrough = stream.PassThrough;
+        var passthrough = new PassThrough();
+
+        var out = require('../').create(passthrough);
+        out.write('hello');
+        try {
+            out.error('test');
+            done('uncaught exception expected');
+        } catch(e) {
+            done();
+        }
+
+    });
 });
