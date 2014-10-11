@@ -31,7 +31,7 @@ function testRender(path, data, done, options) {
     var out = options.out || new AsyncWriter(new StringBuilder());
 
     marko.render(inputPath, data, out)
-        .on('end', function() {
+        .on('finish', function() {
             var output = out.getOutput();
 
             fs.writeFileSync(actualPath, output, {encoding: 'utf8'});

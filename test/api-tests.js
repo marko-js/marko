@@ -34,11 +34,11 @@ describe('marko/api' , function() {
             });
     });
 
-    it('should allow a template to be rendered to a context wrapping a string builder', function(done) {
-        var context = marko.createWriter();
-        context
-            .on('end', function() {
-                expect(context.getOutput()).to.equal('Hello John!');
+    it('should allow a template to be rendered to a writer wrapping a string builder', function(done) {
+        var out = marko.createWriter();
+        out
+            .on('finish', function() {
+                expect(out.getOutput()).to.equal('Hello John!');
                 done();
             })
             .on('error', function(e) {
@@ -50,21 +50,21 @@ describe('marko/api' , function() {
             {
                 name: 'John'
             },
-            context);
+            out);
 
-        context.end();
+        out.end();
     });
 
-    it('should allow a template to be rendered to a context wrapping a stream', function(done) {
+    it('should allow a template to be rendered to a writer wrapping a stream', function(done) {
         var output = '';
 
         var stream = through(function write(data) {
             output += data;
         });
 
-        var context = marko.createWriter(stream);
-        context
-            .on('end', function() {
+        var out = marko.createWriter(stream);
+        out
+            .on('finish', function() {
                 expect(output).to.equal('Hello John!');
                 done();
             })
@@ -77,9 +77,7 @@ describe('marko/api' , function() {
             {
                 name: 'John'
             },
-            context);
-
-        context.end();
+            out).end();
     });
 
     it('should allow a template to be rendered to a stream', function(done) {
@@ -87,8 +85,13 @@ describe('marko/api' , function() {
 
         var output = '';
         var outStream = through(function write(data) {
-                output += data;
-            });
+            output += data;
+        });
+
+        outStream.on('end', function() {
+            expect(output).to.equal('Hello John!');
+            done();
+        });
 
 
         marko.stream(
@@ -97,10 +100,6 @@ describe('marko/api' , function() {
                 name: 'John'
             })
             .pipe(outStream)
-            .on('end', function() {
-                expect(output).to.equal('Hello John!');
-                done();
-            })
             .on('error', function(e) {
                 done(e);
             });
@@ -124,11 +123,11 @@ describe('marko/api' , function() {
             });
     });
 
-    it('should allow a template to be loaded and rendered to a context wrapping a string builder', function(done) {
-        var context = marko.createWriter();
-        context
-            .on('end', function() {
-                expect(context.getOutput()).to.equal('Hello John!');
+    it('should allow a template to be loaded and rendered to a writer wrapping a string builder', function(done) {
+        var out = marko.createWriter();
+        out
+            .on('finish', function() {
+                expect(out.getOutput()).to.equal('Hello John!');
                 done();
             })
             .on('error', function(e) {
@@ -139,12 +138,12 @@ describe('marko/api' , function() {
         template.render({
                 name: 'John'
             },
-            context);
+            out);
 
-        context.end();
+        out.end();
     });
 
-    it('should allow a template to be loaded and rendered to a context wrapping a stream', function(done) {
+    it('should allow a template to be loaded and rendered to a writer wrapping a stream', function(done) {
 
         var output = '';
 
@@ -152,9 +151,8 @@ describe('marko/api' , function() {
             output += data;
         });
 
-        var context = marko.createWriter(stream);
-        context
-            .on('end', function() {
+        var out = marko.createWriter(stream)
+            .on('finish', function() {
                 expect(output).to.equal('Hello John!');
                 done();
             })
@@ -166,9 +164,7 @@ describe('marko/api' , function() {
         template.render({
                 name: 'John'
             },
-            context);
-
-        context.end();
+            out).end();
     });
 
     it('should allow a template to be loaded and rendered to a stream', function(done) {
@@ -176,18 +172,19 @@ describe('marko/api' , function() {
 
         var output = '';
         var outStream = through(function write(data) {
-                output += data;
-            });
+            output += data;
+        });
+
+        outStream.on('end', function() {
+            expect(output).to.equal('Hello John!');
+            done();
+        });
 
 
         template.stream({
                 name: 'John'
             })
             .pipe(outStream)
-            .on('end', function() {
-                expect(output).to.equal('Hello John!');
-                done();
-            })
             .on('error', function(e) {
                 done(e);
             });

@@ -62,23 +62,30 @@ Template.prototype = {
 
         // callback is last argument if provided
         callback = arguments[arguments.length - 1];
-        var shouldEnd = true;
+
+        var shouldEnd = false;
+
         if (typeof callback === 'function') {
-            if (arguments.length === 2) { // data, out, callback
-                callback = out;
-                out = new AsyncWriter();
+            if (arguments.length === 2) {
+                // render called with data and callback,
+                // we need to create the "out"
+                out = null;
             }
-            out.on('end', function() {
-                    callback(null, out.getOutput());
-                })
-                .on('error', callback);
-        } else {
-            if (out.isAsyncWriter) {
-                shouldEnd = false;
-            } else {
-                // Assume the "out" is really a stream
+
+            if (!out || !out.isAsyncWriter) {
                 out = new AsyncWriter(out);
+                shouldEnd = true;
             }
+            
+            out.on('finish', function() {
+                callback(null, out.getOutput());
+            });
+
+            out.on('error', callback);
+        } else if (!out || !out.isAsyncWriter) {
+            // Assume the "out" is really a stream
+            out = new AsyncWriter(out);
+            shouldEnd = true;
         }
 
         var $global = data.$global;
@@ -87,8 +94,17 @@ Template.prototype = {
         }
 
         renderFunc(data, out);
+
+        // Automatically end output stream (the writer) if we
+        // had to create an async writer (which might happen
+        // if the caller did not provide a writer/out or the
+        // writer/out was not an AsyncWriter).
+        //
+        // If out parameter was originally an AsyncWriter then
+        // we assume that we are writing to output that was
+        // created in the context of another rendering job.
         if (shouldEnd) {
-            out.end(); // End the async writer and the underlying stream
+            out.end();
         }
 
         return out;
