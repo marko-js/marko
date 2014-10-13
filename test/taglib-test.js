@@ -51,7 +51,7 @@ function testRender(path, data, done, options) {
     var context = options.context || new Context(new StringBuilder());
 
     marko.render(inputPath, data, context)
-        .on('end', function() {
+        .on('finish', function() {
             var output = context.getOutput();
 
             fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
@@ -72,8 +72,8 @@ function testRender(path, data, done, options) {
 
             done();
         })
-        .on('error', done);
-        
+        .on('error', done)
+        .end();
 }
 
 xdescribe('marko-widgets/taglib' , function() {
