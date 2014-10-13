@@ -25,7 +25,7 @@ describe('async-writer' , function() {
         out.write('3');
         out.write('4');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('1234');
             done();
@@ -51,7 +51,7 @@ describe('async-writer' , function() {
         }, 10);
 
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('1234');
             done();
@@ -70,7 +70,7 @@ describe('async-writer' , function() {
 
         out.write('3');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('123');
             done();
@@ -88,7 +88,7 @@ describe('async-writer' , function() {
 
         out.write('3');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('123');
             done();
@@ -113,7 +113,7 @@ describe('async-writer' , function() {
         out.write('3');
         out.end();
 
-        out.on('end', function() {
+        out.on('finish', function() {
             expect(errors.length).to.equal(1);
             expect(out.getOutput()).to.equal('13');
             done();
@@ -161,7 +161,7 @@ describe('async-writer' , function() {
         }, 10);
 
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('12a2b2c34a4b4c');
             done();
@@ -183,7 +183,7 @@ describe('async-writer' , function() {
         }, 10);
         out.write('3');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(errors.length).to.equal(1);
             expect(output).to.equal('13');
@@ -197,7 +197,7 @@ describe('async-writer' , function() {
             .on('error', function(e) {
                 errors.push(e);
             })
-            .on('end', function() {
+            .on('finish', function() {
                 var output = out.getOutput();
                 expect(errors.length).to.equal(1);
                 expect(output).to.equal('13');
@@ -228,7 +228,7 @@ describe('async-writer' , function() {
             .on('error', function(e) {
                 errors.push(e);
             })
-            .on('end', function() {
+            .on('finish', function() {
                 expect(errors.length).to.equal(0);
                 expect(output).to.equal('123');
                 done();
@@ -263,7 +263,7 @@ describe('async-writer' , function() {
             .on('error', function(e) {
                 errors.push(e);
             })
-            .on('end', function() {
+            .on('finish', function() {
             })
             .write('1');
 
@@ -289,7 +289,7 @@ describe('async-writer' , function() {
 
         out.write('2');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('1Hello World2');
             done();
@@ -309,10 +309,7 @@ describe('async-writer' , function() {
 
         through
             .pipe(out)
-            .on('end', function() {
-                expect(outStr).to.equal('1Hello World2');
-                done();
-            })
+            
             .on('error', function(e) {
                 done(e);
             });
@@ -326,6 +323,12 @@ describe('async-writer' , function() {
         helloReadStream.pipe(asyncOut);
 
         out.write('2');
+
+        out.on('finish', function() {
+            expect(outStr).to.equal('1Hello World2');
+            done();
+        });
+
         out.end();
 
     });
@@ -343,7 +346,7 @@ describe('async-writer' , function() {
 
         out.write('3');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             var output = out.getOutput();
             expect(output).to.equal('123');
             done();
@@ -373,7 +376,7 @@ describe('async-writer' , function() {
 
         out.write('3');
         out.end();
-        out.on('end', function() {
+        out.on('finish', function() {
             expect(lastFiredCount).to.equal(1);
             var output = out.getOutput();
             expect(output).to.equal('123');
