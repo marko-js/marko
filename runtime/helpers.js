@@ -6,6 +6,7 @@ var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
 var markoRegExp = /\.marko(.xml)?$/;
+var req = require;
 
 function notEmpty(o) {
     if (Array.isArray(o) === true) {
@@ -87,7 +88,7 @@ module.exports = {
             if (markoRegExp.test(path)) {
                 return runtime.load(path);
             } else {
-                return require('view-engine').load(path);
+                return req('view-engine').load(path);
             }
         } else {
             // Assume it is already a pre-loaded template
