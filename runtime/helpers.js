@@ -5,6 +5,7 @@ var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
+var markoRegExp = /\.marko(.xml)?$/;
 
 function notEmpty(o) {
     if (Array.isArray(o) === true) {
@@ -82,7 +83,16 @@ module.exports = {
 
     as: attrs,
     l: function(path) {
-        return typeof path === 'string' ? runtime.load(path) : path;
+        if (typeof path === 'string') {
+            if (markoRegExp.test(path)) {
+                return runtime.load(path);
+            } else {
+                return require('view-engine').load(path);
+            }
+        } else {
+            // Assume it is already a pre-loaded template
+            return path;
+        }
     },
 
     /* Helpers that require a context below: */
