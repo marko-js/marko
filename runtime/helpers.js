@@ -9,10 +9,15 @@ var markoRegExp = /\.marko(.xml)?$/;
 var req = require;
 
 function notEmpty(o) {
-    if (Array.isArray(o) === true) {
-        return o.length !== 0;
+    if (o == null) {
+        return false;
+    } else if (Array.isArray(o)) {
+        return !!o.length;
+    } else if (o === '') {
+        return false;
     }
-    return o;
+
+    return true;
 }
 
 module.exports = {
