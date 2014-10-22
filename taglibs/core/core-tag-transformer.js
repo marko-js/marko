@@ -214,7 +214,7 @@ function handleAttr(node, compiler, template) {
         node.addError('Invalid attributes for tag ' + node.toString() + ': ' + invalidAttrs.join(', '));
         return;
     }
-    //Cleanup whitespace between <c-attr> tags
+    //Cleanup whitespace between <attr> tags
     if (node.previousSibling && node.previousSibling.isTextNode() && node.previousSibling.getText().trim() === '') {
         node.previousSibling.detach();
     }
@@ -238,7 +238,7 @@ function handleAttr(node, compiler, template) {
 
 function findNestedAttrs(node, compiler, template) {
     node.forEachChild(function (child) {
-        if (child.qName === 'c-attr') {
+        if (child.qName === 'attr') {
             handleAttr(child, compiler, template);
         }
     });

@@ -1,8 +1,8 @@
 <c-template
     params="">
     <div data-attr="Hello &lt;John&gt; &lt;hello&gt;">
-        <c-attr name="data-nested-attr">Hello &lt;John&gt; <![CDATA[<hello>]]></c-attr>
-        <c-attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
+        <attr name="data-nested-attr">Hello &lt;John&gt; <![CDATA[<hello>]]></attr>
+        <attr name="data-nested-attr2" value="Hello &lt;John&gt; &lt;hello&gt;"/>
         Hello &lt;John&gt;© <![CDATA[<hello>]]>
         ${startTag:START}
     </div>

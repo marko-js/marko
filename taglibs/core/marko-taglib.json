@@ -191,7 +191,7 @@
                 }
             }
         },
-        "c-attr": {
+        "attr": {
             "attributes": {
                 "name": {
                     "type": "string"
@@ -243,7 +243,7 @@
                 }
             }
         },
-        "c-assign": {
+        "assign": {
             "node-class": "./AssignNode",
             "attributes": {
                 "var": {

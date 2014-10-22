@@ -2,20 +2,20 @@
     params="active">
     
     <test-popover>
-        <c-attr name="title">Popover Title</c-attr>
-        <c-attr name="content">Popover Content</c-attr>
+        <attr name="title">Popover Title</attr>
+        <attr name="content">Popover Content</attr>
         
         Link Text
     </test-popover>
     
     <div>
-        <c-attr name="class" value="{?active;tab-active}"/>
-        <c-attr name="align">center</c-attr>
+        <attr name="class" value="{?active;tab-active}"/>
+        <attr name="align">center</attr>
     </div>
     
     <div>
-        <c-attr name="title">
+        <attr name="title">
             <for each="color in ['red', 'green', 'blue']"> $color! </for>
-        </c-attr>
+        </attr>
     </div>
 </c-template>

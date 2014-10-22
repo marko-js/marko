@@ -79,12 +79,12 @@
     </else>
     
     <div class="test">
-        <c-attr name="class" value="duplicate"/>
+        <attr name="class" value="duplicate"/>
     </div>
     
     <test-popover title="Popover Title" invalidAttr1="invalidValue1">
-        <c-attr name="invalidAttr2" value="invalidValue2"/>
-        <c-attr name="invalidAttr3">invalidValue3</c-attr>
-        <c-attr name="invalidAttr4" if="invalidIf">invalidValue4</c-attr>
+        <attr name="invalidAttr2" value="invalidValue2"/>
+        <attr name="invalidAttr3">invalidValue3</attr>
+        <attr name="invalidAttr4" if="invalidIf">invalidValue4</attr>
     </test-popover>
 </c-template>
