@@ -76,7 +76,7 @@ Template.prototype = {
                 out = new AsyncWriter(out);
                 shouldEnd = true;
             }
-            
+
             out.on('finish', function() {
                 callback(null, out.getOutput());
             });
@@ -155,6 +155,10 @@ if (stream) {
 }
 
 function load(templatePath) {
+    if (!templatePath) {
+        throw new Error('"templatePath" is required');
+    }
+
     var template;
 
     if (typeof templatePath === 'string') {
