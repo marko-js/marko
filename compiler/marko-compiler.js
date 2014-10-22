@@ -19,7 +19,6 @@ var req = require; // Fool code inspectors used by client-side bundles
 var nodePath = require('path');
 
 var defaultOptions = {
-        minify: false,
         preserveWhitespace: {
             'pre': true,
             'textarea': true,
