@@ -25,7 +25,7 @@ function isEmpty(o) {
     if (!o) {
         return true;
     }
-    
+
     for (var k in o) {
         if (o.hasOwnProperty(k)) {
             return false;
@@ -107,9 +107,9 @@ ElementNode.prototype = {
         if (this.attributesByNS[namespace]) {
             forEachEntry(this.attributesByNS[namespace], function (name, attr) {
                 attributes.push(attr);
-            });    
+            });
         }
-        
+
         return attributes;
     },
     getAttribute: function (name) {
@@ -208,6 +208,9 @@ ElementNode.prototype = {
         if (preserveWhitespace) {
             this.removePreserveSpaceAttr();
         }
+
+        var _this = this;
+
         template.text('<' + name);
         this.forEachAttributeAnyNS(function (attr) {
             var prefix = attr.prefix;
@@ -243,10 +246,10 @@ ElementNode.prototype = {
                     },
                     error: function (message) {
                         invalidAttr = true;
-                        this.addError('Invalid expression found in attribute "' + name + '". ' + message);
+                        _this.addError('Invalid expression found in attribute "' + name + '". ' + message);
                     }
-                }, this);
-                
+                });
+
                 if (invalidAttr) {
                     template.text(name + '="' + escapeXmlAttr(attr.value) + '"');
                 } else {
