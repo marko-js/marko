@@ -21,6 +21,7 @@ function loadSource(templatePath, compiledSrc) {
 
 module.exports = function load(templatePath) {
     templatePath = nodePath.resolve(cwd, templatePath);
+    var targetDir = nodePath.dirname(templatePath);
 
     var targetFile = templatePath + '.js';
     var compiler = markoCompiler.createCompiler(templatePath);
@@ -34,7 +35,10 @@ module.exports = function load(templatePath) {
 
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
-    fs.writeFileSync(targetFile, compiledSrc, {encoding: 'utf8'});
+    var filename = nodePath.basename(targetFile);
+    var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
+    fs.writeFileSync(tempFile, compiledSrc, {encoding: 'utf8'});
+    fs.renameSync(tempFile, targetFile);
 
     return require(targetFile);
 };
