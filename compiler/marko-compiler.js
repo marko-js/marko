@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 'use strict';
-var extend = require('raptor-util').extend;
-var fs = require('fs');
+var extend = require('raptor-util/extend');
+var req = require; // Fool code inspectors used by client-side bundles
 var nodePath = require('path');
 
 var defaultOptions = {
@@ -64,6 +64,8 @@ extend(exports, {
     },
 
     compileFile: function(path, options, callback) {
+        var fs = req('fs');
+
         if (typeof options === 'function') {
             callback = options;
             options = null;

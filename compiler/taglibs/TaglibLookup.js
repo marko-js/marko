@@ -26,7 +26,7 @@ function merge(target, source) {
 
                     var targetArray = target[k];
                     var sourceArray = source[k];
-                    
+
 
                     if (!Array.isArray(targetArray)) {
                         targetArray = [targetArray];
@@ -44,7 +44,7 @@ function merge(target, source) {
                     merge(newTarget, source[k]);
                     target[k] = newTarget;
                 }
-                
+
             } else {
                 target[k] = source[k];
             }
@@ -175,7 +175,7 @@ TaglibLookup.prototype = {
          */
 
         var transformers = [];
-        
+
         function addTransformer(transformer) {
             if (!transformer || !transformer.getFunc) {
                 throw createError(new Error('Invalid transformer'));
@@ -190,12 +190,14 @@ TaglibLookup.prototype = {
          * Start with the least specific and end with the most specific.
          */
 
-        if (this.merged.tags[tagKey]) {
-            this.merged.tags[tagKey].forEachTransformer(addTransformer);
-        }
+        if (this.merged.tags) {
+            if (this.merged.tags[tagKey]) {
+                this.merged.tags[tagKey].forEachTransformer(addTransformer);
+            }
 
-        if (this.merged.tags['*']) {
-            this.merged.tags['*'].forEachTransformer(addTransformer);
+            if (this.merged.tags['*']) {
+                this.merged.tags['*'].forEachTransformer(addTransformer);
+            }
         }
 
         transformers.sort(transformerComparator);
@@ -203,8 +205,10 @@ TaglibLookup.prototype = {
         transformers.forEach(callback, thisObj);
     },
     forEachTextTransformer: function (callback, thisObj) {
-        this.merged.textTransformers.sort(transformerComparator);
-        this.merged.textTransformers.forEach(callback, thisObj);
+        if (this.merged.textTransformers) {
+            this.merged.textTransformers.sort(transformerComparator);
+            this.merged.textTransformers.forEach(callback, thisObj);
+        }
     },
     getInputFiles: function() {
         if (!this._inputFiles) {

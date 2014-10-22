@@ -16,14 +16,20 @@
 'use strict';
 var stringify = require('raptor-json/stringify');
 var nodePath = require('path');
-var fs = require('fs');
+var req = require;
+var fs;
+
+try {
+    fs = req('fs');
+} catch(e) {}
+
 
 var extend = require('raptor-util').extend;
 function IncludeNode(props) {
     if (IncludeNode.$super) {
-        IncludeNode.$super.call(this);    
+        IncludeNode.$super.call(this);
     }
-    
+
     if (props) {
         this.setProperties(props);
     }
@@ -50,7 +56,7 @@ IncludeNode.prototype = {
                 dataExpression = {
                     toString: function () {
                         var propParts = [];
-                        
+
                         _this.forEachProperty(function (name, value) {
                             name = name.replace(/-([a-z])/g, function (match, lower) {
                                 return lower.toUpperCase();

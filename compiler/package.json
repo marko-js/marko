@@ -1,3 +1,6 @@
 {
-    "main": "./marko-compiler.js"
+    "main": "./marko-compiler.js",
+    "browser": {
+        "./up-to-date.js": "./up-to-date-browser.js"
+    }
 }

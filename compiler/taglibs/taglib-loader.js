@@ -1,4 +1,13 @@
-var fs = require('fs');
+var fs ;
+var req = require;
+
+try {
+    fs = req('fs');
+} catch(e) {
+
+}
+
+
 var ok = require('assert').ok;
 var nodePath = require('path');
 var Taglib = require('./Taglib');
@@ -6,8 +15,17 @@ var cache = {};
 var forEachEntry = require('raptor-util').forEachEntry;
 var raptorRegexp = require('raptor-regexp');
 var tagDefFromCode = require('./tag-def-from-code');
-var resolve = require('raptor-modules/resolver').serverResolveRequire;
+var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
+
+function exists(path) {
+    try {
+        require.resolve(path);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
 
 function createDefaultTagDef() {
     return {
@@ -52,7 +70,7 @@ function buildAttribute(attr, attrProps, path) {
             attr.removeDashes = value === true;
         },
         description: function() {
-            
+
         }
     }, path);
 
@@ -101,15 +119,12 @@ function buildTag(tagObject, path, taglib, dirname) {
 
         renderer: function(value) {
             var path = resolve(value, dirname);
-            if (!fs.existsSync(path)) {
-                throw new Error('Renderer at path "' + path + '" does not exist.');
-            }
 
             tag.renderer = path;
         },
         template: function(value) {
             var path = nodePath.resolve(dirname, value);
-            if (!fs.existsSync(path)) {
+            if (!exists(path)) {
                 throw new Error('Template at path "' + path + '" does not exist.');
             }
 
@@ -120,9 +135,6 @@ function buildTag(tagObject, path, taglib, dirname) {
         },
         nodeClass: function(value) {
             var path = resolve(value, dirname);
-            if (!fs.existsSync(path)) {
-                throw new Error('Node module at path "' + path + '" does not exist.');
-            }
 
             tag.nodeClass = path;
         },
@@ -138,10 +150,6 @@ function buildTag(tagObject, path, taglib, dirname) {
             propertyHandlers(value, {
                 path: function(value) {
                     var path = resolve(value, dirname);
-                    if (!fs.existsSync(path)) {
-                        throw new Error('Transformer at path "' + path + '" does not exist.');
-                    }
-
                     transformer.path = path;
                 },
 
@@ -187,7 +195,7 @@ function buildTag(tagObject, path, taglib, dirname) {
                         nestedVariable = {};
 
                         propertyHandlers(v, {
-                            
+
                             name: function(value) {
                                 nestedVariable.name = value;
                             },
@@ -279,7 +287,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             taglib.addTag(tag);
         } else {
             // marko-tag.json does *not* exist... checking for a 'renderer.js'
-            
+
 
             if (fs.existsSync(rendererFile)) {
                 var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
@@ -316,19 +324,17 @@ function load(path) {
         return cache[path];
     }
 
-    var src = fs.readFileSync(path, {encoding: 'utf8'});
-    var taglib = new Taglib(path);
-    taglib.addInputFile(path);
-    var dirname = nodePath.dirname(path);
-
     var taglibObject;
 
     try {
-        taglibObject = JSON.parse(src);
-    }
-    catch(e) {
+        taglibObject = require(path);
+    } catch(e) {
         throw new Error('Unable to parse taglib JSON at path "' + path + '". Exception: ' + e);
     }
+
+    var taglib = new Taglib(path);
+    taglib.addInputFile(path);
+    var dirname = nodePath.dirname(path);
 
     propertyHandlers(taglibObject, {
         attributes: function(value) {
@@ -344,18 +350,15 @@ function load(path) {
                 if (typeof path === 'string') {
                     path = nodePath.resolve(dirname, path);
                     taglib.addInputFile(path);
-                    
+
                     tagDirname = nodePath.dirname(path);
-                    if (!fs.existsSync(path)) {
+                    if (!exists(path)) {
                         throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.id);
                     }
 
-                    var tagJSON = fs.readFileSync(path, {encoding: 'utf8'});
-
                     try {
-                        tagObject = JSON.parse(tagJSON);
-                    }
-                    catch(e) {
+                        tagObject = require(path);
+                    } catch(e) {
                         throw new Error('Unable to parse tag JSON for tag at path "' + path + '"');
                     }
                 } else {
@@ -394,10 +397,6 @@ function load(path) {
             propertyHandlers(value, {
                 path: function(value) {
                     var path = resolve(value, dirname);
-                    if (!fs.existsSync(path)) {
-                        throw new Error('Transformer at path "' + path + '" does not exist.');
-                    }
-
                     transformer.path = path;
                 }
 

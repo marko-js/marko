@@ -28,8 +28,6 @@ var WithNode = require('./WithNode');
 var TagHandlerNode = require('./TagHandlerNode');
 var IncludeNode = require('./IncludeNode');
 
-var resolver = require('raptor-modules/resolver');
-
 var coreAttrHandlers = [
     [
         'c-space', function(attr, node) {
@@ -352,7 +350,7 @@ module.exports = function transform(node, compiler, template) {
                     node.setInputExpression(template.makeExpression(inputAttr));
                 }
             } else {
-                var templatePath = resolver.deresolve(tag.template, compiler.dirname);
+                var templatePath = compiler.getRequirePath(tag.template);
                 // The tag is mapped to a template that will be used to perform
                 // the rendering so convert the node into a "IncludeNode" that can
                 // be used to include the output of rendering a template
