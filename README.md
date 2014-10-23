@@ -156,6 +156,12 @@ Hello ${data.name}!
 </div>
 ```
 
+To render the template you will need to install the `marko` module using [npm](https://www.npmjs.org/):
+
+```bash
+npm install marko --save
+```
+
 The template can then be rendered as shown in the following sample code:
 
 ```javascript
@@ -172,6 +178,7 @@ template.render({
 ```
 
 The output of running the above program will be the following (formatted for readability):
+
 ```html
 Hello World!
 
@@ -182,7 +189,7 @@ Hello World!
 </ul>
 ```
 
-For comparison, given the following data data consisting of an empty array of colors:
+For comparison, given the following data consisting of an empty array of colors:
 
 ```javascript
 {
@@ -264,11 +271,13 @@ The custom tags encapsulate rendering logic and help avoid repeating the same HT
 # Installation
 
 To install the `marko` module into your project you should use the following command:
+
 ```bash
 npm install marko --save
 ```
 
 To install the optional `markoc` command line interface to compile templates you can use the following command:
+
 ```bash
 npm install marko --global
 ```
@@ -278,6 +287,7 @@ npm install marko --global
 ## Template Rendering
 
 ### Callback API
+
 ```javascript
 var template = require('marko').load('template.marko');
 
@@ -1081,7 +1091,7 @@ For more details, please see [https://github.com/raptorjs/marko-layout](https://
 
 ## Tag Renderer
 
-Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
 module.exports = function(data, out) {
