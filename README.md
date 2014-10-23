@@ -3,9 +3,11 @@ Marko
 
 Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
 
-[:arrow_forward: __Try Online!__](http://raptorjs.org/marko/try-online/)
+__[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 ![Marko Syntax](syntax.png)
+
+Syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package.
 
 ![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
 
