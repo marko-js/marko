@@ -1398,6 +1398,11 @@ __Question:__ _How is Marko related to [RaptorJS](http://raptorjs.org)?_
 
 __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
 
+# Further Reading
+
+* [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
+* [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
+
 # Discuss
 
 Please post questions or comments on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
