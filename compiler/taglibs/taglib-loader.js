@@ -138,6 +138,9 @@ function buildTag(tagObject, path, taglib, dirname) {
 
             tag.nodeClass = path;
         },
+        preserveWhitespace: function(value) {
+            tag.preserveWhitespace = !!value;
+        },
         transformer: function(value) {
             var transformer = new Taglib.Transformer();
 
