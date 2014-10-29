@@ -106,7 +106,7 @@ Widget.prototype = {
 module.exports = Widget;
 ```
 
-In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<w-init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
+In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
 
 __src/pages/index/template.marko:__
 
@@ -127,7 +127,7 @@ __src/pages/index/template.marko:__
     </div>
 
     <optimizer-body/>
-    <w-init-widgets/>
+    <init-widgets/>
 </body>
 </html>
 ```
