@@ -88,7 +88,7 @@ describe('marko/marko' , function() {
         testRender('test-project/custom-tag.marko', {}, done);
     });
 
-    it.only("should allow for text replacement", function(done) {
+    it("should allow for text replacement", function(done) {
         testRender("test-project/html-templates/text-replacement.marko", {
             zero: 0,
             person: {
