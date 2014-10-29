@@ -40,6 +40,13 @@
                 "function-name": "string",
                 "include-script-tag": "boolean"
             }
+        },
+        "init-widgets": {
+            "renderer": "./taglib/init-widgets-tag.js",
+            "attributes": {
+                "function-name": "string",
+                "include-script-tag": "boolean"
+            }
         }
     }
 }
