@@ -66,14 +66,16 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
     if (targetType === 'string') {
         return allowExpressions ? new Expression(value != null ? stringify(value) : 'null') : value;
     } else if (targetType === 'boolean') {
-        if (allowExpressions) {
-            return new Expression(value);
-        } else {
+        if (!allowExpressions) {
             value = value.toLowerCase();
-            value = value === 'true' || value === 'yes';
-            //convert it to a boolean
-            return value;
         }
+
+        if (!allowExpressions || value === 'true' || value === 'yes' || value === '') {
+            //convert it to a boolean
+            return new Expression(true);
+        }
+
+        return new Expression(value);
     } else if (targetType === 'float' || targetType === 'double' || targetType === 'number' || targetType === 'integer' || targetType === 'int') {
         if (allowExpressions) {
             return new Expression(value);
