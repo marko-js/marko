@@ -1,22 +1,32 @@
-var raptorWidgets = require('../');
+var markoWidgets = require('../');
 
-module.exports = function render(input, context) {
-    var widgetsContext = raptorWidgets.getWidgetsContext(context);
+module.exports = function render(input, out) {
+    var widgetsContext = markoWidgets.getWidgetsContext(out);
 
-    if (context.featureLastFlush === false) {
-        // If the rendering context doesn't support the ability to know when all of the asynchronous fragmnents
+    var options = input.immediate ? {immediate: true} : null;
+
+    if (input.immediate === true) {
+        out.on('asyncFragmentFinish', function(eventArgs) {
+            var asyncFragmentOut = eventArgs.out;
+            var widgetsContext = markoWidgets.getWidgetsContext(asyncFragmentOut);
+            markoWidgets.writeInitWidgetsCode(widgetsContext, asyncFragmentOut, options);
+        });
+    }
+
+    if (out.featureLastFlush === false) {
+        // If the rendering out doesn't support the ability to know when all of the asynchronous fragmnents
         // have completed then we won't be able to know which widgets were rendered so we will
         // need to scan the DOM to find the widgets
-        raptorWidgets.writeInitWidgetsCode(widgetsContext, context, {scanDOM: true});
+        markoWidgets.writeInitWidgetsCode(widgetsContext, out, {scanDOM: true});
     } else {
-        var asyncContext = context.beginAsync({ last: true, timeout: -1 });
-        context.once('last', function() {
-            if (!widgetsContext.hasWidgets()) {
-                return asyncContext.end();
+        var asyncOut = out.beginAsync({ last: true, timeout: -1 });
+        out.onLast(function(next) {
+            if (widgetsContext.hasWidgets()) {
+                markoWidgets.writeInitWidgetsCode(widgetsContext, asyncOut, options);
             }
 
-            raptorWidgets.writeInitWidgetsCode(widgetsContext, asyncContext);
-            asyncContext.end();
+            asyncOut.end();
+            next();
         });
     }
 };

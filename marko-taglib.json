@@ -38,14 +38,16 @@
             "renderer": "./taglib/init-widgets-tag.js",
             "attributes": {
                 "function-name": "string",
-                "include-script-tag": "boolean"
+                "include-script-tag": "boolean",
+                "immediate": "boolean"
             }
         },
         "init-widgets": {
             "renderer": "./taglib/init-widgets-tag.js",
             "attributes": {
                 "function-name": "string",
-                "include-script-tag": "boolean"
+                "include-script-tag": "boolean",
+                "immediate": "boolean"
             }
         }
     }

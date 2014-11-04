@@ -4,16 +4,16 @@ var DUMMY_WIDGET_DEF = {
         elId: function () {
         }
     };
-module.exports = function render(input, context) {
+module.exports = function render(input, out) {
     var modulePath = input.module;
     var config = input.config || input._cfg;
-    var widgetArgs = context.attributes.widgetArgs;
+    var widgetArgs = out.global.widgetArgs;
     var id = input.id;
-    var scope = input.scope || context.getAttribute('widget');
+    var scope = input.scope || out.getAttribute('widget');
     var assignedId = input.assignedId;
     var events;
     if (widgetArgs) {
-        delete context.attributes.widgetArgs;
+        delete out.global.widgetArgs;
         scope = scope || widgetArgs.scope;
         assignedId = assignedId || widgetArgs.id;
         events = widgetArgs.events;
@@ -21,7 +21,7 @@ module.exports = function render(input, context) {
     if (!id && input.hasOwnProperty('id')) {
         throw new Error('Invalid widget ID for "' + modulePath + '"');
     }
-    var widgetsContext = widgets.getWidgetsContext(context);
+    var widgetsContext = widgets.getWidgetsContext(out);
 
     if (modulePath) {
 
