@@ -309,7 +309,7 @@ describe('async-writer' , function() {
 
         through
             .pipe(out)
-            
+
             .on('error', function(e) {
                 done(e);
             });
@@ -412,5 +412,47 @@ describe('async-writer' , function() {
             done();
         }
 
+    });
+
+    it('should allow multiple onLast calls', function(done) {
+        var out = require('../').create();
+        out.write('1');
+
+        var asyncOut1 = out.beginAsync();
+        setTimeout(function() {
+            asyncOut1.write('2');
+            asyncOut1.end();
+        }, 20);
+
+        var asyncOut2 = out.beginAsync({last: true});
+        var onLastCount = 0;
+        var lastOutput = [];
+
+        out.onLast(function(next) {
+            onLastCount++;
+            lastOutput.push('a');
+            asyncOut2.write('3');
+            asyncOut2.end();
+            setTimeout(next, 10);
+        });
+
+        var asyncOut3 = out.beginAsync({last: true});
+        out.onLast(function(next) {
+            onLastCount++;
+            lastOutput.push('b');
+            asyncOut3.write('4');
+            asyncOut3.end();
+            next();
+        });
+
+        out.write('5');
+        out.end();
+        out.on('finish', function() {
+            var output = out.getOutput();
+            expect(output).to.equal('12345');
+            expect(onLastCount).to.equal(2);
+            expect(lastOutput).to.deep.equal(['a', 'b']);
+            done();
+        });
     });
 });
