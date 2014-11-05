@@ -42,8 +42,9 @@ if (streamPath) {
     stream = require(streamPath);
 }
 
-function Template(renderFunc) {
+function Template(renderFunc, options) {
     this._ = renderFunc;
+    this.buffer = !options || options.buffer !== false;
 }
 
 Template.prototype = {
@@ -83,8 +84,13 @@ Template.prototype = {
 
             out.on('error', callback);
         } else if (!out || !out.isAsyncWriter) {
+            var stream = out;
             // Assume the "out" is really a stream
-            out = new AsyncWriter(out);
+            //
+            // By default, we will buffer rendering to a stream to prevent
+            // the response from being "too chunky".
+            var options = this.buffer ? { buffer: true } : null;
+            out = asyncWriter.create(stream, options);
             shouldEnd = true;
         }
 
@@ -114,15 +120,16 @@ Template.prototype = {
             throw new Error('Module not found: stream');
         }
 
-        return new Readable(this, data);
+        return new Readable(this, data, this.buffer);
     }
 };
 
 if (stream) {
-    Readable = function(template, data) {
+    Readable = function(template, data, buffer) {
         Readable.$super.call(this);
         this._t = template;
         this._d = data;
+        this._buffer = buffer;
         this._rendered = false;
     };
 
@@ -145,7 +152,7 @@ if (stream) {
             var template = this._t;
             var data = this._d;
 
-            var out = new AsyncWriter(this);
+            var out = asyncWriter.create(this, this._buffer ? { buffer: true } : null);
             template.render(data, out);
             out.end();
         }
@@ -154,7 +161,7 @@ if (stream) {
     require('raptor-util/inherit')(Readable, stream.Readable);
 }
 
-function load(templatePath) {
+function load(templatePath, options) {
     if (!templatePath) {
         throw new Error('"templatePath" is required');
     }
@@ -164,11 +171,11 @@ function load(templatePath) {
     if (typeof templatePath === 'string') {
         template = cache[templatePath];
         if (!template) {
-            template = cache[templatePath] = new Template(loader(templatePath)(helpers));
+            template = cache[templatePath] = new Template(loader(templatePath)(helpers), options);
         }
     } else {
         // Instead of a path, assume we got a compiled template module
-        template = templatePath._ || (templatePath._ = new Template(templatePath(helpers)));
+        template = templatePath._ || (templatePath._ = new Template(templatePath(helpers), options));
     }
 
     return template;
