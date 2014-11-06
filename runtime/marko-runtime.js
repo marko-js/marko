@@ -82,7 +82,7 @@ Template.prototype = {
                 callback(null, out.getOutput());
             });
 
-            out.on('error', callback);
+            out.once('error', callback);
         } else if (!out || !out.isAsyncWriter) {
             var stream = out;
             // Assume the "out" is really a stream
