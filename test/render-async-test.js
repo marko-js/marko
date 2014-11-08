@@ -271,4 +271,14 @@ describe('marko/marko-async' , function() {
         }, done);
     });
 
+    it("should allow data provider function to only have a callback parameter", function(done) {
+        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
+            userInfo: function(done) {
+                done(null, {
+                    name: 'John'
+                });
+            }
+        }, done);
+    });
+
 });
