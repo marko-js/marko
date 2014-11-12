@@ -1,10 +1,31 @@
-var markoCompiler = require('../compiler');
 var fs = require('fs');
 var nodePath = require('path');
-var Minimatch = require('minimatch').Minimatch;
 var cwd = process.cwd();
+var resolveFrom = require('resolve-from');
+
+// Try to use the Marko compiler installed with the project
+var markoCompilerPath;
+
+try {
+    markoCompilerPath = resolveFrom(process.cwd(), 'marko/compiler');
+} catch(e) {}
+
+var markoCompiler;
+
+if (markoCompilerPath) {
+    markoCompiler = require(markoCompilerPath);
+} else {
+    markoCompiler = require('../compiler');
+}
+
+var Minimatch = require('minimatch').Minimatch;
+
+var appModulePath = require('app-module-path');
+
 require('raptor-polyfill/string/startsWith');
 require('raptor-polyfill/string/endsWith');
+
+markoCompiler.defaultOptions.checkUpToDate = false;
 
 var mmOptions = {
     matchBase: true,
@@ -34,6 +55,10 @@ var args = require('raptor-args').createParser({
         '--clean -c': {
             type: 'boolean',
             description: 'Clean all of the *.marko.js files'
+        },
+        '--paths -p': {
+            type: 'string[]',
+            description: 'Additional directories to add to the Node.js module search path'
         }
     })
     .usage('Usage: $0 <pattern> [options]')
@@ -65,6 +90,13 @@ var args = require('raptor-args').createParser({
     .parse();
 
 
+var paths = args.paths;
+if (paths && paths.length) {
+    paths.forEach(function(path) {
+        appModulePath.addPath(nodePath.resolve(cwd, path));
+    });
+}
+
 var ignoreRules = args.ignore;
 
 if (!ignoreRules) {
@@ -77,7 +109,7 @@ ignoreRules = ignoreRules.filter(function (s) {
 });
 
 ignoreRules = ignoreRules.map(function (pattern) {
-    
+
     return new Minimatch(pattern, mmOptions);
 });
 
@@ -93,9 +125,9 @@ function isIgnored(path, dir, stat) {
     var ignoreRulesLength = ignoreRules.length;
     for (var i=0; i<ignoreRulesLength; i++) {
         var rule = ignoreRules[i];
-        
+
         var match = rule.match(path);
-        
+
         if (!match && stat && stat.isDirectory()) {
             try {
                 stat = fs.statSync(path);
@@ -103,9 +135,9 @@ function isIgnored(path, dir, stat) {
 
             if (stat && stat.isDirectory()) {
                 match = rule.match(path + '/');
-            }    
+            }
         }
-        
+
 
         if (match) {
             if (rule.negate) {
@@ -149,7 +181,7 @@ function walk(files, options, done) {
                 } else {
                     done(null);
                 }
-                
+
             }
         }
     };
@@ -176,7 +208,7 @@ function walk(files, options, done) {
                                 doWalk(file);
                             } else {
                                 fileCallback(file, context);
-                            }    
+                            }
                         }
 
                         context.endAsync();
@@ -221,7 +253,7 @@ if (args.clean) {
                         context.endAsync();
                     });
 
-                    
+
                 }
             }
         },
@@ -231,7 +263,7 @@ if (args.clean) {
             } else {
                 console.log('Deleted ' + deleteCount + ' file(s)');
             }
-            
+
         });
 
 } else {
@@ -303,7 +335,7 @@ if (args.clean) {
                 } else {
                     console.log('Compiled ' + compileCount + ' templates(s)');
                 }
-                
+
             });
-    }    
+    }
 }
