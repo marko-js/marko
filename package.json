@@ -1,28 +1,28 @@
 {
-  "name": "async-writer",
-  "description": "The async-writer module makes it possible to asynchronously write data to an output stream while still flushing out bytes in the correct order",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs/async-writer.git"
-  },
-  "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
-  },
-  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "dependencies": {
-    "events": "^1.0.2"
-  },
-  "devDependencies": {
-    "mocha": "~1.15.1",
-    "chai": "~1.8.1",
-    "through": "^2.3.4"
-  },
-  "license": "Apache License v2.0",
-  "bin": {},
-  "main": "lib/async-writer.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "version": "1.3.0"
+    "name": "async-writer",
+    "description": "The async-writer module makes it possible to asynchronously write data to an output stream while still flushing out bytes in the correct order",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs/async-writer.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "dependencies": {
+        "events": "^1.0.2"
+    },
+    "devDependencies": {
+        "mocha": "~1.15.1",
+        "chai": "~1.8.1",
+        "through": "^2.3.4"
+    },
+    "license": "Apache License v2.0",
+    "bin": {},
+    "main": "lib/async-writer.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "version": "1.3.1"
 }
