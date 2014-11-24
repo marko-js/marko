@@ -7,13 +7,13 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 # Table of Contents
 
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
 	- [Binding Behavior](#binding-behavior)
+	- [Widget Config](#widget-config)
 	- [Referencing Widgets](#referencing-widgets)
 	- [Referencing Widget DOM Elements](#referencing-widget-dom-elements)
 	- [Rendering Widgets in the Browser](#rendering-widgets-in-the-browser)
@@ -37,7 +37,7 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 			- [replace(targetEl)](#replacetargetel)
 			- [replaceChildrenOf(targetEl)](#replacechildrenoftargetel)
 			- [rerender(data, callback)](#rerenderdata-callback)
-			- [subscribeTo(target)](#subscribetotarget)
+			- [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
 		- [Properties](#properties)
 			- [this.el](#thisel)
 			- [this.id](#thisid)
@@ -165,6 +165,66 @@ In the above example, the final HTML will be similar to the following:
 
 :arrow_forward: To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
 
+## Widget Config
+
+Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget. There are two options for attaching widget configuration data to a widget and those options are as follows:
+
+
+__Option 1) Using the `w-config` attribute:__
+
+_template.marko:_
+
+```html
+<div w-bind="./widget" w-config="{message: 'Hello World'}">
+...
+</div>
+```
+
+_widget.js:_
+
+```javascript
+function Widget(config) {
+    console.log(config.message); // Output: 'Hello World'
+}
+
+module.exports = Widget;
+```
+
+__Option 2) As a `widgetConfig` property of the input data model for a Marko template:__
+
+_renderer.js:_
+
+```javascript
+var template = require('marko').load(require.resolve('./template.marko'));
+
+module.exports = function render(input, out) {
+    template.render({
+            widgetConfig: {
+                message: 'Hello World'
+            }
+        },
+        out);
+}
+```
+
+_template.marko:_
+
+```html
+<div w-bind="./widget">
+...
+</div>
+```
+
+_widget.js:_
+
+```javascript
+function Widget(config) {
+    console.log(config.message); // Output: 'Hello World'
+}
+
+module.exports = Widget;
+```
+
 ## Referencing Widgets
 
 The `marko-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.widgets` collection.
@@ -190,7 +250,7 @@ this.widgets.dangerButton.on('click', function() {
 });
 ```
 
-:arrow_forward: To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs/raptor-samples/tree/master/widgets-communication) sample app.
+To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs/raptor-samples/tree/master/widgets-communication) sample app.
 
 ## Referencing Widget DOM Elements
 
@@ -372,7 +432,7 @@ Similar to `getEl`, but only returns the String ID of the DOM element instead of
 
 #### rerender(data, callback)
 
-#### subscribeTo(target)
+#### subscribeTo(targetEventEmitter)
 
 ### Properties
 
