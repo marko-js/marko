@@ -19,10 +19,10 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 
 # Table of Contents
 
+- [Installation](#installation)
+- [Sample Code](#sample-code)
 - [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
-- [Sample Code](#sample-code)
-- [Installation](#installation)
 - [Usage](#usage)
 	- [Template Rendering](#template-rendering)
 		- [Callback API](#callback-api)
@@ -76,73 +76,19 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Another Templating Language?
+# Installation
 
-Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
+To install the `marko` module into your project you should use the following command:
 
-What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows data templates to more closely resemble the final HTML structure.
-
-Let's compare Marko with Handlebars (a text-based templating language):
-
-__Handlebars:__
-
-```html
-Hello {{name}}!
-
-{{#if colors}}
-<ul>
-    {{#each colors}}
-    <li class="color">
-        {{this}}
-    </li>
-    {{/each}}
-</ul>
-{{else}}
-<div>
-    No colors!
-</div>
-{{/if}}
+```bash
+npm install marko --save
 ```
 
-__Marko:__
+To install the optional `markoc` command line interface to compile templates you can use the following command:
 
-```html
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li class="color" for="color in data.colors">
-        ${color}
-    </li>
-</ul>
-<div else>
-    No colors!
-</div>
+```bash
+npm install marko --global
 ```
-
-A few things to note for the Marko template:
-
-* Less lines of code
-* Less lines are "touched" to make the template dynamic
-* Only opening tags are modified for conditionals and looping
-
-Beyond Marko being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Marko compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Marko fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
-
-Finally, another distinguishing feature of Marko is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Marko rendering engine ensures that the final HTML will be streamed out in the correct order.
-
-# Design Philosophy
-
-* __Readable:__ Templates should be as close to the output HTML as possible to keep templates readable. Cryptic syntax and symbols should be avoided.
-* __Simple:__ The number of new concepts should be minimized and complexity should be avoided.
-* __Extensible:__ The template engine should be easily extensible at both compile-time and runtime.
-* __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
-* __Not Restrictive:__ Whether or not to go less logic or more logic is up to the developer.
-* __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
-* __Intuitive:__ The templating engine should introduce as few surprises as possible.
-* __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
-* __Debuggable:__ Compiled JavaScript should be debuggable and readable.
-* __Compile-Time Checks:__ Syntax, custom tags and custom attributes should be validated at compile-time.
-* __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
-* __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a shared registry.
 
 # Sample Code
 
@@ -159,12 +105,6 @@ Hello ${data.name}!
 <div else>
     No colors!
 </div>
-```
-
-To render the template you will need to install the `marko` module using [npm](https://www.npmjs.org/):
-
-```bash
-npm install marko --save
 ```
 
 The template can then be rendered as shown in the following sample code:
@@ -273,19 +213,73 @@ The above template is a very simple way to generate the much more complicated HT
 
 The custom tags encapsulate rendering logic and help avoid repeating the same HTML (and potentially the same mistakes).
 
-# Installation
+# Another Templating Language?
 
-To install the `marko` module into your project you should use the following command:
+Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
 
-```bash
-npm install marko --save
+What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows data templates to more closely resemble the final HTML structure.
+
+Let's compare Marko with Handlebars (a text-based templating language):
+
+__Handlebars:__
+
+```html
+Hello {{name}}!
+
+{{#if colors}}
+<ul>
+    {{#each colors}}
+    <li class="color">
+        {{this}}
+    </li>
+    {{/each}}
+</ul>
+{{else}}
+<div>
+    No colors!
+</div>
+{{/if}}
 ```
 
-To install the optional `markoc` command line interface to compile templates you can use the following command:
+__Marko:__
 
-```bash
-npm install marko --global
+```html
+Hello ${data.name}!
+
+<ul if="notEmpty(data.colors)">
+    <li class="color" for="color in data.colors">
+        ${color}
+    </li>
+</ul>
+<div else>
+    No colors!
+</div>
 ```
+
+A few things to note for the Marko template:
+
+* Less lines of code
+* Less lines are "touched" to make the template dynamic
+* Only opening tags are modified for conditionals and looping
+
+Beyond Marko being an HTML-based templating language, it was also designed with extreme performance and extensibility in mind. The Marko compiler gives developers full control over how templates are compiled to JavaScript and the runtime was designed to be as efficient as possible. Marko fully embraces the JavaScript language for better performance and flexibility (e.g. favoring JavaScript expressions over a custom expression language).
+
+Finally, another distinguishing feature of Marko is that it supports _asynchronous template rendering_. This powerful feature allows portions of the template to be rendered asynchronously. Instead of waiting for all data to come back from remote services before beginning to render the template, you can now immediately start rendering the template and the portions of the template that depend on asynchronous data will render as soon as the asynchronous data becomes available. The Marko rendering engine ensures that the final HTML will be streamed out in the correct order.
+
+# Design Philosophy
+
+* __Readable:__ Templates should be as close to the output HTML as possible to keep templates readable. Cryptic syntax and symbols should be avoided.
+* __Simple:__ The number of new concepts should be minimized and complexity should be avoided.
+* __Extensible:__ The template engine should be easily extensible at both compile-time and runtime.
+* __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
+* __Not Restrictive:__ Whether or not to go less logic or more logic is up to the developer.
+* __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
+* __Intuitive:__ The templating engine should introduce as few surprises as possible.
+* __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
+* __Debuggable:__ Compiled JavaScript should be debuggable and readable.
+* __Compile-Time Checks:__ Syntax, custom tags and custom attributes should be validated at compile-time.
+* __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
+* __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a shared registry.
 
 # Usage
 
