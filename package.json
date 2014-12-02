@@ -24,7 +24,7 @@
     "char-props": "~0.1.5",
     "events": "^1.0.2",
     "htmlparser2": "^3.7.2",
-    "marko-async": "^1.2.11",
+    "marko-async": "^1.2.12",
     "marko-layout": "^1.1.0",
     "minimatch": "^0.2.14",
     "property-handlers": "^1.0.0",
