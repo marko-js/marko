@@ -24,50 +24,51 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 - [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
 - [Usage](#usage)
-	- [Template Rendering](#template-rendering)
-		- [Callback API](#callback-api)
-		- [Streaming API](#streaming-api)
-		- [Synchronous API](#synchronous-api)
-		- [Asynchronous Rendering API](#asynchronous-rendering-api)
-	- [Browser-side Rendering](#browser-side-rendering)
-		- [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
-		- [Using Browserify](#using-browserify)
-	- [Template Compilation](#template-compilation)
-		- [Sample Compiled Template](#sample-compiled-template)
+    - [Template Rendering](#template-rendering)
+        - [Callback API](#callback-api)
+        - [Streaming API](#streaming-api)
+        - [Synchronous API](#synchronous-api)
+        - [Asynchronous Rendering API](#asynchronous-rendering-api)
+    - [Browser-side Rendering](#browser-side-rendering)
+        - [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
+        - [Using Browserify](#using-browserify)
+    - [Template Compilation](#template-compilation)
+        - [Sample Compiled Template](#sample-compiled-template)
 - [Language Guide](#language-guide)
-	- [Template Directives Overview](#template-directives-overview)
-	- [Text Replacement](#text-replacement)
-	- [Expressions](#expressions)
-	- [Includes](#includes)
-	- [Variables](#variables)
-	- [Conditionals](#conditionals)
-		- [if...else-if...else](#ifelse-ifelse)
-		- [Shorthand conditionals](#shorthand-conditionals)
-	- [Looping](#looping)
-		- [for](#for)
-			- [Loop Status Variable](#loop-status-variable)
-			- [Loop Separator](#loop-separator)
-			- [Range Looping](#range-looping)
-			- [Property Looping](#property-looping)
-	- [Macros](#macros)
-		- [def](#def)
-		- [invoke](#invoke)
-	- [Structure Manipulation](#structure-manipulation)
-		- [attrs](#attrs)
-	- [Comments](#comments)
-	- [Helpers](#helpers)
-	- [Custom Tags and Attributes](#custom-tags-and-attributes)
-	- [Async Taglib](#async-taglib)
-	- [Layout Taglib](#layout-taglib)
+    - [Template Directives Overview](#template-directives-overview)
+    - [Text Replacement](#text-replacement)
+    - [Expressions](#expressions)
+    - [Includes](#includes)
+    - [Variables](#variables)
+    - [Conditionals](#conditionals)
+        - [if...else-if...else](#ifelse-ifelse)
+        - [Shorthand conditionals](#shorthand-conditionals)
+    - [Looping](#looping)
+        - [for](#for)
+            - [Loop Status Variable](#loop-status-variable)
+            - [Loop Separator](#loop-separator)
+            - [Range Looping](#range-looping)
+            - [Property Looping](#property-looping)
+            - [Custom Iterator](#custom-iterator)
+    - [Macros](#macros)
+        - [def](#def)
+        - [invoke](#invoke)
+    - [Structure Manipulation](#structure-manipulation)
+        - [attrs](#attrs)
+    - [Comments](#comments)
+    - [Helpers](#helpers)
+    - [Custom Tags and Attributes](#custom-tags-and-attributes)
+    - [Async Taglib](#async-taglib)
+    - [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
-	- [Tag Renderer](#tag-renderer)
-	- [marko-taglib.json](#marko-taglibjson)
-		- [Sample Taglib](#sample-taglib)
-		- [Defining Tags](#defining-tags)
-			- [Defining Attributes](#defining-attributes)
-		- [Scanning for Tags](#scanning-for-tags)
-		- [Nested Tags](#nested-tags)
-	- [Taglib Discovery](#taglib-discovery)
+    - [Tag Renderer](#tag-renderer)
+    - [marko-taglib.json](#marko-taglibjson)
+        - [Sample Taglib](#sample-taglib)
+        - [Defining Tags](#defining-tags)
+            - [Defining Attributes](#defining-attributes)
+        - [Scanning for Tags](#scanning-for-tags)
+        - [Nested Tags](#nested-tags)
+    - [Taglib Discovery](#taglib-discovery)
 - [FAQ](#faq)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
@@ -599,7 +600,7 @@ Wherever expressions are allowed, they are treated as JavaScript expressions and
 
 JavaScript Operator | Marko Equivalent
 ------------------- | -----------------
-`&&` 	            | `and`
+`&&`                 | `and`
 <code>&#124;&#124;</code>                | `or`
 `===`               | `eq`
 `!==`               | `ne`
@@ -849,6 +850,87 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
         $value
     </li>
 </ul>
+```
+
+#### Custom Iterator
+
+A custom iterator function can be passed as part of the view model to the template to control looping over data.
+
+
+A sample custom iterator function that loops over an array in reverse is shown below:
+
+```javascript
+{
+    reverseIterator: function(arrayList, callback) {
+        for(var i=arrayList.length-1; i>=0; i--){
+            callback(arrayList[i]);
+        }
+    }
+}
+```
+
+The custom iterator can then be used in a template as shown below:
+
+_Applied as part of a `for` attribute:_
+
+```html
+<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
+    $item
+</div>
+<!--
+Output:
+<div>c</div><div>b</div><div>a</div>
+-->
+```
+
+_Applied as part of a `<for>` element:_
+
+```html
+<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
+    $item
+</for>
+<!--
+Output:
+cba
+-->
+```
+
+Custom iterators also support providing a custom status object for each loop iteration:
+
+```javascript
+{
+    reverseIterator: function(arrayList, callback){
+        var statusVar = {first: 0, last: arrayList.length-1};
+        for(var i=arrayList.length-1; i>=0; i--){
+            statusVar.index = i;
+            callback(arrayList[i], statusVar);
+        }
+    }
+}
+```
+
+_Applied as part of a `for` attribute:_
+
+```html
+<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
+    ${status.index}$item
+</div>
+<!--
+Output:
+<div>2c</div><div>1b</div><div>0a</div>
+-->
+```
+
+_Applied as part of a `<for>` element:_
+
+```html
+<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
+    ${status.index}$item
+</for>
+<!--
+Output:
+2c1b0a
+-->
 ```
 
 ## Macros
