@@ -337,7 +337,7 @@ __`$('#<widget-el-id>')`__
 Convenience usage to access a nested widget DOM element wrapped as a jQuery object. All of the following are equivalent:
 
 ```javascript
-this.$("#myEl)
+this.$("#myEl")
 $(this.getEl("myEl"))
 $("#" + this.getElId("myEl"))
 ```
