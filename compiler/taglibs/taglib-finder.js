@@ -101,3 +101,9 @@ function excludeDir(dirname) {
 
 exports.find = find;
 exports.excludeDir = excludeDir;
+
+exports.clearCaches = function() {
+    existsCache = {};
+    findCache = {};
+    taglibsByPath = {};
+};

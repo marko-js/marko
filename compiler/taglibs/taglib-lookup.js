@@ -42,3 +42,6 @@ function registerTaglib(taglib) {
 exports.excludeDir = taglibFinder.excludeDir;
 exports.registerTaglib = registerTaglib;
 exports.buildLookup = buildLookup;
+exports.clearCaches = function() {
+	lookupCache = {};
+};

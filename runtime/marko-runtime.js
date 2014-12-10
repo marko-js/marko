@@ -23,7 +23,6 @@
 var asyncWriter = require('async-writer');
 var helpers = require('./helpers');
 var loader = require('./loader');
-var cache = {};
 var Readable;
 var AsyncWriter = asyncWriter.AsyncWriter;
 var extend = require('raptor-util/extend');
@@ -162,6 +161,8 @@ if (stream) {
 }
 
 function load(templatePath, options) {
+    var cache = exports.cache;
+
     if (!templatePath) {
         throw new Error('"templatePath" is required');
     }
@@ -191,12 +192,12 @@ exports.stream = function(templatePath, data) {
     return load(templatePath).stream(data);
 };
 
-exports.unload = function(templatePath) {
-    delete cache[templatePath];
-};
+exports.cache = {};
 
 exports.createWriter = function(writer) {
     return new AsyncWriter(writer);
 };
 
 exports.helpers = helpers;
+
+exports.Template = Template;

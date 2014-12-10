@@ -102,7 +102,10 @@ extend(exports, {
     Expression: require('./Expression'),
     TypeConverter: require('./TypeConverter'),
     EscapeXmlContext: require('./EscapeXmlContext'),
-    defaultOptions: defaultOptions
+    defaultOptions: defaultOptions,
+    clearCaches: function() {
+        exports.taglibs.clearCaches();
+    }
 });
 
 exports.TemplateCompiler = require('./TemplateCompiler');
