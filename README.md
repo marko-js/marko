@@ -1481,6 +1481,7 @@ __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It
 
 * [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
 * [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
+* [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
 
 # Discuss
 
