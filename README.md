@@ -55,6 +55,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
         - [invoke](#invoke)
     - [Structure Manipulation](#structure-manipulation)
         - [attrs](#attrs)
+        - [body-only-if](#body-only-if)
     - [Comments](#comments)
     - [Helpers](#helpers)
     - [Custom Tags and Attributes](#custom-tags-and-attributes)
@@ -1017,6 +1018,30 @@ The output would then be the following:
 <div style="background-color: #FF0000;" class="my-div">
     Hello World!
 </div>
+```
+
+### body-only-if
+
+If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute to handle this use case. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
+
+```html
+<a href="${data.linkUrl}" body-only-if="!data.linkUrl">
+    Some body content
+</a>
+```
+
+Given a value of `"http://localhost/"` for the `data.linkUrl` variable: , the output would be the following:
+
+```html
+<a href="http://localhost/">
+    Some body content
+</a>
+```
+
+Given a value of `undefined` for the `data.linkUrl` variable: , the output would be the following:
+
+```html
+Some body content
 ```
 
 ## Comments
