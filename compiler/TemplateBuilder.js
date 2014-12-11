@@ -242,7 +242,7 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.dirname = nodePath.dirname(path);
     this.options = compiler.options || {};
     this.templateName = null;
-    this.attributes = {};
+    this.attributes = this.data = {};
     this.concatWrites = this.options.concatWrites !== false;
     this.writer = new CodeWriter(this.concatWrites);
     this.staticVars = [];

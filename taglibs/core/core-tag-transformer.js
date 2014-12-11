@@ -143,6 +143,14 @@ var coreAttrHandlers = [
         }
     ],
     [
+        'body-only-if', function(attr, node) {
+            if (!node.setStripExpression) {
+                node.addError('The c-strip directive is not allowed for target node');
+            }
+            node.setStripExpression(attr);
+        }
+    ],
+    [
         'c-input', function(attr, node) {
             this.inputAttr = attr;
         }

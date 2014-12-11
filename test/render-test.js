@@ -350,4 +350,10 @@ describe('marko/marko' , function() {
             name: '<label for="hello">Hello</label>'
         }, done);
     });
+
+    it.only("should handle 'body-only-if' correctly", function(done) {
+        testRender("test-project/html-templates/body-only-if.marko", {
+            url: '/foo'
+        }, done);
+    });
 });

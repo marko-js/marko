@@ -411,10 +411,9 @@ Node.prototype = {
                     this.generateCodeForChildren(template);
                     return;
                 }
-                var nextStripVarId = template.getAttribute('nextStripVarId');
-                if (nextStripVarId == null) {
-                    nextStripVarId = template.setAttribute('nextStripVarId', 0);
-                }
+                var nextStripVarId = template.data.nextStripVarId || (template.data.nextStripVarId = 0);
+                template.data.nextStripVarId++;
+
                 var varName = '__strip' + nextStripVarId++;
                 template.statement('var ' + varName + ' = !(' + this.stripExpression + ');');
                 template.statement('if (' + varName + ') {').indent(function () {
