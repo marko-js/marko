@@ -351,7 +351,7 @@ describe('marko/marko' , function() {
         }, done);
     });
 
-    it.only("should handle 'body-only-if' correctly", function(done) {
+    it("should handle 'body-only-if' correctly", function(done) {
         testRender("test-project/html-templates/body-only-if.marko", {
             url: '/foo'
         }, done);
