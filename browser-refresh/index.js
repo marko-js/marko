@@ -1,28 +1,23 @@
 var enabled = false;
+var browserRefreshClient = require('browser-refresh-client');
 
 exports.enable = function() {
+    if (!browserRefreshClient.isBrowserRefreshEnabled()) {
+        return;
+    }
+
     if (enabled) {
         return;
     }
 
     enabled = true;
 
-    if (process.env.BROWSER_REFRESH_URL) {
-        var modifiedEvent = 'marko.fileModified';
+    var hotReload = require('../hot-reload');
+    hotReload.enable();
 
-        process.send({
-            type: 'browser-refresh.specialReload',
-            pattern: '*.marko marko-taglib.json marko-tag.json',
-            modifiedEvent: modifiedEvent
+    browserRefreshClient
+        .enableSpecialReload('*.marko marko-taglib.json marko-tag.json')
+        .onFileModified(function(path) {
+            hotReload.handleFileModified(path);
         });
-
-        var hotReload = require('../hot-reload');
-        hotReload.enable();
-
-        process.on('message', function(m) {
-            if (typeof m === 'object' && m.type === modifiedEvent) {
-                hotReload.handleFileModified(m.path);
-            }
-        });
-    }
 };
