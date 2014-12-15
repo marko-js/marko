@@ -67,7 +67,9 @@ function tryNodeModules(parent, found) {
 }
 
 function findHelper(dirname, found) {
-    dirname = dirname.replace(trailingSlashRegExp, '');
+    if (dirname.length !== 1) {
+        dirname = dirname.replace(trailingSlashRegExp, '');
+    }
 
     if (!excludedDirs[dirname]) {
         tryDir(dirname, found);
@@ -99,6 +101,7 @@ function find(dirname, registeredTaglibs) {
 }
 
 function excludeDir(dirname) {
+
     dirname = dirname.replace(trailingSlashRegExp, '');
     excludedDirs[dirname] = true;
 }
