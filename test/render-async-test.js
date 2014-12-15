@@ -281,4 +281,32 @@ describe('marko/marko-async' , function() {
         }, done);
     });
 
+    it("should allow for alternative error message (sync)", function(done) {
+        testRender('test-project/html-templates/async-fragment-error.marko', {
+            userInfo: function(done) {
+                done(new Error('Invalid user'));
+            }
+        }, done);
+    });
+
+    it("should allow for alternative error message (async)", function(done) {
+        testRender('test-project/html-templates/async-fragment-error.marko', {
+            userInfo: function(done) {
+                setTimeout(function() {
+                    done(new Error('Invalid user'));
+                }, 200);
+            }
+        }, done);
+    });
+
+    it("should allow for alternative timeout message", function(done) {
+        testRender('test-project/html-templates/async-fragment-timeout.marko', {
+            userInfo: function(done) {
+                setTimeout(function() {
+                    done(null, {});
+                }, 600);
+            }
+        }, done);
+    });
+
 });
