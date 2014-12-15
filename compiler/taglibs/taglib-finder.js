@@ -1,4 +1,7 @@
+require('raptor-polyfill/string/endsWith');
+
 var taglibLoader = require('./taglib-loader');
+var trailingSlashRegExp = /[\\/]$/;
 
 var excludedDirs = {};
 var nodePath = require('path');
@@ -64,6 +67,7 @@ function tryNodeModules(parent, found) {
 }
 
 function findHelper(dirname, found) {
+    dirname = dirname.replace(trailingSlashRegExp, '');
 
     if (!excludedDirs[dirname]) {
         tryDir(dirname, found);
@@ -78,7 +82,6 @@ function findHelper(dirname, found) {
 }
 
 function find(dirname, registeredTaglibs) {
-
     var found = findCache[dirname];
     if (found) {
         return found;
@@ -96,6 +99,7 @@ function find(dirname, registeredTaglibs) {
 }
 
 function excludeDir(dirname) {
+    dirname = dirname.replace(trailingSlashRegExp, '');
     excludedDirs[dirname] = true;
 }
 
