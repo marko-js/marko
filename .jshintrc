@@ -32,7 +32,7 @@
     "sub": false,
     "white": false,
     "eqeqeq": false,
-    "latedef": true,
+    "latedef": "func",
     "unused": "vars",
     "strict": false,
     
