@@ -275,13 +275,13 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
         if (fs.existsSync(tagFile)) {
             // marko-tag.json exists in the directory, use that as the tag definition
             tagDef = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
-            if (!tagDef.renderer || !tagDef.template) {
+            if (!tagDef.renderer && !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;
                 } else if (fs.existsSync(templateFile)) {
                     tagDef.template = templateFile;
                 } else {
-                    throw new Error('Invalid tag. Neither a renderer or a template was found for tag.');
+                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag.');
                 }
             }
 
