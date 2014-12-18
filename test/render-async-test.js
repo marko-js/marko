@@ -309,4 +309,26 @@ describe('marko/marko-async' , function() {
         }, done);
     });
 
+    it("should render async fragments correctly with client-reorder set to true", function(done) {
+        // NOTE: This test is very sensitive to the client-side JavaScript that gets written that handles
+        //       rearranging DOM nodes. Might want to revisit in the future.
+        testRender('test-project/html-templates/async-fragment-client-reorder.marko', {
+            outer: function(callback) {
+                setTimeout(function() {
+                    callback(null, {});
+                }, 400);
+            },
+            inner1: function(callback) {
+                setTimeout(function() {
+                    callback(null, {});
+                }, 500);
+            },
+            inner2: function(callback) {
+                setTimeout(function() {
+                    callback(null, {});
+                }, 600);
+            }
+        }, done);
+    });
+
 });
