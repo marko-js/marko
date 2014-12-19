@@ -1,4 +1,5 @@
 var markoWidgets = require('../');
+var WidgetContext = markoWidgets.WidgetsContext;
 
 module.exports = function render(input, out) {
     var widgetsContext = markoWidgets.getWidgetsContext(out);
@@ -6,10 +7,19 @@ module.exports = function render(input, out) {
     var options = input.immediate ? {immediate: true} : null;
 
     if (input.immediate === true) {
-        out.on('asyncFragmentFinish', function(eventArgs) {
+        out.global.events.on('asyncFragmentBeforeRender', function(eventArgs) {
+            if (eventArgs.clientReorder) {
+                var asyncFragmentOut = eventArgs.out;
+                asyncFragmentOut.widgets = new WidgetContext(asyncFragmentOut);
+            }
+        });
+
+        out.global.events.on('asyncFragmentFinish', function(eventArgs) {
             var asyncFragmentOut = eventArgs.out;
-            var widgetsContext = markoWidgets.getWidgetsContext(asyncFragmentOut);
-            markoWidgets.writeInitWidgetsCode(widgetsContext, asyncFragmentOut, options);
+            var widgetsContext = asyncFragmentOut.widgets;
+            if (widgetsContext) {
+                markoWidgets.writeInitWidgetsCode(widgetsContext, asyncFragmentOut, options);
+            }
         });
     }
 
