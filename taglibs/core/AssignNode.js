@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_]*$/;
+var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_\.]*$/;
 function AssignNode(props) {
     AssignNode.$super.call(this);
     if (props) {
