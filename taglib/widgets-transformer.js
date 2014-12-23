@@ -151,7 +151,7 @@ exports.process =function (node, compiler, template) {
         if (node.hasAttribute('id')) {
             node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
         } else {
-            node.setAttribute('id', template.makeExpression('widget.elId(' + JSON.stringify(widgetElIdAttr) + ')'));
+            node.setAttribute('id', template.makeExpression('widget.elId(' + compiler.convertType(widgetElIdAttr, 'string', true) + ')'));
         }
     }
 
