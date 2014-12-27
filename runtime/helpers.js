@@ -95,9 +95,11 @@ module.exports = {
             } else {
                 return req('view-engine').load(path);
             }
-        } else {
+        } else if (path.render) {
             // Assume it is already a pre-loaded template
             return path;
+        } else {
+            return runtime.load(path);
         }
     },
 
