@@ -57,6 +57,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
         - [attrs](#attrs)
         - [body-only-if](#body-only-if)
     - [Comments](#comments)
+    - [Whitespace](#whitespace)
     - [Helpers](#helpers)
     - [Custom Tags and Attributes](#custom-tags-and-attributes)
     - [Async Taglib](#async-taglib)
@@ -1068,6 +1069,76 @@ Output:
 <h1>Hello</h1>
 ```
 
+## Whitespace
+
+The Marko compiler will remove unnecessary whitespace based on some builtin rules, by default. These rules are partially based on the rules that browser's use to normalize whitespace and partially based on the goal of allowing nicely indented markup with minified output. These rules are as follows:
+
+- For text before the first child element: `text.replace(/^\n\s*/g, '')`
+- For text after the last child element: `text.replace(/\n\s*$/g, '')`
+- For text between child elements: `text.replace(/^\n\s*$/g, '')`
+- Any contiguous sequence of whitespace characters is collapsed into a single space character
+
+In addition, whitespace within the following tags is preserved by default:
+
+- `<pre>`
+- `<textarea>`
+- `<script>`
+
+Example template:
+
+```html
+<div>
+    <a href="/home">
+        Home
+    </a>
+    <a href="/Profile">
+        My   Profile
+    </a>
+    <textarea>
+Hello
+World</textarea
+</div>
+```
+
+Example output:
+
+```html
+<div><a href="/home">Home</a><a href="/Profile">My Profile</a><textarea>
+Hello
+World</textarea</div>
+```
+
+The following options are available to control whitespace removal:
+
+__Option 1)__ Disable whitespace removal using the `c-whitespace` attribute:
+
+```html
+<div c-whitespace="preserve">
+    <img src="foo.jpg">
+    <img src="foo.jpg">
+</div>
+```
+
+__Option 2)__ Disable _all_ whitespace removal by changing a compiler option
+
+```javascript
+require('marko/compiler').defaultOptions.preserveWhitespace = true;
+```
+
+__Option 3)__ Control whitespace removal for specific tags
+
+```javascript
+require('marko/compiler').defaultOptions.preserveWhitespace = {
+    'pre': true,
+    'textarea': true,
+    'script': true
+};
+```
+
+__Option 4)__ Configured a custom tag to preserve whitespace
+
+Adding the `"preserve-whitespace": true` property to a tag definition will result in the Marko compiler preserving whitespace wherever that tag is encountered in a template.
+
 ## Helpers
 
 Since Marko template files compile into CommonJS modules, any Node.js module can be "imported" into a template for use as a helper module. For example, given the following helper module:
@@ -1086,10 +1157,35 @@ exports.reverse = function(str) {
 The above module can then be imported into a template as shown in the following sample template:
 
 _src/template.marko_:
+
 ```html
 <require module="./util" var="util" />
 
 <div>${util.reverse('reverse test')}</div>
+```
+
+It's also possible to pass helper functions to a template as part of the view model:
+
+
+```javascript
+var template = require('marko').load(require.resolve('./template.marko'));
+
+template.render({
+        reverse: function(str) {
+            var out = "";
+            for (var i=str.length-1; i>=0; i--) {
+                out += str.charAt(i);
+            }
+            return out;
+        }
+    },
+    function(err, html) { ... });
+```
+
+Usage inside template:
+
+```html
+<div>${data.reverse('reverse test')}</div>
 ```
 
 ## Custom Tags and Attributes
