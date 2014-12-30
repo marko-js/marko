@@ -22,6 +22,7 @@ var stringify = require('raptor-json/stringify');
 exports.process =function (node, compiler, template) {
     var widgetAttr = node.getAttribute('w-widget') || node.getAttribute('w-bind');
     var widgetElIdAttr;
+    var widgetForAttr;
     var widgetProps = widgetAttr ? null : node.getProperties();
 
     var widgetArgs = {};
@@ -152,6 +153,15 @@ exports.process =function (node, compiler, template) {
             node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
         } else {
             node.setAttribute('id', template.makeExpression('widget.elId(' + compiler.convertType(widgetElIdAttr, 'string', true) + ')'));
+        }
+    }
+
+    if ((widgetForAttr = node.getAttribute('w-for'))) {
+        node.removeAttribute('w-for');
+        if (node.hasAttribute('for')) {
+            node.addError('The "w-for" attribute cannot be used in conjuction with the "for" attribute');
+        } else {
+            node.setAttribute('for', template.makeExpression('widget.elId(' + compiler.convertType(widgetForAttr, 'string', true) + ')'));
         }
     }
 
