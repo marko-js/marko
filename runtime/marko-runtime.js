@@ -78,7 +78,7 @@ Template.prototype = {
             }
 
             out.on('finish', function() {
-                callback(null, out.getOutput());
+                callback(null, out.getOutput(), out);
             });
 
             out.once('error', callback);
