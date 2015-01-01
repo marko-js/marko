@@ -366,11 +366,11 @@ module.exports = function transform(node, compiler, template) {
             }
 
             forEachProp(function (name, value, attrDef) {
-                if (attrDef.dynamicAttribute && attrDef.targetProperty) {
+                if (attrDef.dynamicAttribute) {
                     if (attrDef.removeDashes === true) {
                         name = removeDashes(name);
                     }
-                    if (node.addDynamicAttribute) {
+                    if (node.addDynamicAttribute && attrDef.targetProperty) {
                         node.addDynamicAttribute(name, value);
                         node.setDynamicAttributesProperty(attrDef.targetProperty);
                     } else {
