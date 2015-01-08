@@ -26,9 +26,8 @@ exports.enable = function() {
         if (typeof v === 'function') {
             var oldMethod = v;
             Template.prototype[k] = function() {
-                var path = this.__brPath;
-
-                if (this.__brModifiedFlag !== modifiedFlag) {
+                if (this.__hotReloadModifiedFlag !== modifiedFlag) {
+                    var path = this.__hotReloadPath;
                     // Reload the template
                     var template = runtime.load(path);
                     extend(this, template);
@@ -49,8 +48,8 @@ exports.enable = function() {
         var template = oldLoad.apply(runtime, arguments);
 
         // Store the current last modified with the template
-        template.__brModifiedFlag = modifiedFlag;
-        template.__brPath = path;
+        template.__hotReloadModifiedFlag = modifiedFlag;
+        template.__hotReloadPath = path;
 
         return template;
     };
