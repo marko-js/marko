@@ -13,17 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This module provides the runtime for rendering compiled templates.
- *
- *
- * <p>The code for the Marko compiler is kept separately
- * in the {@link raptor/templating/compiler} module.
+ * This module provides the lightweight runtime for loading and rendering
+ * templates. The compilation is handled by code that is part of the
+ * [marko/compiler](https://github.com/raptorjs/marko/tree/master/compiler)
+ * module. If rendering a template on the client, only the runtime is needed
+ * on the client and not the compiler
  */
+
+// async-writer provides all of the magic to support asynchronous
+// rendering to a stream
 var asyncWriter = require('async-writer');
+
+// helpers can the core set of utility methods
+// that are available in every template (empty, notEmpty, etc.)
 var helpers = require('./helpers');
+
+// The loader is used to load templates that have not already been
+// loaded and cached. On the server, the loader will use
+// the compiler to compile the template and then load the generated
+// module file using the Node.js module loader
 var loader = require('./loader');
+
+// If the optional "stream" module is available
+// then Readable will be a readable stream
 var Readable;
+
 var AsyncWriter = asyncWriter.AsyncWriter;
 var extend = require('raptor-util/extend');
 
@@ -54,6 +70,17 @@ Template.prototype = {
         out.end();
         return out.getOutput();
     },
+    /**
+     * Renders a template to either a stream (if the last
+     * argument is a Stream instance) or
+     * provides the output to a callback function (if the last
+     * argument is a Function).
+     *
+     * @param  {Object} data The view model data for the template
+     * @param  {AsyncWriter} out A Stream or an AsyncWriter instance
+     * @param  {Function} callback A callback function
+     * @return {AsyncWriter} Returns the AsyncWriter instance that the template is rendered to
+     */
     render: function(data, out, callback) {
         if (data == null) {
             data = {};
@@ -172,10 +199,19 @@ function load(templatePath, options) {
     if (typeof templatePath === 'string') {
         template = cache[templatePath];
         if (!template) {
-            template = cache[templatePath] = new Template(loader(templatePath)(helpers), options);
+            // The template has not been loaded, load the template to get
+            // access to the factory function that is used to produce
+            // the actual compiled tmeplate function. We pass the helpers
+            // as the first argument to the factory function to produce
+            // the compiled template function
+            template = cache[templatePath] = new Template(
+                loader(templatePath)(helpers), // Load the template factory and invoke it
+                options);
         }
     } else {
         // Instead of a path, assume we got a compiled template module
+        // We store the loaded template with the factory function that was
+        // used to get access to the compiled template function
         template = templatePath._ || (templatePath._ = new Template(templatePath(helpers), options));
     }
 
