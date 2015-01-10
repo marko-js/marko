@@ -3,6 +3,10 @@
         "*": {
             "attributes": {
                 "w-bind": "string",
+                "w-extend": {
+                    "type": "path",
+                    "preserve-name": "true"
+                },
                 "w-widget": "string",
                 "w-config": "expression",
                 "w-el-id": "string",

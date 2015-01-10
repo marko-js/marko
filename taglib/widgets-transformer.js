@@ -20,18 +20,14 @@ var isObjectEmpty = require('raptor-util/isObjectEmpty');
 var stringify = require('raptor-json/stringify');
 
 exports.process =function (node, compiler, template) {
-    var widgetAttr = node.getAttribute('w-widget') || node.getAttribute('w-bind');
+    var bindAttr = node.getAttribute('w-bind') || node.getAttribute('w-widget');
     var widgetElIdAttr;
     var widgetForAttr;
-    var widgetProps = widgetAttr ? null : node.getProperties();
+    var widgetProps = bindAttr ? null : node.getProperties();
 
     var widgetArgs = {};
     var widgetEvents = [];
 
-    // if (node.tagName === 'sample-button') {
-    //     console.log(node.tagName, node.getAttributes(), node.getProperties());
-    //     console.log(node.getAttributes());
-    // }
     if (widgetProps) {
         var handledPropNames = [];
         forEachEntry(widgetProps, function (name, value) {
@@ -61,6 +57,10 @@ exports.process =function (node, compiler, template) {
                     targetMessage: targetMessage,
                     eventProps: eventProps
                 });
+            } else if (name === 'w-extend') {
+                handledPropNames.push(name);
+                widgetArgs.extend = value;
+                widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
             }
         });
 
@@ -95,12 +95,22 @@ exports.process =function (node, compiler, template) {
             if (widgetArgs.events) {
                 widgetArgsParts.push(widgetArgs.events);
             }
+
+            if (widgetArgs.extend) {
+                if (!widgetArgs.events) {
+                    widgetArgsParts.push('null');
+                }
+
+                widgetArgsParts.push(widgetArgs.extend);
+                widgetArgsParts.push(widgetArgs.extendConfig);
+            }
+
             node.addBeforeCode(template.makeExpression('_widgetArgs(out,' + widgetArgsParts.join(', ') + ');'));
             node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));
         }
     }
 
-    if (widgetAttr) {
+    if (bindAttr) {
         var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("marko-widgets").attrs');
 
         node.removeAttribute('w-widget');
@@ -125,7 +135,7 @@ exports.process =function (node, compiler, template) {
         node.parentNode.replaceChild(widgetNode, node);
         widgetNode.appendChild(node);
 
-        widgetNode.setAttribute('module', widgetAttr);
+        widgetNode.setAttribute('module', bindAttr);
 
         if (config) {
             widgetNode.setProperty('config', config);
