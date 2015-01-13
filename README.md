@@ -1,6 +1,8 @@
 marko-widgets
 ==============
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The `marko-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. Out of the box, bindings are provided for [Marko](https://github.com/raptorjs/marko) and [Dust](https://github.com/linkedin/dustjs). There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
 
 ![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
