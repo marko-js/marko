@@ -1,5 +1,10 @@
 {
     "dependencies": [
-        "require-run: ./client-init"
+        {
+            "type": "require",
+            "path": "./client-init",
+            "run": true,
+            "if": "!flags.contains('marko-widgets/no-client-init')"
+        }
     ]
 }
