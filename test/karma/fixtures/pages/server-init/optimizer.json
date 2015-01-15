@@ -1,0 +1,7 @@
+{
+    "dependencies": [
+        "require: jquery",
+        "require: marko-widgets",
+        "../../components/app-foo/optimizer.json"
+    ]
+}

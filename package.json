@@ -7,6 +7,7 @@
   },
   "scripts": {
     "karma": "node test/karma/run.js",
+    "karma-watch": "node test/karma/run.js --watch",
     "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && npm run karma && node_modules/.bin/jshint lib/ dust/ dust/"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
@@ -26,9 +27,11 @@
     "raptor-util": "^1.0.0"
   },
   "devDependencies": {
+    "async": "^0.9.0",
     "chai": "~1.8.1",
     "dustjs-linkedin": "^2.3.4",
     "ignoring-watcher": "^1.0.1",
+    "jquery": "^2.1.3",
     "jshint": "^2.5.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
@@ -36,10 +39,12 @@
     "karma-mocha": "^0.1.10",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-safari-launcher": "^0.1.1",
+    "marko": "^1.3.24",
     "mkdirp": "^0.5.0",
     "mocha": "~1.15.1",
     "optimizer": "^1.5.8",
     "phantomjs": "^1.9.13",
+    "raptor-args": "^1.0.2",
     "raptor-strings": "^1.0.0"
   },
   "license": "Apache License v2.0",
