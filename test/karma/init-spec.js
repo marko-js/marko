@@ -26,5 +26,8 @@ describe('init' , function() {
                 b: 'test'
             }
         });
+
+        delete window.appFoo;
+        el.parentNode.removeChild(el);
     });
 });
