@@ -7,7 +7,7 @@ var DUMMY_WIDGET_DEF = {
 module.exports = function render(input, out) {
     var modulePath = input.module;
     var config = input.config || input._cfg;
-    var widgetArgs = out.global.widgetArgs;
+    var widgetArgs = out.data.widgetArgs;
     var id = input.id;
     var scope = input.scope || out.getAttribute('widget');
     var assignedId = input.assignedId;
@@ -15,7 +15,7 @@ module.exports = function render(input, out) {
 
     var events;
     if (widgetArgs) {
-        delete out.global.widgetArgs;
+        delete out.data.widgetArgs;
         scope = scope || widgetArgs.scope;
         assignedId = assignedId || widgetArgs.id;
         events = widgetArgs.events;

@@ -1,7 +1,17 @@
 exports.widgetArgs = function (out, assignedId, scope, events, extend, extendConfig) {
     var global = out.global;
-    var existingWidgetArgs = global.widgetArgs;
+    var data = out.data;
+    var existingWidgetArgs = data.widgetArgs;
     var extendParts = null;
+
+    if (!global.__widgetsBeginAsyncAdded) {
+        global.__widgetsBeginAsyncAdded = true;
+        out.on('beginAsync', function(event) {
+            var parentAsyncWriter = event.parentWriter;
+            var asyncWriter = event.writer;
+            asyncWriter.data.widgetArgs = parentAsyncWriter.data.widgetArgs;
+        });
+    }
 
     if (extend) {
         extendParts = [extend, extendConfig];
@@ -20,7 +30,7 @@ exports.widgetArgs = function (out, assignedId, scope, events, extend, extendCon
             }
         }
     } else {
-        out.global.widgetArgs = {
+        data.widgetArgs = {
             id: assignedId,
             scope: scope,
             events: events,
@@ -30,5 +40,5 @@ exports.widgetArgs = function (out, assignedId, scope, events, extend, extendCon
 };
 
 exports.cleanupWidgetArgs = function (out) {
-    delete out.global.widgetArgs;
+    delete out.data.widgetArgs;
 };
