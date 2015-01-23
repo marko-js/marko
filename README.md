@@ -1598,16 +1598,33 @@ __Question:__ _How is Marko related to [RaptorJS](http://raptorjs.org)?_
 
 __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
 
-# Further Reading
+# Additional Resources
+
+## Further Reading
 
 * [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
 * [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
 * [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
-* [Marko Widgets](https://github.com/raptorjs/marko-widgets)
+* [Marko Widgets](https://github.com/raptorjs/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
+
+## Screencasts
+
+* [KnowThen: Episode 8 – Serving Content in Koajs with Marko](http://knowthen.com/episode-8-serving-content-in-koajs-with-marko/)
+
+## Demo Apps
+
+* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/raptorjs-samples/marko-progressive-rendering) [demo](https://marko-progressive-rendering.herokuapp.com/)
+* UI Components Playground [source](https://github.com/raptorjs-samples/ui-components-playground) [demo](https://ui-components-playground.herokuapp.com/)
+
+## Tools
+
+* [Atom: language-marko](https://atom.io/packages/language-marko) - Syntax highlighting for Marko templates in Atom
 
 # Discuss
 
-Please post questions or comments on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
+Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
 
 # Contributors
 
