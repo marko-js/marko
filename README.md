@@ -1613,8 +1613,8 @@ __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It
 
 ## Demo Apps
 
-* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/raptorjs-samples/marko-progressive-rendering) [demo](https://marko-progressive-rendering.herokuapp.com/)
-* UI Components Playground [source](https://github.com/raptorjs-samples/ui-components-playground) [demo](https://ui-components-playground.herokuapp.com/)
+* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/raptorjs-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/)
+* UI Components Playground [source](https://github.com/raptorjs-samples/ui-components-playground) | [demo](https://ui-components-playground.herokuapp.com/)
 
 ## Tools
 
