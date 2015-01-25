@@ -42,7 +42,8 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
     - [Variables](#variables)
     - [Conditionals](#conditionals)
         - [if...else-if...else](#ifelse-ifelse)
-        - [Shorthand conditionals](#shorthand-conditionals)
+        - [Shorthand Conditionals](#shorthand-conditionals)
+        - [Conditional Attributes](#conditional-attributes)
     - [Looping](#looping)
         - [for](#for)
             - [Loop Status Variable](#loop-status-variable)
@@ -711,7 +712,7 @@ _Applied as elements:_
 </else>
 ```
 
-### Shorthand conditionals
+### Shorthand Conditionals
 
 Shorthand conditionals allow for conditional values inside attributes or wherever expressions are allowed. Shorthand conditionals are of the following form:
 `{?<expression>;<true-template>[;<false-template>]}`
@@ -745,6 +746,43 @@ With a value of `false` for `active`, the output would be the following:
 
 ```html
 <div class="tab-inactive">Hello</div>
+```
+
+### Conditional Attributes
+
+Marko supports conditional attributes when the value of an attribute is an expression. Marko also supports [HTML `boolean` attributes](https://html.spec.whatwg.org/#boolean-attributes) (e.g., `<input type="checkbox" checked>`)  If an attribute value resolves to `null`, `undefined`, `false`  or an empty string then the attribute will not be rendered. If an attribute value resolves to `true` then only the attribute name will rendered.
+
+For example, given the following data:
+
+```javascript
+{
+    title: '',
+    active: true,
+    checked: false,
+    disabled: true
+}
+```
+
+And the following template:
+
+```html
+<img src="foo.png" alt="${data.title}">
+
+<div class="{?data.active;tab-active}"></div>
+
+<input type="checkbox"
+    checked="${data.checked}"
+    disabled="${data.disabled}">
+```
+
+The output HTML will be the following:
+
+```html
+<img src="foo.png">
+
+<div></div>
+
+<input type="checkbox" disabled>
 ```
 
 ## Looping
