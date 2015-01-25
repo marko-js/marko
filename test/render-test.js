@@ -356,4 +356,18 @@ describe('marko/marko' , function() {
             url: '/foo'
         }, done);
     });
+
+    it("should support boolean attributes", function(done) {
+        testRender("test-project/html-templates/boolean-attributes.marko", {
+            options: [
+                {  value: 'red', selected: false },
+                {  value: 'green', selected: true },
+                {  value: 'blue', selected: false }
+            ],
+            disabled: false,
+            checked: true
+        }, done);
+    });
+
+
 });

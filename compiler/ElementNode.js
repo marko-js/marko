@@ -224,6 +224,9 @@ ElementNode.prototype = {
             }
             if (attr.value === null || attr.value === undefined) {
                 template.text(' ' + name);
+            } else if (attr.value === '') {
+                // Treat empty attributes as boolean attributes
+                template.text(' ' + name);
             } else if (template.isExpression(attr.value)) {
                 template.attr(name, attr.value, attr.escapeXml !== false);
             } else {
