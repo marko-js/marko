@@ -5,7 +5,7 @@ var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
-var markoRegExp = /\.marko(.xml)?$/;
+var markoRegExp = /\.marko(.xml|.html)?$/;
 var req = require;
 
 function notEmpty(o) {

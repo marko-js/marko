@@ -242,7 +242,7 @@ if (args.clean) {
             file: function(file, context) {
                 var basename = nodePath.basename(file);
 
-                if (basename.endsWith('.marko.js') || basename.endsWith('.marko.xml.js')) {
+                if (basename.endsWith('.marko.js') || basename.endsWith('.marko.html') || basename.endsWith('.marko.xml.js')) {
                     context.beginAsync();
                     fs.unlink(file, function(err) {
                         if (err) {
@@ -314,7 +314,7 @@ if (args.clean) {
                 file: function(file, context) {
                     var basename = nodePath.basename(file);
 
-                    if (basename.endsWith('.marko') || basename.endsWith('.marko.xml')) {
+                    if (basename.endsWith('.marko') || basename.endsWith('.marko.html') || basename.endsWith('.marko.xml')) {
                         compile(file, context);
                     }
                 }

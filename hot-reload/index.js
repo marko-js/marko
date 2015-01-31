@@ -60,13 +60,14 @@ exports.handleFileModified = function(path) {
     var basename = nodePath.basename(path);
 
     if (path.endsWith('.marko') ||
+        path.endsWith('.marko.html') ||
         path.endsWith('.marko.xml') ||
         basename === 'marko-tag.json' ||
         basename === 'marko-taglib.json') {
 
         console.log('[marko/hot-reload] File modified: ' + path);
 
-        if (path.endsWith('.marko')) {
+        if (path.endsWith('.marko') || path.endsWith('.marko.html')) {
             delete require.cache[path + '.js'];
         }
 
