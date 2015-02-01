@@ -280,6 +280,8 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
                     tagDef.renderer = rendererFile;
                 } else if (fs.existsSync(templateFile)) {
                     tagDef.template = templateFile;
+                } else if (fs.existsSync(templateFile + ".html")) {
+                    tagDef.template = templateFile + ".html";
                 } else {
                     throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag.');
                 }
@@ -303,14 +305,23 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
                 tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
                 tag.name = childFilename;
                 taglib.addTag(tag);
-            } else if (fs.existsSync(templateFile)) {
-                var templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
-                tagDef = tagDefFromCode.extractTagDef(templateCode);
-                if (!tagDef) {
-                     tagDef = createDefaultTagDef();
+            } else {
+                var exTemplateFile;
+                if (fs.existsSync(templateFile)) {
+                    exTemplateFile = templateFile;
                 }
+                else if (fs.existsSync(templateFile + ".html")){
+                    exTemplateFile = templateFile + ".html";
+                }
+                if(exTemplateFile){
+                    var templateCode = fs.readFileSync(exTemplateFile, {encoding: 'utf8'});
+                    tagDef = tagDefFromCode.extractTagDef(templateCode);
+                    if (!tagDef) {
+                        tagDef = createDefaultTagDef();
+                    }
 
-                tagDef.template = templateFile;
+                    tagDef.template = exTemplateFile;
+                }
             }
 
             if (tagDef) {
