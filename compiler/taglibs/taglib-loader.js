@@ -306,20 +306,22 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
                 tag.name = childFilename;
                 taglib.addTag(tag);
             } else {
-                var templateCode;
+                var exTemplateFile;
                 if (fs.existsSync(templateFile)) {
-                    templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
+                    exTemplateFile = templateFile;
                 }
                 else if (fs.existsSync(templateFile + ".html")){
-                    templateFile = templateFile + ".html";
-                    templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
+                    exTemplateFile = templateFile + ".html";
                 }
-                tagDef = tagDefFromCode.extractTagDef(templateCode);
-                if (!tagDef) {
-                     tagDef = createDefaultTagDef();
-                }
+                if(exTemplateFile){
+                    var templateCode = fs.readFileSync(exTemplateFile, {encoding: 'utf8'});
+                    tagDef = tagDefFromCode.extractTagDef(templateCode);
+                    if (!tagDef) {
+                        tagDef = createDefaultTagDef();
+                    }
 
-                tagDef.template = templateFile;
+                    tagDef.template = exTemplateFile;
+                }
             }
 
             if (tagDef) {
