@@ -305,22 +305,21 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
                 tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
                 tag.name = childFilename;
                 taglib.addTag(tag);
-            } else if (fs.existsSync(templateFile)) {
-                var templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
+            } else {
+                var templateCode;
+                if (fs.existsSync(templateFile)) {
+                    templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
+                }
+                else if (fs.existsSync(templateFile + ".html")){
+                    templateFile = templateFile + ".html";
+                    templateCode = fs.readFileSync(templateFile, {encoding: 'utf8'});
+                }
                 tagDef = tagDefFromCode.extractTagDef(templateCode);
                 if (!tagDef) {
                      tagDef = createDefaultTagDef();
                 }
 
                 tagDef.template = templateFile;
-            } else if (fs.existsSync(templateFile + ".html")) {
-                var templateCode = fs.readFileSync(templateFile + ".html", {encoding: 'utf8'});
-                tagDef = tagDefFromCode.extractTagDef(templateCode);
-                if (!tagDef) {
-                    tagDef = createDefaultTagDef();
-                }
-
-                tagDef.template = templateFile + ".html";
             }
 
             if (tagDef) {
