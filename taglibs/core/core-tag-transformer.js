@@ -273,7 +273,7 @@ module.exports = function transform(node, compiler, template) {
         }
     }
 
-    function forEachProp(callback, thisObj) {
+    function forEachProp(callback) {
         var foundProps = {};
 
         node.forEachAttributeAnyNS(function (attr) {
@@ -328,12 +328,12 @@ module.exports = function transform(node, compiler, template) {
             }
 
             foundProps[propName] = true;
-            callback.call(thisObj, propName, value, attrDef);
+            callback(propName, value, attrDef);
         });
 
         tag.forEachAttribute(function (attr) {
             if (attr.hasOwnProperty('defaultValue') && !foundProps[attr.name]) {
-                callback.call(thisObj, attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
+                callback(attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
             }
         });
     }
