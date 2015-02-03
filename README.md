@@ -642,11 +642,11 @@ Input data passed to a template is made available using a special `data` variabl
 <var name="name" value="data.name.toUpperCase()" />
 ```
 
-To reassigne an existing variable with a new value always use the `<assign>` tag. For example:
-```html
-<assign var="name" value="data.lastname" />
-```
+To asign a new value to an existing variable the `<assign>` tag can be used as shown in the following sample code:
 
+```html
+<assign var="name" value="data.name.toLowerCase()" />
+```
 
 The `<with>` directive can be used to create scoped variables as shown in the following sample code:
 
