@@ -40,6 +40,7 @@ function Node(nodeType) {
         this.beforeCode = [];
         this.afterCode = [];
         this.data = {}; // Property for associating arbitrary data with a node
+        this.flags = null;
     }
 }
 
@@ -48,6 +49,16 @@ Node.isNode = function(node) {
 };
 
 Node.prototype = {
+    setFlag: function(flag) {
+        if (!this.flags) {
+            this.flags = {};
+        }
+        this.flags[flag] = true;
+    },
+
+    hasFlag: function(flag) {
+        return this.flags ? this.flags.hasOwnProperty(flag) : false;
+    },
 
     setRoot: function (isRoot) {
         this._isRoot = isRoot;
