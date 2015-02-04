@@ -17,48 +17,61 @@
             "attributes": {
                 "c-space": {
                     "type": "custom",
-                    "allow-expressions": false
+                    "allow-expressions": false,
+                    "ignore": true
                 },
                 "c-whitespace": {
                     "type": "custom",
-                    "allow-expressions": false
+                    "allow-expressions": false,
+                    "ignore": true
                 },
                 "for": {
+                    "type": "custom",
                     "allow-expressions": false,
-                    "type": "string"
+                    "ignore": true
                 },
                 "for-each": {
                     "allow-expressions": false,
-                    "type": "string"
+                    "type": "string",
+                    "ignore": true
                 },
                 "if": {
-                    "type": "expression"
+                    "type": "expression",
+                    "ignore": true
                 },
                 "else": {
-                    "type": "empty"
+                    "type": "empty",
+                    "ignore": true
                 },
                 "else-if": {
-                    "type": "expression"
+                    "type": "expression",
+                    "ignore": true
                 },
                 "attrs": {
-                    "type": "expression"
+                    "type": "expression",
+                    "ignore": true
                 },
                 "when": {
-                    "type": "expression"
+                    "type": "expression",
+                    "ignore": true
                 },
                 "with": {
-                    "type": "custom"
+                    "type": "custom",
+                    "ignore": true
                 },
                 "c-parse-body-text": {
                     "type": "boolean",
-                    "allow-expressions": false
+                    "allow-expressions": false,
+                    "ignore": true
                 },
                 "c-trim-body-indent": {
                     "type": "boolean",
-                    "allow-expressions": false
+                    "allow-expressions": false,
+                    "ignore": true
                 },
                 "c-input": {
-                    "type": "expression"
+                    "type": "expression",
+                    "ignore": true
                 }
             },
             "transformer": {

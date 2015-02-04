@@ -252,103 +252,26 @@ function findNestedAttrs(node, compiler, template) {
     });
 }
 
-
-
 module.exports = function transform(node, compiler, template) {
-
     //Find and handle nested <attrs> elements
     findNestedAttrs(node, compiler, template);
 
     var tag;
-
-
-    function convertAttrValue(attr, type, attrDef) {
-        type = type || (attrDef ? attrDef.type : 'string') || 'string';
-
-        try {
-            return compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
-        } catch (e) {
-            node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
-            return attr.value;
-        }
-    }
-
-    function forEachProp(callback) {
-        var foundProps = {};
-
-        node.forEachAttributeAnyNS(function (attr) {
-            var attrDef = compiler.taglibs.getAttribute(node, attr);
-            if (!attrDef) {
-                // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
-                //Tag doesn't allow dynamic attributes
-                node.addError('The tag "' + tag.name + '" in taglib "' + tag.taglibId + '" does not support attribute "' + attr + '"');
-                return;
-            }
-
-            var type = attrDef.type || 'string';
-
-            var value;
-
-            if (compiler.isExpression(attr.value)) {
-                value = attr.value;
-            } else {
-                if (type === 'path') {
-                    var pathVar;
-                    if (compiler.hasExpression(attr.value)) {
-                        value = convertAttrValue(attr, 'string', attrDef);
-                    } else {
-                        // Resolve the static string to a full path only once
-                        pathVar = template.addStaticVar(attr.value, 'require.resolve(' + compiler.convertType(attr.value, 'string', true) + ')');
-                        value = compiler.makeExpression(pathVar);
-                    }
-                } else if (type === 'template') {
-                    var templateVar;
-                    if (compiler.hasExpression(attr.value)) {
-                        value = compiler.makeExpression('__helpers.l(' + convertAttrValue(attr, 'string', attrDef) + ')');
-                    } else {
-                        // Resolve the static string to a full path only once
-                        templateVar = template.addStaticVar(attr.value, '__helpers.l(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
-                        value = compiler.makeExpression(templateVar);
-                    }
-                } else {
-                    value = convertAttrValue(attr, type, attrDef);
-                }
-            }
-            var propName;
-            if (attrDef.dynamicAttribute) {
-                propName = attr.qName;
-            } else {
-                if (attrDef.targetProperty) {
-                    propName = attrDef.targetProperty;
-                } else if (attrDef.preserveName) {
-                    propName = attr.localName;
-                } else {
-                    propName = removeDashes(attr.localName);
-                }
-            }
-
-            foundProps[propName] = true;
-            callback(propName, value, attrDef);
-        });
-
-        tag.forEachAttribute(function (attr) {
-            if (attr.hasOwnProperty('defaultValue') && !foundProps[attr.name]) {
-                callback(attr.name, template.makeExpression(JSON.stringify(attr.defaultValue)), '', attr);
-            }
-        });
-    }
-
     tag = node.tag || compiler.taglibs.getTag(node);
 
     var transformer = new Transformer(template, compiler);
     node = transformer.transformNode(node);
     var inputAttr = transformer.inputAttr;
+    var shouldRemoveAttr = true;
 
     if (tag) {
         if (tag.preserveWhitespace) {
             node.setPreserveWhitespace(true);
         }
+
         if (tag.renderer || tag.template) {
+            shouldRemoveAttr = false;
+
             if (tag.renderer) {
                 //Instead of compiling as a static XML element, we'll
                 //make the node render as a tag handler node so that
@@ -364,32 +287,158 @@ module.exports = function transform(node, compiler, template) {
                 // be used to include the output of rendering a template
                 IncludeNode.convertNode(node, templatePath);
             }
-
-            forEachProp(function (name, value, attrDef) {
-                if (attrDef.dynamicAttribute) {
-                    if (attrDef.removeDashes === true) {
-                        name = removeDashes(name);
-                    }
-                    if (node.addDynamicAttribute && attrDef.targetProperty) {
-                        node.addDynamicAttribute(name, value);
-                        node.setDynamicAttributesProperty(attrDef.targetProperty);
-                    } else {
-                        node.setProperty(name, value);
-                    }
-                } else {
-                    node.setProperty(name, value);
-                }
-            });
-
         } else if (tag.nodeClass) {
+            shouldRemoveAttr = false;
+
             var NodeCompilerClass = require(tag.nodeClass);
             compiler.inheritNode(NodeCompilerClass);
             extend(node, NodeCompilerClass.prototype);
             NodeCompilerClass.call(node);
             node.setNodeClass(NodeCompilerClass);
-            forEachProp(function (name, value) {
+        }
+    }
+
+    function handleProp(name, value, attrDef, attr) {
+        node.setProperty(name, value);
+
+        if (attrDef.setFlag) {
+            node.setFlag(attrDef.setFlag);
+        }
+
+        if (shouldRemoveAttr && attr) {
+            // When an attribute is converted to a property we remove
+            // the old attribute and only keep the resulting
+            // property in the property map.
+            node.removeAttributeNS(attr.namespace, attr.localName);
+        }
+
+        if (attrDef.dynamicAttribute) {
+            if (attrDef.removeDashes === true) {
+                name = removeDashes(name);
+            }
+            if (node.addDynamicAttribute && attrDef.targetProperty) {
+                node.addDynamicAttribute(name, value);
+                node.setDynamicAttributesProperty(attrDef.targetProperty);
+            } else {
                 node.setProperty(name, value);
+            }
+        } else {
+            node.setProperty(name, value);
+        }
+    }
+
+    function handleAttrs() {
+        // Convert tag attributes to JavaScript expressions based on loaded
+        // taglibs. Attributes are converted to properties and applied
+        // to either the runtime render tag or a compile-time AST Node.
+
+        function convertAttrValue(attr, type, attrDef) {
+            type = type || (attrDef ? attrDef.type : 'string') || 'string';
+
+            try {
+                return compiler.convertType(attr.value, type, attrDef ? attrDef.allowExpressions !== false : true);
+            } catch (e) {
+                node.addError('Invalid attribute value of "' + attr.value + '" for attribute "' + attr.name + '": ' + e.message);
+                return attr.value;
+            }
+        }
+
+        var foundProps = {};
+
+        node.forEachAttributeAnyNS(function (attr) {
+            var attrDef = compiler.taglibs.getAttribute(node, attr);
+            if (!attrDef) {
+                if (tag) {
+                    // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
+                    //Tag doesn't allow dynamic attributes
+                    node.addError('The tag "' + tag.name + '" in taglib "' + tag.taglibId + '" does not support attribute "' + attr + '"');
+                }
+                return;
+            }
+
+            if (attrDef.ignore) {
+                // Skip attributes that are marked as "ignore" by the
+                // taglib author. They'll handle the attribute themselves
+                // and we don't need to bother copying it into
+                // the properties map
+                return;
+            }
+
+            var type = attrDef.type || 'string';
+
+            var value;
+
+            if (compiler.isExpression(attr.value)) {
+                value = attr.value;
+            } else {
+                if (type === 'path') {
+                    var pathVar;
+                    if (compiler.hasExpression(attr.value)) {
+                        value = convertAttrValue(
+                            attr,
+                            'string',
+                            attrDef);
+
+                    } else {
+                        // Resolve the static string to a full path only once
+                        pathVar = template.addStaticVar(attr.value, 'require.resolve(' + compiler.convertType(attr.value, 'string', true) + ')');
+                        value = compiler.makeExpression(pathVar);
+                    }
+                } else if (type === 'template') {
+                    var templateVar;
+                    if (compiler.hasExpression(attr.value)) {
+                        value = compiler.makeExpression('__helpers.l(' +
+                            convertAttrValue(
+                                attr,
+                                'string',
+                                attrDef) +
+                            ')');
+                    } else {
+                        // Resolve the static string to a full path only once
+                        templateVar = template.addStaticVar(attr.value, '__helpers.l(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
+                        value = compiler.makeExpression(templateVar);
+                    }
+                } else {
+                    value = convertAttrValue(attr, type, attrDef);
+                }
+            }
+            var propName;
+            if (attrDef.dynamicAttribute) {
+                // Dynamic attributes are allowed attributes
+                // that are not declared (i.e. "*" attributes)
+                propName = attr.qName;
+            } else {
+                // Attributes map to properties and we allow the taglib
+                // author to control how an attribute name resolves
+                // to a property name.
+                if (attrDef.targetProperty) {
+                    propName = attrDef.targetProperty;
+                } else if (attrDef.preserveName) {
+                    propName = attr.localName;
+                } else {
+                    propName = removeDashes(attr.localName);
+                }
+            }
+
+            foundProps[propName] = true;
+            handleProp(propName, value, attrDef, attr);
+        });
+
+        if (tag) {
+            // Add default values for any attributes. If an attribute has a declared
+            // default value and the attribute was not found on the element
+            // then add the property with the specified default value
+            tag.forEachAttribute(function (attrDef) {
+                if (attrDef.hasOwnProperty('defaultValue') && !foundProps[attrDef.name]) {
+                    handleProp(
+                        attrDef.name,
+                        template.makeExpression(JSON.stringify(attrDef.defaultValue)),
+                        attrDef,
+                        null);
+                }
             });
         }
     }
+
+    handleAttrs();
 };
