@@ -39,8 +39,6 @@ function createDefaultTagDef() {
 }
 
 function buildAttribute(attr, attrProps, path) {
-
-
     propertyHandlers(attrProps, {
         type: function(value) {
             attr.type = value;
@@ -71,6 +69,14 @@ function buildAttribute(attr, attrProps, path) {
         },
         description: function() {
 
+        },
+        setFlag: function(value) {
+            attr.setFlag = value;
+        },
+        ignore: function(value) {
+            if (value === true) {
+                attr.ignore = true;
+            }
         }
     }, path);
 

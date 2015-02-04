@@ -135,9 +135,9 @@ Taglib.Tag = makeClass({
         /*jshint unused:false */
         for (var k in this.transformers) {
             if (this.transformers.hasOwnProperty(k)) {
-                return true;    
+                return true;
             }
-            
+
         }
         return false;
     },
@@ -150,7 +150,7 @@ Taglib.Tag = makeClass({
 
                 if (attr.targetProperty === null || attr.targetProperty === '') {
                     attr.targetProperty = null;
-                    
+
                 }
                 else if (!attr.targetProperty) {
                     attr.targetProperty = '*';
@@ -166,7 +166,7 @@ Taglib.Tag = makeClass({
     forEachAttribute: function (callback, thisObj) {
         for (var attrName in this.attributes) {
             if (this.attributes.hasOwnProperty(attrName)) {
-                callback.call(thisObj, this.attributes[attrName]);    
+                callback.call(thisObj, this.attributes[attrName]);
             }
         }
     },
@@ -192,6 +192,7 @@ Taglib.Attribute = makeClass({
         this.required = false;
         this.type = 'string';
         this.allowExpressions = true;
+        this.setFlag = null;
     }
 });
 
