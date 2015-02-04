@@ -35,15 +35,16 @@ module.exports = function transform(node, compiler) {
         if (compiler.options.xhtml !== true && startTagOnly[lookupKey] === true) {
             node.setStartTagOnly(true);
         }
-        
-        if (node.getQName() === 'html' && node.hasAttribute('html-doctype')) {
-            var doctype = node.getAttribute('html-doctype');
+
+        var doctype;
+
+        if (node.getQName() === 'html' && (doctype = node.getProperty('html-doctype'))) {
+
             var docTypeNode = compiler.createNode(DocTypeNode, {
                     value: doctype,
                     pos: node.getPosition()
                 });
             node.parentNode.insertBefore(docTypeNode, node);
-            node.removeAttribute('html-doctype');
         }
     }
 };

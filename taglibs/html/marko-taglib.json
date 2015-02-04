@@ -3,7 +3,12 @@
         "html": {
             "attributes": {
                 "html-doctype": {
-                    "type": "string"
+                    "type": "custom",
+                    "preserve-name": true
+                },
+                "*": {
+                    "type": "string",
+                    "ignore": true
                 }
             }
         },
