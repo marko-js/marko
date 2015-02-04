@@ -280,7 +280,7 @@ if (args.clean) {
         found[path] = true;
 
         var outPath = path + '.js';
-        console.log('Compiling:\n  Input: ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
+        console.log('Compiling:\n  Input:  ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
         context.beginAsync();
         markoCompiler.compileFile(path, function(err, src) {
             if (err) {
