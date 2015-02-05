@@ -8,78 +8,96 @@ var nodePath = require('path');
 var fs = require('fs');
 var existsCache = {};
 var findCache = {};
-var taglibsByPath = {};
+var taglibsForNodeModulesDirCache = {};
+
+var realpathCache = {};
 
 function existsCached(path) {
     var exists = existsCache[path];
     if (exists === undefined) {
         exists = fs.existsSync(path);
-        existsCache = exists;
+        existsCache[path] = exists;
     }
     return exists;
 }
 
-function tryDir(dirname, found) {
+function realpathCached(path) {
+    var realPath = realpathCache[path];
+    if (realPath === undefined) {
+        try {
+            realPath = fs.realpathSync(path);
+        } catch(e) {
+            realPath = null;
+        }
+
+        realpathCache[path] = realPath;
+    }
+    return realPath;
+}
+
+function tryDir(dirname, helper) {
     var taglibPath = nodePath.join(dirname, 'marko-taglib.json');
     if (existsCached(taglibPath)) {
         var taglib = taglibLoader.load(taglibPath);
-        found.push(taglib);
+        helper.addTaglib(taglib);
     }
 }
 
-function tryNodeModules(parent, found) {
+function tryNodeModules(parent, helper) {
     if (nodePath.basename(parent) === 'node_modules') {
         return;
     }
 
     var nodeModulesDir = nodePath.join(parent, 'node_modules');
 
-    var taglibs = taglibsByPath[nodeModulesDir];
-    if (taglibs !== undefined) {
-        if (taglibs !== null) {
-            for (var i = 0, len = taglibs.length; i < len; i++) {
-                found.push(taglibs[i]);
+    var taglibsForNodeModulesDir = taglibsForNodeModulesDirCache[nodeModulesDir];
+    if (taglibsForNodeModulesDir !== undefined) {
+        if (taglibsForNodeModulesDir !== null) {
+            for (var i = 0, len = taglibsForNodeModulesDir.length; i < len; i++) {
+                var taglib = taglibsForNodeModulesDir[i];
+                helper.addTaglib(taglib);
             }
         }
         return;
     }
 
-    if (existsCached(nodeModulesDir)) {
-        taglibs = [];
+    if ((nodeModulesDir = realpathCached(nodeModulesDir))) {
+        taglibsForNodeModulesDir = [];
         var children = fs.readdirSync(nodeModulesDir);
         children.forEach(function(moduleDirBasename) {
             var moduleDir = nodePath.join(nodeModulesDir, moduleDirBasename);
             var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
 
-
             if (existsCached(taglibPath)) {
+                taglibPath = fs.realpathSync(taglibPath);
+
                 var taglib = taglibLoader.load(taglibPath);
                 taglib.moduleName = moduleDirBasename;
-                taglibs.push(taglib);
-                found.push(taglib);
+                taglibsForNodeModulesDir.push(taglib);
+                helper.addTaglib(taglib);
             }
         });
 
-        taglibsByPath[nodeModulesDir] = taglibs.length ? taglibs : null;
+        taglibsForNodeModulesDirCache[nodeModulesDir] = taglibsForNodeModulesDir.length ? taglibsForNodeModulesDir : null;
     } else {
-        taglibsByPath[nodeModulesDir] = null;
+        taglibsForNodeModulesDirCache[nodeModulesDir] = null;
     }
 }
 
-function findHelper(dirname, found) {
+function findHelper(dirname, helper) {
     if (dirname.length !== 1) {
         dirname = dirname.replace(trailingSlashRegExp, '');
     }
 
     if (!excludedDirs[dirname]) {
-        tryDir(dirname, found);
-        tryNodeModules(dirname, found);
+        tryDir(dirname, helper);
+        tryNodeModules(dirname, helper);
     }
 
     var parent = nodePath.dirname(dirname);
     if (parent && parent !== dirname) {
         // TODO: Don't use recursion (there's a simpler way)
-        findHelper(parent, found);
+        findHelper(parent, helper);
     }
 }
 
@@ -91,7 +109,23 @@ function find(dirname, registeredTaglibs) {
 
     found = [];
 
-    findHelper(dirname, found);
+    var added = {};
+
+    var helper = {
+        alreadyAdded: function(taglibPath) {
+            return added.hasOwnProperty(taglibPath);
+        },
+        addTaglib: function(taglib) {
+            if (added[taglib.path]) {
+                return;
+            }
+
+            added[taglib.path] = true;
+            found.push(taglib);
+        }
+    };
+
+    findHelper(dirname, helper);
 
     found = found.concat(registeredTaglibs);
 
@@ -112,5 +146,5 @@ exports.excludeDir = excludeDir;
 exports.clearCaches = function() {
     existsCache = {};
     findCache = {};
-    taglibsByPath = {};
+    taglibsForNodeModulesDirCache = {};
 };

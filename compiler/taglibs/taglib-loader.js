@@ -428,7 +428,7 @@ function load(path) {
         }
     }, path);
 
-    taglib.id = path;
+    taglib.id = taglib.path = path;
 
     cache[path] = taglib;
 
