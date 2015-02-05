@@ -60,6 +60,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
     - [Comments](#comments)
     - [Whitespace](#whitespace)
     - [Helpers](#helpers)
+      [Global Properties](#global-properties)
     - [Custom Tags and Attributes](#custom-tags-and-attributes)
     - [Async Taglib](#async-taglib)
     - [Layout Taglib](#layout-taglib)
@@ -642,7 +643,7 @@ Input data passed to a template is made available using a special `data` variabl
 <var name="name" value="data.name.toUpperCase()" />
 ```
 
-To asign a new value to an existing variable the `<assign>` tag can be used as shown in the following sample code:
+To assign a new value to an existing variable the `<assign>` tag can be used as shown in the following sample code:
 
 ```html
 <assign var="name" value="data.name.toLowerCase()" />
@@ -1230,6 +1231,34 @@ Usage inside template:
 
 ```html
 <div>${data.reverse('reverse test')}</div>
+```
+
+## Global Properties
+
+The `$global` property is used to add data that is available to all templates encountered during rendering by having the data hang off the wrapped writer.
+
+```javascript
+template.render({
+    $global: {
+        name: 'Frank'
+    }
+}, res);
+```
+
+Given the following template:
+
+```html
+<div>
+    Hello ${out.global.name}!
+</div>
+```
+
+The output would be the following:
+
+```html
+<div>
+    Hello Frank
+</div>
 ```
 
 ## Custom Tags and Attributes

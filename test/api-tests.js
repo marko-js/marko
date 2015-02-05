@@ -81,8 +81,6 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered to a stream', function(done) {
-        
-
         var output = '';
         var outStream = through(function write(data) {
             output += data;
@@ -196,6 +194,32 @@ describe('marko/api' , function() {
         expect(output).to.equal('Hello John!');
     });
 
+    it('should allow a template to be rendered synchronously using global attributes', function() {
+        var template = marko.load(nodePath.join(__dirname, 'test-project/hello-global.marko'));
+        var data = {
+          name: 'John',
+          $global: {
+              greeting: 'Greetings'
+          }
+        };
+        var output = template.renderSync(data)
+        expect(output).to.equal('Greetings John!');
+    });
+
+    it('should allow a template to be rendered asynchronously using global attributes', function(done) {
+      var template = marko.load(nodePath.join(__dirname, 'test-project/hello-global.marko'));
+      var data = {
+          name: 'John',
+          $global: {
+              greeting: 'Greetings'
+          }
+      };
+      template.render(data, function(error, output) {
+          expect(output).to.equal('Greetings John!');
+          done();
+      });
+    });
+
     it('should throw an error if beginAsync is used with renderSync', function() {
         var template = marko.load(nodePath.join(__dirname, 'test-project/hello-async.marko'));
         var output;
@@ -233,4 +257,3 @@ describe('marko/api' , function() {
     });
 
 });
-
