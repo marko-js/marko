@@ -44,7 +44,7 @@ function parseForEach(value) {
             'in': match[2]
         };
     } else if ((match = value.match(forEachPropRegEx))) {
-        
+
 
         return {
             'nameVar': match[1],
@@ -103,9 +103,9 @@ function parseForEach(value) {
                     step = -1;
                 }
             } else {
-                step = 1;    
+                step = 1;
             }
-            
+
         }
 
         return {
@@ -146,8 +146,8 @@ ForNode.prototype = {
 
         if (parts.hasOwnProperty('from')) {
             // This is a range loop
-            
-            
+
+
             var nameVar = parts.nameVar;
             var from = parts.from;
             var to = parts.to;
@@ -234,7 +234,9 @@ ForNode.prototype = {
                 }
             }, this).line('});');
         } else {
-            if (this.getProperty('forLoop') === true) {
+            var forLoopProp = this.getProperty('forLoop');
+
+            if (forLoopProp && forLoopProp.toString() === 'true') {
                 forEachParams = [
                     '__array',
                     '__index',

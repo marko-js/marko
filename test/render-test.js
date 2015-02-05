@@ -159,6 +159,10 @@ describe('marko/marko' , function() {
         testRender("test-project/html-templates/looping.marko", {}, done);
     });
 
+    it.only("should allow for looping (native for-loop)", function(done) {
+        testRender("test-project/html-templates/looping-native-for-loop.marko", {}, done);
+    });
+
     it("should allow for looping over properties", function(done) {
         testRender("test-project/html-templates/looping-props.marko", {}, done);
     });
