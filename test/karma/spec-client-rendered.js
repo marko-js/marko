@@ -119,4 +119,33 @@ describe('client-rendered' , function() {
             }
         });
     });
+
+    it('[client-rendered] should allow for widgets to be extended', function() {
+        var checkboxWidget = require('./fixtures/components/app-extend-checkbox')
+            .render({
+                label: 'Checkbox'
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var buttonWidget = require('./fixtures/components/app-extend-button')
+            .render({
+                label: 'Button'
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(buttonWidget.getEl('label').innerHTML).to.equal('Button');
+        expect(checkboxWidget.getEl('label').innerHTML).to.equal('Checkbox');
+
+        expect(buttonWidget.setChecked).to.be.a('undefined');
+        expect(checkboxWidget.setChecked).to.be.a('function');
+
+        expect(buttonWidget.el.className).to.not.contain('app-extend-checkbox');
+        expect(checkboxWidget.el.className).to.contain('app-extend-checkbox');
+
+        expect(checkboxWidget.isChecked()).to.equal(false);
+        util.triggerMouseEvent(checkboxWidget.getEl('label'), 'click');
+        expect(checkboxWidget.isChecked()).to.equal(true);
+    });
 });

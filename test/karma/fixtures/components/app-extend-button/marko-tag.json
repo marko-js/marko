@@ -1,0 +1,17 @@
+{
+    "attributes": {
+        "name": "string",
+        "label": "string",
+        "href": "string",
+        "variant": {
+            "type": "string",
+            "description": "primary | secondary"
+        },
+        "size": {
+            "type": "string",
+            "description": "small | normal | large"
+        },
+        "*": "string"
+    },
+    "var": "widget"
+}

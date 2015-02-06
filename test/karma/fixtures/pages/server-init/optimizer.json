@@ -6,6 +6,7 @@
         "../../components/app-bar/optimizer.json",
         "../../components/app-dom-events/optimizer.json",
         "../../components/app-dom-events-jquery/optimizer.json",
+        "../../components/app-extend-checkbox/optimizer.json",
         "../../components/app-widget-config/optimizer.json"
     ]
 }

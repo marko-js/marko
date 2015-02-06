@@ -111,4 +111,22 @@ describe('server-rendered' , function() {
             }
         });
     });
+
+    it('[server-rendered] should allow for widgets to be extended', function() {
+        var buttonWidget = window.testData.widgets.extendButton[0];
+        var checkboxWidget = window.testData.widgets.extendCheckbox[0];
+
+        expect(buttonWidget.getEl('label').innerHTML).to.equal('Button');
+        expect(checkboxWidget.getEl('label').innerHTML).to.equal('Checkbox');
+
+        expect(buttonWidget.setChecked).to.be.a('undefined');
+        expect(checkboxWidget.setChecked).to.be.a('function');
+
+        expect(buttonWidget.el.className).to.not.contain('app-extend-checkbox');
+        expect(checkboxWidget.el.className).to.contain('app-extend-checkbox');
+
+        expect(checkboxWidget.isChecked()).to.equal(false);
+        util.triggerMouseEvent(checkboxWidget.getEl('label'), 'click');
+        expect(checkboxWidget.isChecked()).to.equal(true);
+    });
 });

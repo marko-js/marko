@@ -1,0 +1,9 @@
+{
+    "attributes": {
+        "label": "string",
+        "data": "expression",
+        "checked": "boolean",
+        "class": "string",
+        "name": "string"
+    }
+}

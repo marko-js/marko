@@ -1,0 +1,10 @@
+<button attrs="data.rootAttrs"
+    w-onclick="handleClick"
+    w-bind="./widget">
+
+    <if test="data.label">
+        <span w-el-id="label">${data.label}</span>
+    </if>
+    <invoke function="data.invokeBody(widget)"
+        else-if="data.invokeBody"/>
+</button>

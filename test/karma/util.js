@@ -22,7 +22,21 @@ function cleanup() {
     document.body.appendChild(div);
 }
 
+function triggerMouseEvent(el, type) {
+    var ev = document.createEvent("MouseEvent");
+    ev.initMouseEvent(
+        type,
+        true /* bubble */, true /* cancelable */,
+        window, null,
+        0, 0, 0, 0, /* coordinates */
+        false, false, false, false, /* modifier keys */
+        0 /*left*/, null
+    );
+    el.dispatchEvent(ev);
+}
+
 exports.cleanup = cleanup;
+exports.triggerMouseEvent = triggerMouseEvent;
 
 Object.defineProperty(
     exports,
