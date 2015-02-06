@@ -28,9 +28,11 @@ exports.enable = function() {
             Template.prototype[k] = function() {
                 if (this.__hotReloadModifiedFlag !== modifiedFlag) {
                     var path = this.__hotReloadPath;
-                    // Reload the template
-                    var template = runtime.load(path);
-                    extend(this, template);
+                    if (path) {
+                        // Reload the template
+                        var template = runtime.load(path);
+                        extend(this, template);
+                    }
                 }
 
                 oldMethod.apply(this, arguments);
@@ -41,7 +43,7 @@ exports.enable = function() {
 
     var oldLoad = runtime.load;
 
-    runtime.load = function browserRefreshLoad(path) {
+    runtime.load = function hotReloadLoad(path) {
         if (!path) {
             throw new Error('Invalid path');
         }
