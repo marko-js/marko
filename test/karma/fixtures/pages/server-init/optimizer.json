@@ -2,6 +2,8 @@
     "dependencies": [
         "require: jquery",
         "require: marko-widgets",
-        "../../components/app-foo/optimizer.json"
+        "../../components/app-foo/optimizer.json",
+        "../../components/app-dom-events/optimizer.json",
+        "../../components/app-dom-events-jquery/optimizer.json"
     ]
 }

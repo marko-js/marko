@@ -1,15 +1,22 @@
 var nodePath = require('path');
+
+process.chdir(__dirname);
+
+require('marko/hot-reload').enable();
 var optimizer = require('optimizer');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var karma = require('karma');
 var async = require('async');
+
 var renderPages = require('./render-pages');
 var generatedDir = nodePath.join(__dirname, 'generated');
 var firstRun = true;
 
 var args = require('raptor-args').createParser({
-        '--watch': 'boolean'
+        '--watch': 'boolean',
+        '--all-browsers': 'boolean',
+        '--browsers --browser': 'string[]'
     })
     .parse();
 
@@ -21,8 +28,21 @@ optimizer.configure({
     fingerprintsEnabled: false,
     require: {
         runImmediately: true
-    }
+    },
+    plugins: [
+        {
+            plugin: 'optimizer-require',
+            config: {
+                builtins: {
+                    'marko-widgets': require.resolve('../../')
+                }
+            }
+        },
+        'optimizer-marko'
+    ]
 });
+
+
 
 var watch = args.watch === true;
 
@@ -61,19 +81,28 @@ function run() {
             }
 
             if (firstRun) {
-                karma.server.start({
+                var karmaConfig = {
                     colors: true,
                     autoWatch: watch === true,
                     singleRun: watch === false,
                     port: port,
-                    logLevel: 'WARN',
-                    browsers: ['PhantomJS'],
+                    // logLevel: 'WARN',
+                    // browsers: ['PhantomJS'],
                     configFile: require.resolve('./karma.conf.js')
-                },
-                function(exitCode) {
-                    console.log('Karma has exited with ' + exitCode);
-                    process.exit(exitCode);
-                });
+                };
+
+                if (args.browsers) {
+                    karmaConfig.browsers = args.browsers;
+                } else if (args.allBrowsers) {
+                    karmaConfig.browsers = ['PhantomJS', 'Chrome', 'Firefox', 'Safari'];
+                }
+
+                karma.server.start(
+                    karmaConfig,
+                    function(exitCode) {
+                        console.log('Karma has exited with ' + exitCode);
+                        process.exit(exitCode);
+                    });
 
                 firstRun = false;
 
@@ -97,6 +126,7 @@ function run() {
                             // console.log('Ignore patterns:\n  ' + eventArgs.ignorePatterns.join('  \n'));
                         })
                         .on('modified', function(eventArgs) {
+                            require('marko/hot-reload').handleFileModified(eventArgs.path);
                             optimizer.handleWatchedFileChanged(eventArgs.path);
                             console.log('[marko-widgets/test/karma] File modified: ' + eventArgs.path);
                             run();

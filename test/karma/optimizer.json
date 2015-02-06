@@ -3,6 +3,6 @@
         "require: jquery",
         "require: marko-widgets",
         "./fixtures/pages/**/optimizer.json",
-        "require-run: *-spec.js"
+        "require-run: spec-*.js"
     ]
 }

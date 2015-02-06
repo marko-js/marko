@@ -1,0 +1,20 @@
+<div class="app-dom-events"
+    w-bind="./widget"
+    w-onmousemove="handleRootMouseMove"
+    w-onclick="handleRootClick">
+    <button type="button" w-el-id="button"
+        w-onclick="handleButtonClick">
+        <span w-onmousemove="handleButtonSpanMouseMove">
+            Button
+        </span>
+    </button>
+
+    <a href="#foo" id="fooLink"
+        w-ondblclick="handleFooLinkDblClick"
+        w-onmouseout="handleFooLinkMouseOut">
+    </a>
+
+    <app-button w-id="appButton">
+        <span w-el-id="helloWorld" w-onmousedown="handleHelloWorldMouseDown">Hello World</span>
+    </app-button>
+</div>

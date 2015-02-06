@@ -15,78 +15,122 @@
  */
 'use strict';
 require('raptor-polyfill/string/startsWith');
-var forEachEntry = require('raptor-util/forEachEntry');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
-var stringify = require('raptor-json/stringify');
+
+var markoWidgets = require('../');
+
+function getWidgetNode(node) {
+    if (!node) {
+        return;
+    }
+
+    while (true) {
+        if (node.qName === 'w-widget') {
+            return node;
+        }
+
+        node = node.parentNode;
+        if (!node) {
+            break;
+        }
+    }
+}
 
 exports.process =function (node, compiler, template) {
-    var bindAttr = node.getAttribute('w-bind') || node.getAttribute('w-widget');
-    var widgetElIdAttr;
-    var widgetForAttr;
-    var widgetProps = bindAttr ? null : node.getProperties();
+    var props = node.getProperties();
+    var bind;
 
-    var widgetArgs = {};
-    var widgetEvents = [];
+    if (!node._ts) {
+        node._ts = Math.random();
+    }
 
-    if (widgetProps) {
-        var handledPropNames = [];
-        forEachEntry(widgetProps, function (name, value) {
-            if (name === 'w-id') {
-                handledPropNames.push(name);
-                widgetArgs.id = value;
-            } else if (name.startsWith('w-event-')) {
-                handledPropNames.push(name);
-                var eventProps = compiler.parseAttribute(value, {
-                        '*': { type: 'expression' },
-                        target: { type: 'custom' }
-                    }, {
-                        defaultName: 'target',
-                        errorHandler: function (message) {
-                            node.addError('Invalid value of "' + value + '" for event attribute "' + name + '". Error: ' + message);
-                        }
-                    });
-                var sourceEvent = name.substring('event-'.length);
-                var targetMessage = eventProps.target;
-                if (!targetMessage) {
-                    node.addError('Invalid value of "' + value + '" for event attribute "' + name + '". Target message not provided');
-                    return;
-                }
-                delete eventProps.target;
-                widgetEvents.push({
-                    sourceEvent: sourceEvent,
-                    targetMessage: targetMessage,
-                    eventProps: eventProps
-                });
-            } else if (name === 'w-extend') {
-                handledPropNames.push(name);
-                widgetArgs.extend = value;
-                widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
-            }
-        });
+    if ((bind = props['w-bind'])) {
+        // A widget is bound to the node
+        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("marko-widgets").attrs');
 
-        handledPropNames.forEach(function (propName) {
-            node.removeProperty(propName);
-        });
+        var config;
+        var assignedId;
+        var scope;
+        var id;
 
-        if (widgetEvents.length) {
-            widgetArgs.events = '[' + widgetEvents.map(function (widgetEvent) {
-                var widgetPropsJS;
-                if (!isObjectEmpty(widgetEvent.eventProps)) {
-                    widgetPropsJS = [];
-                    forEachEntry(widgetEvent.eventProps, function (name, valueExpression) {
-                        widgetPropsJS.push(stringify(name) + ': ' + valueExpression);
-                    }, this);
-                    widgetPropsJS = '{' + widgetPropsJS.join(', ') + '}';
-                }
-                return '[' + stringify(widgetEvent.sourceEvent) + ',' + stringify(widgetEvent.targetMessage) + (widgetPropsJS ? ',' + widgetPropsJS : '') + ']';
-            }).join(',') + ']';
+        var widgetNode = compiler.createTagHandlerNode('w-widget');
+        node.parentNode.replaceChild(widgetNode, node);
+        widgetNode.appendChild(node);
+
+        widgetNode.setAttribute('module', bind);
+
+        if ((config = props['w-config'])) {
+            widgetNode.setProperty('config', config);
         }
+
+        if ((assignedId = props['w-assigned-id'])) {
+            widgetNode.setProperty('assignedId', assignedId);
+        }
+
+        if ((scope = props['w-scope'])) {
+            widgetNode.setProperty('scope', scope);
+        }
+
+        if ((id = node.getAttribute('id'))) {
+            id = compiler.convertType(id, 'string', true);
+            widgetNode.setProperty('id', id);
+        }
+
+        node.setAttribute('id', '${widget.elId()}');
+
+        node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
+    } else {
+        var widgetId;
+        var widgetExtend;
+        var widgetElIdExpression;
+        var widgetFor;
+
+        var widgetArgs = {};
+
+        if ((widgetId = props['w-id'])) {
+            // Handle the "w-id" attribute
+            delete props['w-id'];
+            widgetArgs.id = widgetId;
+        } else if ((widgetExtend = props['w-extend'])) {
+            // Handle the "w-extend" attribute
+            delete props['w-extend'];
+            widgetArgs.extend = widgetExtend;
+            widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
+        } else if ((widgetElIdExpression = props['w-el-id'])) {
+            // Handle the "w-el-id" attribute
+            if (node.hasAttribute('id')) {
+                node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
+            } else {
+                node.setAttribute(
+                    'id',
+                    template.makeExpression('widget.elId(' +
+                        widgetElIdExpression.toString() +
+                        ')'));
+            }
+        } else if ((widgetFor = props['w-for'])) {
+            // Handle the "w-for" attribute
+            if (node.hasAttribute('for')) {
+                node.addError('The "w-for" attribute cannot be used in conjuction with the "for" attribute');
+            } else {
+                node.setAttribute(
+                    'for',
+                    template.makeExpression('widget.elId(' +
+                        compiler.convertType(widgetFor, 'string', true) +
+                        ')'));
+            }
+        }
+
         if (!isObjectEmpty(widgetArgs)) {
-            template.addStaticVar('_widgetArgs', 'require("marko-widgets/taglib/helpers").widgetArgs');
-            template.addStaticVar('_cleanupWidgetArgs', 'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
+
+            template.addStaticVar('_widgetArgs',
+                'require("marko-widgets/taglib/helpers").widgetArgs');
+
+            template.addStaticVar('_cleanupWidgetArgs',
+                'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
+
             var widgetArgsParts = [];
             if (widgetArgs.id) {
-                widgetArgsParts.push(widgetArgs.id.toString());
+                widgetArgsParts.push(JSON.stringify(widgetArgs.id.toString()));
                 widgetArgsParts.push('widget');
             } else {
                 widgetArgsParts.push('null');
@@ -110,68 +154,150 @@ exports.process =function (node, compiler, template) {
         }
     }
 
-    if (bindAttr) {
-        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("marko-widgets").attrs');
+    var widgetTagNode;
+    var eventIdExpression;
 
-        node.removeAttribute('w-widget');
-        node.removeAttribute('w-bind');
-        var config;
-        var assignedId;
-        var scope;
-        if ((assignedId = node.getAttribute('w-assigned-id'))) {
-            node.removeAttribute('w-assigned-id');
-            assignedId = compiler.convertType(assignedId, 'string', true);
-        }
-        if ((scope = node.getAttribute('w-scope'))) {
-            node.removeAttribute('w-scope');
-            scope = compiler.convertType(scope, 'expression', true);
+    function addDirectEventListener(eventType, targetMethod) {
+        // The event does not support bubbling, so the widget
+        // must attach the listeners directly to the target
+        // elements when the widget is initialized.
+        if (!widgetTagNode) {
+            widgetTagNode = getWidgetNode(node);
         }
 
-        if ((config = node.getAttribute('w-config'))) {
-            node.removeAttribute('w-config');
-            config = compiler.convertType(config, 'expression', true);
-        }
-        var widgetNode = compiler.createTagHandlerNode('w-widget');
-        node.parentNode.replaceChild(widgetNode, node);
-        widgetNode.appendChild(node);
-
-        widgetNode.setAttribute('module', bindAttr);
-
-        if (config) {
-            widgetNode.setProperty('config', config);
-        }
-        if (assignedId) {
-            widgetNode.setProperty('assignedId', assignedId);
-        }
-        if (scope) {
-            widgetNode.setProperty('scope', scope);
-        }
-        var id = node.getAttribute('id');
-        if (id) {
-            id = compiler.convertType(id, 'string', true);
-            widgetNode.setProperty('id', id);
-        } else {
-            node.setAttribute('id', '${widget.elId()}');
+        if (!widgetTagNode) {
+            node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+            return;
         }
 
-        node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
+        if (!eventIdExpression) {
+            // In order to attach a DOM event listener directly we need to make sure
+            // the target HTML element has an ID that we can use to get a reference
+            // to the element during initialization. We need to handle the following
+            // scenarios:
+            //
+            // 1) The HTML element already has an "id" attribute
+            // 2) The HTML element has a "w-el-id" attribute (we already converted this
+            //    to an "id" attribute above)
+            // 3) The HTML does not have an "id" or "w-el-id" attribute. We must add
+            //    an "id" attribute with a unique ID.
+
+            var idAttr = node.getAttribute('id');
+            if (idAttr) {
+                // Case 1 and 2 -- Using the existing "id" attribute
+                // The "id" attribute can be a JavaScript expression or a raw String
+                // value. We need a JavaScript expression that can be used to
+                // provide the same ID at runtime.
+
+                if (bind) {
+                    // We have to attach a listener to the root element of the widget
+                    // We will use "!" as an indicator that it is the root widget
+                    // element.
+                    //
+                    // Use an exclamation point to make it clear that we
+                    // we need to resolve the ID as a root widget element ID.
+                    eventIdExpression = compiler.makeExpression('"!"');
+                } else if (widgetElIdExpression) {
+                    // We have to attach a listener to a nested HTML element of the widget
+                    // that was assigned an ID using "w-el-id".
+                    //
+                    // Prefix widget element ID with an exclamation point to make it clear that we
+                    // we need to resolve the ID as a widget element ID.
+                    eventIdExpression = compiler.makeExpression('"!"+' + widgetElIdExpression.toString());
+                } else if (typeof idAttr === 'string') {
+                    // Convert the raw String to a JavaScript expression
+                    eventIdExpression = compiler.convertType(idAttr, 'string', true);
+                } else {
+                    // The "id" attribute is already expression that we can use that
+                    // directly
+                    eventIdExpression = idAttr;
+                }
+            } else {
+                // Case 3 - We need to add a unique "id" attribute
+
+                // We'll add a property to keep track of our next widget ID
+                // NOTE: This is at compile time and "template.data" is only
+                //       used for the current template compilation. We need
+                //       a unique ID that
+                if (template.data.widgetNextId == null) {
+                    template.data.widgetNextId = 0;
+                }
+
+                var uniqueId = '_' + (template.data.widgetNextId++);
+
+                // Prefix the unique ID with an exclamation point to make it clear that we
+                // we need to resolve the ID as a widget element ID.
+                eventIdExpression = compiler.makeExpression(JSON.stringify('!' + uniqueId));
+
+                node.setAttribute('id', compiler.makeExpression('widget.elId("' +
+                    uniqueId +
+                    '")'));
+            }
+        }
+
+        if (!widgetTagNode.data.widgetEvents) {
+            // Add a new input property to the widget tag that will contain
+            // enough information to allow the DOM event listeners to
+            // be attached directly to the DOM elements.
+            widgetTagNode.data.widgetEvents = [];
+            widgetTagNode.setProperty('events', function() {
+                return compiler.makeExpression(
+                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
+            });
+        }
+
+        // Add a 3-tuple consisting of <event-type><target-method><DOM element ID>
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
+        widgetTagNode.data.widgetEvents.push(eventIdExpression.toString());
     }
 
-    if ((widgetElIdAttr = node.getAttribute('w-el-id'))) {
-        node.removeAttribute('w-el-id');
-        if (node.hasAttribute('id')) {
-            node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
-        } else {
-            node.setAttribute('id', template.makeExpression('widget.elId(' + compiler.convertType(widgetElIdAttr, 'string', true) + ')'));
+    function addBubblingEventListener(eventType, targetMethod) {
+
+        if (!widgetTagNode) {
+            widgetTagNode = getWidgetNode(node);
         }
+
+        if (!widgetTagNode) {
+            node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+            return;
+        }
+
+        node.setAttribute('data-' + propName,
+            compiler.makeExpression(JSON.stringify(targetMethod + '|') +
+            '+widget.id'));
     }
 
-    if ((widgetForAttr = node.getAttribute('w-for'))) {
-        node.removeAttribute('w-for');
-        if (node.hasAttribute('for')) {
-            node.addError('The "w-for" attribute cannot be used in conjuction with the "for" attribute');
-        } else {
-            node.setAttribute('for', template.makeExpression('widget.elId(' + compiler.convertType(widgetForAttr, 'string', true) + ')'));
+    if (node.hasFlag('hasWidgetEvents')) {
+        // The Marko compiler was nice enough to attach a flag to nodes that
+        // have one or more attributes that match the "w-on*" pattern.
+        // We still need to loop over the properties to find and handle
+        // the properties corresponding to those attributes
+        for (var propName in props) {
+            if (props.hasOwnProperty(propName) && propName.startsWith('w-on')) {
+
+                propName = propName.toLowerCase();
+
+                var eventType = propName.substring(4); // Chop off "w-on"
+
+                var targetMethod = props[propName];
+
+                var isBubbleEvent = markoWidgets.isBubbleEvent(eventType);
+
+                if (isBubbleEvent) {
+                    // The event is white listed for bubbling so we know that
+                    // we have already attached a listener on document.body
+                    // that can be used to handle the event. We will add
+                    // a "data-w-on{eventType}" attribute to the output HTML
+                    // for this element that will be used to map the event
+                    // to a method on the containing widget.
+                    addBubblingEventListener(eventType, targetMethod);
+                } else {
+                    // The event does not bubble so we must attach a DOM
+                    // event listener directly to the target element.
+                    addDirectEventListener(eventType, targetMethod);
+                }
+            }
         }
     }
 

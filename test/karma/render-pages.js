@@ -13,7 +13,10 @@ var pagesToRender = [
 ];
 
 var work = pagesToRender.map(function(pageToRender) {
-    var pageRenderer = require('./fixtures/pages/' + pageToRender.page);
+    var pageRendererPath = require.resolve('./fixtures/pages/' + pageToRender.page);
+    delete require.cache[pageRendererPath];
+
+    var pageRenderer = require(pageRendererPath);
     var outFile = nodePath.join(__dirname, 'generated', pageToRender.output);
 
     return function(callback) {

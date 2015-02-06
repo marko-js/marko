@@ -2,24 +2,49 @@
     "tags": {
         "*": {
             "attributes": {
-                "w-bind": "string",
-                "w-extend": {
+                "w-bind": {
                     "type": "path",
-                    "preserve-name": "true"
+                    "preserve-name": true
                 },
-                "w-widget": "string",
-                "w-config": "expression",
-                "w-el-id": "string",
-                "w-for": "string",
-                "w-id": {
+                "w-assigned-id": {
                     "type": "string",
                     "preserve-name": true
                 },
-                "w-event-*": {
+                "w-scope": {
+                    "type": "expression",
+                    "preserve-name": true
+                },
+
+                "w-extend": {
+                    "type": "path",
+                    "preserve-name": true
+                },
+                "w-widget": {
+                    "type": "expression",
+                    "target-property": "w-bind"
+                },
+                "w-config": {
+                    "type": "expression",
+                    "preserve-name": true
+                },
+                "w-el-id": {
+                    "type": "string",
+                    "preserve-name": true
+                },
+                "w-for": {
+                    "type": "custom",
+                    "preserve-name": true
+                },
+                "w-id": {
+                    "type": "custom",
+                    "preserve-name": true
+                },
+                "w-on*": {
                     "pattern": true,
                     "type": "custom",
                     "allow-expressions": false,
-                    "preserve-name": true
+                    "preserve-name": true,
+                    "set-flag": "hasWidgetEvents"
                 }
             },
             "transformer": "./taglib/widgets-transformer.js"

@@ -1,5 +1,5 @@
 {
     "dependencies": [
-        "require ./widget"
+        "require: ./widget"
     ]
 }

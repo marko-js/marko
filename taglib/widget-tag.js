@@ -12,13 +12,12 @@ module.exports = function render(input, out) {
     var scope = input.scope || out.getAttribute('widget');
     var assignedId = input.assignedId;
     var extend;
+    var events = input.events;
 
-    var events;
     if (widgetArgs) {
         delete out.data.widgetArgs;
         scope = scope || widgetArgs.scope;
         assignedId = assignedId || widgetArgs.id;
-        events = widgetArgs.events;
         extend = widgetArgs.extend;
     }
 
@@ -28,7 +27,6 @@ module.exports = function render(input, out) {
     var widgetsContext = widgets.getWidgetsContext(out);
 
     if (modulePath) {
-
         var widgetDef = widgetsContext.beginWidget({
             module: modulePath,
             id: id,
