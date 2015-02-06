@@ -1,4 +1,7 @@
 function Widget(config) {
+    this.name = 'app-bar';
+    window.testData.addWidget('app-bar', this);
+
     var $el = this.$();
 
     this.appendHtml = function(html) {
