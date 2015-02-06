@@ -150,6 +150,19 @@ describe('widget' , function() {
         expect(document.getElementById('target').childNodes[1]).to.equal(newWidget.el);
         expect(document.getElementById('target').childNodes[2]).to.equal(nextSibling);
     });
+
+    it('should remove destroyed widgets from scoped widget collection', function() {
+        var fooWidget = require('./fixtures/components/app-foo')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(fooWidget.widgets.bar).to.not.be.empty;
+
+        fooWidget.widgets.bar.destroy();
+
+        expect(fooWidget.widgets.bar).to.be.empty;
+    });
 });
 
 
