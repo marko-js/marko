@@ -1,4 +1,5 @@
 function Widget(config) {
+    this.label = config.label;
     this.name = 'app-bar';
     window.testData.addWidget('app-bar', this);
 

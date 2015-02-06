@@ -20,19 +20,9 @@ describe('server-rendered' , function() {
         done();
     });
 
-    it('[server-rendered] should correctly initialize widgets rendered on the server', function() {
+    it('[server-rendered] should correctly initialize widgets', function() {
         expect(window.testData.widgets['app-foo'].length).to.equal(3);
         expect(window.testData.widgets['app-foo'][0]).to.be.a('object');
-        expect(window.testData.widgets['app-foo'][0].config).to.be.a('object');
-        expect(window.testData.widgets['app-foo'][0].config).to.deep.equal({
-            string: 'world',
-            number: 12,
-            boolean: true,
-            complex: {
-                a: '<\"hello">',
-                b: 'test'
-            }
-        });
 
         // Make sure the app-dom-events widget was initialized:
         expect(window.testData.widgets['app-dom-events'][0].name).to.equal('app-dom-events');
@@ -84,5 +74,41 @@ describe('server-rendered' , function() {
         });
 
         expect(Object.keys(ids).length).to.equal(3);
+    });
+
+    it('[server-rendered] should allow this.widgets', function() {
+        window.testData.widgets['app-foo'].forEach(function(widget) {
+            widget.testWidgetCollection();
+        });
+    });
+
+    it('[server-rendered] should allow for widget config to be passed in from renderer', function() {
+        var widget = window.testData.widgets['app-widget-config'][0];
+
+        expect(widget.config).to.deep.equal({
+            useAttribute: false,
+            string: 'world',
+            number: 12,
+            boolean: true,
+            complex: {
+                a: '<\"hello">',
+                b: 'test'
+            }
+        });
+    });
+
+    it('[server-rendered] should allow for widget config to be provided using w-config', function() {
+        var widget = window.testData.widgets['app-widget-config'][1];
+
+        expect(widget.config).to.deep.equal({
+            useAttribute: true,
+            string: 'world',
+            number: 12,
+            boolean: true,
+            complex: {
+                a: '<\"hello">',
+                b: 'test'
+            }
+        });
     });
 });

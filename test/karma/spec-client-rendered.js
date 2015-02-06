@@ -70,4 +70,53 @@ describe('client-rendered' , function() {
         expect(widgets.length).to.equal(3);
         expect(Object.keys(ids).length).to.equal(widgets.length);
     });
+
+    it('[client-rendered] should allow this.widgets', function() {
+        var widget = require('./fixtures/components/app-foo')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testWidgetCollection();
+    });
+
+    it('[client-rendered] should allow for widget config to be passed in from renderer', function() {
+        var widget = require('./fixtures/components/app-widget-config')
+            .render({
+                useAttribute: false
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(widget.config).to.deep.equal({
+            useAttribute: false,
+            string: 'world',
+            number: 12,
+            boolean: true,
+            complex: {
+                a: '<\"hello">',
+                b: 'test'
+            }
+        });
+    });
+
+    it('[client-rendered] should allow for widget config to be provided using w-config', function() {
+        var widget = require('./fixtures/components/app-widget-config')
+            .render({
+                useAttribute: true
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(widget.config).to.deep.equal({
+            useAttribute: true,
+            string: 'world',
+            number: 12,
+            boolean: true,
+            complex: {
+                a: '<\"hello">',
+                b: 'test'
+            }
+        });
+    });
 });

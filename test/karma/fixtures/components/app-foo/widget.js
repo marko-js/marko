@@ -51,6 +51,16 @@ Widget.prototype = {
         expect(this.getEl('config').className).to.equal('config');
         // Make sure the generated element ID starts with the widget ID
         expect(this.getEl('config').id.substring(0, this.el.id.length)).to.equal(this.el.id);
+    },
+
+    testWidgetCollection: function() {
+        expect(this.widgets.bar).to.be.an('object');
+        expect(this.widgets.bar2).to.be.an('object');
+        expect(this.widgets.barArray.length).to.equal(2);
+        expect(this.widgets.barArray[0].label).to.equal('1');
+        expect(this.widgets.barArray[1].label).to.equal('2');
+        expect(this.widgets.barArrayImplicit[0].label).to.equal('a1');
+        expect(this.widgets.barArrayImplicit[1].label).to.equal('a2');
     }
 };
 
