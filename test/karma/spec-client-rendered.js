@@ -100,6 +100,23 @@ describe('client-rendered' , function() {
         });
     });
 
+    it('[client-rendered] should allow for widgets to be destroyed', function() {
+        var domEventsWidget = require('./fixtures/components/app-dom-events')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        domEventsWidget.testDestroy();
+
+
+        var fooWidget = require('./fixtures/components/app-foo')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        fooWidget.testDestroy();
+    });
+
     it('[client-rendered] should allow for widget config to be provided using w-config', function() {
         var widget = require('./fixtures/components/app-widget-config')
             .render({

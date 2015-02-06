@@ -104,14 +104,14 @@ Widget.prototype = {
     },
 
     testDestroy: function() {
-        expect(Array.isArray(this._evHandles)).to.equal(true);
+        expect(Array.isArray(this.__evHandles)).to.equal(true);
 
         var el = this.el;
         var fooLink = document.getElementById('fooLink');
 
         this.destroy();
 
-        expect(this._evHandles).to.equal(null);
+        expect(this.__evHandles).to.equal(null);
 
         // Make sure the widget is removed from the DOM tree
 
