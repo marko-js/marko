@@ -82,14 +82,17 @@ Template.prototype = {
      * @param  {Function} callback A callback function
      * @return {AsyncWriter} Returns the AsyncWriter instance that the template is rendered to
      */
-    render: function(data, out, callback) {
-        if (data == null) {
-            data = {};
-        }
+    render: function(data, out) {
+        // NOTE: We create new vars here to avoid a V8 de-optimization due
+        //       to the following:
+        //       Assignment to parameter in arguments object
+        var finalOut = out;
+        var finalData = data || {};
+
         var renderFunc = this._;
 
         // callback is last argument if provided
-        callback = arguments[arguments.length - 1];
+        var callback = arguments[arguments.length - 1];
 
         var shouldEnd = false;
 
@@ -97,33 +100,33 @@ Template.prototype = {
             if (arguments.length === 2) {
                 // render called with data and callback,
                 // we need to create the "out"
-                out = null;
+                finalOut = null;
             }
 
-            if (!out || !out.isAsyncWriter) {
-                out = new AsyncWriter(out);
+            if (!finalOut || !finalOut.isAsyncWriter) {
+                finalOut = new AsyncWriter(finalOut);
                 shouldEnd = true;
             }
 
-            out.on('finish', function() {
-                callback(null, out.getOutput(), out);
+            finalOut.on('finish', function() {
+                callback(null, finalOut.getOutput(), finalOut);
             });
 
-            out.once('error', callback);
-        } else if (!out || !out.isAsyncWriter) {
-            var stream = out;
-            // Assume the "out" is really a stream
+            finalOut.once('error', callback);
+        } else if (!finalOut || !finalOut.isAsyncWriter) {
+            var stream = finalOut;
+            // Assume the "finalOut" is really a stream
             //
             // By default, we will buffer rendering to a stream to prevent
             // the response from being "too chunky".
             var options = this.buffer ? { buffer: true } : null;
-            out = asyncWriter.create(stream, options);
+            finalOut = asyncWriter.create(stream, options);
             shouldEnd = true;
         }
 
-        out.global = extend(out.global, data.$global);
+        finalOut.global = extend(finalOut.global, finalData.$global);
 
-        renderFunc(data, out);
+        renderFunc(finalData, finalOut);
 
         // Automatically end output stream (the writer) if we
         // had to create an async writer (which might happen
@@ -134,10 +137,10 @@ Template.prototype = {
         // we assume that we are writing to output that was
         // created in the context of another rendering job.
         if (shouldEnd) {
-            out.end();
+            finalOut.end();
         }
 
-        return out;
+        return finalOut;
     },
     stream: function(data) {
         if (!stream) {
