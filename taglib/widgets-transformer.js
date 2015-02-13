@@ -38,15 +38,54 @@ function getWidgetNode(node) {
 
 exports.process =function (node, compiler, template) {
     var props = node.getProperties();
-    var bind;
+
 
     if (!node._ts) {
         node._ts = Math.random();
     }
 
+    var widgetTypes = [];
+
+    function registerType(target) {
+        var typePathExpression;
+        var targetExpression;
+
+        if (compiler.hasExpression(target)) {
+            return '__markoWidgets.getDynamicClientWidgetPath(' + compiler.convertType(target, 'string', true) + ')';
+        }
+
+        // Resolve the static string to a full path at compile time
+        typePathExpression = template.addStaticVar(target, JSON.stringify(markoWidgets.getClientWidgetPath(target, template.dirname)));
+        targetExpression = 'require(' + JSON.stringify(target) + ')';
+
+        widgetTypes.push({
+            name: typePathExpression,
+            target: targetExpression
+        });
+
+        template.addStaticCode(function(writer) {
+            writer.line('if (typeof window != "undefined") {');
+            writer.incIndent();
+            widgetTypes.forEach(function(registeredType) {
+                writer.line('__markoWidgets.registry.register(' + registeredType.name + ', ' + registeredType.target + ');');
+            });
+
+            writer.decIndent();
+            writer.line('}');
+        });
+
+        return typePathExpression;
+    }
+
+    var bind;
+
     if ((bind = props['w-bind'])) {
+        template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+
         // A widget is bound to the node
-        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', 'require("marko-widgets").attrs');
+        var widgetAttrsVar = template.addStaticVar('_widgetAttrs', '__markoWidgets.attrs');
+
+        var typePathExpression = registerType(bind);
 
         var config;
         var assignedId;
@@ -57,7 +96,7 @@ exports.process =function (node, compiler, template) {
         node.parentNode.replaceChild(widgetNode, node);
         widgetNode.appendChild(node);
 
-        widgetNode.setAttribute('module', bind);
+        widgetNode.setAttribute('module', typePathExpression);
 
         if ((config = props['w-config'])) {
             widgetNode.setProperty('config', config);
@@ -94,7 +133,8 @@ exports.process =function (node, compiler, template) {
         } else if ((widgetExtend = props['w-extend'])) {
             // Handle the "w-extend" attribute
             delete props['w-extend'];
-            widgetArgs.extend = widgetExtend;
+            template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+            widgetArgs.extend = registerType(widgetExtend);
             widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
         } else if ((widgetElIdExpression = props['w-el-id'])) {
             // Handle the "w-el-id" attribute

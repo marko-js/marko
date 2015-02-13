@@ -3,7 +3,7 @@
         "*": {
             "attributes": {
                 "w-bind": {
-                    "type": "path",
+                    "type": "custom",
                     "preserve-name": true
                 },
                 "w-assigned-id": {
@@ -16,7 +16,7 @@
                 },
 
                 "w-extend": {
-                    "type": "path",
+                    "type": "custom",
                     "preserve-name": true
                 },
                 "w-widget": {
@@ -52,7 +52,7 @@
         "w-widget": {
             "renderer": "./taglib/widget-tag.js",
             "attributes": {
-                "module": "path",
+                "module": "expression",
                 "config": "expression",
                 "id": {
                     "type": "string",

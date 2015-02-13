@@ -3,7 +3,7 @@ function Widget(config) {
 }
 
 Widget.prototype = {
-    render: require('./renderer')
+    renderer: require('./renderer')
 };
 
 module.exports = Widget;
