@@ -250,6 +250,7 @@ function TemplateBuilder(compiler, path, rootNode) {
     this.helperFunctionsAdded = {};
     this.vars = [];
     this.varsLookup = {};
+    this.staticCode = [];
 
     this.getStaticHelperFunction('str', 's');
     this.getStaticHelperFunction('empty', 'e');
@@ -279,6 +280,35 @@ TemplateBuilder.prototype = {
             this.helperFunctionsAdded[propName] = varName;
             return varName;
         }
+    },
+    addStaticCode: function(codeOrFunc) {
+        this.staticCode.push(codeOrFunc);
+    },
+
+    _getStaticCode: function() {
+
+        var staticCodeList = this.staticCode;
+
+        if (!staticCodeList.length) {
+            return;
+        }
+
+        var codeWriter = new CodeWriter(this.concatWrites, INDENT);
+        codeWriter.code('\n');
+
+        for (var i=0, len=staticCodeList.length; i<len; i++) {
+            var code = staticCodeList[i];
+            if (typeof code === 'function') {
+                var result = code(codeWriter);
+                if (result != null) {
+                    codeWriter.code(result.toString());
+                }
+            } else {
+                codeWriter.code(code.toString());
+            }
+        }
+
+        return codeWriter.getOutput();
     },
     hasStaticVar: function (name) {
         return this.staticVarsLookup[name] === true;
@@ -455,6 +485,12 @@ TemplateBuilder.prototype = {
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);
+
+        var staticCode = this._getStaticCode();
+        if (staticCode) {
+            out.append(staticCode);
+        }
+
         out.append('\n' + INDENT + 'return function render(data, out) {\n');
         //Write out the render variables
         if (this.vars && this.vars.length) {
