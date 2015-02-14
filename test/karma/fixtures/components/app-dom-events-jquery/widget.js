@@ -51,4 +51,4 @@ Widget.prototype = {
     }
 };
 
-module.exports = Widget;
+exports.Widget = Widget;

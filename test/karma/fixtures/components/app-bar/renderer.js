@@ -1,6 +1,6 @@
 var template = require('marko').load(require.resolve('./template.marko'));
 
-module.exports = function render(input, out) {
+exports.render = function(input, out) {
     var label = input.label || 'BAR';
     template.render({
             label: label,

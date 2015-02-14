@@ -7,4 +7,4 @@ function Widget(config) {
 Widget.prototype = {
 };
 
-module.exports = Widget;
+exports.Widget = Widget;
