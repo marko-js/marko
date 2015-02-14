@@ -1366,21 +1366,21 @@ For more details, please see [https://github.com/raptorjs/marko-layout](https://
 
 ## Tag Renderer
 
-Every tag should be mapped to a "renderer". A renderer is just a function that takes two arguments (`data` and `out`). The `data` argument is an arbitrary object that contains the data for the renderer. The `out` argument is an [asynchronous rendering out](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to an object with a "render" function. The render function is just a function that takes two arguments: `input` and `out`. The `input` argument is an arbitrary object that contains the input data for the renderer. The `out` argument is an [asynchronous writer](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
-module.exports = function(data, out) {
-    out.write('Hello ' + data.name + '!');
+exports.render = function(input, out) {
+    out.write('Hello ' + input.name + '!');
 }
 ```
 
-If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `data` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
+If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `input` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
 
 ```javascript
-module.exports = function(data, out) {
+exports.render = function(input, out) {
     out.write('BEFORE BODY');
-    if (data.invokeBody) {
-        data.invokeBody();
+    if (input.invokeBody) {
+        input.invokeBody();
     }
     out.write('AFTER BODY');
 }
@@ -1547,11 +1547,11 @@ _components/tabs/renderer.js:_
 var templatePath = require.resolve('./template.marko');
 var template = require('marko').load(templatePath);
 
-module.exports = function render(data, out) {
+exports.render = function(input, out) {
     var nestedTabs = [];  
 
     // Invoke the body function to discover nested <ui-tab> tags
-    data.invokeBody({ // Invoke the body with the scoped "tabs" variable
+    input.invokeBody({ // Invoke the body with the scoped "tabs" variable
         addTab: function(tab) {
             tab.id = tab.id || ("tab" + tabs.length);
             nestedTabs.push(tab);
@@ -1568,9 +1568,9 @@ module.exports = function render(data, out) {
 _components/tab/renderer.js:_
 
 ```javascript
-module.exports = function render(data, out) {
+exports.render = function(input, out) {
     // Register with parent but don't render anything
-    data.tabs.addTab(data);
+    input.tabs.addTab(input);
 };
 ```
 
