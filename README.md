@@ -486,7 +486,7 @@ require('marko/compiler').compileFile(path, function(err, src) {
 
 ### Sample Compiled Template
 ```javascript
-module.exports = function create(__helpers) {
+exports.create = function(__helpers) {
   var empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
@@ -522,11 +522,10 @@ The compiled output is designed to be both extremely readable and minifiable. Th
 
 
 ```javascript
-module.exports=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
+exports.create=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
 ```
 
-_File size: 190 bytes gzipped (251 bytes uncompressed)_
-
+_File size: 189 bytes gzipped (251 bytes uncompressed)_
 
 # Language Guide
 

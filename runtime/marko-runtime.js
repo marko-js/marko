@@ -202,18 +202,18 @@ function load(templatePath, options) {
         if (!template) {
             // The template has not been loaded, load the template to get
             // access to the factory function that is used to produce
-            // the actual compiled tmeplate function. We pass the helpers
+            // the actual compiled template function. We pass the helpers
             // as the first argument to the factory function to produce
             // the compiled template function
             template = cache[templatePath] = new Template(
-                loader(templatePath)(helpers), // Load the template factory and invoke it
+                loader(templatePath).create(helpers), // Load the template factory and invoke it
                 options);
         }
     } else {
         // Instead of a path, assume we got a compiled template module
         // We store the loaded template with the factory function that was
         // used to get access to the compiled template function
-        template = templatePath._ || (templatePath._ = new Template(templatePath(helpers), options));
+        template = templatePath._ || (templatePath._ = new Template(templatePath.create(helpers), options));
     }
 
     return template;

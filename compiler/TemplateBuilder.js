@@ -481,7 +481,7 @@ TemplateBuilder.prototype = {
         } else {
             params = ['out'];
         }
-        out.append('module.exports = function create(__helpers) {\n');
+        out.append('exports.create = function(__helpers) {\n');
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);
