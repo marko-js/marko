@@ -16,6 +16,8 @@
 'use strict';
 require('raptor-polyfill/string/startsWith');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
+var fs = require('fs');
+var nodePath = require('path');
 
 var markoWidgets = require('../');
 
@@ -33,6 +35,16 @@ function getWidgetNode(node) {
         if (!node) {
             break;
         }
+    }
+}
+
+function getDefaultWidgetModule(dirname) {
+    if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
+        return './widget';
+    } else if (fs.existsSync(nodePath.join(dirname, 'index.js'))) {
+        return './';
+    } else {
+        return null;
     }
 }
 
@@ -55,7 +67,7 @@ exports.process =function (node, compiler, template) {
         }
 
         // Resolve the static string to a full path at compile time
-        typePathExpression = template.addStaticVar(target, JSON.stringify(markoWidgets.getClientWidgetPath(target, template.dirname)));
+        typePathExpression = template.addStaticVar(target === './' ? '__widgetPath' : target, JSON.stringify(markoWidgets.getClientWidgetPath(target, template.dirname)));
         targetExpression = 'require(' + JSON.stringify(target) + ')';
 
         widgetTypes.push({
@@ -79,7 +91,16 @@ exports.process =function (node, compiler, template) {
 
     var bind;
 
-    if ((bind = props['w-bind'])) {
+    if ((bind = props['w-bind']) != null) {
+
+        if (bind === '') {
+            bind = getDefaultWidgetModule(template.dirname);
+            if (!bind) {
+                node.addError('Unable to find default widget module when using w-bind without a value');
+                return;
+            }
+        }
+
         template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
 
         // A widget is bound to the node
