@@ -7,6 +7,6 @@ exports.TAG = {
     }
 };
 
-module.exports = function render(input, context) {
-    context.write('scanned-e: Hello ' + input.NAME);
+module.exports = function render(input, out) {
+    out.write('scanned-e: Hello ' + input.NAME);
 };

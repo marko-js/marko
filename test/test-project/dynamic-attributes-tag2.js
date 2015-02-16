@@ -1,5 +1,5 @@
-exports.render = function(input, context) {
-    context.write("test: " + input.test + "|");
+exports.render = function(input, out) {
+    out.write("test: " + input.test + "|");
     var dynamicAttributes = input['*'];
     
     if (dynamicAttributes) {
@@ -7,9 +7,9 @@ exports.render = function(input, context) {
         var entries = keys.map(function(key) {
             return key+"="+dynamicAttributes[key];
         });
-        context.write("dynamic attributes: [" + entries.join(", ") + "]");
+        out.write("dynamic attributes: [" + entries.join(", ") + "]");
     }
     else {
-        context.write("dynamic attributes: []");
+        out.write("dynamic attributes: []");
     }
 };

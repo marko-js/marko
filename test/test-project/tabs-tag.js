@@ -1,6 +1,6 @@
 var marko = require('../../');
 
-exports.render = function(input, context) {
+exports.render = function(input, out) {
     var tabs = [],  
         activeFound = false;
     
@@ -26,6 +26,6 @@ exports.render = function(input, context) {
     
     marko.render(require.resolve('./tabs.marko'), {
         tabs: tabs
-    }, context);
+    }, out);
     
 };

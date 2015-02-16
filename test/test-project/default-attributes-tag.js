@@ -1,5 +1,5 @@
-exports.render = function(input, context) {
-    context.write('['+[
+exports.render = function(input, out) {
+    out.write('['+[
         input.prop1,
         input.prop2,
         input.default1,

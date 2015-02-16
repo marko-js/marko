@@ -1,3 +1,3 @@
-module.exports = function render(input, context) {
-    context.write('scanned-a: Hello ' + input.name);
+module.exports = function render(input, out) {
+    out.write('scanned-a: Hello ' + input.name);
 };
