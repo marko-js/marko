@@ -407,7 +407,15 @@ module.exports = function transform(node, compiler, template) {
             if (attrDef.dynamicAttribute) {
                 // Dynamic attributes are allowed attributes
                 // that are not declared (i.e. "*" attributes)
-                propName = attr.qName;
+                //
+                if (attrDef.preserveName === false) {
+                    propName = removeDashes(attr.localName);
+                } else {
+                    propName = attr.qName;
+                }
+
+
+
             } else {
                 // Attributes map to properties and we allow the taglib
                 // author to control how an attribute name resolves

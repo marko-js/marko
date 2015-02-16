@@ -32,7 +32,8 @@ function createDefaultTagDef() {
             attributes: {
                 '*': {
                     type: 'string',
-                    targetProperty: null
+                    targetProperty: null,
+                    preserveName: false
                 }
             }
          };
