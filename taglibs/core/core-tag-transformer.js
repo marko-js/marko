@@ -385,9 +385,10 @@ module.exports = function transform(node, compiler, template) {
                         value = compiler.makeExpression(pathVar);
                     }
                 } else if (type === 'template') {
+                    template.addStaticVar('__loadTemplate', '__helpers.l');
                     var templateVar;
                     if (compiler.hasExpression(attr.value)) {
-                        value = compiler.makeExpression('__helpers.l(' +
+                        value = compiler.makeExpression('__loadTemplate(' +
                             convertAttrValue(
                                 attr,
                                 'string',
@@ -395,7 +396,7 @@ module.exports = function transform(node, compiler, template) {
                             ')');
                     } else {
                         // Resolve the static string to a full path only once
-                        templateVar = template.addStaticVar(attr.value, '__helpers.l(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
+                        templateVar = template.addStaticVar(attr.value, '__loadTemplate(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
                         value = compiler.makeExpression(templateVar);
                     }
                 } else {
