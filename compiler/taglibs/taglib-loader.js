@@ -271,6 +271,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
         var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
         var tag = null;
         var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
+        var indexFile = nodePath.join(dir, childFilename, 'index.js');
         var templateFile = nodePath.join(dir, childFilename, 'template.marko');
         var tagDef = null;
 
@@ -284,6 +285,8 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             if (!tagDef.renderer && !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;
+                } else if (fs.existsSync(indexFile)) {
+                    tagDef.renderer = indexFile;
                 } else if (fs.existsSync(templateFile)) {
                     tagDef.template = templateFile;
                 } else if (fs.existsSync(templateFile + ".html")) {
@@ -298,19 +301,12 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             taglib.addTag(tag);
         } else {
             // marko-tag.json does *not* exist... checking for a 'renderer.js'
-
+            var rendererJSFile;
 
             if (fs.existsSync(rendererFile)) {
-                var rendererCode = fs.readFileSync(rendererFile, {encoding: 'utf8'});
-                tagDef = tagDefFromCode.extractTagDef(rendererCode);
-                if (!tagDef) {
-                     tagDef = createDefaultTagDef();
-                }
-
-                tagDef.renderer  = rendererFile;
-                tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = childFilename;
-                taglib.addTag(tag);
+                rendererJSFile = rendererFile;
+            } else if (fs.existsSync(indexFile)) {
+                rendererJSFile = indexFile;
             } else {
                 var exTemplateFile;
                 if (fs.existsSync(templateFile)) {
@@ -328,6 +324,19 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
 
                     tagDef.template = exTemplateFile;
                 }
+            }
+
+            if (rendererJSFile) {
+                var rendererCode = fs.readFileSync(rendererJSFile, {encoding: 'utf8'});
+                tagDef = tagDefFromCode.extractTagDef(rendererCode);
+                if (!tagDef) {
+                     tagDef = createDefaultTagDef();
+                }
+
+                tagDef.renderer  = rendererJSFile;
+                tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
+                tag.name = childFilename;
+                taglib.addTag(tag);
             }
 
             if (tagDef) {

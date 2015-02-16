@@ -88,6 +88,10 @@ module.exports = {
     a: attr,
 
     as: attrs,
+
+    /**
+     * Loads a template
+     */
     l: function(path) {
         if (typeof path === 'string') {
             if (markoRegExp.test(path)) {
@@ -102,47 +106,60 @@ module.exports = {
             return runtime.load(path);
         }
     },
+    /**
+     * Returns the render function for a tag handler
+     */
+    r: function(handler) {
+        var renderFunc;
+        if (typeof handler === 'function') {
+            renderFunc = handler;
+        } else {
+            renderFunc = handler.renderer || handler.render;
+        }
 
-    /* Helpers that require a context below: */
+        if (typeof renderFunc !== 'function') {
+            throw new Error('Invalid handler: ' + handler);
+        }
 
-    t: function (context, handler, props, body) {
-        if (!props) {
-            props = {};
+        return renderFunc;
+    },
+
+    // ----------------------------------
+    // Helpers that require an out below:
+    // ----------------------------------
+
+
+    /**
+     * Invoke a tag handler render function
+     */
+    t: function (out, renderFunc, input, body) {
+        if (!input) {
+            input = {};
         }
 
         if (body) {
-            props.invokeBody = body;
+            input.invokeBody = body;
         }
 
-        var func;
-
-        if (!(func = handler.process || handler.render)) {
-            if (typeof handler === 'function') {
-                func = handler;
-            } else {
-                throw new Error('Invalid handler: ' + handler);
-            }
-        }
-
-        func.call(handler, props, context);
+        renderFunc(input, out);
     },
-    c: function (context, func) {
-        var output = context.captureString(func);
+    c: function (out, func) {
+        var output = out.captureString(func);
         return {
             toString: function () {
                 return output;
             }
         };
     },
-    i: function(context, path, data) {
+    i: function(out, path, data) {
         if (!path) {
             return;
         }
 
         if (typeof path === 'string') {
-            runtime.render(path, data, context);
+            runtime.render(path, data, out);
         } else if (typeof path.render === 'function') {
-            path.render(data, context);
+            path.render(data, out);
         } else {
             throw new Error('Invalid template');
         }
