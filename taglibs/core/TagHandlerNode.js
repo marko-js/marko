@@ -23,7 +23,7 @@ function addHandlerVar(template, renderer) {
     var handlerVar = handlerVars[renderer];
     if (!handlerVar) {
         handlerVar = renderer.replace(/[.\-\/\\]/g, '_').replace(/^[_]+/g, '');
-        handlerVar = template.addStaticVar(handlerVar, 'require(' + stringify(renderer) + ')');
+        handlerVar = template.addStaticVar(handlerVar, '__renderer(require(' + stringify(renderer) + '))');
         handlerVars[renderer] = handlerVar;
     }
     return handlerVar;
@@ -101,9 +101,11 @@ TagHandlerNode.prototype = {
         this.inputExpression = expression;
     },
     doGenerateCode: function (template) {
+        template.addStaticVar('__renderer', '__helpers.r');
+
         var rendererPath = template.getRequirePath(this.tag.renderer); // Resolve a path to the renderer relative to the directory of the template
         var handlerVar = addHandlerVar(template, rendererPath);
-        var tagHelperVar = template.addStaticVar('_tag', '__helpers.t');
+        var tagHelperVar = template.addStaticVar('__tag', '__helpers.t');
 
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
