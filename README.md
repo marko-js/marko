@@ -310,7 +310,51 @@ var $submitButton = this.$('#submitButton');
 
 ## Attaching DOM Event Listeners
 
-TODO
+Marko Widgets supports custom `w-on*` attributes for "attaching" DOM event listeners.
+
+```html
+<div w-bind>
+	<form w-onsubmit="handleFormSubmit">
+		<input type="text" value="email" w-onchange="handleEmailChange">
+		<button>Submit</button>
+	</form>
+</div>
+```
+
+The containing widget should have a method named `handleButtonClick`. For example:
+
+```javascript
+function Widget() {
+
+}
+
+Widget.prototype = {
+	handleFormSubmit: function(event, el) {
+		event.preventDefault();
+		// ...
+	},
+
+	handleEmailChange: function(event, el) {
+		var email = el.value;
+		this.validateEmail(email);
+		// ...
+	},
+
+	validateEmail: function(email) {
+		// ...
+	}
+}
+
+exports.Widget = Widget;
+```
+
+NOTE: Event handler methods will be invoked with `this` being the widget instance and the following two arguments will be provided to the handler method:
+
+1. `event` - The raw DOM event object (e.g. `event.target`, `event.clientX`, etc.)
+2. `el` - The element that the listener was attached to (which can be different from `event.target` due to bubbling)
+
+
+Internally, Marko Widgets only adds one event listener to the root `document.body` element for each event type that bubbles. When Marko Widgets captures an event on `document.body` it will internally delegate the event to the appropriate widgets. For DOM events that do not bubble, Marko Widgets will automatically attach DOM event listeners to each of the DOM nodes. If a widget is destroyed, Marko Widgets will automatically do the appropriate cleanup to remove DOM event listeners.
 
 ## Rendering Widgets in the Browser
 
