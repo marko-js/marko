@@ -365,10 +365,12 @@ function renderer(input, out) {
 	// ...
 }
 
-exports.render = require('marko-widgets').renderFunc(renderer);
+require('marko-widgets').renderable(exports, renderer);
 ```
 
-The returned render function can then be used as shown below:
+The `renderable` method will modify the target object to add a new `render(input[, callback])` method that can be used to render the widget. In addition, the `renderable` method will also store the provided renderer in the `renderer` property of the target object.
+
+An object that is made renderable, can then be rendered on the client as shown below:
 
 _Synchronous render_:
 
