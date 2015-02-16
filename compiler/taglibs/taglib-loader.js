@@ -261,8 +261,10 @@ function buildTag(tagObject, path, taglib, dirname) {
 function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
     dir = nodePath.resolve(tagsConfigDirname, dir);
     var children = fs.readdirSync(dir);
+    var rendererJSFile;
 
     for (var i=0, len=children.length; i<len; i++) {
+        rendererJSFile = null;
         var childFilename = children[i];
         if (childFilename === 'node_modules') {
             continue;
@@ -301,7 +303,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             taglib.addTag(tag);
         } else {
             // marko-tag.json does *not* exist... checking for a 'renderer.js'
-            var rendererJSFile;
+
 
             if (fs.existsSync(rendererFile)) {
                 rendererJSFile = rendererFile;
