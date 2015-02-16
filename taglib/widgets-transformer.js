@@ -151,7 +151,15 @@ exports.process =function (node, compiler, template) {
             // Handle the "w-id" attribute
             delete props['w-id'];
             widgetArgs.id = widgetId;
-        } else if ((widgetExtend = props['w-extend'])) {
+        } else if ((widgetExtend = props['w-extend']) != null) {
+            if (widgetExtend === '') {
+                widgetExtend = getDefaultWidgetModule(template.dirname);
+                if (!widgetExtend) {
+                    node.addError('Unable to find default widget module when using w-extend without a value');
+                    return;
+                }
+            }
+
             // Handle the "w-extend" attribute
             delete props['w-extend'];
             template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
