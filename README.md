@@ -85,6 +85,14 @@ Using the bindings for Marko, you can bind a widget to a rendered DOM element us
 </div>
 ```
 
+You can also choose to leave the value of `w-bind` empty. If the value of `w-bind` is empty then `marko-widgets` will search for a widget module by first checking to see if `widget.js` exists and then `index.js`. Example:
+
+```html
+<div class="my-component" w-bind>
+    <h1>Click Me</h1>
+</div>
+```
+
 The widget bound to the `<div>` should then be implemented as a CommonJS module that exports a constructor function. During client-side initialization, a new instance of your widget will be created for each rendered DOM element that the widget is bound to. A sample widget implementation is shown in the following JavaScript code:
 
 __src/pages/index/widget.js:__
@@ -141,8 +149,8 @@ __src/pages/index/optimizer.json:__
 ```javascript
 {
     "dependencies": [
-        "require marko-widgets",
-        "require ./widget"
+        "require: marko-widgets",
+        "require: ./widget"
     ]
 }
 ```
@@ -199,7 +207,7 @@ _renderer.js:_
 ```javascript
 var template = require('marko').load(require.resolve('./template.marko'));
 
-module.exports = function render(input, out) {
+exports.renderer = function(input, out) {
     template.render({
             widgetConfig: {
                 message: 'Hello World'
@@ -300,9 +308,90 @@ Option 2) Use the `this.$()` method:
 var $submitButton = this.$('#submitButton');
 ```
 
-## Rendering Widgets in the Browser
+## Attaching DOM Event Listeners
 
 TODO
+
+## Rendering Widgets in the Browser
+
+Marko Widgets provides an API that can be used to create a `render(input[, callback])` function given a renderer:
+
+```javascript
+function renderer(input, out) {
+	// ...
+}
+
+exports.render = require('marko-widgets').renderFunc(renderer);
+```
+
+The returned render function can then be used as shown below:
+
+_Synchronous render_:
+
+```javascript
+var widget = require('fancy-checkbox').render({
+		checked: true,
+		label: 'Foo'
+	})
+	.appendTo(document.body)
+	.getWidget();
+
+widget.setChecked(false);
+widget.setLabel('Bar');
+```
+
+_Asynchronous render_:
+
+```javascript
+require('fancy-checkbox').render({
+		checked: true,
+		label: 'Foo'
+	},
+	function(err, renderResult) {
+		if (err) {
+			// ...
+		}
+
+		var widget = renderResult
+			.appendTo(document.body)
+			.getWidget();
+
+		widget.setChecked(false);
+		widget.setLabel('Bar');
+	});
+```
+
+## Rendering Widgets on the Server
+
+If a UI component is rendered on the server then that means that the HTML will be produced on the server and that separate JavaScript code will need to run in the browser to bind behavior to the widgets associated with the UI components rendered on the server. Marko Widgets keeps track of the rendered widgets associated with an ["out"](https://github.com/raptorjs/async-writer). The following code illustrates how to get the JavaScript code needed to initialize widgets in the browser:
+
+```javascript
+var markoWidgets = require('marko-widgets');
+var template = require('marko').load(require.resolve('./template.marko'));
+
+module.exports = function(req, res) {
+	template.render(viewModel, function(err, html, out) {
+		var initWidgetsCode = markoWidgets.getInitWidgetsCode(out);
+
+		// Serialize the HTML and the JavaScript code to the browser
+		res.json({
+	            html: html,
+	            js: initWidgetsCode
+	        });
+	});
+}
+```
+
+And then, in the browser, the following code can be used to initialize the widgets:
+
+```javascript
+var result = JSON.parse(response.body);
+var html = result.html
+var js = result.js;
+
+document.body.innerHTML = html; // Add the HTML to the DOM
+eval(js); // Initialize the widgets to bind behavior!
+```
 
 # API
 
