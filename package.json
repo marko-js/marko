@@ -1,60 +1,60 @@
 {
-  "name": "marko-widgets",
-  "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs/marko-widgets.git"
-  },
-  "scripts": {
-    "karma-all": "node test/karma/run.js --all-browsers",
-    "karma": "node test/karma/run.js",
-    "karma-watch": "node test/karma/run.js --watch",
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && npm run karma && node_modules/.bin/jshint lib/ dust/ dust/"
-  },
-  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "dependencies": {
-    "events": "^1.0.2",
-    "listener-tracker": "^1.0.2",
-    "raptor-async": "^1.0.3",
-    "raptor-dom": "^1.1.0",
-    "raptor-dust": "^1.1.2",
-    "raptor-json": "^1.0.1",
-    "raptor-logging": "^1.0.1",
-    "raptor-modules": "^1.0.5",
-    "raptor-polyfill": "^1.0.0",
-    "raptor-pubsub": "^1.0.2",
-    "raptor-renderer": "^1.2.0",
-    "raptor-util": "^1.0.0"
-  },
-  "devDependencies": {
-    "app-module-path": "^1.0.1",
-    "async": "^0.9.0",
-    "chai": "~1.8.1",
-    "dustjs-linkedin": "^2.3.4",
-    "ignoring-watcher": "^1.0.1",
-    "jquery": "^2.1.3",
-    "jshint": "^2.5.0",
-    "karma": "^0.12.31",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-firefox-launcher": "^0.1.4",
-    "karma-mocha": "^0.1.10",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-safari-launcher": "^0.1.1",
-    "marko": "^1.3.24",
-    "mkdirp": "^0.5.0",
-    "mocha": "~1.15.1",
-    "optimizer": "^1.5.8",
-    "optimizer-marko": "^1.1.4",
-    "phantomjs": "^1.9.13",
-    "raptor-args": "^1.0.2",
-    "raptor-strings": "^1.0.0"
-  },
-  "license": "Apache License v2.0",
-  "bin": {},
-  "main": "lib/marko-widgets.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "version": "2.0.1"
+    "name": "marko-widgets",
+    "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/raptorjs/marko-widgets.git"
+    },
+    "scripts": {
+        "karma-all": "node test/karma/run.js --all-browsers",
+        "karma": "node test/karma/run.js",
+        "karma-watch": "node test/karma/run.js --watch",
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && npm run karma && node_modules/.bin/jshint lib/ dust/ dust/"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "dependencies": {
+        "events": "^1.0.2",
+        "listener-tracker": "^1.0.2",
+        "raptor-async": "^1.0.3",
+        "raptor-dom": "^1.1.0",
+        "raptor-dust": "^1.1.2",
+        "raptor-json": "^1.0.1",
+        "raptor-logging": "^1.0.1",
+        "raptor-modules": "^1.0.5",
+        "raptor-polyfill": "^1.0.0",
+        "raptor-pubsub": "^1.0.2",
+        "raptor-renderer": "^1.2.0",
+        "raptor-util": "^1.0.0"
+    },
+    "devDependencies": {
+        "app-module-path": "^1.0.1",
+        "async": "^0.9.0",
+        "chai": "~1.8.1",
+        "dustjs-linkedin": "^2.3.4",
+        "ignoring-watcher": "^1.0.1",
+        "jquery": "^2.1.3",
+        "jshint": "^2.5.0",
+        "karma": "^0.12.31",
+        "karma-chrome-launcher": "^0.1.7",
+        "karma-firefox-launcher": "^0.1.4",
+        "karma-mocha": "^0.1.10",
+        "karma-phantomjs-launcher": "^0.1.4",
+        "karma-safari-launcher": "^0.1.1",
+        "marko": "^1.3.24",
+        "mkdirp": "^0.5.0",
+        "mocha": "~1.15.1",
+        "optimizer": "^1.5.8",
+        "optimizer-marko": "^1.1.4",
+        "phantomjs": "^1.9.13",
+        "raptor-args": "^1.0.2",
+        "raptor-strings": "^1.0.0"
+    },
+    "license": "Apache License v2.0",
+    "bin": {},
+    "main": "lib/marko-widgets.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "version": "2.0.2"
 }
