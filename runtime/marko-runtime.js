@@ -188,6 +188,26 @@ if (stream) {
     require('raptor-util/inherit')(Readable, stream.Readable);
 }
 
+/**
+ * NOTE: This method can be removed in the very near future.
+ *       It is only needed to make sure old templates that compiled
+ *       to `module.exports = function(helpers) { ... }` will still
+ *       load correctly even though new templates are compiled to
+ *       `exports.create = function(helpers) { ... }`
+ *
+ */
+function wrapLegacyCompiledTemplate(loadedTemplate) {
+    if (typeof loadedTemplate === 'function') {
+        return {
+            create: function(helpers) {
+                return loadedTemplate(helpers);
+            }
+        };
+    }
+
+    return loadedTemplate;
+}
+
 function load(templatePath, options) {
     var cache = exports.cache;
 
@@ -206,14 +226,14 @@ function load(templatePath, options) {
             // as the first argument to the factory function to produce
             // the compiled template function
             template = cache[templatePath] = new Template(
-                loader(templatePath).create(helpers), // Load the template factory and invoke it
+                wrapLegacyCompiledTemplate(loader(templatePath)).create(helpers), // Load the template factory and invoke it
                 options);
         }
     } else {
         // Instead of a path, assume we got a compiled template module
         // We store the loaded template with the factory function that was
         // used to get access to the compiled template function
-        template = templatePath._ || (templatePath._ = new Template(templatePath.create(helpers), options));
+        template = templatePath._ || (templatePath._ = new Template(wrapLegacyCompiledTemplate(templatePath).create(helpers), options));
     }
 
     return template;
