@@ -5,7 +5,21 @@ CHANGELOG
 
 ## 2.0.x
 
+### 2.0.5
+
+- Replaced `require('marko-widgets').renderFunc(renderer)` with `require('marko-widgets').renderable(exports, renderer)`
+
+### 2.0.4
+
+- Improved documentation
+
+### 2.0.3
+
+- Added support for using `exports.extendWidget = function(widget, widgetConfig) { ... }`
+- Allow `w-extend` attribute to be empty
+
 ### 2.0.2
+
 
 - Allow empty value for `w-bind` (e.g. `<div w-bind>...</div>`) and default to `./widget` or `./`
 - Export new method for creating a client-side render function:
