@@ -9,6 +9,6 @@ TAG = {
 }
 */
 
-module.exports = function render(input, context) {
-    context.write('scanned-f: Hello ' + input.NAME);
+module.exports = function render(input, out) {
+    out.write('scanned-f: Hello ' + input.NAME);
 };

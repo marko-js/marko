@@ -1,4 +1,4 @@
-exports.process = function(input, context) {
+exports.render = function(input, out) {
     var name = input.name || "(unknown)";
-    context.write("Hello " + name + "! adult=" + (input.adult === true));
+    out.write("Hello " + name + "! adult=" + (input.adult === true));
 };

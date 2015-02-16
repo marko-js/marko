@@ -1,3 +1,3 @@
-exports.render = function(input, context) {
-	context.write('nested/a');
+exports.render = function(input, out) {
+	out.write('nested/a');
 };
