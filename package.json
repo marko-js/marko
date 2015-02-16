@@ -36,7 +36,6 @@
         "raptor-polyfill": "^1.0.0",
         "raptor-promises": "^1.0.1",
         "raptor-regexp": "^1.0.0",
-        "raptor-renderer": "^1.1.10",
         "raptor-strings": "^1.0.0",
         "raptor-util": "^1.0.0",
         "resolve-from": "^1.0.0",
@@ -59,5 +58,5 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "1.6.1"
+    "version": "2.0.0"
 }
