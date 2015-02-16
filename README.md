@@ -598,3 +598,26 @@ var submitButton = this.widgets.submitButton;
 ### Properties
 
 #### this.*
+
+# Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)
+
+# Discuss
+
+Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
+
+# Contributors
+
+* [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
+* [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
+
+# Contribute
+
+Pull Requests welcome. Please submit Github issues for any feature enhancements, bugs or documentation problems.
+
+# License
+
+Apache License v2.0
