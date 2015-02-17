@@ -85,7 +85,7 @@ Using the bindings for Marko, you can bind a widget to a rendered DOM element us
 </div>
 ```
 
-You can also choose to leave the value of `w-bind` empty. If the value of `w-bind` is empty then `marko-widgets` will search for a widget module by first checking to see if `widget.js` exists and then `index.js`. Example:
+You can also choose to leave the value of the `w-bind` attribute empty. If the value of `w-bind` is empty then `marko-widgets` will search for a widget module by first checking to see if `widget.js` exists and then `index.js`. Example:
 
 ```html
 <div class="my-component" w-bind>
