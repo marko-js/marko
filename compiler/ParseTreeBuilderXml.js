@@ -11,9 +11,9 @@ ParseTreeBuilderXml.prototype = {
     getPos: function() {
         var parser = this.parser;
         var filePath = this.filePath;
-        
+
         var line = parser.line + 1;
-        
+
         return {
             line: line,
             column: parser.column,
@@ -21,12 +21,12 @@ ParseTreeBuilderXml.prototype = {
             toString: function() {
                 return this.filePath + ":" + this.line + ":" + this.column;
             }
-            
+
         };
     },
 
     doParse: function (src, filePath) {
-        
+
         this.filePath = filePath;
         var parser = this.parser = sax.parser(true /*strict*/, {
             trim: false,
@@ -36,12 +36,12 @@ ParseTreeBuilderXml.prototype = {
         });
 
         var _this = this;
-    
+
         extend(parser, {
             onerror: function(e) {
                 throw e;
             },
-            
+
             ontext: function(text) {
                 text = text.replace(/\r\n|\r/g, "\n");
                 _this.handleCharacters(text);
@@ -51,7 +51,7 @@ ParseTreeBuilderXml.prototype = {
                 text = text.replace(/\r\n|\r/g, "\n");
                 _this.handleCharacters(text);
             },
-            
+
             onopentag: function (node) {
                 var el = {
                     namespace: node.uri,
@@ -72,10 +72,10 @@ ParseTreeBuilderXml.prototype = {
                 _this.handleStartElement(el, attributes);
             },
 
-            
-            
-            onclosetag: function () {
-                _this.handleEndElement();
+
+
+            onclosetag: function (name) {
+                _this.handleEndElement(name);
             },
 
             oncomment: function (comment) {

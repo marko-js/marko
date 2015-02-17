@@ -44,7 +44,16 @@ function ParseTreeBuilder(taglibs) {
     this.charProps = null;
 
     this.nsStack = [];
+    this.compilerOptions = undefined;
 }
+
+var COMPILER_ATTRIBUTE_HANDLERS = {
+    'whitespace': function(attr, compilerOptions) {
+        if (attr.value === 'preserve') {
+            compilerOptions.preserveWhitespace = true;
+        }
+    }
+};
 
 ParseTreeBuilder.prototype = {
     createPos: function(line, column) {
@@ -76,6 +85,10 @@ ParseTreeBuilder.prototype = {
         this.parentNode = null;
         this.nsStack = [];
 
+        // Put the compiler options into the rootNode so that
+        // TemplateCompiler has access to these
+        rootNode.compilerOptions = this.compilerOptions;
+
         return rootNode;
     },
 
@@ -94,6 +107,24 @@ ParseTreeBuilder.prototype = {
     },
 
     handleStartElement: function(el, attributes) {
+        var self = this;
+
+        if (el.localName === 'compiler-options') {
+            attributes.forEach(function (attr) {
+                var attrLocalName = attr.localName;
+                var attrPrefix = attr.prefix;
+                var handler;
+                if (attrPrefix || ((handler = COMPILER_ATTRIBUTE_HANDLERS[attrLocalName]) === undefined)) {
+                    var attrName = attrPrefix;
+                    attrName = (attrName) ? attrName + ':' + attrLocalName : attrLocalName;
+                    throw new Error('Invalid Marko compiler option: ' + attrName + ', Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS));
+                }
+
+                handler(attr, self.compilerOptions || (self.compilerOptions = {}));
+            }, this);
+            return;
+        }
+
         this.prevTextNode = null;
 
         var namespaceMappings = this.nsStack.length ? Object.create(this.nsStack[this.nsStack.length-1]) : {};
@@ -120,7 +151,7 @@ ParseTreeBuilder.prototype = {
                 return '';
             }
         }
-        
+
         var elNS = getNS(el);
 
         var elementNode = new ElementNode(
@@ -133,7 +164,7 @@ ParseTreeBuilder.prototype = {
         if (this.parentNode) {
             this.parentNode.appendChild(elementNode);
         } else {
-            
+
             elementNode.setRoot(true);
 
             if (!elNS && el.localName === 'template') {
@@ -149,11 +180,15 @@ ParseTreeBuilder.prototype = {
             var attrPrefix = attr.prefix;
             elementNode.setAttributeNS(attrNS, attrLocalName, attr.value, attrPrefix);
         }, this);
-        
+
         this.parentNode = elementNode;
     },
 
-    handleEndElement: function() {
+    handleEndElement: function(elementName) {
+        if (elementName === 'compiler-options') {
+            return;
+        }
+
         this.prevTextNode = null;
         this.parentNode = this.parentNode.parentNode;
         this.nsStack.pop();

@@ -147,6 +147,10 @@ describe('marko/marko' , function() {
         testRender("test-project/html-templates/whitespace3.marko", {}, done);
     });
 
+    it("should preserve whitespace using <compiler-options>", function(done) {
+        testRender("test-project/html-templates/whitespace4.marko", {}, done);
+    });
+
     it("should handle whitespace correctly for mixed text and element children", function(done) {
         testRender("test-project/html-templates/whitespace-inline-elements.marko", {}, done);
     });

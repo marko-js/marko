@@ -89,7 +89,7 @@ ParseTreeBuilderHtml.prototype = {
                 _this.handleCharacters(decodeEntities(text));
             },
             onclosetag: function(name){
-                _this.handleEndElement();
+                _this.handleEndElement(name);
             }
         }, parserOptions);
         parser.write(src);

@@ -25,6 +25,7 @@ var ok = require('assert').ok;
 var attributeParser = require('./attribute-parser');
 var expressionParser = require('./expression-parser');
 var inherit = require('raptor-util/inherit');
+var extend = require('raptor-util/extend');
 var _Node = require('./Node');
 var ElementNode = require('./ElementNode');
 var TextNode = require('./TextNode');
@@ -115,6 +116,12 @@ TemplateCompiler.prototype = {
              * First build the parse tree for the tempate
              */
             rootNode = parser.parse(src, filePath, this.taglibs);
+
+            if (rootNode.compilerOptions) {
+                // compiler options were set in the template so use those here
+                this.options = extend(extend({}, this.options), rootNode.compilerOptions);
+            }
+
             //Build a parse tree from the input XML
             templateBuilder = new TemplateBuilder(this, filePath, rootNode);
             //The templateBuilder object is need to manage the compiled JavaScript output

@@ -1154,7 +1154,17 @@ World</textarea</div>
 
 The following options are available to control whitespace removal:
 
-__Option 1)__ Disable whitespace removal using the `c-whitespace` attribute:
+__Option 1)__ Disable whitespace removal using the `compiler-options` tag:
+
+```html
+<compiler-options whitespace="preserve" />
+<div>
+    <img src="foo.jpg">
+    <img src="foo.jpg">
+</div>
+```
+
+__Option 2)__ Disable whitespace removal using the `c-whitespace` attribute:
 
 ```html
 <div c-whitespace="preserve">
@@ -1163,13 +1173,13 @@ __Option 1)__ Disable whitespace removal using the `c-whitespace` attribute:
 </div>
 ```
 
-__Option 2)__ Disable _all_ whitespace removal by changing a compiler option
+__Option 3)__ Disable _all_ whitespace removal by changing a compiler option
 
 ```javascript
 require('marko/compiler').defaultOptions.preserveWhitespace = true;
 ```
 
-__Option 3)__ Control whitespace removal for specific tags
+__Option 4)__ Control whitespace removal for specific tags
 
 ```javascript
 require('marko/compiler').defaultOptions.preserveWhitespace = {
@@ -1179,7 +1189,7 @@ require('marko/compiler').defaultOptions.preserveWhitespace = {
 };
 ```
 
-__Option 4)__ Configured a custom tag to preserve whitespace
+__Option 5)__ Configured a custom tag to preserve whitespace
 
 Adding the `"preserve-whitespace": true` property to a tag definition will result in the Marko compiler preserving whitespace wherever that tag is encountered in a template.
 
