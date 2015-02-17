@@ -1692,6 +1692,10 @@ __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It
 
 * [Atom: language-marko](https://atom.io/packages/language-marko) - Syntax highlighting for Marko templates in Atom
 
+# Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)
+
 # Discuss
 
 Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
