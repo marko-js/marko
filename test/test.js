@@ -455,4 +455,158 @@ describe('async-writer' , function() {
             done();
         });
     });
+
+    it('should handle timeout errors correctly', function(done) {
+        var output = '';
+        var errors = [];
+
+        var through = require('through')(
+            function write(data) {
+                output += data;
+            })
+            .on('error', function(err) {
+                errors.push(err);
+            })
+            .on('end', function() {
+                expect(output).to.equal('12');
+                expect(errors.length).to.equal(1);
+                expect(errors[0].toString()).to.contain('timed out');
+                done();
+            });
+
+        var out = require('../').create(through);
+        out.write('1');
+
+        var asyncOut1 = out.beginAsync();
+        out.beginAsync({ timeout: 50});
+
+        setTimeout(function() {
+            asyncOut1.write('2');
+            asyncOut1.end();
+
+        }, 100);
+
+        out.end();
+    });
+
+    it('should avoid writes after end (a)', function(done) {
+        var output = '';
+        var errors = [];
+        var ended = false;
+
+        var through = require('through')(
+            function write(data) {
+                expect(ended).to.equal(false);
+                output += data;
+            })
+            .on('error', function(err) {
+                errors.push(err);
+            })
+            .on('end', function() {
+                ended = true;
+                expect(output).to.equal('13');
+                done();
+            });
+
+        var out = require('../').create(through);
+        out.write('1');
+
+        var asyncOut1 = out.beginAsync({ timeout: 50});
+
+        setTimeout(function() {
+            asyncOut1.write('2');
+            asyncOut1.end();
+        }, 100);
+
+
+        var asyncOut2 = out.beginAsync();
+        setTimeout(function() {
+            asyncOut2.write('3');
+            asyncOut2.end();
+        }, 50);
+
+        out.end();
+    });
+
+    it('should avoid writes after end (b)', function(done) {
+        var output = '';
+        var errors = [];
+        var ended = false;
+
+        var through = require('through')(
+            function write(data) {
+                expect(ended).to.equal(false);
+                output += data;
+            })
+            .on('error', function(err) {
+                errors.push(err);
+            })
+            .on('end', function() {
+                ended = true;
+                expect(output).to.equal('12');
+                done();
+            });
+
+        var out = require('../').create(through);
+        out.write('1');
+
+        var asyncOut1 = out.beginAsync();
+
+        setTimeout(function() {
+            asyncOut1.write('2');
+            asyncOut1.end();
+        }, 75);
+
+        var asyncOut2 = out.beginAsync({ timeout: 50});
+        // This async fragment will timeout but we will
+        // still write to it after it ends
+        setTimeout(function() {
+            asyncOut2.write('3');
+            asyncOut2.end();
+        }, 100);
+
+        out.end();
+    });
+
+    it.only('should avoid writes after end (c)', function(done) {
+        var output = '';
+        var errors = [];
+        var ended = false;
+
+        var through = require('through')(
+            function write(data) {
+                expect(ended).to.equal(false);
+                output += data;
+            })
+            .on('error', function(err) {
+                errors.push(err);
+            })
+            .on('end', function() {
+                ended = true;
+                expect(output).to.equal('12');
+                expect(errors.length).to.equal(1);
+                console.log("ERRORS: ", errors);
+                done();
+            });
+
+        var out = require('../').create(through);
+        out.write('1');
+
+        var asyncOut1 = out.beginAsync();
+
+        setTimeout(function() {
+            asyncOut1.write('2');
+            asyncOut1.end();
+        }, 75);
+
+        var asyncOut2 = out.beginAsync();
+        // This async fragment will timeout but we will
+        // still write to it after it ends
+        setTimeout(function() {
+            asyncOut2.error('TEST ERROR');
+            asyncOut2.end();
+        }, 100);
+
+        out.end();
+    });
 });
