@@ -568,7 +568,7 @@ describe('async-writer' , function() {
         out.end();
     });
 
-    it.only('should avoid writes after end (c)', function(done) {
+    it('should avoid writes after end (c)', function(done) {
         var output = '';
         var errors = [];
         var ended = false;
@@ -585,7 +585,6 @@ describe('async-writer' , function() {
                 ended = true;
                 expect(output).to.equal('12');
                 expect(errors.length).to.equal(1);
-                console.log("ERRORS: ", errors);
                 done();
             });
 
