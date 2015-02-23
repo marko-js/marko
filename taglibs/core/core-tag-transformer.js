@@ -299,8 +299,6 @@ module.exports = function transform(node, compiler, template) {
     }
 
     function handleProp(name, value, attrDef, attr) {
-        node.setProperty(name, value);
-
         if (attrDef.setFlag) {
             node.setFlag(attrDef.setFlag);
         }
