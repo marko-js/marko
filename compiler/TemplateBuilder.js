@@ -134,7 +134,7 @@ CodeWriter.prototype = {
                 thisObj = arguments[2];
             }
             this.incIndent(delta);
-            func.call(thisObj);
+            func.call(thisObj, this);
             this.decIndent(delta);
         } else if (typeof arguments[0] === 'string') {
             this.code(this._indent + arguments[0]);
@@ -264,8 +264,8 @@ TemplateBuilder.prototype = {
         var newWriter = new CodeWriter(this.concatWrites, oldWriter.indentStr());
         try {
             this.writer = newWriter;
-            func.call(thisObj);
-            return newWriter.getOutput();
+            var value = func.call(thisObj);
+            return value == null ? newWriter.getOutput() : value;
         } finally {
             this.writer = oldWriter;
         }

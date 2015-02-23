@@ -1373,13 +1373,13 @@ exports.render = function(input, out) {
 }
 ```
 
-If, and only if, a tag has nested content, then a special `invokeBody` method will be added to the `input` object. If a renderer wants to render the nested body content then it must call the `invokeBody` method. For example:
+If, and only if, a tag has nested content, then a special `renderBody` method will be added to the `input` object. If a renderer wants to render the nested body content then it must call the `renderBody` method. For example:
 
 ```javascript
 exports.render = function(input, out) {
     out.write('BEFORE BODY');
-    if (input.invokeBody) {
-        input.invokeBody();
+    if (input.renderBody) {
+        input.renderBody(out);
     }
     out.write('AFTER BODY');
 }
@@ -1521,12 +1521,12 @@ Marko supports this by leveraging JavaScript closures in the compiled output. A 
     "tags": {
         "ui-tabs": {
             "renderer": "./tabs-tag",
-            "var": "tabs"
+            "body-function": "getTabs(__tabsHelper)"
         },
         "ui-tab": {
             "renderer": "./tab-tag",
             "import-var": {
-                "tabs": "tabs"
+                "tabs": "__tabsHelper"
             },
             "attributes": {
                 "title": "string"
@@ -1547,15 +1547,21 @@ var templatePath = require.resolve('./template.marko');
 var template = require('marko').load(templatePath);
 
 exports.render = function(input, out) {
-    var nestedTabs = [];  
+    var nestedTabs;  
 
-    // Invoke the body function to discover nested <ui-tab> tags
-    input.invokeBody({ // Invoke the body with the scoped "tabs" variable
-        addTab: function(tab) {
-            tab.id = tab.id || ("tab" + tabs.length);
-            nestedTabs.push(tab);
-        }
-    });
+    if (input.getTabs) {
+        nestedTabs = [];
+        // Invoke the body function to discover nested <ui-tab> tags
+        input.getTabs({ // Invoke the body with the scoped "tabs" variable
+            addTab: function(tab) {
+                tab.id = tab.id || ("tab" + tabs.length);
+                nestedTabs.push(tab);
+            }
+        });
+    } else {
+        nestedTabs = input.tabs || [];
+    }
+
 
     // Now render the markup for the tabs:
     template.render({
@@ -1586,7 +1592,7 @@ _components/tabs/template.marko:_
     </ul>
     <div class="tab-content">
         <div id="${tab.id}" class="tab-pane" for="tab in data.tabs">
-            <invoke function="tab.invokeBody()"/>
+            <invoke function="tab.renderBody(out)"/>
         </div>
     </div>
 </div>

@@ -7,7 +7,6 @@ try {
 
 }
 
-
 var ok = require('assert').ok;
 var nodePath = require('path');
 var Taglib = require('./Taglib');
@@ -17,6 +16,9 @@ var raptorRegexp = require('raptor-regexp');
 var tagDefFromCode = require('./tag-def-from-code');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
+
+var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
+var bodyFunctionRegExp = /^([A-Za-z_$][A-Za-z0-9_]*)(?:\(([^)]*)\))?$/;
 
 function exists(path) {
     try {
@@ -190,6 +192,29 @@ function buildTag(tagObject, path, taglib, dirname) {
             tag.addNestedVariable({
                 name: value
             });
+        },
+        bodyFunction: function(value) {
+            var parts = bodyFunctionRegExp.exec(value);
+            if (!parts) {
+                throw new Error('Invalid value of "' + value + '" for "body-function". Expected value to be of the following form: <function-name>([param1, param2, ...])');
+            }
+
+            var functionName = parts[1];
+            var params = parts[2];
+            if (params) {
+                params = params.trim().split(/\s*,\s*/);
+                for (var i=0; i<params.length; i++) {
+                    if (params[i].length === 0) {
+                        throw new Error('Invalid parameters for body-function with value of "' + value + '"');
+                    } else if (!safeVarName.test(params[i])) {
+                        throw new Error('Invalid parameter name of "' + params[i] + '" for body-function with value of "' + value + '"');
+                    }
+                }
+            } else {
+                params = [];
+            }
+
+            tag.setBodyFunction(functionName, params);
         },
         vars: function(value) {
             if (value) {
