@@ -26,6 +26,19 @@
                 "title": "string"
             }
         },
+        "test-tabs-new": {
+            "renderer": "./tabs-new-tag.js",
+            "body-function": "buildTabs(__tabsHelper)"
+        },
+        "test-tab-new": {
+            "renderer": "./tab-new-tag.js",
+            "import-var": {
+                "tabs": "__tabsHelper"
+            },
+            "attributes": {
+                "title": "string"
+            }
+        },
         "test-dynamic-attributes": {
             "renderer": "./dynamic-attributes-tag.js",
             "attributes": {

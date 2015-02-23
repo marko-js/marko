@@ -34,7 +34,15 @@ function getPropsStr(props, template) {
         template.indent(function () {
             forEachEntry(props, function (name, value) {
                 if (typeof value === 'function') {
-                    value = value();
+                    value = template.captureCode(function() {
+                        return value(template);
+                    });
+
+                    if (!value) {
+                        throw new Error('Invalid value for property "' + name + '"');
+                    }
+
+                    value = template.makeExpression(value);
                 }
 
                 if (template.isExpression(value)) {
@@ -50,7 +58,6 @@ function getPropsStr(props, template) {
                 }
             });
         });
-
 
         if (propsArray.length) {
             return '{\n' + propsArray.join(',\n') + '\n' + template.indentStr() + '}';
@@ -102,16 +109,24 @@ TagHandlerNode.prototype = {
     },
     doGenerateCode: function (template) {
         template.addStaticVar('__renderer', '__helpers.r');
-
+        var _this = this;
         var rendererPath = template.getRequirePath(this.tag.renderer); // Resolve a path to the renderer relative to the directory of the template
         var handlerVar = addHandlerVar(template, rendererPath);
         var tagHelperVar = template.addStaticVar('__tag', '__helpers.t');
+        var bodyFunction = this.tag.bodyFunction;
 
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
         }, this);
 
-        var _this = this;
+        if (bodyFunction) {
+            this.setProperty(bodyFunction.name, function(template) {
+                template.code('function(' + bodyFunction.params + ') {\n').indent(function () {
+                    _this.generateCodeForChildren(template);
+                }).indent().code('}');
+            });
+        }
+
         var variableNames = [];
         _this.tag.forEachVariable(function (nestedVar) {
             var varName;
@@ -165,14 +180,32 @@ TagHandlerNode.prototype = {
 
                     template.code(getPropsStr(_this.getProperties(), template));
                 }
-                if (_this.hasChildren()) {
+                if (_this.hasChildren() && !_this.tag.bodyFunction) {
                     var bodyParams = [];
+                    var hasOutParam = false;
+
                     variableNames.forEach(function (varName) {
+                        if (varName === 'out') {
+                            hasOutParam = true;
+                        }
                         bodyParams.push(varName);
                     });
-                    template.code(',\n').line('function(' + bodyParams.join(',') + ') {').indent(function () {
+
+                    var params;
+
+                    if (hasOutParam) {
+                        params = bodyParams.join(',');
+                    } else {
+                        params = 'out' + (bodyParams.length ? ',' + bodyParams.join(',') : '');
+                    }
+
+                    template.code(',\n').line('function(' + params + ') {').indent(function () {
                         _this.generateCodeForChildren(template);
                     }).indent().code('}');
+
+                    if (hasOutParam) {
+                        template.code(',\n').code(template.indentStr() + '1');
+                    }
                 }
             });
         });

@@ -60,7 +60,7 @@ function testRender(path, data, done, options) {
 
 }
 
-describe('marko/marko' , function() {
+describe('marko/render' , function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {

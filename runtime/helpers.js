@@ -7,6 +7,8 @@ var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
 var markoRegExp = /\.marko(.xml|.html)?$/;
 var req = require;
+var arrayFromArguments = require('raptor-util/arrayFromArguments');
+var logger = require('raptor-logging').logger(module);
 
 function notEmpty(o) {
     if (o == null) {
@@ -19,6 +21,8 @@ function notEmpty(o) {
 
     return true;
 }
+
+var WARNED_INVOKE_BODY = 0;
 
 module.exports = {
     s: function(str) {
@@ -132,13 +136,27 @@ module.exports = {
     /**
      * Invoke a tag handler render function
      */
-    t: function (out, renderFunc, input, body) {
+    t: function (out, renderFunc, input, body, hasOutParam) {
         if (!input) {
             input = {};
         }
 
         if (body) {
-            input.invokeBody = body;
+            input.renderBody = body;
+            input.invokeBody = function() {
+                if (!WARNED_INVOKE_BODY) {
+                    WARNED_INVOKE_BODY = 1;
+                    logger.warn('invokeBody(...) deprecated. Use renderBody(out) instead.', new Error().stack);
+                }
+
+                if (!hasOutParam) {
+                    var args = arrayFromArguments(arguments);
+                    args.unshift(out);
+                    body.apply(this, args);
+                } else {
+                    body.apply(this, arguments);
+                }
+            };
         }
 
         renderFunc(input, out);

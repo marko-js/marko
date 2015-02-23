@@ -88,6 +88,7 @@ Taglib.Tag = makeClass({
         this.nestedVariables = {};
         this.importedVariables = {};
         this.patternAttributes = [];
+        this.bodyFunction = null;
     },
     inheritFrom: function (superTag) {
         var subTag = this;
@@ -182,6 +183,12 @@ Taglib.Tag = makeClass({
         var key = transformer.path;
         transformer.taglibId = this.taglibId;
         this.transformers[key] = transformer;
+    },
+    setBodyFunction: function(name, params) {
+        this.bodyFunction = {
+            name: name,
+            params: params
+        };
     }
 });
 
