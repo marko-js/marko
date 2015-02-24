@@ -1,8 +1,8 @@
 'use strict';
 module.exports = function render(input, out) {
     out.write('<!--');
-    if (input.invokeBody) {
-        input.invokeBody();
+    if (input.renderBody) {
+        input.renderBody(out);
     }
     out.write('-->');
 };
