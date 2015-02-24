@@ -3,5 +3,5 @@
 <var name="title" value="data.title"/>
 
 <span title="$title" data-content="$content">
-    <invoke function="tag.invokeBody()" if="tag.invokeBody"/>
+    <invoke function="tag.renderBody(out)" if="tag.renderBody"/>
 </span>
