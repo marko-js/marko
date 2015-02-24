@@ -5,9 +5,13 @@ Changelog
 
 ## 2.0.x
 
-### 2.0.3
+### 2.0.4
 
 - :exclamation: Fixed #36 - Deprecated - When using `<include>` with body content, nested body content is now passed in as `String` property named `body`. Old behavior: nested content would be passed in as a `Function` property named `invokeBody` that would return the `String` value of the nested content. `invokeBody()` has been deprecated.
+
+### 2.0.3
+
+- Fixed #36 - Don't use `invokeBody()` in test code and the HTML comments tag
 
 ### 2.0.2
 
