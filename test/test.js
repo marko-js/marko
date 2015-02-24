@@ -608,4 +608,43 @@ describe('async-writer' , function() {
 
         out.end();
     });
+
+    it('should track finished correctly', function(done) {
+        var myGlobal = {};
+
+        var out1 = require('../').create(null, {global: myGlobal});
+        var out2 = require('../').create(null, {global: myGlobal});
+
+        function handleFinished() {
+            if (out1.data.__finishedFlag && out2.data.__finishedFlag) {
+                done();
+            }
+        }
+
+        out1.on('finish', function() {
+            if (out1.data.__finishedFlag) {
+                return done(new Error('finished invoked multiple times!'));
+            }
+
+            out1.data.__finishedFlag = true;
+            handleFinished();
+        });
+        out2.on('finish', function() {
+            if (out2.data.__finishedFlag) {
+                return done(new Error('finished invoked multiple times!'));
+            }
+
+            out2.data.__finishedFlag = true;
+            handleFinished();
+        });
+
+        out1.write('foo');
+        out1.end();
+        out1.end();
+
+        out2.write('bar');
+        out2.end();
+
+
+    });
 });
