@@ -41,8 +41,8 @@ module.exports = {
             {
                 builder: function(callback) {
                     var result = out.captureString(function () {
-                        if (input.invokeBody) {
-                            input.invokeBody();
+                        if (input.renderBody) {
+                            input.renderBody(out);
                         }
                     });
                     callback(null, result);
