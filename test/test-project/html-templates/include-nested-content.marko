@@ -1,12 +1,15 @@
 <var name="name" value="data.name"/>
 <var name="count" value="data.count"/>
-<var name="invokeBody" value="data.invokeBody"/>
+<var name="body" value="data.body"/>
 
 <div class="nested">
     <h1>
         Hello $name! You have $count new messages.
     </h1>
     <p>
-        ${invokeBody()}
+        $body
+    </p>
+    <p>
+        ${data.invokeBody()} <!-- deprecated -->
     </p>
 </div>

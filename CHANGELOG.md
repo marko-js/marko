@@ -5,6 +5,26 @@ Changelog
 
 ## 2.0.x
 
+### 2.0.3
+
+- :exclamation: Fixed #36 - Deprecated - When using `<include>` with body content, nested body content is now passed in as `String` property named `body`. Old behavior: nested content would be passed in as a `Function` property named `invokeBody` that would return the `String` value of the nested content. `invokeBody()` has been deprecated.
+
+### 2.0.2
+
+- :exclamation: Fixed #36 - Deprecated `input.invokeBody()` in favor of `input.renderBody(out)`
+- Fixed #37 - Duplicate input property for custom tag renderers
+
+### 2.0.1
+
+- Fixed #35 - Added support for `<compiler-options>`. Example:
+
+```html
+<compiler-options whitespace="preserve" />
+A
+B
+C
+```
+
 ### 2.0.0
 
 

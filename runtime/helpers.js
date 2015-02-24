@@ -174,6 +174,16 @@ module.exports = {
             return;
         }
 
+        if (data.body) {
+            data.invokeBody = function() {
+                if (!WARNED_INVOKE_BODY) {
+                    WARNED_INVOKE_BODY = 1;
+                    logger.warn('data.invokeBody() deprecated. Use data.body instead.', new Error().stack);
+                }
+                return data.body;
+            };
+        }
+
         if (typeof path === 'string') {
             runtime.render(path, data, out);
         } else if (typeof path.render === 'function') {

@@ -65,7 +65,7 @@ IncludeNode.prototype = {
                         }, _this);
 
                         if (_this.hasChildren()) {
-                            propParts.push(stringify('invokeBody') + ': ' + _this.getBodyContentFunctionExpression(template, false));
+                            propParts.push(stringify('body') + ': ' + _this.getBodyContentExpression(template, false));
                         }
 
                         return '{' + propParts.join(', ') + '}';
