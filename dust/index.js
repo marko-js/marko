@@ -11,7 +11,7 @@ exports.registerHelpers = function(dust) {
     raptorDust.registerHelpers({
         'init-widgets': require('../taglib/init-widgets-tag'),
         'widget': {
-            buildInput: function(chunk, context, bodies, params, renderContext) {
+            buildInput: function(chunk, context, bodies, params, out) {
                 var module = params.module;
 
                 if (!module) {
@@ -41,52 +41,52 @@ exports.registerHelpers = function(dust) {
                     params.module = module;
                 }
 
-                params.invokeBody = function(widgetDef) {
+                params.renderBody = function(out, widgetDef) {
                     context = context.push({
                             widget: {
                                 id: widgetDef.id
                             }
                         });
 
-                    renderContext.renderDustBody(bodies.block, context);
+                    out.renderDustBody(bodies.block, context);
                 };
 
                 return params;
             },
-            render: function(data, context) {
-                var widgetsContext = raptorWidgets.getWidgetsContext(context);
-                var tagName = data.tagName || 'div';
-                var widgetConfig = data.config;
-                var assignedId = data.assignedId;
-                var modulePath = data.module;
-                var invokeBody = data.invokeBody;
-                var scope = data.scope || context.getAttribute('widget');
+            render: function(input, out) {
+                var widgetsContext = raptorWidgets.getWidgetsContext(out);
+                var tagName = input.tagName || 'div';
+                var widgetConfig = input.config;
+                var assignedId = input.assignedId;
+                var modulePath = input.module;
+                var renderBody = input.renderBody;
+                var scope = input.scope || out.getAttribute('widget');
 
-                delete data.config;
-                delete data.tagName;
-                delete data.module;
-                delete data.invokeBody;
+                delete input.config;
+                delete input.tagName;
+                delete input.module;
+                delete input.renderBody;
 
                 var widgetDef = widgetsContext.beginWidget({
                     module: modulePath,
-                    id: data.id,
+                    id: input.id,
                     assignedId: assignedId,
                     config: widgetConfig,
                     scope: scope
                 });
 
-                data.id = widgetDef.id;
+                input.id = widgetDef.id;
 
                 var widgetAttrs = raptorWidgets.attrs(widgetDef);
 
-                context.write('<' + tagName);
-                context.write(attrs(data));
-                context.write(attrs(widgetAttrs));
-                context.write('>');
+                out.write('<' + tagName);
+                out.write(attrs(input));
+                out.write(attrs(widgetAttrs));
+                out.write('>');
 
-                invokeBody(widgetDef);
+                renderBody(out, widgetDef);
 
-                context.write('</' + tagName + '>');
+                out.write('</' + tagName + '>');
 
                 widgetDef.end();
             }

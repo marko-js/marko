@@ -38,10 +38,10 @@ module.exports = function render(input, out) {
             extend: extend
         });
 
-        input.invokeBody(widgetDef);
+        input.renderBody(out, widgetDef);
 
         widgetDef.end();
     } else {
-        input.invokeBody(DUMMY_WIDGET_DEF);
+        input.renderBody(out, DUMMY_WIDGET_DEF);
     }
 };
