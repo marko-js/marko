@@ -175,13 +175,13 @@ Marko also supports custom tags so you can easily extend the HTML grammar to sup
 Welcome to Marko!
 
 <ui-tabs>
-    <ui-tab label="Home">
+    <ui-tab title="Home">
         Content for Home
     </ui-tab>
-    <ui-tab label="Profile">
+    <ui-tab title="Profile">
         Content for Profile
     </ui-tab>
-    <ui-tab label="Messages">
+    <ui-tab title="Messages">
         Content for Messages
     </ui-tab>
 </ui-tabs>
@@ -1518,9 +1518,15 @@ It is often necessary for tags to have a parent/child or ancestor/descendent rel
 
 ```html
 <ui-tabs>
-    <ui-tab label="Overview"></ui-tab>
-    <ui-tab label="Language Guide"></ui-tab>
-    <ui-tab label="JavaScript API"></ui-tab>
+    <ui-tab title="Home">
+        Content for Home
+    </ui-tab>
+    <ui-tab title="Profile">
+        Content for Profile
+    </ui-tab>
+    <ui-tab title="Messages">
+        Content for Messages
+    </ui-tab>
 </ui-tabs>
 ```
 
@@ -1564,7 +1570,7 @@ exports.render = function(input, out) {
         // Invoke the body function to discover nested <ui-tab> tags
         input.getTabs({ // Invoke the body with the scoped "tabs" variable
             addTab: function(tab) {
-                tab.id = tab.id || ("tab" + tabs.length);
+                tab.id = tab.id || ("tab" + nestedTabs.length);
                 nestedTabs.push(tab);
             }
         });
