@@ -119,7 +119,7 @@ TagHandlerNode.prototype = {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
         }, this);
 
-        if (bodyFunction) {
+        if (bodyFunction && this.hasChildren()) {
             this.setProperty(bodyFunction.name, function(template) {
                 template.code('function(' + bodyFunction.params + ') {\n').indent(function () {
                     _this.generateCodeForChildren(template);
