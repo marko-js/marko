@@ -186,6 +186,7 @@ Taglib.Tag = makeClass({
     },
     setBodyFunction: function(name, params) {
         this.bodyFunction = {
+            __noMerge: true,
             name: name,
             params: params
         };
