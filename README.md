@@ -1712,7 +1712,9 @@ __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It
 
 ## Tools
 
-* [Atom: language-marko](https://atom.io/packages/language-marko) - Syntax highlighting for Marko templates in Atom
+* [Atom Editor](https://atom.io/)
+    * [language-marko](https://atom.io/packages/language-marko) - Syntax highlighting for Marko templates in Atom
+    * [atom-beautify](https://github.com/Glavin001/atom-beautify) - Beautify Marko templates in Atom
 
 # Changelog
 
