@@ -22,6 +22,11 @@ function merge(target, source) {
             if (target[k] && typeof target[k] === 'object' &&
                 source[k] && typeof source[k] === 'object') {
 
+                if (source.__noMerge) {
+                    // Don't merge objects that are explicitly marked as "do not merge"
+                    continue;
+                }
+
                 if (Array.isArray(target[k]) || Array.isArray(source[k])) {
 
                     var targetArray = target[k];
