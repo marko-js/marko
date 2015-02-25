@@ -19,6 +19,14 @@ var forEachEntry = require('raptor-util').forEachEntry;
 var ok = require('assert').ok;
 var makeClass = require('raptor-util').makeClass;
 
+function inheritProps(sub, sup) {
+    forEachEntry(sup, function (k, v) {
+        if (!sub[k]) {
+            sub[k] = v;
+        }
+    });
+}
+
 function Taglib(id) {
     ok(id, '"id" expected');
     this.id = id;
@@ -85,8 +93,8 @@ Taglib.Tag = makeClass({
         this.template = null;
         this.attributes = {};
         this.transformers = {};
-        this.nestedVariables = {};
-        this.importedVariables = {};
+        this.nestedVariables = null;
+        this.importedVariables = null;
         this.patternAttributes = [];
         this.bodyFunction = null;
     },
@@ -100,29 +108,29 @@ Taglib.Tag = makeClass({
                 subTag[k] = v;
             }
         });
-        function inheritProps(sub, sup) {
-            forEachEntry(sup, function (k, v) {
-                if (!sub[k]) {
-                    sub[k] = v;
-                }
-            });
-        }
         [
             'attributes',
             'transformers',
             'nestedVariables',
-            'importedVariables'
+            'importedVariables',
+            'bodyFunction'
         ].forEach(function (propName) {
             inheritProps(subTag[propName], superTag[propName]);
         });
         subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
     },
     forEachVariable: function (callback, thisObj) {
-        forEachEntry(this.nestedVariables, function (key, variable) {
-            callback.call(thisObj, variable);
-        });
+        if (!this.nestedVariables) {
+            return;
+        }
+
+        this.nestedVariables.vars.forEach(callback, thisObj);
     },
     forEachImportedVariable: function (callback, thisObj) {
+        if (!this.importedVariables) {
+            return;
+        }
+
         forEachEntry(this.importedVariables, function (key, importedVariable) {
             callback.call(thisObj, importedVariable);
         });
@@ -172,10 +180,19 @@ Taglib.Tag = makeClass({
         }
     },
     addNestedVariable: function (nestedVariable) {
-        var key = nestedVariable.nameFromAttribute ? 'attr:' + nestedVariable.nameFromAttribute : nestedVariable.name;
-        this.nestedVariables[key] = nestedVariable;
+        if (!this.nestedVariables) {
+            this.nestedVariables = {
+                __noMerge: true,
+                vars: []
+            };
+        }
+
+        this.nestedVariables.vars.push(nestedVariable);
     },
     addImportedVariable: function (importedVariable) {
+        if (!this.importedVariables) {
+            this.importedVariables = {};
+        }
         var key = importedVariable.targetProperty;
         this.importedVariables[key] = importedVariable;
     },
@@ -186,7 +203,6 @@ Taglib.Tag = makeClass({
     },
     setBodyFunction: function(name, params) {
         this.bodyFunction = {
-            __noMerge: true,
             name: name,
             params: params
         };
