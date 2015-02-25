@@ -1,17 +1,7 @@
 exports.widgetArgs = function (out, assignedId, scope, events, extend, extendConfig) {
-    var global = out.global;
     var data = out.data;
     var existingWidgetArgs = data.widgetArgs;
     var extendParts = null;
-
-    if (!global.__widgetsBeginAsyncAdded) {
-        global.__widgetsBeginAsyncAdded = true;
-        out.on('beginAsync', function(event) {
-            var parentAsyncWriter = event.parentWriter;
-            var asyncWriter = event.writer;
-            asyncWriter.data.widgetArgs = parentAsyncWriter.data.widgetArgs;
-        });
-    }
 
     if (extend) {
         extendParts = [extend, extendConfig];

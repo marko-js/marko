@@ -129,4 +129,9 @@ describe('server-rendered' , function() {
         util.triggerMouseEvent(checkboxWidget.getEl('label'), 'click');
         expect(checkboxWidget.isChecked()).to.equal(true);
     });
+
+    it('[server-rendered] should initialize widgets correctly across async boundaries', function() {
+        var widget = window.testData.widgets['app-init-async'][0];
+        widget.testWidgetCollection();
+    });
 });

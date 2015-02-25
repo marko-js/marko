@@ -5,6 +5,34 @@ var DUMMY_WIDGET_DEF = {
         }
     };
 module.exports = function render(input, out) {
+
+    var global = out.global;
+    if (!global.__widgetsBeginAsyncAdded) {
+        global.__widgetsBeginAsyncAdded = true;
+        out.on('beginAsync', function(event) {
+            var parentAsyncWriter = event.parentWriter;
+            var asyncWriter = event.writer;
+            var widgetsContext = global.widgets;
+            var widgetStack;
+
+            if (widgetsContext && (widgetStack = widgetsContext.widgetStack).length) {
+                // All of the widgets in this async block should be
+                // initialized after the widgets in the parent. Therefore,
+                // we will create a new WidgetsContext for the nested
+                // async block and will create a new widget stack where the current
+                // widget in the parent block is the only widget in the nested
+                // stack (to begin with). This will result in top-level widgets
+                // of the async block being added as children of the widget in the
+                // parent block.
+                var nestedWidgetsContext = new widgets.WidgetsContext(out);
+                nestedWidgetsContext.widgetStack = [widgetStack[0]];
+                asyncWriter.data.widgets = nestedWidgetsContext;
+            }
+
+            asyncWriter.data.widgetArgs = parentAsyncWriter.data.widgetArgs;
+        });
+    }
+
     var modulePath = input.module;
     var config = input.config || input._cfg;
     var widgetArgs = out.data.widgetArgs;

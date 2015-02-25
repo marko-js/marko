@@ -11,6 +11,7 @@ var async = require('async');
 
 var renderPages = require('./render-pages');
 var generatedDir = nodePath.join(__dirname, 'generated');
+var cacheDir = nodePath.join(__dirname, '.cache');
 var firstRun = true;
 
 var args = require('raptor-args').createParser({
@@ -47,8 +48,14 @@ optimizer.configure({
 var watch = args.watch === true;
 
 var port = 9876;
+var runCount = 0;
 
 function run() {
+    console.log('[marko-widgets/test/karma] Running tests...');
+
+    if (++runCount === 4) {
+        process.exit(1);
+    }
     async.series([
             renderPages,
             function generateBrowserFiles(callback) {
@@ -114,8 +121,7 @@ function run() {
                             // One or more ignore patterns
                             ignorePatterns: [
                                 'node_modules',
-                                '/static',
-                                '/.cache',
+                                '/test/karma/.cache',
                                 '.*',
                                 '*.marko.js',
                                 '/test/karma/generated'
@@ -126,30 +132,24 @@ function run() {
                             // console.log('Ignore patterns:\n  ' + eventArgs.ignorePatterns.join('  \n'));
                         })
                         .on('modified', function(eventArgs) {
+                            var path = eventArgs.path;
+
+                            if (path.startsWith(generatedDir)) {
+                                return;
+                            } else if (path.startsWith(cacheDir)) {
+                                return;
+                            }
+
                             require('marko/hot-reload').handleFileModified(eventArgs.path);
                             optimizer.handleWatchedFileChanged(eventArgs.path);
                             console.log('[marko-widgets/test/karma] File modified: ' + eventArgs.path);
                             run();
                         })
                         .startWatching();
+
                 }
             }
         });
-
-    optimizer.optimizePage({
-        name: 'test',
-        dependencies: [
-            nodePath.join(__dirname, 'optimizer.json')
-        ]
-    },
-    function(err, optimizedPage) {
-        if (err) {
-            throw err;
-        }
-
-        var filesJSON = JSON.stringify(optimizedPage.getJavaScriptFiles(), null, 2);
-        fs.writeFileSync(nodePath.join(generatedDir, 'files.js'), 'module.exports=' + filesJSON + ';');
-    });
 }
 
 run();
