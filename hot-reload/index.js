@@ -35,7 +35,7 @@ exports.enable = function() {
                     }
                 }
 
-                oldMethod.apply(this, arguments);
+                return oldMethod.apply(this, arguments);
             };
         }
     });
