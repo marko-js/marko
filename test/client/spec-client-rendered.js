@@ -37,6 +37,16 @@ describe('client-rendered' , function() {
         widget.testCustomEvents();
     });
 
+    it('[client-rendered] should allow for declarative custom events', function() {
+
+        var widget = require('./fixtures/components/app-foo')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testDeclarativeCustomEvents();
+    });
+
     it('[client-rendered] should allow getEl()', function() {
 
         var widget = require('./fixtures/components/app-foo')

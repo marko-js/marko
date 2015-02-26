@@ -68,6 +68,8 @@ Widget.prototype = {
     },
 
     testDOMEvents: function() {
+        this.clearLog();
+
         // Trigger a click event on the root element
         this.triggerMouseEvent(this.el, 'click');
         expect(this.logOutput).to.deep.equal(['el:click']);
@@ -77,7 +79,7 @@ Widget.prototype = {
         expect(this.logOutput).to.deep.equal(['button:click', 'el:click']);
 
         this.clearLog();
-        this.triggerMouseEvent(this.getEl('button').firstChild, 'click');
+        this.triggerMouseEvent(this.getEl('button').firstElementChild, 'click');
         expect(this.logOutput).to.deep.equal(['button:click', 'el:click']);
 
         this.clearLog();
@@ -85,7 +87,7 @@ Widget.prototype = {
         expect(this.logOutput).to.deep.equal(['el:mousemove']);
 
         this.clearLog();
-        this.triggerMouseEvent(this.getEl('button').firstChild, 'mousemove');
+        this.triggerMouseEvent(this.getEl('button').firstElementChild, 'mousemove');
         expect(this.logOutput).to.deep.equal(['button>span:mousemove', 'el:mousemove']);
 
         this.clearLog();
@@ -104,6 +106,8 @@ Widget.prototype = {
     },
 
     testDestroy: function() {
+        this.clearLog();
+
         expect(Array.isArray(this.__evHandles)).to.equal(true);
 
         var el = this.el;

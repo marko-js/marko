@@ -135,7 +135,7 @@ describe('widget' , function() {
 
         var parentNode = widget.el.parentNode;
 
-        expect(widget.el.innerHTML).to.equal('Foo');
+        expect(widget.el.innerHTML.trim()).to.equal('Foo');
 
         var newWidget = widget.rerender({
             label: 'Bar'

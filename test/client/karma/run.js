@@ -1,6 +1,6 @@
 var nodePath = require('path');
 
-process.chdir(__dirname);
+process.chdir(nodePath.join(__dirname, '../'));
 
 require('marko/hot-reload').enable();
 var optimizer = require('optimizer');
@@ -48,14 +48,10 @@ optimizer.configure({
 var watch = args.watch === true;
 
 var port = 9876;
-var runCount = 0;
 
 function run() {
     console.log('[marko-widgets/test/karma] Running tests...');
 
-    if (++runCount === 4) {
-        process.exit(1);
-    }
     async.series([
             renderPages,
             function generateBrowserFiles(callback) {
@@ -63,7 +59,7 @@ function run() {
                 optimizer.optimizePage({
                     name: 'test',
                     dependencies: [
-                        nodePath.join(__dirname, 'optimizer.json')
+                        nodePath.join(__dirname, 'karma.optimizer.json')
                     ],
                     flags: [
                         'marko-widgets/no-client-init'

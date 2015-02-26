@@ -1,0 +1,13 @@
+{
+    "dependencies": [
+        "mocha/mocha.js",
+        "mocha/mocha.css",
+        "require-run: ./client-setup",
+        "require: jquery",
+        "require: marko-widgets",
+        "../fixtures/pages/server-init/optimizer.json",
+        "require-run: ../spec-server-rendered.js",
+        "require-run: ../spec-*.js",
+        "require-run: ./client"
+    ]
+}

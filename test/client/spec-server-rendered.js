@@ -6,18 +6,23 @@ var util = require('./util');
 
 describe('server-rendered' , function() {
     beforeEach(function(done) {
-        util.cleanup();
+        if (window.__karma !== false) {
+            util.cleanup();
+            var pageOutput = require('./karma/generated/page-server-init.json' + '');
+            var html = pageOutput.html;
+            var js = pageOutput.js;
 
-        var pageOutput = require('./generated/page-server-init.json');
-        var html = pageOutput.html;
-        var js = pageOutput.js;
+            var targetEl = util.targetEl;
+            targetEl.innerHTML = html;
 
-        var targetEl = util.targetEl;
-        targetEl.innerHTML = html;
-
-        eval(js);
+            eval(js);
+        }
 
         done();
+    });
+
+    after(function() {
+        require('raptor-dom').removeChildren(document.getElementById('server'));
     });
 
     it('[server-rendered] should correctly initialize widgets', function() {
@@ -32,6 +37,7 @@ describe('server-rendered' , function() {
     });
 
     it('[server-rendered] should allow w-on* event handlers for widgets rendered on the server', function() {
+        // expect(true).to.equal(false);
         window.testData.widgets['app-dom-events'].forEach(function(widget) {
             widget.testDOMEvents();
         });
@@ -43,19 +49,15 @@ describe('server-rendered' , function() {
         });
     });
 
-    it('[server-rendered] should allow for widgets to be destroyed', function() {
-        window.testData.widgets['app-dom-events'].forEach(function(widget) {
-            widget.testDestroy();
-        });
-
-        window.testData.widgets['app-foo'].forEach(function(widget) {
-            widget.testDestroy();
-        });
-    });
-
     it('[server-rendered] should allow custom events', function() {
         window.testData.widgets['app-foo'].forEach(function(widget) {
             widget.testCustomEvents();
+        });
+    });
+
+    it('[server-rendered] should allow declarative custom events', function() {
+        window.testData.widgets['app-foo'].forEach(function(widget) {
+            widget.testDeclarativeCustomEvents();
         });
     });
 
@@ -133,5 +135,15 @@ describe('server-rendered' , function() {
     it('[server-rendered] should initialize widgets correctly across async boundaries', function() {
         var widget = window.testData.widgets['app-init-async'][0];
         widget.testWidgetCollection();
+    });
+
+    it('[server-rendered] should allow for widgets to be destroyed', function() {
+        window.testData.widgets['app-dom-events'].forEach(function(widget) {
+            widget.testDestroy();
+        });
+
+        window.testData.widgets['app-foo'].forEach(function(widget) {
+            widget.testDestroy();
+        });
     });
 });

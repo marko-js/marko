@@ -1,0 +1,7 @@
+{
+    "dependencies": [
+        "require: ./widget",
+        "../app-bar/optimizer.json",
+        "../app-custom-events/optimizer.json"
+    ]
+}

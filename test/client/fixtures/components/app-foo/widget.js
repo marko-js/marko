@@ -61,6 +61,41 @@ Widget.prototype = {
         expect(this.widgets.barArray[1].label).to.equal('2');
         expect(this.widgets.barArrayImplicit[0].label).to.equal('a1');
         expect(this.widgets.barArrayImplicit[1].label).to.equal('a2');
+    },
+
+    testDeclarativeCustomEvents: function() {
+
+        var received1 = [];
+        var received2 = [];
+
+        this.handleTestEvent1 = function() {
+            received1.push({
+                args: arguments,
+                widget: arguments[arguments.length -1]
+            });
+        };
+
+        this.handleTestEvent2 = function() {
+            received2.push({
+                args: arguments,
+                widget: arguments[arguments.length -1]
+            });
+        };
+
+        this.widgets.customEvents.emitTestEvent1();
+        expect(received1.length).to.equal(1);
+        expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
+        expect(received1[0].widget).to.equal(this.widgets.customEvents);
+
+        debugger;
+        
+        require('raptor-pubsub').channel('customEvents-' + this.id).emit('emitTestEvent2');
+
+        expect(received1.length).to.equal(1);
+        expect(received2.length).to.equal(1);
+
+        expect(received2[0].args.length).to.equal(1); // [sourceWidget]
+        expect(received2[0].widget).to.be.an('object');
     }
 };
 

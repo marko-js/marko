@@ -1,0 +1,33 @@
+<optimizer-page package-path="./optimizer.json"/>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marko Widgets Tests</title>
+    <optimizer-head/>
+</head>
+<body>
+
+    <div id="server">
+        <layout-placeholder name="body"/>
+    </div>
+
+    <div id="test">
+    </div>
+
+    <div id="mocha">
+    </div>
+
+    <optimizer-body/>
+    <init-widgets immediate/>
+
+    <script>
+    if (window.mochaPhantomJS) {
+        window.mochaPhantomJS.run();
+    } else {
+        window.mocha.run();
+    }
+    </script>
+</body>
+</html>

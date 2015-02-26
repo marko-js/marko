@@ -38,6 +38,10 @@ function getWidgetNode(node) {
     }
 }
 
+function isUpperCase(c) {
+    return c == c.toUpperCase();
+}
+
 function getDefaultWidgetModule(dirname) {
     if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
         return './widget';
@@ -57,6 +61,8 @@ exports.process =function (node, compiler, template) {
     }
 
     var widgetTypes = [];
+    var widgetId;
+    var widgetArgs = null;
 
     function registerType(target) {
         var typePathExpression;
@@ -140,12 +146,11 @@ exports.process =function (node, compiler, template) {
 
         node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
     } else {
-        var widgetId;
         var widgetExtend;
         var widgetElIdExpression;
         var widgetFor;
 
-        var widgetArgs = {};
+        widgetArgs = {};
 
         if ((widgetId = props['w-id'])) {
             // Handle the "w-id" attribute
@@ -196,42 +201,29 @@ exports.process =function (node, compiler, template) {
             }
         }
 
-        if (!isObjectEmpty(widgetArgs)) {
 
-            template.addStaticVar('_widgetArgs',
-                'require("marko-widgets/taglib/helpers").widgetArgs');
-
-            template.addStaticVar('_cleanupWidgetArgs',
-                'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
-
-            var widgetArgsParts = [];
-            if (widgetArgs.id) {
-                widgetArgsParts.push(JSON.stringify(widgetArgs.id.toString()));
-                widgetArgsParts.push('widget');
-            } else {
-                widgetArgsParts.push('null');
-                widgetArgsParts.push('null');
-            }
-            if (widgetArgs.events) {
-                widgetArgsParts.push(widgetArgs.events);
-            }
-
-            if (widgetArgs.extend) {
-                if (!widgetArgs.events) {
-                    widgetArgsParts.push('null');
-                }
-
-                widgetArgsParts.push(widgetArgs.extend);
-                widgetArgsParts.push(widgetArgs.extendConfig);
-            }
-
-            node.addBeforeCode(template.makeExpression('_widgetArgs(out,' + widgetArgsParts.join(', ') + ');'));
-            node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));
-        }
     }
 
     var widgetTagNode;
     var eventIdExpression;
+
+    function addWidgetEvent(eventType, targetMethod, target) {
+        if (!widgetTagNode.data.widgetEvents) {
+            // Add a new input property to the widget tag that will contain
+            // enough information to allow the DOM event listeners to
+            // be attached directly to the DOM elements.
+            widgetTagNode.data.widgetEvents = [];
+            widgetTagNode.setProperty('events', function() {
+                return compiler.makeExpression(
+                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
+            });
+        }
+
+        // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
+        widgetTagNode.data.widgetEvents.push(target);
+    }
 
     function addDirectEventListener(eventType, targetMethod) {
         // The event does not support bubbling, so the widget
@@ -295,37 +287,23 @@ exports.process =function (node, compiler, template) {
                 // NOTE: This is at compile time and "template.data" is only
                 //       used for the current template compilation. We need
                 //       a unique ID that
-                if (template.data.widgetNextId == null) {
-                    template.data.widgetNextId = 0;
+                if (template.data.widgetNextElId == null) {
+                    template.data.widgetNextElId = 0;
                 }
 
-                var uniqueId = '_' + (template.data.widgetNextId++);
+                var uniqueElId = '_' + (template.data.widgetNextElId++);
 
                 // Prefix the unique ID with an exclamation point to make it clear that we
                 // we need to resolve the ID as a widget element ID.
-                eventIdExpression = compiler.makeExpression(JSON.stringify('!' + uniqueId));
+                eventIdExpression = compiler.makeExpression(JSON.stringify('!' + uniqueElId));
 
                 node.setAttribute('id', compiler.makeExpression('widget.elId("' +
-                    uniqueId +
+                    uniqueElId +
                     '")'));
             }
         }
 
-        if (!widgetTagNode.data.widgetEvents) {
-            // Add a new input property to the widget tag that will contain
-            // enough information to allow the DOM event listeners to
-            // be attached directly to the DOM elements.
-            widgetTagNode.data.widgetEvents = [];
-            widgetTagNode.setProperty('events', function() {
-                return compiler.makeExpression(
-                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
-            });
-        }
-
-        // Add a 3-tuple consisting of <event-type><target-method><DOM element ID>
-        widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
-        widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
-        widgetTagNode.data.widgetEvents.push(eventIdExpression.toString());
+        addWidgetEvent(eventType, targetMethod, eventIdExpression.toString());
     }
 
     function addBubblingEventListener(eventType, targetMethod) {
@@ -344,6 +322,37 @@ exports.process =function (node, compiler, template) {
             '+widget.id'));
     }
 
+    function addCustomEventListener(eventType, targetMethod) {
+        // The event does not support bubbling, so the widget
+        // must attach the listeners directly to the target
+        // elements when the widget is initialized.
+        if (!widgetTagNode) {
+            widgetTagNode = getWidgetNode(node);
+        }
+
+        if (!widgetTagNode) {
+            node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+            return;
+        }
+
+        // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
+
+        if (!widgetArgs) {
+            widgetArgs = {};
+        }
+
+        if (!widgetArgs.id) {
+            if (template.data.widgetNextId == null) {
+                template.data.widgetNextId = 0;
+            }
+
+            var uniqueId = '_' + (template.data.widgetNextId++);
+            widgetArgs.id = uniqueId;
+        }
+
+        addWidgetEvent(eventType, targetMethod, JSON.stringify('@' + widgetArgs.id));
+    }
+
     if (node.hasFlag('hasWidgetEvents')) {
         // The Marko compiler was nice enough to attach a flag to nodes that
         // have one or more attributes that match the "w-on*" pattern.
@@ -352,29 +361,89 @@ exports.process =function (node, compiler, template) {
         for (var propName in props) {
             if (props.hasOwnProperty(propName) && propName.startsWith('w-on')) {
 
-                propName = propName.toLowerCase();
+
 
                 var eventType = propName.substring(4); // Chop off "w-on"
-
                 var targetMethod = props[propName];
 
-                var isBubbleEvent = markoWidgets.isBubbleEvent(eventType);
+                if (node.tag) {
+                    // We are adding an event listener for a custom event (not a DOM event)
+                    if (eventType.startsWith('-')) {
+                        // Remove the leading dash.
+                        // Example: w-on-before-show → before-show
+                        eventType = eventType.substring(1);
+                    } else if (isUpperCase(eventType.charAt(0))) {
+                        // Convert first character to lower case:
+                        // Example: w-onBeforeShow → beforeShow
+                        eventType = eventType.charAt(0).toLowerCase() + eventType.substring(1);
+                    }
 
-                if (isBubbleEvent) {
-                    // The event is white listed for bubbling so we know that
-                    // we have already attached a listener on document.body
-                    // that can be used to handle the event. We will add
-                    // a "data-w-on{eventType}" attribute to the output HTML
-                    // for this element that will be used to map the event
-                    // to a method on the containing widget.
-                    addBubblingEventListener(eventType, targetMethod);
+                    // Node is for a custom tag
+                    addCustomEventListener(eventType, targetMethod);
                 } else {
-                    // The event does not bubble so we must attach a DOM
-                    // event listener directly to the target element.
-                    addDirectEventListener(eventType, targetMethod);
+                    // We are adding an event listener for a DOM event (not a custom event)
+                    //
+                    if (eventType.startsWith('-')) {
+                        // Remove the leading dash.
+                        // Example: w-on-before-show → before-show
+                        eventType = eventType.substring(1);
+                    }
+
+                    // Normalize DOM event types to be all lower case
+                    propName = propName.toLowerCase();
+
+                    // Node is for an HTML element so treat the event as a DOM event
+                    var isBubbleEvent = markoWidgets.isBubbleEvent(eventType);
+
+                    if (isBubbleEvent) {
+                        // The event is white listed for bubbling so we know that
+                        // we have already attached a listener on document.body
+                        // that can be used to handle the event. We will add
+                        // a "data-w-on{eventType}" attribute to the output HTML
+                        // for this element that will be used to map the event
+                        // to a method on the containing widget.
+                        addBubblingEventListener(eventType, targetMethod);
+                    } else {
+                        // The event does not bubble so we must attach a DOM
+                        // event listener directly to the target element.
+                        addDirectEventListener(eventType, targetMethod);
+                    }
                 }
             }
         }
+    }
+
+    if (widgetArgs && !isObjectEmpty(widgetArgs)) {
+
+        template.addStaticVar('_widgetArgs',
+            'require("marko-widgets/taglib/helpers").widgetArgs');
+
+        template.addStaticVar('_cleanupWidgetArgs',
+            'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
+
+        var widgetArgsParts = [];
+        if (widgetArgs.id) {
+            widgetArgsParts.push(JSON.stringify(widgetArgs.id.toString()));
+            widgetArgsParts.push('widget');
+        } else {
+            widgetArgsParts.push('null');
+            widgetArgsParts.push('null');
+        }
+        if (widgetArgs.events) {
+            widgetArgsParts.push(widgetArgs.events);
+        }
+
+        if (widgetArgs.extend) {
+            if (!widgetArgs.events) {
+                widgetArgsParts.push('null');
+            }
+
+            widgetArgsParts.push(widgetArgs.extend);
+            widgetArgsParts.push(widgetArgs.extendConfig);
+        }
+
+        node.addBeforeCode(template.makeExpression('_widgetArgs(out,' + widgetArgsParts.join(', ') + ');'));
+        node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));
     }
 
     if (node.qName === 'w-widget') {
