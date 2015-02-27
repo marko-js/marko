@@ -3,11 +3,11 @@ var expect = require('chai').expect;
 function Widget() {
     window.testData.addWidget('app-init-async', this);
 
-    var helloFrank = this.widgets.helloFrank;
-    var async1 = this.widgets.async1;
-    var helloJohn = this.widgets.helloJohn;
-    var async2 = this.widgets.async2;
-    var helloJane = this.widgets.helloJane;
+    var helloFrank = this.getWidget('helloFrank');
+    var async1 = this.getWidget('async1');
+    var helloJohn = this.getWidget('helloJohn');
+    var async2 = this.getWidget('async2');
+    var helloJane = this.getWidget('helloJane');
 
     this.testWidgetCollection = function() {
         expect(helloFrank).to.be.an('object');

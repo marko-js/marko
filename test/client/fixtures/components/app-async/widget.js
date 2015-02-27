@@ -4,7 +4,7 @@ exports.Widget = function(config) {
     this.asyncWidget = true;
     this.name = config.name;
 
-    var helloWidget = this.widgets.hello;
+    var helloWidget = this.getWidget('hello');
 
     this.testWidgetCollection = function() {
         expect(helloWidget).to.be.an('object');

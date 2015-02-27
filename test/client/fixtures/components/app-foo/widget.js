@@ -4,12 +4,12 @@ function Widget(config) {
     this.name = 'app-foo';
     window.testData.addWidget('app-foo', this);
     this.config = config;
-    this.widgets.bar.appendHtml('FOO');
+    this.getWidget('bar').appendHtml('FOO');
 }
 
 Widget.prototype = {
     testDestroy: function() {
-        var appBarWidget = this.widgets.bar;
+        var appBarWidget = this.getWidget('bar');
 
         var eventsFired = {};
 
@@ -35,13 +35,13 @@ Widget.prototype = {
     testCustomEvents: function() {
         var testEventFired = false;
 
-        this.widgets.bar.on('testEvent', function(a, b) {
+        this.getWidget('bar').on('testEvent', function(a, b) {
             expect(a).to.equal('a');
             expect(b).to.equal('b');
             testEventFired = true;
         });
 
-        this.widgets.bar.emitTestEvent();
+        this.getWidget('bar').emitTestEvent();
 
         expect(testEventFired).to.equal(true);
     },
@@ -55,12 +55,12 @@ Widget.prototype = {
 
     testWidgetCollection: function() {
         expect(this.widgets.bar).to.be.an('object');
-        expect(this.widgets.bar2).to.be.an('object');
-        expect(this.widgets.barArray.length).to.equal(2);
-        expect(this.widgets.barArray[0].label).to.equal('1');
-        expect(this.widgets.barArray[1].label).to.equal('2');
-        expect(this.widgets.barArrayImplicit[0].label).to.equal('a1');
-        expect(this.widgets.barArrayImplicit[1].label).to.equal('a2');
+        expect(this.getWidget('bar2')).to.be.an('object');
+        expect(this.getWidget('barArray').length).to.equal(2);
+        expect(this.getWidget('barArray', 0).label).to.equal('1');
+        expect(this.getWidget('barArray', 1).label).to.equal('2');
+        expect(this.getWidget('barArrayImplicit', 0).label).to.equal('a1');
+        expect(this.getWidget('barArrayImplicit', 1).label).to.equal('a2');
     },
 
     testDeclarativeCustomEvents: function() {
@@ -82,10 +82,10 @@ Widget.prototype = {
             });
         };
 
-        this.widgets.customEvents.emitTestEvent1();
+        this.getWidget('customEvents').emitTestEvent1();
         expect(received1.length).to.equal(1);
         expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
-        expect(received1[0].widget).to.equal(this.widgets.customEvents);
+        expect(received1[0].widget).to.equal(this.getWidget('customEvents'));
 
         require('raptor-pubsub').channel('customEvents-' + this.id).emit('emitTestEvent2');
 

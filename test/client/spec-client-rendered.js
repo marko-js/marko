@@ -81,7 +81,7 @@ describe('client-rendered' , function() {
         expect(Object.keys(ids).length).to.equal(widgets.length);
     });
 
-    it('[client-rendered] should allow this.widgets', function() {
+    it('[client-rendered] should allow this.getWidget(...)', function() {
         var widget = require('./fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))

@@ -99,10 +99,10 @@ Widget.prototype = {
         expect(this.logOutput).to.deep.equal(['#fooLink:mouseout']);
 
         this.clearLog();
-        expect(this.widgets.appButton.clicked).to.equal(false);
+        expect(this.getWidget('appButton').clicked).to.equal(false);
         this.triggerMouseEvent(this.getEl('helloWorld'), 'mousedown');
         expect(this.logOutput).to.deep.equal(['#helloWorld:mousedown']);
-        expect(this.widgets.appButton.clicked).to.equal(true);
+        expect(this.getWidget('appButton').clicked).to.equal(true);
     },
 
     testDestroy: function() {

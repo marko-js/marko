@@ -78,7 +78,7 @@ describe('server-rendered' , function() {
         expect(Object.keys(ids).length).to.equal(3);
     });
 
-    it('[server-rendered] should allow this.widgets', function() {
+    it('[server-rendered] should allow this.getWidget(...)', function() {
         window.testData.widgets['app-foo'].forEach(function(widget) {
             widget.testWidgetCollection();
         });
