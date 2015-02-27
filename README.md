@@ -11,6 +11,7 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # Table of Contents
 
+- [Sample Code](#sample-code)
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
@@ -51,6 +52,69 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 			- [this.*](#this)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Sample Code
+
+Marko Widgets allows you to declaratively bind behavior to an HTML element inside a Marko template. The widget provides the client-side behavior for your UI component. A sample Marko template is shown below:
+
+```html
+<div w-bind="./widget">
+	<app-overlay title="My Overlay"
+		w-id="overlay"
+		w-onBeforeHide="handleOverlayBeforeHide">
+
+		Content for overlay.
+	</app-overlay>
+
+	<button type="button"
+		w-onclick="handleShowButtonClick">
+		Show Overlay
+	</button>
+
+	<button type="button"
+		w-onclick="handleHideButtonClick">
+		Hide Overlay
+	</button>
+
+	<button type="button"
+		w-onclick="handleDestroyButtonClick">
+		Destroy Overlay
+	</button>
+</div>
+```
+
+Below is the content of `widget.js` where the widget type is defined:
+
+```javascript
+function Widget() {
+	var el = this.el; // el will be the raw DOM element your widget is bound to
+}
+
+Widget.prototype = {
+    handleShowButtonClick: function(event) {
+		console.log('Showing overlay...');
+        this.widgets.overlay.show();
+    },
+
+    handleHideButtonClick: function(event) {
+		console.log('Hiding overlay...');
+        this.widgets.overlay.hide();
+    },
+
+    handleDestroyButtonClick: function(event) {
+		// Permanently remove the overlay out of the DOM while
+		// also doing proper cleanup.
+        this.widgets.overlay.destroy();
+		console.log('Overlay destroyed!');
+    },
+
+    handleOverlayBeforeHide: function(event) {
+        console.log('The overlay is about to be hidden!');
+    }
+};
+
+exports.Widget = Widget;
+```
 
 # Installation
 
@@ -308,9 +372,85 @@ Option 2) Use the `this.$()` method:
 var $submitButton = this.$('#submitButton');
 ```
 
-## Attaching DOM Event Listeners
+## Attaching Event Listeners
 
-Marko Widgets supports custom `w-on*` attributes for "attaching" DOM event listeners.
+Marko Widgets supports attaching event listeners to nested DOM elements and nested widgets. Event listeners can either be registered declaratively in the Marko template or in JavaScript code.
+
+### Attaching Custom Event Listeners
+
+A widget can subscribe to events on a nested widget. Every widget extends [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter) and this allows each widget to emit events.
+
+Listeners can be attached declaratively as shown in the following sample code:
+
+```html
+<div w-bind="./widget">
+	<app-overlay title="My Overlay"
+		w-onBeforeHide="handleOverlayBeforeHide">
+
+		Content for overlay
+
+	</app-overlay>
+</div>
+```
+
+And then in the widget:
+
+```javascript
+function Widget() {
+}
+
+Widget.prototype = {
+    handleOverlayBeforeHide: function(event) {
+        console.log('The overlay is about to be hidden!');
+    }
+};
+
+exports.Widget = Widget;
+```
+
+You can also choose to attach listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. For example, in the template:
+
+```html
+<div w-bind="./widget">
+	<app-overlay title="My Overlay"
+		w-id="myOverlay">
+
+		Content for overlay
+
+	</app-overlay>
+</div>
+```
+
+And then in the widget:
+
+```javascript
+function Widget() {
+	var self = this;
+
+	var myOverlay = this.widgets.myOverlay;
+
+	this.subscribeTo(myOverlay)
+		.on('beforeHide', function(event) {
+			self.handleOverlayBeforeHide(event);
+		});
+}
+
+Widget.prototype = {
+    handleOverlayBeforeHide: function(event) {
+        console.log('The overlay is about to be hidden!');
+    }
+};
+
+exports.Widget = Widget;
+```
+
+NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscribing widget is destroyed.
+
+### Attaching DOM Event Listeners
+
+A widget can subscribe to events on a nested DOM element.
+
+Listeners can be attached declaratively as shown in the following sample code:
 
 ```html
 <div w-bind>
@@ -321,7 +461,7 @@ Marko Widgets supports custom `w-on*` attributes for "attaching" DOM event liste
 </div>
 ```
 
-The containing widget should have a method named `handleButtonClick`. For example:
+And then in the widget:
 
 ```javascript
 function Widget() {
@@ -354,7 +494,56 @@ NOTE: Event handler methods will be invoked with `this` being the widget instanc
 2. `el` - The element that the listener was attached to (which can be different from `event.target` due to bubbling)
 
 
-Internally, Marko Widgets only adds one event listener to the root `document.body` element for each event type that bubbles. When Marko Widgets captures an event on `document.body` it will internally delegate the event to the appropriate widgets. For DOM events that do not bubble, Marko Widgets will automatically attach DOM event listeners to each of the DOM nodes. If a widget is destroyed, Marko Widgets will automatically do the appropriate cleanup to remove DOM event listeners.
+For performance reasons, Marko Widgets only adds one event listener to the root `document.body` element for each event type that bubbles. When Marko Widgets captures an event on `document.body` it will internally delegate the event to the appropriate widgets. For DOM events that do not bubble, Marko Widgets will automatically attach DOM event listeners to each of the DOM nodes. If a widget is destroyed, Marko Widgets will automatically do the appropriate cleanup to remove DOM event listeners.
+
+You can also choose to attach listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. For example, in the template:
+
+```html
+<div w-bind>
+	<form w-el-id="form">
+		<input type="text" value="email" w-el-id="email">
+		<button>Submit</button>
+	</form>
+</div>
+```
+
+And then in the widget:
+
+```javascript
+function Widget() {
+	var self = this;
+
+	var formEl = this.getEl('form');
+	formEl.addEventListener('submit', function(event) {
+		self.handleFormSubmit(event, formEl)
+	});
+
+	// Or use jQuery if that is loaded on your page:
+	var emailEl = this.getEl('email');
+	$(emailEl).on('change', function(event) {
+		self.handleEmailChange(event, emailEl)
+	});
+}
+
+Widget.prototype = {
+	handleFormSubmit: function(event, el) {
+		event.preventDefault();
+		// ...
+	},
+
+	handleEmailChange: function(event, el) {
+		var email = el.value;
+		this.validateEmail(email);
+		// ...
+	},
+
+	validateEmail: function(email) {
+		// ...
+	}
+}
+
+exports.Widget = Widget;
+```
 
 ## Rendering Widgets in the Browser
 
