@@ -247,7 +247,7 @@ In the above example, the final HTML will be similar to the following:
 </html>
 ```
 
-:arrow_forward: To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
+To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
 
 ## Widget Config
 
@@ -338,13 +338,13 @@ To try out and experiment with this code please see the documentation and source
 
 ## Referencing Nested DOM Elements
 
-DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-el-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
+DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
 
 ```html
 <form w-bind="./widget">
     ...
-    <button type="submit" w-el-id="submitButton">Submit</button>
-    <button type="button" w-el-id="cancelButton">Cancel</button>
+    <button type="submit" w-id="submitButton">Submit</button>
+    <button type="button" w-id="cancelButton">Cancel</button>
 </form>
 ```
 
@@ -436,12 +436,12 @@ NOTE: Event handler methods will be invoked with `this` being the widget instanc
 
 For performance reasons, Marko Widgets only adds one event listener to the root `document.body` element for each event type that bubbles. When Marko Widgets captures an event on `document.body` it will internally delegate the event to the appropriate widgets. For DOM events that do not bubble, Marko Widgets will automatically add DOM event listeners to each of the DOM nodes. If a widget is destroyed, Marko Widgets will automatically do the appropriate cleanup to remove DOM event listeners.
 
-You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `w-el-id="<id>"` attribute. For example, in the template:
+You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
 
 ```html
 <div w-bind>
-	<form w-el-id="form">
-		<input type="text" value="email" w-el-id="email">
+	<form w-id="form">
+		<input type="text" value="email" w-id="email">
 		<button>Submit</button>
 	</form>
 </div>
@@ -744,7 +744,7 @@ Emits an event. This method is inherited from EventEmitter (see [Node.js Events:
 
 #### getEl(widgetElId)
 
-Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Marko, nested DOM elements should be assigned an ID using the `w-el-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
+Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Marko, nested DOM elements should be assigned an ID using the `w-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
 
 #### getElId(widgetElId)
 

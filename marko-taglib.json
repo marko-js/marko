@@ -36,7 +36,7 @@
                     "preserve-name": true
                 },
                 "w-id": {
-                    "type": "custom",
+                    "type": "string",
                     "preserve-name": true
                 },
                 "w-on*": {

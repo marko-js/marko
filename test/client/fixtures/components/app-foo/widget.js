@@ -87,8 +87,6 @@ Widget.prototype = {
         expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
         expect(received1[0].widget).to.equal(this.widgets.customEvents);
 
-        debugger;
-        
         require('raptor-pubsub').channel('customEvents-' + this.id).emit('emitTestEvent2');
 
         expect(received1.length).to.equal(1);

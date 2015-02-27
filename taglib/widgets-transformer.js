@@ -152,10 +152,38 @@ exports.process =function (node, compiler, template) {
 
         widgetArgs = {};
 
-        if ((widgetId = props['w-id'])) {
-            // Handle the "w-id" attribute
-            delete props['w-id'];
-            widgetArgs.id = widgetId;
+        widgetId = props['w-el-id'];
+
+        if (widgetId) {
+            var warning = 'The "w-el-id" attribute is deprecated. Use "w-id" instead. ' + node;
+            var pos = node.getPosition();
+            if (pos) {
+                warning += ' at ' + pos;
+            }
+            console.log(warning);
+        }
+
+        if ((widgetId = widgetId || props['w-id'])) {
+            if (node.tag) {
+                // Node is a UI component with a widget
+                delete props['w-id'];
+                widgetArgs.id = widgetId;
+            } else {
+                // Node is a DOM element
+                widgetElIdExpression = widgetId;
+                widgetId = null;
+
+                if (node.hasAttribute('id')) {
+                    node.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');
+                } else {
+                    node.setAttribute(
+                        'id',
+                        template.makeExpression('widget.elId(' +
+                            widgetElIdExpression.toString() +
+                            ')'));
+                }
+            }
+
         } else if ((widgetExtend = props['w-extend']) != null) {
             if (widgetExtend === '') {
                 widgetExtend = getDefaultWidgetModule(template.dirname);
@@ -176,17 +204,6 @@ exports.process =function (node, compiler, template) {
                 widgetArgs.extendConfig = template.makeExpression(extendConfig);
             } else {
                 widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
-            }
-        } else if ((widgetElIdExpression = props['w-el-id'])) {
-            // Handle the "w-el-id" attribute
-            if (node.hasAttribute('id')) {
-                node.addError('The "w-el-id" attribute cannot be used in conjuction with the "id" attribute');
-            } else {
-                node.setAttribute(
-                    'id',
-                    template.makeExpression('widget.elId(' +
-                        widgetElIdExpression.toString() +
-                        ')'));
             }
         } else if ((widgetFor = props['w-for'])) {
             // Handle the "w-for" attribute
@@ -341,16 +358,21 @@ exports.process =function (node, compiler, template) {
             widgetArgs = {};
         }
 
-        if (!widgetArgs.id) {
-            if (template.data.widgetNextId == null) {
-                template.data.widgetNextId = 0;
-            }
+        var targetWidgetExpression;
 
-            var uniqueId = '_' + (template.data.widgetNextId++);
-            widgetArgs.id = uniqueId;
+        if (widgetArgs.id) {
+            targetWidgetExpression = '"@"+' + widgetArgs.id;
+        } else {
+             if (template.data.widgetNextId == null) {
+                 template.data.widgetNextId = 0;
+             }
+
+             var uniqueId = '_' + (template.data.widgetNextId++);
+             widgetArgs.id = template.makeExpression(JSON.stringify(uniqueId));
+             targetWidgetExpression = JSON.stringify('@' + uniqueId);
         }
 
-        addWidgetEvent(eventType, targetMethod, JSON.stringify('@' + widgetArgs.id));
+        addWidgetEvent(eventType, targetMethod, targetWidgetExpression);
     }
 
     if (node.hasFlag('hasWidgetEvents')) {
@@ -423,7 +445,7 @@ exports.process =function (node, compiler, template) {
 
         var widgetArgsParts = [];
         if (widgetArgs.id) {
-            widgetArgsParts.push(JSON.stringify(widgetArgs.id.toString()));
+            widgetArgsParts.push(widgetArgs.id.toString());
             widgetArgsParts.push('widget');
         } else {
             widgetArgsParts.push('null');
