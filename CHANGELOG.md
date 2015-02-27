@@ -5,6 +5,34 @@ CHANGELOG
 
 ## 2.0.x
 
+### 2.0.12
+
+- Deprecate `w-el-id` in favor of `w-id`
+
+### 2.0.11
+
+- Internal code cleanup
+
+### 2.0.10
+
+- Fixed #19 - Allow `w-on` for custom widget events
+
+### 2.0.9
+
+- Fixed #18 - Widgets in async blocks now initialize in the correct order
+
+### 2.0.8
+
+- Fixed #17 - Allow `w-config` with `w-extend`
+
+### 2.0.7
+
+- Internal: use 'renderBody(out)' instead of `invokeBody()`
+
+### 2.0.6
+
+- Introduced `require('marko-widgets').render(renderer, input)`
+
 ### 2.0.5
 
 - Replaced `require('marko-widgets').renderFunc(renderer)` with `require('marko-widgets').renderable(exports, renderer)`
