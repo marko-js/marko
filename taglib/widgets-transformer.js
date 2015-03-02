@@ -85,7 +85,7 @@ exports.process =function (node, compiler, template) {
             writer.line('if (typeof window != "undefined") {');
             writer.incIndent();
             widgetTypes.forEach(function(registeredType) {
-                writer.line('__markoWidgets.registry.register(' + registeredType.name + ', ' + registeredType.target + ');');
+                writer.line('__markoWidgets.registerWidget(' + registeredType.name + ', ' + registeredType.target + ');');
             });
 
             writer.decIndent();
@@ -115,8 +115,6 @@ exports.process =function (node, compiler, template) {
         var typePathExpression = registerType(bind);
 
         var config;
-        var assignedId;
-        var scope;
         var id;
 
         var widgetNode = compiler.createTagHandlerNode('w-widget');
@@ -127,14 +125,6 @@ exports.process =function (node, compiler, template) {
 
         if ((config = props['w-config'])) {
             widgetNode.setProperty('config', config);
-        }
-
-        if ((assignedId = props['w-assigned-id'])) {
-            widgetNode.setProperty('assignedId', assignedId);
-        }
-
-        if ((scope = props['w-scope'])) {
-            widgetNode.setProperty('scope', scope);
         }
 
         if ((id = node.getAttribute('id'))) {
@@ -224,24 +214,6 @@ exports.process =function (node, compiler, template) {
     var widgetTagNode;
     var eventIdExpression;
 
-    function addWidgetEvent(eventType, targetMethod, target) {
-        if (!widgetTagNode.data.widgetEvents) {
-            // Add a new input property to the widget tag that will contain
-            // enough information to allow the DOM event listeners to
-            // be attached directly to the DOM elements.
-            widgetTagNode.data.widgetEvents = [];
-            widgetTagNode.setProperty('events', function() {
-                return compiler.makeExpression(
-                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
-            });
-        }
-
-        // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
-        widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
-        widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
-        widgetTagNode.data.widgetEvents.push(target);
-    }
-
     function addDirectEventListener(eventType, targetMethod) {
         // The event does not support bubbling, so the widget
         // must attach the listeners directly to the target
@@ -276,26 +248,22 @@ exports.process =function (node, compiler, template) {
 
                 if (bind) {
                     // We have to attach a listener to the root element of the widget
-                    // We will use "!" as an indicator that it is the root widget
+                    // We will use an empty string as an indicator that it is the root widget
                     // element.
-                    //
-                    // Use an exclamation point to make it clear that we
-                    // we need to resolve the ID as a root widget element ID.
-                    eventIdExpression = compiler.makeExpression('"!"');
+                    eventIdExpression = compiler.makeExpression('""');
                 } else if (widgetElIdExpression) {
                     // We have to attach a listener to a nested HTML element of the widget
-                    // that was assigned an ID using "w-el-id".
-                    //
-                    // Prefix widget element ID with an exclamation point to make it clear that we
-                    // we need to resolve the ID as a widget element ID.
-                    eventIdExpression = compiler.makeExpression('"!"+' + widgetElIdExpression.toString());
+                    // that was assigned an ID using "w-id". This ID will not be a fully
+                    // resolved DOM element ID.
+                    eventIdExpression = compiler.makeExpression(widgetElIdExpression.toString());
                 } else if (typeof idAttr === 'string') {
-                    // Convert the raw String to a JavaScript expression
-                    eventIdExpression = compiler.convertType(idAttr, 'string', true);
+                    // Convert the raw String to a JavaScript expression. we need to prefix
+                    // with '#' to make it clear this is a fully resolved element ID
+                    eventIdExpression = compiler.makeExpression('"#"+' + compiler.convertType(idAttr, 'string', true));
                 } else {
-                    // The "id" attribute is already expression that we can use that
-                    // directly
-                    eventIdExpression = idAttr;
+                    // The "id" attribute is already expression but we need to prefix
+                    // with '#' to make it clear this is a fully resolved element ID
+                    eventIdExpression = compiler.makeExpression('"#"+' + idAttr);
                 }
             } else {
                 // Case 3 - We need to add a unique "id" attribute
@@ -308,11 +276,11 @@ exports.process =function (node, compiler, template) {
                     template.data.widgetNextElId = 0;
                 }
 
-                var uniqueElId = '_' + (template.data.widgetNextElId++);
+                var uniqueElId = (template.data.widgetNextElId++);
 
                 // Prefix the unique ID with an exclamation point to make it clear that we
                 // we need to resolve the ID as a widget element ID.
-                eventIdExpression = compiler.makeExpression(JSON.stringify('!' + uniqueElId));
+                eventIdExpression = compiler.makeExpression(JSON.stringify(uniqueElId));
 
                 node.setAttribute('id', compiler.makeExpression('widget.elId("' +
                     uniqueElId +
@@ -320,7 +288,21 @@ exports.process =function (node, compiler, template) {
             }
         }
 
-        addWidgetEvent(eventType, targetMethod, eventIdExpression.toString());
+        if (!widgetTagNode.data.widgetEvents) {
+            // Add a new input property to the widget tag that will contain
+            // enough information to allow the DOM event listeners to
+            // be attached directly to the DOM elements.
+            widgetTagNode.data.widgetEvents = [];
+            widgetTagNode.setProperty('domEvents', function() {
+                return compiler.makeExpression(
+                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
+            });
+        }
+
+        // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
+        widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
+        widgetTagNode.data.widgetEvents.push(eventIdExpression.toString());
     }
 
     function addBubblingEventListener(eventType, targetMethod) {
@@ -340,39 +322,22 @@ exports.process =function (node, compiler, template) {
     }
 
     function addCustomEventListener(eventType, targetMethod) {
-        // The event does not support bubbling, so the widget
-        // must attach the listeners directly to the target
-        // elements when the widget is initialized.
-        if (!widgetTagNode) {
-            widgetTagNode = getWidgetNode(node);
-        }
-
-        if (!widgetTagNode) {
-            node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
-            return;
-        }
-
         // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
-
         if (!widgetArgs) {
             widgetArgs = {};
         }
 
-        var targetWidgetExpression;
+        // if (!widgetArgs.id) {
+        //     var uniqueId = '_' + (template.data.widgetNextId++);
+        //     widgetArgs.id = template.makeExpression(JSON.stringify(uniqueId));
+        // }
 
-        if (widgetArgs.id) {
-            targetWidgetExpression = '"@"+' + widgetArgs.id;
-        } else {
-             if (template.data.widgetNextId == null) {
-                 template.data.widgetNextId = 0;
-             }
-
-             var uniqueId = '_' + (template.data.widgetNextId++);
-             widgetArgs.id = template.makeExpression(JSON.stringify(uniqueId));
-             targetWidgetExpression = JSON.stringify('@' + uniqueId);
+        if (!widgetArgs.customEvents) {
+            widgetArgs.customEvents = [];
         }
 
-        addWidgetEvent(eventType, targetMethod, targetWidgetExpression);
+        widgetArgs.customEvents.push(JSON.stringify(eventType));
+        widgetArgs.customEvents.push(JSON.stringify(targetMethod));
     }
 
     if (node.hasFlag('hasWidgetEvents')) {
@@ -382,13 +347,11 @@ exports.process =function (node, compiler, template) {
         // the properties corresponding to those attributes
         for (var propName in props) {
             if (props.hasOwnProperty(propName) && propName.startsWith('w-on')) {
-
-
-
                 var eventType = propName.substring(4); // Chop off "w-on"
                 var targetMethod = props[propName];
 
                 if (node.tag) {
+                    node.removeProperty(propName);
                     // We are adding an event listener for a custom event (not a DOM event)
                     if (eventType.startsWith('-')) {
                         // Remove the leading dash.
@@ -443,16 +406,20 @@ exports.process =function (node, compiler, template) {
         template.addStaticVar('_cleanupWidgetArgs',
             'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
 
-        var widgetArgsParts = [];
+        // Make sure the nested widget has access to the ID of the containing
+        // widget if it is needed
+        var shouldProvideScope = widgetArgs.id || widgetArgs.customEvents;
+
+        var widgetArgsParts = [shouldProvideScope ? 'widget.id' : 'null'];
+
         if (widgetArgs.id) {
             widgetArgsParts.push(widgetArgs.id.toString());
-            widgetArgsParts.push('widget');
         } else {
             widgetArgsParts.push('null');
-            widgetArgsParts.push('null');
         }
-        if (widgetArgs.events) {
-            widgetArgsParts.push(widgetArgs.events);
+
+        if (widgetArgs.customEvents) {
+            widgetArgsParts.push('[' + widgetArgs.customEvents.join(',') + ']');
         }
 
         if (widgetArgs.extend) {
@@ -464,7 +431,7 @@ exports.process =function (node, compiler, template) {
             widgetArgsParts.push(widgetArgs.extendConfig);
         }
 
-        node.addBeforeCode(template.makeExpression('_widgetArgs(out,' + widgetArgsParts.join(', ') + ');'));
+        node.addBeforeCode(template.makeExpression('_widgetArgs(out, ' + widgetArgsParts.join(', ') + ');'));
         node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));
     }
 

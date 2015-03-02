@@ -21,10 +21,6 @@ describe('server-rendered' , function() {
         done();
     });
 
-    after(function() {
-        require('raptor-dom').removeChildren(document.getElementById('server'));
-    });
-
     it('[server-rendered] should correctly initialize widgets', function() {
         expect(window.testData.widgets['app-foo'].length).to.equal(3);
         expect(window.testData.widgets['app-foo'][0]).to.be.a('object');

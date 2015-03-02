@@ -54,13 +54,12 @@ Widget.prototype = {
     },
 
     testWidgetCollection: function() {
-        expect(this.widgets.bar).to.be.an('object');
+        debugger;
+        expect(this.getWidget('bar')).to.be.an('object');
         expect(this.getWidget('bar2')).to.be.an('object');
-        expect(this.getWidget('barArray').length).to.equal(2);
+        expect(this.getWidgets('barArray').length).to.equal(2);
         expect(this.getWidget('barArray', 0).label).to.equal('1');
         expect(this.getWidget('barArray', 1).label).to.equal('2');
-        expect(this.getWidget('barArrayImplicit', 0).label).to.equal('a1');
-        expect(this.getWidget('barArrayImplicit', 1).label).to.equal('a2');
     },
 
     testDeclarativeCustomEvents: function() {
@@ -81,6 +80,8 @@ Widget.prototype = {
                 widget: arguments[arguments.length -1]
             });
         };
+
+        debugger;
 
         this.getWidget('customEvents').emitTestEvent1();
         expect(received1.length).to.equal(1);

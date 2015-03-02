@@ -3,6 +3,10 @@ var expect = chai.expect;
 var util = require('./util');
 
 describe('client-rendered' , function() {
+    before(function() {
+        require('raptor-dom').removeChildren(document.getElementById('server'));
+    });
+
     beforeEach(function() {
         util.cleanup();
     });

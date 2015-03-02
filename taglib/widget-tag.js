@@ -37,16 +37,17 @@ module.exports = function render(input, out) {
     var config = input.config || input._cfg;
     var widgetArgs = out.data.widgetArgs;
     var id = input.id;
-    var scope = input.scope || out.getAttribute('widget');
-    var assignedId = input.assignedId;
     var extend;
-    var events = input.events;
+    var domEvents = input.domEvents;
+    var customEvents;
+    var scope;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
-        scope = scope || widgetArgs.scope;
-        assignedId = assignedId || widgetArgs.id;
+        id = widgetArgs.id || id;
         extend = widgetArgs.extend;
+        customEvents = widgetArgs.customEvents;
+        scope = widgetArgs.scope;
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -58,10 +59,10 @@ module.exports = function render(input, out) {
         var widgetDef = widgetsContext.beginWidget({
             module: modulePath,
             id: id,
-            assignedId: assignedId,
             config: config,
+            domEvents: domEvents,
+            customEvents: customEvents,
             scope: scope,
-            events: events,
             createWidget: input.createWidget,
             extend: extend
         });

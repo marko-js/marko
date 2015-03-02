@@ -1,29 +1,45 @@
-exports.widgetArgs = function (out, assignedId, scope, events, extend, extendConfig) {
+require('raptor-polyfill/string/endsWith');
+
+exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, extendConfig) {
     var data = out.data;
-    var existingWidgetArgs = data.widgetArgs;
+    var widgetArgs = data.widgetArgs;
     var extendParts = null;
 
     if (extend) {
         extendParts = [extend, extendConfig];
     }
 
-    if (existingWidgetArgs) {
+    if (widgetArgs) {
+
+        // Merge in the extends...
         if (extendParts) {
-            if (existingWidgetArgs.extend) {
+            if (widgetArgs.extend) {
                 // The nested extends should come before the outer extends
                 // since the extends are applied from left to right and the
                 // outer widget will expect for the inner widget to have been
                 // patched
-                existingWidgetArgs.extend = extendParts.concat(existingWidgetArgs.extend);
+                widgetArgs.extend = extendParts.concat(widgetArgs.extend);
             } else {
-                existingWidgetArgs.extend = extendParts;
+                widgetArgs.extend = extendParts;
             }
         }
     } else {
+
+        if (assignedId && assignedId.endsWith('[]')) {
+            var indexLookupKey = scope + '-' + assignedId;
+            var currentIndex = out.global[indexLookupKey];
+            if (currentIndex == null) {
+                currentIndex = out.global[indexLookupKey] = 0;
+            } else {
+                currentIndex = ++out.global[indexLookupKey];
+            }
+            assignedId = assignedId.slice(0, -2) + '[' + currentIndex + ']';
+        }
+
         data.widgetArgs = {
-            id: assignedId,
+            id: assignedId ? scope + '-' + assignedId : null,
             scope: scope,
-            events: events,
+            customEvents: customEvents,
             extend: extendParts
         };
     }

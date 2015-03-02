@@ -157,11 +157,11 @@ describe('widget' , function() {
             .appendTo(document.getElementById('target'))
             .getWidget();
 
-        expect(fooWidget.widgets.bar).to.not.be.empty;
+        expect(fooWidget.getWidget('bar')).to.not.be.empty;
 
-        fooWidget.widgets.bar.destroy();
+        fooWidget.getWidget('bar').destroy();
 
-        expect(fooWidget.widgets.bar).to.be.empty;
+        expect(fooWidget.getWidget('bar')).to.be.an('undefined');
     });
 });
 
