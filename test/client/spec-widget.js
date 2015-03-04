@@ -151,6 +151,21 @@ describe('widget' , function() {
         expect(document.getElementById('target').childNodes[2]).to.equal(nextSibling);
     });
 
+    it('should use the same ID for re-rendered widgets', function() {
+        var widget = require('./fixtures/components/app-rerender')
+            .render({
+                label: 'Foo'
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var newWidget = widget.rerender({
+            label: 'Bar'
+        });
+
+        expect(newWidget.el.id).to.equal(widget.el.id);
+    });
+
     it('should remove destroyed widgets from scoped widget collection', function() {
         var fooWidget = require('./fixtures/components/app-foo')
             .render({})

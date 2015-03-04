@@ -50,6 +50,11 @@ module.exports = function render(input, out) {
         scope = widgetArgs.scope;
     }
 
+    if (global.widgetId) {
+        id = global.widgetId;
+        delete global.widgetId;
+    }
+
     if (!id && input.hasOwnProperty('id')) {
         throw new Error('Invalid widget ID for "' + modulePath + '"');
     }
