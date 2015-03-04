@@ -414,13 +414,19 @@ TemplateBuilder.prototype = {
         }
         return this;
     },
+    getEscapeXmlFunction: function() {
+        return this.getStaticHelperFunction('escapeXml', 'x');
+    },
+    getEscapeXmlAttrFunction: function() {
+        return this.getStaticHelperFunction('escapeXmlAttr', 'xa');
+    },
     write: function (expression, options) {
         if (!this.hasErrors()) {
             if (options) {
                 if (options.escapeXml) {
-                    expression = this.getStaticHelperFunction('escapeXml', 'x') + '(' + expression + ')';
+                    expression = this.getEscapeXmlFunction() + '(' + expression + ')';
                 } else if (options.escapeXmlAttr) {
-                    expression = this.getStaticHelperFunction('escapeXmlAttr', 'xa') + '(' + expression + ')';
+                    expression = this.getEscapeXmlAttrFunction() + '(' + expression + ')';
                 }
             }
             this.writer.write(expression);
