@@ -1,6 +1,62 @@
 CHANGELOG
 =========
 
+# Upgrade Guide
+
+## v2 to v3
+
+With marko-widgets, `this.widgets.foo` is no longer support and `this.widgets` will be `null`. Instead, you should `this.getWidget('foo')`.
+
+## v1 to v2
+
+marko-widgets v2 introduced the potential for a circular dependency. To avoid problems, you should no longer use `module.exports` in your widget JavaScript module as shown below:
+
+_Old widget.js:_
+
+```javascript
+function Widget() {
+    // ...
+}
+
+Widget.prototype = {
+    // ...
+};
+
+module.exports = Widget;
+```
+
+_New widget.js:_
+
+```javascript
+function Widget() {
+
+}
+
+Widget.prototype = {
+
+};
+
+exports.Widget = Widget;
+```
+
+You should also do the same for your UI component renderer:
+
+_Old renderer.js:_
+
+```javascript
+module.exports = function render(input, out) {
+    // ...
+}
+```
+
+_New renderer.js:_
+
+```javascript
+exports.renderer = function(input, out) {
+    // ...
+}
+```
+
 # 2.x
 
 ## 2.0.x
