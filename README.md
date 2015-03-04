@@ -103,18 +103,18 @@ function Widget() {
 Widget.prototype = {
     handleShowButtonClick: function(event) {
 		console.log('Showing overlay...');
-        this.widgets.overlay.show();
+        this.getWidget('overlay').show();
     },
 
     handleHideButtonClick: function(event) {
 		console.log('Hiding overlay...');
-        this.widgets.overlay.hide();
+        this.getWidget('overlay').hide();
     },
 
     handleDestroyButtonClick: function(event) {
 		// Permanently remove the overlay out of the DOM while
 		// also doing proper cleanup.
-        this.widgets.overlay.destroy();
+        this.getWidget('overlay').destroy();
 		console.log('Overlay destroyed!');
     },
 
@@ -311,7 +311,7 @@ exports.Widget = Widget;
 
 ## Referencing Nested Widgets
 
-The `marko-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.widgets` collection.
+The `marko-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.getWidget(id)` method.
 
 The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 
@@ -326,12 +326,31 @@ The following HTML template fragment contains a widget that has three nested [sa
 </div>
 ```
 
-The containing widget can then refer to a particular nested widget as shown in the following sample JavaScript code:
+The containing widget can then reference a particular nested widget as shown in the following sample JavaScript code:
 
 ```javascript
-this.widgets.dangerButton.on('click', function() {
+this.getWidget('dangerButton').on('click', function() {
     alert('You clicked on the danger button!');
 });
+```
+
+Marko Widgets also supports referencing _repeated_ nested widgets as shown below:
+
+```html
+<div class="my-component" w-bind="./widget">
+    <ul>
+		<li for="todoItem in data.todoItems">
+			<app-todo-item w-id="todoItems[]" todo-item="todoItem"/>
+		</li>
+	</ul>
+</div>
+```
+
+The containing widget can then reference the repeated todo item widgets using the `this.getWidgets(id)` method as shown below:
+
+```javascript
+var todoItemWidgets = this.getWidgets('todoItems');
+// todoItemWidgets will be an Array of todo item widgets
 ```
 
 To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs/raptor-samples/tree/master/widgets-communication) sample app.
@@ -367,7 +386,7 @@ var cancelButton = this.getEl('cancelButton'); // cancelButton.id === 'w123-canc
 submitButton.style.border = '1px solid red';
 ```
 
-The object returned by `this.getEl()` will be a raw [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element). If you want a jQuery wrapped element you can do either of the following:
+The object returned by `this.getEl(id)` will be a raw [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element). If you want a jQuery wrapped element you can do either of the following:
 
 
 Option 1) Use jQuery directly:
@@ -380,6 +399,24 @@ Option 2) Use the `this.$()` method:
 
 ```javascript
 var $submitButton = this.$('#submitButton');
+```
+
+Marko Widgets also supports referencing _repeated_ nested DOM elements as shown below:
+
+```html
+<ul>
+	<li for="color in ['red', 'green', 'blue']"
+		w-id="colorListItems[]">
+		$color
+	</li>
+</ul>
+```
+
+The containing widget can then reference the repeated DOM elements using the `this.getEls(id)` method as shown below:
+
+```javascript
+var colorListItems = this.getEls('colorListItems');
+// colorListItems will be an Array of raw DOM <li> elements
 ```
 
 ## Adding Event Listeners
@@ -536,7 +573,7 @@ And then in the widget:
 function Widget() {
 	var self = this;
 
-	var myOverlay = this.widgets.myOverlay;
+	var myOverlay = this.getWidget('myOverlay');
 
 	this.subscribeTo(myOverlay)
 		.on('beforeHide', function(event) {
@@ -746,9 +783,21 @@ Emits an event. This method is inherited from EventEmitter (see [Node.js Events:
 
 Returns a nested DOM element by prefixing the provided `widgetElId` with the widget's ID. For Marko, nested DOM elements should be assigned an ID using the `w-id` custom attribute.  Returns `this.el` if no `widgetElId` is provided.
 
+#### getEls(id)
+
+Returns an Array of _repeated_ `DOM` elements for the given ID. Repeated DOM elements must have a value for the `w-id` attribute that ends with `[]` (e.g., `w-id="myDivs[]"`)
+
 #### getElId(widgetElId)
 
-Similar to `getEl`, but only returns the String ID of the DOM element instead of the actual DOM element.
+Similar to `getEl`, but only returns the String ID of the nested DOM element instead of the actual DOM element.
+
+#### getWidget(id[, index])
+
+Returns a reference to a nested `Widget` for the given ID. If an `index` is provided and the target widget is a repeated widget (e.g. `w-id="myWidget[]"`) then the widget at the given index will be returned.
+
+#### getWidgets(id)
+
+Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated widgets must have a value for the `w-id` attribute that ends with `[]` (e.g., `w-id="myWidget[]"`)
 
 #### insertAfter(targetEl)
 
@@ -779,24 +828,6 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 #### this.id
 
 The String ID of the root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the widget is bound to.
-
-#### this.widgets
-
-An instance of `WidgetCollection` (see below) that holds references to all nested widgets with an assigned widget ID (e.g., but using the `w-id` custom attribute). For example:
-
-```javascript
-var submitButton = this.widgets.submitButton;
-```
-
-## WidgetCollection
-
-### Methods
-
-#### forEach([id], callback)
-
-### Properties
-
-#### this.*
 
 # Changelog
 
