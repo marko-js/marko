@@ -57,6 +57,34 @@ exports.renderer = function(input, out) {
 }
 ```
 
+# 3.x
+
+## 3.0.x
+
+### 3.0.0
+
+- :exclamation: Removed support for `this.widgets.foo` (use `this.getWidget('foo')` instead)
+- Added support for repeated DOM elements and repeated widgets:
+
+```html
+<div class="my-component" w-bind="./widget">
+    <ul>
+		<li w-id="todoListeItems[]" for="todoItem in data.todoItems">
+			<app-todo-item w-id="todoItems[]" todo-item="todoItem"/>
+		</li>
+	</ul>
+</div>
+```
+
+```javascript
+var todoListeItems = this.getEls('todoListeItems');
+var todoItemWidgets = this.getWidgets('todoItems');
+```
+
+- Added new methods:
+    - `getEls(id)`
+    - `getWidgets(id)`
+
 # 2.x
 
 ## 2.0.x
