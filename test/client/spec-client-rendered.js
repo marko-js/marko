@@ -61,6 +61,16 @@ describe('client-rendered' , function() {
         widget.testDOMLookup();
     });
 
+    it('[client-rendered] should allow getEls()', function() {
+
+        var widget = require('./fixtures/components/app-foo')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testGetEls();
+    });
+
     it('[client-rendered] should assign unique IDs to widgets', function() {
         var widgets = [];
 

@@ -63,6 +63,12 @@ describe('server-rendered' , function() {
         });
     });
 
+    it('[server-rendered] should allow getEls()', function() {
+        window.testData.widgets['app-foo'].forEach(function(widget) {
+            widget.testGetEls();
+        });
+    });
+
     it('[server-rendered] should assign unique IDs to widgets', function() {
         expect(window.testData.widgets['app-foo'].length).to.equal(3);
 

@@ -54,7 +54,6 @@ Widget.prototype = {
     },
 
     testWidgetCollection: function() {
-        debugger;
         expect(this.getWidget('bar')).to.be.an('object');
         expect(this.getWidget('bar2')).to.be.an('object');
         expect(this.getWidgets('barArray').length).to.equal(2);
@@ -81,8 +80,6 @@ Widget.prototype = {
             });
         };
 
-        debugger;
-
         this.getWidget('customEvents').emitTestEvent1();
         expect(received1.length).to.equal(1);
         expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
@@ -95,6 +92,14 @@ Widget.prototype = {
 
         expect(received2[0].args.length).to.equal(1); // [sourceWidget]
         expect(received2[0].widget).to.be.an('object');
+    },
+
+    testGetEls: function() {
+        var els = this.getEls('colorListItems');
+        expect(els.length).to.equal(3);
+        expect(els[0].innerHTML).to.equal('red');
+        expect(els[1].innerHTML).to.equal('green');
+        expect(els[2].innerHTML).to.equal('blue');
     }
 };
 

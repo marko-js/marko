@@ -1,5 +1,7 @@
 require('raptor-polyfill/string/endsWith');
 
+var repeatedId = require('../lib/repeated-id');
+
 exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, extendConfig) {
     var data = out.data;
     var widgetArgs = data.widgetArgs;
@@ -24,16 +26,8 @@ exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, ext
             }
         }
     } else {
-
         if (assignedId && assignedId.endsWith('[]')) {
-            var indexLookupKey = scope + '-' + assignedId;
-            var currentIndex = out.global[indexLookupKey];
-            if (currentIndex == null) {
-                currentIndex = out.global[indexLookupKey] = 0;
-            } else {
-                currentIndex = ++out.global[indexLookupKey];
-            }
-            assignedId = assignedId.slice(0, -2) + '[' + currentIndex + ']';
+            assignedId = repeatedId.nextId(out, scope, assignedId);
         }
 
         data.widgetArgs = {
