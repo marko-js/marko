@@ -56,6 +56,10 @@ var args = require('raptor-args').createParser({
             type: 'boolean',
             description: 'Clean all of the *.marko.js files'
         },
+        '--force': {
+            type: 'boolean',
+            description: 'Force template recompilation even if unchanged'
+        },
         '--paths -p': {
             type: 'string[]',
             description: 'Additional directories to add to the Node.js module search path'
@@ -89,6 +93,11 @@ var args = require('raptor-args').createParser({
     })
     .parse();
 
+
+var force = args.force;
+if (force) {
+    markoCompiler.defaultOptions.checkUpToDate = false;
+}
 
 var paths = args.paths;
 if (paths && paths.length) {
