@@ -45,6 +45,14 @@
                     "allow-expressions": false,
                     "preserve-name": true,
                     "set-flag": "hasWidgetEvents"
+                },
+                "w-body": {
+                    "type": "custom",
+                    "preserve-name": true
+                },
+                "w-body-args": {
+                    "type": "expression",
+                    "preserve-name": true
                 }
             },
             "transformer": "./taglib/widgets-transformer.js"
@@ -61,7 +69,8 @@
             },
             "var": "widget",
             "import-var": {
-                "_cfg": "data.widgetConfig"
+                "_cfg": "data.widgetConfig",
+                "_state": "data.widgetState"
             }
         },
         "w-init-widgets": {
@@ -79,6 +88,9 @@
                 "include-script-tag": "boolean",
                 "immediate": "boolean"
             }
+        },
+        "w-body": {
+            "node-class": "./taglib/widget-body-node.js"
         }
     }
 }

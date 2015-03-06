@@ -35,12 +35,14 @@ module.exports = function render(input, out) {
 
     var modulePath = input.module;
     var config = input.config || input._cfg;
+    var state = input.state || input._state;
     var widgetArgs = out.data.widgetArgs;
     var id = input.id;
     var extend;
     var domEvents = input.domEvents;
     var customEvents;
     var scope;
+    var preserve = input.preserve;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
@@ -50,9 +52,11 @@ module.exports = function render(input, out) {
         scope = widgetArgs.scope;
     }
 
-    if (global.widgetId) {
-        id = global.widgetId;
-        delete global.widgetId;
+    var existingWidget = global.__widget;
+
+    if (existingWidget) {
+        id = existingWidget.id;
+        delete global.__widget;
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -65,11 +69,14 @@ module.exports = function render(input, out) {
             module: modulePath,
             id: id,
             config: config,
+            state: state,
             domEvents: domEvents,
             customEvents: customEvents,
             scope: scope,
             createWidget: input.createWidget,
-            extend: extend
+            extend: extend,
+            preserve: preserve,
+            existingWidget: existingWidget
         });
 
         input.renderBody(out, widgetDef);
