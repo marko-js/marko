@@ -93,6 +93,10 @@ CodeWriter.prototype = {
         this._code.append(');\n');
     },
     code: function (code) {
+        if (typeof code === 'function') {
+            code = code();
+        }
+        
         this.flush();
         this._code.append(code);
     },
