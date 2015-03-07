@@ -53,6 +53,14 @@
                 "w-body-args": {
                     "type": "expression",
                     "preserve-name": true
+                },
+                "w-preserve": {
+                    "type": "custom",
+                    "preserve-name": true
+                },
+                "w-preserve-body": {
+                    "type": "custom",
+                    "preserve-name": true
                 }
             },
             "transformer": "./taglib/widgets-transformer.js"

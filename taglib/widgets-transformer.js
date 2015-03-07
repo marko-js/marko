@@ -315,17 +315,22 @@ exports.process =function (node, compiler, template) {
         }
     }
 
-    var widgetBody;
     var widgetExtendNode;
     var preserveIdExpression;
 
-    if ((widgetBody = props['w-body'])) {
+    function addPreserve(bodyOnly) {
         if (!widgetTagNode) {
             widgetTagNode = getWidgetNode(node);
 
             if (!widgetTagNode) {
                 widgetExtendNode = getWidgetExtendNode(node);
             }
+        }
+
+        preserveIdExpression = getNestedIdExpression(node);
+
+        if (!bodyOnly) {
+            preserveIdExpression = '"@"+' + preserveIdExpression;
         }
 
         if (widgetTagNode) {
@@ -338,7 +343,6 @@ exports.process =function (node, compiler, template) {
                 });
             }
 
-            preserveIdExpression = getNestedIdExpression(node);
             widgetPreserveData.push(preserveIdExpression);
         } else if (widgetExtendNode) {
             var extendPreserve = widgetExtendNode.data.widgetArgs.extendPreserve;
@@ -346,9 +350,13 @@ exports.process =function (node, compiler, template) {
                 extendPreserve = widgetExtendNode.data.widgetArgs.extendPreserve = [];
             }
 
-            preserveIdExpression = getNestedIdExpression(node);
             extendPreserve.push(preserveIdExpression);
         }
+    }
+
+    var widgetBody;
+    if ((widgetBody = props['w-body'])) {
+        addPreserve(true);
 
         var widgetBodyArgs = props['w-body-args'];
 
@@ -360,6 +368,16 @@ exports.process =function (node, compiler, template) {
             body: widgetBody,
             widgetBodyArgs: widgetBodyArgs
         }));
+    }
+
+    var widgetPreserve;
+    if ((widgetPreserve = props['w-preserve']) != null) {
+        addPreserve(false);
+    }
+
+    var widgetPreserveBody;
+    if ((widgetPreserveBody = props['w-preserve-body']) != null) {
+        addPreserve(true);
     }
 
     var widgetTagNode;
@@ -379,6 +397,17 @@ exports.process =function (node, compiler, template) {
         }
 
         var eventIdExpression = getNestedIdExpression(node);
+
+        if (!widgetTagNode.data.widgetEvents) {
+            // Add a new input property to the widget tag that will contain
+            // enough information to allow the DOM event listeners to
+            // be attached directly to the DOM elements.
+            widgetTagNode.data.widgetEvents = [];
+            widgetTagNode.setProperty('domEvents', function() {
+                return compiler.makeExpression(
+                    '[' + widgetTagNode.data.widgetEvents.join(',') + ']');
+            });
+        }
 
         // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
         widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
