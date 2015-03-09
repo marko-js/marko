@@ -12,6 +12,5 @@
             "description": "small | normal | large"
         },
         "*": "string"
-    },
-    "var": "widget"
+    }
 }
