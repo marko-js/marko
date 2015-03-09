@@ -281,10 +281,22 @@ function buildTag(tagObject, path, taglib, dirname) {
 /**
  * @param {String} tagsConfigPath path to tag definition file
  * @param {String} tagsConfigDirname path to directory of tags config file (should be path.dirname(tagsConfigPath))
- * @param {String} dir the path to directory to scan
+ * @param {String|Object} dir the path to directory to scan
  * @param {String} taglib the taglib that is being loaded
  */
 function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
+    var prefix;
+
+    if (typeof dir === 'object') {
+        prefix = dir.prefix;
+        dir = dir.path;
+    }
+
+    if (prefix == null) {
+        // no prefix by default
+        prefix = '';
+    }
+
     dir = nodePath.resolve(tagsConfigDirname, dir);
     var children = fs.readdirSync(dir);
     var rendererJSFile;
@@ -295,6 +307,8 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
         if (childFilename === 'node_modules') {
             continue;
         }
+
+        var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
         var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
         var tag = null;
@@ -325,7 +339,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             }
 
             tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
-            tag.name = childFilename;
+            tag.name = tagName;
             taglib.addTag(tag);
         } else {
             // marko-tag.json does *not* exist... checking for a 'renderer.js'
@@ -363,13 +377,13 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
 
                 tagDef.renderer  = rendererJSFile;
                 tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = childFilename;
+                tag.name = tagName;
                 taglib.addTag(tag);
             }
 
             if (tagDef) {
                 tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = childFilename;
+                tag.name = tagName;
                 taglib.addTag(tag);
             }
         }
