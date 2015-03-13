@@ -1,12 +1,25 @@
 'use strict';
 var widgets = require('../');
+var extend = require('raptor-util/extend');
+
 var DUMMY_WIDGET_DEF = {
         elId: function () {
         }
     };
-module.exports = function render(input, out) {
 
+function mergeExtendState(state, extendList) {
+    state = extend({}, state);
+
+    for (var i=2, len=extendList.length; i<len; i+=3) {
+        extend(state, extendList[i]);
+    }
+
+    return state;
+}
+
+module.exports = function render(input, out) {
     var global = out.global;
+
     if (!global.__widgetsBeginAsyncAdded) {
         global.__widgetsBeginAsyncAdded = true;
         out.on('beginAsync', function(event) {
@@ -42,7 +55,6 @@ module.exports = function render(input, out) {
     var domEvents = input.domEvents;
     var customEvents;
     var scope;
-    var preserve = input.preserve;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
@@ -52,17 +64,37 @@ module.exports = function render(input, out) {
         scope = widgetArgs.scope;
     }
 
-    var existingWidget = global.__widget;
+    var rerenderWidget = global.__rerenderWidget;
+    var widgetsContext = widgets.getWidgetsContext(out);
 
-    if (existingWidget) {
-        id = existingWidget.id;
-        delete global.__widget;
+    if (rerenderWidget) {
+        id = rerenderWidget.id;
+        delete global.__rerenderWidget;
+    } else if (global.__rerender === true && state && id) {
+        console.log('Checking for existing widget: ', id, 'STATE: ', state);
+        var existingEl = document.getElementById(id);
+        if (existingEl) {
+            var existingWidget = existingEl.__widget;
+            if (existingWidget) {
+                // TODO Only reuse a widget if the types match
+                out.write('<span id="' + id + '"></span>');
+
+                if (extend) {
+                    // Merge in any additional state if the widget is being extended
+                    state = mergeExtendState(state, extend);
+                }
+
+                console.log('Found existing widget to reuse: ', id, 'STATE: ', state);
+
+                widgetsContext.addReusableWidget(existingWidget, state);
+                return;
+            }
+        }
     }
 
     if (!id && input.hasOwnProperty('id')) {
         throw new Error('Invalid widget ID for "' + modulePath + '"');
     }
-    var widgetsContext = widgets.getWidgetsContext(out);
 
     if (modulePath) {
         var widgetDef = widgetsContext.beginWidget({
@@ -75,8 +107,7 @@ module.exports = function render(input, out) {
             scope: scope,
             createWidget: input.createWidget,
             extend: extend,
-            preserve: preserve,
-            existingWidget: existingWidget
+            existingWidget: rerenderWidget
         });
 
         input.renderBody(out, widgetDef);

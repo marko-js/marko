@@ -99,6 +99,12 @@
         },
         "w-body": {
             "node-class": "./taglib/widget-body-node.js"
+        },
+        "w-preserve": {
+            "renderer": "./taglib/preserve-tag.js",
+            "attributes": {
+                "id": "string"
+            }
         }
     }
 }

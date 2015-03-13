@@ -31,10 +31,12 @@ BodyNode.prototype = {
 
         // console.log(module.id, this);
         template.statement('__widgetBody(out, ' +
+            this.getProperty('id') +
+            ', ' +
             this.getProperty('body') +
             ', ' +
             escapeXml +
-            (widgetBodyArgs ? ', ' + widgetBodyArgs : '') + 
+            (widgetBodyArgs ? ', ' + widgetBodyArgs : '') +
             ');');
     }
 };

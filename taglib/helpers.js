@@ -1,14 +1,14 @@
 require('raptor-polyfill/string/endsWith');
-
+var widgets = require('../');
 var repeatedId = require('../lib/repeated-id');
 
-exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, extendConfig, extendState, extendPreserve) {
+exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, extendConfig, extendState) {
     var data = out.data;
     var widgetArgs = data.widgetArgs;
     var extendParts = null;
 
     if (extend) {
-        extendParts = [extend, extendConfig, extendState, extendPreserve];
+        extendParts = [extend, extendConfig, extendState];
     }
 
     if (widgetArgs) {
@@ -26,12 +26,16 @@ exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, ext
             }
         }
     } else {
-        if (assignedId && assignedId.endsWith('[]')) {
-            assignedId = repeatedId.nextId(out, scope, assignedId);
+        if (assignedId != null) {
+            assignedId = assignedId.toString();
+
+            if (assignedId.endsWith('[]')) {
+                assignedId = repeatedId.nextId(out, scope, assignedId);
+            }
         }
 
         data.widgetArgs = {
-            id: assignedId ? scope + '-' + assignedId : null,
+            id: assignedId != null ? scope + '-' + assignedId : null,
             scope: scope,
             customEvents: customEvents,
             extend: extendParts
@@ -43,9 +47,15 @@ exports.cleanupWidgetArgs = function (out) {
     delete out.data.widgetArgs;
 };
 
-exports.widgetBody = function (out, content, escapeXml, renderArgs) {
+exports.widgetBody = function (out, id, content, escapeXml, renderArgs) {
     if (content == null) {
-        // Do nothing
+        // There is no body content so let's see if we should reuse
+        // the existing body content in the DOM
+        var existingEl = document.getElementById(id);
+        if (existingEl) {
+            var widgetsContext = widgets.getWidgetsContext(out);
+            widgetsContext.addReusableDOMNode(existingEl, true /* body only */);
+        }
     } else if (typeof content === 'function') {
         if (renderArgs) {
             if (renderArgs.length === 1) {

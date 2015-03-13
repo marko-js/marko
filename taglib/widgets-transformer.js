@@ -39,24 +39,6 @@ function getWidgetNode(node) {
     return undefined;
 }
 
-function getWidgetExtendNode(node) {
-    if (!node) {
-        return;
-    }
-
-    while (true) {
-        if (node.data.widgetExtend === true) {
-            return node;
-        }
-
-        node = node.parentNode;
-        if (!node) {
-            break;
-        }
-    }
-    return undefined;
-}
-
 function isUpperCase(c) {
     return c == c.toUpperCase();
 }
@@ -85,8 +67,18 @@ exports.process =function (node, compiler, template) {
     var widgetId;
     var widgetArgs = null;
     var nestedIdExpression;
+    var idExpression;
+    var widgetElIdExpression;
 
-    function getNestedIdExpression() {
+    function nextUniqueId() {
+        if (template.data.widgetNextElId == null) {
+            template.data.widgetNextElId = 0;
+        }
+
+        return (template.data.widgetNextElId++);
+    }
+
+    function ensureNodeId() {
         // In order to attach a DOM event listener directly we need to make sure
         // the target HTML element has an ID that we can use to get a reference
         // to the element during initialization. We need to handle the following
@@ -99,7 +91,7 @@ exports.process =function (node, compiler, template) {
         //    an "id" attribute with a unique ID.
 
         if (nestedIdExpression) {
-            return nestedIdExpression;
+            return;
         }
 
         var idAttr = node.getAttribute('id');
@@ -108,6 +100,12 @@ exports.process =function (node, compiler, template) {
             // The "id" attribute can be a JavaScript expression or a raw String
             // value. We need a JavaScript expression that can be used to
             // provide the same ID at runtime.
+
+            if (typeof idAttr === 'string') {
+                idExpression = compiler.convertType(idAttr, 'string', true);
+            } else {
+                idExpression = idAttr;
+            }
 
             if (bind) {
                 // We have to attach a listener to the root element of the widget
@@ -122,12 +120,14 @@ exports.process =function (node, compiler, template) {
             } else if (typeof idAttr === 'string') {
                 // Convert the raw String to a JavaScript expression. we need to prefix
                 // with '#' to make it clear this is a fully resolved element ID
-                nestedIdExpression = compiler.makeExpression('"#"+' + compiler.convertType(idAttr, 'string', true));
+                nestedIdExpression = compiler.makeExpression('"#"+' + idExpression);
             } else {
                 // The "id" attribute is already expression but we need to prefix
                 // with '#' to make it clear this is a fully resolved element ID
                 nestedIdExpression = compiler.makeExpression('"#"+' + idAttr);
             }
+
+
         } else {
             // Case 3 - We need to add a unique "id" attribute
 
@@ -135,19 +135,17 @@ exports.process =function (node, compiler, template) {
             // NOTE: This is at compile time and "template.data" is only
             //       used for the current template compilation. We need
             //       a unique ID that
-            if (template.data.widgetNextElId == null) {
-                template.data.widgetNextElId = 0;
-            }
-
-            var uniqueElId = (template.data.widgetNextElId++);
+            var uniqueElId = nextUniqueId();
 
             // Prefix the unique ID with an exclamation point to make it clear that we
             // we need to resolve the ID as a widget element ID.
             nestedIdExpression = compiler.makeExpression(JSON.stringify(uniqueElId));
 
-            node.setAttribute('id', compiler.makeExpression('widget.elId("' +
+            idExpression = compiler.makeExpression('widget.elId("' +
                 uniqueElId +
-                '")'));
+                '")');
+
+            node.setAttribute('id', idExpression);
         }
 
         return nestedIdExpression;
@@ -231,7 +229,6 @@ exports.process =function (node, compiler, template) {
         node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
     } else {
         var widgetExtend;
-        var widgetElIdExpression;
         var widgetFor;
 
         widgetArgs = {};
@@ -315,48 +312,11 @@ exports.process =function (node, compiler, template) {
         }
     }
 
-    var widgetExtendNode;
-    var preserveIdExpression;
-
-    function addPreserve(bodyOnly) {
-        if (!widgetTagNode) {
-            widgetTagNode = getWidgetNode(node);
-
-            if (!widgetTagNode) {
-                widgetExtendNode = getWidgetExtendNode(node);
-            }
-        }
-
-        preserveIdExpression = getNestedIdExpression(node);
-
-        if (!bodyOnly) {
-            preserveIdExpression = '"@"+' + preserveIdExpression;
-        }
-
-        if (widgetTagNode) {
-            var widgetPreserveData = widgetTagNode.data.widgetPreserve;
-            if (!widgetPreserveData) {
-                widgetPreserveData = widgetTagNode.data.widgetPreserve = [];
-                widgetTagNode.setProperty('preserve', function() {
-                    return compiler.makeExpression(
-                        '[' + widgetTagNode.data.widgetPreserve.join(', ') + ']');
-                });
-            }
-
-            widgetPreserveData.push(preserveIdExpression);
-        } else if (widgetExtendNode) {
-            var extendPreserve = widgetExtendNode.data.widgetArgs.extendPreserve;
-            if (!extendPreserve) {
-                extendPreserve = widgetExtendNode.data.widgetArgs.extendPreserve = [];
-            }
-
-            extendPreserve.push(preserveIdExpression);
-        }
-    }
-
     var widgetBody;
-    if ((widgetBody = props['w-body'])) {
-        addPreserve(true);
+    if ((widgetBody = props['w-body']) != null) {
+        if (widgetBody === '') {
+            widgetBody = 'data.widgetBody';
+        }
 
         var widgetBodyArgs = props['w-body-args'];
 
@@ -364,10 +324,37 @@ exports.process =function (node, compiler, template) {
             widgetBodyArgs = template.makeExpression('[widget]');
         }
 
+        ensureNodeId(node);
+
         node.appendChild(compiler.createNode('w-body', {
+            id: idExpression,
             body: widgetBody,
             widgetBodyArgs: widgetBodyArgs
         }));
+    }
+
+    function addPreserve(bodyOnly) {
+        ensureNodeId(node);
+
+        var preserveNode = compiler.createTagHandlerNode('w-preserve');
+        preserveNode.setProperty('id', idExpression);
+
+        if (bodyOnly) {
+            preserveNode.setProperty('bodyOnly', template.makeExpression(bodyOnly));
+        }
+
+        if (bodyOnly) {
+            node.forEachChild(function(childNode) {
+                preserveNode.appendChild(childNode);
+            });
+
+            node.appendChild(preserveNode);
+        } else {
+            node.parentNode.replaceChild(preserveNode, node);
+            preserveNode.appendChild(node);
+        }
+
+        return preserveNode;
     }
 
     var widgetPreserve;
@@ -396,7 +383,6 @@ exports.process =function (node, compiler, template) {
             return;
         }
 
-        var eventIdExpression = getNestedIdExpression(node);
 
         if (!widgetTagNode.data.widgetEvents) {
             // Add a new input property to the widget tag that will contain
@@ -412,7 +398,7 @@ exports.process =function (node, compiler, template) {
         // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
         widgetTagNode.data.widgetEvents.push(JSON.stringify(eventType));
         widgetTagNode.data.widgetEvents.push(JSON.stringify(targetMethod));
-        widgetTagNode.data.widgetEvents.push(eventIdExpression.toString());
+        widgetTagNode.data.widgetEvents.push(nestedIdExpression.toString());
     }
 
     function addBubblingEventListener(eventType, targetMethod) {
@@ -451,6 +437,14 @@ exports.process =function (node, compiler, template) {
     }
 
     if (node.hasFlag('hasWidgetEvents')) {
+        if (!widgetArgs) {
+            widgetArgs = {};
+        }
+
+        if (!widgetArgs.id) {
+            widgetArgs.id = nextUniqueId();
+        }
+
         // The Marko compiler was nice enough to attach a flag to nodes that
         // have one or more attributes that match the "w-on*" pattern.
         // We still need to loop over the properties to find and handle
@@ -529,7 +523,7 @@ exports.process =function (node, compiler, template) {
 
             var widgetArgsParts = [shouldProvideScope ? 'widget.id' : 'null'];
 
-            if (widgetArgs.id) {
+            if (widgetArgs.id != null) {
                 widgetArgsParts.push(widgetArgs.id.toString());
             } else {
                 widgetArgsParts.push('null');
@@ -547,10 +541,6 @@ exports.process =function (node, compiler, template) {
                 widgetArgsParts.push(widgetArgs.extend);
                 widgetArgsParts.push(widgetArgs.extendConfig);
                 widgetArgsParts.push(widgetArgs.extendState);
-
-                if (widgetArgs.extendPreserve) {
-                    widgetArgsParts.push('[' + widgetArgs.extendPreserve.join(',') + ']');
-                }
             }
 
             return template.makeExpression('_widgetArgs(out, ' + widgetArgsParts.join(', ') + ');');
