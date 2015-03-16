@@ -22,7 +22,15 @@ function buildLookup(dirname) {
 		lookup = new TaglibLookup();
 
         for (var i=taglibs.length-1; i>=0; i--) {
-			lookup.addTaglib(taglibs[i]);
+			var taglib = taglibs[i];
+			lookup.addTaglib(taglib);
+
+			if (taglib.imports) {
+				for (var j=0; j<taglib.imports.length; j++) {
+					var importedTaglib = taglibLoader.load(taglib.imports[j]);
+					lookup.addTaglib(importedTaglib);
+				}
+			}
 		}
 
 		lookupCache[lookupCacheKey] = lookup;

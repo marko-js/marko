@@ -373,5 +373,7 @@ describe('marko/render' , function() {
         }, done);
     });
 
-
+    it("should support importing taglibs into other taglibs", function(done) {
+        testRender("test-project/html-templates/taglib-imports.marko", {}, done);
+    });
 });

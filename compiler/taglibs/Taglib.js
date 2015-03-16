@@ -36,6 +36,7 @@ function Taglib(id) {
     this.attributes = {};
     this.patternAttributes = [];
     this.inputFilesLookup = {};
+    this.imports = null;
 }
 
 Taglib.prototype = {
@@ -82,6 +83,13 @@ Taglib.prototype = {
         forEachEntry(this.tags, function (key, tag) {
             callback.call(thisObj, tag);
         }, this);
+    },
+
+    addImport: function(path) {
+        if (!this.imports) {
+            this.imports = [];
+        }
+        this.imports.push(path);
     }
 };
 
