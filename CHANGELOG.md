@@ -5,6 +5,39 @@ Changelog
 
 ## 2.0.x
 
+### 2.1.0
+
+- Fixes #47 - Added support for "taglib-imports"
+
+### 2.0.12
+
+- Fixes #31 - Add support for providing prefix when scanning for tags
+- Allow "code" to be a function that lazily evaluates to a code string during code generation
+
+### 2.0.11
+
+- Added method for custom node compilers to get access to the `escapeXml` function at runtime
+
+### 2.0.10
+
+- Fixes #39 - Added missing return when using hot-reload
+
+### 2.0.9
+
+- Fixed bad publish
+
+### 2.0.8
+
+- Better merging of tags when loading and merging taglibs
+
+### 2.0.7
+
+- Changes to avoid problems associated with the same taglib being found multiple times in the search path
+
+### 2.0.6
+
+- `renderBody` function is only added if tag has children
+
 ### 2.0.5
 
 - Fixed #36 - Don't use `invokeBody()` in the cache taglib
