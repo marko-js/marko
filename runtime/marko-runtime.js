@@ -66,7 +66,12 @@ Template.prototype = {
     renderSync: function(data) {
         var out = new AsyncWriter();
         out.sync();
-        out.global = extend(out.global, data.$global);
+
+        if (data.$global) {
+            out.global = extend(out.global, data.$global);
+            delete data.$global;            
+        }
+
         this._(data, out);
         out.end();
         return out.getOutput();
@@ -124,7 +129,10 @@ Template.prototype = {
             shouldEnd = true;
         }
 
-        finalOut.global = extend(finalOut.global, finalData.$global);
+        if (finalData.$global) {
+            finalOut.global = extend(finalOut.global, finalData.$global);
+            delete finalData.$global;
+        }
 
         renderFunc(finalData, finalOut);
 
