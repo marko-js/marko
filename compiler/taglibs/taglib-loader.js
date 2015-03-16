@@ -456,6 +456,38 @@ function load(path) {
                 scanTagsDir(path, dirname, dir, taglib);
             }
         },
+
+        taglibImports: function(imports) {
+            if (imports && Array.isArray(imports)) {
+                for (var i=0; i<imports.length; i++) {
+                    var curImport = imports[i];
+                    if (typeof curImport === 'string') {
+                        var basename = nodePath.basename(curImport);
+                        if (basename === 'package.json') {
+                            var packagePath = resolve(curImport, dirname);
+                            var pkg = require(packagePath);
+                            var dependencies = pkg.dependencies;
+                            if (dependencies) {
+                                var dependencyNames = Object.keys(dependencies);
+                                for (var j=0; j<dependencyNames.length; j++) {
+                                    var dependencyName = dependencyNames[j];
+                                    var importPath;
+
+                                    try {
+                                        importPath = require('resolve-from')(dirname, dependencyName + '/marko-taglib.json');
+                                    } catch(e) {}
+
+                                    if (importPath) {
+                                        taglib.addImport(importPath);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
         textTransformer: function(value) {
             var transformer = new Taglib.Transformer();
 

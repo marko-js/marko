@@ -98,5 +98,6 @@
             "template": "./hello.marko"
         }
     },
-    "tags-dir": "./scanned-tags"
+    "tags-dir": "./scanned-tags",
+    "taglib-imports": ["./package.json"]
 }
