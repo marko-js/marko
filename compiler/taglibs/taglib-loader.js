@@ -339,7 +339,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
             }
 
             tag = buildTag(tagDef, tagsConfigPath, taglib, tagDirname);
-            tag.name = tagName;
+            tag.name = tag.name || tagName;
             taglib.addTag(tag);
         } else {
             // marko-tag.json does *not* exist... checking for a 'renderer.js'
