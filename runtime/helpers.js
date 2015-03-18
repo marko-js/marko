@@ -114,12 +114,7 @@ module.exports = {
      * Returns the render function for a tag handler
      */
     r: function(handler) {
-        var renderFunc;
-        if (typeof handler === 'function') {
-            renderFunc = handler;
-        } else {
-            renderFunc = handler.renderer || handler.render;
-        }
+        var renderFunc = handler.renderer || handler.render || handler;
 
         if (typeof renderFunc !== 'function') {
             throw new Error('Invalid handler: ' + handler);
