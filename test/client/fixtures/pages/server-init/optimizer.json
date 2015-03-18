@@ -8,6 +8,7 @@
         "../../components/app-dom-events-jquery/optimizer.json",
         "../../components/app-extend-checkbox/optimizer.json",
         "../../components/app-widget-config/optimizer.json",
-        "../../components/app-init-async/optimizer.json"
+        "../../components/app-init-async/optimizer.json",
+        "../../components/app-fixed-id/optimizer.json"
     ]
 }

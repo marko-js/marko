@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "require: ./widget",
+        "../app-hello/optimizer.json"
+    ]
+}
