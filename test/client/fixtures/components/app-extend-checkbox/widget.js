@@ -1,7 +1,5 @@
-exports.extend = function(widget, widgetConfig) {
+exports.extend = function(widget) {
     var $el = widget.$();
-
-    widget.data = widgetConfig.data;
     var checked = $el.hasClass('checked');
 
     function isChecked() {
@@ -23,7 +21,7 @@ exports.extend = function(widget, widgetConfig) {
 
         widget.emit('toggle', {
             checked: checked,
-            data: widgetConfig.data
+            data: widget.data
         });
     }
 
@@ -33,4 +31,9 @@ exports.extend = function(widget, widgetConfig) {
 
     widget.isChecked = isChecked;
     widget.setChecked = setChecked;
+
+    widget.on('afterInit', function(eventArgs) {
+        var widgetConfig = eventArgs.config;
+        widget.data = widgetConfig.data;
+    });
 };

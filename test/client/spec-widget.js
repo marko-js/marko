@@ -137,17 +137,21 @@ describe('widget' , function() {
 
         expect(widget.el.innerHTML.trim()).to.equal('Foo');
 
-        var newWidget = widget.rerender({
+        var oldEl = widget.el;
+
+        widget.rerender({
             label: 'Bar'
         });
 
-        expect(newWidget.el.parentNode).to.equal(parentNode);
-        expect(widget.el.parentNode == null).to.equal(true);
+
+
+        expect(widget.el.parentNode).to.equal(parentNode);
+        expect(widget.el !== oldEl).to.equal(true);
 
 
         expect(document.getElementById('target').childNodes.length).to.equal(3);
         expect(document.getElementById('target').childNodes[0]).to.equal(previousSibling);
-        expect(document.getElementById('target').childNodes[1]).to.equal(newWidget.el);
+        expect(document.getElementById('target').childNodes[1]).to.equal(widget.el);
         expect(document.getElementById('target').childNodes[2]).to.equal(nextSibling);
     });
 
@@ -159,11 +163,13 @@ describe('widget' , function() {
             .appendTo(document.getElementById('target'))
             .getWidget();
 
-        var newWidget = widget.rerender({
+        var oldId = widget.id;
+
+        widget.rerender({
             label: 'Bar'
         });
 
-        expect(newWidget.el.id).to.equal(widget.el.id);
+        expect(widget.el.id).to.equal(oldId);
     });
 
     it('should remove destroyed widgets from scoped widget collection', function() {

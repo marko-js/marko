@@ -393,6 +393,8 @@ exports.process =function (node, compiler, template) {
 
 
     function addDirectEventListener(eventType, targetMethod) {
+        ensureNodeId();
+
         // The event does not support bubbling, so the widget
         // must attach the listeners directly to the target
         // elements when the widget is initialized.
