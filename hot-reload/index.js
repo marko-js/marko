@@ -11,12 +11,16 @@ var modifiedFlag = 1;
 exports.enable = function() {
 
 
-    if (runtime.__browserRefresh) {
+    if (runtime.__hotReloadEnabled) {
         // Marko has already been monkey-patched. Nothing to do!
         return;
     }
 
-    runtime.__browserRefresh = true;
+    runtime.__hotReloadEnabled = true;
+
+    // We set an environment variable so that _all_ marko modules
+    // installed in the project will have hot reload enabled.
+    process.env.MARKO_HOT_RELOAD = 'true';
 
     // Patch the Template prototype to proxy all render methods...
 

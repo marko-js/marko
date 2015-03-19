@@ -4,6 +4,14 @@ var Module = require('module').Module;
 var markoCompiler = require('../compiler');
 var cwd = process.cwd();
 
+if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
+    require('../hot-reload').enable();
+}
+
+if (process.env.hasOwnProperty('MARKO_BROWSER_REFRESH')) {
+    require('../browser-refresh').enable();
+}
+
 function loadSource(templatePath, compiledSrc) {
     var templateModulePath = templatePath + '.js';
 
