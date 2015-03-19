@@ -12,6 +12,10 @@ exports.enable = function() {
 
     enabled = true;
 
+    // We set an environment variable so that _all_ marko modules
+    // installed in the project will have browser refresh enabled.
+    process.env.MARKO_BROWSER_REFRESH = 'true';
+
     var hotReload = require('../hot-reload');
     hotReload.enable();
 
