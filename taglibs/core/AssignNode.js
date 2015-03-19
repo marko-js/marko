@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_\.]*$/;
+// var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_\.]*$/;
 function AssignNode(props) {
     AssignNode.$super.call(this);
     if (props) {
@@ -27,9 +27,6 @@ AssignNode.prototype = {
         var value = this.getProperty('value');
         if (!varName) {
             this.addError('"var" attribute is required');
-        } else if (!varNameRegExp.test(varName)) {
-            this.addError('Invalid variable name of "' + varName + '"');
-            varName = null;
         }
         if (!value) {
             this.addError('"value" attribute is required');
