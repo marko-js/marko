@@ -30,11 +30,7 @@ var asyncWriter = require('async-writer');
 // that are available in every template (empty, notEmpty, etc.)
 var helpers = require('./helpers');
 
-// The loader is used to load templates that have not already been
-// loaded and cached. On the server, the loader will use
-// the compiler to compile the template and then load the generated
-// module file using the Node.js module loader
-var loader = require('./loader');
+var loader;
 
 // If the optional "stream" module is available
 // then Readable will be a readable stream
@@ -69,7 +65,7 @@ Template.prototype = {
 
         if (data.$global) {
             out.global = extend(out.global, data.$global);
-            delete data.$global;            
+            delete data.$global;
         }
 
         this._(data, out);
@@ -246,3 +242,9 @@ exports.createWriter = function(writer) {
 exports.helpers = helpers;
 
 exports.Template = Template;
+
+// The loader is used to load templates that have not already been
+// loaded and cached. On the server, the loader will use
+// the compiler to compile the template and then load the generated
+// module file using the Node.js module loader
+loader = require('./loader');
