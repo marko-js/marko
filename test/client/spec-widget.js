@@ -143,7 +143,7 @@ describe('widget' , function() {
             label: 'Bar'
         });
 
-
+        expect(widget.el.innerHTML.trim()).to.equal('Bar');
 
         expect(widget.el.parentNode).to.equal(parentNode);
         expect(widget.el !== oldEl).to.equal(true);
