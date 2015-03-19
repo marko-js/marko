@@ -1,31 +1,13 @@
 require('raptor-polyfill/string/endsWith');
 var widgets = require('../');
 var repeatedId = require('../lib/repeated-id');
+var extend = require('raptor-util/extend');
 
-exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, extendConfig, extendState) {
+exports.widgetArgs = function (out, scope, assignedId, customEvents, extendModule, extendConfig, extendState) {
     var data = out.data;
     var widgetArgs = data.widgetArgs;
-    var extendParts = null;
 
-    if (extend) {
-        extendParts = [extend, extendConfig, extendState];
-    }
-
-    if (widgetArgs) {
-
-        // Merge in the extends...
-        if (extendParts) {
-            if (widgetArgs.extend) {
-                // The nested extends should come before the outer extends
-                // since the extends are applied from left to right and the
-                // outer widget will expect for the inner widget to have been
-                // patched
-                widgetArgs.extend = extendParts.concat(widgetArgs.extend);
-            } else {
-                widgetArgs.extend = extendParts;
-            }
-        }
-    } else {
+    if (!widgetArgs) {
         if (assignedId != null) {
             assignedId = assignedId.toString();
 
@@ -34,12 +16,37 @@ exports.widgetArgs = function (out, scope, assignedId, customEvents, extend, ext
             }
         }
 
-        data.widgetArgs = {
+        widgetArgs = data.widgetArgs = {
             id: assignedId != null ? scope + '-' + assignedId : null,
             scope: scope,
-            customEvents: customEvents,
-            extend: extendParts
+            customEvents: customEvents
         };
+    }
+    
+    if (extendModule) {
+        if (widgetArgs.extend) {
+            // The nested extends should come before the outer extends
+            // since the extends are applied from left to right and the
+            // outer widget will expect for the inner widget to have been
+            // patched
+            widgetArgs.extend.push(extendModule);
+        } else {
+            widgetArgs.extend = [extendModule];
+        }
+    }
+
+    // Merge in the extend config...
+    if (extendConfig) {
+        widgetArgs.extendConfig = widgetArgs.extendConfig ?
+            extend(extendConfig, widgetArgs.extendConfig) :
+            extendConfig;
+    }
+
+    // Merge in the extend state...
+    if (extendState) {
+        widgetArgs.extendState = widgetArgs.extendState ?
+            extend(extendState, widgetArgs.extendState) :
+            extendState;
     }
 };
 

@@ -94,6 +94,25 @@ exports.process =function (node, compiler, template) {
             return;
         }
 
+        if (node.tag) {
+            if (!widgetArgs) {
+                widgetArgs = {};
+            }
+
+            if (!widgetArgs.id) {
+                widgetArgs.id = nextUniqueId();
+            }
+
+            idExpression = compiler.makeExpression('widget.elId(' +
+                widgetArgs.id +
+                ')');
+
+            // Prefix the unique ID with an exclamation point to make it clear that we
+            // we need to resolve the ID as a widget element ID.
+            nestedIdExpression = compiler.makeExpression(widgetArgs.id);
+            return;
+        }
+
         var idAttr = node.getAttribute('id');
         if (idAttr) {
             // Case 1 and 2 -- Using the existing "id" attribute
@@ -337,6 +356,7 @@ exports.process =function (node, compiler, template) {
         ensureNodeId(node);
 
         var preserveNode = compiler.createTagHandlerNode('w-preserve');
+
         preserveNode.setProperty('id', idExpression);
 
         if (bodyOnly) {
@@ -359,11 +379,13 @@ exports.process =function (node, compiler, template) {
 
     var widgetPreserve;
     if ((widgetPreserve = props['w-preserve']) != null) {
+        node.removeProperty('w-preserve');
         addPreserve(false);
     }
 
     var widgetPreserveBody;
     if ((widgetPreserveBody = props['w-preserve-body']) != null) {
+        node.removeProperty('w-preserve-body');
         addPreserve(true);
     }
 
@@ -534,7 +556,7 @@ exports.process =function (node, compiler, template) {
             }
 
             if (widgetArgs.extend) {
-                if (!widgetArgs.events) {
+                if (!widgetArgs.customEvents) {
                     widgetArgsParts.push('null');
                 }
 

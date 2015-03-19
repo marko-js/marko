@@ -7,16 +7,6 @@ var DUMMY_WIDGET_DEF = {
         }
     };
 
-function mergeExtendState(state, extendList) {
-    state = extend({}, state);
-
-    for (var i=2, len=extendList.length; i<len; i+=3) {
-        extend(state, extendList[i]);
-    }
-
-    return state;
-}
-
 module.exports = function render(input, out) {
     var global = out.global;
 
@@ -51,17 +41,35 @@ module.exports = function render(input, out) {
     var state = input.state || input._state;
     var widgetArgs = out.data.widgetArgs;
     var id = input.id;
-    var extend;
+    var extendList;
     var domEvents = input.domEvents;
     var customEvents;
     var scope;
+    var extendState;
+    var extendConfig;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
         id = widgetArgs.id || id;
-        extend = widgetArgs.extend;
+        extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
         scope = widgetArgs.scope;
+
+        if ((extendState = widgetArgs.extendState)) {
+            if (state) {
+                extend(state, extendState);
+            } else {
+                state = extendState;
+            }
+        }
+
+        if ((extendConfig = widgetArgs.extendConfig)) {
+            if (config) {
+                extend(config, extendConfig);
+            } else {
+                config = extendConfig;
+            }
+        }
     }
 
     var rerenderWidget = global.__rerenderWidget;
@@ -70,26 +78,6 @@ module.exports = function render(input, out) {
     if (rerenderWidget) {
         id = rerenderWidget.id;
         delete global.__rerenderWidget;
-    } else if (global.__rerender === true && state && id) {
-        console.log('Checking for existing widget: ', id, 'STATE: ', state);
-        var existingEl = document.getElementById(id);
-        if (existingEl) {
-            var existingWidget = existingEl.__widget;
-            if (existingWidget) {
-                // TODO Only reuse a widget if the types match
-                out.write('<span id="' + id + '"></span>');
-
-                if (extend) {
-                    // Merge in any additional state if the widget is being extended
-                    state = mergeExtendState(state, extend);
-                }
-
-                console.log('Found existing widget to reuse: ', id, 'STATE: ', state);
-
-                widgetsContext.addReusableWidget(existingWidget, state);
-                return;
-            }
-        }
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -106,7 +94,7 @@ module.exports = function render(input, out) {
             customEvents: customEvents,
             scope: scope,
             createWidget: input.createWidget,
-            extend: extend,
+            extend: extendList,
             existingWidget: rerenderWidget
         });
 
