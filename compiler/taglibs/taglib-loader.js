@@ -16,6 +16,7 @@ var raptorRegexp = require('raptor-regexp');
 var tagDefFromCode = require('./tag-def-from-code');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
+var jsonminify = require('jsonminify');
 
 var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
 var bodyFunctionRegExp = /^([A-Za-z_$][A-Za-z0-9_]*)(?:\(([^)]*)\))?$/;
@@ -218,7 +219,7 @@ function buildTag(tagObject, path, taglib, dirname) {
             tag.setBodyFunction(functionName, params);
         },
         bodyProperty: function(value) {
-            tag.setBodyProperty(value)
+            tag.setBodyProperty(value);
         },
         vars: function(value) {
             if (value) {
@@ -326,7 +327,7 @@ function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
 
         if (fs.existsSync(tagFile)) {
             // marko-tag.json exists in the directory, use that as the tag definition
-            tagDef = JSON.parse(fs.readFileSync(tagFile, {encoding: 'utf8'}));
+            tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, {encoding: 'utf8'})));
             if (!tagDef.renderer && !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;

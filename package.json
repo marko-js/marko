@@ -1,62 +1,63 @@
 {
-    "name": "marko",
-    "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
-    "keywords": [
-        "templating",
-        "template",
-        "async",
-        "streaming"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/raptorjs/marko.git"
-    },
-    "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": [
-        "Patrick Steele-Idem <pnidem@gmail.com>"
-    ],
-    "dependencies": {
-        "app-module-path": "^1.0.0",
-        "async-writer": "^1.1.2",
-        "browser-refresh-client": "^1.0.0",
-        "char-props": "~0.1.5",
-        "events": "^1.0.2",
-        "htmlparser2": "^3.7.2",
-        "marko-async": "^2.0.0",
-        "marko-layout": "^2.0.0",
-        "minimatch": "^0.2.14",
-        "property-handlers": "^1.0.0",
-        "raptor-args": "^1.0.0",
-        "raptor-json": "^1.0.1",
-        "raptor-logging": "^1.0.1",
-        "raptor-modules": "^1.0.5",
-        "raptor-polyfill": "^1.0.0",
-        "raptor-promises": "^1.0.1",
-        "raptor-regexp": "^1.0.0",
-        "raptor-strings": "^1.0.0",
-        "raptor-util": "^1.0.0",
-        "resolve-from": "^1.0.0",
-        "sax": "^0.6.0"
-    },
-    "devDependencies": {
-        "chai": "~1.8.1",
-        "dustjs-linkedin": "^2.3.4",
-        "jshint": "^2.5.0",
-        "mocha": "~1.15.1",
-        "raptor-cache": "^1.1.1",
-        "raptor-data-providers": "^1.0.1-beta",
-        "through": "^2.3.4"
-    },
-    "license": "Apache License v2.0",
-    "bin": {
-        "markoc": "bin/markoc"
-    },
-    "main": "runtime/marko-runtime.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "version": "2.1.6"
+  "name": "marko",
+  "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
+  "keywords": [
+    "templating",
+    "template",
+    "async",
+    "streaming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raptorjs/marko.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": [
+    "Patrick Steele-Idem <pnidem@gmail.com>"
+  ],
+  "dependencies": {
+    "app-module-path": "^1.0.0",
+    "async-writer": "^1.1.2",
+    "browser-refresh-client": "^1.0.0",
+    "char-props": "~0.1.5",
+    "events": "^1.0.2",
+    "htmlparser2": "^3.7.2",
+    "jsonminify": "^0.2.3",
+    "marko-async": "^2.0.0",
+    "marko-layout": "^2.0.0",
+    "minimatch": "^0.2.14",
+    "property-handlers": "^1.0.0",
+    "raptor-args": "^1.0.0",
+    "raptor-json": "^1.0.1",
+    "raptor-logging": "^1.0.1",
+    "raptor-modules": "^1.0.5",
+    "raptor-polyfill": "^1.0.0",
+    "raptor-promises": "^1.0.1",
+    "raptor-regexp": "^1.0.0",
+    "raptor-strings": "^1.0.0",
+    "raptor-util": "^1.0.0",
+    "resolve-from": "^1.0.0",
+    "sax": "^0.6.0"
+  },
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "dustjs-linkedin": "^2.3.4",
+    "jshint": "^2.5.0",
+    "mocha": "~1.15.1",
+    "raptor-cache": "^1.1.1",
+    "raptor-data-providers": "^1.0.1-beta",
+    "through": "^2.3.4"
+  },
+  "license": "Apache License v2.0",
+  "bin": {
+    "markoc": "bin/markoc"
+  },
+  "main": "runtime/marko-runtime.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "2.1.6"
 }
