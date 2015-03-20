@@ -217,6 +217,9 @@ function buildTag(tagObject, path, taglib, dirname) {
 
             tag.setBodyFunction(functionName, params);
         },
+        bodyProperty: function(value) {
+            tag.setBodyProperty(value)
+        },
         vars: function(value) {
             if (value) {
                 value.forEach(function(v, i) {

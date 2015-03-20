@@ -215,6 +215,9 @@ Taglib.Tag = makeClass({
             name: name,
             params: params
         };
+    },
+    setBodyProperty: function(propertyName) {
+        this.bodyProperty = propertyName;
     }
 });
 

@@ -114,18 +114,26 @@ TagHandlerNode.prototype = {
         var handlerVar = addHandlerVar(template, rendererPath);
         var tagHelperVar = template.addStaticVar('__tag', '__helpers.t');
         var bodyFunction = this.tag.bodyFunction;
+        var bodyProperty = this.tag.bodyProperty;
 
         this.tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
         }, this);
 
-        if (bodyFunction && this.hasChildren()) {
-            this.setProperty(bodyFunction.name, function(template) {
-                template.code('function(' + bodyFunction.params + ') {\n').indent(function () {
-                    _this.generateCodeForChildren(template);
-                }).indent().code('}');
-            });
+        if (this.hasChildren()) {
+            if (bodyFunction) {
+                this.setProperty(bodyFunction.name, function(template) {
+                    template.code('function(' + bodyFunction.params + ') {\n').indent(function () {
+                        _this.generateCodeForChildren(template);
+                    }).indent().code('}');
+                });
+            } else if (bodyProperty) {
+                this.setProperty(bodyProperty, function(template) {
+                    return _this.getBodyContentExpression(template);
+                });
+            }
         }
+
 
         var variableNames = [];
         _this.tag.forEachVariable(function (nestedVar) {
