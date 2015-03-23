@@ -185,7 +185,7 @@ describe('widget' , function() {
         expect(fooWidget.getWidget('bar')).to.be.an('undefined');
     });
 
-    it.only('should preserve DOM elements correctly', function() {
+    it('should preserve DOM elements correctly', function() {
         var preserveDomWidget = require('./fixtures/components/app-preserve-dom')
             .render({})
             .appendTo(document.getElementById('target'))
