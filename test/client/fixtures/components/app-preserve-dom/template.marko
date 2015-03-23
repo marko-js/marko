@@ -1,0 +1,31 @@
+<div w-bind>
+    <span w-id="preserve" w-preserve>
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <span w-id="preserveBody" w-preserve-body>
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <app-hello w-id="hello" name="Frank" w-preserve/>
+
+    <!-- Test without an ID -->
+
+    <span class="preserve" w-preserve>
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <span class="preserve-body" w-preserve-body>
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <app-hello name="Frank" w-preserve/>
+</div>
