@@ -178,6 +178,24 @@ describe('widget' , function() {
 
         expect(fooWidget.getWidget('bar')).to.be.an('undefined');
     });
+
+    it('should support conditional widgets', function() {
+        require('./fixtures/components/app-conditional-widget')
+            .render({
+                includeWidget: false
+            })
+            .appendTo(document.getElementById('target'));
+
+        expect(window.testData.widgets['app-conditional-widget'] == null).to.equal(true);
+
+        require('./fixtures/components/app-conditional-widget')
+            .render({
+                includeWidget: true
+            })
+            .appendTo(document.getElementById('target'));
+
+        expect(window.testData.widgets['app-conditional-widget'] == null).to.equal(false);
+    });
 });
 
 
