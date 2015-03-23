@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "require: ./widget",
-        "../app-extend-button/optimizer.json"
-    ]
-}
