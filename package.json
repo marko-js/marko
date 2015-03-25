@@ -50,7 +50,7 @@
     "mocha": "~1.15.1",
     "mocha-phantomjs": "^3.5.3",
     "optimizer": "^1.8.2",
-    "optimizer-marko": "^1.1.4",
+    "optimizer-marko": "^2.0.1",
     "phantomjs": "^1.9.15",
     "raptor-args": "^1.0.2",
     "raptor-strings": "^1.0.0"
