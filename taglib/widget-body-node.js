@@ -25,19 +25,12 @@ BodyNode.prototype = {
         template.addStaticVar('__widgetBody',
             'require("marko-widgets/taglib/helpers").widgetBody');
 
-        var escapeXml = template.getEscapeXmlFunction();
-
-        var widgetBodyArgs = this.getProperty('widgetBodyArgs');
-
         // console.log(module.id, this);
         template.statement('__widgetBody(out, ' +
             this.getProperty('id') +
             ', ' +
             this.getProperty('body') +
-            ', ' +
-            escapeXml +
-            (widgetBodyArgs ? ', ' + widgetBodyArgs : '') +
-            ');');
+            ', widget);');
     }
 };
 

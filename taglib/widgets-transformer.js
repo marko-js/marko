@@ -21,24 +21,6 @@ var nodePath = require('path');
 
 var markoWidgets = require('../');
 
-function getWidgetNode(node) {
-    if (!node) {
-        return;
-    }
-
-    while (true) {
-        if (node.qName === 'w-widget') {
-            return node;
-        }
-
-        node = node.parentNode;
-        if (!node) {
-            break;
-        }
-    }
-    return undefined;
-}
-
 function isUpperCase(c) {
     return c == c.toUpperCase();
 }
@@ -69,6 +51,32 @@ exports.process =function (node, compiler, template) {
     var nestedIdExpression;
     var idExpression;
     var widgetElIdExpression;
+
+    var _widgetNode;
+
+    function getWidgetNode() {
+        var curNode = node;
+
+        if (_widgetNode !== undefined) {
+            return _widgetNode;
+        }
+
+        while (true) {
+            if (curNode.qName === 'w-widget') {
+                _widgetNode = curNode;
+                return _widgetNode;
+            }
+
+            curNode = curNode.parentNode;
+            if (!curNode) {
+                break;
+            }
+        }
+
+        _widgetNode = null;
+
+        return undefined;
+    }
 
     function nextUniqueId() {
         if (template.data.widgetNextElId == null) {
@@ -337,18 +345,14 @@ exports.process =function (node, compiler, template) {
             widgetBody = 'data.widgetBody';
         }
 
-        var widgetBodyArgs = props['w-body-args'];
-
-        if (!widgetBodyArgs) {
-            widgetBodyArgs = template.makeExpression('[widget]');
-        }
-
         ensureNodeId(node);
+
+        var widgetTagNode = getWidgetNode();
+        widgetTagNode.setProperty('body', nestedIdExpression);
 
         node.appendChild(compiler.createNode('w-body', {
             id: idExpression,
-            body: widgetBody,
-            widgetBodyArgs: widgetBodyArgs
+            body: widgetBody
         }));
     }
 
@@ -389,18 +393,13 @@ exports.process =function (node, compiler, template) {
         addPreserve(true);
     }
 
-    var widgetTagNode;
-
-
     function addDirectEventListener(eventType, targetMethod) {
         ensureNodeId();
 
         // The event does not support bubbling, so the widget
         // must attach the listeners directly to the target
         // elements when the widget is initialized.
-        if (!widgetTagNode) {
-            widgetTagNode = getWidgetNode(node);
-        }
+        var widgetTagNode = getWidgetNode();
 
         if (!widgetTagNode) {
             node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
@@ -427,9 +426,7 @@ exports.process =function (node, compiler, template) {
 
     function addBubblingEventListener(eventType, targetMethod) {
 
-        if (!widgetTagNode) {
-            widgetTagNode = getWidgetNode(node);
-        }
+        var widgetTagNode = getWidgetNode();
 
         if (!widgetTagNode) {
             node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');

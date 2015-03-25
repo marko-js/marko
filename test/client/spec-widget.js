@@ -193,6 +193,15 @@ describe('widget' , function() {
 
         preserveDomWidget.testPreserveDOM();
     });
+
+    it('should reuse widgets', function() {
+        var widget = require('./fixtures/components/app-stateful-reuse-widgets')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testReuseWidgets();
+    });
 });
 
 

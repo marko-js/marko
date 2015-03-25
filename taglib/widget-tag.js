@@ -40,6 +40,8 @@ module.exports = function render(input, out) {
     var config = input.config || input._cfg;
     var state = input.state || input._state;
     var widgetArgs = out.data.widgetArgs;
+    var bodyElId = input.body;
+
     var id = input.id;
     var extendList;
     var domEvents = input.domEvents;
@@ -95,7 +97,8 @@ module.exports = function render(input, out) {
             scope: scope,
             createWidget: input.createWidget,
             extend: extendList,
-            existingWidget: rerenderWidget
+            existingWidget: rerenderWidget,
+            bodyElId: bodyElId
         });
 
         input.renderBody(out, widgetDef);
