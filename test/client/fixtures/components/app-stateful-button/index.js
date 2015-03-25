@@ -71,5 +71,9 @@ module.exports = require('marko-widgets').defineWidget({
 
     setLabel: function(label) {
         this.setState('label', label);
+    },
+
+    getSize: function() {
+        return this.state.size;
     }
 });

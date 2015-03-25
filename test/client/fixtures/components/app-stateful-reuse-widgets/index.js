@@ -25,9 +25,12 @@ module.exports = require('marko-widgets').defineWidget({
 
         expect(this.getWidget('button1').getBodyEl().innerHTML).to.equal('normal');
 
-        this.setButtonSize('small');
-        this.rerender();
+        var self = this;
 
+        require('marko-widgets').batchUpdate(function() {
+            self.setButtonSize('small');
+            self.rerender();
+        });
 
         var newButton1El = this.getWidget('button1').el;
         var newButton2El = this.getEl('button2');
@@ -47,5 +50,6 @@ module.exports = require('marko-widgets').defineWidget({
         //
         // // State didn't change for button2 so it should be the same el
         expect(newButton2El).to.equal(oldButton2El);
+
     }
 });
