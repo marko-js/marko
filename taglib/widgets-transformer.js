@@ -348,7 +348,9 @@ exports.process =function (node, compiler, template) {
         ensureNodeId(node);
 
         var widgetTagNode = getWidgetNode();
-        widgetTagNode.setProperty('body', nestedIdExpression);
+        if (widgetTagNode) {
+            widgetTagNode.setProperty('body', nestedIdExpression);            
+        }
 
         node.appendChild(compiler.createNode('w-body', {
             id: idExpression,
