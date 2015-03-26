@@ -93,7 +93,6 @@ Widget.prototype = {
         expect(this.logOutput).to.deep.equal(['button>span:mousemove', 'el:mousemove']);
 
         this.clearLog();
-        debugger;
         this.triggerMouseEvent(document.getElementById('fooLink'), 'dblclick');
         expect(this.logOutput).to.deep.equal(['#fooLink:dblclick']);
 

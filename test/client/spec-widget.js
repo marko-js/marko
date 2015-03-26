@@ -133,6 +133,73 @@ describe('widget' , function() {
 
         widget.testReuseWidgets();
     });
+
+    it('should support widgets with a custom renderer and a template', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('./fixtures/components/app-renderer-and-template')
+            .render({
+                name: 'Frank'
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Frank');
+        widget.setName('John');
+        expect(targetEl.innerHTML).to.contain('John');
+        expect(targetEl.innerHTML).to.not.contain('Frank');
+
+        widget.rerender({
+            name: 'Jane'
+        });
+
+        expect(targetEl.innerHTML).to.contain('Jane');
+    });
+
+    it('should support widgets with a renderer only', function() {
+        var targetEl = document.getElementById('target');
+
+        require('./fixtures/components/app-renderer-only')
+            .render({
+                name: 'Frank'
+            })
+            .appendTo(targetEl);
+
+        expect(targetEl.innerHTML).to.equal('Hello Frank!');
+    });
+
+    it('should support re-rendering a stateless widget with new props', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('./fixtures/components/app-simple')
+            .render({
+                name: 'Frank',
+                messageCount: 10
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
+
+        require('marko-widgets').batchUpdate(function() {
+            widget.setProps({
+                name: 'John',
+                messageCount: 20
+            });
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
+
+        require('marko-widgets').batchUpdate(function() {
+            widget.setProps({
+                name: 'Jane',
+                messageCount: 30
+            });
+            expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello Jane! You have 30 new messages.');
+    });
 });
 
 
