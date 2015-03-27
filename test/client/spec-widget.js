@@ -168,10 +168,10 @@ describe('widget' , function() {
         expect(targetEl.innerHTML).to.equal('Hello Frank!');
     });
 
-    it('should support re-rendering a stateless widget with new props', function() {
+    it('should support lifecycle event handler methods', function() {
         var targetEl = document.getElementById('target');
 
-        var widget = require('./fixtures/components/app-simple')
+        var widget = require('./fixtures/components/app-lifecycle-events')
             .render({
                 name: 'Frank',
                 messageCount: 10
@@ -180,25 +180,25 @@ describe('widget' , function() {
             .getWidget();
 
         expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
+        expect(widget.lifecycleEvents).to.deep.equal([]);
 
-        require('marko-widgets').batchUpdate(function() {
-            widget.setProps({
-                name: 'John',
-                messageCount: 20
-            });
-        });
-
-        expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
 
         require('marko-widgets').batchUpdate(function() {
             widget.setProps({
                 name: 'Jane',
                 messageCount: 30
             });
-            expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
+            expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
+            expect(widget.lifecycleEvents).to.deep.equal([]);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Jane! You have 30 new messages.');
+
+        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+
+        widget.destroy();
+
+        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
     });
 });
 

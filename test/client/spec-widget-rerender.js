@@ -11,7 +11,7 @@ describe('widget re-render' , function() {
         var previousSibling = document.createElement('div');
         document.getElementById('target').appendChild(previousSibling);
 
-        var widget = require('./fixtures/components/app-rerender')
+        var widget = require('./fixtures/components/app-legacy-rerender')
             .render({
                 label: 'Foo'
             })
@@ -47,7 +47,7 @@ describe('widget re-render' , function() {
     });
 
     it('should use the same ID for re-rendered widgets', function() {
-        var widget = require('./fixtures/components/app-rerender')
+        var widget = require('./fixtures/components/app-legacy-rerender')
             .render({
                 label: 'Foo'
             })
@@ -61,6 +61,91 @@ describe('widget re-render' , function() {
         });
 
         expect(widget.el.id).to.equal(oldId);
+    });
+
+    it('should support re-rendering a stateless widget with new props', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('./fixtures/components/app-simple')
+            .render({
+                name: 'Frank',
+                messageCount: 10
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
+
+        require('marko-widgets').batchUpdate(function() {
+            widget.setProps({
+                name: 'John',
+                messageCount: 20
+            });
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
+
+        require('marko-widgets').batchUpdate(function() {
+            widget.setProps({
+                name: 'Jane',
+                messageCount: 30
+            });
+            expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello Jane! You have 30 new messages.');
+    });
+
+    it('should reuse stateful widgets during a re-render', function() {
+        var widget = require('./fixtures/components/app-stateful-reuse-widgets')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testReuseWidgets();
+    });
+
+    it('should reuse stateless widgets during a re-render', function() {
+        var widget = require('./fixtures/components/app-stateless-reuse-widgets')
+            .render({
+                buttonSize: 'normal'
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var oldButton1Widget = widget.getWidget('button1');
+        var oldButton2Widget = widget.getEl('button2').__widget;
+        var oldButton1El = oldButton1Widget.el;
+        var oldButton2El = widget.getEl('button2');
+
+        expect(widget.getWidget('button1').el.innerHTML.trim()).to.equal('normal');
+
+        var self = widget;
+
+        require('marko-widgets').batchUpdate(function() {
+            self.setProps({
+                buttonSize: 'small'
+            });
+        });
+
+        var newButton1El = widget.getWidget('button1').el;
+        var newButton2El = widget.getEl('button2');
+
+        // // Both button widgets should be reused
+        expect(widget.getWidget('button1') === oldButton1Widget).to.equal(true);
+        expect(widget.getEl('button2').__widget === oldButton2Widget).to.equal(true);
+
+        expect(widget.getWidget('button1').el.innerHTML.trim()).to.equal('small');
+
+
+        // // State changed for button1 so it should have a new el
+        // // since it re-renders to update its view
+        // console.log('newButton1El: ', newButton1El);
+        expect(newButton1El !== oldButton1El).to.equal(true);
+
+        //
+        // // State didn't change for button2 so it should be the same el
+        expect(newButton2El !== oldButton2El).to.equal(true);
     });
 });
 

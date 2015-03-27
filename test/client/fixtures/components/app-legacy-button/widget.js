@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
 
 function Widget(config) {
-    this.name = 'app-button';
-    window.testData.addWidget('app-button', this);
+    this.name = 'app-legacy-button';
+    window.testData.addWidget('app-legacy-button', this);
 
     var logOutput = this.logOutput = [];
 
@@ -17,9 +17,9 @@ function Widget(config) {
 Widget.prototype = {
     handleRootMouseDown: function(event, el) {
         this.clicked = true;
-        expect(el.getAttribute('class')).to.equal('app-button');
+        expect(el.getAttribute('class')).to.equal('app-legacy-button');
         this.log('click');
-        expect(this.name).to.equal('app-button');
+        expect(this.name).to.equal('app-legacy-button');
     }
 };
 

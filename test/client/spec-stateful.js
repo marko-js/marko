@@ -25,15 +25,6 @@ describe('stateful widgets' , function() {
         expect(widget.el.className).to.contain('small');
     });
 
-    it('should reuse widgets', function() {
-        var widget = require('./fixtures/components/app-stateful-reuse-widgets')
-            .render({})
-            .appendTo(document.getElementById('target'))
-            .getWidget();
-
-        widget.testReuseWidgets();
-    });
-
     it('should preserve body content', function() {
         var widget = require('./fixtures/components/app-stateful-preserve-body')
             .render({})
