@@ -3,7 +3,7 @@ marko-widgets
 
 [![Build Status](https://travis-ci.org/raptorjs/marko-widgets.svg?branch=master)](https://travis-ci.org/raptorjs/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The `marko-widgets` module provides a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. This module also supports inter-widget communication and provides a simple framework that encourages best practices and makes it easy to "wire up" complex applications. There is no complex widget class hierarchy or complex API and you are free to use jQuery or any other library for working with the DOM.
+Marko Widgets extends the [Marko templating language](https://github.com/raptorjs/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, Marko Widgets provides an efficient and simple mechanism for automatically updating the DOM whenever a widget's internal view state changes. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
 
 ![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
 
@@ -12,17 +12,24 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 
 # Table of Contents
 
+- [Features](#features)
+- [Design Philosophy](#design-philosophy)
 - [Sample Code](#sample-code)
+	- [Stateless Widget](#stateless-widget)
+	- [Stateless Widget with Behavior](#stateless-widget-with-behavior)
+	- [Stateful Widget](#stateful-widget)
+	- [Stateful Widget with Update Handlers](#stateful-widget-with-update-handlers)
+	- [Complex Widget](#complex-widget)
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
 	- [Binding Behavior](#binding-behavior)
 	- [Widget Config](#widget-config)
-	- [Referencing Widgets](#referencing-widgets)
-	- [Referencing Widget DOM Elements](#referencing-widget-dom-elements)
-	- [Attaching Event Listeners](#attaching-event-listeners)
-		- [Attaching Custom Event Listeners](#attaching-custom-event-listeners)
-		- [Attaching DOM Event Listeners](#attaching-dom-event-listeners)
+	- [Referencing Nested Widgets](#referencing-nested-widgets)
+	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
+	- [Adding Event Listeners](#adding-event-listeners)
+		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
+		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
 	- [Rendering Widgets in the Browser](#rendering-widgets-in-the-browser)
 	- [Rendering Widgets on the Server](#rendering-widgets-on-the-server)
 - [API](#api)
@@ -35,7 +42,10 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 			- [detach()](#detach)
 			- [emit(eventType, arg1, arg2, ...)](#emiteventtype-arg1-arg2-)
 			- [getEl(widgetElId)](#getelwidgetelid)
+			- [getEls(id)](#getelsid)
 			- [getElId(widgetElId)](#getelidwidgetelid)
+			- [getWidget(id[, index])](#getwidgetid-index)
+			- [getWidgets(id)](#getwidgetsid)
 			- [insertAfter(targetEl)](#insertaftertargetel)
 			- [insertBefore(targetEl)](#insertbeforetargetel)
 			- [isDestroyed()](#isdestroyed)
@@ -49,12 +59,6 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 		- [Properties](#properties)
 			- [this.el](#thisel)
 			- [this.id](#thisid)
-			- [this.widgets](#thiswidgets)
-	- [WidgetCollection](#widgetcollection)
-		- [Methods](#methods-1)
-			- [forEach([id], callback)](#foreachid-callback)
-		- [Properties](#properties-1)
-			- [this.*](#this)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
@@ -63,17 +67,238 @@ The `marko-widgets` module provides a simple and efficient mechanism for binding
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+# Features
+
+- Simple
+	- Clean JavaScript syntax for defining widgets
+	- Utilizes [Marko templates](https://github.com/raptorjs/marko) (an HTML-based templating language) for the view
+	- Supports stateful and stateless widgets
+		- Stateful widgets auto-update if internal state changes
+	- No complex class hierarchy
+	- Simple, declarative event binding for both DOM and custom events
+	- Lifecycle management for widgets (easily destroy and create widgets)
+	- Events bubble up and view state changes trickle down
+	- Only need to understand a few concepts to get started
+- High performance
+	- Lightning fast performance on the server and in the browser (see [Marko vs React: Performance Benchmark](https://github.com/patrick-steele-idem/marko-vs-react))
+	- Supports streaming and asynchronous rendering
+	- Efficient binding of behavior of UI components rendered on the server and in the browser
+	- Efficient updating of the DOM via the following tricks:
+		- Batched updates
+		- Nested widgets and associated DOM nodes are reused instead of being re-rendered
+		- Full re-rendering of a widget can be short circuited if state transition handlers are provided
+		- For container components, nested body DOM nodes are automatically preserved
+		- Entire DOM subtrees can be preserved between rendering
+		- Smart template compilers to offload as much work to compile time
+	- Very efficient event delegation
+- Lightweight
+	- Extremely small JavaScript runtime (~6.3 KB gzipped)
+	- No dependencies on any other JavaScript library such as jQuery
+	- Focused exclusively on the UI view (easily mix and match with other libraries/frameworks)
+
+# Design Philosophy
+
+- A UI component should encapsulate view, behavior and styling
+- A complex page should be decomposed into modular UI components
+- UI components should be used as building blocks
+- A component's view should be driven by a pure function that accepts an input state and produces output HTML
+- A UI component should be independently testable
+- A UI component should not leak its internal implementation
+- A UI component should be installable via npm
+- A UI component should play nice with other frameworks and libraries
+- UI components should be easily composable
+- Developers should not need to manually manipulate the DOM
+
 # Sample Code
 
-Marko Widgets allows you to declaratively bind behavior to an HTML element inside a Marko template. The widget provides the client-side behavior for your UI component. A sample Marko template is shown below:
+Marko Widgets allows you to declaratively bind behavior to an HTML element inside a Marko template. The widget provides the client-side behavior for your UI component.
+
+## Stateless Widget
+
+__src/components/app-hello/template.marko__
 
 ```html
-<div w-bind="./widget">
+<div w-bind>
+	Hello ${data.name}!
+</div>
+```
+
+__src/components/app-hello/index.js__
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getTemplateData: function(state, input) {
+		return {
+			name: input.name
+		};
+	}
+});
+```
+
+Congratulations, you just built a reusable UI component! Your UI component can be embedded in other Marko template files:
+
+```html
+<div>
+	<app-hello name="Frank"/>
+</div>
+```
+
+In addition, your UI can be rendered and added to the DOM using the JavaScript API:
+
+```javascript
+var widget = require('./app-hello')
+	.render({
+		name: 'John'
+	})
+	.appendTo(document.body)
+	.getWidget();
+
+// Changing the props will trigger the widget to re-render
+// with the new props and for the DOM to be updated:
+widget.setProps({
+	name: 'Jane'
+});
+```
+
+## Stateless Widget with Behavior
+
+__src/components/app-hello/template.marko__
+
+```html
+<div w-bind
+	 w-onClick="handleClick">
+
+	Hello ${data.name}!
+
+</div>
+```
+
+__src/components/app-hello/index.js__
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getTemplateData: function(state, input) {
+		return {
+			name: input.name
+		};
+	},
+
+	handleClick: function() {
+		this.el.style.backgroundColor = 'yellow';
+	}
+});
+```
+
+## Stateful Widget
+
+Let's create a stateful widget that changes to yellow when you click on it:
+
+__src/components/app-hello/template.marko__
+
+```html
+<div w-bind
+	 w-onClick="handleClick"
+	 style="background-color: ${data.color}">
+
+	Hello ${data.name}!
+
+</div>
+```
+
+__src/components/app-hello/index.js__
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getInitialState: function(input) {
+		return {
+			name: input.name,
+			color: input.color || null;
+		}
+	},
+
+	getTemplateData: function(state, input) {
+		return {
+			name: state.name,
+			color: state.color
+		};
+	},
+
+	handleClick: function() {
+		this.setState('color', 'yellow');
+	},
+
+	getColor: function() {
+		return this.state.color;
+	}
+});
+```
+
+## Stateful Widget with Update Handlers
+
+If you want to avoid re-rendering a widget for a particular state property change then simply provide your own method to handle the state change as shown below:
+
+__src/components/app-hello/template.marko__
+
+```html
+<div w-bind
+	 w-onClick="handleClick"
+	 style="background-color: ${data.color}">
+
+	Hello ${data.name}!
+
+</div>
+```
+
+__src/components/app-hello/index.js__
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getInitialState: function(input) {
+		return {
+			name: input.name,
+			color: input.color || null;
+		}
+	},
+
+	getTemplateData: function(state, input) {
+		return {
+			name: state.name,
+			color: state.color
+		};
+	},
+
+	update_color: function(newColor) {
+		// Manually update the DOM to reflect the new
+		// color to avoid re-rendering the entire widget.
+		this.el.style.backgroundColor = newColor;
+	},
+
+	handleClick: function() {
+		this.setState('color', 'yellow');
+	},
+
+	getColor: function() {
+		return this.state.color;
+	}
+});
+```
+
+## Complex Widget
+
+```html
+<div w-bind>
 	<app-overlay title="My Overlay"
 		w-id="overlay"
 		w-onBeforeHide="handleOverlayBeforeHide">
-
-		Content for overlay.
+		Body content for overlay.
 	</app-overlay>
 
 	<button type="button"
@@ -85,23 +310,22 @@ Marko Widgets allows you to declaratively bind behavior to an HTML element insid
 		w-onclick="handleHideButtonClick">
 		Hide Overlay
 	</button>
-
-	<button type="button"
-		w-onclick="handleDestroyButtonClick">
-		Destroy Overlay
-	</button>
 </div>
 ```
 
-Below is the content of `widget.js` where the widget type is defined:
+Below is the content of `index.js` where the widget type is defined:
 
 ```javascript
-function Widget() {
-	var el = this.el; // el will be the raw DOM element your widget is bound to
-}
+module.exports = require('marko-widgets').defineWidget({
+	init: function() {
+		// this.el will be the raw DOM element the widget instance
+		// is bound to:
+		var el = this.el;
+	},
 
-Widget.prototype = {
-    handleShowButtonClick: function(event) {
+	template: require.resolve('./template.marko'),
+
+	handleShowButtonClick: function(event) {
 		console.log('Showing overlay...');
         this.getWidget('overlay').show();
     },
@@ -111,19 +335,10 @@ Widget.prototype = {
         this.getWidget('overlay').hide();
     },
 
-    handleDestroyButtonClick: function(event) {
-		// Permanently remove the overlay out of the DOM while
-		// also doing proper cleanup.
-        this.getWidget('overlay').destroy();
-		console.log('Overlay destroyed!');
-    },
-
     handleOverlayBeforeHide: function(event) {
         console.log('The overlay is about to be hidden!');
     }
-};
-
-exports.Widget = Widget;
+})
 ```
 
 # Installation
