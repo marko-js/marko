@@ -349,7 +349,7 @@ exports.process =function (node, compiler, template) {
 
         var widgetTagNode = getWidgetNode();
         if (widgetTagNode) {
-            widgetTagNode.setProperty('body', nestedIdExpression);            
+            widgetTagNode.setProperty('body', nestedIdExpression);
         }
 
         node.appendChild(compiler.createNode('w-body', {
@@ -502,7 +502,7 @@ exports.process =function (node, compiler, template) {
                     }
 
                     // Normalize DOM event types to be all lower case
-                    propName = propName.toLowerCase();
+                    eventType = eventType.toLowerCase();
 
                     // Node is for an HTML element so treat the event as a DOM event
                     var isBubbleEvent = markoWidgets.isBubbleEvent(eventType);
