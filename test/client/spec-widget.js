@@ -200,6 +200,19 @@ describe('widget' , function() {
 
         expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
     });
+
+    it('should support getInitialProps', function() {
+        var targetEl = document.getElementById('target');
+
+        require('./fixtures/components/app-getInitialProps')
+            .render({
+                name: 'Frank'
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Hello FRANK!');
+    });
 });
 
 
