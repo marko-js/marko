@@ -3,7 +3,7 @@ marko-widgets
 
 [![Build Status](https://travis-ci.org/raptorjs/marko-widgets.svg?branch=master)](https://travis-ci.org/raptorjs/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Marko Widgets extends the [Marko templating language](https://github.com/raptorjs/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, Marko Widgets provides an efficient and simple mechanism for automatically updating the DOM whenever a widget's internal view state changes. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
+Marko Widgets extends the [Marko templating language](https://github.com/raptorjs/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
 
 ![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
 
@@ -73,7 +73,6 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 	- Clean JavaScript syntax for defining widgets
 	- Utilizes [Marko templates](https://github.com/raptorjs/marko) (an HTML-based templating language) for the view
 	- Supports stateful and stateless widgets
-		- Stateful widgets auto-update if internal state changes
 	- No complex class hierarchy
 	- Simple, declarative event binding for both DOM and custom events
 	- Lifecycle management for widgets (easily destroy and create widgets)
@@ -85,7 +84,8 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 	- Efficient binding of behavior of UI components rendered on the server and in the browser
 	- Efficient updating of the DOM via the following tricks:
 		- Batched updates
-		- Nested widgets and associated DOM nodes are reused instead of being re-rendered
+		- When re-rendering a widget, nested widgets are reused
+		- Only widgets whose state changed are re-rendered
 		- Full re-rendering of a widget can be short circuited if state transition handlers are provided
 		- For container components, nested body DOM nodes are automatically preserved
 		- Entire DOM subtrees can be preserved between rendering
@@ -133,6 +133,11 @@ module.exports = require('marko-widgets').defineWidget({
 		return {
 			name: input.name
 		};
+	},
+
+	init: function() {
+		var el = this.el; // The root DOM element that the widget is bound to
+		console.log('Initializing widget: ' + el.id);
 	}
 });
 ```
@@ -188,7 +193,15 @@ module.exports = require('marko-widgets').defineWidget({
 	},
 
 	handleClick: function() {
-		this.el.style.backgroundColor = 'yellow';
+		this.setSelected(true);
+	},
+
+	setSelected: function(selected) {
+		if (selected) {
+			this.el.style.backgroundColor = 'yellow';
+		} else {
+			this.el.style.backgroundColor = null;
+		}
 	}
 });
 ```
@@ -212,29 +225,34 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
+
+var styleUtil = require('marko-widgets/util/style');
+
 module.exports = require('marko-widgets').defineWidget({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
 			name: input.name,
-			color: input.color || null;
+			selected: input.selected || false;
 		}
 	},
 
 	getTemplateData: function(state, input) {
+		var style = ;
+
 		return {
 			name: state.name,
-			color: state.color
+			color: state.selected ? 'yellow' : 'transparent'
 		};
 	},
 
 	handleClick: function() {
-		this.setState('color', 'yellow');
+		this.setState('selected', true);
 	},
 
-	getColor: function() {
-		return this.state.color;
+	isSelected: function() {
+		return this.state.selected;
 	}
 });
 ```
@@ -264,29 +282,35 @@ module.exports = require('marko-widgets').defineWidget({
 	getInitialState: function(input) {
 		return {
 			name: input.name,
-			color: input.color || null;
+			selected: input.selected || false;
 		}
 	},
 
 	getTemplateData: function(state, input) {
+		var style = ;
+
 		return {
 			name: state.name,
-			color: state.color
+			color: state.selected ? 'yellow' : 'transparent'
 		};
 	},
 
-	update_color: function(newColor) {
-		// Manually update the DOM to reflect the new
-		// color to avoid re-rendering the entire widget.
-		this.el.style.backgroundColor = newColor;
-	},
-
 	handleClick: function() {
-		this.setState('color', 'yellow');
+		this.setState('selected', true);
 	},
 
-	getColor: function() {
-		return this.state.color;
+	isSelected: function() {
+		return this.state.selected;
+	},
+
+	update_selected: function(newSelected) {
+		// Manually update the DOM to reflect the new "selected"
+		// state" to avoid re-rendering the entire widget.
+		if (selected) {
+			this.el.style.backgroundColor = 'yellow';
+		} else {
+			this.el.style.backgroundColor = null;
+		}
 	}
 });
 ```
@@ -302,12 +326,12 @@ module.exports = require('marko-widgets').defineWidget({
 	</app-overlay>
 
 	<button type="button"
-		w-onclick="handleShowButtonClick">
+		w-onClick="handleShowButtonClick">
 		Show Overlay
 	</button>
 
 	<button type="button"
-		w-onclick="handleHideButtonClick">
+		w-onClick="handleHideButtonClick">
 		Hide Overlay
 	</button>
 </div>
@@ -339,6 +363,69 @@ module.exports = require('marko-widgets').defineWidget({
         console.log('The overlay is about to be hidden!');
     }
 })
+```
+
+## Container Widget
+
+A container widget supports nested content. When the container widget is re-rendered, the nested content is automatically preserved.
+
+__src/components/app-alert/index.js__
+
+```html
+<div class="alert alert-${data.type}" w-bind>
+	<i class="alert-icon"/>
+	<span w-body></span>
+</div>
+```
+
+__src/components/app-alert/template.marko__
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	init: function() {
+		// this.el will be the raw DOM element the widget instance
+		// is bound to:
+		var el = this.el;
+	},
+
+	template: require.resolve('./template.marko'),
+
+	getInitialState: function(input) {
+		return {
+			type: input.type || 'success'
+		}
+	},
+
+	getTemplateData: function(state, input) {
+		return {
+			type: state.type
+		};
+	},
+
+	getWidgetBody: function(input) {
+		return input.message || input.renderBody;
+    },
+
+	setType: function(type) {
+		this.setState('type', type);
+	}
+})
+```
+
+The widget can then be used as shown below:
+
+```html
+<app-alert message="This is a success alert"/>
+
+<app-alert>
+	This is a success alert
+</app-alert>
+
+<app-alert message="This is a failure alert" type="failure"/>
+
+<app-alert type="failure">
+	This is a failure alert
+</app-alert>
 ```
 
 # Installation
