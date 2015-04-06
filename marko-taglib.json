@@ -101,6 +101,9 @@
             "attributes": {
                 "id": "string"
             }
+        },
+        "w-register-widget": {
+            "node-class": "./taglib/register-widget-node.js"
         }
     }
 }
