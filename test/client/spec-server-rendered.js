@@ -148,4 +148,12 @@ describe('server-rendered' , function() {
             widget.testDestroy();
         });
     });
+
+    it('[server-rendered] should allow fixed IDs for widgets', function() {
+        window.testData.widgets['app-fixed-id'].forEach(function(widget) {
+            expect(widget.id).to.equal('appFixedId');
+            widget.testGetWidget();
+            widget.testGetEl();
+        });
+    });
 });

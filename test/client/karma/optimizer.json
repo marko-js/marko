@@ -1,9 +1,0 @@
-{
-    "dependencies": [
-        "require: jquery",
-        "require: marko-widgets",
-        "require: ./generated/page-server-init.json",
-        "./fixtures/pages/**/optimizer.json",
-        "require-run: spec-*.js"
-    ]
-}
