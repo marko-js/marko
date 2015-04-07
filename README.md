@@ -541,8 +541,27 @@ require('fancy-checkbox').render({
 
 
 
-If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input)` method.
+If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input)` method as shown below:
 
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getInitialProps: function(input) {
+		return {
+			size: input.size ? input.size.toLowerCase() : 'normal'
+		};
+	},
+
+	getTemplateData: function(state, input) {
+		// input will be the value returned by getInitialProps()
+		// ...
+	}
+
+	// ...
+});
+```
 
 ## Widget Template
 
