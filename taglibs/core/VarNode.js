@@ -39,7 +39,7 @@ VarNode.prototype = {
             if (isStatic) {
                 template.addStaticVar(varName, value);
             } else {
-                template.statement('var ' + varName + (value ? '=' + value : '') + ';');    
+                template.statement('var ' + varName + (value ? ' = ' + value : '') + ';');    
             }
         }
     }
