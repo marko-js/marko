@@ -1,4 +1,4 @@
-function assignWidgetId() {
+function assignWidgetId(isRepeated) {
     var compiler = this.compiler;
     var node = this.node;
 
@@ -104,6 +104,10 @@ function assignWidgetId() {
     } else {
         // Case 3 - We need to add a unique "id" attribute
         var uniqueElId = this.nextUniqueId();
+
+        if (isRepeated) {
+            uniqueElId += '[]';
+        }
 
         // Prefix the unique ID with an exclamation point to make it clear that we
         // we need to resolve the ID as a widget element ID.

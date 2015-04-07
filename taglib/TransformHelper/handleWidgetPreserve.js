@@ -4,12 +4,28 @@ function addPreserve(transformHelper, bodyOnly) {
     var node = transformHelper.node;
 
     var preserveNode = compiler.createTagHandlerNode('w-preserve');
-
-    preserveNode.setProperty('id', transformHelper.getIdExpression());
+    transformHelper.assignWidgetId(true /* repeated */);
 
     if (bodyOnly) {
         preserveNode.setProperty('bodyOnly', template.makeExpression(bodyOnly));
     }
+
+    var nextVarId = template.data.nextWidgetPreserveId;
+    if (nextVarId == null) {
+        nextVarId = template.data.nextWidgetPreserveId = 0;
+    }
+
+    var idVarName = '__preserve' + (template.data.nextWidgetPreserveId++);
+    var idExpression = template.makeExpression(idVarName);
+    node.setAttribute('id', idExpression);
+    preserveNode.setProperty('id', idExpression);
+
+    var varNode = compiler.createNode('var', {
+        name: idVarName,
+        value: transformHelper.getIdExpression()
+    });
+
+    node.parentNode.insertBefore(varNode, node);
 
     if (bodyOnly) {
         node.forEachChild(function(childNode) {

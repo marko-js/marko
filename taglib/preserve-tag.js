@@ -4,12 +4,16 @@ module.exports = function render(input, out) {
 
     var global = out.global;
 
+
+
     if (global.__rerender === true) {
+        var id = input.id;
+        
         // See if the DOM node with the given ID already exists.
         // If so, then reuse the existing DOM node instead of re-rendering
         // the children. We have to put a placeholder node that will get
         // replaced out if we find that the DOM node has already been rendered
-        var id = input.id;
+
         var existingEl = document.getElementById(id);
         if (existingEl) {
             var widgetsContext = widgets.getWidgetsContext(out);

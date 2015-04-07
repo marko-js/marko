@@ -125,6 +125,24 @@ describe('widget' , function() {
         preserveDomWidget.testPreserveDOM();
     });
 
+    it('should preserve repeated DOM elements correctly', function() {
+        var preserveDomWidget = require('./fixtures/components/app-preserve-repeated-dom')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        preserveDomWidget.testPreserveDOM();
+    });
+
+    it('should preserve body of repeated DOM elements correctly', function() {
+        var preserveDomWidget = require('./fixtures/components/app-preserve-repeated-dom')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        preserveDomWidget.testPreserveDOM();
+    });
+
     it('should reuse widgets', function() {
         var widget = require('./fixtures/components/app-stateful-reuse-widgets')
             .render({})

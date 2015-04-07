@@ -22,6 +22,10 @@ exports.process =function (node, compiler, template) {
     var transformHelper = new TransformHelper(node, compiler, template);
     var nodeProps = transformHelper.nodeProps;
 
+    if (nodeProps['w-preserve'] != null || nodeProps['w-preserve-body'] != null) {
+        transformHelper.handleWidgetPreserve();
+    }
+
     if (nodeProps['w-bind'] != null) {
         transformHelper.handleWidgetBind();
     } else if (nodeProps['w-extend'] != null) {
@@ -30,10 +34,6 @@ exports.process =function (node, compiler, template) {
         transformHelper.assignWidgetId();
     } else if (nodeProps['w-for'] != null) {
         transformHelper.handleWidgetFor();
-    }
-
-    if (nodeProps['w-preserve'] != null || nodeProps['w-preserve-body'] != null) {
-        transformHelper.handleWidgetPreserve();
     }
 
     if (nodeProps['w-body'] != null) {
@@ -49,7 +49,6 @@ exports.process =function (node, compiler, template) {
     // we generate compiled code that stores the widget args in the out
     // for the next widget and then we also insert cleanup code to remove
     // the data out of the out
-
     if (node.tag) { // Only custom tags can have nested widgets
         transformHelper.compileWidgetArgs();
     }
