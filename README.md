@@ -521,7 +521,27 @@ module.exports = require('marko-widgets').defineWidget({
 
 ## Client-side Rendering
 
+Every widget defined using `defineWidget(...)` exports a `render(input)` method that can be used to render the widget in the browser as shown below:
 
+```javascript
+var widget = require('fancy-checkbox').render({
+		checked: true,
+		label: 'Foo'
+	})
+	.appendTo(document.body)
+	.getWidget();
+
+widget.setChecked(false);
+widget.setLabel('Bar');
+```
+
+The `appendTo(targetEl)` method is only one of the methods that can be used to insert the widget into the DOM. All of the methods are listed below:
+
+- `appendTo(targetEl)`
+- `insertAfter(targetEl)`
+- `insertBefore(targetEl)`
+- `prependTo(targetEl)`
+- `replace(targetEl)`
 
 ## Server-side Rendering
 
@@ -960,89 +980,6 @@ exports.Widget = Widget;
 ```
 
 NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscribing widget is destroyed.
-
-## Rendering Widgets in the Browser
-
-Marko Widgets provides an API that can be used to create a `render(input[, callback])` function given a renderer:
-
-```javascript
-function renderer(input, out) {
-	// ...
-}
-
-require('marko-widgets').renderable(exports, renderer);
-```
-
-The `renderable` method will modify the target object to add a new `render(input[, callback])` method that can be used to render the widget. In addition, the `renderable` method will also store the provided renderer in the `renderer` property of the target object.
-
-An object that is made renderable, can then be rendered on the client as shown below:
-
-_Synchronous render_:
-
-```javascript
-var widget = require('fancy-checkbox').render({
-		checked: true,
-		label: 'Foo'
-	})
-	.appendTo(document.body)
-	.getWidget();
-
-widget.setChecked(false);
-widget.setLabel('Bar');
-```
-
-_Asynchronous render_:
-
-```javascript
-require('fancy-checkbox').render({
-		checked: true,
-		label: 'Foo'
-	},
-	function(err, renderResult) {
-		if (err) {
-			// ...
-		}
-
-		var widget = renderResult
-			.appendTo(document.body)
-			.getWidget();
-
-		widget.setChecked(false);
-		widget.setLabel('Bar');
-	});
-```
-
-## Rendering Widgets on the Server
-
-If a UI component is rendered on the server then that means that the HTML will be produced on the server and that separate JavaScript code will need to run in the browser to bind behavior to the widgets associated with the UI components rendered on the server. Marko Widgets keeps track of the rendered widgets associated with an ["out"](https://github.com/raptorjs/async-writer). The following code illustrates how to get the JavaScript code needed to initialize widgets in the browser:
-
-```javascript
-var markoWidgets = require('marko-widgets');
-var template = require('marko').load(require.resolve('./template.marko'));
-
-module.exports = function(req, res) {
-	template.render(viewModel, function(err, html, out) {
-		var initWidgetsCode = markoWidgets.getInitWidgetsCode(out);
-
-		// Serialize the HTML and the JavaScript code to the browser
-		res.json({
-	            html: html,
-	            js: initWidgetsCode
-	        });
-	});
-}
-```
-
-And then, in the browser, the following code can be used to initialize the widgets:
-
-```javascript
-var result = JSON.parse(response.body);
-var html = result.html
-var js = result.js;
-
-document.body.innerHTML = html; // Add the HTML to the DOM
-eval(js); // Initialize the widgets to bind behavior!
-```
 
 # API
 
