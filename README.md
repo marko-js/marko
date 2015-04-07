@@ -26,15 +26,18 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 - [Glossary](#glossary)
 - [Usage](#usage)
 	- [Binding Behavior](#binding-behavior)
-	- [Client-side Rendering](#client-side-rendering)
-	- [Server-side Rendering](#server-side-rendering)
-		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
+	- [Widget Props](#widget-props)
+	- [Widget Template](#widget-template)
+	- [Widget State](#widget-state)
 	- [Widget Config](#widget-config)
 	- [Referencing Nested Widgets](#referencing-nested-widgets)
 	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
 	- [Adding Event Listeners](#adding-event-listeners)
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
 		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
+	- [Client-side Rendering](#client-side-rendering)
+	- [Server-side Rendering](#server-side-rendering)
+		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
 - [API](#api)
 	- [Widget](#widget)
 		- [Methods](#methods)
@@ -57,11 +60,16 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 			- [ready(callback)](#readycallback)
 			- [replace(targetEl)](#replacetargetel)
 			- [replaceChildrenOf(targetEl)](#replacechildrenoftargetel)
+		- [replaceState(newState)](#replacestatenewstate)
 			- [rerender(data, callback)](#rerenderdata-callback)
+			- [setState(name, value)](#setstatename-value)
+			- [setState(newState)](#setstatenewstate)
+			- [setProps(newProps)](#setpropsnewprops)
 			- [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
 		- [Properties](#properties)
 			- [this.el](#thisel)
 			- [this.id](#thisid)
+			- [this.state](#thisstate)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
@@ -77,7 +85,7 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 	- Utilizes [Marko templates](https://github.com/raptorjs/marko) (an HTML-based templating language) for the view
 	- Supports stateful and stateless widgets
 	- No complex class hierarchy
-	- Simple, declarative event binding for both DOM and custom events
+	- Simple, declarative event binding for both native DOM events and custom events
 	- Lifecycle management for widgets (easily destroy and create widgets)
 	- Events bubble up and view state changes trickle down
 	- Only need to understand a few concepts to get started
@@ -433,9 +441,10 @@ The widget can then be used as shown below:
 Sometimes it is important to _not_ re-render a DOM subtree. This may due to either of the following reasons:
 
 - Improved performance
-- DOM node contains externally provided content
+- DOM nodes contains externally provided content
+- DOM nodes have internal state that needs to be maintained
 
-Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve` or `w-preserve-body` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be re-inserted into newly rendered widgets automatically.
+Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve` or `w-preserve-body` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be reused and re-inserted into a widget's newly rendered DOM automatically.
 
 ```html
 <div w-bind>
@@ -519,125 +528,6 @@ module.exports = require('marko-widgets').defineWidget({
 })
 ```
 
-## Client-side Rendering
-
-Every widget defined using `defineWidget(...)` exports a `render(input)` method that can be used to render the widget in the browser as shown below:
-
-```javascript
-var widget = require('fancy-checkbox').render({
-		checked: true,
-		label: 'Foo'
-	})
-	.appendTo(document.body)
-	.getWidget();
-
-widget.setChecked(false);
-widget.setLabel('Bar');
-```
-
-The `appendTo(targetEl)` method is only one of the methods that can be used to insert the widget into the DOM. All of the methods are listed below:
-
-- `appendTo(targetEl)`
-- `insertAfter(targetEl)`
-- `insertBefore(targetEl)`
-- `prependTo(targetEl)`
-- `replace(targetEl)`
-
-## Server-side Rendering
-
-In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
-
-__src/pages/index/template.marko:__
-
-```html
-<optimizer-page name="index" package-path="./optimizer.json" />
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Widgets Demo</title>
-    <optimizer-head/>
-</head>
-<body>
-    <!-- Bind a widget to a div element using the "w-bind" attribute -->
-    <div class="my-component" w-bind="./widget">
-        <h1>Click Me</h1>
-    </div>
-
-    <optimizer-body/>
-    <init-widgets/>
-</body>
-</html>
-```
-
-The `optimizer.json` that includes the required client-side code is shown below:
-
-__src/pages/index/optimizer.json:__
-
-```javascript
-{
-    "dependencies": [
-        "require: marko-widgets",
-        "require: ./widget"
-    ]
-}
-```
-
-In the above example, the final HTML will be similar to the following:
-
-```html
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Widgets Demo</title>
-    </head>
-    <body>
-        <div data-rwidget="/src/pages/index/widget" id="w0" class="my-component">
-            <h1>Click Me</h1>
-        </div>
-        <script src="static/index-8947595a.js" type="text/javascript"></script>
-        <span style="display:none;" data-ids="w0" id="rwidgets"></span>
-    </body>
-</html>
-```
-
-To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
-
-### Manually Initializing Server-side Rendered Widgets
-
-It's also possible to manually initialize rendered widgets as shown in the following code:
-
-```javascript
-var markoWidgets = require('marko-widgets');
-var template = require('marko').load(require.resolve('./template.marko'));
-
-module.exports = function(req, res) {
-	template.render(viewModel, function(err, html, out) {
-		var widgetIds = markoWidgets.getRenderedWidgetIds(out);
-
-		// Serialize the HTML and the widget IDs to the browser
-		res.json({
-	            html: html,
-	            widgetIds: widgetIds
-	        });
-	});
-}
-```
-
-And then, in the browser, the following code can be used to initialize the widgets:
-
-```javascript
-var result = JSON.parse(response.body);
-var html = result.html
-var widgetIds = result.widgetIds;
-
-document.body.innerHTML = html; // Add the HTML to the DOM
-
-// Initialize the widgets to bind behavior!
-require('marko-widgets').initWidgets(widgetIds);
-```
-
 ## Widget Props
 
 When a widget is initially rendered, it is passed in an initial set of properties. For example:
@@ -654,7 +544,7 @@ require('fancy-checkbox').render({
 If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input)` method.
 
 
-## Template Rendering
+## Widget Template
 
 Every widget should have an associated Marko template that will be used to render the widget. A widget is associated with a template using the `template` property as shown below:
 
@@ -1016,6 +906,125 @@ module.exports = require('marko-widgets').defineWidget({
 ```
 
 NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscribing widget is destroyed.
+
+## Client-side Rendering
+
+Every widget defined using `defineWidget(...)` exports a `render(input)` method that can be used to render the widget in the browser as shown below:
+
+```javascript
+var widget = require('fancy-checkbox').render({
+		checked: true,
+		label: 'Foo'
+	})
+	.appendTo(document.body)
+	.getWidget();
+
+widget.setChecked(false);
+widget.setLabel('Bar');
+```
+
+The `appendTo(targetEl)` method is only one of the methods that can be used to insert the widget into the DOM. All of the methods are listed below:
+
+- `appendTo(targetEl)`
+- `insertAfter(targetEl)`
+- `insertBefore(targetEl)`
+- `prependTo(targetEl)`
+- `replace(targetEl)`
+
+## Server-side Rendering
+
+In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
+
+__src/pages/index/template.marko:__
+
+```html
+<optimizer-page name="index" package-path="./optimizer.json" />
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Widgets Demo</title>
+    <optimizer-head/>
+</head>
+<body>
+    <!-- Bind a widget to a div element using the "w-bind" attribute -->
+    <div class="my-component" w-bind="./widget">
+        <h1>Click Me</h1>
+    </div>
+
+    <optimizer-body/>
+    <init-widgets/>
+</body>
+</html>
+```
+
+The `optimizer.json` that includes the required client-side code is shown below:
+
+__src/pages/index/optimizer.json:__
+
+```javascript
+{
+    "dependencies": [
+        "require: marko-widgets",
+        "require: ./widget"
+    ]
+}
+```
+
+In the above example, the final HTML will be similar to the following:
+
+```html
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Widgets Demo</title>
+    </head>
+    <body>
+        <div data-rwidget="/src/pages/index/widget" id="w0" class="my-component">
+            <h1>Click Me</h1>
+        </div>
+        <script src="static/index-8947595a.js" type="text/javascript"></script>
+        <span style="display:none;" data-ids="w0" id="rwidgets"></span>
+    </body>
+</html>
+```
+
+To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
+
+### Manually Initializing Server-side Rendered Widgets
+
+It's also possible to manually initialize rendered widgets as shown in the following code:
+
+```javascript
+var markoWidgets = require('marko-widgets');
+var template = require('marko').load(require.resolve('./template.marko'));
+
+module.exports = function(req, res) {
+	template.render(viewModel, function(err, html, out) {
+		var widgetIds = markoWidgets.getRenderedWidgetIds(out);
+
+		// Serialize the HTML and the widget IDs to the browser
+		res.json({
+	            html: html,
+	            widgetIds: widgetIds
+	        });
+	});
+}
+```
+
+And then, in the browser, the following code can be used to initialize the widgets:
+
+```javascript
+var result = JSON.parse(response.body);
+var html = result.html
+var widgetIds = result.widgetIds;
+
+document.body.innerHTML = html; // Add the HTML to the DOM
+
+// Initialize the widgets to bind behavior!
+require('marko-widgets').initWidgets(widgetIds);
+```
 
 # API
 
