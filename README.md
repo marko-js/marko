@@ -20,18 +20,21 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 	- [Stateful Widget](#stateful-widget)
 	- [Stateful Widget with Update Handlers](#stateful-widget-with-update-handlers)
 	- [Complex Widget](#complex-widget)
+	- [Container Widget](#container-widget)
+	- [Preserving DOM Nodes during Re-render](#preserving-dom-nodes-during-re-render)
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
 	- [Binding Behavior](#binding-behavior)
+	- [Client-side Rendering](#client-side-rendering)
+	- [Server-side Rendering](#server-side-rendering)
+		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
 	- [Widget Config](#widget-config)
 	- [Referencing Nested Widgets](#referencing-nested-widgets)
 	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
 	- [Adding Event Listeners](#adding-event-listeners)
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
 		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
-	- [Rendering Widgets in the Browser](#rendering-widgets-in-the-browser)
-	- [Rendering Widgets on the Server](#rendering-widgets-on-the-server)
 - [API](#api)
 	- [Widget](#widget)
 		- [Methods](#methods)
@@ -225,9 +228,6 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
-
-var styleUtil = require('marko-widgets/util/style');
-
 module.exports = require('marko-widgets').defineWidget({
 	template: require.resolve('./template.marko'),
 
@@ -638,64 +638,105 @@ document.body.innerHTML = html; // Add the HTML to the DOM
 require('marko-widgets').initWidgets(widgetIds);
 ```
 
+## Widget Props
+
+When a widget is initially rendered, it is passed in an initial set of properties. For example:
+
+```javascript
+require('fancy-checkbox').render({
+		checked: true,
+		label: 'Foo'
+	});
+```
+
+
+
+If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input)` method.
+
+
+## Template Rendering
+
+Every widget should have an associated Marko template that will be used to render the widget. A widget is associated with a template using the `template` property as shown below:
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getTemplateData: function(state, input) {
+		return {
+			name: input.name
+		};
+	},
+
+	...
+});
+```
+
+The `getTemplateData(state, input)` method is used to build the view model that gets passed to the template based on the state and/or input. If a widget is stateful then the template data should be derived only from the `state`. If a widget is stateless then the template data should be derived only from the `input`. If a stateful widget is being re-rendered then the `input` argument will always be `null`. For a stateless widget, the `state` argument will be `null`.
+
+## Widget State
+
+A stateful widget will maintain state as part of the widget that instance. If the state of the widget changes then the widget will be queued to be updated in the next batch. The initial state should be provided using the `getInitialState(input)` method. All state changes should go through the `setState(name, value)` or `setState(newState)` methods. For example:
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getInitialState: function(input) {
+		return {
+			name: input.name,
+			selected: input.selected || false;
+		}
+	},
+
+	getTemplateData: function(state, input) {
+		var style = ;
+
+		return {
+			name: state.name,
+			color: state.selected ? 'yellow' : 'transparent'
+		};
+	},
+
+	handleClick: function() {
+		this.setState('selected', true);
+	},
+
+	isSelected: function() {
+		return this.state.selected;
+	}
+});
+```
+
+The current state of the widget can always be read using the `this.state` property. For example:
+
+```javscript
+var isSelected = this.state.selected === true;
+```
+
+When state is modified using either the `setState(name, value)` or `setState(newState)` method, only a shallow compare is done to see if the state has changed. Therefore, if a complex object is part of the state then it should be treated as immutable.
+
 ## Widget Config
 
-Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget. There are two options for attaching widget configuration data to a widget and those options are as follows:
-
-
-__Option 1) Using the `w-config` attribute:__
-
-_template.marko:_
-
-```html
-<div w-bind="./widget" w-config="{message: 'Hello World'}">
-...
-</div>
-```
-
-_widget.js:_
+Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget by implementing the `getWidgetConfig(input)` property as shown below:
 
 ```javascript
-function Widget(config) {
-    console.log(config.message); // Output: 'Hello World'
-}
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
 
-exports.Widget = Widget;
-```
+	getWidgetConfig: function(input) {
+		return {
+			foo: 'bar'
+		}
+	},
 
-__Option 2) As a `widgetConfig` property of the input data model for a Marko template:__
+	init: function(widgetConfig) {
+		var foo = widgetConfig.foo; // foo === 'bar'
+	},
 
-_renderer.js:_
+	...
+});
 
-```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
-
-exports.renderer = function(input, out) {
-    template.render({
-            widgetConfig: {
-                message: 'Hello World'
-            }
-        },
-        out);
-}
-```
-
-_template.marko:_
-
-```html
-<div w-bind="./widget">
-...
-</div>
-```
-
-_widget.js:_
-
-```javascript
-function Widget(config) {
-    console.log(config.message); // Output: 'Hello World'
-}
-
-exports.Widget = Widget;
 ```
 
 ## Referencing Nested Widgets
@@ -830,11 +871,10 @@ Listeners can be attached declaratively as shown in the following sample code:
 And then in the widget:
 
 ```javascript
-function Widget() {
 
-}
+module.exports = require('marko-widgets').defineWidget({
+	// ...
 
-Widget.prototype = {
 	handleFormSubmit: function(event, el) {
 		event.preventDefault();
 		// ...
@@ -849,9 +889,7 @@ Widget.prototype = {
 	validateEmail: function(email) {
 		// ...
 	}
-}
-
-exports.Widget = Widget;
+});
 ```
 
 NOTE: Event handler methods will be invoked with `this` being the widget instance and the following two arguments will be provided to the handler method:
@@ -876,22 +914,25 @@ You can also choose to add listeners in JavaScript code by assigning an "element
 And then in the widget:
 
 ```javascript
-function Widget() {
-	var self = this;
 
-	var formEl = this.getEl('form');
-	formEl.addEventListener('submit', function(event) {
-		self.handleFormSubmit(event, formEl)
-	});
+module.exports = require('marko-widgets').defineWidget({
+	// ...
 
-	// Or use jQuery if that is loaded on your page:
-	var emailEl = this.getEl('email');
-	$(emailEl).on('change', function(event) {
-		self.handleEmailChange(event, emailEl)
-	});
-}
+	init: function() {
+		var self = this;
 
-Widget.prototype = {
+		var formEl = this.getEl('form');
+		formEl.addEventListener('submit', function(event) {
+			self.handleFormSubmit(event, formEl)
+		});
+
+		// Or use jQuery if that is loaded on your page:
+		var emailEl = this.getEl('email');
+		$(emailEl).on('change', function(event) {
+			self.handleEmailChange(event, emailEl)
+		});
+	},
+
 	handleFormSubmit: function(event, el) {
 		event.preventDefault();
 		// ...
@@ -906,9 +947,7 @@ Widget.prototype = {
 	validateEmail: function(email) {
 		// ...
 	}
-}
-
-exports.Widget = Widget;
+});
 ```
 
 ### Adding Custom Event Listeners
@@ -931,16 +970,13 @@ Listeners can be attached declaratively as shown in the following sample code:
 And then in the widget:
 
 ```javascript
-function Widget() {
-}
+module.exports = require('marko-widgets').defineWidget({
+	// ...
 
-Widget.prototype = {
-    handleOverlayBeforeHide: function(event) {
+	handleOverlayBeforeHide: function(event) {
         console.log('The overlay is about to be hidden!');
     }
-};
-
-exports.Widget = Widget;
+});
 ```
 
 You can also choose to add listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. The scoped widget ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
@@ -959,24 +995,24 @@ You can also choose to add listeners in JavaScript code by assigning an "id" to 
 And then in the widget:
 
 ```javascript
-function Widget() {
-	var self = this;
+module.exports = require('marko-widgets').defineWidget({
+	// ...
 
-	var myOverlay = this.getWidget('myOverlay');
+	init: function() {
+		var self = this;
 
-	this.subscribeTo(myOverlay)
-		.on('beforeHide', function(event) {
-			self.handleOverlayBeforeHide(event);
-		});
-}
+		var myOverlay = this.getWidget('myOverlay');
 
-Widget.prototype = {
-    handleOverlayBeforeHide: function(event) {
+		this.subscribeTo(myOverlay)
+			.on('beforeHide', function(event) {
+				self.handleOverlayBeforeHide(event);
+			});
+	},
+
+	handleOverlayBeforeHide: function(event) {
         console.log('The overlay is about to be hidden!');
     }
-};
-
-exports.Widget = Widget;
+});
 ```
 
 NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscribing widget is destroyed.
@@ -1121,7 +1157,34 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 
 #### replaceChildrenOf(targetEl)
 
+### replaceState(newState)
+
+Replaces the state with an entirely new state. If any of the state properties changed then the widget's view will automatically be updated.
+
 #### rerender(data, callback)
+
+#### setState(name, value)
+
+Used to change the value of a single state property. For example:
+
+```javascript
+this.setState('disabled', true);
+```
+
+#### setState(newState)
+
+Used to change the value of multiple state properties. For example:
+
+```javascript
+this.setState({
+	disabled: true,
+	size: 'large'
+});
+```
+
+#### setProps(newProps)
+
+For stateless widgets, setting a widgets properties will result in the widget being re-rendered using the new input. For stateful widgets, setting a widgets properties will result in `getInitialState(newProps)` being called again to determine the new state and the widget state will be updated to use the new state.
 
 #### subscribeTo(targetEventEmitter)
 
@@ -1134,6 +1197,28 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 #### this.id
 
 The String ID of the root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the widget is bound to.
+
+#### this.state
+
+The current state for the widget. For example:
+
+```javascript
+module.exports = require('marko-widgets').defineWidget({
+	template: require.resolve('./template.marko'),
+
+	getInitialState: function(input) {
+		return {
+			disabled: false
+		}
+	},
+
+	init: function() {
+		console.log(this.state.disabled); // Output: false
+		this.setState('disabled', true);
+		console.log(this.state.disabled); // Output: true
+	}
+});
+```
 
 # Changelog
 
