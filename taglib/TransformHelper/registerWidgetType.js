@@ -7,6 +7,8 @@ function registerWidgetType(target) {
     var typePathExpression;
     var targetExpression;
 
+    template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+
     if (compiler.hasExpression(target)) {
         return '__markoWidgets.getDynamicClientWidgetPath(' + compiler.convertType(target, 'string', true) + ')';
     }

@@ -1,5 +1,6 @@
 var fs = require('fs');
 var nodePath = require('path');
+var WidgetArgs = require('./WidgetArgs');
 
 function TransformHelper(node, compiler, template) {
     this.node = node;
@@ -15,7 +16,14 @@ function TransformHelper(node, compiler, template) {
 
 TransformHelper. prototype = {
     getWidgetArgs: function() {
-        return this.widgetArgs || (this.widgetArgs = {});
+        return this.widgetArgs || (this.widgetArgs = new WidgetArgs());
+    },
+    compileWidgetArgs: function() {
+        if (!this.widgetArgs) {
+            return;
+        }
+
+        this.widgetArgs.compileWidgetArgs(this.node, this.template);
     },
     nextUniqueId: function() {
         var widgetNextElId = this.template.data.widgetNextElId;
@@ -49,7 +57,6 @@ TransformHelper. prototype = {
     assignWidgetId: require('./assignWidgetId'),
     registerWidgetType: require('./registerWidgetType'),
     getContainingWidgetNode: require('./getContainingWidgetNode'),
-    compileWidgetArgs: require('./compileWidgetArgs'),
     handleWidgetEvents: require('./handleWidgetEvents'),
     handleWidgetPreserve: require('./handleWidgetPreserve'),
     handleWidgetBody: require('./handleWidgetBody'),

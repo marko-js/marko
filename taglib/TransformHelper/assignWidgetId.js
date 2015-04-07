@@ -56,7 +56,7 @@ function assignWidgetId() {
 
         if (node.tag) {
             var widgetArgs = this.getWidgetArgs();
-            widgetArgs.id = widgetId;
+            widgetArgs.setId(widgetId);
         } else {
             if (node.hasAttribute('id')) {
                 node.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');

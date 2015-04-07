@@ -49,10 +49,10 @@ exports.process =function (node, compiler, template) {
     // we generate compiled code that stores the widget args in the out
     // for the next widget and then we also insert cleanup code to remove
     // the data out of the out
-    if (node.tag) {
+
+    if (node.tag) { // Only custom tags can have nested widgets
         transformHelper.compileWidgetArgs();
     }
-
 
     if (node.qName === 'w-widget') {
         if (node.getAttribute('id') != null) {

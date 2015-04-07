@@ -52,18 +52,7 @@ function addDirectEventListener(transformHelper, eventType, targetMethod) {
 function addCustomEventListener(transformHelper, eventType, targetMethod) {
     // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
     var widgetArgs = transformHelper.getWidgetArgs();
-
-    // if (!widgetArgs.id) {
-    //     var uniqueId = '_' + (template.data.widgetNextId++);
-    //     widgetArgs.id = template.makeExpression(JSON.stringify(uniqueId));
-    // }
-
-    if (!widgetArgs.customEvents) {
-        widgetArgs.customEvents = [];
-    }
-
-    widgetArgs.customEvents.push(JSON.stringify(eventType));
-    widgetArgs.customEvents.push(JSON.stringify(targetMethod));
+    widgetArgs.addCustomEvent(eventType, targetMethod);
 }
 
 function handleWidgetEvents() {
@@ -77,8 +66,8 @@ function handleWidgetEvents() {
     if (hasWidgetEvents) {
         var widgetArgs = this.getWidgetArgs();
 
-        if (!widgetArgs.id) {
-            widgetArgs.id = this.nextUniqueId();
+        if (widgetArgs.getId() == null) {
+            widgetArgs.setId(this.nextUniqueId());
         }
 
         var props = this.nodeProps;

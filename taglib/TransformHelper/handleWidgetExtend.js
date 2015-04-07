@@ -23,25 +23,32 @@ module.exports = function handleWidgetExtend() {
 
     node.addNestedVariable('widget');
 
-    // Handle the "w-extend" attribute
-    delete props['w-extend'];
 
-    template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
-    widgetArgs.extend = this.registerWidgetType(widgetExtend);
+    
 
     var extendConfig = props['w-config'];
 
     if (extendConfig) {
-        widgetArgs.extendConfig = template.makeExpression(extendConfig);
+        extendConfig = template.makeExpression(extendConfig);
     } else {
-        widgetArgs.extendConfig = template.makeExpression('data.widgetConfig');
+        extendConfig = template.makeExpression('data.widgetConfig');
     }
 
     var extendState = props['w-state'];
 
     if (extendState) {
-        widgetArgs.extendState = template.makeExpression(extendState);
+        extendState = template.makeExpression(extendState);
     } else {
-        widgetArgs.extendState = template.makeExpression('data.widgetState');
+        extendState = template.makeExpression('data.widgetState');
     }
+
+    widgetArgs.setExtend(
+            this.registerWidgetType(widgetExtend),
+            extendConfig,
+            extendState);
+
+    // Do some cleanup
+    delete props['w-extend'];
+    delete props['w-config'];
+    delete props['w-state'];
 };
