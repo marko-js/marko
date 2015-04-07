@@ -428,6 +428,34 @@ The widget can then be used as shown below:
 </app-alert>
 ```
 
+## Preserving DOM Nodes during Re-render
+
+Sometimes it is important to _not_ re-render a DOM subtree. This may due to either of the following reasons:
+
+- Improved performance
+- DOM node contains externally provided content
+
+Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve` or `w-preserve-body` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be re-inserted into newly rendered widgets automatically.
+
+```html
+<div w-bind>
+
+	<span w-preserve>
+		<p>
+			The root span and all its children will never
+			be re-rendered.
+		</p>
+		<p>
+			Rendered at ${Date.now()}.
+		</p>
+	</span>
+	<div w-preserve-body>
+		Only the children of the div will preserved and
+		the outer HTML div tag will be re-rendered.
+	</div>
+</div>
+```
+
 # Installation
 
 ```bash
@@ -469,28 +497,33 @@ You can also choose to leave the value of the `w-bind` attribute empty. If the v
 </div>
 ```
 
-The widget bound to the `<div>` should then be implemented as a CommonJS module that exports a constructor function. During client-side initialization, a new instance of your widget will be created for each rendered DOM element that the widget is bound to. A sample widget implementation is shown in the following JavaScript code:
+The widget bound to the `<div>` should then be implemented as a CommonJS module that exports a widget type as shown in the following JavaScript code:
 
 __src/pages/index/widget.js:__
 
 ```javascript
-function Widget(config) {
-    var rootEl = this.el; // this.el returns the root element that the widget is bound to
-    var self = this;
 
-    rootEl.addEventListener('click', function() {
-        self.addText('You clicked on the root element!');
-    });
-}
+module.exports = require('marko-widgets').defineWidget({
+	init: function() {
+		var rootEl = this.el; // this.el returns the root element that the widget is bound to
+	    var self = this;
 
-Widget.prototype = {
-    addText: function(text) {
+	    rootEl.addEventListener('click', function() {
+	        self.addText('You clicked on the root element!');
+	    });
+	},
+
+	addText: function(text) {
         this.el.appendChild(document.createTextNode(text));
     }
-};
-
-exports.Widget = Widget;
+})
 ```
+
+## Client-side Rendering
+
+
+
+## Server-side Rendering
 
 In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
 
@@ -550,6 +583,40 @@ In the above example, the final HTML will be similar to the following:
 ```
 
 To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
+
+### Manually Initializing Server-side Rendered Widgets
+
+It's also possible to manually initialize rendered widgets as shown in the following code:
+
+```javascript
+var markoWidgets = require('marko-widgets');
+var template = require('marko').load(require.resolve('./template.marko'));
+
+module.exports = function(req, res) {
+	template.render(viewModel, function(err, html, out) {
+		var widgetIds = markoWidgets.getRenderedWidgetIds(out);
+
+		// Serialize the HTML and the widget IDs to the browser
+		res.json({
+	            html: html,
+	            widgetIds: widgetIds
+	        });
+	});
+}
+```
+
+And then, in the browser, the following code can be used to initialize the widgets:
+
+```javascript
+var result = JSON.parse(response.body);
+var html = result.html
+var widgetIds = result.widgetIds;
+
+document.body.innerHTML = html; // Add the HTML to the DOM
+
+// Initialize the widgets to bind behavior!
+require('marko-widgets').initWidgets(widgetIds);
+```
 
 ## Widget Config
 
