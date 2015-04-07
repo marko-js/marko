@@ -10,7 +10,7 @@ var optimizer = require('optimizer');
 
 var outputDir = path.join(__dirname, 'generated');
 var cacheDir = path.join(__dirname, '../.cache');
-var rootDir = path.join(__dirname, '../../../');
+var rootDir = path.join(__dirname, '../../');
 
 try {
     fs.mkdirSync(outputDir);
@@ -37,7 +37,7 @@ var running = false;
 var fileModified = false;
 
 function run() {
-    console.log('Running tests...');
+    console.log('Preparing client-side tests...');
 
     running = true;
     fileModified = false;
@@ -46,12 +46,12 @@ function run() {
     var pageLayoutTemplate = require('marko').load(require.resolve('./page-layout.marko'));
     var pageHtmlFile = path.join(outputDir, 'test-page.html');
 
-
     var out = fs.createWriteStream(pageHtmlFile, 'utf8');
     pageTemplate.render({
             layout: pageLayoutTemplate
         }, out)
         .on('finish', function() {
+            console.log('Running client tests using mocha-phantomjs...');
             spawn(
                 'npm',
                 ['run', 'mocha-phantomjs-run', '--loglevel=silent'],

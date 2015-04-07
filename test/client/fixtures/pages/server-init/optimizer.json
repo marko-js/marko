@@ -1,7 +1,0 @@
-{
-    "dependencies": [
-        "require: jquery",
-        "require: marko-widgets",
-        "require: ../../components/**/widget.js"
-    ]
-}

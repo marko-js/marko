@@ -13,7 +13,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow this.$() to be used to attach DOM event listeners', function() {
 
-        var widget = require('./fixtures/components/app-dom-events-jquery')
+        var widget = require('../fixtures/components/app-dom-events-jquery')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -23,7 +23,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow w-on* to handle DOM events', function() {
 
-        var widget = require('./fixtures/components/app-dom-events')
+        var widget = require('../fixtures/components/app-dom-events')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -33,7 +33,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow for custom events', function() {
 
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -43,7 +43,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow for declarative custom events', function() {
 
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -53,7 +53,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow getEl()', function() {
 
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -63,7 +63,7 @@ describe('client-rendered' , function() {
 
     it('[client-rendered] should allow getEls()', function() {
 
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -75,7 +75,7 @@ describe('client-rendered' , function() {
         var widgets = [];
 
         function renderWidget() {
-            var widget = require('./fixtures/components/app-foo')
+            var widget = require('../fixtures/components/app-foo')
                 .render({})
                 .appendTo(document.getElementById('target'))
                 .getWidget();
@@ -96,7 +96,7 @@ describe('client-rendered' , function() {
     });
 
     it('[client-rendered] should allow this.getWidget(...)', function() {
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -105,7 +105,7 @@ describe('client-rendered' , function() {
     });
 
     it('[client-rendered] should allow for widget config to be passed in from renderer', function() {
-        var widget = require('./fixtures/components/app-widget-config')
+        var widget = require('../fixtures/components/app-widget-config')
             .render({
                 useAttribute: false
             })
@@ -125,7 +125,7 @@ describe('client-rendered' , function() {
     });
 
     it('[client-rendered] should allow for widgets to be destroyed', function() {
-        var domEventsWidget = require('./fixtures/components/app-dom-events')
+        var domEventsWidget = require('../fixtures/components/app-dom-events')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -133,7 +133,7 @@ describe('client-rendered' , function() {
         domEventsWidget.testDestroy();
 
 
-        var fooWidget = require('./fixtures/components/app-foo')
+        var fooWidget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -142,7 +142,7 @@ describe('client-rendered' , function() {
     });
 
     it('[client-rendered] should allow for widget config to be provided using w-config', function() {
-        var widget = require('./fixtures/components/app-widget-config')
+        var widget = require('../fixtures/components/app-widget-config')
             .render({
                 useAttribute: true
             })
@@ -162,14 +162,14 @@ describe('client-rendered' , function() {
     });
 
     it('[client-rendered] should allow for widgets to be extended', function() {
-        var checkboxWidget = require('./fixtures/components/app-extend-checkbox')
+        var checkboxWidget = require('../fixtures/components/app-extend-checkbox')
             .render({
                 label: 'Checkbox'
             })
             .appendTo(document.getElementById('target'))
             .getWidget();
 
-        var buttonWidget = require('./fixtures/components/app-extend-button')
+        var buttonWidget = require('../fixtures/components/app-extend-button')
             .render({
                 label: 'Button'
             })

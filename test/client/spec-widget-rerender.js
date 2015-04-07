@@ -11,7 +11,7 @@ describe('widget re-render' , function() {
         var previousSibling = document.createElement('div');
         document.getElementById('target').appendChild(previousSibling);
 
-        var widget = require('./fixtures/components/app-legacy-rerender')
+        var widget = require('../fixtures/components/app-legacy-rerender')
             .render({
                 label: 'Foo'
             })
@@ -47,7 +47,7 @@ describe('widget re-render' , function() {
     });
 
     it('should use the same ID for re-rendered widgets', function() {
-        var widget = require('./fixtures/components/app-legacy-rerender')
+        var widget = require('../fixtures/components/app-legacy-rerender')
             .render({
                 label: 'Foo'
             })
@@ -66,7 +66,7 @@ describe('widget re-render' , function() {
     it('should support re-rendering a stateless widget with new props', function() {
         var targetEl = document.getElementById('target');
 
-        var widget = require('./fixtures/components/app-simple')
+        var widget = require('../fixtures/components/app-simple')
             .render({
                 name: 'Frank',
                 messageCount: 10
@@ -97,7 +97,7 @@ describe('widget re-render' , function() {
     });
 
     it('should reuse stateful widgets during a re-render', function() {
-        var widget = require('./fixtures/components/app-stateful-reuse-widgets')
+        var widget = require('../fixtures/components/app-stateful-reuse-widgets')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -106,7 +106,7 @@ describe('widget re-render' , function() {
     });
 
     it('should reuse stateless widgets during a re-render', function() {
-        var widget = require('./fixtures/components/app-stateless-reuse-widgets')
+        var widget = require('../fixtures/components/app-stateless-reuse-widgets')
             .render({
                 buttonSize: 'normal'
             })

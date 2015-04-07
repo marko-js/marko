@@ -5,9 +5,9 @@
         "require-run: ./client-setup",
         "require: jquery",
         "require: marko-widgets",
-        "../fixtures/pages/server-init/optimizer.json",
-        "require-run: ../spec-server-rendered.js",
-        "require-run: ../spec-*.js",
+        "require: ../fixtures/components/**/widget.js",
+        "require-run: ../client/spec-server-rendered.js",
+        "require-run: ../client/spec-*.js",
         "require-run: ./client"
     ]
 }

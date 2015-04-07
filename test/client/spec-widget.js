@@ -9,7 +9,7 @@ describe('widget' , function() {
 
     it('should create widgets with the expected properties', function() {
 
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -38,7 +38,7 @@ describe('widget' , function() {
     });
 
     it('should create widgets that extend EventEmitter', function() {
-        var widget = require('./fixtures/components/app-foo')
+        var widget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -70,12 +70,12 @@ describe('widget' , function() {
     });
 
     it('should create widgets that allow subscribeTo', function() {
-        var widget1 = require('./fixtures/components/app-foo')
+        var widget1 = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
 
-        var widget2 = require('./fixtures/components/app-foo')
+        var widget2 = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -108,7 +108,7 @@ describe('widget' , function() {
     });
 
     it('should create widgets that supports this.$(...)', function() {
-        var widget = require('./fixtures/components/app-jquery-proxy')
+        var widget = require('../fixtures/components/app-jquery-proxy')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -117,7 +117,7 @@ describe('widget' , function() {
     });
 
     it('should preserve DOM elements correctly', function() {
-        var preserveDomWidget = require('./fixtures/components/app-preserve-dom')
+        var preserveDomWidget = require('../fixtures/components/app-preserve-dom')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -126,7 +126,7 @@ describe('widget' , function() {
     });
 
     it('should preserve repeated DOM elements correctly', function() {
-        var preserveDomWidget = require('./fixtures/components/app-preserve-repeated-dom')
+        var preserveDomWidget = require('../fixtures/components/app-preserve-repeated-dom')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -135,7 +135,7 @@ describe('widget' , function() {
     });
 
     it('should preserve body of repeated DOM elements correctly', function() {
-        var preserveDomWidget = require('./fixtures/components/app-preserve-repeated-dom')
+        var preserveDomWidget = require('../fixtures/components/app-preserve-repeated-dom')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -144,7 +144,7 @@ describe('widget' , function() {
     });
 
     it('should reuse widgets', function() {
-        var widget = require('./fixtures/components/app-stateful-reuse-widgets')
+        var widget = require('../fixtures/components/app-stateful-reuse-widgets')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -155,7 +155,7 @@ describe('widget' , function() {
     it('should support widgets with a custom renderer and a template', function() {
         var targetEl = document.getElementById('target');
 
-        var widget = require('./fixtures/components/app-renderer-and-template')
+        var widget = require('../fixtures/components/app-renderer-and-template')
             .render({
                 name: 'Frank'
             })
@@ -177,7 +177,7 @@ describe('widget' , function() {
     it('should support widgets with a renderer only', function() {
         var targetEl = document.getElementById('target');
 
-        require('./fixtures/components/app-renderer-only')
+        require('../fixtures/components/app-renderer-only')
             .render({
                 name: 'Frank'
             })
@@ -189,7 +189,7 @@ describe('widget' , function() {
     it('should support lifecycle event handler methods', function() {
         var targetEl = document.getElementById('target');
 
-        var widget = require('./fixtures/components/app-lifecycle-events')
+        var widget = require('../fixtures/components/app-lifecycle-events')
             .render({
                 name: 'Frank',
                 messageCount: 10
@@ -222,7 +222,7 @@ describe('widget' , function() {
     it('should support getInitialProps', function() {
         var targetEl = document.getElementById('target');
 
-        require('./fixtures/components/app-getInitialProps')
+        require('../fixtures/components/app-getInitialProps')
             .render({
                 name: 'Frank'
             })
@@ -233,7 +233,7 @@ describe('widget' , function() {
     });
 
     it('should support conditional widgets', function() {
-        require('./fixtures/components/app-conditional-widget')
+        require('../fixtures/components/app-conditional-widget')
             .render({
                 includeWidget: false
             })
@@ -241,7 +241,7 @@ describe('widget' , function() {
 
         expect(window.testData.widgets['app-conditional-widget'] == null).to.equal(true);
 
-        require('./fixtures/components/app-conditional-widget')
+        require('../fixtures/components/app-conditional-widget')
             .render({
                 includeWidget: true
             })

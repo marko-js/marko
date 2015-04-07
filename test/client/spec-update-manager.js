@@ -8,7 +8,7 @@ describe('update-manager' , function() {
     });
 
     it('should support batch updates', function() {
-        var widget = require('./fixtures/components/app-stateful-button')
+        var widget = require('../fixtures/components/app-stateful-button')
             .render({
                 size: 'large',
                 label: 'Initial Label'
@@ -26,7 +26,7 @@ describe('update-manager' , function() {
     });
 
     it('should schedule updates not within batchUpdate() for the next tick', function(done) {
-        var widget = require('./fixtures/components/app-stateful-button')
+        var widget = require('../fixtures/components/app-stateful-button')
             .render({
                 size: 'large',
                 label: 'Initial Label'

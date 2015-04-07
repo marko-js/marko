@@ -8,7 +8,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should update widgets', function() {
-        var widget = require('./fixtures/components/app-stateful-button')
+        var widget = require('../fixtures/components/app-stateful-button')
             .render({
                 size: 'large',
                 label: 'Initial Label'
@@ -26,7 +26,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should preserve body content', function() {
-        var widget = require('./fixtures/components/app-stateful-preserve-body')
+        var widget = require('../fixtures/components/app-stateful-preserve-body')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -35,7 +35,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should not re-render if changed state property has an update handler', function() {
-        var widget = require('./fixtures/components/app-stateful-update-handlers')
+        var widget = require('../fixtures/components/app-stateful-update-handlers')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -68,7 +68,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should re-render if any changed state property does *not* have an update handler', function() {
-        var widget = require('./fixtures/components/app-stateful-update-handlers')
+        var widget = require('../fixtures/components/app-stateful-update-handlers')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -99,7 +99,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should copy state object on write', function() {
-        var widget = require('./fixtures/components/app-stateful-button')
+        var widget = require('../fixtures/components/app-stateful-button')
             .render({
                 size: 'large',
                 label: 'Initial Label'
@@ -121,7 +121,7 @@ describe('stateful widgets' , function() {
     });
 
     it('should not copy state if changed property value matches old value', function() {
-        var widget = require('./fixtures/components/app-stateful-button')
+        var widget = require('../fixtures/components/app-stateful-button')
             .render({
                 size: 'large',
                 label: 'Initial Label'

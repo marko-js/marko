@@ -8,7 +8,7 @@ describe('widget lifecycle' , function() {
     });
 
     it('should return undefined for references to destroyed widgets (legacy widget)', function() {
-        var fooWidget = require('./fixtures/components/app-foo')
+        var fooWidget = require('../fixtures/components/app-foo')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -21,7 +21,7 @@ describe('widget lifecycle' , function() {
     });
 
     it('should return undefined for references to destroyed widgets', function() {
-        var widget = require('./fixtures/components/app-destroy')
+        var widget = require('../fixtures/components/app-destroy')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
@@ -36,12 +36,12 @@ describe('widget lifecycle' , function() {
     });
 
     it('should unsubscribe to custom events for destroyed widgets', function() {
-        var widget = require('./fixtures/components/app-destroy')
+        var widget = require('../fixtures/components/app-destroy')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
 
-        var customEventsWidget = require('./fixtures/components/app-custom-events')
+        var customEventsWidget = require('../fixtures/components/app-custom-events')
             .render({})
             .appendTo(document.getElementById('target'))
             .getWidget();
