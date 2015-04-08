@@ -96,7 +96,7 @@ CodeWriter.prototype = {
         if (typeof code === 'function') {
             code = code();
         }
-        
+
         this.flush();
         this._code.append(code);
     },
@@ -514,8 +514,8 @@ TemplateBuilder.prototype = {
     setTemplateName: function (templateName) {
         this.templateName = templateName;
     },
-    makeExpression: function (expression) {
-        return this.compiler.makeExpression(expression);
+    makeExpression: function (expression, replaceSpecialOperators) {
+        return this.compiler.makeExpression(expression, replaceSpecialOperators);
     },
     hasExpression: function (str) {
         return this.compiler.hasExpression(str);

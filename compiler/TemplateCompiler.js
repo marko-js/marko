@@ -164,11 +164,11 @@ TemplateCompiler.prototype = {
     hasExpression: function(str) {
         return expressionParser.hasExpression(str);
     },
-    makeExpression: function (expression) {
+    makeExpression: function (expression, replaceSpecialOperators) {
         if (this.isExpression(expression)) {
             return expression;
         } else {
-            return new Expression(expression);
+            return new Expression(expression, replaceSpecialOperators);
         }
     },
     parseExpression: function(str, listeners, options) {

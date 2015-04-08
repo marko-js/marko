@@ -42,7 +42,7 @@ function getPropsStr(props, template) {
                         throw new Error('Invalid value for property "' + name + '"');
                     }
 
-                    value = template.makeExpression(value);
+                    value = template.makeExpression(value, false);
                 }
 
                 if (template.isExpression(value)) {
