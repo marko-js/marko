@@ -186,10 +186,10 @@ describe('widget' , function() {
         expect(targetEl.innerHTML).to.equal('Hello Frank!');
     });
 
-    it('should support lifecycle event handler methods', function() {
+    it('should support lifecycle event handler methods for a stateless widget', function() {
         var targetEl = document.getElementById('target');
 
-        var widget = require('../fixtures/components/app-lifecycle-events')
+        var widget = require('../fixtures/components/app-stateless-lifecycle-events')
             .render({
                 name: 'Frank',
                 messageCount: 10
@@ -217,6 +217,50 @@ describe('widget' , function() {
         widget.destroy();
 
         expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
+    });
+
+    it('should support lifecycle event handler methods for a stateful widget', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('../fixtures/components/app-stateful-lifecycle-events')
+            .render({
+                name: 'Frank',
+                messageCount: 10
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Hello Frank!');
+        expect(targetEl.innerHTML).to.contain('10');
+        expect(widget.lifecycleEvents).to.deep.equal([]);
+
+        require('marko-widgets').batchUpdate(function() {
+            // NOTE: messageCount has an update handler
+            widget.setState('messageCount', 30);
+            expect(targetEl.innerHTML).to.contain('Hello Frank!');
+            expect(targetEl.innerHTML).to.contain('10');
+            expect(widget.lifecycleEvents).to.deep.equal([]);
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello Frank!');
+        expect(targetEl.innerHTML).to.contain('30');
+        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+
+        require('marko-widgets').batchUpdate(function() {
+            // NOTE: name does *not* have an update handler
+            widget.setState('name', 'Jane');
+            expect(targetEl.innerHTML).to.contain('Hello Frank!');
+            expect(targetEl.innerHTML).to.contain('30');
+            expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello Jane!');
+        expect(targetEl.innerHTML).to.contain('30');
+        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeUpdate', 'onAfterUpdate']);
+
+        widget.destroy();
+
+        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
     });
 
     it('should support getInitialProps', function() {
