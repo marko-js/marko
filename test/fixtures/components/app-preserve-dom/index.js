@@ -36,11 +36,14 @@ module.exports = require('marko-widgets').defineWidget({
         var oldPreserveBodyEl2Children = nodeListToArray(oldPreserveBodyEl2.childNodes);
 
         var oldHelloEl1 = this.getWidget('hello').el;
-        var oldHelloEl2 = this.el.querySelector('.app-hello');
+        var oldHelloEl2 = this.el.querySelector('.app-hello-no-id');
 
         expect(oldEl != null).to.equal(true);
+        var self = this;
 
-        this.rerender();
+        require('marko-widgets').batchUpdate(function() {
+            self.rerender();
+        });
 
         var newEl = this.el;
         var newPreserveEl1 = this.getEl('preserve');
@@ -50,7 +53,7 @@ module.exports = require('marko-widgets').defineWidget({
         var newPreserveBodyEl2 = this.el.querySelector('.preserve-body');
 
         var newHelloEl1 = this.getWidget('hello').el;
-        var newHelloEl2 = this.el.querySelector('.app-hello');
+        var newHelloEl2 = this.el.querySelector('.app-hello-no-id');
 
         expect(newEl != null).to.equal(true);
         expect(oldEl != newEl).to.equal(true);

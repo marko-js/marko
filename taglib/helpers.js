@@ -7,18 +7,28 @@ var escapeXml = require('raptor-util/escapeXml');
 exports.widgetArgs = function (out, scope, assignedId, customEvents, extendModule, extendConfig, extendState) {
     var data = out.data;
     var widgetArgs = data.widgetArgs;
+    var id;
 
     if (!widgetArgs) {
-        if (assignedId != null) {
-            assignedId = assignedId.toString();
 
-            if (assignedId.endsWith('[]')) {
-                assignedId = repeatedId.nextId(out, scope, assignedId);
+
+        if (assignedId != null) {
+            id = assignedId.toString();
+
+            if (id.charAt(0) === '!') {
+                id = id.substring(1);
+
+            } else {
+                if (id.endsWith('[]')) {
+                    id = repeatedId.nextId(out, scope, id);
+                }
+
+                id = scope + '-' + id;
             }
         }
 
         widgetArgs = data.widgetArgs = {
-            id: assignedId != null ? scope + '-' + assignedId : null,
+            id: id,
             scope: scope,
             customEvents: customEvents
         };

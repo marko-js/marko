@@ -116,7 +116,7 @@ describe('widget' , function() {
         widget.test();
     });
 
-    it('should preserve DOM elements correctly', function() {
+    it.only('should preserve DOM elements correctly', function() {
         var preserveDomWidget = require('../fixtures/components/app-preserve-dom')
             .render({})
             .appendTo(document.getElementById('target'))

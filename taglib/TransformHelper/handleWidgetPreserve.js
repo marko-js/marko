@@ -17,7 +17,12 @@ function addPreserve(transformHelper, bodyOnly) {
 
     var idVarName = '__preserve' + (template.data.nextWidgetPreserveId++);
     var idExpression = template.makeExpression(idVarName);
-    node.setAttribute('id', idExpression);
+    if (node.tag) {
+        transformHelper.getWidgetArgs().setId(template.makeExpression('"!"+' + idExpression));
+    } else {
+        node.setAttribute('id', idExpression);
+    }
+
     preserveNode.setProperty('id', idExpression);
 
     var varNode = compiler.createNode('var', {

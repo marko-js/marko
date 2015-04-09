@@ -55,8 +55,7 @@ function assignWidgetId(isRepeated) {
         nestedIdExpression = compiler.makeExpression(widgetId);
 
         if (node.tag) {
-            var widgetArgs = this.getWidgetArgs();
-            widgetArgs.setId(widgetId);
+            this.getWidgetArgs().setId(widgetId);
         } else {
             if (node.hasAttribute('id')) {
                 node.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');
@@ -117,7 +116,14 @@ function assignWidgetId(isRepeated) {
             uniqueElId +
             '")');
 
-        node.setAttribute('id', idExpression);
+
+        if (node.tag) {
+            this.getWidgetArgs().setId(idExpression);
+        } else {
+            node.setAttribute('id', idExpression);
+        }
+
+
     }
 
     this.widgetIdInfo = {
