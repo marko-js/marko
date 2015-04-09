@@ -4,6 +4,8 @@ var repeatedId = require('../lib/repeated-id');
 var extend = require('raptor-util/extend');
 var escapeXml = require('raptor-util/escapeXml');
 
+var isBrowser = typeof window !== 'undefined';
+
 exports.widgetArgs = function (out, scope, assignedId, customEvents, extendModule, extendConfig, extendState) {
     var data = out.data;
     var widgetArgs = data.widgetArgs;
@@ -67,12 +69,14 @@ exports.cleanupWidgetArgs = function (out) {
 
 exports.widgetBody = function (out, id, content, widget) {
     if (id != null && content == null) {
-        // There is no body content so let's see if we should reuse
-        // the existing body content in the DOM
-        var existingEl = document.getElementById(id);
-        if (existingEl) {
-            var widgetsContext = widgets.getWidgetsContext(out);
-            widgetsContext.addPreservedDOMNode(existingEl, true /* body only */);
+        if (isBrowser) {
+            // There is no body content so let's see if we should reuse
+            // the existing body content in the DOM
+            var existingEl = document.getElementById(id);
+            if (existingEl) {
+                var widgetsContext = widgets.getWidgetsContext(out);
+                widgetsContext.addPreservedDOMNode(existingEl, true /* body only */);
+            }
         }
     } else if (typeof content === 'function') {
         content(out, widget);
