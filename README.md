@@ -64,12 +64,14 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 			- [rerender(data, callback)](#rerenderdata-callback)
 			- [setState(name, value)](#setstatename-value)
 			- [setState(newState)](#setstatenewstate)
+			- [setStateDirty(name, value)](#setstatedirtyname-value)
 			- [setProps(newProps)](#setpropsnewprops)
 			- [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
 		- [Properties](#properties)
 			- [this.el](#thisel)
 			- [this.id](#thisid)
 			- [this.state](#thisstate)
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
@@ -1210,6 +1212,21 @@ this.setState({
 });
 ```
 
+#### setStateDirty(name, value)
+
+Force a state property to be changed even if the value is equal to the old value. This helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare.
+
+Example:
+
+```javascript
+// Add a new item to an array without going through `this.setState(...)`
+this.state.colors.push('red');
+
+// Force that particular state property to be considered dirty so
+// that it will trigger the widget's view to be updated.
+this.setStateDirty('colors');
+```
+
 #### setProps(newProps)
 
 For stateless widgets, setting a widgets properties will result in the widget being re-rendered using the new input. For stateful widgets, setting a widgets properties will result in `getInitialState(newProps)` being called again to determine the new state and the widget state will be updated to use the new state.
@@ -1247,6 +1264,10 @@ module.exports = require('marko-widgets').defineWidget({
 	}
 });
 ```
+
+# Frequently Asked Questions (FAQ)
+
+Please see [FAQ](docs/faq.md).
 
 # Changelog
 
