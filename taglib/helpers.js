@@ -62,7 +62,7 @@ exports.widgetBody = function (out, id, content, widget) {
         var existingEl = document.getElementById(id);
         if (existingEl) {
             var widgetsContext = widgets.getWidgetsContext(out);
-            widgetsContext.addReusableDOMNode(existingEl, true /* body only */);
+            widgetsContext.addPreservedDOMNode(existingEl, true /* body only */);
         }
     } else if (typeof content === 'function') {
         content(out, widget);

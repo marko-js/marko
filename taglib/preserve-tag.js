@@ -8,7 +8,7 @@ module.exports = function render(input, out) {
 
     if (global.__rerender === true) {
         var id = input.id;
-        
+
         // See if the DOM node with the given ID already exists.
         // If so, then reuse the existing DOM node instead of re-rendering
         // the children. We have to put a placeholder node that will get
@@ -28,7 +28,7 @@ module.exports = function render(input, out) {
                 out.write('<span id="' + id + '"></span>');
             }
 
-            widgetsContext.addReusableDOMNode(existingEl, bodyOnly);
+            widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
             return;
         }
     }
