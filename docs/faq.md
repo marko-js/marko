@@ -47,7 +47,7 @@ In the above example, the exact same button is produced, but when using the `<in
 
 ## Which component functions are invoked at what time - what's the order of invocation?
 
-As a widget developer you implement any of the following special functions:
+As a widget developer you can choose to implement any of the following special functions:
 
 - Rendering/Rerendering functions (all optional, called in the order shown):
     1. `getInitialProps(input)`
