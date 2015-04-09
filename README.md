@@ -314,7 +314,7 @@ module.exports = require('marko-widgets').defineWidget({
 	update_selected: function(newSelected) {
 		// Manually update the DOM to reflect the new "selected"
 		// state" to avoid re-rendering the entire widget.
-		if (selected) {
+		if (newSelected) {
 			this.el.style.backgroundColor = 'yellow';
 		} else {
 			this.el.style.backgroundColor = null;
