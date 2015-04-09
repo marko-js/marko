@@ -293,6 +293,30 @@ describe('widget' , function() {
 
         expect(window.testData.widgets['app-conditional-widget'] == null).to.equal(false);
     });
+
+    it('should support setStateDirty(name)', function() {
+
+        var widget = require('../fixtures/components/app-setStateDirty')
+            .render({
+                colors: ['red', 'green', 'blue']
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(widget.el.innerHTML).to.contain('red');
+        expect(widget.el.innerHTML).to.contain('green');
+        expect(widget.el.innerHTML).to.contain('blue');
+
+        require('marko-widgets').batchUpdate(function() {
+            // NOTE: name does *not* have an update handler
+            widget.addColor('orange');
+        });
+
+        expect(widget.el.innerHTML).to.contain('red');
+        expect(widget.el.innerHTML).to.contain('green');
+        expect(widget.el.innerHTML).to.contain('blue');
+        expect(widget.el.innerHTML).to.contain('orange');
+    });
 });
 
 
