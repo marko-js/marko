@@ -1,10 +1,18 @@
+var expect = require('chai').expect;
+
 module.exports = require('marko-widgets').defineWidget({
     template: require.resolve('./template.marko'),
-
+    getInitialProps: function(input) {
+        expect(input.getInitialPropsCalled).to.be.a('undefined');
+        input.getInitialPropsCalled = true;
+        return input;
+    },
     getInitialBody: function(input) {
         return input.label || input.renderBody;
     },
     getTemplateData: function(state, input) {
+        expect(input.getInitialPropsCalled).to.equal(true);
+
         var rootAttrs = {};
         var attrs = input['*'];
         var className = input['class'];
