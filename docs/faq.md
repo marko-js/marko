@@ -87,9 +87,9 @@ In some situations, it may be helpful to communicate an event on a global pub/su
 
 ## Why is state so important for Marko Widgets?
 
-The concept of stateful widgets was introduced into Marko Widgets after evaluating some the great ideas introduced with [React](https://facebook.github.io/react/). By making widgets stateful and tracking changes to state, the Marko Widgets runtime can minimize updates to the DOM. Both Marko Widgets and React want to help developers avoid having to write code that manually updates the DOM. Marko Widgets, however, provides support for updating the DOM for specific state changes when required.
+The concept of stateful widgets was introduced into Marko Widgets after evaluating some the great ideas introduced with [React](https://facebook.github.io/react/). By making widgets stateful and tracking changes to state, the Marko Widgets runtime can minimize updates to the DOM. Both Marko Widgets and React want to allow developers to create more easily maintainable applications by promoting rerendering over writing code that manually manipulates the DOM. Marko Widgets still allows developers to manually update the DOM if performance is a concern, but that should not be the norm.
 
-A stateful widget's view will only be updated if any of its state properties has been changed. In addition, when rerendering a tree of Marko Widgets, only the specific widgets that need to be updated will be updated and the other widgets will continue to be used. While re-rendering a widget with nested widgets, if Marko Widgets encounters a previously rendered widget in the DOM with the same ID then the previous widget will be reused to avoid rerendering and entire subtree of widgets.
+A stateful widget's view will only be updated if any of its state properties have been changed. In addition, when rerendering a tree of widgets, only the specific widgets that need to be updated will be updated and the other widgets will continue to be used. While rerendering a widget with nested widgets, if Marko Widgets encounters a previously rendered widget in the DOM with the same ID then the previous widget will be reused to avoid rerendering and entire subtree of widgets. Marko Widgets also has the concept of container components that accept external nested content. If the state of the container component changes, only the outer "shell" will be rerendered and not the nested content.
 
 For performance reasons, only a shallow compare is done when checking if the value of a state property has changed. This means that complex objects that exist in the state should be treated as immutable or, alternatively, Marko Widgets needs to be told when a state property has changed using `setStateDirty(name)`. Both supported solutions are compared below:
 
@@ -116,3 +116,5 @@ function addColor(newColor) {
     this.setStateDirty('colors');
 }
 ```
+
+Unlike React, Marko Widgets does not try to maintain a virtual DOM tree. This allows the Marko Widgets runtime to be much smaller. Marko Widgets makes the assumption that rerendering directly to the DOM is usually fast enough. In the cases where performance is a concern, developers have the option to provide custom state update handlers to manually update the DOM. In addition, Marko Widgets allows developers to mark entire subtrees of the DOM as "preserved" so that portions of the DOM are never rerendered and will continue be used across rerendering.
