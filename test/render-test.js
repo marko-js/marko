@@ -380,4 +380,8 @@ describe('marko/render' , function() {
     it("should support importing taglibs into other taglibs", function(done) {
         testRender("test-project/html-templates/taglib-imports.marko", {}, done);
     });
+
+    it("should support c-input being used in conjunction with attributes", function(done) {
+        testRender("test-project/html-templates/c-input-plus-attrs.marko", {}, done);
+    });
 });

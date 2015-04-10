@@ -17,6 +17,7 @@
 var extend = require('raptor-util').extend;
 var forEachEntry = require('raptor-util').forEachEntry;
 var stringify = require('raptor-json/stringify');
+var isObjectEmpty = require('raptor-util/isObjectEmpty');
 
 function addHandlerVar(template, renderer) {
     var handlerVars = template._handlerVars || (template._handlerVars = {});
@@ -177,17 +178,42 @@ TagHandlerNode.prototype = {
         template.functionCall(tagHelperVar, function () {
             template.code('out,\n').indent(function () {
                 template.line(handlerVar + ',').indent();
+
+                if (_this.dynamicAttributes) {
+                    template.indent(function() {
+                        _this.setProperty(_this.dynamicAttributesProperty, template.makeExpression(getPropsStr(_this.dynamicAttributes, template)));
+                    });
+                }
+
+                var props = _this.getProperties();
+
+                var propsCode = getPropsStr(props, template);
+
                 if (_this.inputExpression) {
-                    template.code(_this.inputExpression);
-                } else {
-                    if (_this.dynamicAttributes) {
-                        template.indent(function() {
-                            _this.setProperty(_this.dynamicAttributesProperty, template.makeExpression(getPropsStr(_this.dynamicAttributes, template)));
-                        });
+                    if (isObjectEmpty(props)) {
+                        propsCode = _this.inputExpression;
+                    } else {
+                        // We need to generate code that merges in the attribute properties with
+                        // the provided data object. We don't want to modify the existing
+                        // data object provided by the user so first need to create a new
+                        // empty object and then merge in the existing properties from the
+                        // provided object. When then extend that object with the properties
+                        // that came from the attributes.
+                        //
+                        // The generated code will be similar to the following:
+                        //
+                        // extend(extend({}, <input_expression>), <attr_props>);
+                        var extendVar = template.addStaticVar('__extend', '__helpers.xt');
+                        propsCode = extendVar + '(' +
+                                    extendVar + '({}, ' + _this.inputExpression + '), ' +
+                                    propsCode +
+                                ')';
                     }
 
-                    template.code(getPropsStr(_this.getProperties(), template));
                 }
+
+                template.code(propsCode);
+
                 if (_this.hasChildren() && !_this.tag.bodyFunction) {
                     var bodyParams = [];
                     var hasOutParam = false;
