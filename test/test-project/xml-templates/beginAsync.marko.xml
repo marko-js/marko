@@ -1,8 +1,0 @@
-<c-template 
-    params="helper">
-
-    A<invoke function="helper.beginAsync(out)"/>C
-
-</c-template>
-
-

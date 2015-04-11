@@ -20,7 +20,7 @@ describe('marko/api' , function() {
 
     it('should allow a template to be rendered using a callback', function(done) {
         marko.render(
-            nodePath.join(__dirname, 'test-project/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -46,7 +46,7 @@ describe('marko/api' , function() {
             });
 
         marko.render(
-            nodePath.join(__dirname, 'test-project/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -73,7 +73,7 @@ describe('marko/api' , function() {
             });
 
         marko.render(
-            nodePath.join(__dirname, 'test-project/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -93,7 +93,7 @@ describe('marko/api' , function() {
 
 
         marko.stream(
-            nodePath.join(__dirname, 'test-project/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
             {
                 name: 'John'
             })
@@ -107,7 +107,7 @@ describe('marko/api' , function() {
     /// TEMPLATE LOADING:
 
     it('should allow a template to be loaded and rendered using a callback', function(done) {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -132,7 +132,7 @@ describe('marko/api' , function() {
                 done(e);
             });
 
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -158,7 +158,7 @@ describe('marko/api' , function() {
                 done(e);
             });
 
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -166,7 +166,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be loaded and rendered to a stream', function(done) {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
 
         var output = '';
         var outStream = through(function write(data) {
@@ -189,13 +189,13 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered to a string synchronously using renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
         var output = template.renderSync({ name: 'John' });
         expect(output).to.equal('Hello John!');
     });
 
     it('should allow a template to be rendered synchronously using global attributes', function() {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello-global.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-global.marko'));
         var data = {
           name: 'John',
           $global: {
@@ -207,7 +207,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered asynchronously using global attributes', function(done) {
-      var template = marko.load(nodePath.join(__dirname, 'test-project/hello-global.marko'));
+      var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-global.marko'));
       var data = {
           name: 'John',
           $global: {
@@ -221,7 +221,7 @@ describe('marko/api' , function() {
     });
 
     it('should throw an error if beginAsync is used with renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello-async.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-async.marko'));
         var output;
         var e;
 
@@ -242,7 +242,7 @@ describe('marko/api' , function() {
     });
 
     it('should throw errors correctly with renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'test-project/hello-error.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-error.marko'));
         var output;
         var e;
 

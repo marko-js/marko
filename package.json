@@ -12,7 +12,8 @@
         "url": "https://github.com/raptorjs/marko.git"
     },
     "scripts": {
-        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/"
+        "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/",
+        "test-fast": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": [

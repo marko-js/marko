@@ -2,11 +2,6 @@
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
-var nodePath = require('path');
-var fs = require('fs');
-
-
-var StringBuilder = require('raptor-strings/StringBuilder');
 
 function delayedDataProvider(delay, value) {
     return function(args, done) {
@@ -16,58 +11,10 @@ function delayedDataProvider(delay, value) {
     };
 }
 
-function testRender(path, data, done, options) {
-    var inputPath = nodePath.join(__dirname, path);
-    var expectedPath = nodePath.join(__dirname, path + '.expected.html');
-    var actualPath = nodePath.join(__dirname, path + '.actual.html');
-    options = options || {};
-    var compiledPath = nodePath.join(__dirname, path + '.actual.js');
+var testRender = require('./util').createTestRender({
+    ext: '.marko'
+});
 
-    var compiler = require('../compiler').createCompiler(inputPath);
-    var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-
-    var compiledSrc = compiler.compile(src);
-    fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
-
-
-
-    // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
-
-
-
-    var marko = require('../');
-    var AsyncWriter = marko.AsyncWriter;
-    var out = options.out || new AsyncWriter(new StringBuilder());
-
-    require('../compiler').defaultOptions.checkUpToDate = false;
-
-    marko.render(inputPath, data, out)
-        .on('finish', function() {
-            var output = out.getOutput();
-
-            fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
-
-            var expected;
-            try {
-                expected = options.expected || fs.readFileSync(expectedPath, {encoding: 'utf8'});
-            }
-            catch(e) {
-                expected = 'TBD';
-                fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
-            }
-
-            if (output !== expected) {
-                throw new Error('Unexpected output for "' + inputPath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
-                    '\n---------\nACTUAL (' + actualPath + '):\n---------\n' + output + '\n---------');
-            }
-
-            done();
-        })
-        .on('error', done)
-        .end();
-
-
-}
 
 describe('marko/marko-async' , function() {
 
@@ -86,7 +33,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+        testRender('fixtures/templates/async-fragment-ordering', {
             'D1': delayedDataProvider(100),
             'D2': delayedDataProvider(300),
             'D3': delayedDataProvider(200),
@@ -95,7 +42,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+        testRender('fixtures/templates/async-fragment-ordering', {
             'D1': delayedDataProvider(100),
             'D2': delayedDataProvider(200),
             'D3': delayedDataProvider(300),
@@ -104,7 +51,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+        testRender('fixtures/templates/async-fragment-ordering', {
             'D1': delayedDataProvider(800),
             'D2': delayedDataProvider(200),
             'D3': delayedDataProvider(300),
@@ -113,7 +60,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a simple template with async fragments correctly (4)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering.marko', {
+        testRender('fixtures/templates/async-fragment-ordering', {
             'D1': delayedDataProvider(800),
             'D2': delayedDataProvider(300),
             'D3': delayedDataProvider(200),
@@ -122,7 +69,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (1)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+        testRender('fixtures/templates/async-fragment-ordering2', {
             'D1': delayedDataProvider(100),
             'D2': delayedDataProvider(300),
             'D3': delayedDataProvider(200),
@@ -134,7 +81,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (2)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+        testRender('fixtures/templates/async-fragment-ordering2', {
             'D1': delayedDataProvider(100),
             'D2': delayedDataProvider(300),
             'D3': delayedDataProvider(200),
@@ -146,7 +93,7 @@ describe('marko/marko-async' , function() {
     });
 
     it('should render a less simple template with async fragments correctly (3)', function(done) {
-        testRender('test-project/html-templates/async-fragment-ordering2.marko', {
+        testRender('fixtures/templates/async-fragment-ordering2', {
             'D1': delayedDataProvider(900),
             'D2': delayedDataProvider(300),
             'D3': delayedDataProvider(200),
@@ -158,13 +105,13 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow for using macros inside async fragments", function(done) {
-        testRender('test-project/html-templates/async-fragment-macros.marko', {
+        testRender('fixtures/templates/async-fragment-macros', {
             'D1': delayedDataProvider(100)
         }, done);
     });
 
     it("should allow for global data providers", function(done) {
-        testRender('test-project/html-templates/async-fragment-data-providers.marko', {
+        testRender('fixtures/templates/async-fragment-data-providers', {
             'sharedData': function(args, done) {
                 var deferred = require('raptor-promises').defer();
 
@@ -206,7 +153,7 @@ describe('marko/marko-async' , function() {
         };
 
 
-        testRender('test-project/html-templates/async-fragment-args.marko', {
+        testRender('fixtures/templates/async-fragment-args', {
             'userInfo': function(arg, done) {
                 setTimeout(function() {
                     done(null, users[arg.userId]);
@@ -222,7 +169,7 @@ describe('marko/marko-async' , function() {
             deferred.resolve('Test promise');
         }, 200);
 
-        testRender('test-project/html-templates/async-fragment-promise.marko', {
+        testRender('fixtures/templates/async-fragment-promise', {
             'promiseData': function(arg, done) {
                 return deferred.promise;
             }
@@ -230,7 +177,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow functions that return promises as data providers", function(done) {
-        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
+        testRender('fixtures/templates/async-fragment-function-data-provider', {
             userInfo: function() {
                 var deferred = require('raptor-promises').defer();
                 setTimeout(function() {
@@ -244,7 +191,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow functions that return non-promises as data providers", function(done) {
-        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
+        testRender('fixtures/templates/async-fragment-function-data-provider', {
             userInfo: function() {
                 return {
                     name: 'John'
@@ -254,7 +201,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow functions that use done callback", function(done) {
-        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
+        testRender('fixtures/templates/async-fragment-function-data-provider', {
             userInfo: function(arg, done) {
                 done(null, {
                     name: 'John'
@@ -264,7 +211,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow for a timeout message", function(done) {
-        testRender('test-project/html-templates/async-fragment-timeout-message.marko', {
+        testRender('fixtures/templates/async-fragment-timeout-message', {
             userInfo: function(arg, done) {
                 // Do nothing to trigger a timeout
             }
@@ -272,7 +219,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow data provider function to only have a callback parameter", function(done) {
-        testRender('test-project/html-templates/async-fragment-function-data-provider.marko', {
+        testRender('fixtures/templates/async-fragment-function-data-provider', {
             userInfo: function(done) {
                 done(null, {
                     name: 'John'
@@ -282,7 +229,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow for alternative error message (sync)", function(done) {
-        testRender('test-project/html-templates/async-fragment-error.marko', {
+        testRender('fixtures/templates/async-fragment-error', {
             userInfo: function(done) {
                 done(new Error('Invalid user'));
             }
@@ -290,7 +237,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow for alternative error message (async)", function(done) {
-        testRender('test-project/html-templates/async-fragment-error.marko', {
+        testRender('fixtures/templates/async-fragment-error', {
             userInfo: function(done) {
                 setTimeout(function() {
                     done(new Error('Invalid user'));
@@ -300,7 +247,7 @@ describe('marko/marko-async' , function() {
     });
 
     it("should allow for alternative timeout message", function(done) {
-        testRender('test-project/html-templates/async-fragment-timeout.marko', {
+        testRender('fixtures/templates/async-fragment-timeout', {
             userInfo: function(done) {
                 setTimeout(function() {
                     done(null, {});
@@ -312,7 +259,7 @@ describe('marko/marko-async' , function() {
     it("should render async fragments correctly with client-reorder set to true", function(done) {
         // NOTE: This test is very sensitive to the client-side JavaScript that gets written that handles
         //       rearranging DOM nodes. Might want to revisit in the future.
-        testRender('test-project/html-templates/async-fragment-client-reorder.marko', {
+        testRender('fixtures/templates/async-fragment-client-reorder', {
             outer: function(callback) {
                 setTimeout(function() {
                     callback(null, {});

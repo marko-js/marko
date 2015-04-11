@@ -89,7 +89,7 @@ describe('marko/dust' , function() {
             }
         };
 
-        testRender('test-project/dust/async.dust', {
+        testRender('fixtures/dust/async.dust', {
             userIds: [0, 1, 2, 3],
             userInfo: function(arg, callback) {
                 callback(null, users[arg.userId]);

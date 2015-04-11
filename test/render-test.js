@@ -2,63 +2,11 @@
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
-var expect = require('chai').expect;
-var nodePath = require('path');
-var fs = require('fs');
+// var expect = require('chai').expect;
 
-var StringBuilder = require('raptor-strings/StringBuilder');
-
-function testRender(path, data, done, options) {
-    var inputPath = nodePath.join(__dirname, path);
-    var expectedPath = nodePath.join(__dirname, path + '.expected.html');
-    var actualPath = nodePath.join(__dirname, path + '.actual.html');
-    options = options || {};
-    var compiledPath = nodePath.join(__dirname, path + '.actual.js');
-
-    // var compiler = require('../compiler').createCompiler(inputPath);
-    // var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-
-    // var compiledSrc = compiler.compile(src);
-    // fs.writeFileSync(compiledPath, compiledSrc, {encoding: 'utf8'});
-
-
-    // console.log('\nCompiled (' + inputPath + '):\n---------\n' + compiledSrc);
-
-
-
-    var marko = require('../');
-
-    require('../compiler').defaultOptions.checkUpToDate = false;
-
-    var AsyncWriter = marko.AsyncWriter;
-    var out = options.out || new AsyncWriter(new StringBuilder());
-
-    marko.render(inputPath, data, out)
-        .on('finish', function() {
-            var output = out.getOutput();
-
-            fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
-
-            var expected;
-            try {
-                expected = options.expected || fs.readFileSync(expectedPath, {encoding: 'utf8'});
-            }
-            catch(e) {
-                expected = 'TBD';
-                fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
-            }
-
-            if (output !== expected) {
-                throw new Error('Unexpected output for "' + inputPath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
-                    '\n---------\nACTUAL (' + actualPath + '):\n---------\n' + output + '\n---------');
-            }
-
-            done();
-        })
-        .on('error', done)
-        .end();
-
-}
+var testRender = require('./util').createTestRender({
+    ext: '.marko'
+});
 
 describe('marko/render' , function() {
 
@@ -77,19 +25,19 @@ describe('marko/render' , function() {
     });
 
     it('should render a simple template', function(done) {
-        testRender('test-project/simple.marko', {}, done);
+        testRender('fixtures/templates/hello-static', {}, done);
     });
 
     it('should render a simple template with expressions', function(done) {
-        testRender('test-project/hello-dynamic.marko', {name: 'John'}, done);
+        testRender('fixtures/templates/hello-dynamic', {name: 'John'}, done);
     });
 
     it('should render a template with a custom tag', function(done) {
-        testRender('test-project/custom-tag.marko', {}, done);
+        testRender('fixtures/templates/custom-tag', {}, done);
     });
 
     it("should allow for text replacement", function(done) {
-        testRender("test-project/html-templates/text-replacement.marko", {
+        testRender("fixtures/templates/text-replacement", {
             zero: 0,
             person: {
                 name: "John",
@@ -104,7 +52,7 @@ describe('marko/render' , function() {
     });
 
     it("should render simple template with logic", function(done) {
-        testRender("test-project/html-templates/simple.marko", {
+        testRender("fixtures/templates/simple", {
             message: "Hello World!",
             rootClass: "title",
             colors: ["red", "green", "blue"]
@@ -112,96 +60,96 @@ describe('marko/render' , function() {
     });
 
     it("should allow for simple template handlers", function(done) {
-        testRender("test-project/html-templates/simple-handlers.marko", {dynamic: "universe"}, done);
+        testRender("fixtures/templates/simple-handlers", {dynamic: "universe"}, done);
     });
 
     it("should allow for template handlers with nested body content", function(done) {
-        testRender("test-project/html-templates/nested-handlers.marko", {showConditionalTab: false}, done);
+        testRender("fixtures/templates/nested-handlers", {showConditionalTab: false}, done);
     });
 
     it("should allow entity expressions", function(done) {
-        testRender("test-project/html-templates/entities.marko", {}, done);
+        testRender("fixtures/templates/entities", {}, done);
     });
 
     it("should allow escaped expressions", function(done) {
-        testRender("test-project/html-templates/escaped.marko", {}, done);
+        testRender("fixtures/templates/escaped", {}, done);
     });
 
     it("should allow complex expressions", function(done) {
-        testRender("test-project/html-templates/expressions.marko", {}, done);
+        testRender("fixtures/templates/expressions", {}, done);
     });
 
     it("should allow whitespace to be removed", function(done) {
-        testRender("test-project/html-templates/whitespace.marko", {}, done);
+        testRender("fixtures/templates/whitespace", {}, done);
     });
 
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/html-templates/whitespace2.marko", {}, done);
+        testRender("fixtures/templates/whitespace2", {}, done);
     });
 
     it("should handle whitespace when using expressions", function(done) {
-        testRender("test-project/html-templates/whitespace2.marko", {}, done);
+        testRender("fixtures/templates/whitespace2", {}, done);
     });
 
     it("should normalize whitespace", function(done) {
-        testRender("test-project/html-templates/whitespace3.marko", {}, done);
+        testRender("fixtures/templates/whitespace3", {}, done);
     });
 
     it("should preserve whitespace using <compiler-options>", function(done) {
-        testRender("test-project/html-templates/whitespace4.marko", {}, done);
+        testRender("fixtures/templates/whitespace4", {}, done);
     });
 
     it("should handle whitespace correctly for mixed text and element children", function(done) {
-        testRender("test-project/html-templates/whitespace-inline-elements.marko", {}, done);
+        testRender("fixtures/templates/whitespace-inline-elements", {}, done);
     });
 
     it("should allow HTML output that is not well-formed XML", function(done) {
-        testRender("test-project/html-templates/html.marko", {}, done);
+        testRender("fixtures/templates/html", {}, done);
     });
 
     it("should allow for looping", function(done) {
-        testRender("test-project/html-templates/looping.marko", {}, done);
+        testRender("fixtures/templates/looping", {}, done);
     });
 
     it("should allow for looping (native for-loop)", function(done) {
-        testRender("test-project/html-templates/looping-native-for-loop.marko", {}, done);
+        testRender("fixtures/templates/looping-native-for-loop", {}, done);
     });
 
     it("should allow for looping over properties", function(done) {
-        testRender("test-project/html-templates/looping-props.marko", {}, done);
+        testRender("fixtures/templates/looping-props", {}, done);
     });
 
     it("should allow for looping over ranges", function(done) {
-        testRender("test-project/html-templates/looping-range.marko", {}, done);
+        testRender("fixtures/templates/looping-range", {}, done);
     });
 
     it("should allow for dynamic attributes", function(done) {
-        testRender("test-project/html-templates/attrs.marko", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
+        testRender("fixtures/templates/attrs", {"myAttrs": {style: "background-color: #FF0000; <test>", "class": "my-div"}}, done);
     });
 
     it("should allow for <def> functions", function(done) {
-        testRender("test-project/html-templates/def.marko", {}, done);
+        testRender("fixtures/templates/def", {}, done);
     });
 
     it("should allow for <with> functions", function(done) {
-        testRender("test-project/html-templates/with.marko", {}, done);
+        testRender("fixtures/templates/with", {}, done);
     });
 
     it("should allow for scriptlets", function(done) {
-        testRender("test-project/html-templates/scriptlet.marko", {}, done);
+        testRender("fixtures/templates/scriptlet", {}, done);
     });
 
 
     it("should allow for includes", function(done) {
-        testRender("test-project/html-templates/include.marko", {}, done);
+        testRender("fixtures/templates/include", {}, done);
     });
 
     it("should allow for <invoke function... />", function(done) {
-        testRender("test-project/html-templates/invoke.marko", {}, done);
+        testRender("fixtures/templates/invoke", {}, done);
     });
 
     it("should allow for require", function(done) {
-        testRender("test-project/html-templates/require.marko", {}, done);
+        testRender("fixtures/templates/require", {}, done);
     });
 
 
@@ -227,7 +175,7 @@ describe('marko/render' , function() {
     //         }
     //     };
 
-    //     tryTemplate("test-project/html-templates/errors.marko", function(message, errors) {
+    //     tryTemplate("fixtures/templates/errors", function(message, errors) {
     //         var len = errors ? errors.length : -1;
     //         expect(len).toEqual(25);
 
@@ -238,15 +186,15 @@ describe('marko/render' , function() {
     // });
 
     it("should allow static file includes", function(done) {
-        testRender("test-project/html-templates/include-resource-static.marko", {}, done);
+        testRender("fixtures/templates/include-resource-static", {}, done);
     });
 
     it("should allow HTML pages with inline script", function(done) {
-        testRender("test-project/html-templates/inline-script.marko", {name: "World"}, done);
+        testRender("fixtures/templates/inline-script", {name: "World"}, done);
     });
 
     it("should allow CDATA inside templates", function(done) {
-        testRender("test-project/html-templates/cdata.marko", {name: "World"}, done);
+        testRender("fixtures/templates/cdata", {name: "World"}, done);
     });
 
     // it("should allow type conversion", function(done) {
@@ -255,80 +203,80 @@ describe('marko/render' , function() {
     // });
 
     it("should allow for if...else", function(done) {
-        testRender("test-project/html-templates/if-else.marko", {}, done);
+        testRender("fixtures/templates/if-else", {}, done);
     });
 
     it("should allow for expressions and variables inside JavaScript strings", function(done) {
-        testRender("test-project/html-templates/string-expressions.marko", {name: "John", count: 10}, done);
+        testRender("fixtures/templates/string-expressions", {name: "John", count: 10}, done);
     });
 
     it("should allow for simple conditionals", function(done) {
-        testRender("test-project/html-templates/simple-conditionals.marko", {name: "John", count: 51}, done);
+        testRender("fixtures/templates/simple-conditionals", {name: "John", count: 51}, done);
     });
 
     it("should allow for conditional attributes", function(done) {
-        testRender("test-project/html-templates/conditional-attributes.marko", {}, done);
+        testRender("fixtures/templates/conditional-attributes", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer using a custom property name", function(done) {
-        testRender("test-project/html-templates/dynamic-attributes.marko", {}, done);
+        testRender("fixtures/templates/dynamic-attributes", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer", function(done) {
-        testRender("test-project/html-templates/dynamic-attributes2.marko", {}, done);
+        testRender("fixtures/templates/dynamic-attributes2", {}, done);
     });
 
     it("should allow for dynamic attributes to be passed to tag renderer as part of input object", function(done) {
-        testRender("test-project/html-templates/dynamic-attributes3.marko", {}, done);
+        testRender("fixtures/templates/dynamic-attributes3", {}, done);
     });
 
     it("should allow for nested attributes", function(done) {
-        testRender("test-project/html-templates/nested-attrs.marko", {active: true}, done);
+        testRender("fixtures/templates/nested-attrs", {active: true}, done);
     });
 
     it("should allow for new variables to be created and assigned values", function(done) {
-        testRender("test-project/html-templates/var.marko", {active: true}, done);
+        testRender("fixtures/templates/var", {active: true}, done);
     });
 
 
     it("should handle XML escaping correctly", function(done) {
-        testRender("test-project/html-templates/xml-escaping.marko", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
+        testRender("fixtures/templates/xml-escaping", {name: "<Patrick>", welcome: '<span>Welcome</span>'}, done);
     });
 
     it("should allow for a doctype tag and a doctype attribute", function(done) {
-        testRender("test-project/html-templates/doctype.marko", {}, done);
+        testRender("fixtures/templates/doctype", {}, done);
     });
 
     it("should allow for using templates to render custom tags", function(done) {
-        testRender("test-project/html-templates/template-as-tag.marko", {title: "My Page Title"}, done);
+        testRender("fixtures/templates/template-as-tag", {title: "My Page Title"}, done);
     });
 
     it("should allow for caching HTML fragments", function(done) {
-        testRender("test-project/html-templates/caching.marko", {}, done);
+        testRender("fixtures/templates/caching", {}, done);
     });
 
     it("should escape XML in text node when enabled", function(done) {
-        testRender("test-project/html-templates/escape-xml-enabled.marko", {}, done);
+        testRender("fixtures/templates/escape-xml-enabled", {}, done);
     });
 
     it("should not escape XML in text node when disabled", function(done) {
-        testRender("test-project/html-templates/escape-xml-disabled.marko", {}, done);
+        testRender("fixtures/templates/escape-xml-disabled", {}, done);
     });
 
     it("should allow for attributes with default values", function(done) {
-        testRender("test-project/html-templates/default-attributes.marko", {}, done);
+        testRender("fixtures/templates/default-attributes", {}, done);
     });
 
     it("should allow for input expressions to be provided to tag handler nodes", function(done) {
-        testRender("test-project/html-templates/tag-input-expressions.marko", {name: "Frank", adult: true}, done);
+        testRender("fixtures/templates/tag-input-expressions", {name: "Frank", adult: true}, done);
     });
 
     it("should allow for using layouts", function(done) {
-        testRender("test-project/html-templates/layout-use.marko", {}, done);
+        testRender("fixtures/templates/layout-use", {}, done);
     });
 
     it("should work with custom iteration", function(done) {
-        testRender("test-project/html-templates/looping-iterator.marko", {
+        testRender("fixtures/templates/looping-iterator", {
             reverseIterator: function(arrayList, callback){
                 var statusVar = {first: 0, last: arrayList.length-1};
                 for(var i=arrayList.length-1; i>=0; i--){
@@ -340,33 +288,33 @@ describe('marko/render' , function() {
     });
 
     it("should support scanning a directory for tags", function(done) {
-        testRender("test-project/html-templates/scanned-tags.marko", {}, done);
+        testRender("fixtures/templates/scanned-tags", {}, done);
     });
 
     it("should support scanning a directory for tags", function(done) {
-        testRender("test-project/html-templates/template-tag-dynamic-attributes.marko", {}, done);
+        testRender("fixtures/templates/template-tag-dynamic-attributes", {}, done);
     });
 
     it("should not escape HTML characters inside script tags", function(done) {
-        testRender("test-project/html-templates/script-tag-entities.marko", {
+        testRender("fixtures/templates/script-tag-entities", {
             name: '<script>evil<script>'
         }, done);
     });
 
     it("should not interfer with a 'for' attribute assigned to a label element", function(done) {
-        testRender("test-project/html-templates/label-for.marko", {
+        testRender("fixtures/templates/label-for", {
             name: '<label for="hello">Hello</label>'
         }, done);
     });
 
     it("should handle 'body-only-if' correctly", function(done) {
-        testRender("test-project/html-templates/body-only-if.marko", {
+        testRender("fixtures/templates/body-only-if", {
             url: '/foo'
         }, done);
     });
 
     it("should support boolean attributes", function(done) {
-        testRender("test-project/html-templates/boolean-attributes.marko", {
+        testRender("fixtures/templates/boolean-attributes", {
             options: [
                 {  value: 'red', selected: false },
                 {  value: 'green', selected: true },
@@ -378,10 +326,10 @@ describe('marko/render' , function() {
     });
 
     it("should support importing taglibs into other taglibs", function(done) {
-        testRender("test-project/html-templates/taglib-imports.marko", {}, done);
+        testRender("fixtures/templates/taglib-imports", {}, done);
     });
 
     it("should support c-input being used in conjunction with attributes", function(done) {
-        testRender("test-project/html-templates/c-input-plus-attrs.marko", {}, done);
+        testRender("fixtures/templates/c-input-plus-attrs", {}, done);
     });
 });

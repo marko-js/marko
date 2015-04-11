@@ -1,7 +1,0 @@
-<c-template>
-
-    <async-fragment dependency="promiseData" var="promiseData">
-        $promiseData
-    </async-fragment>
-    
-</c-template>

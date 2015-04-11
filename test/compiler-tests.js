@@ -2,19 +2,17 @@
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
-var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
-var logger = require('raptor-logging').logger(module);
 
 function testCompiler(path) {
-    var inputPath = nodePath.join(__dirname, path);
-    var expectedPath = nodePath.join(__dirname, path + '.expected.js');
-    var actualPath = nodePath.join(__dirname, path + '.actual.js');
+    var templatePath = nodePath.join(__dirname, path, 'template.marko');
+    var expectedPath = nodePath.join(__dirname, path, 'expected.js');
+    var actualPath = nodePath.join(__dirname, path, 'template.marko.js');
 
-    var compiler = require('../compiler').createCompiler(inputPath);
-    var src = fs.readFileSync(inputPath, {encoding: 'utf8'});
-    
+    var compiler = require('../compiler').createCompiler(templatePath);
+    var src = fs.readFileSync(templatePath, {encoding: 'utf8'});
+
     var output = compiler.compile(src);
     fs.writeFileSync(actualPath, output, {encoding: 'utf8'});
 
@@ -28,7 +26,7 @@ function testCompiler(path) {
     }
 
     if (output !== expected) {
-        throw new Error('Unexpected output for "' + inputPath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
+        throw new Error('Unexpected output for "' + templatePath + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
             '\n---------\nACTUAL (' + actualPath + '):\n---------\n' + output + '\n---------');
     }
 }
@@ -50,15 +48,15 @@ describe('marko/compiler' , function() {
     });
 
     it('should compile a simple template', function() {
-        testCompiler('test-project/simple.marko');
+        testCompiler('fixtures/templates/compiler/simple');
     });
 
     it('should compile a simple template with custom tag', function() {
-        testCompiler('test-project/custom-tag.marko');
+        testCompiler('fixtures/templates/compiler/custom-tag');
     });
 
     it('should compile a simple template with expressions', function() {
-        testCompiler('test-project/hello-dynamic.marko');
+        testCompiler('fixtures/templates/compiler/hello-dynamic');
     });
 
     // it.only('should compile a template with <c:invoke>', function() {
@@ -69,6 +67,6 @@ describe('marko/compiler' , function() {
     //     testCompiler('test-project/test-templates/include.marko');
     // });
 
-    
+
 });
 

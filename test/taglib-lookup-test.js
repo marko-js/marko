@@ -19,7 +19,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup core attributes for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
         var ifAttr = lookup.getAttribute('div', 'if');
         expect(ifAttr != null).to.equal(true);
@@ -28,7 +28,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup core tag for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var ifTag = lookup.getTag('if');
         expect(ifTag != null).to.equal(true);
         expect(ifTag.name).to.equal('if');
@@ -36,7 +36,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup core template for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.tags));
         var templateTag = lookup.getTag('c-template');
         expect(templateTag != null).to.equal(true);
@@ -45,7 +45,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup custom tag for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var tag = lookup.getTag('test-hello');
         // console.log(Object.keys(lookup.tags));
         expect(tag != null).to.equal(true);
@@ -54,7 +54,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup custom attributes for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('test-hello', 'name');
         expect(attr != null).to.equal(true);
@@ -71,7 +71,7 @@ describe('taglib-lookup' , function() {
 
     it('should allow for dynamic attributes', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('test-hello', 'DYNAMIC');
         expect(attr != null).to.equal(true);
@@ -80,7 +80,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup global attributes correctly', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
         var attrDef = lookup.getAttribute('test-dynamic-attributes', 'global-attribute');
         expect(attrDef != null).to.equal(true);
@@ -89,10 +89,10 @@ describe('taglib-lookup' , function() {
 
     it('should cache a lookup', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup1 = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
-        var lookup2 = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project'));
-        var lookup3 = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/empty'));
-        var lookup4 = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup1 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
+        var lookup2 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
+        var lookup3 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-empty'));
+        var lookup4 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
         expect(lookup1).to.equal(lookup2);
         expect(lookup2).to.equal(lookup3);
         expect(lookup1).to.not.equal(lookup4);
@@ -100,7 +100,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup nested tags', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
         var tag = lookup.getTag('nested-foo');
 
         expect(tag != null).to.equal(true);
@@ -109,7 +109,7 @@ describe('taglib-lookup' , function() {
 
     it('should lookup attributes for nested tags', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('nested-foo', 'attr1');
         expect(attr != null).to.equal(true);
@@ -120,7 +120,7 @@ describe('taglib-lookup' , function() {
         var transformers = [];
 
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
 
         lookup.forEachTagTransformer('div', function(transformer) {
             transformers.push(transformer);
@@ -134,7 +134,7 @@ describe('taglib-lookup' , function() {
 
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup;
-        // lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        // lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/nested'));
 
         // transformers = [];
         // lookup.forEachTagTransformer('nested-foo', function(transformer) {
@@ -143,7 +143,7 @@ describe('taglib-lookup' , function() {
 
         // expect(transformers.length).to.equal(2);
 
-        lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/transformers'));
+        lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-transformers'));
 
         transformers = [];
         lookup.forEachTagTransformer('transform-foo', function(transformer) {
@@ -170,7 +170,7 @@ describe('taglib-lookup' , function() {
         var transformers = [];
 
         var taglibLookup = require('../compiler').taglibs.lookup;
-        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'test-project/nested'));
+        var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
 
         lookup.forEachTagTransformer('else', function(transformer) {
             transformers.push(transformer);
