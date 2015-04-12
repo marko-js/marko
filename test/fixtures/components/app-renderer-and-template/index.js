@@ -1,6 +1,6 @@
 var template;
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
     renderer: function(input, out) {
         template.render({
                 name: input.name

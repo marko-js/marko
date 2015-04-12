@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
     template: require.resolve('./template.marko'),
     getInitialProps: function(input) {
         expect(input.getInitialPropsCalled).to.be.a('undefined');

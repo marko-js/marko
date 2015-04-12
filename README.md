@@ -139,7 +139,7 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getTemplateData: function(state, input) {
@@ -196,7 +196,7 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getTemplateData: function(state, input) {
@@ -238,7 +238,7 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
@@ -286,7 +286,7 @@ __src/components/app-hello/template.marko__
 __src/components/app-hello/index.js__
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
@@ -350,7 +350,7 @@ module.exports = require('marko-widgets').defineWidget({
 Below is the content of `index.js` where the widget type is defined:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	init: function() {
 		// this.el will be the raw DOM element the widget instance
 		// is bound to:
@@ -391,7 +391,7 @@ __src/components/app-alert/index.js__
 __src/components/app-alert/template.marko__
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	init: function() {
 		// this.el will be the raw DOM element the widget instance
 		// is bound to:
@@ -514,7 +514,7 @@ __src/pages/index/widget.js:__
 
 ```javascript
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	init: function() {
 		var rootEl = this.el; // this.el returns the root element that the widget is bound to
 	    var self = this;
@@ -547,7 +547,7 @@ If a widget is stateful, then the state should be derived from the input propert
 
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialProps: function(input) {
@@ -570,7 +570,7 @@ module.exports = require('marko-widgets').defineWidget({
 Every widget should have an associated Marko template that will be used to render the widget. A widget is associated with a template using the `template` property as shown below:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getTemplateData: function(state, input) {
@@ -590,7 +590,7 @@ The `getTemplateData(state, input)` method is used to build the view model that 
 A stateful widget will maintain state as part of the widget that instance. If the state of the widget changes then the widget will be queued to be updated in the next batch. The initial state should be provided using the `getInitialState(input)` method. All state changes should go through the `setState(name, value)` or `setState(newState)` methods. For example:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
@@ -632,7 +632,7 @@ When state is modified using either the `setState(name, value)` or `setState(new
 Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget by implementing the `getWidgetConfig(input)` property as shown below:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getWidgetConfig: function(input) {
@@ -783,7 +783,7 @@ And then in the widget:
 
 ```javascript
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	// ...
 
 	handleFormSubmit: function(event, el) {
@@ -826,7 +826,7 @@ And then in the widget:
 
 ```javascript
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	// ...
 
 	init: function() {
@@ -881,7 +881,7 @@ Listeners can be attached declaratively as shown in the following sample code:
 And then in the widget:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	// ...
 
 	handleOverlayBeforeHide: function(event) {
@@ -906,7 +906,7 @@ You can also choose to add listeners in JavaScript code by assigning an "id" to 
 And then in the widget:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	// ...
 
 	init: function() {
@@ -930,7 +930,7 @@ NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscr
 
 ## Client-side Rendering
 
-Every widget defined using `defineWidget(...)` exports a `render(input)` method that can be used to render the widget in the browser as shown below:
+Every widget defined using `defineComponent(...)` exports a `render(input)` method that can be used to render the widget in the browser as shown below:
 
 ```javascript
 var widget = require('fancy-checkbox').render({
@@ -1248,7 +1248,7 @@ The String ID of the root [HTML element](https://developer.mozilla.org/en-US/doc
 The current state for the widget. For example:
 
 ```javascript
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
