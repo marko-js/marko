@@ -20,7 +20,7 @@ function checkChildrenMatch(children1, children2) {
     }
 }
 
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require('marko-widgets').defineComponent({
     template: require.resolve('./template.marko'),
     init: function() {
         window.testData.addWidget('app-preserve-dom', this);
