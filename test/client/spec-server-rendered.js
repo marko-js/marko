@@ -156,4 +156,14 @@ describe('server-rendered' , function() {
             widget.testGetEl();
         });
     });
+
+    it('[server-rendered] should allow the widget to split from the renderer', function() {
+        expect(window.testData.widgets['app-button-split'].length).to.equal(1);
+
+        window.testData.widgets['app-button-split'].forEach(function(widget) {
+            expect(widget.el.innerHTML).to.equal('Test Button');
+            widget.setLabel('New Label');
+            expect(widget.el.innerHTML).to.equal('New Label');
+        });
+    });
 });
