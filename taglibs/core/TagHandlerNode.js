@@ -18,12 +18,13 @@ var extend = require('raptor-util').extend;
 var forEachEntry = require('raptor-util').forEachEntry;
 var stringify = require('raptor-json/stringify');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
+var requireVarName = require('./requireVarName');
 
 function addHandlerVar(template, renderer) {
     var handlerVars = template._handlerVars || (template._handlerVars = {});
     var handlerVar = handlerVars[renderer];
     if (!handlerVar) {
-        handlerVar = renderer.replace(/[.\-\/\\]/g, '_').replace(/^[_]+/g, '');
+        handlerVar = requireVarName(renderer, template.dirname);
         handlerVar = template.addStaticVar(handlerVar, '__renderer(require(' + stringify(renderer) + '))');
         handlerVars[renderer] = handlerVar;
     }

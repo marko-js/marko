@@ -96,6 +96,12 @@
         },
         "test-template-tag-dynamic-attributes": {
             "template": "./taglib/hello.marko"
+        },
+        "test-root-renderer": {
+            "renderer": "./",
+            "attributes": {
+                "name": "string"
+            }
         }
     },
     "tags-dir": "./taglib/scanned-tags",

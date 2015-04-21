@@ -3,12 +3,12 @@ exports.create = function(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne,
       __renderer = __helpers.r,
-      taglib_hello_renderer = __renderer(require("../../../taglib/hello-renderer")),
+      _________taglib_hello_renderer_js = __renderer(require("../../../taglib/hello-renderer")),
       __tag = __helpers.t;
 
   return function render(data, out) {
     __tag(out,
-      taglib_hello_renderer,
+      _________taglib_hello_renderer_js,
       {
         "name": "World"
       });
