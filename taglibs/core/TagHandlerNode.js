@@ -70,6 +70,28 @@ function getPropsStr(props, template) {
         return '{}';
     }
 }
+
+function getNextNestedTagVarName(template) {
+    if (template.data.nextNestedTagId == null) {
+        template.data.nextNestedTagId = 0;
+    }
+
+    return '__nestedTagInput' + (template.data.nextNestedTagId++);
+}
+
+function getNestedTagParentNode(nestedTagNode, tag) {
+    var parentTagName = tag.parentTagName;
+
+    var currentNode = nestedTagNode.parentNode;
+    while (currentNode) {
+        if (currentNode.localName === parentTagName) {
+            return currentNode;
+        }
+
+        currentNode = currentNode.parentNode;
+    }
+}
+
 function TagHandlerNode(tag) {
     if (!this.nodeType) {
         TagHandlerNode.$super.call(this);
@@ -112,13 +134,41 @@ TagHandlerNode.prototype = {
     doGenerateCode: function (template) {
         template.addStaticVar('__renderer', '__helpers.r');
         var _this = this;
-        var rendererPath = template.getRequirePath(this.tag.renderer); // Resolve a path to the renderer relative to the directory of the template
-        var handlerVar = addHandlerVar(template, rendererPath);
-        var tagHelperVar = template.addStaticVar('__tag', '__helpers.t');
-        var bodyFunction = this.tag.bodyFunction;
-        var bodyProperty = this.tag.bodyProperty;
+        var tag = this.tag;
 
-        this.tag.forEachImportedVariable(function (importedVariable) {
+        var rendererPath;
+        var handlerVar;
+
+        if (tag.renderer) {
+            rendererPath = template.getRequirePath(this.tag.renderer); // Resolve a path to the renderer relative to the directory of the template
+            handlerVar = addHandlerVar(template, rendererPath);
+        }
+
+
+        var bodyFunction = tag.bodyFunction;
+        var bodyProperty = tag.bodyProperty;
+        var isNestedTag = tag.isNestedTag === true;
+        var hasNestedTags = tag.hasNestedTags();
+        var tagHelperVar = template.addStaticVar('__tag', '__helpers.t');
+
+        var nestedTagVar;
+        var nestedTagParentNode = null;
+
+        if (isNestedTag) {
+            nestedTagParentNode = getNestedTagParentNode(this, tag);
+            if (nestedTagParentNode == null) {
+                this.addError('Parent tag of <' + tag.parentTagName + '> not found in template.');
+                return;
+            }
+
+            nestedTagVar = nestedTagParentNode.data.nestedTagVar;
+        }
+
+        if (hasNestedTags) {
+            nestedTagVar = this.data.nestedTagVar = getNextNestedTagVarName(template);
+        }
+
+        tag.forEachImportedVariable(function (importedVariable) {
             this.setProperty(importedVariable.targetProperty, template.makeExpression(importedVariable.expression));
         }, this);
 
@@ -138,7 +188,7 @@ TagHandlerNode.prototype = {
 
 
         var variableNames = [];
-        _this.tag.forEachVariable(function (nestedVar) {
+        tag.forEachVariable(function (nestedVar) {
             var varName;
             if (nestedVar.nameFromAttribute) {
                 var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
@@ -178,7 +228,7 @@ TagHandlerNode.prototype = {
 
         template.functionCall(tagHelperVar, function () {
             template.code('out,\n').indent(function () {
-                template.line(handlerVar + ',').indent();
+                template.line((handlerVar ? handlerVar : 'null') + ',').indent();
 
                 if (_this.dynamicAttributes) {
                     template.indent(function() {
@@ -215,32 +265,56 @@ TagHandlerNode.prototype = {
 
                 template.code(propsCode);
 
-                if (_this.hasChildren() && !_this.tag.bodyFunction) {
-                    var bodyParams = [];
-                    var hasOutParam = false;
+                var hasOutParam = false;
 
-                    variableNames.forEach(function (varName) {
-                        if (varName === 'out') {
-                            hasOutParam = true;
-                        }
-                        bodyParams.push(varName);
-                    });
+                if (_this.hasChildren() && !tag.bodyFunction) {
+                    var bodyParams = [];
+
+
+                    if (hasNestedTags) {
+                        bodyParams.push(nestedTagVar);
+                    } else {
+                        variableNames.forEach(function (varName) {
+                            if (varName === 'out') {
+                                hasOutParam = true;
+                            }
+                            bodyParams.push(varName);
+                        });
+                    }
 
                     var params;
 
                     if (hasOutParam) {
                         params = bodyParams.join(',');
                     } else {
-                        params = 'out' + (bodyParams.length ? ',' + bodyParams.join(',') : '');
+                        params = 'out' + (bodyParams.length ? ', ' + bodyParams.join(', ') : '');
                     }
 
                     template.code(',\n').line('function(' + params + ') {').indent(function () {
                         _this.generateCodeForChildren(template);
                     }).indent().code('}');
+                }
+
+                if (hasNestedTags || isNestedTag || hasOutParam) {
+                    var options = [];
+
+                    if (hasNestedTags) {
+                        options.push('hasNestedTags: 1');
+                    }
 
                     if (hasOutParam) {
-                        template.code(',\n').code(template.indentStr() + '1');
+                        options.push('hasOutParam: 1');
                     }
+
+                    if (isNestedTag) {
+                        options.push('targetProperty: ' + JSON.stringify(tag.targetProperty));
+                        options.push('parent: ' + nestedTagVar);
+                        if (tag.isRepeated) {
+                            options.push('isRepeated: 1');
+                        }
+                    }
+
+                    template.code(',\n').code(template.indentStr() + '{ ' + options.join(', ') + ' }');
                 }
             });
         });

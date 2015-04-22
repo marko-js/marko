@@ -116,6 +116,8 @@
             "template": "./taglib/test-circular-template-b/template.marko"
         }
     },
+    "<test-nested-tags-tabs>": "./taglib/test-nested-tags-tabs/marko-tag.json",
+    "<test-nested-tags-overlay>": "./taglib/test-nested-tags-overlay/marko-tag.json",
     "tags-dir": "./taglib/scanned-tags",
     "taglib-imports": ["./package.json"]
 }

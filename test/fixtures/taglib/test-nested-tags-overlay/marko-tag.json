@@ -1,0 +1,21 @@
+{
+    "renderer": "./renderer",
+    "@header <header>": {
+        "@class": {
+            "type": "string",
+            "target-property": "className"
+        }
+    },
+    "@body <body>": {
+        "@class": {
+            "type": "string",
+            "target-property": "className"
+        }
+    },
+    "@footer <footer>": {
+        "@class": {
+            "type": "string",
+            "target-property": "className"
+        }
+    }
+}
