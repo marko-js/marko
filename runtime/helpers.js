@@ -22,6 +22,26 @@ function notEmpty(o) {
     return true;
 }
 
+function createLazyRenderer(handler) {
+    var lazyRenderer = function(input, out) {
+        lazyRenderer.renderer(input, out);
+    };
+
+    // This is the initial function that will do the rendering. We replace
+    // the renderer with the actual renderer func on the first render
+    lazyRenderer.renderer = function(input, out) {
+        var rendererFunc = handler.renderer || handler.render;
+        if (typeof renderFunc !== 'function') {
+            throw new Error('Invalid tag handler: ' + handler);
+        }
+        // Use the actual renderer from now on
+        lazyRenderer.renderer = rendererFunc;
+        rendererFunc(input, out);
+    };
+
+    return lazyRenderer;
+}
+
 var WARNED_INVOKE_BODY = 0;
 
 module.exports = {
@@ -116,8 +136,12 @@ module.exports = {
     r: function(handler) {
         var renderFunc = handler.renderer || handler.render || handler;
 
+        // If the user code has a circular function then the renderer function
+        // may not be available on the module. Since we can't get a reference
+        // to the actual renderer(input, out) function right now we lazily
+        // try to get access to it later.
         if (typeof renderFunc !== 'function') {
-            throw new Error('Invalid tag handler: ' + handler);
+            return createLazyRenderer(handler);
         }
 
         return renderFunc;

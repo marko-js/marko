@@ -53,8 +53,8 @@ if (streamPath) {
     stream = require(streamPath);
 }
 
-function Template(renderFunc, options) {
-    this._ = renderFunc;
+function Template( options) {
+    this._ = null;
     this.buffer = !options || options.buffer !== false;
 }
 
@@ -204,20 +204,35 @@ function load(templatePath, options) {
     if (typeof templatePath === 'string') {
         template = cache[templatePath];
         if (!template) {
-            // The template has not been loaded, load the template to get
-            // access to the factory function that is used to produce
+            // The template has not been loaded
+
+            // Cache the Template instance before actually loading and initializing
+            // the compiled template. This allows circular dependencies since the
+            // partially loaded Template instance will be found in the cache.
+            template = cache[templatePath] = new Template(options);
+
+            // Now load the template to get access to the factory function that is used to produce
             // the actual compiled template function. We pass the helpers
             // as the first argument to the factory function to produce
-            // the compiled template function
-            template = cache[templatePath] = new Template(
-                loader(templatePath).create(helpers), // Load the template factory and invoke it
-                options);
+            // the template rendering function
+            template._ = loader(templatePath).create(helpers); // Load the template factory and invoke it
         }
     } else {
         // Instead of a path, assume we got a compiled template module
         // We store the loaded template with the factory function that was
         // used to get access to the compiled template function
-        template = templatePath._ || (templatePath._ = new Template(templatePath.create(helpers), options));
+        template = templatePath._;
+        if (!template) {
+            // First put the partially loaded Template instance on the
+            // the compiled template module before actually loading and
+            // initializing the compiled template. This allows for circular
+            // dependencies during template loading.
+            template = templatePath._ = new Template(options);
+
+            // Now fully initialize the template by adding the needed render
+            // function.
+            template._ = templatePath.create(helpers);
+        }
     }
 
     return template;
