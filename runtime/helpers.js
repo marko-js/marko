@@ -22,24 +22,24 @@ function notEmpty(o) {
     return true;
 }
 
-function createLazyRenderer(handler) {
-    var lazyRenderer = function(input, out) {
-        lazyRenderer.renderer(input, out);
-    };
+function createDeferredRenderer(handler) {
+    function deferredRenderer(input, out) {
+        deferredRenderer.renderer(input, out);
+    }
 
     // This is the initial function that will do the rendering. We replace
     // the renderer with the actual renderer func on the first render
-    lazyRenderer.renderer = function(input, out) {
+    deferredRenderer.renderer = function(input, out) {
         var rendererFunc = handler.renderer || handler.render;
         if (typeof renderFunc !== 'function') {
             throw new Error('Invalid tag handler: ' + handler);
         }
         // Use the actual renderer from now on
-        lazyRenderer.renderer = rendererFunc;
+        deferredRenderer.renderer = rendererFunc;
         rendererFunc(input, out);
     };
 
-    return lazyRenderer;
+    return deferredRenderer;
 }
 
 var WARNED_INVOKE_BODY = 0;
@@ -141,7 +141,7 @@ module.exports = {
         // to the actual renderer(input, out) function right now we lazily
         // try to get access to it later.
         if (typeof renderFunc !== 'function') {
-            return createLazyRenderer(handler);
+            return createDeferredRenderer(handler);
         }
 
         return renderFunc;
