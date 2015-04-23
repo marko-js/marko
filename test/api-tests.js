@@ -256,4 +256,24 @@ describe('marko/api' , function() {
         expect(e).to.not.equal(undefined);
     });
 
+    it('should allow a template to be loaded from a compiled JS module', function(done) {
+        // Load the JS file to ensure the hello.marko.js file is created
+        marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'))
+
+        var templateModule = require(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko.js'));
+
+        var template = marko.load(templateModule);
+        template.render({
+                name: 'John'
+            },
+            function(err, output) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(output).to.equal('Hello John!');
+                done();
+            });
+    });
+
 });
