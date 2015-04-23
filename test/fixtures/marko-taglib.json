@@ -102,6 +102,18 @@
             "attributes": {
                 "name": "string"
             }
+        },
+        "test-circular-renderer-a": {
+            "renderer": "./taglib/test-circular-renderer-a/renderer"
+        },
+        "test-circular-renderer-b": {
+            "renderer": "./taglib/test-circular-renderer-b/renderer"
+        },
+        "test-circular-template-a": {
+            "template": "./taglib/test-circular-template-a/template.marko"
+        },
+        "test-circular-template-b": {
+            "template": "./taglib/test-circular-template-b/template.marko"
         }
     },
     "tags-dir": "./taglib/scanned-tags",
