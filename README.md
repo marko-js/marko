@@ -12,7 +12,7 @@ __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 Syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package.
 
-![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
+![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -411,13 +411,13 @@ You can then bundle up the above program for running in the browser using either
 
 ### Using Lasso.js
 
-The `optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Marko template files using a command similar to the following:
+The `lasso` CLI can be used to generate resource bundles that includes all application modules and all referenced Marko template files using a command similar to the following:
 ```bash
-# First install the optimizer and the optimizer-marko plugin
-npm install optimizer --global
-npm install optimizer-marko
+# First install the lasso and the lasso-marko plugin
+npm install lasso --global
+npm install lasso-marko
 
-optimizer --main run.js --name my-page --plugins optimizer-marko
+lasso --main run.js --name my-page --plugins lasso-marko
 ```
 
 This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization.
@@ -425,7 +425,7 @@ This will produce a JSON file named `build/my-page.html.json` that contains the 
 Alternatively, you can inject the HTML markup into a static HTML file using the following command:
 
 ```bash
-optimizer --main run.js --name my-page --plugins optimizer-marko --inject-into my-page.html
+lasso --main run.js --name my-page --plugins lasso-marko --inject-into my-page.html
 ```
 
 
