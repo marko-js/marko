@@ -12,10 +12,12 @@
             "target-property": "className"
         }
     },
-    "@footer <footer>": {
-        "@class": {
-            "type": "string",
-            "target-property": "className"
+    "nested-tags": {
+        "footer": {
+            "@class": {
+                "type": "string",
+                "target-property": "className"
+            }
         }
     }
 }

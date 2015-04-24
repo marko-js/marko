@@ -28,19 +28,71 @@ function removeDashes(str) {
     });
 }
 
+function handleVar(tag, value, path) {
+    var nestedVariable;
 
-function TagHandlers(tag, dirname, path) {
+    if (typeof value === 'string') {
+        nestedVariable = {
+            name: value
+        };
+    } else {
+        nestedVariable = {};
+
+        propertyHandlers(value, {
+
+            name: function(value) {
+                nestedVariable.name = value;
+            },
+
+            nameFromAttribute: function(value) {
+                nestedVariable.nameFromAttribute = value;
+            }
+
+        }, path);
+
+        if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
+            throw new Error('The "name" or "name-from-attribute" attribute is required for a nested variable');
+        }
+    }
+
+    tag.addNestedVariable(nestedVariable);
+}
+
+
+/**
+ * We load tag definition using this class. Properties in the taglib
+ * definition (which is just a JavaScript object with properties)
+ * are mapped to handler methods in an instance of this type.
+ *
+ * @param {Tag} tag The initially empty Tag instance that we populate
+ * @param {String} dirname The full file system path associated with the tag being loaded
+ * @param {String} path An informational path associated with this tag (used for error reporting)
+ */
+function TagHandlers(tag, dirname, path, taglib) {
     this.tag = tag;
     this.dirname = dirname;
     this.path = path;
+    this.taglib = taglib;
 }
 
 TagHandlers.prototype = {
+    /**
+     * The tag name
+     * @param {String} value The tag name
+     */
     name: function(value) {
         var tag = this.tag;
         tag.name = value;
     },
 
+    /**
+     * The path to the renderer JS module to use for this tag.
+     *
+     * NOTE: We use the equivalent of require.resolve to resolve the JS module
+     * 		 and use the tag directory as the "from".
+     *
+     * @param {String} value The renderer path
+     */
     renderer: function(value) {
         var tag = this.tag;
         var dirname = this.dirname;
@@ -48,6 +100,12 @@ TagHandlers.prototype = {
 
         tag.renderer = path;
     },
+
+    /**
+     * A tag can use a renderer or a template to do the rendering. If
+     * a template is provided then the value should be the path to the
+     * template to use to render the custom tag.
+     */
     template: function(value) {
         var tag = this.tag;
         var dirname = this.dirname;
@@ -59,12 +117,32 @@ TagHandlers.prototype = {
 
         tag.template = path;
     },
+
+    /**
+     * An Object where each property maps to an attribute definition.
+     * The property key will be the attribute name and the property value
+     * will be the attribute definition. Example:
+     * {
+     *     "attributes": {
+     *         "foo": "string",
+     *         "bar": "expression"
+     *     }
+     * }
+     */
     attributes: function(value) {
         var tag = this.tag;
         var path = this.path;
 
         handleAttributes(value, tag, path);
     },
+
+    /**
+     * A custom tag can be mapped to a compile-time Node that gets
+     * added to the parsed Abstract Syntax Tree (AST). The Node can
+     * then generate custom JS code at compile time. The value
+     * should be a path to a JS module that gets resolved using the
+     * equivalent of require.resolve(path)
+     */
     nodeClass: function(value) {
         var tag = this.tag;
         var dirname = this.dirname;
@@ -72,10 +150,22 @@ TagHandlers.prototype = {
         var path = resolve(value, dirname);
         tag.nodeClass = path;
     },
+    /**
+     * If the "preserve-whitespace" property is set to true then
+     * all whitespace nested below the custom tag in a template
+     * will be stripped instead of going through the normal whitespace
+     * removal rules.
+     */
     preserveWhitespace: function(value) {
         var tag = this.tag;
         tag.preserveWhitespace = !!value;
     },
+
+    /**
+     * If a custom tag has an associated transformer then the transformer
+     * will be called on the compile-time Node. The transformer can manipulate
+     * the AST using the DOM-like API to change how the code gets generated.
+     */
     transformer: function(value) {
         var tag = this.tag;
         var dirname = this.dirname;
@@ -84,11 +174,19 @@ TagHandlers.prototype = {
         var transformer = new Taglib.Transformer();
 
         if (typeof value === 'string') {
+            // The value is a simple string type
+            // so treat the value as the path to the JS
+            // module for the transformer
             value = {
                 path: value
             };
         }
 
+        /**
+         * The transformer is a complex type and we need
+         * to process each property to load the Transformer
+         * definition.
+         */
         propertyHandlers(value, {
             path: function(value) {
                 var path = resolve(value, dirname);
@@ -119,12 +217,48 @@ TagHandlers.prototype = {
         tag.addTransformer(transformer);
     },
 
+    /**
+     * The "var" property is used to declared nested variables that get
+     * added as JavaScript variables at compile time.
+     *
+     * Examples:
+     *
+     * "var": "myScopedVariable",
+     *
+     * "var": {
+     *     "name": "myScopedVariable"
+     * }
+     *
+     * "var": {
+     *     "name-from-attribute": "var"
+     * }
+     */
     'var': function(value) {
-        var tag = this.tag;
-        tag.addNestedVariable({
-            name: value
-        });
+        handleVar(this.tag, value, '"var" in tag ' + this.path);
     },
+    /**
+     * The "vars" property is equivalent to the "var" property
+     * except that it expects an array of nested variables.
+     */
+    vars: function(value) {
+        var tag = this.tag;
+        var self = this;
+
+        if (value) {
+            value.forEach(function(v, i) {
+                handleVar(tag, v, '"vars"[' + i + '] in tag ' + self.path);
+            });
+        }
+    },
+    /**
+     * The "body-function" property" allows the nested body content to be mapped
+     * to a function at compile time. The body function gets mapped to a property
+     * of the tag renderer at render time. The body function can have any number
+     * of parameters.
+     *
+     * Example:
+     * - "body-function": "_handleBody(param1, param2, param3)"
+     */
     bodyFunction: function(value) {
         var tag = this.tag;
         var parts = bodyFunctionRegExp.exec(value);
@@ -149,44 +283,27 @@ TagHandlers.prototype = {
 
         tag.setBodyFunction(functionName, params);
     },
+    /**
+     * The "body-property" property can be used to map the body content
+     * to a String property on the renderer's input object.
+     *
+     * Example:
+     * "body-property": "label"
+     */
     bodyProperty: function(value) {
         var tag = this.tag;
         tag.setBodyProperty(value);
     },
-    vars: function(value) {
-        var tag = this.tag;
-        if (value) {
-            value.forEach(function(v, i) {
-                var nestedVariable;
-
-                if (typeof v === 'string') {
-                    nestedVariable = {
-                        name: v
-                    };
-                } else {
-                    nestedVariable = {};
-
-                    propertyHandlers(v, {
-
-                        name: function(value) {
-                            nestedVariable.name = value;
-                        },
-
-                        nameFromAttribute: function(value) {
-                            nestedVariable.nameFromAttribute = value;
-                        }
-
-                    }, 'var at index ' + i);
-
-                    if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
-                        throw new Error('The "name" or "name-from-attribute" attribute is required for a nested variable');
-                    }
-                }
-
-                tag.addNestedVariable(nestedVariable);
-            });
-        }
-    },
+    /**
+     * The "import-var" property can be used to add a property to the
+     * input object of the tag renderer whose value is determined by
+     * a JavaScript expression.
+     *
+     * Example:
+     * "import-var": {
+     *     "myTargetProperty": "data.myCompileTimeJavaScriptExpression",
+     * }
+     */
     importVar: function(value) {
         var tag = this.tag;
         forEachEntry(value, function(varName, varValue) {
@@ -211,12 +328,42 @@ TagHandlers.prototype = {
             tag.addImportedVariable(importedVar);
         });
     },
+    /**
+     * The tag type.
+     */
     type: function(value) {
         var tag = this.tag;
         tag.type = value;
     },
+    /**
+     * Declare a nested tag.
+     *
+     * Example:
+     * {
+     *     ...
+     *     "nested-tags": {
+     *        "tab": {
+     *            "target-property": "tabs",
+     *            "isRepeated": true
+     *        }
+     *     }
+     * }
+     */
     nestedTags: function(value) {
+        var tagPath = this.path;
+        var taglib = this.taglib;
+        var dirname = this.dirname;
+        var tag = this.tag;
 
+        forEachEntry(value, function(nestedTagName, nestedTagDef) {
+            var nestedTag = loadTag(
+                nestedTagDef,
+                nestedTagName + ' of ' + tagPath,
+                taglib,
+                dirname);
+            nestedTag.name = nestedTagName;
+            tag.addNestedTag(nestedTag);
+        });
     }
 };
 
@@ -239,7 +386,7 @@ function loadTag(tagProps, path, taglib, dirname) {
         };
     }
 
-    var tagHandlers = new TagHandlers(tag, dirname, path);
+    var tagHandlers = new TagHandlers(tag, dirname, path, taglib);
 
     // We add a handler for any properties that didn't match
     // one of the default property handlers. This is used to
@@ -288,9 +435,11 @@ function loadTag(tagProps, path, taglib, dirname) {
                         tagProps[k] = value[k];
                         delete value[k];
                     } else {
+                        // The property is not a shorthand attribute or shorthand
+                        // tag so move it over to either the tag definition
+                        // or the attribute definition or both the tag definition
+                        // and attribute definition.
                         var propNameDashes = removeDashes(k);
-
-
 
                         if (loader.tagLoader.isSupportedProperty(propNameDashes) &&
                             loader.attributeLoader.isSupportedProperty(propNameDashes)) {
@@ -365,6 +514,8 @@ function loadTag(tagProps, path, taglib, dirname) {
                     taglib,
                     dirname);
 
+                // We use the '[]' suffix to indicate that a nested tag
+                // can be repeated
                 var isNestedTagRepeated = false;
                 if (part.endsWith('[]')) {
                     isNestedTagRepeated = true;

@@ -150,6 +150,10 @@ module.exports = makeClass({
 
         nestedTag.isNestedTag = true;
 
+        if (!nestedTag.targetProperty) {
+            nestedTag.targetProperty = nestedTag.name;
+        }
+
         this.nestedTags[nestedTag.name] = nestedTag;
     },
     forEachNestedTag: function (callback, thisObj) {

@@ -55,6 +55,15 @@ function handleTag(taglibHandlers, tagName, path) {
     taglib.addTag(tag);
 }
 
+/**
+ * We load a taglib definion using this class. Properties in the taglib
+ * definition (which is just a JavaScript object with properties)
+ * are mapped to handler methods in an instance of this type.
+ *
+ *
+ * @param {Taglib} taglib The initially empty Taglib instance that we will populate
+ * @param {String} path The file system path to the taglib that we are loading
+ */
 function TaglibHandlers(taglib, path) {
     ok(taglib);
     ok(path);
@@ -66,12 +75,40 @@ function TaglibHandlers(taglib, path) {
 
 TaglibHandlers.prototype = {
     attributes: function(value) {
+        // The value of the "attributes" property will be an object
+        // where each property maps to an attribute definition. Since these
+        // attributes are on the taglib they will be "global" attribute
+        // defintions.
+        //
+        // The property key will be the attribute name and the property value
+        // will be the attribute definition. Example:
+        // {
+        //     "attributes": {
+        //         "foo": "string",
+        //         "bar": "expression"
+        //     }
+        // }
         var taglib = this.taglib;
         var path = this.path;
 
         handleAttributes(value, taglib, path);
     },
     tags: function(tags) {
+        // The value of the "tags" property will be an object
+        // where each property maps to an attribute definition. The property
+        // key will be the tag name and the property value
+        // will be the tag definition. Example:
+        // {
+        //     "tags": {
+        //         "foo": {
+        //             "attributes": { ... }
+        //         },
+        //         "bar": {
+        //             "attributes": { ... }
+        //         },
+        //     }
+        // }
+
         for (var tagName in tags) {
             if (tags.hasOwnProperty(tagName)) {
                 handleTag(this, tagName, tags[tagName]);
@@ -79,6 +116,12 @@ TaglibHandlers.prototype = {
         }
     },
     tagsDir: function(dir) {
+        // The "tags-dir" property is used to supporting scanning
+        // of a directory to discover custom tags. Scanning a directory
+        // is a much simpler way for a developer to create custom tags.
+        // Only one tag is allowed per directory and the directory name
+        // corresponds to the tag name. We only search for directories
+        // one level deep.
         var taglib = this.taglib;
         var path = this.path;
         var dirname = this.dirname;
@@ -93,6 +136,14 @@ TaglibHandlers.prototype = {
     },
 
     taglibImports: function(imports) {
+        // The "taglib-imports" property allows another taglib to be imported
+        // into this taglib so that the tags defined in the imported taglib
+        // will be part of this taglib.
+        //
+        // NOTE: If a taglib import refers to a package.json file then we read
+        //       the package.json file and automatically import *all* of the
+        //       taglibs from the installed modules found in the "dependencies"
+        //       section
         var taglib = this.taglib;
         var dirname = this.dirname;
 
@@ -127,6 +178,8 @@ TaglibHandlers.prototype = {
     },
 
     textTransformer: function(value) {
+        // Marko allows a "text-transformer" to be registered. The provided
+        // text transformer will be called for any static text found in a template.
         var taglib = this.taglib;
         var path = this.path;
         var dirname = this.dirname;
@@ -150,8 +203,20 @@ TaglibHandlers.prototype = {
         ok(transformer.path, '"path" is required for transformer');
 
         taglib.addTextTransformer(transformer);
-    },
-    '*': function(name, value) {
+    }
+};
+
+exports.loadTaglib = function(path) {
+    var taglibProps = taglibReader.readTaglib(path);
+
+    var taglib = new Taglib(path);
+    taglib.addInputFile(path);
+
+    var taglibHandlers = new TaglibHandlers(taglib, path);
+
+    // We register a wildcard handler to handle "@my-attr" and "<my-tag>"
+    // properties (shorthand syntax)
+    taglibHandlers['*'] = function(name, value) {
         var taglib = this.taglib;
         var path = this.path;
 
@@ -169,16 +234,7 @@ TaglibHandlers.prototype = {
         } else {
             return false;
         }
-    }
-};
-
-exports.loadTaglib = function(path) {
-    var taglibProps = taglibReader.readTaglib(path);
-
-    var taglib = new Taglib(path);
-    taglib.addInputFile(path);
-
-    var taglibHandlers = new TaglibHandlers(taglib, path);
+    };
 
     propertyHandlers(taglibProps, taglibHandlers, path);
 
