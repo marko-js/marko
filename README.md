@@ -24,56 +24,62 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 - [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
 - [Usage](#usage)
-    - [Template Rendering](#template-rendering)
-        - [Callback API](#callback-api)
-        - [Streaming API](#streaming-api)
-        - [Synchronous API](#synchronous-api)
-        - [Asynchronous Rendering API](#asynchronous-rendering-api)
-    - [Browser-side Rendering](#browser-side-rendering)
-        - [Using Lasso.js](#using-lassojs)
-        - [Using Browserify](#using-browserify)
-    - [Template Compilation](#template-compilation)
-        - [Sample Compiled Template](#sample-compiled-template)
+	- [Template Rendering](#template-rendering)
+		- [Callback API](#callback-api)
+		- [Streaming API](#streaming-api)
+		- [Synchronous API](#synchronous-api)
+		- [Asynchronous Rendering API](#asynchronous-rendering-api)
+	- [Browser-side Rendering](#browser-side-rendering)
+		- [Using Lasso.js](#using-lassojs)
+		- [Using Browserify](#using-browserify)
+	- [Template Compilation](#template-compilation)
+		- [Sample Compiled Template](#sample-compiled-template)
 - [Language Guide](#language-guide)
-    - [Template Directives Overview](#template-directives-overview)
-    - [Text Replacement](#text-replacement)
-    - [Expressions](#expressions)
-    - [Includes](#includes)
-    - [Variables](#variables)
-    - [Conditionals](#conditionals)
-        - [if...else-if...else](#ifelse-ifelse)
-        - [Shorthand Conditionals](#shorthand-conditionals)
-        - [Conditional Attributes](#conditional-attributes)
-    - [Looping](#looping)
-        - [for](#for)
-            - [Loop Status Variable](#loop-status-variable)
-            - [Loop Separator](#loop-separator)
-            - [Range Looping](#range-looping)
-            - [Property Looping](#property-looping)
-            - [Custom Iterator](#custom-iterator)
-    - [Macros](#macros)
-        - [def](#def)
-        - [invoke](#invoke)
-    - [Structure Manipulation](#structure-manipulation)
-        - [attrs](#attrs)
-        - [body-only-if](#body-only-if)
-    - [Comments](#comments)
-    - [Whitespace](#whitespace)
-    - [Helpers](#helpers)
-      [Global Properties](#global-properties)
-    - [Custom Tags and Attributes](#custom-tags-and-attributes)
-    - [Async Taglib](#async-taglib)
-    - [Layout Taglib](#layout-taglib)
+	- [Template Directives Overview](#template-directives-overview)
+	- [Text Replacement](#text-replacement)
+	- [Expressions](#expressions)
+	- [Includes](#includes)
+	- [Variables](#variables)
+	- [Conditionals](#conditionals)
+		- [if...else-if...else](#ifelse-ifelse)
+		- [Shorthand Conditionals](#shorthand-conditionals)
+		- [Conditional Attributes](#conditional-attributes)
+	- [Looping](#looping)
+		- [for](#for)
+			- [Loop Status Variable](#loop-status-variable)
+			- [Loop Separator](#loop-separator)
+			- [Range Looping](#range-looping)
+			- [Property Looping](#property-looping)
+			- [Custom Iterator](#custom-iterator)
+	- [Macros](#macros)
+		- [def](#def)
+		- [invoke](#invoke)
+	- [Structure Manipulation](#structure-manipulation)
+		- [attrs](#attrs)
+		- [body-only-if](#body-only-if)
+	- [Comments](#comments)
+	- [Whitespace](#whitespace)
+	- [Helpers](#helpers)
+	- [Global Properties](#global-properties)
+	- [Custom Tags and Attributes](#custom-tags-and-attributes)
+	- [Async Taglib](#async-taglib)
+	- [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
-    - [Tag Renderer](#tag-renderer)
-    - [marko-taglib.json](#marko-taglibjson)
-        - [Sample Taglib](#sample-taglib)
-        - [Defining Tags](#defining-tags)
-            - [Defining Attributes](#defining-attributes)
-        - [Scanning for Tags](#scanning-for-tags)
-        - [Nested Tags](#nested-tags)
-    - [Taglib Discovery](#taglib-discovery)
+	- [Tag Renderer](#tag-renderer)
+	- [marko-taglib.json](#marko-taglibjson)
+		- [Sample Taglib](#sample-taglib)
+	- [Defining Tags](#defining-tags)
+	- [Defining Attributes](#defining-attributes)
+	- [Scanning for Tags](#scanning-for-tags)
+	- [Nested Tags](#nested-tags)
+	- [Taglib Discovery](#taglib-discovery)
 - [FAQ](#faq)
+- [Additional Resources](#additional-resources)
+	- [Further Reading](#further-reading)
+	- [Screencasts](#screencasts)
+	- [Demo Apps](#demo-apps)
+	- [Tools](#tools)
+- [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
 - [Contribute](#contribute)
@@ -1427,7 +1433,7 @@ Marko also supports a short-hand for declaring tags and attributes. The followin
 
 The short-hand will be used for the remaining of this documentation.
 
-### Defining Tags
+## Defining Tags
 
 Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `marko-taglib.json`:
 
@@ -1450,9 +1456,9 @@ Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `mark
 
 Every tag should be associated with a renderer or a template. When a custom tag is used in a template, the renderer (or template) will be invoked at render time to produce the HTML/output. If a `String` path to a `marko-tag.json` for a custom tag then the target `marko-tag.json` is loaded to define the tag.
 
-#### Defining Attributes
+## Defining Attributes
 
-If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
+If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"@*"`) allows any attribute to be passed in. Below are sample attribute definitions:
 
 _Multiple attributes:_
 
@@ -1464,7 +1470,7 @@ _Multiple attributes:_
 }
 ```
 
-### Scanning for Tags
+## Scanning for Tags
 
 Marko supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
 
@@ -1520,7 +1526,7 @@ _In `marko-tag.json`:_
 
 _NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
 
-### Nested Tags
+## Nested Tags
 
 It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
 
