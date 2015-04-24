@@ -6,6 +6,8 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 Marko is a perfect match for Node.js since it supports writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
+For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/raptorjs/marko-widgets) taglib.
+
 __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 ![Marko Syntax](syntax.png)
