@@ -157,7 +157,7 @@ TagHandlerNode.prototype = {
         if (isNestedTag) {
             nestedTagParentNode = getNestedTagParentNode(this, tag);
             if (nestedTagParentNode == null) {
-                this.addError('Parent tag of <' + tag.parentTagName + '> not found in template.');
+                this.addError('Invalid usage of the ' + this + ' nested tag. Tag not nested within a <' + tag.parentTagName + '> tag.');
                 return;
             }
 
