@@ -30,7 +30,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
         - [Synchronous API](#synchronous-api)
         - [Asynchronous Rendering API](#asynchronous-rendering-api)
     - [Browser-side Rendering](#browser-side-rendering)
-        - [Using Lasso.js](#using-lasso-js)
+        - [Using Lasso.js](#using-lassojs)
         - [Using Browserify](#using-browserify)
     - [Template Compilation](#template-compilation)
         - [Sample Compiled Template](#sample-compiled-template)
