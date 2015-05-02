@@ -269,24 +269,23 @@ module.exports = function transform(node, compiler, template) {
             node.setPreserveWhitespace(true);
         }
 
-        if (tag.renderer || tag.template) {
+        if (tag.renderer || tag.isNestedTag) {
             shouldRemoveAttr = false;
 
-            if (tag.renderer) {
-                //Instead of compiling as a static XML element, we'll
-                //make the node render as a tag handler node so that
-                //writes code that invokes the handler
-                TagHandlerNode.convertNode(node, tag);
-                if (inputAttr) {
-                    node.setInputExpression(template.makeExpression(inputAttr));
-                }
-            } else {
-                var templatePath = compiler.getRequirePath(tag.template);
-                // The tag is mapped to a template that will be used to perform
-                // the rendering so convert the node into a "IncludeNode" that can
-                // be used to include the output of rendering a template
-                IncludeNode.convertNode(node, templatePath);
+            //Instead of compiling as a static XML element, we'll
+            //make the node render as a tag handler node so that
+            //writes code that invokes the handler
+            TagHandlerNode.convertNode(node, tag);
+            if (inputAttr) {
+                node.setInputExpression(template.makeExpression(inputAttr));
             }
+        } else if (tag.template) {
+            shouldRemoveAttr = false;
+            var templatePath = compiler.getRequirePath(tag.template);
+            // The tag is mapped to a template that will be used to perform
+            // the rendering so convert the node into a "IncludeNode" that can
+            // be used to include the output of rendering a template
+            IncludeNode.convertNode(node, templatePath);
         } else if (tag.nodeClass) {
             shouldRemoveAttr = false;
 

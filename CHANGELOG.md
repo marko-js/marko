@@ -3,11 +3,187 @@ Changelog
 
 # 2.x
 
-## 2.0.x
+## 2.4.x
+
+### 2.4.0
+
+- Added support for short-hand tags and attributes
+
+Old `marko-taglib.json`:
+
+```json
+{
+    "tags": {
+        "my-hello": {
+            "renderer": "./hello-renderer",
+            "attributes": {
+                "name": "string"
+            }
+        }
+    }
+}
+```
+
+Short-hand `marko-taglib.json`:
+
+```json
+{
+    "<my-hello>": {
+        "renderer": "./hello-renderer",
+        "@name": "string"
+    }
+}
+```
+
+- Fixes #61 Simplify parent/child relationships
+
+Marko now supports custom tags in the following format: `<parent_tag.nested_tag>`
+
+Example usage:
+
+```html
+<ui-tabs orientation="horizontal">
+    <ui-tabs.tab title="Home">
+        Content for Home
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Profile">
+        Content for Profile
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Messages">
+        Content for Messages
+    </ui-tabs.tab>
+</ui-tabs>
+```
+
+___ui-tabs/marko-tag.json___
+
+```json
+{
+    "@orientation": "string",
+    "@tabs <tab>[]": {
+        "@title": "string"
+    }
+}
+```
+
+___ui-tabs/renderer.js___
+
+```javascript
+var template = require('marko').load(require.resolve('./template.marko'));
+
+exports.renderer = function(input, out) {
+    var tabs = input.tabs;
+
+    // Tabs will be in the following form:
+    // [
+    //     {
+    //         title: 'Home',
+    //         renderBody: function(out) { ... }
+    //     },
+    //     {
+    //         title: 'Profile',
+    //         renderBody: function(out) { ... }
+    //     },
+    //     {
+    //         title: 'Messages',
+    //         renderBody: function(out) { ... }
+    //     }
+    // ]
+    console.log(tabs.length); // Output: 3
+
+    template.render({
+        tabs: tabs
+    }, out);
+
+};
+```
+
+___ui-tabs/template.marko___
+
+```html
+<div class="tabs">
+    <ul class="nav nav-tabs">
+        <li class="tab" for="tab in data.tabs">
+            <a href="#${tab.title}">
+                ${tab.title}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" for="tab in data.tabs">
+            <invoke function="tab.renderBody(out)"/>
+        </div>
+    </div>
+</div>
+```
+
+## 2.3.x
+
+### 2.3.2
+
+Fixes #66 - Allow circular dependencies when loading templates
+
+### 2.3.1
+
+- Testing framework changes
+- Fixes #65 - Generated variable name is an empty string in some cases
+
+### 2.3.0
+
+- Fixes #53 Merge c-input with attr props
+
+## 2.2.x
+
+### 2.2.2
+
+Fixes #60 Don't replace special operators for body functions
+
+### 2.2.1
+
+- Fixes #58 Added support for MARKO_CLEAN env variable (force recompile of all loaded templates). Example usage:
+
+```bash
+MARKO_CLEAN=true node run.js
+```
+
+- Code formatting: add spaces in var code
+
+### 2.2.0
+
+- Fixes #51 Allow body content to be mapped to a String input property
+- Fixes #52 Remove JavaScript comments from JSON taglib files before parsing
+
+## 2.1.x
+
+### 2.1.6
+
+- Fixes #50 Initialize the loader after the runtime is fully initialized
+
+### 2.1.5
+
+- Fixes #50 Ensure that all instances of marko have hot-reload and browser-refresh enabled
+
+### 2.1.4
+
+- Allowing complex var names (i.e. LHS) for the `<assign>` tag.
+
+### 2.1.3
+
+- Minor change: Slight improvement to code to resolve tag handler
+
+### 2.1.2
+
+- Minor change: Improve how renderer is resolved
+
+### 2.1.1
+
+- Fixes #48 name in marko-tag.json should override default name given during discovery
 
 ### 2.1.0
 
 - Fixes #47 - Added support for "taglib-imports"
+
+## 2.0.x
 
 ### 2.0.12
 

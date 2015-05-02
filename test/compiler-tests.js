@@ -1,7 +1,6 @@
 'use strict';
 var chai = require('chai');
 chai.Assertion.includeStack = true;
-require('chai').should();
 var nodePath = require('path');
 var fs = require('fs');
 

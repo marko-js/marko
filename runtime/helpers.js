@@ -155,30 +155,61 @@ module.exports = {
     /**
      * Invoke a tag handler render function
      */
-    t: function (out, renderFunc, input, body, hasOutParam) {
+    t: function (out, renderFunc, input, renderBody, options) {
         if (!input) {
             input = {};
         }
 
-        if (body) {
-            input.renderBody = body;
-            input.invokeBody = function() {
-                if (!WARNED_INVOKE_BODY) {
-                    WARNED_INVOKE_BODY = 1;
-                    logger.warn('invokeBody(...) deprecated. Use renderBody(out) instead.', new Error().stack);
-                }
+        var hasOutParam;
+        var targetProperty;
+        var parent;
+        var hasNestedTags;
+        var isRepeated;
 
-                if (!hasOutParam) {
-                    var args = arrayFromArguments(arguments);
-                    args.unshift(out);
-                    body.apply(this, args);
-                } else {
-                    body.apply(this, arguments);
-                }
-            };
+        if (options) {
+            hasOutParam = options.hasOutParam;
+            parent = options.parent;
+            targetProperty = options.targetProperty;
+            hasNestedTags = options.hasNestedTags;
+            isRepeated = options.isRepeated;
         }
 
-        renderFunc(input, out);
+        if (renderBody) {
+            if (hasNestedTags) {
+                renderBody(out, input);
+            } else {
+                input.renderBody = renderBody;
+                input.invokeBody = function() {
+                    if (!WARNED_INVOKE_BODY) {
+                        WARNED_INVOKE_BODY = 1;
+                        logger.warn('invokeBody(...) deprecated. Use renderBody(out) instead.', new Error().stack);
+                    }
+
+                    if (!hasOutParam) {
+                        var args = arrayFromArguments(arguments);
+                        args.unshift(out);
+                        renderBody.apply(this, args);
+                    } else {
+                        renderBody.apply(this, arguments);
+                    }
+                };
+            }
+        }
+
+        if (renderFunc) {
+            renderFunc(input, out);
+        } else if (targetProperty) {
+            if (isRepeated) {
+                var existingArray = parent[targetProperty];
+                if (existingArray) {
+                    existingArray.push(input);
+                } else {
+                    parent[targetProperty] = [input];
+                }
+            } else {
+                parent[targetProperty] = input;
+            }
+        }
     },
     c: function (out, func) {
         var output = out.captureString(func);

@@ -22,11 +22,6 @@ function createTestRender(options) {
         var actualPath = nodePath.join(dir, 'actual.html');
         options = options || {};
 
-        // if (foundDirs[dir]) {
-        //     console.log('DUPLICATE DIRECTORY: ' + dir);
-        // }
-        // foundDirs[dir] = true;
-
         var marko = require('../');
 
         require('../compiler').defaultOptions.checkUpToDate = false;
@@ -34,7 +29,25 @@ function createTestRender(options) {
         var AsyncWriter = marko.AsyncWriter;
         var out = options.out || new AsyncWriter(new StringBuilder());
 
-        marko.render(templatePath, templateData, out)
+        var template;
+
+        try {
+            template = marko.load(templatePath);
+        } catch(err) {
+            if (options.handleCompileError) {
+                try {
+                    options.handleCompileError(err);
+                    done();
+                } catch(err) {
+                    done(err);
+                }
+            } else {
+                done(err);
+            }
+            return;
+        }
+
+        template.render(templateData, out)
             .on('finish', function() {
                 var output = out.getOutput();
 
@@ -56,7 +69,18 @@ function createTestRender(options) {
 
                 done();
             })
-            .on('error', done)
+            .on('error', function(err) {
+                if (options.handleError) {
+                    try {
+                        options.handleError(err);
+                        done();
+                    } catch(err) {
+                        done(err);
+                    }
+                } else {
+                    done(err);
+                }
+            })
             .end();
 
     };
@@ -83,7 +107,7 @@ exports.loadRenderTests = function(dirname, desc, options) {
 
             var testOptions = testInfo.options;
 
-            testRender(dir, templateData || {}, expectedFile, testOptions, done);
+            testRender(dir, templateData || {}, expectedFile, testOptions || {}, done);
         });
     }
 

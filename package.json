@@ -14,7 +14,9 @@
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/",
         "test-fast": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test",
-        "test-async": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test"
+        "test-async": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test",
+        "test-taglib-loader": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/taglib-loader-test",
+        "jshint": "node_modules/.bin/jshint compiler/ runtime/ taglibs/"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": [
@@ -61,5 +63,5 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "2.3.2"
+    "version": "2.4.0"
 }

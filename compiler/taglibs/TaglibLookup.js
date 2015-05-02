@@ -1,5 +1,7 @@
 var ok = require('assert').ok;
 var createError = require('raptor-util').createError;
+var Taglib = require('./Taglib');
+var extend = require('raptor-util/extend');
 
 function transformerComparator(a, b) {
     a = a.priority;
@@ -66,7 +68,33 @@ function TaglibLookup() {
 }
 
 TaglibLookup.prototype = {
+    _mergeNestedTags: function(taglib) {
+        var Tag = Taglib.Tag;
+        // Loop over all of the nested tags and register a new custom tag
+        // with the fully qualified name
 
+        var merged = this.merged;
+
+        function handleNestedTag(nestedTag, parentTagName) {
+            var fullyQualifiedName = parentTagName + '.' + nestedTag.name;
+
+            // Create a clone of the nested tag since we need to add some new
+            // properties
+            var clonedNestedTag = new Tag();
+            extend(clonedNestedTag ,nestedTag);
+            // Record the fully qualified name of the parent tag that this
+            // custom tag is associated with.
+            clonedNestedTag.parentTagName = parentTagName;
+            clonedNestedTag.name = fullyQualifiedName;
+            merged.tags[fullyQualifiedName] = clonedNestedTag;
+        }
+
+        taglib.forEachTag(function(tag) {
+            tag.forEachNestedTag(function(nestedTag) {
+                handleNestedTag(nestedTag, tag.name);
+            });
+        });
+    },
 
     addTaglib: function (taglib) {
         ok(taglib, '"taglib" is required');
@@ -79,6 +107,8 @@ TaglibLookup.prototype = {
         this.taglibsById[taglib.id] = taglib;
 
         merge(this.merged, taglib);
+
+        this._mergeNestedTags(taglib);
     },
 
     getTag: function (element) {

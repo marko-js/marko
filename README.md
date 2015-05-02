@@ -6,13 +6,15 @@ Marko is an extensible, streaming, asynchronous, [high performance](https://gith
 
 Marko is a perfect match for Node.js since it supports writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
+For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/raptorjs/marko-widgets) taglib.
+
 __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 ![Marko Syntax](syntax.png)
 
 Syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package.
 
-![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
+![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -24,56 +26,62 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 - [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
 - [Usage](#usage)
-    - [Template Rendering](#template-rendering)
-        - [Callback API](#callback-api)
-        - [Streaming API](#streaming-api)
-        - [Synchronous API](#synchronous-api)
-        - [Asynchronous Rendering API](#asynchronous-rendering-api)
-    - [Browser-side Rendering](#browser-side-rendering)
-        - [Using the RaptorJS Optimizer](#using-the-raptorjs-optimizer)
-        - [Using Browserify](#using-browserify)
-    - [Template Compilation](#template-compilation)
-        - [Sample Compiled Template](#sample-compiled-template)
+	- [Template Rendering](#template-rendering)
+		- [Callback API](#callback-api)
+		- [Streaming API](#streaming-api)
+		- [Synchronous API](#synchronous-api)
+		- [Asynchronous Rendering API](#asynchronous-rendering-api)
+	- [Browser-side Rendering](#browser-side-rendering)
+		- [Using Lasso.js](#using-lassojs)
+		- [Using Browserify](#using-browserify)
+	- [Template Compilation](#template-compilation)
+		- [Sample Compiled Template](#sample-compiled-template)
 - [Language Guide](#language-guide)
-    - [Template Directives Overview](#template-directives-overview)
-    - [Text Replacement](#text-replacement)
-    - [Expressions](#expressions)
-    - [Includes](#includes)
-    - [Variables](#variables)
-    - [Conditionals](#conditionals)
-        - [if...else-if...else](#ifelse-ifelse)
-        - [Shorthand Conditionals](#shorthand-conditionals)
-        - [Conditional Attributes](#conditional-attributes)
-    - [Looping](#looping)
-        - [for](#for)
-            - [Loop Status Variable](#loop-status-variable)
-            - [Loop Separator](#loop-separator)
-            - [Range Looping](#range-looping)
-            - [Property Looping](#property-looping)
-            - [Custom Iterator](#custom-iterator)
-    - [Macros](#macros)
-        - [def](#def)
-        - [invoke](#invoke)
-    - [Structure Manipulation](#structure-manipulation)
-        - [attrs](#attrs)
-        - [body-only-if](#body-only-if)
-    - [Comments](#comments)
-    - [Whitespace](#whitespace)
-    - [Helpers](#helpers)
-      [Global Properties](#global-properties)
-    - [Custom Tags and Attributes](#custom-tags-and-attributes)
-    - [Async Taglib](#async-taglib)
-    - [Layout Taglib](#layout-taglib)
+	- [Template Directives Overview](#template-directives-overview)
+	- [Text Replacement](#text-replacement)
+	- [Expressions](#expressions)
+	- [Includes](#includes)
+	- [Variables](#variables)
+	- [Conditionals](#conditionals)
+		- [if...else-if...else](#ifelse-ifelse)
+		- [Shorthand Conditionals](#shorthand-conditionals)
+		- [Conditional Attributes](#conditional-attributes)
+	- [Looping](#looping)
+		- [for](#for)
+			- [Loop Status Variable](#loop-status-variable)
+			- [Loop Separator](#loop-separator)
+			- [Range Looping](#range-looping)
+			- [Property Looping](#property-looping)
+			- [Custom Iterator](#custom-iterator)
+	- [Macros](#macros)
+		- [def](#def)
+		- [invoke](#invoke)
+	- [Structure Manipulation](#structure-manipulation)
+		- [attrs](#attrs)
+		- [body-only-if](#body-only-if)
+	- [Comments](#comments)
+	- [Whitespace](#whitespace)
+	- [Helpers](#helpers)
+	- [Global Properties](#global-properties)
+	- [Custom Tags and Attributes](#custom-tags-and-attributes)
+	- [Async Taglib](#async-taglib)
+	- [Layout Taglib](#layout-taglib)
 - [Custom Taglibs](#custom-taglibs)
-    - [Tag Renderer](#tag-renderer)
-    - [marko-taglib.json](#marko-taglibjson)
-        - [Sample Taglib](#sample-taglib)
-        - [Defining Tags](#defining-tags)
-            - [Defining Attributes](#defining-attributes)
-        - [Scanning for Tags](#scanning-for-tags)
-        - [Nested Tags](#nested-tags)
-    - [Taglib Discovery](#taglib-discovery)
+	- [Tag Renderer](#tag-renderer)
+	- [marko-taglib.json](#marko-taglibjson)
+		- [Sample Taglib](#sample-taglib)
+	- [Defining Tags](#defining-tags)
+	- [Defining Attributes](#defining-attributes)
+	- [Scanning for Tags](#scanning-for-tags)
+	- [Nested Tags](#nested-tags)
+	- [Taglib Discovery](#taglib-discovery)
 - [FAQ](#faq)
+- [Additional Resources](#additional-resources)
+	- [Further Reading](#further-reading)
+	- [Screencasts](#screencasts)
+	- [Demo Apps](#demo-apps)
+	- [Tools](#tools)
+- [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Contributors](#contributors)
 - [Contribute](#contribute)
@@ -406,18 +414,18 @@ templatePath.render({
     });
 ```
 
-You can then bundle up the above program for running in the browser using either [optimizer](https://github.com/raptorjs/optimizer) (recommended) or [browserify](https://github.com/substack/node-browserify).
+You can then bundle up the above program for running in the browser using either [Lasso.js](https://github.com/lasso-js/lasso) (recommended) or [browserify](https://github.com/substack/node-browserify).
 
 
-### Using the RaptorJS Optimizer
+### Using Lasso.js
 
-The `optimizer` CLI can be used to generate resource bundles that includes all application modules and all referenced Marko template files using a command similar to the following:
+The `lasso` CLI can be used to generate resource bundles that includes all application modules and all referenced Marko template files using a command similar to the following:
 ```bash
-# First install the optimizer and the optimizer-marko plugin
-npm install optimizer --global
-npm install optimizer-marko
+# First install the lasso and the lasso-marko plugin
+npm install lasso --global
+npm install lasso-marko
 
-optimizer --main run.js --name my-page --plugins optimizer-marko
+lasso --main run.js --name my-page --plugins lasso-marko
 ```
 
 This will produce a JSON file named `build/my-page.html.json` that contains the HTML markup that should be used to include the required JavaScript and CSS resources that resulted from the page optimization.
@@ -425,7 +433,7 @@ This will produce a JSON file named `build/my-page.html.json` that contains the 
 Alternatively, you can inject the HTML markup into a static HTML file using the following command:
 
 ```bash
-optimizer --main run.js --name my-page --plugins optimizer-marko --inject-into my-page.html
+lasso --main run.js --name my-page --plugins lasso-marko --inject-into my-page.html
 ```
 
 
@@ -444,7 +452,7 @@ browserify -t markoify run.js > browser.js
 
 ## Template Compilation
 
-The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using the [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) or [Browserify](https://github.com/substack/node-browserify).
+The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using [Lasso.js](https://github.com/lasso-js/lasso) or [Browserify](https://github.com/substack/node-browserify).
 
 The `marko` module will automatically compile templates loaded by your application on the server, but you can also choose to precompile all templates. This can be helpful as a build or test step to catch errors early.
 
@@ -1414,45 +1422,57 @@ A tag renderer should be mapped to a custom tag by creating a `marko-taglib.json
 }
 ```
 
-### Defining Tags
-
-Tags can be defined by adding a `"tags"` property to your `marko-taglib.json`:
+Marko also supports a short-hand for declaring tags and attributes. The following `marko-taglib.json` is equivalent to the `marko-taglib.json` above:
 
 ```json
 {
-    "tags": {
-        "my-hello": {
-            "renderer": "./hello-renderer",
-            "attributes": {
-                "name": "string"
-            }
-        },
-        "my-foo": {
-            "renderer": "./foo-renderer",
-            "attributes": {
-                "*": "string"
-            }
-        }
+    "<my-hello>": {
+        "renderer": "./hello-renderer",
+        "@name": "string"
     }
 }
 ```
 
-Every tag should be associated with a renderer. When a custom tag is used in a template, the renderer will be invoked at render time to produce the HTML/output.
+The short-hand will be used for the remaining of this documentation.
 
-#### Defining Attributes
+## Defining Tags
 
-If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"*"`) allows any attribute to be passed in. Below are sample attribute definitions:
+Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `marko-taglib.json`:
 
-_Multiple attributes:_
-```javascript
-"attributes": {
-    "message": "string",     // String
-    "my-data": "expression", // JavaScript expression
-    "*": "string"            // Everything else will be added to a special "*" property
+```json
+{
+    "<my-hello>": {
+        "renderer": "./hello-renderer",
+        "@name": "string"
+    },
+    "<my-foo>": {
+        "renderer": "./foo-renderer",
+        "@*": "string"
+    },
+    "<my-bar>": "./path/to/my-bar/marko-tag.json",
+    "<my-baz>": {
+        "template": "./baz-template.marko"
+    },
 }
 ```
 
-### Scanning for Tags
+Every tag should be associated with a renderer or a template. When a custom tag is used in a template, the renderer (or template) will be invoked at render time to produce the HTML/output. If a `String` path to a `marko-tag.json` for a custom tag then the target `marko-tag.json` is loaded to define the tag.
+
+## Defining Attributes
+
+If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"@*"`) allows any attribute to be passed in. Below are sample attribute definitions:
+
+_Multiple attributes:_
+
+```javascript
+{
+    "@message": "string",     // String
+    "@my-data": "expression", // JavaScript expression
+    "@*": "string"            // Everything else will be added to a special "*" property
+}
+```
+
+## Scanning for Tags
 
 Marko supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
 
@@ -1494,9 +1514,7 @@ _In `renderer.js`:_
 
 ```javascript
 exports.tag = {
-    "attributes": {
-        "name": "string"
-    }
+    "@name": "string"
 }
 ```
 
@@ -1504,116 +1522,180 @@ _In `marko-tag.json`:_
 
 ```javascript
 {
-    "attributes": {
-        "name": "string"
-    }
+    "@name": "string"
 }
 ```
 
 _NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
 
-### Nested Tags
+## Nested Tags
 
 It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
 
 ```html
-<ui-tabs>
-    <ui-tab title="Home">
+<ui-tabs orientation="horizontal">
+    <ui-tabs.tab title="Home">
         Content for Home
-    </ui-tab>
-    <ui-tab title="Profile">
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Profile">
         Content for Profile
-    </ui-tab>
-    <ui-tab title="Messages">
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Messages">
         Content for Messages
-    </ui-tab>
+    </ui-tabs.tab>
 </ui-tabs>
 ```
 
-Marko supports this by leveraging JavaScript closures in the compiled output. A tag can introduce scoped variables that are available to nested tags. This is shown in the sample `marko-taglib.json` below:
+Nested tags can be declared in the parent tag's `marko-tag.json` as shown below:
+
+___ui-tabs/marko-tag.json___
 
 ```json
 {
-    "tags": {
-        "ui-tabs": {
-            "renderer": "./tabs-tag",
-            "body-function": "getTabs(__tabsHelper)"
-        },
-        "ui-tab": {
-            "renderer": "./tab-tag",
-            "import-var": {
-                "tabs": "__tabsHelper"
-            },
-            "attributes": {
-                "title": "string"
-            }
-        }
+    "@orientation": "string",
+    "@tabs <tab>[]": {
+        "@title": "string"
     }
 }
 ```
 
-In the above example, the `<ui-tabs>` tag will introduce a scoped variable named `tabs` that is then automatically imported by the nested `<ui-tab>` tags. When the nested `<ui-tab>` tags render they can use the scoped variable to communicate with the renderer for the `<ui-tabs>` tag.
+This allows a `tabs` to be provided using nested `<ui-tabs.tab>` tags or the tabs can be provided as a `tabs` attribute (e.g. `<ui-tabs tabs="[tab1, tab2, tab3]"`). The nested `<ui-tabs.tab>` tags will be made available to the renderer as part of the `tabs` property for the parent `<ui-tabs>`. Because of the `[]` suffix on `<tab>[]` the tabs property will be of type `Array` and not a single object. That is, the `[]` suffix is used to declare that a nested tag can be repeated. The sample renderer that accesses the nested tabs is shown below:
 
-The complete code for this example is shown below:
-
-_components/tabs/renderer.js:_
+___ui-tabs/renderer.js___
 
 ```javascript
-var templatePath = require.resolve('./template.marko');
-var template = require('marko').load(templatePath);
+var template = require('marko').load(require.resolve('./template.marko'));
 
-exports.render = function(input, out) {
-    var nestedTabs;  
+exports.renderer = function(input, out) {
+    var tabs = input.tabs;
 
-    if (input.getTabs) {
-        nestedTabs = [];
-        // Invoke the body function to discover nested <ui-tab> tags
-        input.getTabs({ // Invoke the body with the scoped "tabs" variable
-            addTab: function(tab) {
-                tab.id = tab.id || ("tab" + nestedTabs.length);
-                nestedTabs.push(tab);
-            }
-        });
-    } else {
-        nestedTabs = input.tabs || [];
-    }
+    // Tabs will be in the following form:
+    // [
+    //     {
+    //         title: 'Home',
+    //         renderBody: function(out) { ... }
+    //     },
+    //     {
+    //         title: 'Profile',
+    //         renderBody: function(out) { ... }
+    //     },
+    //     {
+    //         title: 'Messages',
+    //         renderBody: function(out) { ... }
+    //     }
+    // ]
+    console.log(tabs.length); // Output: 3
 
-
-    // Now render the markup for the tabs:
     template.render({
-        tabs: nestedTabs
+        tabs: tabs
     }, out);
+
 };
 ```
 
-_components/tab/renderer.js:_
+Finally, the template to render the `<ui-tabs>` component will be similar to the following:
 
-```javascript
-exports.render = function(input, out) {
-    // Register with parent but don't render anything
-    input.tabs.addTab(input);
-};
-```
-
-_components/tabs/template.marko:_
+___ui-tabs/template.marko___
 
 ```html
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="tab" for="tab in data.tabs">
-            <a href="#${tab.id}" data-toggle="tab">
+            <a href="#${tab.title}">
                 ${tab.title}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div id="${tab.id}" class="tab-pane" for="tab in data.tabs">
+        <div class="tab-pane" for="tab in data.tabs">
             <invoke function="tab.renderBody(out)"/>
         </div>
     </div>
 </div>
 ```
 
+Below is an example of using nested tags that are not repeated:
+
+```html
+<ui-overlay>
+    <ui-overlay.header class="my-header">
+        Header content
+    </ui-overlay.header>
+
+    <ui-overlay.body class="my-body">
+        Body content
+    </ui-overlay.body>
+
+    <ui-overlay.footer class="my-footer">
+        Footer content
+    </ui-overlay.footer>
+</ui-overlay>
+```
+
+The `marko-tag.json` for the `<ui-overlay>` tag will be similar to the following:
+
+___ui-overlay/marko-tag.json___
+
+```json
+{
+    "@header <header>": {
+        "@class": "string"
+    },
+    "@body <body>": {
+        "@class": "string"
+    },
+    "@footer <footer>": {
+        "@class": "string"
+    }
+}
+```
+
+The renderer for the `<ui-overlay>` tag will be similar to the following:
+
+```javascript
+var template = require('marko').load(require.resolve('./template.marko'));
+
+exports.renderer = function(input, out) {
+    var header = input.header;
+    var body = input.body;
+    var footer = input.footer;
+
+    // NOTE: header, body and footer will be of the following form:
+    //
+    // {
+    //     'class': 'my-header',
+    //     renderBody: function(out) { ... }
+    // }
+
+    template.render({
+        header: header,
+        body: body,
+        footer: footer
+    }, out);
+
+};
+```
+
+Finally, the sample template to render the `<ui-overlay>` tag is shown below:
+
+```html
+<div class="overlay">
+    <!-- Header -->
+    <div class="overlay-header ${data.header['class']}" if="data.header">
+        <invoke function="data.header.renderBody(out)"/>
+    </div>
+
+    <!-- Body -->
+    <div class="overlay-body ${data.body['class']}" if="data.body">
+        <invoke function="data.body.renderBody(out)"/>
+    </div>
+
+    <!-- Footer -->
+    <div class="overlay-footer ${data.footer['class']}" if="data.footer">
+        <invoke function="data.footer.renderBody(out)"/>
+    </div>
+</div>
+```
 
 ## Taglib Discovery
 
@@ -1640,7 +1722,7 @@ __Answer__: Yes, Marko has been battle-tested at [eBay](http://www.ebay.com/) an
 
 __Question:__ _Can templates be compiled on the client?_
 
-__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. The [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) is recommended for including compiled templates as part of a web page.
+__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. [Lasso.js](https://github.com/lasso-js/lasso) is recommended for including compiled templates as part of a web page.
 
 <hr>
 

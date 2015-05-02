@@ -1,0 +1,14 @@
+<var name="tabs" value="data.tabs"/>
+
+<div class="tabs">
+    <ul>
+        <li for="tab in tabs">
+            ${tab.title}
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab" for="tab in tabs">
+            <invoke function="tab.renderBody(out)"/>
+        </div>
+    </div>
+</div>

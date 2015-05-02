@@ -1,7 +1,6 @@
 'use strict';
 var chai = require('chai');
 chai.Assertion.includeStack = true;
-require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
 var marko = require('../');

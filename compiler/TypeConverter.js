@@ -30,9 +30,7 @@ TypeConverter.convert = function (value, targetType, allowExpressions) {
         return value;
     }
 
-
-
-    if (targetType === 'expression') {
+    if (targetType === 'expression' || targetType === 'object' || targetType === 'array') {
         if (value === '') {
             value = 'null';
         }
