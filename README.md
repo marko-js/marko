@@ -1489,7 +1489,6 @@ With this approach, `marko-taglib.json` will be much simpler:
     "tags-dir": "./components"
 }
 ```
-
 Given the following directory structure:
 
 * __components/__
@@ -1527,6 +1526,14 @@ _In `marko-tag.json`:_
 ```
 
 _NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
+
+`tags-dir` also accepts an array if you have taglibs organized in multiple folers.
+
+```json
+{
+    "tags-dir": ["./components", "./modules"]
+}
+```
 
 ## Nested Tags
 
