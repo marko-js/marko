@@ -51,8 +51,11 @@ module.exports = function handleWidgetBind() {
         widgetNode.setProperty('state', state);
     }
 
-    if ((id = node.getAttribute('id'))) {
-        id = compiler.convertType(id, 'string', true);
+    if ((id = node.getAttribute('id')) != null) {
+        if (typeof id === 'string') {
+            id = compiler.convertType(id, 'string', true);
+        }
+
         widgetNode.setProperty('id', id);
     }
 
