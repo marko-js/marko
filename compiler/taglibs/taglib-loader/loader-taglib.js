@@ -146,6 +146,8 @@ TaglibHandlers.prototype = {
         //       section
         var taglib = this.taglib;
         var dirname = this.dirname;
+        var importPath;
+        var resolveFrom = require('resolve-from');
 
         if (imports && Array.isArray(imports)) {
             for (var i=0; i<imports.length; i++) {
@@ -160,10 +162,9 @@ TaglibHandlers.prototype = {
                             var dependencyNames = Object.keys(dependencies);
                             for (var j=0; j<dependencyNames.length; j++) {
                                 var dependencyName = dependencyNames[j];
-                                var importPath;
 
                                 try {
-                                    importPath = require('resolve-from')(dirname, dependencyName + '/marko-taglib.json');
+                                    importPath = resolveFrom(dirname, dependencyName + '/marko-taglib.json');
                                 } catch(e) {}
 
                                 if (importPath) {
@@ -171,6 +172,9 @@ TaglibHandlers.prototype = {
                                 }
                             }
                         }
+                    } else {
+                        importPath = resolveFrom(dirname, curImport);
+                        taglib.addImport(importPath);
                     }
                 }
             }
