@@ -28,7 +28,7 @@
         "raptor-modules": "^1.0.22",
         "raptor-polyfill": "^1.0.0",
         "raptor-pubsub": "^1.0.2",
-        "raptor-renderer": "^1.2.0",
+        "raptor-renderer": "^1.4.1",
         "raptor-util": "^1.0.0"
     },
     "devDependencies": {
