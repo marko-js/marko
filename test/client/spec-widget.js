@@ -317,4 +317,12 @@ describe('widget' , function() {
         expect(widget.el.innerHTML).to.contain('blue');
         expect(widget.el.innerHTML).to.contain('orange');
     });
+
+    it('should throw error when accessing this.widgets', function() {
+        expect(function() {
+            require('../fixtures/invalid/invalid-WidgetCollection')
+                .render({})
+                .appendTo(document.getElementById('target'));
+        }).to.throw(/is no longer supported/);
+    });
 });
