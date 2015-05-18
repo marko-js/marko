@@ -27,6 +27,9 @@ exports.process =function (node, compiler, template) {
     }
 
     if (nodeProps['w-bind'] != null) {
+        if (nodeProps['w-id'] != null) {
+            node.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
+        }
         transformHelper.handleWidgetBind();
     } else if (nodeProps['w-extend'] != null) {
         transformHelper.handleWidgetExtend();
