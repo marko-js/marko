@@ -170,13 +170,31 @@ exports.renderer = function(input, out) {
 ### 4.0.1
 
 - Stateful widgets
-- New attributes: `w-preserve`, `w-preserve-body` and `w-body`
+- Batched updates to the DOM
+- New methods exported by marko-widgets:
+    - `defineComponent(def)`
+    - `defineWidget(def)`
+    - `defineRenderer(def)`
+- New custom taglib attributes: `w-preserve`, `w-preserve-body` and `w-body`
 - New Widget methods:
     - `setState(name, value)`
     - `setState(newState)`
     - `replaceState(newState)`
     - `setProps(newProps)`
     - `setStateDirty(name)`
+    - `onBeforeDestroy()`
+    - `onDestroy()`
+    - `onBeforeUpdate()`
+    - `onAfterUpdate()`
+- New rendering properties:
+    - `template` (`String` path to a Marko template)
+    - `getInitialProps(input)`
+    - `getInitialState(input)`
+    - `getTemplateData(state, input)`
+    - `getWidgetConfig(input)`
+    - `getInitialBody(input)`
+- General code cleanup and performance improvements
+- :exclamation: Removed support for `Widget.prototype.render = function(input, out) { ... }`
 
 # 3.x
 
