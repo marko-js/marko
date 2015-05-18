@@ -109,7 +109,7 @@ npm install marko --global
 
 A basic template with text replacement, looping and conditionals is shown below:
 
-```html
+```xml
 Hello ${data.name}!
 
 <ul if="notEmpty(data.colors)">
@@ -139,7 +139,7 @@ template.render({
 
 The output of running the above program will be the following (formatted for readability):
 
-```html
+```xml
 Hello World!
 
 <ul>
@@ -160,7 +160,7 @@ For comparison, given the following data consisting of an empty array of colors:
 
 The output would be the following:
 
-```html
+```xml
 Hello World!
 
 <div>No colors!</div>
@@ -181,7 +181,7 @@ app.get('/profile', function(req, res) {
 
 Marko also supports custom tags so you can easily extend the HTML grammar to support things like the following:
 
-```html
+```xml
 Welcome to Marko!
 
 <ui-tabs>
@@ -199,7 +199,7 @@ Welcome to Marko!
 
 The above template is a very simple way to generate the much more complicated HTML output shown below:
 
-```html
+```xml
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="active">
@@ -238,7 +238,7 @@ Let's compare Marko with Handlebars (a text-based templating language):
 
 __Handlebars:__
 
-```html
+```xml
 Hello {{name}}!
 
 {{#if colors}}
@@ -258,7 +258,7 @@ Hello {{name}}!
 
 __Marko:__
 
-```html
+```xml
 Hello ${data.name}!
 
 <ul if="notEmpty(data.colors)">
@@ -392,7 +392,7 @@ out.end();
 
 Despite rendering the first chunk asynchronously, the above program will stream out the output in the correct order to `index.html`:
 
-```html
+```xml
 BEGIN Hello World! END
 ```
 
@@ -544,7 +544,7 @@ _File size: 189 bytes gzipped (251 bytes uncompressed)_
 Almost all of the Marko templating directives can be used as either an attribute or as an element. For example:
 
 _Applying directives using attributes:_
-```html
+```xml
 <!-- Colors available -->
 <ul if="notEmpty(colors)">
     <li for="color in colors">
@@ -559,7 +559,7 @@ _Applying directives using attributes:_
 ```
 
 _Applying directives using elements:_
-```html
+```xml
 <!-- Colors available -->
 <if test="notEmpty(colors)">
     <ul>
@@ -586,7 +586,7 @@ The disadvantage of using elements to control structural logic is that they chan
 Dynamic text is supported using either `$<variable-reference>` or `${<javascript-expression>}`.
 
 Examples:
-```html
+```xml
 Hello $data.name!
 Hello ${data.name}!
 Hello ${data.name.toUpperCase()}!
@@ -594,13 +594,13 @@ Hello ${data.name.toUpperCase()}!
 
 By default, all special HTML characters will be escaped in dynamic text to prevent Cross-site Scripting (XSS) Attacks. To disable HTML escaping, you can use `$!` as shown in the following sample code:
 
-```html
+```xml
 Hello $!{data.name}! <!-- Do not escape -->
 ```
 
 If necessary, you can escape `$` using a forward slash to have it be treated as text instead of a placeholder token:
 
-```html
+```xml
 Test: \${hello}
 <!-- Rendered Ouptut:
 Test: ${hello}
@@ -624,13 +624,13 @@ JavaScript Operator | Marko Equivalent
 
 For example, both of the following are valid and equivalent:
 
-```html
+```xml
 <div if="searchResults.length > 100">
     Show More
 </div>
 ```
 
-```html
+```xml
 <div if="searchResults.length gt 100">
     Show More
 </div>
@@ -640,7 +640,7 @@ For example, both of the following are valid and equivalent:
 
 Other Marko files can be included using the `<include>` tag and a relative path. For example:
 
-```html
+```xml
 <include template="./greeting.marko" name="Frank" count="30"/>
 ```
 
@@ -648,19 +648,19 @@ Other Marko files can be included using the `<include>` tag and a relative path.
 
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
 
-```html
+```xml
 <var name="name" value="data.name.toUpperCase()" />
 ```
 
 To assign a new value to an existing variable the `<assign>` tag can be used as shown in the following sample code:
 
-```html
+```xml
 <assign var="name" value="data.name.toLowerCase()" />
 ```
 
 The `<with>` directive can be used to create scoped variables as shown in the following sample code:
 
-```html
+```xml
 <with vars="nameUpper=data.name.toUpperCase(); nameLower=data.name.toLowerCase()">
     Hello $nameUpper!
     Hello $nameLower!
@@ -674,7 +674,7 @@ The `<with>` directive can be used to create scoped variables as shown in the fo
 Any element or fragment of HTML can be made conditional using the `if`, `else-if` or `else` directive.
 
 _Applied as attributes:_
-```html
+```xml
 <!--Simple if-->
 <div if="someCondition">
     Hello World
@@ -696,7 +696,7 @@ _Applied as attributes:_
 ```
 
 _Applied as elements:_
-```html
+```xml
 <!-- Colors available -->
 <!--Simple if-->
 <if test="someCondition">
@@ -735,18 +735,18 @@ Shorthand conditionals allow for conditional values inside attributes or whereve
 
 For example:
 
-```html
+```xml
 <div class="{?active;tab-active}">Hello</div>
 ```
 With a value of `true` for `active`, the output would be the following:
 
-```html
+```xml
 <div class="tab-active">Hello</div>
 ```
 
 With a value of `false` for `active`, the output would be the following:
 
-```html
+```xml
 <div>Hello</div>
 ```
 
@@ -754,13 +754,13 @@ _NOTE: If the expression inside an attribute evaluates to `null` or an empty str
 
 As shown in the previous example, the "else" block for shorthand conditionals is optional. The usage of an else block is shown below:
 
-```html
+```xml
 <div class="{?active;tab-active;tab-inactive}">Hello</div>
 ```
 
 With a value of `false` for `active`, the output would be the following:
 
-```html
+```xml
 <div class="tab-inactive">Hello</div>
 ```
 
@@ -781,7 +781,7 @@ For example, given the following data:
 
 And the following template:
 
-```html
+```xml
 <img src="foo.png" alt="${data.title}">
 
 <div class="{?data.active;tab-active}"></div>
@@ -793,7 +793,7 @@ And the following template:
 
 The output HTML will be the following:
 
-```html
+```xml
 <img src="foo.png">
 
 <div></div>
@@ -809,7 +809,7 @@ Any element can be repeated for every item in an array using the `for` directive
 
 _Applied as an attribute:_
 
-```html
+```xml
 <ul>
     <li for="item in items">${item}</li>
 </ul>
@@ -817,7 +817,7 @@ _Applied as an attribute:_
 
 _Applied as an element:_
 
-```html
+```xml
 <ul>
     <for each="item in items">
         <li>${item}</li>
@@ -834,7 +834,7 @@ Given the following value for items:
 
 The output would be the following:
 
-```html
+```xml
 <ul>
     <li>red</li>
     <li>green</li>
@@ -846,7 +846,7 @@ The output would be the following:
 
 The `for` directive also supports a loop status variable in case you need to know the current loop index. For example:
 
-```html
+```xml
 <ul>
     <li for="color in colors; status-var=loop">
         ${loop.getIndex()+1}) $color
@@ -858,7 +858,7 @@ The `for` directive also supports a loop status variable in case you need to kno
 
 #### Loop Separator
 
-```html
+```xml
 <for each="color in colors" separator=", ">$color</for>
 
 <div>
@@ -872,7 +872,7 @@ A range can be provided in the following format; `<var-name> from <from> to <to>
 
 The `from`, `to` and `step` values must be numerical expressions. If not specified, step defaults to 1.
 
-```html
+```xml
 <ul>
     <li for="i from 0 to 10">
         $i
@@ -880,7 +880,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 </ul>
 ```
 
-```html
+```xml
 <ul>
     <li for="i from 0 to 10 step 2">
         $i
@@ -888,7 +888,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 </ul>
 ```
 
-```html
+```xml
 <ul>
     <li for="i from 0 to myArray.length-1">
         ${myArray[i]}
@@ -899,7 +899,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 #### Property Looping
 
-```html
+```xml
 <ul>
     <li for="(name,value) in settings">
         <b>$name</b>:
@@ -929,7 +929,7 @@ The custom iterator can then be used in a template as shown below:
 
 _Applied as part of a `for` attribute:_
 
-```html
+```xml
 <div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
     $item
 </div>
@@ -941,7 +941,7 @@ Output:
 
 _Applied as part of a `<for>` element:_
 
-```html
+```xml
 <for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
     $item
 </for>
@@ -967,7 +967,7 @@ Custom iterators also support providing a custom status object for each loop ite
 
 _Applied as part of a `for` attribute:_
 
-```html
+```xml
 <div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
     ${status.index}$item
 </div>
@@ -979,7 +979,7 @@ Output:
 
 _Applied as part of a `<for>` element:_
 
-```html
+```xml
 <for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
     ${status.index}$item
 </for>
@@ -997,7 +997,7 @@ Parameterized macros allow for reusable fragments within an HTML template. A mac
 
 The `<def>` directive can be used to define a reusable function within a template.
 
-```html
+```xml
 <def function="greeting(name, count)">
     Hello $name! You have $count new messages.
 </def>
@@ -1005,7 +1005,7 @@ The `<def>` directive can be used to define a reusable function within a templat
 
 The above macro can then be invoked as part of any expression. Alternatively, the [`<invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
 
-```html
+```xml
 <def function="greeting(name, count)">
     Hello $name! You have $count new messages.
 </def>
@@ -1022,7 +1022,7 @@ The above macro can then be invoked as part of any expression. Alternatively, th
 
 The `<invoke>` directive can be used to invoke a function defined using the `<def>` directive or a function that is part of the input data to a template. The `<invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<def>` directive.
 
-```html
+```xml
 <def function="greeting(name, count)">
     Hello ${name}! You have ${count} new messages.
 </def>
@@ -1033,7 +1033,7 @@ The `<invoke>` directive can be used to invoke a function defined using the `<de
 
 The output for the above template would be the following:
 
-```html
+```xml
 <p>
     Hello John! You have 10 new messages.
 </p>
@@ -1043,7 +1043,7 @@ The output for the above template would be the following:
 ```
 
 _NOTE:_ By default, the arguments will be of type "string" when using `<invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
-```html
+```xml
 count="10" <!-- string argument -->
 count="${10}"  <!-- number argument -->
 ```
@@ -1055,7 +1055,7 @@ count="${10}"  <!-- number argument -->
 
 The `attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
 
-```html
+```xml
 <div attrs="myAttrs">
     Hello World!
 </div>
@@ -1069,7 +1069,7 @@ Given the following value for the `myAttrs` variable:
 
 The output would then be the following:
 
-```html
+```xml
 <div style="background-color: #FF0000;" class="my-div">
     Hello World!
 </div>
@@ -1079,7 +1079,7 @@ The output would then be the following:
 
 If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute to handle this use case. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 
-```html
+```xml
 <a href="${data.linkUrl}" body-only-if="!data.linkUrl">
     Some body content
 </a>
@@ -1087,7 +1087,7 @@ If you find that you have a wrapper element that is conditional, but whose body 
 
 Given a value of `"http://localhost/"` for the `data.linkUrl` variable: , the output would be the following:
 
-```html
+```xml
 <a href="http://localhost/">
     Some body content
 </a>
@@ -1095,7 +1095,7 @@ Given a value of `"http://localhost/"` for the `data.linkUrl` variable: , the ou
 
 Given a value of `undefined` for the `data.linkUrl` variable: , the output would be the following:
 
-```html
+```xml
 Some body content
 ```
 
@@ -1105,20 +1105,20 @@ Standard HTML comments can be used to add comments to your template. The HTML co
 
 Example comments:
 
-```html
+```xml
 <!-- This is a comment that will not be rendered -->
 <h1>Hello</h1>
 ```
 
 If you would like for your HTML comment to show up in the final output then you can use the custom `html-comment` tag:
-```html
+```xml
 <html-comment>This is a comment that *will* be rendered</html-comment>
 <h1>Hello</h1>
 ```
 
 Output:
 
-```html
+```xml
 <!--This is a comment that *will* be rendered-->
 <h1>Hello</h1>
 ```
@@ -1140,7 +1140,7 @@ In addition, whitespace within the following tags is preserved by default:
 
 Example template:
 
-```html
+```xml
 <div>
     <a href="/home">
         Home
@@ -1156,7 +1156,7 @@ World</textarea
 
 Example output:
 
-```html
+```xml
 <div><a href="/home">Home</a><a href="/Profile">My Profile</a><textarea>
 Hello
 World</textarea</div>
@@ -1166,7 +1166,7 @@ The following options are available to control whitespace removal:
 
 __Option 1)__ Disable whitespace removal using the `compiler-options` tag:
 
-```html
+```xml
 <compiler-options whitespace="preserve" />
 <div>
     <img src="foo.jpg">
@@ -1176,7 +1176,7 @@ __Option 1)__ Disable whitespace removal using the `compiler-options` tag:
 
 __Option 2)__ Disable whitespace removal using the `c-whitespace` attribute:
 
-```html
+```xml
 <div c-whitespace="preserve">
     <img src="foo.jpg">
     <img src="foo.jpg">
@@ -1222,7 +1222,7 @@ The above module can then be imported into a template as shown in the following 
 
 _src/template.marko_:
 
-```html
+```xml
 <require module="./util" var="util" />
 
 <div>${util.reverse('reverse test')}</div>
@@ -1248,7 +1248,7 @@ template.render({
 
 Usage inside template:
 
-```html
+```xml
 <div>${data.reverse('reverse test')}</div>
 ```
 
@@ -1266,7 +1266,7 @@ template.render({
 
 Given the following template:
 
-```html
+```xml
 <div>
     Hello ${out.global.name}!
 </div>
@@ -1274,7 +1274,7 @@ Given the following template:
 
 The output would be the following:
 
-```html
+```xml
 <div>
     Hello Frank
 </div>
@@ -1286,7 +1286,7 @@ Marko supports extending the language with custom tags and attributes. A custom 
 
 Below illustrates how to use a simple custom tag:
 
-```html
+```xml
 <div>
     <my-hello name="World"/>
 </div>
@@ -1294,7 +1294,7 @@ Below illustrates how to use a simple custom tag:
 
 The output of the above template might be the following:
 
-```html
+```xml
 <div>
     Hello World!
 </div>
@@ -1317,7 +1317,7 @@ template.render({
     }, ...);
 ```
 
-```html
+```xml
 <async-fragment data-provider="data.userProfileDataProvider"
     var="userProfile"
     arg-userId="${data.userId}">
@@ -1345,7 +1345,7 @@ Marko provides a `layout` taglib to support separating out layout from content. 
 
 _default-layout.marko:_
 
-```html
+```xml
 <!doctype html>
 <html lang="en">
 <head>
@@ -1370,7 +1370,7 @@ _default-layout.marko:_
 
 _Usage of `default-layout.marko`:_
 
-```html
+```xml
 <layout-use template="./default-layout.marko" show-header="$true">
     <layout-put into="title">My Page</layout-put>
     <layout-put into="body">BODY CONTENT</layout-put>
@@ -1541,7 +1541,7 @@ _NOTE: It is not necessary to declare the `renderer` since the scanner will auto
 
 It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
 
-```html
+```xml
 <ui-tabs orientation="horizontal">
     <ui-tabs.tab title="Home">
         Content for Home
@@ -1606,7 +1606,7 @@ Finally, the template to render the `<ui-tabs>` component will be similar to the
 
 ___ui-tabs/template.marko___
 
-```html
+```xml
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="tab" for="tab in data.tabs">
@@ -1625,7 +1625,7 @@ ___ui-tabs/template.marko___
 
 Below is an example of using nested tags that are not repeated:
 
-```html
+```xml
 <ui-overlay>
     <ui-overlay.header class="my-header">
         Header content
@@ -1687,7 +1687,7 @@ exports.renderer = function(input, out) {
 
 Finally, the sample template to render the `<ui-overlay>` tag is shown below:
 
-```html
+```xml
 <div class="overlay">
     <!-- Header -->
     <div class="overlay-header ${data.header['class']}" if="data.header">
