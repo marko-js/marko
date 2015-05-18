@@ -23,9 +23,6 @@ module.exports = function handleWidgetExtend() {
 
     node.addNestedVariable('widget');
 
-
-    
-
     var extendConfig = props['w-config'];
 
     if (extendConfig) {

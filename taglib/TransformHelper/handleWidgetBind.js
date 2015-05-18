@@ -1,7 +1,3 @@
-
-
-
-
 module.exports = function handleWidgetBind() {
     var props = this.nodeProps;
     var bind = props['w-bind'];

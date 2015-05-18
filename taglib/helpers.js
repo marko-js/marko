@@ -12,8 +12,6 @@ exports.widgetArgs = function (out, scope, assignedId, customEvents, extendModul
     var id;
 
     if (!widgetArgs) {
-
-
         if (assignedId != null) {
             id = assignedId.toString();
 
