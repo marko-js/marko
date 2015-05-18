@@ -28,6 +28,14 @@ describe('marko-widgets/server' , function() {
             component.render({});
         }).to.throw(/The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute/);
     });
+
+    it('should throw an error when Widget.prototype.render is provided', function() {
+        expect(function() {
+            var markoWidgetsRegistry = require(require.resolve('../../lib/registry'));
+            var widgetModulePath = require.resolve('../fixtures/invalid/widget-with-render/widget.js');
+            markoWidgetsRegistry.createWidget(widgetModulePath, 'w0');
+        }).to.throw(/is no longer supported/);
+    });
 });
 
 
