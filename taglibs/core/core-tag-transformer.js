@@ -265,6 +265,10 @@ module.exports = function transform(node, compiler, template) {
     var shouldRemoveAttr = true;
 
     if (tag) {
+        if (tag.renderer || tag.template) {
+            node.tag = tag;
+        }
+
         if (tag.preserveWhitespace) {
             node.setPreserveWhitespace(true);
         }
