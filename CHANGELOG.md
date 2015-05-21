@@ -5,6 +5,18 @@ Changelog
 
 ## 2.4.x
 
+### 2.4.3
+
+- Fixes edge case: More precise regular expression for decoding HTML entities
+
+### 2.4.2
+
+- Internal: Fixes #75 Always assign the tag property to custom tag nodes
+
+### 2.4.1
+
+- Improvement to allow taglibs to be imported from other taglibs ([commit](https://github.com/raptorjs/marko/commit/73e9a3420a1bac3e2c201d4dcadf21c0701b5222))
+
 ### 2.4.0
 
 - Added support for short-hand tags and attributes
