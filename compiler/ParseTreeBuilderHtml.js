@@ -32,7 +32,7 @@ var entities = {
 };
 
 function decodeEntities(data) {
-    return data.replace(/&([^;]+);/g, function(match, entityName) {
+    return data.replace(/&([a-z0-9#]+);/gi, function(match, entityName) {
         return entities[entityName] || '${entity:' + entityName + '}';
     });
 }
