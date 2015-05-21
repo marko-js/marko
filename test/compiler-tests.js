@@ -58,6 +58,10 @@ describe('marko/compiler' , function() {
         testCompiler('fixtures/templates/compiler/hello-dynamic');
     });
 
+    it('should compile a simple template with entities', function() {
+        testCompiler('fixtures/templates/compiler/entities');
+    });
+
     // it.only('should compile a template with <c:invoke>', function() {
     //     testCompiler('test-project/tabs.marko');
     // });
