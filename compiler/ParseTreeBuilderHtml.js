@@ -32,7 +32,8 @@ var entities = {
 };
 
 function decodeEntities(data) {
-    return data.replace(/&([a-z0-9#]+);/gi, function(match, entityName) {
+    // match numeric, hexadecimal & named entities
+    return data.replace(/&(#\d+|#x[0-9a-fA-F]+|[a-zA-Z0-9]+);/g, function(match, entityName) {
         return entities[entityName] || '${entity:' + entityName + '}';
     });
 }
