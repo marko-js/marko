@@ -3,6 +3,12 @@ Changelog
 
 # 2.x
 
+## 2.5.x
+
+### 2.5.0
+
+- Fixes #78 - Custom Node.js require extension for Marko template files
+
 ## 2.4.x
 
 ### 2.4.3
