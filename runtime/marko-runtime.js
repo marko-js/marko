@@ -218,6 +218,11 @@ function load(templatePath, options) {
             template._ = loader(templatePath).create(helpers); // Load the template factory and invoke it
         }
     } else {
+        // If the first argument is already a loaded template then just return it
+        if (templatePath.render) {
+            return templatePath;
+        }
+
         // Instead of a path, assume we got a compiled template module
         // We store the loaded template with the factory function that was
         // used to get access to the compiled template function
