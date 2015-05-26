@@ -8,6 +8,7 @@ Changelog
 ### 2.5.0
 
 - Fixes #78 - Custom Node.js require extension for Marko template files
+- Compiled templates now export a loaded Template instance. In the previous version of marko, compiled templates exported a function that could be used to create a loaded Template instance.
 
 ## 2.4.x
 
