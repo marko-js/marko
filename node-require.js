@@ -28,11 +28,8 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         fs.renameSync(tempFile, targetFile);
     }
 
-    // The compiled output is for a CommonJS module. The code that we want to load should
-    // actually export a loaded template instance so we append some additional code to
-    // load the compiled template and assign it to `module.exports`. We also attach a
-    // path to the compiled template so that hot reloading will work.
-    return compiledSrc + '\nexports.path=__filename;\nmodule.exports = require("marko").load(exports);';
+    // We attach a path to the compiled template so that hot reloading will work.
+    return compiledSrc;
 }
 
 exports.install = function(options) {

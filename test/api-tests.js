@@ -6,6 +6,8 @@ var nodePath = require('path');
 var marko = require('../');
 var through = require('through');
 
+require('../node-require').install();
+
 describe('marko/api' , function() {
 
     before(function() {
@@ -263,6 +265,23 @@ describe('marko/api' , function() {
 
         var template = marko.load(templateModule);
         template.render({
+                name: 'John'
+            },
+            function(err, output) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(output).to.equal('Hello John!');
+                done();
+            });
+    });
+
+    it('should allow a template to be required', function(done) {
+        var templatePath = nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko');
+        var template = require(templatePath);
+        template.render(
+            {
                 name: 'John'
             },
             function(err, output) {

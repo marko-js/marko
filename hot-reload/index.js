@@ -25,6 +25,10 @@ exports.enable = function() {
     // Patch the Template prototype to proxy all render methods...
 
     Object.keys(Template.prototype).forEach(function(k) {
+        if (k === 'c') {
+            return;
+        }
+
         var v = Template.prototype[k];
 
         if (typeof v === 'function') {
@@ -45,9 +49,9 @@ exports.enable = function() {
     });
 
 
-    var oldLoad = runtime.load;
+    var oldCreateTemplate = runtime.c;
 
-    runtime.load = function hotReloadLoad(path) {
+    runtime.c = function hotReloadCreateTemplate(path) {
         if (!path) {
             throw new Error('Invalid path');
         }
@@ -62,7 +66,7 @@ exports.enable = function() {
             templatePath = templatePath.replace(/\.js$/, '');
         }
 
-        var template = oldLoad.apply(runtime, arguments);
+        var template = oldCreateTemplate.apply(runtime, arguments);
 
         // Store the current last modified with the template
         template.__hotReloadModifiedFlag = modifiedFlag;
