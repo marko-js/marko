@@ -491,7 +491,7 @@ TemplateBuilder.prototype = {
         } else {
             params = ['out'];
         }
-        out.append('exports.create = function(__helpers) {\n');
+        out.append('function create(__helpers) {\n');
         //Write out the static variables
         this.writer.flush();
         this._writeVars(this.staticVars, out, INDENT);
@@ -508,7 +508,10 @@ TemplateBuilder.prototype = {
             out.append('\n');
         }
         out.append(this.writer.getOutput());
-        out.append(INDENT + '};\n}');
+        // We generate code that assign a partially Template instance to module.exports
+        // and then we fully initialize the Template instance. This was done to avoid
+        // problems with circular dependencies.
+        out.append(INDENT + '};\n}\n(module.exports = require("marko").c(__filename)).c(create);');
         return out.toString();
     },
     setTemplateName: function (templateName) {

@@ -25,6 +25,10 @@ exports.enable = function() {
     // Patch the Template prototype to proxy all render methods...
 
     Object.keys(Template.prototype).forEach(function(k) {
+        if (k === 'c') {
+            return;
+        }
+
         var v = Template.prototype[k];
 
         if (typeof v === 'function') {
@@ -45,17 +49,28 @@ exports.enable = function() {
     });
 
 
-    var oldLoad = runtime.load;
+    var oldCreateTemplate = runtime.c;
 
-    runtime.load = function hotReloadLoad(path) {
+    runtime.c = function hotReloadCreateTemplate(path) {
         if (!path) {
             throw new Error('Invalid path');
         }
-        var template = oldLoad.apply(runtime, arguments);
+
+        var templatePath = path;
+
+        if (typeof templatePath !== 'string') {
+            templatePath = path.path;
+        }
+
+        if (typeof templatePath === 'string') {
+            templatePath = templatePath.replace(/\.js$/, '');
+        }
+
+        var template = oldCreateTemplate.apply(runtime, arguments);
 
         // Store the current last modified with the template
         template.__hotReloadModifiedFlag = modifiedFlag;
-        template.__hotReloadPath = path;
+        template.__hotReloadPath = templatePath;
 
         return template;
     };
@@ -74,6 +89,7 @@ exports.handleFileModified = function(path) {
         console.log('[marko/hot-reload] File modified: ' + path);
 
         if (path.endsWith('.marko') || path.endsWith('.marko.html')) {
+            delete require.cache[path];
             delete require.cache[path + '.js'];
         }
 

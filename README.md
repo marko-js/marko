@@ -1,6 +1,6 @@
 Marko
 ================
-[![Build Status](https://travis-ci.org/raptorjs/marko.svg?branch=master)](https://travis-ci.org/raptorjs/marko) [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/raptorjs/marko.svg?branch=master)](https://travis-ci.org/raptorjs/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
 
 
@@ -28,6 +28,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 - [Another Templating Language?](#another-templating-language)
 - [Design Philosophy](#design-philosophy)
 - [Usage](#usage)
+	- [Template Loading](#template-loading)
 	- [Template Rendering](#template-rendering)
 		- [Callback API](#callback-api)
 		- [Streaming API](#streaming-api)
@@ -68,6 +69,24 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 	- [Custom Tags and Attributes](#custom-tags-and-attributes)
 	- [Async Taglib](#async-taglib)
 	- [Layout Taglib](#layout-taglib)
+- [API](#api)
+	- [require('marko')](#requiremarko)
+		- [Methods](#methods)
+			- [load(templatePath[, options]) : Template](#loadtemplatepath-options--template)
+			- [createWriter([stream]) : AsyncWriter](#createwriterstream--asyncwriter)
+			- [render(templatePath, templateData, stream.Writable)](#rendertemplatepath-templatedata-streamwritable)
+			- [render(templatePath, templateData, callback)](#rendertemplatepath-templatedata-callback)
+			- [stream(templatePath, templateData) : stream.Readable](#streamtemplatepath-templatedata--streamreadable)
+		- [Properties](#properties)
+			- [helpers](#helpers)
+			- [Template](#template)
+	- [Template](#template-1)
+		- [Methods](#methods-1)
+			- [renderSync(templateData) : String](#rendersynctemplatedata--string)
+			- [render(templateData, stream.Writable)](#rendertemplatedata-streamwritable)
+			- [render(templateData, AsyncWriter)](#rendertemplatedata-asyncwriter)
+			- [render(templateData, callback)](#rendertemplatedata-callback)
+			- [stream(templateData) : stream.Readable](#streamtemplatedata--streamreadable)
 - [Custom Taglibs](#custom-taglibs)
 	- [Tag Renderer](#tag-renderer)
 	- [marko-taglib.json](#marko-taglibjson)
@@ -125,8 +144,9 @@ Hello ${data.name}!
 The template can then be rendered as shown in the following sample code:
 
 ```javascript
-var templatePath = require.resolve('./hello.marko');
-var template = require('marko').load(templatePath);
+require('marko/node-require').install();
+
+var template = require('./hello.marko');
 
 template.render({
         name: 'World',
@@ -169,7 +189,7 @@ Hello World!
 The streaming API can be used to stream the output to an HTTP response stream or any other writable stream. For example, with Express:
 
 ```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 app.get('/profile', function(req, res) {
     template.stream({
@@ -185,15 +205,15 @@ Marko also supports custom tags so you can easily extend the HTML grammar to sup
 Welcome to Marko!
 
 <ui-tabs>
-    <ui-tab title="Home">
+    <ui-tabs.tab title="Home">
         Content for Home
-    </ui-tab>
-    <ui-tab title="Profile">
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Profile">
         Content for Profile
-    </ui-tab>
-    <ui-tab title="Messages">
+    </ui-tabs.tab>
+    <ui-tabs.tab title="Messages">
         Content for Messages
-    </ui-tab>
+    </ui-tabs.tab>
 </ui-tabs>
 ```
 
@@ -298,12 +318,38 @@ Finally, another distinguishing feature of Marko is that it supports _asynchrono
 
 # Usage
 
+## Template Loading
+
+Marko provides a custom Node.js require extension that allows Marko templates to be required just like a standard JavaScript module. For example:
+
+```javascript
+// The following line installs the Node.js require extension
+// for `.marko` files. Once installed, `*.marko` files can be
+// required just like any other JavaScript modules.
+require('marko/node-require').install();
+
+// ...
+
+// Load a Marko template by requiring a .marko file:
+var template = require('./template.marko');
+```
+
+_NOTE: The require extension only needs to be installed once, but it does not hurt if it is installed multiple times. For example, it is okay if the main app registers the require extension and an installed module also registers the require extension. The require extension will always resolve the proper `marko` module relative to the template being required so that there can still be multiple versions of marko in use for a single app._
+
+However, if you prefer to not rely on the require extension for Marko templates, the following code will work as well:
+
+```javascript
+var template = require('marko').load(require.resolve('./template.marko'));
+```
+
+A loaded Marko template has multiple methods for rendering the template as described in the next section.
+
 ## Template Rendering
 
 ### Callback API
 
 ```javascript
-var template = require('marko').load('template.marko');
+var template = require('./template.marko');
 
 template.render({
         name: 'Frank',
@@ -404,9 +450,7 @@ Given the following module code that will be used to render a template on the cl
 
 _run.js_:
 ```javascript
-
-var templatePath = require.resolve('./hello.marko');
-var template = require('marko').load(templatePath);
+var template = require('./hello.marko');
 
 templatePath.render({
         name: 'John'
@@ -1232,7 +1276,7 @@ It's also possible to pass helper functions to a template as part of the view mo
 
 
 ```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 template.render({
         reverse: function(str) {
@@ -1380,12 +1424,143 @@ _Usage of `default-layout.marko`:_
 
 For more details, please see [https://github.com/raptorjs/marko-layout](https://github.com/raptorjs/marko-layout).
 
-# Custom Taglibs
+# API
 
+## require('marko')
+
+### Methods
+
+#### load(templatePath[, options]) : Template
+
+Loads a template instance for the given template path.
+
+Example usage:
+
+```javascript
+var templatePath = require.resolve('./template.marko');
+var template = require('marko').load(templatePath);
+template.render({ name: 'Frank' }, process.stdout);
+```
+
+Supported `options`:
+
+- `buffer` (`boolean`) - If `true` (default) then rendered output will be buffered until `out.flush()` is called or until rendering is completed. Otherwise, the output will be written to the underlying stream as soon as it is produced.
+
+#### createWriter([stream]) : AsyncWriter
+
+Creates an instance of an [AsyncWriter](https://github.com/raptorjs/async-writer) instance that can be used to support asynchronous rendering.
+
+Example usage:
+
+```javascript
+var out = require('async-writer').create(process.stdout);
+out.write('Hello');
+
+var asyncOut = out.beginAsync();
+setTimeout(function() {
+	asyncOut.write('World')
+	asyncOut.end();
+}, 100);
+
+require('./template.marko').render({}, out);
+```
+
+#### render(templatePath, templateData, stream.Writable)
+
+Deprecated. Do not use.
+
+#### render(templatePath, templateData, callback)
+
+Deprecated. Do not use.
+
+#### stream(templatePath, templateData) : stream.Readable
+
+Deprecated. Do not use.
+
+### Properties
+
+#### helpers
+
+Global helpers passed to all templates. Available in compiled templates as the `__helpers` variable. It is not recommended to use this property to introduce global helpers (globals are evil).
+
+#### Template
+
+The `Template` type.
+
+## Template
+
+### Methods
+
+#### renderSync(templateData) : String
+
+Synchronously renders a template to a `String`.
+
+_NOTE: If `out.beginAsync()` is called during synchronous rendering an error will be thrown._
+
+Example usage:
+
+```javascript
+var template = require('./template.marko');
+var html = template.renderSync({ name: 'Frank' });
+console.log(html);
+```
+
+#### render(templateData, stream.Writable)
+
+Renders a template to a writable stream.
+
+Example usage:
+
+```javascript
+var template = require('./template.marko');
+template.render({ name: 'Frank' }, process.stdout);
+```
+
+#### render(templateData, AsyncWriter)
+
+Renders a template to an [AsyncWriter](https://github.com/raptorjs/async-writer) instance that wraps an underlying stream.
+
+Example usage:
+
+```javascript
+var template = require('./template.marko');
+var out = require('marko').createWriter(process.stdout);
+template.render({ name: 'Frank' }, out);
+```
+
+#### render(templateData, callback)
+
+Asynchronously renders a template and provides the output to the provided callback function.
+
+```javascript
+var template = require('./template.marko');
+template.render({ name: 'Frank' }, function(err, html, out) {
+	if (err) {
+		// Handel the error...
+	}
+
+	console.log(html);
+});
+```
+
+_NOTE: The `out` argument will rarely be used, but it will be a reference to the [AsyncWriter](https://github.com/raptorjs/async-writer) instance that was created to faciltate rendering of the template._
+
+#### stream(templateData) : stream.Readable
+
+Returns a readable stream that can be used to read the output of rendering a template.
+
+Example usage:
+
+```javascript
+var template = require('./template.marko');
+template.stream({ name: 'Frank' }).pipe(process.stdout);
+```
+
+# Custom Taglibs
 
 ## Tag Renderer
 
-Every tag should be mapped to an object with a "render" function. The render function is just a function that takes two arguments: `input` and `out`. The `input` argument is an arbitrary object that contains the input data for the renderer. The `out` argument is an [asynchronous writer](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to an object with a `render(input, out)` function. The render function is just a function that takes two arguments: `input` and `out`. The `input` argument is an arbitrary object that contains the input data for the renderer. The `out` argument is an [asynchronous writer](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
 exports.render = function(input, out) {
@@ -1573,7 +1748,7 @@ This allows a `tabs` to be provided using nested `<ui-tabs.tab>` tags or the tab
 ___ui-tabs/renderer.js___
 
 ```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 exports.renderer = function(input, out) {
     var tabs = input.tabs;
@@ -1662,7 +1837,7 @@ ___ui-overlay/marko-tag.json___
 The renderer for the `<ui-overlay>` tag will be similar to the following:
 
 ```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 exports.renderer = function(input, out) {
     var header = input.header;
@@ -1746,7 +1921,7 @@ __Question:__ _How can Marko be used with Express?_
 __Answer__: The recommended way to use Marko with Express is to bypass the Express view engine and instead have Marko render directly to the response stream as shown in the following code:
 
 ```javascript
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 app.get('/profile', function(req, res) {
     template
@@ -1761,7 +1936,7 @@ With this approach, you can benefit from streaming and there is no middleman (le
 Alternatively, you can use the streaming API to produce an intermediate stream that can then be piped to the response stream as shown below:
 
 ```javascript
-var template = require('view-engine').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 app.get('/profile', function(req, res) {
     template.stream({
@@ -1813,7 +1988,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Discuss
 
-Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
 

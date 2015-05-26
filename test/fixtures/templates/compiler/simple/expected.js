@@ -1,4 +1,4 @@
-exports.create = function(__helpers) {
+function create(__helpers) {
   var str = __helpers.s,
       empty = __helpers.e,
       notEmpty = __helpers.ne;
@@ -7,3 +7,4 @@ exports.create = function(__helpers) {
     out.w('Hello John');
   };
 }
+(module.exports = require("marko").c(__filename)).c(create);
