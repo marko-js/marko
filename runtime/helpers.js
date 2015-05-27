@@ -1,3 +1,4 @@
+'use strict';
 var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./'); // Circular dependnecy, but that is okay
