@@ -1,8 +1,9 @@
 var fs = require('fs');
 var jsonminify = require('jsonminify');
+var fsReadOptions = { encoding: 'utf8' };
 
 exports.readTaglib = function (path) {
-    var json = fs.readFileSync(path, 'utf8');
+    var json = fs.readFileSync(path, fsReadOptions);
 
     try {
         var taglibProps = JSON.parse(jsonminify(json));
