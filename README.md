@@ -369,7 +369,7 @@ template.render({
 
 ```javascript
 var template = require('marko').load('template.marko');
-var out = require('fs').createWriteStream('index.html', 'utf8');
+var out = require('fs').createWriteStream('index.html', {encoding: 'utf8'});
 
 // Render the template to 'index.html'
 template.stream({
@@ -383,7 +383,7 @@ Alternatively, you can render directly to an existing stream to avoid creating a
 
 ```javascript
 var template = require('marko').load('template.marko');
-var out = require('fs').createWriteStream('index.html', 'utf8');
+var out = require('fs').createWriteStream('index.html', {encoding: 'utf8'});
 
 // Render the template to 'index.html'
 template.render({
@@ -414,7 +414,7 @@ var fs = require('fs');
 var marko = require('marko');
 var template = marko.load('template.marko');
 
-var out = marko.createWriter(fs.createWriteStream('index.html', 'utf8'));
+var out = marko.createWriter(fs.createWriteStream('index.html', {encoding: 'utf8'}));
 
 // Render the first chunk asynchronously (after 1s delay):
 var asyncOut = out.beginAsync();
