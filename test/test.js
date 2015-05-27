@@ -6,6 +6,8 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 
+var fsReadOptions = { encoding: 'utf8' };
+
 describe('async-writer' , function() {
 
     beforeEach(function(done) {
@@ -214,17 +216,18 @@ describe('async-writer' , function() {
             .end();
     });
 
-    it('should support writing to a through stream', function(done) {
+    it('should support writing to a through2 stream', function(done) {
 
         var output = '';
-        var through = require('through')(
-            function write(data) {
+        var through2 = require('through2')(
+            function write(data, encoding, callback) {
                 output += data;
+                callback(null, data);
             }
         );
 
         var errors = [];
-        var out = require('../').create(through)
+        var out = require('../').create(through2)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -245,13 +248,45 @@ describe('async-writer' , function() {
             .end();
     });
 
+    it('should support writing to a through stream', function(done) {
+
+        var output = '';
+        var through = require('through')(
+            function write(data) {
+                output += data;
+                this.queue(data);
+            }
+        );
+
+        var errors = [];
+        var out = require('../').create(through)
+            .on('error', function(e) {
+                errors.push(e);
+            })
+            .on('end', function() {
+                expect(errors.length).to.equal(0);
+                expect(output).to.equal('123');
+                done();
+            })
+            .write('1');
+
+        var asyncOut = out.beginAsync();
+        setTimeout(function() {
+            asyncOut.write('2');
+            asyncOut.end();
+        }, 10);
+
+        out.write('3')
+            .end();
+    });
+
     it('should support writing to a file output stream', function(done) {
 
         var outFile = nodePath.join(__dirname, 'test.out');
-        var out = fs.createWriteStream(outFile, 'utf8');
+        var out = fs.createWriteStream(outFile, fsReadOptions);
 
         out.on('close', function() {
-            var output  = fs.readFileSync(outFile, 'utf8');
+            var output  = fs.readFileSync(outFile, fsReadOptions);
             expect(errors.length).to.equal(0);
             expect(output).to.equal('123');
             fs.unlinkSync(outFile);
@@ -284,7 +319,7 @@ describe('async-writer' , function() {
 
         var asyncOut = out.beginAsync();
 
-        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), fsReadOptions);
         helloReadStream.pipe(asyncOut);
 
         out.write('2');
@@ -319,12 +354,12 @@ describe('async-writer' , function() {
 
         var asyncOut = out.beginAsync();
 
-        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), 'utf8');
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), fsReadOptions);
         helloReadStream.pipe(asyncOut);
 
         out.write('2');
 
-        out.on('finish', function() {
+        out.on('end', function() {
             expect(outStr).to.equal('1Hello World2');
             done();
         });
