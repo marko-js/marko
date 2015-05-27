@@ -65,7 +65,7 @@ describe('marko/api' , function() {
 
         var out = marko.createWriter(stream);
         out
-            .on('finish', function() {
+            .on('end', function() {
                 expect(output).to.equal('Hello John!');
                 done();
             })
@@ -151,7 +151,7 @@ describe('marko/api' , function() {
         });
 
         var out = marko.createWriter(stream)
-            .on('finish', function() {
+            .on('end', function() {
                 expect(output).to.equal('Hello John!');
                 done();
             })
