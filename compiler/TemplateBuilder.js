@@ -491,6 +491,9 @@ TemplateBuilder.prototype = {
         } else {
             params = ['out'];
         }
+
+        out.append('"use strict";\n');
+
         out.append('function create(__helpers) {\n');
         //Write out the static variables
         this.writer.flush();
