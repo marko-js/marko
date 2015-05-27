@@ -1,4 +1,3 @@
-"use strict";
 function create(__helpers) {
   var str = __helpers.s,
       empty = __helpers.e,

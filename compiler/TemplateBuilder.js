@@ -492,7 +492,9 @@ TemplateBuilder.prototype = {
             params = ['out'];
         }
 
-        out.append('"use strict";\n');
+        // Don't use "use strict" in compiled templates since it
+        // could break backwards compatibility.
+        // out.append('"use strict";\n');
 
         out.append('function create(__helpers) {\n');
         //Write out the static variables
