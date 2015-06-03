@@ -147,6 +147,31 @@ describe('widget re-render' , function() {
         // // State didn't change for button2 so it should be the same el
         expect(newButton2El !== oldButton2El).to.equal(true);
     });
+
+    it('should reinitialize children first when doing a rerender', function() {
+        window.rerenderInitOrder = [];
+
+        var widget = require('../fixtures/components/app-rerender-init-order')
+            .render({
+                version: 0
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+
+        expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);
+
+        window.rerenderInitOrder = [];
+
+        require('marko-widgets').batchUpdate(function() {
+            widget.setState('version', 1);
+        });
+
+        // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
+        expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);
+
+
+    });
 });
 
 
