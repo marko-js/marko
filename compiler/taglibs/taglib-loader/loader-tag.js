@@ -364,6 +364,11 @@ TagHandlers.prototype = {
             nestedTag.name = nestedTagName;
             tag.addNestedTag(nestedTag);
         });
+    },
+    escapeXmlBody: function(value) {
+        if (value === false) {
+            this.tag.escapeXmlBody = false;
+        }
     }
 };
 

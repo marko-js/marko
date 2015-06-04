@@ -24,7 +24,8 @@
             "transformer": "./html-tag-transformer"
         },
         "html-comment": {
-            "renderer": "./CommentTag"
+            "renderer": "./CommentTag",
+            "escape-xml-body": false
         }
     }
 }
