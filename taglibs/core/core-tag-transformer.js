@@ -273,6 +273,10 @@ module.exports = function transform(node, compiler, template) {
             node.setPreserveWhitespace(true);
         }
 
+        if (tag.escapeXmlBody === false) {
+            node.setEscapeXmlBodyText(false);
+        }
+
         if (tag.renderer || tag.isNestedTag) {
             shouldRemoveAttr = false;
 
