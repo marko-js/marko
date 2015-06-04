@@ -7,7 +7,7 @@ CHANGELOG
 
 ### Breaking changes
 
-- `Widget.prototype.render = function(input, out) { ... }` is no longer allowed. Use `Widget.prototype.rerender = function(input, out) { ... }` or `defineComponent(...)` instead (recommended).
+- `Widget.prototype.render = function(input, out) { ... }` is no longer allowed. Use `Widget.prototype.renderer = function(input, out) { ... }` or `defineComponent(...)` instead (recommended).
 - NOTE: `this.widgets.foo` has been removed since `marko-widgets@^3`
 
 ### New features
