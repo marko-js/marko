@@ -3,6 +3,7 @@ var fs = require('fs');
 var jsonminify = require('jsonminify');
 var tagDefFromCode = require('./tag-def-from-code');
 var loader = require('./loader');
+var fsReadOptions = { encoding: 'utf8' };
 
 function createDefaultTagDef() {
     return {
@@ -62,7 +63,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         if (fs.existsSync(tagFile)) {
             // marko-tag.json exists in the directory, use that as the tag definition
-            tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, {encoding: 'utf8'})));
+            tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
             if (!tagDef.renderer && !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;
@@ -95,7 +96,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
                     exTemplateFile = templateFile + ".html";
                 }
                 if(exTemplateFile){
-                    var templateCode = fs.readFileSync(exTemplateFile, {encoding: 'utf8'});
+                    var templateCode = fs.readFileSync(exTemplateFile, fsReadOptions);
                     tagDef = tagDefFromCode.extractTagDef(templateCode);
                     if (!tagDef) {
                         tagDef = createDefaultTagDef();
@@ -106,7 +107,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             }
 
             if (rendererJSFile) {
-                var rendererCode = fs.readFileSync(rendererJSFile, {encoding: 'utf8'});
+                var rendererCode = fs.readFileSync(rendererJSFile, fsReadOptions);
                 tagDef = tagDefFromCode.extractTagDef(rendererCode);
                 if (!tagDef) {
                      tagDef = createDefaultTagDef();

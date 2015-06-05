@@ -3,6 +3,7 @@ var fs = require('fs');
 var Module = require('module').Module;
 var markoCompiler = require('../compiler');
 var cwd = process.cwd();
+var fsReadOptions = {encoding: 'utf8'};
 
 if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
     require('../hot-reload').enable();
@@ -42,14 +43,14 @@ module.exports = function load(templatePath) {
         return require(targetFile);
     }
 
-	var templateSrc = fs.readFileSync(templatePath, {encoding: 'utf8'});
+	var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
 	var compiledSrc = compiler.compile(templateSrc);
 
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
     var filename = nodePath.basename(targetFile);
     var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
-    fs.writeFileSync(tempFile, compiledSrc, {encoding: 'utf8'});
+    fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
     fs.renameSync(tempFile, targetFile);
 
     return require(targetFile);

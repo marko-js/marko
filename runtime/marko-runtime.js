@@ -25,7 +25,7 @@
 // async-writer provides all of the magic to support asynchronous
 // rendering to a stream
 
-
+'use strict';
 /**
  * Method is for internal usage only. This method
  * is invoked by code in a compiled Marko template and
@@ -35,6 +35,8 @@
 exports.c = function createTemplate(path) {
     return new Template(path);
 };
+
+var BUFFER_OPTIONS = { buffer: true };
 
 var asyncWriter = require('async-writer');
 
@@ -67,10 +69,25 @@ if (streamPath) {
     stream = require(streamPath);
 }
 
+function renderCallback(renderFunc, data, globalData, callback) {
+    var out = new AsyncWriter();
+    if (globalData) {
+        extend(out.global, globalData);
+    }
+
+    renderFunc(data, out);
+    return out.end()
+        .on('finish', function() {
+            callback(null, out.getOutput(), out);
+        })
+        .once('error', callback);
+}
+
 function Template(path, func, options) {
     this.path = path;
     this._ = func;
-    this.buffer = !options || options.buffer !== false;
+    this._options = !options || options.buffer !== false ?
+        BUFFER_OPTIONS : null;
 }
 
 Template.prototype = {
@@ -96,67 +113,83 @@ Template.prototype = {
         }
 
         this._(data, out);
-        out.end();
         return out.getOutput();
     },
+
     /**
      * Renders a template to either a stream (if the last
      * argument is a Stream instance) or
      * provides the output to a callback function (if the last
      * argument is a Function).
      *
+     * Supported signatures:
+     *
+     * render(data, callback)
+     * render(data, out)
+     * render(data, stream)
+     * render(data, out, callback)
+     * render(data, stream, callback)
+     *
      * @param  {Object} data The view model data for the template
      * @param  {AsyncWriter} out A Stream or an AsyncWriter instance
      * @param  {Function} callback A callback function
      * @return {AsyncWriter} Returns the AsyncWriter instance that the template is rendered to
      */
-    render: function(data, out) {
+    render: function(data, out, callback) {
+        var renderFunc = this._;
+        var finalData;
+        var globalData;
+        if (data) {
+            finalData = data;
+
+            if ((globalData = data.$global)) {
+                // We will *move* the "$global" property
+                // into the "out.global" object
+                delete data.$global;
+            }
+        } else {
+            finalData = {};
+        }
+
+        if (typeof out === 'function') {
+            // Short circuit for render(data, callback)
+            return renderCallback(renderFunc, finalData, globalData, out);
+        }
+
         // NOTE: We create new vars here to avoid a V8 de-optimization due
         //       to the following:
         //       Assignment to parameter in arguments object
         var finalOut = out;
-        var finalData = data || {};
-
-        var renderFunc = this._;
-
-        // callback is last argument if provided
-        var callback = arguments[arguments.length - 1];
 
         var shouldEnd = false;
 
-        if (typeof callback === 'function') {
-            if (arguments.length === 2) {
-                // render called with data and callback,
-                // we need to create the "out"
-                finalOut = null;
-            }
-
+        if (arguments.length === 3) {
+            // render(data, out, callback)
             if (!finalOut || !finalOut.isAsyncWriter) {
                 finalOut = new AsyncWriter(finalOut);
                 shouldEnd = true;
             }
 
-            finalOut.on('finish', function() {
-                callback(null, finalOut.getOutput(), finalOut);
-            });
-
-            finalOut.once('error', callback);
+            finalOut
+                .on('finish', function() {
+                    callback(null, finalOut.getOutput(), finalOut);
+                })
+                .once('error', callback);
         } else if (!finalOut || !finalOut.isAsyncWriter) {
-            var stream = finalOut;
             // Assume the "finalOut" is really a stream
             //
             // By default, we will buffer rendering to a stream to prevent
             // the response from being "too chunky".
-            var options = this.buffer ? { buffer: true } : null;
-            finalOut = asyncWriter.create(stream, options);
+            finalOut = asyncWriter.create(finalOut, this._options);
             shouldEnd = true;
         }
 
-        if (finalData.$global) {
-            finalOut.global = extend(finalOut.global, finalData.$global);
-            delete finalData.$global;
+        if (globalData) {
+            extend(out.global, globalData);
         }
 
+        // Invoke the compiled template's render function to have it
+        // write out strings to the provided out.
         renderFunc(finalData, finalOut);
 
         // Automatically end output stream (the writer) if we
@@ -167,27 +200,23 @@ Template.prototype = {
         // If out parameter was originally an AsyncWriter then
         // we assume that we are writing to output that was
         // created in the context of another rendering job.
-        if (shouldEnd) {
-            finalOut.end();
-        }
-
-        return finalOut;
+        return shouldEnd ? finalOut.end() : finalOut;
     },
     stream: function(data) {
         if (!stream) {
             throw new Error('Module not found: stream');
         }
 
-        return new Readable(this, data, this.buffer);
+        return new Readable(this, data, this._options);
     }
 };
 
 if (stream) {
-    Readable = function(template, data, buffer) {
+    Readable = function(template, data, options) {
         Readable.$super.call(this);
         this._t = template;
         this._d = data;
-        this._buffer = buffer;
+        this._options = options;
         this._rendered = false;
     };
 
@@ -210,7 +239,7 @@ if (stream) {
             var template = this._t;
             var data = this._d;
 
-            var out = asyncWriter.create(this, this._buffer ? { buffer: true } : null);
+            var out = asyncWriter.create(this, this._options);
             template.render(data, out);
             out.end();
         }

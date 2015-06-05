@@ -5,6 +5,16 @@ Changelog
 
 ## 2.5.x
 
+### 2.6.0
+
+- Performance improvements
+    - `'use strict';`
+    - Optimized render code paths
+- Code cleanup
+- Compatibility fixes for Node.js 0.12
+    - Bad: `fs.readFile(path, 'utf8')`
+    - Good: `fs.readFile(path, {encoding: 'utf8'})`
+
 ### 2.5.0
 
 - Fixes #78 - Custom Node.js require extension for Marko template files. Example usage:
