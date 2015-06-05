@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-function CommentNode(comment, escapeXml) {
+function CommentNode(comment) {
     CommentNode.$super.call(this, 'comment');
     this.comment = comment;
 }
