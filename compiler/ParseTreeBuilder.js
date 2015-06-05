@@ -17,9 +17,15 @@
 
 var TextNode = require('./TextNode');
 var ElementNode = require('./ElementNode');
+var CommentNode = require('./CommentNode');
 var charProps = require('char-props');
 
+var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
+// IE conditional comment format: <!--[if expression]> HTML <![endif]-->;
 
+function isIEConditionalComment(comment) {
+    return ieConditionalCommentRegExp.test(comment);
+}
 
 function Pos(filePath, line, column) {
     this.filePath = filePath;
@@ -51,6 +57,11 @@ var COMPILER_ATTRIBUTE_HANDLERS = {
     'whitespace': function(attr, compilerOptions) {
         if (attr.value === 'preserve') {
             compilerOptions.preserveWhitespace = true;
+        }
+    },
+    'comments': function(attr, compilerOptions) {
+        if (attr.value === 'preserve') {
+            compilerOptions.preserveComments = true;
         }
     }
 };
@@ -192,6 +203,17 @@ ParseTreeBuilder.prototype = {
         this.prevTextNode = null;
         this.parentNode = this.parentNode.parentNode;
         this.nsStack.pop();
+    },
+
+    handleComment: function(comment) {
+        var compilerOptions = this.compilerOptions;
+        var preserveComment = (compilerOptions && compilerOptions.preserveComments === true) ||
+            isIEConditionalComment(comment);
+
+        if (preserveComment) {
+            var commentNode = new CommentNode(comment);
+            this.parentNode.appendChild(commentNode);
+        }
     },
 
     getRootNode: function () {

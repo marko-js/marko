@@ -91,6 +91,9 @@ ParseTreeBuilderHtml.prototype = {
             },
             onclosetag: function(name){
                 _this.handleEndElement(name);
+            },
+            oncomment: function(comment) {
+                _this.handleComment(comment);
             }
         }, parserOptions);
         parser.write(src);
