@@ -3,7 +3,29 @@ Changelog
 
 # 2.x
 
-## 2.5.x
+## 2.7.x
+
+### 2.7.0
+
+- Fixes [#27](https://github.com/raptorjs/marko/issues/27) - IE conditional comments (e.g., `<!--[if lt IE 9]><div><![endif]-->`) are automatically preserved. Previously, all HTML comments were stripped out when loading a template. For example:
+- Added support for `<compiler-options comments="preserve"/>` to enable comments to preserved in a template. For example:
+
+```xml
+<compiler-options comments="preserve"/>
+Hello
+<!--This comment should be preserved-->
+World
+```
+
+Output:
+
+```xml
+Hello
+<!--This comment should be preserved-->
+World
+```
+
+## 2.6.x
 
 ### 2.6.0
 
@@ -14,6 +36,8 @@ Changelog
 - Compatibility fixes for Node.js 0.12
     - Bad: `fs.readFile(path, 'utf8')`
     - Good: `fs.readFile(path, {encoding: 'utf8'})`
+
+## 2.5.x
 
 ### 2.5.0
 
