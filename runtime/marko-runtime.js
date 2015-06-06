@@ -185,7 +185,7 @@ Template.prototype = {
         }
 
         if (globalData) {
-            extend(out.global, globalData);
+            extend(finalOut.global, globalData);
         }
 
         // Invoke the compiled template's render function to have it
