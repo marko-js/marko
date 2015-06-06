@@ -294,4 +294,46 @@ describe('marko/api' , function() {
             });
     });
 
+    it('should allow global data with callback-style render', function(done) {
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/global-data.marko'));
+        template.render({
+                $global: {
+                    foo: 'bar'
+                }
+            },
+            function(err, output) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(output).to.equal('bar');
+                done();
+            });
+    });
+
+    it('should allow global data with render to writable stream', function(done) {
+        var output = '';
+
+        var stream = through(function write(data) {
+            output += data;
+        });
+
+        stream.on('end', function() {
+                expect(output).to.equal('bar');
+                done();
+            })
+            .on('error', function(e) {
+                done(e);
+            });
+
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/global-data.marko'));
+        template.render(
+            {
+                $global: {
+                    foo: 'bar'
+                }
+            },
+            stream);
+    });
+
 });
