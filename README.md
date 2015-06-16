@@ -581,6 +581,10 @@ exports.create=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.
 
 _File size: 189 bytes gzipped (251 bytes uncompressed)_
 
+## Hot reloading templates
+
+During development it is very beneficial to not have to restart the server in order for changes to already loaded templates to be reflected. Marko supports hot reloading of templates on the server, but this feature must be explicitly enabled. Enabling hot reloading is documented as part of the following sample app: [marko-js-samples/marko-hot-reload](https://github.com/marko-js-samples/marko-hot-reload)
+
 # Language Guide
 
 ## Template Directives Overview
