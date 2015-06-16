@@ -39,6 +39,7 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 		- [Using Browserify](#using-browserify)
 	- [Template Compilation](#template-compilation)
 		- [Sample Compiled Template](#sample-compiled-template)
+	- [Hot reloading templates](#hot-reloading-templates)
 - [Language Guide](#language-guide)
 	- [Template Directives Overview](#template-directives-overview)
 	- [Text Replacement](#text-replacement)
