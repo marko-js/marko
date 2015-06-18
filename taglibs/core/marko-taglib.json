@@ -1,4 +1,5 @@
 {
+    "taglib-id": "marko-core",
     "tags": {
         "c-template": {
             "attributes": {

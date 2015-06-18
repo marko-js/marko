@@ -1,4 +1,5 @@
 {
+    "taglib-id": "marko-caching",
     "tags": {
         "cached-fragment": {
             "renderer": "./cached-fragment-tag",

@@ -1,0 +1,6 @@
+{
+    "taglib-id": "taglib-duplicate",
+    "<duplicate-bar>": {
+        "renderer": "./bar-renderer.js"
+    }
+}

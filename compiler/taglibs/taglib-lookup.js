@@ -20,8 +20,12 @@ function buildLookup(dirname) {
 	var lookup = lookupCache[lookupCacheKey];
 	if (lookup === undefined) {
 		lookup = new TaglibLookup();
-
-        for (var i=taglibs.length-1; i>=0; i--) {
+		// The taglibs "closer" to the template will be earlier in the list
+		// and the taglibs "farther" from the template will be later. We
+		// want closer taglibs to take precedence (especially when de-duping)
+		// so we loop from beginning to end. We used to loop from the end
+		// to the beginning, but that appears to have been a mistake.
+        for (var i=0; i<taglibs.length; i++) {
 			var taglib = taglibs[i];
 			lookup.addTaglib(taglib);
 

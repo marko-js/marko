@@ -33,7 +33,7 @@ function handleTag(taglibHandlers, tagName, path) {
 
         tagDirname = nodePath.dirname(path);
         if (!exists(path)) {
-            throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.id);
+            throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.path);
         }
 
         try {
@@ -44,7 +44,7 @@ function handleTag(taglibHandlers, tagName, path) {
     } else {
         tagDirname = dirname; // Tag is in the same taglib file
         tagObject = path;
-        path = '<' + tagName + '> tag in ' + taglib.id;
+        path = '<' + tagName + '> tag in ' + taglib.path;
     }
 
 
@@ -207,6 +207,20 @@ TaglibHandlers.prototype = {
         ok(transformer.path, '"path" is required for transformer');
 
         taglib.addTextTransformer(transformer);
+    },
+
+    /**
+     * Allows an ID to be explicitly assigned to a taglib.
+     * The taglib ID is used to prevent the same taglib  (even if different versions)
+     * from being loaded multiple times.
+     *
+     * NOTE: Introduced as part of fix for #73
+     *
+     * @param  {String} value The taglib ID
+     */
+    taglibId: function(value) {
+        var taglib = this.taglib;
+        taglib.id = value;
     }
 };
 
@@ -242,6 +256,32 @@ exports.loadTaglib = function(path) {
 
     propertyHandlers(taglibProps, taglibHandlers, path);
 
-    taglib.id = taglib.path = path;
+    taglib.path = path;
+
+    if (!taglib.id) {
+        // Fixes #73
+        // See if there is a package.json in the same directory as the taglib file.
+        // If so, and if that package.json file has a "name" property then we will
+        // use the the name as the "taglib ID". The taglib ID is used to uniquely
+        // identity a taglib (ignoring version) and it is used to prevent the same
+        // taglib from being loaded multiple times.
+        //
+        // Using the file path as the taglib ID doesn't work so well since we might find
+        // the same taglib multiple times in the Node.js module search path with
+        // different paths.
+        var dirname = nodePath.dirname(path);
+        var packageJsonPath = nodePath.join(dirname, 'package.json');
+
+
+        try {
+            var pkg = require(packageJsonPath);
+            taglib.id = pkg.name;
+        } catch(e) {}
+
+        if (!taglib.id) {
+            taglib.id = path;
+        }
+    }
+
     return taglib;
 };
