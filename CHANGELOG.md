@@ -5,6 +5,14 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.2
+
+- Fixes #73 - Prevent same taglib from being loaded multiple times
+
+### 2.7.1
+
+- Fixes #88 - Assign global data to the correct out
+
 ### 2.7.0
 
 - Fixes [#27](https://github.com/raptorjs/marko/issues/27) - IE conditional comments (e.g., `<!--[if lt IE 9]><div><![endif]-->`) are automatically preserved. Previously, all HTML comments were stripped out when loading a template. For example:
