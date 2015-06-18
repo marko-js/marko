@@ -1,0 +1,6 @@
+{
+    "taglib-id": "taglib-duplicate",
+    "<duplicate-foo>": {
+        "renderer": "./foo-renderer.js"
+    }
+}

@@ -1,4 +1,5 @@
 {
+    "taglib-id": "marko-html",
     "tags": {
         "html": {
             "attributes": {

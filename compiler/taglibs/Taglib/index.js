@@ -18,9 +18,9 @@
 var forEachEntry = require('raptor-util').forEachEntry;
 var ok = require('assert').ok;
 
-function Taglib(id) {
-    ok(id, '"id" expected');
-    this.id = id;
+function Taglib(path) {
+    ok(path, '"path" expected');
+    this.path = path;
     this.dirname = null;
     this.tags = {};
     this.textTransformers = [];
