@@ -412,7 +412,7 @@ module.exports = require('marko-widgets').defineComponent({
 		};
 	},
 
-	getWidgetBody: function(input) {
+	getInitialBody: function(input) {
 		return input.message || input.renderBody;
     },
 
