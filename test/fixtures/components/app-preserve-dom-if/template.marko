@@ -1,0 +1,34 @@
+<div w-bind>
+    <h1>Preserve Begin</h1>
+    <span w-id="preserve" w-preserve-if="data.preserveCondition">
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <span w-id="preserveBody" w-preserve-body-if="data.preserveCondition">
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <app-hello w-id="hello" name="Frank" w-preserve-if="data.preserveCondition"/>
+
+    <!-- Test without an ID -->
+
+    <span class="preserve" w-preserve-if="data.preserveCondition">
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <span class="preserve-body" w-preserve-body-if="data.preserveCondition">
+        <div>red</div>
+        <div>green</div>
+        <div>blue</div>
+    </span>
+
+    <app-hello class="app-hello-no-id" name="Frank" w-preserve-if="data.preserveCondition"/>
+
+    <h1>Preserve End</h1>
+</div>

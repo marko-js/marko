@@ -22,7 +22,10 @@ exports.process =function (node, compiler, template) {
     var transformHelper = new TransformHelper(node, compiler, template);
     var nodeProps = transformHelper.nodeProps;
 
-    if (nodeProps['w-preserve'] != null || nodeProps['w-preserve-body'] != null) {
+    if (nodeProps['w-preserve'] != null ||
+        nodeProps['w-preserve-body'] != null ||
+        nodeProps['w-preserve-if'] != null ||
+        nodeProps['w-preserve-body-if'] != null) {
         transformHelper.handleWidgetPreserve();
     }
 

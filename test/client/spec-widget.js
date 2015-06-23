@@ -143,6 +143,15 @@ describe('widget' , function() {
         preserveDomWidget.testPreserveDOM();
     });
 
+    it('should conditionally preserve DOM elements correctly', function() {
+        var preserveDomWidget = require('../fixtures/components/app-preserve-dom-if')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        preserveDomWidget.testPreserveDOM();
+    });
+
     it('should reuse widgets', function() {
         var widget = require('../fixtures/components/app-stateful-reuse-widgets')
             .render({})

@@ -13,23 +13,25 @@ module.exports = function render(input, out) {
         // If so, then reuse the existing DOM node instead of re-rendering
         // the children. We have to put a placeholder node that will get
         // replaced out if we find that the DOM node has already been rendered
+        var condition = input['if'];
+        if (condition !== false) {
+            var existingEl = document.getElementById(id);
+            if (existingEl) {
+                var widgetsContext = widgets.getWidgetsContext(out);
+                var bodyOnly = input.bodyOnly === true;
 
-        var existingEl = document.getElementById(id);
-        if (existingEl) {
-            var widgetsContext = widgets.getWidgetsContext(out);
-            var bodyOnly = input.bodyOnly === true;
+                if (!bodyOnly) {
 
-            if (!bodyOnly) {
+                    // If we are preserving the entire DOM node (not just the body)
+                    // then that means that we have need to render a placeholder to
+                    // mark the target location. We can then replace the placeholder
+                    // node with the existing DOM node
+                    out.write('<span id="' + id + '"></span>');
+                }
 
-                // If we are preserving the entire DOM node (not just the body)
-                // then that means that we have need to render a placeholder to
-                // mark the target location. We can then replace the placeholder
-                // node with the existing DOM node
-                out.write('<span id="' + id + '"></span>');
+                widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
+                return;
             }
-
-            widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
-            return;
         }
     }
 

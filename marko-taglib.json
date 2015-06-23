@@ -57,6 +57,14 @@
                 "w-preserve-body": {
                     "type": "custom",
                     "preserve-name": true
+                },
+                "w-preserve-if": {
+                    "type": "expression",
+                    "preserve-name": true
+                },
+                "w-preserve-body-if": {
+                    "type": "expression",
+                    "preserve-name": true
                 }
             },
             "transformer": "./taglib/widgets-transformer.js"
@@ -99,7 +107,8 @@
         "w-preserve": {
             "renderer": "./taglib/preserve-tag.js",
             "attributes": {
-                "id": "string"
+                "id": "string",
+                "if": "expression"
             }
         },
         "w-register-widget": {

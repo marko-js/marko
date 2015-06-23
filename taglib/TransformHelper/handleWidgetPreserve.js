@@ -1,4 +1,4 @@
-function addPreserve(transformHelper, bodyOnly) {
+function addPreserve(transformHelper, bodyOnly, condition) {
     var template = transformHelper.template;
     var compiler = transformHelper.compiler;
     var node = transformHelper.node;
@@ -8,6 +8,10 @@ function addPreserve(transformHelper, bodyOnly) {
 
     if (bodyOnly) {
         preserveNode.setProperty('bodyOnly', template.makeExpression(bodyOnly));
+    }
+
+    if (condition) {
+        preserveNode.setProperty('if', template.makeExpression(condition));
     }
 
     var nextVarId = template.data.nextWidgetPreserveId;
@@ -56,9 +60,21 @@ module.exports = function handleWidgetPreserve() {
         addPreserve(this, false);
     }
 
+    var widgetPreserveIf;
+    if ((widgetPreserveIf = props['w-preserve-if']) != null) {
+        node.removeProperty('w-preserve-if');
+        addPreserve(this, false, widgetPreserveIf);
+    }
+
     var widgetPreserveBody;
     if ((widgetPreserveBody = props['w-preserve-body']) != null) {
         node.removeProperty('w-preserve-body');
         addPreserve(this, true);
+    }
+
+    var widgetPreserveBodyIf;
+    if ((widgetPreserveBodyIf = props['w-preserve-body-if']) != null) {
+        node.removeProperty('w-preserve-body-if');
+        addPreserve(this, true, widgetPreserveBodyIf);
     }
 };

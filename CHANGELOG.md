@@ -165,6 +165,20 @@ exports.renderer = function(input, out) {
 
 # 4.x
 
+## 4.1.x
+
+### 4.1.0
+
+- Added support `w-preserve-if` and `w-preserve-body-if`. These new attributes allow DOM elements to be conditionally preserved. The right-hand side of the attribute should a JavaScript expression. If the expression evaluates to `false` then the elements will _not_ be preserved. Example usage:
+
+```xml
+<div w-bind>
+    <!-- Don't rerender the search results if no search results are provided -->
+    <app-search-results items="data.searchResults"
+        w-preserve-if="data.searchResults == null"/>
+</div>
+```
+
 ## 4.0.x
 
 ### 4.0.1
