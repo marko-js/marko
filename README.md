@@ -465,7 +465,8 @@ Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`
 		the outer HTML div tag will be re-rendered.
 	</div>
 
-	Don't rerender the search results if no search results are provided -->
+	Don't rerender the search results if no search results
+	are provided.
 	<app-search-results items="data.searchResults"
 		w-preserve-if="data.searchResults == null"/>
 </div>
