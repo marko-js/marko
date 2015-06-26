@@ -369,7 +369,7 @@ template.render({
 ### Streaming API
 
 ```javascript
-var template = require('marko').load('template.marko');
+var template = require('./template.marko');
 var out = require('fs').createWriteStream('index.html', {encoding: 'utf8'});
 
 // Render the template to 'index.html'
@@ -383,7 +383,7 @@ template.stream({
 Alternatively, you can render directly to an existing stream to avoid creating an intermediate stream:
 
 ```javascript
-var template = require('marko').load('template.marko');
+var template = require('./template.marko');
 var out = require('fs').createWriteStream('index.html', {encoding: 'utf8'});
 
 // Render the template to 'index.html'
@@ -399,7 +399,7 @@ _NOTE:_ This will end the target output stream.
 If you know that your template rendering requires no asynchronous rendering then you can use the synchronous API to render a template to a String:
 
 ```javascript
-var template = require('marko').load('template.marko');
+var template = require('./template.marko');
 
 var output = template.renderSync({
         name: 'Frank',
@@ -412,8 +412,7 @@ console.log('Output HTML: ' + output);
 
 ```javascript
 var fs = require('fs');
-var marko = require('marko');
-var template = marko.load('template.marko');
+var template = require('./template.marko');
 
 var out = marko.createWriter(fs.createWriteStream('index.html', {encoding: 'utf8'}));
 
@@ -1443,7 +1442,7 @@ Example usage:
 
 ```javascript
 var templatePath = require.resolve('./template.marko');
-var template = require('marko').load(templatePath);
+var template = require('marko')require('marko')(templatePath);
 template.render({ name: 'Frank' }, process.stdout);
 ```
 
