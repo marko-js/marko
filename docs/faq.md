@@ -4,20 +4,29 @@ FAQ - Marko Widgets
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-# Table of Contents
 
 - [Questions](#questions)
-	- [Is there a difference between reuse and preserve in the context of Marko Widgets?](#is-there-a-difference-between-reuse-and-preserve-in-the-context-of-marko-widgets)
-	- [How far should a UI be "componentized"?](#how-far-should-a-ui-be-componentized)
-	- [When should the body of a custom component be used?](#when-should-the-body-of-a-custom-component-be-used)
-	- [Which component functions are invoked at what time - what's the order of invocation?](#which-component-functions-are-invoked-at-what-time---whats-the-order-of-invocation)
-	- [Marko Widgets supports the batching of DOM updates, but what does this mean to the developer?](#marko-widgets-supports-the-batching-of-dom-updates-but-what-does-this-mean-to-the-developer)
-	- [How do widgets communicate?](#how-do-widgets-communicate)
-	- [Why is state so important for Marko Widgets?](#why-is-state-so-important-for-marko-widgets)
+  - [What are the difficulties involved in creating „reusable“ widgets when building an app?](#what-are-the-difficulties-involved-in-creating-%E2%80%9Ereusable%E2%80%9C-widgets-when-building-an-app)
+  - [Is there a difference between reuse and preserve in the context of Marko Widgets?](#is-there-a-difference-between-reuse-and-preserve-in-the-context-of-marko-widgets)
+  - [How far should a UI be "componentized"?](#how-far-should-a-ui-be-componentized)
+  - [When should the body of a custom component be used?](#when-should-the-body-of-a-custom-component-be-used)
+  - [Which component functions are invoked at what time - what's the order of invocation?](#which-component-functions-are-invoked-at-what-time---whats-the-order-of-invocation)
+  - [Marko Widgets supports the batching of DOM updates, but what does this mean to the developer?](#marko-widgets-supports-the-batching-of-dom-updates-but-what-does-this-mean-to-the-developer)
+  - [How do widgets communicate?](#how-do-widgets-communicate)
+  - [Why is state so important for Marko Widgets?](#why-is-state-so-important-for-marko-widgets)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Questions
+
+
+## What are the difficulties involved in creating „reusable“ widgets when building an app?
+
+As a developer one needs to make the choice between building a "reusable" UI component versus a widget that is tightly coupled with an app - there most certainly is a tradeoff between reusability and simplicity.
+
+A reusable UI widget would need to emit generic events while a tightly coupled widget would directly talk to the app instance to control the app. Therefore, a reusable widget introduces complexity because it then becomes the responsibility of the parent widget to handle the events. A tightly coupled widget, in comparison, avoids the middleman and goes straight to the app.
+
+As the decision is centered around individual situations, an application developer has to decide if a certain component would benefit to be reusable.
 
 ## Is there a difference between reuse and preserve in the context of Marko Widgets?
 
