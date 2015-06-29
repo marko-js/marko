@@ -45,7 +45,6 @@ function assignWidgetId(isRepeated) {
     delete nodeProps['w-id'];
 
     if (widgetId != null) {
-
         idExpression = compiler.makeExpression('widget.elId(' +
             widgetId +
             ')');
@@ -54,7 +53,7 @@ function assignWidgetId(isRepeated) {
         // we need to resolve the ID as a widget element ID.
         nestedIdExpression = compiler.makeExpression(widgetId);
 
-        if (node.tag) {
+        if (node.tag || node.nodeClass) {
             this.getWidgetArgs().setId(widgetId);
         } else {
             if (node.hasAttribute('id')) {
