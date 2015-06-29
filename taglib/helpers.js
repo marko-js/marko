@@ -1,6 +1,6 @@
 require('raptor-polyfill/string/endsWith');
 var widgets = require('../');
-var repeatedId = require('../lib/repeated-id');
+
 var extend = require('raptor-util/extend');
 var escapeXml = require('raptor-util/escapeXml');
 
@@ -14,20 +14,10 @@ exports.widgetArgs = function (out, scope, assignedId, customEvents, extendModul
     if (!widgetArgs) {
         if (assignedId != null) {
             id = assignedId.toString();
-
-            if (id.charAt(0) === '!') {
-                id = id.substring(1);
-
-            } else {
-                if (id.endsWith('[]')) {
-                    id = repeatedId.nextId(out, scope, id);
-                }
-
-                id = scope + '-' + id;
-            }
         }
 
         widgetArgs = data.widgetArgs = {
+            out: out,
             id: id,
             scope: scope,
             customEvents: customEvents

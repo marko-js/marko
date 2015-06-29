@@ -1,6 +1,7 @@
 'use strict';
 var widgets = require('../');
 var extend = require('raptor-util/extend');
+var widgetArgsId = require('../lib/widget-args-id');
 
 var DUMMY_WIDGET_DEF = {
         elId: function () {
@@ -52,10 +53,11 @@ module.exports = function render(input, out) {
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
-        id = widgetArgs.id || id;
+        scope = widgetArgs.scope;
+
+        id = id || widgetArgsId(widgetArgs);
         extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
-        scope = widgetArgs.scope;
 
         if ((extendState = widgetArgs.extendState)) {
             if (state) {

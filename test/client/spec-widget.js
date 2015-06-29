@@ -345,4 +345,14 @@ describe('widget' , function() {
         expect(barWidget != null).to.equal(true);
         expect(barWidget.name).to.equal('app-bar');
     });
+
+    it('should allow a conditional widget with repeated IDs', function() {
+        var widget = require('../fixtures/components/app-repeated-id-widgetless')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var childWidgets = widget.getWidgets('childWidget');
+        expect(childWidgets.length).to.equal(1);
+    });
 });
