@@ -5,7 +5,7 @@ marko-widgets
 
 Marko Widgets extends the [Marko templating language](https://github.com/raptorjs/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
 
-![eBay Open Source](https://raw.githubusercontent.com/raptorjs/optimizer/master/images/ebay.png)
+![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -959,19 +959,19 @@ The `appendTo(targetEl)` method is only one of the methods that can be used to i
 
 ## Server-side Rendering
 
-In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [optimizer](https://github.com/raptorjs/optimizer) module and the taglib that it provides. Our final page template is shown below:
+In order for everything to work on the client-side we need to include the code for the `marko-widgets` module and the `./widget.js` module as part of the client bundle and we also need to use the custom `<init-widgets>` tag to let the client know which widgets rendered on the server need to be initialized on the client. To include the client-side dependencies will be using the [lasso](https://github.com/lasso-js/lasso) module and the taglib that it provides. Our final page template is shown below:
 
 __src/pages/index/template.marko:__
 
 ```html
-<optimizer-page name="index" package-path="./optimizer.json" />
+<lasso-page name="index" package-path="./browser.json" />
 
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Widgets Demo</title>
-    <optimizer-head/>
+    <lasso-head/>
 </head>
 <body>
     <!-- Bind a widget to a div element using the "w-bind" attribute -->
@@ -979,15 +979,15 @@ __src/pages/index/template.marko:__
         <h1>Click Me</h1>
     </div>
 
-    <optimizer-body/>
+    <lasso-body/>
     <init-widgets/>
 </body>
 </html>
 ```
 
-The `optimizer.json` that includes the required client-side code is shown below:
+The `browser.json` that includes the required client-side code is shown below:
 
-__src/pages/index/optimizer.json:__
+__src/pages/index/browser.json:__
 
 ```javascript
 {

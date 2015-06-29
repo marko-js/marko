@@ -6,7 +6,7 @@ var spawn = require('child_process').spawn;
 
 require('marko/hot-reload').enable();
 require('marko/compiler').defaultOptions.preserveWhitespace = true;
-var optimizer = require('optimizer');
+var lasso = require('lasso');
 
 var outputDir = path.join(__dirname, 'generated');
 var cacheDir = path.join(__dirname, '../.cache');
@@ -23,10 +23,10 @@ var args = require('raptor-args').createParser({
     })
     .parse();
 
-require('optimizer').configure({
+require('lasso').configure({
     outputDir: path.join(outputDir, 'static'),
     plugins: [
-        'optimizer-marko'
+        'lasso-marko'
     ],
     urlPrefix: './static',
     fingerprintsEnabled: false,
@@ -107,7 +107,7 @@ if (args.watch === true) {
 
 
             require('marko/hot-reload').handleFileModified(eventArgs.path);
-            optimizer.handleWatchedFileChanged(eventArgs.path);
+            lasso.handleWatchedFileChanged(eventArgs.path);
             console.log('[marko-widgets/test/client/mocha-widgets] File modified: ' + eventArgs.path);
 
             if (running) {
