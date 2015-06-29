@@ -130,7 +130,7 @@ Marko Widgets allows you to declaratively bind behavior to an HTML element insid
 
 __src/components/app-hello/template.marko__
 
-```html
+```xml
 <div w-bind>
 	Hello ${data.name}!
 </div>
@@ -157,7 +157,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 Congratulations, you just built a reusable UI component! Your UI component can be embedded in other Marko template files:
 
-```html
+```xml
 <div>
 	<app-hello name="Frank"/>
 </div>
@@ -184,7 +184,7 @@ widget.setProps({
 
 __src/components/app-hello/template.marko__
 
-```html
+```xml
 <div w-bind
 	 w-onClick="handleClick">
 
@@ -225,7 +225,7 @@ Let's create a stateful widget that changes to yellow when you click on it:
 
 __src/components/app-hello/template.marko__
 
-```html
+```xml
 <div w-bind
 	 w-onClick="handleClick"
 	 style="background-color: ${data.color}">
@@ -273,7 +273,7 @@ If you want to avoid re-rendering a widget for a particular state property chang
 
 __src/components/app-hello/template.marko__
 
-```html
+```xml
 <div w-bind
 	 w-onClick="handleClick"
 	 style="background-color: ${data.color}">
@@ -327,7 +327,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 ## Complex Widget
 
-```html
+```xml
 <div w-bind>
 	<app-overlay title="My Overlay"
 		w-id="overlay"
@@ -381,7 +381,7 @@ A container widget supports nested content. When the container widget is re-rend
 
 __src/components/app-alert/index.js__
 
-```html
+```xml
 <div class="alert alert-${data.type}" w-bind>
 	<i class="alert-icon"/>
 	<span w-body></span>
@@ -424,7 +424,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 The widget can then be used as shown below:
 
-```html
+```xml
 <app-alert message="This is a success alert"/>
 
 <app-alert>
@@ -448,7 +448,7 @@ Sometimes it is important to _not_ re-render a DOM subtree. This may due to eith
 
 Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`, `w-preserve-if="<condition>"`, `w-preserve-body` or `w-preserve-body-if="<condition>"` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be reused and re-inserted into a widget's newly rendered DOM automatically.
 
-```html
+```xml
 <div w-bind>
 
 	<span w-preserve>
@@ -499,7 +499,7 @@ A few definitions before you get started:
 
 Using the bindings for Marko, you can bind a widget to a rendered DOM element using the custom `w-bind` attribute as shown in the following sample template:
 
-```html
+```xml
 <div class="my-component" w-bind="./widget">
     <h1>Click Me</h1>
 </div>
@@ -507,7 +507,7 @@ Using the bindings for Marko, you can bind a widget to a rendered DOM element us
 
 You can also choose to leave the value of the `w-bind` attribute empty. If the value of `w-bind` is empty then `marko-widgets` will search for a widget module by first checking to see if `widget.js` exists and then `index.js`. Example:
 
-```html
+```xml
 <div class="my-component" w-bind>
     <h1>Click Me</h1>
 </div>
@@ -661,7 +661,7 @@ The `marko-widgets` taglib also provides support for allowing a widget to commun
 
 The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 
-```html
+```xml
 <div class="my-component" w-bind="./widget">
     <div class="btn-group">
         <sample-button label="Click Me" variant="primary" w-id="primaryButton"/>
@@ -682,7 +682,7 @@ this.getWidget('dangerButton').on('click', function() {
 
 Marko Widgets also supports referencing _repeated_ nested widgets as shown below:
 
-```html
+```xml
 <div class="my-component" w-bind="./widget">
     <ul>
 		<li for="todoItem in data.todoItems">
@@ -705,7 +705,7 @@ To try out and experiment with this code please see the documentation and source
 
 DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
 
-```html
+```xml
 <form w-bind="./widget">
     ...
     <button type="submit" w-id="submitButton">Submit</button>
@@ -715,7 +715,7 @@ DOM elements nested within a widget can be given unique IDs based on the contain
 
 Assuming the unique ID assigned to the widget is `w123`, the following would be the HTML output:
 
-```html
+```xml
 <form id="w123">
     ...
     <button type="submit" id="w123-submitButton">Submit</button>
@@ -749,7 +749,7 @@ var $submitButton = this.$('#submitButton');
 
 Marko Widgets also supports referencing _repeated_ nested DOM elements as shown below:
 
-```html
+```xml
 <ul>
 	<li for="color in ['red', 'green', 'blue']"
 		w-id="colorListItems[]">
@@ -775,7 +775,7 @@ A widget can subscribe to events on a nested DOM element.
 
 Listeners can be attached declaratively as shown in the following sample code:
 
-```html
+```xml
 <div w-bind>
 	<form w-onsubmit="handleFormSubmit">
 		<input type="text" value="email" w-onchange="handleEmailChange">
@@ -818,7 +818,7 @@ For performance reasons, Marko Widgets only adds one event listener to the root 
 
 You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
 
-```html
+```xml
 <div w-bind>
 	<form w-id="form">
 		<input type="text" value="email" w-id="email">
@@ -872,7 +872,7 @@ A widget can subscribe to events on nested widgets. Every widget extends [EventE
 
 Listeners can be attached declaratively as shown in the following sample code:
 
-```html
+```xml
 <div w-bind="./widget">
 	<app-overlay title="My Overlay"
 		w-onBeforeHide="handleOverlayBeforeHide">
@@ -897,7 +897,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 You can also choose to add listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. The scoped widget ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
 
-```html
+```xml
 <div w-bind="./widget">
 	<app-overlay title="My Overlay"
 		w-id="myOverlay">
@@ -963,7 +963,7 @@ In order for everything to work on the client-side we need to include the code f
 
 __src/pages/index/template.marko:__
 
-```html
+```xml
 <lasso-page name="index" package-path="./browser.json" />
 
 <!doctype html>
@@ -1000,7 +1000,7 @@ __src/pages/index/browser.json:__
 
 In the above example, the final HTML will be similar to the following:
 
-```html
+```xml
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -1066,7 +1066,7 @@ src/components/app-hello/
 
 ___src/components/app-hello/template.marko:___
 
-```html
+```xml
 <div w-bind
 	w-on-click="handleClick">
 	Hello ${data.name}!
@@ -1103,7 +1103,7 @@ src/components/app-hello/
 
 ___src/components/app-hello/template.marko:___
 
-```html
+```xml
 <div w-bind="./widget"
 	w-on-click="handleClick">
 	Hello ${data.name}!
