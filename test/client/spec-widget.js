@@ -334,4 +334,15 @@ describe('widget' , function() {
                 .appendTo(document.getElementById('target'));
         }).to.throw(/is no longer supported/);
     });
+
+    it('should allow a w-id attr to be assigned to an invoke tag', function() {
+        var widget = require('../fixtures/components/app-invoke-widget-id')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var barWidget = widget.getWidget('barTest');
+        expect(barWidget != null).to.equal(true);
+        expect(barWidget.name).to.equal('app-bar');
+    });
 });
