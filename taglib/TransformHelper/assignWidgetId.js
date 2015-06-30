@@ -14,6 +14,18 @@ function assignWidgetId(isRepeated) {
     var nestedIdExpression;
     var idExpression;
 
+    var containingWidgetNode = this.getContainingWidgetNode({ allowExtend: true });
+
+    if (!containingWidgetNode) {
+        // We are assigning a widget ID to a nested widget in a template that does not have a widget.
+        // That means we do not have access to the parent widget variable as part of a closure. We
+        // need to look it up out of the `out.data` map
+        if (!this.template.data.hasWidgetVar) {
+            this.template.addVar('widget', 'out.global.widgets.getWidget()');
+            this.template.data.hasWidgetVar = true;
+        }
+    }
+
     // In order to attach a DOM event listener directly we need to make sure
     // the target HTML element has an ID that we can use to get a reference
     // to the element during initialization. We generate this unique ID

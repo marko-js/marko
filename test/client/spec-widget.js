@@ -355,4 +355,17 @@ describe('widget' , function() {
         var childWidgets = widget.getWidgets('childWidget');
         expect(childWidgets.length).to.equal(1);
     });
+
+    it('should allow the view for a UI component to be split into multiple templates', function() {
+        var widget = require('../fixtures/components/app-split-template')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var submitButton = widget.getWidget('submitButton');
+        var cancelButton = widget.getWidget('submitButton');
+
+        expect(submitButton != null).to.equal(true);
+        expect(cancelButton != null).to.equal(true);
+    });
 });
