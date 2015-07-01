@@ -47,6 +47,7 @@
         "sax": "^0.6.0"
     },
     "devDependencies": {
+        "bluebird": "^2.9.30",
         "chai": "~1.8.1",
         "dustjs-linkedin": "^2.3.4",
         "jshint": "^2.5.0",
