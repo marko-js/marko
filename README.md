@@ -140,7 +140,7 @@ __src/components/app-hello/index.js__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -197,7 +197,7 @@ __src/components/app-hello/index.js__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -239,7 +239,7 @@ __src/components/app-hello/index.js__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
@@ -287,7 +287,7 @@ __src/components/app-hello/index.js__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
@@ -351,13 +351,13 @@ Below is the content of `index.js` where the widget type is defined:
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
+	template: require('./template.marko'),
+
 	init: function() {
 		// this.el will be the raw DOM element the widget instance
 		// is bound to:
 		var el = this.el;
 	},
-
-	template: require.resolve('./template.marko'),
 
 	handleShowButtonClick: function(event) {
 		console.log('Showing overlay...');
@@ -392,13 +392,13 @@ __src/components/app-alert/template.marko__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
+	template: require('./template.marko'),
+
 	init: function() {
 		// this.el will be the raw DOM element the widget instance
 		// is bound to:
 		var el = this.el;
 	},
-
-	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
@@ -553,7 +553,7 @@ If a widget is stateful, then the state should be derived from the input propert
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getInitialProps: function(input) {
 		return {
@@ -576,7 +576,7 @@ Every widget should have an associated Marko template that will be used to rende
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -596,7 +596,7 @@ A stateful widget will maintain state as part of the widget that instance. If th
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
@@ -638,7 +638,7 @@ Arbitrary widget configuration data determined at render time can be provided to
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getWidgetConfig: function(input) {
 		return {
@@ -1024,7 +1024,7 @@ It's also possible to manually initialize rendered widgets as shown in the follo
 
 ```javascript
 var markoWidgets = require('marko-widgets');
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 
 module.exports = function(req, res) {
 	template.render(viewModel, function(err, html, out) {
@@ -1077,7 +1077,7 @@ ___src/components/app-hello/index.js:___
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -1114,7 +1114,7 @@ ___src/components/app-hello/renderer.js:___
 
 ```javascript
 module.exports = require('marko-widgets').defineRenderer({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -1155,7 +1155,7 @@ Example usage for defining a stateless UI component:
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getTemplateData: function(state, input) {
 		return {
@@ -1384,7 +1384,7 @@ The current state for the widget. For example:
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
-	template: require.resolve('./template.marko'),
+	template: require('./template.marko'),
 
 	getInitialState: function(input) {
 		return {
