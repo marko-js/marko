@@ -1,6 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 require('marko/compiler').defaultOptions.checkUpToDate = false;
+chai.Assertion.includeStack = true;
 
 describe('marko-widgets/server' , function() {
     beforeEach(function() {
@@ -39,7 +40,7 @@ describe('marko-widgets/server' , function() {
 
     it('should throw a friendly error for a missing "template" property', function() {
         expect(function() {
-            require('../fixtures/components/app-missing-template');
+            require('../fixtures/invalid/app-missing-template');
         }).to.throw(/Expected "template"/);
     });
 });
