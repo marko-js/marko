@@ -36,6 +36,12 @@ describe('marko-widgets/server' , function() {
             markoWidgetsRegistry.createWidget(widgetModulePath, 'w0');
         }).to.throw(/is no longer supported/);
     });
+
+    it('should throw a friendly error for a missing "template" property', function() {
+        expect(function() {
+            require('../fixtures/components/app-missing-template');
+        }).to.throw(/Expected "template"/);
+    });
 });
 
 
