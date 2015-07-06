@@ -393,7 +393,12 @@ TemplateBuilder.prototype = {
                 }
             }
 
-            this.contextHelperMethodCall('i', typeof templatePath === 'string' ? this.compiler.convertType(templatePath, 'string', true) : templatePath, dataExpression);
+            this.contextHelperMethodCall(
+                'i',
+                typeof templatePath === 'string' ?
+                    this.compiler.convertType(templatePath, 'string', true) :
+                    templatePath,
+                dataExpression);
         }
         return this;
     },
