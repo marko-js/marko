@@ -398,6 +398,7 @@ module.exports = function transform(node, compiler, template) {
                                 attr,
                                 'string',
                                 attrDef) +
+                                ', require' + // Include the "require" variable to allow relative paths to be resolved
                             ')');
                     } else {
                         // Resolve the static string to a full path only once

@@ -117,8 +117,13 @@ module.exports = {
     /**
      * Loads a template
      */
-    l: function(path) {
+    l: function(path, req) {
         if (typeof path === 'string') {
+            if (path.charAt(0) === '.') { // Check if the path is relative
+                // The path is relative so use require.resolve to fully resolve the path
+                path = req.resolve(path);
+            }
+
             if (markoRegExp.test(path)) {
                 return runtime.load(path);
             } else {
