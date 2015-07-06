@@ -692,9 +692,15 @@ Marko supports includes/partials. Other Marko files can be included using the `<
 <include template="./greeting.marko" name="Frank" count="30"/>
 ```
 
+Alternatively, you can pass the template data using the `template-data` attribute whose value should be a JavaScript expression that resolves to the template data as shown below:
+
+```xml
+<include template="./greeting.marko" template-data="{ name: 'Frank', count: 30 }"/>
+```
+
 The value of the `template` attribute can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
 
-In your controller:
+In your JavaScript controller:
 
 ```javascript
 var myIncludeTarget = require('./my-include-target.marko');
