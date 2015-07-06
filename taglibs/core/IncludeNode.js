@@ -46,14 +46,13 @@ IncludeNode.prototype = {
         var resourcePath;
         var _this = this;
 
-        if (templatePath) {
-            this.removeProperty('template');
+        this.removeProperty('template');
+        this.removeProperty('templateData');
+        this.removeProperty('template-data');
 
-            var dataExpression;
-            if (templateData) {
-                dataExpression = templateData;
-            } else {
-                dataExpression = {
+        if (templatePath) {
+
+            var dataExpression = {
                     toString: function () {
                         var propParts = [];
 
@@ -68,10 +67,24 @@ IncludeNode.prototype = {
                             propParts.push(stringify('body') + ': ' + _this.getBodyContentExpression(template, false));
                         }
 
-                        return '{' + propParts.join(', ') + '}';
+                        var propsCode = '{' + propParts.join(', ') + '}';
+
+                        if (templateData) {
+                            if (propParts.length) {
+                                var extendVar = template.addStaticVar('__extend', '__helpers.xt');
+                                propsCode = extendVar + '(' +
+                                            extendVar + '({}, ' + templateData + '), ' +
+                                            propsCode +
+                                        ')';
+                            } else {
+                                propsCode = templateData;
+                            }
+                        }
+
+                        return propsCode;
                     }
                 };
-            }
+
             template.include(templatePath, dataExpression);
         } else if ((resourcePath = this.getAttribute('resource'))) {
             var isStatic = this.getProperty('static') !== false;
