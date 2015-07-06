@@ -64,8 +64,8 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "2.7.5",
     "browser": {
         "./node-require.js": "./node-require-browser.js"
-    }
+    },
+    "version": "2.7.6"
 }
