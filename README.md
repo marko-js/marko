@@ -686,10 +686,41 @@ For example, both of the following are valid and equivalent:
 
 ## Includes
 
-Other Marko files can be included using the `<include>` tag and a relative path. For example:
+Marko supports includes/partials. Other Marko files can be included using the `<include>` tag and a relative path. For example:
 
 ```xml
 <include template="./greeting.marko" name="Frank" count="30"/>
+```
+
+The value of the `template` attribute can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
+
+In your controller:
+
+```javascript
+var myIncludeTarget = require('./my-include-target.marko');
+var anotherIncludeTarget = require('./another-include-target.marko');
+
+
+template.render({
+		myIncludeTarget: myIncludeTarget,
+		anotherIncludeTarget: anotherIncludeTarget
+	},
+	...);
+```
+
+And then in your template:
+
+```xml
+<include template="${data.myIncludeTarget}" name="Frank" count="30"/>
+<include template="${data.anotherIncludeTarget}" name="Frank" count="30"/>
+```
+
+You can also choose to load the include target within the calling template as shown below:
+
+```xml
+<require module="./my-include-target.marko" var="myIncludeTarget" />
+...
+<include template="${data.myIncludeTarget}" name="Frank" count="30"/>
 ```
 
 ## Variables
