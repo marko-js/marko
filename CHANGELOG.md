@@ -5,6 +5,14 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.4
+
+- Fixes #96 - Allow relative, dynamic include paths
+
+### 2.7.3
+
+- Internal change: Additional test cases added for using promises with async fragments
+
 ### 2.7.2
 
 - Fixes #73 - Prevent same taglib from being loaded multiple times
