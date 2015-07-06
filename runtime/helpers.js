@@ -7,7 +7,6 @@ var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
 var markoRegExp = /\.marko(.xml|.html)?$/;
-var req = require;
 var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var logger = require('raptor-logging').logger(module);
 
