@@ -6,13 +6,14 @@
         "url": "https://github.com/raptorjs/marko-widgets.git"
     },
     "scripts": {
-        "karma-all": "node test/karma/run.js --all-browsers",
-        "karma": "node test/karma/run.js",
-        "karma-watch": "node test/karma/run.js --watch",
-        "test": "npm run test-server -s && npm run test-client -s && node_modules/.bin/jshint lib/ dust/ dust/",
-        "test-server": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
-        "test-client": "node test/mocha-phantomjs/run.js",
-        "mocha-phantomjs": "node test/mocha-phantomjs/run.js",
+        "init-tests": "./test/init-tests.sh",
+        "karma-all": "npm run init-tests && node test/karma/run.js --all-browsers",
+        "karma": "npm run init-tests && node test/karma/run.js",
+        "karma-watch": "npm run init-tests && node test/karma/run.js --watch",
+        "test": "npm run init-tests && npm run test-server -s && npm run test-client -s && node_modules/.bin/jshint lib/ dust/ dust/",
+        "test-server": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
+        "test-client": "npm run init-tests && node test/mocha-phantomjs/run.js",
+        "mocha-phantomjs": "npm run init-tests && node test/mocha-phantomjs/run.js",
         "mocha-phantomjs-run": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
