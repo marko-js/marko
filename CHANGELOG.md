@@ -165,6 +165,31 @@ exports.renderer = function(input, out) {
 
 # 4.x
 
+## 4.3.x
+
+### 4.3.0
+
+- Fixed #41 - Initialize widgets in nested batched updates first
+
+## 4.2.x
+
+### 4.2.3
+
+- Internal code improvements
+
+### 4.2.2
+
+- Fixed #49 - Allow `w-id` to be used in an intermediate template
+
+### 4.2.1
+
+- Fixed #48 - Improved logic for generating repeated widget IDs to handle gaps
+
+### 4.2.0
+
+- Fixed #47 - Switched from `optimizer` to [lasso](https://github.com/lasso-js/lasso) for tests
+- Fixed #46 - Allow `w-id` attr with `<invoke>`
+
 ## 4.1.x
 
 ### 4.1.0
