@@ -27,7 +27,7 @@ WidgetArgs.prototype = {
         }
 
         this.customEvents.push(JSON.stringify(eventType));
-        this.customEvents.push(JSON.stringify(targetMethod));
+        this.customEvents.push(targetMethod);
     },
 
     setExtend: function(extendType, extendConfig, extendState) {

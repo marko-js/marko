@@ -41,8 +41,8 @@
                 },
                 "w-on*": {
                     "pattern": true,
-                    "type": "custom",
-                    "allow-expressions": false,
+                    "type": "string",
+                    "allow-expressions": true,
                     "preserve-name": true,
                     "set-flag": "hasWidgetEvents"
                 },

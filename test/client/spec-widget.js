@@ -363,9 +363,17 @@ describe('widget' , function() {
             .getWidget();
 
         var submitButton = widget.getWidget('submitButton');
-        var cancelButton = widget.getWidget('submitButton');
+        var cancelButton = widget.getWidget('cancelButton');
 
         expect(submitButton != null).to.equal(true);
         expect(cancelButton != null).to.equal(true);
+    });
+
+    it('should allow dynamic event handler method names', function() {
+        require('../fixtures/components/app-dynamic-event-handler-method')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget()
+            .test();
     });
 });

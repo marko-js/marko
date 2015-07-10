@@ -15,7 +15,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod) {
     }
 
     node.setAttribute('data-w-on' + eventType,
-        transformHelper.compiler.makeExpression(JSON.stringify(targetMethod + '|') +
+        transformHelper.compiler.makeExpression(targetMethod + '+' + '"|"' +
         '+widget.id'));
 }
 
@@ -45,7 +45,7 @@ function addDirectEventListener(transformHelper, eventType, targetMethod) {
 
     // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
     containingWidgetNode.data.widgetEvents.push(JSON.stringify(eventType));
-    containingWidgetNode.data.widgetEvents.push(JSON.stringify(targetMethod));
+    containingWidgetNode.data.widgetEvents.push(targetMethod);
     containingWidgetNode.data.widgetEvents.push(transformHelper.getNestedIdExpression().toString());
 }
 
