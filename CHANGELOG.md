@@ -170,6 +170,7 @@ exports.renderer = function(input, out) {
 ### 4.3.0
 
 - Fixed #41 - Initialize widgets in nested batched updates first
+- Fixed #54 - Allow event handler method name to be dynamic
 
 ## 4.2.x
 
