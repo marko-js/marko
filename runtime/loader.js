@@ -53,7 +53,7 @@ module.exports = function load(templatePath) {
     fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
     fs.renameSync(tempFile, targetFile);
 
-    delete require.cache[require.resolve(targetFile)];
+    delete require.cache[targetFile];
     return require(targetFile);
 };
 
