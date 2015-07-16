@@ -548,14 +548,14 @@ require('fancy-checkbox').render({
 
 
 
-If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input)` method as shown below:
+If a widget is stateful, then the state should be derived from the input properties and the template data should then be derived from the state. If a widget is not stateful, then the template data should be derived directly from the input properties. If you need to normalize the input properties then you can implement the `getInitialProps(input, out)` method as shown below:
 
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
 	template: require('./template.marko'),
 
-	getInitialProps: function(input) {
+	getInitialProps: function(input, out) {
 		return {
 			size: input.size ? input.size.toLowerCase() : 'normal'
 		};
@@ -578,7 +578,7 @@ Every widget should have an associated Marko template that will be used to rende
 module.exports = require('marko-widgets').defineComponent({
 	template: require('./template.marko'),
 
-	getTemplateData: function(state, input) {
+	getTemplateData: function(state, input, out) {
 		return {
 			name: input.name
 		};
@@ -588,7 +588,7 @@ module.exports = require('marko-widgets').defineComponent({
 });
 ```
 
-The `getTemplateData(state, input)` method is used to build the view model that gets passed to the template based on the state and/or input. If a widget is stateful then the template data should be derived only from the `state`. If a widget is stateless then the template data should be derived only from the `input`. If a stateful widget is being re-rendered then the `input` argument will always be `null`. For a stateless widget, the `state` argument will be `null`.
+The `getTemplateData(state, input, out)` method is used to build the view model that gets passed to the template based on the state and/or input. If a widget is stateful then the template data should be derived only from the `state`. If a widget is stateless then the template data should be derived only from the `input`. If a stateful widget is being re-rendered then the `input` argument will always be `null`. For a stateless widget, the `state` argument will be `null`.
 
 ## Widget State
 
@@ -598,7 +598,7 @@ A stateful widget will maintain state as part of the widget that instance. If th
 module.exports = require('marko-widgets').defineComponent({
 	template: require('./template.marko'),
 
-	getInitialState: function(input) {
+	getInitialState: function(input, out) {
 		return {
 			name: input.name,
 			selected: input.selected || false;
@@ -634,13 +634,13 @@ When state is modified using either the `setState(name, value)` or `setState(new
 
 ## Widget Config
 
-Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget by implementing the `getWidgetConfig(input)` property as shown below:
+Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget by implementing the `getWidgetConfig(input, out)` method as shown below:
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
 	template: require('./template.marko'),
 
-	getWidgetConfig: function(input) {
+	getWidgetConfig: function(input, out) {
 		return {
 			foo: 'bar'
 		}
