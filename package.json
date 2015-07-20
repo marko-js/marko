@@ -43,7 +43,7 @@
     "mkdirp": "^0.5.0",
     "mocha": "~1.15.1",
     "mocha-phantomjs": "^3.5.3",
-    "phantomjs": "^1.9.15",
+    "phantomjs": "1.9.7-15",
     "raptor-args": "^1.0.2",
     "raptor-strings": "^1.0.0"
   },
