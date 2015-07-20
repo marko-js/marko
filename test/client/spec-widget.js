@@ -376,4 +376,32 @@ describe('widget' , function() {
             .getWidget()
             .test();
     });
+
+    it('should preserve all state when rerendered', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('../fixtures/components/app-stateful-rerender')
+            .render({
+                name: 'Frank',
+                count: 30
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 30 new messages.');
+        expect(targetEl.innerHTML).to.contain('foo: bar');
+        expect(targetEl.innerHTML).to.contain('hello: world');
+        expect(widget.state.name).to.equal('Frank');
+        expect(widget.state.count).to.equal(30);
+
+        require('marko-widgets').batchUpdate(function() { // Force the HTML update to be immediate
+            widget.setState('name', 'John');
+        });
+
+        expect(targetEl.innerHTML).to.contain('Hello John! You have 30 new messages.');
+        expect(targetEl.innerHTML).to.contain('foo: bar');
+        expect(targetEl.innerHTML).to.contain('hello: world');
+        expect(widget.state.name).to.equal('John');
+        expect(widget.state.count).to.equal(30);
+    });
 });
