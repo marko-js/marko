@@ -1,57 +1,58 @@
 {
-    "name": "marko-widgets",
-    "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/marko-js/marko-widgets.git"
-    },
-    "scripts": {
-        "init-tests": "./test/init-tests.sh",
-        "test": "npm run init-tests && npm run test-server -s && npm run test-client -s && node_modules/.bin/jshint lib/ dust/ dust/",
-        "test-server": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
-        "test-client": "npm run init-tests && node test/mocha-phantomjs/run.js",
-        "mocha-phantomjs": "npm run init-tests && node test/mocha-phantomjs/run.js",
-        "mocha-phantomjs-run": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "dependencies": {
-        "events": "^1.0.2",
-        "listener-tracker": "^1.0.2",
-        "raptor-async": "^1.1.2",
-        "raptor-dom": "^1.1.0",
-        "raptor-dust": "^1.1.2",
-        "raptor-json": "^1.0.1",
-        "raptor-logging": "^1.0.1",
-        "raptor-modules": "^1.0.22",
-        "raptor-polyfill": "^1.0.0",
-        "raptor-pubsub": "^1.0.2",
-        "raptor-renderer": "^1.4.1",
-        "raptor-util": "^1.0.0"
-    },
-    "devDependencies": {
-        "app-module-path": "^1.0.1",
-        "async": "^0.9.0",
-        "chai": "~1.8.1",
-        "dustjs-linkedin": "^2.3.4",
-        "ignoring-watcher": "^1.0.2",
-        "jquery": "^2.1.3",
-        "jshint": "^2.5.0",
-        "lasso": "^1.10.0",
-        "lasso-marko": "^2.0.4",
-        "marko": "^2.7.6",
-        "mkdirp": "^0.5.0",
-        "mocha": "~1.15.1",
-        "mocha-phantomjs": "^3.5.3",
-        "phantomjs": "1.9.7-15",
-        "raptor-args": "^1.0.2",
-        "raptor-strings": "^1.0.0"
-    },
-    "license": "Apache License v2.0",
-    "bin": {},
-    "main": "lib/marko-widgets.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "version": "4.3.2"
+  "name": "marko-widgets",
+  "description": "Module to support binding of behavior to rendered UI components rendered on the server or client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko-widgets.git"
+  },
+  "scripts": {
+    "init-tests": "./test/init-tests.sh",
+    "test": "npm run init-tests && npm run test-server -s && npm run test-client -s && node_modules/.bin/jshint lib/ dust/ dust/",
+    "test-server": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
+    "test-client": "npm run init-tests && node test/mocha-phantomjs/run.js",
+    "mocha-phantomjs": "npm run init-tests && node test/mocha-phantomjs/run.js",
+    "mocha-phantomjs-run": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "dependencies": {
+    "events": "^1.0.2",
+    "listener-tracker": "^1.0.2",
+    "morphdom": "^0.1.4",
+    "raptor-async": "^1.1.2",
+    "raptor-dom": "^1.1.0",
+    "raptor-dust": "^1.1.2",
+    "raptor-json": "^1.0.1",
+    "raptor-logging": "^1.0.1",
+    "raptor-modules": "^1.0.22",
+    "raptor-polyfill": "^1.0.0",
+    "raptor-pubsub": "^1.0.2",
+    "raptor-renderer": "^1.4.1",
+    "raptor-util": "^1.0.0"
+  },
+  "devDependencies": {
+    "app-module-path": "^1.0.1",
+    "async": "^0.9.0",
+    "chai": "~1.8.1",
+    "dustjs-linkedin": "^2.3.4",
+    "ignoring-watcher": "^1.0.2",
+    "jquery": "^2.1.3",
+    "jshint": "^2.5.0",
+    "lasso": "^1.10.0",
+    "lasso-marko": "^2.0.4",
+    "marko": "^2.7.6",
+    "mkdirp": "^0.5.0",
+    "mocha": "~1.15.1",
+    "mocha-phantomjs": "^3.5.3",
+    "phantomjs": "1.9.7-15",
+    "raptor-args": "^1.0.2",
+    "raptor-strings": "^1.0.0"
+  },
+  "license": "Apache License v2.0",
+  "bin": {},
+  "main": "lib/marko-widgets.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "5.0.0-beta.1"
 }

@@ -95,7 +95,7 @@ describe('stateful widgets' , function() {
         expect(button1Widget.el.innerHTML).to.contain('New Label');
         expect(button2Widget.el.innerHTML).to.contain('New Label');
 
-        expect(widget.el).to.not.equal(oldEl);
+        expect(widget.el).to.equal(oldEl);
     });
 
     it('should copy state object on write', function() {

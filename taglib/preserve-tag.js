@@ -19,14 +19,17 @@ module.exports = function render(input, out) {
             if (existingEl) {
                 var widgetsContext = widgets.getWidgetsContext(out);
                 var bodyOnly = input.bodyOnly === true;
+                // Don't actually render anything since the element is already in the DOM,
+                // but keep track that the node is being preserved so that we can ignore
+                // it while transforming the old DOM
 
                 if (!bodyOnly) {
-
+                    var tagName = existingEl.tagName;
                     // If we are preserving the entire DOM node (not just the body)
                     // then that means that we have need to render a placeholder to
                     // mark the target location. We can then replace the placeholder
                     // node with the existing DOM node
-                    out.write('<span id="' + id + '"></span>');
+                    out.write('<' + tagName + ' id="' + id + '"></' + tagName + '>');
                 }
 
                 widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
