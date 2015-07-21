@@ -18,7 +18,7 @@
   "dependencies": {
     "events": "^1.0.2",
     "listener-tracker": "^1.0.2",
-    "raptor-async": "^1.0.3",
+    "raptor-async": "^1.1.2",
     "raptor-dom": "^1.1.0",
     "raptor-dust": "^1.1.2",
     "raptor-json": "^1.0.1",
@@ -39,7 +39,7 @@
     "jshint": "^2.5.0",
     "lasso": "^1.10.0",
     "lasso-marko": "^2.0.4",
-    "marko": "^2.0.10",
+    "marko": "^2.7.6",
     "mkdirp": "^0.5.0",
     "mocha": "~1.15.1",
     "mocha-phantomjs": "^3.5.3",
