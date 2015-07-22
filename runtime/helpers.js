@@ -6,9 +6,16 @@ var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
-var markoRegExp = /\.marko(.xml|.html)?$/;
+var markoRegExp = /.html|\.marko(.xml|.html)?$/;
 var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var logger = require('raptor-logging').logger(module);
+
+var viewEngine;
+var req = require;
+
+try {
+    viewEngine = req('view-engine');
+} catch(e) {}
 
 function notEmpty(o) {
     if (o == null) {
@@ -118,15 +125,15 @@ module.exports = {
      */
     l: function(path, req) {
         if (typeof path === 'string') {
-            if (path.charAt(0) === '.') { // Check if the path is relative
+            if (path.charAt(0) === '.' && req.resolve) { // Check if the path is relative
                 // The path is relative so use require.resolve to fully resolve the path
                 path = req.resolve(path);
             }
 
-            if (markoRegExp.test(path)) {
+            if (!viewEngine || markoRegExp.test(path)) {
                 return runtime.load(path);
             } else {
-                return req('view-engine').load(path);
+                return viewEngine.load(path);
             }
         } else if (path.render) {
             // Assume it is already a pre-loaded template

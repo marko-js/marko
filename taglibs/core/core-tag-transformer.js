@@ -402,7 +402,7 @@ module.exports = function transform(node, compiler, template) {
                             ')');
                     } else {
                         // Resolve the static string to a full path only once
-                        templateVar = template.addStaticVar(attr.value, '__loadTemplate(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '))');
+                        templateVar = template.addStaticVar(attr.value, '__loadTemplate(require.resolve(' + compiler.convertType(attr.value, 'string', true) + '), require)');
                         value = compiler.makeExpression(templateVar);
                     }
                 } else {
