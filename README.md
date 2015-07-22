@@ -21,110 +21,6 @@ Syntax highlighting available for [Atom](https://atom.io/) by installing the [la
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-# Table of Contents
-
-- [Installation](#installation)
-- [Sample Code](#sample-code)
-- [Another Templating Language?](#another-templating-language)
-- [Design Philosophy](#design-philosophy)
-- [Usage](#usage)
-	- [Template Loading](#template-loading)
-	- [Template Rendering](#template-rendering)
-		- [Callback API](#callback-api)
-		- [Streaming API](#streaming-api)
-		- [Synchronous API](#synchronous-api)
-		- [Asynchronous Rendering API](#asynchronous-rendering-api)
-	- [Browser-side Rendering](#browser-side-rendering)
-		- [Using Lasso.js](#using-lassojs)
-		- [Using Browserify](#using-browserify)
-	- [Template Compilation](#template-compilation)
-		- [Sample Compiled Template](#sample-compiled-template)
-	- [Hot reloading templates](#hot-reloading-templates)
-- [Language Guide](#language-guide)
-	- [Template Directives Overview](#template-directives-overview)
-	- [Text Replacement](#text-replacement)
-	- [Expressions](#expressions)
-	- [Includes](#includes)
-	- [Variables](#variables)
-	- [Conditionals](#conditionals)
-		- [if...else-if...else](#ifelse-ifelse)
-		- [Shorthand Conditionals](#shorthand-conditionals)
-		- [Conditional Attributes](#conditional-attributes)
-	- [Looping](#looping)
-		- [for](#for)
-			- [Loop Status Variable](#loop-status-variable)
-			- [Loop Separator](#loop-separator)
-			- [Range Looping](#range-looping)
-			- [Property Looping](#property-looping)
-			- [Custom Iterator](#custom-iterator)
-	- [Macros](#macros)
-		- [def](#def)
-		- [invoke](#invoke)
-	- [Structure Manipulation](#structure-manipulation)
-		- [attrs](#attrs)
-		- [body-only-if](#body-only-if)
-	- [Comments](#comments)
-	- [Whitespace](#whitespace)
-	- [Helpers](#helpers)
-	- [Global Properties](#global-properties)
-	- [Custom Tags and Attributes](#custom-tags-and-attributes)
-	- [Async Taglib](#async-taglib)
-	- [Layout Taglib](#layout-taglib)
-- [API](#api)
-	- [require('marko')](#requiremarko)
-		- [Methods](#methods)
-			- [load(templatePath[, options]) : Template](#loadtemplatepath-options--template)
-			- [createWriter([stream]) : AsyncWriter](#createwriterstream--asyncwriter)
-			- [render(templatePath, templateData, stream.Writable)](#rendertemplatepath-templatedata-streamwritable)
-			- [render(templatePath, templateData, callback)](#rendertemplatepath-templatedata-callback)
-			- [stream(templatePath, templateData) : stream.Readable](#streamtemplatepath-templatedata--streamreadable)
-		- [Properties](#properties)
-			- [helpers](#helpers)
-			- [Template](#template)
-	- [Template](#template-1)
-		- [Methods](#methods-1)
-			- [renderSync(templateData) : String](#rendersynctemplatedata--string)
-			- [render(templateData, stream.Writable)](#rendertemplatedata-streamwritable)
-			- [render(templateData, AsyncWriter)](#rendertemplatedata-asyncwriter)
-			- [render(templateData, callback)](#rendertemplatedata-callback)
-			- [stream(templateData) : stream.Readable](#streamtemplatedata--streamreadable)
-- [Custom Taglibs](#custom-taglibs)
-	- [Tag Renderer](#tag-renderer)
-	- [marko-taglib.json](#marko-taglibjson)
-		- [Sample Taglib](#sample-taglib)
-	- [Defining Tags](#defining-tags)
-	- [Defining Attributes](#defining-attributes)
-	- [Scanning for Tags](#scanning-for-tags)
-	- [Nested Tags](#nested-tags)
-	- [Taglib Discovery](#taglib-discovery)
-- [FAQ](#faq)
-- [Additional Resources](#additional-resources)
-	- [Further Reading](#further-reading)
-	- [Screencasts](#screencasts)
-	- [Demo Apps](#demo-apps)
-	- [Tools](#tools)
-- [Changelog](#changelog)
-- [Discuss](#discuss)
-- [Contributors](#contributors)
-- [Contribute](#contribute)
-- [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Installation
-
-To install the `marko` module into your project you should use the following command:
-
-```bash
-npm install marko --save
-```
-
-To install the optional `markoc` command line interface to compile templates you can use the following command:
-
-```bash
-npm install marko --global
-```
-
 # Sample Code
 
 A basic template with text replacement, looping and conditionals is shown below:
@@ -248,6 +144,108 @@ The above template is a very simple way to generate the much more complicated HT
 ```
 
 The custom tags encapsulate rendering logic and help avoid repeating the same HTML (and potentially the same mistakes).
+# Table of Contents
+
+- [Installation](#installation)
+- [Another Templating Language?](#another-templating-language)
+- [Design Philosophy](#design-philosophy)
+- [Usage](#usage)
+	- [Template Loading](#template-loading)
+	- [Template Rendering](#template-rendering)
+		- [Callback API](#callback-api)
+		- [Streaming API](#streaming-api)
+		- [Synchronous API](#synchronous-api)
+		- [Asynchronous Rendering API](#asynchronous-rendering-api)
+	- [Browser-side Rendering](#browser-side-rendering)
+		- [Using Lasso.js](#using-lassojs)
+		- [Using Browserify](#using-browserify)
+	- [Template Compilation](#template-compilation)
+		- [Sample Compiled Template](#sample-compiled-template)
+	- [Hot reloading templates](#hot-reloading-templates)
+- [Language Guide](#language-guide)
+	- [Template Directives Overview](#template-directives-overview)
+	- [Text Replacement](#text-replacement)
+	- [Expressions](#expressions)
+	- [Includes](#includes)
+	- [Variables](#variables)
+	- [Conditionals](#conditionals)
+		- [if...else-if...else](#ifelse-ifelse)
+		- [Shorthand Conditionals](#shorthand-conditionals)
+		- [Conditional Attributes](#conditional-attributes)
+	- [Looping](#looping)
+		- [for](#for)
+			- [Loop Status Variable](#loop-status-variable)
+			- [Loop Separator](#loop-separator)
+			- [Range Looping](#range-looping)
+			- [Property Looping](#property-looping)
+			- [Custom Iterator](#custom-iterator)
+	- [Macros](#macros)
+		- [def](#def)
+		- [invoke](#invoke)
+	- [Structure Manipulation](#structure-manipulation)
+		- [attrs](#attrs)
+		- [body-only-if](#body-only-if)
+	- [Comments](#comments)
+	- [Whitespace](#whitespace)
+	- [Helpers](#helpers)
+	- [Global Properties](#global-properties)
+	- [Custom Tags and Attributes](#custom-tags-and-attributes)
+	- [Async Taglib](#async-taglib)
+	- [Layout Taglib](#layout-taglib)
+- [API](#api)
+	- [require('marko')](#requiremarko)
+		- [Methods](#methods)
+			- [load(templatePath[, options]) : Template](#loadtemplatepath-options--template)
+			- [createWriter([stream]) : AsyncWriter](#createwriterstream--asyncwriter)
+			- [render(templatePath, templateData, stream.Writable)](#rendertemplatepath-templatedata-streamwritable)
+			- [render(templatePath, templateData, callback)](#rendertemplatepath-templatedata-callback)
+			- [stream(templatePath, templateData) : stream.Readable](#streamtemplatepath-templatedata--streamreadable)
+		- [Properties](#properties)
+			- [helpers](#helpers)
+			- [Template](#template)
+	- [Template](#template-1)
+		- [Methods](#methods-1)
+			- [renderSync(templateData) : String](#rendersynctemplatedata--string)
+			- [render(templateData, stream.Writable)](#rendertemplatedata-streamwritable)
+			- [render(templateData, AsyncWriter)](#rendertemplatedata-asyncwriter)
+			- [render(templateData, callback)](#rendertemplatedata-callback)
+			- [stream(templateData) : stream.Readable](#streamtemplatedata--streamreadable)
+- [Custom Taglibs](#custom-taglibs)
+	- [Tag Renderer](#tag-renderer)
+	- [marko-taglib.json](#marko-taglibjson)
+		- [Sample Taglib](#sample-taglib)
+	- [Defining Tags](#defining-tags)
+	- [Defining Attributes](#defining-attributes)
+	- [Scanning for Tags](#scanning-for-tags)
+	- [Nested Tags](#nested-tags)
+	- [Taglib Discovery](#taglib-discovery)
+- [FAQ](#faq)
+- [Additional Resources](#additional-resources)
+	- [Further Reading](#further-reading)
+	- [Screencasts](#screencasts)
+	- [Demo Apps](#demo-apps)
+	- [Tools](#tools)
+- [Changelog](#changelog)
+- [Discuss](#discuss)
+- [Contributors](#contributors)
+- [Contribute](#contribute)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Installation
+
+To install the `marko` module into your project you should use the following command:
+
+```bash
+npm install marko --save
+```
+
+To install the optional `markoc` command line interface to compile templates you can use the following command:
+
+```bash
+npm install marko --global
+```
 
 # Another Templating Language?
 
