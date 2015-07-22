@@ -2031,7 +2031,9 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
+Questions or comments can also be posted on the [Marko Github issues](https://github.com/raptorjs/marko/issues) page.
+
+~~Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).~~
 
 # Contributors
 
