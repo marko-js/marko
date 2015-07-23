@@ -1,14 +1,14 @@
 Marko
 ================
-[![Build Status](https://travis-ci.org/raptorjs/marko.svg?branch=master)](https://travis-ci.org/raptorjs/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
 
 
-Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/raptorjs/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
+Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/marko-js/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
 
 Marko is a perfect match for Node.js since it supports writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
-For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/raptorjs/marko-widgets) taglib.
+For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/marko-js/marko-widgets) taglib.
 
 __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
@@ -440,7 +440,7 @@ Despite rendering the first chunk asynchronously, the above program will stream 
 BEGIN Hello World! END
 ```
 
-For more details, please see the documentation for the [async-writer](https://github.com/raptorjs/async-writer) module.
+For more details, please see the documentation for the [async-writer](https://github.com/marko-js/async-writer) module.
 
 ## Browser-side Rendering
 
@@ -1420,7 +1420,7 @@ template.render({
 </async-fragment>
 ```
 
-For more details, please see [https://github.com/raptorjs/marko-async](https://github.com/raptorjs/marko-async).
+For more details, please see [https://github.com/marko-js/marko-async](https://github.com/marko-js/marko-async).
 
 ## Layout Taglib
 
@@ -1461,7 +1461,7 @@ _Usage of `default-layout.marko`:_
 ```
 
 
-For more details, please see [https://github.com/raptorjs/marko-layout](https://github.com/raptorjs/marko-layout).
+For more details, please see [https://github.com/marko-js/marko-layout](https://github.com/marko-js/marko-layout).
 
 # API
 
@@ -1487,7 +1487,7 @@ Supported `options`:
 
 #### createWriter([stream]) : AsyncWriter
 
-Creates an instance of an [AsyncWriter](https://github.com/raptorjs/async-writer) instance that can be used to support asynchronous rendering.
+Creates an instance of an [AsyncWriter](https://github.com/marko-js/async-writer) instance that can be used to support asynchronous rendering.
 
 Example usage:
 
@@ -1557,7 +1557,7 @@ template.render({ name: 'Frank' }, process.stdout);
 
 #### render(templateData, AsyncWriter)
 
-Renders a template to an [AsyncWriter](https://github.com/raptorjs/async-writer) instance that wraps an underlying stream.
+Renders a template to an [AsyncWriter](https://github.com/marko-js/async-writer) instance that wraps an underlying stream.
 
 Example usage:
 
@@ -1582,7 +1582,7 @@ template.render({ name: 'Frank' }, function(err, html, out) {
 });
 ```
 
-_NOTE: The `out` argument will rarely be used, but it will be a reference to the [AsyncWriter](https://github.com/raptorjs/async-writer) instance that was created to faciltate rendering of the template._
+_NOTE: The `out` argument will rarely be used, but it will be a reference to the [AsyncWriter](https://github.com/marko-js/async-writer) instance that was created to facilitate rendering of the template._
 
 #### stream(templateData) : stream.Readable
 
@@ -1599,7 +1599,7 @@ template.stream({ name: 'Frank' }).pipe(process.stdout);
 
 ## Tag Renderer
 
-Every tag should be mapped to an object with a `render(input, out)` function. The render function is just a function that takes two arguments: `input` and `out`. The `input` argument is an arbitrary object that contains the input data for the renderer. The `out` argument is an [asynchronous writer](https://github.com/raptorjs/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
+Every tag should be mapped to an object with a `render(input, out)` function. The render function is just a function that takes two arguments: `input` and `out`. The `input` argument is an arbitrary object that contains the input data for the renderer. The `out` argument is an [asynchronous writer](https://github.com/marko-js/async-writer) that wraps an output stream. Output can be produced using `out.write(someString)` There is no class hierarchy or tie-ins to Marko when implementing a tag renderer. A simple tag renderer is shown below:
 
 ```javascript
 exports.render = function(input, out) {
@@ -1989,13 +1989,9 @@ app.get('/profile', function(req, res) {
 
 __Question:__ _What is the recommended directory structure for templates and "partials"_
 
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/raptorjs/raptor-samples/tree/master/marko-express).
+__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/marko-js-samples/marko-express).
 
 <hr>
-
-__Question:__ _How is Marko related to [RaptorJS](http://raptorjs.org)?_
-
-__Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It used to be a submodule, but now it has been split out into its own top-level Node.js module (for history, please see the [RaptorJS 3 Plan](https://github.com/raptorjs/raptorjs/wiki/RaptorJS-3-Plan) page).
 
 # Additional Resources
 
@@ -2004,16 +2000,16 @@ __Answer__: Marko is one of the modules that is part of the RaptorJS toolkit. It
 * [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
 * [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
 * [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
-* [Marko Widgets](https://github.com/raptorjs/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
+* [Marko Widgets](https://github.com/marko-js/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
 
 ## Screencasts
 
 * [KnowThen: Episode 8 – Serving Content in Koajs with Marko](http://knowthen.com/episode-8-serving-content-in-koajs-with-marko/)
 
-## Demo Apps
+## Sample Apps
 
-* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/raptorjs-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/)
-* UI Components Playground [source](https://github.com/raptorjs-samples/ui-components-playground) | [demo](https://ui-components-playground.herokuapp.com/)
+* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/marko-js-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/)
+* UI Components Playground [source](https://github.com/marko-js-samples/ui-components-playground) | [demo](https://ui-components-playground.herokuapp.com/)
 
 ## Tools
 
@@ -2027,9 +2023,9 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Discuss
 
-Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Questions or comments can also be posted on the [Marko Github issues](https://github.com/raptorjs/marko/issues) page.
+Questions or comments can also be posted on the [Marko Github issues](https://github.com/marko-js/marko/issues) page.
 
 ~~Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).~~
 
