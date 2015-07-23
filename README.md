@@ -1,9 +1,9 @@
 marko-widgets
 ==============
 
-[![Build Status](https://travis-ci.org/raptorjs/marko-widgets.svg?branch=master)](https://travis-ci.org/raptorjs/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/marko-js/marko-widgets.svg?branch=master)](https://travis-ci.org/marko-js/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Marko Widgets extends the [Marko templating language](https://github.com/raptorjs/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
+Marko Widgets extends the [Marko templating language](https://github.com/marko-js/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
 
 ![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
 
@@ -84,7 +84,7 @@ Marko Widgets extends the [Marko templating language](https://github.com/raptorj
 
 - Simple
 	- Clean JavaScript syntax for defining widgets
-	- Utilizes [Marko templates](https://github.com/raptorjs/marko) (an HTML-based templating language) for the view
+	- Utilizes [Marko templates](https://github.com/marko-js/marko) (an HTML-based templating language) for the view
 	- Supports stateful and stateless widgets
 	- No complex class hierarchy
 	- Simple, declarative event binding for both native DOM events and custom events
@@ -659,7 +659,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 The `marko-widgets` taglib also provides support for allowing a widget to communicate directly with nested widgets. A nested widget can be assigned a widget ID (only needs to be unique within the scope of the containing widget) and the containing widget can then reference the nested widget by the assigned widget ID using the `this.getWidget(id)` method.
 
-The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/raptorjs/raptor-sample-ui-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
+The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/marko-js-samples/marko-sample-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/marko-js-samples/marko-sample-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 
 ```xml
 <div class="my-component" w-bind="./widget">
@@ -699,7 +699,7 @@ var todoItemWidgets = this.getWidgets('todoItems');
 // todoItemWidgets will be an Array of todo item widgets
 ```
 
-To try out and experiment with this code please see the documentation and source code for the [widgets-communication](https://github.com/raptorjs/raptor-samples/tree/master/widgets-communication) sample app.
+To try out and experiment with this code please see the documentation and source code for the [widget-communication](https://github.com/marko-js-samples/widget-communication) sample app.
 
 ## Referencing Nested DOM Elements
 
@@ -970,13 +970,14 @@ __src/pages/index/template.marko:__
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Widgets Demo</title>
+    <title>Marko Widgets: Bind</title>
     <lasso-head/>
 </head>
 <body>
-    <!-- Bind a widget to a div element using the "w-bind" attribute -->
+    <h1>Marko Widgets: Bind</h1>
+
     <div class="my-component" w-bind="./widget">
-        <h1>Click Me</h1>
+        <h2>Click Me</h2>
     </div>
 
     <lasso-body/>
@@ -1007,16 +1008,17 @@ In the above example, the final HTML will be similar to the following:
         <title>Widgets Demo</title>
     </head>
     <body>
-        <div data-rwidget="/src/pages/index/widget" id="w0" class="my-component">
-            <h1>Click Me</h1>
-        </div>
+		<h1>Marko Widgets: Bind</h1>
+		<div class="my-component" id="w0" data-widget="/src/pages/index/widget">
+			<h2>Click Me</h2>
+		</div>
         <script src="static/index-8947595a.js" type="text/javascript"></script>
         <span style="display:none;" data-ids="w0" id="rwidgets"></span>
     </body>
 </html>
 ```
 
-To try out and experiment with this code please see the documentation and source code for the [widgets-bind-behavior](https://github.com/raptorjs/raptor-samples/tree/master/widgets-bind-behavior) sample app.
+To try out and experiment with this code please see the documentation and source code for the [widget-bind](https://github.com/marko-js-samples/widget-bind) sample app.
 
 ### Manually Initializing Server-side Rendered Widgets
 
@@ -1410,9 +1412,9 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Discuss
 
-Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raptorjs/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/marko-js/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).
+Questions or comments can also be posted on the [Marko Widgets Github issues](https://github.com/marko-js/marko-widgets/issues) page.
 
 # Contributors
 
