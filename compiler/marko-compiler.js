@@ -36,6 +36,10 @@ var defaultOptions = {
         checkUpToDate: true
     };
 
+if (process.env.MARKO_CLEAN === '' || process.env.MARKO_CLEAN === 'true') {
+    defaultOptions.checkUpToDate = false;
+}
+
 extend(exports, {
     createCompiler: function (path, options) {
         var TemplateCompiler = require('./TemplateCompiler');

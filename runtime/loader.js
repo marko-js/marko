@@ -13,10 +13,6 @@ if (process.env.hasOwnProperty('MARKO_BROWSER_REFRESH')) {
     require('../browser-refresh').enable();
 }
 
-if (process.env.MARKO_CLEAN === '' || process.env.MARKO_CLEAN === 'true') {
-    markoCompiler.defaultOptions.checkUpToDate = false;
-}
-
 function loadSource(templatePath, compiledSrc) {
     var templateModulePath = templatePath + '.js';
 
