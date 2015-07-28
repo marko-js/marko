@@ -206,6 +206,8 @@ TemplateCompiler.prototype = {
             var nodeClass = require(tag.nodeClass);
             nodeClass.prototype.constructor = nodeClass;
             return nodeClass;
+        } else {
+            return ElementNode;
         }
         throw createError(new Error('Node class not found for tag "' + tagName + '"'));
     },
@@ -229,6 +231,13 @@ TemplateCompiler.prototype = {
         if (typeof Ctor === 'string') {
             var tagName = Ctor;
             Ctor = this.getNodeClass(tagName);
+
+            if (Ctor === ElementNode) {
+                return new ElementNode(
+                    tagName,
+                    '',
+                    '');
+            }
         }
 
         ok(Ctor != null, 'Ctor is required');
