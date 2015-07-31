@@ -166,4 +166,12 @@ describe('server-rendered' , function() {
             expect(widget.el.innerHTML).to.equal('New Label');
         });
     });
+
+    it('[server-rendered] should allow DOM event listeners on repeated elements for non-bubbling events', function() {
+        expect(window.testData.widgets['app-repeated-el-dom-events'].length).to.equal(1);
+
+        window.testData.widgets['app-repeated-el-dom-events'].forEach(function(widget) {
+            widget.test();
+        });
+    });
 });

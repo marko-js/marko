@@ -113,6 +113,9 @@
         },
         "w-register-widget": {
             "node-class": "./taglib/register-widget-node.js"
+        },
+        "w-dom-event": {
+            "node-class": "./taglib/dom-event-node.js"
         }
     }
 }

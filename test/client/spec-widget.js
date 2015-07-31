@@ -404,4 +404,15 @@ describe('widget' , function() {
         expect(widget.state.name).to.equal('John');
         expect(widget.state.count).to.equal(30);
     });
+
+    it('should allow DOM event listeners on repeated elements for non-bubbling events', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('../fixtures/components/app-repeated-el-dom-events')
+            .render({})
+            .appendTo(targetEl)
+            .getWidget();
+
+        widget.test();
+    });
 });

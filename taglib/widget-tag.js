@@ -1,5 +1,5 @@
 'use strict';
-var widgets = require('../');
+var markoWidgets = require('../');
 var extend = require('raptor-util/extend');
 var widgetArgsId = require('../lib/widget-args-id');
 
@@ -28,7 +28,7 @@ module.exports = function render(input, out) {
                 // stack (to begin with). This will result in top-level widgets
                 // of the async block being added as children of the widget in the
                 // parent block.
-                var nestedWidgetsContext = new widgets.WidgetsContext(out);
+                var nestedWidgetsContext = new markoWidgets.WidgetsContext(out);
                 nestedWidgetsContext.widgetStack = [widgetStack[0]];
                 asyncWriter.data.widgets = nestedWidgetsContext;
             }
@@ -45,7 +45,7 @@ module.exports = function render(input, out) {
 
     var id = input.id;
     var extendList;
-    var domEvents = input.domEvents;
+    var hasDomEvents = input.hasDomEvents;
     var customEvents;
     var scope;
     var extendState;
@@ -77,7 +77,7 @@ module.exports = function render(input, out) {
     }
 
     var rerenderWidget = global.__rerenderWidget;
-    var widgetsContext = widgets.getWidgetsContext(out);
+    var widgetsContext = markoWidgets.getWidgetsContext(out);
 
     if (rerenderWidget) {
         id = rerenderWidget.id;
@@ -94,7 +94,7 @@ module.exports = function render(input, out) {
             id: id,
             config: config,
             state: state,
-            domEvents: domEvents,
+            hasDomEvents: hasDomEvents,
             customEvents: customEvents,
             scope: scope,
             createWidget: input.createWidget,
@@ -104,6 +104,8 @@ module.exports = function render(input, out) {
         });
 
         input.renderBody(out, widgetDef);
+
+        markoWidgets.writeDomEventsEl(widgetDef, out);
 
         widgetDef.end();
     } else {
