@@ -31,6 +31,7 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 	- [Widget State](#widget-state)
 	- [Widget Config](#widget-config)
 	- [Referencing Nested Widgets](#referencing-nested-widgets)
+	- [Referencing External Widgets](#referencing-external-widgets)
 	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
 	- [Adding Event Listeners](#adding-event-listeners)
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
@@ -700,6 +701,21 @@ var todoItemWidgets = this.getWidgets('todoItems');
 ```
 
 To try out and experiment with this code please see the documentation and source code for the [widget-communication](https://github.com/marko-js-samples/widget-communication) sample app.
+
+## Referencing External Widgets
+
+Sometimes it may be necessary to reference a widget outside of its nested context. To do this you may use the `getWidgetForEl(el)` function:
+```javascript
+var myToggle = require('marko-widgets').getWidgetForEl('w0-myToggle');
+myToggle.setSelected(true);
+```
+
+It is also possible to get a widget handle using the widget el:
+```javascript
+var el = document.getElementById('w0-myToggle');
+var myToggle = require('marko-widgets').getWidgetForEl(el);
+myToggle.setSelected(true);
+```
 
 ## Referencing Nested DOM Elements
 
