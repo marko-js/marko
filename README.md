@@ -31,7 +31,6 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 	- [Widget State](#widget-state)
 	- [Widget Config](#widget-config)
 	- [Referencing Nested Widgets](#referencing-nested-widgets)
-	- [Referencing External Widgets](#referencing-external-widgets)
 	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
 	- [Adding Event Listeners](#adding-event-listeners)
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
@@ -702,21 +701,6 @@ var todoItemWidgets = this.getWidgets('todoItems');
 
 To try out and experiment with this code please see the documentation and source code for the [widget-communication](https://github.com/marko-js-samples/widget-communication) sample app.
 
-## Referencing External Widgets
-
-Sometimes it may be necessary to reference a widget outside of its nested context. To do this you may use the `getWidgetForEl(el)` function:
-```javascript
-var myToggle = require('marko-widgets').getWidgetForEl('w0-myToggle');
-myToggle.setSelected(true);
-```
-
-It is also possible to get a widget handle using the widget el:
-```javascript
-var el = document.getElementById('w0-myToggle');
-var myToggle = require('marko-widgets').getWidgetForEl(el);
-myToggle.setSelected(true);
-```
-
 ## Referencing Nested DOM Elements
 
 DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
@@ -1201,6 +1185,20 @@ The `defineWidget(def)` function can be used to define a UI component's client-s
 
 The return value of `defineRenderer(def)` will be a `renderer(input, out)` function with a static `render(input)` method.
 
+### getWidgetForEl(el)
+
+The `getWidgetForEl(el)` function can be used to retrieve a widget object outside of its nested context.
+```javascript
+var myToggle = require('marko-widgets').getWidgetForEl('w0-myToggle');
+myToggle.setSelected(true);
+```
+
+It is also possible to get a widget handle using the widget el:
+```javascript
+var el = document.getElementById('w0-myToggle');
+var myToggle = require('marko-widgets').getWidgetForEl(el);
+myToggle.setSelected(true);
+```
 
 ## Widget
 
