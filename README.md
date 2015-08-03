@@ -2016,6 +2016,8 @@ __Answer__: Your templates should be organized just like all other JavaScript mo
 * [Atom Editor](https://atom.io/)
     * [language-marko](https://atom.io/packages/language-marko) - Syntax highlighting for Marko templates in Atom
     * [atom-beautify](https://github.com/Glavin001/atom-beautify) - Beautify Marko templates in Atom
+* [Sublime Text](http://www.sublimetext.com/)
+    * [marko-sublime](https://github.com/merwan7/sublime-marko) - Syntax highlighting and completions for Sublime Text
 
 # Changelog
 
