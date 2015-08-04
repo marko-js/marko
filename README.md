@@ -1185,6 +1185,20 @@ The `defineWidget(def)` function can be used to define a UI component's client-s
 
 The return value of `defineRenderer(def)` will be a `renderer(input, out)` function with a static `render(input)` method.
 
+### getWidgetForEl(el)
+
+The `getWidgetForEl(el)` function can be used to retrieve a widget object outside of its nested context.
+```javascript
+var myToggle = require('marko-widgets').getWidgetForEl('w0-myToggle');
+myToggle.setSelected(true);
+```
+
+It is also possible to get a widget handle using the widget el:
+```javascript
+var el = document.getElementById('w0-myToggle');
+var myToggle = require('marko-widgets').getWidgetForEl(el);
+myToggle.setSelected(true);
+```
 
 ## Widget
 
