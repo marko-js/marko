@@ -1054,6 +1054,28 @@ document.body.innerHTML = html; // Add the HTML to the DOM
 require('marko-widgets').initWidgets(widgetIds);
 ```
 
+NOTE: the server side example above renders the template directly and therefore circumvents the
+index.js file (neither getInitialState() nor getTemplateData() are executed).
+
+To render the complete widget, use the code below instead
+(the browser side is not affected; the same code snipped can be used):
+
+```javascript
+var markoWidgets = require('marko-widgets');
+var helloComponent = require('src/components/app-hello');
+
+module.exports = function(req, res) {
+    var renderResult = helloComponent.render(viewModel);
+    var widgetIds = markoWidgets.getRenderedWidgetIds(renderResult.out);
+
+    // Serialize the HTML and the widget IDs to the browser
+    res.json({
+        html: renderResult.html,
+        widgetIds: widgetIds
+    });
+}
+```
+
 ## Split Renderer and Widget
 
 For UI components that will only be rendered on the server it may be desirable to split the renderer (i.e. rendering logic and template) from the client-side behavior (i.e. widget). This can be done by using `defineRenderer(def)` and `defineWidget(def)` instead of `defineComponent(def)`. An example of a combined and split UI component is shown below.
