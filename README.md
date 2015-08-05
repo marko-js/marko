@@ -1294,6 +1294,17 @@ this.appendTo(document.body);
 
 Destroys the widget by unsubscribing from all listeners made using the `subscribeTo` method and then detaching the widget's root element from the DOM. All nested widgets (discovered by querying the DOM) are also destroyed.
 
+Destroy takes 2 optional parameters:
+```javascript
+widget.destroy({
+	removeNode: true, //true by default
+	recursive: true //true by default
+})
+```
+
+Setting `removeNode` parameter to `false` will keep the widget on the DOM while still unsubscribing all events from it.
+Setting `recursive` to `false` will prevent children widgets from being destroyed.
+
 #### detach()
 
 Detaches the widget's root element from the DOM by removing the node from its parent node.
