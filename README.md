@@ -932,7 +932,8 @@ The `for` directive also supports a loop status variable in case you need to kno
 ```xml
 <ul>
     <li for="color in colors; status-var=loop">
-        ${loop.getIndex()+1}) $color
+        $color
+        ${loop.getIndex()+1}) of ${loop.getLength()}
         <if test="loop.isFirst()"> - FIRST</if>
         <if test="loop.isLast()"> - LAST</if>
     </li>
