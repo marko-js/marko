@@ -76,11 +76,11 @@ module.exports = function render(input, out) {
         }
     }
 
-    var rerenderWidget = global.__rerenderWidget;
+    var existingWidget = global.__rerenderWidget;
     var widgetsContext = widgets.getWidgetsContext(out);
 
-    if (rerenderWidget) {
-        id = rerenderWidget.id;
+    if (existingWidget) {
+        id = existingWidget.id;
         delete global.__rerenderWidget;
     }
 
@@ -99,7 +99,7 @@ module.exports = function render(input, out) {
             scope: scope,
             createWidget: input.createWidget,
             extend: extendList,
-            existingWidget: rerenderWidget,
+            existingWidget: existingWidget,
             bodyElId: bodyElId
         });
 
