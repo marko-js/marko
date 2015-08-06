@@ -379,7 +379,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 A container widget supports nested content. When the container widget is re-rendered, the nested content is automatically preserved.
 
-__src/components/app-alert/index.js__
+__src/components/app-alert/template.marko__
 
 ```xml
 <div class="alert alert-${data.type}" w-bind>
@@ -388,7 +388,7 @@ __src/components/app-alert/index.js__
 </div>
 ```
 
-__src/components/app-alert/template.marko__
+__src/components/app-alert/index.js__
 
 ```javascript
 module.exports = require('marko-widgets').defineComponent({
