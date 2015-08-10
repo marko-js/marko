@@ -346,6 +346,17 @@ describe('widget' , function() {
         expect(barWidget.name).to.equal('app-bar');
     });
 
+    it('should allow a dynamic w-id attr to be assigned to an invoke tag', function() {
+        var widget = require('../fixtures/components/app-invoke-widget-id-dynamic')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        var barWidget = widget.getWidget('myBar');
+        expect(barWidget != null).to.equal(true);
+        expect(barWidget.name).to.equal('app-bar');
+    });
+
     it('should allow a conditional widget with repeated IDs', function() {
         var widget = require('../fixtures/components/app-repeated-id-widgetless')
             .render({})
