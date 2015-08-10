@@ -58,11 +58,10 @@ The output of running the above program will be the following (formatted for rea
 
 ```xml
 Hello World!
-
 <ul>
-    <li>red</li>
-    <li>green</li>
-    <li>blue</li>
+    <li style="color: red">red</li>
+    <li style="color: green">green</li>
+    <li style="color: blue">blue</li>
 </ul>
 ```
 
@@ -79,8 +78,9 @@ The output would be the following:
 
 ```xml
 Hello World!
-
-<div>No colors!</div>
+<div>
+    No colors!
+</div>
 ```
 
 The streaming API can be used to stream the output to an HTTP response stream or any other writable stream. For example, with Express:
