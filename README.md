@@ -319,7 +319,7 @@ Finally, another distinguishing feature of Marko is that it supports _asynchrono
 
 ## Template Loading
 
-Marko provides a custom Node.js require extension that allows Marko templates to be required just like a standard JavaScript module. For example:
+Marko provides a [custom Node.js require extension](https://github.com/marko-js/marko/blob/master/node-require.js) that allows Marko templates to be `require`'d just like a standard JavaScript module. For example:
 
 ```javascript
 // The following line installs the Node.js require extension
@@ -333,9 +333,11 @@ require('marko/node-require').install();
 var template = require('./template.marko');
 ```
 
-_NOTE: The require extension only needs to be installed once, but it does not hurt if it is installed multiple times. For example, it is okay if the main app registers the require extension and an installed module also registers the require extension. The require extension will always resolve the proper `marko` module relative to the template being required so that there can still be multiple versions of marko in use for a single app._
+_NOTE: The Node.js require extension for Marko templates simply hooks into the Node.js module loading system to automatically compile `.marko` template files to CommonJS JavaScript modules when they are first required and the loaded `Template` instance is exported by the compiled template module. Internally, the implementation for `require('marko/node-require').install()` will use `require.extensions[extension] = function markoExtension(module, filename) { ... }` to register the Node.js require extension._
 
-However, if you prefer to not rely on the require extension for Marko templates, the following code will work as well:
+_NOTE 2: The require extension only needs to be installed once, but it does not hurt if it is installed multiple times. For example, it is okay if the main app registers the require extension and an installed module also registers the require extension. The require extension will always resolve the proper `marko` module relative to the template being required so that there can still be multiple versions of marko in use for a single app._
+
+If you prefer to not rely on the require extension for Marko templates, the following code will work as well:
 
 ```javascript
 var template = require('marko').load(require.resolve('./template.marko'));
