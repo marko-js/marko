@@ -63,7 +63,12 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         if (fs.existsSync(tagFile)) {
             // marko-tag.json exists in the directory, use that as the tag definition
-            tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
+            try {
+                tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
+            } catch(e) {
+                throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
+            }
+
             if (!tagDef.renderer && !tagDef.template) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;
