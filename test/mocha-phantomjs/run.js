@@ -6,6 +6,9 @@ var spawn = require('child_process').spawn;
 
 require('marko/hot-reload').enable();
 require('marko/compiler').defaultOptions.preserveWhitespace = true;
+require('marko/compiler').defaultOptions.checkUpToDate = false;
+require('marko/node-require').install();
+
 var lasso = require('lasso');
 
 var outputDir = path.join(__dirname, 'generated');

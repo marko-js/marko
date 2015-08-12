@@ -21,32 +21,22 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod) {
 
 function addDirectEventListener(transformHelper, eventType, targetMethod) {
 
-    // The event does not support bubbling, so the widget
-    // must attach the listeners directly to the target
-    // elements when the widget is initialized.
+    var compiler = transformHelper.compiler;
+    var node = transformHelper.node;
+
+    // Create a node that will generate code to register the DOM event listener
+    var domEventNode = compiler.createNode('w-dom-event', {
+        eventType: JSON.stringify(eventType),
+        targetMethod: targetMethod,
+        elId: transformHelper.getNestedIdExpression().toString()
+    });
+
+    // Insert the node right before the node with the DOM event listener
+    node.parentNode.insertBefore(domEventNode, node);
+
+    // Also add another DOM element that will be used to
     var containingWidgetNode = transformHelper.getContainingWidgetNode();
-
-    if (!containingWidgetNode) {
-        transformHelper.node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
-        return;
-    }
-
-
-    if (!containingWidgetNode.data.widgetEvents) {
-        // Add a new input property to the widget tag that will contain
-        // enough information to allow the DOM event listeners to
-        // be attached directly to the DOM elements.
-        containingWidgetNode.data.widgetEvents = [];
-        containingWidgetNode.setProperty('domEvents', function() {
-            return transformHelper.compiler.makeExpression(
-                '[' + containingWidgetNode.data.widgetEvents.join(',') + ']');
-        });
-    }
-
-    // Add a 3-tuple consisting of <event-type><target-method>(<DOM element ID>|<widget ID>)
-    containingWidgetNode.data.widgetEvents.push(JSON.stringify(eventType));
-    containingWidgetNode.data.widgetEvents.push(targetMethod);
-    containingWidgetNode.data.widgetEvents.push(transformHelper.getNestedIdExpression().toString());
+    containingWidgetNode.setProperty('hasDomEvents', compiler.makeExpression('1'));
 }
 
 function addCustomEventListener(transformHelper, eventType, targetMethod) {
