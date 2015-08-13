@@ -16,13 +16,11 @@ module.exports = require('marko-widgets').defineComponent({
 	},
 
 	init: function() {
-		if (!this.lifecycleEvents) {
-			this.lifecycleEvents = [];
-		}
+		window.recordWidgetLifecycleEvent(this.id, 'init');
 	},
 
 	update_messageCount: function(newMessageCount) {
-		this.getEl('messageCount').innerHTML = '' + newMessageCount;
+		this.getWidget('nestedStateful').setMessageCount(newMessageCount);
 	},
 
 	setName: function(newName) {
@@ -34,18 +32,18 @@ module.exports = require('marko-widgets').defineComponent({
 	},
 
 	onBeforeDestroy: function() {
-		this.lifecycleEvents.push('onBeforeDestroy');
+		window.recordWidgetLifecycleEvent(this.id, 'onBeforeDestroy');
 	},
 
 	onDestroy: function() {
-		this.lifecycleEvents.push('onDestroy');
+		window.recordWidgetLifecycleEvent(this.id, 'onDestroy');
 	},
 
 	onBeforeUpdate: function() {
-		this.lifecycleEvents.push('onBeforeUpdate');
+		window.recordWidgetLifecycleEvent(this.id, 'onBeforeUpdate');
 	},
 
 	onAfterUpdate: function() {
-		this.lifecycleEvents.push('onAfterUpdate');
+		window.recordWidgetLifecycleEvent(this.id, 'onAfterUpdate');
 	}
 });

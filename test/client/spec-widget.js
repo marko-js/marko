@@ -2,6 +2,13 @@ var chai = require('chai');
 var expect = chai.expect;
 var util = require('./util');
 
+var widgetLifecycleEvents = {};
+
+window.recordWidgetLifecycleEvent = function(key, eventType) {
+    var events = widgetLifecycleEvents[key] || (widgetLifecycleEvents[key] = []);
+    events.push(eventType);
+};
+
 describe('widget' , function() {
     beforeEach(function() {
         util.cleanup();
@@ -207,8 +214,10 @@ describe('widget' , function() {
             .getWidget();
 
         expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
-        expect(widget.lifecycleEvents).to.deep.equal([]);
 
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init'
+        ]);
 
         require('marko-widgets').batchUpdate(function() {
             widget.setProps({
@@ -216,20 +225,35 @@ describe('widget' , function() {
                 messageCount: 30
             });
             expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
-            expect(widget.lifecycleEvents).to.deep.equal([]);
+
+            expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+                'init'
+            ]);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Jane! You have 30 new messages.');
 
-        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate'
+        ]);
 
         widget.destroy();
 
-        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforeDestroy',
+            'onDestroy'
+        ]);
     });
 
     it('should support lifecycle event handler methods for a stateful widget', function() {
         var targetEl = document.getElementById('target');
+
+        widgetLifecycleEvents = {};
 
         var widget = require('../fixtures/components/app-stateful-lifecycle-events')
             .render({
@@ -241,35 +265,96 @@ describe('widget' , function() {
 
         expect(targetEl.innerHTML).to.contain('Hello Frank!');
         expect(targetEl.innerHTML).to.contain('10');
-        expect(widget.lifecycleEvents).to.deep.equal([]);
+
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init']);
+
+        expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
+            'init']);
+
+        expect(widgetLifecycleEvents.foo).to.deep.equal([
+            'init']);
 
         require('marko-widgets').batchUpdate(function() {
             // NOTE: messageCount has an update handler
-            widget.setState('messageCount', 30);
+            widget.setState('messageCount', 999);
             expect(targetEl.innerHTML).to.contain('Hello Frank!');
             expect(targetEl.innerHTML).to.contain('10');
-            expect(widget.lifecycleEvents).to.deep.equal([]);
+            expect(widgetLifecycleEvents[widget.id]).to.deep.equal(['init']);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Frank!');
-        expect(targetEl.innerHTML).to.contain('30');
-        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+        expect(targetEl.innerHTML).to.contain('999');
+
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate']);
+
+        expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate']);
 
         require('marko-widgets').batchUpdate(function() {
             // NOTE: name does *not* have an update handler
             widget.setState('name', 'Jane');
             expect(targetEl.innerHTML).to.contain('Hello Frank!');
-            expect(targetEl.innerHTML).to.contain('30');
-            expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate']);
+            expect(targetEl.innerHTML).to.contain('999');
+            expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+                'init',
+                'onBeforeUpdate',
+                'onAfterUpdate']);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Jane!');
-        expect(targetEl.innerHTML).to.contain('30');
-        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeUpdate', 'onAfterUpdate']);
+        expect(targetEl.innerHTML).to.contain('999');
+
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforeUpdate',
+            'onAfterUpdate']);
+
+        expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate']);
+
+        expect(widgetLifecycleEvents.foo).to.deep.equal([
+            'init',
+            'onBeforeDestroy',
+            'onDestroy',
+            'init']);
+
+        var nestedStateful = widget.getWidget('nestedStateful');
 
         widget.destroy();
 
-        expect(widget.lifecycleEvents).to.deep.equal(['onBeforeUpdate', 'onAfterUpdate', 'onBeforeUpdate', 'onAfterUpdate', 'onBeforeDestroy', 'onDestroy']);
+        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforeDestroy',
+            'onDestroy']);
+
+        expect(widgetLifecycleEvents[nestedStateful.id]).to.deep.equal([
+            'init',
+            'onBeforeUpdate',
+            'onAfterUpdate',
+            'onBeforeDestroy',
+            'onDestroy']);
+
+        expect(widgetLifecycleEvents.foo).to.deep.equal([
+            'init',
+            'onBeforeDestroy',
+            'onDestroy',
+            'init',
+            'onBeforeDestroy',
+            'onDestroy']);
     });
 
     it('should support getInitialProps', function() {
@@ -325,14 +410,6 @@ describe('widget' , function() {
         expect(widget.el.innerHTML).to.contain('green');
         expect(widget.el.innerHTML).to.contain('blue');
         expect(widget.el.innerHTML).to.contain('orange');
-    });
-
-    it('should throw error when accessing this.widgets', function() {
-        expect(function() {
-            require('../fixtures/invalid/invalid-WidgetCollection')
-                .render({})
-                .appendTo(document.getElementById('target'));
-        }).to.throw(/is no longer supported/);
     });
 
     it('should allow a w-id attr to be assigned to an invoke tag', function() {
@@ -425,5 +502,36 @@ describe('widget' , function() {
             .getWidget();
 
         widget.test();
+    });
+
+    it('should correctly destroy a discarded widget', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('../fixtures/components/app-discard')
+            .render({
+                showSimple: true
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        var simple = widget.getWidget('simple');
+        var simpleDestroyed = false;
+
+        simple.onDestroy = function() {
+            simpleDestroyed = true;
+        };
+
+        expect(simple != null).to.equal(true);
+
+        require('marko-widgets').batchUpdate(function() { // Force the HTML update to be immediate
+            widget.setProps({
+                showSimple: false
+            });
+        });
+
+        expect(simpleDestroyed).to.equal(true);
+        expect(simple.isDestroyed()).to.equal(true);
+
+        expect(widget.getWidget('simple') == null).to.equal(true);
     });
 });

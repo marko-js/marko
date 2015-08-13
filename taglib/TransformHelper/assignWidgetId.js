@@ -21,7 +21,7 @@ function assignWidgetId(isRepeated) {
         // That means we do not have access to the parent widget variable as part of a closure. We
         // need to look it up out of the `out.data` map
         if (!this.template.data.hasWidgetVar) {
-            this.template.addVar('widget', 'out.global.widgets.getWidget()');
+            this.template.addVar('widget', 'out.global.widgets.getCurrentWidget()');
             this.template.data.hasWidgetVar = true;
         }
     }
