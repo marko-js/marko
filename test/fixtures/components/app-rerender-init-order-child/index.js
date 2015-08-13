@@ -16,7 +16,7 @@ module.exports = require('marko-widgets').defineComponent({
         // console.log(module.id, 'init()', this.state);
         window.rerenderInitOrder.push(this.state.id);
     },
-    onAfterUpdate: function() {
+    onUpdate: function() {
         // console.log(module.id, 'init()', this.state);
         window.rerenderInitOrder.push(this.state.id);
     }

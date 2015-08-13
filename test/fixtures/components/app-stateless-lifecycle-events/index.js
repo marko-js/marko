@@ -24,7 +24,7 @@ module.exports = require('marko-widgets').defineComponent({
 		window.recordWidgetLifecycleEvent(this.id, 'onBeforeUpdate');
 	},
 
-	onAfterUpdate: function() {
-		window.recordWidgetLifecycleEvent(this.id, 'onAfterUpdate');
+	onUpdate: function() {
+		window.recordWidgetLifecycleEvent(this.id, 'onUpdate');
 	}
 });

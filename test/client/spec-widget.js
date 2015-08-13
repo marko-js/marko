@@ -236,7 +236,7 @@ describe('widget' , function() {
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate'
+            'onUpdate'
         ]);
 
         widget.destroy();
@@ -244,7 +244,7 @@ describe('widget' , function() {
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate',
+            'onUpdate',
             'onBeforeDestroy',
             'onDestroy'
         ]);
@@ -289,12 +289,12 @@ describe('widget' , function() {
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate']);
+            'onUpdate']);
 
         expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate']);
+            'onUpdate']);
 
         require('marko-widgets').batchUpdate(function() {
             // NOTE: name does *not* have an update handler
@@ -304,7 +304,7 @@ describe('widget' , function() {
             expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
                 'init',
                 'onBeforeUpdate',
-                'onAfterUpdate']);
+                'onUpdate']);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Jane!');
@@ -313,14 +313,14 @@ describe('widget' , function() {
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate',
+            'onUpdate',
             'onBeforeUpdate',
-            'onAfterUpdate']);
+            'onUpdate']);
 
         expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate']);
+            'onUpdate']);
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
             'init',
@@ -335,16 +335,16 @@ describe('widget' , function() {
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate',
+            'onUpdate',
             'onBeforeUpdate',
-            'onAfterUpdate',
+            'onUpdate',
             'onBeforeDestroy',
             'onDestroy']);
 
         expect(widgetLifecycleEvents[nestedStateful.id]).to.deep.equal([
             'init',
             'onBeforeUpdate',
-            'onAfterUpdate',
+            'onUpdate',
             'onBeforeDestroy',
             'onDestroy']);
 
