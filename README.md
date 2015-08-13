@@ -5,7 +5,7 @@ marko-widgets
 
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
-Marko Widgets extends the [Marko templating language](https://github.com/marko-js/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
+Marko Widgets extends the [Marko templating language](https://github.com/marko-js/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state or properties will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster (especially on the server). When updating the view for a widget, Marko Widgets uses DOM diffing to make the minimum number of changes to the DOM through the use of the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -36,9 +36,16 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
 		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
 	- [Lifecycle Methods](#lifecycle-methods)
+		- [getInitialProps(input, out)](#getinitialpropsinput-out)
+		- [getInitialState(input, out)](#getinitialstateinput-out)
+		- [getTemplateData(state, input, out)](#gettemplatedatastate-input-out)
+		- [getWidgetConfig(input, out)](#getwidgetconfiginput-out)
+		- [getInitialBody(input, out)](#getinitialbodyinput-out)
 		- [init(widgetConfig)](#initwidgetconfig)
 		- [onBeforeUpdate()](#onbeforeupdate)
 		- [onUpdate()](#onupdate)
+		- [onBeforeDestroy()](#onbeforedestroy)
+		- [onDestroy()](#ondestroy)
 		- [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
 	- [Client-side Rendering](#client-side-rendering)
 	- [Server-side Rendering](#server-side-rendering)
@@ -109,6 +116,7 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 	- Supports streaming and asynchronous rendering
 	- Efficient binding of behavior of UI components rendered on the server and in the browser
 	- Efficient updating of the DOM via the following tricks:
+		- DOM diffing is used to make the minimum number of changes to the DOM using the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
 		- Batched updates
 		- When re-rendering a widget, nested widgets are reused
 		- Only widgets whose state changed are re-rendered
@@ -948,15 +956,94 @@ NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscr
 
 ## Lifecycle Methods
 
+
+### getInitialProps(input, out)
+
+This optional method is used to normalize the input properties during the rendering of a UI component. If implemented, this method should return the input properties to use based on the provided `input` and `out` arguments.
+
+```javascript
+{
+	getInitialProps: function(input, out) {
+		return {
+			name: input.name.toUpperCase()
+		}
+	},
+	...
+}
+```
+
+_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+
+### getInitialState(input, out)
+
+This optional method is used to determine the initial state for a newly rendered UI component.
+
+```javascript
+{
+	getInitialState: function(input, out) {
+		return {
+			counter: input.counter == null ? 0 : input.counter
+		}
+	},
+	...
+}
+```
+
+_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+
+### getTemplateData(state, input, out)
+
+This optional method is used to determine what data will be passed to the Marko template that is used to render the UI component.
+
+_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+
+### getWidgetConfig(input, out)
+
+This optional method is used to determine is passed to the widget constructor when the widget is initialized in the browser. If the UI component is rendered on the server then the widget config data will be serialized to a JSON-like data structure and stored in a special `data-w-config` attribute in the DOM.
+
+_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+
+### getInitialBody(input, out)
+
+This optional method is used to determine the nested external content that is to be injected into the body of the UI component (to support transclusion). The actual injection point is determined by the `w-body` attribute.
+
+_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+
 ### init(widgetConfig)
+
+The `init(widgetConfig)` constructor method is called once in the browser when the widget is first created and after the widget has been mounted in the DOM. The `init(widgetConfig)` method is only called once for a given widget.
+
+_NOTE: `this` will be the widget instance_
 
 ### onBeforeUpdate()
 
+The `onBeforeUpdate()` method is called when a widget's view is about to be updated due to either new properties or a state change.
+
+_NOTE: `this` will be the widget instance_
+
 ### onUpdate()
+
+The `onUpdate()` method is called when a widget's view has been updated due to either new properties or a state change. The DOM nodes have been updated accordingly by time this method has been called.
+
+_NOTE: `this` will be the widget instance_
+
+### onBeforeDestroy()
+
+The `onBeforeDestroy()` method is called when a widget is about to be destroyed due to it being fromed from the DOM.
+
+_NOTE: `this` will be the widget instance_
+
+### onDestroy()
+
+The `onDestroy()` method is called after a widget has been destroyed and removed from the DOM.
+
+_NOTE: `this` will be the widget instance_
 
 ### shouldUpdate(newProps, newState)
 
+The `shouldUpdate(newProps, newState)` method is called when a widget's view is about to be updated. Returning `false` will prevent the widget's view from being updated.
 
+_NOTE: `this` will be the widget instance_
 
 ## Client-side Rendering
 
