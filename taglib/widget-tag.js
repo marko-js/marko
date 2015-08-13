@@ -8,6 +8,30 @@ var DUMMY_WIDGET_DEF = {
         }
     };
 
+/**
+ * Look in in the DOM to see if a widget with the same ID and type already exists. 
+ */
+function getExistingWidget(id, type) {
+    var existingEl = document.getElementById(id);
+    var existingWidget;
+
+    if (existingEl && (existingWidget = existingEl.__widget) && existingWidget.__type === type) {
+        return existingWidget;
+    }
+
+    return null;
+}
+
+function preserveWidgetEl(existingWidget, out, widgetsContext) {
+    // We put a placeholder element in the output stream to ensure that the existing
+    // DOM node is matched up correctly when using morphdom.
+    var tagName = existingWidget.el.tagName;
+    out.write('<' + tagName + ' id="' + existingWidget.id + '"></' + tagName + '>');
+    existingWidget._reset(); // The widget is no longer dirty so reset internal flags
+    widgetsContext.addPreservedDOMNode(existingWidget.el); // Mark the element as being preserved (for morphdom)
+}
+
+
 module.exports = function render(input, out) {
     var global = out.global;
 
@@ -40,6 +64,7 @@ module.exports = function render(input, out) {
     var modulePath = input.module;
     var config = input.config || input._cfg;
     var state = input.state || input._state;
+    var props = input.props || input._props;
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
 
@@ -77,11 +102,17 @@ module.exports = function render(input, out) {
     }
 
     var rerenderWidget = global.__rerenderWidget;
+    var isRerender = global.__rerender === true;
+
     var widgetsContext = markoWidgets.getWidgetsContext(out);
+    var existingWidget;
 
     if (rerenderWidget) {
+        existingWidget = rerenderWidget;
         id = rerenderWidget.id;
         delete global.__rerenderWidget;
+    } else if (isRerender) {
+        existingWidget = getExistingWidget(id, modulePath);
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -89,8 +120,42 @@ module.exports = function render(input, out) {
     }
 
     if (modulePath) {
+        var shouldRenderBody = true;
+
+        if (existingWidget && !rerenderWidget) {
+            // This is a nested widget found during a rerender. We don't want to needlessly
+            // rerender the widget if that is not necessary. If the widget is a stateful
+            // widget then we update the existing widget with the new state.
+            if (state) {
+                existingWidget._replaceState(state); // Update the existing widget state using the internal/private
+                                                     // method to ensure that another update is not queued up
+
+                // If the widget has custom state update handlers then we will use those methods
+                // to update the widget.
+                if (existingWidget._processUpdateHandlers() === true) {
+                    // If _processUpdateHandlers() returns true then that means
+                    // that the widget is now up-to-date and we can skip rerendering it.
+                    shouldRenderBody = false;
+                    preserveWidgetEl(existingWidget, out, widgetsContext);
+                    return;
+                }
+            }
+
+            // If the widget is not dirty (no state changes) and shouldUpdate() returns false
+            // then skip rerendering the widget.
+            if (!existingWidget.isDirty() && !existingWidget.shouldUpdate(props, state)) {
+                shouldRenderBody = false;
+                preserveWidgetEl(existingWidget, out, widgetsContext);
+                return;
+            }
+        }
+
+        if (existingWidget) {
+            existingWidget._emitLifecycleEvent('beforeUpdate');
+        }
+
         var widgetDef = widgetsContext.beginWidget({
-            module: modulePath,
+            type: modulePath,
             id: id,
             config: config,
             state: state,
@@ -99,13 +164,15 @@ module.exports = function render(input, out) {
             scope: scope,
             createWidget: input.createWidget,
             extend: extendList,
-            existingWidget: rerenderWidget,
+            existingWidget: existingWidget,
             bodyElId: bodyElId
         });
 
-        input.renderBody(out, widgetDef);
-
-        markoWidgets.writeDomEventsEl(widgetDef, out);
+        // Only render the widget if it needs to be rerendered
+        if (shouldRenderBody) {
+            input.renderBody(out, widgetDef);
+            markoWidgets.writeDomEventsEl(widgetDef, out);
+        }
 
         widgetDef.end();
     } else {

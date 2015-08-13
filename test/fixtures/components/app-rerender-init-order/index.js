@@ -12,5 +12,8 @@ module.exports = require('marko-widgets').defineComponent({
     },
     init: function() {
         window.rerenderInitOrder.push('parent');
+    },
+    onUpdate: function() {
+        window.rerenderInitOrder.push('parent');
     }
 });

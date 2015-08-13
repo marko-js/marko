@@ -3,9 +3,9 @@ marko-widgets
 
 [![Build Status](https://travis-ci.org/marko-js/marko-widgets.svg?branch=master)](https://travis-ci.org/marko-js/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Marko Widgets extends the [Marko templating language](https://github.com/marko-js/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
+![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
-![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
+Marko Widgets extends the [Marko templating language](https://github.com/marko-js/marko) to provide a simple and efficient mechanism for binding behavior to UI components rendered on either the server or in the browser. In addition, changing a widgets state will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -35,10 +35,23 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 	- [Adding Event Listeners](#adding-event-listeners)
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
 		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
+	- [Lifecycle Methods](#lifecycle-methods)
+		- [init(widgetConfig)](#initwidgetconfig)
+		- [onBeforeUpdate()](#onbeforeupdate)
+		- [onUpdate()](#onupdate)
+		- [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
 	- [Client-side Rendering](#client-side-rendering)
 	- [Server-side Rendering](#server-side-rendering)
 		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
+	- [Split Renderer and Widget](#split-renderer-and-widget)
+		- [Combined Renderer and Widget](#combined-renderer-and-widget)
+		- [Split Renderer and Widget](#split-renderer-and-widget-1)
 - [API](#api)
+	- [marko-widgets exports](#marko-widgets-exports)
+		- [defineComponent(def)](#definecomponentdef)
+		- [defineRenderer(def)](#definerendererdef)
+		- [defineWidget(def)](#definewidgetdef)
+		- [getWidgetForEl(el)](#getwidgetforelel)
 	- [Widget](#widget)
 		- [Methods](#methods)
 			- [$(querySelector)](#$queryselector)
@@ -932,6 +945,18 @@ module.exports = require('marko-widgets').defineComponent({
 ```
 
 NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscribing widget is destroyed.
+
+## Lifecycle Methods
+
+### init(widgetConfig)
+
+### onBeforeUpdate()
+
+### onUpdate()
+
+### shouldUpdate(newProps, newState)
+
+
 
 ## Client-side Rendering
 

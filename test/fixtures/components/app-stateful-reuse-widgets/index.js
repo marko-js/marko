@@ -45,7 +45,7 @@ module.exports = require('marko-widgets').defineComponent({
         // // State changed for button1 so it should have a new el
         // // since it re-renders to update its view
         // console.log('newButton1El: ', newButton1El);
-        expect(newButton1El !== oldButton1El).to.equal(true);
+        expect(newButton1El === oldButton1El).to.equal(true);
 
         //
         // // State didn't change for button2 so it should be the same el

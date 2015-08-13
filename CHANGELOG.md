@@ -3,6 +3,18 @@ CHANGELOG
 
 # Upgrade Guide
 
+## v4 to v5
+
+### Breaking changes
+
+- The `onAfterUpdate` lifecycle event was renamed to `onUpdate`
+- The `init()` constructor for a widget is only called _once_ even if a widget is rerendered
+- When a nested widget is rerendered, it is no longer reinitialized.
+
+### New features
+
+-
+
 ## v3 to v4
 
 ### Breaking changes
@@ -162,6 +174,20 @@ exports.renderer = function(input, out) {
     // ...
 }
 ```
+
+# 5.x
+
+## 5.0.x
+
+### 5.0.0
+
+- Integrated [morphdom](https://github.com/patrick-steele-idem/morphdom) to more efficiently transform the existing DOM instead of replacing it entirely
+- Significant performance improvements
+- Code cleanup
+- Breaking changes:
+    - The `onAfterUpdate` lifecycle event was renamed to `onUpdate`
+    - Reusing DOM nodes might change application behavior (in rare cases)
+    - The `init()` constructor for a widget is only called _once_ even if a widget is rerendered
 
 # 4.x
 

@@ -9,24 +9,22 @@ module.exports = require('marko-widgets').defineComponent({
 	},
 
 	init: function() {
-		if (!this.lifecycleEvents) {
-			this.lifecycleEvents = [];
-		}
+		window.recordWidgetLifecycleEvent(this.id, 'init');
 	},
 
 	onBeforeDestroy: function() {
-		this.lifecycleEvents.push('onBeforeDestroy');
+		window.recordWidgetLifecycleEvent(this.id, 'onBeforeDestroy');
 	},
 
 	onDestroy: function() {
-		this.lifecycleEvents.push('onDestroy');
+		window.recordWidgetLifecycleEvent(this.id, 'onDestroy');
 	},
 
 	onBeforeUpdate: function() {
-		this.lifecycleEvents.push('onBeforeUpdate');
+		window.recordWidgetLifecycleEvent(this.id, 'onBeforeUpdate');
 	},
 
-	onAfterUpdate: function() {
-		this.lifecycleEvents.push('onAfterUpdate');
+	onUpdate: function() {
+		window.recordWidgetLifecycleEvent(this.id, 'onUpdate');
 	}
 });

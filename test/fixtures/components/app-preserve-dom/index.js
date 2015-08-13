@@ -56,13 +56,13 @@ module.exports = require('marko-widgets').defineComponent({
         var newHelloEl2 = this.el.querySelector('.app-hello-no-id');
 
         expect(newEl != null).to.equal(true);
-        expect(oldEl != newEl).to.equal(true);
+        expect(oldEl === newEl).to.equal(true);
 
         expect(newPreserveEl1).to.equal(oldPreserveEl1);
         expect(newPreserveEl2).to.equal(oldPreserveEl2);
 
-        expect(newPreserveBodyEl1).to.not.equal(oldPreserveBodyEl1);
-        expect(newPreserveBodyEl2).to.not.equal(oldPreserveBodyEl2);
+        expect(newPreserveBodyEl1).to.equal(oldPreserveBodyEl1);
+        expect(newPreserveBodyEl2).to.equal(oldPreserveBodyEl2);
 
         checkChildrenMatch(oldPreserveBodyEl1Children, newPreserveBodyEl1.childNodes);
         checkChildrenMatch(oldPreserveBodyEl2Children, newPreserveBodyEl2.childNodes);

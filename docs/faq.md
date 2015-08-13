@@ -70,7 +70,8 @@ As a widget developer you can choose to implement any of the following special f
     - `onBeforeUpdate()` - Called before the widget's DOM is about to be updated (due to either a rerender or state update handler).
     - `onBeforeDestroy()` - Called before the widget is about to be destroyed
     - `onDestroy()` - Call after the widget has been destroyed
-    - `onAfterUpdate()` - Called after the DOM has been updated.
+    - `onUpdate()` - Called after the DOM has been updated.
+    - `shouldUpdate(newProps, newState)` - Called when a widget is about to be updated due to new props. Returning `false` will prevent the widget from being rerendered.
 
 ## Marko Widgets supports the batching of DOM updates, but what does this mean to the developer?
 

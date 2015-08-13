@@ -82,7 +82,8 @@
             "var": "widget",
             "import-var": {
                 "_cfg": "data.widgetConfig",
-                "_state": "data.widgetState"
+                "_state": "data.widgetState",
+                "_props": "data.widgetProps"
             }
         },
         "w-init-widgets": {

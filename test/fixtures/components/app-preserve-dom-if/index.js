@@ -62,15 +62,15 @@ module.exports = require('marko-widgets').defineComponent({
 
         var newEls1 = getEls();
         expect(newEls1.el != null).to.equal(true);
-        expect(newEls1.el).to.not.equal(origEls.el);
+        expect(newEls1.el).to.equal(origEls.el);
         expect(newEls1.preserveEl1).to.equal(origEls.preserveEl1);
         expect(newEls1.preserveEl2).to.equal(origEls.preserveEl2);
         expect(newEls1.preserveEl1).to.equal(origEls.preserveEl1);
         expect(newEls1.preserveEl2).to.equal(origEls.preserveEl2);
 
 
-        expect(newEls1.preserveBodyEl1).to.not.equal(origEls.preserveBodyEl1);
-        expect(newEls1.preserveBodyEl2).to.not.equal(origEls.preserveBodyEl2);
+        expect(newEls1.preserveBodyEl1).to.equal(origEls.preserveBodyEl1);
+        expect(newEls1.preserveBodyEl2).to.equal(origEls.preserveBodyEl2);
 
         checkChildrenMatch(newEls1.preserveBodyEl1Children, origEls.preserveBodyEl1Children);
         checkChildrenMatch(newEls1.preserveBodyEl2Children, origEls.preserveBodyEl2Children);
@@ -88,20 +88,20 @@ module.exports = require('marko-widgets').defineComponent({
 
         var newEls2 = getEls();
         expect(newEls2.el != null).to.equal(true);
-        expect(newEls2.el).to.not.equal(newEls1.el);
-        expect(newEls2.preserveEl1).to.not.equal(newEls1.preserveEl1);
-        expect(newEls2.preserveEl2).to.not.equal(newEls1.preserveEl2);
-        expect(newEls2.preserveEl1).to.not.equal(newEls1.preserveEl1);
-        expect(newEls2.preserveEl2).to.not.equal(newEls1.preserveEl2);
+        expect(newEls2.el).to.equal(newEls1.el);
+        expect(newEls2.preserveEl1).to.equal(newEls1.preserveEl1);
+        expect(newEls2.preserveEl2).to.equal(newEls1.preserveEl2);
+        expect(newEls2.preserveEl1).to.equal(newEls1.preserveEl1);
+        expect(newEls2.preserveEl2).to.equal(newEls1.preserveEl2);
 
 
-        expect(newEls2.preserveBodyEl1).to.not.equal(newEls1.preserveBodyEl1);
-        expect(newEls2.preserveBodyEl2).to.not.equal(newEls1.preserveBodyEl2);
+        expect(newEls2.preserveBodyEl1).to.equal(newEls1.preserveBodyEl1);
+        expect(newEls2.preserveBodyEl2).to.equal(newEls1.preserveBodyEl2);
 
-        expect(newEls2.preserveBodyEl1Children[0]).to.not.equal(newEls1.preserveBodyEl1Children[0]);
-        expect(newEls2.preserveBodyEl2Children[0]).to.not.equal(newEls1.preserveBodyEl2Children[0]);
+        expect(newEls2.preserveBodyEl1Children[0]).to.equal(newEls1.preserveBodyEl1Children[0]);
+        expect(newEls2.preserveBodyEl2Children[0]).to.equal(newEls1.preserveBodyEl2Children[0]);
 
-        expect(newEls2.helloEl1).to.not.equal(newEls1.helloEl1);
-        expect(newEls2.helloEl2).to.not.equal(newEls1.helloEl2);
+        expect(newEls2.helloEl1).to.equal(newEls1.helloEl1);
+        expect(newEls2.helloEl2).to.equal(newEls1.helloEl2);
     }
 });

@@ -28,7 +28,7 @@ describe('widget re-render' , function() {
 
         expect(widget.el.innerHTML.trim()).to.equal('Foo');
 
-        var oldEl = widget.el;
+        // var oldEl = widget.el;
 
         widget.rerender({
             label: 'Bar'
@@ -37,7 +37,7 @@ describe('widget re-render' , function() {
         expect(widget.el.innerHTML.trim()).to.equal('Bar');
 
         expect(widget.el.parentNode).to.equal(parentNode);
-        expect(widget.el !== oldEl).to.equal(true);
+        // expect(widget.el !== oldEl).to.equal(true);
 
 
         expect(document.getElementById('target').childNodes.length).to.equal(3);
@@ -115,8 +115,6 @@ describe('widget re-render' , function() {
 
         var oldButton1Widget = widget.getWidget('button1');
         var oldButton2Widget = widget.getEl('button2').__widget;
-        var oldButton1El = oldButton1Widget.el;
-        var oldButton2El = widget.getEl('button2');
 
         expect(widget.getWidget('button1').el.innerHTML.trim()).to.equal('normal');
 
@@ -128,24 +126,22 @@ describe('widget re-render' , function() {
             });
         });
 
-        var newButton1El = widget.getWidget('button1').el;
-        var newButton2El = widget.getEl('button2');
+        // var newButton1El = widget.getWidget('button1').el;
 
         // // Both button widgets should be reused
         expect(widget.getWidget('button1') === oldButton1Widget).to.equal(true);
         expect(widget.getEl('button2').__widget === oldButton2Widget).to.equal(true);
-
         expect(widget.getWidget('button1').el.innerHTML.trim()).to.equal('small');
 
 
         // // State changed for button1 so it should have a new el
         // // since it re-renders to update its view
         // console.log('newButton1El: ', newButton1El);
-        expect(newButton1El !== oldButton1El).to.equal(true);
+        // expect(newButton1El !== oldButton1El).to.equal(true);
 
         //
         // // State didn't change for button2 so it should be the same el
-        expect(newButton2El !== oldButton2El).to.equal(true);
+        // expect(newButton2El !== oldButton2El).to.equal(true);
     });
 
     it('should reinitialize children first when doing a rerender', function() {
