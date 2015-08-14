@@ -3,34 +3,14 @@
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
 
-Marko is an eBay open source HTML-based templating engine that is a perfect match for Node.js and any web browser. Marko is [extremely fast](https://github.com/marko-js/templating-benchmarks) while also supporting streaming and asynchronous rendering. Marko also supports custom tags and custom attributes to make it easy for developers to extend the HTML grammar with new building blocks. Marko compiles templates into _readable_ Node.js JavaScript modules that use `require()` to import all dependencies, thus making it effortless to bundle up compiled templates for use in the browser using your favorite JavaScript module bundler. Marko avoids the ugliness associated with many other templating engines by completely avoiding global variables and global helpers.
+Marko is an eBay open source HTML-based templating engine that can be used to render templates on the server (Node.js) or in the web browser. It is [extremely fast](https://github.com/marko-js/templating-benchmarks) and lightweight (~3.75KB gzipped) while also supporting streaming and asynchronous rendering. Developers can extend the HTML grammar with custom tags and custom attributes to introduce new and reusable building blocks. The Marko compiler produces Node.js-compatible JavaScript modules that are [easy to read](https://gist.github.com/patrick-steele-idem/0514b480219d1c9ed8d4), understand and debug. In contrast to other templating engines, Marko avoids [evil global variables](http://archive.oreilly.com/pub/a/javascript/excerpts/javascript-good-parts/awful-parts.html) and global helpers.
 
-
-Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. Marko also retains the full power of JavaScript by allowing JavaScript expressions inside templates.
-
-```xml
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li style="color: $color" for="color in data.colors">
-        $color
-    </li>
-</ul>
-<div else>
-    No colors!
-</div>
-```
+Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML. Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. Marko also retains the full power and flexibility of JavaScript by allowing JavaScript expressions inside templates.
 
 Marko supports [progressive HTML rendering](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) by writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
-```javascript
-require("./template.marko").render({
-        message: "It doesn't get any easier than this!"
-    },
-    process.stdout)
-```
 
-For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/marko-js/marko-widgets) taglib.
+For building rich UI components with client-side behavior please check out the [marko-widgets](https://github.com/marko-js/marko-widgets) project.
 
 __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
@@ -38,12 +18,11 @@ __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 Improved syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package and for [Sublime Text](http://www.sublimetext.com/) by installing the [marko-sublime](https://github.com/merwan7/sublime-marko) package.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 # Sample Code
 
 A basic template with text replacement, looping and conditionals is shown below:
+
+_hello-world.marko:_
 
 ```xml
 Hello ${data.name}!
@@ -63,7 +42,7 @@ The template can then be rendered as shown in the following sample code:
 ```javascript
 require('marko/node-require').install();
 
-var template = require('./hello.marko');
+var template = require('./hello-world.marko');
 
 template.render({
         name: 'World',
@@ -106,64 +85,16 @@ Hello World!
 The streaming API can be used to stream the output to an HTTP response stream or any other writable stream. For example, with Express:
 
 ```javascript
-var template = require('./template.marko');
+var template = require('./user-profile.marko');
 
 app.get('/profile', function(req, res) {
-    template.stream({
+    // Render directly to the writable HTTP output stream:
+    template.render({
             name: 'Frank'
-        })
-        .pipe(res);
+        }, res);
 });
 ```
 
-Marko also supports custom tags so you can easily extend the HTML grammar to support things like the following:
-
-```xml
-Welcome to Marko!
-
-<ui-tabs>
-    <ui-tabs.tab title="Home">
-        Content for Home
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Profile">
-        Content for Profile
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Messages">
-        Content for Messages
-    </ui-tabs.tab>
-</ui-tabs>
-```
-
-The above template is a very simple way to generate the much more complicated HTML output shown below:
-
-```xml
-<div class="tabs">
-    <ul class="nav nav-tabs">
-        <li class="active">
-            <a href="#tab0" data-toggle="tab">Home</a>
-        </li>
-        <li>
-            <a href="#tab1" data-toggle="tab">Profile</a>
-        </li>
-        <li>
-            <a href="#tab2" data-toggle="tab">Messages</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div id="tab0" class="tab-pane active">
-            Content for Home
-        </div>
-        <div id="tab1" class="tab-pane">
-            Content for Profile
-        </div>
-        <div id="tab2" class="tab-pane">
-            Content for Messages
-        </div>
-    </div>
-</div>
-```
-
-The custom tags encapsulate rendering logic and help avoid repeating the same HTML (and potentially the same mistakes).
 # Table of Contents
 
 - [Installation](#installation)
@@ -251,8 +182,6 @@ The custom tags encapsulate rendering logic and help avoid repeating the same HT
 - [Contribute](#contribute)
 - [License](#license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Installation
 
 To install the `marko` module into your project you should use the following command:
@@ -326,14 +255,14 @@ Finally, another distinguishing feature of Marko is that it supports _asynchrono
 * __Simple:__ The number of new concepts should be minimized and complexity should be avoided.
 * __Extensible:__ The template engine should be easily extensible at both compile-time and runtime.
 * __High Performance:__ Runtime and compiled output should be optimized for low CPU and memory usage and have a small footprint. All expressions should be native JavaScript to avoid runtime interpretation.
-* __Not Restrictive:__ Whether or not to go less logic or more logic is up to the developer.
+* __Not Restrictive:__ Whether or not to go less logic or more logic in templates is up to the developer.
 * __Asynchronous and Streaming Output:__ It should be possible to render HTML out-of-order, but the output HTML should be streamed out in the correct order. This minimizes idle time and reduces the time to first byte.
 * __Intuitive:__ The templating engine should introduce as few surprises as possible.
 * __Browser and Server Compatibility:__ Templates should compile down to JavaScript that can be executed on both the server and the client.
 * __Debuggable:__ Compiled JavaScript should be debuggable and readable.
 * __Compile-Time Checks:__ Syntax, custom tags and custom attributes should be validated at compile-time.
 * __Tools Support:__ Tools should be enabled to offer auto-completion and validation for improved productivity and safety.
-* __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a shared registry.
+* __Modular:__ Runtime and compiled templates should be based on CommonJS modules for improved dependency management. Template dependencies (such as custom tags) should be resolved based on a template's file system path instead of relying on a global registry.
 
 # Usage
 
@@ -2066,7 +1995,7 @@ Pull Requests welcome. Please make sure all tests pass:
 npm test
 ```
 
-Please submit Github issues for any feature enhancements, bugs or documentation problems. 
+Please submit Github issues for any feature enhancements, bugs or documentation problems.
 
 # License
 
