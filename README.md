@@ -94,7 +94,7 @@ Marko Widgets extends the [Marko templating language](https://github.com/marko-j
 - [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
-- [Contributors](#contributors)
+- [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -1575,7 +1575,7 @@ Chat channel: [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter
 
 Questions or comments can also be posted on the [Marko Widgets Github issues](https://github.com/marko-js/marko-widgets/issues) page.
 
-# Contributors
+# Maintainers
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
