@@ -2033,6 +2033,7 @@ __Answer__: Your templates should be organized just like all other JavaScript mo
 
 * Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/marko-js-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/)
 * UI Components Playground [source](https://github.com/marko-js-samples/ui-components-playground) | [demo](https://ui-components-playground.herokuapp.com/)
+* More sample apps: [https://github.com/marko-js-samples](https://github.com/marko-js-samples)
 
 ## Tools
 
