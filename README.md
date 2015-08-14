@@ -1,5 +1,5 @@
-marko-widgets
-==============
+Marko Widgets
+=============
 
 [![Build Status](https://travis-ci.org/marko-js/marko-widgets.svg?branch=master)](https://travis-ci.org/marko-js/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko-widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
