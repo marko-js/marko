@@ -3,10 +3,34 @@ Marko
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
 
+![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
-Marko is an extensible, streaming, asynchronous, [high performance](https://github.com/marko-js/templating-benchmarks), _HTML-based_ templating language that can be used in Node.js or in the browser. Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. In addition, Marko allows developers to introduce custom tags and custom attributes to extend the HTML grammar (much like [Web Components](http://www.html5rocks.com/en/tutorials/webcomponents/customelements/)—only you can use it now).
+Marko is an eBay open source HTML-based templating engine that is a perfect match for Node.js and any web browser. Marko is [extremely fast](https://github.com/marko-js/templating-benchmarks) while also supporting streaming and asynchronous rendering. Marko also supports custom tags and custom attributes to make it easy for developers to extend the HTML grammar with new building blocks. Marko compiles templates into _readable_ Node.js JavaScript modules that use `require()` to import all dependencies, thus making it effortless to bundle up compiled templates for use in the browser using your favorite JavaScript module bundler. Marko avoids the ugliness associated with many other templating engines by completely avoiding global variables and global helpers.
+
+
+Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML.  Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. Marko also retains the full power of JavaScript by allowing JavaScript expressions inside templates.
+
+```xml
+Hello ${data.name}!
+
+<ul if="notEmpty(data.colors)">
+    <li style="color: $color" for="color in data.colors">
+        $color
+    </li>
+</ul>
+<div else>
+    No colors!
+</div>
+```
 
 Marko is a perfect match for Node.js since it supports writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
+
+```javascript
+require("./template.marko").render({
+        message: "It doesn't get any easier than this!"
+    },
+    process.stdout)
+```
 
 For building rich UI components with client-side behavior please check out the companion [marko-widgets](https://github.com/marko-js/marko-widgets) taglib.
 
@@ -14,9 +38,7 @@ __[Try Marko Online!](http://raptorjs.org/marko/try-online/)__
 
 ![Marko Syntax](syntax.png)
 
-Syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package.
-
-![eBay Open Source](https://raw.githubusercontent.com/lasso-js/lasso/master/images/ebay.png)
+Improved syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package and for [Sublime Text](http://www.sublimetext.com/) by installing the [marko-sublime](https://github.com/merwan7/sublime-marko) package.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -539,6 +561,7 @@ require('marko/compiler').compileFile(path, function(err, src) {
 ```
 
 ### Sample Compiled Template
+
 ```javascript
 exports.create = function(__helpers) {
   var empty = __helpers.e,
@@ -2032,8 +2055,6 @@ Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://git
 
 Questions or comments can also be posted on the [Marko Github issues](https://github.com/marko-js/marko/issues) page.
 
-~~Questions or comments can also be posted on the [RaptorJS Google Groups Discussion Forum](http://groups.google.com/group/raptorjs).~~
-
 # Contributors
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
@@ -2041,7 +2062,13 @@ Questions or comments can also be posted on the [Marko Github issues](https://gi
 
 # Contribute
 
-Pull Requests welcome. Please submit Github issues for any feature enhancements, bugs or documentation problems.
+Pull Requests welcome. Please make sure all tests pass:
+
+```
+npm test
+```
+
+Please submit Github issues for any feature enhancements, bugs or documentation problems. 
 
 # License
 
