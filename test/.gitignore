@@ -3,3 +3,4 @@
 *.actual.js
 *.actual.html
 actual.html
+/node_modules
