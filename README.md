@@ -341,6 +341,7 @@ template.render({
         count: 30
     }, out);
 ```
+
 _NOTE:_ This will end the target output stream.
 
 ### Synchronous API
@@ -354,6 +355,7 @@ var output = template.renderSync({
         name: 'Frank',
         count: 30
     });
+
 console.log('Output HTML: ' + output);
 ```
 
@@ -401,7 +403,7 @@ _run.js_:
 ```javascript
 var template = require('./hello.marko');
 
-templatePath.render({
+template.render({
         name: 'John'
     },
     function(err, output) {
@@ -495,7 +497,8 @@ function create(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
-      forEach = __helpers.f;
+      forEach = __helpers.f,
+      escapeXmlAttr = __helpers.xa;
 
   return function render(data, out) {
     out.w('Hello ' +
@@ -506,7 +509,9 @@ function create(__helpers) {
       out.w('<ul>');
 
       forEach(data.colors, function(color) {
-        out.w('<li class="color">' +
+        out.w('<li style="color: ' +
+          escapeXmlAttr(color) +
+          '">' +
           escapeXml(color) +
           '</li>');
       });
@@ -525,10 +530,10 @@ The compiled output is designed to be both extremely readable and minifiable. Th
 
 
 ```javascript
-function create(a){var d=a.ne,c=a.x,e=a.f;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li class="color">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}}(module.exports=require("marko").c(__filename)).c(create);
+function create(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}}(module.exports=require("marko").c(__filename)).c(create);
 ```
 
-_File size: 212 bytes gzipped (283 bytes uncompressed)_
+_File size: 223 bytes gzipped (300 bytes uncompressed)_
 
 ## Hot reloading templates
 
