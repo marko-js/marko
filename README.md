@@ -561,12 +561,12 @@ require('marko/compiler').compileFile(path, function(err, src) {
 ### Sample Compiled Template
 
 ```javascript
-exports.create = function(__helpers) {
-  var empty = __helpers.e,
+function create(__helpers) {
+  var str = __helpers.s,
+      empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
-      forEach = __helpers.f,
-      escapeXmlAttr = __helpers.xa;
+      forEach = __helpers.f;
 
   return function render(data, out) {
     out.w('Hello ' +
@@ -577,9 +577,7 @@ exports.create = function(__helpers) {
       out.w('<ul>');
 
       forEach(data.colors, function(color) {
-        out.w('<li style="color: ' +
-          escapeXmlAttr(color) +
-          '">' +
+        out.w('<li class="color">' +
           escapeXml(color) +
           '</li>');
       });
@@ -591,16 +589,17 @@ exports.create = function(__helpers) {
     }
   };
 }
+(module.exports = require("marko").c(__filename)).c(create);
 ```
 
 The compiled output is designed to be both extremely readable and minifiable. The minified code is shown below:
 
 
 ```javascript
-exports.create=function(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}};
+function create(a){var d=a.ne,c=a.x,e=a.f;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li class="color">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}}(module.exports=require("marko").c(__filename)).c(create);
 ```
 
-_File size: 189 bytes gzipped (251 bytes uncompressed)_
+_File size: 212 bytes gzipped (283 bytes uncompressed)_
 
 ## Hot reloading templates
 
