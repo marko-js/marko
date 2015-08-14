@@ -178,7 +178,7 @@ app.get('/profile', function(req, res) {
 	- [Tools](#tools)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
-- [Contributors](#contributors)
+- [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
 
