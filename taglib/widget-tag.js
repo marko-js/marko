@@ -9,7 +9,7 @@ var DUMMY_WIDGET_DEF = {
     };
 
 /**
- * Look in in the DOM to see if a widget with the same ID and type already exists. 
+ * Look in in the DOM to see if a widget with the same ID and type already exists.
  */
 function getExistingWidget(id, type) {
     var existingEl = document.getElementById(id);
@@ -101,10 +101,21 @@ module.exports = function render(input, out) {
         }
     }
 
+
+
     var rerenderWidget = global.__rerenderWidget;
     var isRerender = global.__rerender === true;
 
     var widgetsContext = markoWidgets.getWidgetsContext(out);
+
+    if (!id) {
+        var parentWidget = widgetsContext.getCurrentWidget();
+
+        if (parentWidget) {
+            id = parentWidget.nextId();
+        }
+    }
+
     var existingWidget;
 
     if (rerenderWidget) {

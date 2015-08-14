@@ -324,9 +324,8 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
             'init',
-            'onBeforeDestroy',
-            'onDestroy',
-            'init']);
+            'onBeforeUpdate',
+            'onUpdate']);
 
         var nestedStateful = widget.getWidget('nestedStateful');
 
@@ -350,9 +349,8 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
             'init',
-            'onBeforeDestroy',
-            'onDestroy',
-            'init',
+            'onBeforeUpdate',
+            'onUpdate',
             'onBeforeDestroy',
             'onDestroy']);
     });

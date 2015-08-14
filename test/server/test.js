@@ -15,7 +15,7 @@ describe('marko-widgets/server' , function() {
         template.render({}, function(err, html, out) {
     		var widgetIds = markoWidgets.getRenderedWidgetIds(out);
             expect(widgetIds).to.be.a('string');
-            expect(widgetIds).to.equal('w1,w2,w0');
+            expect(widgetIds).to.equal('w0-w0,w0-w1,w0');
             done();
     	});
     });
