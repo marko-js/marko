@@ -1,9 +1,7 @@
-Marko
-================
+![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
+
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
-
-![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
 Marko is an eBay open source HTML-based templating engine that is a perfect match for Node.js and any web browser. Marko is [extremely fast](https://github.com/marko-js/templating-benchmarks) while also supporting streaming and asynchronous rendering. Marko also supports custom tags and custom attributes to make it easy for developers to extend the HTML grammar with new building blocks. Marko compiles templates into _readable_ Node.js JavaScript modules that use `require()` to import all dependencies, thus making it effortless to bundle up compiled templates for use in the browser using your favorite JavaScript module bundler. Marko avoids the ugliness associated with many other templating engines by completely avoiding global variables and global helpers.
 
