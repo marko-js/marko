@@ -1350,7 +1350,7 @@ For information on how to use and create taglibs, please see the [Custom Taglibs
 
 ## Async Taglib
 
-The async taglib allows portions of your template to be rendere asynchronously. An asynchronous fragment can be bound to a function that accepts an "args" objects and callback argument. When the data provider function completes and invokes the callback with the resulting data, the body of the async fragment is then rendered with the asynchronous data assigned to the specified variable. Asynchronous fragments allow parts of your page to render out-of-order while still providing the final HTML in the correct order.
+The async taglib allows portions of your template to be rendered asynchronously. An asynchronous fragment can be bound to a function that accepts an "args" objects and callback argument. When the data provider function completes and invokes the callback with the resulting data, the body of the async fragment is then rendered with the asynchronous data assigned to the specified variable. As an additional feature, asynchronous fragments allow parts of your page to render out-of-order while still providing the final HTML in the correct order allowing to have very reactive websites with almost instant visual feedback. Features like out-of-order rendering, that are based on client-reordering, require the use of JavaScript. Websites that have to render completely without JavaScript should avoid using this additional feature (they can still use asynchronous fragments though).
 
 Example:
 
