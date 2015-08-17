@@ -30,10 +30,12 @@ function createTestRender(options) {
         var out = options.out || new AsyncWriter(new StringBuilder());
 
         var template;
+        var hadError = false;
 
         try {
             template = marko.load(templatePath);
         } catch(err) {
+            hadError = true;
             if (options.handleCompileError) {
                 try {
                     options.handleCompileError(err);
@@ -45,6 +47,10 @@ function createTestRender(options) {
                 done(err);
             }
             return;
+        }
+
+        if (options.handleCompileError && !hadError) {
+            throw new Error('Error expected for test case, but no error occurred. Template: ' + templatePath);
         }
 
         template.render(templateData, out)

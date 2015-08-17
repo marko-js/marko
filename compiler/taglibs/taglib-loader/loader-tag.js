@@ -376,6 +376,20 @@ exports.isSupportedProperty = function(name) {
     return TagHandlers.prototype.hasOwnProperty(name);
 };
 
+function hasAttributes(tagProps) {
+    if (tagProps.attributes != null) {
+        return true;
+    }
+
+    for (var name in tagProps) {
+        if (tagProps.hasOwnProperty(name) && name.startsWith('@')) {
+            return true;
+        }
+    }
+
+    return true;
+}
+
 function loadTag(tagProps, path, taglib, dirname) {
     ok(tagProps);
     ok(typeof path === 'string');
@@ -384,7 +398,9 @@ function loadTag(tagProps, path, taglib, dirname) {
 
     var tag = new Taglib.Tag(taglib);
 
-    if (tagProps.attributes == null) {
+
+
+    if (!hasAttributes(tagProps)) {
         // allow any attributes if no attributes are declared
         tagProps.attributes = {
             '*': 'string'

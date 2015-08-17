@@ -65,7 +65,7 @@ Taglib.prototype = {
         ok(arguments.length === 1, 'Invalid args');
         ok(tag.name, '"tag.name" is required');
         this.tags[tag.name] = tag;
-        tag.taglibId = this.id;
+        tag.taglibId = this.id || this.path;
     },
     addTextTransformer: function (transformer) {
         this.textTransformers.push(transformer);
