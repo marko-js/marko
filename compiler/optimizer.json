@@ -1,7 +1,0 @@
-{
-    "dependencies": [
-        "../taglibs/optimizer.json",
-        "marko-async/optimizer.json",
-        "marko-layout/optimizer.json"
-    ]
-}
