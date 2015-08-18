@@ -207,6 +207,8 @@ TaglibHandlers.prototype = {
 
         ok(transformer.path, '"path" is required for transformer');
 
+        taglib.addInputFile(transformer.path);
+
         taglib.addTextTransformer(transformer);
     },
 

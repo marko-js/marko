@@ -60,6 +60,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         // Record dependencies so that we can check if a template is up-to-date
         taglib.addInputFile(tagFile);
         taglib.addInputFile(rendererFile);
+        taglib.addInputFile(templateFile);
 
         if (fs.existsSync(tagFile)) {
             // marko-tag.json exists in the directory, use that as the tag definition

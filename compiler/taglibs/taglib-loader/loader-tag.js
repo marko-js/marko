@@ -74,6 +74,10 @@ function TagHandlers(tag, dirname, path, taglib) {
     this.dirname = dirname;
     this.path = path;
     this.taglib = taglib;
+
+    if (!taglib) {
+        throw new Error('taglib expected');
+    }
 }
 
 TagHandlers.prototype = {
@@ -99,6 +103,8 @@ TagHandlers.prototype = {
         var dirname = this.dirname;
         var path = resolve(value, dirname);
 
+        this.taglib.addInputFile(path);
+
         tag.renderer = path;
     },
 
@@ -115,6 +121,8 @@ TagHandlers.prototype = {
         if (!exists(path)) {
             throw new Error('Template at path "' + path + '" does not exist.');
         }
+
+        this.taglib.addInputFile(path);
 
         tag.template = path;
     },
@@ -150,6 +158,7 @@ TagHandlers.prototype = {
 
         var path = resolve(value, dirname);
         tag.nodeClass = path;
+        this.taglib.addInputFile(path);
     },
     /**
      * If the "preserve-whitespace" property is set to true then
@@ -171,6 +180,7 @@ TagHandlers.prototype = {
         var tag = this.tag;
         var dirname = this.dirname;
         var path = this.path;
+        var taglib = this.taglib;
 
         var transformer = new Taglib.Transformer();
 
@@ -192,6 +202,7 @@ TagHandlers.prototype = {
             path: function(value) {
                 var path = resolve(value, dirname);
                 transformer.path = path;
+                taglib.addInputFile(path);
             },
 
             priority: function(value) {
