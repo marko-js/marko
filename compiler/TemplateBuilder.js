@@ -60,6 +60,22 @@ function safeVarName(varName) {
     });
 }
 
+
+/**
+ * This class is used internally to manage how code and static text is added
+ * to the compiled text. It has logic to group up contiguous blocks of static
+ * text so that the static text is written out as a single string. It will
+ * also change writes.
+ *
+ *  For example:
+ *  	out.w('foo')
+ *  	   .w('bar')
+ *
+ *  Instead of:
+ *      out.w('foo');
+ *      out.w('bar');
+ *
+ */
 function CodeWriter(concatWrites, indent) {
     this._indent = indent != null ? indent : INDENT + INDENT;
     this._code = new StringBuilder();
@@ -239,14 +255,22 @@ CodeWriter.prototype = {
         return this._code.toString();
     }
 };
+
+/**
+ * This class provides the interface that compile-time transformers
+ * and compile-time tags can use to add JavaScript code to the final
+ * template.
+ *
+ * This class ensures that proper indentation is maintained so that
+ * compiled templates are readable.
+ */
 function TemplateBuilder(compiler, path, rootNode) {
-    this.rootNode = rootNode;
-    this.compiler = compiler;
-    this.path = path;
-    this.dirname = nodePath.dirname(path);
-    this.options = compiler.options || {};
-    this.templateName = null;
-    this.attributes = this.data = {};
+    this.rootNode = rootNode; // This is the root node for the AST. It should be a TemplateNode
+    this.compiler = compiler; // A reference to the compiler
+    this.path = path; // The file system path of the template being compiled
+    this.dirname = nodePath.dirname(path); // The file system directory of the template being compiled
+    this.options = compiler.options || {}; // Compiler options
+    this.data = this.attributes /* deprecated */ = {};
     this.concatWrites = this.options.concatWrites !== false;
     this.writer = new CodeWriter(this.concatWrites);
     this.staticVars = [];
@@ -523,9 +547,6 @@ TemplateBuilder.prototype = {
         // problems with circular dependencies.
         out.append(INDENT + '};\n}\n(module.exports = require("marko").c(__filename)).c(create);');
         return out.toString();
-    },
-    setTemplateName: function (templateName) {
-        this.templateName = templateName;
     },
     makeExpression: function (expression, replaceSpecialOperators) {
         return this.compiler.makeExpression(expression, replaceSpecialOperators);
