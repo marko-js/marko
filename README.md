@@ -1,3 +1,99 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Sample Code](#sample-code)
+- [Hello](#hello)
+- [Hello](#hello-1)
+- [Hello](#hello-2)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Another Templating Language?](#another-templating-language)
+- [Design Philosophy](#design-philosophy)
+- [Usage](#usage)
+  - [Template Loading](#template-loading)
+  - [Template Rendering](#template-rendering)
+    - [Callback API](#callback-api)
+    - [Streaming API](#streaming-api)
+    - [Synchronous API](#synchronous-api)
+    - [Asynchronous Rendering API](#asynchronous-rendering-api)
+  - [Browser-side Rendering](#browser-side-rendering)
+    - [Using Lasso.js](#using-lassojs)
+    - [Using Browserify](#using-browserify)
+  - [Template Compilation](#template-compilation)
+    - [Sample Compiled Template](#sample-compiled-template)
+  - [Hot reloading templates](#hot-reloading-templates)
+- [Language Guide](#language-guide)
+  - [Template Directives Overview](#template-directives-overview)
+  - [Text Replacement](#text-replacement)
+  - [Expressions](#expressions)
+  - [Includes](#includes)
+  - [Variables](#variables)
+  - [Conditionals](#conditionals)
+    - [if...else-if...else](#ifelse-ifelse)
+    - [Shorthand Conditionals](#shorthand-conditionals)
+    - [Conditional Attributes](#conditional-attributes)
+  - [Looping](#looping)
+    - [for](#for)
+      - [Loop Status Variable](#loop-status-variable)
+      - [Loop Separator](#loop-separator)
+      - [Range Looping](#range-looping)
+      - [Property Looping](#property-looping)
+      - [Custom Iterator](#custom-iterator)
+  - [Macros](#macros)
+    - [def](#def)
+    - [invoke](#invoke)
+  - [Structure Manipulation](#structure-manipulation)
+    - [attrs](#attrs)
+    - [body-only-if](#body-only-if)
+  - [Comments](#comments)
+  - [Whitespace](#whitespace)
+  - [Helpers](#helpers)
+  - [Global Properties](#global-properties)
+  - [Custom Tags and Attributes](#custom-tags-and-attributes)
+  - [Async Taglib](#async-taglib)
+  - [Layout Taglib](#layout-taglib)
+- [API](#api)
+  - [require('marko')](#requiremarko)
+    - [Methods](#methods)
+      - [load(templatePath[, options]) : Template](#loadtemplatepath-options--template)
+      - [createWriter([stream]) : AsyncWriter](#createwriterstream--asyncwriter)
+      - [render(templatePath, templateData, stream.Writable)](#rendertemplatepath-templatedata-streamwritable)
+      - [render(templatePath, templateData, callback)](#rendertemplatepath-templatedata-callback)
+      - [stream(templatePath, templateData) : stream.Readable](#streamtemplatepath-templatedata--streamreadable)
+    - [Properties](#properties)
+      - [helpers](#helpers)
+      - [Template](#template)
+  - [Template](#template-1)
+    - [Methods](#methods-1)
+      - [renderSync(templateData) : String](#rendersynctemplatedata--string)
+      - [render(templateData, stream.Writable)](#rendertemplatedata-streamwritable)
+      - [render(templateData, AsyncWriter)](#rendertemplatedata-asyncwriter)
+      - [render(templateData, callback)](#rendertemplatedata-callback)
+      - [stream(templateData) : stream.Readable](#streamtemplatedata--streamreadable)
+- [Custom Taglibs](#custom-taglibs)
+  - [Tag Renderer](#tag-renderer)
+  - [marko-taglib.json](#marko-taglibjson)
+    - [Sample Taglib](#sample-taglib)
+  - [Defining Tags](#defining-tags)
+  - [Defining Attributes](#defining-attributes)
+  - [Scanning for Tags](#scanning-for-tags)
+  - [Nested Tags](#nested-tags)
+  - [Taglib Discovery](#taglib-discovery)
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+- [Additional Resources](#additional-resources)
+  - [Further Reading](#further-reading)
+  - [Screencasts](#screencasts)
+  - [Sample Apps](#sample-apps)
+  - [Tools](#tools)
+- [Changelog](#changelog)
+- [Discuss](#discuss)
+- [Maintainers](#maintainers)
+- [Contribute](#contribute)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -1899,63 +1995,7 @@ As an example, given a template at path `/my-project/src/pages/login/template.ma
 7. `/my-project/marko-taglib.json`
 8. `/my-project/node_modules/*/marko-taglib.json`
 
-# FAQ
-
-__Question:__ _Is Marko ready for production use?_
-
-__Answer__: Yes, Marko has been battle-tested at [eBay](http://www.ebay.com/) and other companies for well over a year and has been designed with high performance, scalability, security and stability in mind.
-
-<hr>
-
-__Question:__ _Can templates be compiled on the client?_
-
-__Answer__: Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. [Lasso.js](https://github.com/lasso-js/lasso) is recommended for including compiled templates as part of a web page.
-
-<hr>
-
-__Question:__ _Which web browsers are supported?_
-
-__Answer__: The runtime for template rendering is supported in all web browsers. If you find an issue please report a bug.
-
-<hr>
-
-__Question:__ _How can Marko be used with Express?_
-
-__Answer__: The recommended way to use Marko with Express is to bypass the Express view engine and instead have Marko render directly to the response stream as shown in the following code:
-
-```javascript
-var template = require('./template.marko');
-
-app.get('/profile', function(req, res) {
-    template
-        .render({
-            name: 'Frank'
-        }, res);
-});
-```
-
-With this approach, you can benefit from streaming and there is no middleman (less complexity).
-
-Alternatively, you can use the streaming API to produce an intermediate stream that can then be piped to the response stream as shown below:
-
-```javascript
-var template = require('./template.marko');
-
-app.get('/profile', function(req, res) {
-    template.stream({
-            name: 'Frank'
-        })
-        .pipe(res);
-});
-```
-
-<hr>
-
-__Question:__ _What is the recommended directory structure for templates and "partials"_
-
-__Answer__: Your templates should be organized just like all other JavaScript modules. You should put your templates right next to the code that refers to them. That is, do not create a separate "templates" directory. For a sample Express app that uses Marko, please see [marko-express](https://github.com/marko-js-samples/marko-express).
-
-<hr>
+# Frequently Asked Questions (FAQ)
 
 # Additional Resources
 
