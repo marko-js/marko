@@ -95,6 +95,9 @@ app.get('/profile', function(req, res) {
 });
 ```
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 # Table of Contents
 
 - [Installation](#installation)
@@ -174,13 +177,15 @@ app.get('/profile', function(req, res) {
 - [Additional Resources](#additional-resources)
 	- [Further Reading](#further-reading)
 	- [Screencasts](#screencasts)
-	- [Demo Apps](#demo-apps)
+	- [Sample Apps](#sample-apps)
 	- [Tools](#tools)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Installation
 
