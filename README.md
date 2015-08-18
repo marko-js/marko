@@ -604,7 +604,7 @@ If necessary, you can escape `$` using a forward slash to have it be treated as 
 
 ```xml
 Test: \${hello}
-<!-- Rendered Ouptut:
+<!-- Rendered Output:
 Test: ${hello}
 -->
 ```
@@ -1706,7 +1706,7 @@ _In `marko-tag.json`:_
 
 _NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
 
-`tags-dir` also accepts an array if you have taglibs organized in multiple folers.
+`tags-dir` also accepts an array if you have taglibs organized in multiple folders.
 
 ```json
 {
