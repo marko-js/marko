@@ -1581,6 +1581,7 @@ exports.render = function(input, out) {
     out.write('AFTER BODY');
 }
 ```
+For users of Marko Widgets: Invoking `input.renderBody` is equivalent to using the `w-body` attribute for tags (in conjunction with the `getInitialBody()` lifecycle method; see [getInitialBody()](https://github.com/marko-js/marko-widgets#getinitialbodyinput-out)).
 
 A tag renderer should be mapped to a custom tag by creating a `marko-taglib.json` as shown in the next few sections.
 
