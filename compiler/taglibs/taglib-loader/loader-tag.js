@@ -387,7 +387,7 @@ function hasAttributes(tagProps) {
         }
     }
 
-    return true;
+    return false;
 }
 
 function loadTag(tagProps, path, taglib, dirname) {
