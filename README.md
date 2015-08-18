@@ -1,6 +1,6 @@
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
-[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://nodei.co/npm/marko.png?downloads=true)](https://nodei.co/npm/marko/)
 
 Marko is an eBay open source HTML-based templating engine that can be used to render templates on the server (Node.js) or in the web browser. It is [extremely fast](https://github.com/marko-js/templating-benchmarks) and lightweight (~3.75KB gzipped) while also supporting streaming and asynchronous rendering. Developers can extend the HTML grammar with custom tags and custom attributes to introduce new and reusable building blocks. The Marko compiler produces Node.js-compatible JavaScript modules that are [easy to read](https://gist.github.com/patrick-steele-idem/0514b480219d1c9ed8d4), understand and debug. In contrast to other templating engines, Marko avoids [evil global variables](http://archive.oreilly.com/pub/a/javascript/excerpts/javascript-good-parts/awful-parts.html) and global helpers.
@@ -1941,7 +1941,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Discuss
 
-- Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+- Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 - Twitter: please use the `#MarkoJS` hashtag. Follow [@MarkoDevTeam](https://twitter.com/MarkoDevTeam)
 
 Questions or comments can also be posted on the [Marko Github issues](https://github.com/marko-js/marko/issues) page.
