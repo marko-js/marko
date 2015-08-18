@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -68,10 +68,18 @@ function createDeferredRenderer(handler) {
 var WARNED_INVOKE_BODY = 0;
 
 module.exports = {
+    /**
+     * Internal helper method to prevent null/undefined from being written out
+     * when writing text that resolves to null/undefined
+     * @private
+     */
     s: function(str) {
         return (str == null) ? '' : str;
     },
-
+    /**
+     * Internal helper method to handle loops with a status variable
+     * @private
+     */
     fv: function (array, callback) {
         if (!array) {
             return;
@@ -100,7 +108,15 @@ module.exports = {
             callback(o || '', loopStatus);
         }
     },
+    /**
+     * Internal helper method to handle loops without a status variable
+     * @private
+     */
     f: forEach,
+    /**
+     * Internal helper method to handle native for loops
+     * @private
+     */
     fl: function (array, func) {
         if (array != null) {
             if (!Array.isArray(array)) {
@@ -109,6 +125,10 @@ module.exports = {
             func(array, 0, array.length);
         }
     },
+    /**
+     * Internal helper method for looping over the properties of any object
+     * @private
+     */
     fp: function (o, func) {
         if (!o) {
             return;
@@ -119,12 +139,32 @@ module.exports = {
             }
         }
     },
+    /**
+     * Internal method to check if an object/array is empty
+     * @private
+     */
     e: function (o) {
         return !notEmpty(o);
     },
+    /**
+     * Internal method to check if an object/array is not empty
+     * @private
+     */
     ne: notEmpty,
+    /**
+     * Internal method to escape special XML characters
+     * @private
+     */
     x: escapeXml,
+    /**
+     * Internal method to escape special XML characters within an attribute
+     * @private
+     */
     xa: escapeXmlAttr,
+    /**
+     * Internal helper to prevent an object from being escaped
+     * @private
+     */
     nx: function (str) {
         return {
             toString: function () {
@@ -132,10 +172,17 @@ module.exports = {
             }
         };
     },
+    /**
+     * Internal method to render a single HTML attribute
+     * @private
+     */
     a: attr,
 
+    /**
+     * Internal method to render multiple HTML attributes based on the properties of an object
+     * @private
+     */
     as: attrs,
-
     /**
      * Loads a template
      */
@@ -239,6 +286,13 @@ module.exports = {
             }
         }
     },
+    /**
+     * Internal helper method that captures the output of rendering.
+     * This function works by swapping out the underlying writer to
+     * a temporary writer that buffers a string. The provided function
+     * is executed and the old writer is restored. Finally, the buffered
+     * string is returned.
+     */
     c: function (out, func) {
         var output = out.captureString(func);
         return {
@@ -247,6 +301,10 @@ module.exports = {
             }
         };
     },
+    /**
+     * Internal method to handle includes/partials
+     * @private
+     */
     i: function(out, path, data) {
         if (!path) {
             return;
@@ -272,5 +330,9 @@ module.exports = {
 
         return this;
     },
+    /**
+     * Internal helper method to do a shallow copy of the properties of one object to another.
+     * @private
+     */
     xt: extend
 };

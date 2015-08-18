@@ -49,6 +49,10 @@ Node.isNode = function(node) {
 };
 
 Node.prototype = {
+    /**
+     * Marks this node with an arbitrary flag
+     * @param  {String} flag The flag name
+     */
     setFlag: function(flag) {
         if (!this.flags) {
             this.flags = {};
@@ -56,13 +60,29 @@ Node.prototype = {
         this.flags[flag] = true;
     },
 
+    /**
+     * Checks if this node has been marked with an arbitrary flag
+     * @param  {String} flag The flag name
+     * @return {Boolean} True, if marked. False, otherwise.
+     */
     hasFlag: function(flag) {
         return this.flags ? this.flags.hasOwnProperty(flag) : false;
     },
-
+    /**
+     * Marks this node as being the root node of the tmeplate
+     * @param {Boolean} isRoot
+     */
     setRoot: function (isRoot) {
         this._isRoot = isRoot;
     },
+    /**
+     * Gets the position information associated with this node.
+     *
+     * The returned position object has the following properties:
+     * - filePath
+     * - line;
+     * - column;
+     */
     getPosition: function () {
         var pos = this.pos || this.getProperty('pos') || {
                 toString: function () {
@@ -71,9 +91,15 @@ Node.prototype = {
             };
         return pos;
     },
+    /**
+     * Stores position information with this node.
+     */
     setPosition: function (pos) {
         this.pos = pos;
     },
+    /**
+     * Associates a compile-time error with this node that will be reported by the comiler.
+     */
     addError: function (error) {
         var compiler = this.compiler;
         var curNode = this;
@@ -117,6 +143,11 @@ Node.prototype = {
     removeProperty: function (name) {
         delete this.properties[name];
     },
+    /**
+     * Loops over the child nodes of this node
+     * @param  {Function} callback A callback function
+     * @param  {Boolean}  thisObj  The "this" for the callback function
+     */
     forEachChild: function (callback, thisObj) {
         if (!this.firstChild) {
             return;
