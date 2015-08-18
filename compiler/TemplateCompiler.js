@@ -198,6 +198,10 @@ TemplateCompiler.prototype = {
     getErrors: function () {
         return this.errors;
     },
+    /**
+     * Returns the constructor for an AST node based
+     * on the tag name.
+     */
     getNodeClass: function (tagName) {
         ok(arguments.length === 1, 'Invalid args');
 
@@ -212,6 +216,12 @@ TemplateCompiler.prototype = {
         throw createError(new Error('Node class not found for tag "' + tagName + '"'));
     },
 
+    /**
+     * There are three types of nodes that can be added to an AST: Node, ElementNode and TextNode
+     * Nodes that produce an HTML tag should extend ElementNode.
+     * Nodes that produce text should extend TextNode
+     * For everything else, a node should inherit from the base Node class
+     */
     inheritNode: function(Ctor) {
         if (!Ctor.prototype.__NODE) {
             var nodeType = Ctor.nodeType || 'node';
@@ -227,6 +237,12 @@ TemplateCompiler.prototype = {
         }
     },
 
+    /**
+     * Create a new AST node that can be added to the AST tree
+     *
+     * The first argument can either be a tag name or a construtor
+     * function.
+     */
     createNode: function(Ctor, arg) {
         if (typeof Ctor === 'string') {
             var tagName = Ctor;
@@ -248,10 +264,17 @@ TemplateCompiler.prototype = {
         return new Ctor(arg);
     },
 
+    /**
+     * Helper method to create a new Text node that can be added to the AST.
+     * The Text node will generate code that renders static HTML
+     */
     createTextNode: function(text, escapeXml) {
         return new TextNode(text, escapeXml);
     },
 
+    /**
+     * Returns the max last modified date of a template and all of its taglibs
+     */
     getLastModified: function() {
         return upToDate.getLastModified(this.path, this.taglibs);
     },

@@ -1,3 +1,4 @@
+require('raptor-polyfill/string/startsWith');
 var ok = require('assert').ok;
 var Taglib = require('../Taglib');
 var propertyHandlers = require('property-handlers');

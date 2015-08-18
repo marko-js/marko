@@ -54,12 +54,12 @@ function ParseTreeBuilder(taglibs) {
 }
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
-    'whitespace': function(attr, compilerOptions) {
+    whitespace: function(attr, compilerOptions) {
         if (attr.value === 'preserve') {
             compilerOptions.preserveWhitespace = true;
         }
     },
-    'comments': function(attr, compilerOptions) {
+    comments: function(attr, compilerOptions) {
         if (attr.value === 'preserve') {
             compilerOptions.preserveComments = true;
         }

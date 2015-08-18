@@ -3,27 +3,59 @@ var raptorCache;
 var defaultCacheManager;
 var req = require; // Fool the optimizer
 
+var caches = {};
+
+function createCache() {
+    var cache = {};
+
+    return {
+        get: function(cacheKey, options, callback) {
+            var value = cache[cacheKey];
+            if (value !== undefined) {
+                return callback(null, value);
+            }
+
+            var builder = options.builder;
+            builder(function(err, value) {
+                if (err) {
+                    return callback(err);
+                }
+
+                if (value === undefined) {
+                    value = null;
+                }
+
+                cache[cacheKey] = value;
+
+                callback(null, value);
+            });
+        }
+    };
+}
+
+var defaultCacheManager = {
+    getCache: function(cacheName) {
+        return caches[cacheName] || (caches[cacheName] = createCache());
+    }
+};
 
 module.exports = {
     render: function (input, out) {
         if (raptorCache === undefined) {
             try {
                 raptorCache = req('raptor-cache');
-            }
-            catch(e) {
-                throw new Error('The "raptor-cache" module should be installed as an application-level dependency when using caching tags');
-            }
-
-            defaultCacheManager = raptorCache.createCacheManager({
-                profiles: {
-                    '*': {
-                        'marko/cached-fragment': {
-                            store: 'memory',
-                            encoding: 'utf8'
+                defaultCacheManager = raptorCache.createCacheManager({
+                    profiles: {
+                        '*': {
+                            'marko/cached-fragment': {
+                                store: 'memory',
+                                encoding: 'utf8'
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            catch(e) {}
         }
 
         var cacheKey = input.cacheKey;

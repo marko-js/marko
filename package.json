@@ -52,7 +52,6 @@
         "chai": "~1.8.1",
         "jshint": "^2.5.0",
         "mocha": "~1.15.1",
-        "raptor-cache": "^1.1.1",
         "through": "^2.3.4"
     },
     "license": "Apache-2.0",
