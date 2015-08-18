@@ -1941,7 +1941,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Discuss
 
- - Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+- Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - Twitter: please use the `#MarkoJS` hashtag. Follow [@MarkoDevTeam](https://twitter.com/MarkoDevTeam)
 
 Questions or comments can also be posted on the [Marko Github issues](https://github.com/marko-js/marko/issues) page.
