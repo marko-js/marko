@@ -1,3 +1,4 @@
+'use strict';
 var nodePath = require('path');
 var fs = require('fs');
 var Module = require('module').Module;
