@@ -36,17 +36,19 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
 		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
 		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
 	- [Lifecycle Methods](#lifecycle-methods)
-		- [getInitialProps(input, out)](#getinitialpropsinput-out)
-		- [getInitialState(input, out)](#getinitialstateinput-out)
-		- [getTemplateData(state, input, out)](#gettemplatedatastate-input-out)
-		- [getWidgetConfig(input, out)](#getwidgetconfiginput-out)
-		- [getInitialBody(input, out)](#getinitialbodyinput-out)
-		- [init(widgetConfig)](#initwidgetconfig)
-		- [onBeforeUpdate()](#onbeforeupdate)
-		- [onUpdate()](#onupdate)
-		- [onBeforeDestroy()](#onbeforedestroy)
-		- [onDestroy()](#ondestroy)
-		- [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
+		- [Rendering Methods](#rendering-methods)
+			- [getInitialProps(input, out)](#getinitialpropsinput-out)
+			- [getInitialState(input, out)](#getinitialstateinput-out)
+			- [getTemplateData(state, input, out)](#gettemplatedatastate-input-out)
+			- [getWidgetConfig(input, out)](#getwidgetconfiginput-out)
+			- [getInitialBody(input, out)](#getinitialbodyinput-out)
+		- [Widget Methods](#widget-methods)
+			- [init(widgetConfig)](#initwidgetconfig)
+			- [onBeforeUpdate()](#onbeforeupdate)
+			- [onUpdate()](#onupdate)
+			- [onBeforeDestroy()](#onbeforedestroy)
+			- [onDestroy()](#ondestroy)
+			- [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
 	- [Client-side Rendering](#client-side-rendering)
 	- [Server-side Rendering](#server-side-rendering)
 		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
@@ -956,8 +958,11 @@ NOTE: `subscribeTo(eventEmitter)` is used to ensure proper cleanup if the subscr
 
 ## Lifecycle Methods
 
+### Rendering Methods
 
-### getInitialProps(input, out)
+`this` should _not_ be used in these methods because a widget instance has not yet been created during rendering. 
+
+#### getInitialProps(input, out)
 
 This optional method is used to normalize the input properties during the rendering of a UI component. If implemented, this method should return the input properties to use based on the provided `input` and `out` arguments.
 
@@ -972,9 +977,7 @@ This optional method is used to normalize the input properties during the render
 }
 ```
 
-_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
-
-### getInitialState(input, out)
+#### getInitialState(input, out)
 
 This optional method is used to determine the initial state for a newly rendered UI component.
 
@@ -989,61 +992,45 @@ This optional method is used to determine the initial state for a newly rendered
 }
 ```
 
-_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
-
-### getTemplateData(state, input, out)
+#### getTemplateData(state, input, out)
 
 This optional method is used to determine what data will be passed to the Marko template that is used to render the UI component.
 
-_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
-
-### getWidgetConfig(input, out)
+#### getWidgetConfig(input, out)
 
 This optional method is used to determine is passed to the widget constructor when the widget is initialized in the browser. If the UI component is rendered on the server then the widget config data will be serialized to a JSON-like data structure and stored in a special `data-w-config` attribute in the DOM.
 
-_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
-
-### getInitialBody(input, out)
+#### getInitialBody(input, out)
 
 This optional method is used to determine the nested external content that is to be injected into the body of the UI component (to support transclusion). The actual injection point is determined by the `w-body` attribute.
 
-_NOTE: This method is called during rendering and before a widget instance has been created. `this` should _not_ be used._
+### Widget Methods
 
-### init(widgetConfig)
+`this` can be used in these methods as the widget instance.
+
+#### init(widgetConfig)
 
 The `init(widgetConfig)` constructor method is called once in the browser when the widget is first created and after the widget has been mounted in the DOM. The `init(widgetConfig)` method is only called once for a given widget.
 
-_NOTE: `this` will be the widget instance_
-
-### onBeforeUpdate()
+#### onBeforeUpdate()
 
 The `onBeforeUpdate()` method is called when a widget's view is about to be updated due to either new properties or a state change.
 
-_NOTE: `this` will be the widget instance_
-
-### onUpdate()
+#### onUpdate()
 
 The `onUpdate()` method is called when a widget's view has been updated due to either new properties or a state change. The DOM nodes have been updated accordingly by time this method has been called.
 
-_NOTE: `this` will be the widget instance_
-
-### onBeforeDestroy()
+#### onBeforeDestroy()
 
 The `onBeforeDestroy()` method is called when a widget is about to be destroyed due to it being fromed from the DOM.
 
-_NOTE: `this` will be the widget instance_
-
-### onDestroy()
+#### onDestroy()
 
 The `onDestroy()` method is called after a widget has been destroyed and removed from the DOM.
 
-_NOTE: `this` will be the widget instance_
-
-### shouldUpdate(newProps, newState)
+#### shouldUpdate(newProps, newState)
 
 The `shouldUpdate(newProps, newState)` method is called when a widget's view is about to be updated. Returning `false` will prevent the widget's view from being updated.
-
-_NOTE: `this` will be the widget instance_
 
 ## Client-side Rendering
 
