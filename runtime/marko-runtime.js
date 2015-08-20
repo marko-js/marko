@@ -309,8 +309,6 @@ exports.stream = function(templatePath, data) {
     return load(templatePath).stream(data);
 };
 
-exports.cache = {};
-
 exports.createWriter = function(writer) {
     return new AsyncWriter(writer);
 };
