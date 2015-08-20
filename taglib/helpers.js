@@ -75,3 +75,17 @@ exports.widgetBody = function (out, id, content, widget) {
         out.write(content);
     }
 };
+
+exports.getCurrentWidget = function (out) {
+    var widgets = out.global.widgets;
+    if (!widgets) {
+        throw new Error('No widget found');
+    }
+
+    var widget = widgets.getCurrentWidget();
+    if (!widget) {
+        throw new Error('No widget found');
+    }
+
+    return widget;
+};

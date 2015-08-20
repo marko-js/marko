@@ -1,6 +1,7 @@
 function assignWidgetId(isRepeated) {
     var compiler = this.compiler;
     var node = this.node;
+    var template = this.template;
 
     var widgetIdInfo = this.widgetIdInfo;
 
@@ -21,7 +22,10 @@ function assignWidgetId(isRepeated) {
         // That means we do not have access to the parent widget variable as part of a closure. We
         // need to look it up out of the `out.data` map
         if (!this.template.data.hasWidgetVar) {
-            this.template.addVar('widget', 'out.global.widgets.getCurrentWidget()');
+            template.addStaticVar('__getCurrentWidget',
+                'require("marko-widgets/taglib/helpers").getCurrentWidget');
+
+            this.template.addVar('widget', '__getCurrentWidget(out)');
             this.template.data.hasWidgetVar = true;
         }
     }
