@@ -1,3 +1,58 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [CHANGELOG](#changelog)
+- [Upgrade Guide](#upgrade-guide)
+  - [v4 to v5](#v4-to-v5)
+    - [Breaking changes](#breaking-changes)
+    - [New features](#new-features)
+  - [v3 to v4](#v3-to-v4)
+    - [Breaking changes](#breaking-changes-1)
+    - [New features](#new-features-1)
+  - [v2 to v3](#v2-to-v3)
+  - [v1 to v2](#v1-to-v2)
+- [5.x](#5x)
+  - [5.0.x](#50x)
+    - [5.0.0](#500)
+- [4.x](#4x)
+  - [4.3.x](#43x)
+    - [4.3.0](#430)
+  - [4.2.x](#42x)
+    - [4.2.3](#423)
+    - [4.2.2](#422)
+    - [4.2.1](#421)
+    - [4.2.0](#420)
+  - [4.1.x](#41x)
+    - [4.1.0](#410)
+  - [4.0.x](#40x)
+    - [4.0.1](#401)
+- [3.x](#3x)
+  - [3.0.x](#30x)
+    - [3.0.0](#300)
+- [2.x](#2x)
+  - [2.0.x](#20x)
+    - [2.0.12](#2012)
+    - [2.0.11](#2011)
+    - [2.0.10](#2010)
+    - [2.0.9](#209)
+    - [2.0.8](#208)
+    - [2.0.7](#207)
+    - [2.0.6](#206)
+    - [2.0.5](#205)
+    - [2.0.4](#204)
+    - [2.0.3](#203)
+    - [2.0.2](#202)
+    - [2.0.1](#201)
+    - [2.0.0](#200)
+- [1.x](#1x)
+  - [1.5.x](#15x)
+    - [1.5.2](#152)
+    - [1.5.1](#151)
+    - [1.5.0](#150)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 CHANGELOG
 =========
 

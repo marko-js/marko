@@ -10,89 +10,88 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-# Table of Contents
 
 - [Features](#features)
 - [Design Philosophy](#design-philosophy)
 - [Sample Code](#sample-code)
-	- [Stateless Widget](#stateless-widget)
-	- [Stateless Widget with Behavior](#stateless-widget-with-behavior)
-	- [Stateful Widget](#stateful-widget)
-	- [Stateful Widget with Update Handlers](#stateful-widget-with-update-handlers)
-	- [Complex Widget](#complex-widget)
-	- [Container Widget](#container-widget)
-	- [Preserving DOM Nodes during Re-render](#preserving-dom-nodes-during-re-render)
+  - [Stateless Widget](#stateless-widget)
+  - [Stateless Widget with Behavior](#stateless-widget-with-behavior)
+  - [Stateful Widget](#stateful-widget)
+  - [Stateful Widget with Update Handlers](#stateful-widget-with-update-handlers)
+  - [Complex Widget](#complex-widget)
+  - [Container Widget](#container-widget)
+  - [Preserving DOM Nodes during Re-render](#preserving-dom-nodes-during-re-render)
 - [Installation](#installation)
 - [Glossary](#glossary)
 - [Usage](#usage)
-	- [Binding Behavior](#binding-behavior)
-	- [Widget Props](#widget-props)
-	- [Widget Template](#widget-template)
-	- [Widget State](#widget-state)
-	- [Widget Config](#widget-config)
-	- [Referencing Nested Widgets](#referencing-nested-widgets)
-	- [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
-	- [Adding Event Listeners](#adding-event-listeners)
-		- [Adding DOM Event Listeners](#adding-dom-event-listeners)
-		- [Adding Custom Event Listeners](#adding-custom-event-listeners)
-	- [Lifecycle Methods](#lifecycle-methods)
-		- [Rendering Methods](#rendering-methods)
-			- [getInitialProps(input, out)](#getinitialpropsinput-out)
-			- [getInitialState(input, out)](#getinitialstateinput-out)
-			- [getTemplateData(state, input, out)](#gettemplatedatastate-input-out)
-			- [getWidgetConfig(input, out)](#getwidgetconfiginput-out)
-			- [getInitialBody(input, out)](#getinitialbodyinput-out)
-		- [Widget Methods](#widget-methods)
-			- [init(widgetConfig)](#initwidgetconfig)
-			- [onBeforeUpdate()](#onbeforeupdate)
-			- [onUpdate()](#onupdate)
-			- [onBeforeDestroy()](#onbeforedestroy)
-			- [onDestroy()](#ondestroy)
-			- [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
-	- [Client-side Rendering](#client-side-rendering)
-	- [Server-side Rendering](#server-side-rendering)
-		- [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
-	- [Split Renderer and Widget](#split-renderer-and-widget)
-		- [Combined Renderer and Widget](#combined-renderer-and-widget)
-		- [Split Renderer and Widget](#split-renderer-and-widget-1)
+  - [Binding Behavior](#binding-behavior)
+  - [Widget Props](#widget-props)
+  - [Widget Template](#widget-template)
+  - [Widget State](#widget-state)
+  - [Widget Config](#widget-config)
+  - [Referencing Nested Widgets](#referencing-nested-widgets)
+  - [Referencing Nested DOM Elements](#referencing-nested-dom-elements)
+  - [Adding Event Listeners](#adding-event-listeners)
+    - [Adding DOM Event Listeners](#adding-dom-event-listeners)
+    - [Adding Custom Event Listeners](#adding-custom-event-listeners)
+  - [Lifecycle Methods](#lifecycle-methods)
+    - [Rendering Methods](#rendering-methods)
+      - [getInitialProps(input, out)](#getinitialpropsinput-out)
+      - [getInitialState(input, out)](#getinitialstateinput-out)
+      - [getTemplateData(state, input, out)](#gettemplatedatastate-input-out)
+      - [getWidgetConfig(input, out)](#getwidgetconfiginput-out)
+      - [getInitialBody(input, out)](#getinitialbodyinput-out)
+    - [Widget Methods](#widget-methods)
+      - [init(widgetConfig)](#initwidgetconfig)
+      - [onBeforeUpdate()](#onbeforeupdate)
+      - [onUpdate()](#onupdate)
+      - [onBeforeDestroy()](#onbeforedestroy)
+      - [onDestroy()](#ondestroy)
+      - [shouldUpdate(newProps, newState)](#shouldupdatenewprops-newstate)
+  - [Client-side Rendering](#client-side-rendering)
+  - [Server-side Rendering](#server-side-rendering)
+    - [Manually Initializing Server-side Rendered Widgets](#manually-initializing-server-side-rendered-widgets)
+  - [Split Renderer and Widget](#split-renderer-and-widget)
+    - [Combined Renderer and Widget](#combined-renderer-and-widget)
+    - [Split Renderer and Widget](#split-renderer-and-widget-1)
 - [API](#api)
-	- [marko-widgets exports](#marko-widgets-exports)
-		- [defineComponent(def)](#definecomponentdef)
-		- [defineRenderer(def)](#definerendererdef)
-		- [defineWidget(def)](#definewidgetdef)
-		- [getWidgetForEl(el)](#getwidgetforelel)
-	- [Widget](#widget)
-		- [Methods](#methods)
-			- [$(querySelector)](#$queryselector)
-			- [addEventListener(eventType, listener)](#addeventlistenereventtype-listener)
-			- [appendTo(targetEl)](#appendtotargetel)
-			- [destroy()](#destroy)
-			- [detach()](#detach)
-			- [emit(eventType, arg1, arg2, ...)](#emiteventtype-arg1-arg2-)
-			- [getEl(widgetElId)](#getelwidgetelid)
-			- [getEls(id)](#getelsid)
-			- [getElId(widgetElId)](#getelidwidgetelid)
-			- [getWidget(id[, index])](#getwidgetid-index)
-			- [getWidgets(id)](#getwidgetsid)
-			- [insertAfter(targetEl)](#insertaftertargetel)
-			- [insertBefore(targetEl)](#insertbeforetargetel)
-			- [isDestroyed()](#isdestroyed)
-			- [on(eventType, listener)](#oneventtype-listener)
-			- [prependTo(targetEl)](#prependtotargetel)
-			- [ready(callback)](#readycallback)
-			- [replace(targetEl)](#replacetargetel)
-			- [replaceChildrenOf(targetEl)](#replacechildrenoftargetel)
-		- [replaceState(newState)](#replacestatenewstate)
-			- [rerender(data, callback)](#rerenderdata-callback)
-			- [setState(name, value)](#setstatename-value)
-			- [setState(newState)](#setstatenewstate)
-			- [setStateDirty(name, value)](#setstatedirtyname-value)
-			- [setProps(newProps)](#setpropsnewprops)
-			- [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
-		- [Properties](#properties)
-			- [this.el](#thisel)
-			- [this.id](#thisid)
-			- [this.state](#thisstate)
+  - [marko-widgets exports](#marko-widgets-exports)
+    - [defineComponent(def)](#definecomponentdef)
+    - [defineRenderer(def)](#definerendererdef)
+    - [defineWidget(def)](#definewidgetdef)
+    - [getWidgetForEl(el)](#getwidgetforelel)
+  - [Widget](#widget)
+    - [Methods](#methods)
+      - [$(querySelector)](#queryselector)
+      - [addEventListener(eventType, listener)](#addeventlistenereventtype-listener)
+      - [appendTo(targetEl)](#appendtotargetel)
+      - [destroy()](#destroy)
+      - [detach()](#detach)
+      - [emit(eventType, arg1, arg2, ...)](#emiteventtype-arg1-arg2-)
+      - [getEl(widgetElId)](#getelwidgetelid)
+      - [getEls(id)](#getelsid)
+      - [getElId(widgetElId)](#getelidwidgetelid)
+      - [getWidget(id[, index])](#getwidgetid-index)
+      - [getWidgets(id)](#getwidgetsid)
+      - [insertAfter(targetEl)](#insertaftertargetel)
+      - [insertBefore(targetEl)](#insertbeforetargetel)
+      - [isDestroyed()](#isdestroyed)
+      - [on(eventType, listener)](#oneventtype-listener)
+      - [prependTo(targetEl)](#prependtotargetel)
+      - [ready(callback)](#readycallback)
+      - [replace(targetEl)](#replacetargetel)
+      - [replaceChildrenOf(targetEl)](#replacechildrenoftargetel)
+      - [replaceState(newState)](#replacestatenewstate)
+      - [rerender(data, callback)](#rerenderdata-callback)
+      - [setState(name, value)](#setstatename-value)
+      - [setState(newState)](#setstatenewstate)
+      - [setStateDirty(name, value)](#setstatedirtyname-value)
+      - [setProps(newProps)](#setpropsnewprops)
+      - [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
+    - [Properties](#properties)
+      - [this.el](#thisel)
+      - [this.id](#thisid)
+      - [this.state](#thisstate)
 - [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
 - [Changelog](#changelog)
 - [Discuss](#discuss)
@@ -524,7 +523,7 @@ Using the bindings for Marko, you can bind a widget to a rendered DOM element us
 
 ```xml
 <div class="my-component" w-bind="./widget">
-    <h1>Click Me</h1>
+    <div>Click Me</div>
 </div>
 ```
 
@@ -532,7 +531,7 @@ You can also choose to leave the value of the `w-bind` attribute empty. If the v
 
 ```xml
 <div class="my-component" w-bind>
-    <h1>Click Me</h1>
+    <div>Click Me</div>
 </div>
 ```
 
@@ -1073,10 +1072,10 @@ __src/pages/index/template.marko:__
     <lasso-head/>
 </head>
 <body>
-    <h1>Marko Widgets: Bind</h1>
+    <div>Marko Widgets: Bind</div>
 
     <div class="my-component" w-bind="./widget">
-        <h2>Click Me</h2>
+        <div>Click Me</div>
     </div>
 
     <lasso-body/>
@@ -1107,9 +1106,9 @@ In the above example, the final HTML will be similar to the following:
         <title>Widgets Demo</title>
     </head>
     <body>
-		<h1>Marko Widgets: Bind</h1>
+		<div>Marko Widgets: Bind</div>
 		<div class="my-component" id="w0" data-widget="/src/pages/index/widget">
-			<h2>Click Me</h2>
+			<div>Click Me</div>
 		</div>
         <script src="static/index-8947595a.js" type="text/javascript"></script>
         <span style="display:none;" data-ids="w0" id="rwidgets"></span>
@@ -1470,7 +1469,7 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 
 #### replaceChildrenOf(targetEl)
 
-### replaceState(newState)
+#### replaceState(newState)
 
 Replaces the state with an entirely new state. If any of the state properties changed then the widget's view will automatically be updated.
 
