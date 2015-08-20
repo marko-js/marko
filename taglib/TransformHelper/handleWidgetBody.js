@@ -9,14 +9,16 @@ module.exports = function handleWidgetBody() {
         return;
     }
 
-    var widgetTagNode = this.getContainingWidgetNode();
+    var widgetTagNode = this.getContainingWidgetNode({ allowExtend: true });
+
+    if (!widgetTagNode) {
+        node.addError('w-body can only be used within the scope of w-bind');
+        return;
+    }
     var idExpression;
 
     if (widgetBody) {
         this.assignWidgetId(true /* repeated */);
-
-
-
 
         var nextVarId = template.data.nextWidgetBodyId;
         if (nextVarId == null) {

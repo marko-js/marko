@@ -2,6 +2,7 @@
 var markoWidgets = require('../');
 var extend = require('raptor-util/extend');
 var widgetArgsId = require('../lib/widget-args-id');
+var widgetBodyHelper = require('./helpers').widgetBody;
 
 var DUMMY_WIDGET_DEF = {
         elId: function () {
@@ -22,13 +23,21 @@ function getExistingWidget(id, type) {
     return null;
 }
 
-function preserveWidgetEl(existingWidget, out, widgetsContext) {
+function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
     // We put a placeholder element in the output stream to ensure that the existing
     // DOM node is matched up correctly when using morphdom.
     var tagName = existingWidget.el.tagName;
-    out.write('<' + tagName + ' id="' + existingWidget.id + '"></' + tagName + '>');
+    out.write('<' + tagName + ' id="' + existingWidget.id + '">');
+    var hasUnpreservedBody = false;
+
+    if (widgetBody && existingWidget.bodyEl) {
+        hasUnpreservedBody = true;
+        widgetBodyHelper(out, existingWidget.bodyEl.id, widgetBody, existingWidget);
+    }
+
+    out.write('</' + tagName + '>');
     existingWidget._reset(); // The widget is no longer dirty so reset internal flags
-    widgetsContext.addPreservedDOMNode(existingWidget.el); // Mark the element as being preserved (for morphdom)
+    widgetsContext.addPreservedDOMNode(existingWidget.el, null, hasUnpreservedBody); // Mark the element as being preserved (for morphdom)
 }
 
 
@@ -67,6 +76,7 @@ module.exports = function render(input, out) {
     var props = input.props || input._props;
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
+    var widgetBody = input._body;
 
     var id = input.id;
     var extendList;
@@ -147,7 +157,7 @@ module.exports = function render(input, out) {
                     // If _processUpdateHandlers() returns true then that means
                     // that the widget is now up-to-date and we can skip rerendering it.
                     shouldRenderBody = false;
-                    preserveWidgetEl(existingWidget, out, widgetsContext);
+                    preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody);
                     return;
                 }
             }
@@ -156,7 +166,7 @@ module.exports = function render(input, out) {
             // then skip rerendering the widget.
             if (!existingWidget.isDirty() && !existingWidget.shouldUpdate(props, state)) {
                 shouldRenderBody = false;
-                preserveWidgetEl(existingWidget, out, widgetsContext);
+                preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody);
                 return;
             }
         }
