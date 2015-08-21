@@ -65,7 +65,7 @@ As a widget developer you can choose to implement any of the following special f
     4. `getInitialBody(input)`
     5. `getWidgetConfig(input)`
 - Widget methods:
-    - `init(widgetConfig)` - Called when the widget is initialized (called exactly once, even if a widget is rerendered)
+    - `init(widgetConfig)` - Called when the widget is initialized (rerendering a widget does not invoke the function again)
     - `update_<state_property>(newValue)` - Called when the corresponding state property has changed and the DOM needs to be updated based on the new value.
     - `onBeforeUpdate()` - Called before the widget's DOM is about to be updated (due to either a rerender or state update handler).
     - `onBeforeDestroy()` - Called before the widget is about to be destroyed
