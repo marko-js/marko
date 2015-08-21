@@ -30,11 +30,11 @@ As the decision is centered around individual situations, an application develop
 
 ## Is there a difference between reuse and preserve in the context of Marko Widgets?
 
-DOM nodes can be preserved during a rerender and widget instances can be reused during a rerender. A preserved DOM node is left completely in its previous state (other than being reinserted into the DOM with a new parent). A reused widgets, however, is reinitialized after updating its internal state, but the same instance is reused.
+DOM nodes can be preserved during a rerender and widget instances can be reused during a rerender (to have the same widget instance even after a rerender). A preserved DOM node is left completely in its previous state (other than being reinserted into the DOM with a new parent).
 
 A preserved DOM nodes is detached from the DOM and reinserted into the updated DOM in its proper place.
 
-Reusing the same widget instance ensures that any references to the old widget instance will still be correct. It is necessary to reinitialize a widget (i.e., call the `init` method again) since nested DOM subtree and nested widgets will likely have changed.
+Reusing the same widget instance ensures that any references to the old widget instance will still be correct.
 
 ## How far should a UI be "componentized"?
 
@@ -65,7 +65,7 @@ As a widget developer you can choose to implement any of the following special f
     4. `getInitialBody(input)`
     5. `getWidgetConfig(input)`
 - Widget methods:
-    - `init(widgetConfig)` - Called when the widget is initialized _or_ reinitialized
+    - `init(widgetConfig)` - Called when the widget is initialized (called exactly once, even if a widget is rerendered)
     - `update_<state_property>(newValue)` - Called when the corresponding state property has changed and the DOM needs to be updated based on the new value.
     - `onBeforeUpdate()` - Called before the widget's DOM is about to be updated (due to either a rerender or state update handler).
     - `onBeforeDestroy()` - Called before the widget is about to be destroyed
