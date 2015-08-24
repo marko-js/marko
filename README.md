@@ -67,7 +67,9 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
       - [appendTo(targetEl)](#appendtotargetel)
       - [destroy()](#destroy)
       - [detach()](#detach)
+      - [doUpdate(stateChanges, oldState)](#doupdatestatechanges-oldstate)
       - [emit(eventType, arg1, arg2, ...)](#emiteventtype-arg1-arg2-)
+      - [getBodyEl()](#getbodyel)
       - [getEl(widgetElId)](#getelwidgetelid)
       - [getEls(id)](#getelsid)
       - [getElId(widgetElId)](#getelidwidgetelid)
@@ -76,6 +78,7 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
       - [insertAfter(targetEl)](#insertaftertargetel)
       - [insertBefore(targetEl)](#insertbeforetargetel)
       - [isDestroyed()](#isdestroyed)
+      - [isDirty()](#isdirty)
       - [on(eventType, listener)](#oneventtype-listener)
       - [prependTo(targetEl)](#prependtotargetel)
       - [ready(callback)](#readycallback)
@@ -88,6 +91,7 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
       - [setStateDirty(name, value)](#setstatedirtyname-value)
       - [setProps(newProps)](#setpropsnewprops)
       - [subscribeTo(targetEventEmitter)](#subscribetotargeteventemitter)
+      - [update()](#update)
     - [Properties](#properties)
       - [this.el](#thisel)
       - [this.id](#thisid)
@@ -1429,9 +1433,13 @@ Setting `recursive` to `false` will prevent children widgets from being destroye
 
 Detaches the widget's root element from the DOM by removing the node from its parent node.
 
+#### doUpdate(stateChanges, oldState)
+
 #### emit(eventType, arg1, arg2, ...)
 
 Emits an event. This method is inherited from EventEmitter (see [Node.js Events: EventsEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
+
+#### getBodyEl()
 
 #### getEl(widgetElId)
 
@@ -1458,6 +1466,8 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 #### insertBefore(targetEl)
 
 #### isDestroyed()
+
+#### isDirty()
 
 #### on(eventType, listener)
 
@@ -1514,6 +1524,17 @@ this.setStateDirty('colors');
 For stateless widgets, setting a widgets properties will result in the widget being re-rendered using the new input. For stateful widgets, setting a widgets properties will result in `getInitialState(newProps)` being called again to determine the new state and the widget state will be updated to use the new state.
 
 #### subscribeTo(targetEventEmitter)
+
+#### update()
+
+Force the DOM to update immediately, rather than following the normal queued update mechanism for rendering.
+
+```js
+this.setState('foo', 'bar');
+this.update(); // Force the DOM to update
+this.setState('hello', 'world');
+this.update(); // Force the DOM to update
+```
 
 ### Properties
 
