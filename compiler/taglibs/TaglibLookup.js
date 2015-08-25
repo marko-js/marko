@@ -88,6 +88,11 @@ function TaglibLookup() {
 }
 
 TaglibLookup.prototype = {
+
+    hasTaglib: function(taglib) {
+        return this.taglibsById.hasOwnProperty(taglib.id);
+    },
+
     _mergeNestedTags: function(taglib) {
         var Tag = Taglib.Tag;
         // Loop over all of the nested tags and register a new custom tag

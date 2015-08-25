@@ -28,9 +28,11 @@ function handleImports(lookup, taglib) {
 	if (taglib.imports) {
 		for (var j=0; j<taglib.imports.length; j++) {
 			var importedTaglib = taglibLoader.load(taglib.imports[j]);
-			lookup.addTaglib(importedTaglib);
 
-			handleImports(lookup, importedTaglib);
+			if (!lookup.hasTaglib(importedTaglib)) {
+				lookup.addTaglib(importedTaglib);
+				handleImports(lookup, importedTaglib);
+			}
 		}
 	}
 }
