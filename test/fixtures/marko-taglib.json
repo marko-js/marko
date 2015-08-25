@@ -119,7 +119,7 @@
     "<test-nested-tags-tabs>": "./taglib/test-nested-tags-tabs/marko-tag.json",
     "<test-nested-tags-overlay>": "./taglib/test-nested-tags-overlay/marko-tag.json",
     "tags-dir": "./taglib/scanned-tags",
-    "taglib-imports": ["./package.json"],
+    "taglib-imports": ["./package.json", "./nested-import/marko-taglib.json"],
     "<test-invalid-attr>": {
         "@foo": "string"
     }

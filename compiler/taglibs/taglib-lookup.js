@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,6 +23,17 @@ var TaglibLookup = require('./TaglibLookup');
 exports.registeredTaglibs = [];
 
 var lookupCache = {};
+
+function handleImports(lookup, taglib) {
+	if (taglib.imports) {
+		for (var j=0; j<taglib.imports.length; j++) {
+			var importedTaglib = taglibLoader.load(taglib.imports[j]);
+			lookup.addTaglib(importedTaglib);
+
+			handleImports(lookup, importedTaglib);
+		}
+	}
+}
 
 function buildLookup(dirname) {
 	var taglibs = taglibFinder.find(dirname, exports.registeredTaglibs);
@@ -45,12 +56,7 @@ function buildLookup(dirname) {
 			var taglib = taglibs[i];
 			lookup.addTaglib(taglib);
 
-			if (taglib.imports) {
-				for (var j=0; j<taglib.imports.length; j++) {
-					var importedTaglib = taglibLoader.load(taglib.imports[j]);
-					lookup.addTaglib(importedTaglib);
-				}
-			}
+			handleImports(lookup, taglib);
 		}
 
 		lookupCache[lookupCacheKey] = lookup;

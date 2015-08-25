@@ -1,4 +1,6 @@
 'use strict';
+require('../node-require').install();
+
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
