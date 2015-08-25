@@ -65,5 +65,5 @@
     "browser": {
         "./node-require.js": "./node-require-browser.js"
     },
-    "version": "2.7.15"
+    "version": "2.7.16"
 }
