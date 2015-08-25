@@ -131,7 +131,12 @@ TaglibLookup.prototype = {
 
         this.taglibsById[taglib.id] = taglib;
 
-        merge(this.merged, taglib);
+        merge(this.merged, {
+            tags: taglib.tags,
+            textTransformers: taglib.textTransformers,
+            attributes: taglib.attributes,
+            patternAttributes: taglib.patternAttributes
+        });
 
         this._mergeNestedTags(taglib);
     },

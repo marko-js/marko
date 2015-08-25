@@ -26,12 +26,11 @@ var lookupCache = {};
 
 function handleImports(lookup, taglib) {
 	if (taglib.imports) {
-		for (var j=0; j<taglib.imports.length; j++) {
-			var importedTaglib = taglibLoader.load(taglib.imports[j]);
+		for (var i=0; i<taglib.imports.length; i++) {
+			var importedTaglib = taglib.imports[i];
 
 			if (!lookup.hasTaglib(importedTaglib)) {
 				lookup.addTaglib(importedTaglib);
-				handleImports(lookup, importedTaglib);
 			}
 		}
 	}
@@ -57,7 +56,6 @@ function buildLookup(dirname) {
         for (var i=0; i<taglibs.length; i++) {
 			var taglib = taglibs[i];
 			lookup.addTaglib(taglib);
-
 			handleImports(lookup, taglib);
 		}
 

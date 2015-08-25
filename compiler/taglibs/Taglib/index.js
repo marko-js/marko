@@ -17,10 +17,33 @@
 'use strict';
 var forEachEntry = require('raptor-util').forEachEntry;
 var ok = require('assert').ok;
+var taglibLoader;
+
+function handleImport(taglib, importedTaglib) {
+    var importsLookup = taglib.importsLookup || (taglib.importsLookup = {});
+    if (importsLookup.hasOwnProperty(importedTaglib.path)) {
+        return;
+    }
+
+    importsLookup[importedTaglib.path] = importedTaglib;
+
+    if (!taglib.imports) {
+        taglib.imports = [];
+    }
+
+    taglib.imports.push(importedTaglib);
+    taglib.addInputFile(importedTaglib.path);
+
+    if (importedTaglib.imports) {
+        importedTaglib.imports.forEach(function(nestedImportedTaglib) {
+            handleImport(taglib, nestedImportedTaglib);
+        });
+    }
+}
 
 function Taglib(path) {
     ok(path, '"path" expected');
-    this.path = path;
+    this.path = this.id = path;
     this.dirname = null;
     this.tags = {};
     this.textTransformers = [];
@@ -28,6 +51,7 @@ function Taglib(path) {
     this.patternAttributes = [];
     this.inputFilesLookup = {};
     this.imports = null;
+    this.importsLookup = null;
 }
 
 Taglib.prototype = {
@@ -77,10 +101,8 @@ Taglib.prototype = {
     },
 
     addImport: function(path) {
-        if (!this.imports) {
-            this.imports = [];
-        }
-        this.imports.push(path);
+        var importedTaglib = taglibLoader.load(path);
+        handleImport(this, importedTaglib);
     }
 };
 
@@ -92,3 +114,5 @@ Taglib.ImportedVariable = require('./ImportedVariable');
 Taglib.Transformer = require('./Transformer');
 
 module.exports = Taglib;
+
+taglibLoader = require('../taglib-loader');
