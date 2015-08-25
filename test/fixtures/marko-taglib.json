@@ -5,6 +5,7 @@
                 "global-attribute": "boolean"
             }
         },
+        "test-accordion": "taglib/accordion-tag.json",
         "test-hello": "taglib/hello-tag.json",
         "test-simpleHello": {
             "renderer": "./taglib/simple-hello-tag.js",
