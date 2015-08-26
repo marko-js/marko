@@ -53,10 +53,14 @@ var coreAttrHandlers = [
     ],
     [
         'attrs', function(attr, node) {
-            if (!node.addDynamicAttributes) {
-                node.addError('Node does not support the "attrs" attribute');
+            if (this.tag) {
+                this.inputAttr = attr;
             } else {
-                node.addDynamicAttributes(attr);
+                if (!node.addDynamicAttributes) {
+                    node.addError('Node does not support the "attrs" attribute');
+                } else {
+                    node.addDynamicAttributes(attr);
+                }
             }
         }
     ],
@@ -157,15 +161,17 @@ var coreAttrHandlers = [
     ],
     [
         'c-data', function(attr, node) {
+            console.log('c-data', typeof attr);
             this.inputAttr = attr;
         }
     ]
 ];
 
 
-function Transformer(template, compiler) {
+function Transformer(template, compiler, tag) {
     this.template = template;
     this.compiler = compiler;
+    this.tag = tag;
     this.inputAttr = null;
 }
 
@@ -259,7 +265,7 @@ module.exports = function transform(node, compiler, template) {
     var tag;
     tag = node.tag || compiler.taglibs.getTag(node);
 
-    var transformer = new Transformer(template, compiler);
+    var transformer = new Transformer(template, compiler, tag);
     node = transformer.transformNode(node);
     var inputAttr = transformer.inputAttr;
     var shouldRemoveAttr = true;
