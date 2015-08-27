@@ -209,7 +209,11 @@ module.exports = {
      * Returns the render function for a tag handler
      */
     r: function(handler) {
-        var renderFunc = handler.renderer || handler.render || handler;
+        if (typeof handler === 'function') {
+            return handler;
+        }
+
+        var renderFunc = handler.renderer || handler.render;
 
         // If the user code has a circular function then the renderer function
         // may not be available on the module. Since we can't get a reference
