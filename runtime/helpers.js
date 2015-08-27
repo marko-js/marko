@@ -209,21 +209,26 @@ module.exports = {
      * Returns the render function for a tag handler
      */
     r: function(handler) {
+
+        var renderer = handler.renderer;
+
+        if (renderer) {
+            return renderer;
+        }
+
         if (typeof handler === 'function') {
             return handler;
         }
 
-        var renderFunc = handler.renderer || handler.render;
+        if (typeof (renderer = handler.render) === 'function') {
+            return renderer;
+        }
 
         // If the user code has a circular function then the renderer function
         // may not be available on the module. Since we can't get a reference
         // to the actual renderer(input, out) function right now we lazily
         // try to get access to it later.
-        if (typeof renderFunc !== 'function') {
-            return createDeferredRenderer(handler);
-        }
-
-        return renderFunc;
+        return createDeferredRenderer(handler);
     },
 
     // ----------------------------------
