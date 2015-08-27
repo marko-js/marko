@@ -24,6 +24,8 @@ var propertyHandlers = require('property-handlers');
 var Taglib = require('../Taglib');
 var taglibReader = require('./taglib-reader');
 var loader = require('./loader');
+var tryRequire = require('try-require');
+var resolveFrom = tryRequire('resolve-from', require);
 
 function exists(path) {
     try {
@@ -153,6 +155,9 @@ TaglibHandlers.prototype = {
     },
 
     taglibImports: function(imports) {
+        if (!resolveFrom) {
+            return;
+        }
         // The "taglib-imports" property allows another taglib to be imported
         // into this taglib so that the tags defined in the imported taglib
         // will be part of this taglib.
@@ -164,7 +169,6 @@ TaglibHandlers.prototype = {
         var taglib = this.taglib;
         var dirname = this.dirname;
         var importPath;
-        var resolveFrom = require('resolve-from');
 
         if (imports && Array.isArray(imports)) {
             for (var i=0; i<imports.length; i++) {
