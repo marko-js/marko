@@ -202,6 +202,11 @@ ElementNode.prototype = {
         this.generateCodeForChildren(template);
         this.generateAfterCode(template);
     },
+    // override for optional tag name transformation
+    generateTagName: function (name, template) {
+      template.text(name);
+    },
+
     generateBeforeCode: function (template) {
         var preserveWhitespace = this.preserveWhitespace = this.isPreserveWhitespace();
         var name = this.prefix ? this.prefix + ':' + this.localName : this.localName;
@@ -211,7 +216,9 @@ ElementNode.prototype = {
 
         var _this = this;
 
-        template.text('<' + name);
+        template.text('<')
+        this.generateTagName(name, template);
+
         this.forEachAttributeAnyNS(function (attr) {
             var prefix = attr.prefix;
             if (!prefix && attr.namespace) {
@@ -292,10 +299,14 @@ ElementNode.prototype = {
     generateAfterCode: function (template) {
         var name = this.prefix ? this.prefix + ':' + this.localName : this.localName;
         if (this.hasChildren()) {
-            template.text('</' + name + '>');
+            template.text('</');
+            this.generateTagName(name, template);
+             template.text('>');
         } else {
             if (!this.startTagOnly && !this.allowSelfClosing) {
-                template.text('></' + name + '>');
+                template.text('></');
+                this.generateTagName(name, template);
+                template.text('>');
             }
         }
     },
