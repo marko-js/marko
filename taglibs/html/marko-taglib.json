@@ -21,6 +21,13 @@
             },
             "node-class": "./DocTypeNode"
         },
+        "html-element": {
+            "@tag-name": "string",
+            "@*": {
+                "ignore": true
+            },
+            "node-class": "./HtmlElementNode"
+        },
         "*": {
             "transformer": "./html-tag-transformer"
         },

@@ -211,7 +211,13 @@ ElementNode.prototype = {
 
         var _this = this;
 
-        template.text('<' + name);
+        if (template.isExpression(name)) {
+            template.text('<');
+            template.write(name);
+        } else {
+            template.text('<' + name);
+        }
+
         this.forEachAttributeAnyNS(function (attr) {
             var prefix = attr.prefix;
             if (!prefix && attr.namespace) {
@@ -291,11 +297,19 @@ ElementNode.prototype = {
     },
     generateAfterCode: function (template) {
         var name = this.prefix ? this.prefix + ':' + this.localName : this.localName;
-        if (this.hasChildren()) {
-            template.text('</' + name + '>');
+
+
+        if (template.isExpression(name)) {
+            template.text('</');
+            template.write(name);
+            template.text('>');
         } else {
-            if (!this.startTagOnly && !this.allowSelfClosing) {
-                template.text('></' + name + '>');
+            if (this.hasChildren()) {
+                template.text('</' + name + '>');
+            } else {
+                if (!this.startTagOnly && !this.allowSelfClosing) {
+                    template.text('></' + name + '>');
+                }
             }
         }
     },
