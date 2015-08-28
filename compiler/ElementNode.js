@@ -89,9 +89,18 @@ ElementNode.prototype = {
 
         attributes.forEach(callback, thisObj);
     },
+    setSkipAttributes: function(attNames) {
+      this.attributesToSkip = attNames;
+    },
+    addSkipAttribute: function(attName) {
+      this.attributesToSkip = this.attributesToSkip || [];
+      this.attributesToSkip.push(attName);
+    },
+    isSkipAttribute: function(attr) {
+      return this.attributesToSkip.indexOf(attr.localName) >= 0;
+    },
     forEachAttributeNS: function (namespace, callback, thisObj) {
         namespace = this.resolveNamespace(namespace);
-
         var attrs = this.attributesByNS[namespace];
         if (attrs) {
             forEachEntry(attrs, function (name, attr) {
@@ -204,6 +213,7 @@ ElementNode.prototype = {
     },
     // override for optional tag name transformation
     generateTagName: function (name, template) {
+      console.log('ElementNode generateTagName', name);
       template.text(name);
     },
 
@@ -220,6 +230,8 @@ ElementNode.prototype = {
         this.generateTagName(name, template);
 
         this.forEachAttributeAnyNS(function (attr) {
+            if (this.isSkipAttribute(attr)) return;
+
             var prefix = attr.prefix;
             if (!prefix && attr.namespace) {
                 prefix = this.resolveNamespacePrefix(attr.namespace);
@@ -301,7 +313,7 @@ ElementNode.prototype = {
         if (this.hasChildren()) {
             template.text('</');
             this.generateTagName(name, template);
-             template.text('>');
+            template.text('>');
         } else {
             if (!this.startTagOnly && !this.allowSelfClosing) {
                 template.text('></');
@@ -311,7 +323,8 @@ ElementNode.prototype = {
         }
     },
     toString: function () {
-        return '<' + (this.prefix ? this.prefix + ':' + this.localName : this.localName) + '>';
+      var name = (this.prefix ? this.prefix + ':' + this.localName : this.localName)
+      return '<' + name + '>';
     }
 };
 require('raptor-util').inherit(ElementNode, require('./Node'));
