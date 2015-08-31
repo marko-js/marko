@@ -65,6 +65,7 @@ CHANGELOG
 - The `onAfterUpdate` lifecycle event was renamed to `onUpdate`
 - The `init()` constructor for a widget is only called _once_ even if a widget is rerendered
 - When a nested widget is rerendered, it is no longer reinitialized.
+- Everything related to Dust has been removed.
 
 ### New features
 
@@ -246,6 +247,7 @@ exports.renderer = function(input, out) {
     - The `onAfterUpdate` lifecycle event was renamed to `onUpdate`
     - Reusing DOM nodes might change application behavior (in rare cases)
     - The `init()` constructor for a widget is only called _once_ even if a widget is rerendered
+- Dust-related code has been removed
 
 # 4.x
 
