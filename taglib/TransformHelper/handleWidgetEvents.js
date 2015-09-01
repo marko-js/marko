@@ -13,8 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var bubbleEventsLookup = {};
 
-var markoWidgets = require('../../');
+require('../../lib/bubble').forEach(function(eventType) {
+    bubbleEventsLookup[eventType] = true;
+});
+
+function isBubbleEvent(eventType) {
+    return bubbleEventsLookup.hasOwnProperty(eventType);
+}
 
 function isUpperCase(c) {
     return c == c.toUpperCase();
@@ -113,9 +120,9 @@ function handleWidgetEvents() {
                     eventType = eventType.toLowerCase();
 
                     // Node is for an HTML element so treat the event as a DOM event
-                    var isBubbleEvent = markoWidgets.isBubbleEvent(eventType);
+                    var willBubble = isBubbleEvent(eventType);
 
-                    if (isBubbleEvent) {
+                    if (willBubble) {
                         // The event is white listed for bubbling so we know that
                         // we have already attached a listener on document.body
                         // that can be used to handle the event. We will add

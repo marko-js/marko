@@ -65,11 +65,11 @@ WidgetArgs.prototype = {
         var extendConfig = this.extendConfig;
         var extendState = this.extendState;
 
-        template.addStaticVar('_widgetArgs',
-            'require("marko-widgets/taglib/helpers").widgetArgs');
+        template.addStaticVar('__widgetArgs',
+            'require("marko-widgets/taglib/helpers/widgetArgs")');
 
         template.addStaticVar('_cleanupWidgetArgs',
-            'require("marko-widgets/taglib/helpers").cleanupWidgetArgs');
+            '__widgetArgs.cleanup');
 
         node.addBeforeCode(function() {
 
@@ -99,7 +99,7 @@ WidgetArgs.prototype = {
                 widgetArgsParts.push(extendState);
             }
 
-            return template.makeExpression('_widgetArgs(out, ' + widgetArgsParts.join(', ') + ');');
+            return template.makeExpression('__widgetArgs(out, ' + widgetArgsParts.join(', ') + ');');
         });
 
         node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));

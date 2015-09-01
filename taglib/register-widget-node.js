@@ -28,6 +28,8 @@ RegisterWidetNode.prototype = {
             return;
         }
 
+        template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+
         // We add a function to the top of the template that can be used
         // to lazily register the widget by associating a widget type name
         // with a loaded widget module. We do the registering of the widget

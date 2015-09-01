@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-var markoWidgets;
 
 function registerWidgetType(target) {
     var template = this.template;
@@ -23,16 +22,16 @@ function registerWidgetType(target) {
     var typePathExpression;
     var targetExpression;
 
-    template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+    template.addStaticVar('__getDynamicClientWidgetPath', 'require("marko-widgets/taglib/helpers/getDynamicClientWidgetPath")');
 
     if (compiler.hasExpression(target)) {
-        return '__markoWidgets.getDynamicClientWidgetPath(' + compiler.convertType(target, 'string', true) + ')';
+        return '__getDynamicClientWidgetPath(' + compiler.convertType(target, 'string', true) + ')';
     }
 
     // Resolve the static string to a full path at compile time
     typePathExpression = template.addStaticVar(
         target,
-        JSON.stringify(markoWidgets.getClientWidgetPath(target, template.dirname)));
+        JSON.stringify(this.getClientWidgetPath(target)));
 
     targetExpression = 'require(' + JSON.stringify(target) + ')';
 
@@ -57,6 +56,3 @@ function registerWidgetType(target) {
 }
 
 module.exports = registerWidgetType;
-
-// Late initialization to avoid potential circular dependency problems
-markoWidgets = require('../../');

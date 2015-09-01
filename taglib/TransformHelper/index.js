@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-var fs = require('fs');
+var tryRequire = require('try-require');
+var fs = tryRequire('fs', require);
 var nodePath = require('path');
 var WidgetArgs = require('./WidgetArgs');
 
@@ -78,7 +78,8 @@ TransformHelper. prototype = {
     handleWidgetBody: require('./handleWidgetBody'),
     handleWidgetBind: require('./handleWidgetBind'),
     handleWidgetExtend: require('./handleWidgetExtend'),
-    handleWidgetFor: require('./handleWidgetFor')
+    handleWidgetFor: require('./handleWidgetFor'),
+    getClientWidgetPath: require('./getClientWidgetPath')
 };
 
 module.exports = TransformHelper;

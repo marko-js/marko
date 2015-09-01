@@ -23,7 +23,7 @@ function BodyNode(props) {
 BodyNode.prototype = {
     doGenerateCode: function (template) {
         template.addStaticVar('__widgetBody',
-            'require("marko-widgets/taglib/helpers").widgetBody');
+            'require("marko-widgets/taglib/helpers/widgetBody")');
 
         // console.log(module.id, this);
         template.statement('__widgetBody(out, ' +

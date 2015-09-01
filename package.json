@@ -7,11 +7,12 @@
   },
   "scripts": {
     "init-tests": "./test/init-tests.sh",
-    "test": "npm run init-tests && npm run test-server -s && npm run test-client -s && node_modules/.bin/jshint lib/",
+    "test": "npm run init-tests && npm run test-server -s && npm run test-client -s && npm run jshint --silent",
     "test-server": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
     "test-client": "npm run init-tests && node test/mocha-phantomjs/run.js",
     "mocha-phantomjs": "npm run init-tests && node test/mocha-phantomjs/run.js",
-    "mocha-phantomjs-run": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html"
+    "mocha-phantomjs-run": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html",
+    "jshint": "jshint lib/ taglib/ *.js"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
@@ -27,7 +28,8 @@
     "raptor-polyfill": "^1.0.0",
     "raptor-pubsub": "^1.0.2",
     "raptor-renderer": "^1.4.1",
-    "raptor-util": "^1.0.0"
+    "raptor-util": "^1.0.0",
+    "try-require": "^1.2.1"
   },
   "devDependencies": {
     "app-module-path": "^1.0.1",
