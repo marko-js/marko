@@ -19,6 +19,11 @@ module.exports = require('marko-widgets').defineComponent({
 		window.recordWidgetLifecycleEvent(this.id, 'init');
 	},
 
+	onRender: function(eventArg) {
+		window.recordWidgetLifecycleEvent(this.id,
+			eventArg.firstRender ? 'onRender:firstRender' : 'onRender' );
+	},
+
 	update_messageCount: function(newMessageCount) {
 		this.getWidget('nestedStateful').setMessageCount(newMessageCount);
 	},

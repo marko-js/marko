@@ -39,22 +39,7 @@ In the above example, the exact same button is produced, but when using the `<in
 
 # Which component functions are invoked at what time - what's the order of invocation?
 
-As a widget developer you can choose to implement any of the following special functions:
-
-- Rendering/Rerendering functions (all optional, called in the order shown):
-    1. `getInitialProps(input)`
-    2. `getInitialState(input)`
-    3. `getTemplateData(state, input)`
-    4. `getInitialBody(input)`
-    5. `getWidgetConfig(input)`
-- Widget methods:
-    - `init(widgetConfig)` - Called when the widget is initialized (rerendering a widget does not invoke the function again)
-    - `update_<state_property>(newValue)` - Called when the corresponding state property has changed and the DOM needs to be updated based on the new value.
-    - `onBeforeUpdate()` - Called before the widget's DOM is about to be updated (due to either a rerender or state update handler).
-    - `onBeforeDestroy()` - Called before the widget is about to be destroyed
-    - `onDestroy()` - Call after the widget has been destroyed
-    - `onUpdate()` - Called after the DOM has been updated.
-    - `shouldUpdate(newProps, newState)` - Called when a widget is about to be updated due to new props. Returning `false` will prevent the widget from being rerendered.
+Please see [Component Lifecycle](./component-lifecycle.md).
 
 # Marko Widgets supports the batching of DOM updates, but what does this mean to the developer?
 

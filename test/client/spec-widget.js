@@ -216,7 +216,8 @@ describe('widget' , function() {
         expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init'
+            'init',
+            'onRender:firstRender'
         ]);
 
         require('marko-widgets').batchUpdate(function() {
@@ -227,7 +228,8 @@ describe('widget' , function() {
             expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
 
             expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-                'init'
+                'init',
+                'onRender:firstRender'
             ]);
         });
 
@@ -235,16 +237,20 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
-            'onUpdate'
+            'onUpdate',
+            'onRender'
         ]);
 
         widget.destroy();
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate',
+            'onRender',
             'onBeforeDestroy',
             'onDestroy'
         ]);
@@ -267,20 +273,25 @@ describe('widget' , function() {
         expect(targetEl.innerHTML).to.contain('10');
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init']);
+            'init',
+            'onRender:firstRender']);
 
         expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
-            'init']);
+            'init',
+            'onRender:firstRender']);
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
-            'init']);
+            'init',
+            'onRender:firstRender']);
 
         require('marko-widgets').batchUpdate(function() {
             // NOTE: messageCount has an update handler
             widget.setState('messageCount', 999);
             expect(targetEl.innerHTML).to.contain('Hello Frank!');
             expect(targetEl.innerHTML).to.contain('10');
-            expect(widgetLifecycleEvents[widget.id]).to.deep.equal(['init']);
+            expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+                'init',
+                'onRender:firstRender']);
         });
 
         expect(targetEl.innerHTML).to.contain('Hello Frank!');
@@ -288,13 +299,20 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate']);
 
         expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
-            'onUpdate']);
+            'onUpdate',
+            'onRender']);
+
+        expect(widgetLifecycleEvents.foo).to.deep.equal([
+            'init',
+            'onRender:firstRender']);
 
         require('marko-widgets').batchUpdate(function() {
             // NOTE: name does *not* have an update handler
@@ -303,6 +321,7 @@ describe('widget' , function() {
             expect(targetEl.innerHTML).to.contain('999');
             expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
                 'init',
+                'onRender:firstRender',
                 'onBeforeUpdate',
                 'onUpdate']);
         });
@@ -312,20 +331,26 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate',
             'onBeforeUpdate',
-            'onUpdate']);
+            'onUpdate',
+            'onRender']);
 
         expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
-            'onUpdate']);
+            'onUpdate',
+            'onRender']);
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
-            'onUpdate']);
+            'onUpdate',
+            'onRender']);
 
         var nestedStateful = widget.getWidget('nestedStateful');
 
@@ -333,24 +358,30 @@ describe('widget' , function() {
 
         expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate',
             'onBeforeUpdate',
             'onUpdate',
+            'onRender',
             'onBeforeDestroy',
             'onDestroy']);
 
         expect(widgetLifecycleEvents[nestedStateful.id]).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate',
+            'onRender',
             'onBeforeDestroy',
             'onDestroy']);
 
         expect(widgetLifecycleEvents.foo).to.deep.equal([
             'init',
+            'onRender:firstRender',
             'onBeforeUpdate',
             'onUpdate',
+            'onRender',
             'onBeforeDestroy',
             'onDestroy']);
     });

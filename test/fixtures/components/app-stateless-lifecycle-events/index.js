@@ -12,6 +12,11 @@ module.exports = require('marko-widgets').defineComponent({
 		window.recordWidgetLifecycleEvent(this.id, 'init');
 	},
 
+	onRender: function(eventArg) {
+		window.recordWidgetLifecycleEvent(this.id,
+			eventArg.firstRender ? 'onRender:firstRender' : 'onRender' );
+	},
+
 	onBeforeDestroy: function() {
 		window.recordWidgetLifecycleEvent(this.id, 'onBeforeDestroy');
 	},

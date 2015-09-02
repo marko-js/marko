@@ -26,6 +26,10 @@ module.exports = require('marko-widgets').defineComponent({
 		this.setState('messageCount', messageCount);
 	},
 
+	onRender: function(eventArg) {
+		window.recordWidgetLifecycleEvent(this.state.name || this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
+	},
+
 	onBeforeDestroy: function() {
 		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onBeforeDestroy');
 	},

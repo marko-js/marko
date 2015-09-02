@@ -73,6 +73,7 @@ CHANGELOG
 - Significant performance improvements
 - Code cleanup
 - Stable IDs for widgets that are not assigned a `w-id`
+- New lifecycle event: 'onRender'
 
 ## v3 to v4
 
@@ -248,6 +249,7 @@ exports.renderer = function(input, out) {
     - Reusing DOM nodes might change application behavior (in rare cases)
     - The `init()` constructor for a widget is only called _once_ even if a widget is rerendered
 - Dust-related code has been removed
+- New lifecycle event: 'onRender'
 
 # 4.x
 
