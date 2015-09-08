@@ -33,8 +33,6 @@ The `defineRenderer(def)` function can be used to define a UI component renderer
 
 The return value of `defineRenderer(def)` will be a `renderer(input, out)` function with a static `render(input)` method.
 
-See the [Split Ren]
-
 ## defineWidget(def)
 
 The `defineWidget(def)` function can be used to define a UI component's client-side behavior independent of the code to render the UI component. This can be beneficial when a UI component needs to only be rendered on the server and it is desirable to avoid sending down the template and rendering logic to the browser. For UI components that are only rendered on the server, only the client-side behavior really needs to be be sent to the browser.

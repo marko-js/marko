@@ -3,7 +3,7 @@ Component Lifecycle
 
 <!--{TOC}-->
 
-Rendering a UI component will cause the top-level UI component to be rendered and all nested UI components to be rendered. The output of rendering will be an HTML string that contains the output of all rendered UI components. When the HTML string is added to the DOM any widgets assocaited with the rendered UI components will be initialized. Nested widgets will be initialized before their parents.
+Rendering a UI component will cause the top-level UI component to be rendered and all nested UI components to be rendered. The output of rendering will be an HTML string that contains the output of all rendered UI components. When the HTML string is added to the DOM any widgets associated with the rendered UI components will be initialized. Nested widgets will be initialized before their parents.
 
 # Component Rendering
 
