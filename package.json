@@ -67,5 +67,5 @@
         "./node-require.js": "./node-require-browser.js"
     },
     "homepage": "http://markojs.com/",
-    "version": "2.7.20"
+    "version": "2.7.21"
 }
