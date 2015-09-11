@@ -189,7 +189,17 @@ Template.prototype = {
 
         // Invoke the compiled template's render function to have it
         // write out strings to the provided out.
-        renderFunc(finalData, finalOut);
+        try {
+          renderFunc(finalData, finalOut);
+        }
+        catch (e) {
+          if (typeof finalOut.on === 'function') {
+            finalOut.emit('error', e);
+          }
+          else {
+            throw e;
+          }
+        }
 
         // Automatically end output stream (the writer) if we
         // had to create an async writer (which might happen
