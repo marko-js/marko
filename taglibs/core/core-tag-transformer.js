@@ -22,6 +22,7 @@ function removeDashes(str) {
 var extend = require('raptor-util').extend;
 var ForNode = require('./ForNode');
 var IfNode = require('./IfNode');
+var UnlessNode = require('./UnlessNode');
 var ElseIfNode = require('./ElseIfNode');
 var ElseNode = require('./ElseNode');
 var WithNode = require('./WithNode');
