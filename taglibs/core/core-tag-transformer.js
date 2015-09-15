@@ -109,6 +109,18 @@ var coreAttrHandlers = [
         }
     ],
     [
+        'unless', function(attr, node) {
+            var unlessNode = this.compiler.createNode(UnlessNode, {
+                    test: this.template.makeExpression(attr),
+                    pos: node.getPosition()
+                });
+            //Surround the existing node with an "unlessNode" node by replacing the current
+            //node with the new "unlessNode" node and then adding the current node as a child
+            node.parentNode.replaceChild(unlessNode, node);
+            unlessNode.appendChild(node);
+        }
+    ],
+    [
         'else-if', function(attr, node) {
             var elseIfNode = this.compiler.createNode(ElseIfNode, {
                     test: this.template.makeExpression(attr),
