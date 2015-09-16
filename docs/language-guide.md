@@ -198,30 +198,33 @@ Any element or fragment of HTML can be made conditional using the following dire
 </div>
 
 <!--Simple unless-->
-<div unless="someCondition > data.warningLevel">
+<div unless="someCondition">
     Hello World
 </div>
 
 <!--Complex if-->
-<div if="data.textarea">
-  <text-area attrs='data.textinput'/>
+<div if="test === 'a'">
+  A
 </div>
-<div else-if="data.selector">
-  <value-selector attrs='data.selector'/>
+<div else-if="test === 'b'">
+  B
 </div>
-<div else-if="data.textinput">
-  <text-input attrs='data.textinput'/>
+<div else-if="test === 'c'">
+  C
 </div>
 <div else>
-  <ui-error msg='Unknown form field'/>
+  Something else
 </div>
 
 <!--Complex unless-->
-<div unless="data.prod">
-    Development
+<div unless="test === 'a'">
+    A
 </div>
-<div else="">
-    Production
+<div else-if="test === 'b'">
+  B
+</div>
+<div else>
+  Something else
 </div>
 ```
 
@@ -237,7 +240,7 @@ Any element or fragment of HTML can be made conditional using the following dire
 </if>
 
 <!--Simple unless-->
-<if test="someCondition > data.warningLevel">
+<unless test="someCondition">
     <div>
         Hello World
     </div>
@@ -404,13 +407,10 @@ The `for` directive also supports a loop status variable in case you need to kno
 *Applied as part of a `<for>` element:*
 
 ```xml
-<for each="item in ['a', 'b', 'c']" status-var="status">
-    ${status.index}$item
+<for each="color in colors" status-var="loop">
+  $color
+  ${loop.getIndex()+1}) of ${loop.getLength()}
 </for>
-<!--
-Output:
-2c1b0a
--->
 ```
 
 ### Loop Separator
