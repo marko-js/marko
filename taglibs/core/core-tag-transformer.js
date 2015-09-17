@@ -22,6 +22,7 @@ function removeDashes(str) {
 var extend = require('raptor-util').extend;
 var ForNode = require('./ForNode');
 var IfNode = require('./IfNode');
+var UnlessNode = require('./UnlessNode');
 var ElseIfNode = require('./ElseIfNode');
 var ElseNode = require('./ElseNode');
 var WithNode = require('./WithNode');
@@ -106,6 +107,18 @@ var coreAttrHandlers = [
             //node with the new "if" node and then adding the current node as a child
             node.parentNode.replaceChild(ifNode, node);
             ifNode.appendChild(node);
+        }
+    ],
+    [
+        'unless', function(attr, node) {
+            var unlessNode = this.compiler.createNode(UnlessNode, {
+                    test: this.template.makeExpression(attr),
+                    pos: node.getPosition()
+                });
+            //Surround the existing node with an "unlessNode" node by replacing the current
+            //node with the new "unlessNode" node and then adding the current node as a child
+            node.parentNode.replaceChild(unlessNode, node);
+            unlessNode.appendChild(node);
         }
     ],
     [

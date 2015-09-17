@@ -40,6 +40,10 @@
                     "type": "expression",
                     "ignore": true
                 },
+                "unless": {
+                    "type": "expression",
+                    "ignore": true
+                },
                 "else": {
                     "type": "empty",
                     "ignore": true
@@ -119,6 +123,14 @@
         },
         "if": {
             "node-class": "./IfNode",
+            "attributes": {
+                "test": {
+                    "type": "expression"
+                }
+            }
+        },
+        "unless": {
+            "node-class": "./UnlessNode",
             "attributes": {
                 "test": {
                     "type": "expression"

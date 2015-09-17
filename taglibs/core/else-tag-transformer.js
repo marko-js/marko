@@ -18,10 +18,11 @@ module.exports = function transform(node, compiler) {
     var curNode = node.previousSibling;
     var matchingNode;
     var IfNode = compiler.getNodeClass('if');
+    var UnlessNode = compiler.getNodeClass('unless');
     var ElseIfNode = compiler.getNodeClass('else-if');
     var whitespaceNodes = [];
     while (curNode) {
-        if (curNode.getNodeClass() === ElseIfNode || curNode.getNodeClass() === IfNode) {
+        if (curNode.getNodeClass() === ElseIfNode || curNode.getNodeClass() === IfNode || curNode.getNodeClass() === UnlessNode) {
             matchingNode = curNode;
             break;
         } else if (curNode.isTextNode()) {
@@ -39,7 +40,7 @@ module.exports = function transform(node, compiler) {
         curNode = curNode.previousSibling;
     }
     if (!matchingNode) {
-        node.addError('<if> or <else-if> node not found immediately before ' + node.toString() + ' tag.');
+        node.addError('<if>, <unless> or <else-if> node not found immediately before ' + node.toString() + ' tag.');
         return;
     }
     whitespaceNodes.forEach(function (whitespaceNode) {
