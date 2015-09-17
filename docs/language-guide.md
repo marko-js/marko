@@ -172,31 +172,53 @@ The `<with>` directive can be used to create scoped variables as shown in the fo
 
 ## if...else-if...else
 
-Any element or fragment of HTML can be made conditional using the `if`, `else-if` or `else` directive.
+Any element or fragment of HTML can be made conditional using the following directives:
 
-_Applied as attributes:_
+-	`if`
+-	`else-if`
+-	`else`
+
+*Applied as attributes:*
+
 ```xml
 <!--Simple if-->
 <div if="someCondition">
     Hello World
 </div>
 
+<!--Simple unless-->
+<div unless="someCondition">
+    Hello World
+</div>
+
 <!--Complex if-->
 <div if="test === 'a'">
+  A
+</div>
+<div else-if="test === 'b'">
+  B
+</div>
+<div else-if="test === 'c'">
+  C
+</div>
+<div else>
+  Something else
+</div>
+
+<!--Complex unless-->
+<div unless="test === 'a'">
     A
 </div>
 <div else-if="test === 'b'">
-    B
-</div>
-<div else-if="test === 'c'">
-    C
+  B
 </div>
 <div else>
-    Something else
+  Something else
 </div>
 ```
 
-_Applied as elements:_
+*Applied as elements:*
+
 ```xml
 <!-- Colors available -->
 <!--Simple if-->
@@ -206,8 +228,64 @@ _Applied as elements:_
     </div>
 </if>
 
+
 <!--Complex if-->
 <if test="test === 'a'">
+    <div>
+        A
+    </div>
+</if>
+<else-if test="test === 'b'">
+    <div>
+        B
+    </div>
+</else-if>
+<else-if test="test === 'c'">
+    <div>
+        C
+    </div>
+</else-if>
+<else>
+    <div>
+        Something else
+    </div>
+</else>
+```
+
+## unless...else-if...else
+
+The `unless` directive is also supported as an alternative to `if` in cases where the condition should be negated.
+
+```xml
+<!--Simple unless-->
+<div unless="someCondition">
+    Hello World
+</div>
+
+<!--Complex unless-->
+<div unless="test === 'a'">
+    A
+</div>
+<div else-if="test === 'b'">
+  B
+</div>
+<div else>
+  Something else
+</div>
+```
+
+*Applied as elements:*
+
+```xml
+<!--Simple unless-->
+<unless test="someCondition">
+    <div>
+        Hello World
+    </div>
+</div>
+
+<!--Complex unless-->
+<unless test="test === 'a'">
     <div>
         A
     </div>
