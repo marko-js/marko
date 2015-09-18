@@ -1,4 +1,4 @@
-Template Compilation
+Marko Compiler
 ====================
 
 The Marko compiler produces a Node.js-compatible, CommonJS module as output. This output format has the advantage that compiled template modules can benefit from a context-aware module loader and templates can easily be transported to work in the browser using [Lasso.js](https://github.com/lasso-js/lasso) or [Browserify](https://github.com/substack/node-browserify).
