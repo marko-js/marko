@@ -54,7 +54,7 @@ function createDeferredRenderer(handler) {
     // the renderer with the actual renderer func on the first render
     deferredRenderer.renderer = function(input, out) {
         var rendererFunc = handler.renderer || handler.render;
-        if (typeof renderFunc !== 'function') {
+        if (typeof rendererFunc !== 'function') {
             throw new Error('Invalid tag handler: ' + handler);
         }
         // Use the actual renderer from now on
