@@ -22,13 +22,6 @@ exports.process =function (node, compiler, template) {
     var transformHelper = new TransformHelper(node, compiler, template);
     var nodeProps = transformHelper.nodeProps;
 
-    if (nodeProps['w-preserve'] != null ||
-        nodeProps['w-preserve-body'] != null ||
-        nodeProps['w-preserve-if'] != null ||
-        nodeProps['w-preserve-body-if'] != null) {
-        transformHelper.handleWidgetPreserve();
-    }
-
     if (nodeProps['w-bind'] != null) {
         if (nodeProps['w-id'] != null) {
             node.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
@@ -40,6 +33,13 @@ exports.process =function (node, compiler, template) {
         transformHelper.assignWidgetId();
     } else if (nodeProps['w-for'] != null) {
         transformHelper.handleWidgetFor();
+    }
+
+    if (nodeProps['w-preserve'] != null ||
+        nodeProps['w-preserve-body'] != null ||
+        nodeProps['w-preserve-if'] != null ||
+        nodeProps['w-preserve-body-if'] != null) {
+        transformHelper.handleWidgetPreserve();
     }
 
     if (nodeProps['w-body'] != null) {

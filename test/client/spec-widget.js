@@ -660,4 +660,27 @@ describe('widget' , function() {
         expect(el.querySelector('h1').innerHTML).to.contain('failure');
         expect(el.querySelector('.alert').className).to.contain('alert alert-failure');
     });
+
+    it('should allow w-preserve on the root node', function() {
+        var targetEl = document.getElementById('target');
+
+        var widget = require('../fixtures/components/app-w-preserve-root')
+            .render({
+                name: 'Frank',
+                messageCount: 30
+            })
+            .appendTo(targetEl)
+            .getWidget();
+
+        expect(widget.el.innerHTML).to.contain('Frank');
+        expect(widget.el.innerHTML).to.contain('30');
+
+        require('marko-widgets').batchUpdate(function() { // Force the HTML update to be immediate
+            widget.setName('John');
+        });
+
+        expect(widget.el.innerHTML).to.not.contain('John');
+        expect(widget.el.innerHTML).to.contain('Frank');
+        expect(widget.el.innerHTML).to.contain('30');
+    });
 });
