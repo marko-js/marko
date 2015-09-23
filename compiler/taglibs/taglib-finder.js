@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -81,6 +81,16 @@ function tryNodeModules(parent, helper) {
         taglibsForNodeModulesDir = [];
         var children = fs.readdirSync(nodeModulesDir);
         children.forEach(function(moduleDirBasename) {
+            // Fixes https://github.com/marko-js/marko/issues/140
+            // If the same node_module is found multiple times then only load the first one.
+            // Only the package name (that is: node_modules/<module_name>) matters and the
+            // package version does not matter.
+            if (helper.foundTaglibPackages[moduleDirBasename]) {
+                return;
+            }
+
+            helper.foundTaglibPackages[moduleDirBasename] = true;
+
             var moduleDir = nodePath.join(nodeModulesDir, moduleDirBasename);
             var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
 
@@ -138,7 +148,8 @@ function find(dirname, registeredTaglibs) {
 
             added[taglib.path] = true;
             found.push(taglib);
-        }
+        },
+        foundTaglibPackages: {}
     };
 
     findHelper(dirname, helper);

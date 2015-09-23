@@ -4,6 +4,8 @@ chai.Assertion.includeStack = true;
 var nodePath = require('path');
 var fs = require('fs');
 
+require('../node-require').install();
+
 function testCompiler(path) {
     var templatePath = nodePath.join(__dirname, path, 'template.marko');
     var expectedPath = nodePath.join(__dirname, path, 'expected.js');
@@ -60,6 +62,10 @@ describe('marko/compiler' , function() {
 
     it('should compile a simple template with entities', function() {
         testCompiler('fixtures/templates/compiler/entities');
+    });
+
+    it('should de-dupe the same taglib', function() {
+        require('./fixtures/repeated-taglib/nested/template.marko');
     });
 
     // it.only('should compile a template with <c:invoke>', function() {
