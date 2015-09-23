@@ -336,4 +336,15 @@ describe('marko/api' , function() {
             stream);
     });
 
+    it('should emit errors when rendered with stream', function(done) {
+      var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-error.marko'));
+
+      template.stream({})
+        .on('error', function (e) {
+          expect(e).to.be.instanceOf(Error);
+          expect(e.message).to.be.equal('Test')
+          done()
+        })
+        .pipe(through(function () {}));
+    });
 });
