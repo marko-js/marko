@@ -45,7 +45,7 @@ function loadSource(templatePath, compiledSrc) {
     return templateModule.exports;
 }
 
-module.exports = function load(templatePath) {
+function loadFile(templatePath) {
     templatePath = nodePath.resolve(cwd, templatePath);
     var targetDir = nodePath.dirname(templatePath);
 
@@ -67,6 +67,20 @@ module.exports = function load(templatePath) {
     fs.renameSync(tempFile, targetFile);
 
     return require(targetFile);
+}
+
+module.exports = function load(templatePath) {
+    if (markoCompiler.defaultOptions.writeToDisk === false) {
+        // Don't write the compiled template to disk. Instead, load it
+        // directly from the compiled source using the internals of the
+        // Node.js module loading system.
+        var compiler = markoCompiler.createCompiler(templatePath);
+        var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+    	var compiledSrc = compiler.compile(templateSrc);
+        return loadSource(templatePath, compiledSrc);
+    } else {
+        return loadFile(templatePath);
+    }
 };
 
 module.exports.loadSource = loadSource;

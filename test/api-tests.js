@@ -5,6 +5,7 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var marko = require('../');
 var through = require('through');
+var fs = require('fs');
 
 require('../node-require').install();
 
@@ -203,7 +204,7 @@ describe('marko/api' , function() {
               greeting: 'Greetings'
           }
         };
-        var output = template.renderSync(data)
+        var output = template.renderSync(data);
         expect(output).to.equal('Greetings John!');
     });
 
@@ -259,7 +260,7 @@ describe('marko/api' , function() {
 
     it('should allow a template to be loaded from a compiled JS module', function(done) {
         // Load the JS file to ensure the hello.marko.js file is created
-        marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'))
+        marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
 
         var templateModule = require(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko.js'));
 
@@ -334,6 +335,63 @@ describe('marko/api' , function() {
                 }
             },
             stream);
+    });
+
+    it('should write compiled templates to disk by default when using the Node.js require extension', function() {
+        var compiledPath;
+
+        try {
+            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
+            compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var template = require(templatePath);
+            expect(fs.existsSync(compiledPath)).to.equal(true);
+            expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+        } finally {
+            fs.unlinkSync(compiledPath);
+        }
+    });
+
+    it('should write compiled templates to disk by default when using load', function() {
+
+        var compiledPath;
+
+        try {
+            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
+            compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var template = marko.load(templatePath);
+            expect(fs.existsSync(compiledPath)).to.equal(true);
+            expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+        } finally {
+            fs.unlinkSync(compiledPath);
+        }
+    });
+
+    it('should allow compiled templates to not be written to disk when using the Node.js require extension', function() {
+        require('../compiler').defaultOptions.writeToDisk = false;
+        try {
+            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
+            var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var template = require(templatePath);
+            expect(fs.existsSync(compiledPath)).to.equal(false);
+            expect(template.render).to.be.a('function');
+            expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+        } finally {
+            require('../compiler').defaultOptions.writeToDisk = true;
+        }
+    });
+
+    it('should allow compiled templates to not be written to disk when using load', function() {
+        require('../compiler').defaultOptions.writeToDisk = false;
+        try {
+            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
+            var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var template = marko.load(templatePath);
+            expect(fs.existsSync(compiledPath)).to.equal(false);
+            expect(template.render).to.be.a('function');
+            expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+        } finally {
+            require('../compiler').defaultOptions.writeToDisk = true;
+        }
     });
 
 });

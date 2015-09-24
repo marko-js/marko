@@ -132,3 +132,99 @@ Example usage:
 var template = require('./template.marko');
 template.stream({ name: 'Frank' }).pipe(process.stdout);
 ```
+
+# require('marko/compiler')
+
+## Methods
+
+### createCompiler(path, options) : TemplateCompiler
+
+Creates a compiler for a given template path and given options.
+
+### compile(src, path, options, callback)
+
+Compiles a template given the loaded template source, the file system path of the source template and options.
+Currently, compilation is synchronous so the callback is optional. In the future, we may allow asynchronous
+compilation.
+
+The result will be the compiled JavaScript source code.
+
+### compileFile(path, options, callback)
+
+Compiles a template given the loaded template source, the file system path of the source template and options.
+Currently, compilation is synchronous so the callback is optional. In the future, we may allow asynchronous
+compilation.
+
+The result will be the compiled JavaScript source code.
+
+### getLastModified(path, options, callback)
+
+Compiles a template given the loaded template source, the file system path of the source template and options.
+Currently, this method is synchronous so the callback is optional. In the future, we may allow this method to be asynchronous.
+
+Returns the last modified time as a number.
+
+### clearCaches()
+
+Clears any internal caches used by the compiler. Needed for hot-reloading.
+
+## Properties
+
+### defaultOptions
+
+The default options used by the compiler. These options can be changed as shown in the following sample code:
+
+```javascript
+require('marko/compiler').defaultOptions.writeToDisk = false;
+```
+
+Default options:
+
+```javascript
+{
+    /**
+     * Set of tag names that should automatically have whitespace preserved.
+     * Alternatively, if value is `true` then whitespace will be preserved
+     * for all tags.
+     */
+    preserveWhitespace: {
+        'pre': true,
+        'textarea': true,
+        'script': true
+    },
+    /**
+     * Set of tag names that should be allowed to be rendered as a self-closing
+     * XML tag. A self-closing tag will only be rendered if the tag has no nested
+     * content. HTML doesn't allow self-closing tags so you should likely
+     * never use this.
+     */
+    allowSelfClosing: {},
+    /**
+     * Set of tag names that should be rendered with a start tag only.
+     */
+    startTagOnly: {
+        'img': true,
+        'br': true,
+        'input': true,
+        'meta': true,
+        'link': true,
+        'hr': true
+    },
+    /**
+     * If true, then the compiler will check the disk to see if a previously compiled
+     * template is the same age or newer than the source template. If so, the previously
+     * compiled template will be loaded. Otherwise, the template will be recompiled
+     * and saved to disk.
+     *
+     * If false, the template will always be recompiled. If `writeToDisk` is false
+     * then this option will be ignored.
+     */
+    checkUpToDate: true,
+    /**
+     * If true (the default) then compiled templates will be written to disk. If false,
+     * compiled templates will not be written to disk (i.e., no `.marko.js` file will
+     * be generated)
+     */
+    writeToDisk: true
+}
+```

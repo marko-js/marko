@@ -19,12 +19,26 @@ var req = require; // Fool code inspectors used by client-side bundles
 var nodePath = require('path');
 
 var defaultOptions = {
+        /**
+         * Set of tag names that should automatically have whitespace preserved.
+         * Alternatively, if value is `true` then whitespace will be preserved
+         * for all tags.
+         */
         preserveWhitespace: {
             'pre': true,
             'textarea': true,
             'script': true
         },
+        /**
+         * Set of tag names that should be allowed to be rendered as a self-closing
+         * XML tag. A self-closing tag will only be rendered if the tag has no nested
+         * content. HTML doesn't allow self-closing tags so you should likely
+         * never use this.
+         */
         allowSelfClosing: {},
+        /**
+         * Set of tag names that should be rendered with a start tag only.
+         */
         startTagOnly: {
             'img': true,
             'br': true,
@@ -33,7 +47,22 @@ var defaultOptions = {
             'link': true,
             'hr': true
         },
-        checkUpToDate: true
+        /**
+         * If true, then the compiler will check the disk to see if a previously compiled
+         * template is the same age or newer than the source template. If so, the previously
+         * compiled template will be loaded. Otherwise, the template will be recompiled
+         * and saved to disk.
+         *
+         * If false, the template will always be recompiled. If `writeToDisk` is false
+         * then this option will be ignored.
+         */
+        checkUpToDate: true,
+        /**
+         * If true (the default) then compiled templates will be written to disk. If false,
+         * compiled templates will not be written to disk (i.e., no `.marko.js` file will
+         * be generated)
+         */
+        writeToDisk: true
     };
 
 if (process.env.MARKO_CLEAN === '' || process.env.MARKO_CLEAN === 'true') {
