@@ -5,6 +5,117 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.25
+
+- Fixes #150 - Provide option to prevent writing compiled templates to disk. Example usage:
+
+```javascript
+require('marko/compiler').defaultOptions.writeToDisk = false;
+```
+
+NOTE: If you disable writing compiled templates to disk then it will be a little harder to debug errors in templates on the server since the stack trace will refer to a file that has not been written to disk.
+
+For a more complete list of compiler options please see: http://markojs.com/docs/marko/javascript-api/#defaultoptions
+
+### 2.7.24
+
+- Fixes #140 - De-dupe taglibs by module name
+- Documentation: Miscellaneous changes
+
+### 2.7.23
+
+- Fixed a typo for `rendererFunc` `in helpers.js` (commit: 0205a47f04911f34ca4d458970d710f81a143987)
+
+### 2.7.22
+
+- New language feature: [`unless` support added](http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse)
+
+### 2.7.21
+
+- Automatically enable hot-reload and browser-refresh if launched using [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh)
+
+### 2.7.20
+
+- Documentation: Miscellaneous changes
+
+### 2.7.19
+
+- Fixes #137 - adds support for dynamic HTML tag names
+
+### 2.7.18
+
+- Improvement: Better resolving of tag renderer
+- Compiler: Fix to make compiler work in the browser
+
+### 2.7.17
+
+- Fixes #135 Allow "attrs" attribute on custom tags
+
+### 2.7.16
+
+- Improved handling of imports
+- Better handling of loading taglibs with circular dependencies
+
+### 2.7.15
+
+- Handle circular taglib imports
+
+### 2.7.14
+
+- Fixes #131 - Recursively handle taglib imports
+
+### 2.7.13
+
+- Added a `.npmignore` file
+- Fixed licensing header in source
+- Documentation: improved docs for input.renderBody()
+- Documentation: Miscellaneous changes
+
+### 2.7.12
+
+- Fixes #122 Don't allow invalid attributes when using shorthand
+- Fixes #122 Typo in hasAttributes
+- Fixes #127 - Make sure all possible input files are accounted for when checking if a compiled template is up-to-date
+- Use `browser.json` files instead of `optimizer.json` files
+- Documentation: Improved docs for async taglib
+- Documentation: Added empty() and notEmpty() helpers to the readme
+- Added Martin Aberer as a maintainer
+- Documentation: Miscellaneous changes
+
+### 2.7.11
+
+- New logo!
+
+### 2.7.10
+
+- Fixes #118 Better error when parsing JSON file for tag
+- Testing: More test cases related to empty attributes
+- Documentation: Clarification for the Node.js require extension
+- Documentation: doc reference for `getLength()` of loop `status-var`
+- Documentation: Added reference to [sublime-marko](https://github.com/merwan7/sublime-marko) under the tools section.
+
+### 2.7.9
+
+- Fixes #109 - Allow `compiler.createNode('div')`
+- Fixes #108 - Improve how the `MARKO_CLEAN` env variable is handled
+
+### 2.7.8
+
+- Minor documentation changes
+
+### 2.7.7
+
+- Allow `.html` extension for layouts (Fix for https://github.com/raptorjs/marko-layout/issues/2)
+
+### 2.7.6
+
+- Make require('marko/node-require').install() a noop in the browser
+
+### 2.7.5
+
+- Improvement: Allow `template-data` to be combined with other attributes on the `<include>` tag
+- Documentation: Fixes #98 - docs for `<include template-data="...">`
+
 ### 2.7.4
 
 - Fixes #96 - Allow relative, dynamic include paths
