@@ -70,7 +70,29 @@ After a UI component's DOM nodes have been added to the DOM a widget instance wi
 
 ## Widget Lifecycle Methods
 
-`this` can be used in these methods as the widget instance.
+`this` can be used in these methods as the widget instance. Widget lifecycle methods are optional methods, that if implemented will be invoked by the Marko Widgets runtime in response to widget lifecycle events. For example:
+
+```javascript
+module.exports = require('marko-widgets').defineComponent({
+	// ...
+	//
+	init: function() {
+		console.log('The UI component has been mounted to the DOM.', this.id);
+	},
+
+	onBeforeUpdate: function() {
+		console.log('The DOM is about to be updated...', this.id);
+	},
+
+	onBeforeUpdate: function() {
+		console.log('The DOM has been updated.', this.id);
+	},
+
+	onDestroy: function() {
+		console.log('The UI component is being removed from the DOM :(', this.id);
+	}
+});
+```
 
 ### init(widgetConfig)
 
