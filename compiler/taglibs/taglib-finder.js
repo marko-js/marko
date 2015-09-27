@@ -71,10 +71,18 @@ function tryNodeModules(parent, helper) {
             if (existsCached(taglibPath)) {
                 taglibPath = fs.realpathSync(taglibPath);
 
-                var taglib = taglibLoader.load(taglibPath);
-                taglib.moduleName = moduleDirBasename;
-                taglibsForNodeModulesDir.push(taglib);
-                helper.addTaglib(taglib);
+                var taglib;
+                try {
+                    taglib = taglibLoader.load(taglibPath);
+                } catch(e) {
+                    console.warn('Warning: Unable to load taglib at path "' + taglibPath + '".  Skipping. Exception:', e.stack || e);
+                }
+
+                if (taglib) {
+                    taglib.moduleName = moduleDirBasename;
+                    taglibsForNodeModulesDir.push(taglib);
+                    helper.addTaglib(taglib);
+                }
             }
         });
 
