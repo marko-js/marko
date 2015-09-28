@@ -78,7 +78,7 @@ module.exports = function render(input, out) {
                 // of the async block being added as children of the widget in the
                 // parent block.
                 var nestedWidgetsContext = new markoWidgets.WidgetsContext(out);
-                nestedWidgetsContext.widgetStack = [widgetStack[0]];
+                nestedWidgetsContext.widgetStack = [widgetStack[widgetStack.length-1]];
                 asyncWriter.data.widgets = nestedWidgetsContext;
             }
 
