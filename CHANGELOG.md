@@ -5,6 +5,10 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.26
+
+- Use shorter relative paths in error messages
+
 ### 2.7.25
 
 - Fixes #150 - Provide option to prevent writing compiled templates to disk. Example usage:
