@@ -28,6 +28,15 @@ var ElseNode = require('./ElseNode');
 var WithNode = require('./WithNode');
 var TagHandlerNode = require('./TagHandlerNode');
 var IncludeNode = require('./IncludeNode');
+var path = require('path');
+
+function getTaglibPath(taglibPath) {
+    if (typeof window === 'undefined') {
+        return path.relative(process.cwd(), taglibPath);
+    } else {
+        return taglibPath;
+    }
+}
 
 var coreAttrHandlers = [
     [
@@ -375,7 +384,7 @@ module.exports = function transform(node, compiler, template) {
                 if (tag) {
                     // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                     //Tag doesn't allow dynamic attributes
-                    node.addError('The tag "' + tag.name + '" in taglib "' + tag.taglibId + '" does not support attribute "' + attr + '"');
+                    node.addError('The tag "' + tag.name + '" in taglib "' + getTaglibPath(tag.taglibId) + '" does not support attribute "' + attr + '"');
                 }
                 return;
             }

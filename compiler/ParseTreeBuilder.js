@@ -19,6 +19,7 @@ var TextNode = require('./TextNode');
 var ElementNode = require('./ElementNode');
 var CommentNode = require('./CommentNode');
 var charProps = require('char-props');
+var path = require('path');
 
 var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
 // IE conditional comment format: <!--[if expression]> HTML <![endif]-->;
@@ -27,8 +28,17 @@ function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
 }
 
+function getRelativePath(absolutePath) {
+    if (typeof window === 'undefined') {
+        absolutePath = path.resolve(process.cwd(), absolutePath);
+        return path.relative(process.cwd(), absolutePath);
+    } else {
+        return absolutePath;
+    }
+}
+
 function Pos(filePath, line, column) {
-    this.filePath = filePath;
+    this.filePath = getRelativePath(filePath);
     this.line = line;
     this.column = column;
 }
