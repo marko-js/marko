@@ -5,6 +5,20 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.27
+
+- Make loading template from String template source easier:
+
+```javascript
+var template = marko.load(
+    templatePath,
+    'Hello $!{data.name}!');
+```
+
+_NOTE: Loading directly from source only works on the server_
+
+See [Pull Request #153](https://github.com/marko-js/marko/pull/153)
+
 ### 2.7.26
 
 - Use shorter relative paths in error messages
