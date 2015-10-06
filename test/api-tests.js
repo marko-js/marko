@@ -394,4 +394,36 @@ describe('marko/api' , function() {
         }
     });
 
+    it('should allow a template to be loaded from source', function() {
+        var template;
+        var templatePath;
+
+        // Make sure calling load with templatePath:String, templateSrc:String arguments works
+        templatePath = nodePath.join(__dirname, 'dummy.marko');
+        template = marko.load(templatePath, 'Hello $!{data.name}!');
+        expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+
+        // Make sure calling load with templatePath:String, templateSrc:String, options:Object arguments works
+        templatePath = nodePath.join(__dirname, 'dummy.marko');
+        template = marko.load(templatePath, 'Hello $!{data.name}!', {});
+        expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+
+        // Make sure calling load with templatePath:String, options:Object arguments works
+        delete require('../compiler').defaultOptions.writeToDisk;
+
+        templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
+        var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+
+        try {
+            fs.unlinkSync(compiledPath);
+        } catch(e) {
+            // ignore
+        }
+
+        template = marko.load(templatePath, {writeToDisk: false});
+        expect(fs.existsSync(compiledPath)).to.equal(false);
+        expect(template.render).to.be.a('function');
+        expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+    });
+
 });
