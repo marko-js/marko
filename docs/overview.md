@@ -10,7 +10,7 @@ Marko supports [progressive HTML rendering](http://www.ebaytechblog.com/2014/12/
 
 For building rich UI components with client-side behavior please check out the [marko-widgets](https://github.com/marko-js/marko-widgets) project.
 
-__[Try Marko Online!](http://markojs.com/try-online/)__
+<a href="http://markojs.com/try-online/" target="_blank">Try Marko Online!</a>
 
 ![Marko Syntax](syntax.png)
 
