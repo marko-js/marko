@@ -37,7 +37,6 @@ function loadSource(templatePath, compiledSrc) {
     templateModule.paths = Module._nodeModulePaths(nodePath.dirname(templateModulePath));
     templateModule.filename = templateModulePath;
 
-
     templateModule._compile(
         compiledSrc,
         templateModulePath);
@@ -69,13 +68,32 @@ function loadFile(templatePath) {
     return require(targetFile);
 }
 
-module.exports = function load(templatePath) {
-    if (markoCompiler.defaultOptions.writeToDisk === false) {
+module.exports = function load(templatePath, templateSrc, options) {
+    var writeToDisk;
+
+    if (options && (options.writeToDisk != null)) {
+        // options is provided and options.writeToDisk is non-null
+        writeToDisk = options.writeToDisk;
+    } else {
+        // writeToDisk should be inferred from defaultOptions
+        writeToDisk = markoCompiler.defaultOptions.writeToDisk;
+    }
+
+    // If the template source is provided then we can compile the string
+    // in memory and there is no need to read template file from disk or
+    // write compiled code to disk.
+    //
+    // If writeToDisk is false then there will be no up-to-date check
+    // since compiled source won't be written to disk.
+    if ((templateSrc != null) || (writeToDisk === false)) {
         // Don't write the compiled template to disk. Instead, load it
         // directly from the compiled source using the internals of the
         // Node.js module loading system.
         var compiler = markoCompiler.createCompiler(templatePath);
-        var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+        if (templateSrc === undefined) {
+            templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+        }
+
     	var compiledSrc = compiler.compile(templateSrc);
         return loadSource(templatePath, compiledSrc);
     } else {

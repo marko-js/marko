@@ -268,22 +268,38 @@ function initTemplate(rawTemplate, templatePath) {
     return template;
 }
 
-function load(templatePath, options) {
+function load(templatePath, templateSrc, options) {
     if (!templatePath) {
         throw new Error('"templatePath" is required');
+    }
+
+    if (arguments.length === 1) {
+        // templateSrc and options not provided
+    } else if (arguments.length === 2) {
+        // see if second argument is templateSrc (a String)
+        // or options (an Object)
+        var lastArg = arguments[arguments.length - 1];
+        if (typeof lastArg !== 'string') {
+            options = arguments[1];
+            templateSrc = undefined;
+        }
+    } else if (arguments.length === 3) {
+        // assume function called according to function signature
+    } else {
+        throw new Error('Illegal arguments');
     }
 
     var template;
 
     if (typeof templatePath === 'string') {
-        template = initTemplate(loader(templatePath), templatePath);
+        template = initTemplate(loader(templatePath, templateSrc, options), templatePath);
     } else if (templatePath.render) {
         template = templatePath;
     } else {
         template = initTemplate(templatePath);
     }
 
-    if (options) {
+    if (options && (options.buffer != null)) {
         template = new Template(
             template.path,
             createRenderProxy(template),

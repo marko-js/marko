@@ -7,21 +7,68 @@ JavaScript API
 
 ## Methods
 
-### load(templatePath[, options]) : Template
+### load(templatePath[, templateSrc][, options]) : Template
 
 Loads a template instance for the given template path.
+Both `templateSrc` and `options` are optional.
 
-Example usage:
+Template loading is supported in the browser and on
+the server but the behavior differs slightly.
+
+**On the server,**
+if `templateSrc` is not provided then `templatePath` is expected
+to be the path to a Marko template file. If `templateSrc`
+is provided then it is expected to be a `String` and its value
+will be the raw template. The `templatePath`
+argument is only used for reporting error stack traces if
+`templateSrc` is provided.
+
+**In the browser,**
+`templatePath` is expected to path to be the module name
+of the compiled template and the module will be loaded
+via `require(templatePath)`. The `templateSrc` argument
+is ignored if the `load` function is called in the browser.
+
+If `options` is provided then it is expected to be the last argument
+and should be an `Object`.
+
+Example usage for browser and server:
 
 ```javascript
 var templatePath = require.resolve('./template.marko');
-var template = require('marko')require('marko')(templatePath);
+var template = require('marko').load(templatePath);
+template.render({ name: 'Frank' }, process.stdout);
+```
+
+Example **server-side** template loading with `writeToDisk: false` option:
+
+```javascript
+var templatePath = './sample.marko';
+var template = require('marko').load(templatePath, {writeToDisk: false});
+template.render({ name: 'Frank' }, process.stdout);
+```
+
+Example **server-side** template compilation from string:
+
+```javascript
+var templatePath = 'sample.marko';
+var templateSrc = 'Hello $!{data.name}';
+var template = require('marko').load(templatePath, templateSrc);
 template.render({ name: 'Frank' }, process.stdout);
 ```
 
 Supported `options`:
 
-- `buffer` (`boolean`) - If `true` (default) then rendered output will be buffered until `out.flush()` is called or until rendering is completed. Otherwise, the output will be written to the underlying stream as soon as it is produced.
+- `buffer` (`Boolean`) - If `true` (default) then rendered output will be
+buffered until `out.flush()` is called or until rendering is completed.
+Otherwise, the output will be written to the underlying stream as soon as
+it is produced.
+
+- `writeToDisk` (`Boolean`) - This option is only applicable to server-side
+template loading. If `true` then compiled template will be written to disk.
+If `false`, template will be compiled and loaded but the compiled source
+will not be written to disk.
+
 
 ### createWriter([stream]) : AsyncWriter
 
