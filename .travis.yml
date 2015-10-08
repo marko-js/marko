@@ -1,6 +1,6 @@
 node_js:
 - "0.10"
 - "0.12"
-- "4.1.x"
+- "4.1"
 language: node_js
 script: "npm test"
