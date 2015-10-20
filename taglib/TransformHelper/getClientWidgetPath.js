@@ -1,5 +1,5 @@
 var tryRequire = require('try-require');
-var raptorModulesResolver = tryRequire('raptor-modules/resolver');
+var raptorModulesResolver = tryRequire('raptor-modules/resolver', require);
 
 module.exports = function getClientWidgetPath(targetModuleFile) {
     if (raptorModulesResolver) {

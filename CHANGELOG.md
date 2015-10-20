@@ -239,6 +239,22 @@ exports.renderer = function(input, out) {
 
 ## 5.0.x
 
+### 5.0.4
+
+- Fixes #101 - Widget binding broken when UI component is npm linked in
+
+### 5.0.3
+
+- Documentation fixes
+
+### 5.0.2
+
+- Fix for #98 - Properly preserve widget stack when beginning async rendering
+
+### 5.0.1
+
+- Fixes #92 - w-preserve* does not work on widget root node
+
 ### 5.0.0
 
 - Integrated [morphdom](https://github.com/patrick-steele-idem/morphdom) to more efficiently transform the existing DOM instead of replacing it entirely
