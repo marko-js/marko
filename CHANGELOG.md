@@ -239,6 +239,10 @@ exports.renderer = function(input, out) {
 
 ## 5.0.x
 
+### 5.0.5
+
+- Fixes #102 Fix how require path to marko-widgets is generated in compiled templates
+
 ### 5.0.4
 
 - Fixes #101 - Widget binding broken when UI component is npm linked in

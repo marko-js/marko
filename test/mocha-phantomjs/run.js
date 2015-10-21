@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-process.chdir(path.join(__dirname, '../'));
+// process.chdir(path.join(__dirname, '../'));
 
 var spawn = require('child_process').spawn;
 

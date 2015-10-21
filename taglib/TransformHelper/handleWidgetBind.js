@@ -39,7 +39,7 @@ module.exports = function handleWidgetBind() {
     }
 
     // We create a local variable for the ""
-    template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+    template.addStaticVar('__markoWidgets', 'require("' + this.getMarkoWidgetsRequirePath('marko-widgets') + '")');
 
     // A widget is bound to the node
     var widgetAttrsVar = template.addStaticVar('_widgetAttrs', '__markoWidgets.attrs');

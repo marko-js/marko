@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 'use strict';
+var getRequirePath = require('./getRequirePath');
+
 function RegisterWidetNode(props) {
     RegisterWidetNode.$super.call(this);
     if (props) {
@@ -28,7 +30,7 @@ RegisterWidetNode.prototype = {
             return;
         }
 
-        template.addStaticVar('__markoWidgets', 'require("marko-widgets")');
+        template.addStaticVar('__markoWidgets', 'require("' + getRequirePath('marko-widgets', template) + '")');
 
         // We add a function to the top of the template that can be used
         // to lazily register the widget by associating a widget type name

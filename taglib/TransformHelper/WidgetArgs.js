@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var getRequirePath = require('../getRequirePath');
 
 function WidgetArgs() {
     this.id = null;
@@ -66,7 +67,7 @@ WidgetArgs.prototype = {
         var extendState = this.extendState;
 
         template.addStaticVar('__widgetArgs',
-            'require("marko-widgets/taglib/helpers/widgetArgs")');
+            'require("' + getRequirePath('marko-widgets/taglib/helpers/widgetArgs', template) + '")');
 
         template.addStaticVar('_cleanupWidgetArgs',
             '__widgetArgs.cleanup');

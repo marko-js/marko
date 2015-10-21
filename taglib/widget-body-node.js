@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 'use strict';
+var getRequirePath = require('./getRequirePath');
+
 function BodyNode(props) {
     BodyNode.$super.call(this);
     if (props) {
@@ -23,7 +25,7 @@ function BodyNode(props) {
 BodyNode.prototype = {
     doGenerateCode: function (template) {
         template.addStaticVar('__widgetBody',
-            'require("marko-widgets/taglib/helpers/widgetBody")');
+            'require("' + getRequirePath('marko-widgets/taglib/helpers/widgetBody', template) + '")');
 
         // console.log(module.id, this);
         template.statement('__widgetBody(out, ' +
