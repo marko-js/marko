@@ -39,7 +39,7 @@ function assignWidgetId(isRepeated) {
         // need to look it up out of the `out.data` map
         if (!this.template.data.hasWidgetVar) {
             template.addStaticVar('__getCurrentWidget',
-                'require("marko-widgets/taglib/helpers/getCurrentWidget")');
+                'require("' + this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/getCurrentWidget', template) + '")');
 
             this.template.addVar('widget', '__getCurrentWidget(out)');
             this.template.data.hasWidgetVar = true;

@@ -22,7 +22,7 @@ function registerWidgetType(target) {
     var typePathExpression;
     var targetExpression;
 
-    template.addStaticVar('__getDynamicClientWidgetPath', 'require("marko-widgets/taglib/helpers/getDynamicClientWidgetPath")');
+    template.addStaticVar('__getDynamicClientWidgetPath', 'require("' + this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/getDynamicClientWidgetPath') + '")');
 
     if (compiler.hasExpression(target)) {
         return '__getDynamicClientWidgetPath(' + compiler.convertType(target, 'string', true) + ')';

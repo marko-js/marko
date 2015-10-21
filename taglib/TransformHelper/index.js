@@ -17,6 +17,7 @@ var tryRequire = require('try-require');
 var fs = tryRequire('fs', require);
 var nodePath = require('path');
 var WidgetArgs = require('./WidgetArgs');
+var getRequirePath = require('../getRequirePath');
 
 function TransformHelper(node, compiler, template) {
     this.node = node;
@@ -79,7 +80,10 @@ TransformHelper. prototype = {
     handleWidgetBind: require('./handleWidgetBind'),
     handleWidgetExtend: require('./handleWidgetExtend'),
     handleWidgetFor: require('./handleWidgetFor'),
-    getClientWidgetPath: require('./getClientWidgetPath')
+    getClientWidgetPath: require('./getClientWidgetPath'),
+    getMarkoWidgetsRequirePath: function(target) {
+        return getRequirePath(target, this.template);
+    }
 };
 
 module.exports = TransformHelper;
