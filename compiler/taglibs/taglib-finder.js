@@ -71,7 +71,15 @@ function tryNodeModules(parent, helper) {
         if (taglibsForNodeModulesDir !== null) {
             for (var i = 0, len = taglibsForNodeModulesDir.length; i < len; i++) {
                 var taglib = taglibsForNodeModulesDir[i];
-                helper.addTaglib(taglib);
+
+                var moduleName = taglib.moduleName;
+                if (moduleName && !helper.foundTaglibPackages[moduleName]) {
+                    // Fixes https://github.com/marko-js/marko/issues/140
+                    // If the same node_module is found multiple times then only load the first one.
+                    // Only the package name (that is: node_modules/<module_name>) matters and the
+                    // package version does not matter.
+                    helper.addTaglib(taglib);
+                }
             }
         }
         return;
