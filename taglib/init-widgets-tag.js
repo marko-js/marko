@@ -32,7 +32,8 @@ module.exports = function render(input, out) {
 
         out.global.events.on('asyncFragmentFinish', function(eventArgs) {
             var asyncFragmentOut = eventArgs.out;
-            var widgetsContext = asyncFragmentOut.widgets;
+
+            var widgetsContext = asyncFragmentOut.data.widgets || asyncFragmentOut.global.widgets;
             if (widgetsContext) {
                 markoWidgets.writeInitWidgetsCode(widgetsContext, asyncFragmentOut, options);
             }
