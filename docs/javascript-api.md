@@ -223,6 +223,11 @@ Used to change the value of a single state property. For example:
 this.setState('disabled', true);
 ```
 
+Be aware, that `setState()` only nominates the component for a possible rerender. Thus, the component is only rerendered, if at least one of the component state properties changed (`oldValue !== newValue`). If none of the properties changed (because identical or not detected by a shallow comparision), invoking `setState()` is a no operation. (great for performance).
+
+Nice to know:
+Compared to `setState()`, `setStateDirty()` does not nominate a component for rerendering but instead always rerenderes the component independently from its state property values (even if they did not change).
+
 ### setState(newState)
 
 Used to change the value of multiple state properties. For example:
