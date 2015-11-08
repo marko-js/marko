@@ -211,7 +211,10 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 
 ### replaceState(newState)
 
-Replaces the state with an entirely new state. If any of the state properties changed then the widget's view will automatically be updated.
+Replaces the state with an entirely new state. If any of the state properties changed, the widget's view will automatically be updated. 
+
+Important to know:
+While `setState()` is additive and will not remove properties that are in the old state but not in the new state, `replaceState()` will add the new state and remove the old state properties that are not found in the new state. State or template data values that are derived from state properties that are not part of the new state, are `undefined`. Thus, if `replaceState()` is used, one must consider possible side effects if the new state contains less or other properties than the replaced state.
 
 ### rerender(data, callback)
 
