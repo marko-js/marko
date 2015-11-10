@@ -267,7 +267,10 @@ TagHandlerNode.prototype = {
 
                 var hasOutParam = false;
 
+                var hasBodyFunc = false;
+
                 if (_this.hasChildren() && !tag.bodyFunction) {
+                    hasBodyFunc = true;
                     var bodyParams = [];
 
 
@@ -296,6 +299,9 @@ TagHandlerNode.prototype = {
                 }
 
                 if (hasNestedTags || isNestedTag || hasOutParam) {
+                    if (!hasBodyFunc) {
+                        template.code(',null');
+                    }
                     var options = [];
 
                     if (hasNestedTags) {
