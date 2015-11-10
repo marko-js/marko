@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./getRequirePath.js": "./getRequirePath-browser.js"
+    }
+}
