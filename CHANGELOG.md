@@ -5,6 +5,14 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.29
+
+- Fixes #161 - Nested tags with no body content are not handled correctly
+
+### 2.7.28
+
+- Fixes #140 - Also de-dupe cached taglibs in finder
+
 ### 2.7.27
 
 - Make loading template from String template source easier:
