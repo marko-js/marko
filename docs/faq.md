@@ -79,7 +79,7 @@ function addColor(newColor) {
     var newColors = this.state.colors.concat([newColor]);
 
     // Set the colors state with the new Array:
-    this.setState('colors', this.state.colors.concat[newColor]);
+    this.setState('colors', newColors);
 }
 ```
 

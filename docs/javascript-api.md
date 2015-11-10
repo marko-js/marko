@@ -211,7 +211,10 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 
 ### replaceState(newState)
 
-Replaces the state with an entirely new state. If any of the state properties changed then the widget's view will automatically be updated.
+Replaces the state with an entirely new state. If any of the state properties changed, the widget's view will automatically be updated. 
+
+Important to know:
+While `setState()` is additive and will not remove properties that are in the old state but not in the new state, `replaceState()` will add the new state and remove the old state properties that are not found in the new state. State or template data values that are derived from state properties that are not part of the new state, are `undefined`. Thus, if `replaceState()` is used, one must consider possible side effects if the new state contains less or other properties than the replaced state.
 
 ### rerender(data, callback)
 
@@ -222,6 +225,11 @@ Used to change the value of a single state property. For example:
 ```javascript
 this.setState('disabled', true);
 ```
+
+Be aware, that `setState()` only nominates the component for a possible rerender. Thus, the component is only rerendered, if at least one of the component state properties changed (`oldValue !== newValue`). If none of the properties changed (because identical or not detected by a shallow comparision), invoking `setState()` is a no operation. (great for performance).
+
+Nice to know:
+Compared to `setState()`, `setStateDirty()` does not nominate a component for rerendering but instead always rerenderes the component independently from its state property values (even if they did not change).
 
 ### setState(newState)
 
@@ -236,16 +244,21 @@ this.setState({
 
 ### setStateDirty(name, value)
 
-Force a state property to be changed even if the value is equal to the old value. This helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare.
+Force a state property to be changed even if the value is equal to the old value. This is helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare. Invoking this function completely circumvents all property equality checks (shallow compares) and always rerenders the component. 
+
+Additional information:
+The first parameter `name` is used to allow update handlers (e.g. `update_foo(newValue)`) to handle the state transition for the specific state property that was marked as dirty. The second parameter `value` is used as the new value that is given to update handlers. Because `setStateDirty()` always bypasses all property equality checks, this parameter is optional. If not given or equal to the old value, the old value will be used for the update handler.
+It is important to know, that the given parameters do not affect how or if `setStateDirty()` rerenderes a component; they are only considered as additional information to update handlers.
 
 Example:
 
 ```javascript
-// Add a new item to an array without going through `this.setState(...)`
+// Add a new item to an array without going through `this.setState(...)` - because this 
+// does not create a new array, the change would not be detected by a shallow property comparison
 this.state.colors.push('red');
 
 // Force that particular state property to be considered dirty so
-// that it will trigger the widget's view to be updated.
+// that it will trigger the widget's view to be updated
 this.setStateDirty('colors');
 ```
 
