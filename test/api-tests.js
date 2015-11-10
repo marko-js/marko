@@ -94,9 +94,8 @@ describe('marko/api' , function() {
         });
 
 
-        marko.stream(
-            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
-            {
+        marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'))
+            .stream({
                 name: 'John'
             })
             .pipe(outStream)
