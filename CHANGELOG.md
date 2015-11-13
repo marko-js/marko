@@ -239,6 +239,18 @@ exports.renderer = function(input, out) {
 
 ## 5.0.x
 
+### 5.0.8
+
+- Fixes #109 - checks addEventListener instead of attachEvent
+
+### 5.0.7
+
+- Improvement to docs
+
+### 5.0.6
+
+- Fixes #106 - Fix immediate widget initialization
+
 ### 5.0.5
 
 - Fixes #102 Fix how require path to marko-widgets is generated in compiled templates
