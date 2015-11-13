@@ -239,6 +239,14 @@ exports.renderer = function(input, out) {
 
 ## 5.0.x
 
+### 5.0.9
+
+- Fixes #111 - Make registerWidget a no-op on the server
+
+### 5.0.8
+
+- Fixes #109 - checks addEventListener instead of attachEvent
+
 ### 5.0.8
 
 - Fixes #109 - checks addEventListener instead of attachEvent
