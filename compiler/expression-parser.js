@@ -166,6 +166,8 @@ function getConditionalExpression(expression) {
 function processNestedStrings(expression, foundStrings) {
     var hasExpression;
     var parts;
+    var foundString;
+
     function handleText(text) {
         parts.push(foundString.quote + text + foundString.quote);
     }
@@ -173,7 +175,8 @@ function processNestedStrings(expression, foundStrings) {
         hasExpression = true;
         parts.push(expression);
     }
-    for (var i = foundStrings.length - 1, foundString; i >= 0; i--) {
+
+    for (var i = foundStrings.length - 1; i >= 0; i--) {
         foundString = foundStrings[i];
         if (!foundString.value) {
             continue;
@@ -261,7 +264,7 @@ ExpressionParserHelper.prototype = {
 parse = function (str, listeners, options) {
 
     ok(str != null, '"str" is required');
-    
+
     if (!options) {
         options = {};
     }

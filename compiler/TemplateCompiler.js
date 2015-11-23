@@ -102,6 +102,7 @@ TemplateCompiler.prototype = {
         var filePath = this.path;
         var rootNode;
         var templateBuilder;
+        var err;
 
         function returnError(err) {
             if (callback) {
@@ -127,7 +128,7 @@ TemplateCompiler.prototype = {
             //The templateBuilder object is need to manage the compiled JavaScript output
             this.transformTree(rootNode, templateBuilder);
         } catch (e) {
-            var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
+            err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + (e.stack || e)), e);
             return returnError(err);
         }
 
@@ -137,7 +138,7 @@ TemplateCompiler.prototype = {
              */
             rootNode.generateCode(templateBuilder);    //Generate the code and have all output be managed by the TemplateBuilder
         } catch (e) {
-            var err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
+            err = createError(new Error('An error occurred while trying to compile template at path "' + filePath + '". Exception: ' + e), e);
             return returnError(err);
         }
 

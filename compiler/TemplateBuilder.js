@@ -175,6 +175,7 @@ CodeWriter.prototype = {
     flushWrites: function () {
         var _this = this;
         var code = this._code;
+        var _bufferedWrites = this._bufferedWrites;
 
         function concat() {
 
@@ -219,7 +220,6 @@ CodeWriter.prototype = {
             }, _this);
         }
 
-        var _bufferedWrites = this._bufferedWrites;
         if (_bufferedWrites) {
             if (!this.firstStatement) {
                 this._code.append('\n');
