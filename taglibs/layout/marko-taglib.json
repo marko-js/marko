@@ -1,0 +1,42 @@
+{
+    "tags": {
+        "layout-use": {
+            "renderer": "./use-tag",
+            "attributes": {
+                "template": {
+                    "type": "template"
+                },
+                "*": {
+                    "remove-dashes": true,
+                    "type": "string"
+                }
+            },
+            "body-function": "getContent(__layoutHelper)"
+        },
+        "layout-put": {
+            "renderer": "./put-tag",
+            "attributes": {
+                "into": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "import-var": {
+                "layout": "__layoutHelper"
+            }
+        },
+        "layout-placeholder": {
+            "renderer": "./placeholder-tag",
+            "attributes": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "import-var": {
+                "content": "data.layoutContent"
+            }
+        }
+    }
+}

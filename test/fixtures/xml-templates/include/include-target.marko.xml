@@ -1,5 +1,0 @@
-<c-template 
-    params="name,count">
-
-    Hello $name! You have $count new messages.
-</c-template>

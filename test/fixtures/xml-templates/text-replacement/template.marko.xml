@@ -1,7 +1,0 @@
-<template 
-    params="person">
-    
-    
-    Hello $person.name. You are from ${person.address.city}, $person.address.state
-    
-</template>

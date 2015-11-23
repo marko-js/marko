@@ -49,15 +49,12 @@ function loadFile(templatePath) {
     var targetDir = nodePath.dirname(templatePath);
 
     var targetFile = templatePath + '.js';
-    var compiler = markoCompiler.createCompiler(templatePath);
-    var isUpToDate = compiler.checkUpToDate(targetFile);
+    var isUpToDate = markoCompiler.checkUpToDate(templatePath, targetFile);
     if (isUpToDate) {
         return require(targetFile);
     }
 
-	var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-	var compiledSrc = compiler.compile(templateSrc);
-
+	var compiledSrc = markoCompiler.compileFile(templatePath);
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
     var filename = nodePath.basename(targetFile);

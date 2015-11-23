@@ -1,0 +1,12 @@
+<function renderTree(node)>
+    Name: ${child.name}
+
+    Children:
+    <ul if(node.children)>
+        <li for(child in node.children)>
+            <renderTree(child)/>
+        </li>
+    </ul>
+</function>
+
+<renderTree(data.node)>

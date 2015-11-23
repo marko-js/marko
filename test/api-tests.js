@@ -9,7 +9,7 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-describe('marko/api' , function() {
+describe('api' , function() {
 
     before(function() {
         require('../compiler').defaultOptions.checkUpToDate = false;
@@ -22,7 +22,7 @@ describe('marko/api' , function() {
 
     it('should allow a template to be rendered using a callback', function(done) {
         marko.render(
-            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -48,7 +48,7 @@ describe('marko/api' , function() {
             });
 
         marko.render(
-            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -75,7 +75,7 @@ describe('marko/api' , function() {
             });
 
         marko.render(
-            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
             {
                 name: 'John'
             },
@@ -95,7 +95,7 @@ describe('marko/api' , function() {
 
 
         marko.stream(
-            nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'),
+            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
             {
                 name: 'John'
             })
@@ -109,7 +109,7 @@ describe('marko/api' , function() {
     /// TEMPLATE LOADING:
 
     it('should allow a template to be loaded and rendered using a callback', function(done) {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -134,7 +134,7 @@ describe('marko/api' , function() {
                 done(e);
             });
 
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -160,7 +160,7 @@ describe('marko/api' , function() {
                 done(e);
             });
 
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
         template.render({
                 name: 'John'
             },
@@ -168,7 +168,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be loaded and rendered to a stream', function(done) {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
 
         var output = '';
         var outStream = through(function write(data) {
@@ -191,13 +191,13 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered to a string synchronously using renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
         var output = template.renderSync({ name: 'John' });
         expect(output).to.equal('Hello John!');
     });
 
     it('should allow a template to be rendered synchronously using global attributes', function() {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-global.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello-global.marko'));
         var data = {
           name: 'John',
           $global: {
@@ -209,7 +209,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be rendered asynchronously using global attributes', function(done) {
-      var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-global.marko'));
+      var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello-global.marko'));
       var data = {
           name: 'John',
           $global: {
@@ -223,7 +223,7 @@ describe('marko/api' , function() {
     });
 
     it('should throw an error if beginAsync is used with renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-async.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello-async.marko'));
         var output;
         var e;
 
@@ -244,7 +244,7 @@ describe('marko/api' , function() {
     });
 
     it('should throw errors correctly with renderSync', function() {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello-error.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello-error.marko'));
         var output;
         var e;
 
@@ -260,9 +260,9 @@ describe('marko/api' , function() {
 
     it('should allow a template to be loaded from a compiled JS module', function(done) {
         // Load the JS file to ensure the hello.marko.js file is created
-        marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko'));
+        marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
 
-        var templateModule = require(nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko.js'));
+        var templateModule = require(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko.js'));
 
         var template = marko.load(templateModule);
         template.render({
@@ -279,7 +279,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow a template to be required', function(done) {
-        var templatePath = nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko');
+        var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/hello.marko');
         var template = require(templatePath);
         template.render(
             {
@@ -296,7 +296,7 @@ describe('marko/api' , function() {
     });
 
     it('should allow global data with callback-style render', function(done) {
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/global-data.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/global-data.marko'));
         template.render({
                 $global: {
                     foo: 'bar'
@@ -327,7 +327,7 @@ describe('marko/api' , function() {
                 done(e);
             });
 
-        var template = marko.load(nodePath.join(__dirname, 'fixtures/templates/api-tests/global-data.marko'));
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/global-data.marko'));
         template.render(
             {
                 $global: {
@@ -341,8 +341,8 @@ describe('marko/api' , function() {
         var compiledPath;
 
         try {
-            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
-            compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
+            compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
             var template = require(templatePath);
             expect(fs.existsSync(compiledPath)).to.equal(true);
             expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
@@ -356,8 +356,8 @@ describe('marko/api' , function() {
         var compiledPath;
 
         try {
-            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
-            compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
+            compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
             var template = marko.load(templatePath);
             expect(fs.existsSync(compiledPath)).to.equal(true);
             expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
@@ -369,8 +369,8 @@ describe('marko/api' , function() {
     it('should allow compiled templates to not be written to disk when using the Node.js require extension', function() {
         require('../compiler').defaultOptions.writeToDisk = false;
         try {
-            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
-            var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
+            var compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
             var template = require(templatePath);
             expect(fs.existsSync(compiledPath)).to.equal(false);
             expect(template.render).to.be.a('function');
@@ -383,8 +383,8 @@ describe('marko/api' , function() {
     it('should allow compiled templates to not be written to disk when using load', function() {
         require('../compiler').defaultOptions.writeToDisk = false;
         try {
-            var templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
-            var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+            var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
+            var compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
             var template = marko.load(templatePath);
             expect(fs.existsSync(compiledPath)).to.equal(false);
             expect(template.render).to.be.a('function');
@@ -411,8 +411,8 @@ describe('marko/api' , function() {
         // Make sure calling load with templatePath:String, options:Object arguments works
         delete require('../compiler').defaultOptions.writeToDisk;
 
-        templatePath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko');
-        var compiledPath = nodePath.join(__dirname, 'fixtures/write-to-disk/template.marko.js');
+        templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
+        var compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
 
         try {
             fs.unlinkSync(compiledPath);

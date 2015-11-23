@@ -8,7 +8,7 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-describe('marko/hot-reload' , function() {
+describe('hot-reload' , function() {
     before(function() {
         require('../hot-reload').enable();
         require('../compiler').defaultOptions.checkUpToDate = false;

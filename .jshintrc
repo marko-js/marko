@@ -1,16 +1,6 @@
 {
-    "predef": [
-        
-    ],
-
-    "globals": {
-        "define": true,
-        "require": true
-    },
-
     "node" : true,
-    "es5" : false,
-    "browser" : true,
+    "esnext": true,
     "boss" : false,
     "curly": false,
     "debug": false,
@@ -35,6 +25,5 @@
     "latedef": "func",
     "unused": "vars",
     "strict": false,
-    
     "eqnull": true
 }

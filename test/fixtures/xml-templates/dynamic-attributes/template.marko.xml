@@ -1,4 +1,0 @@
-<template>
-    
-    <test-dynamic-attributes test="Hello" class="my-class" id="myId"/>
-</template>

@@ -1,0 +1,76 @@
+{
+    "tags": {
+        "async-fragment": {
+            "renderer": "./async-fragment-tag",
+            "attributes": {
+                "data-provider": {
+                    "type": "expression"
+                },
+                "arg": {
+                    "type": "expression",
+                    "preserve-name": true
+                },
+                "arg-*": {
+                    "pattern": true,
+                    "type": "string",
+                    "preserve-name": true
+                },
+                "var": {
+                    "type": "identifier"
+                },
+                "timeout": {
+                    "type": "integer"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "timeout-message": {
+                    "type": "string"
+                },
+                "error-message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of async fragment (for debugging purposes only)"
+                },
+                "client-reorder": {
+                    "type": "boolean",
+                    "description": "Use JavaScript on client to move async fragment into the proper place."
+                },
+                "scope": {
+                    "type": "expression"
+                },
+                "show-after": {
+                    "type": "string"
+                },
+                "placeholder": {
+                    "type": "string"
+                }
+            },
+            "vars": [
+                {
+                    "name-from-attribute": "var"
+                }
+            ],
+            "transformer": "./async-fragment-tag-transformer"
+        },
+        "async-fragments": {
+            "renderer": "./async-fragments-tag",
+            "attributes": {
+            }
+        },
+        "async-fragment-placeholder": {
+            "node-class": "./AsyncFragmentPlaceholderNode",
+            "transformer": "./async-fragment-placeholder-tag-transformer"
+        },
+        "async-fragment-timeout": {
+          "node-class": "./AsyncFragmentTimeoutNode",
+          "transformer": "./async-fragment-timeout-tag-transformer"
+        },
+        "async-fragment-error": {
+          "node-class": "./AsyncFragmentErrorNode",
+          "transformer": "./async-fragment-error-tag-transformer"
+        }
+    }
+}

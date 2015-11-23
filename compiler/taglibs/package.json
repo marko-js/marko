@@ -1,5 +1,0 @@
-{
-    "browser": {
-        "./taglib-finder.js": "./taglib-finder-browser.js"
-    }
-}

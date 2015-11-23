@@ -1,5 +1,0 @@
-<c-template>
-    <div>
-        <test-page-title title="My Page Title"/>
-    </div>
-</c-template>

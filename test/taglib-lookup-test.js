@@ -18,7 +18,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup core attributes for top-level template', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
         var ifAttr = lookup.getAttribute('div', 'if');
@@ -27,7 +27,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup core tag for top-level template', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var ifTag = lookup.getTag('if');
         expect(ifTag != null).to.equal(true);
@@ -35,7 +35,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup core template for top-level template', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.tags));
         var templateTag = lookup.getTag('c-template');
@@ -44,7 +44,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup custom tag for top-level template', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var tag = lookup.getTag('test-hello');
         // console.log(Object.keys(lookup.tags));
@@ -53,7 +53,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup custom attributes for top-level template', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('test-hello', 'name');
@@ -70,7 +70,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should allow for dynamic attributes', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('test-hello', 'DYNAMIC');
@@ -79,7 +79,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup global attributes correctly', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         // console.log('LOOKUP: ', Object.keys(lookup.attributes));
         var attrDef = lookup.getAttribute('test-dynamic-attributes', 'global-attribute');
@@ -88,7 +88,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should cache a lookup', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup1 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var lookup2 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));
         var lookup3 = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-empty'));
@@ -99,7 +99,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup nested tags', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
         var tag = lookup.getTag('nested-foo');
 
@@ -108,7 +108,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should lookup attributes for nested tags', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
         // console.log(Object.keys(lookup.attributes));
         var attr = lookup.getAttribute('nested-foo', 'attr1');
@@ -119,7 +119,7 @@ describe('taglib-lookup' , function() {
     it('should lookup tag transformers correctly for un-namespaced tags', function() {
         var transformers = [];
 
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
 
         lookup.forEachTagTransformer('div', function(transformer) {
@@ -132,7 +132,7 @@ describe('taglib-lookup' , function() {
     it('should lookup tag transformers correctly for namespaced tag with transformer', function() {
         var transformers;
 
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup;
         // lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/nested'));
 
@@ -169,7 +169,7 @@ describe('taglib-lookup' , function() {
     it('should lookup tag transformers core tag with custom node', function() {
         var transformers = [];
 
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-nested'));
 
         lookup.forEachTagTransformer('else', function(transformer) {
@@ -183,7 +183,7 @@ describe('taglib-lookup' , function() {
     });
 
     it('should de-duplicate taglibs', function() {
-        var taglibLookup = require('../compiler').taglibs.lookup;
+        var taglibLookup = require('../compiler/taglib-lookup');
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures/taglib-duplicate/taglib-duplicate'));
 
         // The "duplicate-bar" tag was declared in the lower
