@@ -683,4 +683,20 @@ describe('widget' , function() {
         expect(widget.el.innerHTML).to.contain('Frank');
         expect(widget.el.innerHTML).to.contain('30');
     });
+
+    it('should allow widgets to be rendered to different frame or window', function() {
+        var widget = require('../fixtures/components/app-iframe')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(widget.__document).to.exist;
+        expect(widget.__document).to.equal(document);
+
+        var contentWidget = widget.renderIntoIframe();
+        expect(contentWidget.__document).to.equal(widget.getFrameEl().contentWindow.document);
+        expect(contentWidget.getEl('input').value).to.equal('test');
+
+        expect(contentWidget.getWidget('more').getValue()).to.equal('hello');
+    });
 });
