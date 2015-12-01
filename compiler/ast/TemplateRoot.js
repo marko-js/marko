@@ -1,5 +1,6 @@
 'use strict';
 var Node = require('./Node');
+var UniqueVars = require('../util/UniqueVars');
 
 function createVarsArray(vars) {
     return Object.keys(vars).map(function(varName) {
@@ -15,6 +16,7 @@ class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');
         this.body = this.makeContainer(def.body);
+        this._uniqueVars = new UniqueVars();
         this.staticVars = {};
 
         this.addStaticVar('str', '__helpers.s');
@@ -62,7 +64,9 @@ class TemplateRoot extends Node {
     }
 
     addStaticVar(name, init) {
-        this.staticVars[name] = init;
+        var actualVarName = this._uniqueVars.addVar(name, init);
+        this.staticVars[actualVarName] = init;
+        return actualVarName;
     }
 }
 

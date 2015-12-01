@@ -3,6 +3,7 @@
 var ok = require('assert').ok;
 
 var HtmlAttribute = require('./HtmlAttribute');
+var Node = require('./Node');
 
 class HtmlAttributeCollection {
     constructor(attributes) {
@@ -17,9 +18,20 @@ class HtmlAttributeCollection {
             } else {
                 for (var attrName in attributes) {
                     if (attributes.hasOwnProperty(attrName)) {
-                        var attr = attributes[attrName];
-                        attr.name = attrName;
-                        this.addAttribute(attr);
+                        let attrValue = attributes[attrName];
+                        let attrDef;
+
+                        if (typeof attrValue === 'object' && !(attrValue instanceof Node)) {
+                            attrDef = attrValue;
+                            attrDef.name = attrName;
+                        } else {
+                            attrDef = {
+                                name: attrName,
+                                value: attrValue
+                            };
+                        }
+
+                        this.addAttribute(attrDef);
                     }
                 }
             }
@@ -31,9 +43,9 @@ class HtmlAttributeCollection {
             let name = arguments[0];
             let expression = arguments[1];
             newAttr = new HtmlAttribute(name, expression);
+        } else if (!HtmlAttribute.isHtmlAttribute(newAttr)) {
+            newAttr = new HtmlAttribute(newAttr);
         }
-
-        ok(HtmlAttribute.isHtmlAttribute(newAttr), 'Invalid attribute');
 
         var name = newAttr.name;
 

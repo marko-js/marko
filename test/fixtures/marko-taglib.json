@@ -1,0 +1,6 @@
+{
+    "<test-hello-world>": {
+        "renderer": "./taglib/test-hello-world/renderer.js",
+        "@name": "string"
+    }
+}

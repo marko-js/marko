@@ -18,6 +18,7 @@ var forEachEntry = require('raptor-util/forEachEntry');
 var extend = require('raptor-util/extend');
 var ok = require('assert').ok;
 var HtmlElement = require('../../ast/HtmlElement');
+var CustomTag = require('../../ast/CustomTag');
 
 function inheritProps(sub, sup) {
     forEachEntry(sup, function (k, v) {
@@ -43,6 +44,12 @@ function createNodeFactory(codeGenerator, typeName) {
 
     return function nodeFactory(el) {
         return new CustomNode(el);
+    };
+}
+
+function createCustomTagNodeFactory(tag) {
+    return function nodeFactory(el) {
+        return new CustomTag(el, tag);
     };
 }
 
@@ -225,6 +232,8 @@ class Tag{
             if (typeof nodeFactory !== 'function') {
                 throw new Error('Invalid node factory exported by module at path "' + this.nodeFactoryPath + '"');
             }
+        } else if (this.renderer || this.template) {
+            nodeFactory = createCustomTagNodeFactory(this);
         } else {
             return null;
         }

@@ -98,51 +98,6 @@ class Builder {
             argument = elInfo.argument;
         }
 
-        if (attributes) {
-            if (!(attributes instanceof HtmlAttributeCollection)) {
-                let attrCollection = new HtmlAttributeCollection();
-
-                if (isArray(attributes)) {
-                    // Convert the attribute list into HtmlAttributeCollection...
-
-                    for (let i=0; i<attributes.length; i++) {
-                        let attr = attributes[i];
-                        ok(attr, 'Invalid attribute at index ' + i);
-
-                        if (attr instanceof HtmlAttribute) {
-                            attrCollection.addAttribute(attr);
-                        } else {
-                            attr = new HtmlAttribute(attr);
-                            attrCollection.addAttribute(attr);
-                        }
-                    }
-
-                } else {
-                    for (let attrName in attributes) {
-                        if (attributes.hasOwnProperty(attrName)) {
-                            let attrValue = attributes[attrName];
-                            let attr;
-
-                            if (typeof attrValue === 'object' && !(attrValue instanceof Node)) {
-                                var attrDef = attrValue;
-                                attrDef.name = attrName;
-                                attr = new HtmlAttribute(attrDef);
-                            } else {
-                                attr = new HtmlAttribute({
-                                    name: attrName,
-                                    value: attrValue
-                                });
-                            }
-
-                            attrCollection.addAttribute(attr);
-                        }
-                    }
-                }
-
-                attributes = attrCollection;
-            }
-        }
-
         return new HtmlElement({tagName, attributes, body, argument});
     }
 
@@ -169,6 +124,12 @@ class Builder {
 
     slot() {
         return new Slot();
+    }
+
+    require(path) {
+        let callee = 'require';
+        let args = [ path ];
+        return new FunctionCall({callee, args});
     }
 }
 

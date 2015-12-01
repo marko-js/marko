@@ -69,6 +69,7 @@ class Generator {
         this.builder = options.builder;
         this.walker = options.walker;
         this.outputType = options.output || 'html';
+        this.compiler = undefined;
 
         this._generatorCodeFuncName = 'generate' +
             this.outputType.charAt(0).toUpperCase() +
@@ -90,8 +91,7 @@ class Generator {
         if (templateRoot.type !== 'TemplateRoot') {
             throw new Error('Root node is not of type "TemplateRoot". Actual ' + JSON.stringify(templateRoot));
         }
-        templateRoot.addStaticVar(name, value);
-        return name;
+        return templateRoot.addStaticVar(name, value);
     }
 
     generateCode(node, options) {
@@ -407,7 +407,7 @@ class Generator {
             for (let i=0; i<keys.length; i++) {
                 let k = keys[i];
                 let v = value[k];
-
+                this.writeLineIndent();
                 this.write(JSON.stringify(k) + ': ');
                 if (v instanceof Node) {
                     this.generateCode(v);
@@ -425,7 +425,7 @@ class Generator {
 
             this.decIndent();
             this.writeLineIndent();
-            this.write('}\n');
+            this.write('}');
         }
     }
 
