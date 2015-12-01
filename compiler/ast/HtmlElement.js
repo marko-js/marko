@@ -17,6 +17,7 @@ class HtmlElement extends Node {
         this.argument = def.argument;
         this.allowSelfClosing = false;
         this.startTagOnly = false;
+        this._dynamicAttributesExpressionArray = undefined;
     }
 
     generateHtmlCode(generator) {
@@ -25,6 +26,7 @@ class HtmlElement extends Node {
         var startTagOnly = this.startTagOnly;
         var allowSelfClosing = this.allowSelfClosing;
         var hasBody = body && body.length;
+        var builder = generator.builder;
 
         // Starting tag
         generator.addWriteLiteral('<' + tagName);
@@ -63,6 +65,14 @@ class HtmlElement extends Node {
             }
         }
 
+        if (this._dynamicAttributesExpressionArray) {
+            this._dynamicAttributesExpressionArray.forEach(function(attrsExpression) {
+                generator.addStaticVar('attrs', '__helpers.as');
+                let attrsFunctionCall = builder.functionCall('attrs', [attrsExpression]);
+                generator.addWrite(attrsFunctionCall);
+            });
+        }
+
         if (hasBody) {
             generator.addWriteLiteral('>');
         } else {
@@ -94,6 +104,14 @@ class HtmlElement extends Node {
         }
     }
 
+    addDynamicAttributes(expression) {
+        if (!this._dynamicAttributesExpressionArray) {
+            this._dynamicAttributesExpressionArray = [];
+        }
+
+        this._dynamicAttributesExpressionArray.push(expression);
+    }
+
     removeAttribute(name) {
         if (this._attributes) {
             this._attributes.removeAttribute(name);
@@ -110,6 +128,14 @@ class HtmlElement extends Node {
 
     get attributes() {
         return this._attributes.all;
+    }
+
+    forEachAttribute(callback, thisObj) {
+        var attributes = this._attributes.all.concat([]);
+
+        for (let i=0, len=attributes.length; i<len; i++) {
+            callback.call(thisObj, attributes[i]);
+        }
     }
 }
 

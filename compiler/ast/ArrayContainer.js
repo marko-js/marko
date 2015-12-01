@@ -30,7 +30,7 @@ class ArrayContainer extends Container {
     // }
 
     forEach(callback, thisObj) {
-        var array = this.array;
+        var array = this.array.concat([]);
         for (var i=0; i<array.length; i++) {
             var item = array[i];
             if (item.container === this) {

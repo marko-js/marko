@@ -1,30 +1,47 @@
 var fs = require('fs');
 var enabledTest = process.env.TEST;
 var path = require('path');
-
+var assert = require('assert');
 
 function autoTest(name, dir, run, options) {
     var compareExtension = (options && options.compareExtension) || '.js';
+    var isJSON = compareExtension === '.json';
+
     var actualPath = path.join(dir, 'actual' + compareExtension);
     var expectedPath = path.join(dir, 'expected' + compareExtension);
 
     var actual = run(dir);
+    var actualJSON = isJSON ? JSON.stringify(actual, null, 2) : null;
 
-    fs.writeFileSync(actualPath, actual, {encoding: 'utf8'});
+    fs.writeFileSync(
+        actualPath,
+        isJSON ? actualJSON : actual,
+        {encoding: 'utf8'});
 
     var expected;
 
     try {
         expected = fs.readFileSync(expectedPath, { encoding: 'utf8' });
     } catch(e) {
-        expected = 'TBD';
+        expected = isJSON ? '"TBD"' : 'TBD';
         fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
     }
 
-    if (actual !== expected) {
-        throw new Error('Unexpected output for "' + name + '":\nEXPECTED (' + expectedPath + '):\n---------\n' + expected +
-            '\n---------\nACTUAL (' + actualPath + '):\n---------\n' + actual + '\n---------');
+    var expectedJSON;
+
+    if (isJSON) {
+        expectedJSON = expected;
+        expected = JSON.parse(expectedJSON);
     }
+
+    assert.deepEqual(
+            (isJSON ? JSON.parse(actualJSON) : actual),
+            expected,
+            'Unexpected output for "' + name + '":\nEXPECTED (' + expectedPath + '):\n---------\n' +
+            (isJSON ? expectedJSON : expected) +
+            '\n---------\nACTUAL (' + actualPath + '):\n---------\n' +
+            (isJSON ? actualJSON : actual) +
+            '\n---------');
 }
 
 exports.scanDir = function(autoTestDir, run, options) {

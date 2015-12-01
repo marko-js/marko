@@ -91,6 +91,7 @@ class Generator {
             throw new Error('Root node is not of type "TemplateRoot". Actual ' + JSON.stringify(templateRoot));
         }
         templateRoot.addStaticVar(name, value);
+        return name;
     }
 
     generateCode(node, options) {

@@ -67,7 +67,7 @@
                   {
                     "type": "HtmlElement",
                     "tagName": "ul",
-                    "attributes": [
+                    "_attributes": [
                       {
                         "name": "class",
                         "value": {
@@ -92,7 +92,7 @@
                               {
                                 "type": "HtmlElement",
                                 "tagName": "li",
-                                "attributes": [
+                                "_attributes": [
                                   {
                                     "name": "class",
                                     "value": {

@@ -94,6 +94,15 @@ var coreAttrHandlers = [
 
             el.setStripExpression(attr);
         }
+    ],
+    [
+        'attrs', function(attr, node) {
+            if (!node.addDynamicAttributes) {
+                node.addError('Node does not support the "attrs" attribute');
+            } else {
+                node.addDynamicAttributes(attr.value);
+            }
+        }
     ]
 ];
 
@@ -139,20 +148,16 @@ var attributeTransformers = AttributeTransformer.prototype;
 module.exports = function transform(el, compiler) {
     var attributeTransfomer;
 
-    var attributes = el.getAttributes();
-    if (attributes) {
-        for (let i=0, len=attributes.length; i<len; i++) {
-            let attr = attributes[i];
-            let attrName = attr.name;
-            var attrTransformerFunc = attributeTransformers[attrName];
-            if (attrTransformerFunc) {
-                el.removeAttribute(attrName);
+    el.forEachAttribute((attr) => {
+        let attrName = attr.name;
+        var attrTransformerFunc = attributeTransformers[attrName];
+        if (attrTransformerFunc) {
+            el.removeAttribute(attrName);
 
-                if (!attributeTransfomer) {
-                    attributeTransfomer = new AttributeTransformer(compiler, el);
-                }
-                attributeTransfomer[attrName](attr, el);
+            if (!attributeTransfomer) {
+                attributeTransfomer = new AttributeTransformer(compiler, el);
             }
+            attributeTransfomer[attrName](attr, el);
         }
-    }
+    });
 };
