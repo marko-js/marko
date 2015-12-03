@@ -84,6 +84,19 @@ class Compiler {
         var codeGenerator = new CodeGenerator(context);
         codeGenerator.generateCode(transformedAST);
 
+        if (context.hasErrors()) {
+            var errors = context.getErrors();
+
+            var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
+            for (var i = 0, len = errors.length; i < len; i++) {
+                let error = errors[i];
+                message += (i + 1) + ') ' + error.toString() + '\n';
+            }
+            var error = new Error(message);
+            error.errors = errors;
+            throw error;
+        }
+
         var compiledSrc = codeGenerator.getCode();
         return compiledSrc;
     }

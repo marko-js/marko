@@ -3,6 +3,7 @@ var Container = require('./Container');
 var ArrayContainer = require('./ArrayContainer');
 var ok = require('assert').ok;
 var extend = require('raptor-util/extend');
+var inspect = require('util').inspect;
 
 class Node {
     constructor(type) {
@@ -56,7 +57,7 @@ class Node {
     }
 
     toString() {
-        return JSON.stringify(this, null, 2);
+        return inspect(this);
     }
 
     toJSON() {
@@ -74,6 +75,17 @@ class Node {
 
     isDetached() {
         return this.container == null;
+    }
+
+    /**
+     * Used by the Node.js require('util').inspect function.
+     * We default to inspecting on the simplified version
+     * of this node that is the same version we use when
+     * serializing to JSON.
+     */
+    inspect(depth, opts) {
+        // We inspect in the simplified version of this object t
+        return this.toJSON();
     }
 }
 

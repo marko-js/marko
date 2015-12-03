@@ -2,5 +2,8 @@
     "<test-declared-attributes>": {
         "renderer": "./taglib/test-declared-attributes/renderer.js",
         "@name": "string"
+    },
+    "<test-invalid-attr>": {
+        "@foo": "string"
     }
 }

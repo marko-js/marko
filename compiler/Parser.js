@@ -1,5 +1,6 @@
 'use strict';
 var ok = require('assert').ok;
+var path = require('path');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     whitespace: function(attr, compilerOptions) {
@@ -23,6 +24,14 @@ function isIEConditionalComment(comment) {
 function parseExpression(expression) {
     // TODO Build an AST from the String expression
     return expression;
+}
+
+function getTaglibPath(taglibPath) {
+    if (typeof window === 'undefined') {
+        return path.relative(process.cwd(), taglibPath);
+    } else {
+        return taglibPath;
+    }
 }
 
 
@@ -135,8 +144,8 @@ class Parser {
             })
         };
 
-
-        var tagDef = context.taglibLookup.getTag(tagName);
+        var taglibLookup = context.taglibLookup;
+        var tagDef = taglibLookup.getTag(tagName);
         if (tagDef) {
             var nodeFactoryFunc = tagDef.getNodeFactory();
             if (nodeFactoryFunc) {
@@ -149,6 +158,24 @@ class Parser {
         }
 
         node.pos = el.pos;
+
+        // Validate the attributes
+        attributes.forEach((attr) => {
+            let attrName = attr.name;
+            let attrDef = taglibLookup.getAttribute(tagName, attrName);
+            if (!attrDef) {
+                if (tagDef) {
+                    // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
+                    //Tag doesn't allow dynamic attributes
+                    context.addError({
+                        node: node,
+                        message: 'The tag "' + tagName + '" in taglib "' + getTaglibPath(tagDef.taglibId) + '" does not support attribute "' + attrName + '"'
+                    });
+
+                }
+                return;
+            }
+        });
 
         this.parentNode.appendChild(node);
 

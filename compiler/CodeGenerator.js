@@ -419,9 +419,18 @@ class Generator {
         return false;
     }
 
-    addError(message) {
+    addError(message, code) {
+        ok('"message" is required');
+
         var node = this._currentNode;
-        this.context.addError(node, message);
+
+        if (typeof message === 'object') {
+            var errorInfo = message;
+            errorInfo.node = node;
+            this.context.addError(errorInfo);
+        } else {
+            this.context.addError({node, code, message});
+        }
     }
 }
 

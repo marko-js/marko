@@ -24,7 +24,6 @@ describe('compiler/codegen', function() {
         var main = require(path.join(dir, 'index.js'));
         var generateCodeFunc = main;
         var ast = generateCodeFunc(builder);
-
         var generator = createGenerator();
         generator.generateCode(ast);
         return generator.getCode();

@@ -27,10 +27,7 @@ class HtmlJsParser {
             },
 
             onopentag(event) {
-                var tagName = event.tagName;
-                var argument = event.argument;
-                var attributes = event.attributes;
-                handlers.handleStartElement({tagName, argument, attributes});
+                handlers.handleStartElement(event);
             },
 
             onclosetag(event) {
@@ -59,10 +56,6 @@ class HtmlJsParser {
         });
 
         parser.parse(src);
-    }
-
-    getPos() {
-        return 0;
     }
 }
 

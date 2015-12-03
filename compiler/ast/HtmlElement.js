@@ -39,7 +39,6 @@ class HtmlElement extends Node {
                 let attrName = attr.name;
                 let attrValue = attr.value;
 
-
                 if (attr.isLiteralValue()) {
                     var literalValue = attrValue.value;
                     if (typeof literalValue === 'boolean') {
@@ -136,6 +135,11 @@ class HtmlElement extends Node {
         for (let i=0, len=attributes.length; i<len; i++) {
             callback.call(thisObj, attributes[i]);
         }
+    }
+
+    toString() {
+        var tagName = this.tagName;
+        return '<' + tagName + '>';
     }
 }
 

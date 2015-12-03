@@ -11,6 +11,10 @@ function autoTest(name, dir, run, options) {
     var expectedPath = path.join(dir, 'expected' + compareExtension);
 
     var actual = run(dir);
+    if (actual === '$PASS$') {
+        return;
+    }
+
     var actualJSON = isJSON ? JSON.stringify(actual, null, 2) : null;
 
     fs.writeFileSync(
