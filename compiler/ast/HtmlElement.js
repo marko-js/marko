@@ -111,6 +111,17 @@ class HtmlElement extends Node {
         this._dynamicAttributesExpressionArray.push(expression);
     }
 
+    getAttribute(name) {
+        return this._attributes != null && this._attributes.getAttribute(name);
+    }
+
+    getAttributeValue(name) {
+        var attr = this._attributes != null && this._attributes.getAttribute(name);
+        if (attr) {
+            return attr.value;
+        }
+    }
+
     removeAttribute(name) {
         if (this._attributes) {
             this._attributes.removeAttribute(name);

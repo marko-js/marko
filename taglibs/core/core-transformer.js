@@ -3,6 +3,7 @@
 var extend = require('raptor-util/extend');
 var parseComplexAttribute = require('./util/parseComplexAttribute');
 var parseForEach = require('./util/parseForEach');
+var parseJavaScriptIdentifier = require('./util/parseJavaScriptIdentifier');
 
 var coreAttrHandlers = [
     [
@@ -13,8 +14,8 @@ var coreAttrHandlers = [
             }
 
             var forEachProps = parseComplexAttribute(forArgument, {
-                    each: true,
-                    separator: true,
+                    'each': true,
+                    'separator': true,
                     'iterator': true,
                     'status-var': true,
                     'for-loop': true
@@ -31,11 +32,26 @@ var coreAttrHandlers = [
                 this.addError('Invalid "for" attribute.');
             }
 
+            var statusVarName = forEachProps.statusVar;
+
+            if (statusVarName) {
+                // statusVar is expected to be a String literal expression
+                // For example: statusVar: "'foo'"
+                // We need to parse it into an actual string such as "foo"
+                statusVarName = parseJavaScriptIdentifier(statusVarName);
+                if (!statusVarName) {
+                    this.addError('Invalid "status-var": ' + forEachProps.statusVar);
+                }
+                delete forEachProps.statusVar;
+                forEachProps.statusVarName = statusVarName;
+            }
+
             var parsedForEach = parseForEach(forEachProps.each);
             delete forEachProps.each;
             extend(forEachProps, parsedForEach);
 
             forEachProps.pos = node.pos;
+
             //Copy the position property
             var forEachNode = this.builder.forEach(forEachProps);
             //Surround the existing node with a "forEach" node
@@ -108,6 +124,7 @@ var coreAttrHandlers = [
 
 class AttributeTransformer {
     constructor(context, el) {
+        this.context = context;
         this.builder = context.builder;
         this.el = el;
     }
@@ -131,8 +148,11 @@ class AttributeTransformer {
         return node;
     }
 
-    addError(error) {
-        this.compiler.addError(this.el, error);
+    addError(message) {
+        this.context.addError({
+            node: this.el,
+            message: message
+        });
     }
 }
 

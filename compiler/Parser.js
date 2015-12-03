@@ -159,6 +159,8 @@ class Parser {
 
         node.pos = el.pos;
 
+        var foundAttrs = {};
+
         // Validate the attributes
         attributes.forEach((attr) => {
             let attrName = attr.name;
@@ -175,7 +177,35 @@ class Parser {
                 }
                 return;
             }
+
+            attr.def = attrDef;
+
+            foundAttrs[attrName] = true;
         });
+
+        if (tagDef) {
+            // Add default values for any attributes. If an attribute has a declared
+            // default value and the attribute was not found on the element
+            // then add the attribute with the specified default value
+            tagDef.forEachAttribute(function (attrDef) {
+                var attrName = attrDef.name;
+
+                if (attrDef.hasOwnProperty('defaultValue') && !foundAttrs.hasOwnProperty(attrName)) {
+                    attributes.push({
+                        name: attrName,
+                        value: builder.literal(attrDef.defaultValue)
+                    });
+                } else if (attrDef.required === true) {
+                    // TODO Only throw an error if there is no data argument provided (just HTML attributes)
+                    if (!foundAttrs.hasOwnProperty(attrName)) {
+                        context.addError({
+                            node: node,
+                            message: 'The "' + attrName + '" attribute is required for tag "' + tagName + '" in taglib "' + getTaglibPath(tagDef.taglibId) + '".'
+                        });
+                    }
+                }
+            });
+        }
 
         this.parentNode.appendChild(node);
 
@@ -196,6 +226,8 @@ class Parser {
     }
 
     handleComment(comment) {
+        this.prevTextNode = null;
+
         var builder = this.context.builder;
 
         var compilerOptions = this.compilerOptions;
@@ -209,6 +241,8 @@ class Parser {
     }
 
     handleBodyTextPlaceholder(expression, escape) {
+        this.prevTextNode = null;
+
         var builder = this.context.builder;
 
         var textOutput = builder.textOutput(expression, escape);

@@ -13,16 +13,52 @@ function removeExt(filename) {
     }
 }
 
-function buildInputProps(node, builder) {
+function buildInputProps(node, context) {
     var inputProps = {};
 
     node.forEachAttribute((attr) => {
         var attrName = attr.name;
-        var propName = removeDashes(attrName);
-        inputProps[propName] = attr.value;
+
+        var attrDef = attr.def || context.taglibLookup.getAttribute(node.tagName, attr.name);
+
+        var propName;
+        var parentPropName;
+
+        if (attrDef.dynamicAttribute) {
+            // Dynamic attributes are allowed attributes
+            // that are not declared (i.e. "*" attributes)
+            //
+            if (attrDef.preserveName === false) {
+                propName = removeDashes(attrName);
+            } else {
+                propName = attrName;
+            }
+
+            if (attrDef.targetProperty) {
+                parentPropName = attrDef.targetProperty;
+            }
+        } else {
+            // Attributes map to properties and we allow the taglib
+            // author to control how an attribute name resolves
+            // to a property name.
+            if (attrDef.targetProperty) {
+                propName = attrDef.targetProperty;
+            } else if (attrDef.preserveName) {
+                propName = attr.name;
+            } else {
+                propName = removeDashes(attr.name);
+            }
+        }
+
+        if (parentPropName) {
+            let parent = inputProps[parentPropName] = (inputProps[parentPropName] = {});
+            parent[propName] = attr.value;
+        } else {
+            inputProps[propName] = attr.value;
+        }
     });
 
-    return builder.literal(inputProps);
+    return context.builder.literal(inputProps);
 }
 
 class CustomTag extends HtmlElement {
@@ -48,7 +84,7 @@ class CustomTag extends HtmlElement {
             let loadRendererFunctionCall = builder.functionCall(loadRendererVar, [ requireRendererFunctionCall ]);
 
             let rendererVar = generator.addStaticVar(removeExt(rendererPath), loadRendererFunctionCall);
-            var inputProps = buildInputProps(this, builder);
+            var inputProps = buildInputProps(this, context);
             var tagArgs = [ 'out', rendererVar, inputProps ];
             var tagFunctionCall = builder.functionCall(tagVar, tagArgs);
             return tagFunctionCall;

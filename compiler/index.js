@@ -1,12 +1,10 @@
 'use strict';
 
 var Builder = require('./Builder');
-var CodeGenerator = require('./CodeGenerator');
 var Compiler = require('./Compiler');
 var Walker = require('./Walker');
 var Parser = require('./Parser');
 var HtmlJsParser = require('./HtmlJsParser');
-var CompileContext = require('./CompileContext');
 var defaultBuilder = new Builder();
 var defaultParser = new Parser(new HtmlJsParser());
 

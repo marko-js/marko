@@ -2,7 +2,6 @@
 
 var Node = require('./Node');
 var Literal = require('./Literal');
-var ok = require('assert').ok;
 
 function trim(textOutputNode) {
     var text = textOutputNode.argument.value;
@@ -86,8 +85,6 @@ class TextOutput extends Node {
             }
 
             if (curChild.type === 'TextOutput' && curChild.isLiteral()) {
-
-
                 if (currentTextLiteral) {
                     currentTextLiteral.argument.value += curChild.argument.value;
                     curChild.detach();
@@ -111,6 +108,8 @@ class TextOutput extends Node {
         }
 
         literalTextNodes.forEach(trim);
+
+
     }
 
     isWhitespace() {

@@ -8,6 +8,11 @@ class ForEach extends Node {
         this.varName = def.varName;
         this.target = def.target;
         this.body = this.makeContainer(def.body);
+        this.separator = def.separator;
+        this.statusVarName = def.statusVarName;
+        this.from = def.from;
+        this.to = def.to;
+        this.step = def.step;
 
         ok(this.varName, '"varName" is required');
         ok(this.target, '"target" is required');
@@ -16,15 +21,76 @@ class ForEach extends Node {
     generateCode(generator) {
         var varName = this.varName;
         var target = this.target;
+        var separator = this.separator;
+        var statusVarName = this.statusVarName;
 
         var builder = generator.builder;
 
-        generator.addStaticVar('forEach', '__helpers.f');
+        if (this.from) {
+            // This is a range loop
+            var from = This.from;
+            var to = this.to;
+            var step = this.step;
+            var comparison = '<=';
 
-        return builder.functionCall('forEach', [
-            target,
-            builder.functionDeclaration(null, [varName], this.body)
-        ]);
+            if (typeof step === 'number') {
+                if (step < 0) {
+                    comparison = '>=';
+                }
+
+                if (step === 1) {
+                    step = varName + '++';
+                } else if (step  === -1) {
+                    step = varName + '--';
+                } else if (step > 0) {
+                    step = varName + '+=' + step;
+                } else if (step === 0) {
+                    throw new Error('Invalid step of 0');
+                } else if (step < 0) {
+                    step = 0-step; // Make the step positive and switch to -=
+                    step = varName + '-=' + step;
+                }
+            } else {
+                step = varName + '+=' + step;
+            }
+
+            // template.statement('(function() {').indent(function () {
+            //     template.statement('for (var ' + nameVar + '=' + from + '; ' + nameVar + comparison + to + '; ' + step + ') {').indent(function () {
+            //         this.generateCodeForChildren(template);
+            //     }, this).line('}');
+            // }, this).line('}());');
+            return;
+        }
+
+        if (separator && !statusVarName) {
+            statusVarName = '__loop';
+        }
+
+        if (statusVarName) {
+            let forEachVarName = generator.addStaticVar('forEachWithStatusVar', '__helpers.fv');
+            let body = this.body;
+
+            if (separator) {
+                body = body.items.concat([
+                    builder.ifStatement('!' + statusVarName + '.isLast()', [
+                        builder.textOutput(separator)
+                    ])
+                ]);
+            }
+
+            return builder.functionCall(forEachVarName, [
+                target,
+                builder.functionDeclaration(null, [varName, statusVarName], body)
+            ]);
+        } else {
+            let forEachVarName = generator.addStaticVar('forEach', '__helpers.f');
+
+            return builder.functionCall(forEachVarName, [
+                target,
+                builder.functionDeclaration(null, [varName], this.body)
+            ]);
+        }
+
     }
 }
 

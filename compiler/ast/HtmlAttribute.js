@@ -5,10 +5,11 @@ var ok = require('assert').ok;
 class HtmlAttribute {
     constructor(def) {
         ok(def, 'Invalid attribute definition');
-        
+
         this.name = def.name.toLowerCase();
         this.value = def.value;
         this.argument = def.argument;
+        this.def = def.def; // The attribute definition loaded from the taglib (if any)
     }
 
     isLiteralValue() {

@@ -3,7 +3,18 @@
         "renderer": "./taglib/test-declared-attributes/renderer.js",
         "@name": "string"
     },
+    "<test-target-property>": {
+        "renderer": "./taglib/test-target-property/renderer.js",
+        "@name-foo": {
+            "target-property": "name"
+        }
+    },
     "<test-invalid-attr>": {
         "@foo": "string"
+    },
+    "<test-missing-required-attr>": {
+        "@name": {
+            "required": true
+        }
     }
 }

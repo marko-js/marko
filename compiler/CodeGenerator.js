@@ -6,6 +6,7 @@ var Literal = require('./ast/Literal');
 var Identifier = require('./ast/Identifier');
 var ok = require('assert').ok;
 var Container = require('./ast/Container');
+var util = require('util');
 
 class Slot {
     constructor(generator) {
@@ -112,7 +113,7 @@ class Generator {
             if (!generateCodeFunc) {
                 throw new Error('Missing generator method for node of type "' +
                     node.type +
-                    '". Node: ' + node);
+                    '". Node: ' + util.inspect(node));
             }
         }
 
