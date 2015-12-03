@@ -6,8 +6,9 @@ function create(__helpers) {
       forEach = __helpers.f;
 
   return function render(data, out) {
-    out.w("Hello ! " +
-      escapeXml(data.name));
+    out.w("Hello " +
+      escapeXml(data.name) +
+      "! ");
 
     if (notEmpty(data.colors)) {
       out.w("<ul>");

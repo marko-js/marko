@@ -1,11 +1,11 @@
 'use strict';
 var chai = require('chai');
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
 
-describe('taglib-lookup' , function() {
+xdescribe('taglib-lookup' , function() {
 
     beforeEach(function(done) {
         for (var k in require.cache) {

@@ -87,12 +87,40 @@ function compileFile(filename, options, callback) {
     }
 }
 
+function compile(src, filename, options, callback) {
+    var compiler;
+
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
+    }
+
+    if (options) {
+        compiler = options.compiler;
+    }
+
+    if (!compiler) {
+        compiler = defaultCompiler;
+    }
+
+    if (callback) {
+        try {
+            callback(null, compiler.compile(src, filename));
+        } catch(e) {
+            callback(e);
+        }
+    } else {
+        return compiler.compile(src, filename);
+    }
+}
+
 function checkUpToDate(templateFile, templateJsFile) {
     return false; // TODO Implement checkUpToDate
 }
 
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
+exports.compile = compile;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;
 exports.createWalker = createWalker;

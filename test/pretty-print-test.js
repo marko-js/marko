@@ -2,8 +2,6 @@
 
 var chai = require('chai');
 chai.config.includeStack = true;
-var expect = require('chai').expect;
-
 var path = require('path');
 var compiler = require('../compiler');
 var builder = compiler.createBuilder();

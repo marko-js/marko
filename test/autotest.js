@@ -50,8 +50,15 @@ function autoTest(name, dir, run, options) {
 
 exports.scanDir = function(autoTestDir, run, options) {
     describe('autotest', function() {
-        fs.readdirSync(autoTestDir)
-            .forEach(function(name) {
+        var files;
+        try {
+            files = fs.readdirSync(autoTestDir);
+        } catch(e) {
+            console.warn('autotest directory does not exist: ' + autoTestDir);
+            return;
+        }
+
+        files.forEach(function(name) {
                 if (name.charAt(0) === '.') {
                     return;
                 }
@@ -69,5 +76,22 @@ exports.scanDir = function(autoTestDir, run, options) {
                 });
 
             });
+
+        var pendingFiles;
+        try {
+            pendingFiles = fs.readdirSync(autoTestDir + '-pending');
+        } catch(e) {}
+
+        if (pendingFiles) {
+            pendingFiles.forEach(function(name) {
+                    if (name.charAt(0) === '.') {
+                        return;
+                    }
+
+                    xit(`[${name}] `, function() {
+                    });
+
+                });
+        }
     });
 };

@@ -1,6 +1,6 @@
 'use strict';
 var chai = require('chai');
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 var expect = require('chai').expect;
 var nodePath = require('path');
 var marko = require('../');
@@ -8,7 +8,7 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-describe('hot-reload' , function() {
+xdescribe('hot-reload' , function() {
     before(function() {
         require('../hot-reload').enable();
         require('../compiler').defaultOptions.checkUpToDate = false;

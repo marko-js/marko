@@ -86,12 +86,12 @@ module.exports = function load(templatePath, templateSrc, options) {
         // Don't write the compiled template to disk. Instead, load it
         // directly from the compiled source using the internals of the
         // Node.js module loading system.
-        var compiler = markoCompiler.createCompiler(templatePath);
+
         if (templateSrc === undefined) {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
         }
 
-    	var compiledSrc = compiler.compile(templateSrc);
+    	var compiledSrc = markoCompiler.compile(templateSrc, templatePath);
         return loadSource(templatePath, compiledSrc);
     } else {
         return loadFile(templatePath);

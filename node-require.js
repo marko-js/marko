@@ -20,9 +20,8 @@ var fs = require('fs');
 var fsReadOptions = { encoding: 'utf8' };
 
 function compile(templatePath, markoCompiler, compilerOptions) {
-    var compiler = markoCompiler.createCompiler(templatePath, compilerOptions);
 
-    var writeToDisk = compilerOptions.writeToDisk
+    var writeToDisk = compilerOptions.writeToDisk;
     if (writeToDisk == null) {
         writeToDisk = markoCompiler.defaultOptions.writeToDisk;
     }
@@ -34,19 +33,19 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         // directly from the compiled source using the internals of the
         // Node.js module loading system.
         templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-        compiledSrc = compiler.compile(templateSrc);
+        compiledSrc = markoCompiler.compile(templateSrc, templatePath);
     } else {
         var targetDir = path.dirname(templatePath);
 
         var targetFile = templatePath + '.js';
 
-        var isUpToDate = compiler.checkUpToDate(targetFile);
+        var isUpToDate = markoCompiler.checkUpToDate(targetFile);
 
         if (isUpToDate) {
             compiledSrc = fs.readFileSync(targetFile, fsReadOptions);
         } else {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-        	compiledSrc = compiler.compile(templateSrc);
+        	compiledSrc = markoCompiler.compile(templateSrc, templatePath);
 
             // Write to a temporary file and move it into place to avoid problems
             // assocatiated with multiple processes write to teh same file. We only
