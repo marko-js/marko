@@ -37,13 +37,13 @@ class CustomTag extends HtmlElement {
         var tagVar = generator.addStaticVar('__tag', '__helpers.t');
 
         var builder = generator.builder;
-        var compiler = generator.compiler;
+        var context = generator.context;
 
         var tagDef = this.tagDef;
 
         var rendererPath = tagDef.renderer;
         if (rendererPath) {
-            let rendererRequirePath = compiler.getRequirePath(rendererPath);
+            let rendererRequirePath = context.getRequirePath(rendererPath);
             let requireRendererFunctionCall = builder.require(JSON.stringify(rendererRequirePath));
             let loadRendererFunctionCall = builder.functionCall(loadRendererVar, [ requireRendererFunctionCall ]);
 

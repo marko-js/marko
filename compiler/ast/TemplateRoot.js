@@ -1,6 +1,5 @@
 'use strict';
 var Node = require('./Node');
-var UniqueVars = require('../util/UniqueVars');
 
 function createVarsArray(vars) {
     return Object.keys(vars).map(function(varName) {
@@ -16,18 +15,14 @@ class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');
         this.body = this.makeContainer(def.body);
-        this._uniqueVars = new UniqueVars();
-        this.staticVars = {};
-
-        this.addStaticVar('str', '__helpers.s');
-        this.addStaticVar('empty', '__helpers.e');
-        this.addStaticVar('notEmpty', '__helpers.ne');
-        this.addStaticVar('escapeXml', '__helpers.x');
     }
 
     generateCode(generator) {
         var body = this.body;
-        var staticVars = this.staticVars;
+        generator.addStaticVar('str', '__helpers.s');
+        generator.addStaticVar('empty', '__helpers.e');
+        generator.addStaticVar('notEmpty', '__helpers.ne');
+        generator.addStaticVar('escapeXml', '__helpers.x');
 
         var builder = generator.builder;
         var program = builder.program;
@@ -50,6 +45,8 @@ class TemplateRoot extends Node {
 
         generator.generateCode(outputNode);
 
+        var staticVars = generator.getStaticVars();
+
         staticsSlot.setContent([
             vars(createVarsArray(staticVars))
         ]);
@@ -58,15 +55,8 @@ class TemplateRoot extends Node {
     toJSON(prettyPrinter) {
         return {
             type: this.type,
-            body: this.body,
-            staticVars: this.staticVars
+            body: this.body
         };
-    }
-
-    addStaticVar(name, init) {
-        var actualVarName = this._uniqueVars.addVar(name, init);
-        this.staticVars[actualVarName] = init;
-        return actualVarName;
     }
 }
 

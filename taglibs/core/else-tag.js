@@ -1,14 +1,14 @@
-module.exports = function nodeFactory(el, compiler) {
+module.exports = function nodeFactory(el, context) {
     var attributes = el.attributes;
-    var elseStatement = compiler.builder.elseStatement();
+    var elseStatement = context.builder.elseStatement();
 
     var argument = el.argument;
     if (argument) {
-        compiler.addError('Invalid <else> tag. Argument is not allowed');
+        context.addError(elseStatement, 'Invalid <else> tag. Argument is not allowed');
     }
 
     if (attributes.length) {
-        compiler.addError(elseStatement, 'Invalid <else> tag. Attributes not allowed.');
+        context.addError(elseStatement, 'Invalid <else> tag. Attributes not allowed.');
     }
 
     return elseStatement;

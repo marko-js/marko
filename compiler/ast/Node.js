@@ -9,7 +9,7 @@ class Node {
         this.type = type;
         this.statement = false;
         this.container = null;
-        this.pos = null;
+        this.pos = null; // The character index of the node in the original source file
         this.transformersApplied = {};
     }
 

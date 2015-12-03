@@ -1,16 +1,16 @@
-module.exports = function nodeFactory(el, compiler) {
+module.exports = function nodeFactory(el, context) {
     var argument = el.argument;
 
 
     var attributes = el.attributes;
-    var elseIfStatement = compiler.builder.elseIfStatement(argument || 'INVALID');
+    var elseIfStatement = context.builder.elseIfStatement(argument || 'INVALID');
 
     if (!argument) {
-        compiler.addError(elseIfStatement, 'Invalid <else-if> tag. Argument is missing. Example; <if(foo === true)>');
+        context.addError(elseIfStatement, 'Invalid <else-if> tag. Argument is missing. Example; <if(foo === true)>');
     }
 
     if (attributes.length) {
-        compiler.addError(elseIfStatement, 'Invalid <else-if> tag. Attributes not allowed.');
+        context.addError(elseIfStatement, 'Invalid <else-if> tag. Attributes not allowed.');
     }
 
     return elseIfStatement;

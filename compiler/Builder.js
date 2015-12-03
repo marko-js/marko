@@ -16,12 +16,9 @@ var BinaryExpression = require('./ast/BinaryExpression');
 var Vars = require('./ast/Vars');
 var Return = require('./ast/Return');
 var HtmlElement = require('./ast/HtmlElement');
-var HtmlAttribute = require('./ast/HtmlAttribute');
-var HtmlAttributeCollection = require('./ast/HtmlAttributeCollection');
 var HtmlOutput = require('./ast/HtmlOutput');
 var TextOutput = require('./ast/TextOutput');
 var ForEach = require('./ast/ForEach');
-var Node = require('./ast/Node');
 var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
 

@@ -85,6 +85,17 @@ class HtmlAttributeCollection {
         return true;
     }
 
+    renameAttribute(oldName, newName) {
+        var attr = this.lookup[oldName];
+        if (!attr) {
+            return;
+        }
+
+        attr.name = newName;
+        delete this.lookup[oldName];
+        this.lookup[newName] = attr;
+    }
+
     hasAttribute(name) {
         ok(typeof name === 'string', 'Invalid attribute name');
 

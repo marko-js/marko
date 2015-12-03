@@ -22,16 +22,8 @@ var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var forEach = require('raptor-util/forEach');
-var markoRegExp = /.html|\.marko(.xml|.html)?$/;
 var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var logger = require('raptor-logging').logger(module);
-
-var viewEngine;
-var req = require;
-
-try {
-    viewEngine = req('view-engine');
-} catch(e) {}
 
 function notEmpty(o) {
     if (o == null) {
@@ -193,11 +185,7 @@ module.exports = {
                 path = req.resolve(path);
             }
 
-            if (!viewEngine || markoRegExp.test(path)) {
-                return runtime.load(path);
-            } else {
-                return viewEngine.load(path);
-            }
+            return runtime.load(path);
         } else if (path.render) {
             // Assume it is already a pre-loaded template
             return path;
@@ -317,16 +305,6 @@ module.exports = {
     i: function(out, path, data) {
         if (!path) {
             return;
-        }
-
-        if (data.body) {
-            data.invokeBody = function() {
-                if (!WARNED_INVOKE_BODY) {
-                    WARNED_INVOKE_BODY = 1;
-                    logger.warn('data.invokeBody() deprecated. Use data.body instead.', new Error().stack);
-                }
-                return data.body;
-            };
         }
 
         if (typeof path === 'string') {

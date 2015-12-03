@@ -1,6 +1,6 @@
 {
-    "<test-hello-world>": {
-        "renderer": "./taglib/test-hello-world/renderer.js",
+    "<test-declared-attributes>": {
+        "renderer": "./taglib/test-declared-attributes/renderer.js",
         "@name": "string"
     }
 }

@@ -50,13 +50,12 @@ class Slot {
         var afterCode = oldCode.substring(this._start);
 
         generator._code = beforeCode + slotCode + afterCode;
-
-
     }
 }
 
 class Generator {
-    constructor(options) {
+    constructor(context, options) {
+        options = options || {};
         this.root = null;
         this._indentStr = options.indent != null ? options.indent : '  ';
         this._indentSize = this._indentStr.length;
@@ -66,10 +65,12 @@ class Generator {
         this.inFunction = false;
 
         this._bufferedWrites = null;
-        this.builder = options.builder;
-        this.walker = options.walker;
+        this.builder = context.builder;
+        this.walker = context.walker;
         this.outputType = options.output || 'html';
-        this.compiler = undefined;
+        this.context = context;
+
+        ok(this.builder, '"this.builder" is required');
 
         this._generatorCodeFuncName = 'generate' +
             this.outputType.charAt(0).toUpperCase() +
@@ -86,29 +87,14 @@ class Generator {
     }
 
     addStaticVar(name, value) {
-        ok(this.root, 'Invalid state');
-        var templateRoot = this.root;
-        if (templateRoot.type !== 'TemplateRoot') {
-            throw new Error('Root node is not of type "TemplateRoot". Actual ' + JSON.stringify(templateRoot));
-        }
-        return templateRoot.addStaticVar(name, value);
+        return this.context.addStaticVar(name, value);
     }
 
-    generateCode(node, options) {
-        var isRoot = this.root == null;
+    getStaticVars() {
+        return this.context.getStaticVars();
+    }
 
-        if (isRoot) {
-            this.root = node;
-        }
-
-        if (options) {
-            if (options.onError) {
-                this._onError = options.onError;
-            }
-        }
-
-        let generator = this;
-
+    generateCode(node) {
         ok(node, '"node" is required');
 
         if (typeof node === 'string') {
@@ -139,17 +125,18 @@ class Generator {
             // - An array/cointainer of AST nodes
             this.generateCode(resultNode);
         }
+
         this._currentNode = oldCurrentNode;
+    }
 
-        if (isRoot) {
-            while(this._slots.length) {
-                let slots = this._slots;
-                this._slots = [];
+    getCode() {
+        while(this._slots.length) {
+            let slots = this._slots;
+            this._slots = [];
 
-                for (let i=slots.length-1; i>=0; i--) {
-                    let slot = slots[i];
-                    slot.generateCode(generator);
-                }
+            for (let i=slots.length-1; i>=0; i--) {
+                let slot = slots[i];
+                slot.generateCode(this);
             }
         }
 
@@ -415,8 +402,7 @@ class Generator {
                     this.writeLiteral(v);
                 }
 
-
-                if (i < value.length - 1) {
+                if (i < keys.length - 1) {
                     this.write(',\n');
                 } else {
                     this.write('\n');
@@ -435,14 +421,7 @@ class Generator {
 
     addError(message) {
         var node = this._currentNode;
-        if (this._onError) {
-            this._onError({
-                node: node,
-                message: message
-            });
-        } else {
-            throw new Error(message);
-        }
+        this.context.addError(node, message);
     }
 }
 

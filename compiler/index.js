@@ -4,6 +4,11 @@ var Builder = require('./Builder');
 var CodeGenerator = require('./CodeGenerator');
 var Compiler = require('./Compiler');
 var Walker = require('./Walker');
+var Parser = require('./Parser');
+var HtmlJsParser = require('./HtmlJsParser');
+var CompileContext = require('./CompileContext');
+var defaultBuilder = new Builder();
+var defaultParser = new Parser(new HtmlJsParser());
 
 var defaultOptions = {
         /**
@@ -34,6 +39,11 @@ var defaultOptions = {
         writeToDisk: true
     };
 
+var defaultCompiler = new Compiler({
+    parser: defaultParser,
+    builder: defaultBuilder
+});
+
 var req = require;
 
 function createBuilder(options) {
@@ -44,46 +54,38 @@ function createWalker(options) {
     return new Walker(options);
 }
 
-function generateCode(ast, options) {
-    var builder = options && options.builder;
-
-    if (!builder) {
-        builder = createBuilder(options);
-    }
-
-    var generatorOptions = {
-        builder
-    };
-
-    var generator = new CodeGenerator(generatorOptions);
-    return generator.generateCode(ast);
-}
-
-function compileFile(path, options, callback) {
+function compileFile(filename, options, callback) {
     var fs = req('fs');
+    var compiler;
 
     if (typeof options === 'function') {
         callback = options;
         options = null;
     }
 
-    var compiler = new Compiler(options);
+    if (options) {
+        compiler = options.compiler;
+    }
+
+    if (!compiler) {
+        compiler = defaultCompiler;
+    }
 
     if (callback) {
-        fs.readFile(path, {encoding: 'utf8'}, function(err, templateSrc) {
+        fs.readFile(filename, {encoding: 'utf8'}, function(err, templateSrc) {
             if (err) {
                 return callback(err);
             }
 
             try {
-                callback(null, compiler.compile(templateSrc, path));
+                callback(null, compiler.compile(templateSrc, filename));
             } catch(e) {
                 callback(e);
             }
         });
     } else {
-        let templateSrc = fs.readFileSync(path, {encoding: 'utf8'});
-        return compiler.compile(templateSrc, path);
+        let templateSrc = fs.readFileSync(filename, {encoding: 'utf8'});
+        return compiler.compile(templateSrc, filename);
     }
 }
 
@@ -92,7 +94,6 @@ function checkUpToDate(templateFile, templateJsFile) {
 }
 
 exports.createBuilder = createBuilder;
-exports.generateCode = generateCode;
 exports.compileFile = compileFile;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;

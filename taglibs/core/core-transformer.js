@@ -37,7 +37,7 @@ var coreAttrHandlers = [
 
             forEachProps.pos = node.pos;
             //Copy the position property
-            var forEachNode = this.compiler.builder.forEach(forEachProps);
+            var forEachNode = this.builder.forEach(forEachProps);
             //Surround the existing node with a "forEach" node
             node.wrap(forEachNode);
         }
@@ -77,7 +77,7 @@ var coreAttrHandlers = [
     ],
     [
         'else', function(attr, node) {
-            var elseNode = this.compiler.builder.elseStatement();
+            var elseNode = this.builder.elseStatement();
             //Surround the existing node with an "if" node
             node.wrap(elseNode);
         }
@@ -107,9 +107,8 @@ var coreAttrHandlers = [
 ];
 
 class AttributeTransformer {
-    constructor(compiler, el) {
-        this.compiler = compiler;
-        this.builder = compiler.builder;
+    constructor(context, el) {
+        this.builder = context.builder;
         this.el = el;
     }
 
@@ -145,7 +144,7 @@ coreAttrHandlers.forEach(function(attrHandler) {
 
 var attributeTransformers = AttributeTransformer.prototype;
 
-module.exports = function transform(el, compiler) {
+module.exports = function transform(el, context) {
     var attributeTransfomer;
 
     el.forEachAttribute((attr) => {
@@ -155,7 +154,7 @@ module.exports = function transform(el, compiler) {
             el.removeAttribute(attrName);
 
             if (!attributeTransfomer) {
-                attributeTransfomer = new AttributeTransformer(compiler, el);
+                attributeTransfomer = new AttributeTransformer(context, el);
             }
             attributeTransfomer[attrName](attr, el);
         }
