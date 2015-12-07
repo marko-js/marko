@@ -12,6 +12,7 @@ class Vars extends Node {
     generateCode(generator) {
         var declarations = this.declarations;
         var kind = this.kind;
+        var isStatement = this.statement;
 
         if (!declarations || !declarations.length) {
             return;
@@ -43,7 +44,7 @@ class Vars extends Node {
                 initValue = declaration.value;
             }
 
-            if (initValue) {
+            if (initValue != null) {
                 generator.write(' = ');
                 generator.generateCode(initValue);
             }
@@ -51,7 +52,9 @@ class Vars extends Node {
             if (i < declarations.length - 1) {
                 generator.write(',\n');
             } else {
-                generator.write(';\n');
+                if (isStatement) {
+                    generator.write(';\n');
+                }
             }
         }
     }

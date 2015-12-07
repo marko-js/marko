@@ -26,15 +26,28 @@ class Slot {
     }
 
     generateCode(generator) {
-        if (!this._content) {
+        var content = this._content;
+
+        if (!content) {
             return;
         }
+
+        var isStatement = this._statement;
 
         generator._currentIndent = this._currentIndent;
         generator.inFunction = this._inFunction;
 
         var capture = generator._beginCaptureCode();
-        generator.generateCode(this._content);
+
+        if (isArray(content) || (content instanceof Container)) {
+            content.forEach((node) => {
+                node.statement = isStatement;
+                generator.generateCode(node);
+            });
+        } else {
+            content.statement = isStatement;
+            generator.generateCode(content);
+        }
 
         var slotCode = capture.end();
 
@@ -96,9 +109,11 @@ class Generator {
     }
 
     generateCode(node) {
-        ok(node, '"node" is required');
+        ok(node != null, '"node" is required');
 
-        if (typeof node === 'string') {
+        if (typeof node === 'string' ||
+            typeof node === 'number' ||
+            typeof node === 'boolean') {
             this.write(node);
             return;
         } else if (isArray(node) || (node instanceof Container)) {

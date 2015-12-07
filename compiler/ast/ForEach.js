@@ -15,7 +15,7 @@ class ForEach extends Node {
         this.step = def.step;
 
         ok(this.varName, '"varName" is required');
-        ok(this.target, '"target" is required');
+        ok(this.target != null || this.from != null, '"target" or "from" is required');
     }
 
     generateCode(generator) {
@@ -26,9 +26,9 @@ class ForEach extends Node {
 
         var builder = generator.builder;
 
-        if (this.from) {
+        if (this.from != null) {
             // This is a range loop
-            var from = This.from;
+            var from = this.from;
             var to = this.to;
             var step = this.step;
             var comparison = '<=';
@@ -54,12 +54,16 @@ class ForEach extends Node {
                 step = varName + '+=' + step;
             }
 
-            // template.statement('(function() {').indent(function () {
-            //     template.statement('for (var ' + nameVar + '=' + from + '; ' + nameVar + comparison + to + '; ' + step + ') {').indent(function () {
-            //         this.generateCodeForChildren(template);
-            //     }, this).line('}');
-            // }, this).line('}());');
-            return;
+            return builder.selfInvokingFunction([
+                builder.forStatement({
+                    init: [
+                        builder.vars([ { id: varName, init: from }])
+                    ],
+                    test: varName + comparison + to,
+                    update: step,
+                    body: this.body
+                })
+            ]);
         }
 
         if (separator && !statusVarName) {

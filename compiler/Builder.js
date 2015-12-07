@@ -1,6 +1,5 @@
 'use strict';
 var isArray = Array.isArray;
-var ok = require('assert').ok;
 
 var Program = require('./ast/Program');
 var TemplateRoot = require('./ast/TemplateRoot');
@@ -21,6 +20,8 @@ var TextOutput = require('./ast/TextOutput');
 var ForEach = require('./ast/ForEach');
 var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
+var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
+var ForStatement = require('./ast/ForStatement');
 
 class Builder {
     program(body) {
@@ -45,6 +46,16 @@ class Builder {
         }
 
         return new FunctionCall({callee, args});
+    }
+
+    selfInvokingFunction(params, args, body) {
+        if (arguments.length === 1) {
+            body = arguments[0];
+            params = null;
+            args = null;
+        }
+
+        return new SelfInvokingFunction({params, args, body});
     }
 
     literal(value) {
@@ -127,6 +138,15 @@ class Builder {
         let callee = 'require';
         let args = [ path ];
         return new FunctionCall({callee, args});
+    }
+
+    forStatement(init, test, update, body) {
+        if (typeof init === 'object' && !init.type) {
+            var def = arguments[0];
+            return new ForStatement(def);
+        } else {
+            return new ForStatement({init, test, update, body});
+        }
     }
 }
 

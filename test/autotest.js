@@ -55,27 +55,28 @@ exports.scanDir = function(autoTestDir, run, options) {
             files = fs.readdirSync(autoTestDir);
         } catch(e) {
             console.warn('autotest directory does not exist: ' + autoTestDir);
-            return;
         }
 
-        files.forEach(function(name) {
-                if (name.charAt(0) === '.') {
-                    return;
-                }
+        if (files) {
+            files.forEach(function(name) {
+                    if (name.charAt(0) === '.') {
+                        return;
+                    }
 
-                var itFunc = it;
+                    var itFunc = it;
 
-                if (enabledTest && name === enabledTest) {
-                    itFunc = it.only;
-                }
+                    if (enabledTest && name === enabledTest) {
+                        itFunc = it.only;
+                    }
 
-                var dir = path.join(autoTestDir, name);
+                    var dir = path.join(autoTestDir, name);
 
-                itFunc(`[${name}] `, function() {
-                    autoTest(name, dir, run, options);
+                    itFunc(`[${name}] `, function() {
+                        autoTest(name, dir, run, options);
+                    });
+
                 });
-
-            });
+        }
 
         var pendingFiles;
         try {
