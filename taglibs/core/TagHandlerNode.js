@@ -153,6 +153,7 @@ TagHandlerNode.prototype = {
 
         var nestedTagVar;
         var nestedTagParentNode = null;
+        var parentNestedTagVar;
 
         if (isNestedTag) {
             nestedTagParentNode = getNestedTagParentNode(this, tag);
@@ -161,7 +162,7 @@ TagHandlerNode.prototype = {
                 return;
             }
 
-            nestedTagVar = nestedTagParentNode.data.nestedTagVar;
+            parentNestedTagVar = nestedTagParentNode.data.nestedTagVar;
         }
 
         if (hasNestedTags) {
@@ -314,7 +315,7 @@ TagHandlerNode.prototype = {
 
                     if (isNestedTag) {
                         options.push('targetProperty: ' + JSON.stringify(tag.targetProperty));
-                        options.push('parent: ' + nestedTagVar);
+                        options.push('parent: ' + parentNestedTagVar);
                         if (tag.isRepeated) {
                             options.push('isRepeated: 1');
                         }

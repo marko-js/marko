@@ -100,24 +100,24 @@ TaglibLookup.prototype = {
 
         var merged = this.merged;
 
-        function handleNestedTag(nestedTag, parentTagName) {
-            var fullyQualifiedName = parentTagName + '.' + nestedTag.name;
-
-            // Create a clone of the nested tag since we need to add some new
-            // properties
-            var clonedNestedTag = new Tag();
-            extend(clonedNestedTag ,nestedTag);
-            // Record the fully qualified name of the parent tag that this
-            // custom tag is associated with.
-            clonedNestedTag.parentTagName = parentTagName;
-            clonedNestedTag.name = fullyQualifiedName;
-            merged.tags[fullyQualifiedName] = clonedNestedTag;
+        function handleNestedTags(tag, parentTagName) {
+            tag.forEachNestedTag(function(nestedTag) {
+                var fullyQualifiedName = parentTagName + '.' + nestedTag.name;
+                // Create a clone of the nested tag since we need to add some new
+                // properties
+                var clonedNestedTag = new Tag();
+                extend(clonedNestedTag, nestedTag);
+                // Record the fully qualified name of the parent tag that this
+                // custom tag is associated with.
+                clonedNestedTag.parentTagName = parentTagName;
+                clonedNestedTag.name = fullyQualifiedName;
+                merged.tags[fullyQualifiedName] = clonedNestedTag;
+                handleNestedTags(clonedNestedTag, fullyQualifiedName);
+            });
         }
 
         taglib.forEachTag(function(tag) {
-            tag.forEachNestedTag(function(nestedTag) {
-                handleNestedTag(nestedTag, tag.name);
-            });
+            handleNestedTags(tag, tag.name);
         });
     },
 

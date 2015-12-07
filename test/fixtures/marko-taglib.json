@@ -122,5 +122,6 @@
     "taglib-imports": ["./package.json", "./nested-import/marko-taglib.json"],
     "<test-invalid-attr>": {
         "@foo": "string"
-    }
+    },
+    "<test-nested-tags-deep>": "./taglib/test-nested-tags-deep/marko-tag.json"
 }
