@@ -5,6 +5,14 @@ Changelog
 
 ## 2.7.x
 
+### 2.7.31
+
+- Fixes #167 - Nested tags only work one level deep
+
+### 2.7.30
+
+- docs: don't exclude docs in .npmignore
+
 ### 2.7.29
 
 - Fixes #161 - Nested tags with no body content are not handled correctly
