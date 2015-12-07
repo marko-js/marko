@@ -137,13 +137,13 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
                 tagDef.renderer  = rendererJSFile;
                 tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = tagName;
+                tag.name = tag.name || tagName;
                 taglib.addTag(tag);
             }
 
             if (tagDef) {
                 tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = tagName;
+                tag.name = tag.name || tagName;
                 taglib.addTag(tag);
             }
         }
