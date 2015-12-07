@@ -18,7 +18,6 @@
 
 var forEachEntry = require('raptor-util/forEachEntry');
 var ok = require('assert').ok;
-var extend = require('raptor-util/extend');
 var taglibLoader;
 
 function handleImport(taglib, importedTaglib) {
