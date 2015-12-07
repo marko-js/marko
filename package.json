@@ -30,6 +30,7 @@
     "char-props": "~0.1.5",
     "esprima": "^2.7.0",
     "events": "^1.0.2",
+    "htmljs-parser": "^1.0.6",
     "jsonminify": "^0.2.3",
     "minimatch": "^0.2.14",
     "property-handlers": "^1.0.0",
