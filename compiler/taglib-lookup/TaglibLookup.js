@@ -18,6 +18,8 @@
 var ok = require('assert').ok;
 var Taglib = require('../taglib-loader/Taglib');
 var extend = require('raptor-util/extend');
+var HtmlElement = require('../ast/HtmlElement');
+var TextOutput = require('../ast/TextOutput');
 
 function transformerComparator(a, b) {
     a = a.priority;
@@ -219,9 +221,9 @@ class TaglibLookup {
         /*
          * Based on the type of node we have to choose how to transform it
          */
-        if (node.type === 'HtmlElement') {
+        if (node instanceof HtmlElement) {
             this.forEachTagTransformer(node, callback, thisObj);
-        } else if (node.type  === 'TextOutput') {
+        } else if (node instanceof TextOutput) {
             this.forEachTextTransformer(callback, thisObj);
         }
     }
