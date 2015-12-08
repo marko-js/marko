@@ -144,17 +144,19 @@ class Parser {
             })
         };
 
+        var elNode = builder.htmlElement(elDef);
+
         var taglibLookup = context.taglibLookup;
         var tagDef = taglibLookup.getTag(tagName);
         if (tagDef) {
             var nodeFactoryFunc = tagDef.getNodeFactory();
             if (nodeFactoryFunc) {
-                node = nodeFactoryFunc(elDef, context);
+                node = nodeFactoryFunc(elNode, context);
             }
         }
 
         if (!node) {
-            node = builder.htmlElement(elDef);
+            node = elNode;
         }
 
         node.pos = el.pos;
