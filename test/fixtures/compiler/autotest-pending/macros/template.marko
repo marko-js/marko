@@ -1,4 +1,4 @@
-<function renderTree(node)>
+<macro renderTree(node)>
     Name: ${child.name}
 
     Children:
@@ -7,6 +7,6 @@
             <renderTree(child)/>
         </li>
     </ul>
-</function>
+</macro>
 
 <renderTree(data.node)>
