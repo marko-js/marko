@@ -88,6 +88,15 @@ function tryNodeModules(parent, helper) {
     if ((nodeModulesDir = realpathCached(nodeModulesDir))) {
         taglibsForNodeModulesDir = [];
         var children = fs.readdirSync(nodeModulesDir);
+        // Add support for npm scoped packages
+        children.forEach(function(scope, index, arr) {
+            if (/^\@\w+$/.test(scope)) {
+                var scoped = fs.readdirSync(nodePath.join(nodeModulesDir, scope));
+                var splice = [index, 1];
+                scoped.forEach(function(s) { splice.push(scope + '/' + s) });
+                Array.prototype.splice.apply(arr, splice);
+            }
+        });
         children.forEach(function(moduleDirBasename) {
             // Fixes https://github.com/marko-js/marko/issues/140
             // If the same node_module is found multiple times then only load the first one.
