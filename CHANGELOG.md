@@ -3,6 +3,12 @@ Changelog
 
 # 2.x
 
+## 2.8.x
+
+### 2.8.0
+
+-  Added support for automatically discovering taglibs from installed packages that are scoped. ([PR #183](https://github.com/marko-js/marko/pull/183) by [@tropperstyle](https://github.com/tropperstyle)) 
+
 ## 2.7.x
 
 ### 2.7.31
