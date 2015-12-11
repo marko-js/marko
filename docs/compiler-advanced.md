@@ -5,7 +5,7 @@ The Marko compiler is responsible for taking an input Marko template and produci
 
 # Compiler stages
 
-The three primary stages of the Marko compiler are parse, transform, generate:
+The three primary stages of the Marko compiler are parse, transform and generate:
 
 - __parse__ - Parse the template source to produce an [Abstract Syntax Tree (AST)](https//en.wikipedia.org/wiki/Abstract_syntax_tree).
 - __transform__ - Transform the AST (add/remove/modify/rearrange nodes)
@@ -95,7 +95,7 @@ if (ifAttr && ifAttr.argument) {
 
     // Create a new "If" node using the provided "builder"
     // (described later)
-    var ifNode = builder.ifStatement(ifArgument);
+    var ifNode = builder.ifStatement(ifAttr.argument);
 
     //Surround the existing node with an "If" node
     node.wrap(ifNode);

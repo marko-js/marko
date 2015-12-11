@@ -75,15 +75,20 @@ class Compiler {
         ok(filename);
 
         var context = new CompileContext(src, filename, this.builder);
+
+        // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
         // console.log('ROOT', JSON.stringify(ast, null, 2));
 
+        // STAGE 2: Transform the initial AST to produce the final AST
         var transformedAST = transformTree(ast, context);
         // console.log('transformedAST', JSON.stringify(ast, null, 2));
 
+        // STAGE 3: Generate the code using the final AST
         var codeGenerator = new CodeGenerator(context);
         codeGenerator.generateCode(transformedAST);
 
+        // If there were any errors then compilation failed.
         if (context.hasErrors()) {
             var errors = context.getErrors();
 
@@ -97,6 +102,7 @@ class Compiler {
             throw error;
         }
 
+        // Return the generated code as the compiled output:
         var compiledSrc = codeGenerator.getCode();
         return compiledSrc;
     }
