@@ -37,18 +37,18 @@
             ],
             "body": [
               {
-                "type": "TextOutput",
+                "type": "Text",
                 "argument": {
                   "type": "Literal",
                   "value": "Hello"
                 }
               },
               {
-                "type": "HtmlOutput",
+                "type": "Html",
                 "argument": "data.name"
               },
               {
-                "type": "TextOutput",
+                "type": "Text",
                 "argument": {
                   "type": "Literal",
                   "value": "!"
@@ -67,7 +67,7 @@
                   {
                     "type": "HtmlElement",
                     "tagName": "ul",
-                    "_attributes": [
+                    "attributes": [
                       {
                         "name": "class",
                         "value": {
@@ -75,48 +75,7 @@
                           "value": "colors"
                         }
                       }
-                    ],
-                    "body": [
-                      {
-                        "type": "FunctionCall",
-                        "callee": "forEach",
-                        "args": [
-                          "data.colors",
-                          {
-                            "type": "FunctionDeclaration",
-                            "name": null,
-                            "params": [
-                              "color"
-                            ],
-                            "body": [
-                              {
-                                "type": "HtmlElement",
-                                "tagName": "li",
-                                "_attributes": [
-                                  {
-                                    "name": "class",
-                                    "value": {
-                                      "type": "Literal",
-                                      "value": "color"
-                                    }
-                                  }
-                                ],
-                                "body": [
-                                  {
-                                    "type": "TextOutput",
-                                    "argument": "color"
-                                  }
-                                ],
-                                "allowSelfClosing": false,
-                                "startTagOnly": false
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "allowSelfClosing": false,
-                    "startTagOnly": false
+                    ]
                   }
                 ]
               }

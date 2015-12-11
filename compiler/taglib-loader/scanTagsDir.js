@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -71,6 +71,8 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
         var indexFile = nodePath.join(dir, childFilename, 'index.js');
         var templateFile = nodePath.join(dir, childFilename, 'template.marko');
+        var codeGeneratorFile = nodePath.join(dir, childFilename, 'code-generator.js');
+        var nodeFactoryFile = nodePath.join(dir, childFilename, 'node-factory.js');
         var tagDef = null;
 
         // Record dependencies so that we can check if a template is up-to-date
@@ -86,7 +88,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
                 throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
             }
 
-            if (!tagDef.renderer && !tagDef.template) {
+            if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory']) {
                 if (fs.existsSync(rendererFile)) {
                     tagDef.renderer = rendererFile;
                 } else if (fs.existsSync(indexFile)) {
@@ -95,8 +97,12 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
                     tagDef.template = templateFile;
                 } else if (fs.existsSync(templateFile + ".html")) {
                     tagDef.template = templateFile + ".html";
+                } else if (fs.existsSync(codeGeneratorFile)) {
+                    tagDef['code-generator'] = codeGeneratorFile;
+                } else if (fs.existsSync(nodeFactoryFile)) {
+                    tagDef['node-factory'] = nodeFactoryFile;
                 } else {
-                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag.');
+                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
                 }
             }
 

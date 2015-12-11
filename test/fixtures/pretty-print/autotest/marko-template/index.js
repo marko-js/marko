@@ -6,8 +6,8 @@ module.exports = function(builder) {
     var functionCall = builder.functionCall;
     var ifStatement = builder.ifStatement;
     var vars = builder.vars;
-    var textOutput = builder.textOutput;
-    var htmlOutput = builder.htmlOutput;
+    var text = builder.text;
+    var html = builder.html;
     var htmlElement = builder.htmlElement;
 
     return templateRoot([
@@ -19,9 +19,9 @@ module.exports = function(builder) {
             ]),
 
             returnStatement(functionDeclaration('render', ['data', 'out'], [
-                textOutput(literal('Hello')),
-                htmlOutput('data.name'),
-                textOutput(literal('!')),
+                text(literal('Hello')),
+                html('data.name'),
+                text(literal('!')),
                 ifStatement(
                     functionCall('notEmpty', 'data.colors'),
                     [
@@ -39,7 +39,7 @@ module.exports = function(builder) {
                                             'li',
                                             { 'class': literal('color')},
                                             [
-                                                textOutput('color')
+                                                text('color')
                                             ])
                                     ])
                                 ]),

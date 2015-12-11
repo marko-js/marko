@@ -1,6 +1,7 @@
 'use strict';
 var isArray = Array.isArray;
 
+var Node = require('./ast/Node');
 var Program = require('./ast/Program');
 var TemplateRoot = require('./ast/TemplateRoot');
 var FunctionDeclaration = require('./ast/FunctionDeclaration');
@@ -15,17 +16,22 @@ var BinaryExpression = require('./ast/BinaryExpression');
 var Vars = require('./ast/Vars');
 var Return = require('./ast/Return');
 var HtmlElement = require('./ast/HtmlElement');
-var HtmlOutput = require('./ast/HtmlOutput');
-var TextOutput = require('./ast/TextOutput');
+var Html = require('./ast/Html');
+var Text = require('./ast/Text');
 var ForEach = require('./ast/ForEach');
 var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
 var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
+var BinaryExpression = require('./ast/BinaryExpression');
 
 class Builder {
     program(body) {
         return new Program({body});
+    }
+
+    node(type) {
+        return new Node(type);
     }
 
     templateRoot(body) {
@@ -109,12 +115,12 @@ class Builder {
         return new HtmlElement({tagName, attributes, body, argument});
     }
 
-    htmlOutput(argument) {
-        return new HtmlOutput({argument});
+    html(argument) {
+        return new Html({argument});
     }
 
-    textOutput(argument, escape) {
-        return new TextOutput({argument, escape});
+    text(argument, escape) {
+        return new Text({argument, escape});
     }
 
     htmlComment(comment) {
@@ -147,6 +153,10 @@ class Builder {
         } else {
             return new ForStatement({init, test, update, body});
         }
+    }
+
+    binaryExpression(left, operator, right) {
+        return new BinaryExpression({left, operator, right});
     }
 }
 

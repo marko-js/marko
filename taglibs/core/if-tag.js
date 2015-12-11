@@ -1,16 +1,17 @@
-module.exports = function nodeFactory(el, context) {
-    var argument = el.argument;
-
-    var attributes = el.attributes;
-    var ifStatement = context.builder.ifStatement(argument || 'INVALID');
+module.exports = function nodeFactory(elNode, context) {
+    var argument = elNode.argument;
 
     if (!argument) {
-        context.addError(ifStatement, 'Invalid <if> tag. Argument is missing. Example; <if(foo === true)>');
+        context.addError(elNode, 'Invalid <if> tag. Argument is missing. Example; <if(foo === true)>');
+        return elNode;
     }
+
+    var attributes = elNode.attributes;
 
     if (attributes.length) {
-        context.addError(ifStatement, 'Invalid <if> tag. Attributes not allowed.');
+        context.addError(elNode, 'Invalid <if> tag. Attributes not allowed.');
+        return;
     }
 
-    return ifStatement;
+    return context.builder.ifStatement(argument);
 };

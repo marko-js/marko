@@ -86,7 +86,7 @@ class Generator {
 
         ok(this.builder, '"this.builder" is required');
 
-        this._generatorCodeFuncName = 'generate' +
+        this._generatorCodeMethodName = 'generate' +
             this.outputType.charAt(0).toUpperCase() +
             this.outputType.substring(1) +
             'Code';
@@ -121,25 +121,48 @@ class Generator {
             return;
         }
 
-        var generateCodeFunc = node.generateCode;
-        if (!generateCodeFunc) {
-            generateCodeFunc = node[this._generatorCodeFuncName];
 
-            if (!generateCodeFunc) {
-                throw new Error('Missing generator method for node of type "' +
-                    node.type +
-                    '". Node: ' + util.inspect(node));
-            }
-        }
 
         var oldCurrentNode = this._currentNode;
         this._currentNode = node;
-        var resultNode = generateCodeFunc.call(node, this);
-        if (resultNode) {
-            // The generateCode function can optionally return either of the following:
-            // - An AST node
-            // - An array/cointainer of AST nodes
-            this.generateCode(resultNode);
+
+
+        var finalNode;
+
+        if (node.getCodeGenerator) {
+            let generateCodeFunc = node.getCodeGenerator(this.outputType);
+            if (generateCodeFunc) {
+                finalNode = generateCodeFunc(node, this);
+            }
+        }
+
+        if (finalNode && finalNode !== node) {
+            this.generateCode(finalNode);
+        } else {
+            let generateCodeMethod = node.generateCode;
+
+            if (!generateCodeMethod) {
+                generateCodeMethod = node[this._generatorCodeMethodName];
+
+                if (!generateCodeMethod) {
+                    throw new Error('Missing code for node of type "' +
+                        node.type +
+                        '" (output type: "' + this.outputType + '"). Node: ' + util.inspect(node));
+                }
+            }
+
+            finalNode = generateCodeMethod.call(node, this);
+            if (finalNode != null) {
+                if (finalNode === node) {
+                    throw new Error('Invalid node returned. Same node returned:  ' + util.inspect(node));
+                }
+
+                // The generateCode function can optionally return either of the following:
+                // - An AST node
+                // - An array/cointainer of AST nodes
+                this.generateCode(finalNode);
+            }
+
         }
 
         this._currentNode = oldCurrentNode;

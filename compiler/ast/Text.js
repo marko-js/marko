@@ -3,10 +3,10 @@
 var Node = require('./Node');
 var Literal = require('./Literal');
 
-function trim(textOutputNode) {
-    var text = textOutputNode.argument.value;
-    var isFirst = textOutputNode.isFirst;
-    var isLast = textOutputNode.isLast;
+function trim(textNode) {
+    var text = textNode.argument.value;
+    var isFirst = textNode.isFirst;
+    var isLast = textNode.isLast;
 
     if (isFirst) {
         //First child
@@ -21,12 +21,12 @@ function trim(textOutputNode) {
         text = '';
     }
     text = text.replace(/\s+/g, ' ');
-    textOutputNode.argument.value = text;
+    textNode.argument.value = text;
 }
 
-class TextOutput extends Node {
+class Text extends Node {
     constructor(def) {
-        super('TextOutput');
+        super('Text');
         this.argument = def.argument;
         this.escape = def.escape;
         this.normalized = false;
@@ -80,11 +80,11 @@ class TextOutput extends Node {
                 return;
             }
 
-            if (curChild.type === 'TextOutput') {
+            if (curChild.type === 'Text') {
                 curChild.normalized = true;
             }
 
-            if (curChild.type === 'TextOutput' && curChild.isLiteral()) {
+            if (curChild.type === 'Text' && curChild.isLiteral()) {
                 if (currentTextLiteral) {
                     currentTextLiteral.argument.value += curChild.argument.value;
                     curChild.detach();
@@ -121,7 +121,7 @@ class TextOutput extends Node {
 
     appendText(text) {
         if (!this.isLiteral()) {
-            throw new Error('Text cannot be appended to a non-literal TextOutput node');
+            throw new Error('Text cannot be appended to a non-literal Text node');
         }
 
         this.argument.value += text;
@@ -135,4 +135,4 @@ class TextOutput extends Node {
     }
 }
 
-module.exports = TextOutput;
+module.exports = Text;

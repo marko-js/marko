@@ -45,7 +45,7 @@ class If extends Node {
                     previous = curNode;
                     curNode.matched = true;
                     return true; // Keep searching since they may be more ElseIf/Else nodes...
-                } else if (curNode.type === 'TextOutput') {
+                } else if (curNode.type === 'Text') {
                     if (curNode.isWhitespace()) {
                         whitespaceNodes.push(curNode);
                         return true; // Just whitespace... keep searching

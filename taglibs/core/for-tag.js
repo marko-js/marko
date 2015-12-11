@@ -1,22 +1,22 @@
 var parseForEach = require('./util/parseForEach');
 
-exports.generateCode = function(generator) {
-    var argument = this.argument;
+module.exports = function nodeFactory(elNode, context) {
+    var argument = elNode.argument;
     if (!argument) {
-        generator.addError('Invalid <for> tag. Argument is missing. Example; <for(color in colors)>');
-        return;
+        context.addError(elNode, 'Invalid <for> tag. Argument is missing. Example; <for(color in colors)>');
+        return elNode;
     }
 
     var forEachProps = parseForEach(argument);
-    forEachProps.body = this.body;
+    forEachProps.body = elNode.body;
 
-    if (this.hasAttribute('separator')) {
-        forEachProps.separator = this.getAttributeValue('separator');
+    if (elNode.hasAttribute('separator')) {
+        forEachProps.separator = elNode.getAttributeValue('separator');
     }
 
-    if (this.hasAttribute('status-var')) {
-        forEachProps.statusVarName = this.getAttributeValue('status-var');
+    if (elNode.hasAttribute('status-var')) {
+        forEachProps.statusVarName = elNode.getAttributeValue('status-var');
     }
 
-    return generator.builder.forEach(forEachProps);
+    return context.builder.forEach(forEachProps);
 };

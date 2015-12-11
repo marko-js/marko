@@ -2,9 +2,9 @@
 
 var Node = require('./Node');
 
-class HtmlOutput extends Node {
+class Html extends Node {
     constructor(def) {
-        super('HtmlOutput');
+        super('Html');
         this.argument = def.argument;
     }
 
@@ -19,4 +19,4 @@ class HtmlOutput extends Node {
     }
 }
 
-module.exports = HtmlOutput;
+module.exports = Html;

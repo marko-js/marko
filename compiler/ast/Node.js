@@ -11,7 +11,10 @@ class Node {
         this.statement = false;
         this.container = null;
         this.pos = null; // The character index of the node in the original source file
-        this.transformersApplied = {};
+        this._codeGeneratorFuncs = null;
+        this._flags = {};
+        this._transformersApplied = {};
+        this.data = {};
     }
 
     wrap(wrapperNode) {
@@ -49,11 +52,11 @@ class Node {
     }
 
     isTransformerApplied(transformer) {
-        return this.transformersApplied[transformer.id] === true;
+        return this._transformersApplied[transformer.id] === true;
     }
 
     setTransformerApplied(transformer) {
-        this.transformersApplied[transformer.id] = true;
+        this._transformersApplied[transformer.id] = true;
     }
 
     toString() {
@@ -65,7 +68,10 @@ class Node {
         delete result.container;
         delete result.statement;
         delete result.pos;
-        delete result.transformersApplied;
+        delete result._transformersApplied;
+        delete result._codeGeneratorFuncs;
+        delete result._flags;
+        delete result.data;
         return result;
     }
 
@@ -86,6 +92,46 @@ class Node {
     inspect(depth, opts) {
         // We inspect in the simplified version of this object t
         return this.toJSON();
+    }
+
+    setType(newType) {
+        this.type = newType;
+    }
+
+    setCodeGenerator(mode, codeGeneratorFunc) {
+        if (arguments.length === 1) {
+            codeGeneratorFunc = arguments[0];
+            mode = null;
+        }
+
+        if (!this._codeGeneratorFuncs) {
+            this._codeGeneratorFuncs = {};
+        }
+        this._codeGeneratorFuncs[mode || 'DEFAULT'] = codeGeneratorFunc;
+    }
+
+    getCodeGenerator(mode) {
+        if (this._codeGeneratorFuncs) {
+            return this._codeGeneratorFuncs[mode] || this._codeGeneratorFuncs.DEFAULT;
+        } else {
+            return undefined;
+        }
+    }
+
+    setFlag(name) {
+        this._flags[name] = true;
+    }
+
+    clearFlag(name) {
+        delete this._flags[name];
+    }
+
+    isFlagSet(name) {
+        return this._flags.hasOwnProperty(name);
+    }
+
+    get parentNode() {
+        return this.container && this.container.node;
     }
 }
 

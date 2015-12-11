@@ -16,5 +16,6 @@
         "@name": {
             "required": true
         }
-    }
+    },
+    "tags-dir": "./taglib/scanned-tags"
 }

@@ -19,7 +19,7 @@ var ok = require('assert').ok;
 var Taglib = require('../taglib-loader/Taglib');
 var extend = require('raptor-util/extend');
 var HtmlElement = require('../ast/HtmlElement');
-var TextOutput = require('../ast/TextOutput');
+var Text = require('../ast/Text');
 
 function transformerComparator(a, b) {
     a = a.priority;
@@ -223,7 +223,7 @@ class TaglibLookup {
          */
         if (node instanceof HtmlElement) {
             this.forEachTagTransformer(node, callback, thisObj);
-        } else if (node instanceof TextOutput) {
+        } else if (node instanceof Text) {
             this.forEachTextTransformer(callback, thisObj);
         }
     }

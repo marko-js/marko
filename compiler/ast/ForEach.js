@@ -77,7 +77,7 @@ class ForEach extends Node {
             if (separator) {
                 body = body.items.concat([
                     builder.ifStatement('!' + statusVarName + '.isLast()', [
-                        builder.textOutput(separator)
+                        builder.text(separator)
                     ])
                 ]);
             }

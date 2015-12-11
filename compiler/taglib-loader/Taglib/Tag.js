@@ -15,9 +15,7 @@
 */
 'use strict';
 var forEachEntry = require('raptor-util/forEachEntry');
-var extend = require('raptor-util/extend');
 var ok = require('assert').ok;
-var HtmlElement = require('../../ast/HtmlElement');
 var CustomTag = require('../../ast/CustomTag');
 
 function inheritProps(sub, sup) {
@@ -26,25 +24,6 @@ function inheritProps(sub, sup) {
             sub[k] = v;
         }
     });
-}
-
-function createNodeFactory(codeGenerator, typeName) {
-    class CustomNode extends HtmlElement {
-        constructor(options) {
-            super(options);
-            this.type = typeName;
-
-            if (this.init) {
-                this.init(options);
-            }
-        }
-    }
-
-    extend(CustomNode.prototype, codeGenerator);
-
-    return function nodeFactory(el) {
-        return new CustomNode(el);
-    };
 }
 
 function createCustomTagNodeFactory(tag) {
@@ -224,9 +203,15 @@ class Tag{
             return nodeFactory;
         }
 
+        let codeGeneratorModulePath = this.codeGeneratorModulePath;
+
         if (this.codeGeneratorModulePath) {
-            var loadedCodeGeneratorModule = require(this.codeGeneratorModulePath);
-            nodeFactory = createNodeFactory(loadedCodeGeneratorModule, this.codeGeneratorModulePath);
+            var loadedCodeGenerator = require(this.codeGeneratorModulePath);
+            nodeFactory = function(elNode) {
+                elNode.setType(codeGeneratorModulePath);
+                elNode.setCodeGenerator(loadedCodeGenerator);
+                return elNode;
+            };
         } else if (this.nodeFactoryPath) {
             nodeFactory = require(this.nodeFactoryPath);
             if (typeof nodeFactory !== 'function') {
@@ -239,6 +224,10 @@ class Tag{
         }
 
         return (this._nodeFactory = nodeFactory);
+    }
+
+    toJSON() {
+        return this;
     }
 }
 

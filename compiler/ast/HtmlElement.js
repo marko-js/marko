@@ -122,6 +122,10 @@ class HtmlElement extends Node {
         }
     }
 
+    setAttributeValue(name, value) {
+        this._attributes.setAttributeValue(name, value);
+    }
+
     removeAttribute(name) {
         if (this._attributes) {
             this._attributes.removeAttribute(name);
@@ -151,6 +155,15 @@ class HtmlElement extends Node {
     toString() {
         var tagName = this.tagName;
         return '<' + tagName + '>';
+    }
+
+    toJSON() {
+        return {
+            type: this.type,
+            tagName: this.tagName,
+            attributes: this._attributes,
+            argument: this.argument
+        };
     }
 }
 

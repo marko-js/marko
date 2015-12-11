@@ -3,7 +3,7 @@
 module.exports = function(compiler) {
     let builder = compiler.createBuilder();
 
-    let textOutput = builder.textOutput;
+    let text = builder.text;
     let templateRoot = builder.templateRoot;
     let htmlElement = builder.htmlElement;
     let ifStatement = builder.ifStatement;
@@ -29,7 +29,7 @@ module.exports = function(compiler) {
                         }
                     },
                     [
-                        textOutput('color')
+                        text('color')
                     ])
             ])
     ]);

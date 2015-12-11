@@ -112,6 +112,18 @@ class HtmlAttributeCollection {
         return this.lookup[name];
     }
 
+    setAttributeValue(name, value) {
+        var attr = this.getAttribute(name);
+        if (attr) {
+            attr.value = value;
+        } else {
+            this.addAttribute({
+                name: name,
+                value: value
+            });
+        }
+    }
+
     getAttributes() {
         return this.all;
     }

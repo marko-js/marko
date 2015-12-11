@@ -1,6 +1,7 @@
 'use strict';
 var ok = require('assert').ok;
 var path = require('path');
+var Node = require('./ast/Node');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     whitespace: function(attr, compilerOptions) {
@@ -83,7 +84,7 @@ class Parser {
         if (this.prevTextNode && this.prevTextNode.isLiteral()) {
             this.prevTextNode.appendText(text);
         } else {
-            this.prevTextNode = builder.textOutput(builder.literal(text));
+            this.prevTextNode = builder.text(builder.literal(text));
             this.prevTextNode.pos = text.pos;
             this.parentNode.appendChild(this.prevTextNode);
         }
@@ -152,6 +153,9 @@ class Parser {
             var nodeFactoryFunc = tagDef.getNodeFactory();
             if (nodeFactoryFunc) {
                 node = nodeFactoryFunc(elNode, context);
+                if (!(node instanceof Node)) {
+                    throw new Error('Invalid node returned from node factory for tag "' + tagName + '".');
+                }
             }
         }
 
@@ -247,8 +251,8 @@ class Parser {
 
         var builder = this.context.builder;
 
-        var textOutput = builder.textOutput(expression, escape);
-        this.parentNode.appendChild(textOutput);
+        var text = builder.text(expression, escape);
+        this.parentNode.appendChild(text);
     }
 
     get parentNode() {
