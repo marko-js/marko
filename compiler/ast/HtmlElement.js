@@ -162,7 +162,8 @@ class HtmlElement extends Node {
             type: this.type,
             tagName: this.tagName,
             attributes: this._attributes,
-            argument: this.argument
+            argument: this.argument,
+            body: this.body
         };
     }
 }

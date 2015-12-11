@@ -1,28 +1,27 @@
 Compiler Advanced
 ====================
 
-Marko allows developers to control how templates generate JavaScript code at compile-time. Developers can create custom compile-time tags and it is also possible to transform the intermediate parse tree by adding, removing, modifying or rearranging nodes at compilation time.
+The Marko compiler is responsible for taking an input Marko template and producing an output JavaScript program. The Marko compiler was designed to be flexible and to allow developers to control how JavaScript code is produced.
 
-# Overview
+# Compiler stages
 
-The three primary stages of the Marko compiler are parse, transform, generate. Each of these stages is described in more detail below:
+The three primary stages of the Marko compiler are parse, transform, generate:
+
+- __parse__ - Parse the template source to produce an [Abstract Syntax Tree (AST)](https//en.wikipedia.org/wiki/Abstract_syntax_tree).
+- __transform__ - Transform the AST (add/remove/modify/rearrange nodes)
+- __generate__ - Generate compiled JavaScript code based on the final AST
+
+Each of these stages is described in more detail in the sections below.
 
 ## Parse stage
 
-The first stage of the Marko compiler takes the source template string and produces an Abstract Syntax Tree (AST).
+The first stage of the Marko compiler takes the source template string and produces an initial AST.
 
 For example, given the following input template:
 
 ```xml
-Hello ${data.name}!
-
-<ul if(notEmpty(data.colors))>
-    <li for(color in data.colors)>
-        ${color}
-    </li>
-</ul>
-<div else>
-    No colors!
+<div if(data.name)>
+    Hello ${data.name}!
 </div>
 ```
 
@@ -33,46 +32,32 @@ The following AST will be produced:
   "type": "TemplateRoot",
   "body": [
     {
-      "type": "Text",
-      "argument": {
-        "type": "Literal",
-        "value": "Hello "
-      }
-    },
-    {
-      "type": "Text",
-      "argument": "data.name"
-    },
-    {
-      "type": "Text",
-      "argument": {
-        "type": "Literal",
-        "value": "!\n\n"
-      }
-    },
-    {
-      "type": "HtmlElement",
-      "tagName": "ul",
-      "attributes": [
-        {
-          "name": "if",
-          "argument": "notEmpty(data.colors)"
-        }
-      ]
-    },
-    {
-      "type": "Text",
-      "argument": {
-        "type": "Literal",
-        "value": "\n"
-      }
-    },
-    {
       "type": "HtmlElement",
       "tagName": "div",
       "attributes": [
         {
-          "name": "else"
+          "name": "if",
+          "argument": "data.name"
+        }
+      ],
+      "body": [
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n    Hello "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": "data.name"
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "!\n"
+          }
         }
       ]
     }
@@ -80,61 +65,113 @@ The following AST will be produced:
 }
 ```
 
+----------
 
-# Creating a compile-time tag
+_TIP:_ If you want a pretty dump of an AST tree for debugging purposes you can use the following code:
 
-Let's take a look at how to create a compile-time tag by providing our own code generator. The first step is to register the custom tag in a `marko-taglib.json` file. We will use the `code-generator` property to associate the custom tag with a function that will be used to generate the code for the element node at compile-time:
+```javascript
+console.log(JSON.stringify(astNode, null ,2));
+```
 
-```json
-{
-    "<greeting>": {
-        "code-generator": "./greeting-tag"
-    }
+----------
+
+## Transform stage
+
+During the transform stage, the AST is manipulated in order to produce the correct compiled code during the generate stage. For example, AST transformers are used to process special attributes such as the following:
+
+- `if()`
+- `else-if()`
+- `else`
+- `for()`
+- etc.
+
+In the case of the `if()` attribute, the node is transformed by a builtin Marko transformer (specifically, [taglibs/core/core-transformer.js](../taglibs/core/core-transformer.js)) in order to be wrapped with an actual `If` node using code similar to the following:
+
+```javascript
+var ifAttr = elNode.getAttribute('if');
+if (ifAttr && ifAttr.argument) {
+    // Remove the if() attribute from the HTML element node
+    elNode.removeAttribute('if');
+
+    // Create a new "If" node using the provided "builder"
+    // (described later)
+    var ifNode = builder.ifStatement(ifArgument);
+
+    //Surround the existing node with an "If" node
+    node.wrap(ifNode);
 }
 ```
 
-The code generator module should export a function with the following signature:
+Continuing with the previous example, after the transformation stage, the AST will be the following:
+
+```json
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "If",
+      "test": "data.name",
+      "body": [
+        {
+          "type": "HtmlElement",
+          "tagName": "div",
+          "attributes": [],
+          "body": [
+            {
+              "type": "Text",
+              "argument": {
+                "type": "Literal",
+                "value": "\n    Hello "
+              }
+            },
+            {
+              "type": "Text",
+              "argument": "data.name"
+            },
+            {
+              "type": "Text",
+              "argument": {
+                "type": "Literal",
+                "value": "!\n"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+You'll notice in the transformed AST that the `HtmlElement` associated with the `<div>` tag was wrapped with a new `If` node. After the AST has been transformed it is now time to generate the compiled JavaScript code.
+
+During the transform stage, the entire AST might be walked multiple times. Not until there are no more nodes transformed does the transform stage complete.
+
+## Generate stage
+
+The generate stage is the final stage of the Marko compiler. During the generate stage the Marko compiler will walk the tree to produce the final JavaScript code. Each node in the tree will have an opportunity to generate JavaScript code. The Marko compiler provides a [`CodeGenerator`](../compiler/CodeGenerator.js) class and an API for generating fragments of JavaScript code that makes it easy to produce well-formed and readable JavaScript code as output.
+
+Every node in the tree must implement one of the following methods:
+
+- `generateCode(generator)`
+- `generate<OUTPUT_TYPE>Code(generator)` (e.g. `generateHtmlCode(generator)`)
+
+The `generator` argument will be an instance of [`CodeGenerator`](../compiler/CodeGenerator.js).
+
+The Marko compiler supports compiling templates differently based on an "output type". Currently, the only supported output type is "Html". With the "Html" output type, the compiled template will be a program that, when executed, will produce an HTML string as output. In the future we may support other output types such as DOM, Virtual DOM, incremental DOM, etc. For example, with the "DOM" output type, the compiled program could use the web browser's DOM API to produce a DOM tree as output (instead of an HTML string).
+
+Below is the fragment of code used by the `If` node to generate the output JavaScript code:
 
 ```javascript
-function generateCode(elNode, generator) : Node
+generator.write('if (');
+generator.generateCode(test);
+generator.write(') ');
+generator.generateBlock(body);
+if (elseStatement) {
+    generator.write(' ');
+    generator.generateCode(elseStatement);
+} else {
+    generator.write('\n');
+}
 ```
-
-Continuing with the `<greeting>`, let's assume we have the following template:
-
-```xml
-<greeting name="Frank"/>
-```
-
-Let's implement the greeting tag that generates code that uses `console.log` to output `Hello <NAME>` as shown below:
-
-```javascript
-module.exports = function generateCode(elNode, generator) {
-    var builder = generator.builder;
-    return [
-        builder.text(builder.literal('Hello Frank')),
-        builder.text(elNode.getAttributeValue('name'))
-    ];
-};
-```
-
-
-
-```javascript
-module.exports = function generateCode(elNode, generator) {
-    var builder = generator.builder;
-    return [
-        builder.text(builder.literal('Hello Frank')),
-        builder.text(elNode.getAttributeValue('name'))
-    ];
-};
-```
-
-
-So when should you a custom compile-time tag and when should use use a compile-time transformer?
-
-Utilize custom compile-time tags when you need to create new custom tags that are capable of generating JavaScript code at compile-time. Examples of custom compile-time tags:
-
--
-
-Compile-time transformers are useful for mod
 

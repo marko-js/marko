@@ -24,6 +24,11 @@ class Node {
         wrapperNode.appendChild(this);
     }
 
+    /**
+     * Converts the provided `array` into a `ArrayContainer`. If the provided `array` is already an instance of a `Container` then it is simply returned.
+     * @param  {[type]} array [description]
+     * @return {[type]}       [description]
+     */
     makeContainer(array) {
         if (array instanceof Container) {
             return array;

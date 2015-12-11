@@ -1,6 +1,6 @@
 {
     "<for>": {
-        "node-factory": "./for-tag"
+        "code-generator": "./for-tag"
     },
     "<if>": {
         "node-factory": "./if-tag"

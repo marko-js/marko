@@ -24,22 +24,43 @@ var HtmlComment = require('./ast/HtmlComment');
 var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
 var BinaryExpression = require('./ast/BinaryExpression');
+var UpdateExpression = require('./ast/UpdateExpression');
 
 class Builder {
-    program(body) {
-        return new Program({body});
+    assignment(left, right) {
+        return new Assignment({left, right});
     }
 
-    node(type) {
-        return new Node(type);
+    binaryExpression(left, operator, right) {
+        return new BinaryExpression({left, operator, right});
     }
 
-    templateRoot(body) {
-        return new TemplateRoot({body});
+    elseStatement(body) {
+        return new Else({body});
     }
 
-    functionDeclaration(name, params, body) {
-        return new FunctionDeclaration({name, params, body});
+    elseIfStatement(test, body, elseStatement) {
+        return new ElseIf({
+            if: new If({test, body, else: elseStatement})
+        });
+    }
+
+    forEach(varName, target, body) {
+        if (typeof varName === 'object') {
+            var options = varName;
+            return new ForEach(options);
+        } else {
+            return new ForEach({varName, target, body});
+        }
+    }
+
+    forStatement(init, test, update, body) {
+        if (typeof init === 'object' && !init.type) {
+            var def = arguments[0];
+            return new ForStatement(def);
+        } else {
+            return new ForStatement({init, test, update, body});
+        }
     }
 
     functionCall(callee, args) {
@@ -54,53 +75,16 @@ class Builder {
         return new FunctionCall({callee, args});
     }
 
-    selfInvokingFunction(params, args, body) {
-        if (arguments.length === 1) {
-            body = arguments[0];
-            params = null;
-            args = null;
-        }
-
-        return new SelfInvokingFunction({params, args, body});
+    functionDeclaration(name, params, body) {
+        return new FunctionDeclaration({name, params, body});
     }
 
-    literal(value) {
-        return new Literal({value});
+    html(argument) {
+        return new Html({argument});
     }
 
-    identifier(name) {
-        return new Identifier({name});
-    }
-
-    ifStatement(test, body, elseStatement) {
-        return new If({test, body, else: elseStatement});
-    }
-
-    elseIfStatement(test, body, elseStatement) {
-        return new ElseIf({
-            if: new If({test, body, else: elseStatement})
-        });
-    }
-
-    elseStatement(body) {
-        return new Else({body});
-    }
-
-    assignment(left, right) {
-        return new Assignment({left, right});
-    }
-
-    strictEquality(left, right) {
-        var operator = '===';
-        return new BinaryExpression({left, right, operator});
-    }
-
-    vars(declarations, kind) {
-        return new Vars({declarations, kind});
-    }
-
-    returnStatement(argument) {
-        return new Return({argument});
+    htmlComment(comment) {
+        return new HtmlComment({comment});
     }
 
     htmlElement(tagName, attributes, body, argument) {
@@ -115,29 +99,24 @@ class Builder {
         return new HtmlElement({tagName, attributes, body, argument});
     }
 
-    html(argument) {
-        return new Html({argument});
+    identifier(name) {
+        return new Identifier({name});
     }
 
-    text(argument, escape) {
-        return new Text({argument, escape});
+    ifStatement(test, body, elseStatement) {
+        return new If({test, body, else: elseStatement});
     }
 
-    htmlComment(comment) {
-        return new HtmlComment({comment});
+    literal(value) {
+        return new Literal({value});
     }
 
-    forEach(varName, target, body) {
-        if (typeof varName === 'object') {
-            var options = varName;
-            return new ForEach(options);
-        } else {
-            return new ForEach({varName, target, body});
-        }
+    node(type) {
+        return new Node(type);
     }
 
-    slot() {
-        return new Slot();
+    program(body) {
+        return new Program({body});
     }
 
     require(path) {
@@ -146,17 +125,43 @@ class Builder {
         return new FunctionCall({callee, args});
     }
 
-    forStatement(init, test, update, body) {
-        if (typeof init === 'object' && !init.type) {
-            var def = arguments[0];
-            return new ForStatement(def);
-        } else {
-            return new ForStatement({init, test, update, body});
-        }
+    returnStatement(argument) {
+        return new Return({argument});
     }
 
-    binaryExpression(left, operator, right) {
-        return new BinaryExpression({left, operator, right});
+    selfInvokingFunction(params, args, body) {
+        if (arguments.length === 1) {
+            body = arguments[0];
+            params = null;
+            args = null;
+        }
+
+        return new SelfInvokingFunction({params, args, body});
+    }
+
+    slot() {
+        return new Slot();
+    }
+
+    strictEquality(left, right) {
+        var operator = '===';
+        return new BinaryExpression({left, right, operator});
+    }
+
+    templateRoot(body) {
+        return new TemplateRoot({body});
+    }
+
+    text(argument, escape) {
+        return new Text({argument, escape});
+    }
+
+    updateExpression(argument, operator, prefix) {
+        return new UpdateExpression({argument, operator, prefix});
+    }
+
+    vars(declarations, kind) {
+        return new Vars({declarations, kind});
     }
 }
 

@@ -75,6 +75,43 @@
                           "value": "colors"
                         }
                       }
+                    ],
+                    "body": [
+                      {
+                        "type": "FunctionCall",
+                        "callee": "forEach",
+                        "args": [
+                          "data.colors",
+                          {
+                            "type": "FunctionDeclaration",
+                            "name": null,
+                            "params": [
+                              "color"
+                            ],
+                            "body": [
+                              {
+                                "type": "HtmlElement",
+                                "tagName": "li",
+                                "attributes": [
+                                  {
+                                    "name": "class",
+                                    "value": {
+                                      "type": "Literal",
+                                      "value": "color"
+                                    }
+                                  }
+                                ],
+                                "body": [
+                                  {
+                                    "type": "Text",
+                                    "argument": "color"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]

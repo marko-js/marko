@@ -76,9 +76,8 @@ class Compiler {
 
         var context = new CompileContext(src, filename, this.builder);
         var ast = this.parser.parse(src, context);
+        // console.log('ROOT', JSON.stringify(ast, null, 2));
 
-        console.log('ROOT', JSON.stringify(ast, null, 2));
-        
         var transformedAST = transformTree(ast, context);
         // console.log('transformedAST', JSON.stringify(ast, null, 2));
 
