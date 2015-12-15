@@ -10,9 +10,11 @@ class HtmlComment extends Node {
 
     generateHtmlCode(generator) {
         var comment = this.comment;
-        generator.addWrite('<--');
+        var literal = generator.builder.literal;
+
+        generator.addWrite(literal('<--'));
         generator.addWrite(comment);
-        generator.addWrite('-->');
+        generator.addWrite(literal('-->'));
     }
 }
 

@@ -14,6 +14,14 @@ class Vars extends Node {
         var kind = this.kind;
         var isStatement = this.statement;
 
+        if (declarations && !Array.isArray(declarations) && typeof declarations === 'object') {
+            // Convert the object into an array of variables
+            declarations = Object.keys(declarations).map((id) => {
+                let init = declarations[id];
+                return { id, init };
+            });
+        }
+
         if (!declarations || !declarations.length) {
             return;
         }
@@ -21,11 +29,12 @@ class Vars extends Node {
         for (let i=0; i<declarations.length; i++) {
             var declaration = declarations[i];
 
+
             if (i === 0) {
                 generator.write(kind + ' ');
             } else {
+                generator.incIndent(4);
                 generator.writeLineIndent();
-                generator.write('    ');
             }
 
             var varName = declaration.id || declaration.name;
@@ -47,6 +56,10 @@ class Vars extends Node {
             if (initValue != null) {
                 generator.write(' = ');
                 generator.generateCode(initValue);
+            }
+
+            if (i !== 0) {
+                generator.decIndent(4);
             }
 
             if (i < declarations.length - 1) {

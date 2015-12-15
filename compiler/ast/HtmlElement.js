@@ -1,13 +1,29 @@
 'use strict';
 
 var Node = require('./Node');
+var Literal = require('./Literal');
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
 var HtmlAttributeCollection = require('./HtmlAttributeCollection');
 
 class HtmlElement extends Node {
     constructor(def) {
         super('HtmlElement');
-        this.tagName = def.tagName;
+
+        var tagName = def.tagName;
+
+        this.tagName = null;
+        this.dynamicTagName = null;
+
+        if (tagName instanceof Node) {
+            if (tagName instanceof Literal) {
+                this.tagName = tagName.value;
+            } else {
+                this.dynamicTagName = tagName;
+            }
+        } else if (typeof tagName === 'string'){
+            this.tagName = tagName;
+        }
+
         this._attributes = def.attributes;
 
         if (!(this._attributes instanceof HtmlAttributeCollection)) {
@@ -22,6 +38,14 @@ class HtmlElement extends Node {
 
     generateHtmlCode(generator) {
         var tagName = this.tagName;
+
+        // Convert the tag name into a Node so that we generate the code correctly
+        if (tagName) {
+            tagName = generator.builder.literal(tagName);
+        } else {
+            tagName = this.dynamicTagName;
+        }
+
         var body = this.body;
         var startTagOnly = this.startTagOnly;
         var allowSelfClosing = this.allowSelfClosing;
@@ -29,7 +53,9 @@ class HtmlElement extends Node {
         var builder = generator.builder;
 
         // Starting tag
-        generator.addWriteLiteral('<' + tagName);
+        generator.addWriteLiteral('<');
+
+        generator.addWrite(tagName);
 
         var attributes = this._attributes && this._attributes.all;
 
@@ -72,33 +98,22 @@ class HtmlElement extends Node {
             });
         }
 
+        // Body
         if (hasBody) {
+            generator.addWriteLiteral('>');
+            generator.generateStatements(body);
+            generator.addWriteLiteral('</');
+            generator.addWrite(tagName);
             generator.addWriteLiteral('>');
         } else {
             if (startTagOnly) {
                 generator.addWriteLiteral('>');
             } else if (allowSelfClosing) {
                 generator.addWriteLiteral('/>');
-            }
-        }
-
-        // Body
-        if (hasBody) {
-            generator.generateStatements(body);
-        }
-
-        // Ending tag
-        if (tagName instanceof Node) {
-            generator.addWriteLiteral('</');
-            generator.addWrite(tagName);
-            generator.addWriteLiteral('>');
-        } else {
-            if (hasBody) {
-                generator.addWriteLiteral('</' + tagName + '>');
             } else {
-                if (!startTagOnly && !allowSelfClosing) {
-                    generator.addWriteLiteral('></' + tagName + '>');
-                }
+                generator.addWriteLiteral('></');
+                generator.addWrite(tagName);
+                generator.addWriteLiteral('>');
             }
         }
     }
@@ -150,6 +165,16 @@ class HtmlElement extends Node {
         for (let i=0, len=attributes.length; i<len; i++) {
             callback.call(thisObj, attributes[i]);
         }
+    }
+
+    setTagName(newTagName) {
+        this.tagName = newTagName;
+        this.dynamicTagName = null;
+    }
+
+    getDynamicTagName(dynamicTagName) {
+        this.tagName = null;
+        this.dynamicTagName = dynamicTagName;
     }
 
     toString() {

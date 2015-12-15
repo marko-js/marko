@@ -25,6 +25,7 @@ var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
 var BinaryExpression = require('./ast/BinaryExpression');
 var UpdateExpression = require('./ast/UpdateExpression');
+var Expression = require('./ast/Expression');
 
 class Builder {
     assignment(left, right) {
@@ -43,6 +44,10 @@ class Builder {
         return new ElseIf({
             if: new If({test, body, else: elseStatement})
         });
+    }
+
+    expression(value) {
+        return new Expression({value});
     }
 
     forEach(varName, target, body) {
@@ -88,7 +93,7 @@ class Builder {
     }
 
     htmlElement(tagName, attributes, body, argument) {
-        if (typeof tagName === 'object') {
+        if (typeof tagName === 'object' && !(tagName instanceof Node)) {
             let elInfo = tagName;
             tagName = elInfo.tagName;
             attributes = elInfo.attributes;

@@ -20,7 +20,7 @@ wrapperNode.appendChild(this);
 
 #### makeContainer(array)
 
-Converts the provided `array` into a `ArrayContainer`. If the provided `array` is already an instance of a `Container` then it is simply returned.
+Converts the provided `Array` into an `ArrayContainer`. If the provided `Array` is already an instance of a `Container` then it is simply returned.
 
 
 #### appendChild(node)
@@ -248,15 +248,128 @@ for (var i = 0; i < 0; i++) {
 
 ### functionCall(callee, args)
 
+Returns a node that generates the following code:
+
+```javascript
+<callee>(<arg1, arg2, ..., argN>)
+```
+
+```javascript
+builder.functionCall(
+    'console.log',
+    [
+        builder.literal('Hello'),
+        builder.identifier('name')
+    ]);
+
+// Output:
+console.log('Hello', name);
+```
+
 ### functionDeclaration(name, params, body)
+
+Returns a node that generates the following code:
+
+```javascript
+function [name](<param1, param2, ..., paramN>) {
+    <body>
+}
+```
+
+_Named function declaration:_
+
+```javascript
+builder.functionDeclaration(
+    'foo',
+    [
+        'num1',
+        'num2'
+    ],
+    [
+        builder.returnStatement(builder.binaryExpression('num1', '+', 'num2'))
+    ]);
+
+// Output:
+function add(num1, num2) {
+  return num1 + num2;
+}
+```
+
+_Anonymous function declaration:_
+
+```javascript
+builder.functionDeclaration(
+    null,
+    [
+        'num1',
+        'num2'
+    ],
+    [
+        builder.returnStatement(builder.binaryExpression('num1', '+', 'num2'))
+    ]);
+
+// Output:
+function(num1, num2) {
+  return num1 + num2;
+}
+```
 
 ### html(argument)
 
+Returns a node that renders a fragment of HTML (special HTML characters will not be escaped):
+
+```javascript
+builder.html(
+    builder.literal('<div>Hello World</div>')
+);
+
+// Output:
+out.w("<div>Hello World</div>");
+```
+
 ### htmlComment(comment)
+
+```javascript
+builder.htmlComment(
+    builder.literal('This is an HTML comment'))
+
+// Output:
+out.w("<--This is an HTML comment-->");
+```
 
 ### htmlElement(tagName, attributes, body, argument)
 
+```javascript
+builder.htmlElement(
+    'div',
+    [
+        {
+            name: 'class',
+            value: builder.literal('greeting')
+        }
+    ],
+    [
+            builder.text(builder.literal('Hello World'))
+    ])
+
+// Output:
+out.w("<div class=\"greeting\">Hello World</div>");
+```
+
 ### identifier(name)
+
+Returns a node that generates the code for a JavaScript identifier code (e.g., a variable name, parameter name, property name, etc.)
+
+For example:
+
+```javascript
+builder.assignment(
+    builder.identifier('foo'),
+    builder.literal('abc'))
+
+// Output code:
+foo = "abc"
+```
 
 ### ifStatement(test, body, elseStatement)
 
@@ -286,6 +399,49 @@ if (true) {
 ```
 
 ### literal(value)
+
+Returns code to generate a JavaScript code for literal strings, numbers, booleans, objects and arrays.
+
+
+For example:
+
+```javascript
+builder.literal('abc');
+
+// Output code:
+"abc"
+```
+
+Or, for a more complex example:
+
+```javascript
+builder.vars({
+    'aString': builder.literal('abc'),
+    'aNumber': builder.literal(123),
+    'aBoolean': builder.literal(false),
+    'anObject': builder.literal({
+        foo: 'bar',
+        dynamic: builder.expression('data.name'),
+    }),
+    'anArray': builder.literal([
+        'foo',
+        builder.expression('data.name')
+    ])
+})
+
+// Output code:
+var aString = "abc",
+    aNumber = 123,
+    aBoolean = false,
+    anObject = {
+      "foo": "bar",
+      "dynamic": data.name
+    },
+    anArray = [
+      "foo",
+      data.name
+    ]
+```
 
 ### node(type)
 

@@ -169,6 +169,8 @@ class Generator {
     }
 
     getCode() {
+        this.flushBufferedWrites();
+
         while(this._slots.length) {
             let slots = this._slots;
             this._slots = [];
@@ -358,15 +360,26 @@ class Generator {
         return this;
     }
 
-    incIndent(code) {
-        this._currentIndent += this._indentStr;
+    incIndent(count) {
+        if (count != null) {
+            for (let i=0; i<count; i++) {
+                this._currentIndent += ' ';
+            }
+        } else {
+            this._currentIndent += this._indentStr;
+        }
+
         return this;
     }
 
-    decIndent(code) {
+    decIndent(count) {
+        if (count == null) {
+            count = this._indentSize;
+        }
+
         this._currentIndent = this._currentIndent.substring(
             0,
-            this._currentIndent.length - this._indentSize);
+            this._currentIndent.length - count);
 
         return this;
     }
@@ -406,6 +419,9 @@ class Generator {
 
             for (let i=0; i<value.length; i++) {
                 let v = value[i];
+
+                this.writeLineIndent();
+                
                 if (v instanceof Node) {
                     this.generateCode(v);
                 } else {
