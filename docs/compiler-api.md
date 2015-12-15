@@ -443,15 +443,131 @@ var aString = "abc",
     ]
 ```
 
-### node(type)
+### node([type, ]generatCode)
+
+Returns a generic `Node` instance with the given node type (optional) and a `generateCode(node, generator)` function that should be used to generate the code for the node. If a `generateCode(node, generator)` function is not provided the node bust be monkey-patched to add a `generateCode(generator)` method.
+
+For example:
+
+```javascript
+builder.node(function(node, generator) {
+    var builder = generator.builder;
+    return builder.text(builder.literal('Hello World!'));
+})
+
+// Output code:
+out.w("Hello World!");
+```
 
 ### program(body)
 
+Returns a node to generate the code for the root statements of a JavaScript code.
+
+For example:
+
+```javascript
+builder.program([
+    builder.vars({
+        name: builder.literal('Frank')
+    }),
+    builder.functionCall('console.log', [
+        builder.literal('Hello'),
+        builder.identifier('name')
+    ])
+])
+
+// Output code:
+var name = "Frank";
+
+console.log("Hello", name);
+```
+
 ### require(path)
+
+Returns a node that generates the following code:
+
+```javascript
+require(<path>)
+```
+
+Short-hand for the following:
+
+```javascript
+builder.functionCall('require', [path])
+```
 
 ### returnStatement(argument)
 
+Returns a node that generates the following code:
+
+```javascript
+return[ <argument>]
+```
+
+For example:
+
+```javascript
+builder.functionDeclaration(
+    'upperCase',
+    [
+        'str'
+    ],
+    [
+        builder.returnStatement(builder.functionCall('str.toUpperCase'))
+    ]
+)
+
+// Output code:
+function upperCase(str) {
+  return str.toUpperCase();
+}
+```
+
 ### selfInvokingFunction(params, args, body)
+
+Returns a node that generates the following code:
+
+```javascript
+(function(<params>) {
+    <body>
+}(<args>))
+```
+
+For example:
+
+```javascript
+builder.selfInvokingFunction(
+    [
+        'win'
+    ],
+    [
+        'window'
+    ],
+    [
+        builder.assignment('win.foo', builder.literal('bar'))
+    ])
+
+// Output code:
+(function(win) {
+  win.foo = "bar";
+}(window))
+```
+
+Or, without params and args:
+
+```javascript
+builder.selfInvokingFunction([
+        builder.vars(['foo']),
+        builder.assignment('foo', builder.literal('bar'))
+    ])
+
+// Output code:
+(function() {
+  var foo;
+
+  foo = "bar";
+}())
+```
 
 ### slot()
 
