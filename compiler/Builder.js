@@ -116,8 +116,17 @@ class Builder {
         return new Literal({value});
     }
 
-    node(type) {
-        return new Node(type);
+    node(type, generateCode) {
+        if (typeof type === 'function') {
+            generateCode = arguments[0];
+            type = 'Node';
+        }
+
+        var node = new Node(type);
+        if (generateCode) {
+            node.setCodeGenerator(generateCode);
+        }
+        return node;
     }
 
     program(body) {
