@@ -1,6 +1,7 @@
 'use strict';
 
 var Node = require('./Node');
+var Identifier = require('./Identifier');
 
 class Vars extends Node {
     constructor(def) {
@@ -29,6 +30,11 @@ class Vars extends Node {
         for (let i=0; i<declarations.length; i++) {
             var declaration = declarations[i];
 
+            if (typeof declaration === 'string' || declaration instanceof Identifier) {
+                declaration = {
+                    id: declaration
+                };
+            }
 
             if (i === 0) {
                 generator.write(kind + ' ');
