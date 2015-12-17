@@ -153,8 +153,8 @@ class Builder {
         return new SelfInvokingFunction({params, args, body});
     }
 
-    slot() {
-        return new Slot();
+    slot(onDone) {
+        return new Slot({onDone});
     }
 
     strictEquality(left, right) {
