@@ -556,7 +556,7 @@ builder.selfInvokingFunction(
 Or, without params and args:
 
 ```javascript
-builder.selfInvokingFunction([
+builder.selfInvokingFunction(null, null, [
         builder.vars(['foo']),
         builder.assignment('foo', builder.literal('bar'))
     ])
@@ -569,9 +569,56 @@ builder.selfInvokingFunction([
 }())
 ```
 
-### slot()
+### selfInvokingFunction(body)
+
+Equivalent to `selfInvokingFunction(null, null, body)`.
+
+### slot(onDone)
+
+Returns a node that defers generating code until everything else is done. This can be helpful in situations where a fragment of code is not known until the rest of the code is generated.
+
+As an example, the [TemplateRoot](../compiler/ast/TemplateRoot.js) node uses a slot to defer generating the static variables section of the compiled template. Not until all of the nodes have generated code is it known which static variables need to be added at the top of the compiled template.
+
+```javascript
+builder.program([
+    builder.slot((slot, generator) => {
+        slot.setContent(generator.builder.vars(vars));
+    }),
+    builder.node(function(node, generator) {
+        vars.push({
+            id: 'foo',
+            init: generator.builder.literal('abc')
+        });
+    }),
+    builder.node(function(node, generator) {
+        vars.push({
+            id: 'bar',
+            init: generator.builder.literal(123)
+        });
+    })
+])
+
+// Output code:
+var foo = "abc",
+    bar = 123;
+```
 
 ### strictEquality(left, right)
+
+Returns a node that generates the following code:
+
+```javascript
+<left> === <right>
+```
+
+For example:
+
+```javascript
+builder.strictEquality('a', 'b')
+
+// Output code:
+a === b
+```
 
 ### templateRoot(body)
 
