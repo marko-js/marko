@@ -12,7 +12,7 @@ class Program extends Node {
         generator.generateStatements(body);
         if (generator._bufferedWrites) {
             generator._write('\n');
-            generator.flushBufferedWrites();
+            generator._flushBufferedWrites();
         }
     }
 }
