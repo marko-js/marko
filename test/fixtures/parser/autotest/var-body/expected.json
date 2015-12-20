@@ -1,0 +1,74 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "Vars",
+      "kind": "var",
+      "declarations": [
+        {
+          "name": "x",
+          "value": {
+            "type": "Literal",
+            "value": 1
+          }
+        },
+        {
+          "name": "y",
+          "value": {
+            "type": "Literal",
+            "value": 7
+          }
+        },
+        {
+          "name": "z",
+          "value": "x+10"
+        },
+        {
+          "name": "unusedvar"
+        }
+      ],
+      "body": [
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": "x"
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": "y"
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": "z"
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\nHELLO WORLD\n"
+          }
+        }
+      ]
+    }
+  ]
+}

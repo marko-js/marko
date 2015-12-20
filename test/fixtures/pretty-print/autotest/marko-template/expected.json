@@ -24,7 +24,8 @@
               "id": "notEmpty",
               "init": "__helpers.ne"
             }
-          ]
+          ],
+          "body": []
         },
         {
           "type": "Return",

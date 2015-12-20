@@ -8,6 +8,7 @@ class Vars extends Node {
         super('Vars');
         this.kind = def.kind || 'var';
         this.declarations = def.declarations;
+        this.body = this.makeContainer(def.body);
     }
 
     generateCode(generator) {
