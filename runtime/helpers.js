@@ -97,7 +97,7 @@ module.exports = {
             };
         for (; i < len; i++) {
             var o = array[i];
-            callback(o || '', loopStatus);
+            callback(o, loopStatus);
         }
     },
     /**
