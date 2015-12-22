@@ -15,6 +15,14 @@ class Vars extends Node {
         var declarations = this.declarations;
         var kind = this.kind;
         var isStatement = this.statement;
+        var body = this.body;
+        var selfInvoking = this.isFlagSet('selfInvoking');
+        var hasBody = (body && body.array && body.array.length > 0);
+
+        if(!selfInvoking && hasBody) {
+            this.setFlag('selfInvoking');
+            return generator.builder.selfInvokingFunction([ this ]);
+        }
 
         if (declarations && !Array.isArray(declarations) && typeof declarations === 'object') {
             // Convert the object into an array of variables
@@ -76,6 +84,9 @@ class Vars extends Node {
                     generator.write(';\n');
                 }
             }
+        }
+        if(hasBody) {
+            generator.generateCode(body);
         }
     }
 }
