@@ -1,4 +1,12 @@
 module.exports = function nodeFactory(el, context) {
-    var attributes = el.attributes;
-    return context.builder.vars(attributes);
+    var builder = context.builder;
+
+    var declarations = el.attributes.map((attr) => {
+        return {
+            id: builder.identifier(attr.name),
+            init: builder.expression(attr.value)
+        };
+    });
+
+    return context.builder.vars(declarations);
 };

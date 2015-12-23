@@ -84,6 +84,14 @@ class Node {
         this.container.removeChild(this);
     }
 
+    /**
+     * Returns true if the current node represents a compound expression (e.g. )
+     * @return {Boolean} [description]
+     */
+    isCompoundExpression() {
+        return false;
+    }
+
     isDetached() {
         return this.container == null;
     }

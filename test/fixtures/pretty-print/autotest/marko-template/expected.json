@@ -46,7 +46,18 @@
               },
               {
                 "type": "Html",
-                "argument": "data.name"
+                "argument": {
+                  "type": "MemberExpression",
+                  "object": {
+                    "type": "Identifier",
+                    "name": "data"
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "name"
+                  },
+                  "computed": false
+                }
               },
               {
                 "type": "Text",
@@ -59,9 +70,23 @@
                 "type": "If",
                 "test": {
                   "type": "FunctionCall",
-                  "callee": "notEmpty",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "notEmpty"
+                  },
                   "args": [
-                    "data.colors"
+                    {
+                      "type": "MemberExpression",
+                      "object": {
+                        "type": "Identifier",
+                        "name": "data"
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "colors"
+                      },
+                      "computed": false
+                    }
                   ]
                 },
                 "body": [
@@ -80,9 +105,23 @@
                     "body": [
                       {
                         "type": "FunctionCall",
-                        "callee": "forEach",
+                        "callee": {
+                          "type": "Identifier",
+                          "name": "forEach"
+                        },
                         "args": [
-                          "data.colors",
+                          {
+                            "type": "MemberExpression",
+                            "object": {
+                              "type": "Identifier",
+                              "name": "data"
+                            },
+                            "property": {
+                              "type": "Identifier",
+                              "name": "colors"
+                            },
+                            "computed": false
+                          },
                           {
                             "type": "FunctionDeclaration",
                             "name": null,
@@ -105,7 +144,10 @@
                                 "body": [
                                   {
                                     "type": "Text",
-                                    "argument": "color"
+                                    "argument": {
+                                      "type": "Identifier",
+                                      "name": "color"
+                                    }
                                   }
                                 ]
                               }

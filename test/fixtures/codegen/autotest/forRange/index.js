@@ -2,10 +2,9 @@
 
 module.exports = function(builder) {
     var templateRoot = builder.templateRoot;
-    var forEach = builder.forEach;
 
     return templateRoot([
-        forEach({
+        builder.forRange({
             varName: 'i',
             from: 0,
             to: 'myArray.length',

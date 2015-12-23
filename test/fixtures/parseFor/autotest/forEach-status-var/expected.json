@@ -1,0 +1,15 @@
+{
+  "loopType": "ForEach",
+  "varName": {
+    "type": "Identifier",
+    "name": "color"
+  },
+  "in": {
+    "type": "Expression",
+    "value": "colors"
+  },
+  "statusVarName": {
+    "type": "Identifier",
+    "name": "loop"
+  }
+}

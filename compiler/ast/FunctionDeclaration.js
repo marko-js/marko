@@ -51,6 +51,10 @@ class FunctionDeclaration extends Node {
             generator.write('\n');
         }
     }
+
+    isCompoundExpression() {
+        return true;
+    }
 }
 
 module.exports = FunctionDeclaration;

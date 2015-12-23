@@ -2,13 +2,12 @@
 
 module.exports = function(builder) {
     var templateRoot = builder.templateRoot;
-    var forEach = builder.forEach;
 
     return templateRoot([
-        forEach({
+        builder.forEachProp({
             nameVarName: 'k',
             valueVarName: 'v',
-            target: 'myArray',
+            in: 'myArray',
             body: [
                 builder.functionCall('console.log', [
                     builder.literal('k:'),

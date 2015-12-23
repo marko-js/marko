@@ -1,0 +1,12 @@
+{
+  "type": "BinaryExpression",
+  "left": {
+    "type": "Identifier",
+    "name": "foo"
+  },
+  "operator": "+",
+  "right": {
+    "type": "Literal",
+    "value": "12"
+  }
+}

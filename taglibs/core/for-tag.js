@@ -1,4 +1,4 @@
-var parseForEach = require('./util/parseForEach');
+var createLoopNode = require('./util/createLoopNode');
 
 module.exports = function codeGenerator(elNode, generator) {
     var argument = elNode.argument;
@@ -7,16 +7,14 @@ module.exports = function codeGenerator(elNode, generator) {
         return elNode;
     }
 
-    var forEachProps = parseForEach(argument);
-    forEachProps.body = elNode.body;
+    var builder = generator.builder;
 
-    if (elNode.hasAttribute('separator')) {
-        forEachProps.separator = elNode.getAttributeValue('separator');
+    var loopNode = createLoopNode(argument, elNode.body, builder);
+
+    if (loopNode.error) {
+        generator.addError(loopNode.error);
+        return elNode;
     }
 
-    if (elNode.hasAttribute('status-var')) {
-        forEachProps.statusVarName = elNode.getAttributeValue('status-var');
-    }
-
-    return generator.builder.forEach(forEachProps);
+    return loopNode;
 };

@@ -124,6 +124,7 @@ exports.compile = compile;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;
 exports.createWalker = createWalker;
+exports.defaultBuilder = defaultBuilder;
 
 var taglibLookup = require('./taglib-lookup');
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json'));

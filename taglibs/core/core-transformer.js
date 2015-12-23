@@ -1,9 +1,6 @@
 'use strict';
 
-var extend = require('raptor-util/extend');
-var parseComplexAttribute = require('./util/parseComplexAttribute');
-var parseForEach = require('./util/parseForEach');
-var parseJavaScriptIdentifier = require('./util/parseJavaScriptIdentifier');
+var createLoopNode = require('./util/createLoopNode');
 
 var coreAttrHandlers = [
     [
@@ -13,49 +10,12 @@ var coreAttrHandlers = [
                 return;
             }
 
-            var forEachProps = parseComplexAttribute(forArgument, {
-                    'each': true,
-                    'separator': true,
-                    'iterator': true,
-                    'status-var': true,
-                    'for-loop': true
-                },
-                {
-                    removeDashes: true,
-                    defaultName: 'each',
-                    errorHandler: function (message) {
-                        this.addError('Invalid for attribute of "' + attr + '". Error: ' + message);
-                    }
-                });
+            var loopNode = createLoopNode(forArgument, null, this.builder);
 
-            if (!forEachProps.each) {
-                this.addError('Invalid "for" attribute.');
-            }
-
-            var statusVarName = forEachProps.statusVar;
-
-            if (statusVarName) {
-                // statusVar is expected to be a String literal expression
-                // For example: statusVar: "'foo'"
-                // We need to parse it into an actual string such as "foo"
-                statusVarName = parseJavaScriptIdentifier(statusVarName);
-                if (!statusVarName) {
-                    this.addError('Invalid "status-var": ' + forEachProps.statusVar);
-                }
-                delete forEachProps.statusVar;
-                forEachProps.statusVarName = statusVarName;
-            }
-
-            var parsedForEach = parseForEach(forEachProps.each);
-            delete forEachProps.each;
-            extend(forEachProps, parsedForEach);
-
-            forEachProps.pos = node.pos;
-
-            //Copy the position property
-            var forEachNode = this.builder.forEach(forEachProps);
-            //Surround the existing node with a "forEach" node
-            node.wrap(forEachNode);
+            //Surround the existing node with the newly created loop node
+            // NOTE: The loop node will be one of the following:
+            //       ForEach, ForRange, ForEachProp or ForStatement
+            node.wrap(loopNode);
         }
     ],
     [

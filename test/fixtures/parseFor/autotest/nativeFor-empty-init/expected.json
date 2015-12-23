@@ -1,0 +1,6 @@
+{
+  "loopType": "For",
+  "init": "",
+  "test": " i<foo.length",
+  "update": " i++"
+}

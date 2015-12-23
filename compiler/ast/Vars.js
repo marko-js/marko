@@ -24,26 +24,12 @@ class Vars extends Node {
             return generator.builder.selfInvokingFunction([ this ]);
         }
 
-        if (declarations && !Array.isArray(declarations) && typeof declarations === 'object') {
-            // Convert the object into an array of variables
-            declarations = Object.keys(declarations).map((id) => {
-                let init = declarations[id];
-                return { id, init };
-            });
-        }
-
         if (!declarations || !declarations.length) {
             return;
         }
 
         for (let i=0; i<declarations.length; i++) {
             var declaration = declarations[i];
-
-            if (typeof declaration === 'string' || declaration instanceof Identifier) {
-                declaration = {
-                    id: declaration
-                };
-            }
 
             if (i === 0) {
                 generator.write(kind + ' ');
@@ -52,14 +38,14 @@ class Vars extends Node {
                 generator.writeLineIndent();
             }
 
-            var varName = declaration.id || declaration.name;
+            var varId = declaration.id || declaration.name;
 
-            if (typeof varName !== 'string') {
-                throw new Error('Invalid variable name: ' + varName);
+            if (!(varId instanceof Identifier) && typeof varId !== 'string') {
+                throw new Error('Invalid variable name: ' + varId);
             }
 
             // TODO Validate the variable name
-            generator.generateCode(varName);
+            generator.generateCode(varId);
 
             var initValue;
             if (declaration.hasOwnProperty('init')) {

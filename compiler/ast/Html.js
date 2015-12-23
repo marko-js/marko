@@ -14,8 +14,6 @@ class Html extends Node {
 
     generateHtmlCode(generator) {
         let argument = this.argument;
-
-        console.log(module.id, 'Html', argument);
         generator.addWrite(argument);
     }
 }

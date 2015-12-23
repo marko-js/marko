@@ -1,6 +1,7 @@
 'use strict';
 
 var Node = require('./Node');
+var isCompoundExpression = require('../util/isCompoundExpression');
 
 class UpdateExpression extends Node {
     constructor(def) {
@@ -19,11 +20,25 @@ class UpdateExpression extends Node {
             generator.generateCode(operator);
         }
 
+        var wrap = isCompoundExpression(argument);
+
+        if (wrap) {
+            generator.write('(');
+        }
+
         generator.generateCode(argument);
+
+        if (wrap) {
+            generator.write(')');
+        }
 
         if (!prefix) {
             generator.generateCode(operator);
         }
+    }
+
+    isCompoundExpression() {
+        return true;
     }
 
     toJSON() {

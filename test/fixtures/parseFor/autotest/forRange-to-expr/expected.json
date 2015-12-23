@@ -1,0 +1,15 @@
+{
+  "loopType": "ForRange",
+  "varName": {
+    "type": "Identifier",
+    "name": "i"
+  },
+  "from": {
+    "type": "Literal",
+    "value": 0
+  },
+  "to": {
+    "type": "Expression",
+    "value": "'abc'.length"
+  }
+}

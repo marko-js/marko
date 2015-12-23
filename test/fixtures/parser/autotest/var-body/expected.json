@@ -6,25 +6,48 @@
       "kind": "var",
       "declarations": [
         {
-          "name": "x",
-          "value": {
+          "id": {
+            "type": "Identifier",
+            "name": "x"
+          },
+          "init": {
             "type": "Literal",
             "value": 1
           }
         },
         {
-          "name": "y",
-          "value": {
+          "id": {
+            "type": "Identifier",
+            "name": "y"
+          },
+          "init": {
             "type": "Literal",
             "value": 7
           }
         },
         {
-          "name": "z",
-          "value": "x+10"
+          "id": {
+            "type": "Identifier",
+            "name": "z"
+          },
+          "init": {
+            "type": "BinaryExpression",
+            "left": {
+              "type": "Identifier",
+              "name": "x"
+            },
+            "operator": "+",
+            "right": {
+              "type": "Literal",
+              "value": 10
+            }
+          }
         },
         {
-          "name": "unusedvar"
+          "id": {
+            "type": "Identifier",
+            "name": "unusedvar"
+          }
         }
       ],
       "body": [
@@ -37,7 +60,10 @@
         },
         {
           "type": "Text",
-          "argument": "x"
+          "argument": {
+            "type": "Identifier",
+            "name": "x"
+          }
         },
         {
           "type": "Text",
@@ -48,7 +74,10 @@
         },
         {
           "type": "Text",
-          "argument": "y"
+          "argument": {
+            "type": "Identifier",
+            "name": "y"
+          }
         },
         {
           "type": "Text",
@@ -59,7 +88,10 @@
         },
         {
           "type": "Text",
-          "argument": "z"
+          "argument": {
+            "type": "Identifier",
+            "name": "z"
+          }
         },
         {
           "type": "Text",

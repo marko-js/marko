@@ -182,14 +182,18 @@ forEach(data.colors, function(color) {
 });
 ```
 
-___object properties:___
+### forEach(varName, target, body)
 
-TBD
+Returns a node that generates a simple `forEach`. See `forEach(def)`.
 
-___range:___
+### forRange(def)
+
+Returns a node that generates code to loop over a number range
+
+___array:___
 
 ```javascript
-builder.forEach({
+builder.forRange({
     varName: 'i',
     from: 0,
     to: 'myArray.length',
@@ -199,6 +203,7 @@ builder.forEach({
     ]
 })
 
+
 // Output code:
 (function() {
   for (var i = 0; i<=myArray.length; i+=2) {
@@ -207,9 +212,9 @@ builder.forEach({
 }());
 ```
 
-### forEach(varName, target, body)
+### forRange(varName, from, to, step, body)
 
-Returns a node that generates a simple `forEach`. See `forEach(def)`.
+Returns a node that generates a simple `forRange`. See `forRange(def)`.
 
 ### forStatement(init, test, update, body)
 
@@ -443,6 +448,23 @@ var aString = "abc",
     ]
 ```
 
+### negate(argument)
+
+Returns a node that generates the following code:
+
+```javascript
+!<argument>
+```
+
+For example:
+
+```javascript
+builder.negate(builder.identifier('foo'))
+
+// Output:
+!foo
+```
+
 ### node([type, ]generatCode)
 
 Returns a generic `Node` instance with the given node type (optional) and a `generateCode(node, generator)` function that should be used to generate the code for the node. If a `generateCode(node, generator)` function is not provided the node bust be monkey-patched to add a `generateCode(generator)` method.
@@ -623,6 +645,8 @@ a === b
 ### templateRoot(body)
 
 ### text(argument, escape)
+
+### unaryExpression(argument, operator, prefix)
 
 ### updateExpression(argument, operator, prefix)
 

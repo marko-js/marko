@@ -3,8 +3,15 @@
   "body": [
     {
       "type": "Assignment",
-      "left": "a",
-      "right": "1"
+      "left": {
+        "type": "Identifier",
+        "name": "a"
+      },
+      "right": {
+        "type": "Literal",
+        "value": 1
+      },
+      "operator": "="
     }
   ]
 }

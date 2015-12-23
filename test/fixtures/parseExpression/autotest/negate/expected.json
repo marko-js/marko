@@ -1,0 +1,9 @@
+{
+  "type": "UnaryExpression",
+  "argument": {
+    "type": "Identifier",
+    "name": "foo"
+  },
+  "operator": "!",
+  "prefix": true
+}

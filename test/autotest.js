@@ -10,6 +10,11 @@ function autoTest(name, dir, run, options) {
     var actualPath = path.join(dir, 'actual' + compareExtension);
     var expectedPath = path.join(dir, 'expected' + compareExtension);
 
+    try {
+        fs.unlinkSync(actualPath);
+    } catch(e) {}
+
+
     var actual = run(dir);
     if (actual === '$PASS$') {
         return;

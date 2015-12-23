@@ -6,7 +6,7 @@ function create(__helpers) {
 
   return function render(data, out) {
     (function() {
-      for (var i = 0; i<=myArray.length; i+=2) {
+      for (var i = 0; i <= myArray.length; i += 2) {
         console.log(i);
       }
     }());
