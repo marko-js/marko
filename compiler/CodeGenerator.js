@@ -125,6 +125,7 @@ class Generator {
 
         let finalNode;
         let generateCodeFunc;
+        var isStatement = node.statement;
 
         if (node.getCodeGenerator) {
             generateCodeFunc = node.getCodeGenerator(this.outputType);
@@ -143,7 +144,11 @@ class Generator {
         }
 
         if (finalNode) {
-            this.generateCode(finalNode);
+            if (isStatement) {
+                this.generateStatements(finalNode);
+            } else {
+                this.generateCode(finalNode);
+            }
         } else if (node) {
             let generateCodeMethod = node.generateCode;
 
@@ -167,7 +172,11 @@ class Generator {
                     throw new Error('Invalid node returned. Same node returned:  ' + util.inspect(node));
                 }
 
-                this.generateCode(finalNode);
+                if (isStatement) {
+                    this.generateStatements(finalNode);
+                } else {
+                    this.generateCode(finalNode);
+                }
             }
         }
 
@@ -245,6 +254,10 @@ class Generator {
     generateStatements(nodes) {
         ok(nodes, '"nodes" expected');
         let firstStatement = true;
+
+        if (nodes instanceof Node) {
+            nodes = [nodes];
+        }
 
         nodes.forEach((node) => {
             if (node instanceof Node) {
