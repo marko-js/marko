@@ -14,7 +14,6 @@ class SelfInvokingFunction extends Node {
         var params = this.params || [];
         var args = this.args || [];
         var body = this.body;
-        var isStatement = this.statement;
 
         generator.write('(');
         var functionDeclaration = generator.builder.functionDeclaration(null, params, body);
@@ -22,10 +21,6 @@ class SelfInvokingFunction extends Node {
         generator.generateCode(functionCall);
 
         generator.write(')');
-
-        if (isStatement) {
-            generator.write('\n');
-        }
     }
 }
 
