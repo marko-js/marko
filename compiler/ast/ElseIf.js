@@ -1,12 +1,13 @@
 'use strict';
 
 var Node = require('./Node');
-var ok = require('assert').ok;
 
 class ElseIf extends Node {
     constructor(def) {
         super('ElseIf');
-        this.if = def.if;
+        this.test = def.test;
+        this.body = this.makeContainer(def.body);
+        this.else = def.else;
         this.matched = false;
     }
 
@@ -16,11 +17,9 @@ class ElseIf extends Node {
             return;
         }
 
-        var ifStatement = this.if;
-        ok(ifStatement);
-
+        var ifStatement = generator.builder.ifStatement(this.test, this.body, this.else);
         generator.write('else ');
-        generator.generateCode(this.if);
+        generator.generateCode(ifStatement);
     }
 }
 

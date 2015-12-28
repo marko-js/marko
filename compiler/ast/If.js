@@ -6,6 +6,7 @@ function removeWhitespaceNodes(whitespaceNodes) {
     for (var i=0; i<whitespaceNodes.length; i++) {
         whitespaceNodes[i].detach();
     }
+    whitespaceNodes.length = 0;
 }
 
 class If extends Node {

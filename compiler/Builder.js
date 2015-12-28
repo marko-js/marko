@@ -64,9 +64,7 @@ class Builder {
     elseIfStatement(test, body, elseStatement) {
         test = makeNode(test);
 
-        return new ElseIf({
-            if: new If({test, body, else: elseStatement})
-        });
+        return new ElseIf({test, body, else: elseStatement});
     }
 
     expression(value) {
