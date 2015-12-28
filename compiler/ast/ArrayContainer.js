@@ -75,7 +75,7 @@ class ArrayContainer extends Container {
         if (node.container !== this) {
             throw new Error('Node does not belong to container: ' + node);
         }
-        var array = this.array;
+        var array = this.array.concat([]);
         var found = false;
 
         for (var i=0; i<array.length; i++) {
