@@ -19,6 +19,7 @@ var HtmlElement = require('./ast/HtmlElement');
 var Html = require('./ast/Html');
 var Text = require('./ast/Text');
 var ForEach = require('./ast/ForEach');
+var ForEachProp = require('./ast/ForEachProp');
 var ForRange = require('./ast/ForRange');
 var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
@@ -80,6 +81,18 @@ class Builder {
             varName = makeNode(varName);
             inExpression = makeNode(inExpression);
             return new ForEach({varName, in: inExpression, body});
+        }
+    }
+
+    forEachProp(nameVarName, valueVarName, inExpression, body) {
+        if (arguments.length === 1) {
+            var def = arguments[0];
+            return new ForEachProp(def);
+        } else {
+            nameVarName = makeNode(nameVarName);
+            valueVarName = makeNode(valueVarName);
+            inExpression = makeNode(inExpression);
+            return new ForEachProp({nameVarName, valueVarName, in: inExpression, body});
         }
     }
 

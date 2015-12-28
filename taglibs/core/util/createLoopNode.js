@@ -13,6 +13,8 @@ function createLoopNode(str, body, builder) {
         return builder.forEach(forDef);
     } else if (forDef.loopType === 'ForRange') {
         return builder.forRange(forDef);
+    } else if (forDef.loopType === 'ForEachProp') {
+        return builder.forEachProp(forDef);
     } else if (forDef.loopType === 'For') {
         return builder.forStatement(forDef);
     } else {
