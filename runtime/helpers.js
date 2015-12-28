@@ -21,9 +21,9 @@ var runtime = require('./'); // Circular dependency, but that is okay
 var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
-var forEach = require('raptor-util/forEach');
 var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var logger = require('raptor-logging').logger(module);
+var isArray = Array.isArray;
 
 function notEmpty(o) {
     if (o == null) {
@@ -104,7 +104,16 @@ module.exports = {
      * Internal helper method to handle loops without a status variable
      * @private
      */
-    f: forEach,
+    f: function forEach(array, callback) {
+        if (isArray(array)) {
+            for (var i=0; i<array.length; i++) {
+                callback(array[i]);
+            }
+        } else if (typeof array === 'function') {
+            // Also allow the first argument to be a custom iterator function
+            array(callback);
+        }
+    },
     /**
      * Internal helper method to handle native for loops
      * @private
