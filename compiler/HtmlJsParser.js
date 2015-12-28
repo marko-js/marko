@@ -37,12 +37,12 @@ class HtmlJsParser {
 
             ondtd(event) {
                 // DTD (e.g. <DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0//EN">)
-                handlers.handleText(event.dtd);
+                handlers.handleCharacters(event.dtd);
             },
 
             ondeclaration(event) {
                 // Declaration (e.g. <?xml version="1.0" encoding="UTF-8" ?>)
-                handlers.handleText(event.declaration);
+                handlers.handleCharacters(event.declaration);
             },
 
             oncomment(event) {
