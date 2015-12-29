@@ -11,33 +11,33 @@ class UnaryExpression extends Node {
         this.prefix = def.prefix === true;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var argument = this.argument;
         var operator = this.operator;
         var prefix = this.prefix;
 
         if (prefix) {
-            generator.write(operator);
+            codegen.write(operator);
 
             if (operator === 'typeof') {
-                generator.write(' ');
+                codegen.write(' ');
             }
         }
 
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            generator.write('(');
+            codegen.write('(');
         }
 
-        generator.generateCode(argument);
+        codegen.generateCode(argument);
 
         if (wrap) {
-            generator.write(')');
+            codegen.write(')');
         }
 
         if (!prefix) {
-            generator.write(operator);
+            codegen.write(operator);
         }
     }
 

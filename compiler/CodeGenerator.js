@@ -9,19 +9,19 @@ const Container = require('./ast/Container');
 const util = require('util');
 
 class Slot {
-    constructor(generator, slotNode) {
+    constructor(codegen, slotNode) {
         this._content = null;
 
-        this._start = generator._code.length;
-        generator.write('/* slot */');
+        this._start = codegen._code.length;
+        codegen.write('/* slot */');
 
         if (slotNode.statement) {
-            generator.write('\n');
+            codegen.write('\n');
         }
-        this._end = generator._code.length;
+        this._end = codegen._code.length;
 
-        this._currentIndent = generator._currentIndent;
-        this._inFunction = generator.inFunction;
+        this._currentIndent = codegen._currentIndent;
+        this._inFunction = codegen.inFunction;
         this._statement = slotNode.statement;
     }
 
@@ -29,36 +29,36 @@ class Slot {
         this._content = content;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         let content = this._content;
         let slotCode;
 
         if (content) {
             let isStatement = this._statement;
 
-            generator._currentIndent = this._currentIndent;
-            generator.inFunction = this._inFunction;
+            codegen._currentIndent = this._currentIndent;
+            codegen.inFunction = this._inFunction;
 
-            let capture = generator._beginCaptureCode();
+            let capture = codegen._beginCaptureCode();
 
             if (isArray(content) || (content instanceof Container)) {
                 content.forEach((node) => {
                     node.statement = isStatement;
-                    generator.generateCode(node);
+                    codegen.generateCode(node);
                 });
             } else {
                 content.statement = isStatement;
-                generator.generateCode(content);
+                codegen.generateCode(content);
             }
 
             slotCode = capture.end();
         }
 
-        let oldCode = generator._code;
+        let oldCode = codegen._code;
         let beforeCode = oldCode.substring(0, this._start);
         let afterCode = oldCode.substring(this._end);
 
-        generator._code = beforeCode + (slotCode || '') + afterCode;
+        codegen._code = beforeCode + (slotCode || '') + afterCode;
     }
 }
 
@@ -83,7 +83,7 @@ class Generator {
 
         ok(this.builder, '"this.builder" is required');
 
-        this._generatorCodeMethodName = 'generate' +
+        this._codegenCodeMethodName = 'generate' +
             this.outputType.charAt(0).toUpperCase() +
             this.outputType.substring(1) +
             'Code';
@@ -153,10 +153,10 @@ class Generator {
             let generateCodeMethod = node.generateCode;
 
             if (!generateCodeMethod) {
-                generateCodeMethod = node[this._generatorCodeMethodName];
+                generateCodeMethod = node[this._codegenCodeMethodName];
 
                 if (!generateCodeMethod) {
-                    throw new Error('No code generator for node of type "' +
+                    throw new Error('No code codegen for node of type "' +
                         node.type +
                         '" (output type: "' + this.outputType + '"). Node: ' + util.inspect(node));
                 }
@@ -299,10 +299,10 @@ class Generator {
         this._code = '';
 
         return {
-            generator: this,
+            codegen: this,
             end() {
-                let newCode = this.generator._code;
-                this.generator._code = oldCode;
+                let newCode = this.codegen._code;
+                this.codegen._code = oldCode;
                 return newCode;
             }
         };

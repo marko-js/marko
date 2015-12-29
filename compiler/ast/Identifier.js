@@ -8,9 +8,9 @@ class Identifier extends Node {
         this.name = def.name;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var name = this.name;
-        generator.write(name);
+        codegen.write(name);
     }
 }
 

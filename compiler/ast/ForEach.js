@@ -16,14 +16,14 @@ class ForEach extends Node {
         ok(this.in != null, '"in" is required');
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var varName = this.varName;
         var inExpression = this.in;
         var separator = this.separator;
         var statusVarName = this.statusVarName;
         var iterator = this.iterator;
 
-        var builder = generator.builder;
+        var builder = codegen.builder;
 
         if (separator && !statusVarName) {
             statusVarName = '__loop';
@@ -41,7 +41,7 @@ class ForEach extends Node {
                 builder.functionDeclaration(null, params, this.body)
             ]);
         } else if (statusVarName) {
-            let forEachVarName = generator.addStaticVar('forEachWithStatusVar', '__helpers.fv');
+            let forEachVarName = codegen.addStaticVar('forEachWithStatusVar', '__helpers.fv');
             let body = this.body;
 
             if (separator) {
@@ -63,7 +63,7 @@ class ForEach extends Node {
                 builder.functionDeclaration(null, [varName, statusVarName], body)
             ]);
         } else {
-            let forEachVarName = generator.addStaticVar('forEach', '__helpers.f');
+            let forEachVarName = codegen.addStaticVar('forEach', '__helpers.f');
 
             return builder.functionCall(forEachVarName, [
                 inExpression,

@@ -4,19 +4,19 @@ module.exports = function(builder) {
     var vars = [];
 
     return builder.program([
-            builder.slot((slot, generator) => {
-                slot.setContent(generator.builder.vars(vars));
+            builder.slot((slot, codegen) => {
+                slot.setContent(codegen.builder.vars(vars));
             }),
-            builder.node(function(node, generator) {
+            builder.node(function(node, codegen) {
                 vars.push({
                     id: 'foo',
-                    init: generator.builder.literal('abc')
+                    init: codegen.builder.literal('abc')
                 });
             }),
-            builder.node(function(node, generator) {
+            builder.node(function(node, codegen) {
                 vars.push({
                     id: 'bar',
-                    init: generator.builder.literal(123)
+                    init: codegen.builder.literal(123)
                 });
             })
         ]);

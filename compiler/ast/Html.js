@@ -12,9 +12,9 @@ class Html extends Node {
         return this.argument instanceof Node && this.argument.type === 'Literal';
     }
 
-    generateHtmlCode(generator) {
+    generateHtmlCode(codegen) {
         let argument = this.argument;
-        generator.addWrite(argument);
+        codegen.addWrite(argument);
     }
 }
 

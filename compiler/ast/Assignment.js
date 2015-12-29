@@ -10,24 +10,24 @@ class Assignment extends Node {
         this.operator = def.operator;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var left = this.left;
         var right = this.right;
         var operator = this.operator;
 
-        generator.generateCode(left);
-        generator.write(' '  + (operator || '=') + ' ');
+        codegen.generateCode(left);
+        codegen.write(' '  + (operator || '=') + ' ');
 
         var wrap = right instanceof Assignment;
 
         if (wrap) {
-            generator.write('(');
+            codegen.write('(');
         }
 
-        generator.generateCode(right);
+        codegen.generateCode(right);
 
         if (wrap) {
-            generator.write(')');
+            codegen.write(')');
         }
     }
 

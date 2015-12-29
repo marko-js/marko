@@ -11,35 +11,35 @@ class ForStatement extends Node {
         this.body = this.makeContainer(def.body);
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var init = this.init;
         var test = this.test;
         var update = this.update;
         var body = this.body;
 
-        generator.write('for (');
+        codegen.write('for (');
 
         if (init) {
-            generator.generateCode(init);
+            codegen.generateCode(init);
         }
 
-        generator.write('; ');
+        codegen.write('; ');
 
         if (test) {
-            generator.generateCode(test);
+            codegen.generateCode(test);
         }
 
-        generator.write('; ');
+        codegen.write('; ');
 
         if (update) {
-            generator.generateCode(update);
+            codegen.generateCode(update);
         }
 
-        generator.write(') ');
+        codegen.write(') ');
 
-        generator.generateBlock(body);
+        codegen.generateBlock(body);
 
-        generator.write('\n');
+        codegen.write('\n');
     }
 }
 

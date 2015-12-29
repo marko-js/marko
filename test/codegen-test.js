@@ -12,7 +12,7 @@ var autotest = require('./autotest');
 var CompileContext = require('../compiler/CompileContext');
 var CodeGenerator = require('../compiler/CodeGenerator');
 
-function createGenerator() {
+function createCodeGenerator() {
     var context = new CompileContext('dummy', 'dummy.marko', builder);
     return new CodeGenerator(context);
 }
@@ -24,9 +24,9 @@ describe('compiler/codegen', function() {
         var main = require(path.join(dir, 'index.js'));
         var generateCodeFunc = main;
         var ast = generateCodeFunc(builder);
-        var generator = createGenerator();
-        generator.generateCode(ast);
-        return generator.getCode();
+        var codegen = createCodeGenerator();
+        codegen.generateCode(ast);
+        return codegen.getCode();
     });
 
     it('should not allow a return outside a function', function() {
@@ -37,8 +37,8 @@ describe('compiler/codegen', function() {
                 builder.returnStatement('foo')
             ]);
 
-            var generator = createGenerator();
-            generator.generateCode(rootNode);
+            var codegen = createCodeGenerator();
+            codegen.generateCode(rootNode);
         }).to.throw('"return" not allowed outside a function body');
     });
 });

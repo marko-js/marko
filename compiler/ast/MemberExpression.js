@@ -10,20 +10,20 @@ class MemberExpression extends Node {
         this.computed = def.computed;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var object = this.object;
         var property = this.property;
         var computed = this.computed;
 
-        generator.generateCode(object);
+        codegen.generateCode(object);
 
         if (computed) {
-            generator.write('[');
-            generator.generateCode(property);
-            generator.write(']');
+            codegen.write('[');
+            codegen.generateCode(property);
+            codegen.write(']');
         } else {
-            generator.write('.');
-            generator.generateCode(property);
+            codegen.write('.');
+            codegen.generateCode(property);
         }
     }
 

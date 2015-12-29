@@ -17,7 +17,7 @@ class If extends Node {
         this.else = def.else;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
 
         if (this.else) {
             this.else.matched = true;
@@ -62,15 +62,15 @@ class If extends Node {
         var test = this.test;
         var body = this.body;
 
-        generator.write('if (');
-        generator.generateCode(test);
-        generator.write(') ');
-        generator.generateBlock(body);
+        codegen.write('if (');
+        codegen.generateCode(test);
+        codegen.write(') ');
+        codegen.generateBlock(body);
         if (this.else) {
-            generator.write(' ');
-            generator.generateCode(this.else);
+            codegen.write(' ');
+            codegen.generateCode(this.else);
         } else {
-            generator.write('\n');
+            codegen.write('\n');
         }
     }
 

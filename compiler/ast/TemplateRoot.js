@@ -17,14 +17,14 @@ class TemplateRoot extends Node {
         this.body = this.makeContainer(def.body);
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var body = this.body;
-        generator.addStaticVar('str', '__helpers.s');
-        generator.addStaticVar('empty', '__helpers.e');
-        generator.addStaticVar('notEmpty', '__helpers.ne');
-        generator.addStaticVar('escapeXml', '__helpers.x');
+        codegen.addStaticVar('str', '__helpers.s');
+        codegen.addStaticVar('empty', '__helpers.e');
+        codegen.addStaticVar('notEmpty', '__helpers.ne');
+        codegen.addStaticVar('escapeXml', '__helpers.x');
 
-        var builder = generator.builder;
+        var builder = codegen.builder;
         var program = builder.program;
         var functionDeclaration = builder.functionDeclaration;
         var vars = builder.vars;
@@ -43,9 +43,9 @@ class TemplateRoot extends Node {
             '(module.exports = require("marko").c(__filename)).c(create)'
         ]);
 
-        generator.generateCode(outputNode);
+        codegen.generateCode(outputNode);
 
-        var staticVars = generator.getStaticVars();
+        var staticVars = codegen.getStaticVars();
 
         staticsSlot.setContent([
             vars(createVarsArray(staticVars))

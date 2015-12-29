@@ -36,12 +36,12 @@ class HtmlElement extends Node {
         this._dynamicAttributesExpressionArray = undefined;
     }
 
-    generateHtmlCode(generator) {
+    generateHtmlCode(codegen) {
         var tagName = this.tagName;
 
         // Convert the tag name into a Node so that we generate the code correctly
         if (tagName) {
-            tagName = generator.builder.literal(tagName);
+            tagName = codegen.builder.literal(tagName);
         } else {
             tagName = this.dynamicTagName;
         }
@@ -50,12 +50,12 @@ class HtmlElement extends Node {
         var startTagOnly = this.startTagOnly;
         var allowSelfClosing = this.allowSelfClosing;
         var hasBody = body && body.length;
-        var builder = generator.builder;
+        var builder = codegen.builder;
 
         // Starting tag
-        generator.addWriteLiteral('<');
+        codegen.addWriteLiteral('<');
 
-        generator.addWrite(tagName);
+        codegen.addWrite(tagName);
 
         var attributes = this._attributes && this._attributes.all;
 
@@ -69,51 +69,51 @@ class HtmlElement extends Node {
                     var literalValue = attrValue.value;
                     if (typeof literalValue === 'boolean') {
                         if (literalValue === true) {
-                            generator.addWriteLiteral(' ' + attrName);
+                            codegen.addWriteLiteral(' ' + attrName);
                         }
                     } else if (literalValue != null) {
-                        generator.addWriteLiteral(' ' + attrName + '="' + escapeXmlAttr(literalValue) + '"');
+                        codegen.addWriteLiteral(' ' + attrName + '="' + escapeXmlAttr(literalValue) + '"');
                     }
 
                 } else if (attrValue) {
-                    generator.addWriteLiteral(' ' + attrName + '="');
-                    generator.isInAttribute = true;
+                    codegen.addWriteLiteral(' ' + attrName + '="');
+                    codegen.isInAttribute = true;
                     // TODO Deal with escaping dynamic HTML attribute expression
-                    generator.addWrite(attrValue);
-                    generator.isInAttribute = false;
-                    generator.addWriteLiteral('"');
+                    codegen.addWrite(attrValue);
+                    codegen.isInAttribute = false;
+                    codegen.addWriteLiteral('"');
                 } else if (attr.argument) {
-                    generator.addWriteLiteral(' ' + attrName + '(');
-                    generator.addWriteLiteral(attr.argument);
-                    generator.addWriteLiteral(')');
+                    codegen.addWriteLiteral(' ' + attrName + '(');
+                    codegen.addWriteLiteral(attr.argument);
+                    codegen.addWriteLiteral(')');
                 }
             }
         }
 
         if (this._dynamicAttributesExpressionArray) {
             this._dynamicAttributesExpressionArray.forEach(function(attrsExpression) {
-                generator.addStaticVar('attrs', '__helpers.as');
+                codegen.addStaticVar('attrs', '__helpers.as');
                 let attrsFunctionCall = builder.functionCall('attrs', [attrsExpression]);
-                generator.addWrite(attrsFunctionCall);
+                codegen.addWrite(attrsFunctionCall);
             });
         }
 
         // Body
         if (hasBody) {
-            generator.addWriteLiteral('>');
-            generator.generateStatements(body);
-            generator.addWriteLiteral('</');
-            generator.addWrite(tagName);
-            generator.addWriteLiteral('>');
+            codegen.addWriteLiteral('>');
+            codegen.generateStatements(body);
+            codegen.addWriteLiteral('</');
+            codegen.addWrite(tagName);
+            codegen.addWriteLiteral('>');
         } else {
             if (startTagOnly) {
-                generator.addWriteLiteral('>');
+                codegen.addWriteLiteral('>');
             } else if (allowSelfClosing) {
-                generator.addWriteLiteral('/>');
+                codegen.addWriteLiteral('/>');
             } else {
-                generator.addWriteLiteral('></');
-                generator.addWrite(tagName);
-                generator.addWriteLiteral('>');
+                codegen.addWriteLiteral('></');
+                codegen.addWrite(tagName);
+                codegen.addWriteLiteral('>');
             }
         }
     }

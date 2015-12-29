@@ -1,18 +1,18 @@
 var createLoopNode = require('./util/createLoopNode');
 
-module.exports = function codeGenerator(elNode, generator) {
+module.exports = function codeGenerator(elNode, codegen) {
     var argument = elNode.argument;
     if (!argument) {
-        generator.addError('Invalid <for> tag. Argument is missing. Example; <for(color in colors)>');
+        codegen.addError('Invalid <for> tag. Argument is missing. Example; <for(color in colors)>');
         return elNode;
     }
 
-    var builder = generator.builder;
+    var builder = codegen.builder;
 
     var loopNode = createLoopNode(argument, elNode.body, builder);
 
     if (loopNode.error) {
-        generator.addError(loopNode.error);
+        codegen.addError(loopNode.error);
         return elNode;
     }
 

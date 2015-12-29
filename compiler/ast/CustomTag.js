@@ -68,12 +68,12 @@ class CustomTag extends HtmlElement {
         this.tagDef = tagDef;
     }
 
-    generateCode(generator) {
-        var loadRendererVar = generator.addStaticVar('__renderer', '__helpers.r');
-        var tagVar = generator.addStaticVar('__tag', '__helpers.t');
+    generateCode(codegen) {
+        var loadRendererVar = codegen.addStaticVar('__renderer', '__helpers.r');
+        var tagVar = codegen.addStaticVar('__tag', '__helpers.t');
 
-        var builder = generator.builder;
-        var context = generator.context;
+        var builder = codegen.builder;
+        var context = codegen.context;
 
         var tagDef = this.tagDef;
 
@@ -83,7 +83,7 @@ class CustomTag extends HtmlElement {
             let requireRendererFunctionCall = builder.require(JSON.stringify(rendererRequirePath));
             let loadRendererFunctionCall = builder.functionCall(loadRendererVar, [ requireRendererFunctionCall ]);
 
-            let rendererVar = generator.addStaticVar(removeExt(rendererPath), loadRendererFunctionCall);
+            let rendererVar = codegen.addStaticVar(removeExt(rendererPath), loadRendererFunctionCall);
             var inputProps = buildInputProps(this, context);
             var tagArgs = [ 'out', rendererVar, inputProps ];
             var tagFunctionCall = builder.functionCall(tagVar, tagArgs);

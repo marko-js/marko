@@ -8,9 +8,9 @@ class Literal extends Node {
         this.value = def.value;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var value = this.value;
-        generator.writeLiteral(value);
+        codegen.writeLiteral(value);
     }
 }
 

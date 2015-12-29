@@ -8,13 +8,13 @@ class HtmlComment extends Node {
         this.comment = def.comment;
     }
 
-    generateHtmlCode(generator) {
+    generateHtmlCode(codegen) {
         var comment = this.comment;
-        var literal = generator.builder.literal;
+        var literal = codegen.builder.literal;
 
-        generator.addWrite(literal('<--'));
-        generator.addWrite(comment);
-        generator.addWrite(literal('-->'));
+        codegen.addWrite(literal('<--'));
+        codegen.addWrite(comment);
+        codegen.addWrite(literal('-->'));
     }
 }
 

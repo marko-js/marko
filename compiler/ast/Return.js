@@ -8,17 +8,17 @@ class Return extends Node {
         this.argument = def.argument;
     }
 
-    generateCode(generator) {
-        if (!generator.inFunction) {
+    generateCode(codegen) {
+        if (!codegen.inFunction) {
             throw new Error('"return" not allowed outside a function body');
         }
 
         var argument = this.argument;
 
-        generator.write('return ');
+        codegen.write('return ');
 
         if (argument) {
-            generator.generateCode(argument);
+            codegen.generateCode(argument);
         }
     }
 }

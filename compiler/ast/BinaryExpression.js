@@ -3,17 +3,17 @@
 var Node = require('./Node');
 var isCompoundExpression = require('../util/isCompoundExpression');
 
-function generateCodeForOperand(node, generator) {
+function generateCodeForOperand(node, codegen) {
     var wrap = isCompoundExpression(node);
 
     if (wrap) {
-        generator.write('(');
+        codegen.write('(');
     }
 
-    generator.generateCode(node);
+    codegen.generateCode(node);
 
     if (wrap) {
-        generator.write(')');
+        codegen.write(')');
     }
 }
 
@@ -25,7 +25,7 @@ class BinaryExpression extends Node {
         this.right = def.right;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var left = this.left;
         var operator = this.operator;
         var right = this.right;
@@ -34,11 +34,11 @@ class BinaryExpression extends Node {
             throw new Error('Invalid BinaryExpression: ' + this);
         }
 
-        generateCodeForOperand(left, generator);
-        generator.write(' ');
-        generator.generateCode(operator);
-        generator.write(' ');
-        generateCodeForOperand(right, generator);
+        generateCodeForOperand(left, codegen);
+        codegen.write(' ');
+        codegen.generateCode(operator);
+        codegen.write(' ');
+        generateCodeForOperand(right, codegen);
     }
 
     isCompoundExpression() {

@@ -1,5 +1,5 @@
-module.exports = function generateCode(elNode, generator) {
-    var builder = generator.builder;
+module.exports = function generateCode(elNode, codegen) {
+    var builder = codegen.builder;
     elNode.setAttributeValue('foo', builder.literal('bar'));
     return elNode;
 };

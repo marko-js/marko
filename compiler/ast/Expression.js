@@ -10,8 +10,8 @@ class Expression extends Node {
         ok(this.value != null, 'Invalid expression');
     }
 
-    generateCode(generator) {
-        generator.generateCode(this.value);
+    generateCode(codegen) {
+        codegen.generateCode(this.value);
     }
 
     isCompoundExpression() {

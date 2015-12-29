@@ -11,15 +11,15 @@ class ElseIf extends Node {
         this.matched = false;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         if (!this.matched) {
-            generator.addError('Unmatched else statement');
+            codegen.addError('Unmatched else statement');
             return;
         }
 
-        var ifStatement = generator.builder.ifStatement(this.test, this.body, this.else);
-        generator.write('else ');
-        generator.generateCode(ifStatement);
+        var ifStatement = codegen.builder.ifStatement(this.test, this.body, this.else);
+        codegen.write('else ');
+        codegen.generateCode(ifStatement);
     }
 }
 

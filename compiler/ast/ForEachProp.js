@@ -15,15 +15,15 @@ class ForEachProp extends Node {
         ok(this.in != null, '"in" is required');
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var nameVarName = this.nameVarName;
         var valueVarName = this.valueVarName;
         var inExpression = this.in;
         var body = this.body;
 
-        var builder = generator.builder;
+        var builder = codegen.builder;
 
-        let forEachVarName = generator.addStaticVar('forEachProp', '__helpers.fp');
+        let forEachVarName = codegen.addStaticVar('forEachProp', '__helpers.fp');
 
         return builder.functionCall(forEachVarName, [
             inExpression,

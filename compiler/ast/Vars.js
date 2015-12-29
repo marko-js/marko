@@ -11,7 +11,7 @@ class Vars extends Node {
         this.body = this.makeContainer(def.body);
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var declarations = this.declarations;
         var kind = this.kind;
         var isStatement = this.statement;
@@ -21,7 +21,7 @@ class Vars extends Node {
 
         if(!selfInvoking && hasBody) {
             this.setFlag('selfInvoking');
-            return generator.builder.selfInvokingFunction([ this ]);
+            return codegen.builder.selfInvokingFunction([ this ]);
         }
 
         if (!declarations || !declarations.length) {
@@ -32,10 +32,10 @@ class Vars extends Node {
             var declaration = declarations[i];
 
             if (i === 0) {
-                generator.write(kind + ' ');
+                codegen.write(kind + ' ');
             } else {
-                generator.incIndent(4);
-                generator.writeLineIndent();
+                codegen.incIndent(4);
+                codegen.writeLineIndent();
             }
 
             var varId = declaration.id || declaration.name;
@@ -45,7 +45,7 @@ class Vars extends Node {
             }
 
             // TODO Validate the variable name
-            generator.generateCode(varId);
+            codegen.generateCode(varId);
 
             var initValue;
             if (declaration.hasOwnProperty('init')) {
@@ -55,24 +55,24 @@ class Vars extends Node {
             }
 
             if (initValue != null) {
-                generator.write(' = ');
-                generator.generateCode(initValue);
+                codegen.write(' = ');
+                codegen.generateCode(initValue);
             }
 
             if (i !== 0) {
-                generator.decIndent(4);
+                codegen.decIndent(4);
             }
 
             if (i < declarations.length - 1) {
-                generator.write(',\n');
+                codegen.write(',\n');
             } else {
                 if (isStatement) {
-                    generator.write(';\n');
+                    codegen.write(';\n');
                 }
             }
         }
         if(hasBody) {
-            generator.generateCode(body);
+            codegen.generateCode(body);
         }
     }
 }

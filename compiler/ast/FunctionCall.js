@@ -13,29 +13,29 @@ class FunctionCall extends Node {
         }
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var callee = this.callee;
         var args = this.args;
 
-        generator.generateCode(callee);
+        codegen.generateCode(callee);
 
-        generator.write('(');
+        codegen.write('(');
 
         if (args && args.length) {
             for (let i=0, argsLen = args.length; i<argsLen; i++) {
                 if (i !== 0) {
-                    generator.write(', ');
+                    codegen.write(', ');
                 }
 
                 let arg = args[i];
                 if (!arg) {
                     throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON()));
                 }
-                generator.generateCode(arg);
+                codegen.generateCode(arg);
             }
         }
 
-        generator.write(')');
+        codegen.write(')');
     }
 }
 

@@ -38,7 +38,7 @@ class Text extends Node {
         return this.argument instanceof Node && this.argument.type === 'Literal';
     }
 
-    generateHtmlCode(generator) {
+    generateHtmlCode(codegen) {
         this.normalizeText();
 
         var argument = this.argument;
@@ -48,7 +48,7 @@ class Text extends Node {
                 return;
             }
         } else {
-            let builder = generator.builder;
+            let builder = codegen.builder;
 
             // TODO Only escape if necessary
             argument = builder.functionCall(
@@ -56,10 +56,10 @@ class Text extends Node {
                 [argument]);
         }
 
-        generator.addWrite(argument);
+        codegen.addWrite(argument);
     }
 
-    normalizeText(generator) {
+    normalizeText(codegen) {
         if (this.normalized) {
             return;
         }

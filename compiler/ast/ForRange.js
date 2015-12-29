@@ -17,13 +17,13 @@ class ForRange extends Node {
         ok(this.from != null, '"from" is required');
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var varName = this.varName;
         var from = this.from;
         var to = this.to;
         var step = this.step;
 
-        var builder = generator.builder;
+        var builder = codegen.builder;
 
         var comparison = '<=';
 

@@ -9,16 +9,16 @@ class Else extends Node {
         this.matched = false;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         if (!this.matched) {
-            generator.addError('Unmatched else statement');
+            codegen.addError('Unmatched else statement');
             return;
         }
         var body = this.body;
 
-        generator.write('else ');
-        generator.generateBlock(body);
-        generator.write('\n');
+        codegen.write('else ');
+        codegen.generateBlock(body);
+        codegen.write('\n');
     }
 }
 

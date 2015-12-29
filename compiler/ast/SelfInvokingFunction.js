@@ -10,17 +10,17 @@ class SelfInvokingFunction extends Node {
         this.body = this.makeContainer(def.body);
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var params = this.params || [];
         var args = this.args || [];
         var body = this.body;
 
-        generator.write('(');
-        var functionDeclaration = generator.builder.functionDeclaration(null, params, body);
-        var functionCall = generator.builder.functionCall(functionDeclaration, args);
-        generator.generateCode(functionCall);
+        codegen.write('(');
+        var functionDeclaration = codegen.builder.functionDeclaration(null, params, body);
+        var functionCall = codegen.builder.functionCall(functionDeclaration, args);
+        codegen.generateCode(functionCall);
 
-        generator.write(')');
+        codegen.write(')');
     }
 }
 

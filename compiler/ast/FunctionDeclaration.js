@@ -11,7 +11,7 @@ class FunctionDeclaration extends Node {
         this.body = this.makeContainer(def.body);
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var name = this.name;
         var params = this.params;
         var body = this.body;
@@ -21,34 +21,34 @@ class FunctionDeclaration extends Node {
             ok(typeof name === 'string', 'Function name should be a string');
         }
 
-        generator.write('function' + (name ? ' ' + name : '') + '(');
+        codegen.write('function' + (name ? ' ' + name : '') + '(');
 
         if (params && params.length) {
             for (let i=0, paramsLen = params.length; i<paramsLen; i++) {
                 if (i !== 0) {
-                    generator.write(', ');
+                    codegen.write(', ');
                 }
                 var param = params[i];
 
                 if (typeof param === 'string') {
-                    generator.write(param);
+                    codegen.write(param);
                 } else {
                     if (param.type !== 'Identifier') {
                         throw new Error('Illegal param: ' + param);
                     }
-                    generator.generateCode(param);
+                    codegen.generateCode(param);
                 }
             }
         }
 
-        generator.write(') ');
-        var oldInFunction = generator.inFunction;
-        generator.inFunction = true;
-        generator.generateBlock(body);
-        generator.inFunction = oldInFunction;
+        codegen.write(') ');
+        var oldInFunction = codegen.inFunction;
+        codegen.inFunction = true;
+        codegen.generateBlock(body);
+        codegen.inFunction = oldInFunction;
 
         if (statement) {
-            generator.write('\n');
+            codegen.write('\n');
         }
     }
 

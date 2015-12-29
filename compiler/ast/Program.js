@@ -7,12 +7,12 @@ class Program extends Node {
         this.body = def.body;
     }
 
-    generateCode(generator) {
+    generateCode(codegen) {
         var body = this.body;
-        generator.generateStatements(body);
-        if (generator._bufferedWrites) {
-            generator._write('\n');
-            generator._flushBufferedWrites();
+        codegen.generateStatements(body);
+        if (codegen._bufferedWrites) {
+            codegen._write('\n');
+            codegen._flushBufferedWrites();
         }
     }
 }

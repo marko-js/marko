@@ -165,7 +165,7 @@ TagHandlers.prototype = {
      * A custom tag can be mapped to module that is is used
      * to generate compile-time code for the custom tag. A
      * node type is created based on the methods and methods
-     * exported by the code generator module.
+     * exported by the code codegen module.
      */
     codeGenerator: function(value) {
         var tag = this.tag;
