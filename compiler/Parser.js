@@ -20,10 +20,7 @@ function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
 }
 
-function parseExpression(expression) {
-    // TODO Build an AST from the String expression
-    return expression;
-}
+var parseExpression = require('./util/parseExpression');
 
 class Parser {
     constructor(parserImpl) {
@@ -122,7 +119,7 @@ class Parser {
                     name: attr.name,
                     value: isLiteral ?
                         builder.literal(attr.literalValue) :
-                        parseExpression(attr.expression)
+                        attr.expression == null ? undefined : parseExpression(attr.expression)
                 };
 
                 if (attr.argument) {
@@ -171,9 +168,11 @@ class Parser {
     handleBodyTextPlaceholder(expression, escape) {
         this.prevTextNode = null;
 
+        var parsedExpression = parseExpression(expression);
+
         var builder = this.context.builder;
 
-        var text = builder.text(expression, escape);
+        var text = builder.text(parsedExpression, escape);
         this.parentNode.appendChild(text);
     }
 

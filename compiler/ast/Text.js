@@ -49,11 +49,13 @@ class Text extends Node {
             }
         } else {
             let builder = codegen.builder;
-
-            // TODO Only escape if necessary
-            argument = builder.functionCall(
-                'escapeXml',
-                [argument]);
+            if (this.escape !== false) {
+                // TODO Only escape the parts that need to be escaped if it is a compound expression with static
+                //      text parts
+                argument = builder.functionCall(
+                    'escapeXml',
+                    [argument]);
+            }
         }
 
         codegen.addWrite(argument);
