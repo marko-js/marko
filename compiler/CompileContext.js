@@ -33,6 +33,7 @@ class CompileContext {
         this.data = {};
 
         this._staticVars = {};
+        this._staticCode = null;
         this._uniqueVars = new UniqueVars();
         this._srcCharProps = null;
         this._flags = {};
@@ -82,6 +83,22 @@ class CompileContext {
 
     getStaticVars() {
         return this._staticVars;
+    }
+
+    addStaticCode(code) {
+        if (!code) {
+            return;
+        }
+
+        if (this._staticCode == null) {
+            this._staticCode = [code];
+        } else {
+            this._staticCode.push(code);
+        }
+    }
+
+    getStaticCode() {
+        return this._staticCode;
     }
 
     createNodeForEl(tagName, attributes, argument) {
@@ -174,6 +191,8 @@ class CompileContext {
                     }
                 }
             });
+
+            node.tagDef = tagDef;
         }
 
         return node;

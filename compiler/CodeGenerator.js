@@ -20,7 +20,7 @@ class Slot {
         }
         this._end = codegen._code.length;
 
-        this._currentIndent = codegen._currentIndent;
+        this.currentIndent = codegen.currentIndent;
         this._inFunction = codegen.inFunction;
         this._statement = slotNode.statement;
     }
@@ -36,23 +36,25 @@ class Slot {
         if (content) {
             let isStatement = this._statement;
 
-            codegen._currentIndent = this._currentIndent;
+            codegen.currentIndent = this.currentIndent;
             codegen.inFunction = this._inFunction;
 
             let capture = codegen._beginCaptureCode();
 
-            if (isArray(content) || (content instanceof Container)) {
-                content.forEach((node) => {
-                    node.statement = isStatement;
-                    codegen.generateCode(node);
-                });
+            if (isStatement) {
+                codegen.generateStatements(content);
             } else {
-                content.statement = isStatement;
                 codegen.generateCode(content);
             }
 
             slotCode = capture.end();
+
+            if (isStatement && slotCode.startsWith(codegen.currentIndent)) {
+                slotCode = slotCode.substring(codegen.currentIndent.length);
+            }
         }
+
+
 
         let oldCode = codegen._code;
         let beforeCode = oldCode.substring(0, this._start);
@@ -70,7 +72,7 @@ class Generator {
         this._indentSize = this._indentStr.length;
 
         this._code = '';
-        this._currentIndent = '';
+        this.currentIndent = '';
         this.inFunction = false;
 
         this._doneListeners = [];
@@ -103,8 +105,16 @@ class Generator {
         return this.context.addStaticVar(name, value);
     }
 
+    addStaticCode(code) {
+        this.context.addStaticCode(code);
+    }
+
     getStaticVars() {
         return this.context.getStaticVars();
+    }
+
+    getStaticCode() {
+        return this.context.getStaticCode();
     }
 
     generateCode(node) {
@@ -266,7 +276,7 @@ class Generator {
 
             let startCodeLen = this._code.length;
 
-            let currentIndent = this._currentIndent;
+            let currentIndent = this.currentIndent;
 
             if (!firstStatement) {
                 this._write('\n');
@@ -286,7 +296,11 @@ class Generator {
                 return;
             }
 
-            if (!this._code.endsWith('\n')) {
+            if (this._code.endsWith('\n')) {
+                // Do nothing
+            } else if (this._code.endsWith(';')) {
+                this._code += '\n';
+            } else {
                 this._code += ';\n';
             }
 
@@ -354,7 +368,7 @@ class Generator {
 
         this._bufferedWrites = null;
 
-        if (!addSeparator && !this._code.endsWith(this._currentIndent)) {
+        if (!addSeparator && !this._code.endsWith(this.currentIndent)) {
             this.writeLineIndent();
         }
 
@@ -377,7 +391,7 @@ class Generator {
         this._write(');\n');
 
         if (addSeparator) {
-            this._write('\n' + this._currentIndent);
+            this._write('\n' + this.currentIndent);
         }
     }
 
@@ -397,10 +411,10 @@ class Generator {
     incIndent(count) {
         if (count != null) {
             for (let i=0; i<count; i++) {
-                this._currentIndent += ' ';
+                this.currentIndent += ' ';
             }
         } else {
-            this._currentIndent += this._indentStr;
+            this.currentIndent += this._indentStr;
         }
 
         return this;
@@ -411,15 +425,15 @@ class Generator {
             count = this._indentSize;
         }
 
-        this._currentIndent = this._currentIndent.substring(
+        this.currentIndent = this.currentIndent.substring(
             0,
-            this._currentIndent.length - count);
+            this.currentIndent.length - count);
 
         return this;
     }
 
     writeLineIndent() {
-        this._code += this._currentIndent;
+        this._code += this.currentIndent;
         return this;
     }
 

@@ -46,10 +46,16 @@ class TemplateRoot extends Node {
         codegen.generateCode(outputNode);
 
         var staticVars = codegen.getStaticVars();
+        var staticCodeArray = codegen.getStaticCode();
 
-        staticsSlot.setContent([
-            vars(createVarsArray(staticVars))
-        ]);
+        var staticContent = [vars(createVarsArray(staticVars))];
+        if (staticCodeArray) {
+            staticCodeArray.forEach((code) => {
+                staticContent.push(builder.code(code));
+            });
+        }
+
+        staticsSlot.setContent(staticContent);
     }
 
     toJSON(prettyPrinter) {

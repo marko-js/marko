@@ -29,6 +29,8 @@ var BinaryExpression = require('./ast/BinaryExpression');
 var UpdateExpression = require('./ast/UpdateExpression');
 var UnaryExpression = require('./ast/UnaryExpression');
 var MemberExpression = require('./ast/MemberExpression');
+var Code = require('./ast/Code');
+
 var parseExpression = require('./util/parseExpression');
 
 function makeNode(arg) {
@@ -55,6 +57,10 @@ class Builder {
         left = makeNode(left);
         right = makeNode(right);
         return new BinaryExpression({left, operator, right});
+    }
+
+    code(value) {
+        return new Code({value});
     }
 
     elseStatement(body) {

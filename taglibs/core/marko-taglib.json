@@ -1,15 +1,19 @@
 {
+    "<else>": {
+        "node-factory": "./else-tag"
+    },
+    "<else-if>": {
+        "node-factory": "./else-if-tag"
+    },
     "<for>": {
         "code-generator": "./for-tag"
     },
     "<if>": {
         "node-factory": "./if-tag"
     },
-    "<else-if>": {
-        "node-factory": "./else-if-tag"
-    },
-    "<else>": {
-        "node-factory": "./else-tag"
+    "<template-init>": {
+        "code-generator": "./template-init-tag",
+        "body": "static-text"
     },
     "<var>": {
         "node-factory": "./var-tag"

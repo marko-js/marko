@@ -413,6 +413,18 @@ TagHandlers.prototype = {
         if (value === false) {
             this.tag.escapeXmlBody = false;
         }
+    },
+
+    /**
+     * Sends the body content type. This is used to control how the body
+     * content is parsed.
+     */
+    body: function(value) {
+        if (value === 'static-text' || value === 'parsed-text' || value === 'html') {
+            this.tag.body = value;
+        } else {
+            throw new Error('Invalid value for "body". Allowed: "static-text", "parsed-text" or "html"');
+        }
     }
 };
 

@@ -3,8 +3,7 @@ var htmljs = require('htmljs-parser');
 
 class HtmlJsParser {
     parse(src, handlers) {
-
-        var parser = htmljs.createParser({
+        var parser = this.parser = htmljs.createParser({
             ontext(event) {
                 handlers.handleCharacters(event.text);
             },
@@ -56,6 +55,14 @@ class HtmlJsParser {
         });
 
         parser.parse(src);
+    }
+
+    enterParsedTextContentState() {
+        this.parser.enterParsedTextContentState();
+    }
+
+    enterStaticTextContentState() {
+        this.parser.enterStaticTextContentState();
     }
 }
 

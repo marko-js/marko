@@ -50,6 +50,7 @@ class Tag{
         this.isRepeated = null;
         this.isNestedTag = false;
         this.parentTagName = null;
+        this.body = null;
         this.type = null; // Only applicable for nested tags
         this._nodeFactory = undefined;
     }

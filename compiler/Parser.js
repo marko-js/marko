@@ -132,6 +132,18 @@ class Parser {
 
         var node = this.context.createNodeForEl(elDef);
 
+        var tagDef = node.tagDef;
+        if (node.tagDef) {
+            var body = tagDef.body;
+            if (body) {
+                if (body === 'parsed-text') {
+                    this.parserImpl.enterParsedTextContentState();
+                } else if (body === 'static-text') {
+                    this.parserImpl.enterStaticTextContentState();
+                }
+            }
+        }
+
         this.parentNode.appendChild(node);
 
         this.stack.push({

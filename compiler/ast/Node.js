@@ -11,6 +11,7 @@ class Node {
         this.statement = false;
         this.container = null;
         this.pos = null; // The character index of the node in the original source file
+        this.tagDef = null; // The tag definition associated with this Node
         this._codeGeneratorFuncs = null;
         this._flags = {};
         this._transformersApplied = {};
@@ -77,6 +78,7 @@ class Node {
         delete result._codeGeneratorFuncs;
         delete result._flags;
         delete result.data;
+        delete result.tagDef;
         return result;
     }
 
@@ -141,6 +143,21 @@ class Node {
 
     isFlagSet(name) {
         return this._flags.hasOwnProperty(name);
+    }
+
+    get bodyText() {
+        var bodyText = '';
+
+        this.forEachChild((child) => {
+            if (child.type === 'Text') {
+                var childText = child.argument;
+                if (childText && childText.type === 'Literal') {
+                    bodyText += childText.value;
+                }
+            }
+        });
+
+        return bodyText;
     }
 
     get parentNode() {
