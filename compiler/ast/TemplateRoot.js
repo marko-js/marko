@@ -51,7 +51,7 @@ class TemplateRoot extends Node {
         var staticContent = [vars(createVarsArray(staticVars))];
         if (staticCodeArray) {
             staticCodeArray.forEach((code) => {
-                staticContent.push(builder.code(code));
+                staticContent.push(code);
             });
         }
 

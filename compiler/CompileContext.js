@@ -90,6 +90,12 @@ class CompileContext {
             return;
         }
 
+        if (typeof code === 'string') {
+            // Wrap the String code in a Code AST node so that
+            // the code will be indented properly
+            code = this.builder.code(code);
+        }
+
         if (this._staticCode == null) {
             this._staticCode = [code];
         } else {
