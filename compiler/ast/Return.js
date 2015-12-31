@@ -15,10 +15,11 @@ class Return extends Node {
 
         var argument = this.argument;
 
-        codegen.write('return ');
-
         if (argument) {
+            codegen.write('return ');
             codegen.generateCode(argument);
+        } else {
+            codegen.write('return');
         }
     }
 }
