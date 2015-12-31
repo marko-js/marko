@@ -102,6 +102,25 @@ builder.binaryExpression(
 foo < 99;
 ```
 
+### code(value)
+
+Returns a node that writes out arbitrary JavaScript code with the given value. The indentation of the provided code is adjusted for proper formatting.
+
+For example:
+
+```javascript
+builder.program([
+    builder.code('var a = 1;\nvar b = 2;'),
+    builder.assignment(builder.identifier('b'), builder.literal(3))
+])
+
+// Output code:
+var a = 1;
+var b = 2;
+
+b = 3;
+```
+
 ### elseStatement(body)
 
 Returns a node that generates the following code:
