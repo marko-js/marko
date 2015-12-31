@@ -1,22 +1,52 @@
 var splitLinesRegExp = /\r?\n/;
 var initialIndentationRegExp = /^\s+/;
 
-// var initialSpaceMatches = /^\s+/.exec(text);
-//             if (initialSpaceMatches) {
-//                 var indentMatches = /\n[^\n]*$/.exec(initialSpaceMatches[0]);
-//                 if (indentMatches) {
-//                     var indentRegExp = new RegExp(indentMatches[0].replace(/\n/g, '\\n'), 'g');
-//                     text = text.replace(indentRegExp, '\n');
-//                 }
-//                 text = text.replace(/^\s*/, '').replace(/\s*$/, '');
-//                 this.setText(text);
-//             }
+function removeInitialEmptyLines(lines) {
+    var i;
+
+    for (i=0; i<lines.length; i++) {
+        if (lines[i].trim() !== '') {
+            break;
+        }
+    }
+
+    if (i !== 0) {
+        lines = lines.slice(i);
+    }
+
+    return lines;
+}
+
+function removeTrailingEmptyLines(lines) {
+    var i;
+    var last = lines.length-1;
+
+    for (i=last; i>=0; i--) {
+        if (lines[i].trim() !== '') {
+            break;
+        }
+    }
+
+    if (i !== last) {
+        lines = lines.slice(0, i+1);
+    }
+
+    return lines;
+}
+
 function adjustIndent(str, newIndentation) {
     if (!str) {
         return str;
     }
 
     var lines = str.split(splitLinesRegExp);
+    lines = removeInitialEmptyLines(lines);
+    lines = removeTrailingEmptyLines(lines);
+
+    if (lines.length === 0) {
+        return '';
+    }
+
     var initialIndentationMatches = initialIndentationRegExp.exec(lines[0]);
 
     var indentation = initialIndentationMatches ? initialIndentationMatches[0] : '';
@@ -33,37 +63,8 @@ function adjustIndent(str, newIndentation) {
     });
 
     return newIndentation ?
-        newIndentation + lines.join('\n' + newIndentation) :
+        lines.join('\n' + newIndentation) :
         lines.join('\n');
 }
 
-// function adjustIndent(str, newIndentation) {
-//     if (!str) {
-//         return str;
-//     }
-//
-//     var lines = str.split(splitLinesRegExp);
-//     var initialIndentationMatches = initialIndentationRegExp.exec(lines[0]);
-//
-//     var indentation = initialIndentationMatches ? initialIndentationMatches[0] : '';
-//     if (!indentation && !newIndentation) {
-//         return str;
-//     }
-//
-//     var result = '';
-//
-//     lines.forEach((line, i) => {
-//         if (line.startsWith(indentation)) {
-//             line = line.substring(indentation.length);
-//         }
-//
-//         if (newIndentation) {
-//             line = newIndentation + line;
-//         }
-//
-//         result += line + '\n';
-//     });
-//
-//     return result;
-// }
 module.exports = adjustIndent;
