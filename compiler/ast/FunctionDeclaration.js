@@ -18,10 +18,16 @@ class FunctionDeclaration extends Node {
         var statement = this.statement;
 
         if (name != null) {
-            ok(typeof name === 'string', 'Function name should be a string');
+            ok(typeof name === 'string' || name.type === 'Identifier', 'Function name should be a string or Identifier');
         }
 
-        codegen.write('function' + (name ? ' ' + name : '') + '(');
+        if (name) {
+            codegen.write('function ');
+            codegen.generateCode(name);
+            codegen.write('(');
+        } else {
+            codegen.write('function(');
+        }
 
         if (params && params.length) {
             for (let i=0, paramsLen = params.length; i<paramsLen; i++) {
