@@ -5,51 +5,22 @@ var Literal = require('./Literal');
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
 var HtmlAttributeCollection = require('./HtmlAttributeCollection');
 
-class HtmlElement extends Node {
+class StartTag extends Node {
     constructor(def) {
-        super('HtmlElement');
+        super('StartTag');
 
-        var tagName = def.tagName;
-
-        this.tagName = null;
-        this.dynamicTagName = null;
-
-        if (tagName instanceof Node) {
-            if (tagName instanceof Literal) {
-                this.tagName = tagName.value;
-            } else {
-                this.dynamicTagName = tagName;
-            }
-        } else if (typeof tagName === 'string'){
-            this.tagName = tagName;
-        }
-
-        this._attributes = def.attributes;
-
-        if (!(this._attributes instanceof HtmlAttributeCollection)) {
-            this._attributes = new HtmlAttributeCollection(this._attributes);
-        }
-        this.body = this.makeContainer(def.body);
+        this.tagName = def.tagName;
+        this.attributes = def.attributes;
         this.argument = def.argument;
-        this.allowSelfClosing = false;
-        this.startTagOnly = false;
-        this._dynamicAttributesExpressionArray = undefined;
+        this.selfClosing = def.selfClosing;
+        this.dynamicAttributes = def.dynamicAttributes;
     }
 
-    generateHtmlCode(codegen) {
+    generateCode(codegen) {
         var tagName = this.tagName;
+        var selfClosing = this.selfClosing;
+        var dynamicAttributes = this.dynamicAttributes;
 
-        // Convert the tag name into a Node so that we generate the code correctly
-        if (tagName) {
-            tagName = codegen.builder.literal(tagName);
-        } else {
-            tagName = this.dynamicTagName;
-        }
-
-        var body = this.body;
-        var startTagOnly = this.startTagOnly;
-        var allowSelfClosing = this.allowSelfClosing;
-        var hasBody = body && body.length;
         var builder = codegen.builder;
 
         // Starting tag
@@ -57,7 +28,7 @@ class HtmlElement extends Node {
 
         codegen.addWrite(tagName);
 
-        var attributes = this._attributes && this._attributes.all;
+        var attributes = this.attributes;
 
         if (attributes) {
             for (let i=0; i<attributes.length; i++) {
@@ -90,40 +61,149 @@ class HtmlElement extends Node {
             }
         }
 
-        if (this._dynamicAttributesExpressionArray) {
-            this._dynamicAttributesExpressionArray.forEach(function(attrsExpression) {
+        if (dynamicAttributes) {
+            dynamicAttributes.forEach(function(attrsExpression) {
                 codegen.addStaticVar('attrs', '__helpers.as');
                 let attrsFunctionCall = builder.functionCall('attrs', [attrsExpression]);
                 codegen.addWrite(attrsFunctionCall);
             });
         }
 
-        // Body
-        if (hasBody) {
+        if (selfClosing) {
+            codegen.addWriteLiteral('/>');
+        } else {
             codegen.addWriteLiteral('>');
-            codegen.generateStatements(body);
-            codegen.addWriteLiteral('</');
-            codegen.addWrite(tagName);
-            codegen.addWriteLiteral('>');
+        }
+    }
+}
+
+class EndTag extends Node {
+    constructor(def) {
+        super('EndTag');
+        this.tagName = def.tagName;
+    }
+
+    generateCode(codegen) {
+        var tagName = this.tagName;
+        codegen.addWriteLiteral('</');
+        codegen.addWrite(tagName);
+        codegen.addWriteLiteral('>');
+    }
+}
+
+class HtmlElement extends Node {
+    constructor(def) {
+        super('HtmlElement');
+
+        var tagName = def.tagName;
+
+        this.tagName = null;
+        this.dynamicTagName = null;
+
+        if (tagName instanceof Node) {
+            if (tagName instanceof Literal) {
+                this.tagName = tagName.value;
+            } else {
+                this.dynamicTagName = tagName;
+            }
+        } else if (typeof tagName === 'string'){
+            this.tagName = tagName;
+        }
+
+        this._attributes = def.attributes;
+
+        if (!(this._attributes instanceof HtmlAttributeCollection)) {
+            this._attributes = new HtmlAttributeCollection(this._attributes);
+        }
+        this.body = this.makeContainer(def.body);
+        this.argument = def.argument;
+        this.allowSelfClosing = false;
+        this.startTagOnly = false;
+        this.dynamicAttributes = undefined;
+        this.bodyOnlyIf = undefined;
+    }
+
+    generateHtmlCode(codegen) {
+        var tagName = this.tagName;
+
+        // Convert the tag name into a Node so that we generate the code correctly
+        if (tagName) {
+            tagName = codegen.builder.literal(tagName);
+        } else {
+            tagName = this.dynamicTagName;
+        }
+
+        var attributes = this._attributes && this._attributes.all;
+        var body = this.body;
+        var argument = this.argument;
+        var hasBody = body && body.length;
+        var startTagOnly = this.startTagOnly;
+        var allowSelfClosing = this.allowSelfClosing === true;
+        var bodyOnlyIf = this.bodyOnlyIf;
+        var dynamicAttributes = this.dynamicAttributes;
+        var selfClosing = false;
+
+        var builder = codegen.builder;
+
+        if (hasBody || bodyOnlyIf) {
+            startTagOnly = false;
+            selfClosing = false;
+        } else {
+            if (allowSelfClosing) {
+                selfClosing = true;
+                startTagOnly = true;
+            }
+        }
+
+
+        var startTag = new StartTag({
+            tagName: tagName,
+            attributes: attributes,
+            argument: argument,
+            selfClosing: selfClosing,
+            dynamicAttributes: dynamicAttributes
+        });
+
+        var endTag;
+
+        if (!startTagOnly) {
+            endTag = new EndTag({
+                tagName: tagName
+            });
+        }
+
+        if (bodyOnlyIf) {
+            var startIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
+                startTag
+            ]);
+
+            var endIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
+                endTag
+            ]);
+
+            return [
+                startIf,
+                body,
+                endIf
+            ];
         } else {
             if (startTagOnly) {
-                codegen.addWriteLiteral('>');
-            } else if (allowSelfClosing) {
-                codegen.addWriteLiteral('/>');
+                codegen.generateCode(startTag);
             } else {
-                codegen.addWriteLiteral('></');
-                codegen.addWrite(tagName);
-                codegen.addWriteLiteral('>');
+                codegen.generateCode(startTag);
+                codegen.generateCode(body);
+                codegen.generateCode(endTag);
             }
+
         }
     }
 
     addDynamicAttributes(expression) {
-        if (!this._dynamicAttributesExpressionArray) {
-            this._dynamicAttributesExpressionArray = [];
+        if (!this.dynamicAttributes) {
+            this.dynamicAttributes = [];
         }
 
-        this._dynamicAttributesExpressionArray.push(expression);
+        this.dynamicAttributes.push(expression);
     }
 
     getAttribute(name) {
@@ -177,19 +257,20 @@ class HtmlElement extends Node {
         this.dynamicTagName = dynamicTagName;
     }
 
-    toString() {
-        var tagName = this.tagName;
-        return '<' + tagName + '>';
-    }
-
     toJSON() {
         return {
             type: this.type,
             tagName: this.tagName,
             attributes: this._attributes,
             argument: this.argument,
-            body: this.body
+            body: this.body,
+            bodyOnlyIf: this.bodyOnlyIf,
+            dynamicAttributes: this.dynamicAttributes
         };
+    }
+
+    setBodyOnlyIf(condition) {
+        this.bodyOnlyIf = condition;
     }
 }
 

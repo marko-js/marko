@@ -61,16 +61,12 @@ var coreAttrHandlers = [
     ],
     [
         'body-only-if', function(attr, node, el) {
-            throw new Error('body-only-if Not Implemented');
-            // var condition = attr.argument;
-            // if (!condition) {
-            //     this.addError('Invalid "body-only-if" attribute');
-            //     return;
-            // }
-            //
-            // if (el.nodeType !== '')
-            //
-            // el.setStripExpression(attr);
+            var condition = attr.argument;
+            if (!condition) {
+                return;
+            }
+
+            el.setBodyOnlyIf(condition);
         }
     ],
     [
@@ -91,25 +87,6 @@ class AttributeTransformer {
         this.el = el;
     }
 
-    transformNode(el) {
-        var node = el;
-        for (var i=0, len=coreAttrHandlers.length; i<len; i++) {
-            var attrHandler = coreAttrHandlers[i];
-            var name = attrHandler[0];
-            var attr = node.getAttribute(name);
-            if (attr != null) {
-                node.removeAttribute(name);
-                var newNode = this[name](attr, node, el);
-                if (newNode) {
-                    newNode.pos = node.pos;
-                    node = newNode;
-                }
-            }
-        }
-
-        return node;
-    }
-
     addError(message) {
         this.context.addError({
             node: this.el,
@@ -128,6 +105,7 @@ var attributeTransformers = AttributeTransformer.prototype;
 
 module.exports = function transform(el, context) {
     var attributeTransfomer;
+    var node = el;
 
     el.forEachAttribute((attr) => {
         let attrName = attr.name;
@@ -138,7 +116,11 @@ module.exports = function transform(el, context) {
             if (!attributeTransfomer) {
                 attributeTransfomer = new AttributeTransformer(context, el);
             }
-            attributeTransfomer[attrName](attr, el);
+            var newNode = attributeTransfomer[attrName](attr, node, el);
+            if (newNode) {
+                newNode.pos = node.pos;
+                node = newNode;
+            }
         }
     });
 };
