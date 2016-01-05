@@ -10,6 +10,7 @@ var PosInfo = require('./util/PosInfo');
 var CompileError = require('./CompileError');
 var path = require('path');
 var Node = require('./ast/Node');
+var macros = require('./util/macros');
 
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
@@ -38,6 +39,7 @@ class CompileContext {
         this._srcCharProps = null;
         this._flags = {};
         this._errors = [];
+        this._macros = null;
     }
 
     getPosInfo(pos) {
@@ -60,6 +62,23 @@ class CompileContext {
     }
 
     addError(errorInfo) {
+        if (errorInfo instanceof Node) {
+            let node = arguments[0];
+            let message = arguments[1];
+            let code = arguments[2];
+            errorInfo = {
+                node,
+                message,
+                code
+            };
+        } else if (typeof errorInfo === 'string') {
+            let message = arguments[0];
+            let code = arguments[1];
+            errorInfo = {
+                message,
+                code
+            };
+        }
         this._errors.push(new CompileError(errorInfo, this));
     }
 
@@ -202,6 +221,30 @@ class CompileContext {
         }
 
         return node;
+    }
+
+    isMacro(name) {
+        if (!this._macros) {
+            return false;
+        }
+
+        return this._macros.isMacro(name);
+    }
+
+    getRegisteredMacro(name) {
+        if (!this._macros) {
+            return undefined;
+        }
+
+        return this._macros.getRegisteredMacro(name);
+    }
+
+    registerMacro(name, params) {
+        if (!this._macros) {
+            this._macros = macros.createMacrosContext();
+        }
+
+        return this._macros.registerMacro(name, params);
     }
 }
 

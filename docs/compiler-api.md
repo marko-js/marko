@@ -422,9 +422,41 @@ if (true) {
 }
 ```
 
+### invokeMacro(name, args, body)
+
+Returns a node to generate the code to invoke a macro with the given name, args and body
+
+For example:
+
+```javascript
+builder.invokeMacro(
+    'greeting',
+    [
+        builder.literal('Frank'),
+        builder.literal(10),
+    ],
+    [
+        builder.text(builder.literal('This is the body passed to the macro'))
+    ])
+```
+
+### invokeMacroFromEl(el)
+
+Returns a node to generate the code to invoke a macro based on the provided `HtmlElement` node.
+
+For example:
+
+```javascript
+var el = builder.htmlElement('greeting', {
+        name: builder.literal('Frank'),
+        age: builder.literal(10)
+    });
+builder.invokeMacroFromEl(el)
+```
+
 ### literal(value)
 
-Returns code to generate a JavaScript code for literal strings, numbers, booleans, objects and arrays.
+Returns a node to generate a JavaScript code for literal strings, numbers, booleans, objects and arrays.
 
 
 For example:
@@ -466,6 +498,10 @@ var aString = "abc",
       data.name
     ]
 ```
+
+### macro(name, params, body)
+
+Returns a node that generates a macro function with the given name, params and body content. The `InvokeMacro` node should be used to generate the code to invoke the macro.
 
 ### negate(argument)
 

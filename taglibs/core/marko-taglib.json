@@ -11,6 +11,12 @@
     "<if>": {
         "node-factory": "./if-tag"
     },
+    "<macro>": {
+        "code-generator": "./macro-tag"
+    },
+    "<macro-body>": {
+        "code-generator": "./macro-body-tag"
+    },
     "<template-init>": {
         "code-generator": "./template-init-tag",
         "body": "static-text"

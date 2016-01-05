@@ -532,7 +532,7 @@ class Generator {
             errorInfo.node = node;
             this.context.addError(errorInfo);
         } else {
-            this.context.addError({node, code, message});
+            this.context.addError({node, message, code});
         }
     }
 

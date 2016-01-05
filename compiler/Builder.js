@@ -30,6 +30,8 @@ var UpdateExpression = require('./ast/UpdateExpression');
 var UnaryExpression = require('./ast/UnaryExpression');
 var MemberExpression = require('./ast/MemberExpression');
 var Code = require('./ast/Code');
+var InvokeMacro = require('./ast/InvokeMacro');
+var Macro = require('./ast/Macro');
 
 var parseExpression = require('./util/parseExpression');
 
@@ -176,8 +178,20 @@ class Builder {
         return new If({test, body, else: elseStatement});
     }
 
+    invokeMacro(name, args, body) {
+        return new InvokeMacro({name, args, body});
+    }
+
+    invokeMacroFromEl(el) {
+        return new InvokeMacro({el});
+    }
+
     literal(value) {
         return new Literal({value});
+    }
+
+    macro(name, params, body) {
+        return new Macro({name, params, body});
     }
 
     memberExpression(object, property, computed) {
@@ -210,6 +224,12 @@ class Builder {
 
     program(body) {
         return new Program({body});
+    }
+
+    renderBodyFunction(body) {
+        let name = 'renderBody';
+        let params = [new Identifier({name: 'out'})];
+        return new FunctionDeclaration({name, params, body});
     }
 
     require(path) {

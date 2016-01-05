@@ -17,11 +17,11 @@ class StartTag extends Node {
     }
 
     generateCode(codegen) {
+        var builder = codegen.builder;
+
         var tagName = this.tagName;
         var selfClosing = this.selfClosing;
         var dynamicAttributes = this.dynamicAttributes;
-
-        var builder = codegen.builder;
 
         // Starting tag
         codegen.addWriteLiteral('<');
@@ -94,22 +94,9 @@ class EndTag extends Node {
 class HtmlElement extends Node {
     constructor(def) {
         super('HtmlElement');
-
-        var tagName = def.tagName;
-
         this.tagName = null;
-        this.dynamicTagName = null;
-
-        if (tagName instanceof Node) {
-            if (tagName instanceof Literal) {
-                this.tagName = tagName.value;
-            } else {
-                this.dynamicTagName = tagName;
-            }
-        } else if (typeof tagName === 'string'){
-            this.tagName = tagName;
-        }
-
+        this.tagNameExpression = null;
+        this.setTagName(def.tagName);
         this._attributes = def.attributes;
 
         if (!(this._attributes instanceof HtmlAttributeCollection)) {
@@ -130,7 +117,16 @@ class HtmlElement extends Node {
         if (tagName) {
             tagName = codegen.builder.literal(tagName);
         } else {
-            tagName = this.dynamicTagName;
+            tagName = this.tagNameExpression;
+        }
+
+        var context = codegen.context;
+
+        if (context.isMacro(this.tagName)) {
+            // At code generation time, if this tag corresponds to a registered macro
+            // then invoke the macro based on this HTML element instead of generating
+            // the code to render an HTML element.
+            return codegen.builder.invokeMacroFromEl(this);
         }
 
         var attributes = this._attributes && this._attributes.all;
@@ -247,14 +243,20 @@ class HtmlElement extends Node {
         }
     }
 
-    setTagName(newTagName) {
-        this.tagName = newTagName;
-        this.dynamicTagName = null;
-    }
-
-    getDynamicTagName(dynamicTagName) {
+    setTagName(tagName) {
         this.tagName = null;
-        this.dynamicTagName = dynamicTagName;
+        this.tagNameExpression = null;
+
+        if (tagName instanceof Node) {
+            if (tagName instanceof Literal) {
+                this.tagName = tagName.value;
+                this.tagNameExpression = tagName;
+            } else {
+                this.tagNameExpression = tagName;
+            }
+        } else if (typeof tagName === 'string'){
+            this.tagName = tagName;
+        }
     }
 
     toJSON() {

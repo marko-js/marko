@@ -2,12 +2,12 @@
 var Expression = require('../../../compiler/ast/Expression');
 var Literal = require('../../../compiler/ast/Literal');
 var Identifier = require('../../../compiler/ast/Identifier');
-var removeComments = require('./removeComments');
+var removeComments = require('../../../compiler/util/removeComments');
 
 var integerRegExp = /^-?\d+$/;
 var numberRegExp = /^-?(?:\d+|\d+\.\d*|\d*\.\d+|\d+\.\d+)$/;
 
-var tokenizer = require('./tokenizer').create([
+var tokenizer = require('../../../compiler/util/tokenizer').create([
     {
         name: 'stringDouble',
         pattern: /"(?:[^"]|\\")*"/,
