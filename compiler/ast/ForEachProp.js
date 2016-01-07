@@ -31,6 +31,13 @@ class ForEachProp extends Node {
         ]);
 
     }
+
+    walk(walker) {
+        this.nameVarName = walker.walk(this.nameVarName);
+        this.valueVarName = walker.walk(this.valueVarName);
+        this.in = walker.walk(this.in);
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = ForEachProp;

@@ -22,6 +22,12 @@ class SelfInvokingFunction extends Node {
 
         codegen.write(')');
     }
+
+    walk(walker) {
+        this.params = walker.walk(this.params);
+        this.args = walker.walk(this.args);
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = SelfInvokingFunction;

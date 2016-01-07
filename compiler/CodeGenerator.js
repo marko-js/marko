@@ -342,6 +342,7 @@ class Generator {
     }
 
     addWrite(output) {
+        ok(output, '"output" is required');
         if (output instanceof Literal) {
             let lastWrite = this._bufferedWrites ?
                 this._bufferedWrites[this._bufferedWrites.length-1] :

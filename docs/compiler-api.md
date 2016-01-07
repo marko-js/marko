@@ -63,6 +63,8 @@ if (this.container) {
 
 ## methods
 
+### arrayExpression(elements)
+
 ### assignment(left, right)
 
 Returns a node that generates the following code:
@@ -87,7 +89,7 @@ foo = '123';
 Returns a node that generates the following code:
 
 ```javascript
-<left> <operator> <right>;
+<left> <operator> <right>
 ```
 
 For example:
@@ -119,6 +121,26 @@ var a = 1;
 var b = 2;
 
 b = 3;
+```
+
+### conditionalExpression(test, consequent, alternate)
+
+Returns a node that generates the following code:
+
+```javascript
+<test> ? <consequent> : <alternate>
+```
+
+For example:
+
+```javascript
+builder.conditionalExpression(
+    builder.identifier('isHidden'),
+    builder.literal('hidden'),
+    builder.literal('visible'));
+
+// Output code:
+isHidden ? "hidden" : "visible"
 ```
 
 ### elseStatement(body)
@@ -499,6 +521,8 @@ var aString = "abc",
     ]
 ```
 
+### logicalExpression(left, operator, right)
+
 ### macro(name, params, body)
 
 Returns a node that generates a macro function with the given name, params and body content. The `InvokeMacro` node should be used to generate the code to invoke the macro.
@@ -520,6 +544,8 @@ builder.negate(builder.identifier('foo'))
 !foo
 ```
 
+### newExpression(callee, args)
+
 ### node([type, ]generatCode)
 
 Returns a generic `Node` instance with the given node type (optional) and a `generateCode(node, generator)` function that should be used to generate the code for the node. If a `generateCode(node, generator)` function is not provided the node bust be monkey-patched to add a `generateCode(generator)` method.
@@ -535,6 +561,8 @@ builder.node(function(node, generator) {
 // Output code:
 out.w("Hello World!");
 ```
+
+### objectExpression(properties)
 
 ### program(body)
 
@@ -558,6 +586,8 @@ var name = "Frank";
 
 console.log("Hello", name);
 ```
+
+### property(key, value)
 
 ### require(path)
 
@@ -701,9 +731,13 @@ a === b
 
 ### text(argument, escape)
 
+### thisExpression()
+
 ### unaryExpression(argument, operator, prefix)
 
 ### updateExpression(argument, operator, prefix)
+
+### variableDeclarator(id, init)
 
 ### vars(declarations, kind)
 

@@ -16,6 +16,10 @@ class Html extends Node {
         let argument = this.argument;
         codegen.addWrite(argument);
     }
+
+    walk(walker) {
+        this.argument = walker.walk(this.argument);
+    }
 }
 
 module.exports = Html;

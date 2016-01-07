@@ -11,31 +11,50 @@
       "name": "b"
     },
     "right": {
-      "type": "BinaryExpression",
+      "type": "LogicalExpression",
       "left": {
         "type": "BinaryExpression",
         "left": {
-          "type": "Identifier",
-          "name": "a"
+          "type": "BinaryExpression",
+          "left": {
+            "type": "Identifier",
+            "name": "a"
+          },
+          "operator": "+",
+          "right": {
+            "type": "Identifier",
+            "name": "b"
+          }
         },
-        "operator": "+",
+        "operator": ">",
         "right": {
-          "type": "Identifier",
-          "name": "b"
+          "type": "Assignment",
+          "left": {
+            "type": "Identifier",
+            "name": "c"
+          },
+          "right": {
+            "type": "Literal",
+            "value": 2
+          },
+          "operator": "+="
         }
       },
-      "operator": ">",
+      "operator": "||",
       "right": {
-        "type": "Assignment",
-        "left": {
+        "type": "ConditionalExpression",
+        "test": {
           "type": "Identifier",
-          "name": "c"
+          "name": "isHidden"
         },
-        "right": {
+        "consequent": {
           "type": "Literal",
-          "value": 2
+          "value": "hidden"
         },
-        "operator": "+="
+        "alternate": {
+          "type": "Literal",
+          "value": "visible"
+        }
       }
     },
     "operator": "="

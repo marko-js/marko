@@ -77,6 +77,12 @@ class If extends Node {
     appendChild(newChild) {
         this.body.appendChild(newChild);
     }
+
+    walk(walker) {
+        this.test = walker.walk(this.test);
+        this.body = walker.walk(this.body);
+        this.else = walker.walk(this.else);
+    }
 }
 
 module.exports = If;

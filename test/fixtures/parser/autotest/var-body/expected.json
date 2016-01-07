@@ -6,6 +6,7 @@
       "kind": "var",
       "declarations": [
         {
+          "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
             "name": "x"
@@ -16,6 +17,7 @@
           }
         },
         {
+          "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
             "name": "y"
@@ -26,6 +28,7 @@
           }
         },
         {
+          "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
             "name": "z"
@@ -44,6 +47,7 @@
           }
         },
         {
+          "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
             "name": "unusedvar"

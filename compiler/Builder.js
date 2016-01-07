@@ -13,6 +13,7 @@ var ElseIf = require('./ast/ElseIf');
 var Else = require('./ast/Else');
 var Assignment = require('./ast/Assignment');
 var BinaryExpression = require('./ast/BinaryExpression');
+var LogicalExpression = require('./ast/LogicalExpression');
 var Vars = require('./ast/Vars');
 var Return = require('./ast/Return');
 var HtmlElement = require('./ast/HtmlElement');
@@ -32,6 +33,13 @@ var MemberExpression = require('./ast/MemberExpression');
 var Code = require('./ast/Code');
 var InvokeMacro = require('./ast/InvokeMacro');
 var Macro = require('./ast/Macro');
+var ConditionalExpression = require('./ast/ConditionalExpression');
+var NewExpression = require('./ast/NewExpression');
+var ObjectExpression = require('./ast/ObjectExpression');
+var ArrayExpression = require('./ast/ArrayExpression');
+var Property = require('./ast/Property');
+var VariableDeclarator = require('./ast/VariableDeclarator');
+var ThisExpression = require('./ast/ThisExpression');
 
 var parseExpression = require('./util/parseExpression');
 
@@ -46,6 +54,22 @@ function makeNode(arg) {
 }
 
 class Builder {
+    arrayExpression(elements) {
+        if (elements) {
+            if (!isArray(elements)) {
+                elements = [elements];
+            }
+
+            for (var i=0; i<elements.length; i++) {
+                elements[i] = makeNode(elements[i]);
+            }
+        } else {
+            elements = [];
+        }
+
+        return new ArrayExpression({elements});
+    }
+
     assignment(left, right, operator) {
         if (operator == null) {
             operator = '=';
@@ -63,6 +87,10 @@ class Builder {
 
     code(value) {
         return new Code({value});
+    }
+
+    conditionalExpression(test, consequent, alternate) {
+        return new ConditionalExpression({test, consequent, alternate});
     }
 
     elseStatement(body) {
@@ -190,6 +218,12 @@ class Builder {
         return new Literal({value});
     }
 
+    logicalExpression(left, operator, right) {
+        left = makeNode(left);
+        right = makeNode(right);
+        return new LogicalExpression({left, operator, right});
+    }
+
     macro(name, params, body) {
         return new Macro({name, params, body});
     }
@@ -209,6 +243,24 @@ class Builder {
         return new UnaryExpression({argument, operator, prefix});
     }
 
+    newExpression(callee, args) {
+        callee = makeNode(callee);
+
+        if (args) {
+            if (!isArray(args)) {
+                args = [args];
+            }
+
+            for (var i=0; i<args.length; i++) {
+                args[i] = makeNode(args[i]);
+            }
+        } else {
+            args = [];
+        }
+
+        return new NewExpression({callee, args});
+    }
+
     node(type, generateCode) {
         if (typeof type === 'function') {
             generateCode = arguments[0];
@@ -222,8 +274,32 @@ class Builder {
         return node;
     }
 
+    objectExpression(properties) {
+        if (properties) {
+            if (!isArray(properties)) {
+                properties = [properties];
+            }
+
+            for (var i=0; i<properties.length; i++) {
+                let prop = properties[i];
+                prop.value = makeNode(prop.value);
+            }
+        } else {
+            properties = [];
+        }
+
+        return new ObjectExpression({properties});
+    }
+
     program(body) {
         return new Program({body});
+    }
+
+    property(key, value) {
+        key = makeNode(key);
+        value = makeNode(value);
+
+        return new Property({key, value});
     }
 
     renderBodyFunction(body) {
@@ -278,6 +354,10 @@ class Builder {
         return new Text({argument, escape});
     }
 
+    thisExpression() {
+        return new ThisExpression();
+    }
+
     unaryExpression(argument, operator, prefix) {
         argument = makeNode(argument);
 
@@ -289,19 +369,53 @@ class Builder {
         return new UpdateExpression({argument, operator, prefix});
     }
 
+    variableDeclarator(id, init) {
+        if (typeof id === 'string') {
+            id = new Identifier({name: id});
+        }
+        if (init) {
+            init = makeNode(init);
+        }
+
+        return new VariableDeclarator({id, init});
+    }
+
     vars(declarations, kind) {
         if (declarations) {
             if (Array.isArray(declarations)) {
                 for (let i=0; i<declarations.length; i++) {
                     var declaration = declarations[i];
+                    if (!declaration) {
+                        throw new Error('Invalid variable declaration');
+                    }
                     if (typeof declaration === 'string') {
-                        declarations[i] = {
-                            id: makeNode(declaration)
-                        };
+                        declarations[i] = new VariableDeclarator({
+                            id: new Identifier({name: declaration})
+                        });
                     } else if (declaration instanceof Identifier) {
-                        declarations[i] = {
+                        declarations[i] = new VariableDeclarator({
                             id: declaration
-                        };
+                        });
+                    } else if (typeof declaration === 'object') {
+                        if (!(declaration instanceof VariableDeclarator)) {
+                            let id = declaration.id;
+                            let init = declaration.init;
+
+                            if (typeof id === 'string') {
+                                id = new Identifier({name: id});
+                            }
+
+                            if (!id) {
+                                throw new Error('Invalid variable declaration');
+                            }
+
+                            if (init) {
+                                init = makeNode(init);
+                            }
+
+
+                            declarations[i] = new VariableDeclarator({id, init});
+                        }
                     }
                 }
             } else if (typeof declarations === 'object') {
@@ -309,7 +423,7 @@ class Builder {
                 declarations = Object.keys(declarations).map((key) => {
                     let id = new Identifier({name: key});
                     let init = makeNode(declarations[key]);
-                    return { id, init };
+                    return new VariableDeclarator({ id, init });
                 });
             }
         }

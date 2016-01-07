@@ -21,6 +21,12 @@ class ElseIf extends Node {
         codegen.write('else ');
         codegen.generateCode(ifStatement);
     }
+
+    walk(walker) {
+        this.test = walker.walk(this.test);
+        this.body = walker.walk(this.body);
+        this.else = walker.walk(this.else);
+    }
 }
 
 module.exports = ElseIf;

@@ -7,27 +7,8 @@ var Container = require('./Container');
 class ArrayContainer extends Container {
     constructor(node, array) {
         super(node);
-        if (array) {
-            ok(isArray(array), 'Invalid array');
-
-            for (let i=0; i<array.length; i++) {
-                array[i].container = this;
-            }
-        }
-        this.array = array || [];
+        this.items = array;
     }
-
-    // forEach(callback, thisObj) {
-    //     var array = this.array;
-    //
-    //     for (var i=0; i<array.length; i++) {
-    //         var item = array[i];
-    //         if (item == null) {
-    //             throw new Error('Invalid node in container at index ' + i + '. Array: ' + JSON.stringify(array, null, 2));
-    //         }
-    //         callback.call(thisObj, item, i);
-    //     }
-    // }
 
     forEach(callback, thisObj) {
         var array = this.array.concat([]);
@@ -103,6 +84,17 @@ class ArrayContainer extends Container {
 
     get items() {
         return this.array;
+    }
+
+    set items(newItems) {
+        if (newItems) {
+            ok(isArray(newItems), 'Invalid array');
+
+            for (let i=0; i<newItems.length; i++) {
+                newItems[i].container = this;
+            }
+        }
+        this.array = newItems || [];
     }
 }
 

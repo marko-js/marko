@@ -37,6 +37,11 @@ class FunctionCall extends Node {
 
         codegen.write(')');
     }
+
+    walk(walker) {
+        this.callee = walker.walk(this.callee);
+        this.args = walker.walk(this.args);
+    }
 }
 
 module.exports = FunctionCall;

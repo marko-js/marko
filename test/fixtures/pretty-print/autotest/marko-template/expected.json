@@ -13,16 +13,61 @@
           "kind": "var",
           "declarations": [
             {
-              "id": "str",
-              "init": "__helpers.s"
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "str"
+              },
+              "init": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "__helpers"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "s"
+                },
+                "computed": false
+              }
             },
             {
-              "id": "empty",
-              "init": "__helpers.e"
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "empty"
+              },
+              "init": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "__helpers"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "e"
+                },
+                "computed": false
+              }
             },
             {
-              "id": "notEmpty",
-              "init": "__helpers.ne"
+              "type": "VariableDeclarator",
+              "id": {
+                "type": "Identifier",
+                "name": "notEmpty"
+              },
+              "init": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "__helpers"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "ne"
+                },
+                "computed": false
+              }
             }
           ],
           "body": []
@@ -95,6 +140,7 @@
                     "tagName": "ul",
                     "attributes": [
                       {
+                        "type": "HtmlAttribute",
                         "name": "class",
                         "value": {
                           "type": "Literal",
@@ -134,6 +180,7 @@
                                 "tagName": "li",
                                 "attributes": [
                                   {
+                                    "type": "HtmlAttribute",
                                     "name": "class",
                                     "value": {
                                       "type": "Literal",

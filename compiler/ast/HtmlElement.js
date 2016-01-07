@@ -2,7 +2,6 @@
 
 var Node = require('./Node');
 var Literal = require('./Literal');
-var escapeXmlAttr = require('raptor-util/escapeXml').attr;
 var HtmlAttributeCollection = require('./HtmlAttributeCollection');
 
 class StartTag extends Node {
@@ -33,31 +32,7 @@ class StartTag extends Node {
         if (attributes) {
             for (let i=0; i<attributes.length; i++) {
                 let attr = attributes[i];
-                let attrName = attr.name;
-                let attrValue = attr.value;
-
-                if (attr.isLiteralValue()) {
-                    var literalValue = attrValue.value;
-                    if (typeof literalValue === 'boolean') {
-                        if (literalValue === true) {
-                            codegen.addWriteLiteral(' ' + attrName);
-                        }
-                    } else if (literalValue != null) {
-                        codegen.addWriteLiteral(' ' + attrName + '="' + escapeXmlAttr(literalValue) + '"');
-                    }
-
-                } else if (attrValue) {
-                    codegen.addWriteLiteral(' ' + attrName + '="');
-                    codegen.isInAttribute = true;
-                    // TODO Deal with escaping dynamic HTML attribute expression
-                    codegen.addWrite(attrValue);
-                    codegen.isInAttribute = false;
-                    codegen.addWriteLiteral('"');
-                } else if (attr.argument) {
-                    codegen.addWriteLiteral(' ' + attrName + '(');
-                    codegen.addWriteLiteral(attr.argument);
-                    codegen.addWriteLiteral(')');
-                }
+                codegen.generateCode(attr);
             }
         }
 
@@ -98,12 +73,13 @@ class HtmlElement extends Node {
         this.tagNameExpression = null;
         this.setTagName(def.tagName);
         this._attributes = def.attributes;
+        this.body = this.makeContainer(def.body);
+        this.argument = def.argument;
 
         if (!(this._attributes instanceof HtmlAttributeCollection)) {
             this._attributes = new HtmlAttributeCollection(this._attributes);
         }
-        this.body = this.makeContainer(def.body);
-        this.argument = def.argument;
+
         this.allowSelfClosing = false;
         this.startTagOnly = false;
         this.dynamicAttributes = undefined;
@@ -190,7 +166,6 @@ class HtmlElement extends Node {
                 codegen.generateCode(body);
                 codegen.generateCode(endTag);
             }
-
         }
     }
 
@@ -254,7 +229,8 @@ class HtmlElement extends Node {
             } else {
                 this.tagNameExpression = tagName;
             }
-        } else if (typeof tagName === 'string'){
+        } else if (typeof tagName === 'string') {
+            this.tagNameExpression = new Literal({value: tagName});
             this.tagName = tagName;
         }
     }
@@ -273,6 +249,12 @@ class HtmlElement extends Node {
 
     setBodyOnlyIf(condition) {
         this.bodyOnlyIf = condition;
+    }
+
+    walk(walker) {
+        this.setTagName(walker.walk(this.tagNameExpression));
+        this._attributes.walk(walker);
+        this.body = walker.walk(this.body);
     }
 }
 

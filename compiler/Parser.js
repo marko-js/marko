@@ -82,7 +82,7 @@ class Parser {
 
         var tagName = el.tagName;
         var attributes = el.attributes;
-        var argument = el.argument; // e.g. For <for(color in colors)>, args will be "color in colors"
+        var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
 
         if (tagName === 'compiler-options') {
             var compilerOptions = this.compilerOptions;

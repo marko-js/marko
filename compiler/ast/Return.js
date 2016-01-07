@@ -22,6 +22,10 @@ class Return extends Node {
             codegen.write('return');
         }
     }
+
+    walk(walker) {
+        this.argument = walker.walk(this.argument);
+    }
 }
 
 module.exports = Return;

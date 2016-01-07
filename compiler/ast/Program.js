@@ -15,6 +15,10 @@ class Program extends Node {
             codegen._flushBufferedWrites();
         }
     }
+
+    walk(walker) {
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = Program;

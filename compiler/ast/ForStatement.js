@@ -41,6 +41,13 @@ class ForStatement extends Node {
 
         codegen.write('\n');
     }
+
+    walk(walker) {
+        this.init = walker.walk(this.init);
+        this.test = walker.walk(this.test);
+        this.update = walker.walk(this.update);
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = ForStatement;

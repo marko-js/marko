@@ -72,6 +72,15 @@ class ForEach extends Node {
         }
 
     }
+
+    walk(walker) {
+        this.varName = walker.walk(this.varName);
+        this.in = walker.walk(this.in);
+        this.body = walker.walk(this.body);
+        this.separator = walker.walk(this.separator);
+        this.statusVarName = walker.walk(this.statusVarName);
+        this.iterator = walker.walk(this.iterator);
+    }
 }
 
 module.exports = ForEach;

@@ -64,6 +64,10 @@ class TemplateRoot extends Node {
             body: this.body
         };
     }
+
+    walk(walker) {
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = TemplateRoot;

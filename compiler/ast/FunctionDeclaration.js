@@ -61,6 +61,12 @@ class FunctionDeclaration extends Node {
     isCompoundExpression() {
         return true;
     }
+
+    walk(walker) {
+        this.name = walker.walk(this.name);
+        this.params = walker.walk(this.params);
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = FunctionDeclaration;

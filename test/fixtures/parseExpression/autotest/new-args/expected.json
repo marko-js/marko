@@ -1,0 +1,13 @@
+{
+  "type": "NewExpression",
+  "callee": {
+    "type": "Identifier",
+    "name": "Foo"
+  },
+  "args": [
+    {
+      "type": "Literal",
+      "value": "abc"
+    }
+  ]
+}

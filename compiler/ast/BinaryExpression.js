@@ -53,6 +53,11 @@ class BinaryExpression extends Node {
             right: this.right
         };
     }
+
+    walk(walker) {
+        this.left = walker.walk(this.left);
+        this.right = walker.walk(this.right);
+    }
 }
 
 module.exports = BinaryExpression;

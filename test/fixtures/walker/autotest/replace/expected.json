@@ -1,0 +1,52 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "HtmlElement",
+      "tagName": "ul",
+      "attributes": [
+        {
+          "type": "HtmlAttribute",
+          "name": "class",
+          "value": {
+            "type": "MemberExpression",
+            "object": {
+              "type": "Identifier",
+              "name": "data"
+            },
+            "property": {
+              "type": "Identifier",
+              "name": "foo"
+            },
+            "computed": false
+          }
+        }
+      ],
+      "body": [
+        {
+          "type": "HtmlElement",
+          "tagName": "li",
+          "attributes": [
+            {
+              "type": "HtmlAttribute",
+              "name": "class",
+              "value": {
+                "type": "Literal",
+                "value": "color"
+              }
+            }
+          ],
+          "body": [
+            {
+              "type": "Text",
+              "argument": {
+                "type": "Identifier",
+                "name": "color"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

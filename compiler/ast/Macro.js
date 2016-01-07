@@ -29,6 +29,10 @@ class Macro extends Node {
         var functionName = macroDef.functionName;
         return builder.functionDeclaration(functionName, macroDef.params, body);
     }
+
+    walk(walker) {
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = Macro;

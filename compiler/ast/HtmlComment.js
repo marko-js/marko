@@ -16,6 +16,10 @@ class HtmlComment extends Node {
         codegen.addWrite(comment);
         codegen.addWrite(literal('-->'));
     }
+
+    walk(walker) {
+        this.comment = walker.walk(this.comment);
+    }
 }
 
 module.exports = HtmlComment;

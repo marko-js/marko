@@ -35,7 +35,7 @@ module.exports = function(compiler) {
     ]);
 
     let walker = compiler.createWalker({
-        visit: function(node) {
+        enter(node) {
             if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('for')) {
                     node.wrap(forEach('color', 'data.colors'));

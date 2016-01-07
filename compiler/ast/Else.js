@@ -20,6 +20,10 @@ class Else extends Node {
         codegen.generateBlock(body);
         codegen.write('\n');
     }
+
+    walk(walker) {
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = Else;

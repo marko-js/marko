@@ -35,6 +35,11 @@ class MemberExpression extends Node {
             computed: this.computed
         };
     }
+
+    walk(walker) {
+        this.object = walker.walk(this.object);
+        this.property = walker.walk(this.property);
+    }
 }
 
 module.exports = MemberExpression;

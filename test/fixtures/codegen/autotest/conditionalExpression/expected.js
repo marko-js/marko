@@ -1,0 +1,1 @@
+isHidden ? "hidden" : "visible"

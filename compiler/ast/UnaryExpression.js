@@ -53,6 +53,10 @@ class UnaryExpression extends Node {
             prefix: this.prefix
         };
     }
+
+    walk(walker) {
+        this.argument = walker.walk(this.argument);
+    }
 }
 
 module.exports = UnaryExpression;

@@ -1,0 +1,25 @@
+function create(__helpers) {
+  var str = __helpers.s,
+      empty = __helpers.e,
+      notEmpty = __helpers.ne,
+      escapeXml = __helpers.x,
+      attr = __helpers.a,
+      escapeXmlAttr = __helpers.xa;
+
+  return function render(data, out) {
+    out.w("<div" +
+      attr("class", data.className) +
+      attr("class2", data.className, false) +
+      " foo=\"a" +
+      escapeXmlAttr(data.foo) +
+      "b\" bar=\"a " +
+      escapeXmlAttr(data.foo) +
+      " b\" baz=\"a " +
+      data.foo +
+      " b\" nested=\"a " +
+      data.foo + ("nested " + data.bar) +
+      " b\"></div>");
+  };
+}
+
+(module.exports = require("marko").c(__filename)).c(create);

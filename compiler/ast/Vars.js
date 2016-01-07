@@ -1,7 +1,6 @@
 'use strict';
 
 var Node = require('./Node');
-var Identifier = require('./Identifier');
 
 class Vars extends Node {
     constructor(def) {
@@ -29,7 +28,7 @@ class Vars extends Node {
         }
 
         for (let i=0; i<declarations.length; i++) {
-            var declaration = declarations[i];
+            var declarator = declarations[i];
 
             if (i === 0) {
                 codegen.write(kind + ' ');
@@ -38,26 +37,7 @@ class Vars extends Node {
                 codegen.writeLineIndent();
             }
 
-            var varId = declaration.id || declaration.name;
-
-            if (!(varId instanceof Identifier) && typeof varId !== 'string') {
-                throw new Error('Invalid variable name: ' + varId);
-            }
-
-            // TODO Validate the variable name
-            codegen.generateCode(varId);
-
-            var initValue;
-            if (declaration.hasOwnProperty('init')) {
-                initValue = declaration.init;
-            } else if (declaration.hasOwnProperty('value')) {
-                initValue = declaration.value;
-            }
-
-            if (initValue != null) {
-                codegen.write(' = ');
-                codegen.generateCode(initValue);
-            }
+            codegen.generateCode(declarator);
 
             if (i !== 0) {
                 codegen.decIndent(4);
@@ -74,6 +54,10 @@ class Vars extends Node {
         if(hasBody) {
             codegen.generateCode(body);
         }
+    }
+
+    walk(walker) {
+        this.argument = walker.walk(this.argument);
     }
 }
 

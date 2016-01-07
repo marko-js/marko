@@ -83,7 +83,9 @@ class Node {
     }
 
     detach() {
-        this.container.removeChild(this);
+        if (this.container) {
+            this.container.removeChild(this);
+        }
     }
 
     /**

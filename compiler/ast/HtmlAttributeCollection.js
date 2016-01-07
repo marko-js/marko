@@ -7,35 +7,7 @@ var Node = require('./Node');
 
 class HtmlAttributeCollection {
     constructor(attributes) {
-        this.all = [];
-        this.lookup = {};
-
-        if (attributes) {
-            if (Array.isArray(attributes)) {
-                attributes.forEach((attr) => {
-                    this.addAttribute(attr);
-                });
-            } else {
-                for (var attrName in attributes) {
-                    if (attributes.hasOwnProperty(attrName)) {
-                        let attrValue = attributes[attrName];
-                        let attrDef;
-
-                        if (typeof attrValue === 'object' && !(attrValue instanceof Node)) {
-                            attrDef = attrValue;
-                            attrDef.name = attrName;
-                        } else {
-                            attrDef = {
-                                name: attrName,
-                                value: attrValue
-                            };
-                        }
-
-                        this.addAttribute(attrDef);
-                    }
-                }
-            }
-        }
+        this.setAttributes(attributes);
     }
 
     addAttribute(newAttr) {
@@ -134,6 +106,43 @@ class HtmlAttributeCollection {
 
     toString() {
         return JSON.stringify(this.all);
+    }
+
+    setAttributes(attributes) {
+        this.all = [];
+        this.lookup = {};
+
+        if (attributes) {
+            if (Array.isArray(attributes)) {
+                attributes.forEach((attr) => {
+                    this.addAttribute(attr);
+                });
+            } else {
+                for (var attrName in attributes) {
+                    if (attributes.hasOwnProperty(attrName)) {
+                        let attrValue = attributes[attrName];
+                        let attrDef;
+
+                        if (typeof attrValue === 'object' && !(attrValue instanceof Node)) {
+                            attrDef = attrValue;
+                            attrDef.name = attrName;
+                        } else {
+                            attrDef = {
+                                name: attrName,
+                                value: attrValue
+                            };
+                        }
+
+                        this.addAttribute(attrDef);
+                    }
+                }
+            }
+        }
+    }
+
+    walk(walker) {
+        var newAttributes = walker.walk(this.all);
+        this.setAttributes(newAttributes);
     }
 }
 

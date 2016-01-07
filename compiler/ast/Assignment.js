@@ -31,6 +31,11 @@ class Assignment extends Node {
         }
     }
 
+    walk(walker) {
+        this.left = walker.walk(this.left);
+        this.right = walker.walk(this.right);
+    }
+
     isCompoundExpression() {
         return true;
     }

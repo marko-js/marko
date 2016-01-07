@@ -110,6 +110,13 @@ class InvokeMacro extends Node {
 
         return builder.functionCall(builder.identifier(macroDef.functionName), args);
     }
+
+    walk(walker) {
+        this.el = walker.walk(this.el);
+        this.name = walker.walk(this.name);
+        this.args = walker.walk(this.args);
+        this.body = walker.walk(this.body);
+    }
 }
 
 module.exports = InvokeMacro;

@@ -90,7 +90,14 @@ class ForRange extends Node {
                 body: this.body
             })
         ]);
+    }
 
+    walk(walker) {
+        this.varName = walker.walk(this.varName);
+        this.body = walker.walk(this.body);
+        this.from = walker.walk(this.from);
+        this.to = walker.walk(this.to);
+        this.step = walker.walk(this.step);
     }
 }
 
