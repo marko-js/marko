@@ -1,4 +1,7 @@
 {
+    "<assign>": {
+        "code-generator": "./assign-tag"
+    },
     "<else>": {
         "node-factory": "./else-tag"
     },
@@ -10,6 +13,9 @@
     },
     "<if>": {
         "node-factory": "./if-tag"
+    },
+    "<invoke>": {
+        "code-generator": "./invoke-tag"
     },
     "<macro>": {
         "code-generator": "./macro-tag"
@@ -23,9 +29,6 @@
     },
     "<var>": {
         "node-factory": "./var-tag"
-    },
-    "<assign>": {
-        "code-generator": "./assign-tag"
     },
     "<*>": {
         "transformer": "./core-transformer"

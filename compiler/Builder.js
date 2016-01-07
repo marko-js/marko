@@ -291,6 +291,10 @@ class Builder {
         return new ObjectExpression({properties});
     }
 
+    parseExpression(str) {
+        return parseExpression(str);
+    }
+
     program(body) {
         return new Program({body});
     }
