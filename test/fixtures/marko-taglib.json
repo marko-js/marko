@@ -17,5 +17,6 @@
             "required": true
         }
     },
+    "<test-hello>": "taglib/test-hello/marko-tag.json",
     "tags-dir": "./taglib/scanned-tags"
 }

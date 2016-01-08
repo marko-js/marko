@@ -58,6 +58,11 @@ function buildInputProps(node, context) {
         }
     });
 
+    if (node.body && node.body.length) {
+        var renderBodyFunction = context.builder.renderBodyFunction(node.body);
+        inputProps.renderBody = renderBodyFunction;
+    }
+
     return context.builder.literal(inputProps);
 }
 
