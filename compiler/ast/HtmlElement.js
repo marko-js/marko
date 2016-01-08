@@ -11,7 +11,7 @@ class StartTag extends Node {
         this.tagName = def.tagName;
         this.attributes = def.attributes;
         this.argument = def.argument;
-        this.selfClosing = def.selfClosing;
+        this.selfClosed = def.selfClosed;
         this.dynamicAttributes = def.dynamicAttributes;
     }
 
@@ -19,7 +19,7 @@ class StartTag extends Node {
         var builder = codegen.builder;
 
         var tagName = this.tagName;
-        var selfClosing = this.selfClosing;
+        var selfClosed = this.selfClosed;
         var dynamicAttributes = this.dynamicAttributes;
 
         // Starting tag
@@ -44,7 +44,7 @@ class StartTag extends Node {
             });
         }
 
-        if (selfClosing) {
+        if (selfClosed) {
             codegen.addWriteLiteral('/>');
         } else {
             codegen.addWriteLiteral('>');
@@ -80,8 +80,8 @@ class HtmlElement extends Node {
             this._attributes = new HtmlAttributeCollection(this._attributes);
         }
 
-        this.allowSelfClosing = false;
-        this.startTagOnly = false;
+        this.openTagOnly = def.openTagOnly;
+        this.selfClosed = def.selfClosed;
         this.dynamicAttributes = undefined;
         this.bodyOnlyIf = undefined;
     }
@@ -109,36 +109,31 @@ class HtmlElement extends Node {
         var body = this.body;
         var argument = this.argument;
         var hasBody = body && body.length;
-        var startTagOnly = this.startTagOnly;
-        var allowSelfClosing = this.allowSelfClosing === true;
+        var openTagOnly = this.openTagOnly;
         var bodyOnlyIf = this.bodyOnlyIf;
         var dynamicAttributes = this.dynamicAttributes;
-        var selfClosing = false;
+        var selfClosed = this.selfClosed === true;
 
         var builder = codegen.builder;
 
         if (hasBody || bodyOnlyIf) {
-            startTagOnly = false;
-            selfClosing = false;
-        } else {
-            if (allowSelfClosing) {
-                selfClosing = true;
-                startTagOnly = true;
-            }
+            openTagOnly = false;
+            selfClosed = false;
+        } else if (selfClosed){
+            openTagOnly = true;
         }
-
 
         var startTag = new StartTag({
             tagName: tagName,
             attributes: attributes,
             argument: argument,
-            selfClosing: selfClosing,
+            selfClosed: selfClosed,
             dynamicAttributes: dynamicAttributes
         });
 
         var endTag;
 
-        if (!startTagOnly) {
+        if (!openTagOnly) {
             endTag = new EndTag({
                 tagName: tagName
             });
@@ -159,7 +154,7 @@ class HtmlElement extends Node {
                 endIf
             ];
         } else {
-            if (startTagOnly) {
+            if (openTagOnly) {
                 codegen.generateCode(startTag);
             } else {
                 codegen.generateCode(startTag);

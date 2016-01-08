@@ -107,6 +107,8 @@ class Parser {
         var elDef = {
             tagName: tagName,
             argument: argument,
+            openTagOnly: el.openTagOnly === true,
+            selfClosed: el.selfClosed === true,
             pos: el.pos,
             attributes: attributes.map((attr) => {
                 var isLiteral = false;

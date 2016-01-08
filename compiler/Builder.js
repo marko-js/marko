@@ -189,12 +189,12 @@ class Builder {
         return new HtmlComment({comment});
     }
 
-    htmlElement(tagName, attributes, body, argument) {
+    htmlElement(tagName, attributes, body, argument, openTagOnly, selfClosed) {
         if (typeof tagName === 'object' && !(tagName instanceof Node)) {
             let def = arguments[0];
             return new HtmlElement(def);
         } else {
-            return new HtmlElement({tagName, attributes, body, argument});
+            return new HtmlElement({tagName, attributes, body, argument, openTagOnly, selfClosed});
         }
     }
 

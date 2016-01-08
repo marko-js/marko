@@ -383,7 +383,7 @@ builder.htmlComment(
 out.w("<--This is an HTML comment-->");
 ```
 
-### htmlElement(tagName, attributes, body, argument)
+### htmlElement(tagName, attributes, body, argument, openTagOnly, selfClosed)
 
 ```javascript
 builder.htmlElement(

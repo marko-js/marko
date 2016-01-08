@@ -126,7 +126,7 @@ class CompileContext {
         return this._staticCode;
     }
 
-    createNodeForEl(tagName, attributes, argument) {
+    createNodeForEl(tagName, attributes, argument, openTagOnly, selfClosed) {
         var elDef;
         var builder = this.builder;
 
@@ -134,13 +134,8 @@ class CompileContext {
             elDef = tagName;
             tagName = elDef.tagName;
             attributes = elDef.attributes;
-            argument = elDef.argument;
         } else {
-            elDef = {
-                tagName: tagName,
-                argument: argument,
-                attributes: attributes
-            };
+            elDef = { tagName, argument, attributes, openTagOnly, selfClosed };
         }
 
         ok(typeof tagName === 'string', 'Invalid "tagName"');
