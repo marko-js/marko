@@ -1,5 +1,3 @@
-var createLoopNode = require('./util/createLoopNode');
-
 module.exports = function codeGenerator(elNode, codegen) {
     var functionAttr = elNode.attributes[0];
     if (!functionAttr) {
