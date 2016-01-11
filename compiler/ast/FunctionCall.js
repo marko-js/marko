@@ -9,7 +9,7 @@ class FunctionCall extends Node {
         this.callee = def.callee;
 
         ok(this.callee, '"callee" is required');
-        
+
         this.args = def.args;
 
         if (this.args && !Array.isArray(this.args)) {

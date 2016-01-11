@@ -20,9 +20,9 @@ class HtmlJsParser {
             onattributeplaceholder(event) {
                 // placeholder within attribute
                 if (event.escape) {
-                    event.expression = 'escapeXml(' + event.expression + ')';
+                    event.expression = '$escapeXml(' + event.expression + ')';
                 } else {
-                    event.expression = 'noEscapeXml(' + event.expression + ')';
+                    event.expression = '$noEscapeXml(' + event.expression + ')';
                 }
             },
 

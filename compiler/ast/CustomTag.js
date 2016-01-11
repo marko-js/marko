@@ -3,6 +3,7 @@
 var HtmlElement = require('./HtmlElement');
 var path = require('path');
 var removeDashes = require('../util/removeDashes');
+var removeEscapeFunctions = require('../util/removeEscapeFunctions');
 
 function removeExt(filename) {
     var ext = path.extname(filename);
@@ -20,6 +21,11 @@ function buildInputProps(node, context) {
         var attrName = attr.name;
 
         var attrDef = attr.def || context.taglibLookup.getAttribute(node.tagName, attr.name);
+        var attrValue = removeEscapeFunctions(attr.value);
+
+        if (!attrDef) {
+            return; // Skip over attributes that are not supported
+        }
 
         var propName;
         var parentPropName;
@@ -52,9 +58,9 @@ function buildInputProps(node, context) {
 
         if (parentPropName) {
             let parent = inputProps[parentPropName] = (inputProps[parentPropName] = {});
-            parent[propName] = attr.value;
+            parent[propName] = attrValue;
         } else {
-            inputProps[propName] = attr.value;
+            inputProps[propName] = attrValue;
         }
     });
 

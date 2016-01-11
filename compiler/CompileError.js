@@ -38,7 +38,7 @@ class CompileError {
             pos = '';
         }
         var str = pos + this.message;
-        if (this.node) {
+        if (pos == null && this.node) {
             str += ' (' + this.node.toString() + ')';
         }
         return str;

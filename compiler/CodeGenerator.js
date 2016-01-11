@@ -288,7 +288,11 @@ class Generator {
 
             let startPos = this._code.length;
 
-            this.generateCode(node);
+            if (Array.isArray(node) || (node instanceof Container)) {
+                this.generateStatements(node);
+            } else {
+                this.generateCode(node);
+            }
 
             if (this._code.length === startPos) {
                 // No code was generated. Remove any code that was previously added

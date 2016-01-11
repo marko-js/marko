@@ -3,8 +3,8 @@ var Node = require('./Node');
 var Literal = require('./Literal');
 var ok = require('assert').ok;
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
-var compiler = require('../');
 var parseExpression = require('../util/parseExpression');
+var removeEscapeFunctions = require('../util/removeEscapeFunctions');
 
 function isStringLiteral(node) {
     return node.type === 'Literal' && typeof node.value === 'string';
@@ -13,18 +13,12 @@ function isStringLiteral(node) {
 function isNoEscapeXml(node) {
     return node.type === 'FunctionCall' &&
         node.callee.type === 'Identifier' &&
-        node.callee.name === 'noEscapeXml';
-}
-
-function isEscapeXml(node) {
-    return node.type === 'FunctionCall' &&
-        node.callee.type === 'Identifier' &&
-        node.callee.name === 'escapeXml';
+        node.callee.name === '$noEscapeXml';
 }
 
 function isStringExpression(node) {
     return node.type === 'FunctionCall' && node.callee.type === 'Identifier' &&
-        (node.callee.name === 'noEscapeXml' || node.callee.name === 'escapeXml');
+        (node.callee.name === '$noEscapeXml' || node.callee.name === '$escapeXml');
 }
 
 function flattenAttrConcats(node) {
@@ -59,33 +53,6 @@ function flattenAttrConcats(node) {
 
     var final = flattenHelper(node);
     return final.concats;
-}
-
-// function handleEscaping(node) {
-//
-//     function handleEscapingHelper(node, escaping) {
-//         if (node.type === 'Literal') {
-//         } else if (isEscapeXml(node)) {
-//             return handleEscapingHelper(node.arguments[0], true);
-//         } else if (isNoEscapeXml(node)) {
-//             return handleEscapingHelper(node.arguments[0], escaping false);
-//         }
-//     }
-//
-//     var finalNode = handleEscapingHelper(node, true /* default to escaping */);
-//     return finalNode;
-// }
-
-function removeEscapeFunctions(node) {
-    var walker = compiler.createWalker({
-        enter: function(node, parent) {
-            if (isNoEscapeXml(node) || isEscapeXml(node)) {
-                return node.args[0];
-            }
-        }
-    });
-
-    return walker.walk(node);
 }
 
 function generateCodeForExpressionAttr(name, value, codegen) {

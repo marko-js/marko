@@ -157,9 +157,11 @@ class HtmlElement extends Node {
             if (openTagOnly) {
                 codegen.generateCode(startTag);
             } else {
-                codegen.generateCode(startTag);
-                codegen.generateCode(body);
-                codegen.generateCode(endTag);
+                return [
+                    startTag,
+                    body,
+                    endTag
+                ];
             }
         }
     }
