@@ -1,4 +1,5 @@
 'use strict';
+var charProps = require('char-props');
 
 const esprima = require('esprima');
 const Expression = require('../ast/Expression');
@@ -201,7 +202,27 @@ function convert(node) {
 }
 
 function parseExpression(src) {
-    let jsAST = esprima.parse('(' + src + ')');
+    let jsAST;
+    try {
+        jsAST = esprima.parse('(' + src + ')');
+    } catch(e) {
+        var errorIndex = e.index;
+
+        var errorMessage = e.toString();
+        if (errorIndex != null && errorIndex >= 0) {
+            var srcCharProps = charProps(src);
+            errorIndex--; // Account for extra paren added to start
+            let line = srcCharProps.lineAt(errorIndex)+1;
+            let column = srcCharProps.columnAt(errorIndex)+1;
+            errorMessage += ' [Line ' + line + ', Col: ' + column + ']';
+        }
+        var wrappedError = new Error('Invalid JavaScript expression: ' + src + ' - ' + errorMessage);
+        wrappedError.index = errorIndex;
+        wrappedError.src = src;
+        wrappedError.code = 'ERR_INVALID_JAVASCRIPT_EXPRESSION';
+        throw wrappedError;
+    }
+
     var converted = convert(jsAST);
     if (converted == null) {
         converted = new Expression({value: src});
