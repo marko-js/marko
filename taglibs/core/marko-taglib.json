@@ -27,6 +27,9 @@
         "code-generator": "./template-init-tag",
         "body": "static-text"
     },
+    "<unless>": {
+        "node-factory": "./unless-tag"
+    },
     "<var>": {
         "node-factory": "./var-tag"
     },
