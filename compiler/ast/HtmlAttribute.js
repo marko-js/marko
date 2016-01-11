@@ -180,8 +180,8 @@ class HtmlAttribute extends Node {
 
         if (this.isLiteralValue()) {
             var literalValue = value.value;
-            if (typeof literalValue === 'boolean') {
-                if (literalValue === true) {
+            if (typeof literalValue === 'boolean' || literalValue === '') {
+                if (literalValue === true || literalValue === '') {
                     codegen.addWriteLiteral(' ' + name);
                 }
             } else if (literalValue != null) {
