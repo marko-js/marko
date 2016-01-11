@@ -1,4 +1,5 @@
 'use strict';
+var ok = require('assert').ok;
 
 var Node = require('./Node');
 
@@ -6,6 +7,9 @@ class FunctionCall extends Node {
     constructor(def) {
         super('FunctionCall');
         this.callee = def.callee;
+
+        ok(this.callee, '"callee" is required');
+        
         this.args = def.args;
 
         if (this.args && !Array.isArray(this.args)) {
