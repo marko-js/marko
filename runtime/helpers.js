@@ -187,19 +187,12 @@ module.exports = {
     /**
      * Loads a template
      */
-    l: function(path, req) {
+    l: function(path) {
         if (typeof path === 'string') {
-            if (path.charAt(0) === '.' && req.resolve) { // Check if the path is relative
-                // The path is relative so use require.resolve to fully resolve the path
-                path = req.resolve(path);
-            }
-
             return runtime.load(path);
-        } else if (path.render) {
+        } else {
             // Assume it is already a pre-loaded template
             return path;
-        } else {
-            return runtime.load(path);
         }
     },
     /**

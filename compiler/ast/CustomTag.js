@@ -81,6 +81,7 @@ class CustomTag extends HtmlElement {
         var context = codegen.context;
 
         var tagDef = this.tagDef;
+        var inputProps = buildInputProps(this, context);
 
         var rendererPath = tagDef.renderer;
         if (rendererPath) {
@@ -89,10 +90,16 @@ class CustomTag extends HtmlElement {
             let loadRendererFunctionCall = builder.functionCall(loadRendererVar, [ requireRendererFunctionCall ]);
 
             let rendererVar = codegen.addStaticVar(removeExt(rendererPath), loadRendererFunctionCall);
-            var inputProps = buildInputProps(this, context);
-            var tagArgs = [ 'out', rendererVar, inputProps ];
-            var tagFunctionCall = builder.functionCall(tagVar, tagArgs);
+            let tagArgs = [ 'out', rendererVar, inputProps ];
+            let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
             return tagFunctionCall;
+        } else if (tagDef.template) {
+            let templateRequirePath = context.getRequirePath(tagDef.template);
+            let templateVar = context.importTemplate(templateRequirePath);
+            let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
+            let renderArgs = [ inputProps, 'out' ];
+            let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
+            return renderFunctionCall;
         }
     }
 }

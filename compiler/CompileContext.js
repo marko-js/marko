@@ -20,6 +20,24 @@ function getTaglibPath(taglibPath) {
     }
 }
 
+function removeExt(filename) {
+    var ext = path.extname(filename);
+    if (ext) {
+        return filename.slice(0, 0 - ext.length);
+    } else {
+        return filename;
+    }
+}
+
+function requireResolve(builder, path) {
+    var requireResolveNode = builder.memberExpression(
+        builder.identifier('require'),
+        builder.identifier('resolve'));
+
+
+    return builder.functionCall(requireResolveNode, [ path ]);
+}
+
 class CompileContext {
     constructor(src, filename, builder) {
         ok(typeof src === 'string', '"src" string is required');
@@ -240,6 +258,22 @@ class CompileContext {
         }
 
         return this._macros.registerMacro(name, params);
+    }
+
+    importTemplate(relativePath) {
+        ok(typeof relativePath === 'string', '"path" should be a string');
+        var builder = this.builder;
+
+
+        // We want to add the following import:
+        // var loadTemplate = __helpers.t;
+        // var template = loadTemplate(require.resolve(<templateRequirePath>))
+
+        var loadTemplateVar = this.addStaticVar('loadTemplate', '__helpers.l');
+        var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
+        var loadFunctionCall = builder.functionCall(loadTemplateVar, [ requireResolveTemplate ]);
+        var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
+        return templateVar;
     }
 }
 
