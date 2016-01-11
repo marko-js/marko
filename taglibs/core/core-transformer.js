@@ -7,7 +7,7 @@ var coreAttrHandlers = [
         'for', function(attr, node) {
             var forArgument = attr.argument;
             if (!forArgument) {
-                return;
+                return false;
             }
 
             var loopNode = createLoopNode(forArgument, null, this.builder);
@@ -22,7 +22,7 @@ var coreAttrHandlers = [
         'if', function(attr, node) {
             var ifArgument = attr.argument;
             if (!ifArgument) {
-                return;
+                return false;
             }
             var ifNode = this.builder.ifStatement(ifArgument);
             //Surround the existing node with an "If" node
@@ -33,7 +33,7 @@ var coreAttrHandlers = [
         'unless', function(attr, node) {
             var ifArgument = attr.argument;
             if (!ifArgument) {
-                return;
+                return false;
             }
             ifArgument = this.builder.negate(ifArgument);
             var ifNode = this.builder.ifStatement(ifArgument);
@@ -45,7 +45,7 @@ var coreAttrHandlers = [
         'else-if', function(attr, node) {
             var elseIfArgument = attr.argument;
             if (!elseIfArgument) {
-                return;
+                return false;
             }
             var elseIfNode = this.builder.elseIfStatement(elseIfArgument);
             //Surround the existing node with an "ElseIf" node
@@ -63,7 +63,7 @@ var coreAttrHandlers = [
         'body-only-if', function(attr, node, el) {
             var condition = attr.argument;
             if (!condition) {
-                return;
+                return false;
             }
 
             el.setBodyOnlyIf(condition);
@@ -111,15 +111,16 @@ module.exports = function transform(el, context) {
         let attrName = attr.name;
         var attrTransformerFunc = attributeTransformers[attrName];
         if (attrTransformerFunc) {
-            el.removeAttribute(attrName);
-
             if (!attributeTransfomer) {
                 attributeTransfomer = new AttributeTransformer(context, el);
             }
             var newNode = attributeTransfomer[attrName](attr, node, el);
-            if (newNode) {
-                newNode.pos = node.pos;
-                node = newNode;
+            if (newNode !== false) {
+                el.removeAttribute(attrName);
+                if (newNode) {
+                    newNode.pos = node.pos;
+                    node = newNode;
+                }
             }
         }
     });
