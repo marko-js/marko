@@ -42,6 +42,7 @@ class Text extends Node {
         this.normalizeText();
 
         var argument = this.argument;
+        var escape = this.escape !== false;
 
         if (argument instanceof Literal) {
             if (!argument.value) {
@@ -49,12 +50,15 @@ class Text extends Node {
             }
         } else {
             let builder = codegen.builder;
-            if (this.escape !== false) {
+
+            if (escape) {
                 // TODO Only escape the parts that need to be escaped if it is a compound expression with static
                 //      text parts
                 argument = builder.functionCall(
                     'escapeXml',
                     [argument]);
+            } else {
+                argument = builder.functionCall(builder.identifier('str'), [ argument ]);
             }
         }
 

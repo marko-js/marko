@@ -109,6 +109,7 @@ function generateCodeForExpressionAttr(name, value, codegen) {
 
             } else if (isNoEscapeXml(part)) {
                 part = removeEscapeFunctions(part);
+                part = codegen.builder.functionCall(codegen.builder.identifier('str'), [part]);
             } else {
                 var escapeXmlAttrVar = codegen.addStaticVar('escapeXmlAttr', '__helpers.xa');
                 part = removeEscapeFunctions(part);

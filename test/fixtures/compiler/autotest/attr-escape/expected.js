@@ -15,9 +15,9 @@ function create(__helpers) {
       "b\" bar=\"a " +
       escapeXmlAttr(data.foo) +
       " b\" baz=\"a " +
-      data.foo +
+      str(data.foo) +
       " b\" nested=\"a " +
-      data.foo + ("nested " + data.bar) +
+      str(data.foo + ("nested " + data.bar)) +
       " b\"></div>");
   };
 }
