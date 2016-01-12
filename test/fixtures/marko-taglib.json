@@ -114,6 +114,14 @@
         },
         "test-circular-template-b": {
             "template": "./taglib/test-circular-template-b/template.marko"
+        },
+        "script": {
+            "attributes": {
+                "*": {
+                    "ignore": true
+                }
+            },
+            "transformer": "./taglib/script-nonce-transformer.js"
         }
     },
     "<test-nested-tags-tabs>": "./taglib/test-nested-tags-tabs/marko-tag.json",

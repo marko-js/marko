@@ -63,7 +63,7 @@ var coreAttrHandlers = [
     ],
     [
         'attrs', function(attr, node) {
-            if (this.tag) {
+            if (this.tag && this.tag.isCustomTag()) {
                 this.inputAttr = attr;
             } else {
                 if (!node.addDynamicAttributes) {
@@ -183,7 +183,6 @@ var coreAttrHandlers = [
     ],
     [
         'c-data', function(attr, node) {
-            console.log('c-data', typeof attr);
             this.inputAttr = attr;
         }
     ]
