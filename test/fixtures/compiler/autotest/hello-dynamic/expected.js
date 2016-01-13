@@ -5,13 +5,14 @@ function create(__helpers) {
       escapeXml = __helpers.x;
 
   return function render(data, out) {
-    out.w('Hello ' +
+    out.w("Hello " +
       escapeXml(data.name) +
-      '! Hello ' +
+      "! Hello " +
       str(data.name) +
-      '! Hello ' +
+      "! Hello " +
       str(data.missing) +
-      '!');
+      "!");
   };
 }
+
 (module.exports = require("marko").c(__filename)).c(create);
