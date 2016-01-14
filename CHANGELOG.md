@@ -237,6 +237,21 @@ exports.renderer = function(input, out) {
 
 # 5.x
 
+## 5.2.x
+
+### 5.2.0
+
+ - Fixes #116 - Bug in browserify breaks browserify compatibility (workaround required)
+ - Use `<noscript>` tag for delivering widget IDs to the browser
+
+## 5.1.x
+
+### 5.1.0
+
+ - Fixes #112 DOM document should be bound to widget for purpose of using correct document.getElementById(...)
+
+### 5.0.9
+
 ## 5.0.x
 
 ### 5.0.9
