@@ -70,6 +70,11 @@ class Text extends Node {
             return;
         }
 
+        var parentNode = this.parentNode;
+        if (parentNode && parentNode.tagDef && parentNode.tagDef.preserveWhitespace) {
+            return;
+        }
+
         var container = this.container;
         if (!container) {
             return;

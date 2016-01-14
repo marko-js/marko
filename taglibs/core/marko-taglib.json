@@ -23,9 +23,18 @@
     "<macro-body>": {
         "code-generator": "./macro-body-tag"
     },
+    "<pre>": {
+        "preserve-whitespace": true
+    },
+    "<script>": {
+        "preserve-whitespace": true
+    },
     "<template-init>": {
         "code-generator": "./template-init-tag",
         "body": "static-text"
+    },
+    "<textarea>": {
+        "preserve-whitespace": true
     },
     "<unless>": {
         "node-factory": "./unless-tag"
