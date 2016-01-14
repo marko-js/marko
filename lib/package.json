@@ -1,8 +1,0 @@
-{
-    "main": "marko-widgets.js",
-    "browser": {
-        "./marko-widgets.js": "./marko-widgets-browser.js",
-        "./uniqueId.js": "./uniqueId-browser.js",
-        "./init-widgets.js": "./init-widgets-browser.js"
-    }
-}

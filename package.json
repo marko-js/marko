@@ -51,9 +51,14 @@
   },
   "license": "Apache License v2.0",
   "bin": {},
-  "main": "lib/marko-widgets.js",
+  "main": "lib/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "5.1.0"
+  "version": "5.1.0",
+  "browser": {
+      "./lib/index.js": "./lib/index-browser.js",
+      "./lib/uniqueId.js": "./lib/uniqueId-browser.js",
+      "./lib/init-widgets.js": "./lib/init-widgets-browser.js"
+  }
 }
