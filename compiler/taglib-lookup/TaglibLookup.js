@@ -154,7 +154,7 @@ class TaglibLookup {
         }
 
         var tagName = element.tagName;
-        return tags[tagName];
+        return tags[tagName.toLowerCase()];
     }
 
     getAttribute(element, attr) {
@@ -235,7 +235,7 @@ class TaglibLookup {
             };
         }
 
-        var tagName = element.tagName;
+        var tagName = element.tagName.toLowerCase();
         /*
          * If the node is an element node then we need to find all matching
          * transformers based on the URI and the local name of the element.
