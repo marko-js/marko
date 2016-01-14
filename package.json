@@ -55,7 +55,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "5.1.0",
+  "version": "5.2.0",
   "browser": {
       "./lib/index.js": "./lib/index-browser.js",
       "./lib/uniqueId.js": "./lib/uniqueId-browser.js",
