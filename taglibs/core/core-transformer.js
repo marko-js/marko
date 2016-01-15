@@ -77,6 +77,11 @@ var coreAttrHandlers = [
                 node.addDynamicAttributes(attr.value);
             }
         }
+    ],
+    [
+        'marko-preserve-whitespace', function(attr, node) {
+            node.setPreserveWhitespace(true);
+        }
     ]
 ];
 
@@ -104,6 +109,8 @@ coreAttrHandlers.forEach(function(attrHandler) {
 var attributeTransformers = AttributeTransformer.prototype;
 
 module.exports = function transform(el, context) {
+    el.removeAttribute('marko-body'); // This attribute is handled at parse time. We can just remove it now
+
     var attributeTransfomer;
     var node = el;
 

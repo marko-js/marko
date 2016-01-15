@@ -39,6 +39,13 @@ class Assignment extends Node {
     isCompoundExpression() {
         return true;
     }
+
+    /**
+     * "noOutput" should be true if the Node.js does not result in any HTML or Text output
+     */
+    get noOutput() {
+        return !(this.body && this.body.length);
+    }
 }
 
 module.exports = Assignment;

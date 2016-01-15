@@ -352,10 +352,14 @@ class Builder {
         return new TemplateRoot({body});
     }
 
-    text(argument, escape) {
+    text(argument, escape, preserveWhitespace) {
+        if (typeof argument === 'object' && !(argument instanceof Node)) {
+            var def = arguments[0];
+            return new Text(def);
+        }
         argument = makeNode(argument);
 
-        return new Text({argument, escape});
+        return new Text({argument, escape, preserveWhitespace});
     }
 
     thisExpression() {

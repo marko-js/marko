@@ -4,7 +4,7 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x;
 
-  var name = 'Frank';
+  var name = '${name}<div if(foo)></div>';
 
   return function render(data, out) {
     out.w(" Hello " +

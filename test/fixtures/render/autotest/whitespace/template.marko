@@ -1,7 +1,7 @@
-${"BEGIN  this whitespace   should be retained   END"} 
+${"BEGIN  this whitespace   should be retained   END"}
 
 test <!-- text should be normalized to one space -->
-${"hello"} 
+${"hello"}
 
 Long paragraph of text
 
@@ -19,18 +19,18 @@ should   <!-- This whitespace should be normalized -->  retain spacing between l
 </a>
 
 <pre>
-   begin <!-- this whitespace should not be normalized -->     end     
+   begin <!-- this whitespace should not be normalized -->     end
 </pre>
 
-<div c-space="preserve">
-   begin <!-- this whitespace should not be normalized -->     end     
+<div marko-preserve-whitespace>
+   begin <!-- this whitespace should not be normalized -->     end
 </div>
 
-<div c-space="preserve">
-   begin <!-- this whitespace should not be normalized -->     end     
+<div marko-preserve-whitespace>
+   begin <!-- this whitespace should not be normalized -->     end
 </div>
-<if test="true">begin <!-- this whitespace should be preserved -->end</if>
-<!-- 
+<if(true)>begin <!-- this whitespace should be preserved -->end</if>
+<!--
 - In not "xml:space" === "preserve":
     - newline followed by whitespace should be removed
     - More than one whitespace should be normalized into a single space (or new line character?)

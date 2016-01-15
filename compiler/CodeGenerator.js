@@ -327,22 +327,11 @@ class Generator {
     }
 
     addWriteLiteral(value) {
-        let lastWrite = this._bufferedWrites ?
-            this._bufferedWrites[this._bufferedWrites.length-1] :
-            null;
-
-        if (lastWrite instanceof Literal) {
-            lastWrite.value += value;
-            return;
+        if (!(value instanceof Literal)) {
+            value = new Literal({value});
         }
 
-        let output = new Literal({value});
-
-        if (!this._bufferedWrites) {
-            this._bufferedWrites = [output];
-        } else {
-            this._bufferedWrites.push(output);
-        }
+        this.addWrite(value);
     }
 
     addWrite(output) {
@@ -354,6 +343,10 @@ class Generator {
             if (lastWrite instanceof Literal) {
                 lastWrite.value += output.value;
                 return;
+            }
+        } else {
+            if (!(output instanceof Node)) {
+                throw new Error('Invalid write: ' + JSON.stringify(output, null, 2));
             }
         }
 

@@ -1,9 +1,15 @@
 'use strict';
 
+var ok = require('assert').ok;
 var Node = require('./Node');
 var Literal = require('./Literal');
+var escapeXml = require('raptor-util/escapeXml');
 
 function trim(textNode) {
+    if (textNode.preserveWhitespace === true) {
+        return;
+    }
+
     var text = textNode.argument.value;
     var isFirst = textNode.isFirst;
     var isLast = textNode.isLast;
@@ -28,10 +34,13 @@ class Text extends Node {
     constructor(def) {
         super('Text');
         this.argument = def.argument;
-        this.escape = def.escape;
+        this.escape = def.escape !== false;
         this.normalized = false;
         this.isFirst = false;
         this.isLast = false;
+        this.preserveWhitespace = def.preserveWhitespace === true;
+
+        ok(this.argument, 'Invalid argument');
     }
 
     isLiteral() {
@@ -39,7 +48,9 @@ class Text extends Node {
     }
 
     generateHtmlCode(codegen) {
-        this.normalizeText();
+        this.normalizeText(codegen);
+
+
 
         var argument = this.argument;
         var escape = this.escape !== false;
@@ -47,6 +58,10 @@ class Text extends Node {
         if (argument instanceof Literal) {
             if (!argument.value) {
                 return;
+            }
+
+            if (escape === true) {
+                argument.value = escapeXml(argument.value.toString());
             }
         } else {
             let builder = codegen.builder;
@@ -66,13 +81,15 @@ class Text extends Node {
     }
 
     normalizeText(codegen) {
-        if (this.normalized) {
+        if (this.normalized || codegen.context.isPreserveWhitespace() || this.preserveWhitespace === true) {
             return;
         }
 
         var parentNode = this.parentNode;
-        if (parentNode && parentNode.tagDef && parentNode.tagDef.preserveWhitespace) {
-            return;
+        if (parentNode) {
+            if (parentNode.isPreserveWhitespace()) {
+                return;
+            }
         }
 
         var container = this.container;
@@ -96,7 +113,9 @@ class Text extends Node {
             }
 
             if (curChild.type === 'Text' && curChild.isLiteral()) {
-                if (currentTextLiteral) {
+                if (currentTextLiteral &&
+                        currentTextLiteral.preserveWhitespace === curChild.preserveWhitespace &&
+                        currentTextLiteral.escape === curChild.escape) {
                     currentTextLiteral.argument.value += curChild.argument.value;
                     curChild.detach();
                 } else {

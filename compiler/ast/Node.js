@@ -15,6 +15,7 @@ class Node {
         this._codeGeneratorFuncs = null;
         this._flags = {};
         this._transformersApplied = {};
+        this._preserveWhitespace = null;
         this.data = {};
     }
 
@@ -79,6 +80,7 @@ class Node {
         delete result._flags;
         delete result.data;
         delete result.tagDef;
+        delete result._preserveWhitespace;
         return result;
     }
 
@@ -164,6 +166,19 @@ class Node {
 
     get parentNode() {
         return this.container && this.container.node;
+    }
+
+    setPreserveWhitespace(isPreserved) {
+        this._preserveWhitespace = isPreserved;
+    }
+
+    isPreserveWhitespace() {
+        var preserveWhitespace = this._preserveWhitespace;
+        if (preserveWhitespace == null) {
+            preserveWhitespace = this.tagDef && this.tagDef.preserveWhitespace;
+        }
+
+        return preserveWhitespace === true;
     }
 }
 

@@ -16,7 +16,7 @@ class Vars extends Node {
         var isStatement = this.statement;
         var body = this.body;
         var selfInvoking = this.isFlagSet('selfInvoking');
-        var hasBody = (body && body.array && body.array.length > 0);
+        var hasBody = this.body && this.body.length;
 
         if(!selfInvoking && hasBody) {
             this.setFlag('selfInvoking');
@@ -58,6 +58,13 @@ class Vars extends Node {
 
     walk(walker) {
         this.argument = walker.walk(this.argument);
+    }
+
+    /**
+     * "noOutput" should be true if the Node.js does not result in any HTML or Text output
+     */
+    get noOutput() {
+        return !(this.body && this.body.length);
     }
 }
 

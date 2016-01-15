@@ -3,7 +3,7 @@ var htmljs = require('htmljs-parser');
 
 class HtmlJsParser {
     parse(src, handlers) {
-        var parser = this.parser = htmljs.createParser({
+        var listeners = {
             ontext(event) {
                 handlers.handleCharacters(event.text);
             },
@@ -55,19 +55,21 @@ class HtmlJsParser {
             },
 
             onerror(event) {
-                // Error
+                handlers.handleError(event);
             }
-        });
+        };
+
+        var options = {
+            parserStateProvider(event) {
+                if (event.type === 'opentag') {
+                    return handlers.getParserStateForTag(event);
+                }
+            }
+        };
+
+        var parser = this.parser = htmljs.createParser(listeners, options);
 
         parser.parse(src);
-    }
-
-    enterParsedTextContentState() {
-        this.parser.enterParsedTextContentState();
-    }
-
-    enterStaticTextContentState() {
-        this.parser.enterStaticTextContentState();
     }
 }
 

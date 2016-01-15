@@ -2,15 +2,11 @@
 var ok = require('assert').ok;
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
-    whitespace: function(attr, compilerOptions) {
-        if (attr.value === 'preserve') {
-            compilerOptions.preserveWhitespace = true;
-        }
+    'preserve-whitespace': function(attr, context) {
+        context.setPreserveWhitespace(true);
     },
-    comments: function(attr, compilerOptions) {
-        if (attr.value === 'preserve') {
-            compilerOptions.preserveComments = true;
-        }
+    'preserve-comments': function(attr, context) {
+        context.setPreserveComments(true);
     }
 };
 
@@ -70,7 +66,8 @@ class Parser {
         if (this.prevTextNode && this.prevTextNode.isLiteral()) {
             this.prevTextNode.appendText(text);
         } else {
-            this.prevTextNode = builder.text(builder.literal(text));
+            var escape = false;
+            this.prevTextNode = builder.text(builder.literal(text), escape);
             this.prevTextNode.pos = text.pos;
             this.parentNode.appendChild(this.prevTextNode);
         }
@@ -85,18 +82,21 @@ class Parser {
         var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
 
         if (tagName === 'compiler-options') {
-            var compilerOptions = this.compilerOptions;
-
             attributes.forEach(function (attr) {
                 let attrName = attr.name;
-                let attrValue = attr.value;
-                let handler = COMPILER_ATTRIBUTE_HANDLERS[attrValue];
+                let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 
                 if (!handler) {
-                    throw new Error('Invalid Marko compiler option: ' + attrName + ', Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS));
+                    context.addError({
+                        code: 'ERR_INVALID_COMPILER_OPTION',
+                        message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
+                        pos: el.pos,
+                        node: el
+                    });
+                    return;
                 }
 
-                handler(attr, compilerOptions);
+                handler(attr, context);
             });
 
             return;
@@ -138,11 +138,7 @@ class Parser {
         if (node.tagDef) {
             var body = tagDef.body;
             if (body) {
-                if (body === 'parsed-text') {
-                    this.parserImpl.enterParsedTextContentState();
-                } else if (body === 'static-text') {
-                    this.parserImpl.enterStaticTextContentState();
-                }
+
             }
         }
 
@@ -185,14 +181,64 @@ class Parser {
         var parsedExpression = parseExpression(expression);
 
         var builder = this.context.builder;
+        var preserveWhitespace = true;
 
-        var text = builder.text(parsedExpression, escape);
+        var text = builder.text(parsedExpression, escape, preserveWhitespace);
         this.parentNode.appendChild(text);
+    }
+
+    handleError(event) {
+        this.context.addError({
+            message: event.message,
+            code: event.code,
+            pos: event.pos,
+            endPos: event.endPos
+        });
     }
 
     get parentNode() {
         var last = this.stack[this.stack.length-1];
         return last.node;
+    }
+
+    getParserStateForTag(el) {
+        var attributes = el.attributes;
+
+        for (var i=0; i<attributes.length; i++) {
+            var attr = attributes[i];
+            var attrName = attr.name;
+            if (attrName === 'marko-body') {
+                var parseMode;
+
+                if (attr.literalValue) {
+                    parseMode = attr.literalValue;
+                }
+
+                if (parseMode === 'static-text' ||
+                    parseMode === 'parsed-text' ||
+                    parseMode === 'html') {
+                    return parseMode;
+                } else {
+                    this.context.addError({
+                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
+                        code: 'ERR_INVALID_ATTR'
+                    });
+                    return;
+                }
+            }
+        }
+
+        var tagName = el.tagName;
+        var tagDef = this.context.getTagDef(tagName);
+
+        if (tagDef) {
+            var body = tagDef.body;
+            if (body) {
+                return body; // 'parsed-text' | 'static-text' | 'html'
+            }
+        }
+
+        return null; // Default parse state
     }
 }
 

@@ -58,6 +58,7 @@ class CompileContext {
         this._flags = {};
         this._errors = [];
         this._macros = null;
+        this._preserveWhitespace = null;
     }
 
     getPosInfo(pos) {
@@ -142,6 +143,21 @@ class CompileContext {
 
     getStaticCode() {
         return this._staticCode;
+    }
+
+    getTagDef(tagName) {
+        var taglibLookup = this.taglibLookup;
+
+        if (typeof tagName === 'string') {
+            return taglibLookup.getTag(tagName);
+        } else {
+            let elNode = tagName;
+            if (elNode.tagDef) {
+                return elNode.tagDef;
+            }
+
+            return taglibLookup.getTag(elNode.tagName);
+        }
     }
 
     createNodeForEl(tagName, attributes, argument, openTagOnly, selfClosed) {
@@ -274,6 +290,14 @@ class CompileContext {
         var loadFunctionCall = builder.functionCall(loadTemplateVar, [ requireResolveTemplate ]);
         var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
         return templateVar;
+    }
+
+    setPreserveWhitespace(preserveWhitespace) {
+        this._preserveWhitespace = preserveWhitespace;
+    }
+
+    isPreserveWhitespace() {
+        return this._preserveWhitespace === true;
     }
 }
 
