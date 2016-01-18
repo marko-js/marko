@@ -29,6 +29,7 @@ var Taglib = require('./Taglib');
 var propertyHandlers = require('property-handlers');
 var forEachEntry = require('raptor-util').forEachEntry;
 var loader = require('./loader');
+var markoCompiler = require('../');
 
 function exists(path) {
     try {
@@ -368,7 +369,7 @@ TagHandlers.prototype = {
                 throw new Error('Invalid "import-var": ' + require('util').inspect(varValue));
             }
 
-            importedVar.expression = expression;
+            importedVar.expression = markoCompiler.defaultBuilder.parseExpression(expression);
             tag.addImportedVariable(importedVar);
         });
     },

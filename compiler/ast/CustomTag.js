@@ -67,6 +67,13 @@ function buildInputProps(node, context) {
         }
     });
 
+    tagDef.forEachImportedVariable(function(importedVariable) {
+        let propName = importedVariable.targetProperty;
+        let propExpression = importedVariable.expression;
+
+        inputProps[propName] = propExpression;
+    });
+
     if (node.body && node.body.length) {
 
         if (tagDef.bodyFunction) {
