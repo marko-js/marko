@@ -114,7 +114,7 @@ class HtmlAttribute extends Node {
 
         ok(def, 'Invalid attribute definition');
         this.type = 'HtmlAttribute';
-        this.name = def.name.toLowerCase();
+        this.name = def.name;
         this.value = def.value;
 
         if (typeof this.value === 'string') {

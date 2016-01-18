@@ -50,7 +50,7 @@
           "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
-            "name": "unusedvar"
+            "name": "unusedVar"
           }
         }
       ],

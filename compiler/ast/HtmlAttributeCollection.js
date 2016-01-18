@@ -31,7 +31,7 @@ class HtmlAttributeCollection {
             }
         }
 
-        this.lookup[name] = newAttr;
+        this.lookup[name.toLowerCase()] = newAttr;
         this.all.push(newAttr);
     }
 
@@ -58,22 +58,21 @@ class HtmlAttributeCollection {
     }
 
     renameAttribute(oldName, newName) {
-        var attr = this.lookup[oldName];
+        var key = oldName.toLowerCase();
+
+        var attr = this.lookup[key];
         if (!attr) {
             return;
         }
 
         attr.name = newName;
-        delete this.lookup[oldName];
-        this.lookup[newName] = attr;
+        delete this.lookup[key];
+        this.lookup[key] = attr;
     }
 
     hasAttribute(name) {
         ok(typeof name === 'string', 'Invalid attribute name');
-
-        name = name.toLowerCase();
-
-        return this.lookup.hasOwnProperty(name);
+        return this.lookup.hasOwnProperty(name.toLowerCase());
     }
 
     hasAttributes() {
@@ -81,7 +80,7 @@ class HtmlAttributeCollection {
     }
 
     getAttribute(name) {
-        return this.lookup[name];
+        return this.lookup[name.toLowerCase()];
     }
 
     setAttributeValue(name, value) {

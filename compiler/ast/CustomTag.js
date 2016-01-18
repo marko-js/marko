@@ -1,24 +1,24 @@
 'use strict';
 
 var HtmlElement = require('./HtmlElement');
-var path = require('path');
 var removeDashes = require('../util/removeDashes');
 var removeEscapeFunctions = require('../util/removeEscapeFunctions');
+var safeVarName = require('../util/safeVarName');
 
-function removeExt(filename) {
-    var ext = path.extname(filename);
-    if (ext) {
-        return filename.slice(0, 0 - ext.length);
-    } else {
-        return filename;
+function getNestedTagParentNode(nestedTagNode, parentTagName) {
+    var currentNode = nestedTagNode.parentNode;
+    while (currentNode) {
+        if (currentNode.type === 'CustomTag' && currentNode.tagDef.name === parentTagName) {
+            return currentNode;
+        }
+
+        currentNode = currentNode.parentNode;
     }
 }
 
 function buildInputProps(node, context) {
     var tagDef = node.tagDef;
     var inputProps = {};
-    var builder = context.builder;
-
 
     node.forEachAttribute((attr) => {
         var attrName = attr.name;
@@ -74,24 +74,18 @@ function buildInputProps(node, context) {
         inputProps[propName] = propExpression;
     });
 
-    if (node.body && node.body.length) {
+    return inputProps;
+}
 
-        if (tagDef.bodyFunction) {
-            let bodyFunction = tagDef.bodyFunction;
-            let bodyFunctionName = bodyFunction.name;
-            var bodyFunctionParams = bodyFunction.params.map(function(param) {
-                return builder.identifier(param);
-            });
+function getNextNestedTagVarName(tagDef, context) {
+    var key = 'customTag' + tagDef.name;
 
-            inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, node.body);
-        } else {
-            var renderBodyFunction = context.builder.renderBodyFunction(node.body);
-            inputProps.renderBody = renderBodyFunction;
-        }
+    var nestedTagVarInfo = context.data[key] || (context.data[key] = {
+        next: 0
+    });
 
-    }
 
-    return context.builder.literal(inputProps);
+    return safeVarName(tagDef.name) + (nestedTagVarInfo.next++);
 }
 
 class CustomTag extends HtmlElement {
@@ -99,35 +93,129 @@ class CustomTag extends HtmlElement {
         super(el);
         this.type = 'CustomTag';
         this.tagDef = tagDef;
+        // console.log(module.id, this.type);
     }
 
     generateCode(codegen) {
-        var loadRendererVar = codegen.addStaticVar('__renderer', '__helpers.r');
-        var tagVar = codegen.addStaticVar('__tag', '__helpers.t');
-
+        if (this.type !== 'CustomTag') {
+            throw new Error(this.type);
+        }
         var builder = codegen.builder;
         var context = codegen.context;
 
         var tagDef = this.tagDef;
+
+        var isNestedTag = tagDef.isNestedTag === true;
+        var hasNestedTags = tagDef.hasNestedTags();
+        var parentTagName;
+        var isRepeated;
+        var targetProperty;
+
+        if (isNestedTag) {
+            parentTagName = tagDef.parentTagName;
+            isRepeated = tagDef.isRepeated === true;
+            targetProperty = builder.literal(tagDef.targetProperty);
+        }
+
+        var nestedTagVar;
+
+        if (hasNestedTags) {
+            nestedTagVar = this.data.nestedTagVar = builder.identifier(getNextNestedTagVarName(tagDef, context));
+        }
+
+        let parentTagVar;
+
+        if (isNestedTag) {
+            let parentTagNode = getNestedTagParentNode(this, parentTagName);
+            parentTagVar = parentTagNode.data.nestedTagVar;
+        }
+
         var inputProps = buildInputProps(this, context);
+        var renderBodyFunction;
+
+        if (this.body && this.body.length) {
+
+            if (tagDef.bodyFunction) {
+                let bodyFunction = tagDef.bodyFunction;
+                let bodyFunctionName = bodyFunction.name;
+                let bodyFunctionParams = bodyFunction.params.map(function(param) {
+                    return builder.identifier(param);
+                });
+
+                inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, this.body);
+            } else {
+                renderBodyFunction = context.builder.renderBodyFunction(this.body);
+                if (nestedTagVar) {
+                    renderBodyFunction.params.push(nestedTagVar);
+                }
+            }
+        }
+
 
         var rendererPath = tagDef.renderer;
-        if (rendererPath) {
-            let rendererRequirePath = context.getRequirePath(rendererPath);
-            let requireRendererFunctionCall = builder.require(JSON.stringify(rendererRequirePath));
-            let loadRendererFunctionCall = builder.functionCall(loadRendererVar, [ requireRendererFunctionCall ]);
+        var rendererRequirePath;
+        var requireRendererFunctionCall;
 
-            let rendererVar = codegen.addStaticVar(removeExt(rendererPath), loadRendererFunctionCall);
-            let tagArgs = [ 'out', rendererVar, inputProps ];
-            let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
-            return tagFunctionCall;
-        } else if (tagDef.template) {
+        if (rendererPath) {
+            rendererRequirePath = context.getRequirePath(rendererPath);
+            requireRendererFunctionCall = builder.require(JSON.stringify(rendererRequirePath));
+        } else {
+            requireRendererFunctionCall = builder.literal(null);
+        }
+
+        if (tagDef.template) {
+            if (renderBodyFunction) { // Store the renderBody function with the input
+                inputProps.renderBody = renderBodyFunction;
+            }
+
             let templateRequirePath = context.getRequirePath(tagDef.template);
             let templateVar = context.importTemplate(templateRequirePath);
             let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
-            let renderArgs = [ inputProps, 'out' ];
+            let renderArgs = [ builder.literal(inputProps), 'out' ];
             let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
             return renderFunctionCall;
+        } else {
+
+            // Store the renderBody function with the input, but only if the body does not have
+            // nested tags
+            if (renderBodyFunction && !hasNestedTags) {
+                inputProps.renderBody = renderBodyFunction;
+            }
+
+            var loadTagVar = codegen.addStaticVar('__loadTag', '__helpers.t');
+
+            var loadTagArgs = [
+                requireRendererFunctionCall // The first param is the renderer
+            ];
+
+            if (isNestedTag || hasNestedTags) {
+                if (isNestedTag) {
+                    loadTagArgs.push(targetProperty); // targetProperty
+                    loadTagArgs.push(builder.literal(isRepeated ? 1 : 0)); // isRepeated
+                } else {
+                    loadTagArgs.push(builder.literal(0)); // targetProperty
+                    loadTagArgs.push(builder.literal(0)); // isRepeated
+                }
+
+                if (hasNestedTags) {
+                    loadTagArgs.push(builder.literal(1));
+                }
+            }
+
+            var loadTag = builder.functionCall(loadTagVar, loadTagArgs);
+
+            let tagVar = codegen.addStaticVar(tagDef.name, loadTag);
+            let tagArgs = [ builder.literal(inputProps), 'out' ];
+
+            if (isNestedTag || hasNestedTags) {
+                tagArgs.push(isNestedTag ? parentTagVar : builder.literal(0));
+
+                if (renderBodyFunction && hasNestedTags) {
+                    tagArgs.push(renderBodyFunction);
+                }
+            }
+            let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
+            return tagFunctionCall;
         }
     }
 }

@@ -3,17 +3,18 @@ function create(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
-      __renderer = __helpers.r,
-      __tag = __helpers.t,
-      test_body_function_renderer = __renderer(require("../../../taglib/scanned-tags/test-body-function/renderer"));
+      __loadTag = __helpers.t,
+      test_import_var = __loadTag(require("../../../taglib/scanned-tags/test-import-var/renderer"));
 
   return function render(data, out) {
-    __tag(out, test_body_function_renderer, {
+    test_import_var({
       "name": "World",
-      "myBody": function myBody(foo, bar) {
+      "foo": data.foo,
+      "bar": data.bar,
+      "renderBody": function renderBody(out) {
         out.w("This is the body content");
       }
-    });
+    }, out);
   };
 }
 

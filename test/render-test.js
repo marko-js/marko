@@ -5,6 +5,8 @@ var path = require('path');
 var marko = require('../');
 var autotest = require('./autotest');
 
+require('../node-require').install();
+
 describe('render', function() {
     var autoTestDir = path.join(__dirname, 'fixtures/render/autotest');
 

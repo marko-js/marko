@@ -21,8 +21,6 @@ var runtime = require('./'); // Circular dependency, but that is okay
 var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
-var arrayFromArguments = require('raptor-util/arrayFromArguments');
-var logger = require('raptor-logging').logger(module);
 var isArray = Array.isArray;
 
 function notEmpty(o) {
@@ -57,7 +55,27 @@ function createDeferredRenderer(handler) {
     return deferredRenderer;
 }
 
-var WARNED_INVOKE_BODY = 0;
+function resolveRenderer(handler) {
+    var renderer = handler.renderer;
+
+    if (renderer) {
+        return renderer;
+    }
+
+    if (typeof handler === 'function') {
+        return handler;
+    }
+
+    if (typeof (renderer = handler.render) === 'function') {
+        return renderer;
+    }
+
+    // If the user code has a circular function then the renderer function
+    // may not be available on the module. Since we can't get a reference
+    // to the actual renderer(input, out) function right now we lazily
+    // try to get access to it later.
+    return createDeferredRenderer(handler);
+}
 
 module.exports = {
     /**
@@ -195,31 +213,6 @@ module.exports = {
             return path;
         }
     },
-    /**
-     * Returns the render function for a tag handler
-     */
-    r: function(handler) {
-
-        var renderer = handler.renderer;
-
-        if (renderer) {
-            return renderer;
-        }
-
-        if (typeof handler === 'function') {
-            return handler;
-        }
-
-        if (typeof (renderer = handler.render) === 'function') {
-            return renderer;
-        }
-
-        // If the user code has a circular function then the renderer function
-        // may not be available on the module. Since we can't get a reference
-        // to the actual renderer(input, out) function right now we lazily
-        // try to get access to it later.
-        return createDeferredRenderer(handler);
-    },
 
     // ----------------------------------
     // The helpers listed below require an out
@@ -229,62 +222,41 @@ module.exports = {
     /**
      * Invoke a tag handler render function
      */
-    t: function (out, renderFunc, input, renderBody, options) {
-        if (!input) {
-            input = {};
+    t: function (renderer, targetProperty, isRepeated, hasNestedTags) {
+        if (renderer) {
+            renderer = resolveRenderer(renderer);
         }
 
-        var hasOutParam;
-        var targetProperty;
-        var parent;
-        var hasNestedTags;
-        var isRepeated;
-
-        if (options) {
-            hasOutParam = options.hasOutParam;
-            parent = options.parent;
-            targetProperty = options.targetProperty;
-            hasNestedTags = options.hasNestedTags;
-            isRepeated = options.isRepeated;
-        }
-
-        if (renderBody) {
-            if (hasNestedTags) {
-                renderBody(out, input);
-            } else {
-                input.renderBody = renderBody;
-                input.invokeBody = function() {
-                    if (!WARNED_INVOKE_BODY) {
-                        WARNED_INVOKE_BODY = 1;
-                        logger.warn('invokeBody(...) deprecated. Use renderBody(out) instead.', new Error().stack);
-                    }
-
-                    if (!hasOutParam) {
-                        var args = arrayFromArguments(arguments);
-                        args.unshift(out);
-                        renderBody.apply(this, args);
-                    } else {
-                        renderBody.apply(this, arguments);
-                    }
-                };
-            }
-        }
-
-        if (renderFunc) {
-            renderFunc(input, out);
-        } else if (targetProperty) {
-            if (isRepeated) {
-                var existingArray = parent[targetProperty];
-                if (existingArray) {
-                    existingArray.push(input);
-                } else {
-                    parent[targetProperty] = [input];
+        if (targetProperty || hasNestedTags) {
+            return function(input, out, parent, renderBody) {
+                // Handle nested tags
+                if (renderBody) {
+                    renderBody(out, input);
                 }
-            } else {
-                parent[targetProperty] = input;
-            }
+
+                if (targetProperty) {
+                    // If we are nested tag then we do not have a renderer
+                    if (isRepeated) {
+                        var existingArray = parent[targetProperty];
+                        if (existingArray) {
+                            existingArray.push(input);
+                        } else {
+                            parent[targetProperty] = [input];
+                        }
+                    } else {
+                        parent[targetProperty] = input;
+                    }
+                } else {
+                    // We are a tag with nested tags, but we have already found
+                    // our nested tags by rendering the body
+                    renderer(input, out);
+                }
+            };
+        } else {
+            return renderer;
         }
     },
+
     /**
      * Internal helper method that captures the output of rendering.
      * This function works by swapping out the underlying writer to

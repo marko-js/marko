@@ -26,9 +26,9 @@ function inheritProps(sub, sup) {
     });
 }
 
-function createCustomTagNodeFactory(tag) {
+function createCustomTagNodeFactory(tagDef) {
     return function nodeFactory(el) {
-        return new CustomTag(el, tag);
+        return new CustomTag(el, tagDef);
     };
 }
 
@@ -218,7 +218,7 @@ class Tag{
             if (typeof nodeFactory !== 'function') {
                 throw new Error('Invalid node factory exported by module at path "' + this.nodeFactoryPath + '"');
             }
-        } else if (this.renderer || this.template) {
+        } else if (this.renderer || this.template || this.isNestedTag) {
             nodeFactory = createCustomTagNodeFactory(this);
         } else {
             return null;

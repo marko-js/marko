@@ -187,9 +187,17 @@ class CompileContext {
         if (tagDef) {
             var nodeFactoryFunc = tagDef.getNodeFactory();
             if (nodeFactoryFunc) {
-                node = nodeFactoryFunc(elNode, this);
-                if (!(node instanceof Node)) {
+                var newNode = nodeFactoryFunc(elNode, this);
+                if (!(newNode instanceof Node)) {
                     throw new Error('Invalid node returned from node factory for tag "' + tagName + '".');
+                }
+
+                if (newNode != node) {
+                    // Make sure the body container is associated with the correct node
+                    if (newNode.body && newNode.body !== node) {
+                        newNode.body = newNode.makeContainer(newNode.body.items);
+                    }
+                    node = newNode;
                 }
             }
         }
