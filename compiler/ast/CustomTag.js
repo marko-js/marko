@@ -15,7 +15,10 @@ function removeExt(filename) {
 }
 
 function buildInputProps(node, context) {
+    var tagDef = node.tagDef;
     var inputProps = {};
+    var builder = context.builder;
+
 
     node.forEachAttribute((attr) => {
         var attrName = attr.name;
@@ -65,8 +68,20 @@ function buildInputProps(node, context) {
     });
 
     if (node.body && node.body.length) {
-        var renderBodyFunction = context.builder.renderBodyFunction(node.body);
-        inputProps.renderBody = renderBodyFunction;
+
+        if (tagDef.bodyFunction) {
+            let bodyFunction = tagDef.bodyFunction;
+            let bodyFunctionName = bodyFunction.name;
+            var bodyFunctionParams = bodyFunction.params.map(function(param) {
+                return builder.identifier(param);
+            });
+
+            inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, node.body);
+        } else {
+            var renderBodyFunction = context.builder.renderBodyFunction(node.body);
+            inputProps.renderBody = renderBodyFunction;
+        }
+
     }
 
     return context.builder.literal(inputProps);

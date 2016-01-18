@@ -459,7 +459,10 @@ function loadTag(tagProps, path, taglib, dirname) {
     if (!hasAttributes(tagProps)) {
         // allow any attributes if no attributes are declared
         tagProps.attributes = {
-            '*': 'string'
+            '*': {
+                type: 'string',
+                targetProperty: null
+            }
         };
     }
 

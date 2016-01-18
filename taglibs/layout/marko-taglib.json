@@ -1,42 +1,26 @@
 {
-    "tags": {
-        "layout-use": {
-            "renderer": "./use-tag",
-            "attributes": {
-                "template": {
-                    "type": "template"
-                },
-                "*": {
-                    "remove-dashes": true,
-                    "type": "string"
-                }
-            },
-            "body-function": "getContent(__layoutHelper)"
+    "<layout-use>": {
+        "@template": "template",
+        "@*": {
+            "remove-dashes": true,
+            "type": "string"
         },
-        "layout-put": {
-            "renderer": "./put-tag",
-            "attributes": {
-                "into": {
-                    "type": "string"
-                },
-                "value": {
-                    "type": "string"
-                }
-            },
-            "import-var": {
-                "layout": "__layoutHelper"
-            }
-        },
-        "layout-placeholder": {
-            "renderer": "./placeholder-tag",
-            "attributes": {
-                "name": {
-                    "type": "string"
-                }
-            },
-            "import-var": {
-                "content": "data.layoutContent"
-            }
+        "renderer": "./use-tag",
+        "body-function": "getContent(__layoutHelper)"
+    },
+    "<layout-put>": {
+        "@into": "string",
+        "@value": "string",
+        "renderer": "./put-tag",
+        "import-var": {
+            "layout": "__layoutHelper"
+        }
+    },
+    "<layout-placeholder>": {
+        "@name": "string",
+        "renderer": "./placeholder-tag",
+        "import-var": {
+            "content": "data.layoutContent"
         }
     }
 }

@@ -1,0 +1,4 @@
+{
+    "renderer": "./renderer",
+    "body-function": "myBody(foo, bar)"
+}
