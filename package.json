@@ -59,6 +59,7 @@
   "browser": {
       "./lib/index.js": "./lib/index-browser.js",
       "./lib/uniqueId.js": "./lib/uniqueId-browser.js",
-      "./lib/init-widgets.js": "./lib/init-widgets-browser.js"
+      "./lib/init-widgets.js": "./lib/init-widgets-browser.js",
+      "./lib/defineWidget.js": "./lib/defineWidget-browser.js"
   }
 }
