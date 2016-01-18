@@ -51,7 +51,7 @@ class HtmlJsParser {
 
             oncomment(event) {
                 // Text within XML comment
-                handlers.handleComment(event.text);
+                handlers.handleComment(event.comment);
             },
 
             onerror(event) {

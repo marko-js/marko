@@ -1,1 +1,1 @@
-out.w("<--This is an HTML comment-->");
+out.w("<!--This is an HTML comment-->");

@@ -59,6 +59,7 @@ class CompileContext {
         this._errors = [];
         this._macros = null;
         this._preserveWhitespace = null;
+        this._preserveComments = null;
     }
 
     getPosInfo(pos) {
@@ -298,6 +299,14 @@ class CompileContext {
 
     isPreserveWhitespace() {
         return this._preserveWhitespace === true;
+    }
+
+    setPreserveComments(preserveComments) {
+        this._preserveComments = preserveComments;
+    }
+
+    isPreserveComments() {
+        return this._preserveComments === true;
     }
 }
 

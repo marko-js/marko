@@ -12,7 +12,7 @@ class HtmlComment extends Node {
         var comment = this.comment;
         var literal = codegen.builder.literal;
 
-        codegen.addWrite(literal('<--'));
+        codegen.addWrite(literal('<!--'));
         codegen.addWrite(comment);
         codegen.addWrite(literal('-->'));
     }

@@ -25,7 +25,6 @@ class Parser {
         this.parserImpl = parserImpl;
 
         this.prevTextNode = null;
-        this.compilerOptions = null;
         this.stack = null;
 
         // The context gets provided when parse is called
@@ -36,7 +35,6 @@ class Parser {
 
     _reset() {
         this.prevTextNode = null;
-        this.compilerOptions = {};
         this.stack = [];
     }
 
@@ -165,12 +163,11 @@ class Parser {
 
         var builder = this.context.builder;
 
-        var compilerOptions = this.compilerOptions;
-        var preserveComment = (compilerOptions && compilerOptions.preserveComments === true) ||
+        var preserveComment = this.context.isPreserveComments() ||
             isIEConditionalComment(comment);
 
         if (preserveComment) {
-            var commentNode = builder.htmlComment(comment);
+            var commentNode = builder.htmlComment(builder.literal(comment));
             this.parentNode.appendChild(commentNode);
         }
     }
