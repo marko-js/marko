@@ -699,4 +699,14 @@ describe('widget' , function() {
 
         expect(contentWidget.getWidget('more').getValue()).to.equal('hello');
     });
+
+    it('should throw an error when Widget.prototype.render is provided', function() {
+        expect(function() {
+            var markoWidgetsRegistry = require('marko-widgets/lib/registry');
+            var widgetWithRender = require('../fixtures/invalid/widget-with-render/widget.js');
+            var typePath = 'widgetWithRender';
+            markoWidgetsRegistry.register(typePath, widgetWithRender);
+            markoWidgetsRegistry.createWidget(typePath, 'w0');
+        }).to.throw(/is no longer supported/);
+    });
 });
