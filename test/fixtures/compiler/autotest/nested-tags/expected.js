@@ -10,21 +10,21 @@ function create(__helpers) {
 
   return function render(data, out) {
     test_nested_tags_overlay({
-      header: "data.header"
-    }, out, 0, function renderBody(out, test_nested_tags_overlay0) {
+        header: "data.header"
+      }, out, 0, function renderBody(out, test_nested_tags_overlay0) {
       test_nested_tags_overlay_body({
-        className: "my-body",
-        renderBody: function renderBody(out) {
-          out.w("Body content");
-        }
-      }, out, test_nested_tags_overlay0);
+          className: "my-body",
+          renderBody: function renderBody(out) {
+            out.w("Body content");
+          }
+        }, out, test_nested_tags_overlay0);
 
       test_nested_tags_overlay_footer({
-        className: "my-footer",
-        renderBody: function renderBody(out) {
-          out.w("Footer content");
-        }
-      }, out, test_nested_tags_overlay0);
+          className: "my-footer",
+          renderBody: function renderBody(out) {
+            out.w("Footer content");
+          }
+        }, out, test_nested_tags_overlay0);
     });
   };
 }

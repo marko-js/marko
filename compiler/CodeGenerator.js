@@ -488,6 +488,7 @@ class Generator {
         } else if (typeof value === 'number') {
             this.write(value.toString());
         } else if (typeof value === 'object') {
+            this.incIndent();
             this.write('{\n');
             this.incIndent();
 
@@ -498,7 +499,7 @@ class Generator {
                 let v = value[k];
 
                 this.writeLineIndent();
-                
+
                 if (isValidJavaScriptIdentifier(k)) {
                     this.write(k + ': ');
                 } else {
@@ -521,6 +522,7 @@ class Generator {
             this.decIndent();
             this.writeLineIndent();
             this.write('}');
+            this.decIndent();
         }
     }
 

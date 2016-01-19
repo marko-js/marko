@@ -16,6 +16,7 @@ class ObjectExpression extends Node {
             return;
         }
 
+        codegen.incIndent();
         codegen.write('{\n');
         codegen.incIndent();
 
@@ -33,6 +34,7 @@ class ObjectExpression extends Node {
         codegen.decIndent();
         codegen.writeLineIndent();
         codegen.write('}');
+        codegen.decIndent();
     }
 
     toJSON() {
