@@ -1,5 +1,5 @@
 module.exports = function render(input, out) {
-    var contentMap = input.content || out.getAttribute('layoutContent');
+    var contentMap = input.content;
     var content = contentMap ? contentMap[input.name] : null;
     if (content) {
         if (content.value) {

@@ -1,12 +1,14 @@
 {
     "<layout-use>": {
-        "@template": "template",
+        "@__template": "template",
+        "@__data": "template",
         "@*": {
             "remove-dashes": true,
             "type": "string"
         },
         "renderer": "./use-tag",
-        "body-function": "getContent(__layoutHelper)"
+        "body-function": "getContent(__layoutHelper)",
+        "transformer": "./use-tag-transformer.js"
     },
     "<layout-put>": {
         "@into": "string",
