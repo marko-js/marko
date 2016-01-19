@@ -155,6 +155,29 @@ class CustomTag extends HtmlElement {
             }
         }
 
+        // Store the renderBody function with the input, but only if the body does not have
+        // nested tags
+        if (renderBodyFunction && !hasNestedTags) {
+            inputProps.renderBody = renderBodyFunction;
+        }
+
+        inputProps = builder.literal(inputProps);
+
+        var argument = this.argument;
+
+        if (argument) {
+            argument = builder.parseExpression(argument);
+
+            if (Object.keys(inputProps.value).length === 0) {
+                inputProps = argument;
+            } else {
+                var mergeVar = codegen.addStaticVar('__merge', '__helpers.m');
+                inputProps = builder.functionCall(mergeVar, [
+                    inputProps, // Input props from the attributes take precedence
+                    argument
+                ]);
+            }
+        }
 
         var rendererPath = tagDef.renderer;
         var rendererRequirePath;
@@ -168,24 +191,13 @@ class CustomTag extends HtmlElement {
         }
 
         if (tagDef.template) {
-            if (renderBodyFunction) { // Store the renderBody function with the input
-                inputProps.renderBody = renderBodyFunction;
-            }
-
             let templateRequirePath = context.getRequirePath(tagDef.template);
             let templateVar = context.importTemplate(templateRequirePath);
             let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
-            let renderArgs = [ builder.literal(inputProps), 'out' ];
+            let renderArgs = [ inputProps, 'out' ];
             let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
             return renderFunctionCall;
         } else {
-
-            // Store the renderBody function with the input, but only if the body does not have
-            // nested tags
-            if (renderBodyFunction && !hasNestedTags) {
-                inputProps.renderBody = renderBodyFunction;
-            }
-
             var loadTagVar = codegen.addStaticVar('__loadTag', '__helpers.t');
 
             var loadTagArgs = [
@@ -209,7 +221,7 @@ class CustomTag extends HtmlElement {
             var loadTag = builder.functionCall(loadTagVar, loadTagArgs);
 
             let tagVar = codegen.addStaticVar(tagDef.name, loadTag);
-            let tagArgs = [ builder.literal(inputProps), 'out' ];
+            let tagArgs = [inputProps, 'out' ];
 
             if (isNestedTag || hasNestedTags) {
                 tagArgs.push(isNestedTag ? parentTagVar : builder.literal(0));

@@ -18,7 +18,6 @@
 var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./'); // Circular dependency, but that is okay
-var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var isArray = Array.isArray;
@@ -291,9 +290,19 @@ module.exports = {
 
         return this;
     },
+
     /**
-     * Internal helper method to do a shallow copy of the properties of one object to another.
-     * @private
+     * Merges
+     * @param  {[type]} object [description]
+     * @param  {[type]} source [description]
+     * @return {[type]}        [description]
      */
-    xt: extend
+    m: function(into, source) {
+        for (var k in source) {
+            if (source.hasOwnProperty(k) && !into.hasOwnProperty(k)) {
+                into[k] = source[k];
+            }
+        }
+        return into;
+    }
 };
