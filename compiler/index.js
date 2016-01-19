@@ -129,6 +129,7 @@ exports.builder = Builder.DEFAULT_BUILDER;
 var taglibLookup = require('./taglib-lookup');
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko-taglib.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko-taglib.json'));
 
 /*
 exports.Taglib = require('./Taglib');

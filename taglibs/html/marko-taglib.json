@@ -1,0 +1,6 @@
+{
+    "taglib-id": "marko-html",
+    "<html-comment>": {
+        "renderer": "./html-comment-tag.js"
+    }
+}
