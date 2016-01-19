@@ -117,7 +117,7 @@ class CompileContext {
     addStaticVar(name, init) {
         var actualVarName = this._uniqueVars.addVar(name, init);
         this._staticVars[actualVarName] = init;
-        return actualVarName;
+        return this.builder.identifier(actualVarName);
     }
 
     getStaticVars() {
