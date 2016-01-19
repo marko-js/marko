@@ -16,14 +16,14 @@ function getNestedTagParentNode(nestedTagNode, parentTagName) {
     }
 }
 
-function buildInputProps(node, context) {
-    var tagDef = node.tagDef;
+function buildInputProps(el, context) {
+    var tagDef = el.tagDef;
     var inputProps = {};
 
-    node.forEachAttribute((attr) => {
+    el.forEachAttribute((attr) => {
         var attrName = attr.name;
 
-        var attrDef = attr.def || context.taglibLookup.getAttribute(node.tagName, attr.name);
+        var attrDef = attr.def || context.taglibLookup.getAttribute(el.tagName, attr.name);
         var attrValue = removeEscapeFunctions(attr.value);
 
         if (!attrDef) {
@@ -37,7 +37,7 @@ function buildInputProps(node, context) {
             // Dynamic attributes are allowed attributes
             // that are not declared (i.e. "*" attributes)
             //
-            if (attrDef.preserveName === false) {
+            if (attrDef.removeDashes === true || attrDef.preserveName === false) {
                 propName = removeDashes(attrName);
             } else {
                 propName = attrName;
@@ -52,7 +52,7 @@ function buildInputProps(node, context) {
             // to a property name.
             if (attrDef.targetProperty) {
                 propName = attrDef.targetProperty;
-            } else if (attrDef.preserveName) {
+            } else if (attrDef.preserveName === true) {
                 propName = attr.name;
             } else {
                 propName = removeDashes(attr.name);
