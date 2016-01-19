@@ -44,6 +44,7 @@ var ThisExpression = require('./ast/ThisExpression');
 var Expression = require('./ast/Expression');
 var parseExpression = require('./util/parseExpression');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
+var removeEscapeFunctions = require('./util/removeEscapeFunctions');
 
 var DEFAULT_BUILDER;
 
@@ -295,9 +296,13 @@ class Builder {
         return new ObjectExpression({properties});
     }
 
-    parseExpression(str) {
+    parseExpression(str, options) {
         ok(typeof str === 'string', '"str" should be a string expression');
-        return parseExpression(str, DEFAULT_BUILDER);
+        var parsed = parseExpression(str, DEFAULT_BUILDER);
+        if (options && options.escapeXml === false) {
+            parsed = removeEscapeFunctions(parsed);
+        }
+        return parsed;
     }
 
     parseJavaScriptArgs(args) {
