@@ -127,6 +127,10 @@ class CustomTag extends HtmlElement {
 
         if (isNestedTag) {
             let parentTagNode = getNestedTagParentNode(this, parentTagName);
+            if (!parentTagNode) {
+                codegen.addError('Invalid usage of the <' + this.tagName + '> nested tag. Tag not nested within a <' + parentTagName + '> tag.');
+                return;
+            }
             parentTagVar = parentTagNode.data.nestedTagVar;
         }
 
