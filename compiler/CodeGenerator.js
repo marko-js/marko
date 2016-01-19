@@ -7,6 +7,7 @@ const Identifier = require('./ast/Identifier');
 const ok = require('assert').ok;
 const Container = require('./ast/Container');
 const util = require('util');
+const isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
 class Slot {
     constructor(codegen, slotNode) {
@@ -495,8 +496,15 @@ class Generator {
             for (let i=0; i<keys.length; i++) {
                 let k = keys[i];
                 let v = value[k];
+
                 this.writeLineIndent();
-                this.write(JSON.stringify(k) + ': ');
+                
+                if (isValidJavaScriptIdentifier(k)) {
+                    this.write(k + ': ');
+                } else {
+                    this.write(JSON.stringify(k) + ': ');
+                }
+
                 if (v instanceof Node) {
                     this.generateCode(v);
                 } else {

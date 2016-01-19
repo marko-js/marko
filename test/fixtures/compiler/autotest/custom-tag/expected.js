@@ -8,7 +8,7 @@ function create(__helpers) {
 
   return function render(data, out) {
     test_hello({
-      "name": "World"
+      name: "World"
     }, out);
   };
 }

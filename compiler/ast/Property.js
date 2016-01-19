@@ -1,6 +1,6 @@
 'use strict';
-
-var Node = require('./Node');
+const isValidJavaScriptIdentifier = require('../util/isValidJavaScriptIdentifier');
+const Node = require('./Node');
 
 class Property extends Node {
     constructor(def) {
@@ -12,6 +12,13 @@ class Property extends Node {
     generateCode(codegen) {
         var key = this.key;
         var value = this.value;
+
+        if (key.type === 'Literal') {
+            var propName = key.value;
+            if (isValidJavaScriptIdentifier(propName)) {
+                key = codegen.builder.identifier(propName);
+            }
+        }
 
         codegen.generateCode(key);
         codegen.write(': ');

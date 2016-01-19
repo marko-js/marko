@@ -8,8 +8,8 @@ function create(__helpers) {
 
   return function render(data, out) {
     test_body_function({
-      "name": "World",
-      "myBody": function myBody(foo, bar) {
+      name: "World",
+      myBody: function myBody(foo, bar) {
         out.w("This is the body content");
       }
     }, out);

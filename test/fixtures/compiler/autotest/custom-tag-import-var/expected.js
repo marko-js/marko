@@ -8,10 +8,10 @@ function create(__helpers) {
 
   return function render(data, out) {
     test_import_var({
-      "name": "World",
-      "foo": data.foo,
-      "bar": data.bar,
-      "renderBody": function renderBody(out) {
+      name: "World",
+      foo: data.foo,
+      bar: data.bar,
+      renderBody: function renderBody(out) {
         out.w("This is the body content");
       }
     }, out);
