@@ -43,6 +43,10 @@
         "node-factory": "./var-tag"
     },
     "<*>": {
+        "@if": "argument",
+        "@else-if": "argument",
+        "@else": "argument",
+        "@for": "argument",
         "transformer": "./core-transformer"
     }
 }
