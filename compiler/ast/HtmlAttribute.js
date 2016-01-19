@@ -3,8 +3,8 @@ var Node = require('./Node');
 var Literal = require('./Literal');
 var ok = require('assert').ok;
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
-var parseExpression = require('../util/parseExpression');
 var removeEscapeFunctions = require('../util/removeEscapeFunctions');
+var compiler = require('../');
 
 function isStringLiteral(node) {
     return node.type === 'Literal' && typeof node.value === 'string';
@@ -118,7 +118,11 @@ class HtmlAttribute extends Node {
         this.value = def.value;
 
         if (typeof this.value === 'string') {
-            this.value = parseExpression(this.value);
+            this.value = compiler.builder.parseExpression(this.value);
+        }
+
+        if (this.value && !(this.value instanceof Node)) {
+            throw new Error('"value" should be a Node instance');
         }
 
         this.argument = def.argument;

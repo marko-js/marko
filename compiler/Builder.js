@@ -1,5 +1,6 @@
 'use strict';
 var isArray = Array.isArray;
+var ok = require('assert').ok;
 
 var Node = require('./ast/Node');
 var Program = require('./ast/Program');
@@ -40,12 +41,15 @@ var ArrayExpression = require('./ast/ArrayExpression');
 var Property = require('./ast/Property');
 var VariableDeclarator = require('./ast/VariableDeclarator');
 var ThisExpression = require('./ast/ThisExpression');
-
+var Expression = require('./ast/Expression');
 var parseExpression = require('./util/parseExpression');
+var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
+
+var DEFAULT_BUILDER;
 
 function makeNode(arg) {
     if (typeof arg === 'string') {
-        return parseExpression(arg);
+        return parseExpression(arg, DEFAULT_BUILDER);
     } else if (arg instanceof Node) {
         return arg;
     } else {
@@ -104,7 +108,7 @@ class Builder {
     }
 
     expression(value) {
-        return makeNode(value);
+        return new Expression({value});
     }
 
     forEach(varName, inExpression, body) {
@@ -292,7 +296,13 @@ class Builder {
     }
 
     parseExpression(str) {
-        return parseExpression(str);
+        ok(typeof str === 'string', '"str" should be a string expression');
+        return parseExpression(str, DEFAULT_BUILDER);
+    }
+
+    parseJavaScriptArgs(args) {
+        ok(typeof args === 'string', '"args" should be a string');
+        return parseJavaScriptArgs(args, DEFAULT_BUILDER);
     }
 
     program(body) {
@@ -440,5 +450,9 @@ class Builder {
         return new Vars({declarations, kind});
     }
 }
+
+DEFAULT_BUILDER = new Builder();
+
+Builder.DEFAULT_BUILDER = DEFAULT_BUILDER;
 
 module.exports = Builder;

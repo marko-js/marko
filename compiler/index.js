@@ -1,11 +1,11 @@
 'use strict';
 
-var Builder = require('./Builder');
 var Compiler = require('./Compiler');
 var Walker = require('./Walker');
 var Parser = require('./Parser');
 var HtmlJsParser = require('./HtmlJsParser');
-var defaultBuilder = new Builder();
+var Builder = require('./Builder');
+
 var defaultParser = new Parser(new HtmlJsParser());
 
 var defaultOptions = {
@@ -39,7 +39,7 @@ var defaultOptions = {
 
 var defaultCompiler = new Compiler({
     parser: defaultParser,
-    builder: defaultBuilder
+    builder: Builder.DEFAULT_BUILDER
 });
 
 var req = require;
@@ -124,10 +124,11 @@ exports.compile = compile;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;
 exports.createWalker = createWalker;
-exports.defaultBuilder = defaultBuilder;
+exports.builder = Builder.DEFAULT_BUILDER;
 
 var taglibLookup = require('./taglib-lookup');
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko-taglib.json'));
 
 /*
 exports.Taglib = require('./Taglib');

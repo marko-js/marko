@@ -16,8 +16,6 @@ function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
 }
 
-var parseExpression = require('./util/parseExpression');
-
 class Parser {
     constructor(parserImpl) {
         ok(parserImpl, '"parserImpl" is required');
@@ -119,7 +117,7 @@ class Parser {
                     name: attr.name,
                     value: isLiteral ?
                         builder.literal(attr.literalValue) :
-                        attr.expression == null ? undefined : parseExpression(attr.expression)
+                        attr.expression == null ? undefined : builder.parseExpression(attr.expression)
                 };
 
                 if (attr.argument) {
@@ -174,10 +172,8 @@ class Parser {
 
     handleBodyTextPlaceholder(expression, escape) {
         this.prevTextNode = null;
-
-        var parsedExpression = parseExpression(expression);
-
         var builder = this.context.builder;
+        var parsedExpression = builder.parseExpression(expression);
         var preserveWhitespace = true;
 
         var text = builder.text(parsedExpression, escape, preserveWhitespace);

@@ -369,7 +369,7 @@ TagHandlers.prototype = {
                 throw new Error('Invalid "import-var": ' + require('util').inspect(varValue));
             }
 
-            importedVar.expression = markoCompiler.defaultBuilder.parseExpression(expression);
+            importedVar.expression = markoCompiler.builder.parseExpression(expression);
             tag.addImportedVariable(importedVar);
         });
     },
