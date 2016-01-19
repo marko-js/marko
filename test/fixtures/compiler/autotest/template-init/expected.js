@@ -7,7 +7,7 @@ function create(__helpers) {
   var name = '${name}<div if(foo)></div>';
 
   return function render(data, out) {
-    out.w(" Hello " +
+    out.w("Hello " +
       escapeXml(name) +
       "!");
   };

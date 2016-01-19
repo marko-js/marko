@@ -1,3 +1,6 @@
-<require module="./test-helpers" var="testHelpers" />
+<template-init>
+    var testHelpers = require('./test-helpers')
+</template-init>
+
 Hello ${testHelpers.upperCase("world")}!
 Hello ${testHelpers.trim("   World   ")}!
