@@ -2,7 +2,6 @@
 
 var Node = require('./Node');
 var ok = require('assert').ok;
-var splitJavaScriptArgs = require('../util/splitJavaScriptArgs');
 
 function removeTrailingUndefineds(args) {
     var i;
@@ -62,7 +61,7 @@ class InvokeMacro extends Node {
             }
 
             if (el.argument) {
-                args = splitJavaScriptArgs(el.argument);
+                args = builder.parseJavaScriptArgs(el.argument);
             } else {
                 args = new Array(macroDef.params.length);
                 for (let i=0; i<args.length; i++) {
