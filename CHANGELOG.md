@@ -239,7 +239,7 @@ exports.renderer = function(input, out) {
 
 ## 5.2.x
 
-### v5.2.1
+### v5.2.2
 
 - The function for generating unique widget IDs on the client-side is not
   exported as a global on the `window` object (fixes #118).
