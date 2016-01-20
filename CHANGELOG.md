@@ -239,6 +239,11 @@ exports.renderer = function(input, out) {
 
 ## 5.2.x
 
+### v5.2.1
+
+- The function for generating unique widget IDs on the client-side is not
+  exported as a global on the `window` object (fixes #118).
+
 ### 5.2.0
 
  - Fixes #116 - Bug in browserify breaks browserify compatibility (workaround required)
