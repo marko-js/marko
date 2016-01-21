@@ -2,9 +2,8 @@
 
 DIR=`dirname $0`
 
-cd ${DIR}
+mkdir -p $DIR/node_modules
+rm -rf $DIR/node_modules/marko-widgets
+ln -s ../.. $DIR/node_modules/marko-widgets
 
-if [ ! -d "../node_modules/marko-widgets" ]; then
-    mkdir -p ../node_modules/marko-widgets
-    cat marko-widgets-fake.js > ../node_modules/marko-widgets/index.js
-fi
+echo "Created symbolic link to marko-widgets in the test/node_modules directory"
