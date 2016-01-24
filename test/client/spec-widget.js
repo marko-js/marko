@@ -709,4 +709,13 @@ describe('widget' , function() {
             markoWidgetsRegistry.createWidget(typePath, 'w0');
         }).to.throw(/is no longer supported/);
     });
+
+    it('should allow event.stopPropagation', function() {
+        var widget = require('../fixtures/components/app-stopPropagation')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testStopPropagation();
+    });
 });
