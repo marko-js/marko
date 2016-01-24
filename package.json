@@ -61,5 +61,5 @@
         "./lib/init-widgets.js": "./lib/init-widgets-browser.js",
         "./lib/defineWidget.js": "./lib/defineWidget-browser.js"
     },
-    "version": "5.2.2"
+    "version": "5.2.3"
 }
