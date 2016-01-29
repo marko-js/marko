@@ -718,4 +718,13 @@ describe('widget' , function() {
 
         widget.testStopPropagation();
     });
+
+    it('should allow w-preserve-attrs', function() {
+        var widget = require('../fixtures/components/app-preserve-attrs')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        widget.testPreserveAttrs();
+    });
 });

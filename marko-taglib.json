@@ -65,6 +65,10 @@
                 "w-preserve-body-if": {
                     "type": "expression",
                     "preserve-name": true
+                },
+                "w-preserve-attrs": {
+                    "type": "string",
+                    "preserve-name": true
                 }
             },
             "transformer": "./taglib/widgets-transformer.js"

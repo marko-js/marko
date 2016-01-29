@@ -42,6 +42,10 @@ exports.process =function (node, compiler, template) {
         transformHelper.handleWidgetPreserve();
     }
 
+    if (nodeProps['w-preserve-attrs'] != null) {
+        transformHelper.handleWidgetPreserveAttrs();
+    }
+
     if (nodeProps['w-body'] != null) {
         transformHelper.handleWidgetBody();
     }

@@ -76,6 +76,7 @@ TransformHelper. prototype = {
     getContainingWidgetNode: require('./getContainingWidgetNode'),
     handleWidgetEvents: require('./handleWidgetEvents'),
     handleWidgetPreserve: require('./handleWidgetPreserve'),
+    handleWidgetPreserveAttrs: require('./handleWidgetPreserveAttrs'),
     handleWidgetBody: require('./handleWidgetBody'),
     handleWidgetBind: require('./handleWidgetBind'),
     handleWidgetExtend: require('./handleWidgetExtend'),

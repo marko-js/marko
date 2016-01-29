@@ -237,6 +237,16 @@ exports.renderer = function(input, out) {
 
 # 5.x
 
+## 5.3.x
+
+### v5.3.0
+
+- Fixes [#121](https://github.com/marko-js/marko-widgets/issues/121) - Allow for w-preserve-attrs to enable preservation of attributes:
+
+```html
+<div w-preserve-attrs="style,class"></div>
+```
+
 ## 5.2.x
 
 ### v5.2.2
