@@ -400,7 +400,7 @@ Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`
 
 ## Preserving DOM Attributes during Re-render
 
-Similar to preserving DOM nodes, Marko Widgets also makes it possible to preserve specific attributes on a DOM node. This can be helpful if a separately library is modifying DOM attributes and those changes should be preserved during a rerender. This is mostly the case with `class` and `style` attributes where external animation / tweening engines such as Velocity.js or GSAP are often used.
+Similar to preserving DOM nodes, Marko Widgets also makes it possible to preserve specific attributes on a DOM node. This can be helpful if a separately library is modifying DOM attributes and those changes should be preserved during a rerender. This is mostly the case with `class` and `style` attributes when using a animation/tweening engines such as [Velocity.js](http://julian.com/research/velocity/) or [GSAP](http://greensock.com/gsap).
 
 The `w-preserve-attrs` attribute can be applied to any DOM element and it expects a comma-separated list of attribute names as shown below:
 
