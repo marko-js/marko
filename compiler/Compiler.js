@@ -71,8 +71,9 @@ class Compiler {
     }
 
     compile(src, filename) {
-        ok(src);
-        ok(filename);
+        ok(typeof src === 'string', '"src" argument should be a string');
+        ok(filename, '"filename" argument is required');
+        ok(typeof filename === 'string', '"filename" argument should be a string');
 
         var context = new CompileContext(src, filename, this.builder);
 
