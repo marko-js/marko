@@ -16,6 +16,45 @@ function getNestedTagParentNode(nestedTagNode, parentTagName) {
     }
 }
 
+function getNestedVariables(elNode, tagDef, codegen) {
+    var variableNames = [];
+    tagDef.forEachVariable((nestedVar) => {
+        var varName;
+        if (nestedVar.nameFromAttribute) {
+            var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
+            for (var i = 0, len = possibleNameAttributes.length; i < len; i++) {
+                var attrName = possibleNameAttributes[i];
+                var keep = false;
+                if (attrName.endsWith('|keep')) {
+                    keep = true;
+                    attrName = attrName.slice(0, 0 - '|keep'.length);
+                    possibleNameAttributes[i] = attrName;
+                }
+                varName = elNode.getAttributeValue(attrName);
+                if (varName) {
+                    if (!keep) {
+                        elNode.removeAttribute(attrName);
+                    }
+                    break;
+                }
+            }
+            if (!varName) {
+                codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
+                varName = '_var';    // Let it continue with errors
+            }
+        } else {
+            varName = nestedVar.name;
+            if (!varName) {
+                codegen.addError('Variable name is required');
+                varName = '_var';    // Let it continue with errors
+            }
+        }
+        variableNames.push(codegen.builder.identifier(varName));
+    });
+
+    return variableNames;
+}
+
 function buildInputProps(el, context) {
     var tagDef = el.tagDef;
     var inputProps = {};
@@ -134,6 +173,8 @@ class CustomTag extends HtmlElement {
             parentTagVar = parentTagNode.data.nestedTagVar;
         }
 
+        var nestedVariableNames = getNestedVariables(this, tagDef, codegen);
+
         var inputProps = buildInputProps(this, context);
         var renderBodyFunction;
 
@@ -151,6 +192,10 @@ class CustomTag extends HtmlElement {
                 renderBodyFunction = context.builder.renderBodyFunction(this.body);
                 if (nestedTagVar) {
                     renderBodyFunction.params.push(nestedTagVar);
+                } else {
+                    if (nestedVariableNames && nestedVariableNames.length) {
+                        renderBodyFunction.params = renderBodyFunction.params.concat(nestedVariableNames);
+                    }
                 }
             }
         }
