@@ -64,7 +64,6 @@ class Parser {
         } else {
             var escape = false;
             this.prevTextNode = builder.text(builder.literal(text), escape);
-            this.prevTextNode.pos = text.pos;
             this.parentNode.appendChild(this.prevTextNode);
         }
     }
@@ -76,6 +75,10 @@ class Parser {
         var tagName = el.tagName;
         var attributes = el.attributes;
         var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
+
+        if (argument) {
+            argument = argument.value;
+        }
 
         if (tagName === 'compiler-options') {
             attributes.forEach(function (attr) {
@@ -117,11 +120,12 @@ class Parser {
                     name: attr.name,
                     value: isLiteral ?
                         builder.literal(attr.literalValue) :
-                        attr.expression == null ? undefined : builder.parseExpression(attr.expression)
+                        attr.value == null ? undefined : builder.parseExpression(attr.value)
                 };
 
                 if (attr.argument) {
-                    attrDef.argument = attr.argument;
+                    // TODO Do something with the argument pos
+                    attrDef.argument = attr.argument.value;
                 }
 
                 return attrDef;

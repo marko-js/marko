@@ -1,3 +1,4 @@
+---
 ${"BEGIN  this whitespace   should be retained   END"}
 
 test <!-- text should be normalized to one space -->
@@ -30,12 +31,4 @@ should   <!-- This whitespace should be normalized -->  retain spacing between l
    begin <!-- this whitespace should not be normalized -->     end
 </div>
 <if(true)>begin <!-- this whitespace should be preserved -->end</if>
-<!--
-- In not "xml:space" === "preserve":
-    - newline followed by whitespace should be removed
-    - More than one whitespace should be normalized into a single space (or new line character?)
-- Certain elements should preserve whitespace (e.g. PRE elements)
-    - Allow for a xml:space="preserve" attribute
-    - http://xhtml.com/en/css/reference/white-space/
-- When should whitespace removal happen? When generating code?
- -->
+---

@@ -4,71 +4,75 @@ var htmljs = require('htmljs-parser');
 class HtmlJsParser {
     parse(src, handlers) {
         var listeners = {
-            ontext(event) {
-                handlers.handleCharacters(event.text);
+            onText(event) {
+                handlers.handleCharacters(event.value);
             },
 
-            oncontentplaceholder(event) {
-                // placeholder within content
-                handlers.handleBodyTextPlaceholder(event.expression, event.escape);
-            },
-
-            onnestedcontentplaceholder(event) {
-                // placeholder within string that is within content placeholder
-            },
-
-            onattributeplaceholder(event) {
-                // placeholder within attribute
-                if (event.escape) {
-                    event.expression = '$escapeXml(' + event.expression + ')';
+            onPlaceholder(event) {
+                if (event.withinBody) {
+                    if (!event.withinString) {
+                        handlers.handleBodyTextPlaceholder(event.value, event.escape);
+                    }
+                } else if (event.withinOpenTag) {
+                    // Don't escape placeholder for dynamic attributes. For example: <div ${data.myAttrs}></div>
                 } else {
-                    event.expression = '$noEscapeXml(' + event.expression + ')';
+                    // placeholder within attribute
+                    if (event.escape) {
+                        event.value = '$escapeXml(' + event.value + ')';
+                    } else {
+                        event.value = '$noEscapeXml(' + event.value + ')';
+                    }
+                }
+                // placeholder within content
+
+            },
+
+            onCDATA(event) {
+                handlers.handleCharacters(event.value);
+            },
+
+            onOpenTag(event, parser) {
+                event.selfClosed = false; // Don't allow self-closed tags
+                handlers.handleStartElement(event);
+
+                var newParserState = handlers.getParserStateForTag(event);
+                if (newParserState) {
+                    if (newParserState === 'parsed-text') {
+                        parser.enterParsedTextContentState();
+                    } else if (newParserState === 'static-text') {
+                        parser.enterStaticTextContentState();
+                    }
                 }
             },
 
-            oncdata(event) {
-                handlers.handleCharacters(event.text);
-            },
-
-            onopentag(event) {
-                handlers.handleStartElement(event);
-            },
-
-            onclosetag(event) {
+            onCloseTag(event) {
                 var tagName = event.tagName;
                 handlers.handleEndElement(tagName);
             },
 
-            ondtd(event) {
-                // DTD (e.g. <DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0//EN">)
-                handlers.handleCharacters(event.dtd);
+            onDocumentType(event) {
+
+                // Document type: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd
+                // NOTE: The value will be all of the text between "<!" and ">""
+                handlers.handleCharacters('<!' + event.value + '>');
             },
 
-            ondeclaration(event) {
+            onDeclaration(event) {
                 // Declaration (e.g. <?xml version="1.0" encoding="UTF-8" ?>)
-                handlers.handleCharacters(event.declaration);
+                handlers.handleCharacters('<?' + event.value + '?>');
             },
 
-            oncomment(event) {
+            onComment(event) {
                 // Text within XML comment
-                handlers.handleComment(event.comment);
+                handlers.handleComment(event.value);
             },
 
-            onerror(event) {
+            onError(event) {
                 handlers.handleError(event);
             }
         };
 
-        var options = {
-            parserStateProvider(event) {
-                if (event.type === 'opentag') {
-                    return handlers.getParserStateForTag(event);
-                }
-            }
-        };
-
-        var parser = this.parser = htmljs.createParser(listeners, options);
-
+        var parser = this.parser = htmljs.createParser(listeners);
         parser.parse(src);
     }
 }
