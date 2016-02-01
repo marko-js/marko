@@ -213,6 +213,10 @@ class CompileContext {
         // Validate the attributes
         attributes.forEach((attr) => {
             let attrName = attr.name;
+            if (!attrName) {
+                // Attribute will be name for placeholder attributes. For example: <div ${data.myAttrs}>
+                return;
+            }
             let attrDef = taglibLookup.getAttribute(tagName, attrName);
             if (!attrDef) {
                 if (tagDef) {

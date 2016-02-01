@@ -70,15 +70,6 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'attrs', function(attr, node) {
-            if (!node.addDynamicAttributes) {
-                node.addError('Node does not support the "attrs" attribute');
-            } else {
-                node.addDynamicAttributes(attr.value);
-            }
-        }
-    ],
-    [
         'marko-preserve-whitespace', function(attr, node) {
             node.setPreserveWhitespace(true);
         }
@@ -116,6 +107,14 @@ module.exports = function transform(el, context) {
 
     el.forEachAttribute((attr) => {
         let attrName = attr.name;
+        if (!attrName) {
+            if (!node.addDynamicAttributes) {
+                node.addError('Node does not support the "attrs" attribute');
+            } else {
+                node.addDynamicAttributes(attr.value);
+            }
+            return;
+        }
         var attrTransformerFunc = attributeTransformers[attrName];
         if (attrTransformerFunc) {
             if (!attributeTransfomer) {

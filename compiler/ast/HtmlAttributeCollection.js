@@ -31,7 +31,10 @@ class HtmlAttributeCollection {
             }
         }
 
-        this.lookup[name.toLowerCase()] = newAttr;
+        if (name) {
+            this.lookup[name.toLowerCase()] = newAttr;
+        }
+
         this.all.push(newAttr);
     }
 

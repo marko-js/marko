@@ -149,6 +149,10 @@ class HtmlAttribute extends Node {
         let value = this.value;
         let argument = this.argument;
 
+        if (!name) {
+            return;
+        }
+
         if (this.isLiteralValue()) {
             var literalValue = value.value;
             if (typeof literalValue === 'boolean' || literalValue === '') {
