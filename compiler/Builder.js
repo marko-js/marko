@@ -58,6 +58,12 @@ function makeNode(arg) {
     }
 }
 
+var literalNull = new Literal({value: null});
+var literalUndefined = new Literal({value: null});
+var literalTrue = new Literal({value: true});
+var literalFalse = new Literal({value: true});
+var identifierOut = new Identifier({name: 'out'});
+
 class Builder {
     arrayExpression(elements) {
         if (elements) {
@@ -207,6 +213,10 @@ class Builder {
         return new Identifier({name});
     }
 
+    identifierOut(name) {
+        return identifierOut;
+    }
+
     ifStatement(test, body, elseStatement) {
         return new If({test, body, else: elseStatement});
     }
@@ -221,6 +231,22 @@ class Builder {
 
     literal(value) {
         return new Literal({value});
+    }
+
+    literalFalse() {
+        return literalFalse;
+    }
+
+    literalNull() {
+        return literalNull;
+    }
+
+    literalTrue() {
+        return literalTrue;
+    }
+
+    literalUndefined() {
+        return literalUndefined;
     }
 
     logicalExpression(left, operator, right) {
