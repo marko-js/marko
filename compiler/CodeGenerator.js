@@ -9,6 +9,27 @@ const Container = require('./ast/Container');
 const util = require('util');
 const isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
+class GeneratorEvent {
+    constructor(node, codegen) {
+        this.node = node;
+        this.codegen = codegen;
+
+        this.isBefore = true;
+        this.builder = codegen.builder;
+        this.context = codegen.context;
+    }
+
+    insertCode(newCode) {
+        this.codegen.generateStatements(newCode);
+
+        if (this.isBefore) {
+            if (!this.codegen._code.endsWith(this.codegen.currentIndent)) {
+                this.codegen.writeLineIndent();
+            }
+        }
+    }
+}
+
 class Slot {
     constructor(codegen, slotNode) {
         this._content = null;
@@ -80,7 +101,6 @@ class Generator {
 
         this._bufferedWrites = null;
         this.builder = context.builder;
-        this.walker = context.walker;
         this.outputType = options.output || 'html';
         this.context = context;
 
@@ -138,6 +158,17 @@ class Generator {
         let generateCodeFunc;
         var isStatement = node.statement;
 
+        var beforeAfterEvent;
+
+        if (node.listenerCount('beforeGenerateCode') || node.listenerCount('beforeGenerateCode')) {
+            beforeAfterEvent = new GeneratorEvent(node, this);
+        }
+
+        if (beforeAfterEvent) {
+            beforeAfterEvent.isBefore = true;
+            beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
+        }
+
         if (node.getCodeGenerator) {
             generateCodeFunc = node.getCodeGenerator(this.outputType);
             if (generateCodeFunc) {
@@ -189,6 +220,11 @@ class Generator {
                     this.generateCode(finalNode);
                 }
             }
+        }
+
+        if (beforeAfterEvent) {
+            beforeAfterEvent.isBefore = false;
+            beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
         }
 
         this._currentNode = oldCurrentNode;
@@ -484,7 +520,7 @@ class Generator {
 
             this.decIndent();
             this.writeLineIndent();
-            this.write(']\n');
+            this.write(']');
         } else if (typeof value === 'number') {
             this.write(value.toString());
         } else if (typeof value === 'object') {

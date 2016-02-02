@@ -4,6 +4,7 @@ var ArrayContainer = require('./ArrayContainer');
 var ok = require('assert').ok;
 var extend = require('raptor-util/extend');
 var inspect = require('util').inspect;
+var EventEmitter = require('events').EventEmitter;
 
 class Node {
     constructor(type) {
@@ -16,7 +17,38 @@ class Node {
         this._flags = {};
         this._transformersApplied = {};
         this._preserveWhitespace = null;
+        this._events = null;
         this.data = {};
+    }
+
+    on(event, listener) {
+        if (!this._events) {
+            this._events = new EventEmitter();
+        }
+
+        this._events.on(event, listener);
+    }
+
+    emit(event, args) {
+        if (this._events) {
+            this._events.emit.apply(this._events, arguments);
+        }
+    }
+
+    listenerCount(event) {
+        if (this._events) {
+            return this._events.listenerCount(event);
+        } else {
+            return 0;
+        }
+    }
+
+    onBeforeGenerateCode(listener) {
+        this.on('beforeGenerateCode', listener);
+    }
+
+    onAfterGenerateCode(listener) {
+        this.on('afterGenerateCode', listener);
     }
 
     wrap(wrapperNode) {
@@ -81,6 +113,7 @@ class Node {
         delete result.data;
         delete result.tagDef;
         delete result._preserveWhitespace;
+        delete result._events;
         return result;
     }
 
