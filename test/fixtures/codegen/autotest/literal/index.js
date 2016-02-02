@@ -12,6 +12,10 @@ module.exports = function(builder) {
         'anArray': builder.literal([
             'foo',
             builder.expression('data.name')
-        ])
+        ]),
+        'literalTrue': builder.literalTrue(),
+        'literalFalse': builder.literalFalse(),
+        'literalNull': builder.literalNull(),
+        'literalUndefined': builder.literalUndefined()
     });
 };

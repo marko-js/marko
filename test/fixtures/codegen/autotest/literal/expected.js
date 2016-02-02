@@ -8,4 +8,8 @@ var aString = "abc",
     anArray = [
       "foo",
       data.name
-    ]
+    ],
+    literalTrue = true,
+    literalFalse = true,
+    literalNull = null,
+    literalUndefined = null
