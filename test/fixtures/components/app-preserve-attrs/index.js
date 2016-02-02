@@ -23,6 +23,8 @@ module.exports = require('marko-widgets').defineComponent({
 
         this.el.querySelector('a').href = "http://www.foo.com/";
 
+        this.getEl('hello2').removeAttribute('class');
+
         var self = this;
 
         require('marko-widgets').batchUpdate(function() {
@@ -30,6 +32,7 @@ module.exports = require('marko-widgets').defineComponent({
         });
 
         expect(helloEl.innerHTML).to.equal('Hello Frank!');
+        expect(this.getEl('hello2').getAttribute('class')).to.equal(null);
 
         // Make sure the preserved attributes did not change
         expect(this.el.style.border).to.equal("1px solid red");
