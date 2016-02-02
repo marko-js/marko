@@ -21,9 +21,8 @@ describe('api' , function() {
     });
 
     it('should allow a template to be rendered using a callback', function(done) {
-        marko.render(
-            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
-            {
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
+        template.render({
                 name: 'John'
             },
             function(err, output) {
@@ -47,9 +46,8 @@ describe('api' , function() {
                 done(e);
             });
 
-        marko.render(
-            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
-            {
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
+        template.render({
                 name: 'John'
             },
             out);
@@ -74,9 +72,9 @@ describe('api' , function() {
                 done(e);
             });
 
-        marko.render(
-            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
-            {
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
+
+        template.render({
                 name: 'John'
             },
             out).end();
@@ -94,8 +92,8 @@ describe('api' , function() {
         });
 
 
-        marko.stream(
-            nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'),
+        var template = require(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
+        template.stream(
             {
                 name: 'John'
             })
@@ -400,12 +398,12 @@ describe('api' , function() {
 
         // Make sure calling load with templatePath:String, templateSrc:String arguments works
         templatePath = nodePath.join(__dirname, 'dummy.marko');
-        template = marko.load(templatePath, 'Hello $!{data.name}!');
+        template = marko.load(templatePath, '- Hello $!{data.name}!');
         expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
 
         // Make sure calling load with templatePath:String, templateSrc:String, options:Object arguments works
         templatePath = nodePath.join(__dirname, 'dummy.marko');
-        template = marko.load(templatePath, 'Hello $!{data.name}!', {});
+        template = marko.load(templatePath, '- Hello $!{data.name}!', {});
         expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
 
         // Make sure calling load with templatePath:String, options:Object arguments works

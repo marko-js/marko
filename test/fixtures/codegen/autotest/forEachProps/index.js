@@ -7,7 +7,7 @@ module.exports = function(builder) {
         builder.forEachProp({
             nameVarName: 'k',
             valueVarName: 'v',
-            in: 'myArray',
+            in: 'myObject',
             body: [
                 builder.functionCall('console.log', [
                     builder.literal('k:'),

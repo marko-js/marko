@@ -3,11 +3,11 @@ function create(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
-      forEach = __helpers.f;
+      forEachProp = __helpers.fp;
 
   return function render(data, out) {
-    forEach(data.colors, function(color) {
-      out.w(escapeXml(color));
+    forEachProp(myObject, function(k, v) {
+      console.log("k:", k, "v:", v);
     });
   };
 }
