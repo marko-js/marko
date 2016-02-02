@@ -109,7 +109,7 @@ module.exports = function transform(el, context) {
         let attrName = attr.name;
         if (!attrName) {
             if (!node.addDynamicAttributes) {
-                node.addError('Node does not support the "attrs" attribute');
+                context.addError(el, 'Node does not support the "attrs" attribute');
             } else {
                 node.addDynamicAttributes(attr.value);
             }
