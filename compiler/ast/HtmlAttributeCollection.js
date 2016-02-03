@@ -32,7 +32,7 @@ class HtmlAttributeCollection {
         }
 
         if (name) {
-            this.lookup[name.toLowerCase()] = newAttr;
+            this.lookup[name] = newAttr;
         }
 
         this.all.push(newAttr);
@@ -40,8 +40,6 @@ class HtmlAttributeCollection {
 
     removeAttribute(name) {
         ok(typeof name === 'string', 'Invalid attribute name');
-
-        name = name.toLowerCase();
 
         if (!this.lookup.hasOwnProperty(name)) {
             return false;
@@ -61,7 +59,7 @@ class HtmlAttributeCollection {
     }
 
     renameAttribute(oldName, newName) {
-        var key = oldName.toLowerCase();
+        var key = oldName;
 
         var attr = this.lookup[key];
         if (!attr) {
@@ -75,7 +73,7 @@ class HtmlAttributeCollection {
 
     hasAttribute(name) {
         ok(typeof name === 'string', 'Invalid attribute name');
-        return this.lookup.hasOwnProperty(name.toLowerCase());
+        return this.lookup.hasOwnProperty(name);
     }
 
     hasAttributes() {
@@ -83,7 +81,7 @@ class HtmlAttributeCollection {
     }
 
     getAttribute(name) {
-        return this.lookup[name.toLowerCase()];
+        return this.lookup[name];
     }
 
     setAttributeValue(name, value) {
