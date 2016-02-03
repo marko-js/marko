@@ -114,6 +114,15 @@ class CompileContext {
         return deresolve(targetFilename, this.dirname);
     }
 
+    importModule(varName, path) {
+        if (typeof path !== 'string') {
+            throw new Error('"path" should be a string');
+        }
+
+        return this.addStaticVar(varName, 'require("' + path + '")');
+    }
+
+
     addStaticVar(name, init) {
         var actualVarName = this._uniqueVars.addVar(name, init);
         this._staticVars[actualVarName] = init;

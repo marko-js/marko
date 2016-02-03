@@ -130,6 +130,10 @@ class Generator {
         this.context.addStaticCode(code);
     }
 
+    importModule(varName, path) {
+        return this.context.importModule(varName, path);
+    }
+
     getStaticVars() {
         return this.context.getStaticVars();
     }
