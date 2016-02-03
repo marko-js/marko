@@ -27,11 +27,11 @@
         "preserve-whitespace": true
     },
     "<script>": {
-        "preserve-whitespace": true
-    },
-    "<template-init>": {
-        "code-generator": "./template-init-tag",
-        "body": "static-text"
+        "preserve-whitespace": true,
+        "@marko-init": "boolean",
+        "@*": {
+            "ignore": true
+        }
     },
     "<textarea>": {
         "preserve-whitespace": true

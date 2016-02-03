@@ -70,8 +70,21 @@ var coreAttrHandlers = [
         }
     ],
     [
-        'marko-preserve-whitespace', function(attr, node) {
-            node.setPreserveWhitespace(true);
+        'marko-preserve-whitespace', function(attr, node, el) {
+            el.setPreserveWhitespace(true);
+        }
+    ],
+    [
+        'marko-init', function(attr, node, el) {
+            if (el.tagName !== 'script') {
+                this.addError('The "marko-init" attribute should only be used on the <script> tag');
+                return;
+            }
+            var bodyText = el.bodyText;
+            el.noOutput = true;
+            this.context.addStaticCode(bodyText);
+            el.detach();
+            return null;
         }
     ]
 ];
@@ -123,8 +136,11 @@ module.exports = function transform(el, context) {
             var newNode = attributeTransfomer[attrName](attr, node, el);
             if (newNode !== false) {
                 el.removeAttribute(attrName);
-                if (newNode) {
-                    newNode.pos = node.pos;
+                if (newNode !== undefined) {
+                    if (newNode) {
+                        newNode.pos = node.pos;
+                    }
+
                     node = newNode;
                 }
             }

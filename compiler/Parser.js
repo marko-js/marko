@@ -222,6 +222,8 @@ class Parser {
                     });
                     return;
                 }
+            } else if (attrName === 'marko-init') {
+                return 'static-text';
             }
         }
 
