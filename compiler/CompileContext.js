@@ -11,6 +11,7 @@ var CompileError = require('./CompileError');
 var path = require('path');
 var Node = require('./ast/Node');
 var macros = require('./util/macros');
+var extend = require('raptor-util/extend');
 
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
@@ -182,12 +183,32 @@ class CompileContext {
             elDef = { tagName, argument, attributes, openTagOnly, selfClosed };
         }
 
-        ok(typeof tagName === 'string', 'Invalid "tagName"');
-        ok(attributes == null || Array.isArray(attributes), 'Invalid "attributes"');
-
         if (!attributes) {
             attributes = elDef.attributes = [];
+        } else if (typeof attributes === 'object') {
+            if (!Array.isArray(attributes)) {
+                attributes = elDef.attributes = Object.keys(attributes).map((attrName) => {
+                    var attrDef = {
+                        name: attrName
+                    };
+
+                    var val = attributes[attrName];
+                    if (val == null) {
+
+                    } if (val instanceof Node) {
+                        attrDef.value = val;
+                    } else {
+                        extend(attrDef, val);
+                    }
+
+                    return attrDef;
+                });
+            }
+        } else {
+            throw new Error('Invalid attributes');
         }
+
+        ok(typeof tagName === 'string', 'Invalid "tagName"');
 
         var node;
         var elNode = builder.htmlElement(elDef);
