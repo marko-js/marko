@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+'use strict';
 
 var nodePath = require('path');
 var fs = require('fs');
@@ -20,6 +21,7 @@ var jsonminify = require('jsonminify');
 var tagDefFromCode = require('./tag-def-from-code');
 var loader = require('./loader');
 var fsReadOptions = { encoding: 'utf8' };
+var extend = require('raptor-util/extend');
 
 function createDefaultTagDef() {
     return {
@@ -71,6 +73,8 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
         var indexFile = nodePath.join(dir, childFilename, 'index.js');
         var templateFile = nodePath.join(dir, childFilename, 'template.marko');
+        var templateFileAlt = nodePath.join(dir, childFilename, 'template.html');
+        var templateFileAlt2 = nodePath.join(dir, childFilename, 'template.marko.html');
         var codeGeneratorFile = nodePath.join(dir, childFilename, 'code-generator.js');
         var nodeFactoryFile = nodePath.join(dir, childFilename, 'node-factory.js');
         var tagDef = null;
@@ -80,78 +84,54 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         taglib.addInputFile(rendererFile);
         taglib.addInputFile(templateFile);
 
+        var hasTagFile = false;
         if (fs.existsSync(tagFile)) {
+            hasTagFile = true;
             // marko-tag.json exists in the directory, use that as the tag definition
             try {
                 tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
             } catch(e) {
                 throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
             }
-
-            if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory']) {
-                if (fs.existsSync(rendererFile)) {
-                    tagDef.renderer = rendererFile;
-                } else if (fs.existsSync(indexFile)) {
-                    tagDef.renderer = indexFile;
-                } else if (fs.existsSync(templateFile)) {
-                    tagDef.template = templateFile;
-                } else if (fs.existsSync(templateFile + ".html")) {
-                    tagDef.template = templateFile + ".html";
-                } else if (fs.existsSync(codeGeneratorFile)) {
-                    tagDef['code-generator'] = codeGeneratorFile;
-                } else if (fs.existsSync(nodeFactoryFile)) {
-                    tagDef['node-factory'] = nodeFactoryFile;
-                } else {
-                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
-                }
-            }
-
-            tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
-            tag.name = tag.name || tagName;
-            taglib.addTag(tag);
         } else {
-            // marko-tag.json does *not* exist... checking for a 'renderer.js'
+            tagDef = createDefaultTagDef();
+        }
+
+        if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory']) {
             if (fs.existsSync(rendererFile)) {
-                rendererJSFile = rendererFile;
+                tagDef.renderer = rendererFile;
             } else if (fs.existsSync(indexFile)) {
-                rendererJSFile = indexFile;
+                tagDef.renderer = indexFile;
+            } else if (fs.existsSync(templateFile)) {
+                tagDef.template = templateFile;
+            } else if (fs.existsSync(templateFileAlt)) {
+                tagDef.template = templateFileAlt;
+            } else if (fs.existsSync(templateFileAlt2)) {
+                tagDef.template = templateFileAlt2;
+            } else if (fs.existsSync(codeGeneratorFile)) {
+                tagDef['code-generator'] = codeGeneratorFile;
+            } else if (fs.existsSync(nodeFactoryFile)) {
+                tagDef['node-factory'] = nodeFactoryFile;
             } else {
-                var exTemplateFile;
-                if (fs.existsSync(templateFile)) {
-                    exTemplateFile = templateFile;
+                if (hasTagFile) {
+                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
+                } else {
+                    // Skip this directory... there doesn't appear to be anything in it
+                    continue;
                 }
-                else if (fs.existsSync(templateFile + ".html")){
-                    exTemplateFile = templateFile + ".html";
-                }
-                if(exTemplateFile){
-                    var templateCode = fs.readFileSync(exTemplateFile, fsReadOptions);
-                    tagDef = tagDefFromCode.extractTagDef(templateCode);
-                    if (!tagDef) {
-                        tagDef = createDefaultTagDef();
-                    }
-
-                    tagDef.template = exTemplateFile;
-                }
-            }
-
-            if (rendererJSFile) {
-                var rendererCode = fs.readFileSync(rendererJSFile, fsReadOptions);
-                tagDef = tagDefFromCode.extractTagDef(rendererCode);
-                if (!tagDef) {
-                     tagDef = createDefaultTagDef();
-                }
-
-                tagDef.renderer  = rendererJSFile;
-                tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = tagName;
-                taglib.addTag(tag);
-            }
-
-            if (tagDef) {
-                tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
-                tag.name = tagName;
-                taglib.addTag(tag);
             }
         }
+
+        if (!hasTagFile && (tagDef.renderer || tagDef.template)) {
+            let templateCode = fs.readFileSync(tagDef.renderer || tagDef.template, fsReadOptions);
+            let extractedTagDef = tagDefFromCode.extractTagDef(templateCode);
+            if (extractedTagDef) {
+                extend(tagDef, extractedTagDef);
+            }
+        }
+
+        tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
+        tag.name = tag.name || tagName;
+        taglib.addTag(tag);
     }
 };
