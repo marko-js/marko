@@ -1,0 +1,16 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "HtmlElement",
+      "tagName": "div",
+      "attributes": [
+        {
+          "type": "HtmlAttribute",
+          "name": "w-bind"
+        }
+      ],
+      "body": []
+    }
+  ]
+}
