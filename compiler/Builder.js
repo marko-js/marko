@@ -42,6 +42,8 @@ var Property = require('./ast/Property');
 var VariableDeclarator = require('./ast/VariableDeclarator');
 var ThisExpression = require('./ast/ThisExpression');
 var Expression = require('./ast/Expression');
+var Scriptlet = require('./ast/Scriptlet');
+
 var parseExpression = require('./util/parseExpression');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
 var removeEscapeFunctions = require('./util/removeEscapeFunctions');
@@ -365,6 +367,10 @@ class Builder {
         argument = makeNode(argument);
 
         return new Return({argument});
+    }
+
+    scriptlet(code) {
+        return new Scriptlet({code});
     }
 
     selfInvokingFunction(params, args, body) {

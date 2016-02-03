@@ -67,6 +67,11 @@ class HtmlJsParser {
                 handlers.handleComment(event.value);
             },
 
+            onScriptlet(event) {
+                // <% (code) %>
+                handlers.handleScriptlet(event.value);
+            },
+
             onError(event) {
                 handlers.handleError(event);
             }

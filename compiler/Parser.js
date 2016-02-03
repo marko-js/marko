@@ -184,6 +184,13 @@ class Parser {
         this.parentNode.appendChild(text);
     }
 
+    handleScriptlet(code) {
+        this.prevTextNode = null;
+        var builder = this.context.builder;
+        var scriptlet = builder.scriptlet(code);
+        this.parentNode.appendChild(scriptlet);
+    }
+
     handleError(event) {
         this.context.addError({
             message: event.message,

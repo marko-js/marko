@@ -1,0 +1,49 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "Scriptlet",
+      "code": " if (true) { "
+    },
+    {
+      "type": "Text",
+      "argument": {
+        "type": "Literal",
+        "value": "\n    HELLO\n"
+      }
+    },
+    {
+      "type": "Scriptlet",
+      "code": " } "
+    },
+    {
+      "type": "Text",
+      "argument": {
+        "type": "Literal",
+        "value": "\n"
+      }
+    },
+    {
+      "type": "Scriptlet",
+      "code": " if (false) { "
+    },
+    {
+      "type": "Text",
+      "argument": {
+        "type": "Literal",
+        "value": "\n    WORLD\n"
+      }
+    },
+    {
+      "type": "Scriptlet",
+      "code": " } "
+    },
+    {
+      "type": "Text",
+      "argument": {
+        "type": "Literal",
+        "value": "\n"
+      }
+    }
+  ]
+}
