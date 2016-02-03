@@ -180,6 +180,14 @@ class HtmlAttribute extends Node {
     walk(walker) {
         this.value = walker.walk(this.value);
     }
+
+    get literalValue() {
+        if (this.isLiteralValue()) {
+            return this.value.value;
+        } else {
+            throw new Error('Attribute value is not a literal value. Actual: ' + JSON.stringify(this.value, null, 2));
+        }
+    }
 }
 
 HtmlAttribute.isHtmlAttribute = function(attr) {
