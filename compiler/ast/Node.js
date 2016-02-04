@@ -64,6 +64,16 @@ class Node {
         ok(replaced, 'Invalid state. Child does not belong to the container');
     }
 
+    insertSiblingBefore(newNode) {
+        ok(this.container, 'Node does not belong to a container: ' + this);
+        this.container.insertChildAfter(newNode, this);
+    }
+
+    insertSiblingAfter(newNode) {
+        ok(this.container, 'Node does not belong to a container: ' + this);
+        this.container.insertChildAfter(newNode, this);
+    }
+
     /**
      * Converts the provided `array` into a `ArrayContainer`. If the provided `array` is already an instance of a `Container` then it is simply returned.
      * @param  {[type]} array [description]
@@ -77,9 +87,19 @@ class Node {
         return new ArrayContainer(this, array);
     }
 
+    prependChild(node) {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        this.body.prependChild(node);
+    }
+
     appendChild(node) {
         ok(this.body, 'Node does not support child nodes: ' + this);
         this.body.appendChild(node);
+    }
+
+    insertBefore(newNode, referenceNode) {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        this.body.insertBefore(newNode, referenceNode);
     }
 
     forEachChild(callback, thisObj) {
