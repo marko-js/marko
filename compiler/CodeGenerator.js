@@ -134,14 +134,6 @@ class Generator {
         return this.context.importModule(varName, path);
     }
 
-    getStaticVars() {
-        return this.context.getStaticVars();
-    }
-
-    getStaticCode() {
-        return this.context.getStaticCode();
-    }
-
     generateCode(node) {
         ok(node != null, '"node" is required');
 
