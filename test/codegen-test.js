@@ -23,8 +23,8 @@ describe('compiler/codegen', function() {
     autotest.scanDir(autoTestDir, function run(dir) {
         var main = require(path.join(dir, 'index.js'));
         var generateCodeFunc = main;
-        var ast = generateCodeFunc(builder);
         var codegen = createCodeGenerator();
+        var ast = generateCodeFunc(builder, codegen);
         codegen.generateCode(ast);
         return codegen.getCode();
     });
