@@ -46,10 +46,50 @@ class ArrayContainer extends Container {
         child.container = null;
     }
 
+    prependChild(newChild) {
+        ok(newChild, 'Invalid child');
+        this.array.unshift(newChild);
+        newChild.container = this;
+    }
+
     appendChild(newChild) {
         ok(newChild, 'Invalid child');
         this.array.push(newChild);
         newChild.container = this;
+    }
+
+    insertChildBefore(newChild, referenceNode) {
+        ok(newChild, 'Invalid child');
+        ok(referenceNode, 'Invalid reference child');
+
+        var array = this.array;
+        var len = array.length;
+        for (var i=0; i<len; i++) {
+            var curChild = array[i];
+            if (curChild === referenceNode) {
+                array.splice(i, 0, newChild);
+                return;
+            }
+        }
+
+        throw new Error('Reference node not found');
+    }
+
+    insertChildAfter(newChild, referenceNode) {
+        ok(newChild, 'Invalid child');
+        ok(referenceNode, 'Invalid reference child');
+
+        var array = this.array;
+        var len = array.length;
+        for (var i=0; i<len; i++) {
+            var curChild = array[i];
+            if (curChild === referenceNode) {
+                array.splice(i+1, 0, newChild);
+                return;
+            }
+        }
+
+        throw new Error('Reference node not found');
     }
 
     forEachNextSibling(node, callback, thisObj) {
