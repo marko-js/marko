@@ -97,7 +97,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             tagDef = createDefaultTagDef();
         }
 
-        if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory']) {
+        if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory'] && !tagDef.transformer) {
             if (fs.existsSync(rendererFile)) {
                 tagDef.renderer = rendererFile;
             } else if (fs.existsSync(indexFile)) {
