@@ -102,6 +102,13 @@ class Builder {
         return new Code({value});
     }
 
+    concat(left, right) {
+        left = makeNode(left);
+        right = makeNode(right);
+        let operator = '+';
+        return new BinaryExpression({left, operator, right});
+    }
+
     conditionalExpression(test, consequent, alternate) {
         return new ConditionalExpression({test, consequent, alternate});
     }
