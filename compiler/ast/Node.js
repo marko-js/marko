@@ -58,6 +58,12 @@ class Node {
         wrapperNode.appendChild(this);
     }
 
+    replaceWith(newNode) {
+        ok(this.container, 'Node does not belong to a container: ' + this);
+        var replaced = this.container.replaceChild(newNode, this);
+        ok(replaced, 'Invalid state. Child does not belong to the container');
+    }
+
     /**
      * Converts the provided `array` into a `ArrayContainer`. If the provided `array` is already an instance of a `Container` then it is simply returned.
      * @param  {[type]} array [description]
