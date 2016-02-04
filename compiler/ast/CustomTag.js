@@ -4,6 +4,7 @@ var HtmlElement = require('./HtmlElement');
 var removeDashes = require('../util/removeDashes');
 var removeEscapeFunctions = require('../util/removeEscapeFunctions');
 var safeVarName = require('../util/safeVarName');
+var ok = require('assert').ok;
 
 function getNestedTagParentNode(nestedTagNode, parentTagName) {
     var currentNode = nestedTagNode.parentNode;
@@ -51,6 +52,12 @@ function getNestedVariables(elNode, tagDef, codegen) {
         }
         variableNames.push(codegen.builder.identifier(varName));
     });
+
+    if (elNode.additionalNestedVars.length) {
+        elNode.additionalNestedVars.forEach((varName) => {
+            variableNames.push(codegen.builder.identifier(varName));
+        });
+    }
 
     return variableNames;
 }
@@ -132,7 +139,12 @@ class CustomTag extends HtmlElement {
         super(el);
         this.type = 'CustomTag';
         this.tagDef = tagDef;
-        // console.log(module.id, this.type);
+        this.additionalNestedVars = [];
+    }
+
+    addNestedVariable(name) {
+        ok(name, '"name" is required');
+        this.additionalNestedVars.push(name);
     }
 
     generateCode(codegen) {
