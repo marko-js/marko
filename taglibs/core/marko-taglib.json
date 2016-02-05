@@ -47,6 +47,9 @@
         "@else-if": "argument",
         "@else": "argument",
         "@for": "argument",
-        "transformer": "./core-transformer"
+        "transformer": {
+            "path": "./core-transformer",
+            "priority": 0
+        }
     }
 }

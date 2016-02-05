@@ -14,6 +14,9 @@
 * limitations under the License.
 */
 'use strict';
+exports.registerTaglib = registerTaglib;
+exports.buildLookup = buildLookup;
+exports.clearCaches = clearCaches;
 
 var taglibLoader = require('../taglib-loader');
 var taglibFinder = require('../taglib-finder');
@@ -75,8 +78,3 @@ function registerTaglib(taglib) {
 function clearCaches() {
 	lookupCache = {};
 }
-
-exports.excludeDir = taglibFinder.excludeDir;
-exports.registerTaglib = registerTaglib;
-exports.buildLookup = buildLookup;
-exports.clearCaches = clearCaches;

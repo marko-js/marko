@@ -1,0 +1,18 @@
+{
+    "tags": {
+        "transform-foo": {
+            "transformer": {
+                "name": "foo",
+                "path": "./foo-transformer.js",
+                "priority": -1
+            }
+        },
+        "transform-bar": {
+            "transformer": {
+                "name": "bar",
+                "path": "./bar-transformer.js",
+                "priority": 1
+            }
+        }
+    }
+}

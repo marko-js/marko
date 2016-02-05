@@ -5,7 +5,7 @@ require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
 
-xdescribe('taglib-loader' , function() {
+describe('taglib-loader' , function() {
 
     beforeEach(function(done) {
         for (var k in require.cache) {
@@ -18,7 +18,7 @@ xdescribe('taglib-loader' , function() {
     });
 
     it('should load a taglib with shorthand attributes and tags', function() {
-        var taglibLoader = require('../compiler/taglibs').loader;
+        var taglibLoader = require('../compiler').taglibLoader;
         var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/taglib-shorthand/marko-taglib.json'));
         expect(taglib != null).to.equal(true);
 
