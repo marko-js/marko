@@ -47,6 +47,7 @@ var Scriptlet = require('./ast/Scriptlet');
 var parseExpression = require('./util/parseExpression');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
 var removeEscapeFunctions = require('./util/removeEscapeFunctions');
+var isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
 var DEFAULT_BUILDER;
 
@@ -219,6 +220,13 @@ class Builder {
     }
 
     identifier(name) {
+        ok(typeof name === 'string', '"name" should be a string');
+
+        if (!isValidJavaScriptIdentifier(name)) {
+            var error = new Error('Invalid JavaScript identifier: ' + name);
+            error.code = 'INVALID_IDENTIFIER';
+            throw error;
+        }
         return new Identifier({name});
     }
 
