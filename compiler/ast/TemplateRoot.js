@@ -18,6 +18,8 @@ class TemplateRoot extends Node {
     }
 
     generateCode(codegen) {
+        var context = codegen.context;
+
         var body = this.body;
         codegen.addStaticVar('str', '__helpers.s');
         codegen.addStaticVar('empty', '__helpers.e');
@@ -27,11 +29,15 @@ class TemplateRoot extends Node {
         var builder = codegen.builder;
         var program = builder.program;
         var functionDeclaration = builder.functionDeclaration;
-        var vars = builder.vars;
+
         var returnStatement = builder.returnStatement;
         var slot = builder.slot;
 
         var staticsSlot = slot();
+        var varsSlot = slot();
+        varsSlot.noOutput = true;
+
+        body = [ varsSlot ].concat(body.items);
 
         var outputNode = program([
             functionDeclaration('create', ['__helpers'], [
@@ -45,10 +51,10 @@ class TemplateRoot extends Node {
 
         codegen.generateCode(outputNode);
 
-        var staticVars = codegen.getStaticVars();
-        var staticCodeArray = codegen.getStaticCode();
+        var staticVars = context.getStaticVars();
+        var staticCodeArray = context.getStaticCode();
 
-        var staticContent = [vars(createVarsArray(staticVars))];
+        var staticContent = [builder.vars(createVarsArray(staticVars))];
         if (staticCodeArray) {
             staticCodeArray.forEach((code) => {
                 staticContent.push(code);
@@ -56,6 +62,9 @@ class TemplateRoot extends Node {
         }
 
         staticsSlot.setContent(staticContent);
+
+        var vars = context.getVars();
+        varsSlot.setContent(builder.vars(createVarsArray(vars)));
     }
 
     toJSON(prettyPrinter) {

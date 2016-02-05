@@ -52,9 +52,11 @@ class CompileContext {
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
 
+        this._vars = {};
+        this._uniqueVars = new UniqueVars();
         this._staticVars = {};
         this._staticCode = null;
-        this._uniqueVars = new UniqueVars();
+        this._uniqueStaticVars = new UniqueVars();
         this._srcCharProps = null;
         this._flags = {};
         this._errors = [];
@@ -124,8 +126,18 @@ class CompileContext {
     }
 
 
-    addStaticVar(name, init) {
+    addVar(name, init) {
         var actualVarName = this._uniqueVars.addVar(name, init);
+        this._vars[actualVarName] = init;
+        return this.builder.identifier(actualVarName);
+    }
+
+    getVars() {
+        return this._vars;
+    }
+
+    addStaticVar(name, init) {
+        var actualVarName = this._uniqueStaticVars.addVar(name, init);
         this._staticVars[actualVarName] = init;
         return this.builder.identifier(actualVarName);
     }
