@@ -82,7 +82,19 @@ class Slot {
         let beforeCode = oldCode.substring(0, this._start);
         let afterCode = oldCode.substring(this._end);
 
-        codegen._code = beforeCode + (slotCode || '') + afterCode;
+        if (slotCode) {
+            codegen._code = beforeCode + slotCode + afterCode;
+        } else {
+            let beforeWhitespaceMatches = beforeCode.match(/[\n]\s*$/);
+            if (beforeWhitespaceMatches != null) {
+                let beforeWhitespace = beforeWhitespaceMatches[0];
+
+                if (afterCode.startsWith(beforeWhitespace)) {
+                    afterCode = afterCode.substring(beforeWhitespace.length);
+                }
+            }
+            codegen._code = beforeCode + afterCode;
+        }
     }
 }
 
