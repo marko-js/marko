@@ -273,6 +273,10 @@ class CompileContext {
                 return;
             }
 
+            if (attrDef.setFlag) {
+                node.setFlag(attrDef.setFlag);
+            }
+
             attr.def = attrDef;
 
             foundAttrs[attrName] = true;

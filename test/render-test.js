@@ -4,6 +4,7 @@ chai.config.includeStack = true;
 var path = require('path');
 var marko = require('../');
 var autotest = require('./autotest');
+var fs = require('fs');
 
 require('../node-require').install();
 
@@ -16,7 +17,7 @@ describe('render', function() {
             var templatePath = path.join(dir, 'template.marko');
             var mainPath = path.join(dir, 'test.js');
 
-            var main = require(mainPath);
+            var main = fs.existsSync(mainPath) ? require(mainPath) : {};
 
             if (main.checkError) {
                 var e;
