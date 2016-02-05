@@ -134,6 +134,10 @@ class Generator {
         return slot;
     }
 
+    addVar(name, value) {
+        return this.context.addVar(name, value);
+    }
+
     addStaticVar(name, value) {
         return this.context.addStaticVar(name, value);
     }
