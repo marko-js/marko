@@ -9,12 +9,15 @@ module.exports = function codeGenerator(elNode, codegen) {
 
     var builder = codegen.builder;
 
-    var loopNode = createLoopNode(argument, elNode.body, builder);
-
-    if (loopNode.error) {
-        codegen.addError(loopNode.error);
-        return elNode;
+    try {
+        var loopNode = createLoopNode(argument, elNode.body, builder);
+        return loopNode;
+    } catch(e) {
+        if (e.code === 'INVALID_FOR') {
+            codegen.addError(e.message);
+        } else {
+            throw e;
+        }
     }
 
-    return loopNode;
 };

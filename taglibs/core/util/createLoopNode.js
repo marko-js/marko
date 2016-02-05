@@ -3,10 +3,6 @@ var parseFor = require('./parseFor');
 function createLoopNode(str, body, builder) {
     var forDef = parseFor(str);
 
-    if (forDef.error) {
-        return forDef;
-    }
-
     forDef.body = body;
 
     if (forDef.loopType === 'ForEach') {

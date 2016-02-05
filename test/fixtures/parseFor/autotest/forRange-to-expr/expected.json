@@ -9,7 +9,15 @@
     "value": 0
   },
   "to": {
-    "type": "Expression",
-    "value": "'abc'.length"
+    "type": "MemberExpression",
+    "object": {
+      "type": "Literal",
+      "value": "abc"
+    },
+    "property": {
+      "type": "Identifier",
+      "name": "length"
+    },
+    "computed": false
   }
 }

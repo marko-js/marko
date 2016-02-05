@@ -5,12 +5,12 @@
     "name": "color"
   },
   "in": {
-    "type": "Expression",
-    "value": "colors"
+    "type": "Identifier",
+    "name": "colors"
   },
   "separator": {
-    "type": "Expression",
-    "value": "','"
+    "type": "Literal",
+    "value": ","
   },
   "statusVarName": {
     "type": "Identifier",

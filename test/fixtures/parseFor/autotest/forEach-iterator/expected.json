@@ -5,11 +5,11 @@
     "name": "color"
   },
   "in": {
-    "type": "Expression",
-    "value": "colors"
+    "type": "Identifier",
+    "name": "colors"
   },
   "iterator": {
-    "type": "Expression",
-    "value": "myIterator"
+    "type": "Identifier",
+    "name": "myIterator"
   }
 }

@@ -13,10 +13,21 @@ describe('parseFor' , function() {
     autotest.scanDir(
         autoTestDir,
         function run(dir) {
-            var inputPath = path.join(dir, 'input.txt');
-            var input = fs.readFileSync(inputPath, {encoding: 'utf8'});
-            var parsed = parseFor(input);
-            return parsed;
+            let inputPath = path.join(dir, 'input.txt');
+            let input = fs.readFileSync(inputPath, {encoding: 'utf8'});
+            try {
+                let parsed = parseFor(input);
+                return parsed;
+            } catch(e) {
+                if (e.code === 'INVALID_FOR') {
+                    return {
+                        error: e.message
+                    };
+                } else {
+                    throw e;
+                }
+
+            }
         },
         {
             deepEqual: true,

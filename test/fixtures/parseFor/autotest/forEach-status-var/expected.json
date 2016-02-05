@@ -5,8 +5,8 @@
     "name": "color"
   },
   "in": {
-    "type": "Expression",
-    "value": "colors"
+    "type": "Identifier",
+    "name": "colors"
   },
   "statusVarName": {
     "type": "Identifier",

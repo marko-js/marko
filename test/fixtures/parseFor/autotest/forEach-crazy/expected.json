@@ -5,19 +5,54 @@
     "name": "color"
   },
   "in": {
-    "type": "Expression",
-    "value": "(a in test | 0)"
+    "type": "BinaryExpression",
+    "left": {
+      "type": "BinaryExpression",
+      "left": {
+        "type": "Identifier",
+        "name": "a"
+      },
+      "operator": "in",
+      "right": {
+        "type": "Identifier",
+        "name": "test"
+      }
+    },
+    "operator": "|",
+    "right": {
+      "type": "Literal",
+      "value": 0
+    }
   },
   "separator": {
-    "type": "Expression",
-    "value": "(iterator==1 ? 'foo' : 'bar')"
+    "type": "ConditionalExpression",
+    "test": {
+      "type": "BinaryExpression",
+      "left": {
+        "type": "Identifier",
+        "name": "iterator"
+      },
+      "operator": "==",
+      "right": {
+        "type": "Literal",
+        "value": 1
+      }
+    },
+    "consequent": {
+      "type": "Literal",
+      "value": "foo"
+    },
+    "alternate": {
+      "type": "Literal",
+      "value": "bar"
+    }
   },
   "statusVarName": {
     "type": "Identifier",
     "name": "loop"
   },
   "iterator": {
-    "type": "Expression",
-    "value": "my Iterator"
+    "type": "Identifier",
+    "name": "myIterator"
   }
 }

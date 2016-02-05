@@ -1,8 +1,6 @@
 'use strict';
-var Expression = require('../../../compiler/ast/Expression');
-var Literal = require('../../../compiler/ast/Literal');
-var Identifier = require('../../../compiler/ast/Identifier');
 var removeComments = require('../../../compiler/util/removeComments');
+var compiler = require('../../../compiler');
 
 var integerRegExp = /^-?\d+$/;
 var numberRegExp = /^-?(?:\d+|\d+\.\d*|\d*\.\d+|\d+\.\d+)$/;
@@ -62,18 +60,39 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     }
 ]);
 
+function throwError(message) {
+    var error = new Error(message);
+    error.code = 'INVALID_FOR';
+    throw error;
+}
 
-function createNumberExpression(str) {
+function buildIdentifier(name, errorMessage) {
+    try {
+        return compiler.builder.identifier(name);
+    } catch(e) {
+        throwError(errorMessage + ': ' + e.message);
+    }
+}
+
+function parseExpression(str, errorMessage) {
+    try {
+        return compiler.builder.parseExpression(str);
+    } catch(e) {
+        throwError(errorMessage + ': ' + e.message);
+    }
+}
+
+function createNumberExpression(str, errorMessage) {
     if (str == null) {
         return null;
     }
 
     if (integerRegExp.test(str)) {
-        return new Literal({value: parseInt(str, 10)});
+        return compiler.builder.literal(parseInt(str, 10));
     } else if (numberRegExp.test(str)) {
-        return new Literal({value: parseFloat(str)});
+        return compiler.builder.literal(parseFloat(str));
     } else {
-        return new Expression({value: str});
+        return parseExpression(str, errorMessage);
     }
 }
 
@@ -143,6 +162,12 @@ module.exports = function(str) {
             case 'iterator':
                 iteratorExpression = part;
                 break;
+            case 'pipe':
+                if (part.length !== 0) {
+                    throwError('Unexpected input: ' + part);
+                    return;
+                }
+                break;
         }
     }
 
@@ -190,9 +215,7 @@ module.exports = function(str) {
                         forTest = str.substring(prevToken.end, token.start);
                         forUpdate = str.substring(token.end);
                     } else {
-                        return {
-                            error: 'Invalid native for loop. Expected format: <init>; <test>; <update>'
-                        };
+                        throwError('Invalid native for loop. Expected format: <init>; <test>; <update>');
                     }
 
                     prevToken = token;
@@ -229,42 +252,46 @@ module.exports = function(str) {
     finishPrevPart(str.length);
 
     if (loopType === 'ForEach') {
-        var nameValue = varName.split(',');
+        var nameValue = varName.split(/\s*,\s*/);
         if (nameValue.length === 2) {
-            nameVarName = new Identifier({name: nameValue[0]});
-            valueVarName = new Identifier({name: nameValue[1]});
+            nameVarName = buildIdentifier(nameValue[0], 'Invalid name variable');
+            valueVarName = buildIdentifier(nameValue[1], 'Invalid value variable');
+            varName = null;
             loopType = 'ForEachProp';
         }
     }
 
     if (inExpression) {
-        inExpression = new Expression({value: inExpression});
+        inExpression = parseExpression(inExpression, 'Invalid "in" expression');
     }
 
     if (separatorExpression) {
-        separatorExpression = new Expression({value: separatorExpression});
+        separatorExpression = parseExpression(separatorExpression, 'Invalid "separator" expression');
     }
 
     if (iteratorExpression) {
-        iteratorExpression = new Expression({value: iteratorExpression});
+        iteratorExpression = parseExpression(iteratorExpression, 'Invalid "iterator" expression');
     }
 
     if (fromExpression) {
-        fromExpression = createNumberExpression(fromExpression);
+        fromExpression = createNumberExpression(fromExpression, 'Invalid "from" expression');
     }
 
     if (toExpression) {
-        toExpression = createNumberExpression(toExpression);
+        toExpression = createNumberExpression(toExpression, 'Invalid "to" expression');
     }
 
     if (stepExpression) {
-        stepExpression = createNumberExpression(stepExpression);
+        stepExpression = createNumberExpression(stepExpression, 'Invalid "step" expression');
     }
 
-    varName = new Identifier({name: varName});
+    if (varName != null) {
+        varName = buildIdentifier(varName, 'Invalid variable name');
+    }
+
 
     if (statusVarName) {
-        statusVarName = new Identifier({name: statusVarName});
+        statusVarName = buildIdentifier(statusVarName, 'Invalid status-var option');
     }
 
     // No more tokens... now we need to sort out what happened
@@ -294,9 +321,7 @@ module.exports = function(str) {
         };
     } else if (loopType === 'For') {
         if (forTest == null) {
-            return {
-                error: 'Invalid native for loop. Expected format: <init>; <test>; <update>'
-            };
+            throwError('Invalid native for loop. Expected format: <init>; <test>; <update>');
         }
         return {
             'loopType': loopType,
@@ -305,8 +330,6 @@ module.exports = function(str) {
             'update': forUpdate
         };
     } else {
-        return {
-            'error': 'Invalid for loop'
-        };
+        throwError('Invalid for loop');
     }
 };

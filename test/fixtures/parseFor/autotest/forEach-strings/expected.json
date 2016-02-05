@@ -5,7 +5,7 @@
     "name": "color"
   },
   "in": {
-    "type": "Expression",
-    "value": "' | separator=\",\";'"
+    "type": "Literal",
+    "value": " | separator=\",\";"
   }
 }

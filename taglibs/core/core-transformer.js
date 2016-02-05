@@ -10,7 +10,19 @@ var coreAttrHandlers = [
                 return false;
             }
 
-            var loopNode = createLoopNode(forArgument, null, this.builder);
+            var loopNode;
+
+            try {
+                loopNode = createLoopNode(forArgument, null, this.builder);
+            } catch(e) {
+                if (e.code === 'INVALID_FOR') {
+                    this.addError(e.message);
+                    return;
+                } else {
+                    throw e;
+                }
+            }
+
 
             //Surround the existing node with the newly created loop node
             // NOTE: The loop node will be one of the following:
