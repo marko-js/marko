@@ -66,12 +66,7 @@ function buildInputProps(el, context) {
     var tagDef = el.tagDef;
     var inputProps = {};
 
-    el.forEachAttribute((attr) => {
-        var attrName = attr.name;
-
-        var attrDef = attr.def || context.taglibLookup.getAttribute(el.tagName, attr.name);
-        var attrValue = removeEscapeFunctions(attr.value);
-
+    function handleAttr(attrName, attrValue, attrDef) {
         if (!attrDef) {
             return; // Skip over attributes that are not supported
         }
@@ -99,20 +94,47 @@ function buildInputProps(el, context) {
             if (attrDef.targetProperty) {
                 propName = attrDef.targetProperty;
             } else if (attrDef.preserveName === true) {
-                propName = attr.name;
+                propName = attrName;
             } else {
-                propName = removeDashes(attr.name);
+                propName = removeDashes(attrName);
             }
         }
 
         if (parentPropName) {
-            let parent = inputProps[parentPropName] = (inputProps[parentPropName] = {});
+            let parent = inputProps[parentPropName] || (inputProps[parentPropName] = {});
             parent[propName] = attrValue;
         } else {
             inputProps[propName] = attrValue;
         }
+    }
+
+    // Add default values for any attributes from the tag definition. These added properties may get overridden
+    // by get overridden from the attributes found on the actual HTML element.
+    tagDef.forEachAttribute(function (attrDef) {
+        if (attrDef.hasOwnProperty('defaultValue')) {
+            handleAttr(
+                attrDef.name,
+                context.builder.literal(attrDef.defaultValue),
+                attrDef);
+        }
     });
 
+    // Loop over the attributes found on the HTML element and add the corresponding properties
+    // to the input object for the custom tag
+    el.forEachAttribute((attr) => {
+        var attrName = attr.name;
+        var attrDef = attr.def || context.taglibLookup.getAttribute(el.tagName, attr.name);
+
+        if (!attrDef) {
+            return; // Skip over attributes that are not supported
+        }
+
+        var attrValue = removeEscapeFunctions(attr.value);
+        handleAttr(attrName, attrValue, attrDef);
+    });
+
+    // Imported variables are used to add input properties to a custom tag based on data/variables
+    // found in the compiled template
     tagDef.forEachImportedVariable(function(importedVariable) {
         let propName = importedVariable.targetProperty;
         let propExpression = importedVariable.expression;
