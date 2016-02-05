@@ -1,0 +1,13 @@
+{
+    "renderer": "./renderer.js",
+    "@prop1": "string",
+    "@prop2": "integer",
+    "@default1": {
+        "type": "string",
+        "default-value": "Default1"
+    },
+    "@default2": {
+        "type": "integer",
+        "default-value": 100
+    }
+}
