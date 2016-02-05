@@ -14,7 +14,5 @@ module.exports = function(builder) {
         }
     ]));
 
-    console.log(templateRoot.body.items);
-
     return templateRoot;
 };

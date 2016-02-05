@@ -5,19 +5,9 @@ function create(__helpers) {
       escapeXml = __helpers.x;
 
   return function render(data, out) {
-    out.w("<ul>");
+    var foo = "bar";
 
-    forEach(data.colors, function(color) {
-      foo();
-
-      out.w("<li>" +
-        escapeXml(color) +
-        "</li>");
-
-      bar();
-    });
-
-    out.w("</ul>");
+    out.w("<div></div>");
   };
 }
 
