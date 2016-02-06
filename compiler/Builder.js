@@ -103,11 +103,23 @@ class Builder {
         return new Code({value});
     }
 
-    concat(left, right) {
-        left = makeNode(left);
-        right = makeNode(right);
+    concat(args) {
+        var prev;
         let operator = '+';
-        return new BinaryExpression({left, operator, right});
+
+        for (var i=1; i<arguments.length; i++) {
+            var left;
+            var right = makeNode(arguments[i]);
+            if (i === 1) {
+                left = makeNode(arguments[i-1]);
+            } else {
+                left = prev;
+            }
+
+            prev = new BinaryExpression({left, operator, right});
+        }
+
+        return prev;
     }
 
     conditionalExpression(test, consequent, alternate) {
