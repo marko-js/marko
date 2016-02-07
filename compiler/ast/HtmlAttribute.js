@@ -55,7 +55,7 @@ function flattenAttrConcats(node) {
     return final.concats;
 }
 
-function generateCodeForExpressionAttr(name, value, codegen) {
+function generateCodeForExpressionAttr(name, value, escape, codegen) {
     var flattenedConcats = flattenAttrConcats(value);
     var hasLiteral = false;
 
@@ -78,9 +78,13 @@ function generateCodeForExpressionAttr(name, value, codegen) {
                 part = removeEscapeFunctions(part);
                 part = codegen.builder.functionCall(codegen.builder.identifier('str'), [part]);
             } else {
-                var escapeXmlAttrVar = codegen.addStaticVar('escapeXmlAttr', '__helpers.xa');
+
                 part = removeEscapeFunctions(part);
-                part = codegen.builder.functionCall(escapeXmlAttrVar, [part]);
+
+                if (escape !== false) {
+                    var escapeXmlAttrVar = codegen.getEscapeXmlAttrVar();
+                    part = codegen.builder.functionCall(escapeXmlAttrVar, [part]);
+                }
             }
             codegen.addWrite(part);
         }
@@ -91,9 +95,7 @@ function generateCodeForExpressionAttr(name, value, codegen) {
         // let valueWithEscaping = handleEscaping(value);
         let attrVar = codegen.addStaticVar('attr', '__helpers.a');
 
-        var escape = true;
-
-        if (isNoEscapeXml(value)) {
+        if (escape === false || isNoEscapeXml(value)) {
             escape = false;
         }
 
@@ -116,6 +118,7 @@ class HtmlAttribute extends Node {
         this.type = 'HtmlAttribute';
         this.name = def.name;
         this.value = def.value;
+        this.escape = def.escape;
 
         if (typeof this.value === 'string') {
             this.value = compiler.builder.parseExpression(this.value);
@@ -148,6 +151,7 @@ class HtmlAttribute extends Node {
         let name = this.name;
         let value = this.value;
         let argument = this.argument;
+        let escape = this.escape !== false;
 
         if (!name) {
             return;
@@ -165,7 +169,7 @@ class HtmlAttribute extends Node {
 
         } else if (value != null) {
             codegen.isInAttribute = true;
-            generateCodeForExpressionAttr(name, value, codegen);
+            generateCodeForExpressionAttr(name, value, escape, codegen);
             codegen.isInAttribute = false;
         } else if (argument) {
             codegen.addWriteLiteral(' ' + name + '(');

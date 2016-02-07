@@ -185,6 +185,10 @@ class HtmlElement extends Node {
         }
     }
 
+    addAttribute(attr) {
+        this._attributes.addAttribute(attr);
+    }
+
     setAttributeValue(name, value) {
         this._attributes.setAttributeValue(name, value);
     }
