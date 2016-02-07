@@ -34,6 +34,18 @@ class BinaryExpression extends Node {
             throw new Error('Invalid BinaryExpression: ' + this);
         }
 
+        if (left.type === 'Literal' && right.type === 'Literal') {
+            if (operator === '+') {
+                return codegen.generateCode(codegen.builder.literal(left.value + right.value));
+            } else if (operator === '-') {
+                return codegen.generateCode(codegen.builder.literal(left.value - right.value));
+            } else if (operator === '*') {
+                return codegen.generateCode(codegen.builder.literal(left.value * right.value));
+            } else if (operator === '/') {
+                return codegen.generateCode(codegen.builder.literal(left.value / right.value));
+            }
+        }
+
         generateCodeForOperand(left, codegen);
         codegen.write(' ');
         codegen.generateCode(operator);
