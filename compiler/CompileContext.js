@@ -168,6 +168,10 @@ class CompileContext {
         return this._staticCode;
     }
 
+    getEscapeXmlAttrVar() {
+        return this.addStaticVar('escapeXmlAttr', '__helpers.xa');
+    }
+
     getTagDef(tagName) {
         var taglibLookup = this.taglibLookup;
 

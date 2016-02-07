@@ -146,6 +146,10 @@ class Generator {
         this.context.addStaticCode(code);
     }
 
+    getEscapeXmlAttrVar() {
+        return this.context.getEscapeXmlAttrVar();
+    }
+
     importModule(varName, path) {
         return this.context.importModule(varName, path);
     }
