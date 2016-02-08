@@ -462,6 +462,21 @@ class Builder {
         return new VariableDeclarator({id, init});
     }
 
+    var(id, init, kind) {
+        if (!kind) {
+            kind = 'var';
+        }
+
+        id = makeNode(id);
+        init = makeNode(init);
+
+        var declarations = [
+            new VariableDeclarator({id, init})
+        ];
+
+        return new Vars({declarations, kind});
+    }
+
     vars(declarations, kind) {
         if (declarations) {
             if (Array.isArray(declarations)) {
