@@ -27,21 +27,18 @@ class Vars extends Node {
             return;
         }
 
+        codegen.incIndent(4);
+
         for (let i=0; i<declarations.length; i++) {
             var declarator = declarations[i];
 
             if (i === 0) {
                 codegen.write(kind + ' ');
             } else {
-                codegen.incIndent(4);
                 codegen.writeLineIndent();
             }
 
             codegen.generateCode(declarator);
-
-            if (i !== 0) {
-                codegen.decIndent(4);
-            }
 
             if (i < declarations.length - 1) {
                 codegen.write(',\n');
@@ -51,7 +48,10 @@ class Vars extends Node {
                 }
             }
         }
-        if(hasBody) {
+
+        codegen.decIndent(4);
+
+        if (hasBody) {
             codegen.generateCode(body);
         }
     }
