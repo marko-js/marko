@@ -15,7 +15,7 @@ module.exports = function(builder) {
         html('data.name'),
         text(literal('!')),
         ifStatement(
-            functionCall('notEmpty', 'data.colors'),
+            functionCall('notEmpty', ['data.colors']),
             [
                 htmlElement('ul',
                     [
