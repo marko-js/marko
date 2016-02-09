@@ -522,6 +522,11 @@ class Generator {
         } else if (value === false) {
             this.write('false');
         }  else if (isArray(value)) {
+            if (value.length === 0) {
+                this.write('[]');
+                return;
+            }
+
             this.write('[\n');
             this.incIndent();
 
@@ -549,11 +554,15 @@ class Generator {
         } else if (typeof value === 'number') {
             this.write(value.toString());
         } else if (typeof value === 'object') {
+            let keys = Object.keys(value);
+            if (keys.length === 0) {
+                this.write('{}');
+                return;
+            }
+
             this.incIndent();
             this.write('{\n');
             this.incIndent();
-
-            let keys = Object.keys(value);
 
             for (let i=0; i<keys.length; i++) {
                 let k = keys[i];
