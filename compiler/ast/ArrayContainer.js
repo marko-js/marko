@@ -29,7 +29,7 @@ class ArrayContainer extends Container {
             var curChild = array[i];
             if (curChild === oldChild) {
                 array[i] = newChild;
-                oldChild.container = null;
+                oldChild.detach();
                 newChild.container = this;
                 return true;
             }
@@ -42,8 +42,11 @@ class ArrayContainer extends Container {
         var childIndex = this.array.indexOf(child);
         if (childIndex !== -1) {
             this.array.splice(childIndex, 1);
+            child.detach();
+            return true;
+        } else {
+            return false;
         }
-        child.container = null;
     }
 
     prependChild(newChild) {
@@ -54,6 +57,7 @@ class ArrayContainer extends Container {
 
     appendChild(newChild) {
         ok(newChild, 'Invalid child');
+        newChild.detach();
         this.array.push(newChild);
         newChild.container = this;
     }
@@ -90,6 +94,20 @@ class ArrayContainer extends Container {
         }
 
         throw new Error('Reference node not found');
+    }
+
+    moveChildrenTo(target) {
+        ok(target.appendChild, 'Node does not support appendChild(node): ' + target);
+
+        var array = this.array;
+        var len = array.length;
+        for (var i=0; i<len; i++) {
+            var curChild = array[i];
+            curChild.container = null; // Detach the child from this container
+            target.appendChild(curChild);
+        }
+
+        this.array.length = 0; // Clear out this container
     }
 
     forEachNextSibling(node, callback, thisObj) {

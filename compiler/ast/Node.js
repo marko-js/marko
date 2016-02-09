@@ -108,6 +108,13 @@ class Node {
         }
     }
 
+    moveChildrenTo(targetNode) {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        ok(this !== targetNode, 'Target node cannot be the same as the source node');
+
+        this.body.moveChildrenTo(targetNode);
+    }
+
     forEachNextSibling(callback, thisObj) {
         var container = this.container;
 
@@ -146,6 +153,7 @@ class Node {
     detach() {
         if (this.container) {
             this.container.removeChild(this);
+            this.container = null;
         }
     }
 

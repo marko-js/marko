@@ -162,8 +162,15 @@ class Generator {
             typeof node === 'boolean') {
             this.write(node);
             return;
-        } else if (isArray(node) || (node instanceof Container)) {
+        } else if (isArray(node)) {
             node.forEach(this.generateCode, this);
+            return;
+        } else if (node instanceof Container) {
+            node.forEach((child) => {
+                if (child.container === node) {
+                    this.generateCode(child);
+                }
+            });
             return;
         }
 
