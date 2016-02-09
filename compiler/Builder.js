@@ -43,6 +43,7 @@ var VariableDeclarator = require('./ast/VariableDeclarator');
 var ThisExpression = require('./ast/ThisExpression');
 var Expression = require('./ast/Expression');
 var Scriptlet = require('./ast/Scriptlet');
+var ContainerNode = require('./ast/ContainerNode');
 
 var parseExpression = require('./util/parseExpression');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
@@ -131,6 +132,19 @@ class Builder {
 
     conditionalExpression(test, consequent, alternate) {
         return new ConditionalExpression({test, consequent, alternate});
+    }
+
+    containerNode(type, generateCode) {
+        if (typeof type === 'function') {
+            generateCode = arguments[0];
+            type = 'ContainerNode';
+        }
+
+        var node = new ContainerNode(type);
+        if (generateCode) {
+            node.setCodeGenerator(generateCode);
+        }
+        return node;
     }
 
     elseStatement(body) {
