@@ -76,14 +76,14 @@ function compileFile(filename, options, callback) {
             }
 
             try {
-                callback(null, compiler.compile(templateSrc, filename));
+                callback(null, compiler.compile(templateSrc, filename, options));
             } catch(e) {
                 callback(e);
             }
         });
     } else {
         let templateSrc = fs.readFileSync(filename, {encoding: 'utf8'});
-        return compiler.compile(templateSrc, filename);
+        return compiler.compile(templateSrc, filename, options);
     }
 }
 
@@ -105,7 +105,7 @@ function compile(src, filename, options, callback) {
 
     if (callback) {
         try {
-            callback(null, compiler.compile(src, filename));
+            callback(null, compiler.compile(src, filename, options));
         } catch(e) {
             callback(e);
         }

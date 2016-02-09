@@ -70,12 +70,18 @@ class Compiler {
         ok(this.parser, '"options.parser" is required');
     }
 
-    compile(src, filename) {
+    compile(src, filename, options) {
         ok(typeof src === 'string', '"src" argument should be a string');
         ok(filename, '"filename" argument is required');
         ok(typeof filename === 'string', '"filename" argument should be a string');
 
         var context = new CompileContext(src, filename, this.builder);
+
+        if (options) {
+            if (options.preserveWhitespace) {
+                context.setPreserveWhitespace(true);
+            }
+        }
 
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);

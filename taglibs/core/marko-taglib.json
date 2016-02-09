@@ -39,6 +39,9 @@
             "ignore": true
         }
     },
+    "<style>": {
+        "preserve-whitespace": true
+    },
     "<textarea>": {
         "preserve-whitespace": true
     },

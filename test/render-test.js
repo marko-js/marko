@@ -18,12 +18,13 @@ describe('render', function() {
             var mainPath = path.join(dir, 'test.js');
 
             var main = fs.existsSync(mainPath) ? require(mainPath) : {};
-
+            var loadOptions = main && main.loadOptions;
+            
             if (main.checkError) {
                 var e;
 
                 try {
-                    marko.load(templatePath);
+                    marko.load(templatePath, loadOptions);
                 } catch(_e) {
                     e = _e;
                 }
@@ -35,7 +36,7 @@ describe('render', function() {
                 main.checkError(e);
                 return '$PASS$';
             } else {
-                var template = marko.load(templatePath);
+                var template = marko.load(templatePath, loadOptions);
                 var templateData = main.templateData || {};
                 var html = template.renderSync(templateData);
                 return html;

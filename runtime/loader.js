@@ -44,7 +44,7 @@ function loadSource(templatePath, compiledSrc) {
     return templateModule.exports;
 }
 
-function loadFile(templatePath) {
+function loadFile(templatePath, options) {
     templatePath = nodePath.resolve(cwd, templatePath);
     var targetDir = nodePath.dirname(templatePath);
 
@@ -54,7 +54,7 @@ function loadFile(templatePath) {
         return require(targetFile);
     }
 
-	var compiledSrc = markoCompiler.compileFile(templatePath);
+	var compiledSrc = markoCompiler.compileFile(templatePath, options);
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
     var filename = nodePath.basename(targetFile);
@@ -91,10 +91,10 @@ module.exports = function load(templatePath, templateSrc, options) {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
         }
 
-    	var compiledSrc = markoCompiler.compile(templateSrc, templatePath);
+    	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
         return loadSource(templatePath, compiledSrc);
     } else {
-        return loadFile(templatePath);
+        return loadFile(templatePath, options);
     }
 };
 
