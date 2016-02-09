@@ -394,6 +394,18 @@ class Builder {
         return new FunctionCall({callee, args});
     }
 
+    requireResolve(path) {
+        path = makeNode(path);
+
+        let callee = new MemberExpression({
+            object: new Identifier({name: 'require'}),
+            property: new Identifier({name: 'resolve'})
+        });
+
+        let args = [ path ];
+        return new FunctionCall({callee, args});
+    }
+
     returnStatement(argument) {
         argument = makeNode(argument);
 
