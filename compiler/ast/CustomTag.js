@@ -99,6 +99,12 @@ function buildInputProps(el, context) {
             }
         }
 
+        if (attrDef.type === 'path') {
+            attrValue = context.resolvePath(attrValue);
+        } else if (attrDef.type === 'template') {
+            attrValue = context.resolveTemplate(attrValue);
+        }
+
         if (parentPropName) {
             let parent = inputProps[parentPropName] || (inputProps[parentPropName] = {});
             parent[propName] = attrValue;
