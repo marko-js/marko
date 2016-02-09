@@ -467,6 +467,8 @@ class Generator {
     }
 
     incIndent(count) {
+        this._flushBufferedWrites(true /* add separator */);
+
         if (count != null) {
             for (let i=0; i<count; i++) {
                 this.currentIndent += ' ';

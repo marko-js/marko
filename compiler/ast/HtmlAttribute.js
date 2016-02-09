@@ -3,7 +3,6 @@ var Node = require('./Node');
 var Literal = require('./Literal');
 var ok = require('assert').ok;
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
-var removeEscapeFunctions = require('../util/removeEscapeFunctions');
 var compiler = require('../');
 
 function isStringLiteral(node) {
@@ -11,14 +10,8 @@ function isStringLiteral(node) {
 }
 
 function isNoEscapeXml(node) {
-    return node.type === 'FunctionCall' &&
-        node.callee.type === 'Identifier' &&
-        node.callee.name === '$noEscapeXml';
-}
-
-function isStringExpression(node) {
-    return node.type === 'FunctionCall' && node.callee.type === 'Identifier' &&
-        (node.callee.name === '$noEscapeXml' || node.callee.name === '$escapeXml');
+    return node.type === 'AttributePlaceholder' &&
+        node.escape === false;
 }
 
 function flattenAttrConcats(node) {
@@ -46,7 +39,7 @@ function flattenAttrConcats(node) {
         }
 
         return {
-            isString: isStringLiteral(node) || isStringExpression(node),
+            isString: isStringLiteral(node) || node.type === 'AttributePlaceholder',
             concats: [node]
         };
     }
@@ -75,12 +68,8 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
             } else if (part.type === 'Literal') {
 
             } else if (isNoEscapeXml(part)) {
-                part = removeEscapeFunctions(part);
                 part = codegen.builder.functionCall(codegen.builder.identifier('str'), [part]);
             } else {
-
-                part = removeEscapeFunctions(part);
-
                 if (escape !== false) {
                     var escapeXmlAttrVar = codegen.getEscapeXmlAttrVar();
                     part = codegen.builder.functionCall(escapeXmlAttrVar, [part]);
@@ -99,7 +88,6 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
             escape = false;
         }
 
-        value = removeEscapeFunctions(value);
         let attrArgs = [codegen.builder.literal(name), value];
 
         if (escape === false) {

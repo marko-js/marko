@@ -66,7 +66,7 @@ class Node {
 
     insertSiblingBefore(newNode) {
         ok(this.container, 'Node does not belong to a container: ' + this);
-        this.container.insertChildAfter(newNode, this);
+        this.container.insertChildBefore(newNode, this);
     }
 
     insertSiblingAfter(newNode) {

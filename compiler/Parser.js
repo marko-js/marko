@@ -1,5 +1,6 @@
 'use strict';
 var ok = require('assert').ok;
+var AttributePlaceholder = require('./ast/AttributePlaceholder');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     'preserve-whitespace': function(attr, context) {
@@ -14,6 +15,25 @@ var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
 
 function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
+}
+
+function replacePlaceholderEscapeFuncs(node, context) {
+
+    var walker = context.createWalker({
+        exit: function(node, parent) {
+            if (node.type === 'FunctionCall' &&
+                node.callee.type === 'Identifier') {
+
+                if (node.callee.name === '$noEscapeXml') {
+                    return new AttributePlaceholder({escape: false, value: node.args[0]});
+                } else if (node.callee.name === '$escapeXml') {
+                    return new AttributePlaceholder({escape: true, value: node.args[0]});
+                }
+            }
+        }
+    });
+
+    return walker.walk(node);
 }
 
 class Parser {
@@ -110,17 +130,19 @@ class Parser {
             selfClosed: el.selfClosed === true,
             pos: el.pos,
             attributes: attributes.map((attr) => {
-                var isLiteral = false;
-
+                var attrValue;
                 if (attr.hasOwnProperty('literalValue')) {
-                    isLiteral = true;
+                    attrValue = builder.literal(attr.literalValue);
+                } else if (attr.value == null) {
+                    attrValue = undefined;
+                } else {
+                    let parsedExpression = builder.parseExpression(attr.value);
+                    attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
                 }
 
                 var attrDef = {
                     name: attr.name,
-                    value: isLiteral ?
-                        builder.literal(attr.literalValue) :
-                        attr.value == null ? undefined : builder.parseExpression(attr.value)
+                    value: attrValue
                 };
 
                 if (attr.argument) {

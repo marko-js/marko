@@ -12,6 +12,7 @@ var path = require('path');
 var Node = require('./ast/Node');
 var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
+var Walker = require('./Walker');
 
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
@@ -369,6 +370,10 @@ class CompileContext {
 
     isPreserveComments() {
         return this._preserveComments === true;
+    }
+
+    createWalker(options) {
+        return new Walker(options);
     }
 }
 

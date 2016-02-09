@@ -2,7 +2,6 @@
 
 var HtmlElement = require('./HtmlElement');
 var removeDashes = require('../util/removeDashes');
-var removeEscapeFunctions = require('../util/removeEscapeFunctions');
 var safeVarName = require('../util/safeVarName');
 var ok = require('assert').ok;
 
@@ -129,8 +128,7 @@ function buildInputProps(el, context) {
             return; // Skip over attributes that are not supported
         }
 
-        var attrValue = removeEscapeFunctions(attr.value);
-        handleAttr(attrName, attrValue, attrDef);
+        handleAttr(attrName, attr.value, attrDef);
     });
 
     // Imported variables are used to add input properties to a custom tag based on data/variables

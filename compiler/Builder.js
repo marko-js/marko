@@ -46,7 +46,6 @@ var Scriptlet = require('./ast/Scriptlet');
 
 var parseExpression = require('./util/parseExpression');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
-var removeEscapeFunctions = require('./util/removeEscapeFunctions');
 var isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
 var DEFAULT_BUILDER;
@@ -362,9 +361,6 @@ class Builder {
     parseExpression(str, options) {
         ok(typeof str === 'string', '"str" should be a string expression');
         var parsed = parseExpression(str, DEFAULT_BUILDER);
-        if (options && options.escapeXml === false) {
-            parsed = removeEscapeFunctions(parsed);
-        }
         return parsed;
     }
 
