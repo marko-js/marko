@@ -12,7 +12,7 @@ class ObjectExpression extends Node {
         var properties = this.properties;
 
         if (!properties || !properties.length) {
-            this.write('{}');
+            codegen.write('{}');
             return;
         }
 
