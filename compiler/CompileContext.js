@@ -375,6 +375,34 @@ class CompileContext {
     createWalker(options) {
         return new Walker(options);
     }
+
+    /**
+     * Statically resolves a path if it is a literal string. Otherwise, it returns the input expression.
+     */
+    resolvePath(pathExpression) {
+        ok(pathExpression, '"pathExpression" is required');
+
+        if (pathExpression.type === 'Literal') {
+            let path = pathExpression.value;
+            if (typeof path === 'string') {
+                return this.addStaticVar(path, this.builder.requireResolve(pathExpression));
+            }
+        }
+        return pathExpression;
+    }
+
+    resolveTemplate(pathExpression) {
+        ok(pathExpression, '"pathExpression" is required');
+
+        if (pathExpression.type === 'Literal') {
+            let path = pathExpression.value;
+            if (typeof path === 'string') {
+                return this.importTemplate(path);
+            }
+        }
+
+        return pathExpression;
+    }
 }
 
 module.exports = CompileContext;

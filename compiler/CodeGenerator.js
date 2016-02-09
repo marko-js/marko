@@ -617,6 +617,14 @@ class Generator {
     onDone(listenerFunc) {
         this._doneListeners.push(listenerFunc);
     }
+
+    getRequirePath(targetFilename) {
+        return this.context.getRequirePath(targetFilename);
+    }
+
+    resolvePath(pathExpression) {
+        return this.context.resolvePath(pathExpression);
+    }
 }
 
 module.exports = Generator;
