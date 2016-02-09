@@ -38,12 +38,12 @@ module.exports = function(compiler) {
         enter(node) {
             if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('for')) {
-                    node.wrap(forEach('color', 'data.colors'));
+                    node.wrapWith(forEach('color', 'data.colors'));
                     node.removeAttribute('for');
                 }
 
                 if (node.hasAttribute('if')) {
-                    node.wrap(ifStatement('notEmpty(data.colors)'));
+                    node.wrapWith(ifStatement('notEmpty(data.colors)'));
                     node.removeAttribute('if');
                 }
             }

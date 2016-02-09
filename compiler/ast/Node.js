@@ -51,7 +51,7 @@ class Node {
         this.on('afterGenerateCode', listener);
     }
 
-    wrap(wrapperNode) {
+    wrapWith(wrapperNode) {
         ok(this.container, 'Node does not belong to a container: ' + this);
         var replaced = this.container.replaceChild(wrapperNode, this);
         ok(replaced, 'Invalid state. Child does not belong to the container');

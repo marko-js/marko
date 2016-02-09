@@ -27,7 +27,7 @@ var coreAttrHandlers = [
             //Surround the existing node with the newly created loop node
             // NOTE: The loop node will be one of the following:
             //       ForEach, ForRange, ForEachProp or ForStatement
-            node.wrap(loopNode);
+            node.wrapWith(loopNode);
         }
     ],
     [
@@ -38,7 +38,7 @@ var coreAttrHandlers = [
             }
             var ifNode = this.builder.ifStatement(ifArgument);
             //Surround the existing node with an "If" node
-            node.wrap(ifNode);
+            node.wrapWith(ifNode);
         }
     ],
     [
@@ -50,7 +50,7 @@ var coreAttrHandlers = [
             ifArgument = this.builder.negate(ifArgument);
             var ifNode = this.builder.ifStatement(ifArgument);
             //Surround the existing node with an "if" node
-            node.wrap(ifNode);
+            node.wrapWith(ifNode);
         }
     ],
     [
@@ -61,14 +61,14 @@ var coreAttrHandlers = [
             }
             var elseIfNode = this.builder.elseIfStatement(elseIfArgument);
             //Surround the existing node with an "ElseIf" node
-            node.wrap(elseIfNode);
+            node.wrapWith(elseIfNode);
         }
     ],
     [
         'else', function(attr, node) {
             var elseNode = this.builder.elseStatement();
             //Surround the existing node with an "Else" node
-            node.wrap(elseNode);
+            node.wrapWith(elseNode);
         }
     ],
     [
