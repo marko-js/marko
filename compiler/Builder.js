@@ -103,6 +103,14 @@ class Builder {
         return new Code({value});
     }
 
+    computedMemberExpression(object, property) {
+        object = makeNode(object);
+        property = makeNode(property);
+        let computed = true;
+
+        return new MemberExpression({object, property, computed});
+    }
+
     concat(args) {
         var prev;
         let operator = '+';
@@ -195,7 +203,7 @@ class Builder {
 
         if (args) {
             if (!isArray(args)) {
-                args = [args];
+                throw new Error('"args" should be an array');
             }
 
             for (var i=0; i<args.length; i++) {
