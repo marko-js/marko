@@ -40,7 +40,7 @@ class FunctionDeclaration extends Node {
                     codegen.write(param);
                 } else {
                     if (param.type !== 'Identifier') {
-                        throw new Error('Illegal param: ' + param);
+                        throw new Error('Illegal param ' + JSON.stringify(param) + ' for FunctionDeclaration: ' + JSON.stringify(this));
                     }
                     codegen.generateCode(param);
                 }
