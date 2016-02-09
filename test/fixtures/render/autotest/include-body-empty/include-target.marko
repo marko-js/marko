@@ -1,0 +1,11 @@
+<div>
+    <h1>
+        Hello ${data.name}! You have ${data.count} new messages.
+    </h1>
+    <p if(data.renderBody)>
+        <invoke data.renderBody(out)/>
+    </p>
+    <p else>
+        No body!
+    </p>
+</div>

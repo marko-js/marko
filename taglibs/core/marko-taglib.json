@@ -14,6 +14,9 @@
     "<if>": {
         "node-factory": "./if-tag"
     },
+    "<include>": {
+        "code-generator": "./include-tag"
+    },
     "<invoke>": {
         "code-generator": "./invoke-tag"
     },
