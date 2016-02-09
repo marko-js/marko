@@ -17,6 +17,9 @@
     "<include>": {
         "code-generator": "./include-tag"
     },
+    "<include-text>": {
+        "code-generator": "./include-text-tag"
+    },
     "<invoke>": {
         "code-generator": "./invoke-tag"
     },
