@@ -118,11 +118,21 @@ function checkUpToDate(templateFile, templateJsFile) {
     return false; // TODO Implement checkUpToDate
 }
 
+function getLastModified(path, options, callback) {
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
+    }
+
+    callback(null, null); // TODO Implement getLastModified
+}
+
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;
+exports.getLastModified = getLastModified;
 exports.createWalker = createWalker;
 exports.builder = Builder.DEFAULT_BUILDER;
 

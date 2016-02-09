@@ -79,6 +79,7 @@ class Compiler {
 
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
+        context.root = ast;
         // console.log('ROOT', JSON.stringify(ast, null, 2));
 
         // STAGE 2: Transform the initial AST to produce the final AST
