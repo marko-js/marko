@@ -7,7 +7,11 @@ Changelog
 
 ### 2.8.0
 
--  Added support for automatically discovering taglibs from installed packages that are scoped. ([PR #183](https://github.com/marko-js/marko/pull/183) by [@tropperstyle](https://github.com/tropperstyle)) 
+-  Added support for automatically discovering taglibs from installed packages that are scoped. ([PR #183](https://github.com/marko-js/marko/pull/183) by [@tropperstyle](https://github.com/tropperstyle))
+
+### 2.8.3
+
+- Fixes circular dependency issue between `hot-reload/index.js` and `runtime/index.js`
 
 ## 2.7.x
 
