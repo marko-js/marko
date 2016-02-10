@@ -5,6 +5,22 @@ Changelog
 
 ## 2.8.x
 
+### 2.8.4
+
+- Fixes circular dependency issue between runtime/index.js and hot-reload/index.js
+
+### 2.8.3
+
+- Fixes circular dependency issue between runtime/index.js and hot-reload/index.js
+
+### 2.8.2
+
+- Fixes #203 - Incorrect behavior when attrs is used on a standard HTML tag with a tag def
+
+### 2.8.1
+
+-  Fixes #202 - Pass along options to compiler when loading a template
+
 ### 2.8.0
 
 -  Added support for automatically discovering taglibs from installed packages that are scoped. ([PR #183](https://github.com/marko-js/marko/pull/183) by [@tropperstyle](https://github.com/tropperstyle))
