@@ -110,7 +110,7 @@ function compile(src, filename, options, callback) {
             callback(e);
         }
     } else {
-        return compiler.compile(src, filename);
+        return compiler.compile(src, filename, options);
     }
 }
 
@@ -124,7 +124,7 @@ function getLastModified(path, options, callback) {
         options = null;
     }
 
-    callback(null, null); // TODO Implement getLastModified
+    callback(null, -1); // TODO Implement getLastModified
 }
 
 exports.createBuilder = createBuilder;
