@@ -17,6 +17,7 @@
 var extend = require('raptor-util/extend');
 var req = require; // Fool code inspectors used by client-side bundles
 var nodePath = require('path');
+var NODE_ENV = process.env.NODE_ENV;
 
 var defaultOptions = {
         /**
@@ -62,7 +63,12 @@ var defaultOptions = {
          * compiled templates will not be written to disk (i.e., no `.marko.js` file will
          * be generated)
          */
-        writeToDisk: true
+        writeToDisk: true,
+
+        /**
+         * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
+         */
+        assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
     };
 
 if (process.env.MARKO_CLEAN === '' || process.env.MARKO_CLEAN === 'true') {

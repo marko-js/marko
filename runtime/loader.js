@@ -45,12 +45,36 @@ function loadSource(templatePath, compiledSrc) {
 }
 
 function loadFile(templatePath, options) {
+    var targetFile = templatePath + '.js';
+
+    // Short-circuit loading if the template has already been cached in the Node.js require cache
+    var cached = require.cache[targetFile];
+    if (cached) {
+        return cached.exports;
+    }
+
     templatePath = nodePath.resolve(cwd, templatePath);
     var targetDir = nodePath.dirname(templatePath);
 
-    var targetFile = templatePath + '.js';
+    targetFile = templatePath + '.js';
+
+    // Check the require cache again after fully resolving the path
+    cached = require.cache[targetFile];
+    if (cached) {
+        return cached.exports;
+    }
+
+    // If the `assumeUpToDate` option is true then we just assume that the compiled template on disk is up-to-date
+    // if it exists
+    if (markoCompiler.defaultOptions.assumeUpToDate) {
+        if (fs.existsSync(targetFile)) {
+            return require(targetFile);
+        }
+    }
+
     var compiler = markoCompiler.createCompiler(templatePath, options);
     var isUpToDate = compiler.checkUpToDate(targetFile);
+
     if (isUpToDate) {
         return require(targetFile);
     }
