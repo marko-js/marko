@@ -56,8 +56,10 @@ function makeNode(arg) {
         return parseExpression(arg, DEFAULT_BUILDER);
     } else if (arg instanceof Node) {
         return arg;
-    } else {
+    } else if (arg == null) {
         return undefined;
+    } else {
+        throw new Error('Argument should be a string or Node or null. Actual: ' + arg);
     }
 }
 
