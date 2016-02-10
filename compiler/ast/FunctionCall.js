@@ -10,10 +10,19 @@ class FunctionCall extends Node {
 
         ok(this.callee, '"callee" is required');
 
-        this.args = def.args;
+        let args = this.args = def.args;
 
-        if (this.args && !Array.isArray(this.args)) {
-            throw new Error('Invalid args');
+        if (args) {
+            if (!Array.isArray(args)) {
+                throw new Error('Invalid args');
+            }
+
+            for (let i=0; i<args.length; i++) {
+                let arg = args[i];
+                if (!arg) {
+                    throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON(), null, 2));
+                }
+            }
         }
     }
 
