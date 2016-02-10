@@ -364,6 +364,8 @@ class Generator {
                 // Do nothing
             } else if (this._code.endsWith(';')) {
                 this._code += '\n';
+            }  else if (this._code.endsWith('\n' + this.currentIndent)) {
+                // Do nothing
             } else {
                 this._code += ';\n';
             }
