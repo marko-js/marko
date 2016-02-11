@@ -131,6 +131,7 @@ function buildInputProps(el, context) {
         var attrDef = attr.def || context.taglibLookup.getAttribute(el.tagName, attr.name);
 
         if (!attrDef) {
+            context.addError(el, 'Unsupported attribute of "' + attrName + '" found on the <' + el.tagName + '> custom tag.');
             return; // Skip over attributes that are not supported
         }
 

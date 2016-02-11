@@ -267,6 +267,10 @@ class CompileContext {
             let attrDef = taglibLookup.getAttribute(tagName, attrName);
             if (!attrDef) {
                 if (tagDef) {
+                    if (node.removeAttribute) {
+                        node.removeAttribute(attrName);
+                    }
+
                     // var isAttrForTaglib = compiler.taglibs.isTaglib(attrUri);
                     //Tag doesn't allow dynamic attributes
                     this.addError({
