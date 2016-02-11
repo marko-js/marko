@@ -142,7 +142,8 @@ class Parser {
 
                 var attrDef = {
                     name: attr.name,
-                    value: attrValue
+                    value: attrValue,
+                    rawValue: attr.value
                 };
 
                 if (attr.argument) {
