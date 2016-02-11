@@ -35,6 +35,7 @@
     "minimatch": "^0.2.14",
     "property-handlers": "^1.0.0",
     "raptor-args": "^1.0.0",
+    "raptor-async": "^1.1.2",
     "raptor-json": "^1.0.1",
     "raptor-logging": "^1.0.1",
     "raptor-modules": "^1.0.5",
