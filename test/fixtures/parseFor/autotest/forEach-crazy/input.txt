@@ -1,0 +1,1 @@
+color in (a in test | 0) | status-var=loop separator=(iterator==1 ? 'foo' : 'bar') iterator=myIterator

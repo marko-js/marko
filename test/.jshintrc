@@ -1,7 +1,5 @@
 {
     "predef": [
-        "jasmine",
-        "spyOn",
         "it",
         "xit",
         "console",
@@ -14,14 +12,9 @@
         "waitsFor",
         "runs"
     ],
-
-    "globals": {
-        "define": true,
-        "require": true
-    },
-
     "node" : true,
     "es5" : false,
+    "esnext": true,
     "browser" : true,
     "boss" : false,
     "curly": false,
@@ -46,6 +39,5 @@
     "eqeqeq": false,
     "latedef": true,
     "unused": "vars",
-    
     "eqnull": true
 }

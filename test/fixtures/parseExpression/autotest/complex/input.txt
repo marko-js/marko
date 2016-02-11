@@ -1,0 +1,1 @@
+a = b = (a+b)>(c+=2) || (isHidden ? 'hidden' : 'visible')

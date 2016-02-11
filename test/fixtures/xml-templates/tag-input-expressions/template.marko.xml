@@ -1,6 +1,0 @@
-<template 
-    params="">
-    
-    <test-simpleHello c-input="data"/>
-    
-</template>

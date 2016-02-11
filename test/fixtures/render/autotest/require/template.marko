@@ -1,0 +1,8 @@
+---
+<script marko-init>
+    var testHelpers = require('./test-helpers')
+</script>
+
+Hello ${testHelpers.upperCase("world")}!
+Hello ${testHelpers.trim("   World   ")}!
+---

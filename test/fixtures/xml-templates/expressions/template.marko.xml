@@ -1,5 +1,0 @@
-<c-template
-    params="">
-Hello ${({name: "World"}).name}!
-</c-template>
-

@@ -1,0 +1,17 @@
+{
+  "type": "ArrayExpression",
+  "elements": [
+    {
+      "type": "Literal",
+      "value": "a"
+    },
+    {
+      "type": "Literal",
+      "value": "b"
+    },
+    {
+      "type": "Literal",
+      "value": 123
+    }
+  ]
+}

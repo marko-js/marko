@@ -1,0 +1,11 @@
+{
+  "type": "MemberExpression",
+  "object": {
+    "type": "ThisExpression"
+  },
+  "property": {
+    "type": "Identifier",
+    "name": "foo"
+  },
+  "computed": false
+}

@@ -1,0 +1,15 @@
+{
+  "prefix": "12",
+  "node": {
+    "type": "BinaryExpression",
+    "left": {
+      "type": "Identifier",
+      "name": "foo"
+    },
+    "operator": "+",
+    "right": {
+      "type": "Identifier",
+      "name": "bar"
+    }
+  }
+}

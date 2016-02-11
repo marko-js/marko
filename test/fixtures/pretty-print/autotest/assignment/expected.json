@@ -1,0 +1,17 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "Assignment",
+      "left": {
+        "type": "Identifier",
+        "name": "a"
+      },
+      "right": {
+        "type": "Literal",
+        "value": 1
+      },
+      "operator": "="
+    }
+  ]
+}

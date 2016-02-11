@@ -1,0 +1,27 @@
+---
+Hello ${data.name}!
+
+<ul if(notEmpty(data.colors))>
+    <li for(color in data.colors)>
+        ${color}
+    </li>
+</ul>
+<div else>
+    No colors!
+</div>
+
+<if(notEmpty(data.colors))>
+    <ul>
+        <for(color in data.colors)>
+            <li>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</if>
+<else>
+    <div>
+        No colors!
+    </div>
+</else>
+---

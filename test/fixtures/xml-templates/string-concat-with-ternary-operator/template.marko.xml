@@ -1,4 +1,0 @@
-<c-template c-whitespace="preserve">
-A: $!{true ? 'ABC' : ''}
-B: This should be outputted as well.
-</c-template>

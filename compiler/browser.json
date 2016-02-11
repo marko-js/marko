@@ -1,7 +1,0 @@
-{
-    "dependencies": [
-        "../taglibs/browser.json",
-        "marko-async/browser.json",
-        "marko-layout/browser.json"
-    ]
-}

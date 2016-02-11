@@ -1,0 +1,63 @@
+{
+  "type": "Assignment",
+  "left": {
+    "type": "Identifier",
+    "name": "a"
+  },
+  "right": {
+    "type": "Assignment",
+    "left": {
+      "type": "Identifier",
+      "name": "b"
+    },
+    "right": {
+      "type": "LogicalExpression",
+      "left": {
+        "type": "BinaryExpression",
+        "left": {
+          "type": "BinaryExpression",
+          "left": {
+            "type": "Identifier",
+            "name": "a"
+          },
+          "operator": "+",
+          "right": {
+            "type": "Identifier",
+            "name": "b"
+          }
+        },
+        "operator": ">",
+        "right": {
+          "type": "Assignment",
+          "left": {
+            "type": "Identifier",
+            "name": "c"
+          },
+          "right": {
+            "type": "Literal",
+            "value": 2
+          },
+          "operator": "+="
+        }
+      },
+      "operator": "||",
+      "right": {
+        "type": "ConditionalExpression",
+        "test": {
+          "type": "Identifier",
+          "name": "isHidden"
+        },
+        "consequent": {
+          "type": "Literal",
+          "value": "hidden"
+        },
+        "alternate": {
+          "type": "Literal",
+          "value": "visible"
+        }
+      }
+    },
+    "operator": "="
+  },
+  "operator": "="
+}

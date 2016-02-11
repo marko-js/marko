@@ -1,0 +1,18 @@
+[
+  {
+    "type": "Literal",
+    "value": "Hello, John"
+  },
+  {
+    "type": "BinaryExpression",
+    "left": {
+      "type": "Identifier",
+      "name": "abc"
+    },
+    "operator": "+",
+    "right": {
+      "type": "Literal",
+      "value": 123
+    }
+  }
+]

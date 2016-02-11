@@ -1,6 +1,2 @@
-*.marko.js
-*.marko.xml.js
-*.actual.js
-*.actual.html
-actual.html
 /node_modules
+/scratch.js

@@ -1,0 +1,6 @@
+{
+    "<foo>": {
+        "renderer": "./foo-tag.js",
+        "@file": "path"
+    }
+}

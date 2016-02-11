@@ -1,0 +1,7 @@
+<div class=data.className
+    class2="$!{data.className}"
+    foo=('a' + data.foo + 'b')
+    bar="a ${data.foo} b"
+    baz="a $!{data.foo} b"
+    nested="a $!{data.foo + 'nested ${data.bar}'} b">
+</div>

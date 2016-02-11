@@ -1,7 +1,0 @@
-<c-template 
-    params="">
- 
-    BEGIN
-    <include resource="include-resource-target.txt" static="true"/>
-    END
-</c-template>

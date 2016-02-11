@@ -1,0 +1,11 @@
+{
+  "loopType": "ForEach",
+  "varName": {
+    "type": "Identifier",
+    "name": "color"
+  },
+  "in": {
+    "type": "Literal",
+    "value": " | separator=\",\";"
+  }
+}

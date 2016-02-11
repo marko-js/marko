@@ -1,0 +1,8 @@
+{
+    "renderer": "./renderer.js",
+    "@test": "string",
+    "@*": {
+        "type": "string",
+        "target-property": "dynamicAttributes"
+    }
+}

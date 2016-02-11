@@ -1,0 +1,110 @@
+{
+  "type": "TemplateRoot",
+  "body": [
+    {
+      "type": "Vars",
+      "kind": "var",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "x"
+          },
+          "init": {
+            "type": "Literal",
+            "value": 1
+          }
+        },
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "y"
+          },
+          "init": {
+            "type": "Literal",
+            "value": 7
+          }
+        },
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "z"
+          },
+          "init": {
+            "type": "BinaryExpression",
+            "left": {
+              "type": "Identifier",
+              "name": "x"
+            },
+            "operator": "+",
+            "right": {
+              "type": "Literal",
+              "value": 10
+            }
+          }
+        },
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "unusedVar"
+          }
+        }
+      ],
+      "body": [
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Identifier",
+            "name": "x"
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Identifier",
+            "name": "y"
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\n  "
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Identifier",
+            "name": "z"
+          }
+        },
+        {
+          "type": "Text",
+          "argument": {
+            "type": "Literal",
+            "value": "\nHELLO WORLD\n"
+          }
+        }
+      ]
+    }
+  ]
+}

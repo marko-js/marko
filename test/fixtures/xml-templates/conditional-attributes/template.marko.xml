@@ -1,6 +1,0 @@
-<template>
-    
-    <div class="{?false;some-class}"></div>
-    <div class="{?true;some-class}"></div>
-    <div class="${data.name}"></div>
-</template>

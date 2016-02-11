@@ -21,6 +21,7 @@ var Module = require('module').Module;
 var markoCompiler = require('../compiler');
 var cwd = process.cwd();
 var fsReadOptions = {encoding: 'utf8'};
+var extend = require('raptor-util/extend');
 
 if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
     require('../hot-reload').enable();
@@ -64,23 +65,23 @@ function loadFile(templatePath, options) {
         return cached.exports;
     }
 
+    options = extend(extend({}, markoCompiler.defaultOptions), options);
+
     // If the `assumeUpToDate` option is true then we just assume that the compiled template on disk is up-to-date
     // if it exists
-    if (markoCompiler.defaultOptions.assumeUpToDate) {
+    if (options.assumeUpToDate) {
         if (fs.existsSync(targetFile)) {
             return require(targetFile);
         }
     }
 
-    var compiler = markoCompiler.createCompiler(templatePath, options);
-    var isUpToDate = compiler.checkUpToDate(targetFile);
+    var isUpToDate = markoCompiler.checkUpToDate(targetFile);
 
     if (isUpToDate) {
         return require(targetFile);
     }
 
-	var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-	var compiledSrc = compiler.compile(templateSrc);
+	var compiledSrc = markoCompiler.compileFile(templatePath, options);
 
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
@@ -113,12 +114,11 @@ module.exports = function load(templatePath, templateSrc, options) {
         // Don't write the compiled template to disk. Instead, load it
         // directly from the compiled source using the internals of the
         // Node.js module loading system.
-        var compiler = markoCompiler.createCompiler(templatePath, options);
         if (templateSrc === undefined) {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
         }
 
-    	var compiledSrc = compiler.compile(templateSrc);
+    	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
         return loadSource(templatePath, compiledSrc);
     } else {
         return loadFile(templatePath, options);

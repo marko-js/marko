@@ -18,20 +18,9 @@
 var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./'); // Circular dependency, but that is okay
-var extend = require('raptor-util/extend');
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
-var forEach = require('raptor-util/forEach');
-var markoRegExp = /.html|\.marko(.xml|.html)?$/;
-var arrayFromArguments = require('raptor-util/arrayFromArguments');
-var logger = require('raptor-logging').logger(module);
-
-var viewEngine;
-var req = require;
-
-try {
-    viewEngine = req('view-engine');
-} catch(e) {}
+var isArray = Array.isArray;
 
 function notEmpty(o) {
     if (o == null) {
@@ -65,7 +54,27 @@ function createDeferredRenderer(handler) {
     return deferredRenderer;
 }
 
-var WARNED_INVOKE_BODY = 0;
+function resolveRenderer(handler) {
+    var renderer = handler.renderer;
+
+    if (renderer) {
+        return renderer;
+    }
+
+    if (typeof handler === 'function') {
+        return handler;
+    }
+
+    if (typeof (renderer = handler.render) === 'function') {
+        return renderer;
+    }
+
+    // If the user code has a circular function then the renderer function
+    // may not be available on the module. Since we can't get a reference
+    // to the actual renderer(input, out) function right now we lazily
+    // try to get access to it later.
+    return createDeferredRenderer(handler);
+}
 
 module.exports = {
     /**
@@ -105,14 +114,23 @@ module.exports = {
             };
         for (; i < len; i++) {
             var o = array[i];
-            callback(o || '', loopStatus);
+            callback(o, loopStatus);
         }
     },
     /**
      * Internal helper method to handle loops without a status variable
      * @private
      */
-    f: forEach,
+    f: function forEach(array, callback) {
+        if (isArray(array)) {
+            for (var i=0; i<array.length; i++) {
+                callback(array[i]);
+            }
+        } else if (typeof array === 'function') {
+            // Also allow the first argument to be a custom iterator function
+            array(callback);
+        }
+    },
     /**
      * Internal helper method to handle native for loops
      * @private
@@ -186,49 +204,13 @@ module.exports = {
     /**
      * Loads a template
      */
-    l: function(path, req) {
+    l: function(path) {
         if (typeof path === 'string') {
-            if (path.charAt(0) === '.' && req.resolve) { // Check if the path is relative
-                // The path is relative so use require.resolve to fully resolve the path
-                path = req.resolve(path);
-            }
-
-            if (!viewEngine || markoRegExp.test(path)) {
-                return runtime.load(path);
-            } else {
-                return viewEngine.load(path);
-            }
-        } else if (path.render) {
+            return runtime.load(path);
+        } else {
             // Assume it is already a pre-loaded template
             return path;
-        } else {
-            return runtime.load(path);
         }
-    },
-    /**
-     * Returns the render function for a tag handler
-     */
-    r: function(handler) {
-
-        var renderer = handler.renderer;
-
-        if (renderer) {
-            return renderer;
-        }
-
-        if (typeof handler === 'function') {
-            return handler;
-        }
-
-        if (typeof (renderer = handler.render) === 'function') {
-            return renderer;
-        }
-
-        // If the user code has a circular function then the renderer function
-        // may not be available on the module. Since we can't get a reference
-        // to the actual renderer(input, out) function right now we lazily
-        // try to get access to it later.
-        return createDeferredRenderer(handler);
     },
 
     // ----------------------------------
@@ -239,62 +221,41 @@ module.exports = {
     /**
      * Invoke a tag handler render function
      */
-    t: function (out, renderFunc, input, renderBody, options) {
-        if (!input) {
-            input = {};
+    t: function (renderer, targetProperty, isRepeated, hasNestedTags) {
+        if (renderer) {
+            renderer = resolveRenderer(renderer);
         }
 
-        var hasOutParam;
-        var targetProperty;
-        var parent;
-        var hasNestedTags;
-        var isRepeated;
-
-        if (options) {
-            hasOutParam = options.hasOutParam;
-            parent = options.parent;
-            targetProperty = options.targetProperty;
-            hasNestedTags = options.hasNestedTags;
-            isRepeated = options.isRepeated;
-        }
-
-        if (renderBody) {
-            if (hasNestedTags) {
-                renderBody(out, input);
-            } else {
-                input.renderBody = renderBody;
-                input.invokeBody = function() {
-                    if (!WARNED_INVOKE_BODY) {
-                        WARNED_INVOKE_BODY = 1;
-                        logger.warn('invokeBody(...) deprecated. Use renderBody(out) instead.', new Error().stack);
-                    }
-
-                    if (!hasOutParam) {
-                        var args = arrayFromArguments(arguments);
-                        args.unshift(out);
-                        renderBody.apply(this, args);
-                    } else {
-                        renderBody.apply(this, arguments);
-                    }
-                };
-            }
-        }
-
-        if (renderFunc) {
-            renderFunc(input, out);
-        } else if (targetProperty) {
-            if (isRepeated) {
-                var existingArray = parent[targetProperty];
-                if (existingArray) {
-                    existingArray.push(input);
-                } else {
-                    parent[targetProperty] = [input];
+        if (targetProperty || hasNestedTags) {
+            return function(input, out, parent, renderBody) {
+                // Handle nested tags
+                if (renderBody) {
+                    renderBody(out, input);
                 }
-            } else {
-                parent[targetProperty] = input;
-            }
+
+                if (targetProperty) {
+                    // If we are nested tag then we do not have a renderer
+                    if (isRepeated) {
+                        var existingArray = parent[targetProperty];
+                        if (existingArray) {
+                            existingArray.push(input);
+                        } else {
+                            parent[targetProperty] = [input];
+                        }
+                    } else {
+                        parent[targetProperty] = input;
+                    }
+                } else {
+                    // We are a tag with nested tags, but we have already found
+                    // our nested tags by rendering the body
+                    renderer(input, out);
+                }
+            };
+        } else {
+            return renderer;
         }
     },
+
     /**
      * Internal helper method that captures the output of rendering.
      * This function works by swapping out the underlying writer to
@@ -319,16 +280,6 @@ module.exports = {
             return;
         }
 
-        if (data.body) {
-            data.invokeBody = function() {
-                if (!WARNED_INVOKE_BODY) {
-                    WARNED_INVOKE_BODY = 1;
-                    logger.warn('data.invokeBody() deprecated. Use data.body instead.', new Error().stack);
-                }
-                return data.body;
-            };
-        }
-
         if (typeof path === 'string') {
             runtime.render(path, data, out);
         } else if (typeof path.render === 'function') {
@@ -339,9 +290,19 @@ module.exports = {
 
         return this;
     },
+
     /**
-     * Internal helper method to do a shallow copy of the properties of one object to another.
-     * @private
+     * Merges
+     * @param  {[type]} object [description]
+     * @param  {[type]} source [description]
+     * @return {[type]}        [description]
      */
-    xt: extend
+    m: function(into, source) {
+        for (var k in source) {
+            if (source.hasOwnProperty(k) && !into.hasOwnProperty(k)) {
+                into[k] = source[k];
+            }
+        }
+        return into;
+    }
 };

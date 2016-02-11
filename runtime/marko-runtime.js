@@ -311,20 +311,6 @@ function load(templatePath, templateSrc, options) {
 
 exports.load = load;
 
-/**
- * @deprecated Use load(templatePath) instead
- */
-exports.render = function (templatePath, data, out) {
-    return load(templatePath).render(data, out);
-};
-
-/**
- * @deprecated Use load(templatePath) instead
- */
-exports.stream = function(templatePath, data) {
-    return load(templatePath).stream(data);
-};
-
 exports.createWriter = function(writer) {
     return new AsyncWriter(writer);
 };

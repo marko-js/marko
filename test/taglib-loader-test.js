@@ -1,6 +1,6 @@
 'use strict';
 var chai = require('chai');
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
@@ -18,7 +18,7 @@ describe('taglib-loader' , function() {
     });
 
     it('should load a taglib with shorthand attributes and tags', function() {
-        var taglibLoader = require('../compiler/taglibs').loader;
+        var taglibLoader = require('../compiler').taglibLoader;
         var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/taglib-shorthand/marko-taglib.json'));
         expect(taglib != null).to.equal(true);
 
