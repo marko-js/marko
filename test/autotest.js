@@ -1,56 +1,73 @@
+'use strict';
+
 var fs = require('fs');
 var enabledTest = process.env.TEST;
 var path = require('path');
 var assert = require('assert');
 
-function autoTest(name, dir, run, options) {
+function autoTest(name, dir, run, options, done) {
     var compareExtension = (options && options.compareExtension) || '.js';
     var isJSON = compareExtension === '.json';
 
     var actualPath = path.join(dir, 'actual' + compareExtension);
     var expectedPath = path.join(dir, 'expected' + compareExtension);
 
+    function verify(actual) {
+        if (actual === '$PASS$') {
+            return;
+        }
+
+        var actualJSON = isJSON ? JSON.stringify(actual, null, 2) : null;
+
+        fs.writeFileSync(
+            actualPath,
+            isJSON ? actualJSON : actual,
+            {encoding: 'utf8'});
+
+        var expected;
+
+        try {
+            expected = fs.readFileSync(expectedPath, { encoding: 'utf8' });
+        } catch(e) {
+            expected = isJSON ? '"TBD"' : 'TBD';
+            fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
+        }
+
+        var expectedJSON;
+
+        if (isJSON) {
+            expectedJSON = expected;
+            expected = JSON.parse(expectedJSON);
+        }
+
+        assert.deepEqual(
+                (isJSON ? JSON.parse(actualJSON) : actual),
+                expected,
+                'Unexpected output for "' + name + '":\nEXPECTED (' + expectedPath + '):\n---------\n' +
+                (isJSON ? expectedJSON : expected) +
+                '\n---------\nACTUAL (' + actualPath + '):\n---------\n' +
+                (isJSON ? actualJSON : actual) +
+                '\n---------');
+    }
+
     try {
         fs.unlinkSync(actualPath);
     } catch(e) {}
 
+    if (done) {
+        // Async test
+        run(dir, function(err, actual) {
+            if (err) {
+                return done(err);
+            }
 
-    var actual = run(dir);
-    if (actual === '$PASS$') {
-        return;
+            verify(actual);
+            done();
+        });
+    } else {
+        let actual = run(dir);
+        verify(actual);
     }
-
-    var actualJSON = isJSON ? JSON.stringify(actual, null, 2) : null;
-
-    fs.writeFileSync(
-        actualPath,
-        isJSON ? actualJSON : actual,
-        {encoding: 'utf8'});
-
-    var expected;
-
-    try {
-        expected = fs.readFileSync(expectedPath, { encoding: 'utf8' });
-    } catch(e) {
-        expected = isJSON ? '"TBD"' : 'TBD';
-        fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
-    }
-
-    var expectedJSON;
-
-    if (isJSON) {
-        expectedJSON = expected;
-        expected = JSON.parse(expectedJSON);
-    }
-
-    assert.deepEqual(
-            (isJSON ? JSON.parse(actualJSON) : actual),
-            expected,
-            'Unexpected output for "' + name + '":\nEXPECTED (' + expectedPath + '):\n---------\n' +
-            (isJSON ? expectedJSON : expected) +
-            '\n---------\nACTUAL (' + actualPath + '):\n---------\n' +
-            (isJSON ? actualJSON : actual) +
-            '\n---------');
 }
 
 exports.scanDir = function(autoTestDir, run, options) {
@@ -76,9 +93,17 @@ exports.scanDir = function(autoTestDir, run, options) {
 
                     var dir = path.join(autoTestDir, name);
 
-                    itFunc(`[${name}] `, function() {
-                        autoTest(name, dir, run, options);
-                    });
+                    if (run.length === 2) {
+                        itFunc(`[${name}] `, function(done) {
+                            autoTest(name, dir, run, options, done);
+                        });
+                    } else {
+                        itFunc(`[${name}] `, function() {
+                            autoTest(name, dir, run, options);
+                        });
+                    }
+
+
 
                 });
         }

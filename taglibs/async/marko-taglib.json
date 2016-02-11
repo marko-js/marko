@@ -1,76 +1,62 @@
 {
-    "tags": {
-        "async-fragment": {
-            "renderer": "./async-fragment-tag",
-            "attributes": {
-                "data-provider": {
-                    "type": "expression"
-                },
-                "arg": {
-                    "type": "expression",
-                    "preserve-name": true
-                },
-                "arg-*": {
-                    "pattern": true,
-                    "type": "string",
-                    "preserve-name": true
-                },
-                "var": {
-                    "type": "identifier"
-                },
-                "timeout": {
-                    "type": "integer"
-                },
-                "method": {
-                    "type": "string"
-                },
-                "timeout-message": {
-                    "type": "string"
-                },
-                "error-message": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Name of async fragment (for debugging purposes only)"
-                },
-                "client-reorder": {
-                    "type": "boolean",
-                    "description": "Use JavaScript on client to move async fragment into the proper place."
-                },
-                "scope": {
-                    "type": "expression"
-                },
-                "show-after": {
-                    "type": "string"
-                },
-                "placeholder": {
-                    "type": "string"
-                }
-            },
-            "vars": [
-                {
-                    "name-from-attribute": "var"
-                }
-            ],
-            "transformer": "./async-fragment-tag-transformer"
+    "<async-fragment>": {
+        "renderer": "./async-fragment-tag",
+        "@data-provider": "expression",
+        "@arg": {
+            "type": "expression",
+            "preserve-name": true
         },
-        "async-fragments": {
-            "renderer": "./async-fragments-tag",
-            "attributes": {
-            }
+        "@arg-*": {
+            "pattern": true,
+            "type": "string",
+            "preserve-name": true
         },
-        "async-fragment-placeholder": {
-            "node-class": "./AsyncFragmentPlaceholderNode",
-            "transformer": "./async-fragment-placeholder-tag-transformer"
+        "@var": "identifier",
+
+        "@method": "string",
+
+        "@timeout": "integer",
+
+        "@timeout-message": "string",
+        "@error-message": "string",
+        "@placeholder": "string",
+
+        "@renderTimeout": "function",
+        "@renderError": "function",
+        "@renderPlaceholder": "function",
+
+        "@name": {
+            "type": "string",
+            "description": "Name of async fragment"
         },
-        "async-fragment-timeout": {
-          "node-class": "./AsyncFragmentTimeoutNode",
-          "transformer": "./async-fragment-timeout-tag-transformer"
+        "@_name": "string",
+        "@client-reorder": {
+            "type": "boolean",
+            "description": "Use JavaScript on client to move async fragment into the proper place."
         },
-        "async-fragment-error": {
-          "node-class": "./AsyncFragmentErrorNode",
-          "transformer": "./async-fragment-error-tag-transformer"
-        }
+        "@scope": {
+            "type": "expression",
+            "description": "The value of 'this' when invoking the data provider function (N/A with promises)"
+        },
+        "@show-after": {
+            "type": "string"
+        },
+
+        "vars": [{
+            "name-from-attribute": "var"
+        }],
+        "transformer": "./async-fragment-tag-transformer"
+    },
+    "<async-fragments>": {
+        "renderer": "./async-fragments-tag"
+    },
+    "<async-fragment-placeholder>": {
+        "transformer": "./async-fragment-nested-tag-transformer"
+    },
+    "<async-fragment-timeout>": {
+        "transformer": "./async-fragment-nested-tag-transformer"
+    },
+    "<async-fragment-error>": {
+        "transformer": "./async-fragment-nested-tag-transformer"
     }
 }

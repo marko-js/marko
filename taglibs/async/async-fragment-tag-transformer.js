@@ -1,50 +1,103 @@
 'use strict';
-var varNameRegExp = /^[A-Za-z_][A-Za-z0-9_]*$/;
-module.exports = function transform(node, compiler, template) {
-    var varName = node.getAttribute('var') || node.getAttribute('data-provider') || node.getAttribute('dependency');
+
+var isObjectEmpty = require('raptor-util/isObjectEmpty');
+
+module.exports = function transform(el, context) {
+    var varName = el.getAttributeValue('var');
     if (varName) {
-        if (!varNameRegExp.test(varName)) {
-            node.addError('Invalid variable name of "' + varName + '"');
+        if (varName.type !== 'Literal' || typeof varName.value !== 'string') {
+            context.addError(el, 'The "var" attribute value should be a string');
+            return;
+        }
+
+        varName = varName.value;
+
+        if (!context.util.isValidJavaScriptIdentifier(varName)) {
+            context.addError(el, 'The "var" attribute value should be a valid JavaScript identifier');
             return;
         }
     } else {
-        node.addError('Either "var" or "data-provider" is required');
+        context.addError(el, 'The "var" attribute is required');
         return;
     }
 
+    var attrs = el.getAttributes().concat([]);
+    var arg = {};
+    var builder = context.builder;
 
-    var argProps = [];
-    var propsToRemove = [];
-
-    var hasNameProp = false;
-    node.forEachProperty(function (name, value) {
-        if (name.startsWith('arg-')) {
-            var argName = name.substring('arg-'.length);
-            argProps.push(JSON.stringify(argName) + ': ' + value);
-            propsToRemove.push(name);
-        } else if (name === 'name') {
-            hasNameProp = true;
+    attrs.forEach((attr) => {
+        var attrName = attr.name;
+        if (attrName.startsWith('arg-')) {
+            let argName = attrName.substring('arg-'.length);
+            arg[argName] = attr.value;
+            el.removeAttribute(attrName);
         }
     });
 
-    if (!hasNameProp) {
-        var name = node.getAttribute('data-provider');
-        node.setProperty('_name', name);
+    var dataProviderAttr = el.getAttribute('data-provider');
+    if (!dataProviderAttr) {
+        context.addError(el, 'The "data-provider" attribute is required');
+        return;
     }
 
-    propsToRemove.forEach(function (propName) {
-        node.removeProperty(propName);
-    });
-    var argString;
-    if (argProps.length) {
-        argString = '{' + argProps.join(', ') + '}';
+    if (dataProviderAttr.value == null) {
+        context.addError(el, 'A value is required for the "data-provider" attribute');
+        return;
     }
-    var arg = node.getProperty('arg');
+
+    if (dataProviderAttr.value.type == 'Literal') {
+        context.addError(el, 'The "data-provider" attribute value should not be a literal ' + (typeof dataProviderAttr.value.value));
+        return;
+    }
+
+    var name = el.getAttributeValue('name');
+    if (name == null) {
+        el.setAttributeValue('_name', builder.literal(dataProviderAttr.rawValue));
+    }
+
+    if (el.hasAttribute('arg')) {
+        if (isObjectEmpty(arg)) {
+            arg = el.getAttributeValue('arg');
+        } else {
+            let mergeVar = context.addStaticVar('__merge', '__helpers.m');
+            arg = builder.functionCall(mergeVar, [
+                builder.literal(arg), // Input props from the attributes take precedence
+                el.getAttributeValue('arg')
+            ]);
+        }
+    } else {
+        if (isObjectEmpty(arg)) {
+            arg = null;
+        } else {
+            arg = builder.literal(arg);
+        }
+    }
+
     if (arg) {
-        var extendFuncName = template.getStaticHelperFunction('extend', 'xt');
-        argString = extendFuncName + '(' + arg + ', ' + argString + ')';
+        el.setAttributeValue('arg', arg);
     }
-    if (argString) {
-        node.setProperty('arg', template.makeExpression(argString));
+
+    var timeoutMessage = el.getAttributeValue('timeout-message');
+    if (timeoutMessage) {
+        el.removeAttribute('timeout-message');
+        el.setAttributeValue('renderTimeout', builder.renderBodyFunction([
+            builder.text(timeoutMessage)
+        ]));
+    }
+
+    var errorMessage = el.getAttributeValue('error-message');
+    if (errorMessage) {
+        el.removeAttribute('error-message');
+        el.setAttributeValue('renderError', builder.renderBodyFunction([
+            builder.text(errorMessage)
+        ]));
+    }
+
+    var placeholder = el.getAttributeValue('placeholder');
+    if (placeholder) {
+        el.removeAttribute('placeholder');
+        el.setAttributeValue('renderPlaceholder', builder.renderBodyFunction([
+            builder.text(placeholder)
+        ]));
     }
 };

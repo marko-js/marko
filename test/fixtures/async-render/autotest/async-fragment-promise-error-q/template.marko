@@ -1,0 +1,10 @@
+<async-fragment data-provider=data.promiseData var="promiseData">
+    BEFORE
+    <if(true)>
+        ${promiseData.noprop.value}
+    </if>
+    AFTER
+    <async-fragment-error>
+        something went wrong!
+    </async-fragment-error>
+</async-fragment>

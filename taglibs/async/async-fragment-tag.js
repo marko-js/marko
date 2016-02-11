@@ -77,7 +77,7 @@ module.exports = function render(input, out) {
     var name = input.name || input._name;
     var scope = input.scope || this;
 
-    function renderBody(err, data, timeoutMessage) {
+    function renderBody(err, data, renderTimeout) {
         if (timeoutId) {
             clearTimeout(timeoutId);
             timeoutId = null;
@@ -94,14 +94,14 @@ module.exports = function render(input, out) {
         });
 
         if (err) {
-            if (input.errorMessage) {
+            if (input.renderError) {
                 console.error('Async fragment (' + name + ') failed. Error:', (err.stack || err));
-                targetOut.write(input.errorMessage);
+                input.renderError(targetOut);
             } else {
                 targetOut.error(err);
             }
-        } else if (timeoutMessage) {
-            asyncOut.write(timeoutMessage);
+        } else if (renderTimeout) {
+            renderTimeout(asyncOut);
         } else {
             if (input.renderBody) {
                 input.renderBody(targetOut, data);
@@ -135,7 +135,7 @@ module.exports = function render(input, out) {
 
     if (!done) {
         var timeout = input.timeout;
-        var timeoutMessage = input.timeoutMessage;
+        var renderTimeout = input.renderTimeout;
 
         if (timeout == null) {
             timeout = 10000;
@@ -147,9 +147,9 @@ module.exports = function render(input, out) {
             timeoutId = setTimeout(function() {
                 var message = 'Async fragment (' + name + ') timed out after ' + timeout + 'ms';
 
-                if (timeoutMessage) {
+                if (renderTimeout) {
                     logger.error(message);
-                    renderBody(null, null, timeoutMessage);
+                    renderBody(null, null, renderTimeout);
                 } else {
                     renderBody(new Error(message));
                 }
