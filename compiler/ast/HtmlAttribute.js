@@ -106,6 +106,7 @@ class HtmlAttribute extends Node {
         this.type = 'HtmlAttribute';
         this.name = def.name;
         this.value = def.value;
+        this.rawValue = def.rawValue;
         this.escape = def.escape;
 
         if (typeof this.value === 'string') {
