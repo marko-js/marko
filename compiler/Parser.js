@@ -268,6 +268,11 @@ class Parser {
 
         return null; // Default parse state
     }
+
+    isOpenTagOnly(tagName) {
+        var tagDef = this.context.getTagDef(tagName);
+        return tagDef && tagDef.openTagOnly;
+    }
 }
 
 module.exports = Parser;

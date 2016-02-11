@@ -426,6 +426,10 @@ TagHandlers.prototype = {
         } else {
             throw new Error('Invalid value for "body". Allowed: "static-text", "parsed-text" or "html"');
         }
+    },
+
+    openTagOnly: function(value) {
+        this.tag.openTagOnly = value;
     }
 };
 

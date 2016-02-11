@@ -77,7 +77,11 @@ class HtmlJsParser {
             }
         };
 
-        var parser = this.parser = htmljs.createParser(listeners);
+        var parser = this.parser = htmljs.createParser(listeners, {
+            isOpenTagOnly: function(tagName) {
+                return handlers.isOpenTagOnly(tagName);
+            }
+        });
         parser.parse(src);
     }
 }
