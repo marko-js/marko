@@ -5,20 +5,11 @@ var Walker = require('./Walker');
 var Parser = require('./Parser');
 var HtmlJsParser = require('./HtmlJsParser');
 var Builder = require('./Builder');
+var extend = require('raptor-util/extend');
 
 var defaultParser = new Parser(new HtmlJsParser());
 
 var defaultOptions = {
-        /**
-         * Set of tag names that should automatically have whitespace preserved.
-         * Alternatively, if value is `true` then whitespace will be preserved
-         * for all tags.
-         */
-        preserveWhitespace: {
-            'pre': true,
-            'textarea': true,
-            'script': true
-        },
         /**
          * If true, then the compiler will check the disk to see if a previously compiled
          * template is the same age or newer than the source template. If so, the previously
@@ -36,6 +27,10 @@ var defaultOptions = {
          */
         writeToDisk: true
     };
+
+function configure(config) {
+    extend(defaultOptions, config);
+}
 
 var defaultCompiler = new Compiler({
     parser: defaultParser,
@@ -135,6 +130,7 @@ exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;
 exports.createWalker = createWalker;
 exports.builder = Builder.DEFAULT_BUILDER;
+exports.configure = configure;
 
 var taglibLookup = require('./taglib-lookup');
 exports.taglibLookup = taglibLookup;
@@ -144,6 +140,8 @@ taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json')
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko-taglib.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko-taglib.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko-taglib.json'));
+
+
 
 /*
 exports.Taglib = require('./Taglib');
