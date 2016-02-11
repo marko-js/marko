@@ -1,5 +1,5 @@
 <macro renderTree(node)>
-    Name: ${child.name}
+    Name: ${node.name}
 
     Children:
     <ul if(node.children)>
@@ -9,4 +9,4 @@
     </ul>
 </macro>
 
-<renderTree(data.node)>
+<renderTree(data.node)/>
