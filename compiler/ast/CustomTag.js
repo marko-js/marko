@@ -70,6 +70,10 @@ function buildInputProps(el, context) {
             return; // Skip over attributes that are not supported
         }
 
+        if (attrValue == null) {
+            attrValue = context.builder.literalTrue();
+        }
+
         var propName;
         var parentPropName;
 
