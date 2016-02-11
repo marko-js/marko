@@ -102,7 +102,7 @@ class TaglibLookup {
 
         function handleNestedTags(tag, parentTagName) {
             tag.forEachNestedTag(function(nestedTag) {
-                var fullyQualifiedName = parentTagName + '.' + nestedTag.name;
+                var fullyQualifiedName = parentTagName + ':' + nestedTag.name;
                 // Create a clone of the nested tag since we need to add some new
                 // properties
                 var clonedNestedTag = new Tag();
