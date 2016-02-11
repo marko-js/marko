@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,18 +19,28 @@ require('raptor-polyfill/string/endsWith');
 var extend = require('raptor-util/extend');
 var compiler = require('../compiler');
 var nodePath = require('path');
-var runtime = require('../runtime');
-var Template = runtime.Template;
 
 var modifiedFlag = 1;
+var runtime;
+
+/**
+ * Lazily require the Marko runtime because there is a circular dependency.
+ * We need to export our `enable` function before actually requiring the
+ * Marko runtime.
+ */
+function _getMarkoRuntime() {
+    return runtime || (runtime = require('../runtime'));
+}
 
 exports.enable = function() {
-
+    var runtime = _getMarkoRuntime();
 
     if (runtime.__hotReloadEnabled) {
         // Marko has already been monkey-patched. Nothing to do!
         return;
     }
+
+    var Template = runtime.Template;
 
     runtime.__hotReloadEnabled = true;
 
@@ -93,7 +103,7 @@ exports.enable = function() {
 };
 
 exports.handleFileModified = function(path) {
-
+    var runtime = _getMarkoRuntime();
     var basename = nodePath.basename(path);
 
     if (path.endsWith('.marko') ||

@@ -84,30 +84,52 @@ function tryNodeModules(parent, helper) {
 
     if ((nodeModulesDir = realpathCached(nodeModulesDir))) {
         taglibsForNodeModulesDir = [];
-        var children = fs.readdirSync(nodeModulesDir);
-        children.forEach(function(moduleDirBasename) {
+
+        var handlePackageDir = function(packageName) {
             // Fixes https://github.com/marko-js/marko/issues/140
             // If the same node_module is found multiple times then only load the first one.
             // Only the package name (that is: node_modules/<module_name>) matters and the
             // package version does not matter.
-            if (helper.foundTaglibPackages[moduleDirBasename]) {
+            if (helper.foundTaglibPackages[packageName]) {
                 return;
             }
 
-            helper.foundTaglibPackages[moduleDirBasename] = true;
+            helper.foundTaglibPackages[packageName] = true;
 
-            var moduleDir = nodePath.join(nodeModulesDir, moduleDirBasename);
+            var moduleDir = nodePath.join(nodeModulesDir, packageName);
             var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
 
             if (existsCached(taglibPath)) {
                 taglibPath = fs.realpathSync(taglibPath);
 
                 var taglib = taglibLoader.load(taglibPath);
-                taglib.moduleName = moduleDirBasename;
+                taglib.moduleName = packageName;
                 taglibsForNodeModulesDir.push(taglib);
                 helper.addTaglib(taglib);
             }
-        });
+        };
+
+        fs.readdirSync(nodeModulesDir)
+            .forEach(function(packageName) {
+                if (packageName.charAt(0) === '@') {
+                    // Add support for npm scoped packages. Scoped packages
+                    // get instaled into subdirectories organized by user.
+                    // For example:
+                    // node_modules/@foo/my-package
+                    // node_modules/@foo/another-package
+
+                    var scope = packageName; // e.g. scope = '@foo'
+
+                    // We need to loop over the nested directory to automatically
+                    // discover taglibs exported by scoped packages.
+                    fs.readdirSync(nodePath.join(nodeModulesDir, scope))
+                        .forEach(function(packageName) {
+                            handlePackageDir(scope + '/' + packageName); // @foo/my-package
+                        });
+                } else {
+                    handlePackageDir(packageName);
+                }
+            });
 
         taglibsForNodeModulesDirCache[nodeModulesDir] = taglibsForNodeModulesDir.length ? taglibsForNodeModulesDir : null;
     } else {
