@@ -32,6 +32,14 @@ function getNestedVariables(elNode, tagDef, codegen) {
                 }
                 varName = elNode.getAttributeValue(attrName);
                 if (varName) {
+                    if (varName.type !== 'Literal' || typeof varName.value !== 'string') {
+                        codegen.addError('The value of the ' + attrName + ' is expected to be a string');
+                        codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
+                        varName = '_var';    // Let it continue with errors
+                    }
+
+                    varName = varName.value;
+
                     if (!keep) {
                         elNode.removeAttribute(attrName);
                     }
