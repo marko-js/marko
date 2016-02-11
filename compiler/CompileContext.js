@@ -409,4 +409,8 @@ class CompileContext {
     }
 }
 
+CompileContext.prototype.util = {
+    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier')
+};
+
 module.exports = CompileContext;
