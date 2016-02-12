@@ -141,10 +141,10 @@ var taglibLookup = require('./taglib-lookup');
 exports.taglibLookup = taglibLookup;
 exports.taglibLoader = require('./taglib-loader');
 
-taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko-taglib.json'));
-taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko-taglib.json'));
-taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko-taglib.json'));
-taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko-taglib.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko.json'));
 
 
 

@@ -13,17 +13,16 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-var taglibLoader = require('../taglib-loader');
-var trailingSlashRegExp = /[\\/]$/;
+'use strict';
 
-var excludedDirs = {};
+var taglibLoader = require('../taglib-loader');
 var nodePath = require('path');
 var fs = require('fs');
 var existsCache = {};
 var findCache = {};
 var taglibsForNodeModulesDirCache = {};
-
-var realpathCache = {};
+var raptorModulesUtil = require('raptor-modules/util');
+var resolveFrom = require('resolve-from');
 
 function existsCached(path) {
     var exists = existsCache[path];
@@ -34,124 +33,36 @@ function existsCached(path) {
     return exists;
 }
 
-function realpathCached(path) {
-    var realPath = realpathCache[path];
-    if (realPath === undefined) {
-        try {
-            realPath = fs.realpathSync(path);
-        } catch(e) {
-            realPath = null;
-        }
-
-        realpathCache[path] = realPath;
-    }
-    return realPath;
-}
-
-function tryDir(dirname, helper) {
-    var taglibPath = nodePath.join(dirname, 'marko-taglib.json');
-    if (existsCached(taglibPath)) {
-        var taglib = taglibLoader.load(taglibPath);
-        helper.addTaglib(taglib);
+function getModuleRootPackage(dirname) {
+    try {
+        return raptorModulesUtil.getModuleRootPackage(dirname);
+    } catch(e) {
+        return undefined;
     }
 }
 
-function tryNodeModules(parent, helper) {
-    if (nodePath.basename(parent) === 'node_modules') {
-        return;
+function getAllDependencyNames(pkg) {
+    var map = {};
+
+    if (pkg.dependencies) {
+        Object.keys(pkg.dependencies).forEach((name) => {
+            map[name] = true;
+        });
     }
 
-    var nodeModulesDir = nodePath.join(parent, 'node_modules');
-
-    var taglibsForNodeModulesDir = taglibsForNodeModulesDirCache[nodeModulesDir];
-    if (taglibsForNodeModulesDir !== undefined) {
-        if (taglibsForNodeModulesDir !== null) {
-            for (var i = 0, len = taglibsForNodeModulesDir.length; i < len; i++) {
-                var taglib = taglibsForNodeModulesDir[i];
-
-                var moduleName = taglib.moduleName;
-                if (moduleName && !helper.foundTaglibPackages[moduleName]) {
-                    // Fixes https://github.com/marko-js/marko/issues/140
-                    // If the same node_module is found multiple times then only load the first one.
-                    // Only the package name (that is: node_modules/<module_name>) matters and the
-                    // package version does not matter.
-                    helper.addTaglib(taglib);
-                }
-            }
-        }
-        return;
+    if (pkg.peerDependencies) {
+        Object.keys(pkg.peerDependencies).forEach((name) => {
+            map[name] = true;
+        });
     }
 
-    if ((nodeModulesDir = realpathCached(nodeModulesDir))) {
-        taglibsForNodeModulesDir = [];
-
-        var handlePackageDir = function(packageName) {
-            // Fixes https://github.com/marko-js/marko/issues/140
-            // If the same node_module is found multiple times then only load the first one.
-            // Only the package name (that is: node_modules/<module_name>) matters and the
-            // package version does not matter.
-            if (helper.foundTaglibPackages[packageName]) {
-                return;
-            }
-
-            helper.foundTaglibPackages[packageName] = true;
-
-            var moduleDir = nodePath.join(nodeModulesDir, packageName);
-            var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
-
-            if (existsCached(taglibPath)) {
-                taglibPath = fs.realpathSync(taglibPath);
-
-                var taglib = taglibLoader.load(taglibPath);
-                taglib.moduleName = packageName;
-                taglibsForNodeModulesDir.push(taglib);
-                helper.addTaglib(taglib);
-            }
-        };
-
-        fs.readdirSync(nodeModulesDir)
-            .forEach(function(packageName) {
-                if (packageName.charAt(0) === '@') {
-                    // Add support for npm scoped packages. Scoped packages
-                    // get instaled into subdirectories organized by user.
-                    // For example:
-                    // node_modules/@foo/my-package
-                    // node_modules/@foo/another-package
-
-                    var scope = packageName; // e.g. scope = '@foo'
-
-                    // We need to loop over the nested directory to automatically
-                    // discover taglibs exported by scoped packages.
-                    fs.readdirSync(nodePath.join(nodeModulesDir, scope))
-                        .forEach(function(packageName) {
-                            handlePackageDir(scope + '/' + packageName); // @foo/my-package
-                        });
-                } else {
-                    handlePackageDir(packageName);
-                }
-            });
-
-        taglibsForNodeModulesDirCache[nodeModulesDir] = taglibsForNodeModulesDir.length ? taglibsForNodeModulesDir : null;
-    } else {
-        taglibsForNodeModulesDirCache[nodeModulesDir] = null;
-    }
-}
-
-function findHelper(dirname, helper) {
-    if (dirname.length !== 1) {
-        dirname = dirname.replace(trailingSlashRegExp, '');
+    if (pkg.devDependencies) {
+        Object.keys(pkg.devDependencies).forEach((name) => {
+            map[name] = true;
+        });
     }
 
-    if (!excludedDirs[dirname]) {
-        tryDir(dirname, helper);
-        tryNodeModules(dirname, helper);
-    }
-
-    var parent = nodePath.dirname(dirname);
-    if (parent && parent !== dirname) {
-        // TODO: Don't use recursion (there's a simpler way)
-        findHelper(parent, helper);
-    }
+    return Object.keys(map);
 }
 
 function find(dirname, registeredTaglibs) {
@@ -179,19 +90,54 @@ function find(dirname, registeredTaglibs) {
         foundTaglibPackages: {}
     };
 
-    findHelper(dirname, helper);
+    var rootDirname = process.cwd(); // Don't search up past this directory
+    var rootPkg = getModuleRootPackage(dirname);
+    if (rootPkg) {
+        rootDirname = rootPkg.__dirname; // Use the package's root directory as the top-level directory
+    }
+
+
+    // First walk up the directory tree looking for marko.json files
+    let curDirname = dirname;
+    while(true) {
+        let taglibPath = nodePath.join(curDirname, 'marko.json');
+        if (existsCached(taglibPath)) {
+            var taglib = taglibLoader.load(taglibPath);
+            helper.addTaglib(taglib);
+        }
+
+        if (curDirname === rootDirname) {
+            break;
+        }
+
+        let parentDirname = nodePath.dirname(curDirname);
+        if (!parentDirname || parentDirname === curDirname) {
+            break;
+        }
+        curDirname = parentDirname;
+    }
+
+    if (rootPkg) {
+        // Now look for `marko.json` from installed packages
+        getAllDependencyNames(rootPkg).forEach((name) => {
+            let taglibPath;
+            try {
+                taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
+            } catch(e) {
+                // The installed dependency does not export a taglib... skip it
+                return;
+            }
+
+            var taglib = taglibLoader.load(taglibPath);
+            helper.addTaglib(taglib);
+        });
+    }
 
     found = found.concat(registeredTaglibs);
 
     findCache[dirname] = found;
 
     return found;
-}
-
-function excludeDir(dirname) {
-
-    dirname = dirname.replace(trailingSlashRegExp, '');
-    excludedDirs[dirname] = true;
 }
 
 function clearCaches() {
@@ -201,5 +147,4 @@ function clearCaches() {
 }
 
 exports.find = find;
-exports.excludeDir = excludeDir;
 exports.clearCaches = clearCaches;

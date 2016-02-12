@@ -183,7 +183,7 @@ TaglibHandlers.prototype = {
                                 var dependencyName = dependencyNames[j];
 
                                 try {
-                                    importPath = resolveFrom(dirname, dependencyName + '/marko-taglib.json');
+                                    importPath = resolveFrom(dirname, dependencyName + '/marko.json');
                                 } catch(e) {}
 
                                 if (importPath) {

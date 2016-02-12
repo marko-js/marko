@@ -19,7 +19,7 @@ describe('taglib-loader' , function() {
 
     it('should load a taglib with shorthand attributes and tags', function() {
         var taglibLoader = require('../compiler').taglibLoader;
-        var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/taglib-shorthand/marko-taglib.json'));
+        var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/taglib-shorthand/marko.json'));
         expect(taglib != null).to.equal(true);
 
         var shorthandCheckbox = taglib.tags['shorthand-checkbox'];

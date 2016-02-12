@@ -1,0 +1,8 @@
+[
+  "/a/b/c/marko.json",
+  "/a/b/marko.json",
+  "/a/marko.json",
+  "/node_modules/dependency-with-taglib/marko.json",
+  "/node_modules/peer-dependency-with-taglib/marko.json",
+  "/node_modules/dev-dependency-with-taglib/marko.json"
+]

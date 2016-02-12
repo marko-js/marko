@@ -1,0 +1,17 @@
+{
+    "name": "taglib-finder-test",
+    "version": "0.0.0",
+    "dependencies": {
+        "dependency-with-taglib": "0.0.1",
+        "dependency-without-taglib": "0.0.1"
+    },
+    "devDependencies": {
+        "dev-dependency-with-taglib": "0.0.1",
+        "dev-dependency-without-taglib": "0.0.1"
+    },
+    "peerDependencies": {
+        "peer-dependency-with-taglib": "0.0.1",
+        "peer-dependency-without-taglib": "0.0.1"
+    }
+
+}
