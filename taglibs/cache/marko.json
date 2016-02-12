@@ -1,0 +1,9 @@
+{
+    "<cached-fragment>": {
+        "renderer": "./cached-fragment-tag",
+        "@cache-key": "string",
+        "@cache-name": "string",
+        "@cache-manager": "string",
+        "transformer": "./cached-fragment-tag-transformer.js"
+    }
+}
