@@ -1,0 +1,6 @@
+{
+    "<test-root-renderer>": {
+        "renderer": "./",
+        "@name": "string"
+    }
+}
