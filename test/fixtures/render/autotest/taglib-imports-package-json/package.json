@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "imported-foo": "^1.0.0",
+        "imported-bar": "^1.0.0"
+    }
+}
