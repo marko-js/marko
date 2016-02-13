@@ -15,12 +15,15 @@ class Vars extends Node {
         var kind = this.kind;
         var isStatement = this.statement;
         var body = this.body;
-        var selfInvoking = this.isFlagSet('selfInvoking');
+
         var hasBody = this.body && this.body.length;
 
-        if(!selfInvoking && hasBody) {
-            this.setFlag('selfInvoking');
-            return codegen.builder.selfInvokingFunction([ this ]);
+        if(hasBody) {
+
+            var scopedBody = [this].concat(this.body.items);
+            this.body = null;
+
+            return codegen.builder.selfInvokingFunction(scopedBody);
         }
 
         if (!declarations || !declarations.length) {
