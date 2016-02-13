@@ -35,4 +35,8 @@ function load(path) {
     return taglib;
 }
 
+exports.clearCache = function() {
+    cache = {};
+};
+
 exports.load = load;

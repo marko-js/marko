@@ -140,11 +140,11 @@ function find(dirname, registeredTaglibs) {
     return found;
 }
 
-function clearCaches() {
+function clearCache() {
     existsCache = {};
     findCache = {};
     taglibsForNodeModulesDirCache = {};
 }
 
 exports.find = find;
-exports.clearCaches = clearCaches;
+exports.clearCache = clearCache;

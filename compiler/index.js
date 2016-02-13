@@ -127,6 +127,12 @@ function getLastModified(path, options, callback) {
     callback(null, -1); // TODO Implement getLastModified
 }
 
+function clearCaches() {
+    exports.taglibLookup.clearCache();
+    exports.taglibFinder.clearCache();
+    exports.taglibLoader.clearCache();
+}
+
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
@@ -136,10 +142,12 @@ exports.getLastModified = getLastModified;
 exports.createWalker = createWalker;
 exports.builder = Builder.DEFAULT_BUILDER;
 exports.configure = configure;
+exports.clearCaches = clearCaches;
 
 var taglibLookup = require('./taglib-lookup');
 exports.taglibLookup = taglibLookup;
 exports.taglibLoader = require('./taglib-loader');
+exports.taglibFinder = require('./taglib-finder');
 
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko.json'));

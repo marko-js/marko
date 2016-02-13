@@ -16,7 +16,7 @@
 'use strict';
 exports.registerTaglib = registerTaglib;
 exports.buildLookup = buildLookup;
-exports.clearCaches = clearCaches;
+exports.clearCache = clearCache;
 
 var taglibLoader = require('../taglib-loader');
 var taglibFinder = require('../taglib-finder');
@@ -75,6 +75,6 @@ function registerTaglib(taglib) {
     exports.registeredTaglibs.push(taglib);
 }
 
-function clearCaches() {
+function clearCache() {
 	lookupCache = {};
 }

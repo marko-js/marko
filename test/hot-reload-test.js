@@ -8,7 +8,7 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-xdescribe('hot-reload' , function() {
+describe('hot-reload' , function() {
     before(function() {
         require('../hot-reload').enable();
         require('../compiler').defaultOptions.checkUpToDate = false;
@@ -17,7 +17,7 @@ xdescribe('hot-reload' , function() {
     it('should allow a required template to be hot reloaded', function() {
 
 
-        var srcTemplatePath = nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko');
+        var srcTemplatePath = nodePath.join(__dirname, 'fixtures/hot-reload/hot-reload.marko');
         var templateSrc = fs.readFileSync(srcTemplatePath, { encoding: 'utf8' });
 
         var tempTemplatePath = nodePath.join(__dirname, 'temp/hello.marko');
@@ -39,7 +39,7 @@ xdescribe('hot-reload' , function() {
     it('should allow a non-required template to be hot reloaded', function() {
 
 
-        var srcTemplatePath = nodePath.join(__dirname, 'fixtures/templates/api-tests/hello.marko');
+        var srcTemplatePath = nodePath.join(__dirname, 'fixtures/hot-reload/hot-reload.marko');
         var templateSrc = fs.readFileSync(srcTemplatePath, { encoding: 'utf8' });
 
         var tempTemplatePath = nodePath.join(__dirname, 'temp/hello2.marko');
