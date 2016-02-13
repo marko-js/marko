@@ -1,3 +1,5 @@
+:information_source: ___The master branch currently contains the code for the next major version of Marko (Marko v3). The docs on markojs.com have not yet been updated.___
+
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
