@@ -46,6 +46,7 @@ var Scriptlet = require('./ast/Scriptlet');
 var ContainerNode = require('./ast/ContainerNode');
 
 var parseExpression = require('./util/parseExpression');
+var parseStatement = require('./util/parseStatement');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
 var isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
@@ -383,6 +384,12 @@ class Builder {
     parseJavaScriptArgs(args) {
         ok(typeof args === 'string', '"args" should be a string');
         return parseJavaScriptArgs(args, DEFAULT_BUILDER);
+    }
+
+    parseStatement(str, options) {
+        ok(typeof str === 'string', '"str" should be a string expression');
+        var parsed = parseStatement(str, DEFAULT_BUILDER);
+        return parsed;
     }
 
     program(body) {
