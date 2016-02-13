@@ -1,6 +1,33 @@
 {
   "loopType": "For",
   "init": "",
-  "test": " i<foo.length",
-  "update": " i++"
+  "test": {
+    "type": "BinaryExpression",
+    "left": {
+      "type": "Identifier",
+      "name": "i"
+    },
+    "operator": "<",
+    "right": {
+      "type": "MemberExpression",
+      "object": {
+        "type": "Identifier",
+        "name": "foo"
+      },
+      "property": {
+        "type": "Identifier",
+        "name": "length"
+      },
+      "computed": false
+    }
+  },
+  "update": {
+    "type": "UpdateExpression",
+    "argument": {
+      "type": "Identifier",
+      "name": "i"
+    },
+    "operator": "++",
+    "prefix": false
+  }
 }

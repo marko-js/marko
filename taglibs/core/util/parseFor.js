@@ -82,6 +82,14 @@ function parseExpression(str, errorMessage) {
     }
 }
 
+function parseStatement(str, errorMessage) {
+    try {
+        return compiler.builder.parseStatement(str);
+    } catch(e) {
+        throwError(errorMessage + ': ' + e.message);
+    }
+}
+
 function createNumberExpression(str, errorMessage) {
     if (str == null) {
         return null;
@@ -292,6 +300,18 @@ module.exports = function(str) {
 
     if (statusVarName) {
         statusVarName = buildIdentifier(statusVarName, 'Invalid status-var option');
+    }
+
+    if (forInit) {
+        forInit = parseStatement(forInit, 'Invalid for loop init');
+    }
+
+    if (forTest) {
+        forTest = parseExpression(forTest, 'Invalid for loop test');
+    }
+
+    if (forUpdate) {
+        forUpdate = parseExpression(forUpdate, 'Invalid for loop update');
     }
 
     // No more tokens... now we need to sort out what happened
