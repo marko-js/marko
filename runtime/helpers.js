@@ -132,18 +132,6 @@ module.exports = {
         }
     },
     /**
-     * Internal helper method to handle native for loops
-     * @private
-     */
-    fl: function (array, func) {
-        if (array != null) {
-            if (!Array.isArray(array)) {
-                array = [array];
-            }
-            func(array, 0, array.length);
-        }
-    },
-    /**
      * Internal helper method for looping over the properties of any object
      * @private
      */
@@ -179,17 +167,6 @@ module.exports = {
      * @private
      */
     xa: escapeXmlAttr,
-    /**
-     * Internal helper to prevent an object from being escaped
-     * @private
-     */
-    nx: function (str) {
-        return {
-            toString: function () {
-                return str;
-            }
-        };
-    },
     /**
      * Internal method to render a single HTML attribute
      * @private
@@ -257,35 +234,18 @@ module.exports = {
     },
 
     /**
-     * Internal helper method that captures the output of rendering.
-     * This function works by swapping out the underlying writer to
-     * a temporary writer that buffers a string. The provided function
-     * is executed and the old writer is restored. Finally, the buffered
-     * string is returned.
-     */
-    c: function (out, func) {
-        var output = out.captureString(func);
-        return {
-            toString: function () {
-                return output;
-            }
-        };
-    },
-    /**
      * Internal method to handle includes/partials
      * @private
      */
-    i: function(out, path, data) {
-        if (!path) {
+    i: function(out, template, data) {
+        if (!template) {
             return;
         }
 
-        if (typeof path === 'string') {
-            runtime.render(path, data, out);
-        } else if (typeof path.render === 'function') {
-            path.render(data, out);
+        if (typeof template.render === 'function') {
+            template.render(data, out);
         } else {
-            throw new Error('Invalid template');
+            throw new Error('Invalid template: ' + template);
         }
 
         return this;
