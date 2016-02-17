@@ -160,13 +160,6 @@ class Parser {
 
         var node = this.context.createNodeForEl(elDef);
 
-        var tagDef = node.tagDef;
-        if (node.tagDef) {
-            var body = tagDef.body;
-            if (body) {
-
-            }
-        }
 
         this.parentNode.appendChild(node);
 
