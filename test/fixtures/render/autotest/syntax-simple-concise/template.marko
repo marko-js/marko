@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        h1 - Hello ${data.name}!
+        ul if(notEmpty(data.colors))
+            li for(color in data.colors)
+                ${color}
+        div else
+            - No colors!
