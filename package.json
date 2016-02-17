@@ -24,13 +24,12 @@
     "Patrick Steele-Idem <pnidem@gmail.com>"
   ],
   "dependencies": {
-    "app-module-path": "^1.0.0",
     "async-writer": "^1.4.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "esprima": "^2.7.0",
     "events": "^1.0.2",
-    "htmljs-parser": "^1.3.0",
+    "htmljs-parser": "^1.5.3",
     "jsonminify": "^0.2.3",
     "minimatch": "^0.2.14",
     "property-handlers": "^1.0.0",
@@ -48,6 +47,7 @@
     "try-require": "^1.2.1"
   },
   "devDependencies": {
+    "app-module-path": "^1.0.0",
     "bluebird": "^2.9.30",
     "chai": "^3.3.0",
     "jshint": "^2.5.0",
