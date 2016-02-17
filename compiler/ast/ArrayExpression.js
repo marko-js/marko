@@ -16,6 +16,7 @@ class ArrayExpression extends Node {
             return;
         }
 
+        codegen.incIndent();
         codegen.write('[\n');
         codegen.incIndent();
 
@@ -33,6 +34,7 @@ class ArrayExpression extends Node {
         codegen.decIndent();
         codegen.writeLineIndent();
         codegen.write(']');
+        codegen.decIndent();
     }
 
     walk(walker) {
