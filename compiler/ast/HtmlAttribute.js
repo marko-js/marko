@@ -79,21 +79,37 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
         }
         codegen.addWriteLiteral('"');
     } else {
+        if (name === 'style') {
+            // let builder = codegen.builder;
+            // let valueWithEscaping = handleEscaping(value);
+            let styleAttr = codegen.addStaticVar('styleAttr', '__helpers.sa');
 
-        // let builder = codegen.builder;
-        // let valueWithEscaping = handleEscaping(value);
-        let attrVar = codegen.addStaticVar('attr', '__helpers.a');
+            if (escape === false || isNoEscapeXml(value)) {
+                escape = false;
+            }
 
-        if (escape === false || isNoEscapeXml(value)) {
-            escape = false;
+            let styleAttrArgs = [value];
+
+            if (escape === false) {
+                styleAttrArgs.push(codegen.builder.literal(false));
+            }
+            codegen.addWrite(codegen.builder.functionCall(styleAttr, styleAttrArgs));
+        } else {
+            // let builder = codegen.builder;
+            // let valueWithEscaping = handleEscaping(value);
+            let attrVar = codegen.addStaticVar('attr', '__helpers.a');
+
+            if (escape === false || isNoEscapeXml(value)) {
+                escape = false;
+            }
+
+            let attrArgs = [codegen.builder.literal(name), value];
+
+            if (escape === false) {
+                attrArgs.push(codegen.builder.literal(false));
+            }
+            codegen.addWrite(codegen.builder.functionCall(attrVar, attrArgs));
         }
-
-        let attrArgs = [codegen.builder.literal(name), value];
-
-        if (escape === false) {
-            attrArgs.push(codegen.builder.literal(false));
-        }
-        codegen.addWrite(codegen.builder.functionCall(attrVar, attrArgs));
     }
 }
 

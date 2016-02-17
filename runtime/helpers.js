@@ -21,6 +21,7 @@ var runtime = require('./'); // Circular dependency, but that is okay
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var isArray = Array.isArray;
+var STYLE = 'style';
 
 function notEmpty(o) {
     if (o == null) {
@@ -178,6 +179,38 @@ module.exports = {
      * @private
      */
     as: attrs,
+
+    /**
+     * Internal helper method to handle the "style" attribute. The value can either
+     * be a string or an object with style propertes. For example:
+     *
+     * sa('color: red; font-weight: bold') ==> ' style="color: red; font-weight: bold"'
+     * sa({color: 'red', 'font-weight': 'bold'}) ==> ' style="color: red; font-weight: bold"'
+     */
+    sa: function(style, escape) {
+        if (!style) {
+            return;
+        }
+
+        escape = escape !== false;
+
+        if (typeof style === 'string') {
+            return attr(STYLE, style, escape);
+        } else if (typeof style === 'object') {
+            var parts = [];
+            for (var name in style) {
+                if (style.hasOwnProperty(name)) {
+                    var value = style[name];
+                    if (value) {
+                        parts.push(name + ':' + (escape ? escapeXmlAttr(value) : value));
+                    }
+                }
+            }
+            return parts ? attr(STYLE, parts.join(';'), false) : '';
+        } else {
+            return '';
+        }
+    },
     /**
      * Loads a template
      */
