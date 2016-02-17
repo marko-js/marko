@@ -252,7 +252,7 @@ module.exports = {
     },
 
     /**
-     * Merges
+     * Merges object properties
      * @param  {[type]} object [description]
      * @param  {[type]} source [description]
      * @return {[type]}        [description]
@@ -264,5 +264,24 @@ module.exports = {
             }
         }
         return into;
+    },
+
+    /**
+     * classList(a, b, c, ...)
+     * Joines a list of class names with spaces. Empty class names are omitted.
+     *
+     * classList('a', undefined, 'b') --> 'a b'
+     *
+     */
+    cl: function() {
+        var args = arguments;
+        var classNames = [];
+        for (var i=0, len=args.length; i<len; i++) {
+            var cur = args[i];
+            if (cur) {
+                classNames.push(cur);
+            }
+        }
+        return classNames.join(' ');
     }
 };

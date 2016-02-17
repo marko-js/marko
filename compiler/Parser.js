@@ -18,7 +18,6 @@ function isIEConditionalComment(comment) {
 }
 
 function replacePlaceholderEscapeFuncs(node, context) {
-
     var walker = context.createWalker({
         exit: function(node, parent) {
             if (node.type === 'FunctionCall' &&
@@ -34,6 +33,39 @@ function replacePlaceholderEscapeFuncs(node, context) {
     });
 
     return walker.walk(node);
+}
+
+function mergeShorthandClassNames(el, shorthandClassNames, context) {
+    var builder = context.builder;
+    let classNames = shorthandClassNames.map((className) => {
+        return builder.parseExpression(className.value);
+    });
+
+    var classAttr = el.getAttributeValue('class');
+    if (classAttr) {
+        classNames.push(classAttr);
+    }
+
+    let prevClassName;
+
+    var finalClassNames = [];
+
+    for (var i=0; i<classNames.length; i++) {
+        let className = classNames[i];
+        if (prevClassName && className.type === 'Literal' && prevClassName.type === 'Literal') {
+            prevClassName.value += ' ' + className.value;
+        } else {
+            finalClassNames.push(className);
+        }
+        prevClassName = className;
+    }
+
+    if (finalClassNames.length === 1) {
+        el.setAttributeValue('class', finalClassNames[0]);
+    } else {
+        var classListVar = context.addStaticVar('__classList', '__helpers.cl');
+        el.setAttributeValue('class', builder.functionCall(classListVar, finalClassNames));
+    }
 }
 
 class Parser {
@@ -160,6 +192,17 @@ class Parser {
 
         var node = this.context.createNodeForEl(elDef);
 
+        if (el.shorthandClassNames) {
+            mergeShorthandClassNames(node, el.shorthandClassNames, context);
+        }
+
+        if (el.shorthandId) {
+            if (node.hasAttribute('id')) {
+                context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
+            } else {
+                node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+            }
+        }
 
         this.parentNode.appendChild(node);
 
