@@ -3,12 +3,13 @@ function create(__helpers) {
       empty = __helpers.e,
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
+      classAttr = __helpers.ca,
       attr = __helpers.a,
       escapeXmlAttr = __helpers.xa;
 
   return function render(data, out) {
     out.w("<div" +
-      attr("class", data.className) +
+      classAttr(data.className) +
       attr("class2", data.className, false) +
       " foo=\"a" +
       escapeXmlAttr(data.foo) +
