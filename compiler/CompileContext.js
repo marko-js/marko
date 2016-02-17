@@ -228,7 +228,7 @@ class CompileContext {
         var node;
         var elNode = builder.htmlElement(elDef);
         var taglibLookup = this.taglibLookup;
-        var tagDef = taglibLookup.getTag(tagName);
+        var tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
         if (tagDef) {
             var nodeFactoryFunc = tagDef.getNodeFactory();
             if (nodeFactoryFunc) {
