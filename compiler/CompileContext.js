@@ -225,8 +225,6 @@ class CompileContext {
             throw new Error('Invalid attributes');
         }
 
-        ok(typeof tagName === 'string', 'Invalid "tagName"');
-
         var node;
         var elNode = builder.htmlElement(elDef);
         var taglibLookup = this.taglibLookup;

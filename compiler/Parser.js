@@ -93,6 +93,7 @@ class Parser {
         var builder = context.builder;
 
         var tagName = el.tagName;
+        var tagNameExpression = el.tagNameExpression;
         var attributes = el.attributes;
         var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
 
@@ -100,7 +101,9 @@ class Parser {
             argument = argument.value;
         }
 
-        if (tagName === 'compiler-options') {
+        if (tagNameExpression) {
+            tagName = builder.parseExpression(tagNameExpression);
+        } else if (tagName === 'compiler-options') {
             attributes.forEach(function (attr) {
                 let attrName = attr.name;
                 let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
