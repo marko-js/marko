@@ -72,6 +72,7 @@ class ArrayContainer extends Container {
             var curChild = array[i];
             if (curChild === referenceNode) {
                 array.splice(i, 0, newChild);
+                newChild.container = this;
                 return;
             }
         }
@@ -89,6 +90,7 @@ class ArrayContainer extends Container {
             var curChild = array[i];
             if (curChild === referenceNode) {
                 array.splice(i+1, 0, newChild);
+                newChild.container = this;
                 return;
             }
         }
