@@ -51,11 +51,15 @@
     "<var>": {
         "node-factory": "./var-tag"
     },
+    "<while>": {
+        "code-generator": "./while-tag"
+    },
     "<*>": {
         "@if": "argument",
         "@else-if": "argument",
         "@else": "argument",
         "@for": "argument",
+        "@while": "argument",
         "transformer": {
             "path": "./core-transformer",
             "priority": 0

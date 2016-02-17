@@ -4,6 +4,17 @@ var createLoopNode = require('./util/createLoopNode');
 
 var coreAttrHandlers = [
     [
+        'while', function(attr, node) {
+            var whileArgument = attr.argument;
+            if (!whileArgument) {
+                return false;
+            }
+
+            var whileNode = this.builder.whileStatement(whileArgument);
+            node.wrapWith(whileNode);
+        }
+    ],
+    [
         'for', function(attr, node) {
             var forArgument = attr.argument;
             if (!forArgument) {

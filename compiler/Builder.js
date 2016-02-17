@@ -44,6 +44,7 @@ var ThisExpression = require('./ast/ThisExpression');
 var Expression = require('./ast/Expression');
 var Scriptlet = require('./ast/Scriptlet');
 var ContainerNode = require('./ast/ContainerNode');
+var WhileStatement = require('./ast/WhileStatement');
 
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
@@ -566,6 +567,10 @@ class Builder {
 
 
         return new Vars({declarations, kind});
+    }
+
+    whileStatement(test, body) {
+        return new WhileStatement({test, body});
     }
 }
 
