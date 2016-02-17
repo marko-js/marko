@@ -21,7 +21,8 @@ var runtime = require('./'); // Circular dependency, but that is okay
 var attr = require('raptor-util/attr');
 var attrs = require('raptor-util/attrs');
 var isArray = Array.isArray;
-var STYLE = 'style';
+var STYLE_ATTR = 'style';
+var CLASS_ATTR = 'class';
 
 function notEmpty(o) {
     if (o == null) {
@@ -33,6 +34,17 @@ function notEmpty(o) {
     }
 
     return true;
+}
+
+function classListArray(classList) {
+    var classNames = [];
+    for (var i=0, len=classList.length; i<len; i++) {
+        var cur = classList[i];
+        if (cur) {
+            classNames.push(cur);
+        }
+    }
+    return classNames.join(' ');
 }
 
 function createDeferredRenderer(handler) {
@@ -187,30 +199,62 @@ module.exports = {
      * sa('color: red; font-weight: bold') ==> ' style="color: red; font-weight: bold"'
      * sa({color: 'red', 'font-weight': 'bold'}) ==> ' style="color: red; font-weight: bold"'
      */
-    sa: function(style, escape) {
+    sa: function(style) {
         if (!style) {
-            return;
+            return '';
         }
 
-        escape = escape !== false;
-
         if (typeof style === 'string') {
-            return attr(STYLE, style, escape);
+            return attr(STYLE_ATTR, style, false);
         } else if (typeof style === 'object') {
             var parts = [];
             for (var name in style) {
                 if (style.hasOwnProperty(name)) {
                     var value = style[name];
                     if (value) {
-                        parts.push(name + ':' + (escape ? escapeXmlAttr(value) : value));
+                        parts.push(name + ':' + value);
                     }
                 }
             }
-            return parts ? attr(STYLE, parts.join(';'), false) : '';
+            return parts ? attr(STYLE_ATTR, parts.join(';'), false) : '';
         } else {
             return '';
         }
     },
+
+    /**
+     * Internal helper method to handle the "class" attribute. The value can either
+     * be a string, an array or an object. For example:
+     *
+     * ca('foo bar') ==> ' class="foo bar"'
+     * ca({foo: true, bar: false, baz: true}) ==> ' class="foo baz"'
+     * ca(['foo', 'bar']) ==> ' class="foo bar"'
+     */
+    ca: function(classNames) {
+        if (!classNames) {
+            return '';
+        }
+
+        if (typeof classNames === 'string') {
+            return attr(CLASS_ATTR, classNames, false);
+        } else if (isArray(classNames)) {
+            return attr(CLASS_ATTR, classListArray(classNames), false);
+        } else if (typeof classNames === 'object') {
+            var classList = [];
+            for (var name in classNames) {
+                if (classNames.hasOwnProperty(name)) {
+                    var value = classNames[name];
+                    if (value) {
+                        classList.push(name);
+                    }
+                }
+            }
+            return attr(CLASS_ATTR, classListArray(classList), false);
+        } else {
+            return '';
+        }
+    },
+
     /**
      * Loads a template
      */
@@ -307,14 +351,6 @@ module.exports = {
      *
      */
     cl: function() {
-        var args = arguments;
-        var classNames = [];
-        for (var i=0, len=args.length; i<len; i++) {
-            var cur = args[i];
-            if (cur) {
-                classNames.push(cur);
-            }
-        }
-        return classNames.join(' ');
+        return classListArray(arguments);
     }
 };

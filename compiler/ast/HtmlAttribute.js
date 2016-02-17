@@ -79,21 +79,16 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
         }
         codegen.addWriteLiteral('"');
     } else {
-        if (name === 'style') {
+        if (name === 'class') {
             // let builder = codegen.builder;
             // let valueWithEscaping = handleEscaping(value);
-            let styleAttr = codegen.addStaticVar('styleAttr', '__helpers.sa');
-
-            if (escape === false || isNoEscapeXml(value)) {
-                escape = false;
-            }
-
-            let styleAttrArgs = [value];
-
-            if (escape === false) {
-                styleAttrArgs.push(codegen.builder.literal(false));
-            }
-            codegen.addWrite(codegen.builder.functionCall(styleAttr, styleAttrArgs));
+            let classAttrVar = codegen.addStaticVar('classAttr', '__helpers.ca');
+            codegen.addWrite(codegen.builder.functionCall(classAttrVar, [value]));
+        } else if (name === 'style') {
+            // let builder = codegen.builder;
+            // let valueWithEscaping = handleEscaping(value);
+            let styleAttrVar = codegen.addStaticVar('styleAttr', '__helpers.sa');
+            codegen.addWrite(codegen.builder.functionCall(styleAttrVar, [value]));
         } else {
             // let builder = codegen.builder;
             // let valueWithEscaping = handleEscaping(value);
