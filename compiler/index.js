@@ -155,7 +155,10 @@ taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/cache/marko.json'));
 
-
+exports.registerTaglib = function(path) {
+    taglibLookup.registerTaglib(path);
+    clearCaches();
+};
 
 /*
 exports.Taglib = require('./Taglib');
