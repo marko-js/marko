@@ -329,17 +329,6 @@ TagHandlers.prototype = {
         tag.setBodyFunction(functionName, params);
     },
     /**
-     * The "body-property" property can be used to map the body content
-     * to a String property on the renderer's input object.
-     *
-     * Example:
-     * "body-property": "label"
-     */
-    bodyProperty: function(value) {
-        var tag = this.tag;
-        tag.setBodyProperty(value);
-    },
-    /**
      * The "import-var" property can be used to add a property to the
      * input object of the tag renderer whose value is determined by
      * a JavaScript expression.
