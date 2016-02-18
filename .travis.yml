@@ -3,4 +3,6 @@ node_js:
 - "4"
 - "5"
 language: node_js
+# Use latest version of npm
+before_script: npm install -g npm
 script: "npm test"
