@@ -14,39 +14,49 @@
  * limitations under the License.
  */
 'use strict';
-require('raptor-polyfill/string/startsWith');
-
 var TransformHelper = require('./TransformHelper');
 
-exports.process =function (node, compiler, template) {
-    var transformHelper = new TransformHelper(node, compiler, template);
-    var nodeProps = transformHelper.nodeProps;
+module.exports = function transform(el, context) {
+    var transformHelper = new TransformHelper(el, context);
 
-    if (nodeProps['w-bind'] != null) {
-        if (nodeProps['w-id'] != null) {
-            node.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
-        }
-        transformHelper.handleWidgetBind();
-    } else if (nodeProps['w-extend'] != null) {
-        transformHelper.handleWidgetExtend();
-    } else if (nodeProps['w-id'] != null || nodeProps['w-el-id'] != null) {
-        transformHelper.assignWidgetId();
-    } else if (nodeProps['w-for'] != null) {
-        transformHelper.handleWidgetFor();
+    if (el.tagName === 'widget-types') {
+        context.setFlag('hasWidgetTypes');
     }
 
-    if (nodeProps['w-preserve'] != null ||
-        nodeProps['w-preserve-body'] != null ||
-        nodeProps['w-preserve-if'] != null ||
-        nodeProps['w-preserve-body-if'] != null) {
+    if (el.hasAttribute('w-el-id')) {
+        transformHelper.addError('"w-el-id" attribute is no longer allowed. Use "w-id" instead.');
+        return;
+    }
+
+    if (el.hasAttribute('w-bind')) {
+        el.setFlag('hasWidgetBind');
+        if (el.hasAttribute('w-id')) {
+            transformHelper.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
+        }
+        transformHelper.handleWidgetBind();
+    } else if (el.hasAttribute('w-extend')) {
+        el.setFlag('hasWidgetExtend');
+        transformHelper.handleWidgetExtend();
+    }
+
+    if (el.hasAttribute('w-preserve') ||
+        el.hasAttribute('w-preserve-body') ||
+        el.hasAttribute('w-preserve-if') ||
+        el.hasAttribute('w-preserve-body-if')) {
         transformHelper.handleWidgetPreserve();
     }
 
-    if (nodeProps['w-preserve-attrs'] != null) {
+    if (el.hasAttribute('w-id')) {
+        transformHelper.assignWidgetId();
+    } else if (el.hasAttribute('w-for')) {
+        transformHelper.handleWidgetFor();
+    }
+
+    if (el.hasAttribute('w-preserve-attrs')) {
         transformHelper.handleWidgetPreserveAttrs();
     }
 
-    if (nodeProps['w-body'] != null) {
+    if (el.hasAttribute('w-body')) {
         transformHelper.handleWidgetBody();
     }
 
@@ -59,13 +69,7 @@ exports.process =function (node, compiler, template) {
     // we generate compiled code that stores the widget args in the out
     // for the next widget and then we also insert cleanup code to remove
     // the data out of the out
-    if (node.tag || node.nodeClass) { // Only custom tags can have nested widgets
-        transformHelper.compileWidgetArgs();
-    }
-
-    if (node.qName === 'w-widget') {
-        if (node.getAttribute('id') != null) {
-            node.setProperty('scope', template.makeExpression('widget'));
-        }
+    if (el.type !== 'HtmlElement') { // Only custom tags can have nested widgets
+        transformHelper.getWidgetArgs().compile(transformHelper);
     }
 };

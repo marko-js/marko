@@ -13,56 +13,63 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
+
 var tryRequire = require('try-require');
 var fs = tryRequire('fs', require);
 var nodePath = require('path');
 var WidgetArgs = require('./WidgetArgs');
 var getRequirePath = require('../getRequirePath');
+var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');
 
-function TransformHelper(node, compiler, template) {
-    this.node = node;
-    this.template = template;
-    this.compiler = compiler;
-    this.nodeProps = node.getProperties();
+class TransformHelper {
+    constructor(el, context) {
+        this.el = el;
+        this.context = context;
+        this.builder = context.builder;
+        this.dirname = context.dirname;
 
-    this.widgetNextElId = 0;
-    this.widgetIdInfo = undefined;
-    this.widgetArgs = undefined;
-    this.containingWidgetNode = undefined;
-}
+        this.widgetNextElId = 0;
+        this.widgetIdInfo = undefined;
+        this.widgetArgs = undefined;
+        this.containingWidgetNode = undefined;
+        this._markoWidgetsVar = undefined;
+        this.widgetStack = context.data.widgetStack || (context.data.widgetStack = []);
+    }
 
-TransformHelper. prototype = {
-    getWidgetArgs: function() {
+    addError(message, code) {
+        this.context.addError(this.el, message, code);
+    }
+
+    getWidgetArgs() {
         return this.widgetArgs || (this.widgetArgs = new WidgetArgs());
-    },
-    compileWidgetArgs: function() {
-        if (!this.widgetArgs) {
-            return;
-        }
+    }
 
-        this.widgetArgs.compileWidgetArgs(this.node, this.template);
-    },
-    nextUniqueId: function() {
-        var widgetNextElId = this.template.data.widgetNextElId;
+    nextUniqueId() {
+        var widgetNextElId = this.context.data.widgetNextElId;
         if (widgetNextElId == null) {
-            this.template.data.widgetNextElId = 0;
+            this.context.data.widgetNextElId = 0;
         }
 
-        return (this.template.data.widgetNextElId++);
-    },
-    getNestedIdExpression: function() {
+        return (this.context.data.widgetNextElId++);
+    }
+
+    getNestedIdExpression() {
         this.assignWidgetId();
         return this.getWidgetIdInfo().nestedIdExpression;
-    },
-    getIdExpression: function() {
+    }
+
+    getIdExpression() {
         this.assignWidgetId();
         return this.getWidgetIdInfo().idExpression;
-    },
-    getWidgetIdInfo: function() {
+    }
+
+    getWidgetIdInfo() {
         return this.widgetIdInfo;
-    },
-    getDefaultWidgetModule: function() {
-        var dirname = this.template.dirname;
+    }
+
+    getDefaultWidgetModule() {
+        var dirname = this.dirname;
         if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
             return './widget';
         } else if (fs.existsSync(nodePath.join(dirname, 'index.js'))) {
@@ -70,21 +77,43 @@ TransformHelper. prototype = {
         } else {
             return null;
         }
-    },
-    assignWidgetId: require('./assignWidgetId'),
-    registerWidgetType: require('./registerWidgetType'),
-    getContainingWidgetNode: require('./getContainingWidgetNode'),
-    handleWidgetEvents: require('./handleWidgetEvents'),
-    handleWidgetPreserve: require('./handleWidgetPreserve'),
-    handleWidgetPreserveAttrs: require('./handleWidgetPreserveAttrs'),
-    handleWidgetBody: require('./handleWidgetBody'),
-    handleWidgetBind: require('./handleWidgetBind'),
-    handleWidgetExtend: require('./handleWidgetExtend'),
-    handleWidgetFor: require('./handleWidgetFor'),
-    getClientWidgetPath: require('./getClientWidgetPath'),
-    getMarkoWidgetsRequirePath: function(target) {
-        return getRequirePath(target, this.template);
     }
-};
+
+    getMarkoWidgetsRequirePath(target) {
+        return getRequirePath(target, this.context);
+    }
+
+    get markoWidgetsVar() {
+        if (!this._markoWidgetsVar) {
+            this._markoWidgetsVar = this.context.importModule('__markoWidgets', this.getMarkoWidgetsRequirePath('marko-widgets'));
+        }
+
+        return this._markoWidgetsVar;
+    }
+
+    buildWidgetElIdFunctionCall(id) {
+        var builder = this.builder;
+
+        var widgetElId = builder.memberExpression(
+            builder.identifier('widget'),
+            builder.identifier('elId'));
+
+        return builder.functionCall(widgetElId, arguments.length === 0 ? [] : [ id ]);
+    }
+
+    buildWidgetTypeNode(path) {
+        return buildWidgetTypeNode(path, this.dirname, this.builder);
+    }
+}
+
+TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
+TransformHelper.prototype.getContainingWidgetNode = require('./getContainingWidgetNode');
+TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');
+TransformHelper.prototype.handleWidgetPreserve = require('./handleWidgetPreserve');
+TransformHelper.prototype.handleWidgetPreserveAttrs = require('./handleWidgetPreserveAttrs');
+TransformHelper.prototype.handleWidgetBody = require('./handleWidgetBody');
+TransformHelper.prototype.handleWidgetBind = require('./handleWidgetBind');
+TransformHelper.prototype.handleWidgetExtend = require('./handleWidgetExtend');
+TransformHelper.prototype.handleWidgetFor = require('./handleWidgetFor');
 
 module.exports = TransformHelper;

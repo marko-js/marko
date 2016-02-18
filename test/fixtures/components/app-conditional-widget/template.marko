@@ -1,3 +1,5 @@
-<div w-bind="{?data.includeWidget;${data.widgetPath}}">
+<widget-types default="./widget"/>
+
+<div w-bind=(data.includeWidget ? 'default' : null)>
     [app-conditional-widget]
 </div>

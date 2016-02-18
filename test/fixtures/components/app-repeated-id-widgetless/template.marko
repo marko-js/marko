@@ -1,5 +1,5 @@
 <div class="app-repeated-id-widgetless" w-bind>
-    <for each="renderer in data.renderers">
-        <invoke function="renderer({}, out)" w-id="childWidget[]" />
+    <for(renderer in data.renderers)>
+        <invoke renderer({}, out) w-id="childWidget[]" />
     </for>
 </div>

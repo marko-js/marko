@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2011 eBay Software Foundation
  *
@@ -13,65 +14,79 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 module.exports = function handleWidgetBind() {
-    var props = this.nodeProps;
-    var bind = props['w-bind'];
-    if (bind == null) {
+    var el = this.el;
+    var context = this.context;
+    var builder = this.builder;
+
+    var bindAttr = el.getAttribute('w-bind');
+    if (bindAttr == null) {
         return;
     }
 
-    var template = this.template;
-    var compiler = this.compiler;
-    var node = this.node;
+    // A widget is bound to the el...
 
-    if (bind === '') {
-        // If the bind attribute is an empty string then
-        // that means that no value was provided so look
-        // for the default widget module. We first
-        // look for a "widget.js" in the same directory
-        // and then we look for an "index.js" in the same directory
-        bind = this.getDefaultWidgetModule();
-        if (!bind) {
-            node.addError('Unable to find default widget module when using w-bind without a value');
+    // Remove the w-bind attribute since we don't want it showing up in the output DOM
+    el.removeAttribute('w-bind');
+
+    // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
+    var bindAttrValue = bindAttr.value;
+    var modulePath;
+
+    var widgetAttrs = {};
+
+    if (bindAttrValue == null) {
+        modulePath = this.getDefaultWidgetModule();
+    } else if (bindAttr.isLiteralValue()) {
+        modulePath = bindAttr.literalValue; // The value of the literal value
+        if (typeof modulePath !== 'string') {
+            this.addError('The value for the "w-bind" attribute should be a string. Actual: ' + modulePath);
             return;
         }
-    }
-
-    // We create a local variable for the ""
-    template.addStaticVar('__markoWidgets', 'require("' + this.getMarkoWidgetsRequirePath('marko-widgets') + '")');
-
-    // A widget is bound to the node
-    var widgetAttrsVar = template.addStaticVar('_widgetAttrs', '__markoWidgets.attrs');
-
-    var typePathExpression = this.registerWidgetType(bind);
-    var config;
-    var id;
-    var state;
-
-    var widgetNode = compiler.createTagHandlerNode('w-widget');
-    node.parentNode.replaceChild(widgetNode, node);
-    widgetNode.appendChild(node);
-
-    widgetNode.setAttribute('module', typePathExpression);
-
-    if ((config = props['w-config'])) {
-        widgetNode.setProperty('config', config);
-    }
-
-    if ((state = props['w-state'])) {
-        widgetNode.setProperty('state', state);
-    }
-
-    if ((id = node.getAttribute('id')) != null) {
-        if (typeof id === 'string') {
-            id = compiler.convertType(id, 'string', true);
+    } else {
+        // This is a dynamic expression. The <widget-types> should have been found.
+        if (!context.isFlagSet('hasWidgetTypes')) {
+            this.addError('The <widget-types> tag must be used to declare widgets when the value of the "w-bind" attribute is a dynamic expression.');
+            return;
         }
 
-        widgetNode.setProperty('id', id);
+        widgetAttrs.type = builder.computedMemberExpression(
+            builder.identifier('__widgetTypes'),
+            bindAttrValue);
     }
 
-    node.setAttribute('id', template.makeExpression('widget.elId()'));
+    if (modulePath) {
+        let widgetTypeNode = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
+        widgetAttrs.type = widgetTypeNode;
+    }
 
-    node.addDynamicAttributes(template.makeExpression(widgetAttrsVar + '(widget)'));
+    var id = el.getAttributeValue('id');
+
+    if (el.hasAttribute('w-config')) {
+        widgetAttrs.config = el.getAttributeValue('w-config');
+        el.removeAttribute('w-config');
+    }
+
+    if (id) {
+        widgetAttrs.id = id;
+    }
+
+    var widgetNode = context.createNodeForEl('w-widget', widgetAttrs);
+    el.wrapWith(widgetNode);
+
+    el.setAttributeValue('id', builder.memberExpression(builder.identifier('widget'), builder.identifier('id')));
+
+    // var _widgetAttrs = __markoWidgets.attrs;
+    var widgetAttrsVar = context.addStaticVar('__widgetAttrs',
+        builder.memberExpression(this.markoWidgetsVar, builder.identifier('attrs')));
+
+    el.addDynamicAttributes(builder.functionCall(widgetAttrsVar, [ builder.identifier('widget') ]));
+
+    this.widgetStack.push({
+        widgetNode: widgetNode,
+        el: el,
+        extend: false
+    });
 };

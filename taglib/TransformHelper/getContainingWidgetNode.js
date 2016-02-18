@@ -14,27 +14,20 @@
  * limitations under the License.
  */
 
-function getContainingWidgetNode(options) {
-
-    var allowExtend = options && options.allowExtend === true;
-
+function getContainingWidgetNode() {
     if (this.containingWidgetNode !== undefined) {
         return this.containingWidgetNode;
     }
 
-    if (allowExtend && this.containingWidgetExtendNode !== undefined) {
-        return this.containingWidgetExtendNode;
-    }
-
-    var curNode = this.node;
+    var curNode = this.el;
 
     while (true) {
-        if (curNode.qName === 'w-widget') {
+        if (curNode.tagName === 'w-widget') {
             this.containingWidgetNode = curNode;
             return this.containingWidgetNode;
-        } else if (allowExtend && curNode.data.widgetExtend) {
-            this.containingWidgetExtendNode = curNode;
-            return this.containingWidgetExtendNode;
+        } else if (curNode.isFlagSet('hasWidgetExtend')) {
+            this.containingWidgetNode = curNode;
+            return this.containingWidgetNode;
         }
 
         curNode = curNode.parentNode;
@@ -45,7 +38,6 @@ function getContainingWidgetNode(options) {
     }
 
     this.containingWidgetNode = null;
-    this.containingWidgetExtendNode = null;
 
     return null;
 }

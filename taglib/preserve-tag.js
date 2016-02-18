@@ -20,8 +20,6 @@ module.exports = function render(input, out) {
 
     var global = out.global;
 
-
-
     if (global.__rerender === true) {
         var id = input.id;
 

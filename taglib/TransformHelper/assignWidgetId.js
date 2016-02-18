@@ -13,36 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
-function assignWidgetId(isRepeated) {
-    var compiler = this.compiler;
-    var node = this.node;
-    var template = this.template;
-
+module.exports = function assignWidgetId(isRepeated) {
+    // First check if we have already assigned an ID to thie element
     var widgetIdInfo = this.widgetIdInfo;
 
     if (widgetIdInfo) {
         return this.widgetIdInfo;
     }
 
-    var idAttr;
-    var nodeProps = this.nodeProps;
+    var el = this.el;
+    var context = this.context;
+    var builder = this.builder;
 
     var nestedIdExpression;
     var idExpression;
 
-    var containingWidgetNode = this.getContainingWidgetNode({ allowExtend: true });
-
+    var containingWidgetNode = this.getContainingWidgetNode();
     if (!containingWidgetNode) {
         // We are assigning a widget ID to a nested widget in a template that does not have a widget.
         // That means we do not have access to the parent widget variable as part of a closure. We
         // need to look it up out of the `out.data` map
-        if (!this.template.data.hasWidgetVar) {
-            template.addStaticVar('__getCurrentWidget',
-                'require("' + this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/getCurrentWidget', template) + '")');
+        if (!context.isFlagSet('hasWidgetVar')) {
+            context.setFlag('hasWidgetVar');
 
-            this.template.addVar('widget', '__getCurrentWidget(out)');
-            this.template.data.hasWidgetVar = true;
+            var getCurrentWidgetVar = context.importModule('__getCurrentWidget',
+                this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/getCurrentWidget'));
+
+            context.addVar('widget', builder.functionCall(getCurrentWidgetVar, [builder.identifierOut()]));
         }
     }
 
@@ -53,114 +52,101 @@ function assignWidgetId(isRepeated) {
     // We need to handle the following scenarios:
     //
     // 1) The HTML element already has an "id" attribute
-    // 2) The HTML element has a "w-el-id" attribute (we already converted this
+    // 2) The HTML element has a "w-id" attribute (we already converted this
     //    to an "id" attribute above)
     // 3) The HTML does not have an "id" or "w-el-id" attribute. We must add
     //    an "id" attribute with a unique ID.
 
-    var widgetId = nodeProps['w-el-id'];
+    var isCustomTag = el.type !== 'HtmlElement';
 
-    if (widgetId) {
-        var warning = 'The "w-el-id" attribute is deprecated. Use "w-id" instead. ' + node;
-        var pos = node.getPosition();
-        if (pos) {
-            warning += ' at ' + pos;
-        }
-        delete nodeProps['w-el-id'];
-        console.log(warning);
-    }
+    if (el.hasAttribute('w-id')) {
+        let widgetId = el.getAttributeValue('w-id');
 
-    if (widgetId == null) {
-        widgetId = nodeProps['w-id'];
-    }
+        el.removeAttribute('w-id');
 
-    delete nodeProps['w-id'];
+        idExpression = this.buildWidgetElIdFunctionCall(widgetId);
 
-    if (widgetId != null) {
-        idExpression = compiler.makeExpression('widget.elId(' +
-            widgetId +
-            ')');
+        nestedIdExpression = widgetId;
 
-        // Prefix the unique ID with an exclamation point to make it clear that we
-        // we need to resolve the ID as a widget element ID.
-        nestedIdExpression = compiler.makeExpression(widgetId);
 
-        if (node.tag || node.nodeClass) {
-            this.getWidgetArgs().setId(widgetId);
+        if (isCustomTag) {
+            // The element is a custom tag
+            this.getWidgetArgs().setId(nestedIdExpression);
         } else {
-            if (node.hasAttribute('id')) {
-                node.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');
+            if (el.hasAttribute('id')) {
+                this.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');
                 return;
             }
-
-            node.setAttribute(
-                'id',
-                idExpression);
+            el.setAttributeValue('id', idExpression);
         }
-    } else if ((idAttr = node.getAttribute('id'))) {
-        // Case 1 and 2 -- Using the existing "id" attribute
-        // The "id" attribute can be a JavaScript expression or a raw String
-        // value. We need a JavaScript expression that can be used to
-        // provide the same ID at runtime.
+    } else if (el.hasAttribute('id')) {
+        idExpression = el.getAttributeValue('id');
 
-        if (typeof idAttr === 'string') {
-            idExpression = compiler.convertType(idAttr, 'string', true);
-        } else {
-            idExpression = idAttr;
-        }
-
-
-        var widgetElIdExpression = this.node.tag == null ? this.nodeProps['w-id'] : null;
-
-        if (nodeProps['w-bind'] != null || nodeProps['w-extend'] != null) {
+        if (el.isFlagSet('hasWidgetBind') || el.isFlagSet('hasWidgetExtend')) {
             // We have to attach a listener to the root element of the widget
             // We will use an empty string as an indicator that it is the root widget
             // element.
-            nestedIdExpression = compiler.makeExpression('""');
-        } else if (widgetElIdExpression) {
-            // We have to attach a listener to a nested HTML element of the widget
-            // that was assigned an ID using "w-id". This ID will not be a fully
-            // resolved DOM element ID.
-            nestedIdExpression = compiler.makeExpression(widgetElIdExpression.toString());
-        } else if (typeof idAttr === 'string') {
+            nestedIdExpression = builder.literal('');
+        } else {
             // Convert the raw String to a JavaScript expression. we need to prefix
             // with '#' to make it clear this is a fully resolved element ID
-            nestedIdExpression = compiler.makeExpression('"#"+' + idExpression);
-        } else {
-            // The "id" attribute is already expression but we need to prefix
-            // with '#' to make it clear this is a fully resolved element ID
-            nestedIdExpression = compiler.makeExpression('"#"+' + idAttr);
+            nestedIdExpression = builder.concat(
+                builder.literal('#'),
+                idExpression);
         }
     } else {
         // Case 3 - We need to add a unique "id" attribute
-        var uniqueElId = this.nextUniqueId();
+        let uniqueElId = this.nextUniqueId();
 
-        if (isRepeated) {
-            uniqueElId += '[]';
-        }
+        nestedIdExpression = isRepeated ? builder.literal(uniqueElId + '[]') : builder.literal(uniqueElId);
 
-        // Prefix the unique ID with an exclamation point to make it clear that we
-        // we need to resolve the ID as a widget element ID.
-        nestedIdExpression = compiler.makeExpression(JSON.stringify(uniqueElId));
+        idExpression = this.buildWidgetElIdFunctionCall(nestedIdExpression);
 
-        idExpression = compiler.makeExpression('widget.elId("' +
-            uniqueElId +
-            '")');
-
-
-        if (node.tag) {
-            this.getWidgetArgs().setId(idExpression);
+        if (isCustomTag) {
+            this.getWidgetArgs().setId(nestedIdExpression);
         } else {
-            node.setAttribute('id', idExpression);
+            el.setAttributeValue('id', idExpression);
         }
-
-
     }
+
+    var transformHelper = this;
 
     this.widgetIdInfo = {
         idExpression: idExpression,
-        nestedIdExpression: nestedIdExpression
-    };
-}
+        nestedIdExpression: nestedIdExpression,
+        idVarNode: null,
+        createIdVarNode: function() {
+            if (this.idVarNode) {
+                return this.idVarNode;
+            }
 
-module.exports = assignWidgetId;
+            let uniqueElId = transformHelper.nextUniqueId();
+            let idVarName = '__widgetId' + uniqueElId;
+            let idVar = builder.identifier(idVarName);
+
+            this.idVarNode = builder.vars([
+                {
+                    id: idVarName,
+                    init: idExpression
+                }
+            ]);
+
+            this.idExpression = idExpression = idVar;
+
+            this.nestedIdExpression = nestedIdExpression = builder.concat(
+                builder.literal('!'),
+                idVar);
+
+            if (isCustomTag) {
+                transformHelper.getWidgetArgs().setId(nestedIdExpression);
+            } else {
+
+                el.setAttributeValue('id', idExpression);
+            }
+
+            return this.idVarNode;
+        }
+    };
+
+    return this.widgetIdInfo;
+};

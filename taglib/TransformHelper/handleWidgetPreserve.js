@@ -15,82 +15,61 @@
  */
 
 function addPreserve(transformHelper, bodyOnly, condition) {
-    var template = transformHelper.template;
-    var compiler = transformHelper.compiler;
-    var node = transformHelper.node;
 
-    var preserveNode = compiler.createTagHandlerNode('w-preserve');
-    transformHelper.assignWidgetId(true /* repeated */);
+    var el = transformHelper.el;
+    var context = transformHelper.context;
+    var builder = transformHelper.builder;
+
+    var preserveAttrs = {};
 
     if (bodyOnly) {
-        preserveNode.setProperty('bodyOnly', template.makeExpression(bodyOnly));
+        preserveAttrs['body-only'] = builder.literal(bodyOnly);
     }
 
     if (condition) {
-        preserveNode.setProperty('if', template.makeExpression(condition));
+        preserveAttrs['if'] = condition;
     }
 
-    var nextVarId = template.data.nextWidgetPreserveId;
-    if (nextVarId == null) {
-        nextVarId = template.data.nextWidgetPreserveId = 0;
-    }
+    var widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
+    var idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
 
-    var idVarName = '__preserve' + (template.data.nextWidgetPreserveId++);
-    var idExpression = template.makeExpression(idVarName);
-    if (node.tag) {
-        transformHelper.getWidgetArgs().setId(template.makeExpression('"!"+' + idExpression));
-    } else {
-        node.setAttribute('id', idExpression);
-    }
+    preserveAttrs.id = transformHelper.getIdExpression();
 
-    preserveNode.setProperty('id', idExpression);
-
-    var varNode = compiler.createNode('var', {
-        name: idVarName,
-        value: transformHelper.getIdExpression()
-    });
-
-    node.parentNode.insertBefore(varNode, node);
+    var preserveNode = context.createNodeForEl('w-preserve', preserveAttrs);
+    var idVarNodeTarget;
 
     if (bodyOnly) {
-        node.forEachChild(function(childNode) {
-            preserveNode.appendChild(childNode);
-        });
-
-        node.appendChild(preserveNode);
+        el.moveChildrenTo(preserveNode);
+        el.appendChild(preserveNode);
+        idVarNodeTarget = el;
     } else {
-        node.parentNode.replaceChild(preserveNode, node);
-        preserveNode.appendChild(node);
+        el.wrapWith(preserveNode);
+        idVarNodeTarget = preserveNode;
+    }
+
+    if (idVarNode) {
+        idVarNodeTarget.onBeforeGenerateCode((event) => {
+            event.insertCode(idVarNode);
+        });
     }
 
     return preserveNode;
 }
 
 module.exports = function handleWidgetPreserve() {
-    var node = this.node;
-    var props = this.nodeProps;
+    var el = this.el;
 
-    var widgetPreserve;
-    if ((widgetPreserve = props['w-preserve']) != null) {
-        node.removeProperty('w-preserve');
+    if (el.hasAttribute('w-preserve')) {
+        el.removeAttribute('w-preserve');
         addPreserve(this, false);
-    }
-
-    var widgetPreserveIf;
-    if ((widgetPreserveIf = props['w-preserve-if']) != null) {
-        node.removeProperty('w-preserve-if');
-        addPreserve(this, false, widgetPreserveIf);
-    }
-
-    var widgetPreserveBody;
-    if ((widgetPreserveBody = props['w-preserve-body']) != null) {
-        node.removeProperty('w-preserve-body');
+    } else if (el.hasAttribute('w-preserve-if')) {
+        addPreserve(this, false, el.getAttributeValue('w-preserve-if'));
+        el.removeAttribute('w-preserve-if');
+    } else if (el.hasAttribute('w-preserve-body')) {
+        el.removeAttribute('w-preserve-body');
         addPreserve(this, true);
-    }
-
-    var widgetPreserveBodyIf;
-    if ((widgetPreserveBodyIf = props['w-preserve-body-if']) != null) {
-        node.removeProperty('w-preserve-body-if');
-        addPreserve(this, true, widgetPreserveBodyIf);
+    } else if (el.hasAttribute('w-preserve-body-if')) {
+        addPreserve(this, true, el.getAttributeValue('w-preserve-body-if'));
+        el.removeAttribute('w-preserve-body-if');
     }
 };

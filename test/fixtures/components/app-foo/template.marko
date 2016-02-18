@@ -9,7 +9,7 @@
     <app-custom-events w-onTestEvent="handleTestEvent2" channel="customEvents-${widget.id}" />
 
     <ul>
-        <li for="color in ['red', 'green', 'blue']" w-id="colorListItems[]">$color</li>
+        <li for(color in ['red', 'green', 'blue']) w-id="colorListItems[]">${color}</li>
     </ul>
 
 

@@ -39,6 +39,14 @@ function getExistingWidget(id, type) {
     return null;
 }
 
+function registerWidgetType(widgetType) {
+    if (!widgetType.registered) {
+        // Only need to register the widget type once
+        widgetType.registered = true;
+        markoWidgets.registerWidget(widgetType);
+    }
+}
+
 function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
     // We put a placeholder element in the output stream to ensure that the existing
     // DOM node is matched up correctly when using morphdom.
@@ -86,13 +94,14 @@ module.exports = function render(input, out) {
         });
     }
 
-    var modulePath = input.module;
+    var type = input.type;
     var config = input.config || input._cfg;
     var state = input.state || input._state;
     var props = input.props || input._props;
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
+    var typeName = type && type.name;
 
     var id = input.id;
     var extendList;
@@ -110,6 +119,13 @@ module.exports = function render(input, out) {
         extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
 
+        if (extendList) {
+            extendList = extendList.map(function(extendType) {
+                registerWidgetType(extendType);
+                return extendType.name;
+            });
+        }
+
         if ((extendState = widgetArgs.extendState)) {
             if (state) {
                 extend(state, extendState);
@@ -126,8 +142,6 @@ module.exports = function render(input, out) {
             }
         }
     }
-
-
 
     var rerenderWidget = global.__rerenderWidget;
     var isRerender = global.__rerender === true;
@@ -149,14 +163,16 @@ module.exports = function render(input, out) {
         id = rerenderWidget.id;
         delete global.__rerenderWidget;
     } else if (isRerender) {
-        existingWidget = getExistingWidget(id, modulePath);
+        existingWidget = getExistingWidget(id, typeName);
     }
 
     if (!id && input.hasOwnProperty('id')) {
-        throw new Error('Invalid widget ID for "' + modulePath + '"');
+        throw new Error('Invalid widget ID for "' + typeName + '"');
     }
 
-    if (modulePath) {
+    if (typeName) {
+        registerWidgetType(type);
+
         var shouldRenderBody = true;
 
         if (existingWidget && !rerenderWidget) {
@@ -192,7 +208,7 @@ module.exports = function render(input, out) {
         }
 
         var widgetDef = widgetsContext.beginWidget({
-            type: modulePath,
+            type: typeName,
             id: id,
             config: config,
             state: state,

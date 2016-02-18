@@ -28,38 +28,49 @@ function isUpperCase(c) {
 }
 
 function addBubblingEventListener(transformHelper, eventType, targetMethod) {
-
     var containingWidgetNode = transformHelper.getContainingWidgetNode();
-    var node = transformHelper.node;
+    var el = transformHelper.el;
 
     if (!containingWidgetNode) {
-        node.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+        transformHelper.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
         return;
     }
 
-    node.setAttribute('data-w-on' + eventType,
-        transformHelper.compiler.makeExpression(targetMethod + '+' + '"|"' +
-        '+widget.id'));
+    var builder = transformHelper.builder;
+
+    el.setAttributeValue(
+        'data-w-on' + eventType.value,
+        builder.concat(
+            targetMethod,
+            builder.literal('|'),
+            builder.memberExpression(
+                builder.identifier('widget'),
+                builder.identifier('id'))));
 }
 
 function addDirectEventListener(transformHelper, eventType, targetMethod) {
+    var builder = transformHelper.builder;
+    var el = transformHelper.el;
 
-    var compiler = transformHelper.compiler;
-    var node = transformHelper.node;
+    var addDomEvent = builder.memberExpression(
+        builder.identifier('widget'),
+        builder.identifier('addDomEvent'));
 
-    // Create a node that will generate code to register the DOM event listener
-    var domEventNode = compiler.createNode('w-dom-event', {
-        eventType: JSON.stringify(eventType),
-        targetMethod: targetMethod,
-        elId: transformHelper.getNestedIdExpression().toString()
+    var addDomEventFunctionCall = builder.functionCall(
+        addDomEvent,
+        [
+            eventType,
+            targetMethod,
+            transformHelper.getNestedIdExpression()
+        ]);
+
+    el.onBeforeGenerateCode((event) => {
+        event.insertCode(addDomEventFunctionCall);
     });
-
-    // Insert the node right before the node with the DOM event listener
-    node.parentNode.insertBefore(domEventNode, node);
 
     // Also add another DOM element that will be used to
     var containingWidgetNode = transformHelper.getContainingWidgetNode();
-    containingWidgetNode.setProperty('hasDomEvents', compiler.makeExpression('1'));
+    containingWidgetNode.setAttributeValue('hasDomEvents', builder.literal(1));
 }
 
 function addCustomEventListener(transformHelper, eventType, targetMethod) {
@@ -68,77 +79,83 @@ function addCustomEventListener(transformHelper, eventType, targetMethod) {
     widgetArgs.addCustomEvent(eventType, targetMethod);
 }
 
-function handleWidgetEvents() {
-
+module.exports = function handleWidgetEvents() {
+    var el = this.el;
+    var builder = this.builder;
+    var isCustomTag = el.type !== 'HtmlElement';
     // We configured the Marko compiler to attach a flag to nodes that
     // have one or more attributes that match the "w-on*" pattern.
     // We still need to loop over the properties to find and handle
     // the properties corresponding to those attributes.
-    var hasWidgetEvents = this.node.hasFlag('hasWidgetEvents') === true;
+    var hasWidgetEvents = this.el.isFlagSet('hasWidgetEvents') === true;
 
     if (hasWidgetEvents) {
-        var widgetArgs = this.getWidgetArgs();
+        var attrs = el.getAttributes().concat([]);
 
-        if (widgetArgs.getId() == null) {
-            widgetArgs.setId(this.nextUniqueId());
-        }
+        attrs.forEach((attr) => {
+            var attrName = attr.name;
+            if (!attrName || !attrName.startsWith('w-on')) {
+                return;
+            }
 
-        var props = this.nodeProps;
-        var node = this.node;
+            el.removeAttribute(attrName);
 
+            var eventType = attrName.substring(4); // Chop off "w-on"
+            var targetMethod = attr.value;
 
-        for (var propName in props) {
-            if (props.hasOwnProperty(propName) && propName.startsWith('w-on')) {
-                var eventType = propName.substring(4); // Chop off "w-on"
-                var targetMethod = props[propName];
+            if (isCustomTag) {
+                var widgetArgs = this.getWidgetArgs();
+                if (widgetArgs.getId() == null) {
+                    widgetArgs.setId(builder.literal(this.nextUniqueId()));
+                }
 
-                if (node.tag) {
-                    node.removeProperty(propName);
-                    // We are adding an event listener for a custom event (not a DOM event)
-                    if (eventType.startsWith('-')) {
-                        // Remove the leading dash.
-                        // Example: w-on-before-show → before-show
-                        eventType = eventType.substring(1);
-                    } else if (isUpperCase(eventType.charAt(0))) {
-                        // Convert first character to lower case:
-                        // Example: w-onBeforeShow → beforeShow
-                        eventType = eventType.charAt(0).toLowerCase() + eventType.substring(1);
-                    }
+                // We are adding an event listener for a custom event (not a DOM event)
+                if (eventType.startsWith('-')) {
+                    // Remove the leading dash.
+                    // Example: w-on-before-show → before-show
+                    eventType = eventType.substring(1);
+                } else if (isUpperCase(eventType.charAt(0))) {
+                    // Convert first character to lower case:
+                    // Example: w-onBeforeShow → beforeShow
+                    eventType = eventType.charAt(0).toLowerCase() + eventType.substring(1);
+                }
 
-                    // Node is for a custom tag
-                    addCustomEventListener(this, eventType, targetMethod);
+                eventType = builder.literal(eventType);
+
+                // Node is for a custom tag
+                addCustomEventListener(this, eventType, targetMethod);
+            } else {
+                // We are adding an event listener for a DOM event (not a custom event)
+                //
+                if (eventType.startsWith('-')) {
+                    // Remove the leading dash.
+                    // Example: w-on-before-show → before-show
+                    eventType = eventType.substring(1);
+                }
+
+                // Normalize DOM event types to be all lower case
+                eventType = eventType.toLowerCase();
+
+                // Node is for an HTML element so treat the event as a DOM event
+                var willBubble = isBubbleEvent(eventType);
+
+                eventType = builder.literal(eventType);
+
+                if (willBubble) {
+                    // The event is white listed for bubbling so we know that
+                    // we have already attached a listener on document.body
+                    // that can be used to handle the event. We will add
+                    // a "data-w-on{eventType}" attribute to the output HTML
+                    // for this element that will be used to map the event
+                    // to a method on the containing widget.
+                    addBubblingEventListener(this, eventType, targetMethod);
                 } else {
-                    // We are adding an event listener for a DOM event (not a custom event)
-                    //
-                    if (eventType.startsWith('-')) {
-                        // Remove the leading dash.
-                        // Example: w-on-before-show → before-show
-                        eventType = eventType.substring(1);
-                    }
-
-                    // Normalize DOM event types to be all lower case
-                    eventType = eventType.toLowerCase();
-
-                    // Node is for an HTML element so treat the event as a DOM event
-                    var willBubble = isBubbleEvent(eventType);
-
-                    if (willBubble) {
-                        // The event is white listed for bubbling so we know that
-                        // we have already attached a listener on document.body
-                        // that can be used to handle the event. We will add
-                        // a "data-w-on{eventType}" attribute to the output HTML
-                        // for this element that will be used to map the event
-                        // to a method on the containing widget.
-                        addBubblingEventListener(this, eventType, targetMethod);
-                    } else {
-                        // The event does not bubble so we must attach a DOM
-                        // event listener directly to the target element.
-                        addDirectEventListener(this, eventType, targetMethod);
-                    }
+                    // The event does not bubble so we must attach a DOM
+                    // event listener directly to the target element.
+                    addDirectEventListener(this, eventType, targetMethod);
                 }
             }
-        }
-    }
-}
+        });
 
-module.exports = handleWidgetEvents;
+    }
+};

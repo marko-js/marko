@@ -1,5 +1,5 @@
 <div class="app-self-reference" w-bind>
     Count: ${data.count}
 
-    <app-self-reference count="${data.count - 1}" if="data.count > 0"/>
+    <app-self-reference count=(data.count-1) if(data.count > 0)/>
 </div>

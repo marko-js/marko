@@ -50,6 +50,8 @@ function run() {
     var pageHtmlFile = path.join(outputDir, 'test-page.html');
 
     var out = fs.createWriteStream(pageHtmlFile, 'utf8');
+
+    console.log('Rendering HTML page...');
     pageTemplate.render({
             layout: pageLayoutTemplate
         }, out)

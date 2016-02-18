@@ -15,10 +15,10 @@
  */
 
 function handleWidgetEvents() {
-
-    var preserveAttrsExpression = this.node.getProperty('w-preserve-attrs');
-    this.node.removeProperty('w-preserve-attrs');
-    this.node.setAttribute('data-w-preserve-attrs', preserveAttrsExpression);
+    var el = this.el;
+    var preserveAttrsExpression = el.getAttributeValue('w-preserve-attrs');
+    el.removeAttribute('w-preserve-attrs');
+    el.setAttributeValue('data-w-preserve-attrs', preserveAttrsExpression);
 }
 
 module.exports = handleWidgetEvents;

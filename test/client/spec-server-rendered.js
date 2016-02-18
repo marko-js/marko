@@ -176,6 +176,6 @@ describe('server-rendered' , function() {
     });
 
     it('[server-rendered] should allow a widget to reference itself', function() {
-        
+
     });
 });

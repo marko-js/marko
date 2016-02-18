@@ -15,53 +15,69 @@
  */
 
 module.exports = function handleWidgetExtend() {
-    var props = this.nodeProps;
+    var el = this.el;
 
-    var widgetExtend = props['w-extend'];
-    if (widgetExtend == null) {
+    if (!el.hasAttribute('w-extend')) {
         return;
     }
 
-    var node = this.node;
+    var extendAttr = el.getAttribute('w-extend');
 
+    var modulePath;
     var widgetArgs = this.getWidgetArgs();
-    var template = this.template;
+    var context = this.context;
+    var builder = this.builder;
 
-    if (widgetExtend === '') {
-        widgetExtend = this.getDefaultWidgetModule();
-        if (!widgetExtend) {
-            node.addError('Unable to find default widget module when using w-extend without a value');
+    if (extendAttr.value == null) {
+        modulePath = this.getDefaultWidgetModule();
+        if (!modulePath) {
+            this.addError('Unable to find default widget module when using w-extend without a value');
             return;
         }
-    }
-
-    node.data.widgetExtend = true;
-
-    node.addNestedVariable('widget');
-
-    var extendConfig = props['w-config'];
-
-    if (extendConfig) {
-        extendConfig = template.makeExpression(extendConfig);
+    } else if (extendAttr.isLiteralValue()) {
+        modulePath = extendAttr.literalValue; // The value of the literal value
+        if (typeof modulePath !== 'string') {
+            this.addError('The value for the "w-extend" attribute should be a string.');
+            return;
+        }
     } else {
-        extendConfig = template.makeExpression('data.widgetConfig');
+        throw new Error('Not yet implemented');
     }
 
-    var extendState = props['w-state'];
+    this.widgetStack.push({
+        el: el,
+        extend: true
+    });
 
-    if (extendState) {
-        extendState = template.makeExpression(extendState);
-    } else {
-        extendState = template.makeExpression('data.widgetState');
+    el.addNestedVariable('widget');
+
+    var extendConfig = el.getAttributeValue('w-config');
+
+    if (!extendConfig) {
+        // extendConfig = data.widgetConfig
+        extendConfig = builder.memberExpression(
+            builder.identifier('data'),
+            builder.identifier('widgetConfig'));
     }
+
+    var extendState = el.getAttributeValue('w-state');
+
+    if (!extendState) {
+        // extendState = data.widgetState
+        extendState = builder.memberExpression(
+            builder.identifier('data'),
+            builder.identifier('widgetState'));
+    }
+
+    var widgetTypeVar = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
 
     widgetArgs.setExtend(
-            this.registerWidgetType(widgetExtend),
+            widgetTypeVar,
             extendConfig,
             extendState);
 
     // Do some cleanup
-    delete props['w-extend'];
-    delete props['w-config'];
-    delete props['w-state'];
+    el.removeAttribute('w-extend');
+    el.removeAttribute('w-config');
+    el.removeAttribute('w-state');
 };

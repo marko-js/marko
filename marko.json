@@ -1,0 +1,92 @@
+{
+    "<*>": {
+        "@w-bind": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-scope": {
+            "type": "expression",
+            "preserve-name": true
+        },
+
+        "@w-extend": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-config": {
+            "type": "expression",
+            "preserve-name": true
+        },
+        "@w-for": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-id": {
+            "type": "string",
+            "preserve-name": true
+        },
+        "@w-on*": {
+            "pattern": true,
+            "type": "string",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasWidgetEvents"
+        },
+        "@w-body": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-preserve": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-preserve-body": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-preserve-if": {
+            "type": "expression",
+            "preserve-name": true
+        },
+        "@w-preserve-body-if": {
+            "type": "expression",
+            "preserve-name": true
+        },
+        "@w-preserve-attrs": {
+            "type": "string",
+            "preserve-name": true
+        },
+        "transformer": "./taglib/widgets-transformer.js"
+    },
+    "<w-widget>": {
+        "renderer": "./taglib/widget-tag.js",
+        "@type": "object",
+        "@config": "object",
+        "@id": "string",
+        "@hasDomEvents": "number",
+        "@body": "string",
+        "var": "widget",
+        "import-var": {
+            "_cfg": "data.widgetConfig",
+            "_state": "data.widgetState",
+            "_props": "data.widgetProps",
+            "_body": "data.widgetBody"
+        }
+    },
+    "<init-widgets>": {
+        "renderer": "./taglib/init-widgets-tag.js",
+        "@function-name": "string",
+        "@include-script-tag": "boolean",
+        "@immediate": "boolean"
+    },
+    "<w-preserve>": {
+        "renderer": "./taglib/preserve-tag.js",
+        "@id": "string",
+        "@if": "expression",
+        "@body-only": "expression"
+    },
+    "<widget-types>": {
+        "code-generator": "./taglib/widget-types-tag.js",
+        "@*": "string"
+    }
+}

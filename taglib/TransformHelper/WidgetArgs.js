@@ -13,52 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
+
 var getRequirePath = require('../getRequirePath');
 
-function WidgetArgs() {
-    this.id = null;
-    this.customEvents = null;
-    this.extend = null;
-    this.extendConfig = null;
-    this.extendState = null;
+class WidgetArgs {
 
-    this.empty = true;
-}
+    constructor() {
+        this.id = null;
+        this.customEvents = null;
+        this.extend = null;
+        this.extendConfig = null;
+        this.extendState = null;
 
-WidgetArgs.prototype = {
-    setId: function(id) {
+        this.empty = true;
+    }
+
+    setId(id) {
         this.empty = false;
 
         this.id = id;
-    },
+    }
 
-    getId: function() {
+    getId() {
         return this.id;
-    },
+    }
 
-    addCustomEvent: function(eventType, targetMethod) {
+    addCustomEvent(eventType, targetMethod) {
         this.empty = false;
 
         if (!this.customEvents) {
             this.customEvents = [];
         }
 
-        this.customEvents.push(JSON.stringify(eventType));
+        this.customEvents.push(eventType);
         this.customEvents.push(targetMethod);
-    },
+    }
 
-    setExtend: function(extendType, extendConfig, extendState) {
+    setExtend(extendType, extendConfig, extendState) {
         this.empty = false;
 
         this.extend = extendType;
         this.extendConfig = extendConfig;
         this.extendState = extendState;
-    },
+    }
 
-    compileWidgetArgs: function(node, template) {
+    compile(transformHelper) {
         if (this.empty) {
             return;
         }
+
+        var el = transformHelper.el;
+
+        let widgetArgsFunctionCall = this.buildWidgetArgsFunctionCall(transformHelper);
+        let cleanupWidgetArgsFunctionCall = this.buildCleanupWidgetArgsFunctionCall(transformHelper);
+
+        el.onBeforeGenerateCode((event) => {
+            event.insertCode(widgetArgsFunctionCall);
+        });
+
+        el.onAfterGenerateCode((event) => {
+            event.insertCode(cleanupWidgetArgsFunctionCall);
+        });
+    }
+
+    buildWidgetArgsFunctionCall(transformHelper) {
+        var context = transformHelper.context;
+        var builder = transformHelper.builder;
 
         var id = this.id;
         var customEvents = this.customEvents;
@@ -66,45 +87,57 @@ WidgetArgs.prototype = {
         var extendConfig = this.extendConfig;
         var extendState = this.extendState;
 
-        template.addStaticVar('__widgetArgs',
-            'require("' + getRequirePath('marko-widgets/taglib/helpers/widgetArgs', template) + '")');
+        // Make sure the nested widget has access to the ID of the containing
+        // widget if it is needed
+        var shouldProvideScope = id || customEvents;
 
-        template.addStaticVar('_cleanupWidgetArgs',
+        let widgetArgsVar = context.addStaticVar('__widgetArgs',
+            'require("' + getRequirePath('marko-widgets/taglib/helpers/widgetArgs', context) + '")');
+
+        var functionCallArgs = [
+            builder.identifier('out')
+        ];
+
+        if (shouldProvideScope) {
+            functionCallArgs.push(builder.memberExpression(
+                builder.identifier('widget'),
+                builder.identifier('id')
+            ));
+        } else {
+            functionCallArgs.push(builder.literalNull());
+        }
+
+        if (id != null) {
+            functionCallArgs.push(id);
+        } else {
+            functionCallArgs.push(builder.literalNull());
+        }
+
+        if (customEvents) {
+            functionCallArgs.push(builder.literal(customEvents));
+        }
+
+        if (extend) {
+            if (!customEvents) {
+                functionCallArgs.push(builder.literalNull());
+            }
+
+            functionCallArgs.push(extend);
+            functionCallArgs.push(extendConfig || builder.literalNull());
+            functionCallArgs.push(extendState || builder.literalNull());
+        }
+        return builder.functionCall(widgetArgsVar, functionCallArgs);
+    }
+
+    buildCleanupWidgetArgsFunctionCall(transformHelper) {
+        var context = transformHelper.context;
+        var builder = transformHelper.builder;
+
+        var cleanupWidgetArgsVar = context.addStaticVar('_cleanupWidgetArgs',
             '__widgetArgs.cleanup');
 
-        node.addBeforeCode(function() {
-
-            // Make sure the nested widget has access to the ID of the containing
-            // widget if it is needed
-            var shouldProvideScope = id || customEvents;
-
-            var widgetArgsParts = [shouldProvideScope ? 'widget.id' : 'null'];
-
-            if (id != null) {
-                widgetArgsParts.push(id.toString());
-            } else {
-                widgetArgsParts.push('null');
-            }
-
-            if (customEvents) {
-                widgetArgsParts.push('[' + customEvents.join(',') + ']');
-            }
-
-            if (extend) {
-                if (!customEvents) {
-                    widgetArgsParts.push('null');
-                }
-
-                widgetArgsParts.push(extend);
-                widgetArgsParts.push(extendConfig);
-                widgetArgsParts.push(extendState);
-            }
-
-            return template.makeExpression('__widgetArgs(out, ' + widgetArgsParts.join(', ') + ');');
-        });
-
-        node.addAfterCode(template.makeExpression('_cleanupWidgetArgs(out);'));
+        return builder.functionCall(cleanupWidgetArgsVar, [builder.identifierOut()]);
     }
-};
+}
 
 module.exports = WidgetArgs;

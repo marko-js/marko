@@ -13,62 +13,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 module.exports = function handleWidgetBody() {
-    var props = this.nodeProps;
-    var template = this.template;
-    var node = this.node;
-    var compiler = this.compiler;
+    let el = this.el;
 
-    var widgetBody = props['w-body'];
-    if (widgetBody == null) {
+    if (!el.hasAttribute('w-body')) {
         return;
     }
 
-    var widgetTagNode = this.getContainingWidgetNode({ allowExtend: true });
+    let context = this.context;
+    let builder = this.builder;
+
+    let widgetTagNode = this.getContainingWidgetNode();
 
     if (!widgetTagNode) {
-        node.addError('w-body can only be used within the scope of w-bind');
+        this.addError('w-body can only be used within the scope of w-bind');
         return;
     }
-    var idExpression;
-
-    if (widgetBody) {
-        this.assignWidgetId(true /* repeated */);
-
-        var nextVarId = template.data.nextWidgetBodyId;
-        if (nextVarId == null) {
-            nextVarId = template.data.nextWidgetBodyId = 0;
-        }
-
-        var idVarName = '__widgetBody' + (template.data.nextWidgetBodyId++);
-
-        var varNode = compiler.createNode('var', {
-            name: idVarName,
-            value: this.getIdExpression()
-        });
-
-        node.parentNode.insertBefore(varNode, node);
 
 
-        idExpression = template.makeExpression(idVarName);
-        if (node.tag) {
-            this.getWidgetArgs().setId(template.makeExpression('"!"+' + idExpression));
-        } else {
-            node.setAttribute('id', idExpression);
+    let widgetBodyExpression = el.getAttributeValue('w-body');
+    el.removeAttribute('w-body');
+
+    if (widgetBodyExpression) {
+        var widgetIdInfo = this.assignWidgetId(true /* repeated */);
+        if (!widgetIdInfo.idVarNode) {
+            let idVarNode = widgetIdInfo.createIdVarNode();
+            el.onBeforeGenerateCode((event) => {
+                event.insertCode(idVarNode);
+            });
         }
     } else {
-        widgetBody = 'data.widgetBody';
+        this.assignWidgetId(false /* not repeated */);
+        widgetBodyExpression = builder.memberExpression(
+            builder.identifier('data'),
+            builder.identifier('widgetBody')
+        );
 
-        if (widgetTagNode) {
-            widgetTagNode.setProperty('body', this.getNestedIdExpression());
-        }
-
-        idExpression = this.getIdExpression();
+        widgetTagNode.setAttributeValue('body', this.getNestedIdExpression());
     }
 
-    this.node.appendChild(this.compiler.createNode('w-body', {
-        id: idExpression,
-        body: widgetBody
-    }));
+    let widgetBodyVar = context.importModule('__widgetBody', this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/widgetBody'));
+
+    let widgetBodyFunctionCall = builder.functionCall(widgetBodyVar, [
+        builder.identifierOut(),
+        this.getIdExpression(),
+        widgetBodyExpression,
+        builder.identifier('widget')
+    ]);
+
+    el.appendChild(widgetBodyFunctionCall);
 };

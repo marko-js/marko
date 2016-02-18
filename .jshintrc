@@ -1,17 +1,8 @@
 {
-    "predef": [
-        
-    ],
-
-    "globals": {
-        "define": true,
-        "require": true
-    },
-
-    "node" : true,
-    "es5" : false,
-    "browser" : true,
-    "boss" : false,
+    "node": true,
+    "browser": true,
+    "esnext": true,
+    "boss": false,
     "curly": false,
     "debug": false,
     "devel": false,
@@ -32,11 +23,8 @@
     "sub": false,
     "white": false,
     "eqeqeq": false,
-    "latedef": false,
+    "latedef": "func",
     "unused": "vars",
-    "jquery": true,
     "strict": false,
-    
-    /* Relaxing options: */
     "eqnull": true
 }
