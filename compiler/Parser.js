@@ -158,6 +158,8 @@ class Parser {
 
         this.prevTextNode = null;
 
+        var attributeParseErrors = [];
+
         var elDef = {
             tagName: tagName,
             argument: argument,
@@ -171,8 +173,21 @@ class Parser {
                 } else if (attr.value == null) {
                     attrValue = undefined;
                 } else {
-                    let parsedExpression = builder.parseExpression(attr.value);
-                    attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                    let parsedExpression;
+                    let valid = true;
+                    try {
+                        parsedExpression = builder.parseExpression(attr.value);
+                    } catch(e) {
+                        valid = false;
+                        attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                    }
+
+                    if (valid) {
+                        attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                    } else {
+                        attrValue = null;
+                    }
+
                 }
 
                 var attrDef = {
@@ -191,6 +206,13 @@ class Parser {
         };
 
         var node = this.context.createNodeForEl(elDef);
+
+        if (attributeParseErrors.length) {
+
+            attributeParseErrors.forEach((e) => {
+                context.addError(node, e);
+            });
+        }
 
         if (el.shorthandClassNames) {
             mergeShorthandClassNames(node, el.shorthandClassNames, context);
