@@ -135,7 +135,7 @@ class Parser {
 
         if (tagNameExpression) {
             tagName = builder.parseExpression(tagNameExpression);
-        } else if (tagName === 'compiler-options') {
+        } else if (tagName === 'marko-compiler-options') {
             attributes.forEach(function (attr) {
                 let attrName = attr.name;
                 let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
@@ -235,7 +235,7 @@ class Parser {
     }
 
     handleEndElement(elementName) {
-        if (elementName === 'compiler-options') {
+        if (elementName === 'marko-compiler-options') {
             return;
         }
 
