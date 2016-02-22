@@ -298,7 +298,7 @@ module.exports = function(str) {
     }
 
     if (statusVarName) {
-        statusVarName = compiler.builder.parseExpression(statusVarName);
+        statusVarName = parseExpression(statusVarName, 'Invalid status-var option');
         if (statusVarName.type === 'Literal') {
             statusVarName = compiler.builder.identifier(statusVarName.value);
         } else  if (statusVarName.type !== 'Identifier') {
