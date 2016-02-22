@@ -297,9 +297,13 @@ module.exports = function(str) {
         varName = buildIdentifier(varName, 'Invalid variable name');
     }
 
-
     if (statusVarName) {
-        statusVarName = buildIdentifier(statusVarName, 'Invalid status-var option');
+        statusVarName = compiler.builder.parseExpression(statusVarName);
+        if (statusVarName.type === 'Literal') {
+            statusVarName = compiler.builder.identifier(statusVarName.value);
+        } else  if (statusVarName.type !== 'Identifier') {
+            throwError('Invalid status-var option');
+        }
     }
 
     if (forInit) {
