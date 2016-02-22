@@ -71,6 +71,10 @@ class HtmlAttributeCollection {
         this.lookup[key] = attr;
     }
 
+    removeAllAttributes() {
+        this.setAttributes([]);
+    }
+
     hasAttribute(name) {
         ok(typeof name === 'string', 'Invalid attribute name');
         return this.lookup.hasOwnProperty(name);

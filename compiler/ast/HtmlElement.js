@@ -199,6 +199,10 @@ class HtmlElement extends Node {
         }
     }
 
+    removeAllAttributes() {
+        this._attributes.removeAllAttributes();
+    }
+
     hasAttribute(name) {
         return this._attributes != null && this._attributes.hasAttribute(name);
     }
