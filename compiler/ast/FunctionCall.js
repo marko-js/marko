@@ -55,6 +55,30 @@ class FunctionCall extends Node {
         this.callee = walker.walk(this.callee);
         this.args = walker.walk(this.args);
     }
+
+    toString() {
+        var callee = this.callee;
+        var args = this.args;
+
+        var result = callee.toString() + '(';
+
+        if (args && args.length) {
+            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+                if (i !== 0) {
+                    result += ', ';
+                }
+
+                let arg = args[i];
+                if (!arg) {
+                    throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON()));
+                }
+                result += arg;
+            }
+        }
+
+        result += ')';
+        return result;
+    }
 }
 
 module.exports = FunctionCall;

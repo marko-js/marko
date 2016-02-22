@@ -53,6 +53,36 @@ class UpdateExpression extends Node {
     walk(walker) {
         this.argument = walker.walk(this.argument);
     }
+
+    toString() {
+        var argument = this.argument;
+        var operator = this.operator;
+        var prefix = this.prefix;
+
+        let result = '';
+
+        if (prefix) {
+            result += operator;
+        }
+
+        var wrap = isCompoundExpression(argument);
+
+        if (wrap) {
+            result += '(';
+        }
+
+        result += argument;
+
+        if (wrap) {
+            result += ')';
+        }
+
+        if (!prefix) {
+            result += operator;
+        }
+
+        return result;
+    }
 }
 
 module.exports = UpdateExpression;

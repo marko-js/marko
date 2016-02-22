@@ -12,6 +12,10 @@ class Identifier extends Node {
         var name = this.name;
         codegen.write(name);
     }
+
+    toString() {
+        return this.name;
+    }
 }
 
 module.exports = Identifier;

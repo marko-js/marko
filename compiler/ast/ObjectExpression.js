@@ -47,6 +47,24 @@ class ObjectExpression extends Node {
     walk(walker) {
         this.properties = walker.walk(this.properties);
     }
+
+    toString(codegen) {
+        var properties = this.properties;
+
+        if (!properties || !properties.length) {
+            return '{}';
+        }
+
+        let result = '{';
+
+        properties.forEach((prop, i) => {
+            if (i !== 0) {
+                result += ', ';
+            }
+            result += prop;
+        });
+
+        return result + '}';    }
 }
 
 module.exports = ObjectExpression;

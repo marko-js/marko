@@ -10,6 +10,10 @@ class ThisExpression extends Node {
     generateCode(codegen) {
         codegen.write('this');
     }
+
+    toString() {
+        return 'this';
+    }
 }
 
 module.exports = ThisExpression;

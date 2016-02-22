@@ -46,6 +46,28 @@ class Assignment extends Node {
     get noOutput() {
         return !(this.body && this.body.length);
     }
+
+    toString() {
+        var left = this.left;
+        var right = this.right;
+        var operator = this.operator;
+
+        var result = left.toString() + ' ' + (operator || '=') + ' ';
+
+        var wrap = right instanceof Assignment;
+
+        if (wrap) {
+            result += '(';
+        }
+
+        result += right.toString();
+
+        if (wrap) {
+            result += ')';
+        }
+
+        return result;
+    }
 }
 
 module.exports = Assignment;

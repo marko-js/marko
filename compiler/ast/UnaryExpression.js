@@ -19,7 +19,7 @@ class UnaryExpression extends Node {
         if (prefix) {
             codegen.write(operator);
 
-            if (operator === 'typeof') {
+            if (operator === 'typeof' || operator === 'delete') {
                 codegen.write(' ');
             }
         }
@@ -56,6 +56,40 @@ class UnaryExpression extends Node {
 
     walk(walker) {
         this.argument = walker.walk(this.argument);
+    }
+
+    toString() {
+        var argument = this.argument;
+        var operator = this.operator;
+        var prefix = this.prefix;
+
+        let result = '';
+
+        if (prefix) {
+            result += operator;
+
+            if (operator === 'typeof' || operator === 'delete') {
+                result += ' ';
+            }
+        }
+
+        var wrap = isCompoundExpression(argument);
+
+        if (wrap) {
+            result += '(';
+        }
+
+        result += argument;
+
+        if (wrap) {
+            result += ')';
+        }
+
+        if (!prefix) {
+            result += operator;
+        }
+
+        return result;
     }
 }
 

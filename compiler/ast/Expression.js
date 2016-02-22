@@ -17,6 +17,10 @@ class Expression extends Node {
     isCompoundExpression() {
         return true;
     }
+
+    toString() {
+        return this.value;
+    }
 }
 
 module.exports = Expression;

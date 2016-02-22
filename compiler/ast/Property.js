@@ -37,6 +37,20 @@ class Property extends Node {
         this.key = walker.walk(this.key);
         this.value = walker.walk(this.value);
     }
+
+    toString() {
+        var key = this.key;
+        var value = this.value;
+
+        if (key.type === 'Literal') {
+            var propName = key.value;
+            if (isValidJavaScriptIdentifier(propName)) {
+                key = propName;
+            }
+        }
+
+        return key + ': ' + value;
+    }
 }
 
 module.exports = Property;

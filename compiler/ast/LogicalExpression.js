@@ -17,6 +17,24 @@ function generateCodeForOperand(node, codegen) {
     }
 }
 
+function operandToString(node, codegen) {
+    var wrap = isCompoundExpression(node);
+
+    var result = '';
+
+    if (wrap) {
+        result += '(';
+    }
+
+    result += node;
+
+    if (wrap) {
+        result += ')';
+    }
+
+    return result;
+}
+
 class LogicalExpression extends Node {
     constructor(def) {
         super('LogicalExpression');
@@ -57,6 +75,18 @@ class LogicalExpression extends Node {
     walk(walker) {
         this.left = walker.walk(this.left);
         this.right = walker.walk(this.right);
+    }
+
+    toString() {
+        var left = this.left;
+        var operator = this.operator;
+        var right = this.right;
+
+        if (!left || !right) {
+            throw new Error('Invalid LogicalExpression: ' + this);
+        }
+
+        return operandToString(left) + ' ' + operator + ' ' + operandToString(right);
     }
 }
 

@@ -14,8 +14,6 @@ class NewExpression extends Node {
         var callee = this.callee;
         var args = this.args;
 
-
-
         codegen.write('new ');
 
         var wrap = isCompoundExpression(callee);
@@ -64,6 +62,43 @@ class NewExpression extends Node {
     walk(walker) {
         this.callee = walker.walk(this.callee);
         this.args = walker.walk(this.args);
+    }
+
+    toString() {
+        var callee = this.callee;
+        var args = this.args;
+
+        let result = 'new ';
+
+        var wrap = isCompoundExpression(callee);
+
+        if (wrap) {
+            result += '(';
+        }
+
+        result += callee;
+
+        if (wrap) {
+            result += ')';
+        }
+
+
+        result += '(';
+
+        if (args && args.length) {
+            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+                if (i !== 0) {
+                    result += ', ';
+                }
+
+                let arg = args[i];
+                result += arg;
+            }
+        }
+
+        result += ')';
+
+        return result;
     }
 }
 

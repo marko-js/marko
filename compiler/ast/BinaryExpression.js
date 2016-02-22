@@ -17,6 +17,24 @@ function generateCodeForOperand(node, codegen) {
     }
 }
 
+function operandToString(node) {
+    var wrap = isCompoundExpression(node);
+
+    var result = '';
+
+    if (wrap) {
+        result += '(';
+    }
+
+    result += node.toString();
+
+    if (wrap) {
+        result += ')';
+    }
+
+    return result;
+}
+
 class BinaryExpression extends Node {
     constructor(def) {
         super('BinaryExpression');
@@ -69,6 +87,18 @@ class BinaryExpression extends Node {
     walk(walker) {
         this.left = walker.walk(this.left);
         this.right = walker.walk(this.right);
+    }
+
+    toString() {
+        var left = this.left;
+        var operator = this.operator;
+        var right = this.right;
+
+        if (!left || !right) {
+            throw new Error('Invalid BinaryExpression: ' + this);
+        }
+
+        return operandToString(left) + ' ' + operator + ' ' + operandToString(right);
     }
 }
 

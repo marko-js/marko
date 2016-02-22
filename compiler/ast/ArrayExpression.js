@@ -47,6 +47,21 @@ class ArrayExpression extends Node {
             elements: this.elements
         };
     }
+
+    toString() {
+        var result = '[';
+        var elements = this.elements;
+        if (elements) {
+            elements.forEach((element, i) => {
+                if (i !== 0) {
+                    result += ', ';
+                }
+                result += element.toString();
+            });
+        }
+
+        return result + ']';
+    }
 }
 
 module.exports = ArrayExpression;

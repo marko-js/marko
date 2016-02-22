@@ -41,6 +41,13 @@ class ConditionalExpression extends Node {
         this.consequent = walker.walk(this.consequent);
         this.alternate = walker.walk(this.alternate);
     }
+
+    toString() {
+        var test = this.test;
+        var consequent = this.consequent;
+        var alternate = this.alternate;
+        return test.toString() + ' ? ' + consequent + ' : ' + alternate;
+    }
 }
 
 module.exports = ConditionalExpression;
