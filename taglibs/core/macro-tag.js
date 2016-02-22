@@ -6,7 +6,7 @@ module.exports = function codeGenerator(elNode, codegen) {
     }
 
     var defAttr = attributes[0];
-    if (!defAttr.argument) {
+    if (defAttr.argument == null) {
         return;
     }
 
