@@ -15,7 +15,8 @@ class Walker {
 
     _reset() {
         this._skipped = false;
-        this._replaced = null;
+        this._replaced = undefined;
+        this._removed = false;
     }
 
     skip() {
@@ -28,6 +29,10 @@ class Walker {
 
     replace(newNode) {
         this._replaced = newNode;
+    }
+
+    remove() {
+        this._removed = true;
     }
 
     _walkArray(array) {
@@ -57,7 +62,7 @@ class Walker {
     _walkContainer(nodes) {
         nodes.forEach((node) => {
             var transformed = this.walk(node);
-            if (transformed == null) {
+            if (!transformed) {
                 node.container.removeChild(node);
             } else if (transformed !== node) {
                 node.container.replaceChild(transformed, node);
@@ -76,8 +81,16 @@ class Walker {
 
         this._stack.push(node);
 
-        var replaced = this._enter(node, parent) || this._replaced;
-        if (replaced) {
+        var replaced = this._enter(node, parent);
+        if (replaced === undefined) {
+            replaced = this._replaced;
+        }
+
+        if (this._removed) {
+            replaced = null;
+        }
+
+        if (replaced !== undefined) {
             this._stack.pop();
             return replaced;
         }
@@ -110,7 +123,15 @@ class Walker {
 
         this._reset();
         replaced = this._exit(node, parent) || this._replaced;
-        if (replaced) {
+        if (replaced === undefined) {
+            replaced = this._replaced;
+        }
+
+        if (this._removed) {
+            replaced = null;
+        }
+
+        if (replaced !== undefined) {
             this._stack.pop();
             return replaced;
         }
