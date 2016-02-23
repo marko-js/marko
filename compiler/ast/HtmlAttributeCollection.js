@@ -127,7 +127,7 @@ class HtmlAttributeCollection {
                         let attrValue = attributes[attrName];
                         let attrDef;
 
-                        if (typeof attrValue === 'object' && !(attrValue instanceof Node)) {
+                        if (attrValue != null && typeof attrValue === 'object' && !(attrValue instanceof Node)) {
                             attrDef = attrValue;
                             attrDef.name = attrName;
                         } else {
