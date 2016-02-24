@@ -120,16 +120,98 @@ template.stream(templateData).pipe(process.stdout);
 
 # UI Components
 
-Marko Widgets is a minimalist library for building UI components with the help of the
-[Marko templating engine](http://markojs.com/docs/). Marko is used for rendering the HTML for UI components,
-while Marko Widgets is used to add client-side behavior. Client-side behavior includes the following:
+Marko Widgets is a minimalist library for building isomorphic/universal UI components with the help of the
+[Marko templating engine](http://markojs.com/docs/). Marko renders the HTML for UI components, while Marko Widgets adds client-side behavior. Client-side behavior includes the following:
 
 - Handling DOM events
 - Emitting custom events
 - Handling custom events emitted by other widgets
 - Manipulating and updating the DOM
 
+Marko Widgets offers advanced features like DOM-diffing, batched updates, stateful widgets, declarative event binding and efficient event delegation.
+
 Changing a widgets state or properties will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster (especially on the server). When updating the view for a widget, Marko Widgets uses DOM diffing to make the minimum number of changes to the DOM through the use of the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
+
+UI components are defined using very clean JavaScript code. For example:
+
+```javascript
+module.exports = require('marko-widgets').defineComponent({
+    /**
+     * The template to use as the view
+     */
+    template: require('./template.marko'),
+
+    /**
+     * Return the initial state for the UI component based on
+     * the input properties that were provided.
+     */
+    getInitialState: function(input) {
+        return {
+            greetingName: input.greetingName,
+            clickCount: 0
+        };
+    },
+
+    /**
+     * Return an object that is used as the template data. The
+     * template data should be based on the current widget state
+     * that is passed in as the first argument
+     */
+    getTemplateData: function(state) {
+        var clickCount = state.clickCount;
+        var timesMessage = clickCount === 1 ? 'time' : 'times';
+
+        return {
+            greetingName: state.greetingName,
+            clickCount: clickCount,
+            timesMessage: timesMessage
+        };
+    },
+
+    /**
+     * This is the constructor for the widget. Called once when
+     * the widget is first added to the DOM.
+     */
+    init: function() {
+        var el = this.el;
+        // "el" will be reference the raw HTML element that this
+        // widget is bound to. You can do whatever you want with it...
+        // el.style.color = 'red';
+    },
+
+    /**
+     * Handler method for the button "click" event. This method name
+     * matches the name of the `w-onClick` attribute in the template.
+     */
+    handleButtonClick: function(event, el) {
+        this.setState('clickCount', this.state.clickCount + 1);
+    },
+
+    /**
+     * Expose a method to let other code change the "greeting name".
+     * If the value of the "greetingName" state property changes
+     * then the UI component will automatically rerender and the
+     * DOM will be updated.
+     */
+    setGreetingName: function(newName) {
+        this.setState('greetingName', newName);
+    }
+});
+```
+
+And, here is the corresponding Marko template for the UI component:
+
+```xml
+<div class="click-count" w-bind>
+    Hello ${data.greetingName}!
+    <div>
+        You clicked the button ${data.clickCount} ${data.timesMessage}.
+    </div>
+    <button type="button" w-onclick="handleButtonClick">
+        Click Me
+    </button>
+</div>
+```
 
 <a href="http://markojs.com/marko-widgets/try-online/" target="_blank">Try Marko Widgets Online!</a>
 
