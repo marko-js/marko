@@ -7,7 +7,7 @@ var Node = require('./Node');
 
 class HtmlAttributeCollection {
     constructor(attributes) {
-        this.setAttributes(attributes);
+        this.replaceAttributes(attributes);
     }
 
     addAttribute(newAttr) {
@@ -72,7 +72,7 @@ class HtmlAttributeCollection {
     }
 
     removeAllAttributes() {
-        this.setAttributes([]);
+        this.replaceAttributes([]);
     }
 
     hasAttribute(name) {
@@ -112,7 +112,7 @@ class HtmlAttributeCollection {
         return JSON.stringify(this.all);
     }
 
-    setAttributes(attributes) {
+    replaceAttributes(attributes) {
         this.all = [];
         this.lookup = {};
 
@@ -146,7 +146,7 @@ class HtmlAttributeCollection {
 
     walk(walker) {
         var newAttributes = walker.walk(this.all);
-        this.setAttributes(newAttributes);
+        this.replaceAttributes(newAttributes);
     }
 }
 

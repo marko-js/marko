@@ -193,6 +193,10 @@ class HtmlElement extends Node {
         this._attributes.setAttributeValue(name, value);
     }
 
+    replaceAttributes(newAttributes) {
+        this._attributes.replaceAttributes(newAttributes);
+    }
+
     removeAttribute(name) {
         if (this._attributes) {
             this._attributes.removeAttribute(name);
