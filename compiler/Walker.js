@@ -122,7 +122,8 @@ class Walker {
         }
 
         this._reset();
-        replaced = this._exit(node, parent) || this._replaced;
+
+        replaced = this._exit(node, parent);
         if (replaced === undefined) {
             replaced = this._replaced;
         }
