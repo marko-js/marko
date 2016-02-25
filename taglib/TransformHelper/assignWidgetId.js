@@ -134,7 +134,7 @@ module.exports = function assignWidgetId(isRepeated) {
             this.idExpression = idExpression = idVar;
 
             this.nestedIdExpression = nestedIdExpression = builder.concat(
-                builder.literal('!'),
+                builder.literal('#'),
                 idVar);
 
             if (isCustomTag) {
