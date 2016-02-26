@@ -4,6 +4,7 @@ chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
+var taglibLoader = require('../compiler').taglibLoader;
 
 describe('taglib-loader' , function() {
 
@@ -18,7 +19,6 @@ describe('taglib-loader' , function() {
     });
 
     it('should load a taglib with shorthand attributes and tags', function() {
-        var taglibLoader = require('../compiler').taglibLoader;
         var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/taglib-shorthand/marko.json'));
         expect(taglib != null).to.equal(true);
 
@@ -37,6 +37,14 @@ describe('taglib-loader' , function() {
         expect(nestedTabTag.attributes.label != null).to.equal(true);
         expect(nestedTabTag.isRepeated).to.equal(true);
         expect(nestedTabTag.targetProperty).to.equal('tabs');
+    });
+
+    it('should load a taglib with index*.js or render*.js', function() {
+        var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/marko.json'));
+
+        console.log(taglib.tags['test-declared-attributes'].renderer);
+        expect(taglib).to.not.be.null;
+        expect(taglib).to.have.deep.property("tags.test-declared-attributes.renderer").to.have.string('renderer.js');
     });
 
 
