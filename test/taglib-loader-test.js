@@ -39,10 +39,9 @@ describe('taglib-loader' , function() {
         expect(nestedTabTag.targetProperty).to.equal('tabs');
     });
 
-    it('should load a taglib with index*.js or render*.js', function() {
+    it('should load a taglib with index.* or render.* extension', function() {
         var taglib = taglibLoader.load(nodePath.join(__dirname, 'fixtures/marko.json'));
 
-        console.log(taglib.tags['test-declared-attributes'].renderer);
         expect(taglib).to.not.be.null;
         expect(taglib).to.have.deep.property("tags.test-declared-attributes.renderer").to.have.string('renderer.js');
     });
