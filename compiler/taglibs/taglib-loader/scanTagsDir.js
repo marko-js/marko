@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,6 +31,26 @@ function createDefaultTagDef() {
                 }
             }
          };
+}
+
+function scanRequireExtensions(baseFilename) {
+    // .js is the most common case so check that first
+    var path = baseFilename + '.js';
+
+    if (fs.existsSync(path)) {
+        return path;
+    }
+
+    for (var extension in require.extensions) {
+        if (extension === '.js') {
+            // We already checked .js above
+            continue;
+        }
+        path = baseFilename + extension;
+        if (fs.existsSync(path)) {
+            return path; // short circuit loop
+        }
+    }
 }
 
 
@@ -66,11 +86,11 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
-        var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
+        var tagFile = nodePath.join(tagDirname, 'marko-tag.json');
         var tag = null;
-        var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
-        var indexFile = nodePath.join(dir, childFilename, 'index.js');
-        var templateFile = nodePath.join(dir, childFilename, 'template.marko');
+        var rendererFile = scanRequireExtensions(nodePath.join(tagDirname, 'renderer'));
+        var indexFile = scanRequireExtensions(nodePath.join(tagDirname, 'index'));
+        var templateFile = nodePath.join(tagDirname, 'template.marko');
         var tagDef = null;
 
         // Record dependencies so that we can check if a template is up-to-date
