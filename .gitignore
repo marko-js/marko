@@ -7,3 +7,4 @@
 *.orig
 .DS_Store
 coverage
+.nvmrc

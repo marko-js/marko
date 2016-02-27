@@ -35,6 +35,15 @@ function createDefaultTagDef() {
          };
 }
 
+function scanRequireExtensions(dir, childFilename, filename) {
+    var path;
+    for (var extension in require.extensions) {
+        path = nodePath.join(dir, childFilename, filename + extension);
+        if (fs.existsSync(path)) {
+            return path; // short circuit loop
+        }
+    }
+}
 
 /**
  * @param {String} tagsConfigPath path to tag definition file
@@ -70,8 +79,8 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var tagDirname = nodePath.join(dir, childFilename);
         var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
         var tag = null;
-        var rendererFile = nodePath.join(dir, childFilename, 'renderer.js');
-        var indexFile = nodePath.join(dir, childFilename, 'index.js');
+        var rendererFile = scanRequireExtensions(dir, childFilename, 'renderer');
+        var indexFile = scanRequireExtensions(dir, childFilename, 'index');
         var templateFile = nodePath.join(dir, childFilename, 'template.marko');
         var templateFileAlt = nodePath.join(dir, childFilename, 'template.html');
         var templateFileAlt2 = nodePath.join(dir, childFilename, 'template.marko.html');
@@ -98,9 +107,9 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         }
 
         if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory'] && !tagDef.transformer) {
-            if (fs.existsSync(rendererFile)) {
+            if (rendererFile) {
                 tagDef.renderer = rendererFile;
-            } else if (fs.existsSync(indexFile)) {
+            } else if (indexFile) {
                 tagDef.renderer = indexFile;
             } else if (fs.existsSync(templateFile)) {
                 tagDef.template = templateFile;
