@@ -35,9 +35,9 @@ function createDefaultTagDef() {
          };
 }
 
-function scanRequireExtensions(dir, filename) {
+function scanRequireExtensions(baseFilename) {
     // .js is the most common case so check that first
-    var path = nodePath.join(dir, filename + '.js');
+    var path = baseFilename + '.js';
 
     if (fs.existsSync(path)) {
         return path;
@@ -48,7 +48,7 @@ function scanRequireExtensions(dir, filename) {
             // We already checked .js above
             continue;
         }
-        path = nodePath.join(dir, filename + extension);
+        path = baseFilename + extension;
         if (fs.existsSync(path)) {
             return path; // short circuit loop
         }
@@ -90,13 +90,13 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var tagFile = nodePath.join(tagDirname, 'marko-tag.json');
         var tag = null;
 
-        var rendererFile = scanRequireExtensions(tagDirname, 'renderer');
-        var indexFile = scanRequireExtensions(tagDirname, 'index');
+        var rendererFile = scanRequireExtensions(nodePath.join(tagDirname, 'renderer'));
+        var indexFile = scanRequireExtensions(nodePath.join(tagDirname, 'index'));
         var templateFile = nodePath.join(tagDirname, 'template.marko');
         var templateFileAlt = nodePath.join(tagDirname, 'template.html');
         var templateFileAlt2 = nodePath.join(tagDirname, 'template.marko.html');
-        var codeGeneratorFile = scanRequireExtensions(tagDirname, 'code-generator');
-        var nodeFactoryFile = scanRequireExtensions(tagDirname, 'node-factory');
+        var codeGeneratorFile = scanRequireExtensions(nodePath.join(tagDirname, 'code-generator'));
+        var nodeFactoryFile = scanRequireExtensions(nodePath.join(tagDirname, 'node-factory'));
         var tagDef = null;
 
         // Record dependencies so that we can check if a template is up-to-date
