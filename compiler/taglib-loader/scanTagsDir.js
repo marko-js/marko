@@ -35,10 +35,20 @@ function createDefaultTagDef() {
          };
 }
 
-function scanRequireExtensions(dir, childFilename, filename) {
-    var path;
+function scanRequireExtensions(dir, filename) {
+    // .js is the most common case so check that first
+    var path = nodePath.join(dir, filename + '.js');
+
+    if (fs.existsSync(path)) {
+        return path;
+    }
+
     for (var extension in require.extensions) {
-        path = nodePath.join(dir, childFilename, filename + extension);
+        if (extension === '.js') {
+            // We already checked .js above
+            continue;
+        }
+        path = nodePath.join(dir, filename + extension);
         if (fs.existsSync(path)) {
             return path; // short circuit loop
         }
@@ -77,15 +87,16 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
-        var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
+        var tagFile = nodePath.join(tagDirname, 'marko-tag.json');
         var tag = null;
-        var rendererFile = scanRequireExtensions(dir, childFilename, 'renderer');
-        var indexFile = scanRequireExtensions(dir, childFilename, 'index');
-        var templateFile = nodePath.join(dir, childFilename, 'template.marko');
-        var templateFileAlt = nodePath.join(dir, childFilename, 'template.html');
-        var templateFileAlt2 = nodePath.join(dir, childFilename, 'template.marko.html');
-        var codeGeneratorFile = nodePath.join(dir, childFilename, 'code-generator.js');
-        var nodeFactoryFile = nodePath.join(dir, childFilename, 'node-factory.js');
+
+        var rendererFile = scanRequireExtensions(tagDirname, 'renderer');
+        var indexFile = scanRequireExtensions(tagDirname, 'index');
+        var templateFile = nodePath.join(tagDirname, 'template.marko');
+        var templateFileAlt = nodePath.join(tagDirname, 'template.html');
+        var templateFileAlt2 = nodePath.join(tagDirname, 'template.marko.html');
+        var codeGeneratorFile = scanRequireExtensions(tagDirname, 'code-generator');
+        var nodeFactoryFile = scanRequireExtensions(tagDirname, 'node-factory');
         var tagDef = null;
 
         // Record dependencies so that we can check if a template is up-to-date
