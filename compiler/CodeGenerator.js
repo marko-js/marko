@@ -7,7 +7,7 @@ const Identifier = require('./ast/Identifier');
 const ok = require('assert').ok;
 const Container = require('./ast/Container');
 const util = require('util');
-const isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
+const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
 
 class GeneratorEvent {
     constructor(node, codegen) {
@@ -572,7 +572,7 @@ class Generator {
 
                 this.writeLineIndent();
 
-                if (isValidJavaScriptIdentifier(k)) {
+                if (isValidJavaScriptVarName(k)) {
                     this.write(k + ': ');
                 } else {
                     this.write(JSON.stringify(k) + ': ');

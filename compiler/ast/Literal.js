@@ -2,7 +2,7 @@
 
 var Node = require('./Node');
 var isArray = Array.isArray;
-const isValidJavaScriptIdentifier = require('../util/isValidJavaScriptIdentifier');
+const isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
 
 class Literal extends Node {
     constructor(def) {
@@ -47,7 +47,7 @@ class Literal extends Node {
                     result += ', ';
                 }
 
-                if (isValidJavaScriptIdentifier(k)) {
+                if (isValidJavaScriptVarName(k)) {
                     result += k + ': ';
                 } else {
                     result += JSON.stringify(k) + ': ';

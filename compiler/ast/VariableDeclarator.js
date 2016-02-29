@@ -2,12 +2,24 @@
 
 var Node = require('./Node');
 var Identifier = require('./Identifier');
+var isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
 
 class VariableDeclarator extends Node {
     constructor(def) {
         super('VariableDeclarator');
         this.id = def.id;
         this.init = def.init;
+
+        let name = this.id.name;
+        if (!name) {
+            throw new Error('"name" is required');
+        }
+
+        if (!isValidJavaScriptVarName(name)) {
+            var error = new Error('Invalid JavaScript variable name: ' + name);
+            error.code = 'INVALID_VAR_NAME';
+            throw error;
+        }
     }
 
     generateCode(codegen) {
