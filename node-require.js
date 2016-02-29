@@ -35,9 +35,15 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         templateSrc = fs.readFileSync(templatePath, fsReadOptions);
         compiledSrc = markoCompiler.compile(templateSrc, templatePath);
     } else {
-        var targetDir = path.dirname(templatePath);
-
         var targetFile = templatePath + '.js';
+
+        if (markoCompiler.defaultOptions.assumeUpToDate && fs.existsSync(targetFile)) {
+            // If the target file already exists and "assumeUpToDate" then just use the previously
+            // compiled template.
+            return fs.readFileSync(targetFile, fsReadOptions);
+        }
+
+        var targetDir = path.dirname(templatePath);
 
         var isUpToDate = markoCompiler.checkUpToDate(targetFile);
 
@@ -48,7 +54,7 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         	compiledSrc = markoCompiler.compile(templateSrc, templatePath);
 
             // Write to a temporary file and move it into place to avoid problems
-            // assocatiated with multiple processes write to teh same file. We only
+            // assocatiated with multiple processes write to the same file. We only
             // write the compiled source code to disk so that stack traces will
             // be accurate.
             var filename = path.basename(targetFile);
@@ -78,6 +84,14 @@ exports.install = function(options) {
     }
 
     require.extensions[extension] = function markoExtension(module, filename) {
+        var targetFile = filename + '.js';
+        var loaded = require.cache[targetFile];
+        if (loaded) {
+            // The template has already been loaded so use the exports of the already loaded template
+            module.exports = loaded.exports;
+            return;
+        }
+       
         // Resolve the appropriate compiler relative to the location of the
         // marko template file on disk using the "resolve-from" module.
         var dirname = path.dirname(filename);
@@ -90,6 +104,6 @@ exports.install = function(options) {
 
         // Append ".js" to the filename since that is where we write the compiled
         // source code that is being loaded. This allows stack traces to match up.
-        module._compile(compiledSrc, filename + '.js');
+        module._compile(compiledSrc, targetFile);
     };
 };
