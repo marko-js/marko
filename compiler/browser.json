@@ -1,0 +1,8 @@
+{
+    "dependencies": [
+        "../taglibs/async/browser.json",
+        "../taglibs/core/browser.json",
+        "../taglibs/html/browser.json",
+        "../taglibs/layout/browser.json"
+    ]
+}

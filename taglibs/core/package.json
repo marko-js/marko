@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./include-text-tag.js": "./include-text-tag-browser.js"
+    }
+}
