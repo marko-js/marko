@@ -2,6 +2,10 @@
 var htmljs = require('htmljs-parser');
 
 class HtmlJsParser {
+    constructor(options) {
+        this.ignorePlaceholders = options && options.ignorePlaceholders === true;
+    }
+
     parse(src, handlers) {
         var listeners = {
             onText(event) {
@@ -54,12 +58,11 @@ class HtmlJsParser {
 
                 // Document type: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd
                 // NOTE: The value will be all of the text between "<!" and ">""
-                handlers.handleCharacters('<!' + event.value + '>');
+                handlers.handleDocumentType(event.value);
             },
 
             onDeclaration(event) {
-                // Declaration (e.g. <?xml version="1.0" encoding="UTF-8" ?>)
-                handlers.handleCharacters('<?' + event.value + '?>');
+                handlers.handleDeclaration(event.value);
             },
 
             onComment(event) {
@@ -78,6 +81,7 @@ class HtmlJsParser {
         };
 
         var parser = this.parser = htmljs.createParser(listeners, {
+            ignorePlaceholders: this.ignorePlaceholders,
             isOpenTagOnly: function(tagName) {
                 return handlers.isOpenTagOnly(tagName);
             }

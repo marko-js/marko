@@ -6,8 +6,16 @@ var Parser = require('./Parser');
 var HtmlJsParser = require('./HtmlJsParser');
 var Builder = require('./Builder');
 var extend = require('raptor-util/extend');
+var CompileContext = require('./CompileContext');
 var NODE_ENV = process.env.NODE_ENV;
 var defaultParser = new Parser(new HtmlJsParser());
+var rawParser = new Parser(
+    new HtmlJsParser({
+        ignorePlaceholders: true
+    }),
+    {
+        raw: true
+    });
 
 var defaultOptions = {
         /**
@@ -133,9 +141,15 @@ function clearCaches() {
     exports.taglibLoader.clearCache();
 }
 
+function parseRaw(templateSrc, filename) {
+    var context = new CompileContext(templateSrc, filename, Builder.DEFAULT_BUILDER);
+    return rawParser.parse(templateSrc, context);
+}
+
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
+exports.parseRaw = parseRaw;
 exports.defaultOptions = defaultOptions;
 exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;

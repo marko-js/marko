@@ -69,13 +69,15 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
 }
 
 class Parser {
-    constructor(parserImpl) {
+    constructor(parserImpl, options) {
         ok(parserImpl, '"parserImpl" is required');
 
         this.parserImpl = parserImpl;
 
         this.prevTextNode = null;
         this.stack = null;
+
+        this.raw = options && options.raw === true;
 
         // The context gets provided when parse is called
         // but we store it as part of the object so that the handler
@@ -133,27 +135,31 @@ class Parser {
             argument = argument.value;
         }
 
-        if (tagNameExpression) {
-            tagName = builder.parseExpression(tagNameExpression);
-        } else if (tagName === 'marko-compiler-options') {
-            attributes.forEach(function (attr) {
-                let attrName = attr.name;
-                let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
+        var raw = this.raw;
 
-                if (!handler) {
-                    context.addError({
-                        code: 'ERR_INVALID_COMPILER_OPTION',
-                        message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
-                        pos: el.pos,
-                        node: el
-                    });
-                    return;
-                }
+        if (!raw) {
+            if (tagNameExpression) {
+                tagName = builder.parseExpression(tagNameExpression);
+            } else if (tagName === 'marko-compiler-options') {
+                attributes.forEach(function (attr) {
+                    let attrName = attr.name;
+                    let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 
-                handler(attr, context);
-            });
+                    if (!handler) {
+                        context.addError({
+                            code: 'ERR_INVALID_COMPILER_OPTION',
+                            message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
+                            pos: el.pos,
+                            node: el
+                        });
+                        return;
+                    }
 
-            return;
+                    handler(attr, context);
+                });
+
+                return;
+            }
         }
 
         this.prevTextNode = null;
@@ -183,11 +189,14 @@ class Parser {
                     }
 
                     if (valid) {
-                        attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                        if (raw) {
+                            attrValue = parsedExpression;
+                        } else {
+                            attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                        }
                     } else {
                         attrValue = null;
                     }
-
                 }
 
                 var attrDef = {
@@ -205,7 +214,14 @@ class Parser {
             })
         };
 
-        var node = this.context.createNodeForEl(elDef);
+        var node;
+
+        if (raw) {
+            node = builder.htmlElement(elDef);
+            node.pos = elDef.pos;
+        } else {
+            node = this.context.createNodeForEl(elDef);
+        }
 
         if (attributeParseErrors.length) {
 
@@ -214,15 +230,31 @@ class Parser {
             });
         }
 
-        if (el.shorthandClassNames) {
-            mergeShorthandClassNames(node, el.shorthandClassNames, context);
-        }
 
-        if (el.shorthandId) {
-            if (node.hasAttribute('id')) {
-                context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
-            } else {
-                node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+        // TODO Retain the shorthand class names and IDs in raw mode
+        if (raw) {
+            if (el.shorthandId) {
+                let parsed = builder.parseExpression(el.shorthandId.value);
+                node.rawShorthandId = parsed.value;
+            }
+
+            if (el.shorthandClassNames) {
+                node.rawShorthandClassNames = el.shorthandClassNames.map((className) => {
+                    let parsed = builder.parseExpression(className.value);
+                    return parsed.value;
+                });
+            }
+        } else {
+            if (el.shorthandClassNames) {
+                mergeShorthandClassNames(node, el.shorthandClassNames, context);
+            }
+
+            if (el.shorthandId) {
+                if (node.hasAttribute('id')) {
+                    context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
+                } else {
+                    node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+                }
             }
         }
 
@@ -252,10 +284,28 @@ class Parser {
         var preserveComment = this.context.isPreserveComments() ||
             isIEConditionalComment(comment);
 
-        if (preserveComment) {
+        if (this.raw || preserveComment) {
             var commentNode = builder.htmlComment(builder.literal(comment));
             this.parentNode.appendChild(commentNode);
         }
+    }
+
+    handleDeclaration(value) {
+        this.prevTextNode = null;
+
+        var builder = this.context.builder;
+
+        var declarationNode = builder.declaration(builder.literal(value));
+        this.parentNode.appendChild(declarationNode);
+    }
+
+    handleDocumentType(value) {
+        this.prevTextNode = null;
+
+        var builder = this.context.builder;
+
+        var docTypeNode = builder.documentType(builder.literal(value));
+        this.parentNode.appendChild(docTypeNode);
     }
 
     handleBodyTextPlaceholder(expression, escape) {
