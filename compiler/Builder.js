@@ -45,6 +45,8 @@ var Expression = require('./ast/Expression');
 var Scriptlet = require('./ast/Scriptlet');
 var ContainerNode = require('./ast/ContainerNode');
 var WhileStatement = require('./ast/WhileStatement');
+var DocumentType = require('./ast/DocumentType');
+var Declaration = require('./ast/Declaration');
 
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
@@ -149,6 +151,14 @@ class Builder {
             node.setCodeGenerator(generateCode);
         }
         return node;
+    }
+
+    declaration(declaration) {
+        return new Declaration({declaration});
+    }
+
+    documentType(documentType) {
+        return new DocumentType({documentType});
     }
 
     elseStatement(body) {
