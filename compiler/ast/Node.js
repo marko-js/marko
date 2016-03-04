@@ -123,6 +123,22 @@ class Node {
         }
     }
 
+    get previousSibling() {
+        var container = this.container;
+
+        if (container) {
+            container.getPreviousSibling(this);
+        }
+    }
+
+    get nextSibling() {
+        var container = this.container;
+
+        if (container) {
+            container.getNextSibling(this);
+        }
+    }
+
     isTransformerApplied(transformer) {
         return this._transformersApplied[transformer.id] === true;
     }
