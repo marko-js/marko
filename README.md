@@ -217,6 +217,16 @@ And, here is the corresponding Marko template for the UI component:
 
 For more details on Marko Widgets, please check out the [Marko Widgets Documentation](http://markojs.com/docs/marko-widgets/).
 
+# Common issues
+
+## nodemon
+
+Marko compiles the templates into cached files. For example, it will create `index.marko.js` in the same folder as `index.marko` when the templates are loaded. This will cause a **reboot loop** in nodemon (and maybe similar watching tools) because when nodemon starts, the compiled file gets regenerated and trigger a restart loop for nodemon.
+
+To avoid this, simply add `"ignore": ["*.marko.js"]` into nodemon.json at the root project folder.
+
+As a better drop-in replacement with more features, you can install [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh) instead.
+
 # Changelog
 
 See [CHANGELOG.md](CHANGELOG.md)
