@@ -221,11 +221,14 @@ For more details on Marko Widgets, please check out the [Marko Widgets Documenta
 
 ## nodemon
 
-Marko compiles the templates into cached files. For example, it will create `index.marko.js` in the same folder as `index.marko` when the templates are loaded. This will cause a **reboot loop** in nodemon (and maybe similar watching tools) because when nodemon starts, the compiled file gets regenerated and trigger a restart loop for nodemon.
+When `marko` compiles your server-side templates, a `.marko.js` file is created next to the original `.marko` file.
+Subsequently, `nodemon` will see the new `.marko.js` file and trigger a restart of your app and this can
+repeat indefinitely unless you configure `nodemon` to ignore `*.marko.js` files.
+To avoid this, simply add `"ignore": ["*.marko.js"]` to the `nodemon.json` file at the root of your project.
 
-To avoid this, simply add `"ignore": ["*.marko.js"]` into nodemon.json at the root project folder.
-
-As a better drop-in replacement with more features, you can install [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh) instead.
+As a better drop-in replacement with more features, you can install [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh).
+Be sure to add `*.marko.js` pattern to your `.gitignore` file and `browser-refresh`
+will automatically ignore the compiled marko templates when they are written to disk.
 
 # Changelog
 
