@@ -33,7 +33,7 @@
     "try-require": "^1.2.1"
   },
   "peerDependencies": {
-    "marko": "^3.0.0-alpha.1"
+    "marko": "^3.0.0"
   },
   "devDependencies": {
     "app-module-path": "^1.0.1",
@@ -64,5 +64,5 @@
     "./lib/init-widgets.js": "./lib/init-widgets-browser.js",
     "./lib/defineWidget.js": "./lib/defineWidget-browser.js"
   },
-  "version": "6.0.0-rc.1"
+  "version": "6.0.0"
 }
