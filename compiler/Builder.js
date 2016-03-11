@@ -282,6 +282,8 @@ class Builder {
     }
 
     ifStatement(test, body, elseStatement) {
+        test = makeNode(test);
+
         return new If({test, body, else: elseStatement});
     }
 
