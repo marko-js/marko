@@ -19,7 +19,6 @@ var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./'); // Circular dependency, but that is okay
 var attr = require('raptor-util/attr');
-var attrs = require('raptor-util/attrs');
 var isArray = Array.isArray;
 var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
@@ -190,7 +189,18 @@ module.exports = {
      * Internal method to render multiple HTML attributes based on the properties of an object
      * @private
      */
-    as: attrs,
+    as: function(arg) {
+        if (typeof arg === 'object') {
+            var out = '';
+            for (var attrName in arg) {
+                out += attr(attrName, arg[attrName]);
+            }
+            return out;
+        } else if (typeof arg === 'string') {
+            return arg;
+        }
+        return '';
+    },
 
     /**
      * Internal helper method to handle the "style" attribute. The value can either
