@@ -95,7 +95,7 @@ In addition, Marko has special support for the `class` and `style` attributes as
 
 ## Style attribute
 
-The value of the style attribute can now resolve to an object expression (in addition to a string value) as shown below:
+The value of the style attribute can resolve to an object expression (in addition to a string value) as shown below:
 
 ```xml
 <div style={color: 'red', 'font-weight': 'bold'}>
@@ -109,7 +109,7 @@ Output:
 
 ## Class attribute
 
-The value of the class attribute can now be an object expression or an array expression as shown below:
+The value of the class attribute can resolve to an object expression or an array expression (in addition to a string value) as shown below:
 
 ```xml
 <!-- array: -->

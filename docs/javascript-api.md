@@ -52,7 +52,7 @@ Example **server-side** template compilation from string:
 
 ```javascript
 var templatePath = 'sample.marko';
-var templateSrc = 'Hello $!{data.name}';
+var templateSrc = '<div>Hello $!{data.name}</div>';
 var template = require('marko').load(templatePath, templateSrc);
 template.render({ name: 'Frank' }, process.stdout);
 ```
