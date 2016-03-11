@@ -36,7 +36,7 @@ exports.enable = function() {
     hotReload.enable();
 
     browserRefreshClient
-        .enableSpecialReload('*.marko marko-taglib.json marko-tag.json')
+        .enableSpecialReload('*.marko marko.json marko-tag.json')
         .onFileModified(function(path) {
             hotReload.handleFileModified(path);
         });
