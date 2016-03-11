@@ -24,9 +24,9 @@ exports.render = function(input, out) {
 ```
 For users of Marko Widgets: Invoking `input.renderBody` is equivalent to using the `w-body` attribute for tags (in conjunction with the `getInitialBody()` lifecycle method; see [getInitialBody()](https://github.com/marko-js/marko-widgets#getinitialbodyinput-out)).
 
-A tag renderer should be mapped to a custom tag by creating a `marko-taglib.json` as shown in the next few sections.
+A tag renderer should be mapped to a custom tag by creating a `marko.json` as shown in the next few sections.
 
-# marko-taglib.json
+# marko.json
 
 ## Sample Taglib
 
@@ -43,7 +43,7 @@ A tag renderer should be mapped to a custom tag by creating a `marko-taglib.json
 }
 ```
 
-Marko also supports a short-hand for declaring tags and attributes. The following `marko-taglib.json` is equivalent to the `marko-taglib.json` above:
+Marko also supports a short-hand for declaring tags and attributes. The following `marko.json` is equivalent to the `marko.json` above:
 
 ```json
 {
@@ -58,7 +58,7 @@ The short-hand will be used for the remaining of this documentation.
 
 # Defining Tags
 
-Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `marko-taglib.json`:
+Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `marko.json`:
 
 ```json
 {
@@ -103,7 +103,7 @@ Marko supports a directory scanner to make it easier to maintain a taglib by int
 * Every tag directory must contain a `renderer.js` that is used as the tag renderer or, alternatively, a `template.marko`
 * Each tag directory may contain a `marko-tag.json` file or the tag definition can be embedded into `renderer.js`
 
-With this approach, `marko-taglib.json` will be much simpler:
+With this approach, `marko.json` will be much simpler:
 
 ```json
 {
@@ -120,7 +120,7 @@ Given the following directory structure:
     * __my-bar/__
         * renderer.js
         * marko-tag.json
-* marko-taglib.json
+* marko.json
 
 The following three tags will be exported:
 
@@ -162,15 +162,15 @@ It is often necessary for tags to have a parent/child or ancestor/descendent rel
 
 ```xml
 <ui-tabs orientation="horizontal">
-    <ui-tabs.tab title="Home">
+    <ui-tabs:tab title="Home">
         Content for Home
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Profile">
+    </ui-tabs:tab>
+    <ui-tabs:tab title="Profile">
         Content for Profile
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Messages">
+    </ui-tabs:tab>
+    <ui-tabs:tab title="Messages">
         Content for Messages
-    </ui-tabs.tab>
+    </ui-tabs:tab>
 </ui-tabs>
 ```
 
@@ -187,7 +187,7 @@ ___ui-tabs/marko-tag.json___
 }
 ```
 
-This allows a `tabs` to be provided using nested `<ui-tabs.tab>` tags or the tabs can be provided as a `tabs` attribute (e.g. `<ui-tabs tabs="[tab1, tab2, tab3]"`). The nested `<ui-tabs.tab>` tags will be made available to the renderer as part of the `tabs` property for the parent `<ui-tabs>`. Because of the `[]` suffix on `<tab>[]` the tabs property will be of type `Array` and not a single object. That is, the `[]` suffix is used to declare that a nested tag can be repeated. The sample renderer that accesses the nested tabs is shown below:
+This allows a `tabs` to be provided using nested `<ui-tabs:tab>` tags or the tabs can be provided as a `tabs` attribute (e.g. `<ui-tabs tabs="[tab1, tab2, tab3]"`). The nested `<ui-tabs:tab>` tags will be made available to the renderer as part of the `tabs` property for the parent `<ui-tabs>`. Because of the `[]` suffix on `<tab>[]` the tabs property will be of type `Array` and not a single object. That is, the `[]` suffix is used to declare that a nested tag can be repeated. The sample renderer that accesses the nested tabs is shown below:
 
 ___ui-tabs/renderer.js___
 
@@ -228,15 +228,15 @@ ___ui-tabs/template.marko___
 ```xml
 <div class="tabs">
     <ul class="nav nav-tabs">
-        <li class="tab" for="tab in data.tabs">
+        <li class="tab" for(tab in data.tabs)>
             <a href="#${tab.title}">
                 ${tab.title}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" for="tab in data.tabs">
-            <invoke function="tab.renderBody(out)"/>
+        <div class="tab-pane" for(tab in data.tabs)>
+            <invoke tab.renderBody(out)/>
         </div>
     </div>
 </div>
@@ -246,17 +246,17 @@ Below is an example of using nested tags that are not repeated:
 
 ```xml
 <ui-overlay>
-    <ui-overlay.header class="my-header">
+    <ui-overlay:header class="my-header">
         Header content
-    </ui-overlay.header>
+    </ui-overlay:header>
 
-    <ui-overlay.body class="my-body">
+    <ui-overlay:body class="my-body">
         Body content
-    </ui-overlay.body>
+    </ui-overlay:body>
 
-    <ui-overlay.footer class="my-footer">
+    <ui-overlay:footer class="my-footer">
         Footer content
-    </ui-overlay.footer>
+    </ui-overlay:footer>
 </ui-overlay>
 ```
 
@@ -309,33 +309,45 @@ Finally, the sample template to render the `<ui-overlay>` tag is shown below:
 ```xml
 <div class="overlay">
     <!-- Header -->
-    <div class="overlay-header ${data.header['class']}" if="data.header">
-        <invoke function="data.header.renderBody(out)"/>
+    <div class="overlay-header ${data.header['class']}" if(data.header)>
+        <invoke data.header.renderBody(out)/>
     </div>
 
     <!-- Body -->
-    <div class="overlay-body ${data.body['class']}" if="data.body">
-        <invoke function="data.body.renderBody(out)"/>
+    <div class="overlay-body ${data.body['class']}" if(data.body)>
+        <invoke data.body.renderBody(out)/>
     </div>
 
     <!-- Footer -->
-    <div class="overlay-footer ${data.footer['class']}" if="data.footer">
-        <invoke function="data.footer.renderBody(out)"/>
+    <div class="overlay-footer ${data.footer['class']}" if(data.footer)>
+        <invoke data.footer.renderBody(out)/>
     </div>
 </div>
 ```
 
 # Taglib Discovery
 
-Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will search up and also look into `node_modules` to discover applicable taglibs.
+Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will automatically import all taglibs associated with packages found as dependencies in the containing package's root `package.json` file.
 
-As an example, given a template at path `/my-project/src/pages/login/template.marko`, the search path will be the following:
+As an example, given a template at path `/my-project/src/pages/login/template.marko` and given a `/my-project/package.json` similar to the following:
 
-1. `/my-project/src/pages/login/marko-taglib.json`
-2. `/my-project/src/pages/login/node_modules/*/marko-taglib.json`
-3. `/my-project/src/pages/marko-taglib.json`
-4. `/my-project/src/pages/node_modules/*/marko-taglib.json`
-5. `/my-project/src/marko-taglib.json`
-6. `/my-project/src/node_modules/*/marko-taglib.json`
-7. `/my-project/marko-taglib.json`
-8. `/my-project/node_modules/*/marko-taglib.json`
+```json
+{
+    "name": "my-package",
+    "dependencies": {
+        "foo": "1.0.0"
+    },
+    "devDependencies": {
+        "bar": "1.0.0"
+    }
+}
+```
+
+The search path will be the following:
+
+1. `/my-project/src/pages/login/marko.json`
+2. `/my-project/src/pages/marko.json`
+3. `/my-project/src/marko.json`
+4. `/my-project/marko.json`
+5. `/my-project/node_modules/foo/marko.json`
+6. `/my-project/node_modules/bar/marko.json`

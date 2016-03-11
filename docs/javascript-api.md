@@ -230,34 +230,6 @@ Default options:
 ```javascript
 {
     /**
-     * Set of tag names that should automatically have whitespace preserved.
-     * Alternatively, if value is `true` then whitespace will be preserved
-     * for all tags.
-     */
-    preserveWhitespace: {
-        'pre': true,
-        'textarea': true,
-        'script': true
-    },
-    /**
-     * Set of tag names that should be allowed to be rendered as a self-closing
-     * XML tag. A self-closing tag will only be rendered if the tag has no nested
-     * content. HTML doesn't allow self-closing tags so you should likely
-     * never use this.
-     */
-    allowSelfClosing: {},
-    /**
-     * Set of tag names that should be rendered with a start tag only.
-     */
-    startTagOnly: {
-        'img': true,
-        'br': true,
-        'input': true,
-        'meta': true,
-        'link': true,
-        'hr': true
-    },
-    /**
      * If true, then the compiler will check the disk to see if a previously compiled
      * template is the same age or newer than the source template. If so, the previously
      * compiled template will be loaded. Otherwise, the template will be recompiled
@@ -272,6 +244,11 @@ Default options:
      * compiled templates will not be written to disk (i.e., no `.marko.js` file will
      * be generated)
      */
-    writeToDisk: true
-}
+    writeToDisk: true,
+
+    /**
+     * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
+     */
+    assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
+};
 ```

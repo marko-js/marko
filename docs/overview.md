@@ -12,9 +12,80 @@ For building rich UI components with client-side behavior please check out the [
 
 <a href="http://markojs.com/try-online/" target="_blank">Try Marko Online!</a>
 
-![Marko Syntax](syntax.png)
+# Syntax
 
-Improved syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package and for [Sublime Text](http://www.sublimetext.com/) by installing the [marko-sublime](https://github.com/merwan7/sublime-marko) package.
+Marko supports _both_ a familiar HTML syntax, as well as a more concise indentation-based syntax. Both syntaxes are equally supported. Regardless of which syntax you choose, the compiled code will be exactly the same.
+
+Syntax highlighting is available in the following editors and IDEs:
+
+- Atom: [language-marko](https://atom.io/packages/language-marko)
+- Sublime Text: [marko-sublime](https://github.com/merwan7/sublime-marko)
+- WebStorm: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle) (See: [Importing TextMate Bundles](https://www.jetbrains.com/phpstorm/help/importing-textmate-bundles.html))
+- TextMate: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle)
+
+## HTML syntax
+
+```xml
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Marko Templating Engine</title>
+    </head>
+    <body>
+        <h1>
+            Hello ${data.name}!
+        </h1>
+
+        <ul if(notEmpty(data.colors))>
+            <li for(color in data.colors)>
+                ${color}
+            </li>
+        </ul>
+        <div else>
+            No colors!
+        </div>
+    </body>
+</html>
+```
+
+## Concise syntax
+
+The following concise template is equivalent to the previous template:
+
+```xml
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        h1 - Hello ${data.name}!
+        ul if(notEmpty(data.colors))
+            li for(color in data.colors)
+                ${color}
+        div else
+            - No colors!
+```
+
+## Mixed syntax
+
+You can even mix and match the concise syntax with the HTML syntax within the same document.
+The following template is equivalent to the previous templates:
+
+```xml
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        <h1>
+            Hello ${data.name}!
+        </h1>
+        ul if(notEmpty(data.colors))
+            li for(color in data.colors)
+                ${color}
+        div else
+            - No colors!
+```
 
 # Sample Code
 
@@ -23,11 +94,10 @@ A basic template with text replacement, looping and conditionals is shown below:
 _hello-world.marko:_
 
 ```xml
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li style="color: $color" for="color in data.colors">
-        $color
+<h2>Hello ${data.name}!</h2>
+<ul if(notEmpty(data.colors))>
+    <li style="color: ${color}" for(color in data.colors)>
+        ${color}
     </li>
 </ul>
 <div else>
@@ -53,8 +123,8 @@ template.render({
 
 The output of running the above program will be the following (formatted for readability):
 
-```xml
-Hello World!
+```html
+<h2>Hello World!</h2>
 <ul>
     <li style="color: red">red</li>
     <li style="color: green">green</li>
@@ -74,7 +144,7 @@ For comparison, given the following data consisting of an empty array of colors:
 The output would be the following:
 
 ```xml
-Hello World!
+<h2>Hello World!</h2>
 <div>
     No colors!
 </div>
@@ -104,7 +174,7 @@ Let's compare Marko with Handlebars (a text-based templating language):
 __Handlebars:__
 
 ```xml
-Hello {{name}}!
+<h2>Hello {{name}}!</h2>
 
 {{#if colors}}
 <ul>
@@ -124,10 +194,9 @@ Hello {{name}}!
 __Marko:__
 
 ```xml
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li class="color" for="color in data.colors">
+<h2>Hello ${data.name}!</h2>
+<ul if(notEmpty(data.colors))>
+    <li class="color" for(color in data.colors)>
         ${color}
     </li>
 </ul>
