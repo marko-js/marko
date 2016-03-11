@@ -3,7 +3,27 @@
   "body": [
     {
       "type": "If",
-      "test": "notEmpty(data.colors)",
+      "test": {
+        "type": "FunctionCall",
+        "callee": {
+          "type": "Identifier",
+          "name": "notEmpty"
+        },
+        "args": [
+          {
+            "type": "MemberExpression",
+            "object": {
+              "type": "Identifier",
+              "name": "data"
+            },
+            "property": {
+              "type": "Identifier",
+              "name": "colors"
+            },
+            "computed": false
+          }
+        ]
+      },
       "body": [
         {
           "type": "HtmlElement",
