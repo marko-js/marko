@@ -19,7 +19,7 @@ describe('render', function() {
 
             var main = fs.existsSync(mainPath) ? require(mainPath) : {};
             var loadOptions = main && main.loadOptions;
-            
+
             if (main.checkError) {
                 var e;
 
@@ -27,6 +27,8 @@ describe('render', function() {
                     marko.load(templatePath, loadOptions);
                 } catch(_e) {
                     e = _e;
+                    var errorFile = path.join(dir, 'error.txt');
+                    fs.writeFileSync(errorFile, e.stack.toString(), { encoding: 'utf8' });
                 }
 
                 if (!e) {
