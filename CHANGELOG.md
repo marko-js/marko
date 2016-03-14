@@ -1,6 +1,14 @@
 Changelog
 =========
 
+# 3.x
+
+## 3.0.x
+
+### 3.0.0
+
+- See [What's New in Marko v3](http://markojs.com/docs/marko/what-is-new-marko-v3/)
+
 # 2.x
 
 ## 2.8.x
