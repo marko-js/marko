@@ -5,6 +5,10 @@ Changelog
 
 ## 3.0.x
 
+### 3.0.2
+
+- Store `tagDef` with `HtmlElement` node (needed for pretty printing)
+
 ### 3.0.1
 
 - Docs: Fixed minor issues in docs
