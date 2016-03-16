@@ -8,6 +8,7 @@ var Builder = require('./Builder');
 var extend = require('raptor-util/extend');
 var CompileContext = require('./CompileContext');
 var NODE_ENV = process.env.NODE_ENV;
+
 var defaultParser = new Parser(new HtmlJsParser());
 var rawParser = new Parser(
     new HtmlJsParser({
@@ -27,7 +28,7 @@ var defaultOptions = {
          * If false, the template will always be recompiled. If `writeToDisk` is false
          * then this option will be ignored.
          */
-        checkUpToDate: true,
+        checkUpToDate: process.env.MARKO_CLEAN ? false : true,
         /**
          * If true (the default) then compiled templates will be written to disk. If false,
          * compiled templates will not be written to disk (i.e., no `.marko.js` file will
@@ -38,7 +39,7 @@ var defaultOptions = {
         /**
          * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
          */
-        assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
+        assumeUpToDate: process.env.MARKO_CLEAN != null || NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
     };
 
 function configure(config) {
