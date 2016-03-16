@@ -196,13 +196,16 @@ To assign a new value to an existing variable the `<assign>` tag can be used as 
 <assign name=data.name.toLowerCase()/>
 ```
 
-The `<with>` directive can be used to create scoped variables as shown in the following sample code:
+The `<var>` directive can also be used to create scoped variables as shown in the following sample code:
 
 ```xml
 <var nameUpper=data.name.toUpperCase() nameLower=data.name.toLowerCase()>
     Hello ${nameUpper}!
     Hello ${nameLower}!
 </var>
+<!--
+nameUpper and nameLower will be undefined here
+-->
 ```
 
 # Conditionals
@@ -643,7 +646,8 @@ The above macro can then be invoked as part of any expression. Alternatively, th
     <greeting("John", 10)/>
 </p>
 <p>
-    <greeting("Frank", 20)/>
+    <!-- Or, using named attributes: -->
+    <greeting name="Frank" count=20/>
 </p>
 ```
 

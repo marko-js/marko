@@ -1,3 +1,5 @@
+---
+---
 What's New in Marko v3
 ======================
 
@@ -10,24 +12,24 @@ We’ve made some exciting improvements to Marko as part of the Marko v3 release
 - [Improved directives](#improved-directives)
 - [New and improved compiler API](#compiler-api)
 
-We worked hard to make Marko v3, arguably, the best templating engine ever. This release includes over [250 commits to Marko](https://github.com/marko-js/marko/compare/v2.8.4...v3.0.0-alpha.1) and [almost 100 commits to the parser](https://github.com/philidem/htmljs-parser/commits/master). Marko is heavily tested with over [350 individual tests for Marko](https://travis-ci.org/marko-js/marko) and [htmljs-parser](https://github.com/philidem/htmljs-parser) . Thank you to all of the contributors who have provided code and feedback along the way (see [#90](https://github.com/marko-js/marko/issues/90), [#211](https://github.com/marko-js/marko/issues/211), especially [@adammcarth](https://github.com/adammcarth), [@BryceEWatson](https://github.com/BryceEWatson), [@crsandeep](https://github.com/crsandeep), [@DanCech](https://github.com/DanCech), [@danrichman](https://github.com/danrichman), [@kristianmandrup](https://github.com/kristianmandrup), [@onemrkarthik](https://github.com/onemrkarthik), [@philidem](https://github.com/philidem), [@pswar](https://github.com/pswar), [@scttdavs](https://github.com/scttdavs), [@SunnyGurnani](https://github.com/SunnyGurnani), [@tindli](https://github.com/tindli), [@vedam](https://github.com/vedam) and [@yomed](https://github.com/yomed))!
+We worked hard to make Marko v3, arguably, the best templating engine ever. This release includes over [250 commits to Marko](https://github.com/marko-js/marko/compare/v2.8.4...v3.0.0-alpha.1) and [almost 100 commits to the parser](https://github.com/philidem/htmljs-parser/commits/master). Marko is heavily tested with over 600 individual tests for Marko and its new parser. Thank you to all of the contributors who have provided code and feedback along the way (see [#90](https://github.com/marko-js/marko/issues/90), [#211](https://github.com/marko-js/marko/issues/211), especially [@adammcarth](https://github.com/adammcarth), [@BryceEWatson](https://github.com/BryceEWatson), [@crsandeep](https://github.com/crsandeep), [@DanCech](https://github.com/DanCech), [@danrichman](https://github.com/danrichman), [@kristianmandrup](https://github.com/kristianmandrup), [@onemrkarthik](https://github.com/onemrkarthik), [@philidem](https://github.com/philidem), [@pswar](https://github.com/pswar), [@scttdavs](https://github.com/scttdavs), [@SunnyGurnani](https://github.com/SunnyGurnani), [@tindli](https://github.com/tindli), [@vedam](https://github.com/vedam) and [@yomed](https://github.com/yomed))!
 
-In order to make these improvements it was necessary to introduce some breaking changes. However, we will be providing a migration tool to convert Marko v2 templates to the new syntax and to also update Marko taglibs automatically. The migration tool is under development, but we hope to provide a tool that makes a perfect migration with no user intervention required.
+In order to make these improvements it was necessary to introduce some breaking changes. However, a migration tool is available to automatically convert Marko v2 templates to the new syntax. Please see: [github.com/marko-js/marko-migrate](https://github.com/marko-js/marko-migrate)
 
 It's also worth mentioning that the new concise syntax was heavily inspired by [Jade/Pug](http://jade-lang.com/). However, we reduced the number of grammar rules with Marko to make the concise syntax easier to grasp and closer to HTML.
 
 While Marko is focused on being the best-in-class templating engine, [Marko Widgets](http://markojs.com/docs/marko-widgets/) aims to be ​one of​ the simplest and fastest libraries for building UI components. Marko renders the HTML for UI components, while Marko Widgets adds client-side behavior. Marko Widgets offers advanced features like DOM-diffing, batched updates, stateful widgets, declarative event binding and efficient event delegation.
 
-Currently, Marko v3 is in alpha. Please try it out and provide feedback:
+Please try it out and provide feedback:
 
 ```
-npm install marko@^3.0.0-alpha.1 --save
+npm install marko@3 --save
 ```
 
 If you are using Marko Widgets you will need to also install the latest version of Marko Widgets:
 
 ```
-npm install marko-widgets@^6.0.0-alpha.1 --save
+npm install marko-widgets@6 --save
 ```
 
 Also, the [Lasso.js](https://github.com/lasso-js/lasso) taglib has been updated to be compatible with Marko v3 so you will need to upgrade Lasso.js if you are using that tool:
@@ -95,7 +97,7 @@ The code snippets below show how each syntax variant compares.
 
 ### HTML syntax
 
-```html
+```xml
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -123,7 +125,7 @@ The code snippets below show how each syntax variant compares.
 
 The following concise template is equivalent to the previous HTML template:
 
-```html
+```xml
 <!DOCTYPE html>
 html lang="en"
     head
@@ -174,7 +176,7 @@ Welcome to Marko
 You can even mix and match the concise syntax with the HTML syntax within the same document.
 The following template is equivalent to the previous templates:
 
-```html
+```xml
 <!DOCTYPE html>
 html lang="en"
     head
@@ -654,7 +656,7 @@ Output:
 
 The shorthand syntax also works with the more verbose HTML syntax:
 
-```html
+```xml
 <#section>
     <ul.colors>
         <li.color>red</li>
@@ -1190,7 +1192,5 @@ The Marko compiler went through a major refactor with Marko v3 as a result of in
 
 
 # Next steps
-
-The Marko compiler and runtime are very stable, but external tools need to catch up. We would like to see the existing Atom plugin ([language-marko](https://atom.io/packages/language-marko)) and Sublime Text plugin ([sublime-marko](https://github.com/merwan7/sublime-marko)) be updated to better support the new syntax. In addition, we would like to see other developer tools like WebStorm support syntax highlighting for Marko templates. Finally, we would like to see Marko linting tools be developed.
 
 If you have ideas on how to improve Marko please let us know. We welcome new contributors so if you would like to help out please join us in the [Gitter chat room for Marko](gitter.im/marko-js/marko), [file an issue on Github](https://github.com/marko-js/marko) or send us a pull request.
