@@ -217,8 +217,13 @@ class Parser {
         var node;
 
         if (raw) {
+
             node = builder.htmlElement(elDef);
             node.pos = elDef.pos;
+
+            let taglibLookup = this.context.taglibLookup;
+            let tagDef = taglibLookup.getTag(tagName);
+            node.tagDef = tagDef;
         } else {
             node = this.context.createNodeForEl(elDef);
         }
@@ -230,8 +235,6 @@ class Parser {
             });
         }
 
-
-        // TODO Retain the shorthand class names and IDs in raw mode
         if (raw) {
             if (el.shorthandId) {
                 let parsed = builder.parseExpression(el.shorthandId.value);
