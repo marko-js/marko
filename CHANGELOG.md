@@ -5,9 +5,14 @@ Changelog
 
 ## 3.0.x
 
+### 3.0.1
+
+- Docs: Fixed minor issues in docs
+- Reintroduced support for the `MARKO_CLEAN` environment variable: `MARK_CLEAN=true node server.js`
+
 ### 3.0.0
 
-- See [What's New in Marko v3](http://markojs.com/docs/marko/what-is-new-marko-v3/)
+- See: [What's New in Marko v3](http://markojs.com/docs/marko/what-is-new-marko-v3/)
 
 # 2.x
 
