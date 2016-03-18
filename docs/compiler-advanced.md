@@ -70,7 +70,7 @@ The following AST will be produced:
 _TIP:_ If you want a pretty dump of an AST tree for debugging purposes you can use the following code:
 
 ```javascript
-console.log(JSON.stringify(astNode, null ,2));
+console.log(JSON.stringify(astNode, null, 2));
 ```
 
 ----------

@@ -3,10 +3,10 @@ Additional Resources
 
 # Further Reading
 
-* [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
-* [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
-* [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
-* [Marko Widgets](https://github.com/marko-js/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
+- [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
+- [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
+- [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
+- [Marko Widgets](https://github.com/marko-js/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
 
 # Updates
 

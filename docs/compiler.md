@@ -86,3 +86,15 @@ function create(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello
 ```
 
 _File size: 223 bytes gzipped (300 bytes uncompressed)_
+
+# Compiler API
+
+See: [Marko Compiler - API](http://markojs.com/docs/marko/compiler/api/)
+
+# Compile-time Tags
+
+See: [Marko Compiler - Compile-time Tags](http://markojs.com/docs/marko/compiler/compile-time-tags/)
+
+# Advanced
+
+See: [Marko Compiler - Advanced](http://markojs.com/docs/marko/compiler/advanced/)
