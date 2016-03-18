@@ -5,6 +5,10 @@ Changelog
 
 ## 3.0.x
 
+### 3.0.3
+
+- Make renderSync behave if no context was supplied ([PR #250](https://github.com/marko-js/marko/pull/250) by [@jsumners](https://github.com/jsumners))
+
 ### 3.0.2
 
 - Store `tagDef` with `HtmlElement` node (needed for pretty printing)
