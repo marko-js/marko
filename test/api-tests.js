@@ -256,6 +256,13 @@ describe('api' , function() {
         expect(e).to.not.equal(undefined);
     });
 
+    it('should handle no context passed to renderSync', function() {
+        var template = marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello-empty.marko'));
+        var output = template.renderSync();
+
+        expect(output).to.equal('Hello!');
+    });
+
     it('should allow a template to be loaded from a compiled JS module', function(done) {
         // Load the JS file to ensure the hello.marko.js file is created
         marko.load(nodePath.join(__dirname, 'fixtures/api-tests/hello.marko'));
