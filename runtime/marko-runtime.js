@@ -103,15 +103,16 @@ Template.prototype = {
         this._ = createFunc(helpers);
     },
     renderSync: function(data) {
+        var localData = data || {};
         var out = new AsyncWriter();
         out.sync();
 
-        if (data.$global) {
-            out.global = extend(out.global, data.$global);
-            delete data.$global;
+        if (localData.$global) {
+            out.global = extend(out.global, localData.$global);
+            delete localData.$global;
         }
 
-        this._(data, out);
+        this._(localData, out);
         return out.getOutput();
     },
 
