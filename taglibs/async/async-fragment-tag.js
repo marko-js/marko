@@ -164,7 +164,12 @@ module.exports = function render(input, out) {
 
             var id = input.name || asyncFragmentContext.nextId++;
 
-            out.write('<span id="afph' + id + '">' + (input.placeholder || '') + '</span>');
+            if (input.placeholder) {
+                out.write('<span id="afph' + id + '">' + input.placeholder + '</span>');
+            } else {
+                out.write('<noscript id="afph' + id + '"></noscript>');
+            }
+
             var asyncValue = new AsyncValue();
 
             // Write to an in-memory buffer
