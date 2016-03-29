@@ -455,7 +455,8 @@ function loadTag(tagProps, path, taglib, dirname) {
         tagProps.attributes = {
             '*': {
                 type: 'string',
-                targetProperty: null
+                targetProperty: null,
+                preserveName: false
             }
         };
     }
