@@ -5,6 +5,15 @@ Changelog
 
 ## 3.0.x
 
+### 3.0.5
+
+- Fixes #257 - Placeholders don't render for out-of-order async fragments
+
+### 3.0.4
+
+- Fixes #256 - Convert attributes to title case if no attributes are declared for a custom tag
+- Use `<noscript>` for out-of-order async fragment placeholders
+
 ### 3.0.3
 
 - Make renderSync behave if no context was supplied ([PR #250](https://github.com/marko-js/marko/pull/250) by [@jsumners](https://github.com/jsumners))
