@@ -136,6 +136,7 @@ module.exports = function render(input, out) {
     if (!done) {
         var timeout = input.timeout;
         var renderTimeout = input.renderTimeout;
+        var renderPlaceholder = input.renderPlaceholder;
 
         if (timeout == null) {
             timeout = 10000;
@@ -164,8 +165,10 @@ module.exports = function render(input, out) {
 
             var id = input.name || asyncFragmentContext.nextId++;
 
-            if (input.placeholder) {
-                out.write('<span id="afph' + id + '">' + input.placeholder + '</span>');
+            if (renderPlaceholder) {
+                out.write('<span id="afph' + id + '">');
+                renderPlaceholder(out);
+                out.write('</span>');
             } else {
                 out.write('<noscript id="afph' + id + '"></noscript>');
             }

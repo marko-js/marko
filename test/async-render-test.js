@@ -39,7 +39,14 @@ describe('render', function() {
                 var template = marko.load(templatePath, loadOptions);
                 var templateData = main.templateData || {};
                 template.render(templateData, function(err, html) {
-                    callback(err, html);
+
+                    if (main.checkHtml) {
+                        main.checkHtml(html);
+                        return callback(null, '$PASS$');
+                    } else {
+                        callback(err, html);
+                    }
+
                 });
             }
         },
