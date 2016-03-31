@@ -217,6 +217,10 @@ function parseExpression(src, builder, isExpression) {
         }
         jsAST = esprima.parse(src);
     } catch(e) {
+        if (e.index == null) {
+            // Doesn't look like an Esprima parse error... just rethrow the exception
+            throw e;
+        }
         var errorIndex = e.index;
         var errorMessage = '\n' + e.description;
         if (errorIndex != null && errorIndex >= 0) {
