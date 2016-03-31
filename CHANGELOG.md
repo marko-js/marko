@@ -5,6 +5,14 @@ Changelog
 
 ## 3.0.x
 
+### 3.0.7
+
+- Fixes #260 - Circular custom tags causes infinite recursion when writeToDisk is set to false
+
+### 3.0.6
+
+- Don't wrap exception in `parseJavaScript` if error object was not created by Esprima
+
 ### 3.0.5
 
 - Fixes #257 - Placeholders don't render for out-of-order async fragments
