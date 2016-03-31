@@ -266,7 +266,7 @@ module.exports = {
     },
 
     /**
-     * Loads a template
+     * Loads a template (__helpers.l --> loadTemplate(path))
      */
     l: function(path) {
         if (typeof path === 'string') {
