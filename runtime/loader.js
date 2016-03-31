@@ -54,9 +54,17 @@ fixFlush();
 function loadSource(templatePath, compiledSrc) {
     var templateModulePath = templatePath + '.js';
 
+    // Short-circuit loading if the template has already been cached in the Node.js require cache
+    var cached = require.cache[templateModulePath];
+    if (cached) {
+        return cached.exports;
+    }
+
     var templateModule = new Module(templateModulePath, module);
     templateModule.paths = Module._nodeModulePaths(nodePath.dirname(templateModulePath));
     templateModule.filename = templateModulePath;
+
+    Module._cache[templateModulePath] = templateModule;
 
     templateModule._compile(
         compiledSrc,

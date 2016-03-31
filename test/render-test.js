@@ -20,28 +20,38 @@ describe('render', function() {
             var main = fs.existsSync(mainPath) ? require(mainPath) : {};
             var loadOptions = main && main.loadOptions;
 
-            if (main.checkError) {
-                var e;
+            if (main.writeToDisk === false) {
+                require('marko/compiler').defaultOptions.writeToDisk = false;
+            }
 
-                try {
-                    marko.load(templatePath, loadOptions);
-                } catch(_e) {
-                    e = _e;
-                    var errorFile = path.join(dir, 'error.txt');
-                    fs.writeFileSync(errorFile, e.stack.toString(), { encoding: 'utf8' });
+            try {
+                if (main.checkError) {
+                    var e;
+
+                    try {
+                        marko.load(templatePath, loadOptions);
+                    } catch(_e) {
+                        e = _e;
+                        var errorFile = path.join(dir, 'error.txt');
+                        fs.writeFileSync(errorFile, e.stack.toString(), { encoding: 'utf8' });
+                    }
+
+                    if (!e) {
+                        throw new Error('Error expected');
+                    }
+
+                    main.checkError(e);
+                    return '$PASS$';
+                } else {
+                    var template = marko.load(templatePath, loadOptions);
+                    var templateData = main.templateData || {};
+                    var html = template.renderSync(templateData);
+                    return html;
                 }
-
-                if (!e) {
-                    throw new Error('Error expected');
+            } finally {
+                if (main.writeToDisk === false) {
+                    require('marko/compiler').defaultOptions.writeToDisk = false;
                 }
-
-                main.checkError(e);
-                return '$PASS$';
-            } else {
-                var template = marko.load(templatePath, loadOptions);
-                var templateData = main.templateData || {};
-                var html = template.renderSync(templateData);
-                return html;
             }
         },
         {

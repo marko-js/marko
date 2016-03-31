@@ -91,7 +91,7 @@ exports.install = function(options) {
             module.exports = loaded.exports;
             return;
         }
-       
+
         // Resolve the appropriate compiler relative to the location of the
         // marko template file on disk using the "resolve-from" module.
         var dirname = path.dirname(filename);
