@@ -234,6 +234,17 @@ exports.renderer = function(input, out) {
     // ...
 }
 ```
+# 6.x
+
+## 6.0.x
+
+### v6.0.1
+
+- Improve how client-side module paths are generated when lasso is available
+
+### v6.0.0
+
+- Marko v3 compatibility
 
 # 5.x
 
