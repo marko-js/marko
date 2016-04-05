@@ -43,6 +43,24 @@ describe('taglib-lookup' , function() {
         expect(templateTag.name).to.equal('c-template');
     });
 
+    it('should not load tag from excluded directory', function() {
+        var tagDirectory = nodePath.join(__dirname, 'fixtures/taglib-exclude');
+        var taglibLookup = require('../compiler').taglibs.lookup;
+        require('../compiler').taglibs.excludeDir(tagDirectory);
+        var lookup = taglibLookup.buildLookup(tagDirectory + '/tags/excluded-tag');
+        var tag = lookup.getTag('excluded-tag');
+        expect(tag != null).to.equal(false);
+    });
+
+    it('should not load tag from excluded package', function() {
+        var tagDirectory = nodePath.join(__dirname, 'fixtures/taglib-exclude');
+        var taglibLookup = require('../compiler').taglibs.lookup;
+        require('../compiler').taglibs.excludePackage('excluded-package');
+        var lookup = taglibLookup.buildLookup(tagDirectory + '/tags/excluded-tag');
+        var tag = lookup.getTag('excluded-package-tag');
+        expect(tag != null).to.equal(false);
+    });
+
     it('should lookup custom tag for top-level template', function() {
         var taglibLookup = require('../compiler').taglibs.lookup;
         var lookup = taglibLookup.buildLookup(nodePath.join(__dirname, 'fixtures'));

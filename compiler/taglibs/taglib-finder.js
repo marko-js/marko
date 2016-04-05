@@ -20,6 +20,7 @@ var taglibLoader = require('./taglib-loader');
 var trailingSlashRegExp = /[\\/]$/;
 
 var excludedDirs = {};
+var excludedPackages = {};
 var nodePath = require('path');
 var fs = require('fs');
 var existsCache = {};
@@ -102,7 +103,7 @@ function tryNodeModules(parent, helper) {
             var moduleDir = nodePath.join(nodeModulesDir, packageName);
             var taglibPath = nodePath.join(moduleDir, 'marko-taglib.json');
 
-            if (existsCached(taglibPath)) {
+            if (existsCached(taglibPath) && !excludedPackages[packageName]) {
                 taglibPath = fs.realpathSync(taglibPath);
 
                 var taglib = taglibLoader.load(taglibPath);
@@ -192,13 +193,18 @@ function find(dirname, registeredTaglibs) {
 }
 
 function excludeDir(dirname) {
-
     dirname = dirname.replace(trailingSlashRegExp, '');
     excludedDirs[dirname] = true;
 }
 
+function excludePackage(packageName) {
+    packageName = packageName.trim().toLowerCase();
+    excludedPackages[packageName] = true;
+}
+
 exports.find = find;
 exports.excludeDir = excludeDir;
+exports.excludePackage = excludePackage;
 
 exports.clearCaches = function() {
     existsCache = {};
