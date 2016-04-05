@@ -3,6 +3,20 @@ Changelog
 
 # 2.x
 
+## 2.9.x
+
+### 2.10.0
+
+- Added ability to exclude specific node_module from marko-taglib.json lookup
+
+### 2.9.1
+
+- Additional fix for #188 - Improvements to the Node.js require extension
+
+### 2.9.0
+
+- Backported fix for #235 to Marko v2 - Scan all file extensions
+
 ## 2.8.x
 
 ### 2.8.4
