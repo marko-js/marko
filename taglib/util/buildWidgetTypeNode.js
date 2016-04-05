@@ -1,6 +1,6 @@
 var tryRequire = require('try-require');
-var lasso = tryRequire('lasso', require);
-var raptorModulesResolver = tryRequire('raptor-modules/resolver', require);
+var lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
+
 var resolveFrom = tryRequire('resolve-from', require);
 var ok = require('assert').ok;
 
@@ -10,12 +10,9 @@ module.exports = function buildWidgetTypeNode(path, from, builder) {
 
     var typeName;
 
-    if (lasso && lasso.getClientPath) {
+    if (lassoModulesClientTransport) {
         var targetPath = resolveFrom(from, path);
-        typeName = lasso.getClientPath(targetPath);
-    } else if (raptorModulesResolver) {
-        var resolved = raptorModulesResolver.resolveRequire(path, from);
-        typeName = resolved.logicalPath;
+        typeName = lassoModulesClientTransport.getClientPath(targetPath);
     } else {
         typeName = path;
     }
