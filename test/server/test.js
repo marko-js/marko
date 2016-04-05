@@ -1,7 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 require('marko/compiler').defaultOptions.checkUpToDate = false;
-chai.Assertion.includeStack = true;
+require('chai').config.includeStack = true;
 
 describe('marko-widgets/server' , function() {
     beforeEach(function() {

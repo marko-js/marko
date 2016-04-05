@@ -1,4 +1,4 @@
-require('chai').Assertion.includeStack = true;
+require('chai').config.includeStack = true;
 
 function cleanup() {
 
