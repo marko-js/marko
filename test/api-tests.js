@@ -431,4 +431,22 @@ describe('api' , function() {
         expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
     });
 
+    it('should allow configure()', function() {
+        var compiler = require('marko/compiler');
+        compiler.configure(); // Use defaults
+        expect(compiler.config.writeToDisk).to.equal(true);
+        expect(compiler.config.preserveWhitespace).to.equal(false);
+
+        compiler.configure({
+            preserveWhitespace: true
+        });
+        expect(compiler.config.writeToDisk).to.equal(true);
+        expect(compiler.config.preserveWhitespace).to.equal(true);
+
+        compiler.configure(); // Use defaults
+        expect(compiler.config.writeToDisk).to.equal(true);
+        expect(compiler.config.preserveWhitespace).to.equal(false);
+
+    });
+
 });

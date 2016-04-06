@@ -24,6 +24,10 @@ describe('render', function() {
                 require('marko/compiler').defaultOptions.writeToDisk = false;
             }
 
+            if (main.preserveWhitespaceGlobal === true) {
+                require('marko/compiler').defaultOptions.preserveWhitespace = true;
+            }
+
             try {
                 if (main.checkError) {
                     var e;
@@ -51,6 +55,10 @@ describe('render', function() {
             } finally {
                 if (main.writeToDisk === false) {
                     require('marko/compiler').defaultOptions.writeToDisk = false;
+                }
+
+                if (main.preserveWhitespaceGlobal === true) {
+                    delete require('marko/compiler').defaultOptions.preserveWhitespace;
                 }
             }
         },

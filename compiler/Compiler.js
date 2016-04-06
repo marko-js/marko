@@ -3,6 +3,8 @@ var ok = require('assert').ok;
 var CodeGenerator = require('./CodeGenerator');
 var CompileContext = require('./CompileContext');
 var createError = require('raptor-util/createError');
+var config = require('./config');
+var extend = require('raptor-util/extend');
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 
@@ -70,17 +72,22 @@ class Compiler {
         ok(this.parser, '"options.parser" is required');
     }
 
-    compile(src, filename, options) {
+    compile(src, filename, userOptions) {
         ok(typeof src === 'string', '"src" argument should be a string');
         ok(filename, '"filename" argument is required');
         ok(typeof filename === 'string', '"filename" argument should be a string');
 
         var context = new CompileContext(src, filename, this.builder);
+        var options = {};
 
-        if (options) {
-            if (options.preserveWhitespace) {
-                context.setPreserveWhitespace(true);
-            }
+        extend(options, config);
+
+        if (userOptions) {
+            extend(options, userOptions);
+        }
+
+        if (options.preserveWhitespace) {
+            context.setPreserveWhitespace(true);
         }
 
         // STAGE 1: Parse the template to produce the initial AST

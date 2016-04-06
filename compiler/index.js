@@ -7,7 +7,20 @@ var HtmlJsParser = require('./HtmlJsParser');
 var Builder = require('./Builder');
 var extend = require('raptor-util/extend');
 var CompileContext = require('./CompileContext');
-var NODE_ENV = process.env.NODE_ENV;
+var globalConfig = require('./config');
+var defaults = extend({}, globalConfig);
+
+Object.defineProperty(exports, 'defaultOptions', {
+    get: function() { return globalConfig;  },
+    enumerable: true,
+    configurable: false
+});
+
+Object.defineProperty(exports, 'config', {
+    get: function() { return globalConfig;  },
+    enumerable: true,
+    configurable: false
+});
 
 var defaultParser = new Parser(new HtmlJsParser());
 var rawParser = new Parser(
@@ -18,32 +31,15 @@ var rawParser = new Parser(
         raw: true
     });
 
-var defaultOptions = {
-        /**
-         * If true, then the compiler will check the disk to see if a previously compiled
-         * template is the same age or newer than the source template. If so, the previously
-         * compiled template will be loaded. Otherwise, the template will be recompiled
-         * and saved to disk.
-         *
-         * If false, the template will always be recompiled. If `writeToDisk` is false
-         * then this option will be ignored.
-         */
-        checkUpToDate: process.env.MARKO_CLEAN ? false : true,
-        /**
-         * If true (the default) then compiled templates will be written to disk. If false,
-         * compiled templates will not be written to disk (i.e., no `.marko.js` file will
-         * be generated)
-         */
-        writeToDisk: true,
 
-        /**
-         * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
-         */
-        assumeUpToDate: process.env.MARKO_CLEAN != null || NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
-    };
 
-function configure(config) {
-    extend(defaultOptions, config);
+function configure(newConfig) {
+    if (!newConfig) {
+        newConfig = {};
+    }
+
+    extend(globalConfig, defaults);
+    extend(globalConfig, newConfig);
 }
 
 var defaultCompiler = new Compiler({
@@ -151,7 +147,7 @@ exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
 exports.parseRaw = parseRaw;
-exports.defaultOptions = defaultOptions;
+
 exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;
 exports.createWalker = createWalker;
