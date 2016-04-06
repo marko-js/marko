@@ -21,7 +21,7 @@ var fs = require('fs');
 var existsCache = {};
 var findCache = {};
 var taglibsForNodeModulesDirCache = {};
-var raptorModulesUtil = require('raptor-modules/util');
+var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
 
 function existsCached(path) {
@@ -35,7 +35,7 @@ function existsCached(path) {
 
 function getModuleRootPackage(dirname) {
     try {
-        return raptorModulesUtil.getModuleRootPackage(dirname);
+        return lassoPackageRoot.getRootPackage(dirname);
     } catch(e) {
         return undefined;
     }
