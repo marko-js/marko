@@ -29,6 +29,10 @@
     "<macro-body>": {
         "code-generator": "./macro-body-tag"
     },
+    "<marko-preserve-whitespace>": {
+        "code-generator": "./marko-preserve-whitespace-tag",
+        "preserve-whitespace": true
+    },
     "<pre>": {
         "preserve-whitespace": true
     },

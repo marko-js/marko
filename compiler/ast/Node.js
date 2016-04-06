@@ -290,8 +290,8 @@ class Node {
         return preserveWhitespace === true;
     }
 
-    _normalizeChildTextNodes(codegen, trimStartEnd) {
-        if (this._childTextNormalized) {
+    _normalizeChildTextNodes(codegen, trimStartEnd, force) {
+        if (this._childTextNormalized && force !== true) {
             return;
         }
 
@@ -324,6 +324,9 @@ class Node {
             }
 
             if (curChild.type === 'Text' && curChild.isLiteral()) {
+                curChild.isFirst  = null;
+                curChild.isLast  = null;
+
                 if (currentTextLiteral &&
                         currentTextLiteral.preserveWhitespace === curChild.preserveWhitespace &&
                         currentTextLiteral.escape === curChild.escape) {
@@ -348,9 +351,7 @@ class Node {
             currentTextLiteral.isLast = true;
         }
 
-        if (!isPreserveWhitespace) {
-            literalTextNodes.forEach(trim);
-        } else if (trimStartEnd) {
+        if (trimStartEnd) {
             if (literalTextNodes.length) {
                 // We will only trim the first and last nodes
                 var firstTextNode = literalTextNodes[0];
@@ -364,6 +365,10 @@ class Node {
                     lastTextNode.argument.value = lastTextNode.argument.value.replace(/\s*$/, '');
                 }
             }
+        }
+
+        if (!isPreserveWhitespace) {
+            literalTextNodes.forEach(trim);
         }
     }
 }

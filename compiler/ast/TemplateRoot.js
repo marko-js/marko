@@ -20,8 +20,6 @@ class TemplateRoot extends Node {
     generateCode(codegen) {
         var context = codegen.context;
 
-        this._normalizeChildTextNodes(codegen, true /* trim start and end */);
-
         var body = this.body;
         codegen.addStaticVar('str', '__helpers.s');
         codegen.addStaticVar('empty', '__helpers.e');

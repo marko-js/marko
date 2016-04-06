@@ -419,6 +419,10 @@ TagHandlers.prototype = {
 
     openTagOnly: function(value) {
         this.tag.openTagOnly = value;
+    },
+
+    noOutput: function(value) {
+        this.tag.noOutput = value;
     }
 };
 

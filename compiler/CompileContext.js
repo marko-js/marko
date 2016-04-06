@@ -228,7 +228,7 @@ class CompileContext {
         var node;
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
-        
+
         var taglibLookup = this.taglibLookup;
         var tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
         if (tagDef) {
@@ -251,6 +251,10 @@ class CompileContext {
 
         if (!node) {
             node = elNode;
+        }
+
+        if (tagDef && tagDef.noOutput) {
+            node.noOutput = true;
         }
 
         node.pos = elDef.pos;

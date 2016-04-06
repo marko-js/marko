@@ -90,8 +90,14 @@ class Compiler {
             context.setPreserveWhitespace(true);
         }
 
+        var codeGenerator = new CodeGenerator(context);
+
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
+
+        // Trim start and end whitespace for the root node
+        ast._normalizeChildTextNodes(codeGenerator, true /* trim start and end */, true /* force */);
+
         context.root = ast;
         // console.log('ROOT', JSON.stringify(ast, null, 2));
 
@@ -99,8 +105,11 @@ class Compiler {
         var transformedAST = transformTree(ast, context);
         // console.log('transformedAST', JSON.stringify(ast, null, 2));
 
+        // Trim start and end whitespace for the root node (again, after the transformation)
+        transformedAST._normalizeChildTextNodes(codeGenerator, true /* trim start and end */, true /* force */);
+
         // STAGE 3: Generate the code using the final AST
-        var codeGenerator = new CodeGenerator(context);
+
         codeGenerator.generateCode(transformedAST);
 
         // If there were any errors then compilation failed.
