@@ -5,9 +5,15 @@ Changelog
 
 ## 3.0.x
 
+### 3.1.0
+
+- Fixes #254 - Allow preserve whitespace to be enabled at the global level
+
 ### 3.0.7
 
+- Fixes #240 - Always trim start and end of template (even if preserveWhitespace is true)
 - Fixes #260 - Circular custom tags causes infinite recursion when writeToDisk is set to false
+- Minor internal cleanup
 
 ### 3.0.6
 
