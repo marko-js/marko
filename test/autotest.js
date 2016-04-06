@@ -5,6 +5,17 @@ var enabledTest = process.env.TEST;
 var path = require('path');
 var assert = require('assert');
 
+var enabledTestNames = enabledTest && enabledTest.split(/[\s*,\s*/]/);
+var enabledTests = null;
+
+if (enabledTestNames && enabledTestNames.length > 1) {
+    enabledTests = {};
+    enabledTest = null;
+    enabledTestNames.forEach((testName) => {
+        enabledTests[testName] = true;
+    });
+}
+
 function autoTest(name, dir, run, options, done) {
     var compareExtension = (options && options.compareExtension) || '.js';
     var isJSON = compareExtension === '.json';
@@ -82,6 +93,10 @@ exports.scanDir = function(autoTestDir, run, options) {
         if (files) {
             files.forEach(function(name) {
                     if (name.charAt(0) === '.') {
+                        return;
+                    }
+
+                    if (enabledTests && !enabledTests[name]) {
                         return;
                     }
 
