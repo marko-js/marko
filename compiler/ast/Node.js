@@ -6,6 +6,31 @@ var extend = require('raptor-util/extend');
 var inspect = require('util').inspect;
 var EventEmitter = require('events').EventEmitter;
 
+function trim(textNode) {
+    if (textNode.preserveWhitespace === true) {
+        return;
+    }
+
+    var text = textNode.argument.value;
+    var isFirst = textNode.isFirst;
+    var isLast = textNode.isLast;
+
+    if (isFirst) {
+        //First child
+        text = text.replace(/^\n\s*/g, '');
+    }
+    if (isLast) {
+        //Last child
+        text = text.replace(/\n\s*$/g, '');
+    }
+    if (/^\n\s*$/.test(text)) {
+        //Whitespace between elements
+        text = '';
+    }
+    text = text.replace(/\s+/g, ' ');
+    textNode.argument.value = text;
+}
+
 class Node {
     constructor(type) {
         this.type = type;
@@ -18,6 +43,7 @@ class Node {
         this._transformersApplied = {};
         this._preserveWhitespace = null;
         this._events = null;
+        this._childTextNormalized = undefined;
         this.data = {};
     }
 
@@ -262,6 +288,83 @@ class Node {
         }
 
         return preserveWhitespace === true;
+    }
+
+    _normalizeChildTextNodes(codegen, trimStartEnd) {
+        if (this._childTextNormalized) {
+            return;
+        }
+
+        this._childTextNormalized = true;
+
+        var isPreserveWhitespace = false;
+
+        if (codegen.context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
+            isPreserveWhitespace = true;
+        }
+
+        if (isPreserveWhitespace && trimStartEnd !== true) {
+            return;
+        }
+
+        var body = this.body;
+        if (!body) {
+            return;
+        }
+
+        var isFirst = true;
+
+        var currentTextLiteral = null;
+        var literalTextNodes = [];
+
+        body.forEach((curChild, i) => {
+            if (curChild.noOutput) {
+                // Skip over AST nodes that produce no HTML output
+                return;
+            }
+
+            if (curChild.type === 'Text' && curChild.isLiteral()) {
+                if (currentTextLiteral &&
+                        currentTextLiteral.preserveWhitespace === curChild.preserveWhitespace &&
+                        currentTextLiteral.escape === curChild.escape) {
+                    currentTextLiteral.argument.value += curChild.argument.value;
+                    curChild.detach();
+                } else {
+                    currentTextLiteral = curChild;
+                    literalTextNodes.push(currentTextLiteral);
+                    if (isFirst) {
+                        currentTextLiteral.isFirst = true;
+                    }
+                }
+            } else {
+                currentTextLiteral = null;
+            }
+
+            isFirst = false;
+        });
+
+        if (currentTextLiteral) {
+            // Last child text
+            currentTextLiteral.isLast = true;
+        }
+
+        if (!isPreserveWhitespace) {
+            literalTextNodes.forEach(trim);
+        } else if (trimStartEnd) {
+            if (literalTextNodes.length) {
+                // We will only trim the first and last nodes
+                var firstTextNode = literalTextNodes[0];
+                var lastTextNode = literalTextNodes[literalTextNodes.length - 1];
+
+                if (firstTextNode.isFirst) {
+                    firstTextNode.argument.value = firstTextNode.argument.value.replace(/^\s*/, '');
+                }
+
+                if (lastTextNode.isLast) {
+                    lastTextNode.argument.value = lastTextNode.argument.value.replace(/\s*$/, '');
+                }
+            }
+        }
     }
 }
 
