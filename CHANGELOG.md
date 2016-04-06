@@ -5,6 +5,10 @@ Changelog
 
 ## 3.0.x
 
+### 3.1.1
+
+- Improved whitespace removal for text nodes directly below the root
+
 ### 3.1.0
 
 - Fixes #254 - Allow preserve whitespace to be enabled at the global level
