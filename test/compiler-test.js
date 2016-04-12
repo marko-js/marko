@@ -7,6 +7,8 @@ var compiler = require('../compiler');
 var autotest = require('./autotest');
 var fs = require('fs');
 
+require('marko/node-require').install();
+
 describe('compiler', function() {
     var autoTestDir = path.join(__dirname, 'fixtures/compiler/autotest');
 
