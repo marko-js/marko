@@ -140,7 +140,22 @@ function clearCaches() {
 
 function parseRaw(templateSrc, filename) {
     var context = new CompileContext(templateSrc, filename, Builder.DEFAULT_BUILDER);
-    return rawParser.parse(templateSrc, context);
+    var parsed = rawParser.parse(templateSrc, context);
+
+    if (context.hasErrors()) {
+        var errors = context.getErrors();
+
+        var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
+        for (var i = 0, len = errors.length; i < len; i++) {
+            let error = errors[i];
+            message += (i + 1) + ') ' + error.toString() + '\n';
+        }
+        var error = new Error(message);
+        error.errors = errors;
+        throw error;
+    }
+
+    return parsed;
 }
 
 exports.createBuilder = createBuilder;
