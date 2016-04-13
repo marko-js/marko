@@ -230,7 +230,7 @@ will automatically ignore the compiled marko templates when they are written to 
 
 # Changelog
 
-See [CHANGELOG.md](https://github.com/rbhogi/marko/blob/master/CHANGELOG.md)
+See [CHANGELOG.md](https://github.com/marko-js/marko-widgets/blob/master/CHANGELOG.md)
 
 # Discuss
 
