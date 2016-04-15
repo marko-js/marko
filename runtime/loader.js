@@ -73,24 +73,28 @@ function loadSource(templatePath, compiledSrc) {
     return templateModule.exports;
 }
 
+function getLoadedTemplate(path) {
+    var cached = require.cache[path];
+    return cached && cached.exports.render ? cached.exports : undefined;
+}
+
 function loadFile(templatePath, options) {
     var targetFile = templatePath + '.js';
 
     // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cached = require.cache[targetFile];
-    if (cached) {
-        return cached.exports;
+    var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
+    if (cachedTemplate) {
+        return cachedTemplate;
     }
 
+    // Just in case the the path wasn't a fully resolved file system path...
     templatePath = nodePath.resolve(cwd, templatePath);
-    var targetDir = nodePath.dirname(templatePath);
-
     targetFile = templatePath + '.js';
 
     // Check the require cache again after fully resolving the path
-    cached = require.cache[targetFile];
-    if (cached) {
-        return cached.exports;
+    cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
+    if (cachedTemplate) {
+        return cachedTemplate;
     }
 
     options = extend(extend({}, markoCompiler.defaultOptions), options);
@@ -114,6 +118,7 @@ function loadFile(templatePath, options) {
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
     var filename = nodePath.basename(targetFile);
+    var targetDir = nodePath.dirname(targetFile);
     var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
     fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
     fs.renameSync(tempFile, targetFile);

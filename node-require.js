@@ -68,6 +68,11 @@ function compile(templatePath, markoCompiler, compilerOptions) {
     return compiledSrc;
 }
 
+function getLoadedTemplate(path) {
+    var cached = require.cache[path];
+    return cached && cached.exports.render ? cached.exports : undefined;
+}
+
 exports.install = function(options) {
     options = options || {};
 
@@ -85,10 +90,10 @@ exports.install = function(options) {
 
     require.extensions[extension] = function markoExtension(module, filename) {
         var targetFile = filename + '.js';
-        var loaded = require.cache[targetFile];
-        if (loaded) {
+        var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
+        if (cachedTemplate) {
             // The template has already been loaded so use the exports of the already loaded template
-            module.exports = loaded.exports;
+            module.exports = cachedTemplate;
             return;
         }
 
