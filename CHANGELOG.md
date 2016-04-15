@@ -5,6 +5,15 @@ Changelog
 
 ## 3.0.x
 
+### 3.1.3
+
+- Fixed #266 - Hot reloading fails if original template is deleted
+
+### 3.1.2
+
+- Fixed error reporting when using `compiler.parseRaw()`
+- Added test for #262
+
 ### 3.1.1
 
 - Improved whitespace removal for text nodes directly below the root
