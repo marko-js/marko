@@ -545,7 +545,7 @@ TemplateBuilder.prototype = {
         // We generate code that assign a partially Template instance to module.exports
         // and then we fully initialize the Template instance. This was done to avoid
         // problems with circular dependencies.
-        out.append(INDENT + '};\n}\n(module.exports = require("marko").c(__filename)).c(create);');
+        out.append(INDENT + '};\n}\n(module.exports = require("marko-v2").c(__filename)).c(create);');
         return out.toString();
     },
     makeExpression: function (expression, replaceSpecialOperators) {

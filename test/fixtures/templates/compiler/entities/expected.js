@@ -7,4 +7,4 @@ function create(__helpers) {
     out.w('Hello John &amp; Suzy Invalid Entity: &amp;b ; Valid Numeric Entity: &#34;\nValid Hexadecimal Entity:\n&#x00A2;');
   };
 }
-(module.exports = require("marko").c(__filename)).c(create);
+(module.exports = require("marko-v2").c(__filename)).c(create);

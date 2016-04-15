@@ -14,4 +14,4 @@ function create(__helpers) {
       });
   };
 }
-(module.exports = require("marko").c(__filename)).c(create);
+(module.exports = require("marko-v2").c(__filename)).c(create);

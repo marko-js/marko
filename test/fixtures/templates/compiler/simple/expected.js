@@ -7,4 +7,4 @@ function create(__helpers) {
     out.w('Hello John');
   };
 }
-(module.exports = require("marko").c(__filename)).c(create);
+(module.exports = require("marko-v2").c(__filename)).c(create);

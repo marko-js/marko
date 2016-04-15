@@ -4,7 +4,7 @@ DIR=`dirname $0`
 
 cd ${DIR}
 
-if [ ! -L "./node_modules/marko" ]; then
+if [ ! -L "./node_modules/marko-v2" ]; then
     mkdir -p node_modules
-    ln -s ../../ node_modules/marko
+    ln -s ../../ node_modules/marko-v2
 fi
