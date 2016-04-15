@@ -5,6 +5,10 @@ Changelog
 
 ## 2.9.x
 
+### 2.10.1
+
+- Fixes #266 - Hot reloading fails if original template is deleted
+
 ### 2.10.0
 
 - Added ability to exclude specific node_module from marko-taglib.json lookup
