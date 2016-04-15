@@ -1,5 +1,5 @@
 {
-  "name": "marko",
+  "name": "marko-v2",
   "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
   "keywords": [
     "templating",
