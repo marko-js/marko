@@ -349,6 +349,7 @@ describe('api' , function() {
             var templatePath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko');
             compiledPath = nodePath.join(__dirname, 'fixtures/api-tests/write-to-disk.marko.js');
             var template = require(templatePath);
+            delete require.cache[templatePath];
             expect(fs.existsSync(compiledPath)).to.equal(true);
             expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
         } finally {
