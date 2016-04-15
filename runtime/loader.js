@@ -44,24 +44,28 @@ function loadSource(templatePath, compiledSrc) {
     return templateModule.exports;
 }
 
+function getLoadedTemplate(path) {
+    var cached = require.cache[path];
+    return cached && cached.exports.render ? cached.exports : undefined;
+}
+
 function loadFile(templatePath, options) {
     var targetFile = templatePath + '.js';
 
     // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cached = require.cache[targetFile];
-    if (cached) {
-        return cached.exports;
+    var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
+    if (cachedTemplate) {
+        return cachedTemplate;
     }
 
     templatePath = nodePath.resolve(cwd, templatePath);
-    var targetDir = nodePath.dirname(templatePath);
 
     targetFile = templatePath + '.js';
 
     // Check the require cache again after fully resolving the path
-    cached = require.cache[targetFile];
-    if (cached) {
-        return cached.exports;
+    cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
+    if (cachedTemplate) {
+        return cachedTemplate;
     }
 
     // If the `assumeUpToDate` option is true then we just assume that the compiled template on disk is up-to-date
@@ -85,6 +89,7 @@ function loadFile(templatePath, options) {
     // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
 
     var filename = nodePath.basename(targetFile);
+    var targetDir = nodePath.dirname(targetFile);
     var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
     fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
     fs.renameSync(tempFile, targetFile);
