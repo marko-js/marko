@@ -35,14 +35,32 @@ function notEmpty(o) {
     return true;
 }
 
-function classListArray(classList) {
-    var classNames = [];
-    for (var i=0, len=classList.length; i<len; i++) {
-        var cur = classList[i];
-        if (cur) {
-            classNames.push(cur);
+function classListHelper(arg, classNames) {
+    var len;
+
+    if (arg) {
+        if (typeof arg === 'string') {
+            classNames.push(arg);
+        } else if (typeof (len = arg.length) === 'number') {
+            for (var i=0; i<len; i++) {
+                classListHelper(arg[i], classNames);
+            }
+        } else if (typeof arg === 'object') {
+            for (var name in arg) {
+                if (arg.hasOwnProperty(name)) {
+                    var value = arg[name];
+                    if (value) {
+                        classNames.push(name);
+                    }
+                }
+            }
         }
     }
+}
+
+function classList(classList) {
+    var classNames = [];
+    classListHelper(classList, classNames);
     return classNames.join(' ');
 }
 
@@ -247,21 +265,8 @@ module.exports = {
 
         if (typeof classNames === 'string') {
             return attr(CLASS_ATTR, classNames, false);
-        } else if (isArray(classNames)) {
-            return attr(CLASS_ATTR, classListArray(classNames), false);
-        } else if (typeof classNames === 'object') {
-            var classList = [];
-            for (var name in classNames) {
-                if (classNames.hasOwnProperty(name)) {
-                    var value = classNames[name];
-                    if (value) {
-                        classList.push(name);
-                    }
-                }
-            }
-            return attr(CLASS_ATTR, classListArray(classList), false);
         } else {
-            return '';
+            return attr(CLASS_ATTR, classList(classNames), false);
         }
     },
 
@@ -361,6 +366,6 @@ module.exports = {
      *
      */
     cl: function() {
-        return classListArray(arguments);
+        return classList(arguments);
     }
 };
