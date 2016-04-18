@@ -5,6 +5,14 @@ Changelog
 
 ## 3.0.x
 
+### 3.1.5
+
+- Fixes #262 - node-require module removes `.marko` extension from filenames in compiled code
+
+### 3.1.4
+
+- Fixes #267 - Shorthand CSS class name cannot be combined with object/array class names
+
 ### 3.1.3
 
 - Fixed #266 - Hot reloading fails if original template is deleted
