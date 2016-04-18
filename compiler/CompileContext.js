@@ -14,6 +14,12 @@ var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
 
+const deresolveOptions = {
+    shouldRemoveExt(ext) {
+        return ext === '.js' || ext === '.json' || ext === '.es6';
+    }
+};
+
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
         return path.relative(process.cwd(), taglibPath);
@@ -115,7 +121,7 @@ class CompileContext {
     }
 
     getRequirePath(targetFilename) {
-        return deresolve(targetFilename, this.dirname);
+        return deresolve(targetFilename, this.dirname, deresolveOptions);
     }
 
     importModule(varName, path) {
