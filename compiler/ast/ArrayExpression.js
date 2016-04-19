@@ -12,7 +12,7 @@ class ArrayExpression extends Node {
         var elements = this.elements;
 
         if (!elements || !elements.length) {
-            this.write('[]');
+            codegen.write('[]');
             return;
         }
 
