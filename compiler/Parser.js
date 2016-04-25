@@ -270,8 +270,10 @@ class Parser {
     }
 
     handleEndElement(elementName) {
-        if (elementName === 'marko-compiler-options') {
-            return;
+        if (this.raw !== true) {
+            if (elementName === 'marko-compiler-options') {
+                return;
+            }
         }
 
         this.prevTextNode = null;
