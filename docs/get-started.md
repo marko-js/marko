@@ -139,8 +139,6 @@ module.exports = require('marko-widgets').defineComponent({
 	},
 
 	getTemplateData: function(state, input) {
-		var style = ;
-
 		return {
 			name: state.name,
 			color: state.selected ? 'yellow' : 'transparent'
