@@ -1,4 +1,6 @@
 'use strict';
+require('./patch-module');
+
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 var expect = require('chai').expect;

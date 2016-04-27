@@ -1,4 +1,6 @@
 'use strict';
+require('./patch-module');
+
 require('../node-require').install();
 
 var chai = require('chai');

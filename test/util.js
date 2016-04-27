@@ -1,3 +1,5 @@
+require('./patch-module');
+
 var nodePath = require('path');
 var fs = require('fs');
 

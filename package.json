@@ -12,12 +12,11 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "init-tests": "./test/init-tests.sh",
-    "test": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test && node_modules/.bin/jshint compiler/ runtime/ taglibs/",
-    "test-fast": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test",
-    "test-async": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test",
-    "test-taglib-loader": "npm run init-tests && node_modules/.bin/mocha --ui bdd --reporter spec ./test/taglib-loader-test",
-    "jshint": "node_modules/.bin/jshint compiler/ runtime/ taglibs/"
+    "test": "mocha --ui bdd --reporter spec ./test && jshint compiler/ runtime/ taglibs/",
+    "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
+    "test-async": "mocha --ui bdd --reporter spec ./test/render-async-test",
+    "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
+    "jshint": "jshint compiler/ runtime/ taglibs/"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
