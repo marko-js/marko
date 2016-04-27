@@ -3,9 +3,11 @@ var nodePath = require('path');
 var Module = require('module').Module;
 var oldResolveFilename = Module._resolveFilename;
 
+var markoRegExp = /^marko($|[\/])/;
+
 var rootDir = nodePath.join(__dirname, '../');
 Module._resolveFilename = function(request, parent, isMain) {
-    if (request === 'marko' || request.startsWith('marko/')) {
+    if (markoRegExp.test(request)) {
         request = request.substring('marko'.length);
         request = rootDir + request;
     }
