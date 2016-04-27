@@ -1,4 +1,6 @@
 'use strict';
+require('./patch-module');
+
 var chai = require('chai');
 chai.config.includeStack = true;
 var path = require('path');
