@@ -3,7 +3,7 @@ Changelog
 
 # 2.x
 
-## 2.9.x
+## 2.10.x
 
 ### 2.10.1
 
@@ -12,6 +12,8 @@ Changelog
 ### 2.10.0
 
 - Added ability to exclude specific node_module from marko-taglib.json lookup
+
+## 2.9.x
 
 ### 2.9.1
 
