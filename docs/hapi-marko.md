@@ -16,7 +16,7 @@ server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
-        return reply(template.stream({ name: 'Frank' }));
+        return reply(template.stream({ name: 'Frank' })).type('text/html');
     }
 });
 
