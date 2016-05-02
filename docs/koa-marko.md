@@ -18,12 +18,11 @@ var koa = require('koa');
 var app = koa();
 
 app.use(function *() {
-    template.render({
+    this.body = template.stream({
             name: 'Frank',
             count: 30,
             colors: ['red', 'green', 'blue']
-        },
-        this.res);
+        });
 });
 
 app.listen(8080);
