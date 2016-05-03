@@ -5,6 +5,20 @@ Changelog
 
 ## 3.0.x
 
+### 3.1.8
+
+- Fixes #280 - Switch from jsonminify to strip-json-comments
+- Updated docs for Koa and Hapi
+- Additional tests for Node.js v6
+
+### 3.1.7
+
+- Fixes #274 - marko-compiler-options tag is not properly ended when using raw parsing (for prettyprint)
+
+### 3.1.6
+
+- Fixes #268 - this.write is not a function for empty ArrayExpression
+
 ### 3.1.5
 
 - Fixes #262 - node-require module removes `.marko` extension from filenames in compiled code
