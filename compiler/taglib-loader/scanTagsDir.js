@@ -17,7 +17,7 @@
 
 var nodePath = require('path');
 var fs = require('fs');
-var jsonminify = require('jsonminify');
+var stripJsonComments = require('strip-json-comments');
 var tagDefFromCode = require('./tag-def-from-code');
 var loader = require('./loader');
 var fsReadOptions = { encoding: 'utf8' };
@@ -109,7 +109,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             hasTagFile = true;
             // marko-tag.json exists in the directory, use that as the tag definition
             try {
-                tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
+                tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagFile, fsReadOptions)));
             } catch(e) {
                 throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
             }
