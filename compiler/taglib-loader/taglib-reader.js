@@ -15,14 +15,14 @@
 */
 
 var fs = require('fs');
-var jsonminify = require('jsonminify');
+var stripJsonComments = require('strip-json-comments');
 var fsReadOptions = { encoding: 'utf8' };
 
 exports.readTaglib = function (path) {
     var json = fs.readFileSync(path, fsReadOptions);
 
     try {
-        var taglibProps = JSON.parse(jsonminify(json));
+        var taglibProps = JSON.parse(stripJsonComments(json));
         return taglibProps;
     } catch(e) {
         throw new Error('Unable to parse taglib at path "' + path + '". Error: ' + e);
