@@ -11,11 +11,11 @@ var fs = require('fs');
 require('../node-require').install();
 
 describe('render', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/async-render/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/async-render');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir, callback) {
+        function run(dir, helpers, done) {
             var templatePath = path.join(dir, 'template.marko');
             var mainPath = path.join(dir, 'test.js');
 
@@ -36,23 +36,23 @@ describe('render', function() {
                 }
 
                 main.checkError(e);
-                return callback(null, '$PASS$');
+                return done();
             } else {
                 var template = marko.load(templatePath, loadOptions);
                 var templateData = main.templateData || {};
                 template.render(templateData, function(err, html) {
+                    if (err) {
+                        return done(err);
+                    }
 
                     if (main.checkHtml) {
                         main.checkHtml(html);
-                        return callback(null, '$PASS$');
+                        done();
                     } else {
-                        callback(err, html);
+                        helpers.compare(html, '.html');
+                        done();
                     }
-
                 });
             }
-        },
-        {
-            compareExtension: '.html'
         });
 });

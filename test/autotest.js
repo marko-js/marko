@@ -16,128 +16,73 @@ if (enabledTestNames && enabledTestNames.length > 1) {
     });
 }
 
-function autoTest(name, dir, run, options, done) {
-    var compareExtension = (options && options.compareExtension) || '.js';
-    var isJSON = compareExtension === '.json';
+var fs = require('fs');
+var enabledTest = process.env.TEST;
+var path = require('path');
+var assert = require('assert');
 
-    var actualPath = path.join(dir, 'actual' + compareExtension);
-    var expectedPath = path.join(dir, 'expected' + compareExtension);
 
-    function verify(actual) {
-        if (actual === '$PASS$') {
-            return;
-        }
+function compareHelper(dir, actual, suffix) {
+    var actualPath = path.join(dir, 'actual' + suffix);
+    var expectedPath = path.join(dir, 'expected' + suffix);
 
-        var actualJSON = isJSON ? JSON.stringify(actual, null, 2) : null;
+    var isObject = typeof actual === 'string' ? false : true;
+    var actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
+    fs.writeFileSync(actualPath, actualString, { encoding: 'utf8' });
 
-        fs.writeFileSync(
-            actualPath,
-            isJSON ? actualJSON : actual,
-            {encoding: 'utf8'});
-
-        var expected;
-
-        try {
-            expected = fs.readFileSync(expectedPath, { encoding: 'utf8' });
-        } catch(e) {
-            expected = isJSON ? '"TBD"' : 'TBD';
-            fs.writeFileSync(expectedPath, expected, {encoding: 'utf8'});
-        }
-
-        var expectedJSON;
-
-        if (isJSON) {
-            expectedJSON = expected;
-            expected = JSON.parse(expectedJSON);
-        }
-
-        assert.deepEqual(
-                (isJSON ? JSON.parse(actualJSON) : actual),
-                expected,
-                'Unexpected output for "' + name + '":\nEXPECTED (' + expectedPath + '):\n---------\n' +
-                (isJSON ? expectedJSON : expected) +
-                '\n---------\nACTUAL (' + actualPath + '):\n---------\n' +
-                (isJSON ? actualJSON : actual) +
-                '\n---------');
-    }
+    var expectedString;
 
     try {
-        fs.unlinkSync(actualPath);
-    } catch(e) {}
-
-    if (done) {
-        // Async test
-        run(dir, function(err, actual) {
-            if (err) {
-                return done(err);
-            }
-
-            verify(actual);
-            done();
-        });
-    } else {
-        let actual = run(dir);
-        verify(actual);
+        expectedString = fs.readFileSync(expectedPath, { encoding: 'utf8' });
+    } catch(e) {
+        expectedString = isObject ? '"TBD"' : 'TBD';
+        fs.writeFileSync(expectedPath, expectedString, {encoding: 'utf8'});
     }
+
+    if (isObject) {
+        actual = JSON.parse(actualString);
+    }
+
+    var expected = isObject ? JSON.parse(expectedString) : expectedString;
+    assert.deepEqual(actual, expected);
+}
+
+function autoTest(name, dir, run, options, done) {
+    options = options || {};
+
+    var helpers = {
+        compare(actual, suffix) {
+            compareHelper(dir, actual, suffix);
+        }
+    };
+
+    run(dir, helpers, done);
 }
 
 exports.scanDir = function(autoTestDir, run, options) {
     describe('autotest', function() {
-        var files;
-        try {
-            files = fs.readdirSync(autoTestDir);
-        } catch(e) {
-            console.warn('autotest directory does not exist: ' + autoTestDir);
-        }
+        fs.readdirSync(autoTestDir)
+            .forEach(function(name) {
+                if (name.charAt(0) === '.') {
+                    return;
+                }
 
-        if (files) {
-            files.forEach(function(name) {
-                    if (name.charAt(0) === '.') {
-                        return;
-                    }
+                if (enabledTests && !enabledTests[name]) {
+                    return;
+                }
 
-                    if (enabledTests && !enabledTests[name]) {
-                        return;
-                    }
+                var itFunc = it;
 
-                    var itFunc = it;
+                if (enabledTest && name === enabledTest) {
+                    itFunc = it.only;
+                }
 
-                    if (enabledTest && name === enabledTest) {
-                        itFunc = it.only;
-                    }
+                var dir = path.join(autoTestDir, name);
 
-                    var dir = path.join(autoTestDir, name);
-
-                    if (run.length === 2) {
-                        itFunc(`[${name}] `, function(done) {
-                            autoTest(name, dir, run, options, done);
-                        });
-                    } else {
-                        itFunc(`[${name}] `, function() {
-                            autoTest(name, dir, run, options);
-                        });
-                    }
-
-
-
+                itFunc(`[${name}] `, function(done) {
+                    autoTest(name, dir, run, options, done);
                 });
-        }
 
-        var pendingFiles;
-        try {
-            pendingFiles = fs.readdirSync(autoTestDir + '-pending');
-        } catch(e) {}
-
-        if (pendingFiles) {
-            pendingFiles.forEach(function(name) {
-                    if (name.charAt(0) === '.') {
-                        return;
-                    }
-
-                    xit(`[${name}] `, function() {
-                    });
-
-                });
-        }
+            });
     });
 };

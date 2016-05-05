@@ -13,9 +13,9 @@ var taglibFinder = require('../compiler/taglib-finder');
 
 
 describe('taglib-finder' , function() {
-    var autoTestDir = nodePath.join(__dirname, 'fixtures/taglib-finder/autotest');
+    var autoTestDir = nodePath.join(__dirname, 'autotests/taglib-finder');
 
-    autotest.scanDir(autoTestDir, function run(dir) {
+    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
             var test = require(nodePath.join(dir, 'test.js'));
             var finderDir = nodePath.join(dir, test.dir);
             var found = taglibFinder.find(finderDir, [])
@@ -26,10 +26,8 @@ describe('taglib-finder' , function() {
                         return 'BAD:' + taglib.path;
                     }
                 });
-            return found;
-        },
-        {
-            deepEqual: true,
-            compareExtension: '.json'
+
+            helpers.compare(found, '.json');
+            return done();
         });
 });

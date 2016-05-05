@@ -1,0 +1,13 @@
+<div class="overlay">
+    <div class="overlay-header ${data.header.className}" if(data.header)>
+        <invoke data.header.renderBody(out)/>
+    </div>
+
+    <div class="overlay-body ${data.body.className}" if(data.body)>
+        <invoke data.body.renderBody(out)/>
+    </div>
+
+    <div class="overlay-footer ${data.footer.className}" if(data.footer)>
+        <invoke data.footer.renderBody(out)/>
+    </div>
+</div>

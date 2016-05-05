@@ -19,15 +19,16 @@ function createCodeGenerator() {
 }
 
 describe('compiler/codegen', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/codegen/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/codegen');
 
-    autotest.scanDir(autoTestDir, function run(dir) {
+    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var main = require(path.join(dir, 'index.js'));
         var generateCodeFunc = main;
         var codegen = createCodeGenerator();
         var ast = generateCodeFunc(builder, codegen);
         codegen.generateCode(ast);
-        return codegen.getCode();
+        helpers.compare(codegen.getCode(), '.js');
+        done();
     });
 
     it('should not allow a return outside a function', function() {

@@ -9,17 +9,14 @@ var builder = compiler.createBuilder();
 var autotest = require('./autotest');
 
 describe('compiler/pretty-print', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/pretty-print/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/pretty-print');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir) {
+        function run(dir, helpers, done) {
             var getAST = require(path.join(dir, 'index.js'));
             var ast = getAST(builder);
-            return ast;
-        },
-        {
-            deepEqual: true,
-            compareExtension: '.json'
+            helpers.compare(ast, '.json');
+            return done();
         });
 });

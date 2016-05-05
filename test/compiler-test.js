@@ -11,9 +11,9 @@ var fs = require('fs');
 require('marko/node-require').install();
 
 describe('compiler', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/compiler/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/compiler');
 
-    autotest.scanDir(autoTestDir, function run(dir) {
+    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var templatePath = path.join(dir, 'template.marko');
         var mainPath = path.join(dir, 'test.js');
         var main;
@@ -21,6 +21,7 @@ describe('compiler', function() {
         if (fs.existsSync(mainPath)) {
             main = require(mainPath);
         }
+
         if (main && main.checkError) {
             var e;
 
@@ -35,11 +36,12 @@ describe('compiler', function() {
             }
 
             main.checkError(e);
-            return '$PASS$';
+            done();
 
         } else {
             var compiledSrc = compiler.compileFile(templatePath);
-            return compiledSrc;
+            helpers.compare(compiledSrc, '.js');
+            done();
         }
     });
 

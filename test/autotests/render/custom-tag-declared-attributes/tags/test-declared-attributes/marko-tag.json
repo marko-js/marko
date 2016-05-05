@@ -1,0 +1,4 @@
+{
+    "renderer": "./renderer.js",
+    "@name": "string"
+}

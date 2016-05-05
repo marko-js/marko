@@ -10,18 +10,15 @@ var path = require('path');
 
 describe('parseJavaScriptArgs' , function() {
 
-    var autoTestDir = path.join(__dirname, 'fixtures/parseJavaScriptArgs/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/parseJavaScriptArgs');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir) {
+        function run(dir, helpers, done) {
             var inputPath = path.join(dir, 'input.txt');
             var input = fs.readFileSync(inputPath, {encoding: 'utf8'});
             var parsed = compiler.builder.parseJavaScriptArgs(input);
-            return parsed;
-        },
-        {
-            deepEqual: true,
-            compareExtension: '.json'
+            helpers.compare(parsed, '.json');
+            return done();
         });
 });

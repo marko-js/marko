@@ -11,11 +11,11 @@ var fs = require('fs');
 require('../node-require').install();
 
 describe('render', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/render/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/render');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir) {
+        function run(dir, helpers, done) {
             var templatePath = path.join(dir, 'template.marko');
             var mainPath = path.join(dir, 'test.js');
 
@@ -47,12 +47,13 @@ describe('render', function() {
                     }
 
                     main.checkError(e);
-                    return '$PASS$';
+                    return done();
                 } else {
                     var template = marko.load(templatePath, loadOptions);
                     var templateData = main.templateData || {};
                     var html = template.renderSync(templateData);
-                    return html;
+                    helpers.compare(html, '.html');
+                    return done();
                 }
             } finally {
                 if (main.writeToDisk === false) {
@@ -63,8 +64,5 @@ describe('render', function() {
                     delete require('marko/compiler').defaultOptions.preserveWhitespace;
                 }
             }
-        },
-        {
-            compareExtension: '.html'
         });
 });
