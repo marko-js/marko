@@ -968,7 +968,7 @@ _default-layout.marko:_
     <title><layout-placeholder name="title"/></title>
 </head>
 <body>
-    <h1 if="data.showHeader !== false">
+    <h1 if(data.showHeader !== false)>
         <layout-placeholder name="title"/>
     </h1>
     <p>
