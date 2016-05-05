@@ -16,6 +16,7 @@
     "test-fast": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test",
     "test-async": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test",
     "test-taglib-loader": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/taglib-loader-test",
+    "test-express": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/express-test",
     "jshint": "node_modules/.bin/jshint compiler/ runtime/ taglibs/"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
@@ -33,6 +34,7 @@
     "htmljs-parser": "^1.5.3",
     "lasso-package-root": "^1.0.0",
     "minimatch": "^0.2.14",
+    "object-assign": "^4.1.0",
     "property-handlers": "^1.0.0",
     "raptor-args": "^1.0.0",
     "raptor-async": "^1.1.2",
@@ -50,8 +52,10 @@
   "devDependencies": {
     "bluebird": "^2.9.30",
     "chai": "^3.3.0",
+    "express": "^4.13.4",
     "jshint": "^2.5.0",
     "mocha": "^2.3.3",
+    "request": "^2.72.0",
     "through": "^2.3.4"
   },
   "license": "Apache-2.0",
