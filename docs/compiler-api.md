@@ -1,6 +1,60 @@
 The Compiler API
 ================
 
+# require('marko/compiler')
+
+## Methods
+
+### buildTaglibLookup(dirname)
+
+Returns a [TaglibLookup](#TaglibLookup) for discovering custom tags available to a template in the given directory.
+
+Example usage:
+
+```javascript
+var taglibLookup  =
+    require('marko/compiler').buildTaglibLookup('some/dir');
+
+taglibLookup.forEachTag((tag) => {
+    console.log(tag.name);
+});
+
+taglibLookup.forEachAttribute('div', (attr) => {
+    console.log(attr.name);
+});
+```
+
+### compile(src, filename, options, callback)
+
+### compileFile(filename, options, callback)
+
+### createBuilder(options)
+
+### createWalker(options)
+
+### parseRaw(templateSrc, filename)
+
+## Properties
+
+### taglibLookup
+
+Returns a reference to the [taglib-lookup](#taglib-lookup) module.
+
+### taglibLoader
+
+### taglibFinder
+
+<a name="taglib-lookup"></a>
+# taglib-lookup
+
+## Methods
+
+### registerTaglib = registerTaglib;
+
+### buildLookup(dirname)
+
+### clearCache();
+
 # AST
 
 ## Node

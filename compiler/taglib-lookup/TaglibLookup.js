@@ -141,6 +141,53 @@ class TaglibLookup {
         this._mergeNestedTags(taglib);
     }
 
+    forEachTag(callback) {
+        var tags = this.merged.tags;
+        if (tags) {
+            for (var tagName in tags) {
+                if (tags.hasOwnProperty(tagName)) {
+                    var tag = tags[tagName];
+                    var result = callback(tag);
+                    if (result === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    forEachAttribute(tagName, callback) {
+        var tags = this.merged.tags;
+        if (!tags) {
+            return;
+        }
+
+        function findAttributesForTagName(tagName) {
+            var tag = tags[tagName];
+            if (!tag) {
+                return;
+            }
+
+            var attributes = tag.attributes;
+            if (!attributes) {
+                return;
+            }
+
+            for (var attrName in attributes) {
+                if (attributes.hasOwnProperty(attrName)) {
+                    callback(attributes[attrName], tag);
+                }
+            }
+
+            if (tag.patternAttributes) {
+                tag.patternAttributes.forEach(callback);
+            }
+        }
+
+        findAttributesForTagName(tagName); // Look for an exact match at the tag level
+        findAttributesForTagName('*'); // Including attributes that apply to all tags
+    }
+
     getTag(element) {
         if (typeof element === 'string') {
             element = {
@@ -157,7 +204,6 @@ class TaglibLookup {
     }
 
     getAttribute(element, attr) {
-
         if (typeof element === 'string') {
             element = {
                 tagName: element

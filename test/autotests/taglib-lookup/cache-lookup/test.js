@@ -1,6 +1,7 @@
 var nodePath = require('path');
 
-exports.check = function(taglibLookup, expect) {
+exports.check = function(markoCompiler, expect) {
+    var taglibLookup = markoCompiler.taglibLookup;
     var lookup1 = taglibLookup.buildLookup(nodePath.join(__dirname, 'foo'));
     var lookup2 = taglibLookup.buildLookup(nodePath.join(__dirname, 'foo'));
     var lookup3 = taglibLookup.buildLookup(nodePath.join(__dirname, 'foo/empty'));

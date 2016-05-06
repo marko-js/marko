@@ -175,6 +175,12 @@ exports.taglibLookup = taglibLookup;
 exports.taglibLoader = require('./taglib-loader');
 exports.taglibFinder = require('./taglib-finder');
 
+function buildTaglibLookup(dirname) {
+    return taglibLookup.buildLookup(dirname);
+}
+
+exports.buildTaglibLookup = buildTaglibLookup;
+
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko.json'));

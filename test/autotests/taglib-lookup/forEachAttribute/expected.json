@@ -1,0 +1,10 @@
+[
+    "name",
+    "age",
+    "foo-on-*",
+    "if",
+    "else-if",
+    "else",
+    "for",
+    "while"
+]

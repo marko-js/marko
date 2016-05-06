@@ -1,4 +1,5 @@
-exports.check = function(taglibLookup, expect) {
+exports.check = function(markoCompiler, expect) {
+    var taglibLookup = markoCompiler.taglibLookup;
     var lookup = taglibLookup.buildLookup(__dirname);
     // console.log(Object.keys(lookup.attributes));
     var attr = lookup.getAttribute('nested-foo', 'attr1');
