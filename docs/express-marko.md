@@ -15,15 +15,13 @@ Marko provides a submodule (`marko/express`) to add a `res.marko` method to the 
 By using `res.marko` you'll automatically have access to `req`, `res`, `app`, `app.locals`, and `res.locals` from within your Marko template and custom tags.  These values are added to `out.global`.
 
 ```javascript
+require('marko/express'); //enable res.marko
 require('marko/node-require').install();
 
 var express = require('express');
 var template = require('./template.marko');
 
 var app = express();
-
-//enable res.marko
-require('marko/express').injectInto(express);
 
 app.get('/', function(req, res) {
     res.marko(template, {

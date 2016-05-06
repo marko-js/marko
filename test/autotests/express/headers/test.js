@@ -1,7 +1,7 @@
-exports.createApp = function(express, markoExpress) {
+exports.createApp = function(express, markoExpressPath) {
     var app = express();
 
-    markoExpress.injectInto(express);
+    require(markoExpressPath);
 
     app.locals.foo = 'FOO';
 

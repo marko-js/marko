@@ -1,5 +1,5 @@
-exports.createApp = function(express, markoExpress) {
-    markoExpress.injectInto(express);
+exports.createApp = function(express, markoExpressPath) {
+    require(markoExpressPath);
 
     var app = express();
 

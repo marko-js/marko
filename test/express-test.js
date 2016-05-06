@@ -7,7 +7,6 @@ var path = require('path');
 var marko = require('../');
 var autotest = require('./autotest');
 var express = require('express');
-var markoExpress = require('../express');
 var request = require('request');
 var fs = require('fs');
 
@@ -21,6 +20,7 @@ describe('render', function() {
         function run(dir, helpers, done) {
             var mainPath = path.join(dir, 'test.js');
             var templatePath = path.join(dir, 'template.marko');
+            var markoExpressPath = require.resolve('../express');
 
             var main = fs.existsSync(mainPath) ? require(mainPath) : {};
             var loadOptions = main && main.loadOptions;
@@ -41,7 +41,7 @@ describe('render', function() {
                 main.checkError(e);
                 return done();
             } else {
-                var app = main.createApp(express, markoExpress);
+                var app = main.createApp(express, markoExpressPath);
                 var template = marko.load(templatePath, loadOptions);
 
                 app.get('/test', main.createController(template));
