@@ -17,33 +17,7 @@ The runtime for template rendering is supported in all web browsers. If you find
 
 # How can Marko be used with Express?
 
-The recommended way to use Marko with Express is to bypass the Express view engine and instead have Marko render directly to the response stream as shown in the following code:
-
-```javascript
-var template = require('./template.marko');
-
-app.get('/profile', function(req, res) {
-    template
-        .render({
-            name: 'Frank'
-        }, res);
-});
-```
-
-With this approach, you can benefit from streaming and there is no middleman (less complexity).
-
-Alternatively, you can use the streaming API to produce an intermediate stream that can then be piped to the response stream as shown below:
-
-```javascript
-var template = require('./template.marko');
-
-app.get('/profile', function(req, res) {
-    template.stream({
-            name: 'Frank'
-        })
-        .pipe(res);
-});
-```
+The recommended way to use Marko with Express is described on the [Express + Marko](express-marko.md) page.
 
 # What is the recommended directory structure for templates and "partials"?
 
