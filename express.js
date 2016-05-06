@@ -28,3 +28,5 @@ response.marko = response.marko || function(template, data) {
 
     template.render(data, res);
 };
+
+delete require.cache[__filename];
