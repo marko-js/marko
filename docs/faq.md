@@ -17,7 +17,7 @@ The runtime for template rendering is supported in all web browsers. If you find
 
 # How can Marko be used with Express?
 
-The recommended way to use Marko with Express is described on the [Express + Marko](express-marko.md) page.
+The recommended way to use Marko with Express is described on the [Express + Marko](http://markojs.com/docs/marko/express/) page.
 
 # What is the recommended directory structure for templates and "partials"?
 

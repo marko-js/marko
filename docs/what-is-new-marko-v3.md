@@ -1186,9 +1186,9 @@ The Marko parser and compiler are now case sensitive. The following tags are not
 
 The Marko compiler went through a major refactor with Marko v3 as a result of introducing a new parser that recognizes types at compile time. The new compile-time API is much simpler and more powerful. For more information on the Marko compiler and extending Marko at compile-time, please check out:
 
-- [Compiler Advanced](https://github.com/marko-js/marko/blob/master/docs/compiler-advanced.md)
-- [The Compiler API](https://github.com/marko-js/marko/blob/master/docs/compiler-api.md) (work-in-progress)
-- [Compile-time Tags](https://github.com/marko-js/marko/blob/master/docs/compile-time-tags.md)
+- [Compiler Advanced](http://markojs.com/docs/marko/compiler/advanced/)
+- [The Compiler API](http://markojs.com/docs/marko/compiler/api/) (work-in-progress)
+- [Compile-time Tags](http://markojs.com/docs/marko/compiler/compile-time-tags/)
 
 
 # Next steps
