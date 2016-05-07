@@ -3,7 +3,18 @@ Changelog
 
 # 3.x
 
-## 3.0.x
+## 3.2.x
+
+### 3.2.0
+
+- Fixes #286 - Add res.marko(templateData) for use with Express ([@mlrawlings](https://github.com/mlrawlings))
+
+## 3.1.x
+
+### 3.1.9
+
+- Fixes #288 - Provide API for discovering custom tags and attributes for autocomplete/tooling purposes
+- Documentation improvements
 
 ### 3.1.8
 
@@ -43,6 +54,8 @@ Changelog
 ### 3.1.0
 
 - Fixes #254 - Allow preserve whitespace to be enabled at the global level
+
+## 3.0.x
 
 ### 3.0.7
 
