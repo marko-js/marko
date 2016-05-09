@@ -35,6 +35,12 @@ function transformerComparator(a, b) {
     return a - b;
 }
 
+function TAG_COMPARATOR(a, b) {
+    a = a.name;
+    b = b.name;
+    return a.localeCompare(b);
+}
+
 function merge(target, source) {
     for (var k in source) {
         if (source.hasOwnProperty(k)) {
@@ -87,6 +93,8 @@ class TaglibLookup {
         this.merged = {};
         this.taglibsById = {};
         this._inputFiles = null;
+
+        this._sortedTags = undefined;
     }
 
     hasTaglib(taglib) {
@@ -129,6 +137,8 @@ class TaglibLookup {
             return;
         }
 
+        this._sortedTags = undefined;
+
         this.taglibsById[taglib.id] = taglib;
 
         merge(this.merged, {
@@ -139,6 +149,20 @@ class TaglibLookup {
         });
 
         this._mergeNestedTags(taglib);
+    }
+
+    getTagsSorted() {
+        var sortedTags = this._sortedTags;
+
+        if (sortedTags === undefined) {
+            sortedTags = this._sortedTags = [];
+            this.forEachTag((tag) => {
+                sortedTags.push(tag);
+            });
+            sortedTags.sort(TAG_COMPARATOR);
+        }
+
+        return sortedTags;
     }
 
     forEachTag(callback) {
