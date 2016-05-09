@@ -3,6 +3,12 @@ Changelog
 
 # 3.x
 
+## 3.3.x
+
+### 3.3.0
+
+- Include async fragment name in the `asyncFragmentFinish` events ([@kprakasam](https://github.com/kprakasam))
+
 ## 3.2.x
 
 ### 3.2.0
