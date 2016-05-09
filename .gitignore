@@ -6,5 +6,6 @@
 /*.sublime-workspace
 *.orig
 .DS_Store
+.vscode
 coverage
 .nvmrc
