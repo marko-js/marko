@@ -45,7 +45,8 @@ module.exports = function(input, out) {
 
                 events.emit('asyncFragmentFinish', {
                     clientReorder: true,
-                    out: af.out
+                    out: af.out,
+                    name: af.id
                 });
 
                 out.flush();

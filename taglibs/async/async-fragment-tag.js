@@ -111,7 +111,8 @@ module.exports = function render(input, out) {
         if (!clientReorder) {
             events.emit('asyncFragmentFinish', {
                 clientReorder: false,
-                out: targetOut
+                out: targetOut,
+                name: name 
             });
         }
 
