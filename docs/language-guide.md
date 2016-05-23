@@ -410,7 +410,7 @@ The output HTML will be the following:
 ```html
 <img src="foo.png">
 
-<div></div>
+<div class="tab-active"></div>
 
 <input type="checkbox" disabled>
 ```
