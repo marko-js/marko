@@ -915,7 +915,7 @@ The output of the above template might be the following:
 </div>
 ```
 
-For information on how to use and create taglibs, please see the [Custom Taglibs](#custom-taglibs) section below.
+For information on how to use and create custom taglibs, please see the documentation for [Custom Taglibs](http://markojs.com/docs/marko/custom-taglibs/).
 
 # Async Taglib
 
