@@ -132,6 +132,11 @@ module.exports = function render(input, out) {
         dataProvider = dataProvider[method].bind(dataProvider);
     }
 
+    events.emit('asyncFragmentBegin', {
+        name: name,
+        clientReorder: clientReorder
+    });
+
     requestData(dataProvider, arg, renderBody, scope);
 
     if (!done) {
@@ -196,10 +201,7 @@ module.exports = function render(input, out) {
 
             if (asyncFragmentContext.fragments) {
                 asyncFragmentContext.fragments.push(fragmentInfo);
-            } else {
-                events.emit('asyncFragmentBegin', fragmentInfo);
             }
-
         } else {
             out.flush(); // Flush everything up to this async fragment
             asyncOut = out.beginAsync({
