@@ -21,7 +21,7 @@
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "lib/async-writer.js",
+    "main": "src/index.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
