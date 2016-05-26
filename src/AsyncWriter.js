@@ -415,6 +415,12 @@ AsyncWriter.prototype = {
         return this;
     },
 
+    prependListener: function() {
+        var events = this._events;
+        events.prependListener.apply(events, arguments);
+        return this;
+    },
+
     pipe: function(stream) {
         this._stream.pipe(stream);
         return this;
