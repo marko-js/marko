@@ -682,4 +682,54 @@ describe('async-writer' , function() {
 
 
     });
+
+    it('should end correctly if top-level is ended asynchronously', function(done) {
+        var out = require('../').create();
+        out.name = 'outer';
+
+        out.on('finish', function() {
+            var output = out.getOutput();
+            expect(output).to.equal('123');
+            done();
+        });
+
+        out.write('1');
+
+        setTimeout(function() {
+            var asyncOut = out.beginAsync({ name: 'inner'});
+            setTimeout(function() {
+                asyncOut.write('2');
+                asyncOut.end();
+            }, 50);
+
+            out.write('3');
+
+            out.end();
+        }, 10);
+    });
+
+    it('should end correctly if top-level is ended asynchronously when providing custom globals', function(done) {
+        var out = require('../').create(null, {global: { foo: 'bar' }});
+        out.name = 'outer';
+
+        out.on('finish', function() {
+            var output = out.getOutput();
+            expect(output).to.equal('123');
+            done();
+        });
+
+        out.write('1');
+
+        setTimeout(function() {
+            var asyncOut = out.beginAsync({ name: 'inner'});
+            setTimeout(function() {
+                asyncOut.write('2');
+                asyncOut.end();
+            }, 50);
+
+            out.write('3');
+
+            out.end();
+        }, 10);
+    });
 });
