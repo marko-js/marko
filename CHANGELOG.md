@@ -5,6 +5,10 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.1
+
+- Additional tweaks for #298 - Always emit correct events for async fragments
+
 ### 3.4.0
 
 - Fixes #298 - Always emit correct events for async fragments
