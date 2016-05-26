@@ -59,13 +59,7 @@ module.exports = function(input, out) {
 
         asyncFragmentsContext.fragments.forEach(handleAsyncFragment);
 
-        out.on('asyncFragmentBegin', function(fragmentInfo) {
-            if (fragmentInfo.clientReorder !== true) {
-                // We only care about async fragments that need to be
-                // reordered in the browser
-                return;
-            }
-
+        out.on('asyncFragmentClientReorder', function(fragmentInfo) {
             remaining++;
             handleAsyncFragment(fragmentInfo);
         });

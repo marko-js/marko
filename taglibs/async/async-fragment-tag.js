@@ -79,8 +79,9 @@ module.exports = function render(input, out) {
         clientReorder: clientReorder
     };
 
-    var beginEmitted = false;
     var beforeRenderEmitted = false;
+
+    out.emit('asyncFragmentBegin', fragmentInfo);
 
     function renderBody(err, data, renderTimeout) {
         if (timeoutId) {
@@ -91,15 +92,6 @@ module.exports = function render(input, out) {
         done = true;
 
         var targetOut = fragmentInfo.out = asyncOut || out;
-
-        if (!beginEmitted) {
-            beginEmitted = true;
-            // It's possible that this completed synchronously. If that happens then we may
-            // be rendering the async fragment before we have even had a chance to emit the begin
-            // event. If that happens then we still need to
-            // emit the begin event before rendering and completing the async fragment
-            out.emit('asyncFragmentBegin', fragmentInfo);
-        }
 
         if (!beforeRenderEmitted) {
             beforeRenderEmitted = true;
@@ -222,6 +214,8 @@ module.exports = function render(input, out) {
             if (asyncFragmentContext.fragments) {
                 asyncFragmentContext.fragments.push(fragmentInfo);
             }
+
+            out.emit('asyncFragmentClientReorder', fragmentInfo);
         } else {
             out.flush(); // Flush everything up to this async fragment
             asyncOut = fragmentInfo.out = out.beginAsync({
@@ -229,12 +223,5 @@ module.exports = function render(input, out) {
                 name: name
             });
         }
-    }
-
-    if (!beginEmitted) {
-        // Always emit the begin event, but if the async fragment completed synchronously
-        // then the begin event will have already been emitted in the renderBody() function.
-        beginEmitted = true;
-        out.emit('asyncFragmentBegin', fragmentInfo);
     }
 };

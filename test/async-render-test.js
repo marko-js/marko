@@ -47,7 +47,7 @@ describe('render', function() {
 
                 var addEventListener = function(event) {
                     out.on(event, function(arg) {
-                        var name = arg.id || arg.name;
+                        var name = arg.name;
 
                         if (!eventsByFragmentName[name]) {
                             eventsByFragmentName[name] = [];
