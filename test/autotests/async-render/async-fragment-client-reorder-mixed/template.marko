@@ -1,0 +1,16 @@
+<body>
+    <async-fragment data-provider=data.outer var="outer" client-reorder>
+        <div class="outer">
+            <h1>Outer</h1>
+
+            <async-fragment data-provider=data.inner1 var="inner1">
+                <div class="inner">
+                    <h2>Inner 1</h2>
+                </div>
+            </async-fragment>
+        </div>
+
+    </async-fragment>
+
+    <async-fragments/>
+</body>

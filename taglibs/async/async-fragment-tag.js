@@ -11,31 +11,30 @@ function isPromise(o) {
 
 function promiseToCallback(promise, callback, thisObj) {
     if (callback) {
-      var finalPromise = promise
-        .then(function(data) {
-          callback(null, data);
-        });
+        var finalPromise = promise
+            .then(function(data) {
+                callback(null, data);
+            });
 
-      if (typeof promise.catch === 'function') {
-        finalPromise = finalPromise.catch(function(err) {
-          callback(err);
-        });
-      } else if (typeof promise.fail === 'function') {
-        finalPromise = finalPromise.fail(function(err) {
-          callback(err);
-        });
-      }
+        if (typeof promise.catch === 'function') {
+            finalPromise = finalPromise.catch(function(err) {
+                callback(err);
+            });
+        } else if (typeof promise.fail === 'function') {
+            finalPromise = finalPromise.fail(function(err) {
+                callback(err);
+            });
+        }
 
-      if (finalPromise.done) {
-        finalPromise.done();
-      }
+        if (finalPromise.done) {
+            finalPromise.done();
+        }
     }
 
     return promise;
 }
 
 function requestData(provider, args, callback, thisObj) {
-
     if (isPromise(provider)) {
         // promises don't support a scope so we can ignore thisObj
         promiseToCallback(provider, callback);
@@ -44,11 +43,10 @@ function requestData(provider, args, callback, thisObj) {
 
     if (typeof provider === 'function') {
         var data = (provider.length === 1) ?
-        // one argument so only provide callback to function call
-        provider.call(thisObj, callback) :
-
-        // two arguments so provide args and callback to function call
-        provider.call(thisObj, args, callback);
+            // one argument so only provide callback to function call
+            provider.call(thisObj, callback) :
+            // two arguments so provide args and callback to function call
+            provider.call(thisObj, args, callback);
 
         if (data !== undefined) {
             if (isPromise(data)) {
@@ -68,7 +66,6 @@ module.exports = function render(input, out) {
     var dataProvider = input.dataProvider;
     var arg = input.arg || {};
     arg.out = out;
-    var events = out.global.events;
 
     var clientReorder = isClientReorderSupported && input.clientReorder === true;
     var asyncOut;
@@ -76,6 +73,14 @@ module.exports = function render(input, out) {
     var timeoutId = null;
     var name = input.name || input._name;
     var scope = input.scope || this;
+
+    var fragmentInfo = {
+        name: name,
+        clientReorder: clientReorder
+    };
+
+    var beginEmitted = false;
+    var beforeRenderEmitted = false;
 
     function renderBody(err, data, renderTimeout) {
         if (timeoutId) {
@@ -85,13 +90,21 @@ module.exports = function render(input, out) {
 
         done = true;
 
-        var targetOut = asyncOut || out;
+        var targetOut = fragmentInfo.out = asyncOut || out;
 
-        events.emit('asyncFragmentBeforeRender', {
-            clientReorder: clientReorder,
-            out: targetOut,
-            name: name
-        });
+        if (!beginEmitted) {
+            beginEmitted = true;
+            // It's possible that this completed synchronously. If that happens then we may
+            // be rendering the async fragment before we have even had a chance to emit the begin
+            // event. If that happens then we still need to
+            // emit the begin event before rendering and completing the async fragment
+            out.emit('asyncFragmentBegin', fragmentInfo);
+        }
+
+        if (!beforeRenderEmitted) {
+            beforeRenderEmitted = true;
+            out.emit('asyncFragmentBeforeRender', fragmentInfo);
+        }
 
         if (err) {
             if (input.renderError) {
@@ -101,7 +114,7 @@ module.exports = function render(input, out) {
                 targetOut.error(err);
             }
         } else if (renderTimeout) {
-            renderTimeout(asyncOut);
+            renderTimeout(targetOut);
         } else {
             if (input.renderBody) {
                 input.renderBody(targetOut, data);
@@ -109,11 +122,7 @@ module.exports = function render(input, out) {
         }
 
         if (!clientReorder) {
-            events.emit('asyncFragmentFinish', {
-                clientReorder: false,
-                out: targetOut,
-                name: name 
-            });
+            out.emit('asyncFragmentFinish', fragmentInfo);
         }
 
         if (asyncOut) {
@@ -131,11 +140,6 @@ module.exports = function render(input, out) {
     if (method) {
         dataProvider = dataProvider[method].bind(dataProvider);
     }
-
-    events.emit('asyncFragmentBegin', {
-        name: name,
-        clientReorder: clientReorder
-    });
 
     requestData(dataProvider, arg, renderBody, scope);
 
@@ -169,7 +173,7 @@ module.exports = function render(input, out) {
                 nextId: 0
             });
 
-            var id = input.name || asyncFragmentContext.nextId++;
+            var id = fragmentInfo.id = input.name || (asyncFragmentContext.nextId++);
 
             if (renderPlaceholder) {
                 out.write('<span id="afph' + id + '">');
@@ -179,10 +183,33 @@ module.exports = function render(input, out) {
                 out.write('<noscript id="afph' + id + '"></noscript>');
             }
 
-            var asyncValue = new AsyncValue();
+            var asyncValue = fragmentInfo.asyncValue = new AsyncValue();
 
-            // Write to an in-memory buffer
-            asyncOut = asyncWriter.create(null, {global: out.global});
+            // If `client-reorder` is enabled then we asynchronously render the async fragment to a new
+            // AsyncWriter instance so that we can Write to a temporary in-memory buffer.
+            asyncOut = fragmentInfo.out = asyncWriter.create(null, {global: out.global});
+
+            fragmentInfo.after = input.showAfter;
+
+            var oldEmit = asyncOut.emit;
+
+            // Since we are rendering the async fragment to a new and separate AsyncWriter instance,
+            // we want to proxy any child events to the main AsyncWriter in case anyone is interested
+            // in those events. This is also needed for the following events to be handled correctly:
+            //
+            // - asyncFragmentBegin
+            // - asyncFragmentBeforeRender
+            // - asyncFragmentFinish
+            //
+            asyncOut.emit = function(event) {
+                if (event !== 'finish' && event !== 'error') {
+                    // We don't want to proxy the finish and error events since those are
+                    // very specific to the AsyncWriter associated with the async fragment
+                    out.emit.apply(out, arguments);
+                }
+
+                oldEmit.apply(asyncOut, arguments);
+            };
 
             asyncOut
                 .on('finish', function() {
@@ -192,22 +219,22 @@ module.exports = function render(input, out) {
                     asyncValue.reject(err);
                 });
 
-            var fragmentInfo = {
-                id: id,
-                asyncValue: asyncValue,
-                out: asyncOut,
-                after: input.showAfter
-            };
-
             if (asyncFragmentContext.fragments) {
                 asyncFragmentContext.fragments.push(fragmentInfo);
             }
         } else {
             out.flush(); // Flush everything up to this async fragment
-            asyncOut = out.beginAsync({
+            asyncOut = fragmentInfo.out = out.beginAsync({
                 timeout: 0, // We will use our code for controlling timeout
                 name: name
             });
         }
+    }
+
+    if (!beginEmitted) {
+        // Always emit the begin event, but if the async fragment completed synchronously
+        // then the begin event will have already been emitted in the renderBody() function.
+        beginEmitted = true;
+        out.emit('asyncFragmentBegin', fragmentInfo);
     }
 };

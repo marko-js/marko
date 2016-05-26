@@ -3,6 +3,7 @@ require('./patch-module');
 
 var chai = require('chai');
 chai.config.includeStack = true;
+var expect = require('chai').expect;
 var path = require('path');
 var marko = require('../');
 var autotest = require('./autotest');
@@ -40,19 +41,60 @@ describe('render', function() {
             } else {
                 var template = marko.load(templatePath, loadOptions);
                 var templateData = main.templateData || {};
-                template.render(templateData, function(err, html) {
+                var out = marko.createWriter();
+                var events = [];
+                var eventsByFragmentName = {};
+
+                var addEventListener = function(event) {
+                    out.on(event, function(arg) {
+                        var name = arg.id || arg.name;
+
+                        if (!eventsByFragmentName[name]) {
+                            eventsByFragmentName[name] = [];
+                        }
+
+                        eventsByFragmentName[name].push(event);
+
+                        events.push({
+                            event: event,
+                            arg: arg
+                        });
+                    });
+                };
+
+                addEventListener('asyncFragmentBegin');
+                addEventListener('asyncFragmentBeforeRender');
+                addEventListener('asyncFragmentFinish');
+
+                template.render(templateData, out, function(err, html) {
                     if (err) {
                         return done(err);
                     }
 
                     if (main.checkHtml) {
                         main.checkHtml(html);
-                        done();
                     } else {
                         helpers.compare(html, '.html');
-                        done();
                     }
+
+                    if (main.checkEvents) {
+                        main.checkEvents(events, helpers);
+                    }
+
+                    // Make sure all of the async fragments were correctly ended
+                    Object.keys(eventsByFragmentName).forEach(function(fragmentName) {
+                        var events = eventsByFragmentName[fragmentName];
+                        expect(events).to.deep.equal([
+                            'asyncFragmentBegin',
+                            'asyncFragmentBeforeRender',
+                            'asyncFragmentFinish'
+                        ]);
+                    });
+
+                    done();
                 });
+
+                out.end();
             }
         });
 });

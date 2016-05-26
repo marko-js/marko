@@ -1,0 +1,47 @@
+[
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "id": 0
+        }
+    }
+]

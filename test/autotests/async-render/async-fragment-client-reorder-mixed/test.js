@@ -11,11 +11,6 @@ exports.templateData = {
         setTimeout(function() {
             callback(null, {});
         }, 500);
-    },
-    inner2: function(callback) {
-        setTimeout(function() {
-            callback(null, {});
-        }, 600);
     }
 };
 

@@ -4,3 +4,4 @@ actual.json
 *.marko.js
 actual.txt
 error.txt
+actual-*

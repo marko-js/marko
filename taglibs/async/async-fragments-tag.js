@@ -2,11 +2,10 @@ var clientReorder = require('./client-reorder');
 
 module.exports = function(input, out) {
     var global = out.global;
-    var events = global.events;
 
     out.flush();
 
-    var asyncOut = out.beginAsync({ last: true, timeout: -1 });
+    var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'async-fragments' });
     out.onLast(function(next) {
         var asyncFragmentsContext = global.__asyncFragments;
 
@@ -20,8 +19,8 @@ module.exports = function(input, out) {
 
         var done = false;
 
-        function handleAsyncFragment(af) {
-            af.asyncValue.done(function(err, html) {
+        function handleAsyncFragment(fragmentInfo) {
+            fragmentInfo.asyncValue.done(function(err, html) {
                 if (done) {
                     return;
                 }
@@ -36,18 +35,17 @@ module.exports = function(input, out) {
                     global._afRuntime = true;
                 }
 
-                asyncOut.write('<div id="af' + af.id + '" style="display:none">' +
+                asyncOut.write('<div id="af' + fragmentInfo.id + '" style="display:none">' +
                     html +
                     '</div>' +
-                    '<script type="text/javascript">$af(' + (typeof af.id === 'number' ? af.id : '"' + af.id + '"') + (af.after ? (',"' + af.after + '"') : '' ) + ')</script>');
+                    '<script type="text/javascript">$af(' +
+                        (typeof fragmentInfo.id === 'number' ? fragmentInfo.id : '"' + fragmentInfo.id + '"') +
+                        (fragmentInfo.after ? (',"' + fragmentInfo.after + '"') : '' ) +
+                    ')</script>');
 
-                af.out.writer = asyncOut.writer;
+                fragmentInfo.out.writer = asyncOut.writer;
 
-                events.emit('asyncFragmentFinish', {
-                    clientReorder: true,
-                    out: af.out,
-                    name: af.id
-                });
+                out.emit('asyncFragmentFinish', fragmentInfo);
 
                 out.flush();
 
@@ -61,9 +59,15 @@ module.exports = function(input, out) {
 
         asyncFragmentsContext.fragments.forEach(handleAsyncFragment);
 
-        events.on('asyncFragmentBegin', function(af) {
+        out.on('asyncFragmentBegin', function(fragmentInfo) {
+            if (fragmentInfo.clientReorder !== true) {
+                // We only care about async fragments that need to be
+                // reordered in the browser
+                return;
+            }
+
             remaining++;
-            handleAsyncFragment(af);
+            handleAsyncFragment(fragmentInfo);
         });
 
         // Now that we have a listener attached, we want to receive any additional
