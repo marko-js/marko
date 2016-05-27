@@ -5,6 +5,10 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.2
+
+- Improved error reporting in cases when code generation fails ([@mlrawlings](https://github.com/mlrawlings))
+
 ### 3.4.1
 
 - Additional tweaks for #298 - Always emit correct events for async fragments
