@@ -1,0 +1,5 @@
+{
+    "<custom-tag>": {
+        "code-generator": "./custom-tag.js"
+    }
+}

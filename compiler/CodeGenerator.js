@@ -4,6 +4,7 @@ const isArray = Array.isArray;
 const Node = require('./ast/Node');
 const Literal = require('./ast/Literal');
 const Identifier = require('./ast/Identifier');
+const HtmlElement = require('./ast/HtmlElement');
 const ok = require('assert').ok;
 const Container = require('./ast/Container');
 const util = require('util');
@@ -195,7 +196,24 @@ class Generator {
         if (node.getCodeGenerator) {
             generateCodeFunc = node.getCodeGenerator(this.outputType);
             if (generateCodeFunc) {
-                finalNode = generateCodeFunc(node, this);
+                try {
+                    finalNode = generateCodeFunc(node, this);
+                } catch(err) {
+                    var contextMessage = 'Generating code for ';
+
+                    if(node instanceof HtmlElement) {
+                        contextMessage += '<'+node.tagName+'> tag';
+                    } else {
+                        contextMessage += node.type + ' node';
+                    }
+
+                    if(node.pos) {
+                        contextMessage += ' ('+this.context.getPosInfo(node.pos)+')';
+                    }
+
+                    err.message = err.message+' -- '+contextMessage;
+                    throw err;
+                }
 
                 if (finalNode === node) {
                     // If the same node was returned then we will generate
