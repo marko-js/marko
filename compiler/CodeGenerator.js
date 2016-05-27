@@ -9,6 +9,7 @@ const ok = require('assert').ok;
 const Container = require('./ast/Container');
 const util = require('util');
 const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
+const createError = require('raptor-util/createError');
 
 class GeneratorEvent {
     constructor(node, codegen) {
@@ -199,20 +200,21 @@ class Generator {
                 try {
                     finalNode = generateCodeFunc(node, this);
                 } catch(err) {
-                    var contextMessage = 'Generating code for ';
+                    var errorMessage = 'Generating code for ';
 
-                    if(node instanceof HtmlElement) {
-                        contextMessage += '<'+node.tagName+'> tag';
+                    if (node instanceof HtmlElement) {
+                        errorMessage += '<'+node.tagName+'> tag';
                     } else {
-                        contextMessage += node.type + ' node';
+                        errorMessage += node.type + ' node';
                     }
 
-                    if(node.pos) {
-                        contextMessage += ' ('+this.context.getPosInfo(node.pos)+')';
+                    if (node.pos) {
+                        errorMessage += ' ('+this.context.getPosInfo(node.pos)+')';
                     }
 
-                    err.message = err.message+' -- '+contextMessage;
-                    throw err;
+                    errorMessage += ' failed. Error: ' + err;
+
+                    throw createError(errorMessage, err /* cause */);
                 }
 
                 if (finalNode === node) {
