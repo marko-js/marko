@@ -135,7 +135,20 @@ describe('stateful widgets' , function() {
             expect(widget.state).to.equal(oldState);
         });
     });
+
+    it('should not re-render the widget if already destroyed', function() {
+        var widget = require('../fixtures/components/app-stateful-button')
+            .render({
+                size: 'large',
+                label: 'Initial Label'
+            })
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(widget.el.className).to.contain('large');
+
+        widget.destroy();
+
+        expect(widget.update()).to.be.undefined;
+    });
 });
-
-
-
