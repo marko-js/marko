@@ -1,6 +1,8 @@
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
 
-[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
+[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
+[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master)](https://coveralls.io/github/marko-js/marko?branch=master)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
 
