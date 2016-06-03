@@ -28,7 +28,24 @@ describe('client-rendered' , function() {
             .appendTo(document.getElementById('target'))
             .getWidget();
 
+        expect(widget.id).to.not.be.empty;
+
         widget.testDOMEvents();
+    });
+
+    it('[client-rendered] should allow multiple w-bind attributes in the same template', function() {
+
+        var widget = require('../fixtures/components/app-nested-widget-bind')
+            .render({})
+            .appendTo(document.getElementById('target'))
+            .getWidget();
+
+        expect(window.testData.widgets['app-nested-widget-bind/foo'].length).to.equal(1);
+        expect(window.testData.widgets['app-nested-widget-bind/bar'].length).to.equal(1);
+
+        expect(window.testData.widgets['app-nested-widget-bind/foo'][0]).to.equal(widget);
+
+        widget.test();
     });
 
     it('[client-rendered] should allow for custom events', function() {
