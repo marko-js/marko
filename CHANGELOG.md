@@ -5,6 +5,11 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.3
+
+- Improved validation for macros ([@mlrawlings](https://github.com/mlrawlings), [PR #300](https://github.com/marko-js/marko/pull/300))
+- Added code coverage reporting ([@mlrawlings](https://github.com/mlrawlings), [PR #301](https://github.com/marko-js/marko/pull/301))
+
 ### 3.4.2
 
 - Improved error reporting in cases when code generation fails ([@mlrawlings](https://github.com/mlrawlings))
