@@ -12,13 +12,15 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
-    "test-fast": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test",
-    "test-async": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test",
-    "test-taglib-loader": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/taglib-loader-test",
-    "test-express": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/express-test",
-    "jshint": "node_modules/.bin/jshint compiler/ runtime/ taglibs/",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "test": "npm run mocha && npm run jshint",
+    "mocha": "mocha --ui bdd --reporter spec ./test/",
+    "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
+    "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
+    "test-async": "mocha --ui bdd --reporter spec ./test/render-async-test",
+    "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
+    "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
+    "jshint": "jshint compiler/ runtime/ taglibs/",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
