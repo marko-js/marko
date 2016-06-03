@@ -12,7 +12,7 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --ui bdd --reporter spec ./test&& node_modules/.bin/jshint compiler/ runtime/ taglibs/",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
     "test-fast": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-test",
     "test-async": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/render-async-test",
     "test-taglib-loader": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/taglib-loader-test",
