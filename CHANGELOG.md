@@ -5,6 +5,10 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.4
+
+- Fixes #303 - `addStaticVar` is not generating unique variable names correctly
+
 ### 3.4.3
 
 - Improved validation for macros ([@mlrawlings](https://github.com/mlrawlings), [PR #300](https://github.com/marko-js/marko/pull/300))
