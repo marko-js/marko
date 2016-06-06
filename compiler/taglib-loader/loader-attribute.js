@@ -156,6 +156,10 @@ AttrHandlers.prototype = {
         if (value === true) {
             attr.ignore = true;
         }
+    },
+
+    autocomplete: function(value) {
+        this.attr.autocomplete = value;
     }
 };
 

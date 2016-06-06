@@ -1,30 +1,78 @@
 {
     "<assign>": {
-        "code-generator": "./assign-tag"
+        "code-generator": "./assign-tag",
+        "open-tag-only": true,
+        "autocomplete": [
+            {
+                "snippet": "assign ${1:varName}=${2:value}"
+            }
+        ]
     },
     "<else>": {
         "node-factory": "./else-tag"
     },
     "<else-if>": {
-        "node-factory": "./else-if-tag"
+        "node-factory": "./else-if-tag",
+        "autocomplete": [
+            {
+                "snippet": "else-if(${1:condition})"
+            }
+        ]
     },
     "<for>": {
-        "code-generator": "./for-tag"
+        "code-generator": "./for-tag",
+        "autocomplete": [
+            {
+                "snippet": "for(${1:var} in ${2:array})"
+            },
+            {
+                "snippet": "for(${1:nameVar},${2:valueVar} in ${3:object})"
+            },
+            {
+                "snippet": "for(${1:init}; ${2:test}; ${3:update})"
+            },
+            {
+                "snippet": "for(${1:var} from ${2:start} to ${3:end})"
+            }
+        ]
     },
     "<if>": {
-        "node-factory": "./if-tag"
+        "node-factory": "./if-tag",
+        "autocomplete": [
+            {
+                "snippet": "if(${1:condition})"
+            }
+        ]
     },
     "<include>": {
-        "code-generator": "./include-tag"
+        "code-generator": "./include-tag",
+        "autocomplete": [
+            {
+                "displayText": "include(<template>)",
+                "snippet": "include(${1:\"./target.marko\"})"
+            }
+        ]
     },
     "<include-text>": {
         "code-generator": "./include-text-tag"
     },
     "<invoke>": {
-        "code-generator": "./invoke-tag"
+        "code-generator": "./invoke-tag",
+        "autocomplete": [
+            {
+                "displayText": "invoke <function_call>",
+                "snippet": "invoke ${1:foo()}"
+            }
+        ]
     },
     "<macro>": {
-        "code-generator": "./macro-tag"
+        "code-generator": "./macro-tag",
+        "autocomplete": [
+            {
+                "displayText": "macro <name>(<parmas>)",
+                "snippet": "macro ${1:name}(${2:param1, param2})"
+            }
+        ]
     },
     "<macro-body>": {
         "code-generator": "./macro-body-tag"
@@ -50,20 +98,69 @@
         "preserve-whitespace": true
     },
     "<unless>": {
-        "node-factory": "./unless-tag"
+        "node-factory": "./unless-tag",
+        "autocomplete": [
+            {
+                "snippet": "unless(${1:condition})"
+            }
+        ]
     },
     "<var>": {
-        "node-factory": "./var-tag"
+        "node-factory": "./var-tag",
+        "autocomplete": [
+            {
+                "snippet": "var ${1:varName}=${2:value}",
+                "openTagOnly": true
+            }
+        ]
     },
     "<while>": {
-        "code-generator": "./while-tag"
+        "code-generator": "./while-tag",
+        "autocomplete": [
+            {
+                "snippet": "while(${1:condition})"
+            }
+        ]
     },
     "<*>": {
-        "@if": "argument",
-        "@else-if": "argument",
+        "@if": {
+            "type": "argument",
+            "autocomplete": {
+                "snippet": "if(${1:condition})"
+            }
+        },
+        "@else-if": {
+            "type": "argument",
+            "autocomplete": {
+                "snippet": "else-if(${1:condition})"
+            }
+        },
         "@else": "argument",
-        "@for": "argument",
-        "@while": "argument",
+        "@for": {
+            "type": "argument",
+            "autocomplete": [
+                {
+                    "snippet": "for(${1:var} in ${2:array})"
+                },
+                {
+                    "snippet": "for(${1:nameVar},${2:valueVar} in ${3:object})"
+                },
+                {
+                    "snippet": "for(${1:init}; ${2:test}; ${3:update})"
+                },
+                {
+                    "snippet": "for(${1:var} from ${2:start} to ${3:end})"
+                }
+            ]
+        },
+        "@while": {
+            "type": "argument",
+            "autocomplete": [
+                {
+                    "snippet": "while(${1:condition})"
+                }
+            ]
+        },
         "transformer": {
             "path": "./core-transformer",
             "priority": 0

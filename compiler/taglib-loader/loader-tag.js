@@ -423,6 +423,10 @@ TagHandlers.prototype = {
 
     noOutput: function(value) {
         this.tag.noOutput = value;
+    },
+
+    autocomplete: function(value) {
+        this.tag.autocomplete = value;
     }
 };
 
