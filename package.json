@@ -75,7 +75,7 @@
     "./node-require.js": "./node-require-browser.js"
   },
   "homepage": "http://markojs.com/",
-  "version": "3.4.4",
+  "version": "3.4.5",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }
