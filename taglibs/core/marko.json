@@ -124,20 +124,20 @@
     },
     "<*>": {
         "@if": {
-            "type": "argument",
+            "type": "directive",
             "autocomplete": {
                 "snippet": "if(${1:condition})"
             }
         },
         "@else-if": {
-            "type": "argument",
+            "type": "directive",
             "autocomplete": {
                 "snippet": "else-if(${1:condition})"
             }
         },
-        "@else": "argument",
+        "@else": "directive",
         "@for": {
-            "type": "argument",
+            "type": "directive",
             "autocomplete": [
                 {
                     "snippet": "for(${1:var} in ${2:array})"
@@ -154,7 +154,7 @@
             ]
         },
         "@while": {
-            "type": "argument",
+            "type": "directive",
             "autocomplete": [
                 {
                     "snippet": "while(${1:condition})"
