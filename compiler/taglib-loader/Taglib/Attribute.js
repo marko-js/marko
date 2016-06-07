@@ -21,7 +21,7 @@ class Attribute {
         this.name = name;
         this.type = null;
         this.required = false;
-        this.type = 'string';
+        this.type = null;
         this.allowExpressions = true;
         this.setFlag = null;
         this.pattern = null;

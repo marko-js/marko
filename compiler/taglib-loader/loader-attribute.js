@@ -171,9 +171,7 @@ exports.loadAttribute = function loadAttribute(attrName, attrProps, path) {
     var attr = new Taglib.Attribute(attrName);
 
     if (attrProps == null) {
-        attrProps = {
-            type: 'string'
-        };
+        attrProps = {};
     } else if (typeof attrProps === 'string') {
         attrProps = {
             type: attrProps
