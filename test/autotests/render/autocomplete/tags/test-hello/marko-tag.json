@@ -1,0 +1,21 @@
+{
+    "renderer": "./renderer.js",
+    "@name": "string",
+    "@foo": {
+        "type": "number",
+        "autocomplete": [
+            {
+                "snippet": "foo=abc"
+            },
+            {
+                "snippet": "foo=def"
+            }
+        ]
+    },
+    "autocomplete": [
+        {
+            "displayText": "test-hello foo=${1:bar}",
+            "snippet": "test-hello foo=$1"
+        }
+    ]
+}
