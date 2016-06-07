@@ -5,6 +5,12 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.5
+
+- Fixes #304 - async-fragment-tag-transformer.js being loaded by PhantomJS
+- Updated taglibs with additional information to support tooling
+- Added [Michael Rawlings](https://github.com/mlrawlings) as a maintainer
+
 ### 3.4.4
 
 - Fixes #303 - `addStaticVar` is not generating unique variable names correctly
