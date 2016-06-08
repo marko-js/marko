@@ -4,43 +4,74 @@
         "open-tag-only": true,
         "autocomplete": [
             {
-                "snippet": "assign ${1:varName}=${2:value}"
+                "snippet": "assign ${1:varName}=${2:value}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
             }
         ]
     },
     "<else>": {
-        "node-factory": "./else-tag"
+        "node-factory": "./else-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            }
+        ]
     },
     "<else-if>": {
         "node-factory": "./else-if-tag",
+        "attributes": {},
         "autocomplete": [
             {
-                "snippet": "else-if(${1:condition})"
+                "snippet": "else-if(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            },
+            {
+                "snippet": "else-if",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             }
         ]
     },
     "<for>": {
         "code-generator": "./for-tag",
+        "attributes": {},
         "autocomplete": [
             {
-                "snippet": "for(${1:var} in ${2:array})"
+                "snippet": "for(${1:var} in ${2:array})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             },
             {
-                "snippet": "for(${1:nameVar},${2:valueVar} in ${3:object})"
+                "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
             },
             {
-                "snippet": "for(${1:init}; ${2:test}; ${3:update})"
+                "snippet": "for(${1:name},${2:value} in ${3:object})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
             },
             {
-                "snippet": "for(${1:var} from ${2:start} to ${3:end})"
+                "snippet": "for(${1:init}; ${2:test}; ${3:update})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+            },
+            {
+                "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
+            },
+            {
+                "snippet": "for",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             }
         ]
     },
     "<if>": {
         "node-factory": "./if-tag",
+        "attributes": {},
         "autocomplete": [
             {
-                "snippet": "if(${1:condition})"
+                "snippet": "if(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             }
         ]
     },
@@ -49,19 +80,32 @@
         "autocomplete": [
             {
                 "displayText": "include(<template>)",
-                "snippet": "include(${1:\"./target.marko\"})"
+                "snippet": "include(${1:\"./target.marko\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
         ]
     },
     "<include-text>": {
-        "code-generator": "./include-text-tag"
+        "code-generator": "./include-text-tag",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
     },
     "<invoke>": {
         "code-generator": "./invoke-tag",
         "autocomplete": [
             {
                 "displayText": "invoke <function_call>",
-                "snippet": "invoke ${1:foo()}"
+                "snippet": "invoke ${1:foo()}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
             }
         ]
     },
@@ -70,16 +114,31 @@
         "autocomplete": [
             {
                 "displayText": "macro <name>(<parmas>)",
-                "snippet": "macro ${1:name}(${2:param1, param2})"
+                "snippet": "macro ${1:name}(${2:param1, param2})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             }
         ]
     },
     "<macro-body>": {
-        "code-generator": "./macro-body-tag"
+        "code-generator": "./macro-body-tag",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
+                "openTagOnly": true
+            }
+        ]
     },
     "<marko-preserve-whitespace>": {
         "code-generator": "./marko-preserve-whitespace-tag",
-        "preserve-whitespace": true
+        "preserve-whitespace": true,
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#whitespace"
+            }
+        ]
     },
     "<pre>": {
         "preserve-whitespace": true
@@ -89,7 +148,13 @@
         "@marko-init": "boolean",
         "@*": {
             "ignore": true
-        }
+        },
+        "autocomplete": [
+            {
+                "snippet": "script marko-init",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
+            }
+        ]
     },
     "<style>": {
         "preserve-whitespace": true
@@ -101,7 +166,11 @@
         "node-factory": "./unless-tag",
         "autocomplete": [
             {
-                "snippet": "unless(${1:condition})"
+                "snippet": "unless(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
             }
         ]
     },
@@ -110,7 +179,11 @@
         "autocomplete": [
             {
                 "snippet": "var ${1:varName}=${2:value}",
-                "openTagOnly": true
+                "openTagOnly": true,
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
             }
         ]
     },
@@ -118,38 +191,65 @@
         "code-generator": "./while-tag",
         "autocomplete": [
             {
-                "snippet": "while(${1:condition})"
+                "snippet": "while(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
             }
         ]
     },
     "<*>": {
         "@if": {
             "type": "statement",
-            "autocomplete": {
-                "snippet": "if(${1:condition})"
-            }
+            "autocomplete": [
+                {
+                    "snippet": "if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                }
+            ]
         },
         "@else-if": {
             "type": "statement",
-            "autocomplete": {
-                "snippet": "else-if(${1:condition})"
-            }
+            "autocomplete": [
+                {
+                    "snippet": "else-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                }
+            ]
         },
         "@else": "statement",
         "@for": {
             "type": "statement",
             "autocomplete": [
                 {
-                    "snippet": "for(${1:var} in ${2:array})"
+                    "snippet": "for(${1:var} in ${2:array})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
                 },
                 {
-                    "snippet": "for(${1:nameVar},${2:valueVar} in ${3:object})"
+                    "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
                 },
                 {
-                    "snippet": "for(${1:init}; ${2:test}; ${3:update})"
+                    "snippet": "for(${1:name},${2:value} in ${3:object})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
                 },
                 {
-                    "snippet": "for(${1:var} from ${2:start} to ${3:end})"
+                    "snippet": "for(${1:init}; ${2:test}; ${3:update})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+                },
+                {
+                    "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
                 }
             ]
         },
@@ -157,7 +257,11 @@
             "type": "statement",
             "autocomplete": [
                 {
-                    "snippet": "while(${1:condition})"
+                    "snippet": "while(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
                 }
             ]
         },
