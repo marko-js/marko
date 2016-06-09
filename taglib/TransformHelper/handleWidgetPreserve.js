@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 function addPreserve(transformHelper, bodyOnly, condition) {
 
@@ -63,13 +64,26 @@ module.exports = function handleWidgetPreserve() {
         el.removeAttribute('w-preserve');
         addPreserve(this, false);
     } else if (el.hasAttribute('w-preserve-if')) {
-        addPreserve(this, false, el.getAttributeValue('w-preserve-if'));
+        let preserveIfAttr = el.getAttribute('w-preserve-if');
+        var preserveIfCondition = preserveIfAttr.argument;
+        if (!preserveIfCondition) {
+            this.addError('The `w-preserve-if` attribute should have an argument. For example: <div w-preserve-if(someCondition)>');
+            return;
+        }
+        addPreserve(this, false, this.builder.expression(preserveIfCondition));
         el.removeAttribute('w-preserve-if');
     } else if (el.hasAttribute('w-preserve-body')) {
         el.removeAttribute('w-preserve-body');
         addPreserve(this, true);
     } else if (el.hasAttribute('w-preserve-body-if')) {
-        addPreserve(this, true, el.getAttributeValue('w-preserve-body-if'));
+        let preserveBodyIfAttr = el.getAttribute('w-preserve-body-if');
+        var preserveBodyIfCondition = preserveBodyIfAttr.argument;
+        if (!preserveBodyIfCondition) {
+            this.addError('The `w-preserve-body-if` attribute should have an argument. For example: <div w-preserve-body-if(someCondition)>');
+            return;
+        }
+
+        addPreserve(this, true, this.builder.expression(preserveBodyIfCondition));
         el.removeAttribute('w-preserve-body-if');
     }
 };

@@ -4,7 +4,8 @@ module.exports = require('marko-widgets').defineComponent({
     getInitialState:function(input){
         return  {
             name: input.name,
-            count: input.count
+            count: input.count,
+            className: input['class']
         };
     },
 
@@ -13,7 +14,8 @@ module.exports = require('marko-widgets').defineComponent({
             name: state.name,
             count: state.count,
             foo: 'bar',
-            hello: 'world'
+            hello: 'world',
+            className: state.className
         };
     }
 });
