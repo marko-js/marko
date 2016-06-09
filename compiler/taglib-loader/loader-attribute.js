@@ -160,6 +160,10 @@ AttrHandlers.prototype = {
 
     autocomplete: function(value) {
         this.attr.autocomplete = value;
+    },
+
+    enum: function(value) {
+        this.attr.enum = value;
     }
 };
 
