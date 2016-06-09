@@ -16,7 +16,7 @@
     "mocha": "mocha --ui bdd --reporter spec ./test/",
     "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
     "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
-    "test-async": "mocha --ui bdd --reporter spec ./test/render-async-test",
+    "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
     "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
     "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
     "jshint": "jshint compiler/ runtime/ taglibs/",

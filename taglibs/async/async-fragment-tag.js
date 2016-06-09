@@ -69,14 +69,19 @@ module.exports = function render(input, out) {
 
     var clientReorder = isClientReorderSupported && input.clientReorder === true;
     var asyncOut;
-    var done = false;
     var timeoutId = null;
     var name = input.name || input._name;
     var scope = input.scope || this;
+    var method = input.method;
+
+    if (method) {
+        dataProvider = dataProvider[method].bind(dataProvider);
+    }
 
     var fragmentInfo = {
         name: name,
-        clientReorder: clientReorder
+        clientReorder: clientReorder,
+        dataProvider: dataProvider
     };
 
     var beforeRenderEmitted = false;
@@ -84,12 +89,12 @@ module.exports = function render(input, out) {
     out.emit('asyncFragmentBegin', fragmentInfo);
 
     function renderBody(err, data, renderTimeout) {
+        if (fragmentInfo.finished) return;
+
         if (timeoutId) {
             clearTimeout(timeoutId);
             timeoutId = null;
         }
-
-        done = true;
 
         var targetOut = fragmentInfo.out = asyncOut || out;
 
@@ -113,6 +118,8 @@ module.exports = function render(input, out) {
             }
         }
 
+        fragmentInfo.finished = true;
+
         if (!clientReorder) {
             out.emit('asyncFragmentFinish', fragmentInfo);
         }
@@ -128,14 +135,9 @@ module.exports = function render(input, out) {
         }
     }
 
-    var method = input.method;
-    if (method) {
-        dataProvider = dataProvider[method].bind(dataProvider);
-    }
-
     requestData(dataProvider, arg, renderBody, scope);
 
-    if (!done) {
+    if (!fragmentInfo.finished) {
         var timeout = input.timeout;
         var renderTimeout = input.renderTimeout;
         var renderPlaceholder = input.renderPlaceholder;
@@ -149,6 +151,8 @@ module.exports = function render(input, out) {
         if (timeout != null) {
             timeoutId = setTimeout(function() {
                 var message = 'Async fragment (' + name + ') timed out after ' + timeout + 'ms';
+
+                fragmentInfo.timedout = true;
 
                 if (renderTimeout) {
                     logger.error(message);
