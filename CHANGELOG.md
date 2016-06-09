@@ -5,6 +5,14 @@ Changelog
 
 ## 3.4.x
 
+### 3.4.6
+
+- Async fragment improvements ([Pull Request #305](https://github.com/marko-js/marko/pull/305) by [@mlrawlings](https://github.com/mlrawlings))
+    - Adds additional event info (finished/timedout) to the data emitted from <async-fragment> tags.
+    - Ensures that renderBody() is not called again if the fragment has already finished (timed out).
+    - Fixes `npm run test-async`
+    - Removes a redundant `async-fragment` timeout related test
+
 ### 3.4.5
 
 - Fixes #304 - async-fragment-tag-transformer.js being loaded by PhantomJS
