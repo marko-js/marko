@@ -11,7 +11,7 @@
         "transformer": "./use-tag-transformer.js",
         "autocomplete": [
             {
-                "snippet": "layout-use(${1:./path/to/template.marko})",
+                "snippet": "layout-use(\"${1:./path/to/template.marko}\")",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-use><code>"
             },
             {
