@@ -5,6 +5,10 @@ CHANGELOG
 
 ## 6.1.x
 
+### v6.1.2
+
+- Fixed #141 - w-preserve-if/w-preserve-body-if broken
+
 ### v6.1.1
 
 - Fixed #137 - A widget should not update the DOM if it is destroyed (fixed by [@avigy](https://github.com/avigy))
