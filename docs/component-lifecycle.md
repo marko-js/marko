@@ -84,7 +84,7 @@ module.exports = require('marko-widgets').defineComponent({
 		console.log('The DOM is about to be updated...', this.id);
 	},
 
-	onBeforeUpdate: function() {
+	onUpdate: function() {
 		console.log('The DOM has been updated.', this.id);
 	},
 
