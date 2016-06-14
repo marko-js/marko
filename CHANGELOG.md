@@ -3,15 +3,33 @@ Changelog
 
 # 3.x
 
+## 3.5.x
+
+### 3.5.0
+
+- Added functionality to exclude specific directory or package from taglib finder ([Pull Request #309](https://github.com/marko-js/marko/pull/309) by [@oxala](https://github.com/oxala))
+
 ## 3.4.x
 
-### 3.4.6
+### 3.4.9
+
+- Fixed [https://github.com/marko-js/marko/issues/307] - Marko concise syntax, with multiple class names ([Pull Request #308](https://github.com/marko-js/marko/pull/308) by [@mlrawlings](https://github.com/mlrawlings))
+
+### 3.4.8
+
+- Added support for an "enum" attribute value
+
+### 3.4.7
 
 - Async fragment improvements ([Pull Request #305](https://github.com/marko-js/marko/pull/305) by [@mlrawlings](https://github.com/mlrawlings))
     - Adds additional event info (finished/timedout) to the data emitted from <async-fragment> tags.
     - Ensures that renderBody() is not called again if the fragment has already finished (timed out).
     - Fixes `npm run test-async`
     - Removes a redundant `async-fragment` timeout related test
+
+### 3.4.6
+
+- Updated autocomplete information
 
 ### 3.4.5
 
