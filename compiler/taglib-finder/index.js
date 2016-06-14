@@ -18,13 +18,26 @@
 var taglibLoader = require('../taglib-loader');
 var nodePath = require('path');
 var fs = require('fs');
+var lassoPackageRoot = require('lasso-package-root');
+var resolveFrom = require('resolve-from');
+
 var existsCache = {};
 var findCache = {};
 var excludedDirs = {};
 var excludedPackages = {};
 var taglibsForNodeModulesDirCache = {};
-var lassoPackageRoot = require('lasso-package-root');
-var resolveFrom = require('resolve-from');
+
+/**
+ * Reset all internal state to the default state. This
+ * was added for testing purposes.
+ */
+function reset() {
+    existsCache = {};
+    findCache = {};
+    excludedDirs = {};
+    excludedPackages = {};
+    taglibsForNodeModulesDirCache = {};
+}
 
 function existsCached(path) {
     var exists = existsCache[path];
@@ -158,6 +171,7 @@ function excludePackage(name) {
     excludedPackages[name] = true;
 }
 
+exports.reset = reset;
 exports.find = find;
 exports.clearCache = clearCache;
 exports.excludeDir = excludeDir;
