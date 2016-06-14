@@ -56,8 +56,8 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
             prevClassName.value += ' ' + className.value;
         } else {
             finalClassNames.push(className);
+            prevClassName = className;
         }
-        prevClassName = className;
     }
 
     if (finalClassNames.length === 1) {
