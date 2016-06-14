@@ -20,6 +20,8 @@ var nodePath = require('path');
 var fs = require('fs');
 var existsCache = {};
 var findCache = {};
+var excludedDirs = {};
+var excludedPackages = {};
 var taglibsForNodeModulesDirCache = {};
 var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
@@ -101,7 +103,7 @@ function find(dirname, registeredTaglibs) {
     let curDirname = dirname;
     while(true) {
         let taglibPath = nodePath.join(curDirname, 'marko.json');
-        if (existsCached(taglibPath)) {
+        if (existsCached(taglibPath) && !excludedDirs[curDirname]) {
             var taglib = taglibLoader.load(taglibPath);
             helper.addTaglib(taglib);
         }
@@ -120,16 +122,18 @@ function find(dirname, registeredTaglibs) {
     if (rootPkg) {
         // Now look for `marko.json` from installed packages
         getAllDependencyNames(rootPkg).forEach((name) => {
-            let taglibPath;
-            try {
-                taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
-            } catch(e) {
-                // The installed dependency does not export a taglib... skip it
-                return;
-            }
+            if (!excludedPackages[name]) {
+                let taglibPath;
+                try {
+                    taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
+                } catch(e) {
+                    // The installed dependency does not export a taglib... skip it
+                    return;
+                }
 
-            var taglib = taglibLoader.load(taglibPath);
-            helper.addTaglib(taglib);
+                var taglib = taglibLoader.load(taglibPath);
+                helper.addTaglib(taglib);
+            }
         });
     }
 
@@ -146,5 +150,15 @@ function clearCache() {
     taglibsForNodeModulesDirCache = {};
 }
 
+function excludeDir(dir) {
+    excludedDirs[dir] = true;
+}
+
+function excludePackage(name) {
+    excludedPackages[name] = true;
+}
+
 exports.find = find;
 exports.clearCache = clearCache;
+exports.excludeDir = excludeDir;
+exports.excludePackage = excludePackage;

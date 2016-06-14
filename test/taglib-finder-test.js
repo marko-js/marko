@@ -16,6 +16,9 @@ describe('taglib-finder' , function() {
     var autoTestDir = nodePath.join(__dirname, 'autotests/taglib-finder');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
+            taglibFinder.excludeDir(nodePath.join(autoTestDir, 'excluded-dir/a/b-excluded'));
+            taglibFinder.excludePackage('excluded-dependency');
+
             var test = require(nodePath.join(dir, 'test.js'));
             var finderDir = nodePath.join(dir, test.dir);
             var found = taglibFinder.find(finderDir, [])
