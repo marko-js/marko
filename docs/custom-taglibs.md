@@ -351,3 +351,15 @@ The search path will be the following:
 4. `/my-project/marko.json`
 5. `/my-project/node_modules/foo/marko.json`
 6. `/my-project/node_modules/bar/marko.json`
+
+If you wish to hide particular folder and/or node_module from discovery of marko.json, you can exclude those from the search with:
+
+```javascript
+    require('marko/compiler').taglibFinder.excludeDir(dirPath);
+    // Where 'dirPath' is an absolute path to the folder containing marko.json
+
+    require('marko/compiler').taglibFinder.excludePackage(packageName);
+    // Where 'packageName' is the name of the node_module containing marko.json
+```
+
+Those statements should be used before any marko rendering happened in the process.
