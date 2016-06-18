@@ -1,0 +1,29 @@
+[
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    }
+]

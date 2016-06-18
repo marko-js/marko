@@ -3,18 +3,22 @@
 module.exports = function transform(el, context) {
     var parentNode = el.parentNode;
 
-    if (parentNode.tagName !== 'async-fragment') {
-        context.addError(el, 'The <' + el.tagName + '> should be nested within an <async-fragment> tag.');
+    if (parentNode.tagName === 'async-fragment') {
+        console.log(parentNode);
+    }
+
+    if (parentNode.tagName !== 'await') {
+        context.addError(el, 'The <' + el.tagName + '> should be nested within an <await> tag.');
         return;
     }
 
     var targetProp;
 
-    if (el.tagName === 'async-fragment-error') {
+    if (el.tagName === 'await-error') {
         targetProp = 'renderError';
-    } else if (el.tagName === 'async-fragment-timeout') {
+    } else if (el.tagName === 'await-timeout') {
         targetProp = 'renderTimeout';
-    } else if (el.tagName === 'async-fragment-placeholder') {
+    } else if (el.tagName === 'await-placeholder') {
         targetProp = 'renderPlaceholder';
     }
 

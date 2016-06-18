@@ -1,0 +1,83 @@
+[
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.inner1",
+            "finished":true,
+            "clientReorder": true,
+            "id": 1
+        }
+    },
+    {
+        "event": "asyncFragmentBegin",
+        "arg": {
+            "name": "data.inner2",
+            "finished":true,
+            "clientReorder": true,
+            "id": 2
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.inner1",
+            "finished":true,
+            "clientReorder": true,
+            "id": 1
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.inner1",
+            "finished":true,
+            "clientReorder": true,
+            "id": 1
+        }
+    },
+    {
+        "event": "asyncFragmentBeforeRender",
+        "arg": {
+            "name": "data.inner2",
+            "finished":true,
+            "clientReorder": true,
+            "id": 2
+        }
+    },
+    {
+        "event": "asyncFragmentFinish",
+        "arg": {
+            "name": "data.inner2",
+            "finished":true,
+            "clientReorder": true,
+            "id": 2
+        }
+    }
+]
