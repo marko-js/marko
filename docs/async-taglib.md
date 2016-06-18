@@ -12,7 +12,7 @@ The Pull Model approach to template rendering requires the use of a templating e
 
 The problem with the traditional Push Model approach is that template rendering is delayed until _all_ data has been fully received. This reduces the time to first byte, and it also may result in the server sitting idle while waiting for data to be loaded from remote services. In addition, if certain data is no longer needed by a template then only the template needs to be modified and not the controller.
 
-With the new Pull Model approach, template rendering begins immediately. In addition, fragments of the template that depend on data from data providers are rendered asynchronously and `await` only the associated data provider to complete. The template rendering will only be delayed for data that the template actually needs.
+With the new Pull Model approach, template rendering begins immediately. In addition, fragments of the template that depend on data from data providers are rendered asynchronously and `await` only the associated data provider's completion. The template rendering will only be delayed for data that the template actually needs.
 
 # Example
 
