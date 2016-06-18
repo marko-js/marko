@@ -1,6 +1,35 @@
 Async Taglib
 =====================
 
+> Note: This functionality used to be provided by the `<async-fragment>` tag
+> which has been deprecated in favor of `<await>`.
+
+# Example
+
+**Pass a promise (or callback) to the template**:
+
+```javascript
+var template = require('./template.marko');
+var request = require('request-promise');
+
+module.exports = template.stream({
+    userDataProvider: request.get('https://api.example.com/users/123')
+});
+```
+
+**And await the data**:
+
+```html
+<await(user from data.userDataProvider)>
+    <ul>
+        <li>Name: ${user.firstName} ${user.lastName}</li>
+        <li>Email address: ${user.email}</li>
+    </ul>
+</await>
+```
+
+# Philosophy
+
 Marko includes a taglib that supports the more efficient and simpler "Pull Model "approach to providing templates with view model data.
 
 * __Push Model:__ Request all needed data upfront and wait for all of the data to be received before building the view model and then rendering the template.
@@ -14,38 +43,6 @@ The problem with the traditional Push Model approach is that template rendering 
 
 With the new Pull Model approach, template rendering begins immediately. In addition, sections of the template that depend on data from data providers are rendered asynchronously and `await` only the associated data provider's completion. The template rendering will only be delayed for data that the template actually needs.
 
-# Example
-
-```javascript
-var template = require('./template.marko');
-
-module.exports = function(req, res) {
-    var userId = req.query.userId;
-    template.render({
-            userProfileDataProvider: function(callback) {
-                userProfileService.getUserProfile(userId, callback);
-            }
-        }, res);
-}
-```
-
-```html
-<await(userProfile from data.userProfileDataProvider)>
-
-    <ul>
-        <li>
-            First name: ${userProfile.firstName}
-        </li>
-        <li>
-            Last name: ${userProfile.lastName}
-        </li>
-        <li>
-            Email address: ${userProfile.email}
-        </li>
-    </ul>
-
-</await>
-```
 
 # Out-of-order Flushing
 
@@ -53,25 +50,26 @@ The marko-async taglib also supports out-of-order flushing. Enabling out-of-orde
 
 1. Add the `client-reorder` attribute to the `<await>` tag:<br>
 
-```html
-<await(userProfile from data.userProfileDataProvider) client-reorder=true>
-
-    <ul>
-        <li>
-            First name: ${userProfile.firstName}
-        </li>
-        <li>
-            Last name: ${userProfile.lastName}
-        </li>
-        <li>
-            Email address: ${userProfile.email}
-        </li>
-    </ul>
-
-</await>
-```
+    ```html
+    <await(user from data.userDataProvider) client-reorder=true>
+        <ul>
+            <li>Name: ${user.firstName} ${user.lastName}</li>
+            <li>Email address: ${user.email}</li>
+        </ul>
+    </await>
+    ```
 
 2. Add the `<await-reorderer>` to the end of the page.
+
+    ```html
+    <html>
+    ...
+    <body>
+        ...
+        <await-reorderer/>
+    </body>
+    </html>
+    ```
 
 If `client-reorder` is `true` then a placeholder element will be rendered to the output instead of the final HTML for the await instance. The instance will be instead rendered at the end of the page and client-side JavaScript code will be used to move the await's contents into the proper place in the DOM. The `<await-reorderer>` will be where the out-of-order instances are rendered before they are moved into place. If there are any out-of-order instances then inline JavaScript code will be injected into the page at this location to move the DOM nodes into the proper place in the DOM.
 

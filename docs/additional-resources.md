@@ -5,7 +5,7 @@ Additional Resources
 
 - [Marko versus Dust](http://psteeleidem.com/marko-versus-dust/)
 - [The JavaScript Templating Landscape](http://psteeleidem.com/the-javascript-templating-landscape/)
-- [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
+- [eBay Tech Blog - Async Fragments: Rediscovering Progressive HTML Rendering with Marko](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) *(Note: The article uses Marko v2's `<async-fragment>` which is now deprecated in favor of [`<await>`](http://markojs.com/docs/marko/async-taglib/), however the concepts remain the same)*
 - [Marko Widgets](https://github.com/marko-js/marko-widgets) - Taglib to support binding of behavior to rendered UI components rendered on the server or client
 
 # Updates
@@ -19,7 +19,7 @@ Additional Resources
 
 # Sample Apps
 
-* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/marko-js-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/)
+* Async Fragments Demo using Marko: In-order versus out-of-order rendering [source](https://github.com/marko-js-samples/marko-progressive-rendering) | [demo](https://marko-progressive-rendering.herokuapp.com/) *(Note: This demo uses `<async-fragment>` which is now deprecated in favor of [`<await>`](http://markojs.com/docs/marko/async-taglib/), however the concepts remain the same)*
 * UI Components Playground [source](https://github.com/marko-js-samples/ui-components-playground) | [demo](https://ui-components-playground.herokuapp.com/)
 * More sample apps: [https://github.com/marko-js-samples](https://github.com/marko-js-samples)
 
