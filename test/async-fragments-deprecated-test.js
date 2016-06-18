@@ -11,7 +11,7 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-describe('render', function() {
+describe('async-fragments (deprecated)', function() {
     var autoTestDir = path.join(__dirname, 'autotests/async-fragments-deprecated');
 
     autotest.scanDir(

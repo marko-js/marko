@@ -1,6 +1,6 @@
 [
     {
-        "event": "asyncFragmentBegin",
+        "event": "await:begin",
         "arg": {
             "name": "data.outer",
             "finished":true,
@@ -9,7 +9,7 @@
         }
     },
     {
-        "event": "asyncFragmentBeforeRender",
+        "event": "await:beforeRender",
         "arg": {
             "name": "data.outer",
             "finished":true,
@@ -18,7 +18,7 @@
         }
     },
     {
-        "event": "asyncFragmentFinish",
+        "event": "await:finish",
         "arg": {
             "name": "data.outer",
             "finished":true,

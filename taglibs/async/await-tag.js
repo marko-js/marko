@@ -78,7 +78,7 @@ module.exports = function render(input, out) {
         dataProvider = dataProvider[method].bind(dataProvider);
     }
 
-    var fragmentInfo = {
+    var awaitInfo = {
         name: name,
         clientReorder: clientReorder,
         dataProvider: dataProvider
@@ -86,26 +86,28 @@ module.exports = function render(input, out) {
 
     var beforeRenderEmitted = false;
 
-    out.emit('asyncFragmentBegin', fragmentInfo);
+    out.emit('await:begin', awaitInfo);
+    out.emit('asyncFragmentBegin', awaitInfo); // TODO: remove deprecated event
 
     function renderBody(err, data, renderTimeout) {
-        if (fragmentInfo.finished) return;
+        if (awaitInfo.finished) return;
 
         if (timeoutId) {
             clearTimeout(timeoutId);
             timeoutId = null;
         }
 
-        var targetOut = fragmentInfo.out = asyncOut || out;
+        var targetOut = awaitInfo.out = asyncOut || out;
 
         if (!beforeRenderEmitted) {
             beforeRenderEmitted = true;
-            out.emit('asyncFragmentBeforeRender', fragmentInfo);
+            out.emit('await:beforeRender', awaitInfo);
+            out.emit('asyncFragmentBeforeRender', awaitInfo); // TODO: remove deprecated event
         }
 
         if (err) {
             if (input.renderError) {
-                console.error('Async fragment (' + name + ') failed. Error:', (err.stack || err));
+                console.error('Await (' + name + ') failed. Error:', (err.stack || err));
                 input.renderError(targetOut);
             } else {
                 targetOut.error(err);
@@ -118,10 +120,11 @@ module.exports = function render(input, out) {
             }
         }
 
-        fragmentInfo.finished = true;
+        awaitInfo.finished = true;
 
         if (!clientReorder) {
-            out.emit('asyncFragmentFinish', fragmentInfo);
+            out.emit('await:finish', awaitInfo);
+            out.emit('asyncFragmentFinish', awaitInfo); // TODO: remove deprecated event
         }
 
         if (asyncOut) {
@@ -137,7 +140,7 @@ module.exports = function render(input, out) {
 
     requestData(dataProvider, arg, renderBody, scope);
 
-    if (!fragmentInfo.finished) {
+    if (!awaitInfo.finished) {
         var timeout = input.timeout;
         var renderTimeout = input.renderTimeout;
         var renderPlaceholder = input.renderPlaceholder;
@@ -150,9 +153,9 @@ module.exports = function render(input, out) {
 
         if (timeout != null) {
             timeoutId = setTimeout(function() {
-                var message = 'Async fragment (' + name + ') timed out after ' + timeout + 'ms';
+                var message = 'Await (' + name + ') timed out after ' + timeout + 'ms';
 
-                fragmentInfo.timedout = true;
+                awaitInfo.timedout = true;
 
                 if (renderTimeout) {
                     logger.error(message);
@@ -164,12 +167,12 @@ module.exports = function render(input, out) {
         }
 
         if (clientReorder) {
-            var asyncFragmentContext = out.global.__asyncFragments || (asyncFragmentContext = out.global.__asyncFragments = {
-                fragments: [],
+            var awaitContext = out.global.__awaitContext || (awaitContext = out.global.__awaitContext = {
+                instances: [],
                 nextId: 0
             });
 
-            var id = fragmentInfo.id = input.name || (asyncFragmentContext.nextId++);
+            var id = awaitInfo.id = input.name || (awaitContext.nextId++);
 
             if (renderPlaceholder) {
                 out.write('<span id="afph' + id + '">');
@@ -179,28 +182,28 @@ module.exports = function render(input, out) {
                 out.write('<noscript id="afph' + id + '"></noscript>');
             }
 
-            var asyncValue = fragmentInfo.asyncValue = new AsyncValue();
+            var asyncValue = awaitInfo.asyncValue = new AsyncValue();
 
-            // If `client-reorder` is enabled then we asynchronously render the async fragment to a new
+            // If `client-reorder` is enabled then we asynchronously render the await instance to a new
             // AsyncWriter instance so that we can Write to a temporary in-memory buffer.
-            asyncOut = fragmentInfo.out = asyncWriter.create(null, {global: out.global});
+            asyncOut = awaitInfo.out = asyncWriter.create(null, {global: out.global});
 
-            fragmentInfo.after = input.showAfter;
+            awaitInfo.after = input.showAfter;
 
             var oldEmit = asyncOut.emit;
 
-            // Since we are rendering the async fragment to a new and separate AsyncWriter instance,
+            // Since we are rendering the await instance to a new and separate AsyncWriter instance,
             // we want to proxy any child events to the main AsyncWriter in case anyone is interested
             // in those events. This is also needed for the following events to be handled correctly:
             //
-            // - asyncFragmentBegin
-            // - asyncFragmentBeforeRender
-            // - asyncFragmentFinish
+            // - await:begin
+            // - await:beforeRender
+            // - await:finish
             //
             asyncOut.emit = function(event) {
                 if (event !== 'finish' && event !== 'error') {
                     // We don't want to proxy the finish and error events since those are
-                    // very specific to the AsyncWriter associated with the async fragment
+                    // very specific to the AsyncWriter associated with the await instance
                     out.emit.apply(out, arguments);
                 }
 
@@ -215,14 +218,15 @@ module.exports = function render(input, out) {
                     asyncValue.reject(err);
                 });
 
-            if (asyncFragmentContext.fragments) {
-                asyncFragmentContext.fragments.push(fragmentInfo);
+            if (awaitContext.instances) {
+                awaitContext.instances.push(awaitInfo);
             }
 
-            out.emit('asyncFragmentClientReorder', fragmentInfo);
+            out.emit('await:clientReorder', awaitInfo);
+            out.emit('asyncFragmentClientReorder', awaitInfo); // TODO: remove deprecated event
         } else {
-            out.flush(); // Flush everything up to this async fragment
-            asyncOut = fragmentInfo.out = out.beginAsync({
+            out.flush(); // Flush everything up to this await instance
+            asyncOut = awaitInfo.out = out.beginAsync({
                 timeout: 0, // We will use our code for controlling timeout
                 name: name
             });

@@ -1,6 +1,6 @@
 [
     {
-        "event": "asyncFragmentBegin",
+        "event": "await:begin",
         "arg": {
             "name": "data.outer",
             "finished":true,
@@ -9,7 +9,7 @@
         }
     },
     {
-        "event": "asyncFragmentBeforeRender",
+        "event": "await:beforeRender",
         "arg": {
             "name": "data.outer",
             "finished":true,
@@ -18,7 +18,7 @@
         }
     },
     {
-        "event": "asyncFragmentBegin",
+        "event": "await:begin",
         "arg": {
             "name": "data.inner1",
             "finished":true,
@@ -27,7 +27,7 @@
         }
     },
     {
-        "event": "asyncFragmentBegin",
+        "event": "await:begin",
         "arg": {
             "name": "data.inner2",
             "finished":true,
@@ -36,7 +36,7 @@
         }
     },
     {
-        "event": "asyncFragmentFinish",
+        "event": "await:finish",
         "arg": {
             "name": "data.outer",
             "finished":true,
@@ -45,7 +45,7 @@
         }
     },
     {
-        "event": "asyncFragmentBeforeRender",
+        "event": "await:beforeRender",
         "arg": {
             "name": "data.inner1",
             "finished":true,
@@ -54,7 +54,7 @@
         }
     },
     {
-        "event": "asyncFragmentFinish",
+        "event": "await:finish",
         "arg": {
             "name": "data.inner1",
             "finished":true,
@@ -63,7 +63,7 @@
         }
     },
     {
-        "event": "asyncFragmentBeforeRender",
+        "event": "await:beforeRender",
         "arg": {
             "name": "data.inner2",
             "finished":true,
@@ -72,7 +72,7 @@
         }
     },
     {
-        "event": "asyncFragmentFinish",
+        "event": "await:finish",
         "arg": {
             "name": "data.inner2",
             "finished":true,
