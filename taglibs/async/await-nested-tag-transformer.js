@@ -3,10 +3,6 @@
 module.exports = function transform(el, context) {
     var parentNode = el.parentNode;
 
-    if (parentNode.tagName === 'async-fragment') {
-        console.log(parentNode);
-    }
-
     if (parentNode.tagName !== 'await') {
         context.addError(el, 'The <' + el.tagName + '> should be nested within an <await> tag.');
         return;
