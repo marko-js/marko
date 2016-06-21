@@ -8,15 +8,15 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    var parts = el.argument.split(' from ');
+    var match = /^([$A-Z_][0-9A-Z_$]*) from (.*)$/i.exec(el.argument);
 
-    if(parts.length !== 2) {
+    if(!match) {
         context.addError(el, 'Invalid <await> tag. Argument is malformed. Example: <await(user from data.userProvider)>');
         return;
     }
 
-    var varName = parts[0];
-    var dataProviderAttr = parts[1];
+    var varName = match[1];
+    var dataProviderAttr = match[2];
 
     if (!context.util.isValidJavaScriptIdentifier(varName)) {
         context.addError(el, 'Invalid <await> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <await(user from data.userProvider)>');
