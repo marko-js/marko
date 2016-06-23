@@ -71,12 +71,14 @@ module.exports = function codeGenerator(el, codegen) {
     if (deprecateHyphensArgs.length) {
         // We import a helper function into the template to allow the properties to
         // still be accessed with the hyphenated name while showing a deprecation warning.
-        // 
+        //
         // This compiled code is being added due to the following bug:
         // https://github.com/marko-js/marko/issues/314
         //
         // It should be removed in the future.
-        var deprecateHyphensVar = codegen.importModule('deprecateHyphens', deprecateHyphensPath);
+        var deprecateHyphensVar = codegen.importModule(
+            'deprecateHyphens',
+            codegen.getRequirePath(deprecateHyphensPath));
         templateData = builder.functionCall(deprecateHyphensVar, [templateData].concat(deprecateHyphensArgs));
     }
 
