@@ -5,6 +5,25 @@ Changelog
 
 ## 3.5.x
 
+### 3.5.1
+
+- Fixes #314 - Remove hyphens from include props
+- Deprecated:
+    - Properties passed in using the `<include>` tag should not be access using hyphens.
+
+For example, given the following template:
+
+```xml
+<include("./include-target.marko") first-name='Jane'/>
+```
+
+The `first-name` data should be accessed using the `firstName` property:
+
+```javascript
+var firstName = input.firstName;
+// NOT: var firstName = input['first-name'];
+```
+
 ### 3.5.0
 
 - Added functionality to exclude specific directory or package from taglib finder ([Pull Request #309](https://github.com/marko-js/marko/pull/309) by [@oxala](https://github.com/oxala))
