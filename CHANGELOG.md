@@ -3,6 +3,58 @@ Changelog
 
 # 3.x
 
+## 3.6.x
+
+### 3.6.0
+
+- Introduced a new and simpler `<await>` tag that should be used instead of the now deprecated `<async-fragment>` tag (see deprecation details below) ([Pull Request #312](https://github.com/marko-js/marko/pull/312) by [@mlrawlings](https://github.com/mlrawlings))
+
+#### Deprecations
+
+- Deprecated the `<async-fragment var="<var>" data-provider=<data-provider>>` tag in favor of the `<await(<var> from <data-provider>)>` tag:
+
+OLD:
+
+```xml
+<async-fragment (userInfo from data.userInfoPromise)>
+    Hello ${userInfo.name}!
+</async-fragment>
+```
+
+NEW:
+
+```xml
+<await(userInfo from data.userInfoPromise)>
+    Hello ${userInfo.name}!
+</await>
+```
+
+The `<await>` tag supports all of the attributes of the previous `<async-fragment>` tag except for `var` and `data-provider`:
+
+```xml
+<await(userInfo from data.userInfoPromise) name="userInfo" timeout=10000 client-reorder>
+    Hello ${userInfo.name}!
+</await>
+```
+
+Finally, the nested tags for providing content for the placeholder, error and timeout messages have been renamed accordingly:
+
+```xml
+<await(userInfo from data.userInfoPromise) client-reorder>
+    <await-placeholder>
+        This is alternate content while the async fragment is loading.
+    </await-placeholder>
+    <await-timeout>
+        A timeout has occurred!
+    </await-timeout>
+    <await-error>
+        A error has occurred!
+    </await-error>
+
+    Hello ${userInfo.name}!
+</await>
+```
+
 ## 3.5.x
 
 ### 3.5.1
