@@ -5,6 +5,10 @@ Changelog
 
 ## 3.6.x
 
+### 3.6.1
+
+- Fixed a bug that was causing transforms to be run on detached nodes.  This was manifesting itself in the `<async-fragment>` to `<await>` transform if an `if()` attribute was present (or other core attributes that end up wrapping the tag it is defined on).
+
 ### 3.6.0
 
 - Introduced a new and simpler `<await>` tag that should be used instead of the now deprecated `<async-fragment>` tag (see deprecation details below) ([Pull Request #312](https://github.com/marko-js/marko/pull/312) by [@mlrawlings](https://github.com/mlrawlings))
