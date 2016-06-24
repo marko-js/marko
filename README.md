@@ -6,7 +6,7 @@
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
 
-Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) and lightweight HTML-based templating engine that compiles templates to CommonJS modules and supports streaming, async rendering and custom tags. Learn more on [http://markojs.com/](http://markojs.com/).
+Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) and lightweight HTML-based templating engine from eBay. Marko runs on Node.js and in the browser and it supports streaming, async rendering and custom tags. Templates are compiled to readable CommonJS modules. Learn more on [http://markojs.com/](http://markojs.com/).
 
 You can try out Marko online: [Try Marko Online!](http://markojs.com/try-online/)
 
