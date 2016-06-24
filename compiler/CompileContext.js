@@ -420,7 +420,8 @@ class CompileContext {
 }
 
 CompileContext.prototype.util = {
-    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier')
+    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier'),
+    isJavaScriptReservedWord: require('./util/isJavaScriptReservedWord')
 };
 
 module.exports = CompileContext;

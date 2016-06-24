@@ -1,6 +1,7 @@
 module.exports = {
     'abstract': true,
     'arguments': true,
+    'await': true, // Not really a reserved word but we add it here anyway
     'boolean': true,
     'break': true,
     'byte': true,
