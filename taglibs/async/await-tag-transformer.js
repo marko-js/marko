@@ -25,8 +25,8 @@ module.exports = function transform(el, context) {
 
     var builder = context.builder;
 
-    el.setAttributeValue('var', builder.literal(varName));
-    el.setAttributeValue('data-provider', builder.parseExpression(dataProviderAttr));
+    el.setAttributeValue('_var', builder.literal(varName));
+    el.setAttributeValue('_dataProvider', builder.parseExpression(dataProviderAttr));
     el.argument = null;
 
     ////////////////////

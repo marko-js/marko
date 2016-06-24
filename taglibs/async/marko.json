@@ -1,8 +1,8 @@
 {
     "<await>": {
         "renderer": "./await-tag",
-        "@var": "identifier",
-        "@data-provider": "expression",
+        "@_var": "identifier",
+        "@_dataProvider": "expression",
 
         "@arg": {
             "type": "expression",
@@ -51,7 +51,7 @@
         },
 
         "vars": [{
-            "name-from-attribute": "var"
+            "name-from-attribute": "_var"
         }],
         "transformer": "./await-tag-transformer",
         "autocomplete": [

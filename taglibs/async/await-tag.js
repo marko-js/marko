@@ -63,7 +63,7 @@ function requestData(provider, args, callback, thisObj) {
 }
 
 module.exports = function render(input, out) {
-    var dataProvider = input.dataProvider;
+    var dataProvider = input._dataProvider;
     var arg = input.arg || {};
     arg.out = out;
 
