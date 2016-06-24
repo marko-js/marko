@@ -16,7 +16,7 @@ Changelog
 OLD:
 
 ```xml
-<async-fragment (userInfo from data.userInfoPromise)>
+<async-fragment var="userInfo" data-provider=data.userInfoPromise>
     Hello ${userInfo.name}!
 </async-fragment>
 ```
