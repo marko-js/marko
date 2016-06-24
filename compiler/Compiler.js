@@ -11,6 +11,9 @@ const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 function transformNode(node, context) {
     try {
         context.taglibLookup.forEachNodeTransformer(node, function (transformer) {
+            if (node.isDetached()) {
+                return;    //The node might have been removed from the tree
+            }
             if (!node.isTransformerApplied(transformer)) {
                 //Check to make sure a transformer of a certain type is only applied once to a node
                 node.setTransformerApplied(transformer);
@@ -39,9 +42,6 @@ function transformTreeHelper(node, context) {
      *       sure that this is not a problem.
      */
     node.forEachChild(function (childNode) {
-        if (childNode.isDetached()) {
-            return;    //The child node might have been removed from the tree
-        }
         transformTreeHelper(childNode, context);
     });
 }

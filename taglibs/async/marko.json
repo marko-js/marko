@@ -102,32 +102,32 @@
     },
     "<async-fragment>": {
         "transformer": {
-            "path":"./async-fragment-to-await-transformer",
-            "priority":0
+            "path": "./async-fragment-to-await-transformer",
+            "priority": -1
         }
     },
     "<async-fragments>": {
         "transformer": {
-            "path":"./async-fragment-to-await-transformer",
-            "priority":0
+            "path": "./async-fragment-to-await-transformer",
+            "priority": -1
         }
     },
     "<async-fragment-placeholder>": {
         "transformer": {
-            "path":"./async-fragment-to-await-transformer",
-            "priority":0
+            "path": "./async-fragment-to-await-transformer",
+            "priority": -1
         }
     },
     "<async-fragment-timeout>": {
         "transformer": {
-            "path":"./async-fragment-to-await-transformer",
-            "priority":0
+            "path": "./async-fragment-to-await-transformer",
+            "priority": -1
         }
     },
     "<async-fragment-error>": {
         "transformer": {
-            "path":"./async-fragment-to-await-transformer",
-            "priority":0
+            "path": "./async-fragment-to-await-transformer",
+            "priority": -1
         }
     }
 }

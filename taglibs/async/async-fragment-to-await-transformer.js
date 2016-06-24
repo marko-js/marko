@@ -47,7 +47,6 @@ module.exports = function transform(oldNode, context) {
         argument
     );
 
-    newNode.body = oldNode.body;
-    newNode.body.node = newNode;
     oldNode.replaceWith(newNode);
+    oldNode.moveChildrenTo(newNode);
 };
