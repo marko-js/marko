@@ -7,6 +7,7 @@ Changelog
 
 ### 3.5.1
 
+- Fixes #316 - Autocomplete for tags is not updated when tag files updated despite clearing cache. This improves the [autocomplete-marko](https://github.com/marko-js/atom-autocomplete-marko) plugin for Atom.
 - Fixes #314 - Remove hyphens from include props
 - Deprecated:
     - Properties passed in using the `<include>` tag should not be access using hyphens.
