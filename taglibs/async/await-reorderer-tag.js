@@ -5,22 +5,22 @@ module.exports = function(input, out) {
 
     out.flush();
 
-    var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'async-fragments' });
+    var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'await-reorderer' });
     out.onLast(function(next) {
-        var asyncFragmentsContext = global.__asyncFragments;
+        var awaitContext = global.__awaitContext;
 
-        if (!asyncFragmentsContext || !asyncFragmentsContext.fragments.length) {
+        if (!awaitContext || !awaitContext.instances.length) {
             asyncOut.end();
             next();
             return;
         }
 
-        var remaining = asyncFragmentsContext.fragments.length;
+        var remaining = awaitContext.instances.length;
 
         var done = false;
 
-        function handleAsyncFragment(fragmentInfo) {
-            fragmentInfo.asyncValue.done(function(err, html) {
+        function handleAwait(awaitInfo) {
+            awaitInfo.asyncValue.done(function(err, html) {
                 if (done) {
                     return;
                 }
@@ -35,17 +35,18 @@ module.exports = function(input, out) {
                     global._afRuntime = true;
                 }
 
-                asyncOut.write('<div id="af' + fragmentInfo.id + '" style="display:none">' +
+                asyncOut.write('<div id="af' + awaitInfo.id + '" style="display:none">' +
                     html +
                     '</div>' +
                     '<script type="text/javascript">$af(' +
-                        (typeof fragmentInfo.id === 'number' ? fragmentInfo.id : '"' + fragmentInfo.id + '"') +
-                        (fragmentInfo.after ? (',"' + fragmentInfo.after + '"') : '' ) +
+                        (typeof awaitInfo.id === 'number' ? awaitInfo.id : '"' + awaitInfo.id + '"') +
+                        (awaitInfo.after ? (',"' + awaitInfo.after + '"') : '' ) +
                     ')</script>');
 
-                fragmentInfo.out.writer = asyncOut.writer;
+                awaitInfo.out.writer = asyncOut.writer;
 
-                out.emit('asyncFragmentFinish', fragmentInfo);
+                out.emit('await:finish', awaitInfo);
+                out.emit('asyncFragmentFinish', awaitInfo); // TODO: remove deprecated event
 
                 out.flush();
 
@@ -57,15 +58,15 @@ module.exports = function(input, out) {
             });
         }
 
-        asyncFragmentsContext.fragments.forEach(handleAsyncFragment);
+        awaitContext.instances.forEach(handleAwait);
 
-        out.on('asyncFragmentClientReorder', function(fragmentInfo) {
+        out.on('await:clientReorder', function(awaitInfo) {
             remaining++;
-            handleAsyncFragment(fragmentInfo);
+            handleAwait(awaitInfo);
         });
 
         // Now that we have a listener attached, we want to receive any additional
-        // out-of-sync fragments via an event
-        delete asyncFragmentsContext.fragments;
+        // out-of-sync instances via an event
+        delete awaitContext.instances;
     });
 };

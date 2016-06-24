@@ -3,27 +3,36 @@
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
 
 module.exports = function transform(el, context) {
-    var varName = el.getAttributeValue('var');
-    if (varName) {
-        if (varName.type !== 'Literal' || typeof varName.value !== 'string') {
-            context.addError(el, 'The "var" attribute value should be a string');
-            return;
-        }
-
-        varName = varName.value;
-
-        if (!context.util.isValidJavaScriptIdentifier(varName)) {
-            context.addError(el, 'The "var" attribute value should be a valid JavaScript identifier');
-            return;
-        }
-    } else {
-        context.addError(el, 'The "var" attribute is required');
+    if(!el.argument) {
+        context.addError(el, 'Invalid <await> tag. Argument is missing. Example: <await(user from data.userProvider)>');
         return;
     }
 
+    var match = /^([$A-Z_][0-9A-Z_$]*) from (.*)$/i.exec(el.argument);
+
+    if(!match) {
+        context.addError(el, 'Invalid <await> tag. Argument is malformed. Example: <await(user from data.userProvider)>');
+        return;
+    }
+
+    var varName = match[1];
+    var dataProviderAttr = match[2];
+
+    if (!context.util.isValidJavaScriptIdentifier(varName)) {
+        context.addError(el, 'Invalid <await> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <await(user from data.userProvider)>');
+        return;
+    }
+
+    var builder = context.builder;
+
+    el.setAttributeValue('var', builder.literal(varName));
+    el.setAttributeValue('data-provider', builder.parseExpression(dataProviderAttr));
+    el.argument = null;
+
+    ////////////////////
+
     var attrs = el.getAttributes().concat([]);
     var arg = {};
-    var builder = context.builder;
 
     attrs.forEach((attr) => {
         var attrName = attr.name;
@@ -34,25 +43,9 @@ module.exports = function transform(el, context) {
         }
     });
 
-    var dataProviderAttr = el.getAttribute('data-provider');
-    if (!dataProviderAttr) {
-        context.addError(el, 'The "data-provider" attribute is required');
-        return;
-    }
-
-    if (dataProviderAttr.value == null) {
-        context.addError(el, 'A value is required for the "data-provider" attribute');
-        return;
-    }
-
-    if (dataProviderAttr.value.type == 'Literal') {
-        context.addError(el, 'The "data-provider" attribute value should not be a literal ' + (typeof dataProviderAttr.value.value));
-        return;
-    }
-
     var name = el.getAttributeValue('name');
     if (name == null) {
-        el.setAttributeValue('_name', builder.literal(dataProviderAttr.rawValue));
+        el.setAttributeValue('_name', builder.literal(dataProviderAttr));
     }
 
     if (el.hasAttribute('arg')) {

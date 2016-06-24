@@ -11,8 +11,8 @@ var fs = require('fs');
 
 require('../node-require').install();
 
-describe('async render', function() {
-    var autoTestDir = path.join(__dirname, 'autotests/async-render');
+describe('async-fragments (deprecated)', function() {
+    var autoTestDir = path.join(__dirname, 'autotests/async-fragments-deprecated');
 
     autotest.scanDir(
         autoTestDir,
@@ -43,17 +43,17 @@ describe('async render', function() {
                 var templateData = main.templateData || {};
                 var out = marko.createWriter();
                 var events = [];
-                var eventsByAwaitInstance = {};
+                var eventsByFragmentName = {};
 
                 var addEventListener = function(event) {
                     out.on(event, function(arg) {
                         var name = arg.name;
 
-                        if (!eventsByAwaitInstance[name]) {
-                            eventsByAwaitInstance[name] = [];
+                        if (!eventsByFragmentName[name]) {
+                            eventsByFragmentName[name] = [];
                         }
 
-                        eventsByAwaitInstance[name].push(event);
+                        eventsByFragmentName[name].push(event);
 
                         events.push({
                             event: event,
@@ -62,9 +62,9 @@ describe('async render', function() {
                     });
                 };
 
-                addEventListener('await:begin');
-                addEventListener('await:beforeRender');
-                addEventListener('await:finish');
+                addEventListener('asyncFragmentBegin');
+                addEventListener('asyncFragmentBeforeRender');
+                addEventListener('asyncFragmentFinish');
 
                 template.render(templateData, out, function(err, html) {
                     if (err) {
@@ -81,13 +81,13 @@ describe('async render', function() {
                         main.checkEvents(events, helpers);
                     }
 
-                    // Make sure all of the await instances were correctly ended
-                    Object.keys(eventsByAwaitInstance).forEach(function(name) {
-                        var events = eventsByAwaitInstance[name];
+                    // Make sure all of the async fragments were correctly ended
+                    Object.keys(eventsByFragmentName).forEach(function(fragmentName) {
+                        var events = eventsByFragmentName[fragmentName];
                         expect(events).to.deep.equal([
-                            'await:begin',
-                            'await:beforeRender',
-                            'await:finish'
+                            'asyncFragmentBegin',
+                            'asyncFragmentBeforeRender',
+                            'asyncFragmentFinish'
                         ]);
                     });
 

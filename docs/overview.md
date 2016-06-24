@@ -5,7 +5,7 @@ Marko is an eBay open source HTML-based templating engine that can be used to re
 
 Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML. Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. Marko also retains the full power and flexibility of JavaScript by allowing JavaScript expressions inside templates.
 
-Marko supports [progressive HTML rendering](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) by writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
+Marko supports [progressive HTML rendering](http://markojs.com/docs/marko/async-taglib/) by writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous parts of the template so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
 
 For building rich UI components with client-side behavior please check out the [marko-widgets](https://github.com/marko-js/marko-widgets) project.

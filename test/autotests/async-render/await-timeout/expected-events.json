@@ -1,0 +1,110 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    }
+]

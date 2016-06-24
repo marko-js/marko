@@ -1,7 +1,9 @@
 {
-    "<async-fragment>": {
-        "renderer": "./async-fragment-tag",
+    "<await>": {
+        "renderer": "./await-tag",
+        "@var": "identifier",
         "@data-provider": "expression",
+
         "@arg": {
             "type": "expression",
             "preserve-name": true
@@ -10,16 +12,6 @@
             "pattern": true,
             "type": "string",
             "preserve-name": true
-        },
-        "@var": {
-            "type": "identifier",
-            "autocomplete": [
-                {
-                    "snippet": "var=\"${1:varName}\""
-                },
-                {
-                }
-            ]
         },
 
         "@method": "string",
@@ -36,7 +28,7 @@
 
         "@name": {
             "type": "string",
-            "description": "Name of async fragment",
+            "description": "Name of await",
             "autocomplete": [
                 {
                     "snippet": "name=\"${1:name}\""
@@ -61,51 +53,81 @@
         "vars": [{
             "name-from-attribute": "var"
         }],
-        "transformer": "./async-fragment-tag-transformer",
+        "transformer": "./await-tag-transformer",
         "autocomplete": [
             {
-                "snippet": "async-fragment data-provider=${1:data.myDataProvider} var=\"${2:varName}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragment><code>"
+                "snippet": "await(${1:varName} from ${2:data.myDataProvider})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragment><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
             }
         ]
+    },
+    "<await-reorderer>": {
+        "renderer": "./await-reorderer-tag",
+        "autocomplete": [
+            {
+                "snippet": "await-reorderer",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+            }
+        ]
+    },
+    "<await-placeholder>": {
+        "transformer": "./await-nested-tag-transformer",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-placeholder><code>"
+            }
+        ]
+    },
+    "<await-timeout>": {
+        "transformer": "./await-nested-tag-transformer",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-timeout><code>"
+            }
+        ]
+    },
+    "<await-error>": {
+        "transformer": "./await-nested-tag-transformer",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-error><code>"
+            }
+        ]
+    },
+    "<async-fragment>": {
+        "transformer": {
+            "path":"./async-fragment-to-await-transformer",
+            "priority":0
+        }
     },
     "<async-fragments>": {
-        "renderer": "./async-fragments-tag",
-        "autocomplete": [
-            {
-                "snippet": "async-fragments client-reorder",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragments><code>"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragments><code>"
-            }
-        ]
+        "transformer": {
+            "path":"./async-fragment-to-await-transformer",
+            "priority":0
+        }
     },
     "<async-fragment-placeholder>": {
-        "transformer": "./async-fragment-nested-tag-transformer",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragment-placeholder><code>"
-            }
-        ]
+        "transformer": {
+            "path":"./async-fragment-to-await-transformer",
+            "priority":0
+        }
     },
     "<async-fragment-timeout>": {
-        "transformer": "./async-fragment-nested-tag-transformer",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragment-timeout><code>"
-            }
-        ]
+        "transformer": {
+            "path":"./async-fragment-to-await-transformer",
+            "priority":0
+        }
     },
     "<async-fragment-error>": {
-        "transformer": "./async-fragment-nested-tag-transformer",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltasync-fragment-error><code>"
-            }
-        ]
+        "transformer": {
+            "path":"./async-fragment-to-await-transformer",
+            "priority":0
+        }
     }
 }
