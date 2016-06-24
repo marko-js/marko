@@ -1,6 +1,6 @@
 {
     "browser": {
         "./scanTagsDir.js": "./scanTagsDir-browser.js",
-        "./taglib-reader.js": "./taglib-reader-browser.js"
+        "./json-file-reader.js": "./json-file-reader-browser.js"
     }
 }

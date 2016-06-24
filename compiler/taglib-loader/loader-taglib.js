@@ -21,7 +21,7 @@ var scanTagsDir = require('./scanTagsDir');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
 var Taglib = require('./Taglib');
-var taglibReader = require('./taglib-reader');
+var jsonFileReader = require('./json-file-reader');
 var loader = require('./loader');
 var tryRequire = require('try-require');
 var resolveFrom = tryRequire('resolve-from', require);
@@ -54,11 +54,7 @@ function handleTag(taglibHandlers, tagName, path) {
             throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.path);
         }
 
-        try {
-            tagObject = require(path);
-        } catch(e) {
-            throw new Error('Unable to parse tag JSON for tag at path "' + path + '"');
-        }
+        tagObject = jsonFileReader.readFileSync(path);
     } else {
         tagDirname = dirname; // Tag is in the same taglib file
         tagObject = path;
@@ -175,7 +171,7 @@ TaglibHandlers.prototype = {
                     var basename = nodePath.basename(curImport);
                     if (basename === 'package.json') {
                         var packagePath = resolve(curImport, dirname);
-                        var pkg = require(packagePath);
+                        var pkg = jsonFileReader.readFileSync(packagePath);
                         var dependencies = pkg.dependencies;
                         if (dependencies) {
                             var dependencyNames = Object.keys(dependencies);
@@ -246,7 +242,7 @@ TaglibHandlers.prototype = {
 };
 
 exports.loadTaglib = function(path, taglib) {
-    var taglibProps = taglibReader.readTaglib(path);
+    var taglibProps = jsonFileReader.readFileSync(path);
 
     taglib = taglib || new Taglib(path);
     taglib.addInputFile(path);
@@ -295,7 +291,7 @@ exports.loadTaglib = function(path, taglib) {
 
 
         try {
-            var pkg = require(packageJsonPath);
+            var pkg = jsonFileReader.readFileSync(packageJsonPath);
             taglib.id = pkg.name;
         } catch(e) {}
 
