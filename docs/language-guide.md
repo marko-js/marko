@@ -925,15 +925,14 @@ Example:
 
 ```javascript
 template.render({
-        userProfileDataProvider: function(arg, callback) {
-            var userId = arg.userId;
-            userProfileService.getUserProfile(userId, callback);
-        }
+        userProfilePromise: new Promise(function (resolve, reject) {
+            // ...
+        })
     }, ...);
 ```
 
 ```xml
-<await(userProfile from data.userProfileDataProvider) arg-userId=data.userId>
+<await(userProfile from data.userProfilePromise)>
 
     <ul>
         <li>
