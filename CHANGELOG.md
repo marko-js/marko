@@ -5,6 +5,10 @@ Changelog
 
 ## 3.6.x
 
+### 3.6.2
+
+- Improved support for hot reloading by automatically disabling `assumeUpToDate` if hot reload is enabled. ([Pull Request #320](https://github.com/marko-js/marko/pull/320) by [@ianvonholt](https://github.com/ianvonholt))
+
 ### 3.6.1
 
 - Fixed a bug that was causing transforms to be run on detached nodes.  This was manifesting itself in the `<async-fragment>` to `<await>` transform if an `if()` attribute was present (or other core attributes that end up wrapping the tag it is defined on).
