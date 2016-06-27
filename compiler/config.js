@@ -21,8 +21,8 @@ module.exports = {
     /**
      * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
      */
-    assumeUpToDate: process.env.MARKO_CLEAN != null || NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev'),
-
+    assumeUpToDate: process.env.MARKO_CLEAN != null || process.env.hasOwnProperty('MARKO_HOT_RELOAD') ? false : ( NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')),
+    
     /**
      * If true, whitespace will be preserved in templates. Defaults to false.
      * @type {Boolean}
