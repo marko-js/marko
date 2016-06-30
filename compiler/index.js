@@ -31,8 +31,6 @@ var rawParser = new Parser(
         raw: true
     });
 
-
-
 function configure(newConfig) {
     if (!newConfig) {
         newConfig = {};
