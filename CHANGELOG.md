@@ -3,6 +3,12 @@ Changelog
 
 # 3.x
 
+## 3.7.x
+
+### 3.7.0
+
+- Made change to make configuration a true singleton shared across all instances of `marko` loaded at runtime ([commit](https://github.com/marko-js/marko/commit/cd797322adf80f2890015de7b8f62301c2921a0a))
+
 ## 3.6.x
 
 ### 3.6.2
