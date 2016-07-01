@@ -5,6 +5,10 @@ Changelog
 
 ## 3.7.x
 
+### 3.7.1
+
+- Improved escaping within the `<script>` tag to fix [issue #322](https://github.com/marko-js/marko/issues/322). Special HTML characters will no longer be escaped within the context of the `<script>` tag since browsers do not decode HTML entities within the `<script>` tag. Instead, only the ending `</script>` tag sequence is escaped using JavaScript string escaping sequences.
+
 ### 3.7.0
 
 - Made change to make configuration a true singleton shared across all instances of `marko` loaded at runtime ([commit](https://github.com/marko-js/marko/commit/cd797322adf80f2890015de7b8f62301c2921a0a))
