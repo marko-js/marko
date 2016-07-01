@@ -185,7 +185,7 @@ class Generator {
 
         var beforeAfterEvent;
 
-        if (node.listenerCount('beforeGenerateCode') || node.listenerCount('beforeGenerateCode')) {
+        if (node.listenerCount('beforeGenerateCode') || node.listenerCount('afterGenerateCode')) {
             beforeAfterEvent = new GeneratorEvent(node, this);
         }
 

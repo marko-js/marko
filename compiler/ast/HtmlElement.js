@@ -66,6 +66,18 @@ class EndTag extends Node {
     }
 }
 
+function beforeGenerateCode(event) {
+    if (event.node.tagName === 'script') {
+        event.context.pushFlag('SCRIPT_BODY');
+    }
+}
+
+function afterGenerateCode(event) {
+    if (event.node.tagName === 'script') {
+        event.context.popFlag('SCRIPT_BODY');
+    }
+}
+
 class HtmlElement extends Node {
     constructor(def) {
         super('HtmlElement');
@@ -84,6 +96,9 @@ class HtmlElement extends Node {
         this.selfClosed = def.selfClosed;
         this.dynamicAttributes = undefined;
         this.bodyOnlyIf = undefined;
+
+        this.on('beforeGenerateCode', beforeGenerateCode);
+        this.on('afterGenerateCode', afterGenerateCode);
     }
 
     generateHtmlCode(codegen) {

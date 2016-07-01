@@ -80,7 +80,7 @@ class CompileContext {
     }
 
     setFlag(name) {
-        this._flags[name] = true;
+        this.pushFlag(name);
     }
 
     clearFlag(name) {
@@ -89,6 +89,24 @@ class CompileContext {
 
     isFlagSet(name) {
         return this._flags.hasOwnProperty(name);
+    }
+
+    pushFlag(name) {
+        if (this._flags.hasOwnProperty(name)) {
+            this._flags[name]++;
+        } else {
+            this._flags[name] = 1;
+        }
+    }
+
+    popFlag(name) {
+        if (!this._flags.hasOwnProperty(name)) {
+            throw new Error('popFlag() called for "' + name + '" when flag was not set');
+        }
+
+        if (--this._flags[name] === 0) {
+            delete this._flags[name];
+        }
     }
 
     addError(errorInfo) {
