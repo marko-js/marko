@@ -43,10 +43,16 @@ class Text extends Node {
             let builder = codegen.builder;
 
             if (escape) {
+                let escapeFuncVar = 'escapeXml';
+
+                if (codegen.context.isFlagSet('SCRIPT_BODY')) {
+                    escapeFuncVar = codegen.addStaticVar('escapeScript', '__helpers.xs');
+                }
+
                 // TODO Only escape the parts that need to be escaped if it is a compound expression with static
                 //      text parts
                 argument = builder.functionCall(
-                    'escapeXml',
+                    escapeFuncVar,
                     [argument]);
             } else {
                 argument = builder.functionCall(builder.identifier('str'), [ argument ]);
