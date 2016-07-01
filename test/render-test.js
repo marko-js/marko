@@ -57,7 +57,7 @@ describe('render', function() {
                 }
             } finally {
                 if (main.writeToDisk === false) {
-                    require('marko/compiler').defaultOptions.writeToDisk = false;
+                    delete require('marko/compiler').defaultOptions.writeToDisk;
                 }
 
                 if (main.preserveWhitespaceGlobal === true) {
