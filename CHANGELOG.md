@@ -5,6 +5,11 @@ CHANGELOG
 
 ## 6.1.x
 
+### v6.1.3
+
+- Fixed #144 - ready callback invoked multiple times when using jQuery proxy
+- Refactored testing harness
+
 ### v6.1.2
 
 - Fixed #141 - w-preserve-if/w-preserve-body-if broken
