@@ -11,10 +11,6 @@ coverage
 *.actual.js
 *.actual.html
 *.marko.js
-/test/karma/generated
 /.cache
-/test/client/karma/generated
-/test/client/karma/.cache
-/test/client/mocha-phantomjs/generated
-/test/client/mocha-phantomjs/.cache
 .cache
+/test/generated/
