@@ -36,6 +36,10 @@ class Text extends Node {
                 return;
             }
 
+            if (codegen.context.isFlagSet('SCRIPT_BODY')) {
+                escape = false;
+            }
+
             if (escape === true) {
                 argument.value = escapeXml(argument.value.toString());
             }
