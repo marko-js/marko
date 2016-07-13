@@ -7,6 +7,7 @@ Changelog
 
 ### 3.7.2
 
+- Fixed [#328](https://github.com/marko-js/marko/issues/328) - Improve error reporting when taglib/tag definition fails to load
 - Additional change to disable escaping for dynamic `Text` nodes added to body of `<script>` tag to fix [issue #326](https://github.com/marko-js/marko/issues/326)
 
 ### 3.7.1
