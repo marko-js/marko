@@ -33,7 +33,6 @@ function handleImport(taglib, importedTaglib) {
     }
 
     taglib.imports.push(importedTaglib);
-    taglib.addInputFile(importedTaglib.path);
 
     if (importedTaglib.imports) {
         importedTaglib.imports.forEach(function(nestedImportedTaglib) {
@@ -45,9 +44,9 @@ function handleImport(taglib, importedTaglib) {
 
 
 class Taglib {
-    constructor(path) {
-        ok(path, '"path" expected');
-        this.path = this.id = path;
+    constructor(filePath) {
+        ok(filePath, '"filePath" expected');
+        this.filePath = this.path /* deprecated */ = this.id = filePath;
         this.dirname = null;
         this.tags = {};
         this.textTransformers = [];
@@ -58,15 +57,9 @@ class Taglib {
         this.importsLookup = null;
     }
 
-    addInputFile(path) {
-        this.inputFilesLookup[path] = true;
-    }
+    addAttribute(attribute) {
+        attribute.filePath = this.filePath;
 
-    getInputFiles() {
-        return Object.keys(this.inputFilesLookup);
-    }
-
-    addAttribute (attribute) {
         if (attribute.pattern) {
             this.patternAttributes.push(attribute);
         } else if (attribute.name) {
@@ -75,7 +68,7 @@ class Taglib {
             throw new Error('Invalid attribute: ' + require('util').inspect(attribute));
         }
     }
-    getAttribute (name) {
+    getAttribute(name) {
         var attribute = this.attributes[name];
         if (!attribute) {
             for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
@@ -87,7 +80,7 @@ class Taglib {
         }
         return attribute;
     }
-    addTag (tag) {
+    addTag(tag) {
         ok(arguments.length === 1, 'Invalid args');
         if (!tag.name) {
             throw new Error('"tag.name" is required: ' + JSON.stringify(tag));
@@ -95,10 +88,10 @@ class Taglib {
         this.tags[tag.name] = tag;
         tag.taglibId = this.id || this.path;
     }
-    addTextTransformer (transformer) {
+    addTextTransformer(transformer) {
         this.textTransformers.push(transformer);
     }
-    forEachTag (callback, thisObj) {
+    forEachTag(callback, thisObj) {
         forEachEntry(this.tags, function (key, tag) {
             callback.call(thisObj, tag);
         }, this);

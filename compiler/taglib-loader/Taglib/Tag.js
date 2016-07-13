@@ -33,9 +33,11 @@ function createCustomTagNodeFactory(tagDef) {
 }
 
 class Tag{
-    constructor(taglib) {
+    constructor() {
+        ok(arguments.length === 0);
+        this.taglibId = null;
+        this.taglibPath = null;
         this.name = undefined;
-        this.taglibId = taglib ? taglib.id : null;
         this.renderer = null;
         this.codeGeneratorModulePath = null;
         this.nodeFactoryPath = null;
@@ -112,6 +114,8 @@ class Tag{
         return false;
     }
     addAttribute(attr) {
+        attr.filePath = this.filePath;
+
         if (attr.pattern) {
             this.patternAttributes.push(attr);
         } else {
@@ -230,6 +234,11 @@ class Tag{
 
     toJSON() {
         return this;
+    }
+
+    setTaglib(taglib) {
+        this.taglibId = taglib ? taglib.id : null;
+        this.taglibPath = taglib ? taglib.path : null;
     }
 }
 

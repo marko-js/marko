@@ -61,7 +61,7 @@ function scanRequireExtensions(baseFilename) {
  * @param {String|Object} dir the path to directory to scan
  * @param {String} taglib the taglib that is being loaded
  */
-module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
+module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib, dependencyChain) {
     var prefix;
 
     if (typeof dir === 'object') {
@@ -87,7 +87,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
-        var tagFile = nodePath.join(tagDirname, 'marko-tag.json');
+        var tagFilePath = nodePath.join(tagDirname, 'marko-tag.json');
         var tag = null;
 
         var rendererFile = scanRequireExtensions(nodePath.join(tagDirname, 'renderer'));
@@ -99,21 +99,17 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var nodeFactoryFile = scanRequireExtensions(nodePath.join(tagDirname, 'node-factory'));
         var tagDef = null;
 
-        // Record dependencies so that we can check if a template is up-to-date
-        taglib.addInputFile(tagFile);
-        taglib.addInputFile(rendererFile);
-        taglib.addInputFile(templateFile);
-
         var hasTagFile = false;
-        if (fs.existsSync(tagFile)) {
+        if (fs.existsSync(tagFilePath)) {
             hasTagFile = true;
             // marko-tag.json exists in the directory, use that as the tag definition
             try {
-                tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagFile, fsReadOptions)));
+                tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagFilePath, fsReadOptions)));
             } catch(e) {
-                throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
+                throw new Error('Unable to parse JSON file at path "' + tagFilePath + '". Error: ' + e);
             }
         } else {
+            tagFilePath = null;
             tagDef = createDefaultTagDef();
         }
 
@@ -134,7 +130,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
                 tagDef['node-factory'] = nodeFactoryFile;
             } else {
                 if (hasTagFile) {
-                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
+                    throw new Error('Invalid tag file: ' + tagFilePath + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
                 } else {
                     // Skip this directory... there doesn't appear to be anything in it
                     continue;
@@ -150,7 +146,15 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             }
         }
 
-        tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
+        let tagDependencyChain;
+
+        if (tagFilePath) {
+            tagDependencyChain = dependencyChain.append(tagFilePath);
+        } else {
+            tagDependencyChain = dependencyChain.append(tagDirname);
+        }
+
+        tag = loader.tagLoader.loadTag(tagDef, tagFilePath || tagDirname, tagDependencyChain);
         tag.name = tag.name || tagName;
         taglib.addTag(tag);
     }

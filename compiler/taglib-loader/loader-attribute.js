@@ -13,19 +13,36 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+'use strict';
 
 var assert = require('assert');
 var raptorRegexp = require('raptor-regexp');
 var propertyHandlers = require('property-handlers');
 var Taglib = require('./Taglib');
+var createError = require('raptor-util/createError');
 
-function AttrHandlers(attr){
-    assert.ok(attr);
-    assert.equal(typeof attr, 'object');
-    this.attr = attr;
-}
+class AttrLoader {
+    constructor(dependencyChain) {
+        this.dependencyChain = dependencyChain;
+        this.attr = null;
+    }
 
-AttrHandlers.prototype = {
+    _load(attrName, attrProps) {
+        if (attrProps == null) {
+            attrProps = {};
+        } else if (typeof attrProps === 'string') {
+            attrProps = {
+                type: attrProps
+            };
+        } else {
+            assert.ok(typeof attrProps === 'object', 'Invalid "attrProps"');
+        }
+
+        var attr = this.attr = new Taglib.Attribute(attrName);
+        propertyHandlers(attrProps, this, this.dependencyChain.toString());
+        return attr;
+    }
+
     /**
      * The attribute type. One of the following:
      * - string (the default)
@@ -40,28 +57,28 @@ AttrHandlers.prototype = {
      * - array
      *
      */
-    type: function(value) {
+    type(value) {
         var attr = this.attr;
         attr.type = value;
-    },
+    }
 
     /**
      * The name of the target property to use when mapping
      * the attribute to a property on the target object.
      */
-    targetProperty: function(value) {
+    targetProperty(value) {
         var attr = this.attr;
         attr.targetProperty = value;
-    },
+    }
     /**
      * The "default-value" property allows a default value
      * to be provided when the attribute is not declared
      * on the custom tag.
      */
-    defaultValue: function(value) {
+    defaultValue(value) {
         var attr = this.attr;
         attr.defaultValue = value;
-    },
+    }
     /**
      * The "pattern" property allows the attribute
      * to be matched based on a simplified regular expression.
@@ -70,23 +87,23 @@ AttrHandlers.prototype = {
      *
      * "pattern": "myprefix-*"
      */
-    pattern: function(value) {
+    pattern(value) {
         var attr = this.attr;
         if (value === true) {
             var patternRegExp = raptorRegexp.simple(attr.name);
             attr.pattern = patternRegExp;
         }
-    },
+    }
 
     /**
      * If "allow-expressions" is set to true (the default) then
      * the the attribute value will be parsed to find any dynamic
      * parts.
      */
-    allowExpressions: function(value) {
+    allowExpressions(value) {
         var attr = this.attr;
         attr.allowExpressions = value;
-    },
+    }
 
     /**
      * By default, the Marko compiler maps an attribute
@@ -97,10 +114,10 @@ AttrHandlers.prototype = {
      * Setting "preserve-name" to true will prevent this from
      * happening for the attribute.
      */
-    preserveName: function(value) {
+    preserveName(value) {
         var attr = this.attr;
         attr.preserveName = value;
-    },
+    }
     /**
      * Declares an attribute as required. Currently, this is
      * not enforced and is only used for documentation purposes.
@@ -108,24 +125,24 @@ AttrHandlers.prototype = {
      * Example:
      * "required": true
      */
-    required: function(value) {
+    required(value) {
         var attr = this.attr;
         attr.required = value === true;
-    },
+    }
     /**
      * This is the opposite of "preserve-name" and will result
      * in dashes being removed from the attribute if set to true.
      */
-    removeDashes: function(value) {
+    removeDashes(value) {
         var attr = this.attr;
         attr.removeDashes = value === true;
-    },
+    }
     /**
      * The description of the attribute. Only used for documentation.
      */
-    description: function() {
+    description() {
 
-    },
+    }
 
     /**
      * The "set-flag" property allows a "flag" to be added to a Node instance
@@ -143,46 +160,40 @@ AttrHandlers.prototype = {
      *
      *
      */
-    setFlag: function(value) {
+    setFlag(value) {
         var attr = this.attr;
         attr.setFlag = value;
-    },
+    }
     /**
      * An attribute can be marked for ignore. Ignored attributes
      * will be ignored during compilation.
      */
-    ignore: function(value) {
+    ignore(value) {
         var attr = this.attr;
         if (value === true) {
             attr.ignore = true;
         }
-    },
+    }
 
-    autocomplete: function(value) {
+    autocomplete(value) {
         this.attr.autocomplete = value;
-    },
+    }
 
-    enum: function(value) {
+    enum(value) {
         this.attr.enum = value;
     }
-};
+}
 
 exports.isSupportedProperty = function(name) {
-    return AttrHandlers.prototype.hasOwnProperty(name);
+    return AttrLoader.prototype.hasOwnProperty(name);
 };
 
-exports.loadAttribute = function loadAttribute(attrName, attrProps, path) {
-    var attr = new Taglib.Attribute(attrName);
+exports.loadAttribute = function loadAttribute(attrName, attrProps, dependencyChain) {
+    var attrLoader = new AttrLoader(dependencyChain);
 
-    if (attrProps == null) {
-        attrProps = {};
-    } else if (typeof attrProps === 'string') {
-        attrProps = {
-            type: attrProps
-        };
+    try {
+        return attrLoader._load(attrName, attrProps);
+    } catch(err) {
+        throw createError('Unable to load attribute "' + attrName + '" (' + dependencyChain + '): ' + err, err);
     }
-
-    var attrHandlers = new AttrHandlers(attr);
-    propertyHandlers(attrProps, attrHandlers, path);
-    return attr;
 };
