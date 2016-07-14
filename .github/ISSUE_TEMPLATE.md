@@ -1,9 +1,9 @@
-<!----------------------------
-  |     IF FEATURE REQUEST    |
-  ----------------------------->
+<!--------------------------------
+  |     IF FEATURE SUGGESTION    |
+  -------------------------------->
 ## New Feature
 
-### Detailed Description
+### Description
 <!--- Provide a detailed description of the change or addition you are proposing -->
 
 ### Context
@@ -13,6 +13,8 @@
 ### Possible Implementation
 <!--- Not obligatory, but suggest an idea for implementing addition or change -->
 
+### Open Questions
+<!--- What still needs to be discussed -->
 
 
 <!----------------------
