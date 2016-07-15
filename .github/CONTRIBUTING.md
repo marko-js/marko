@@ -82,14 +82,26 @@ Below is a guideline for the maintainers and anyone else who is interested
 in what the various labels mean. 
 
 ### Type
+![](https://img.shields.io/badge/type-bug-dd0000.svg)
+![](https://img.shields.io/badge/type-enhancement-0099dd.svg)
+![](https://img.shields.io/badge/type-docs-aaaaaa.svg)
+![](https://img.shields.io/badge/type-question-99cc00.svg)
+
 Every issue should be assigned one of these.
 
 - **enhancement**: A feature request
-- **bug**: A bug report
+- **bug**: A bug report 
 - **docs**: An issue about documentation
 - **question**: A question about how to use Marko
 
 ### Scope
+![](https://img.shields.io/badge/scope-parser-5500cc.svg)
+![](https://img.shields.io/badge/scope-compiler-cc0077.svg)
+![](https://img.shields.io/badge/scope-runtime-eeaa00.svg)
+![](https://img.shields.io/badge/scope-core%20taglib-00cccc.svg)
+![](https://img.shields.io/badge/scope-widgets-9900aa.svg)
+![](https://img.shields.io/badge/scope-tools-33cc00.svg)
+
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
 
 - **parser**: Relates to `htmljs-parser`
@@ -100,12 +112,23 @@ What part of the Marko stack does this issue apply to? In most cases there shoul
 - **tools**: Relates to editor plugins, commandline tools, etc.
 
 ### Difficulty
+![](https://img.shields.io/badge/difficulty-bite%20sized-aabbcc.svg)
+![](https://img.shields.io/badge/difficulty-epic-cc4400.svg)
+
 Indicates a very large or very small issue.  Not required.
 
 - **bite-sized**: An issue that would be great for new contributors to tackle
 - **epic**: A large change that will take some time and likely have sub-issues
 
 ### Status
+![](https://img.shields.io/badge/status-resolved-99cc99.svg)
+![](https://img.shields.io/badge/status-confirmed-5599cc.svg)
+![](https://img.shields.io/badge/status-help%20wanted-33cc88.svg)
+![](https://img.shields.io/badge/status-invalid-997744.svg)
+![](https://img.shields.io/badge/status-duplicate-cc99cc.svg)
+![](https://img.shields.io/badge/status-wontfix-bb6666.svg)
+![](https://img.shields.io/badge/status-needs%20clarifying-dd9944.svg)
+
 In many cases, additional *actions* should be taken when applying one of these.
 
 - **resolved**: The question was answered, the bug was fixed, or the feature was implemented. *Close the issue.*
@@ -115,4 +138,3 @@ In many cases, additional *actions* should be taken when applying one of these.
 - **duplicate**: Someone has already posted the same or a very similar issue.  *Reference the original issue and close this issue.*
 - **wontfix**: This is not a bug, but intended behavior, or this feature will not be implemented.  *Close the issue.*
 - **needs-clarifying**: More information is needed to reproduce the bug. *Ask for more information.  If no reply is received within a week, the issue should be closed.*
-
