@@ -100,7 +100,7 @@ Every issue should be assigned one of these.
 ![](https://img.shields.io/badge/scope-runtime-eebb00.svg)
 ![](https://img.shields.io/badge/scope-core%20taglib-00cccc.svg)
 ![](https://img.shields.io/badge/scope-widgets-9900aa.svg)
-![](https://img.shields.io/badge/scope-tools-33cc00.svg)
+![](https://img.shields.io/badge/scope-tools-fef2c0.svg)
 
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
 
