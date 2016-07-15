@@ -2,33 +2,6 @@
 
 :+1::tada: We're excited you want to contribute! Read on! :tada::+1:
 
-## Reporting security issues
-
-If you discover a security issue, please **DO NOT** file a public issue, 
-instead send your report [privately](https://gitter.im/patrick-steele-idem).
-
-Security reports are greatly appreciated and we will publicly thank you for it.
-We currently do not offer a paid security bounty program.
-
-## Reporting other issues
-
-A great way to contribute to the project is to send a detailed report when you
-encounter an issue.
-
-Check that [our issue database](https://github.com/marko-js/marko/issues)
-doesn't already include that problem or suggestion before submitting an issue.
-If you find a match, you can use the "subscribe" button to get notified on
-updates. Rather than leaving a "+1" or "I have this too" comment, you can add a 
-[reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) 
-to let us know that this is also affecting you without cluttering the conversation. 
-However, if you have ways to reproduce the issue or have additional information that may help
-resolving the issue, please leave a comment.
-
-We have an [ISSUE_TEMPLATE](ISSUE_TEMPLATE.md) that will populate your textarea 
-when you go to open an issue.  Use the relevant section and remove the rest. 
-
-Please provide as much detail as possible.
-
 ## Quick contribution tips and guidelines
 
 This section gives the experienced contributor some tips and guidelines.
@@ -67,6 +40,33 @@ Here's some to get started with:
 - [bite-sized](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adifficulty%3Abite-sized%20no%3Aassignee) issues: great for new contributors
 - [help-wanted](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Astatus%3Ahelp-wanted%20no%3Aassignee) issues: won't be tackled in the near future by the maintainers... we need your help!
 - [un-assigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
+
+### Reporting bugs and other issues
+
+A great way to contribute to the project is to send a detailed report when you
+encounter an issue.
+
+Check that [our issue database](https://github.com/marko-js/marko/issues)
+doesn't already include that problem or suggestion before submitting an issue.
+If you find a match, you can use the "subscribe" button to get notified on
+updates. Rather than leaving a "+1" or "I have this too" comment, you can add a 
+[reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) 
+to let us know that this is also affecting you without cluttering the conversation. 
+However, if you have ways to reproduce the issue or have additional information that may help
+resolving the issue, please leave a comment.
+
+We have an [ISSUE_TEMPLATE](ISSUE_TEMPLATE.md) that will populate your textarea 
+when you go to open an issue.  Use the relevant section and remove the rest. 
+
+Please provide as much detail as possible.
+
+#### Reporting security issues
+
+If you discover a security issue, please **DO NOT** file a public issue, 
+instead send your report [privately](https://gitter.im/patrick-steele-idem).
+
+Security reports are greatly appreciated and we will publicly thank you for it.
+We currently do not offer a paid security bounty program.
 
 ## Maintainers
 
