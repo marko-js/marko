@@ -13,7 +13,7 @@ Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) an
 # Get Involved
 
 - **Contributing**: Pull requests are welcome! 
-    - Read [`CONTRIBUTING.md`](.github/CONTRIBUTING.md) and check out our [`bite-sized`](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Abite-sized) and [`help-wanted`](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Ahelp-wanted) issues
+    - Read [`CONTRIBUTING.md`](.github/CONTRIBUTING.md) and check out our [bite-sized](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Adifficulty%3Abite-sized) and [help-wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ahelp-wanted) issues
     - Submit github issues for any feature enhancements, bugs or documentation problems
 - **Support**: Join our [gitter chat](https://gitter.im/marko-js/marko) to ask questions to get support from the maintainers and other Marko developers
     - Questions/comments can also be posted as [github issues](https://github.com/marko-js/marko/issues)
