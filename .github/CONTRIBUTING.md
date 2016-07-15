@@ -64,8 +64,8 @@ developer to work on.
 
 Here's some to get started with:
 
-- [`bite-sized`](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Abite-sized%20no%3Aassignee) issues: great for new contributors
-- [`help-wanted`](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Ahelp-wanted%20no%3Aassignee) issues: won't be tackled in the near future by the maintainers... we need your help!
+- [bite-sized](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adifficulty%3Abite-sized%20no%3Aassignee) issues: great for new contributors
+- [help-wanted](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Astatus%3Ahelp-wanted%20no%3Aassignee) issues: won't be tackled in the near future by the maintainers... we need your help!
 - [un-assigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
 
 ## Maintainers
