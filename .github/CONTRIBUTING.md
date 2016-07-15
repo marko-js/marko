@@ -84,20 +84,20 @@ in what the various labels mean.
 ### Type
 ![](https://img.shields.io/badge/type-bug-dd0000.svg)
 ![](https://img.shields.io/badge/type-enhancement-0099dd.svg)
-![](https://img.shields.io/badge/type-docs-aaaaaa.svg)
 ![](https://img.shields.io/badge/type-question-99cc00.svg)
+![](https://img.shields.io/badge/type-docs-999999.svg)
 
 Every issue should be assigned one of these.
 
-- **enhancement**: A feature request
 - **bug**: A bug report 
-- **docs**: An issue about documentation
+- **enhancement**: A feature request
 - **question**: A question about how to use Marko
+- **docs**: An issue about documentation
 
 ### Scope
 ![](https://img.shields.io/badge/scope-parser-5500cc.svg)
 ![](https://img.shields.io/badge/scope-compiler-cc0077.svg)
-![](https://img.shields.io/badge/scope-runtime-eeaa00.svg)
+![](https://img.shields.io/badge/scope-runtime-eebb00.svg)
 ![](https://img.shields.io/badge/scope-core%20taglib-00cccc.svg)
 ![](https://img.shields.io/badge/scope-widgets-9900aa.svg)
 ![](https://img.shields.io/badge/scope-tools-33cc00.svg)
