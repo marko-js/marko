@@ -1,12 +1,8 @@
-# Contributing
+# Quick contribution tips and guidelines
 
 :+1::tada: We're excited you want to contribute! Read on! :tada::+1:
 
-## Quick contribution tips and guidelines
-
-This section gives the experienced contributor some tips and guidelines.
-
-### Pull requests are always welcome
+## Pull requests are always welcome
 
 Not sure if that typo is worth a pull request? Found a bug and know how to fix
 it? Do it! We will appreciate it. Any significant improvement should be
@@ -26,7 +22,7 @@ Before submitting your PR, make sure that all new and previous tests pass and th
 npm run test-coverage
 ```
 
-### Tackling an existing issue
+## Tackling an existing issue
 
 Comment on the issue and let us know you'd like to tackle it.   
 We'll assign you to the issue so that we don't duplicate effort.  
@@ -41,7 +37,7 @@ Here's some to get started with:
 - [help-wanted](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Astatus%3Ahelp-wanted%20no%3Aassignee) issues: won't be tackled in the near future by the maintainers... we need your help!
 - [un-assigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
 
-### Reporting bugs and other issues
+## Reporting bugs and other issues
 
 A great way to contribute to the project is to send a detailed report when you
 encounter an issue.
@@ -60,7 +56,7 @@ when you go to open an issue.  Use the relevant section and remove the rest.
 
 Please provide as much detail as possible.
 
-#### Reporting security issues
+### Reporting security issues
 
 If you discover a security issue, please **DO NOT** file a public issue, 
 instead send your report [privately](https://gitter.im/patrick-steele-idem).
@@ -68,14 +64,14 @@ instead send your report [privately](https://gitter.im/patrick-steele-idem).
 Security reports are greatly appreciated and we will publicly thank you for it.
 We currently do not offer a paid security bounty program.
 
-## Maintainers
+# Maintainers
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
 * [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
 
-## Labels
+# Labels
 
 Once you post an issue, a maintainer will add one or more labels to it.
 Below is a guideline for the maintainers and anyone else who is interested 
