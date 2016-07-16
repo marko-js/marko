@@ -1,6 +1,12 @@
-# Quick contribution tips and guidelines
+# Contribution tips and guidelines
 
 :+1::tada: We're excited you want to contribute! Read on! :tada::+1:
+
+[Pull requests](#pull-requests-are-always-welcome) &bull; 
+[Tackling issues](#tackling-an-existing-issue) &bull;
+[Reporting bugs](#reporting-bugs-and-other-issues) &bull;
+[Maintainers](#maintainers) &bull;
+[Labels](#labels)
 
 ## Pull requests are always welcome
 
