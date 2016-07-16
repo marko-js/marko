@@ -17,10 +17,33 @@ If you're new to GitHub or open source you can check out this
 [free course](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) 
 on how to contribute to an open source project.
 
+### Running tests
+
 Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://coveralls.io/github/marko-js/marko?branch=master) has not decreased:
 ```
 npm run test-coverage
 ```
+
+### Adding tests
+
+Marko makes use of a directory based test structure.  A simplified view is below:
+
+<pre>
+<a href="../test/">test/</a>
+ ⤷ <a href="../test/autotests/">autotests/</a>
+    ⤷ <a href="../test/autotests/render/">render/</a>
+      ⤷ attrs/
+      ⤷ <a href="../test/autotests/render/for-tag/">for-tag/</a>
+        ⤷ <a href="../test/autotests/render/for-tag/expected.html">expected.html</a>
+        ⤷ <a href="../test/autotests/render/for-tag/template.marko">template.marko</a>
+        ⤷ <a href="../test/autotests/render/for-tag/test.js">test.js</a>
+      ⤷ nested-tags/
+      ⤷ while-tag/
+ ⤷ <a href="../test/render-test.js">render-test.js</a>
+</pre>
+The `render-test.js` file will run and read all the directories under `autotests/render` and run the `test.js` file, render `template.marko` and assert that it is equivalent to the content of `expected.html` for each directory.
+
+In most cases you'll simply copy a directory and modify it to add a new test.  And we're here to help if you have any questions or need to do something fancy.
 
 ## Tackling an existing issue
 
