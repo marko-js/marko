@@ -124,6 +124,7 @@ Indicates a very large or very small issue.  Not required.
 ![](https://img.shields.io/badge/status-duplicate-cc99cc.svg)
 ![](https://img.shields.io/badge/status-wontfix-bb6666.svg)
 ![](https://img.shields.io/badge/status-needs%20clarifying-dd9944.svg)
+![](https://img.shields.io/badge/status-see%20other-456263.svg)
 
 In many cases, additional *actions* should be taken when applying one of these.
 
@@ -134,3 +135,4 @@ In many cases, additional *actions* should be taken when applying one of these.
 - **duplicate**: Someone has already posted the same or a very similar issue.  *Reference the original issue and close this issue.*
 - **wontfix**: This is not a bug, but intended behavior, or this feature will not be implemented.  *Close the issue.*
 - **needs-clarifying**: More information is needed to reproduce the bug. *Ask for more information.  If no reply is received within a week, the issue should be closed.*
+- **see-other**: This bug is actually due to an issue with another library. *If there is an existing issue for that library link to it, if not create one and link to it.  Close the issue.*
