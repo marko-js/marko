@@ -47,7 +47,7 @@ Marko makes use of a directory based test structure.  A simplified view is below
       ⤷ while-tag/
  ⤷ <a href="../test/render-test.js">render-test.js</a>
 </pre>
-The `render-test.js` file will run and read all the directories under `autotests/render` and run the `test.js` file, render `template.marko` and assert that it is equivalent to the content of `expected.html` for each directory.
+The `render-test.js` file will run and read all the directories under `autotests/render` and for each directory (`attrs`, `for-tag`, etc.) it will run `test.js`, render `template.marko` and assert that it is equivalent to the content of `expected.html`.
 
 In most cases you'll simply copy a directory and modify it to add a new test.  And we're here to help if you have any questions or need to do something fancy.
 
