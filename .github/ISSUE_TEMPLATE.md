@@ -1,6 +1,6 @@
-<!--------------------------------
-  |     IF FEATURE SUGGESTION    |
-  -------------------------------->
+<!----------------------------------------------------------------------
+  |     IF FEATURE SUGGESTION (skip to next section for bug reports)    |
+  ---------------------------------------------------------------------->
 ## New Feature
 
 ### Description
@@ -16,6 +16,8 @@
 ### Open Questions
 <!--- What still needs to be discussed -->
 
+### Is this something you're interested in working on?
+<!--- Yes or no -->
 
 <!----------------------
   |     IF BUG REPORT    |
@@ -46,10 +48,10 @@
 ### Steps to Reproduce
 <!--- Provide a link to a live example, or an unambiguous set of steps to -->
 <!--- reproduce this bug include code to reproduce, if relevant -->
-1.
-2.
-3.
-4.
+1. 
+2. 
+3. 
+4. 
 
 ### Stack Trace
 <!-- If an error is thrown, provide the stack trace here -->
