@@ -5,6 +5,11 @@ Changelog
 
 ## 3.7.x
 
+### 3.7.3
+
+- Fixed [#332](https://github.com/marko-js/marko/issues/332) and [#333](https://github.com/marko-js/marko/issues/333) - Correct values for `literalUndefined` and `literalFalse` in the Builder API [@bkuri](https://github.com/bkuri)
+- Fixed [#336](https://github.com/marko-js/marko/issues/336) - Upgraded to latest version of `minimatch`
+
 ### 3.7.2
 
 - Fixed [#328](https://github.com/marko-js/marko/issues/328) - Improve error reporting when taglib/tag definition fails to load
