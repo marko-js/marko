@@ -20,6 +20,8 @@ var nodePath = require('path');
 var fs = require('fs');
 var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
+var scanTagsDir = require('../taglib-loader/scanTagsDir');
+var Taglib = require('../taglib-loader/Taglib');
 
 var existsCache = {};
 var findCache = {};
@@ -112,13 +114,20 @@ function find(dirname, registeredTaglibs) {
     }
 
 
-    // First walk up the directory tree looking for marko.json files
+    // First walk up the directory tree looking for marko.json files or components/ directories
     let curDirname = dirname;
     while(true) {
         let taglibPath = nodePath.join(curDirname, 'marko.json');
         if (existsCached(taglibPath) && !excludedDirs[curDirname]) {
-            var taglib = taglibLoader.load(taglibPath);
+            let taglib = taglibLoader.load(taglibPath);
             helper.addTaglib(taglib);
+        } else {
+            let componentPath = nodePath.join(curDirname, 'components');
+            if (existsCached(componentPath) && !excludedDirs[curDirname] && !helper.alreadyAdded(componentPath)) {
+                let taglib = new Taglib(componentPath);
+                scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib);
+                helper.addTaglib(taglib);
+            }
         }
 
         if (curDirname === rootDirname) {
