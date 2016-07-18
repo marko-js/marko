@@ -10,6 +10,6 @@ var aString = "abc",
       data.name
     ],
     literalTrue = true,
-    literalFalse = true,
+    literalFalse = false,
     literalNull = null,
-    literalUndefined = null
+    literalUndefined = undefined
