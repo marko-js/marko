@@ -36,7 +36,7 @@
     "events": "^1.0.2",
     "htmljs-parser": "^1.5.3",
     "lasso-package-root": "^1.0.0",
-    "minimatch": "^0.2.14",
+    "minimatch": "^3.0.2",
     "object-assign": "^4.1.0",
     "property-handlers": "^1.0.0",
     "raptor-args": "^1.0.0",
@@ -75,7 +75,7 @@
     "./node-require.js": "./node-require-browser.js"
   },
   "homepage": "http://markojs.com/",
-  "version": "3.7.1",
+  "version": "3.7.3",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }

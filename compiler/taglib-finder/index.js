@@ -22,6 +22,7 @@ var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
 var scanTagsDir = require('../taglib-loader/scanTagsDir');
 var Taglib = require('../taglib-loader/Taglib');
+var DependencyChain = require('../taglib-loader/DependencyChain');
 
 var existsCache = {};
 var findCache = {};
@@ -125,7 +126,7 @@ function find(dirname, registeredTaglibs) {
             let componentPath = nodePath.join(curDirname, 'components');
             if (existsCached(componentPath) && !excludedDirs[curDirname] && !helper.alreadyAdded(componentPath)) {
                 let taglib = new Taglib(componentPath);
-                scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib);
+                scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib, new DependencyChain([componentPath]));
                 helper.addTaglib(taglib);
             }
         }

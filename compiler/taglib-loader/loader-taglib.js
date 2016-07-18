@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+'use strict';
 
 var ok = require('assert').ok;
 var nodePath = require('path');
@@ -25,6 +26,8 @@ var jsonFileReader = require('./json-file-reader');
 var loader = require('./loader');
 var tryRequire = require('try-require');
 var resolveFrom = tryRequire('resolve-from', require);
+var DependencyChain = require('./DependencyChain');
+var createError = require('raptor-util/createError');
 
 function exists(path) {
     try {
@@ -33,39 +36,6 @@ function exists(path) {
     } catch(e) {
         return false;
     }
-}
-
-function handleTag(taglibHandlers, tagName, path) {
-    var taglib = taglibHandlers.taglib;
-    var dirname = taglibHandlers.dirname;
-
-    ok(path, 'Invalid tag definition for "' + tagName + '"');
-
-    var tagObject;
-
-    var tagDirname;
-
-    if (typeof path === 'string') {
-        path = nodePath.resolve(dirname, path);
-        taglib.addInputFile(path);
-
-        tagDirname = nodePath.dirname(path);
-        if (!exists(path)) {
-            throw new Error('Tag at path "' + path + '" does not exist. Taglib: ' + taglib.path);
-        }
-
-        tagObject = jsonFileReader.readFileSync(path);
-    } else {
-        tagDirname = dirname; // Tag is in the same taglib file
-        tagObject = path;
-        path = '<' + tagName + '> tag in ' + taglib.path;
-    }
-
-    var tag = loader.tagLoader.loadTag(tagObject, path, taglib, tagDirname);
-    if (tag.name === undefined) {
-        tag.name = tagName;
-    }
-    taglib.addTag(tag);
 }
 
 /**
@@ -77,17 +47,110 @@ function handleTag(taglibHandlers, tagName, path) {
  * @param {Taglib} taglib The initially empty Taglib instance that we will populate
  * @param {String} path The file system path to the taglib that we are loading
  */
-function TaglibHandlers(taglib, path) {
-    ok(taglib);
-    ok(path);
+class TaglibLoader {
+    constructor(dependencyChain) {
+        ok(dependencyChain instanceof DependencyChain, '"dependencyChain" is not valid');
 
-    this.taglib = taglib;
-    this.path = path;
-    this.dirname = nodePath.dirname(path);
-}
+        this.dependencyChain = dependencyChain;
 
-TaglibHandlers.prototype = {
-    attributes: function(value) {
+        this.taglib = null;
+        this.filePath = null;
+        this.dirname = null;
+    }
+
+
+    _load(filePath, taglib) {
+        ok(typeof filePath === 'string', '"filePath" should be a string');
+
+        this.filePath = filePath;
+        this.dirname = nodePath.dirname(filePath);
+
+        var taglibProps = jsonFileReader.readFileSync(filePath);
+
+        taglib = this.taglib = taglib || new Taglib(filePath);
+
+        propertyHandlers(taglibProps, this, this.dependencyChain.toString());
+
+        if (!taglib.id) {
+            // Fixes #73
+            // See if there is a package.json in the same directory as the taglib file.
+            // If so, and if that package.json file has a "name" property then we will
+            // use the the name as the "taglib ID". The taglib ID is used to uniquely
+            // identity a taglib (ignoring version) and it is used to prevent the same
+            // taglib from being loaded multiple times.
+            //
+            // Using the file path as the taglib ID doesn't work so well since we might find
+            // the same taglib multiple times in the Node.js module search path with
+            // different paths.
+            var dirname = nodePath.dirname(filePath);
+            var packageJsonPath = nodePath.join(dirname, 'package.json');
+
+
+            try {
+                var pkg = jsonFileReader.readFileSync(packageJsonPath);
+                taglib.id = pkg.name;
+            } catch(e) {}
+
+            if (!taglib.id) {
+                taglib.id = filePath;
+            }
+        }
+
+        return taglib;
+    }
+
+    _handleTag(tagName, value, dependencyChain) {
+        var tagObject;
+        var tagFilePath = this.filePath;
+
+        if (typeof value === 'string') {
+            tagFilePath = nodePath.resolve(this.dirname, value);
+
+            if (!exists(tagFilePath)) {
+                throw new Error('Tag at path "' + tagFilePath + '" does not exist. (' + dependencyChain + ')');
+            }
+
+            tagObject = jsonFileReader.readFileSync(tagFilePath);
+            dependencyChain = dependencyChain.append(tagFilePath);
+        } else {
+            tagObject = value;
+        }
+
+        var tag = loader.tagLoader.loadTag(tagObject, tagFilePath, dependencyChain);
+
+        if (tag.name === undefined) {
+            tag.name = tagName;
+        }
+
+        this.taglib.addTag(tag);
+    }
+
+    // We register a wildcard handler to handle "@my-attr" and "<my-tag>"
+    // properties (shorthand syntax)
+    '*'(name, value) {
+        var taglib = this.taglib;
+        var filePath = this.filePath;
+
+        if (name.startsWith('<')) {
+            let tagName = name.slice(1, -1);
+            this._handleTag(tagName, value, this.dependencyChain.append(name));
+        } else if (name.startsWith('@')) {
+            var attrName = name.substring(1);
+
+            var attr = loader.attributeLoader.loadAttribute(
+                attrName,
+                value,
+                this.dependencyChain.append('@' + attrName));
+
+            attr.filePath = filePath;
+
+            taglib.addAttribute(attr);
+        } else {
+            return false;
+        }
+    }
+
+    attributes(value) {
         // The value of the "attributes" property will be an object
         // where each property maps to an attribute definition. Since these
         // attributes are on the taglib they will be "global" attribute
@@ -102,11 +165,11 @@ TaglibHandlers.prototype = {
         //     }
         // }
         var taglib = this.taglib;
-        var path = this.path;
+        var path = this.filePath;
 
         handleAttributes(value, taglib, path);
-    },
-    tags: function(tags) {
+    }
+    tags(tags) {
         // The value of the "tags" property will be an object
         // where each property maps to an attribute definition. The property
         // key will be the tag name and the property value
@@ -124,11 +187,11 @@ TaglibHandlers.prototype = {
 
         for (var tagName in tags) {
             if (tags.hasOwnProperty(tagName)) {
-                handleTag(this, tagName, tags[tagName]);
+                this._handleTag(tagName, tags[tagName], this.dependencyChain.append('tags.' + tagName));
             }
         }
-    },
-    tagsDir: function(dir) {
+    }
+    tagsDir(dir) {
         // The "tags-dir" property is used to supporting scanning
         // of a directory to discover custom tags. Scanning a directory
         // is a much simpler way for a developer to create custom tags.
@@ -136,19 +199,19 @@ TaglibHandlers.prototype = {
         // corresponds to the tag name. We only search for directories
         // one level deep.
         var taglib = this.taglib;
-        var path = this.path;
+        var path = this.filePath;
         var dirname = this.dirname;
 
         if (Array.isArray(dir)) {
             for (var i = 0; i < dir.length; i++) {
-                scanTagsDir(path, dirname, dir[i], taglib);
+                scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
             }
         } else {
-            scanTagsDir(path, dirname, dir, taglib);
+            scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
         }
-    },
+    }
 
-    taglibImports: function(imports) {
+    taglibImports(imports) {
         if (!resolveFrom) {
             return;
         }
@@ -194,13 +257,12 @@ TaglibHandlers.prototype = {
                 }
             }
         }
-    },
+    }
 
-    textTransformer: function(value) {
+    textTransformer(value) {
         // Marko allows a "text-transformer" to be registered. The provided
         // text transformer will be called for any static text found in a template.
         var taglib = this.taglib;
-        var path = this.path;
         var dirname = this.dirname;
 
         var transformer = new Taglib.Transformer();
@@ -212,19 +274,17 @@ TaglibHandlers.prototype = {
         }
 
         propertyHandlers(value, {
-            path: function(value) {
+            path(value) {
                 var path = resolve(value, dirname);
                 transformer.path = path;
             }
 
-        }, 'text-transformer in ' + path);
+        }, this.dependencyChain.append('textTransformer').toString());
 
         ok(transformer.path, '"path" is required for transformer');
 
-        taglib.addInputFile(transformer.path);
-
         taglib.addTextTransformer(transformer);
-    },
+    }
 
     /**
      * Allows an ID to be explicitly assigned to a taglib.
@@ -235,70 +295,22 @@ TaglibHandlers.prototype = {
      *
      * @param  {String} value The taglib ID
      */
-    taglibId: function(value) {
+    taglibId(value) {
         var taglib = this.taglib;
         taglib.id = value;
     }
-};
+}
 
-exports.loadTaglib = function(path, taglib) {
-    var taglibProps = jsonFileReader.readFileSync(path);
-
-    taglib = taglib || new Taglib(path);
-    taglib.addInputFile(path);
-
-    var taglibHandlers = new TaglibHandlers(taglib, path);
-
-    // We register a wildcard handler to handle "@my-attr" and "<my-tag>"
-    // properties (shorthand syntax)
-    taglibHandlers['*'] = function(name, value) {
-        var taglib = this.taglib;
-        var path = this.path;
-
-        if (name.startsWith('<')) {
-            handleTag(this, name.slice(1, -1), value);
-        } else if (name.startsWith('@')) {
-            var attrName = name.substring(1);
-
-            var attr = loader.attributeLoader.loadAttribute(
-                attrName,
-                value,
-                '"' + attrName + '" attribute as part of ' + path);
-
-            taglib.addAttribute(attr);
-        } else {
-            return false;
-        }
-    };
-
-    propertyHandlers(taglibProps, taglibHandlers, path);
-
-    taglib.path = path;
-
-    if (!taglib.id) {
-        // Fixes #73
-        // See if there is a package.json in the same directory as the taglib file.
-        // If so, and if that package.json file has a "name" property then we will
-        // use the the name as the "taglib ID". The taglib ID is used to uniquely
-        // identity a taglib (ignoring version) and it is used to prevent the same
-        // taglib from being loaded multiple times.
-        //
-        // Using the file path as the taglib ID doesn't work so well since we might find
-        // the same taglib multiple times in the Node.js module search path with
-        // different paths.
-        var dirname = nodePath.dirname(path);
-        var packageJsonPath = nodePath.join(dirname, 'package.json');
-
-
-        try {
-            var pkg = jsonFileReader.readFileSync(packageJsonPath);
-            taglib.id = pkg.name;
-        } catch(e) {}
-
-        if (!taglib.id) {
-            taglib.id = path;
-        }
+exports.loadTaglib = function(filePath, taglib, dependencyChain) {
+    if (!dependencyChain) {
+        dependencyChain = new DependencyChain([filePath]);
     }
 
-    return taglib;
+    var taglibLoader = new TaglibLoader(dependencyChain);
+
+    try {
+        return taglibLoader._load(filePath, taglib);
+    } catch(err) {
+        throw createError('Unable to load taglib (' + dependencyChain + '): ' + err, err);
+    }
 };

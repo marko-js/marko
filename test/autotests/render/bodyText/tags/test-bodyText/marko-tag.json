@@ -1,0 +1,5 @@
+{
+    "code-generator": "./code-generator",
+    "body": "static-text",
+    "preserve-whitespace": true
+}
