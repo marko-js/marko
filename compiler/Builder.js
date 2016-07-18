@@ -70,7 +70,7 @@ function makeNode(arg) {
 var literalNull = new Literal({value: null});
 var literalUndefined = new Literal({value: null});
 var literalTrue = new Literal({value: true});
-var literalFalse = new Literal({value: true});
+var literalFalse = new Literal({value: false});
 var identifierOut = new Identifier({name: 'out'});
 
 class Builder {
