@@ -290,7 +290,7 @@ class TaglibLookup {
         /*
          * Based on the type of node we have to choose how to transform it
          */
-        if (node.tagName) {
+        if (node.tagName || node.tagNameExpression) {
             this.forEachTagTransformer(node, callback, thisObj);
         } else if (node instanceof Text) {
             this.forEachTextTransformer(callback, thisObj);
@@ -327,10 +327,12 @@ class TaglibLookup {
          */
 
         if (this.merged.tags) {
-            if (this.merged.tags[tagName]) {
-                this.merged.tags[tagName].forEachTransformer(addTransformer);
+            if (tagName) {
+                if (this.merged.tags[tagName]) {
+                    this.merged.tags[tagName].forEachTransformer(addTransformer);
+                }
             }
-
+            
             if (this.merged.tags['*']) {
                 this.merged.tags['*'].forEachTransformer(addTransformer);
             }
