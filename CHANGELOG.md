@@ -5,6 +5,10 @@ Changelog
 
 ## 3.7.x
 
+### 3.7.4
+
+- Fixed [#339](https://github.com/marko-js/marko/issues/339) - Tag transformers are not being applied to tags with a dynamic tag name (fixes [#146](https://github.com/marko-js/marko-widgets/issues/146) for Marko Widgets)
+
 ### 3.7.3
 
 - Fixed [#332](https://github.com/marko-js/marko/issues/332) and [#333](https://github.com/marko-js/marko/issues/333) - Correct values for `literalUndefined` and `literalFalse` in the Builder API [@bkuri](https://github.com/bkuri)
