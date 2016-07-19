@@ -3,6 +3,12 @@ Changelog
 
 # 3.x
 
+## 3.8.x
+
+### 3.8.0
+
+- Fixed [#329](https://github.com/marko-js/marko/issues/329) - Add autodiscover of components/ directory ([Pull Request #338](https://github.com/marko-js/marko/pull/338) by [@mlrawlings](https://github.com/mlrawlings))
+
 ## 3.7.x
 
 ### 3.7.4
