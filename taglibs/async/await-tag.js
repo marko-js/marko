@@ -231,5 +231,8 @@ module.exports = function render(input, out) {
                 name: name
             });
         }
+    } else if (clientReorder) {
+        // If the async fragment has finished synchronously then we still need to emit the `await:finish` event
+        out.emit('await:finish', awaitInfo);
     }
 };
