@@ -1,0 +1,53 @@
+script marko-init
+    ---
+    function nameDataProvider(callback) {
+        setTimeout(function() {
+            callback(null, {});
+        }, 20);
+    }
+    ---
+
+lasso-page dependencies=data.browserDependencies lasso=data.lasso
+
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title - Marko Widgets Tests
+        lasso-head
+    body
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        lasso-body
+
+        app-foo
+
+        await(name from nameDataProvider) client-reorder
+            app-bar
+
+        init-widgets immediate
+
+        script
+            ---
+            // window.fooWidget should not exist yet, but's store that in a variable to verify
+            window.afterInitWidgets_foo = window.fooWidget;
+            window.afterInitWidgets_bar = window.barWidget;
+            ---
+
+        await-reorderer
+
+        script
+            ---
+            // window.fooWidget should not exist yet, but's store that in a variable to verify
+            window.afterReorderer_foo = window.fooWidget;
+            window.afterReorderer_bar = window.barWidget;
+            ---
+
+        lasso-slot name="mocha-run"
+
+
+
+        browser-refresh

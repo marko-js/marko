@@ -23,14 +23,14 @@ module.exports = function render(input, out) {
     var options = input.immediate ? {immediate: true} : null;
 
     if (input.immediate === true) {
-        out.global.events.on('asyncFragmentBeforeRender', function(eventArgs) {
+        out.on('await:beforeRender', function(eventArgs) {
             if (eventArgs.clientReorder) {
                 var asyncFragmentOut = eventArgs.out;
-                asyncFragmentOut.widgets = new WidgetContext(asyncFragmentOut);
+                asyncFragmentOut.data.widgets = new WidgetContext(asyncFragmentOut);
             }
         });
 
-        out.global.events.on('asyncFragmentFinish', function(eventArgs) {
+        out.on('await:finish', function(eventArgs) {
             var asyncFragmentOut = eventArgs.out;
 
             var widgetsContext = asyncFragmentOut.data.widgets || asyncFragmentOut.global.widgets;
