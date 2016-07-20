@@ -164,6 +164,14 @@ You can also specify the `tags-dir` value in your `marko.json` to configure the 
 
 _NOTE: If a `marko.json` file exists, a `components/` directory will **not** be automatically discovered at that level._
 
+### Excluding directories
+
+By excluding a directory, Marko will not search it for a `components/` directory or a `marko.json` file.
+
+```js
+require('marko/compiler/taglib-finder').excludeDir('./')
+```
+
 # Nested Tags
 
 It is often necessary for tags to have a parent/child or ancestor/descendent relationship. For example:
