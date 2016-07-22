@@ -19,7 +19,7 @@
     "events": "^1.0.2",
     "lasso-modules-client": "^1.0.0",
     "listener-tracker": "^1.0.2",
-    "morphdom": "^2.0.1",
+    "morphdom": "^1.4.6",
     "raptor-async": "^1.1.2",
     "raptor-dom": "^1.1.0",
     "raptor-json": "^1.0.1",
