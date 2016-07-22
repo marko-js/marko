@@ -5,6 +5,10 @@ CHANGELOG
 
 ## 6.2.x
 
+### v6.2.2
+
+- Revert back to `morphdom@^1` until more testing can be done
+
 ### v6.2.1
 
 - Fixes #147 - Immediate widget initialization not working correctly with client reordering enabled
@@ -12,7 +16,7 @@ CHANGELOG
 ### v6.2.0
 
 - Throw an error if a widget fails to initialize because DOM el is missing
-- Upgrade to morphdom@2
+- Upgrade to `morphdom@2`
 
 ## 6.1.x
 
