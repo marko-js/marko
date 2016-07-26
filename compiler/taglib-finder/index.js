@@ -118,16 +118,18 @@ function find(dirname, registeredTaglibs) {
     // First walk up the directory tree looking for marko.json files or components/ directories
     let curDirname = dirname;
     while(true) {
-        let taglibPath = nodePath.join(curDirname, 'marko.json');
-        if (existsCached(taglibPath) && !excludedDirs[curDirname]) {
-            let taglib = taglibLoader.load(taglibPath);
-            helper.addTaglib(taglib);
-        } else {
-            let componentPath = nodePath.join(curDirname, 'components');
-            if (existsCached(componentPath) && !excludedDirs[curDirname] && !helper.alreadyAdded(componentPath)) {
-                let taglib = new Taglib(componentPath);
-                scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib, new DependencyChain([componentPath]));
+        if(!excludedDirs[curDirname]) {
+            let taglibPath = nodePath.join(curDirname, 'marko.json');
+            if (existsCached(taglibPath)) {
+                let taglib = taglibLoader.load(taglibPath);
                 helper.addTaglib(taglib);
+            } else {
+                let componentPath = nodePath.join(curDirname, 'components');
+                if (existsCached(componentPath) && !excludedDirs[componentPath] && !helper.alreadyAdded(componentPath)) {
+                    let taglib = new Taglib(componentPath);
+                    scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib, new DependencyChain([componentPath]));
+                    helper.addTaglib(taglib);
+                }
             }
         }
 

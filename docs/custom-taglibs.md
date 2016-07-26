@@ -97,32 +97,28 @@ _Multiple attributes:_
 
 Marko supports a directory scanner to make it easier to maintain a taglib by introducing a few conventions:
 
-* The name of the tag directory will be the name of the tag
+* When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/` (similar to the way `node_modules/` is found)
+* The `components/` directory contains a directory for each tag
 * One tag per directory
-* All tag directories should be direct children of a parent directory
+* All tag directories should be direct children of `components/`
+* The name of the tag directory will be the name of the tag
 * Every tag directory must contain a `renderer.js` that is used as the tag renderer or, alternatively, a `template.marko`
 * Each tag directory may contain a `marko-tag.json` file or the tag definition can be embedded into `renderer.js`
 
-With this approach, `marko.json` will be much simpler:
-
-```json
-{
-    "tags-dir": "./components"
-}
-```
 Given the following directory structure:
-
 * __components/__
-    * __my-hello/__
-        * renderer.js
     * __my-foo/__
         * template.marko
     * __my-bar/__
         * renderer.js
         * marko-tag.json
-* marko.json
+* __page/__
+    * __components/__
+        * __my-hello/__
+            * renderer.js
+    * __page.marko__
 
-The following three tags will be exported:
+The following three tags will be found when rendering `page.marko`:
 
 * `<my-hello>`
 * `<my-foo>`
@@ -148,12 +144,32 @@ _In `marko-tag.json`:_
 
 _NOTE: It is not necessary to declare the `renderer` since the scanner will automatically use `renderer.js` as the renderer._
 
+## Configuring the directory
+
+You can also specify the `tags-dir` value in your `marko.json` to configure the name of the directory:
+
+```json
+{
+    "tags-dir": "./components"
+}
+```
+
 `tags-dir` also accepts an array if you have taglibs organized in multiple folders.
 
 ```json
 {
     "tags-dir": ["./components", "./modules"]
 }
+```
+
+_NOTE: If a `marko.json` file exists, a `components/` directory will **not** be automatically discovered at that level._
+
+### Excluding directories
+
+By excluding a directory, Marko will not search it for a `components/` directory or a `marko.json` file.
+
+```js
+require('marko/compiler/taglib-finder').excludeDir('./')
 ```
 
 # Nested Tags
