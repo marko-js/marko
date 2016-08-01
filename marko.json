@@ -141,15 +141,14 @@
     },
     "<init-widgets>": {
         "renderer": "./taglib/init-widgets-tag.js",
-        "@function-name": "string",
-        "@include-script-tag": "boolean",
         "@immediate": "boolean"
     },
     "<w-preserve>": {
         "renderer": "./taglib/preserve-tag.js",
         "@id": "string",
         "@if": "expression",
-        "@body-only": "expression"
+        "@body-only": "expression",
+        "autocomplete": []
     },
     "<widget-types>": {
         "code-generator": "./taglib/widget-types-tag.js",
