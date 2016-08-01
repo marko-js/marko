@@ -28,4 +28,14 @@ describe(path.basename(__dirname), function() {
     it('should assign a unique ID to a nested widget based on the parent ID', function() {
         expect(window.bazWidget.id).to.contain(window.fooWidget.id + '-');
     });
+
+    it('should serialize state correctly', function() {
+        expect(window.fooWidget.state.type).to.equal('state');
+        expect(window.fooWidget.state.name).to.equal('foo');
+    });
+
+    it('should serialize widget config correctly', function() {
+        expect(window.fooWidget.widgetConfig.type).to.equal('config');
+        expect(window.fooWidget.widgetConfig.name).to.equal('foo');
+    });
 });
