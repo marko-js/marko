@@ -637,12 +637,12 @@ var template = require('./template.marko');
 
 module.exports = function(req, res) {
 	template.render(viewModel, function(err, html, out) {
-		var widgetIds = markoWidgets.getRenderedWidgetIds(out);
+		var renderedWidgets = markoWidgets.getRenderedWidgets(out);
 
 		// Serialize the HTML and the widget IDs to the browser
 		res.json({
 	            html: html,
-	            widgetIds: widgetIds
+	            renderedWidgets: renderedWidgets
 	        });
 	});
 }
@@ -653,16 +653,16 @@ And then, in the browser, the following code can be used to initialize the widge
 ```javascript
 var result = JSON.parse(response.body);
 var html = result.html
-var widgetIds = result.widgetIds;
+var renderedWidgets = result.renderedWidgets;
 
 document.body.innerHTML = html; // Add the HTML to the DOM
 
 // Initialize the widgets to bind behavior!
-require('marko-widgets').initWidgets(widgetIds);
+require('marko-widgets').initWidgets(renderedWidgets);
 ```
 
 NOTE: the server side example above renders the template directly and therefore circumvents the
-index.js file (neither getInitialState() nor getTemplateData() are executed).
+`index.js` file (neither `getInitialState()` nor `getTemplateData()` are executed).
 
 To render the complete widget, use the code below instead
 (the browser side is not affected; the same code snipped can be used):
@@ -673,12 +673,12 @@ var helloComponent = require('src/components/app-hello');
 
 module.exports = function(req, res) {
     var renderResult = helloComponent.render(viewModel);
-    var widgetIds = markoWidgets.getRenderedWidgetIds(renderResult.out);
+    var renderedWidgets = markoWidgets.getRenderedWidgets(renderResult.out);
 
     // Serialize the HTML and the widget IDs to the browser
     res.json({
         html: renderResult.html,
-        widgetIds: widgetIds
+        renderedWidgets: renderedWidgets
     });
 }
 ```

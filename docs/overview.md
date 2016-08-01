@@ -30,6 +30,7 @@ Marko Widgets extends the [Marko templating engine](https://github.com/marko-js/
 		- Entire DOM subtrees can be preserved between rendering
 		- Smart template compilers to offload as much work to compile time
 	- Very efficient event delegation
+	- Fast serialization of state from the server to the browser using [warp10](https://github.com/patrick-steele-idem/warp10)
 - Lightweight
 	- Extremely small JavaScript runtime (~6.3 KB gzipped)
 	- No dependencies on any other JavaScript library such as jQuery
