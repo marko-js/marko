@@ -46,6 +46,7 @@
     "raptor-polyfill": "^1.0.0",
     "raptor-promises": "^1.0.1",
     "raptor-regexp": "^1.0.0",
+    "raptor-renderer": "^1.4.4",
     "raptor-strings": "^1.0.0",
     "raptor-util": "^1.0.0",
     "resolve-from": "^1.0.0",
