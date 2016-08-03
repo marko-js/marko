@@ -252,3 +252,45 @@ Default options:
     assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
 };
 ```
+
+# require('marko/defineRenderer')
+
+Utility module for building a UI component with both a `renderer(input, out)` (for use as a Marko custom tag renderer) a `render(input)` method (for rendering the UI component and inserting the HTML in the DOM):
+
+
+_src/components/app-hello/index.js_
+
+```javascript
+var defineRenderer = require('marko/defineRenderer');
+
+module.exports = defineRenderer({
+	template: require('./template.marko'),
+	getTemplateData: function(input) {
+		var firstName = input.firstName;
+		var lastName = input.lastName;
+
+		return {
+			fullName: firstName + ' ' + lastName
+		};
+	}
+})
+```
+
+The UI component can be used as a custom tag:
+
+```xml
+<app-hello first-name="John" last-name="Doe" />
+```
+
+And it can also be rendered and inserted into the DOM:
+
+```javascript
+require('./src/components/app-hello')
+	.render({
+		firstName: 'John',
+		lastName: 'Doe'
+	})
+	.appendTo(document.body);
+```
+
+The return value of `render()` will be a [RenderResult](https://github.com/raptorjs/raptor-renderer#renderresult) instance.
