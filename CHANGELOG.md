@@ -3,6 +3,17 @@ Changelog
 
 # 3.x
 
+## 3.9.x
+
+### 3.9.0
+
+- Fixed [#231](https://github.com/marko-js/marko/issues/231) - Allow <assign count++>
+- Fixed [#345](https://github.com/marko-js/marko/issues/345) - Whitespace preservation now applies to all deeply nested text nodes
+- Fixed [#344](https://github.com/marko-js/marko/issues/344) - Introduced [defineRenderer](./docs/javascript-api.md#requiremarkodefinerenderer) for Marko
+- Docs: Added docs for excluding directories from taglib discovery ([@mlrawlings](https://github.com/mlrawlings))
+- Docs: Added docs for component autodiscovery ([@mlrawlings](https://github.com/mlrawlings))
+- Docs: Added docs for passing a data object to a custom tag
+
 ## 3.8.x
 
 ### 3.8.1
