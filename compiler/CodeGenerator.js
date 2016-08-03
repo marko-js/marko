@@ -189,9 +189,15 @@ class Generator {
             beforeAfterEvent = new GeneratorEvent(node, this);
         }
 
+        var isWhitespacePreserved = node.isPreserveWhitespace();
+
         if (beforeAfterEvent) {
             beforeAfterEvent.isBefore = true;
             beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
+
+            if (isWhitespacePreserved) {
+                this.context.beginPreserveWhitespace();
+            }
         }
 
         if (node.getCodeGenerator) {
@@ -268,6 +274,10 @@ class Generator {
         if (beforeAfterEvent) {
             beforeAfterEvent.isBefore = false;
             beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
+
+            if (isWhitespacePreserved) {
+                this.context.endPreserveWhitespace();
+            }
         }
 
         this._currentNode = oldCurrentNode;
