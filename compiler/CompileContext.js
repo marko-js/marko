@@ -14,6 +14,8 @@ var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
 
+const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
+
 const deresolveOptions = {
     shouldRemoveExt(ext) {
         return ext === '.js' || ext === '.json' || ext === '.es6';
@@ -392,8 +394,18 @@ class CompileContext {
         this._preserveWhitespace = preserveWhitespace;
     }
 
+    beginPreserveWhitespace() {
+        this.pushFlag(FLAG_PRESERVE_WHITESPACE);
+    }
+
+    endPreserveWhitespace() {
+        this.popFlag(FLAG_PRESERVE_WHITESPACE);
+    }
+
     isPreserveWhitespace() {
-        return this._preserveWhitespace === true;
+        if (this.isFlagSet(FLAG_PRESERVE_WHITESPACE) || this._preserveWhitespace === true) {
+            return true;
+        }
     }
 
     setPreserveComments(preserveComments) {
