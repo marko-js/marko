@@ -9,6 +9,10 @@ module.exports = function codeGenerator(elNode, generator) {
     var builder = generator.builder;
 
     return attributes.map((attr) => {
-        return builder.assignment(attr.name, attr.value);
+        if (attr.value == null) {
+            return builder.parseExpression(attr.name);
+        } else {
+            return builder.assignment(attr.name, attr.value);
+        }
     });
 };
