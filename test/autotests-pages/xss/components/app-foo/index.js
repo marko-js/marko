@@ -3,20 +3,18 @@ module.exports = require('marko-widgets').defineComponent({
 
     getInitialState: function() {
         return {
-            type: 'state',
-            name: 'foo'
+            'evil': '</script><script>alert("hello")</script>'
         };
     },
 
     getWidgetConfig: function() {
         return {
-            type: 'config',
-            name: 'foo'
+            'evil': '</script><script>alert("hello")</script>'
         };
     },
 
     init: function(widgetConfig) {
-        window.fooWidget = this;
         this.widgetConfig = widgetConfig;
+        window.fooWidget = this;
     }
 });

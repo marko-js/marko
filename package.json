@@ -11,6 +11,7 @@
     "test-browser": "node test/browser-tests-runner/cli.js test/browser-tests.js --automated && npm run test-browser-pages",
     "test-browser-pages": "node test/browser-tests-runner/cli.js --pages --automated",
     "test-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server",
+    "test-page": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server --page",
     "jshint": "jshint lib/ taglib/ *.js"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
@@ -29,7 +30,8 @@
     "raptor-renderer": "^1.4.4",
     "raptor-util": "^1.0.10",
     "resolve-from": "^1.0.1",
-    "try-require": "^1.2.1"
+    "try-require": "^1.2.1",
+    "warp10": "^1.0.0"
   },
   "peerDependencies": {
     "marko": "^3.0.0"
@@ -52,7 +54,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
     "mocha-phantomjs": "^4.1.0",
-    "phantomjs": "^2.1.7",
+    "phantomjs-prebuilt": "^2.1.9",
     "raptor-args": "^1.0.2",
     "raptor-strings": "^1.0.0"
   },

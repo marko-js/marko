@@ -39,6 +39,42 @@ The `defineWidget(def)` function can be used to define a UI component's client-s
 
 The return value of `defineWidget(def)` will be a widget constructor function that is used to instantiate new widget instances.
 
+## getRenderedWidgets(out)
+
+_NOTE: Available server-side only_
+
+Used to support initializing widgets bound to to UI components rendered on the server and sent down to the browser via an AJAX request:
+
+```javascript
+var markoWidgets = require('marko-widgets');
+var template = require('./template.marko');
+
+module.exports = function(req, res) {
+	template.render(viewModel, function(err, html, out) {
+		var renderedWidgets = markoWidgets.getRenderedWidgets(out);
+
+		// Serialize the HTML and the widget IDs to the browser
+		res.json({
+	            html: html,
+	            renderedWidgets: renderedWidgets
+	        });
+	});
+}
+```
+
+And then, in the browser, the following code can be used to initialize the widgets:
+
+```javascript
+var result = JSON.parse(response.body);
+var html = result.html
+var renderedWidgets = result.renderedWidgets;
+
+document.body.innerHTML = html; // Add the HTML to the DOM
+
+// Initialize the widgets to bind behavior!
+require('marko-widgets').initWidgets(renderedWidgets);
+```
+
 ## getWidgetForEl(el)
 
 The `getWidgetForEl(el)` function can be used to retrieve a widget object outside of its nested context.
@@ -211,7 +247,7 @@ Returns an Array of _repeated_ `Widget` instances for the given ID. Repeated wid
 
 ### replaceState(newState)
 
-Replaces the state with an entirely new state. If any of the state properties changed, the widget's view will automatically be updated. 
+Replaces the state with an entirely new state. If any of the state properties changed, the widget's view will automatically be updated.
 
 Important to know:
 While `setState()` is additive and will not remove properties that are in the old state but not in the new state, `replaceState()` will add the new state and remove the old state properties that are not found in the new state. State or template data values that are derived from state properties that are not part of the new state, are `undefined`. Thus, if `replaceState()` is used, one must consider possible side effects if the new state contains less or other properties than the replaced state.
@@ -246,7 +282,7 @@ this.setState({
 
 ### setStateDirty(name, value)
 
-Force a state property to be changed even if the value is equal to the old value. This is helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare. Invoking this function completely circumvents all property equality checks (shallow compares) and always rerenders the component. 
+Force a state property to be changed even if the value is equal to the old value. This is helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare. Invoking this function completely circumvents all property equality checks (shallow compares) and always rerenders the component.
 
 Additional information:
 The first parameter `name` is used to allow update handlers (e.g. `update_foo(newValue)`) to handle the state transition for the specific state property that was marked as dirty. The second parameter `value` is used as the new value that is given to update handlers. Because `setStateDirty()` always bypasses all property equality checks, this parameter is optional. If not given or equal to the old value, the old value will be used for the update handler.
@@ -255,7 +291,7 @@ It is important to know, that the given parameters do not affect how or if `setS
 Example:
 
 ```javascript
-// Add a new item to an array without going through `this.setState(...)` - because this 
+// Add a new item to an array without going through `this.setState(...)` - because this
 // does not create a new array, the change would not be detected by a shallow property comparison
 this.state.colors.push('red');
 
