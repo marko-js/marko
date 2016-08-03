@@ -782,6 +782,8 @@ __Option 2)__ Disable whitespace removal using the `marko-preserve-whitespace` a
 </div>
 ```
 
+NOTE: When whitespace preservation is enabled, whitespace will be preserved for text at any level below the tag that the `marko-preserve-whitespace` attribute is attached to.
+
 __Option 3)__ Disable _all_ whitespace removal by changing a compiler option
 
 ```javascript
@@ -799,6 +801,8 @@ Adding the `"preserve-whitespace": true` property to a tag definition will resul
     }
 }
 ```
+
+NOTE: When whitespace preservation is enabled, whitespace will be preserved for text at any level below the tag.
 
 # Helpers
 
