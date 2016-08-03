@@ -143,20 +143,19 @@ Marko supports includes/partials. Other Marko files can be included using the `<
 <include("./greeting.marko") name="Frank" count=30/>
 ```
 
-Alternatively, you can pass the template data using the `template-data` attribute whose value should be a JavaScript expression that resolves to the template data as shown below:
+Alternatively, you can pass the template data by providing a JavaScript expression as a second argument to the include tag:
 
 ```xml
 <include("./greeting.marko", {name: "Frank", count: 30})/>
 ```
 
-The value of the `template` attribute can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
+The template expression provided as the first argument can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
 
 In your JavaScript controller:
 
 ```javascript
 var myIncludeTarget = require('./my-include-target.marko');
 var anotherIncludeTarget = require('./another-include-target.marko');
-
 
 template.render({
 		myIncludeTarget: myIncludeTarget,
@@ -899,7 +898,9 @@ The output would be the following:
 </div>
 ```
 
-# Custom Tags and Attributes
+<a name="custom-tags-and-attributes"></a>
+
+# Custom Tags and Custom Attributes
 
 Marko supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
 
@@ -907,15 +908,32 @@ Below illustrates how to use a simple custom tag:
 
 ```xml
 <div>
-    <my-hello name="World"/>
+    <my-hello name="Frank" message-count="30"/>
 </div>
 ```
+
 
 The output of the above template might be the following:
 
 ```html
 <div>
-    Hello World!
+    Hello Frank! You have 30 new messages.
+</div>
+```
+
+With Marko, attribute values can be JavaScript expressions:
+
+```xml
+<div>
+    <my-hello name=data.name.toUpperCase() message-count=data.messageCount/>
+</div>
+```
+
+You can also pass a data object by providing a JavaScript expression as an argument to the custom tag:
+
+```xml
+<div>
+    <my-hello({name: "Frank", messageCount: "30"})/>
 </div>
 ```
 
