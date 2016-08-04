@@ -3,6 +3,7 @@ var Node = require('./Node');
 var Literal = require('./Literal');
 var ok = require('assert').ok;
 var escapeXmlAttr = require('raptor-util/escapeXml').attr;
+var attr = require('raptor-util/attr');
 var compiler = require('../');
 
 function isStringLiteral(node) {
@@ -158,15 +159,7 @@ class HtmlAttribute extends Node {
         }
 
         if (this.isLiteralValue()) {
-            var literalValue = value.value;
-            if (typeof literalValue === 'boolean' || literalValue === '') {
-                if (literalValue === true || literalValue === '') {
-                    codegen.addWriteLiteral(' ' + name);
-                }
-            } else if (literalValue != null) {
-                codegen.addWriteLiteral(' ' + name + '="' + escapeXmlAttr(literalValue) + '"');
-            }
-
+            codegen.addWriteLiteral(attr(name, value.value));
         } else if (value != null) {
             codegen.isInAttribute = true;
             generateCodeForExpressionAttr(name, value, escape, codegen);
