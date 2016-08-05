@@ -5,6 +5,14 @@ Changelog
 
 ## 3.9.x
 
+### 3.9.2
+
+- Fixed [#327](https://github.com/marko-js/marko/issues/327) - alt attribute with empty string should be allowed ([Pull Request #350](https://github.com/marko-js/marko/pull/350) by [@mlrawlings](https://github.com/mlrawlings))
+
+### 3.9.1
+
+- Fixed #348 - exclude all `*.orig` and other files from published npm package
+
 ### 3.9.0
 
 - Fixed [#231](https://github.com/marko-js/marko/issues/231) - Allow <assign count++>
