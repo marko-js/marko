@@ -3,6 +3,12 @@ Changelog
 
 # 2.x
 
+## 2.11.x
+
+### 2.11.0
+
+- Fixes #351 - Add support for disabling decoding of HTML entities
+
 ## 2.10.x
 
 ### 2.10.1
