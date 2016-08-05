@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -71,23 +71,48 @@ ParseTreeBuilderHtml.prototype = {
         // Create a pseudo root node
         this.handleStartElement(splitName('c-template'), []);
 
+        var decodeEntitiesStack = [true];
+
         var parser = this.parser = new htmlparser.Parser({
             onopentag: function(name, attribs){
                 var el = splitName(name);
 
+                var decodeEntitiesEnabled = decodeEntitiesStack[decodeEntitiesStack.length - 1];
+                var escapeXml = true;
+
                 var attributes = [];
                 forEachEntry(attribs, function(name, value) {
+                    if (name === 'c-decode-entities' && value === 'false') {
+                        decodeEntitiesEnabled = false;
+                        return; // Skip adding this attribute
+                    } else if (name === 'c-escape-xml' && value === 'false') {
+                        escapeXml = false;
+                    }
+
                     var attr = splitName(name);
-                    attr.value = decodeEntities(value);
+                    attr.value = decodeEntitiesEnabled ? decodeEntities(value) : value;
                     attributes.push(attr);
                 });
 
                 if (name.toLowerCase() === 'script') {
+                    if (escapeXml === true) {
+                        attributes.push({
+                            localName: 'c-escape-xml',
+                            value: 'false'
+                        });
+                        escapeXml = false;
+                    }
+                }
+
+                if (!decodeEntitiesEnabled && escapeXml === true) {
                     attributes.push({
                         localName: 'c-escape-xml',
                         value: 'false'
                     });
+                    escapeXml = false;
                 }
+
+                decodeEntitiesStack.push(decodeEntitiesEnabled);
 
                 _this.handleStartElement(el, attributes);
             },
@@ -103,10 +128,18 @@ ParseTreeBuilderHtml.prototype = {
             //     console.log('oncommentend: ', arguments);
             // },
             ontext: function(text){
-                _this.handleCharacters(decodeEntities(text));
+                var decodeEntitiesEnabled = decodeEntitiesStack[decodeEntitiesStack.length-1];
+                if (decodeEntitiesEnabled === false) {
+                    // Don't decode entities if escape is disabled
+                    _this.handleCharacters(text);
+                } else {
+                    _this.handleCharacters(decodeEntities(text));
+                }
+
             },
             onclosetag: function(name){
                 _this.handleEndElement(name);
+                decodeEntitiesStack.pop();
             },
             oncomment: function(comment) {
                 _this.handleComment(comment);
