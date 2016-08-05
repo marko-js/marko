@@ -365,7 +365,7 @@ With a value of `false` for `active`, the output would be the following:
 <div>Hello</div>
 ```
 
-_NOTE: If an attribute value expression evaluates to `null`, `false` or an empty string then the attribute is not included in the output._
+_NOTE: If an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output._
 
 A ternary condition can also be used:
 
@@ -381,13 +381,12 @@ With a value of `false` for `active`, the output would be the following:
 
 ## Conditional Attributes
 
-Marko supports conditional attributes when the value of an attribute is an expression. Marko also supports [HTML `boolean` attributes](https://html.spec.whatwg.org/#boolean-attributes) (e.g., `<input type="checkbox" checked>`)  If an attribute value resolves to `null`, `undefined`, `false`  or an empty string then the attribute will not be rendered. If an attribute value resolves to `true` then only the attribute name will rendered.
+Marko supports conditional attributes when the value of an attribute is an expression. Marko also supports [HTML `boolean` attributes](https://html.spec.whatwg.org/#boolean-attributes) (e.g., `<input type="checkbox" checked>`)  If an attribute value resolves to `null`, `undefined`, or `false` then the attribute will not be rendered. If an attribute value resolves to `true` then only the attribute name will rendered.
 
 For example, given the following data:
 
 ```javascript
 {
-    title: '',
     active: true,
     checked: false,
     disabled: true
@@ -397,8 +396,6 @@ For example, given the following data:
 And the following template:
 
 ```xml
-<img src="foo.png" alt=data.title/>
-
 <div class=(data.active && "tab-active")/>
 
 <input type="checkbox" checked=data.checked disabled=data.disabled/>
@@ -407,8 +404,6 @@ And the following template:
 The output HTML will be the following:
 
 ```html
-<img src="foo.png">
-
 <div class="tab-active"></div>
 
 <input type="checkbox" disabled>
