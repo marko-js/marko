@@ -970,7 +970,7 @@ For more details, please see [Marko Async Taglib](http://markojs.com/docs/marko/
 
 # Layout Taglib
 
-Marko provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
+Marko provides a `layout` taglib to support separating out layout from content. The usage of the `layout` taglib is shown in the sample code below:
 
 _default-layout.marko:_
 
