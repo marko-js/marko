@@ -5,6 +5,10 @@ CHANGELOG
 
 ## 6.3.x
 
+### v6.3.1
+
+- Fixed regression where `code` was note being returned from `getInitWidgetsCode`.
+
 ### v6.3.0
 
 - Fixed [#150](https://github.com/marko-js/marko-widgets/issues/150) - Integrated [warp10](https://github.com/patrick-steele-idem/warp10) for high performance state/config serialization. Circular dependencies are now supported and duplicate objects are only serialized once.
