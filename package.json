@@ -28,7 +28,7 @@
     "raptor-polyfill": "^1.0.0",
     "raptor-pubsub": "^1.0.2",
     "raptor-renderer": "^1.4.4",
-    "raptor-util": "^1.0.10",
+    "raptor-util": "^2.0.0",
     "resolve-from": "^1.0.1",
     "try-require": "^1.2.1",
     "warp10": "^1.0.0"
