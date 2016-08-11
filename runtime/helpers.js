@@ -107,6 +107,13 @@ function resolveRenderer(handler) {
     return createDeferredRenderer(handler);
 }
 
+function LoopStatus(getLength, isLast, isFirst, getIndex) {
+    this.getLength = getLength;
+    this.isLast = isLast;
+    this.isFirst = isFirst;
+    this.getIndex = getIndex;
+}
+
 module.exports = {
     /**
      * Internal helper method to prevent null/undefined from being written out
@@ -129,25 +136,26 @@ module.exports = {
         }
         var i = 0;
         var len = array.length;
-        var loopStatus = {
-                getLength: function () {
+        var loopStatus = new LoopStatus(
+                function getLength() {
                     return len;
                 },
-                isLast: function () {
+                function isLast() {
                     return i === len - 1;
                 },
-                isFirst: function () {
+                function isFirst() {
                     return i === 0;
                 },
-                getIndex: function () {
+                function getIndex() {
                     return i;
-                }
-            };
+                });
+
         for (; i < len; i++) {
             var o = array[i];
             callback(o, loopStatus);
         }
     },
+
     /**
      * Internal helper method to handle loops without a status variable
      * @private
