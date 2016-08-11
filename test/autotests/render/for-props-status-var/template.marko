@@ -1,0 +1,3 @@
+<for(name,value in {'foo': 'low', 'bar': 'high'} | status-var=loop)>
+    ${loop.getIndex()}) [${name}=${value}]
+</for>

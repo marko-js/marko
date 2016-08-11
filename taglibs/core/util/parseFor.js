@@ -333,7 +333,9 @@ module.exports = function(str) {
             'loopType': loopType,
             'nameVarName': nameVarName,
             'valueVarName': valueVarName,
-            'in': inExpression
+            'in': inExpression,
+            'separator': separatorExpression,
+            'statusVarName': statusVarName
         };
     } else if (loopType === 'ForRange') {
         return {

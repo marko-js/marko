@@ -8,6 +8,8 @@ class ForEachProp extends Node {
         this.nameVarName = def.nameVarName;
         this.valueVarName = def.valueVarName;
         this.in = def.in;
+        this.separator = def.separator;
+        this.statusVarName = def.statusVarName;
         this.body = this.makeContainer(def.body);
 
         ok(this.nameVarName, '"nameVarName" is required');
@@ -20,16 +22,45 @@ class ForEachProp extends Node {
         var valueVarName = this.valueVarName;
         var inExpression = this.in;
         var body = this.body;
+        var separator = this.separator;
+        var statusVarName = this.statusVarName;
+
+        if (separator && !statusVarName) {
+            statusVarName = '__loop';
+        }
 
         var builder = codegen.builder;
 
-        let forEachVarName = codegen.addStaticVar('forEachProp', '__helpers.fp');
+        if (statusVarName) {
+            let helperVar = builder.require(builder.literal('marko/runtime/forEachPropStatusVar'));
+            let forEachVarName = codegen.addStaticVar('forEacPropStatusVar', helperVar);
+            let body = this.body;
 
-        return builder.functionCall(forEachVarName, [
-            inExpression,
-            builder.functionDeclaration(null, [nameVarName, valueVarName], body)
-        ]);
+            if (separator) {
+                let isNotLastTest = builder.functionCall(
+                    builder.memberExpression(statusVarName, builder.identifier('isLast')),
+                    []);
 
+                isNotLastTest = builder.negate(isNotLastTest);
+
+                body = body.items.concat([
+                    builder.ifStatement(isNotLastTest, [
+                        builder.text(separator)
+                    ])
+                ]);
+            }
+
+            return builder.functionCall(forEachVarName, [
+                inExpression,
+                builder.functionDeclaration(null, [nameVarName, valueVarName, statusVarName], body)
+            ]);
+        } else {
+            let forEachVarName = codegen.addStaticVar('forEachProp', '__helpers.fp');
+            return builder.functionCall(forEachVarName, [
+                inExpression,
+                builder.functionDeclaration(null, [nameVarName, valueVarName], body)
+            ]);
+        }
     }
 
     walk(walker) {
