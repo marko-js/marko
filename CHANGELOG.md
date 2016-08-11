@@ -5,13 +5,23 @@ Changelog
 
 ## 3.9.x
 
+### 3.9.4
+
+- Fixed [#355](https://github.com/marko-js/marko/issues/355) - `status-var`/`separator` options not handled when looping over properties
+- Fixed [#354](https://github.com/marko-js/marko/issues/354) - regular expressions used in attribute values are not being handled correctly
+- Fixed [#353](https://github.com/marko-js/marko/issues/353) - `body-only-if` attribute does not work with custom tags (only HTML tags)
+
+### 3.9.3
+
+- Upgraded to `raptor-util@^2`
+
 ### 3.9.2
 
 - Fixed [#327](https://github.com/marko-js/marko/issues/327) - alt attribute with empty string should be allowed ([Pull Request #350](https://github.com/marko-js/marko/pull/350) by [@mlrawlings](https://github.com/mlrawlings))
 
 ### 3.9.1
 
-- Fixed #348 - exclude all `*.orig` and other files from published npm package
+- Fixed [#348](https://github.com/marko-js/marko/issues/348) - exclude all `*.orig` and other files from published npm package
 
 ### 3.9.0
 
