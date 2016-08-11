@@ -173,6 +173,15 @@ function getNextNestedTagVarName(tagDef, context) {
     return safeVarName(tagDef.name) + (nestedTagVarInfo.next++);
 }
 
+function getNextRenderBodyVar(context) {
+    var key = 'CustomTag_renderBodyVar';
+    var nextVarInfo = context.data[key] || (context.data[key] = {
+        next: 0
+    });
+
+    return 'renderBodyConditional'+ (nextVarInfo.next++);
+}
+
 class CustomTag extends HtmlElement {
     constructor(el, tagDef) {
         super(el);
@@ -200,6 +209,8 @@ class CustomTag extends HtmlElement {
         var parentTagName;
         var isRepeated;
         var targetProperty;
+
+        var bodyOnlyIf = this.bodyOnlyIf;
 
         if (isNestedTag) {
             parentTagName = tagDef.parentTagName;
@@ -251,10 +262,21 @@ class CustomTag extends HtmlElement {
             }
         }
 
+        var renderBodyFunctionVarIdentifier;
+        var renderBodyFunctionVar;
         // Store the renderBody function with the input, but only if the body does not have
         // nested tags
         if (renderBodyFunction && !hasNestedTags) {
-            inputProps.renderBody = renderBodyFunction;
+            if (bodyOnlyIf) {
+                // Move the renderBody function into a local variable
+                renderBodyFunctionVarIdentifier = builder.identifier(getNextRenderBodyVar(context));
+                renderBodyFunctionVar = builder.var(renderBodyFunctionVarIdentifier, renderBodyFunction);
+                inputProps.renderBody = renderBodyFunctionVarIdentifier;
+            } else {
+                inputProps.renderBody = renderBodyFunction;
+            }
+        } else {
+            bodyOnlyIf = null;
         }
 
         inputProps = builder.literal(inputProps);
@@ -279,6 +301,8 @@ class CustomTag extends HtmlElement {
         var rendererRequirePath;
         var requireRendererFunctionCall;
 
+
+
         if (rendererPath) {
             rendererRequirePath = context.getRequirePath(rendererPath);
             requireRendererFunctionCall = builder.require(JSON.stringify(rendererRequirePath));
@@ -286,13 +310,15 @@ class CustomTag extends HtmlElement {
             requireRendererFunctionCall = builder.literal(null);
         }
 
+        var finalNode;
+
         if (tagDef.template) {
             let templateRequirePath = context.getRequirePath(tagDef.template);
             let templateVar = context.importTemplate(templateRequirePath);
             let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
             let renderArgs = [ inputProps, 'out' ];
             let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
-            return renderFunctionCall;
+            finalNode = renderFunctionCall;
         } else {
             var loadTagVar = codegen.addStaticVar('__loadTag', '__helpers.t');
 
@@ -332,7 +358,26 @@ class CustomTag extends HtmlElement {
                 }
             }
             let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
-            return tagFunctionCall;
+            finalNode = tagFunctionCall;
+        }
+
+        if (bodyOnlyIf && renderBodyFunctionVar) {
+            var ifStatement = builder.ifStatement(
+                bodyOnlyIf,
+                [
+
+                    builder.functionCall(renderBodyFunctionVarIdentifier, [builder.identifierOut()])
+                ],
+                builder.elseStatement([
+                    finalNode
+                ]));
+
+            return [
+                renderBodyFunctionVar,
+                ifStatement
+            ];
+        } else {
+            return finalNode;
         }
     }
 }

@@ -2,6 +2,7 @@
     "name",
     "age",
     "foo-on-*",
+    "body-only-if",
     "if",
     "else-if",
     "else",
