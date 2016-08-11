@@ -31,6 +31,8 @@ class Literal extends Node {
             return '[' + value.join(', ') + ']';
         } else if (typeof value === 'number') {
             return value.toString();
+        } else if (value instanceof RegExp) {
+            return value.toString();
         } else if (typeof value === 'object') {
             let keys = Object.keys(value);
             if (keys.length === 0) {

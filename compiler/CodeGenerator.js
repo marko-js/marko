@@ -585,6 +585,8 @@ class Generator {
             this.write(']');
         } else if (typeof value === 'number') {
             this.write(value.toString());
+        } else if (value instanceof RegExp) {
+            this.write(value.toString());
         } else if (typeof value === 'object') {
             let keys = Object.keys(value);
             if (keys.length === 0) {

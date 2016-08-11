@@ -120,7 +120,15 @@ function parseExpression(src, builder, isExpression) {
                 return builder.identifier(node.name);
             }
             case 'Literal': {
-                return builder.literal(node.value);
+                let literalValue;
+
+                if (node.regex) {
+                    literalValue = new RegExp(node.regex.pattern, 'gi');
+                } else {
+                    literalValue = node.value;
+                }
+
+                return builder.literal(literalValue);
             }
             case 'LogicalExpression': {
                 let left = convert(node.left);
