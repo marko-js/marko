@@ -5,6 +5,10 @@ CHANGELOG
 
 ## 6.3.x
 
+### v6.3.2
+
+- Fixed [#153](https://github.com/marko-js/marko-widgets/issues/153) - Bubbling event listeners used by event delegation system are attached too late
+
 ### v6.3.1
 
 - Fixed regression where `code` was note being returned from `getInitWidgetsCode`.
