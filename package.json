@@ -70,5 +70,5 @@
     "./lib/init-widgets.js": "./lib/init-widgets-browser.js",
     "./lib/defineWidget.js": "./lib/defineWidget-browser.js"
   },
-  "version": "6.3.2"
+  "version": "6.3.3"
 }
