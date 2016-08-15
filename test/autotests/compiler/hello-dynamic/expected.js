@@ -1,16 +1,14 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x;
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x,
+      marko_str = __markoHelpers.s;
 
   return function render(data, out) {
     out.w("Hello " +
-      escapeXml(data.name) +
+      marko_escapeXml(data.name) +
       "! Hello " +
-      str(data.name) +
+      marko_str(data.name) +
       "! Hello " +
-      str(data.missing) +
+      marko_str(data.missing) +
       "!");
   };
 }

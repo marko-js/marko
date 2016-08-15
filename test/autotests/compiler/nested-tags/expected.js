@@ -1,12 +1,8 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      __loadTag = __helpers.t,
-      test_nested_tags_overlay = __loadTag(require("./tags/test-nested-tags-overlay/renderer"), 0, 0, 1),
-      test_nested_tags_overlay_body = __loadTag(null, "body", 0),
-      test_nested_tags_overlay_footer = __loadTag(null, "footer", 0);
+function create(__markoHelpers) {
+  var marko_loadTag = __markoHelpers.t,
+      test_nested_tags_overlay_body = marko_loadTag(null, "body", 0),
+      test_nested_tags_overlay_footer = marko_loadTag(null, "footer", 0),
+      test_nested_tags_overlay = marko_loadTag(require("./tags/test-nested-tags-overlay/renderer"), 0, 0, 1);
 
   return function render(data, out) {
     test_nested_tags_overlay({

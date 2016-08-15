@@ -11,40 +11,46 @@ class NewExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.callee = codegen.generateCode(this.callee);
+        this.args = codegen.generateCode(this.args);
+        return this;
+    }
+
+    writeCode(writer) {
         var callee = this.callee;
         var args = this.args;
 
-        codegen.write('new ');
+        writer.write('new ');
 
         var wrap = isCompoundExpression(callee);
 
         if (wrap) {
-            codegen.write('(');
+            writer.write('(');
         }
 
-        codegen.generateCode(callee);
+        writer.write(callee);
 
         if (wrap) {
-            codegen.write(')');
+            writer.write(')');
         }
 
-        codegen.write('(');
+        writer.write('(');
 
         if (args && args.length) {
             for (let i=0, argsLen = args.length; i<argsLen; i++) {
                 if (i !== 0) {
-                    codegen.write(', ');
+                    writer.write(', ');
                 }
 
                 let arg = args[i];
                 if (!arg) {
                     throw new Error('Arg ' + i + ' is not valid for new expression: ' + JSON.stringify(this.toJSON()));
                 }
-                codegen.generateCode(arg);
+                writer.write(arg);
             }
         }
 
-        codegen.write(')');
+        writer.write(')');
     }
 
     isCompoundExpression() {

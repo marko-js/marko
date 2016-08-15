@@ -1,7 +1,7 @@
 if (true) {
   if (!(!data.url)) {
     out.w("<a" +
-      attr("href", data.url) +
+      marko_attr("href", data.url) +
       ">");
   }
 

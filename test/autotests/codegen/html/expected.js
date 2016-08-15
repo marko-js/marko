@@ -1,1 +1,1 @@
-out.w("<div>Hello World</div>");
+out.w("<div>Hello World</div>")

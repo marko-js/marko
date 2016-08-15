@@ -1,13 +1,10 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      forEach = __helpers.f;
+function create(__markoHelpers) {
+  var marko_forEach = __markoHelpers.f,
+      marko_escapeXml = __markoHelpers.x;
 
   return function render(data, out) {
-    forEach(data.colors, function(color) {
-      out.w(escapeXml(color));
+    marko_forEach(data.colors, function(color) {
+      out.w(marko_escapeXml(color));
     });
   };
 }

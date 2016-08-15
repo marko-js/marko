@@ -22,7 +22,7 @@
             </li>
         </>
 
-        <ul if(notEmpty(data.colors))>
+        <ul if(data.colors && data.colors.length)>
             <li for(color in data.colors)>${color}</li>
         </ul>
         <div else>

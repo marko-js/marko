@@ -18,7 +18,6 @@ class If extends Node {
     }
 
     generateCode(codegen) {
-
         if (this.else) {
             this.else.matched = true;
         } else {
@@ -59,18 +58,26 @@ class If extends Node {
             });
         }
 
+        this.test = codegen.generateCode(this.test);
+        this.body = codegen.generateCode(this.body);
+        this.else = codegen.generateCode(this.else);
+
+        return this;
+    }
+
+    writeCode(writer) {
         var test = this.test;
         var body = this.body;
 
-        codegen.write('if (');
-        codegen.generateCode(test);
-        codegen.write(') ');
-        codegen.generateBlock(body);
+        writer.write('if (');
+        writer.write(test);
+        writer.write(') ');
+        writer.writeBlock(body);
         if (this.else) {
-            codegen.write(' ');
-            codegen.generateCode(this.else);
+            writer.write(' else ');
+            writer.write(this.else);
         } else {
-            codegen.write('\n');
+            writer.write('\n');
         }
     }
 

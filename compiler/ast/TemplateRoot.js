@@ -11,6 +11,8 @@ function createVarsArray(vars) {
     });
 }
 
+var templateExports = null;
+
 class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');
@@ -20,51 +22,63 @@ class TemplateRoot extends Node {
     generateCode(codegen) {
         var context = codegen.context;
 
-        var body = this.body;
-        codegen.addStaticVar('str', '__helpers.s');
-        codegen.addStaticVar('empty', '__helpers.e');
-        codegen.addStaticVar('notEmpty', '__helpers.ne');
-        codegen.addStaticVar('escapeXml', '__helpers.x');
+        var body = codegen.generateCode(this.body);
 
         var builder = codegen.builder;
-        var program = builder.program;
-        var functionDeclaration = builder.functionDeclaration;
 
-        var returnStatement = builder.returnStatement;
-        var slot = builder.slot;
-
-        var staticsSlot = slot();
-        var varsSlot = slot();
-        varsSlot.noOutput = true;
-
-        body = [ varsSlot ].concat(body.items);
-
-        var outputNode = program([
-            functionDeclaration('create', ['__helpers'], [
-                staticsSlot,
-
-                returnStatement(
-                    functionDeclaration('render', ['data', 'out'], body))
-            ]),
-            '(module.exports = require("marko").c(__filename)).c(create)'
-        ]);
-
-        codegen.generateCode(outputNode);
-
-        var staticVars = context.getStaticVars();
-        var staticCodeArray = context.getStaticCode();
-
-        var staticContent = [builder.vars(createVarsArray(staticVars))];
-        if (staticCodeArray) {
-            staticCodeArray.forEach((code) => {
-                staticContent.push(code);
-            });
+        let renderStatements = [];
+        var vars = createVarsArray(context.getVars());
+        if (vars.length) {
+            renderStatements.push(builder.vars(vars));
         }
 
-        staticsSlot.setContent(staticContent);
+        renderStatements = renderStatements.concat(body);
 
-        var vars = context.getVars();
-        varsSlot.setContent(builder.vars(createVarsArray(vars)));
+        if (context.inline) {
+            var createInlineMarkoTemplateVar = context.importModule('marko_createInlineTemplate', 'marko/runtime/inline');
+
+            return builder.functionCall(
+                createInlineMarkoTemplateVar,
+                [
+                    builder.identifier('__filename'),
+                    builder.functionDeclaration(
+                        null,
+                        [
+                            builder.identifier('data'),
+                            builder.identifierOut()
+                        ],
+                        renderStatements)
+
+                ]);
+
+        } else {
+            let createStatements = [];
+            let staticNodes = context.getStaticNodes();
+            if (staticNodes.length) {
+                createStatements = createStatements.concat(staticNodes);
+            }
+
+            let renderFunction = builder.functionDeclaration(
+                'render',
+                ['data', builder.identifierOut()],
+                renderStatements);
+
+            createStatements.push(builder.returnStatement(renderFunction));
+
+            if (!templateExports) {
+                templateExports = builder.parseStatement('(module.exports = require("marko").c(__filename)).c(create)');
+            }
+
+            return builder.program([
+                builder.functionDeclaration(
+                    'create',
+                    [
+                        context.helpersIdentifier
+                    ],
+                    createStatements),
+                templateExports
+            ]);
+        }
     }
 
     toJSON(prettyPrinter) {

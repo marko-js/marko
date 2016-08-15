@@ -8,7 +8,11 @@ class ThisExpression extends Node {
     }
 
     generateCode(codegen) {
-        codegen.write('this');
+        return this;
+    }
+
+    writeCode(writer) {
+        writer.write('this');
     }
 
     toString() {

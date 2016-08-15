@@ -5,10 +5,9 @@ const Node = require('./ast/Node');
 const Literal = require('./ast/Literal');
 const Identifier = require('./ast/Identifier');
 const HtmlElement = require('./ast/HtmlElement');
+const Html = require('./ast/Html');
 const ok = require('assert').ok;
 const Container = require('./ast/Container');
-const util = require('util');
-const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
 const createError = require('raptor-util/createError');
 
 class GeneratorEvent {
@@ -19,93 +18,45 @@ class GeneratorEvent {
         this.isBefore = true;
         this.builder = codegen.builder;
         this.context = codegen.context;
+
+        this.insertedNodes = null;
     }
 
     insertCode(newCode) {
-        this.codegen.generateStatements(newCode);
-
-        if (this.isBefore) {
-            if (!this.codegen._code.endsWith(this.codegen.currentIndent)) {
-                this.codegen.writeLineIndent();
-            }
-        }
+        this.insertedNodes = newCode;
     }
 }
 
-class Slot {
-    constructor(codegen, slotNode) {
-        this._content = null;
-
-        this._start = codegen._code.length;
-        codegen.write('/* slot */');
-
-        if (slotNode.statement) {
-            codegen.write('\n');
-        }
-        this._end = codegen._code.length;
-
-        this.currentIndent = codegen.currentIndent;
-        this._inFunction = codegen.inFunction;
-        this._statement = slotNode.statement;
+class FinalNodes {
+    constructor() {
+        this.nodes = [];
+        this.nodes._finalNode = true; // Mark the array as a collection of final nodes
+        this.lastNode = null;
     }
 
-    setContent(content) {
-        this._content = content;
-    }
-
-    generateCode(codegen) {
-        let content = this._content;
-        let slotCode;
-
-        if (content) {
-            let isStatement = this._statement;
-
-            codegen.currentIndent = this.currentIndent;
-            codegen.inFunction = this._inFunction;
-
-            let capture = codegen._beginCaptureCode();
-
-            if (isStatement) {
-                codegen.generateStatements(content);
-            } else {
-                codegen.generateCode(content);
-            }
-
-            slotCode = capture.end();
-
-            if (isStatement && slotCode.startsWith(codegen.currentIndent)) {
-                slotCode = slotCode.substring(codegen.currentIndent.length);
-            }
+    push(node) {
+        if (!node) {
+            return;
         }
 
-
-
-        let oldCode = codegen._code;
-        let beforeCode = oldCode.substring(0, this._start);
-        let afterCode = oldCode.substring(this._end);
-
-        if (slotCode) {
-            codegen._code = beforeCode + slotCode + afterCode;
-        } else {
-            let beforeWhitespaceMatches = beforeCode.match(/[\n]\s*$/);
-            if (beforeWhitespaceMatches != null) {
-                let beforeWhitespace = beforeWhitespaceMatches[0];
-
-                if (afterCode.startsWith(beforeWhitespace)) {
-                    afterCode = afterCode.substring(beforeWhitespace.length);
-                }
-            }
-            codegen._code = beforeCode + afterCode;
+        if (node instanceof Html && this.lastNode instanceof Html) {
+            this.lastNode.append(node);
+            return;
         }
+
+        if (node.setFinalNode) {
+            node.setFinalNode(true);
+        }
+
+        this.lastNode = node;
+        this.nodes.push(node);
     }
 }
 
-class Generator {
+class CodeGenerator {
     constructor(context, options) {
         options = options || {};
         this.root = null;
-        this._indentStr = options.indent != null ? options.indent : '  ';
-        this._indentSize = this._indentStr.length;
 
         this._code = '';
         this.currentIndent = '';
@@ -113,7 +64,7 @@ class Generator {
 
         this._doneListeners = [];
 
-        this._bufferedWrites = null;
+
         this.builder = context.builder;
         this.outputType = options.output || 'html';
         this.context = context;
@@ -124,16 +75,6 @@ class Generator {
             this.outputType.charAt(0).toUpperCase() +
             this.outputType.substring(1) +
             'Code';
-
-        this._slots = [];
-    }
-
-    beginSlot(slotNode) {
-        var addSeparator = slotNode.statement;
-        this._flushBufferedWrites(addSeparator);
-        let slot = new Slot(this, slotNode);
-        this._slots.push(slot);
-        return slot;
     }
 
     addVar(name, value) {
@@ -156,32 +97,62 @@ class Generator {
         return this.context.importModule(varName, path);
     }
 
-    generateCode(node) {
-        ok(node != null, '"node" is required');
+    _invokeCodeGenerator(func, node, isMethod) {
+        try {
+            if (isMethod) {
+                return func.call(node, this);
+            } else {
+                return func.call(node, node, this);
+            }
+        } catch(err) {
+            var errorMessage = 'Generating code for ';
 
-        if (typeof node === 'string' ||
-            typeof node === 'number' ||
-            typeof node === 'boolean') {
-            this.write(node);
-            return;
-        } else if (isArray(node)) {
-            node.forEach(this.generateCode, this);
+            if (node instanceof HtmlElement) {
+                errorMessage += '<'+node.tagName+'> tag';
+            } else {
+                errorMessage += node.type + ' node';
+            }
+
+            if (node.pos) {
+                errorMessage += ' ('+this.context.getPosInfo(node.pos)+')';
+            }
+
+            errorMessage += ' failed. Error: ' + err;
+
+            throw createError(errorMessage, err /* cause */);
+        }
+    }
+
+    _generateCode(node, finalNodes) {
+        if (isArray(node)) {
+            node.forEach((child) => {
+                this._generateCode(child, finalNodes);
+            });
             return;
         } else if (node instanceof Container) {
             node.forEach((child) => {
                 if (child.container === node) {
-                    this.generateCode(child);
+                    this._generateCode(child, finalNodes);
                 }
             });
             return;
         }
 
+        if (node == null) {
+            return;
+        }
+
+        if (typeof node === 'string' || node._finalNode || !(node instanceof Node)) {
+            finalNodes.push(node);
+            return;
+        }
+
+        if (node._normalizeChildTextNodes) {
+            node._normalizeChildTextNodes(this.context);
+        }
+
         let oldCurrentNode = this._currentNode;
         this._currentNode = node;
-
-        let finalNode;
-        let generateCodeFunc;
-        var isStatement = node.statement;
 
         var beforeAfterEvent;
 
@@ -191,83 +162,56 @@ class Generator {
 
         var isWhitespacePreserved = node.isPreserveWhitespace();
 
+        if (isWhitespacePreserved) {
+            this.context.beginPreserveWhitespace();
+        }
+
         if (beforeAfterEvent) {
             beforeAfterEvent.isBefore = true;
             beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
 
-            if (isWhitespacePreserved) {
-                this.context.beginPreserveWhitespace();
+            if (beforeAfterEvent.insertedNodes) {
+                this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
+                beforeAfterEvent.insertedNodes = null;
             }
         }
+
+        let codeGeneratorFunc;
+        let generatedCode;
 
         if (node.getCodeGenerator) {
-            generateCodeFunc = node.getCodeGenerator(this.outputType);
-            if (generateCodeFunc) {
-                try {
-                    finalNode = generateCodeFunc(node, this);
-                } catch(err) {
-                    var errorMessage = 'Generating code for ';
+            codeGeneratorFunc = node.getCodeGenerator(this.outputType);
 
-                    if (node instanceof HtmlElement) {
-                        errorMessage += '<'+node.tagName+'> tag';
-                    } else {
-                        errorMessage += node.type + ' node';
-                    }
+            if (codeGeneratorFunc) {
+                node.setCodeGenerator(null);
 
-                    if (node.pos) {
-                        errorMessage += ' ('+this.context.getPosInfo(node.pos)+')';
-                    }
-
-                    errorMessage += ' failed. Error: ' + err;
-
-                    throw createError(errorMessage, err /* cause */);
-                }
-
-                if (finalNode === node) {
-                    // If the same node was returned then we will generate
-                    // code for the node as normal
-                    finalNode = null;
-                } else if (finalNode == null) {
-                    // If nothing was returned then don't generate any code
+                generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, false);
+                if (generatedCode != null && generatedCode !== node) {
                     node = null;
+                    this._generateCode(generatedCode, finalNodes);
                 }
             }
         }
 
-        if (finalNode) {
-            if (isStatement) {
-                this.generateStatements(finalNode);
-            } else {
-                this.generateCode(finalNode);
-            }
-        } else if (node) {
-            let generateCodeMethod = node.generateCode;
+        if (node != null) {
+            codeGeneratorFunc = node.generateCode;
 
-            if (!generateCodeMethod) {
-                generateCodeMethod = node[this._codegenCodeMethodName];
-
-                if (!generateCodeMethod) {
-                    throw new Error('No code codegen for node of type "' +
-                        node.type +
-                        '" (output type: "' + this.outputType + '"). Node: ' + util.inspect(node));
-                }
+            if (!codeGeneratorFunc) {
+                codeGeneratorFunc = node[this._codegenCodeMethodName];
             }
 
-            // The generateCode function can optionally return either of the following:
-            // - An AST node
-            // - An array/cointainer of AST nodes
-            finalNode = generateCodeMethod.call(node, this);
+            if (codeGeneratorFunc) {
+                generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, true);
 
-            if (finalNode != null) {
-                if (finalNode === node) {
-                    throw new Error('Invalid node returned. Same node returned:  ' + util.inspect(node));
-                }
-
-                if (isStatement) {
-                    this.generateStatements(finalNode);
+                if (generatedCode === undefined || generatedCode === node) {
+                    finalNodes.push(node);
+                } else if (generatedCode === null) {
+                    // If nothing was returned then don't generate any code
                 } else {
-                    this.generateCode(finalNode);
+                    this._generateCode(generatedCode, finalNodes);
                 }
+            } else {
+                finalNodes.push(node);
             }
         }
 
@@ -275,263 +219,45 @@ class Generator {
             beforeAfterEvent.isBefore = false;
             beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
 
-            if (isWhitespacePreserved) {
-                this.context.endPreserveWhitespace();
+            if (beforeAfterEvent.insertedNodes) {
+                this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
+                beforeAfterEvent.insertedNodes = null;
             }
+        }
+
+        if (isWhitespacePreserved) {
+            this.context.endPreserveWhitespace();
         }
 
         this._currentNode = oldCurrentNode;
     }
 
-    getCode() {
-        this._flushBufferedWrites();
+    generateCode(node) {
+        if (!node) {
+            return null;
+        }
 
-        while(this._doneListeners.length || this._slots.length) {
+        if (node._finalNode) {
+            return node;
+        }
 
-            let doneListeners = this._doneListeners;
-            if (doneListeners.length) {
-                this._doneListeners = [];
+        let finalNodes = new FinalNodes();
 
-                for (let i=0; i<doneListeners.length; i++) {
-                    let doneListener = doneListeners[i];
-                    doneListener(this);
-                }
-            }
+        var isList = typeof node.forEach === 'function';
 
-            let slots = this._slots;
+        this._generateCode(node, finalNodes);
 
-            if (slots.length) {
-                this._slots = [];
+        finalNodes = finalNodes.nodes;
 
-                for (let i=slots.length-1; i>=0; i--) {
-                    let slot = slots[i];
-                    slot.generateCode(this);
-                }
+        if (!isList) {
+            if (finalNodes.length === 0) {
+                return null;
+            } else if (finalNodes.length === 1) {
+                return finalNodes[0];
             }
         }
 
-        return this._code;
-    }
-
-    generateBlock(body) {
-        if (!body) {
-            this.write('{}');
-            return;
-        }
-
-        if (typeof body === 'function') {
-            body = body();
-        }
-
-        if (!isArray(body) && !(body instanceof Container)) {
-            throw new Error('Invalid body');
-        }
-
-        if (body.length === 0) {
-            this.write('{}');
-            return;
-        }
-
-        this.write('{\n')
-            .incIndent();
-
-        let oldCodeLength = this._code.length;
-
-        this.generateStatements(body);
-
-        if (this._bufferedWrites) {
-            if (this._code.length !== oldCodeLength) {
-                this._code += '\n';
-            }
-            this._flushBufferedWrites();
-        }
-
-        this.decIndent()
-            .writeLineIndent()
-            .write('}');
-    }
-
-    generateStatements(nodes) {
-        ok(nodes, '"nodes" expected');
-        let firstStatement = true;
-
-        if (nodes instanceof Node) {
-            nodes = [nodes];
-        }
-
-        nodes.forEach((node) => {
-            if (node instanceof Node) {
-                node.statement = true;
-            }
-
-            let startCodeLen = this._code.length;
-
-            let currentIndent = this.currentIndent;
-
-            if (!firstStatement) {
-                this._write('\n');
-            }
-
-            if (!this._code.endsWith(currentIndent)) {
-                this.writeLineIndent();
-            }
-
-            let startPos = this._code.length;
-
-            if (Array.isArray(node) || (node instanceof Container)) {
-                this.generateStatements(node);
-            } else {
-                this.generateCode(node);
-            }
-
-            if (this._code.length === startPos) {
-                // No code was generated. Remove any code that was previously added
-                this._code = this._code.slice(0, startCodeLen);
-                return;
-            }
-
-            if (this._code.endsWith('\n')) {
-                // Do nothing
-            } else if (this._code.endsWith(';')) {
-                this._code += '\n';
-            }  else if (this._code.endsWith('\n' + this.currentIndent)) {
-                // Do nothing
-            } else {
-                this._code += ';\n';
-            }
-
-            firstStatement = false;
-        });
-    }
-
-    _beginCaptureCode() {
-        let oldCode = this._code;
-        this._code = '';
-
-        return {
-            codegen: this,
-            end() {
-                let newCode = this.codegen._code;
-                this.codegen._code = oldCode;
-                return newCode;
-            }
-        };
-    }
-
-    addWriteLiteral(value) {
-        if (!(value instanceof Literal)) {
-            value = new Literal({value});
-        }
-
-        this.addWrite(value);
-    }
-
-    addWrite(output) {
-        ok(output, '"output" is required');
-        if (output instanceof Literal) {
-            let lastWrite = this._bufferedWrites ?
-                this._bufferedWrites[this._bufferedWrites.length-1] :
-                null;
-            if (lastWrite instanceof Literal) {
-                lastWrite.value += output.value;
-                return;
-            }
-        } else {
-            if (!(output instanceof Node)) {
-                throw new Error('Invalid write: ' + JSON.stringify(output, null, 2));
-            }
-        }
-
-        if (!this._bufferedWrites) {
-            this._bufferedWrites = [output];
-        } else {
-            this._bufferedWrites.push(output);
-        }
-    }
-
-    _flushBufferedWrites(addSeparator) {
-        let bufferedWrites = this._bufferedWrites;
-
-        if (!bufferedWrites) {
-            return;
-        }
-
-        this._bufferedWrites = null;
-
-        if (!addSeparator && !this._code.endsWith(this.currentIndent)) {
-            this.writeLineIndent();
-        }
-
-        let len = bufferedWrites.length;
-
-        for (let i=0; i<len; i++) {
-            let write = bufferedWrites[i];
-
-            if (i === 0) {
-                this._write('out.w(');
-            } else {
-                this._write(' +\n');
-                this.writeLineIndent();
-                this._write(this._indentStr);
-            }
-
-            this.generateCode(write);
-        }
-
-        this._write(');\n');
-
-        if (addSeparator) {
-            this._write('\n' + this.currentIndent);
-        }
-    }
-
-    write(code) {
-        if (this._bufferedWrites) {
-            this._flushBufferedWrites(true /* add separator */);
-        }
-        this._code += code;
-        return this;
-    }
-
-    _write(code) {
-        this._code += code;
-        return this;
-    }
-
-    incIndent(count) {
-        this._flushBufferedWrites(true /* add separator */);
-
-        if (count != null) {
-            for (let i=0; i<count; i++) {
-                this.currentIndent += ' ';
-            }
-        } else {
-            this.currentIndent += this._indentStr;
-        }
-
-        return this;
-    }
-
-    decIndent(count) {
-        if (count == null) {
-            count = this._indentSize;
-        }
-
-        this.currentIndent = this.currentIndent.substring(
-            0,
-            this.currentIndent.length - count);
-
-        return this;
-    }
-
-    writeLineIndent() {
-        this._code += this.currentIndent;
-        return this;
-    }
-
-    writeIndent() {
-        this._code += this._indentStr;
-        return this;
+        return finalNodes;
     }
 
     isLiteralNode(node) {
@@ -540,94 +266,6 @@ class Generator {
 
     isIdentifierNode(node) {
         return node instanceof Identifier;
-    }
-
-    writeLiteral(value) {
-        if (value === null) {
-            this.write('null');
-        } else if (value === undefined) {
-            this.write('undefined');
-        } else if (typeof value === 'string') {
-            this.write(JSON.stringify(value));
-        } else if (value === true) {
-            this.write('true');
-        } else if (value === false) {
-            this.write('false');
-        }  else if (isArray(value)) {
-            if (value.length === 0) {
-                this.write('[]');
-                return;
-            }
-
-            this.write('[\n');
-            this.incIndent();
-
-            for (let i=0; i<value.length; i++) {
-                let v = value[i];
-
-                this.writeLineIndent();
-
-                if (v instanceof Node) {
-                    this.generateCode(v);
-                } else {
-                    this.writeLiteral(v);
-                }
-
-                if (i < value.length - 1) {
-                    this.write(',\n');
-                } else {
-                    this.write('\n');
-                }
-            }
-
-            this.decIndent();
-            this.writeLineIndent();
-            this.write(']');
-        } else if (typeof value === 'number') {
-            this.write(value.toString());
-        } else if (value instanceof RegExp) {
-            this.write(value.toString());
-        } else if (typeof value === 'object') {
-            let keys = Object.keys(value);
-            if (keys.length === 0) {
-                this.write('{}');
-                return;
-            }
-
-            this.incIndent();
-            this.write('{\n');
-            this.incIndent();
-
-            for (let i=0; i<keys.length; i++) {
-                let k = keys[i];
-                let v = value[k];
-
-                this.writeLineIndent();
-
-                if (isValidJavaScriptVarName(k)) {
-                    this.write(k + ': ');
-                } else {
-                    this.write(JSON.stringify(k) + ': ');
-                }
-
-                if (v instanceof Node) {
-                    this.generateCode(v);
-                } else {
-                    this.writeLiteral(v);
-                }
-
-                if (i < keys.length - 1) {
-                    this.write(',\n');
-                } else {
-                    this.write('\n');
-                }
-            }
-
-            this.decIndent();
-            this.writeLineIndent();
-            this.write('}');
-            this.decIndent();
-        }
     }
 
     isPreserveWhitespaceEnabled() {
@@ -661,4 +299,4 @@ class Generator {
     }
 }
 
-module.exports = Generator;
+module.exports = CodeGenerator;

@@ -10,16 +10,22 @@ class WhileStatement extends Node {
     }
 
     generateCode(codegen) {
+        this.test = codegen.generateCode(this.test);
+        this.body = codegen.generateCode(this.body);
+        return this;
+    }
+
+    writeCode(writer) {
         var test = this.test;
         var body = this.body;
 
-        codegen.write('while (');
-        codegen.generateCode(test);
-        codegen.write(') ');
+        writer.write('while (');
+        writer.write(test);
+        writer.write(') ');
 
-        codegen.generateBlock(body);
+        writer.write(body);
 
-        codegen.write('\n');
+        writer.write('\n');
     }
 
     walk(walker) {

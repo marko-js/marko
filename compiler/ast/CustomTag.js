@@ -230,7 +230,7 @@ class CustomTag extends HtmlElement {
             let parentTagNode = getNestedTagParentNode(this, parentTagName);
             if (!parentTagNode) {
                 codegen.addError('Invalid usage of the <' + this.tagName + '> nested tag. Tag not nested within a <' + parentTagName + '> tag.');
-                return;
+                return null;
             }
             parentTagVar = parentTagNode.data.nestedTagVar;
         }
@@ -239,9 +239,9 @@ class CustomTag extends HtmlElement {
 
         var inputProps = buildInputProps(this, context);
         var renderBodyFunction;
+        var body = codegen.generateCode(this.body);
 
-        if (this.body && this.body.length) {
-
+        if (body && body.length) {
             if (tagDef.bodyFunction) {
                 let bodyFunction = tagDef.bodyFunction;
                 let bodyFunctionName = bodyFunction.name;
@@ -249,9 +249,9 @@ class CustomTag extends HtmlElement {
                     return builder.identifier(param);
                 });
 
-                inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, this.body);
+                inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, body);
             } else {
-                renderBodyFunction = context.builder.renderBodyFunction(this.body);
+                renderBodyFunction = context.builder.renderBodyFunction(body);
                 if (nestedTagVar) {
                     renderBodyFunction.params.push(nestedTagVar);
                 } else {
@@ -289,7 +289,7 @@ class CustomTag extends HtmlElement {
             if (Object.keys(inputProps.value).length === 0) {
                 inputProps = argument;
             } else {
-                var mergeVar = codegen.addStaticVar('__merge', '__helpers.m');
+                var mergeVar = context.helper('merge');
                 inputProps = builder.functionCall(mergeVar, [
                     inputProps, // Input props from the attributes take precedence
                     argument
@@ -320,8 +320,6 @@ class CustomTag extends HtmlElement {
             let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
             finalNode = renderFunctionCall;
         } else {
-            var loadTagVar = codegen.addStaticVar('__loadTag', '__helpers.t');
-
             var loadTagArgs = [
                 requireRendererFunctionCall // The first param is the renderer
             ];
@@ -340,7 +338,7 @@ class CustomTag extends HtmlElement {
                 }
             }
 
-            var loadTag = builder.functionCall(loadTagVar, loadTagArgs);
+            var loadTag = builder.functionCall(context.helper('loadTag'), loadTagArgs);
 
             var tagVar = tagDef.name;
             if (context.util.isJavaScriptReservedWord(tagVar)) {

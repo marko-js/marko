@@ -10,16 +10,20 @@ class Scriptlet extends Node {
     }
 
     generateCode(codegen) {
+        return this;
+    }
+
+    writeCode(writer) {
         var code = this.code;
 
         if (!code) {
             return;
         }
 
-        code = adjustIndent(code, codegen.currentIndent);
+        code = adjustIndent(code, writer.currentIndent);
 
-        codegen.write(code);
-        codegen.write('\n');
+        writer.write(code);
+        writer.write('\n');
     }
 }
 

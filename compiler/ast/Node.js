@@ -45,6 +45,8 @@ class Node {
         this._events = null;
         this._childTextNormalized = undefined;
         this.data = {};
+        this._finalNode = false;
+        this._trimStartEnd = false;
     }
 
     on(event, listener) {
@@ -189,6 +191,8 @@ class Node {
         delete result.tagDef;
         delete result._preserveWhitespace;
         delete result._events;
+        delete result._finalNode;
+        delete result._trimStartEnd;
         return result;
     }
 
@@ -290,16 +294,26 @@ class Node {
         return preserveWhitespace === true;
     }
 
-    _normalizeChildTextNodes(codegen, trimStartEnd, force) {
-        if (this._childTextNormalized && force !== true) {
+    setFinalNode(isFinal) {
+        this._finalNode = true;
+    }
+
+    setTrimStartEnd(trimStartEnd) {
+        this._trimStartEnd = trimStartEnd;
+    }
+
+    _normalizeChildTextNodes(context) {
+        if (this._childTextNormalized) {
             return;
         }
 
         this._childTextNormalized = true;
 
+        var trimStartEnd = this._trimStartEnd === true;
+
         var isPreserveWhitespace = false;
 
-        if (codegen.context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
+        if (context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
             isPreserveWhitespace = true;
         }
 

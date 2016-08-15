@@ -20,9 +20,18 @@ class Property extends Node {
             }
         }
 
-        codegen.generateCode(key);
-        codegen.write(': ');
-        codegen.generateCode(value);
+        this.key = codegen.generateCode(key);
+        this.value = codegen.generateCode(value);
+
+        return this;
+    }
+
+    writeCode(writer) {
+        var key = this.key;
+        var value = this.value;
+        writer.write(key);
+        writer.write(': ');
+        writer.write(value);
     }
 
     toJSON() {

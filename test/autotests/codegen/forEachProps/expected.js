@@ -1,12 +1,8 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      forEachProp = __helpers.fp;
+function create(__markoHelpers) {
+  var marko_forEachProp = __markoHelpers.fp;
 
   return function render(data, out) {
-    forEachProp(myObject, function(k, v) {
+    marko_forEachProp(myObject, function(k, v) {
       console.log("k:", k, "v:", v);
     });
   };

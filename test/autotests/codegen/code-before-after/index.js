@@ -21,5 +21,7 @@ module.exports = function(builder) {
         event.insertCode(builder.functionCall('after', []));
     });
 
-    return htmlElement;
+    return builder.program([
+        htmlElement
+    ]);
 };

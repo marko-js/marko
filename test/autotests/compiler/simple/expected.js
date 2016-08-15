@@ -1,21 +1,18 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      forEach = __helpers.f;
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x,
+      marko_forEach = __markoHelpers.f;
 
   return function render(data, out) {
     out.w("Hello " +
-      escapeXml(data.name) +
+      marko_escapeXml(data.name) +
       "! ");
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w("<ul>");
 
-      forEach(data.colors, function(color) {
+      marko_forEach(data.colors, function(color) {
         out.w("<li>" +
-          escapeXml(color) +
+          marko_escapeXml(color) +
           "</li>");
       });
 
@@ -24,12 +21,12 @@ function create(__helpers) {
       out.w("<div>No colors!</div>");
     }
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w("<ul>");
 
-      forEach(data.colors, function(color) {
+      marko_forEach(data.colors, function(color) {
         out.w("<li>" +
-          escapeXml(color) +
+          marko_escapeXml(color) +
           "</li>");
       });
 

@@ -14,11 +14,15 @@ class Else extends Node {
             codegen.addError('Unmatched else statement');
             return;
         }
-        var body = this.body;
 
-        codegen.write('else ');
-        codegen.generateBlock(body);
-        codegen.write('\n');
+        this.body = codegen.generateCode(this.body);
+        return this;
+    }
+
+    writeCode(writer) {
+        var body = this.body;
+        writer.writeBlock(body);
+        writer.write('\n');
     }
 
     walk(walker) {

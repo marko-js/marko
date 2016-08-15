@@ -23,6 +23,12 @@ class VariableDeclarator extends Node {
     }
 
     generateCode(codegen) {
+        this.id = codegen.generateCode(this.id);
+        this.init = codegen.generateCode(this.init);
+        return this;
+    }
+
+    writeCode(writer) {
         var id = this.id;
         var init = this.init;
 
@@ -30,11 +36,11 @@ class VariableDeclarator extends Node {
             throw new Error('Invalid variable name: ' + id);
         }
 
-        codegen.generateCode(id);
+        writer.write(id);
 
         if (init != null) {
-            codegen.write(' = ');
-            codegen.generateCode(init);
+            writer.write(' = ');
+            writer.write(init);
         }
     }
 

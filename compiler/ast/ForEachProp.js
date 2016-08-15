@@ -18,6 +18,7 @@ class ForEachProp extends Node {
     }
 
     generateCode(codegen) {
+        var context = codegen.context;
         var nameVarName = this.nameVarName;
         var valueVarName = this.valueVarName;
         var inExpression = this.in;
@@ -55,11 +56,12 @@ class ForEachProp extends Node {
                 builder.functionDeclaration(null, [nameVarName, valueVarName, statusVarName], body)
             ]);
         } else {
-            let forEachVarName = codegen.addStaticVar('forEachProp', '__helpers.fp');
-            return builder.functionCall(forEachVarName, [
-                inExpression,
-                builder.functionDeclaration(null, [nameVarName, valueVarName], body)
-            ]);
+            return builder.functionCall(
+                context.helper('forEachProp'),
+                [
+                    inExpression,
+                    builder.functionDeclaration(null, [nameVarName, valueVarName], body)
+                ]);
         }
     }
 

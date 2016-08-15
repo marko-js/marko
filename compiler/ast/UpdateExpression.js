@@ -12,28 +12,33 @@ class UpdateExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.argument = codegen.generateCode(this.argument);
+        return this;
+    }
+
+    writeCode(writer) {
         var argument = this.argument;
         var operator = this.operator;
         var prefix = this.prefix;
 
         if (prefix) {
-            codegen.generateCode(operator);
+            writer.write(operator);
         }
 
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            codegen.write('(');
+            writer.write('(');
         }
 
-        codegen.generateCode(argument);
+        writer.write(argument);
 
         if (wrap) {
-            codegen.write(')');
+            writer.write(')');
         }
 
         if (!prefix) {
-            codegen.generateCode(operator);
+            writer.write(operator);
         }
     }
 

@@ -9,8 +9,12 @@ class Identifier extends Node {
     }
 
     generateCode(codegen) {
+        return this;
+    }
+
+    writeCode(writer) {
         var name = this.name;
-        codegen.write(name);
+        writer.write(name);
     }
 
     toString() {

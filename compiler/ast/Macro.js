@@ -20,13 +20,13 @@ class Macro extends Node {
     generateCode(codegen) {
         var name = this.name;
         var params = this.params || [];
-
-        var body = this.body;
-
         var builder = codegen.builder;
-
         var macroDef = codegen.context.registerMacro(name, params);
         var functionName = macroDef.functionName;
+
+        // Walk the body after registering the macro
+        var body = codegen.generateCode(this.body);
+
         return builder.functionDeclaration(functionName, macroDef.params, body);
     }
 

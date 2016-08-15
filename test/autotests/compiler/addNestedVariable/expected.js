@@ -1,16 +1,13 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      __loadTag = __helpers.t,
-      test_addNestedVariable = __loadTag(require("./tags/test-addNestedVariable/renderer"));
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x,
+      marko_loadTag = __markoHelpers.t,
+      test_addNestedVariable = marko_loadTag(require("./tags/test-addNestedVariable/renderer"));
 
   return function render(data, out) {
     test_addNestedVariable({
         renderBody: function renderBody(out, foo) {
           out.w("Hello " +
-            escapeXml(foo) +
+            marko_escapeXml(foo) +
             "!");
         }
       }, out);

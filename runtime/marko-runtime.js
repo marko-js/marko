@@ -310,6 +310,10 @@ function load(templatePath, templateSrc, options) {
     return template;
 }
 
+function createInlineMarkoTemplate(filename, renderFunc) {
+    return new Template(filename, renderFunc);
+}
+
 exports.load = load;
 
 exports.createWriter = function(writer) {
@@ -319,6 +323,8 @@ exports.createWriter = function(writer) {
 exports.helpers = helpers;
 
 exports.Template = Template;
+
+exports._inline = createInlineMarkoTemplate;
 
 // The loader is used to load templates that have not already been
 // loaded and cached. On the server, the loader will use

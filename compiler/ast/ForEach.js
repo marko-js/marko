@@ -22,7 +22,7 @@ class ForEach extends Node {
         var separator = this.separator;
         var statusVarName = this.statusVarName;
         var iterator = this.iterator;
-
+        var context = codegen.context;
         var builder = codegen.builder;
 
         if (separator && !statusVarName) {
@@ -41,7 +41,7 @@ class ForEach extends Node {
                 builder.functionDeclaration(null, params, this.body)
             ]);
         } else if (statusVarName) {
-            let forEachVarName = codegen.addStaticVar('forEachWithStatusVar', '__helpers.fv');
+
             let body = this.body;
 
             if (separator) {
@@ -58,14 +58,12 @@ class ForEach extends Node {
                 ]);
             }
 
-            return builder.functionCall(forEachVarName, [
+            return builder.functionCall(context.helper('forEachWithStatusVar'), [
                 inExpression,
                 builder.functionDeclaration(null, [varName, statusVarName], body)
             ]);
         } else {
-            let forEachVarName = codegen.addStaticVar('forEach', '__helpers.f');
-
-            return builder.functionCall(forEachVarName, [
+            return builder.functionCall(context.helper('forEach'), [
                 inExpression,
                 builder.functionDeclaration(null, [varName], this.body)
             ]);

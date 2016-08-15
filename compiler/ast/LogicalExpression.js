@@ -3,21 +3,21 @@
 var Node = require('./Node');
 var isCompoundExpression = require('../util/isCompoundExpression');
 
-function generateCodeForOperand(node, codegen) {
+function generateCodeForOperand(node, writer) {
     var wrap = isCompoundExpression(node);
 
     if (wrap) {
-        codegen.write('(');
+        writer.write('(');
     }
 
-    codegen.generateCode(node);
+    writer.write(node);
 
     if (wrap) {
-        codegen.write(')');
+        writer.write(')');
     }
 }
 
-function operandToString(node, codegen) {
+function operandToString(node) {
     var wrap = isCompoundExpression(node);
 
     var result = '';
@@ -44,6 +44,12 @@ class LogicalExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.left = codegen.generateCode(this.left);
+        this.right = codegen.generateCode(this.right);
+        return this;
+    }
+
+    writeCode(writer) {
         var left = this.left;
         var operator = this.operator;
         var right = this.right;
@@ -52,11 +58,11 @@ class LogicalExpression extends Node {
             throw new Error('Invalid LogicalExpression: ' + this);
         }
 
-        generateCodeForOperand(left, codegen);
-        codegen.write(' ');
-        codegen.generateCode(operator);
-        codegen.write(' ');
-        generateCodeForOperand(right, codegen);
+        generateCodeForOperand(left, writer);
+        writer.write(' ');
+        writer.write(operator);
+        writer.write(' ');
+        generateCodeForOperand(right, writer);
     }
 
     isCompoundExpression() {

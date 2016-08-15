@@ -58,7 +58,7 @@ module.exports = function codeGenerator(el, codegen) {
         if (Object.keys(templateData).length === 0) {
             templateData = args[1];
         } else {
-            let mergeVar = codegen.addStaticVar('__merge', '__helpers.m');
+            let mergeVar = codegen.context.helper('merge');
             templateData = builder.functionCall(mergeVar, [
                 builder.literal(templateData), // Input props from the attributes take precedence
                 args[1] // The template data object is passed as the second argument: <include("./foo.marko", { ... })/>

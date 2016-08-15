@@ -17,9 +17,7 @@ class ElseIf extends Node {
             return;
         }
 
-        var ifStatement = codegen.builder.ifStatement(this.test, this.body, this.else);
-        codegen.write('else ');
-        codegen.generateCode(ifStatement);
+        return codegen.builder.ifStatement(this.test, this.body, this.else);
     }
 
     walk(walker) {

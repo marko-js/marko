@@ -1,20 +1,17 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      forEach = __helpers.f;
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x,
+      marko_forEach = __markoHelpers.f;
 
   return function render(data, out) {
     function macro_renderTree(node, out, renderBody) {
       out.w("Name: " +
-        escapeXml(node.name) +
+        marko_escapeXml(node.name) +
         " Children: ");
 
       if (node.children) {
         out.w("<ul>");
 
-        forEach(node.children, function(child) {
+        marko_forEach(node.children, function(child) {
           out.w("<li>");
 
           macro_renderTree(child, out);

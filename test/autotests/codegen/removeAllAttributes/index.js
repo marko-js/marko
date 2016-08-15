@@ -12,5 +12,5 @@ module.exports = function(builder) {
 
     div.removeAllAttributes();
 
-    return div;
+    return builder.program([div]);
 };

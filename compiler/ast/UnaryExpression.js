@@ -12,32 +12,37 @@ class UnaryExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.argument = codegen.generateCode(this.argument);
+        return this;
+    }
+
+    writeCode(writer) {
         var argument = this.argument;
         var operator = this.operator;
         var prefix = this.prefix;
 
         if (prefix) {
-            codegen.write(operator);
+            writer.write(operator);
 
             if (operator === 'typeof' || operator === 'delete') {
-                codegen.write(' ');
+                writer.write(' ');
             }
         }
 
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            codegen.write('(');
+            writer.write('(');
         }
 
-        codegen.generateCode(argument);
+        writer.write(argument);
 
         if (wrap) {
-            codegen.write(')');
+            writer.write(')');
         }
 
         if (!prefix) {
-            codegen.write(operator);
+            writer.write(operator);
         }
     }
 

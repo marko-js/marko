@@ -20,7 +20,7 @@ html lang="en"
             li for(feature in ['async', 'streaming', 'custom-tags', 'readable', 'modules'])
                 ${feature}
 
-        ul if(notEmpty(data.colors))
+        ul if(data.colors && data.colors.length)
             li for(color in data.colors) - ${color}
         div else
             - No colors!

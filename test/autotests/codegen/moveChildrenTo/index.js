@@ -17,8 +17,8 @@ module.exports = function(builder) {
 
     div.moveChildrenTo(span);
 
-    return [
+    return builder.program([
         div,
         span
-    ];
+    ]);
 };

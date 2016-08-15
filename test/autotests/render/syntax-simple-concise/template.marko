@@ -4,7 +4,7 @@ html lang="en"
         title - Marko Templating Engine
     body
         h1 - Hello ${data.name}!
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else

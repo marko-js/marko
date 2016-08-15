@@ -48,8 +48,26 @@ function requireResolve(builder, path) {
     return builder.functionCall(requireResolveNode, [ path ]);
 }
 
+const helpers = {
+    'escapeXml': 'x',
+    'escapeXmlAttr': 'xa',
+    'escapeScript': 'xs',
+    'str': 's',
+    'merge': 'm',
+    'classAttr': 'ca',
+    'styleAttr': 'sa',
+    'attr': 'a',
+    'attrs': 'as',
+    'loadTag': 't',
+    'forEachWithStatusVar': 'fv',
+    'forEach': 'f',
+    'forEachProp': 'fp',
+    'classList': 'cl',
+    'loadTemplate': 'l'
+};
+
 class CompileContext {
-    constructor(src, filename, builder) {
+    constructor(src, filename, builder, options) {
         ok(typeof src === 'string', '"src" string is required');
         ok(filename, '"filename" is required');
 
@@ -60,6 +78,8 @@ class CompileContext {
         this.dirname = path.dirname(filename);
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
+
+        this.options = options || {};
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -72,6 +92,19 @@ class CompileContext {
         this._macros = null;
         this._preserveWhitespace = null;
         this._preserveComments = null;
+        this.inline = this.options.inline === true;
+
+        this._helpersIdentifier = null;
+
+        if (this.options.preserveWhitespace) {
+            this.setPreserveWhitespace(true);
+        }
+
+        this._helpers = {};
+    }
+
+    setInline(isInline) {
+        this.inline = isInline === true;
     }
 
     getPosInfo(pos) {
@@ -193,10 +226,6 @@ class CompileContext {
 
     getStaticCode() {
         return this._staticCode;
-    }
-
-    getEscapeXmlAttrVar() {
-        return this.addStaticVar('escapeXmlAttr', '__helpers.xa');
     }
 
     getTagDef(tagName) {
@@ -378,14 +407,8 @@ class CompileContext {
         ok(typeof relativePath === 'string', '"path" should be a string');
         var builder = this.builder;
 
-
-        // We want to add the following import:
-        // var loadTemplate = __helpers.t;
-        // var template = loadTemplate(require.resolve(<templateRequirePath>))
-
-        var loadTemplateVar = this.addStaticVar('loadTemplate', '__helpers.l');
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
-        var loadFunctionCall = builder.functionCall(loadTemplateVar, [ requireResolveTemplate ]);
+        var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
         var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
         return templateVar;
     }
@@ -446,6 +469,61 @@ class CompileContext {
         }
 
         return pathExpression;
+    }
+
+    getStaticNodes() {
+        let builder = this.builder;
+        let staticNodes = [];
+        let staticVars = this.getStaticVars();
+
+        let staticVarNodes = Object.keys(staticVars).map((varName) => {
+            var varInit = staticVars[varName];
+            return builder.variableDeclarator(varName, varInit);
+        });
+
+
+        if (staticVarNodes.length) {
+            staticNodes.push(this.builder.vars(staticVarNodes));
+        }
+
+        var staticCodeArray = this.getStaticCode();
+
+        if (staticCodeArray) {
+            staticNodes = staticNodes.concat(staticCodeArray);
+        }
+
+        return staticNodes;
+    }
+
+    get helpersIdentifier() {
+        if (!this._helpersIdentifier) {
+            if (this.inline) {
+                this._helpersIdentifier = this.importModule('__markoHelpers', 'marko/runtime/helpers');
+            } else {
+                // The helpers variable is a parameter of the outer create function
+                this._helpersIdentifier = this.builder.identifier('__markoHelpers');
+            }
+        }
+        return this._helpersIdentifier;
+    }
+
+    helper(name) {
+        var helperIdentifier = this._helpers[name];
+        if (!helperIdentifier) {
+            var methodName = helpers[name];
+            if (!methodName) {
+                throw new Error('Invalid helper: ' + name);
+            }
+            var methodIdentifier = this.builder.identifier(methodName);
+
+            helperIdentifier = this.addStaticVar(
+                'marko_' + name,
+                this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+
+            this._helpers[name] = helperIdentifier;
+        }
+
+        return helperIdentifier;
     }
 }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var Node = require('./Node');
+var Literal = require('./Literal');
 
 class Html extends Node {
     constructor(def) {
@@ -8,13 +9,70 @@ class Html extends Node {
         this.argument = def.argument;
     }
 
-    isLiteral() {
-        return this.argument instanceof Node && this.argument.type === 'Literal';
+    _append(appendArgument) {
+        var argument = this.argument;
+
+        if (Array.isArray(argument)) {
+            var len = argument.length;
+            var last = argument[len-1];
+
+            if (last instanceof Literal && appendArgument instanceof Literal) {
+                last.value += appendArgument.value;
+            } else {
+                this.argument.push(appendArgument);
+            }
+        } else {
+            if (argument instanceof Literal && appendArgument instanceof Literal) {
+                argument.value += appendArgument.value;
+            } else {
+                this.argument = [ this.argument, appendArgument ];
+            }
+        }
     }
 
-    generateHtmlCode(codegen) {
-        let argument = this.argument;
-        codegen.addWrite(argument);
+    append(html) {
+        var appendArgument = html.argument;
+        if (!appendArgument) {
+            return;
+        }
+
+        if (Array.isArray(appendArgument)) {
+            appendArgument.forEach(this._append, this);
+        } else {
+            this._append(appendArgument);
+        }
+    }
+
+    generateCode() {
+        return this;
+    }
+
+    writeCode(writer) {
+        var argument = this.argument;
+
+        if (Array.isArray(argument)) {
+            let args = argument;
+
+            for (let i=0, len=args.length; i<len; i++) {
+                let arg = args[i];
+
+                if (i === 0) {
+                    writer.write('out.w(');
+                } else {
+                    writer.write(' +\n');
+                    writer.writeLineIndent();
+                    writer.writeIndent();
+                }
+
+                writer.write(arg);
+            }
+
+            writer.write(')');
+        } else {
+            writer.write('out.w(');
+            writer.write(argument);
+            writer.write(')');
+        }
     }
 
     walk(walker) {

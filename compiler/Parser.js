@@ -63,8 +63,8 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
     if (finalClassNames.length === 1) {
         el.setAttributeValue('class', finalClassNames[0]);
     } else {
-        var classListVar = context.addStaticVar('__classList', '__helpers.cl');
-        el.setAttributeValue('class', builder.functionCall(classListVar, finalClassNames));
+
+        el.setAttributeValue('class', builder.functionCall(context.helper('classList'), finalClassNames));
     }
 }
 
@@ -141,6 +141,8 @@ class Parser {
             if (tagNameExpression) {
                 tagName = builder.parseExpression(tagNameExpression);
             } else if (tagName === 'marko-compiler-options') {
+                this.parentNode.setTrimStartEnd(true);
+
                 attributes.forEach(function (attr) {
                     let attrName = attr.name;
                     let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
@@ -279,6 +281,8 @@ class Parser {
         this.prevTextNode = null;
 
         this.stack.pop();
+
+
     }
 
     handleComment(comment) {

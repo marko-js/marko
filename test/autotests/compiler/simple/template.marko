@@ -1,7 +1,7 @@
 ---
 Hello ${data.name}!
 
-<ul if(notEmpty(data.colors))>
+<ul if(data.colors.length)>
     <li for(color in data.colors)>
         ${color}
     </li>
@@ -10,7 +10,7 @@ Hello ${data.name}!
     No colors!
 </div>
 
-<if(notEmpty(data.colors))>
+<if(data.colors.length)>
     <ul>
         <for(color in data.colors)>
             <li>

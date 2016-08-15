@@ -8,6 +8,10 @@ var Builder = require('./Builder');
 var extend = require('raptor-util/extend');
 var CompileContext = require('./CompileContext');
 var globalConfig = require('./config');
+var CompileContext = require('./CompileContext');
+var InlineCompiler = require('./InlineCompiler');
+var ok = require('assert').ok;
+
 var defaults = extend({}, globalConfig);
 
 Object.defineProperty(exports, 'defaultOptions', {
@@ -55,21 +59,53 @@ function createWalker(options) {
     return new Walker(options);
 }
 
-function compileFile(filename, options, callback) {
-    var fs = req('fs');
-    var compiler;
+function _compile(src, filename, userOptions, callback) {
+    ok(filename, '"filename" argument is required');
+    ok(typeof filename === 'string', '"filename" argument should be a string');
 
+    var options = {};
+
+    extend(options, globalConfig);
+
+    if (userOptions) {
+        extend(options, userOptions);
+    }
+
+    var compiler = defaultCompiler;
+
+    var context = new CompileContext(src, filename, compiler.builder, options);
+
+    if (callback) {
+        let compiled;
+
+        try {
+            compiled = compiler.compile(src, context);
+        } catch(e) {
+            return callback(e);
+        }
+
+        callback(null, compiled.code);
+    } else {
+        let compiled = compiler.compile(src, context);
+        return compiled.code;
+    }
+}
+
+function compile(src, filename, options, callback) {
     if (typeof options === 'function') {
         callback = options;
         options = null;
     }
 
-    if (options) {
-        compiler = options.compiler;
-    }
+    return _compile(src, filename, options, callback);
+}
 
-    if (!compiler) {
-        compiler = defaultCompiler;
+function compileFile(filename, options, callback) {
+    var fs = req('fs');
+
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
     }
 
     if (callback) {
@@ -78,43 +114,27 @@ function compileFile(filename, options, callback) {
                 return callback(err);
             }
 
-            try {
-                callback(null, compiler.compile(templateSrc, filename, options));
-            } catch(e) {
-                callback(e);
-            }
+            _compile(templateSrc, filename, options, callback);
         });
     } else {
         let templateSrc = fs.readFileSync(filename, {encoding: 'utf8'});
-        return compiler.compile(templateSrc, filename, options);
+        return _compile(templateSrc, filename, options, callback);
     }
 }
 
-function compile(src, filename, options, callback) {
-    var compiler;
+function createInlineCompiler(filename, userOptions) {
+    var options = {};
 
-    if (typeof options === 'function') {
-        callback = options;
-        options = null;
+    extend(options, globalConfig);
+
+    if (userOptions) {
+        extend(options, userOptions);
     }
 
-    if (options) {
-        compiler = options.compiler;
-    }
+    var compiler = defaultCompiler;
+    var context = new CompileContext('', filename, compiler.builder, options);
 
-    if (!compiler) {
-        compiler = defaultCompiler;
-    }
-
-    if (callback) {
-        try {
-            callback(null, compiler.compile(src, filename, options));
-        } catch(e) {
-            callback(e);
-        }
-    } else {
-        return compiler.compile(src, filename, options);
-    }
+    return new InlineCompiler(context, compiler);
 }
 
 function checkUpToDate(templateFile, templateJsFile) {
@@ -160,6 +180,7 @@ exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
 exports.parseRaw = parseRaw;
+exports.createInlineCompiler = createInlineCompiler;
 
 exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;
@@ -189,16 +210,3 @@ exports.registerTaglib = function(path) {
     taglibLookup.registerTaglib(path);
     clearCaches();
 };
-
-/*
-exports.Taglib = require('./Taglib');
-
-exports.lookup = require('./taglib-lookup');
-exports.buildLookup = exports.lookup.buildLookup;
-exports.registerTaglib = exports.lookup.registerTaglib;
-exports.excludeDir = exports.lookup.excludeDir;
-exports.clearCaches = function() {
-    exports.lookup.clearCaches();
-    require('./taglib-finder').clearCaches();
-};
-*/

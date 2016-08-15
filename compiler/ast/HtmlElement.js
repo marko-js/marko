@@ -21,34 +21,36 @@ class StartTag extends Node {
         var tagName = this.tagName;
         var selfClosed = this.selfClosed;
         var dynamicAttributes = this.dynamicAttributes;
+        var context = codegen.context;
 
-        // Starting tag
-        codegen.addWriteLiteral('<');
-
-        codegen.addWrite(tagName);
+        var nodes = [
+            builder.htmlLiteral('<'),
+            builder.html(tagName),
+        ];
 
         var attributes = this.attributes;
 
         if (attributes) {
             for (let i=0; i<attributes.length; i++) {
                 let attr = attributes[i];
-                codegen.generateCode(attr);
+                nodes.push(codegen.generateCode(attr));
             }
         }
 
         if (dynamicAttributes) {
             dynamicAttributes.forEach(function(attrsExpression) {
-                codegen.addStaticVar('attrs', '__helpers.as');
-                let attrsFunctionCall = builder.functionCall('attrs', [attrsExpression]);
-                codegen.addWrite(attrsFunctionCall);
+                let attrsFunctionCall = builder.functionCall(context.helper('attrs'), [attrsExpression]);
+                nodes.push(builder.html(attrsFunctionCall));
             });
         }
 
         if (selfClosed) {
-            codegen.addWriteLiteral('/>');
+            nodes.push(builder.htmlLiteral('/>'));
         } else {
-            codegen.addWriteLiteral('>');
+            nodes.push(builder.htmlLiteral('>'));
         }
+
+        return nodes;
     }
 }
 
@@ -60,9 +62,13 @@ class EndTag extends Node {
 
     generateCode(codegen) {
         var tagName = this.tagName;
-        codegen.addWriteLiteral('</');
-        codegen.addWrite(tagName);
-        codegen.addWriteLiteral('>');
+        var builder = codegen.builder;
+
+        return [
+            builder.htmlLiteral('</'),
+            builder.html(tagName),
+            builder.htmlLiteral('>')
+        ];
     }
 }
 
@@ -131,6 +137,10 @@ class HtmlElement extends Node {
 
         var builder = codegen.builder;
 
+        if (hasBody) {
+            body = codegen.generateCode(body);
+        }
+
         if (hasBody || bodyOnlyIf) {
             openTagOnly = false;
             selfClosed = false;
@@ -170,7 +180,7 @@ class HtmlElement extends Node {
             ];
         } else {
             if (openTagOnly) {
-                codegen.generateCode(startTag);
+                return codegen.generateCode(startTag);
             } else {
                 return [
                     startTag,

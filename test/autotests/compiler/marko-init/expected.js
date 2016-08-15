@@ -1,14 +1,11 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x;
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x;
 
   var name = '${name}<div if(foo)></div>';
 
   return function render(data, out) {
     out.w("Hello " +
-      escapeXml(name) +
+      marko_escapeXml(name) +
       "!");
   };
 }

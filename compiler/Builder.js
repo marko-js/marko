@@ -23,7 +23,6 @@ var Text = require('./ast/Text');
 var ForEach = require('./ast/ForEach');
 var ForEachProp = require('./ast/ForEachProp');
 var ForRange = require('./ast/ForRange');
-var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
 var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
@@ -72,6 +71,7 @@ var literalUndefined = new Literal({value: undefined});
 var literalTrue = new Literal({value: true});
 var literalFalse = new Literal({value: false});
 var identifierOut = new Identifier({name: 'out'});
+var identifierRequire = new Identifier({name: 'require'});
 
 class Builder {
     arrayExpression(elements) {
@@ -266,6 +266,11 @@ class Builder {
         }
     }
 
+    htmlLiteral(htmlCode) {
+        var argument = new Literal({value: htmlCode});
+        return new Html({argument});
+    }
+
     identifier(name) {
         ok(typeof name === 'string', '"name" should be a string');
 
@@ -425,7 +430,7 @@ class Builder {
     require(path) {
         path = makeNode(path);
 
-        let callee = 'require';
+        let callee = identifierRequire;
         let args = [ path ];
         return new FunctionCall({callee, args});
     }
@@ -460,10 +465,6 @@ class Builder {
         }
 
         return new SelfInvokingFunction({params, args, body});
-    }
-
-    slot(onDone) {
-        return new Slot({onDone});
     }
 
     strictEquality(left, right) {

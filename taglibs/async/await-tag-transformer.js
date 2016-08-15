@@ -52,7 +52,7 @@ module.exports = function transform(el, context) {
         if (isObjectEmpty(arg)) {
             arg = el.getAttributeValue('arg');
         } else {
-            let mergeVar = context.addStaticVar('__merge', '__helpers.m');
+            let mergeVar = context.helper('merge');
             arg = builder.functionCall(mergeVar, [
                 builder.literal(arg), // Input props from the attributes take precedence
                 el.getAttributeValue('arg')

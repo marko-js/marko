@@ -8,12 +8,13 @@ class Declaration extends Node {
     }
 
     generateHtmlCode(codegen) {
-
         var builder = codegen.builder;
 
-        codegen.addWrite(builder.literal('<?'));
-        codegen.addWrite(this.declaration);
-        codegen.addWrite(builder.literal('?>'));
+        return [
+            builder.htmlLiteral('<?'),
+            codegen.generateCode(this.declaration),
+            builder.htmlLiteral('?>')
+        ];
     }
 
     toJSON() {

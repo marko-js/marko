@@ -1,10 +1,6 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      __loadTag = __helpers.t,
-      test_import_var = __loadTag(require("./tags/test-import-var/renderer"));
+function create(__markoHelpers) {
+  var marko_loadTag = __markoHelpers.t,
+      test_import_var = marko_loadTag(require("./tags/test-import-var/renderer"));
 
   return function render(data, out) {
     test_import_var({

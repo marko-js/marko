@@ -23,20 +23,16 @@ class Text extends Node {
     }
 
     generateHtmlCode(codegen) {
-        var parentNode = this.parentNode;
-        if (parentNode) {
-            parentNode._normalizeChildTextNodes(codegen);
-        }
-
+        var context = codegen.context;
         var argument = this.argument;
         var escape = this.escape !== false;
 
         if (argument instanceof Literal) {
             if (!argument.value) {
-                return;
+                return null;
             }
 
-            if (codegen.context.isFlagSet('SCRIPT_BODY')) {
+            if (context.isFlagSet('SCRIPT_BODY')) {
                 escape = false;
             }
 
@@ -47,23 +43,23 @@ class Text extends Node {
             let builder = codegen.builder;
 
             if (escape) {
-                let escapeFuncVar = 'escapeXml';
+                let escapeIdentifier = context.helper('escapeXml');
 
-                if (codegen.context.isFlagSet('SCRIPT_BODY')) {
-                    escapeFuncVar = codegen.addStaticVar('escapeScript', '__helpers.xs');
+                if (context.isFlagSet('SCRIPT_BODY')) {
+                    escapeIdentifier = context.helper('escapeScript');
                 }
 
                 // TODO Only escape the parts that need to be escaped if it is a compound expression with static
                 //      text parts
                 argument = builder.functionCall(
-                    escapeFuncVar,
+                    escapeIdentifier,
                     [argument]);
             } else {
-                argument = builder.functionCall(builder.identifier('str'), [ argument ]);
+                argument = builder.functionCall(context.helper('str'), [ argument ]);
             }
         }
 
-        codegen.addWrite(argument);
+        return codegen.builder.html(argument);
     }
 
     isWhitespace() {

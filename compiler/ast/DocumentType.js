@@ -8,12 +8,13 @@ class DocumentType extends Node {
     }
 
     generateHtmlCode(codegen) {
-
         var builder = codegen.builder;
 
-        codegen.addWrite(builder.literal('<!'));
-        codegen.addWrite(this.documentType);
-        codegen.addWrite(builder.literal('>'));
+        return [
+            builder.htmlLiteral('<!'),
+            builder.html(codegen.generateCode(this.documentType)),
+            builder.htmlLiteral('>')
+        ];
     }
 
     toJSON() {

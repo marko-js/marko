@@ -11,8 +11,26 @@ class Literal extends Node {
     }
 
     generateCode(codegen) {
+
+        if (this.value != null) {
+            if (isArray(this.value)) {
+                this.value = codegen.generateCode(this.value);
+            } else if (typeof this.value === 'object') {
+                var newObject = {};
+                for (var k in this.value) {
+                    if (this.value.hasOwnProperty(k)) {
+                        newObject[k] = codegen.generateCode(this.value[k]);
+                    }
+                }
+                this.value = newObject;
+            }
+        }
+        return this;
+    }
+
+    writeCode(writer) {
         var value = this.value;
-        codegen.writeLiteral(value);
+        writer.writeLiteral(value);
     }
 
     toString() {

@@ -9,32 +9,37 @@ class ArrayExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.elements = codegen.generateCode(this.elements);
+        return this;
+    }
+
+    writeCode(writer) {
         var elements = this.elements;
 
         if (!elements || !elements.length) {
-            codegen.write('[]');
+            writer.write('[]');
             return;
         }
 
-        codegen.incIndent();
-        codegen.write('[\n');
-        codegen.incIndent();
+        writer.incIndent();
+        writer.write('[\n');
+        writer.incIndent();
 
         elements.forEach((element, i) => {
-            codegen.writeLineIndent();
-            codegen.generateCode(element);
+            writer.writeLineIndent();
+            writer.write(element);
 
             if (i < elements.length - 1) {
-                codegen.write(',\n');
+                writer.write(',\n');
             } else {
-                codegen.write('\n');
+                writer.write('\n');
             }
         });
 
-        codegen.decIndent();
-        codegen.writeLineIndent();
-        codegen.write(']');
-        codegen.decIndent();
+        writer.decIndent();
+        writer.writeLineIndent();
+        writer.write(']');
+        writer.decIndent();
     }
 
     walk(walker) {

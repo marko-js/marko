@@ -2,6 +2,7 @@
 var ok = require('assert').ok;
 
 var Node = require('./Node');
+var isCompoundExpression = require('../util/isCompoundExpression');
 
 class FunctionCall extends Node {
     constructor(def) {
@@ -27,28 +28,47 @@ class FunctionCall extends Node {
     }
 
     generateCode(codegen) {
+        this.callee = codegen.generateCode(this.callee);
+        this.args = codegen.generateCode(this.args);
+
+        return this;
+    }
+
+    writeCode(writer) {
         var callee = this.callee;
         var args = this.args;
 
-        codegen.generateCode(callee);
+        var wrapWithParens = isCompoundExpression(callee);
 
-        codegen.write('(');
+        if (wrapWithParens) {
+            writer.write('(');
+        }
+
+        writer.write(callee);
+
+        if (wrapWithParens) {
+            writer.write(')');
+        }
+
+        writer.write('(');
 
         if (args && args.length) {
             for (let i=0, argsLen = args.length; i<argsLen; i++) {
                 if (i !== 0) {
-                    codegen.write(', ');
+                    writer.write(', ');
                 }
 
                 let arg = args[i];
                 if (!arg) {
                     throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON()));
                 }
-                codegen.generateCode(arg);
+                writer.write(arg);
             }
         }
 
-        codegen.write(')');
+        writer.write(')');
+
+
     }
 
     walk(walker) {

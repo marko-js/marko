@@ -1,6 +1,8 @@
 'use strict';
 
 var Node = require('./Node');
+var isCompoundExpression = require('../util/isCompoundExpression');
+var ok = require('assert').ok;
 
 class MemberExpression extends Node {
     constructor(def) {
@@ -8,22 +10,41 @@ class MemberExpression extends Node {
         this.object = def.object;
         this.property = def.property;
         this.computed = def.computed;
+
+        ok(this.object, '"object" is required');
+        ok(this.property, '"property" is required');
     }
 
     generateCode(codegen) {
+        this.object = codegen.generateCode(this.object);
+        this.property = codegen.generateCode(this.property);
+        return this;
+    }
+
+    writeCode(writer) {
         var object = this.object;
         var property = this.property;
         var computed = this.computed;
 
-        codegen.generateCode(object);
+        var wrapWithParens = isCompoundExpression(object);
+
+        if (wrapWithParens) {
+            writer.write('(');
+        }
+
+        writer.write(object);
+
+        if (wrapWithParens) {
+            writer.write(')');
+        }
 
         if (computed) {
-            codegen.write('[');
-            codegen.generateCode(property);
-            codegen.write(']');
+            writer.write('[');
+            writer.write(property);
+            writer.write(']');
         } else {
-            codegen.write('.');
-            codegen.generateCode(property);
+            writer.write('.');
+            writer.write(property);
         }
     }
 

@@ -6,11 +6,11 @@
     ${message}
 </div>
 
-<ul if(notEmpty(colors))>
+<ul if(colors && colors.length)>
     <li class="color" for(color in colors)>
         ${color}
     </li>
 </ul>
-<div if(empty(colors))>
+<div else>
     No colors!
 </div>

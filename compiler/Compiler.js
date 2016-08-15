@@ -1,10 +1,8 @@
 'use strict';
 var ok = require('assert').ok;
 var CodeGenerator = require('./CodeGenerator');
-var CompileContext = require('./CompileContext');
+var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
-var config = require('./config');
-var extend = require('raptor-util/extend');
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 
@@ -61,8 +59,47 @@ function transformTree(rootNode, context) {
     return rootNode;
 }
 
+function handleErrors(context) {
+    // If there were any errors then compilation failed.
+    if (context.hasErrors()) {
+        var errors = context.getErrors();
+
+        var message = 'An error occurred while trying to compile template at path "' + context.filename + '". Error(s) in template:\n';
+        for (var i = 0, len = errors.length; i < len; i++) {
+            let error = errors[i];
+            message += (i + 1) + ') ' + error.toString() + '\n';
+        }
+        var error = new Error(message);
+        error.errors = errors;
+        throw error;
+    }
+}
+
+class CompiledTemplate {
+    constructor(ast, context, codeGenerator) {
+        this.ast = ast;
+        this.context = context;
+        this.filename = context.filename;
+    }
+
+    get code() {
+        // STAGE 3: Generate the code using the final AST
+        handleErrors(this.context);
+
+        // console.log(module.id, 'FINAL AST:' + JSON.stringify(finalAST, null, 4));
+        var codeWriter = new CodeWriter(this.context.options);
+        codeWriter.write(this.ast);
+
+        handleErrors(this.context);
+
+        // Return the generated code as the compiled output:
+        var compiledSrc = codeWriter.getCode();
+        return compiledSrc;
+    }
+}
+
 class Compiler {
-    constructor(options) {
+    constructor(options, userOptions, inline) {
         ok(options, '"options" is required');
 
         this.builder = options.builder;
@@ -72,31 +109,13 @@ class Compiler {
         ok(this.parser, '"options.parser" is required');
     }
 
-    compile(src, filename, userOptions) {
+    compile(src, context) {
         ok(typeof src === 'string', '"src" argument should be a string');
-        ok(filename, '"filename" argument is required');
-        ok(typeof filename === 'string', '"filename" argument should be a string');
-
-        var context = new CompileContext(src, filename, this.builder);
-        var options = {};
-
-        extend(options, config);
-
-        if (userOptions) {
-            extend(options, userOptions);
-        }
-
-        if (options.preserveWhitespace) {
-            context.setPreserveWhitespace(true);
-        }
 
         var codeGenerator = new CodeGenerator(context);
 
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
-
-        // Trim start and end whitespace for the root node
-        ast._normalizeChildTextNodes(codeGenerator, true /* trim start and end */, true /* force */);
 
         context.root = ast;
         // console.log('ROOT', JSON.stringify(ast, null, 2));
@@ -105,30 +124,13 @@ class Compiler {
         var transformedAST = transformTree(ast, context);
         // console.log('transformedAST', JSON.stringify(ast, null, 2));
 
-        // Trim start and end whitespace for the root node (again, after the transformation)
-        transformedAST._normalizeChildTextNodes(codeGenerator, true /* trim start and end */, true /* force */);
+        handleErrors(context);
 
-        // STAGE 3: Generate the code using the final AST
+        var finalAST = codeGenerator.generateCode(transformedAST);
 
-        codeGenerator.generateCode(transformedAST);
+        handleErrors(context);
 
-        // If there were any errors then compilation failed.
-        if (context.hasErrors()) {
-            var errors = context.getErrors();
-
-            var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
-            for (var i = 0, len = errors.length; i < len; i++) {
-                let error = errors[i];
-                message += (i + 1) + ') ' + error.toString() + '\n';
-            }
-            var error = new Error(message);
-            error.errors = errors;
-            throw error;
-        }
-
-        // Return the generated code as the compiled output:
-        var compiledSrc = codeGenerator.getCode();
-        return compiledSrc;
+        return new CompiledTemplate(finalAST, context);
     }
 }
 

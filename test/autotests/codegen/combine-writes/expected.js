@@ -1,8 +1,5 @@
-function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x;
+function create(__markoHelpers) {
+  var marko_escapeXml = __markoHelpers.x;
 
   return function render(data, out) {
     out.w("<ul>");
@@ -11,7 +8,7 @@ function create(__helpers) {
       foo();
 
       out.w("<li>" +
-        escapeXml(color) +
+        marko_escapeXml(color) +
         "</li>");
 
       bar();
