@@ -12,7 +12,7 @@ Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) an
 
 # Get Involved
 
-- **Contributing**: Pull requests are welcome! 
+- **Contributing**: Pull requests are welcome!
     - Read [`CONTRIBUTING.md`](.github/CONTRIBUTING.md) and check out our [bite-sized](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Adifficulty%3Abite-sized) and [help-wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ahelp-wanted) issues
     - Submit github issues for any feature enhancements, bugs or documentation problems
 - **Support**: Join our [gitter chat](https://gitter.im/marko-js/marko) to ask questions to get support from the maintainers and other Marko developers
@@ -42,7 +42,38 @@ Marko supports _both_ a familiar HTML syntax, as well as a more concise indentat
             Hello ${data.name}!
         </h1>
 
-        <ul if(notEmpty(data.colors))>
+        <if(data.colors.length)>
+            <ul>
+                <for(color in data.colors)>
+                    <li>
+                        ${color}
+                    </li>
+                </for>
+            </ul>
+        </if>
+        <else>
+            <div>
+                No colors!
+            </div>
+        </else>
+    </body>
+</html>
+```
+
+Alternatively, you can choose to apply rendering logic as "attributes":
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Marko Templating Engine</title>
+    </head>
+    <body>
+        <h1>
+            Hello ${data.name}!
+        </h1>
+
+        <ul if(data.colors.length)>
             <li for(color in data.colors)>
                 ${color}
             </li>
@@ -65,7 +96,7 @@ html lang="en"
         title - Marko Templating Engine
     body
         h1 - Hello ${data.name}!
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -86,7 +117,7 @@ html lang="en"
         <h1>
             Hello ${data.name}!
         </h1>
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
