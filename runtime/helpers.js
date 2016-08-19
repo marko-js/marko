@@ -24,18 +24,6 @@ var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function notEmpty(o) {
-    if (o == null) {
-        return false;
-    } else if (Array.isArray(o)) {
-        return !!o.length;
-    } else if (o === '') {
-        return false;
-    }
-
-    return true;
-}
-
 function classListHelper(arg, classNames) {
     var len;
 
@@ -184,18 +172,6 @@ module.exports = {
             }
         }
     },
-    /**
-     * Internal method to check if an object/array is empty
-     * @private
-     */
-    e: function (o) {
-        return !notEmpty(o);
-    },
-    /**
-     * Internal method to check if an object/array is not empty
-     * @private
-     */
-    ne: notEmpty,
     /**
      * Internal method to escape special XML characters
      * @private
