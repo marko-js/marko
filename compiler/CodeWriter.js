@@ -17,13 +17,6 @@ class CodeWriter {
 
         this._code = '';
         this.currentIndent = '';
-
-        this.outputType = options.output || 'html';
-
-        this._writeCodeMethodName = 'write' +
-            this.outputType.charAt(0).toUpperCase() +
-            this.outputType.substring(1) +
-            'Code';
     }
 
     getCode() {

@@ -8,7 +8,7 @@ class HtmlComment extends Node {
         this.comment = def.comment;
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var comment = this.comment;
         var builder = codegen.builder;
 

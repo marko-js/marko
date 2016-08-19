@@ -66,14 +66,13 @@ class CodeGenerator {
 
 
         this.builder = context.builder;
-        this.outputType = options.output || 'html';
+
         this.context = context;
 
         ok(this.builder, '"this.builder" is required');
 
         this._codegenCodeMethodName = 'generate' +
-            this.outputType.charAt(0).toUpperCase() +
-            this.outputType.substring(1) +
+            context.outputType.toUpperCase() +
             'Code';
     }
 

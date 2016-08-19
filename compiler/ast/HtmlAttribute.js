@@ -162,7 +162,7 @@ class HtmlAttribute extends Node {
             typeof this.value.value === 'boolean';
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         let name = this.name;
         let value = this.value;
         let argument = this.argument;

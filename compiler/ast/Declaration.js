@@ -7,7 +7,7 @@ class Declaration extends Node {
         this.declaration = def.declaration;
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var builder = codegen.builder;
 
         return [

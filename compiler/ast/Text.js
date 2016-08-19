@@ -22,7 +22,7 @@ class Text extends Node {
         return this.argument instanceof Node && this.argument.type === 'Literal';
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var context = codegen.context;
         var argument = this.argument;
         var escape = this.escape !== false;

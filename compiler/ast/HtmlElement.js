@@ -107,7 +107,7 @@ class HtmlElement extends Node {
         this.on('afterGenerateCode', afterGenerateCode);
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var tagName = this.tagName;
 
         // Convert the tag name into a Node so that we generate the code correctly

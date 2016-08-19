@@ -81,6 +81,8 @@ class CompileContext {
 
         this.options = options || {};
 
+        this.outputType = this.options.output || 'html';
+
         this._vars = {};
         this._uniqueVars = new UniqueVars();
         this._staticVars = {};

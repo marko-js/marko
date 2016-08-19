@@ -7,7 +7,7 @@ class DocumentType extends Node {
         this.documentType = def.documentType;
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var builder = codegen.builder;
 
         return [
