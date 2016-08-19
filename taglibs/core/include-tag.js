@@ -1,6 +1,5 @@
 'use strict';
 var removeHyphens = require('../../compiler/util/removeDashes');
-var deprecateHyphensPath = require.resolve('../../runtime/deprecateHyphens');
 
 module.exports = function codeGenerator(el, codegen) {
     let argument = el.argument;
@@ -27,24 +26,12 @@ module.exports = function codeGenerator(el, codegen) {
         templateVar = templatePath;
     }
 
-    var deprecateHyphensArgs = [];
-
-
     let templateData = {};
     let attrs = el.getAttributes();
     attrs.forEach((attr) => {
         var propName = attr.name;
         if (propName.indexOf('-') !== -1) {
-            // For now, we will add both the property name converted to camel
-            // case and a getter that allows the property to still be accessed
-            // with the hyphens. This was done to prevent breaking applications
-            // that may be accessing properties with the hyphen due to the following
-            // bug: https://github.com/marko-js/marko/issues/314
-            //
-            // This code should be removed in the future.
-            deprecateHyphensArgs.push(builder.literal(propName)); // Append the hyphenated property name
             propName = removeHyphens(propName); // Convert the property name to camel case
-            deprecateHyphensArgs.push(builder.literal(propName)); // Append the target camel-cased property name
         }
 
         templateData[propName] = attr.value;
@@ -66,20 +53,6 @@ module.exports = function codeGenerator(el, codegen) {
         }
     } else {
         templateData = builder.literal(templateData);
-    }
-
-    if (deprecateHyphensArgs.length) {
-        // We import a helper function into the template to allow the properties to
-        // still be accessed with the hyphenated name while showing a deprecation warning.
-        //
-        // This compiled code is being added due to the following bug:
-        // https://github.com/marko-js/marko/issues/314
-        //
-        // It should be removed in the future.
-        var deprecateHyphensVar = codegen.importModule(
-            'deprecateHyphens',
-            codegen.getRequirePath(deprecateHyphensPath));
-        templateData = builder.functionCall(deprecateHyphensVar, [templateData].concat(deprecateHyphensArgs));
     }
 
     let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
