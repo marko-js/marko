@@ -127,7 +127,7 @@ Source: https://github.com/marko-js/templating-benchmarks
         <!-- Welcome to Marko! -->
         <app-hello name=data.name/>
 
-        <ul if(notEmpty(data.colors))>
+        <ul if(data.colors.length)>
             <li for(color in data.colors)>
                 ${color}
             </li>
@@ -151,7 +151,7 @@ html lang="en"
     body
         // Welcome to Marko!
         app-hello name=data.name
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -171,7 +171,7 @@ html lang="en"
     body
         // Welcome to Marko!
         <app-hello name=data.name/>
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -852,7 +852,7 @@ Usage:
 ```xml
 <my-custom-tag name="World"/>
 
-<ul if(notEmpty(data.colors))>
+<ul if(data.colors.length)>
     <li for(color in data.colors)>
         ${color}
     </li>
@@ -877,7 +877,7 @@ function create(__helpers) {
         name: "World"
       }, out);
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w("<ul>");
 
       forEach(data.colors, function(color) {

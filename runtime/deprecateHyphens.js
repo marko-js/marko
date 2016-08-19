@@ -1,18 +1,20 @@
 var copyProp;
 
-var maxWarn = 50;
+var maxWarn = 20;
 var currentWarn = 0;
 
+var logger = typeof console !== 'undefined' && console.warn && console;
+
 function deprecateWarning(deprecatedName) {
-    console.warn('Deprecated: Use the unhyphenated name instead for reading "' + deprecatedName +
-        '" - WARNING: This will not be allowed in the future.');
+    logger.warn('Deprecated: Use the unhyphenated name instead for reading "' + deprecatedName +
+        '" - WARNING: This will not be allowed in the future. Stack: ' + new Error().stack);
 }
 
 function copyPropNoWarn(obj, deprecatedName, targetName) {
     obj[deprecatedName] = obj[targetName];
 }
 
-if (Object.defineProperty) {
+if (logger && Object.defineProperty) {
     copyProp = function(obj, deprecatedName, targetName) {
         Object.defineProperty(obj, deprecatedName, {
           get: function() {

@@ -11,13 +11,13 @@ _Applying directives using attributes:_
 
 ```xml
 <!-- Colors available -->
-<ul if(notEmpty(colors))>
+<ul if(colors.length)>
     <li for(color in colors)>
         ${color}
     </li>
 </ul>
 <!-- No colors available-->
-<div if(empty(colors))>
+<div else>
     No colors!
 </div>
 ```
@@ -26,7 +26,7 @@ _Applying directives using elements:_
 
 ```xml
 <!-- Colors available -->
-<if(notEmpty(colors))>
+<if(colors.length)>
     <ul>
         <for(color in colors)>
             <li>
@@ -37,11 +37,11 @@ _Applying directives using elements:_
 </if>
 
 <!-- No colors available -->
-<if(empty(colors))>
+<else>
     <div>
         No colors!
     </div>
-</if>
+</else>
 ```
 
 The disadvantage of using elements to control structural logic is that they change the nesting of the elements which can impact readability. For this reason it is often more suitable to apply directives as attributes.
@@ -851,9 +851,11 @@ Usage inside template:
 
 Aside from custom helpers that can be built per-project, Marko has some built-in helpers with support for common tasks.
 
-__empty()/notEmpty()__
+## `empty()`/`notEmpty()`
 
-To deal with "empty" data, Marko provides the empty() and notEmpty() helpers. Both helpers can be used to check for empty objects (objects, that are set to null), arrays of length zero or empty strings; empty() returns true for these cases exclusively. Therefore, not all "falsy" JavaScript values are reported as "empty" - e.g.: a boolean value that is set to "false" is not empty, hence notEmpty() would return "true". As their name already suggests, both helpers are contrary to each other.
+___DEPRECATED - Do not use (removed in Marko v4)___
+
+To deal with "empty" data, Marko automatically provides the `empty()` and `notEmpty()` helpers. Both helpers can be used to check for empty objects (objects, that are set to null), arrays of length zero or empty strings; `empty()` returns `true` for these cases exclusively. Therefore, not all "falsey" JavaScript values are reported as "empty" - e.g.: a boolean value that is set to "false" is not empty, hence `notEmpty()` would return "true". As their name already suggests, both helpers are contrary to each other.
 
 # Miscellaneous
 
