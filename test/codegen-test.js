@@ -36,8 +36,6 @@ describe('compiler/codegen', function() {
         var ast = generateCodeFunc(builder, codegen);
         var finalAST = codegen.generateCode(ast);
 
-        console.log(module.id, 'FINAL AST', JSON.stringify(finalAST, null, 4));
-
         codeWriter.write(finalAST);
         helpers.compare(codeWriter.getCode(), '.js');
         done();
