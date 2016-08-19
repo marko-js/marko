@@ -272,8 +272,8 @@ var forEach = __helpers.f; // Static variable
 
 // ...
 
-forEach(data.colors, function(color) {
-  out.w(escapeXml(color));
+marko_forEach(data.colors, function(color) {
+  out.w(marko_escapeXml(color));
 });
 ```
 

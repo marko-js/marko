@@ -864,13 +864,10 @@ Usage:
 
 ```javascript
 function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      __loadTag = __helpers.t,
-      my_custom_tag = __loadTag(require("./components/my-custom-tag/renderer")),
-      forEach = __helpers.f;
+  var marko_escapeXml = __helpers.x,
+      marko_loadTag = __helpers.t,
+      my_custom_tag = marko_loadTag(require("./components/my-custom-tag/renderer")),
+      marko_forEach = __helpers.f;
 
   return function render(data, out) {
     my_custom_tag({
@@ -880,9 +877,9 @@ function create(__helpers) {
     if (data.colors.length) {
       out.w("<ul>");
 
-      forEach(data.colors, function(color) {
+      marko_forEach(data.colors, function(color) {
         out.w("<li>" +
-          escapeXml(color) +
+          marko_escapeXml(color) +
           "</li>");
       });
 
