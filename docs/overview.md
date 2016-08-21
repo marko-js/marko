@@ -36,7 +36,7 @@ Syntax highlighting is available in the following editors and IDEs:
             Hello ${data.name}!
         </h1>
 
-        <ul if(notEmpty(data.colors))>
+        <ul if(data.colors.length)>
             <li for(color in data.colors)>
                 ${color}
             </li>
@@ -59,7 +59,7 @@ html lang="en"
         title - Marko Templating Engine
     body
         h1 - Hello ${data.name}!
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -80,7 +80,7 @@ html lang="en"
         <h1>
             Hello ${data.name}!
         </h1>
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -95,7 +95,7 @@ _hello-world.marko:_
 
 ```xml
 <h2>Hello ${data.name}!</h2>
-<ul if(notEmpty(data.colors))>
+<ul if(data.colors.length)>
     <li style="color: ${color}" for(color in data.colors)>
         ${color}
     </li>
@@ -195,7 +195,7 @@ __Marko:__
 
 ```xml
 <h2>Hello ${data.name}!</h2>
-<ul if(notEmpty(data.colors))>
+<ul if(data.colors.length)>
     <li class="color" for(color in data.colors)>
         ${color}
     </li>

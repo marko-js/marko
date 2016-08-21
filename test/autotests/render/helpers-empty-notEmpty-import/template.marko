@@ -1,0 +1,17 @@
+<script marko-init>
+var notEmpty = require('marko/helpers/notEmpty');
+var empty = require('marko/helpers/empty');
+</script>
+
+<div if(notEmpty(['a', 'b', 'c']))>
+    notEmpty-YES
+</div>
+<div if(notEmpty([]))>
+    notEmpty-NO
+</div>
+<div if(empty(['a', 'b', 'c']))>
+    empty-NO
+</div>
+<div if(empty([]))>
+    empty-YES
+</div>

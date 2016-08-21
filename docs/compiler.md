@@ -46,8 +46,6 @@ require('marko/compiler').compileFile(path, function(err, src) {
 ```javascript
 function create(__helpers) {
   var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       forEach = __helpers.f,
       escapeXmlAttr = __helpers.xa;
@@ -57,7 +55,7 @@ function create(__helpers) {
       escapeXml(data.name) +
       '! ');
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w('<ul>');
 
       forEach(data.colors, function(color) {

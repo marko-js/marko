@@ -19,22 +19,12 @@ var escapeXml = require('raptor-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 var runtime = require('./'); // Circular dependency, but that is okay
 var attr = require('raptor-util/attr');
+var notEmpty = require('../helpers/notEmpty');
+
 var isArray = Array.isArray;
 var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
 var escapeEndingScriptTagRegExp = /<\//g;
-
-function notEmpty(o) {
-    if (o == null) {
-        return false;
-    } else if (Array.isArray(o)) {
-        return !!o.length;
-    } else if (o === '') {
-        return false;
-    }
-
-    return true;
-}
 
 function classListHelper(arg, classNames) {
     var len;
@@ -114,7 +104,7 @@ function LoopStatus(getLength, isLast, isFirst, getIndex) {
     this.getIndex = getIndex;
 }
 
-module.exports = {
+module.exports = exports = {
     /**
      * Internal helper method to prevent null/undefined from being written out
      * when writing text that resolves to null/undefined
@@ -188,7 +178,7 @@ module.exports = {
      * Internal method to check if an object/array is empty
      * @private
      */
-    e: function (o) {
+    e: function empty(o) {
         return !notEmpty(o);
     },
     /**
@@ -398,3 +388,8 @@ module.exports = {
         return classList(arguments);
     }
 };
+
+var deprecate = require('./deprecate');
+var emptyNotEmptyDeprecationUrl = 'https://github.com/marko-js/marko/issues/357';
+deprecate(exports, 'e', 'empty() helper is deprecated. See: ' + emptyNotEmptyDeprecationUrl);
+deprecate(exports, 'ne', 'notEmpty() helper is deprecated. See: ' + emptyNotEmptyDeprecationUrl);

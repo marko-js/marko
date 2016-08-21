@@ -109,7 +109,7 @@ The code snippets below show how each syntax variant compares.
             Hello ${data.name}!
         </h1>
 
-        <ul if(notEmpty(data.colors))>
+        <ul if(data.colors.length)>
             <li for(color in data.colors)>
                 ${color}
             </li>
@@ -133,7 +133,7 @@ html lang="en"
     body
         // Welcome to Marko!
         h1 - Hello ${data.name}!
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -186,7 +186,7 @@ html lang="en"
         <h1>
             Hello ${data.name}!
         </h1>
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -894,7 +894,7 @@ For example, given the following input template:
 ```xml
 <my-custom-tag name="World"/>
 
-<ul if(notEmpty(data.colors))>
+<ul if(data.colors.length)>
     <li for(color in data.colors)>
         ${color}
     </li>
@@ -921,7 +921,7 @@ function create(__helpers) {
         name: "World"
       }, out);
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w("<ul>");
 
       forEach(data.colors, function(color) {
