@@ -849,14 +849,6 @@ Usage inside template:
 <div>${data.reverse('reverse test')}</div>
 ```
 
-Aside from custom helpers that can be built per-project, Marko has some built-in helpers with support for common tasks.
-
-## `empty()`/`notEmpty()`
-
-___DEPRECATED - Do not use (removed in Marko v4)___
-
-To deal with "empty" data, Marko automatically provides the `empty()` and `notEmpty()` helpers. Both helpers can be used to check for empty objects (objects, that are set to null), arrays of length zero or empty strings; `empty()` returns `true` for these cases exclusively. Therefore, not all "falsey" JavaScript values are reported as "empty" - e.g.: a boolean value that is set to "false" is not empty, hence `notEmpty()` would return "true". As their name already suggests, both helpers are contrary to each other.
-
 # Miscellaneous
 
 ## invoke
