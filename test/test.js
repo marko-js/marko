@@ -170,6 +170,96 @@ describe('async-writer' , function() {
         });
     });
 
+    it('should handle odd execution ordering', function(done) {
+        var outA = require('../').create();
+        outA.name = 'async-a';
+        outA.on('finish', function() {
+            var output = outA.getOutput();
+            expect(output).to.equal('1234!56');
+            done();
+        });
+
+        outA.write('1');
+            // write 1 to original_stream (1)
+
+        var outB = outA.beginAsync({ name:'async-b' });
+            // set outA.writer to buffer1
+            //     buffer1.async to outA
+            // set outB.writer to original_stream
+            //     original_stream.async to outB
+            // set outB.next to buffer1
+            //     buffer1.prev to outB
+
+        outA.write('3');
+            // write 3 to buffer 1 (3)
+
+        var outC = outA.beginAsync({ name:'async-c' });
+            // set newOut(outC).writer to this.writer(buffer1)
+            //     buffer1.async to outC
+            // set this(outA).writer to newBuffer(buffer2)
+            //     buffer2.async to outA
+            // set newOut(outC).next to newBuffer(buffer2)
+            //     buffer2.prev to outC
+
+            // set buffer1.next to outC
+            //     outC.prev to buffer1
+            // set buffer2.next to null
+
+        var outD = outC.beginAsync({ name:'async-d' });
+            // set newOut(outD).writer to this.writer(buffer1)
+            //     buffer1.async to outD
+            // set this(outC).writer to newBuffer(buffer3)
+            //     buffer3.async to outC
+            // set newOut(outD).next to newBuffer(buffer3)
+            //     buffer3.prev to outD
+
+            // set buffer3.next to buffer2
+            //     buffer2.prev to buffer3
+            // set outC.next to outD
+            //     outD.prev to outC
+
+        outB.write('2');
+            // write 2 to original_stream (12)
+
+        outB.end();
+            // flush this(outB).next(buffer1) to this(outB).writer(original_stream)
+            // write buffer1.contents ('3') to original_stream (123)
+            // set buffer1.async.writer (outD.writer) to original_stream
+            // stop, buffer1 not finished
+            // if outB.prev (null)
+            //    false
+
+        outA.write('6');
+            // write 6 to buffer2 (6)
+
+        outC.write('!')
+
+        outD.write('4');
+            // write 4 to original_stream (1234)
+
+        outD.end();
+            // flush outD.next (buffer3) to outD.writer (original_stream)
+            // write buffer3.contents ('') to original_stream (123)
+            // set buffer3.async.writer (outC.writer) to original_stream
+            // stop, buffer3 not finished
+            // if outD.prev (outC)
+            //    set outC.next to buffer3.next (buffer2)
+
+        outC.write('5');
+            // write 5 to original_stream (12345)
+
+        outC.end();
+            // flush outC.next (buffer2) to outC.writer (original_stream)
+            // write buffer2.contents(6) to original_stream (123456)
+            // set buffer2.async.writer (outA.writer) to original_stream
+            // stop, buffer2 not finished
+            // if outC.prev (buffer1)
+            //    set buffer1.next to buffer2.next (null)
+
+        outA.end();
+            //
+    });
+
     it('should handle sync errors correctly', function(done) {
         var out = require('../').create();
         var errors = [];
