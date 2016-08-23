@@ -43,8 +43,5 @@ exports.create = function (writer, options) {
     return asyncWriter;
 };
 
-exports.enableAsyncStackTrace = function() {
-    AsyncWriter.INCLUDE_STACK = true;
-};
-
 exports.AsyncWriter = AsyncWriter;
+exports.enableAsyncStackTrace = AsyncWriter.enableAsyncStackTrace;
