@@ -52,10 +52,6 @@ StringWriter.prototype = {
         var str = this.str;
         this.str = '';
         return str;
-    },
-
-    inspect: function() {
-        return this.id
     }
 };
 
@@ -119,13 +115,10 @@ var voidWriter = {
 function Fragment(asyncWriter) {
     this.asyncWriter = asyncWriter;
     // The asyncWriter that this async fragment is associated with
-    this.writer = asyncWriter.writer;
-    // The original writer this fragment was associated with
+
     this.finished = false;
     // Used to keep track if this async fragment was ended
-    this.flushed = false;
-    // Set to true when the contents of this async fragment have been
-    // flushed to the original writer
+
     Object.defineProperty(this, "next", {
         get: function () { return this.__nextFragment; },
         set: function (f) {
@@ -196,23 +189,14 @@ function Fragment(asyncWriter) {
             this.__prevFragment = f;
         },
     });
-    // A link to the next sibling async fragment (if any)
-    this.ready = true;    // Will be set to true if this fragment is ready to be flushed
-                          // (i.e. when there are no async fragments preceeding this fragment)
 }
 function flushNext(fragment, writer) {
     var next = fragment.next;
-    if (next) {
-        next.ready = true;
-        if(fragment.asyncWriter.finished) {
-            // Since we have flushed the next fragment is ready
-            //console.log('(swap)', next.asyncWriter.name, next.writer.id, 'for', writer.id);
-            next.writer = next.asyncWriter.writer = writer;
-            // Update the next fragment to use the original writer
-            next.flush();    // Now flush the next fragment (if it is not finish then it will just do nothing)
-        } else {
-            console.log('not finished');
-        }
+    if (next && fragment.asyncWriter.finished) {
+        next.asyncWriter.writer = writer;
+        // Update the next fragment to use the original writer
+        next.flush();
+        // Now flush the next fragment (if it is not finish then it will just do nothing)
     }
 }
 function BufferedFragment(asyncWriter, buffer) {
@@ -222,20 +206,16 @@ function BufferedFragment(asyncWriter, buffer) {
 }
 BufferedFragment.prototype = {
     flush: function () {
-        var writer = this.writer;
+        var writer = this.asyncWriter.writer;
         var bufferedString = this.buffer.flush();
 
-        console.log('(bf-'+this.buffer.id+').flush('+bufferedString+') to '+this.writer.id);
+        console.log('(bf-'+this.buffer.id+').flush('+bufferedString+') to '+writer.id);
 
         if (bufferedString.length !== 0) {
             writer.write(bufferedString);
         }
 
-        this.flushed = true;
         flushNext(this, writer);
-    },
-    inspect: function() {
-        return { buffer:this.buffer, writer:this.writer, flushed:this.flushed, next:this.next }
     }
 };
 
@@ -248,16 +228,7 @@ AsyncFragment.prototype = {
         if (!this.finished) {
             // Make sure end is only called once by the user
             this.finished = true;
-
-            console.log('ready?', this.ready)
-
-            if (true || this.ready) {
-                // There are no nested asynchronous fragments that are
-                // remaining and we are ready to be flushed then let's do it!
-                this.flush();
-            }
-        } else {
-            console.log('already finished')
+            this.flush();
         }
     },
     flush: function () {
@@ -267,17 +238,13 @@ AsyncFragment.prototype = {
         }
         if (!this.finished) {
             // Skipped Flushing since not finished
-            console.log('(skipflush)', this.asyncWriter.name, 'next:', this.next && this.next.asyncWriter.name, this.next && this.next.writer.id)
+            console.log('(skipflush)', this.asyncWriter.name, 'next:', this.next && this.next.asyncWriter.name)
             return;
         }
         console.log('(af-'+this.asyncWriter.name+').flush()', this.asyncWriter.writer.id);
-        this.flushed = true;
         var writer = this.asyncWriter.writer;
         this.writer = this.asyncWriter.writer = voidWriter; // Prevent additional out-of-order writes
         flushNext(this, writer);
-    },
-    inspect: function() {
-        return { writer:this.writer, flushed:this.flushed, next:this.next }
     }
 };
 
@@ -395,8 +362,6 @@ AsyncWriter.prototype = {
         options = options || {}
         console.log('('+options.name+') = ('+this.name+').beginAsync()');
 
-        var ready = true;
-
         // Create a new asyncWriter that the async fragment can write to.
         // The new async asyncWriter will use the existing writer and
         // the writer for the current asyncWriter (which will continue to be used)
@@ -425,21 +390,12 @@ AsyncWriter.prototype = {
         // See if we are being buffered by a previous async fragment
 
         if (prevAsyncFragment) {
-            // Splice in our two new fragments and add a link to the previous async fragment
-            // so that it can let us know when we are ready to be flushed
+            // Splice in our two new fragments
             bufferedFragment.next = prevAsyncFragment.next;
             if(prevAsyncFragment.next) prevAsyncFragment.next.prev = bufferedFragment;
-
             prevAsyncFragment.next = asyncFragment;
             asyncFragment.prev = prevAsyncFragment;
-
-            if (!prevAsyncFragment.flushed) {
-                ready = false;    // If we are preceeded by another async fragment then we aren't ready to be flushed
-            }
         }
-
-        asyncFragment.ready = ready;
-        // Set the ready flag based on our earlier checks above
 
         this._prevAF = bufferedFragment;
         // Record the previous async fragment for linking purposes
@@ -666,9 +622,6 @@ AsyncWriter.prototype = {
                 stream.flush();
             }
         }
-    },
-    inspect: function() {
-        return { name:this.name, _af:this._af, _prevAF:this._prevAF, _parentAF:this._parentAF, ready:this.ready }
     }
 };
 
