@@ -175,7 +175,7 @@ describe('async-writer' , function() {
         outA.name = 'async-a';
         outA.on('finish', function() {
             var output = outA.getOutput();
-            expect(output).to.equal('1234!56');
+            expect(output).to.equal('1234567');
             done();
         });
 
@@ -223,34 +223,35 @@ describe('async-writer' , function() {
 
         outB.end();
             // flush this(outB).next(buffer1) to this(outB).writer(original_stream)
-            // write buffer1.contents ('3') to original_stream (123)
+            // write buffer1.contents (3) to original_stream (123)
             // set buffer1.async.writer (outD.writer) to original_stream
             // stop, buffer1 not finished
             // if outB.prev (null)
             //    false
 
-        outA.write('6');
-            // write 6 to buffer2 (6)
+        outA.write('7');
+            // write 7 to buffer2 (7)
 
-        outC.write('!')
+        outC.write('5')
+            // write 5 to buffer3 (5)
 
         outD.write('4');
             // write 4 to original_stream (1234)
 
         outD.end();
             // flush outD.next (buffer3) to outD.writer (original_stream)
-            // write buffer3.contents ('') to original_stream (123)
+            // write buffer3.contents (5) to original_stream (12345)
             // set buffer3.async.writer (outC.writer) to original_stream
             // stop, buffer3 not finished
             // if outD.prev (outC)
             //    set outC.next to buffer3.next (buffer2)
 
-        outC.write('5');
-            // write 5 to original_stream (12345)
+        outC.write('6');
+            // write 6 to original_stream (123456)
 
         outC.end();
             // flush outC.next (buffer2) to outC.writer (original_stream)
-            // write buffer2.contents(6) to original_stream (123456)
+            // write buffer2.contents(7) to original_stream (1234567)
             // set buffer2.async.writer (outA.writer) to original_stream
             // stop, buffer2 not finished
             // if outC.prev (buffer1)
