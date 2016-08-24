@@ -245,6 +245,7 @@ describe('async-writer' , function() {
             // stop, buffer3 not finished
             // if outD.prev (outC)
             //    set outC.next to buffer3.next (buffer2)
+            //        buffer2.prev to outC
 
         outC.write('6');
             // write 6 to original_stream (123456)
@@ -258,7 +259,7 @@ describe('async-writer' , function() {
             //    set buffer1.next to buffer2.next (null)
 
         outA.end();
-            //
+            // all done
     });
 
     it('should handle sync errors correctly', function(done) {
