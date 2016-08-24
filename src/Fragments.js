@@ -48,9 +48,7 @@ BufferedFragment.prototype = {
 
 var voidWriter = {
     id:'void',
-    write: function(str) {
-        debug('UH OH', str)
-    }
+    write: function() {}
 };
 
 function logChangesToNextAndPrev(fragment) {
@@ -139,7 +137,6 @@ function flushNext(fragment, writer, flusher) {
         if (next) next.prev = flusher.prev
     }
 }
-
 
 exports.AsyncFragment = AsyncFragment;
 exports.BufferedFragment = BufferedFragment;

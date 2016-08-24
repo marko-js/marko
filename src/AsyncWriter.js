@@ -17,7 +17,14 @@
 
 // USED FOR DEBUGGING, REMOVE:
 global.ids = 0;
-global.debug = function() { console.log.apply(console, arguments) };
+global.debug = function() {
+    [].unshift.call(arguments, '\t');
+    console.log.apply(console, arguments);
+};
+global.debug.next = function() {
+    [].unshift.call(arguments, '\n');
+    console.log.apply(console, arguments);
+};
 
 var AsyncTracker = require('./AsyncTracker');
 var StringWriter = require('./StringWriter')
@@ -81,7 +88,7 @@ var proto = AsyncWriter.prototype = {
     },
     write: function (str) {
         if (str != null) {
-            debug('\n('+this.name+').write('+str+')');
+            debug.next('('+this.name+').write('+str+')');
             this.writer.write(str.toString());
         }
         return this;
@@ -117,39 +124,48 @@ var proto = AsyncWriter.prototype = {
     },
     createAsyncFragment: function() {
         var asyncFragment = new AsyncFragment(this);
-        this._af = asyncFragment;
+        this._af = this._currentFragment = asyncFragment;
         return asyncFragment;
     },
     createBufferedFragment: function () {
+        // Store the previousFragment so we can splice in
+        // other fragments into the chain
+        this._previousFragment = this._currentFragment;
+
         // Create a new StringWriter to act as a
         // buffer for this AsyncWriter.
         var buffer = this.writer = new StringWriter();
 
-        // Return a BufferedFragment that wraps this new writer.
-        return new BufferedFragment(this, buffer);
-    },
-    linkFragments: function (currentFragment, nextFragment) {
-        currentFragment.next = nextFragment;
-        nextFragment.prev = currentFragment;
+        // Wrap the buffer in a BufferedFragment and
+        // set it as the currentFragment
+        var bufferedFragment = this._currentFragment = new BufferedFragment(this, buffer)
 
-        // If there is a previous fragment,
-        // splice in our two new fragments
-        var prevFragment = this._prevAF || this._af;
-        if (prevFragment) {
-            nextFragment.next = prevFragment.next;
-            if (prevFragment.next) prevFragment.next.prev = nextFragment;
-            prevFragment.next = currentFragment;
-            currentFragment.prev = prevFragment;
+        return bufferedFragment;
+    },
+    linkFragments: function (newAsyncFragment, currentFragment) {
+        newAsyncFragment.next = currentFragment;
+        currentFragment.prev = newAsyncFragment;
+
+        // Splice in our two new fragments
+        // If this is already part of the chain
+        var previousFragment = this._previousFragment;
+        if (previousFragment) {
+            if (previousFragment.next) {
+                currentFragment.next = previousFragment.next;
+                previousFragment.next.prev = currentFragment;
+            }
+            previousFragment.next = newAsyncFragment;
+            newAsyncFragment.prev = previousFragment;
         }
 
-        this._prevAF = nextFragment;
+        delete this._previousFragment;
     },
     beginAsync: function (options) {
         if (this._isSync) {
             throw new Error('beginAsync() not allowed when using renderSync()');
         }
 
-        debug('\n('+(options&&options.name)+') = ('+this.name+').beginAsync()');
+        debug.next('('+(options&&options.name)+') = ('+this.name+').beginAsync()');
 
         // Create a new AsyncWriter that the async fragment can write to.
         // The new AsyncWriter will use the existing writer and
@@ -157,9 +173,9 @@ var proto = AsyncWriter.prototype = {
         // will be replaced with a string buffer writer
         var newAsyncWriter = this.createNestedWriter(this.writer, options);
         var newAsyncFragment = newAsyncWriter.createAsyncFragment();
-        var bufferedFragment = this.createBufferedFragment();
+        var currentFragment = this.createBufferedFragment();
 
-        this.linkFragments(newAsyncFragment, bufferedFragment);
+        this.linkFragments(newAsyncFragment, currentFragment);
         this._tracker.begin(newAsyncWriter, this, options);
 
         debug('('+newAsyncWriter.name+').writer: (sw-'+newAsyncWriter.writer.id+')');
@@ -260,7 +276,7 @@ var proto = AsyncWriter.prototype = {
 
         this.finished = true;
 
-        debug('\n('+this.name+').end()');
+        debug.next('('+this.name+').end()');
 
         var asyncFragment = this._af;
 
