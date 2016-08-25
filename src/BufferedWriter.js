@@ -41,3 +41,5 @@ BufferedWriter.prototype = {
         this._buffer = '';
     }
 };
+
+module.exports = BufferedWriter;
