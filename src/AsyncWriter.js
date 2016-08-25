@@ -10,8 +10,8 @@ var ids = 0;
 
 function AsyncStream(writer, parent, global, buffer) {
     if (!parent) {
-        this.global = global || (global = {});
-        this._events = global.events = writer && writer.on ? writer : new EventEmitter();
+        this.global = this.attributes /* legacy */ = global || (global = {});
+        this._events = global.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
 
         var stream;
 
@@ -27,7 +27,7 @@ function AsyncStream(writer, parent, global, buffer) {
         this._tracker = new AsyncTracker(this);
     } else {
         this.stream = parent.stream;
-        this.global = parent.global;
+        this.global = this.attributes /* legacy */ = parent.global;
         this._events = parent._events;
         this._tracker = parent._tracker;
         this._originalWriter = parent._originalWriter;
@@ -64,6 +64,10 @@ var proto = AsyncStream.prototype = {
     },
 
     beginAsync: function(options) {
+        if (this._isSync) {
+            throw new Error('beginAsync() not allowed when using renderSync()');
+        }
+
         /*  BEFORE:
             =======
                          this
@@ -100,7 +104,7 @@ var proto = AsyncStream.prototype = {
             =======
             this                                  nextStream
             ↓↑                                    ↓↑
-            this.writer(oldWriter) → nextWriter → nextWriter2 → futureWriter  */
+            this.writer(oldWriter) → nextWriter1 → nextWriter2 → futureWriter  */
 
         var oldWriter = this.writer;
         this.writer = voidWriter;
@@ -110,7 +114,7 @@ var proto = AsyncStream.prototype = {
             ======
             this        |  null                     nextStream
             ↓           |  ↑                        ↓↑
-            voidWriter  |  oldWriter → nextWriter → nextWriter2 → futureWriter  */
+            voidWriter  |  oldWriter → nextWriter1 → nextWriter2 → futureWriter  */
 
         if (oldWriter === this._originalWriter) {
             var nextStream;
@@ -147,11 +151,12 @@ var proto = AsyncStream.prototype = {
 
                 FLUSHED & GARBAGE COLLECTED:
                 ============================
-                nextWriter, nextWriter2                  */
+                nextWriter1, nextWriter2                  */
 
         }
 
         this._tracker.end(this);
+        return this;
     },
 
     on: function(event, callback) {
@@ -194,6 +199,7 @@ var proto = AsyncStream.prototype = {
         }
 
         lastArray.push(callback);
+        return this;
     },
 
     emit: function(type, arg) {
@@ -239,6 +245,8 @@ var proto = AsyncStream.prototype = {
         if (console) {
             console.error(message);
         }
+
+        return this;
     },
 
     flush: function() {
@@ -248,6 +256,7 @@ var proto = AsyncStream.prototype = {
                 stream.flush();
             }
         }
+        return this;
     }
 }
 
