@@ -11,7 +11,7 @@ function AsyncTracker(stream) {
 }
 
 AsyncTracker.prototype = {
-    begin(newWriter, parentWriter, options) {
+    begin: function(newWriter, parentWriter, options) {
         var timeout;
         var name;
 
