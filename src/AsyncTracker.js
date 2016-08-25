@@ -1,7 +1,8 @@
 var AsyncWriter = require('./AsyncWriter');
 
-function AsyncTracker(originalWriter) {
-    this.originalWriter = originalWriter;
+function AsyncTracker(stream) {
+    this.originalStream = stream;
+    this.originalWriter = stream._originalWriter;
     this.remaining = 0;
     this.last = 0;
     this.ended = false;
@@ -49,7 +50,7 @@ AsyncTracker.prototype = {
             }, timeout);
         }
 
-        this.originalWriter.emit('beginAsync', {
+        this.originalStream.emit('beginAsync', {
             writer: newWriter,
             parentWriter: parentWriter
         });
@@ -62,7 +63,7 @@ AsyncTracker.prototype = {
 
         var remaining;
 
-        if (asyncWriter === this.originalWriter) {
+        if (asyncWriter === this.originalStream) {
             remaining = this.remaining;
             this.ended = true;
         } else {
@@ -79,15 +80,15 @@ AsyncTracker.prototype = {
             if (!this.lastFired && (this.remaining - this.last === 0)) {
                 this.lastFired = true;
                 this.last = 0;
-                this.originalWriter.emit('last');
+                this.originalStream.emit('last');
             }
 
             if (remaining === 0) {
                 this.finished = true;
-                if (this.originalWriter._originalWriter.end) {
-                    this.originalWriter._originalWriter.end();
+                if (this.originalWriter.end) {
+                    this.originalWriter.end();
                 } else {
-                    this.originalWriter.emit('finish');
+                    this.originalStream.emit('finish');
                 }
             }
         }
