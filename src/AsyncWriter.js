@@ -68,27 +68,24 @@ var proto = AsyncStream.prototype = {
             throw new Error('beginAsync() not allowed when using renderSync()');
         }
 
-        /*  BEFORE:
-            =======
-                         this
-                         ↓↑
-            prevWriter → this.writer(oldWriter) → nextWriter  */
+        var currentWriter = this.writer;
 
-        var oldWriter = this.writer;
+        /* ┏━━━━━┓               this
+           ┃ WAS ┃               ↓↑
+           ┗━━━━━┛  prevWriter → currentWriter → nextWriter  */
+
         var newWriter = new StringWriter();
-        var newStream = new AsyncStream(oldWriter, this);
+        var newStream = new AsyncStream(currentWriter, this);
 
         this.writer = newWriter;
         newWriter.stream = this;
 
-        newWriter.next = oldWriter.next;
-        oldWriter.next = newWriter;
+        newWriter.next = currentWriter.next;
+        currentWriter.next = newWriter;
 
-        /*  AFTER:
-            ======
-                         newStream   this
-                         ↓↑          ↓↑
-            prevWriter → oldWriter → newWriter → nextWriter  */
+        /* ┏━━━━━┓               newStream       this
+           ┃ NOW ┃               ↓↑              ↓↑
+           ┗━━━━━┛  prevWriter → currentWriter → newWriter → nextWriter  */
 
         this._tracker.begin(newStream, this, options);
 
@@ -100,63 +97,84 @@ var proto = AsyncStream.prototype = {
             this.write(data);
         }
 
-        /*  BEFORE:
-            =======
-            this                                  nextStream
-            ↓↑                                    ↓↑
-            this.writer(oldWriter) → nextWriter1 → nextWriter2 → futureWriter  */
+        var currentWriter = this.writer;
 
-        var oldWriter = this.writer;
+        /* ┏━━━━━┓  this            nextStream
+           ┃ WAS ┃  ↓↑              ↓↑
+           ┗━━━━━┛  currentWriter → nextWriter → futureWriter  */
+
+        // Prevent any more writes to the current steam
         this.writer = voidWriter;
-        oldWriter.stream = null;
+        currentWriter.stream = null;
 
-        /*  AFTER:
-            ======
-            this        |  null                     nextStream
-            ↓           |  ↑                        ↓↑
-            voidWriter  |  oldWriter → nextWriter1 → nextWriter2 → futureWriter  */
+        // Flush the contents of nextWriter to the currentWriter
+        this.flushNext(currentWriter);
 
-        if (oldWriter === this._originalWriter) {
-            var nextStream;
-            var nextWriter = oldWriter.next;
-
-            // flush until there is no nextWriter
-            // or the nextWriter is still attached
-            // to a branch.
-            while(nextWriter) {
-                oldWriter.write(nextWriter.toString());
-                nextStream = nextWriter.stream;
-
-                if(nextStream) break;
-                else nextWriter = nextWriter.next;
-            }
-
-            // Orphan the nextWriter and everything that
-            // came before it. They have been flushed.
-            oldWriter.next = nextWriter && nextWriter.next;
-
-            // If there is a nextStream,
-            // set its writer to oldWriter
-            // (which is the originalWriter)
-            if(nextStream) {
-                nextStream.writer = oldWriter;
-                oldWriter.stream = nextStream;
-            }
-
-            /*  AFTER:
-                ======
-                this        |  nextStream
-                ↓           |  ↓↑
-                voidWriter  |  oldWriter → futureWriter
-
-                FLUSHED & GARBAGE COLLECTED:
-                ============================
-                nextWriter1, nextWriter2                  */
-
-        }
+        /* ┏━━━━━┓    this        ╵  nextStream
+           ┃     ┃    ↓           ╵  ↓↑
+           ┃ NOW ┃    voidWriter  ╵  currentWriter → futureWriter
+           ┃     ┃  ──────────────┴────────────────────────────────
+           ┗━━━━━┛    Flushed & garbage collected: nextWriter  */
 
         this._tracker.end(this);
         return this;
+    },
+
+    // flushNextOld: function(currentWriter) {
+    //     if (currentWriter === this._originalWriter) {
+    //         var nextStream;
+    //         var nextWriter = currentWriter.next;
+    //
+    //         // flush until there is no nextWriter
+    //         // or the nextWriter is still attached
+    //         // to a branch.
+    //         while(nextWriter) {
+    //             currentWriter.write(nextWriter.toString());
+    //             nextStream = nextWriter.stream;
+    //
+    //             if(nextStream) break;
+    //             else nextWriter = nextWriter.next;
+    //         }
+    //
+    //         // Orphan the nextWriter and everything that
+    //         // came before it. They have been flushed.
+    //         currentWriter.next = nextWriter && nextWriter.next;
+    //
+    //         // If there is a nextStream,
+    //         // set its writer to currentWriter
+    //         // (which is the originalWriter)
+    //         if(nextStream) {
+    //             nextStream.writer = currentWriter;
+    //             currentWriter.stream = nextStream;
+    //         }
+    //     }
+    // },
+
+    flushNext: function(currentWriter) {
+        // It is possible that currentWriter is the
+        // last writer in the chain, so let's make
+        // sure there is a nextWriter to flush.
+        var nextWriter = currentWriter.next;
+        if (nextWriter) {
+            // Flush the contents of nextWriter
+            // to the currentWriter
+            currentWriter.write(nextWriter.toString());
+
+            // Remove nextWriter from the chain.
+            // It has been flushed and can now be
+            // garbage collected.
+            currentWriter.next = nextWriter.next;
+
+            // It's possible that nextWriter is the last
+            // writer in the chain and its stream already
+            // ended, so let's make sure nextStream exists.
+            var nextStream = nextWriter.stream;
+            if (nextStream) {
+                // Point the nextStream to currentWriter
+                nextStream.writer = currentWriter;
+                currentWriter.stream = nextStream;
+            }
+        }
     },
 
     on: function(event, callback) {
@@ -276,10 +294,10 @@ proto.captureString = function (func, thisObj) {
     return sb.toString();
 };
 proto.swapWriter = function (newWriter, func, thisObj) {
-    var oldWriter = this.writer;
+    var currentWriter = this.writer;
     this.writer = newWriter;
     func.call(thisObj);
-    this.writer = oldWriter;
+    this.writer = currentWriter;
 };
 
 module.exports = AsyncStream;
