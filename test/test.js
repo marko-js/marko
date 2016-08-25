@@ -21,7 +21,7 @@ describe('async-writer' , function() {
     });
 
     it('should render a series of sync calls correctly', function(done) {
-        var out = require('../').create();
+        var out = require('../debug').create();
         out.write('1');
         out.write('2');
         out.write('3');
@@ -123,7 +123,7 @@ describe('async-writer' , function() {
     });
 
     it('should render nested async calls correctly', function(done) {
-        var out = require('../').create();
+        var out = require('../debug').create();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -171,8 +171,8 @@ describe('async-writer' , function() {
     });
 
     it('should handle odd execution ordering', function(done) {
-        var outA = require('../').create();
-        outA.name = 'async-a';
+        var outA = require('../debug').create({ name:'outA' });
+
         outA.on('finish', function() {
             var output = outA.getOutput();
             expect(output).to.equal('1234567');
@@ -182,7 +182,7 @@ describe('async-writer' , function() {
         outA.write('1');
             // write 1 to original_stream (1)
 
-        var outB = outA.beginAsync({ name:'async-b' });
+        var outB = outA.beginAsync({ name:'outB' });
             // set outA.writer to buffer1
             //     buffer1.async to outA
             // set outB.writer to original_stream
@@ -193,7 +193,7 @@ describe('async-writer' , function() {
         outA.write('3');
             // write 3 to buffer 1 (3)
 
-        var outC = outA.beginAsync({ name:'async-c' });
+        var outC = outA.beginAsync({ name:'outC' });
             // set newOut(outC).writer to this.writer(buffer1)
             //     buffer1.async to outC
             // set this(outA).writer to newBuffer(buffer2)
@@ -205,7 +205,7 @@ describe('async-writer' , function() {
             //     outC.prev to buffer1
             // set buffer2.next to null
 
-        var outD = outC.beginAsync({ name:'async-d' });
+        var outD = outC.beginAsync({ name:'outD' });
             // set newOut(outD).writer to this.writer(buffer1)
             //     buffer1.async to outD
             // set this(outC).writer to newBuffer(buffer3)

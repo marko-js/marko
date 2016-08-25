@@ -28,6 +28,11 @@ exports.create = function (writer, options) {
     var global;
     var buffer;
 
+    if(arguments.length === 1 && typeof writer.write !== 'function') {
+        options = writer;
+        writer = null;
+    }
+
     if (options) {
         global = options.global;
         buffer = options.buffer === true;
@@ -35,9 +40,8 @@ exports.create = function (writer, options) {
 
     var asyncWriter = new AsyncWriter(
         writer,
+        null /* Internally used to pass parent */,
         global,
-        null /* Internal async tracking data */,
-        null /* Internal EventEmitter */,
         buffer);    //Create a new context using the writer provided
 
     return asyncWriter;

@@ -11,12 +11,10 @@ function BufferedWriter(wrappedStream) {
 
 BufferedWriter.prototype = {
     write: function(str) {
-        debug('BUFFER:', str);
         this._buffer += str;
     },
 
     flush: function() {
-        debug('FLUSH:', this._buffer);
         if (this._buffer.length !== 0) {
             this._wrapped.write(this._buffer);
             this._buffer = '';

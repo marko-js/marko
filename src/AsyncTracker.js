@@ -6,6 +6,7 @@ function AsyncTracker(originalWriter) {
     this.last = 0;
     this.ended = false;
     this.finished = false;
+    this.ids = 0;
 }
 
 AsyncTracker.prototype = {
@@ -83,8 +84,8 @@ AsyncTracker.prototype = {
 
             if (remaining === 0) {
                 this.finished = true;
-                if (this.originalWriter._stream.end) {
-                    this.originalWriter._stream.end();
+                if (this.originalWriter._originalWriter.end) {
+                    this.originalWriter._originalWriter.end();
                 } else {
                     this.originalWriter.emit('finish');
                 }

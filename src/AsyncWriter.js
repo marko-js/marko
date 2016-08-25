@@ -1,189 +1,161 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
-// USED FOR DEBUGGING, REMOVE:
-global.ids = 0;
-global.debug = function() {
-    [].unshift.call(arguments, '\t');
-    console.log.apply(console, arguments);
-};
-global.debug.next = function() {
-    [].unshift.call(arguments, '\n');
-    console.log.apply(console, arguments);
-};
-
-var AsyncTracker = require('./AsyncTracker');
-var StringWriter = require('./StringWriter')
-var BufferedWriter = require('./BufferedWriter')
-var AsyncFragment = require('./Fragments').AsyncFragment;
-var BufferedFragment = require('./Fragments').BufferedFragment;
 var EventEmitter = require('events').EventEmitter;
+var AsyncTracker = require('./AsyncTracker');
+var StringWriter = require('./StringWriter');
+var BufferedWriter = require('./BufferedWriter');
 
-function AsyncWriter(writer, global, tracker, events, buffer) {
+var voidWriter = { write:function(){} };
+var ids = 0;
+
+function AsyncStream(writer, parent, global, buffer) {
+    if (!parent) {
+        this.global = global || (global = {});
+        this._events = global.events = writer && writer.on ? writer : new EventEmitter();
+
+        var stream;
+
+        if (!writer) {
+            writer = new StringWriter(this._events);
+        } else if (buffer) {
+            stream = writer;
+            writer = new BufferedWriter(writer);
+        }
+
+        this.stream = stream || writer;
+        this._originalWriter = writer;
+        this._tracker = new AsyncTracker(this);
+    } else {
+        this.stream = parent.stream;
+        this.global = parent.global;
+        this._events = parent._events;
+        this._tracker = parent._tracker;
+        this._originalWriter = parent._originalWriter;
+    }
+
     this.data = {};
-    this.global = this.attributes /* legacy */ = (global || (global = {}));
-    this._af = this._prevAF = this._parentAF = null;
-    this._isSync = false;
-    this._last = null;
-
-    Object.defineProperty(this, "writer", {
-        get: function () { return this.__writer; },
-        set: function (w) {
-            if (this.__writer) {
-                debug('('+this.name+').writer: (sw-'+w.id+'); was', this.__writer.id);
-            }
-            this.__writer = w;
-        },
-    });
-
-    if (!events) {
-        // Use the underlying stream as the event emitter if available.
-        // Otherwise, create a new event emitter
-        events = writer && writer.on ? writer : new EventEmitter();
-    }
-
-    this._events = global.events /* deprecated */ = events;
-    this._tracker = tracker || new AsyncTracker(this);
-
-    var stream;
-
-    if (!writer) {
-        writer = new StringWriter(this._events);
-    } else if (buffer) {
-        stream = writer;
-        writer = new BufferedWriter(writer);
-    }
-
-    this.stream = stream || writer;
-    this.writer = this._stream = writer;
+    this.writer = writer;
+    writer.stream = this;
 }
 
-AsyncWriter.DEFAULT_TIMEOUT = 10000;
-AsyncWriter.INCLUDE_STACK = typeof process !== 'undefined' && process.env.NODE_ENV === 'development';
-AsyncWriter.enableAsyncStackTrace = function() {
-    AsyncWriter.INCLUDE_STACK = true;
+AsyncStream.DEFAULT_TIMEOUT = 10000;
+AsyncStream.INCLUDE_STACK = typeof process !== 'undefined' && process.env.NODE_ENV === 'development';
+AsyncStream.enableAsyncStackTrace = function() {
+    AsyncStream.INCLUDE_STACK = true;
 };
 
-var proto = AsyncWriter.prototype = {
-    constructor: AsyncWriter,
-
-    isAsyncWriter: AsyncWriter,
+var proto = AsyncStream.prototype = {
+    constructor: AsyncStream,
+    isAsyncWriter: AsyncStream,
 
     sync: function() {
         this._isSync = true;
     },
+
     write: function (str) {
         if (str != null) {
-            debug.next('('+this.name+').write('+str+')');
             this.writer.write(str.toString());
         }
         return this;
     },
+
     getOutput: function () {
-        return this.writer.toString();
+        return this.writer === voidWriter ? this._originalWriter.toString() : this.writer.toString();
     },
-    createNestedWriter: function (writer, options) {
-        var newOut = new AsyncWriter(
-                writer,
-                this.global /* Global data is shared */,
-                this._tracker /* Internal async metadata is shared */,
-                this._events /* Internal EventEmitter is shared */);
 
-        newOut.name = options && options.name;
+    beginAsync: function(options) {
+        /*  BEFORE:
+            =======
+                         this
+                         ↓↑
+            prevWriter → this.writer(oldWriter) → nextWriter  */
 
-        // Keep a reference to the original stream. This was done because when
-        // rendering to a response stream we can get access to the request/response
-        // to figure out the locale and other information associated with the
-        // client. Without this we would have to rely on the request being
-        // passed around everywhere or rely on something like continuation-local-storage
-        // which has shown to be unreliable in some situations.
-        newOut._stream = this._stream; // This is the original stream or the stream wrapped with a BufferedWriter
-        newOut.stream = this.stream;   // HACK: This is the user assigned stream and not the stream
-                                       //       that was wrapped with a BufferedWriter.
+        var oldWriter = this.writer;
+        var newWriter = new StringWriter();
+        var newStream = new AsyncStream(oldWriter, this);
 
-        var currentBuffer = writer.fragment;
-        if (currentBuffer) {
-            currentBuffer.asyncWriter = newOut;
+        this.writer = newWriter;
+        newWriter.stream = this;
+
+        newWriter.next = oldWriter.next;
+        oldWriter.next = newWriter;
+
+        /*  AFTER:
+            ======
+                         newStream   this
+                         ↓↑          ↓↑
+            prevWriter → oldWriter → newWriter → nextWriter  */
+
+        this._tracker.begin(newStream, this, options);
+
+        return newStream;
+    },
+
+    end: function(data) {
+        if (data) {
+            this.write(data);
         }
 
-        return newOut;
-    },
-    createAsyncFragment: function() {
-        var asyncFragment = new AsyncFragment(this);
-        this._af = this._currentFragment = asyncFragment;
-        return asyncFragment;
-    },
-    createBufferedFragment: function () {
-        // Store the previousFragment so we can splice in
-        // other fragments into the chain
-        this._previousFragment = this._currentFragment;
+        /*  BEFORE:
+            =======
+            this                                  nextStream
+            ↓↑                                    ↓↑
+            this.writer(oldWriter) → nextWriter → nextWriter2 → futureWriter  */
 
-        // Create a new StringWriter to act as a
-        // buffer for this AsyncWriter.
-        var buffer = this.writer = new StringWriter();
+        var oldWriter = this.writer;
+        this.writer = voidWriter;
+        oldWriter.stream = null;
 
-        // Wrap the buffer in a BufferedFragment and
-        // set it as the currentFragment
-        var bufferedFragment = this._currentFragment = new BufferedFragment(this, buffer)
+        /*  AFTER:
+            ======
+            this        |  null                     nextStream
+            ↓           |  ↑                        ↓↑
+            voidWriter  |  oldWriter → nextWriter → nextWriter2 → futureWriter  */
 
-        return bufferedFragment;
-    },
-    linkFragments: function (newAsyncFragment, currentFragment) {
-        newAsyncFragment.next = currentFragment;
-        currentFragment.prev = newAsyncFragment;
+        if (oldWriter === this._originalWriter) {
+            var nextStream;
+            var nextWriter = oldWriter.next;
 
-        // Splice in our two new fragments
-        // If this is already part of the chain
-        var previousFragment = this._previousFragment;
-        if (previousFragment) {
-            if (previousFragment.next) {
-                currentFragment.next = previousFragment.next;
-                previousFragment.next.prev = currentFragment;
+            // flush until there is no nextWriter
+            // or the nextWriter is still attached
+            // to a branch.
+            while(nextWriter) {
+                oldWriter.write(nextWriter.toString());
+                nextStream = nextWriter.stream;
+
+                if(nextStream) break;
+                else nextWriter = nextWriter.next;
             }
-            previousFragment.next = newAsyncFragment;
-            newAsyncFragment.prev = previousFragment;
+
+            // Orphan the nextWriter and everything that
+            // came before it. They have been flushed.
+            oldWriter.next = nextWriter && nextWriter.next;
+
+            // If there is a nextStream,
+            // set its writer to oldWriter
+            // (which is the originalWriter)
+            if(nextStream) {
+                nextStream.writer = oldWriter;
+                oldWriter.stream = nextStream;
+            }
+
+            /*  AFTER:
+                ======
+                this        |  nextStream
+                ↓           |  ↓↑
+                voidWriter  |  oldWriter → futureWriter
+
+                FLUSHED & GARBAGE COLLECTED:
+                ============================
+                nextWriter, nextWriter2                  */
+
         }
 
-        delete this._previousFragment;
+        this._tracker.end(this);
     },
-    beginAsync: function (options) {
-        if (this._isSync) {
-            throw new Error('beginAsync() not allowed when using renderSync()');
-        }
 
-        debug.next('('+(options&&options.name)+') = ('+this.name+').beginAsync()');
-
-        // Create a new AsyncWriter that the async fragment can write to.
-        // The new AsyncWriter will use the existing writer and
-        // the writer for the current asyncWriter (which will continue to be used)
-        // will be replaced with a string buffer writer
-        var newAsyncWriter = this.createNestedWriter(this.writer, options);
-        var newAsyncFragment = newAsyncWriter.createAsyncFragment();
-        var currentFragment = this.createBufferedFragment();
-
-        this.linkFragments(newAsyncFragment, currentFragment);
-        this._tracker.begin(newAsyncWriter, this, options);
-
-        debug('('+newAsyncWriter.name+').writer: (sw-'+newAsyncWriter.writer.id+')');
-
-        return newAsyncWriter;
-    },
     on: function(event, callback) {
-        if (event === 'finish' && this.writer.finished) {
+        if (event === 'finish' && this._originalWriter.finished) {
             callback();
             return this;
         }
@@ -193,7 +165,7 @@ var proto = AsyncWriter.prototype = {
     },
 
     once: function(event, callback) {
-        if (event === 'finish' && this.writer.finished) {
+        if (event === 'finish' && this._originalWriter.finished) {
             callback();
             return this;
         }
@@ -243,7 +215,7 @@ var proto = AsyncWriter.prototype = {
     },
 
     pipe: function(stream) {
-        this._stream.pipe(stream);
+        this._originalWriter.pipe(stream);
         return this;
     },
 
@@ -269,40 +241,20 @@ var proto = AsyncWriter.prototype = {
         }
     },
 
-    end: function(data) {
-        if (data) {
-            this.write(data);
-        }
-
-        this.finished = true;
-
-        debug.next('('+this.name+').end()');
-
-        var asyncFragment = this._af;
-
-        if (asyncFragment) {
-            asyncFragment.end();
-        }
-
-        this._tracker.end(this);
-
-        return this;
-    },
-
     flush: function() {
         if (!this._tracker.finished) {
-            var stream = this._stream;
+            var stream = this._originalWriter;
             if (stream && stream.flush) {
                 stream.flush();
             }
         }
     }
-};
+}
 
-// short alias
-proto.w = AsyncWriter.prototype.write;
+// alias:
+proto.w = AsyncStream.prototype.write;
 
-// DEPRECATED:
+// deprecated:
 proto.getAttributes = function () {
     return this.global;
 };
@@ -321,4 +273,4 @@ proto.swapWriter = function (newWriter, func, thisObj) {
     this.writer = oldWriter;
 };
 
-module.exports = AsyncWriter;
+module.exports = AsyncStream;

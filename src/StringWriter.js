@@ -2,8 +2,6 @@ function StringWriter(events) {
     this.str = '';
     this.events = events;
     this.finished = false;
-    this.id = ids++;
-    debug('(sw-'+this.id+').create()');
 }
 
 StringWriter.prototype = {
@@ -16,7 +14,6 @@ StringWriter.prototype = {
 
     write: function(str) {
         this.str += str;
-        debug('(sw-'+this.id+').write('+str+'); now:', this.str);
         return this;
     },
 
