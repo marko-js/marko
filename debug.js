@@ -36,7 +36,7 @@ function logEvents(asyncStream, state) {
     var _write = asyncStream.write;
     asyncStream.write = function(str) {
         var thisStream = _write.apply(this, arguments);
-        console.log('\n' + bold(this.name + cyan('.write(') + grey(str) + cyan(')')));
+        console.log('\n' + bold(this.name + cyan('.write(') + reset(grey(str)) + cyan(')')));
         console.log(createDiagram(this));
         return thisStream;
     }
@@ -109,7 +109,7 @@ function createDiagram(asyncStream) {
         if(i !== writers.length-1) {
             line1 += '   ';
             line2 += '   ';
-            line3 += ' → ';
+            line3 += grey(' → ');
             line4 += '   ';
         }
     })
@@ -117,17 +117,49 @@ function createDiagram(asyncStream) {
     if(line1 === ' '.repeat(line1.length)) line1 = null;
     if(line2 === ' '.repeat(line2.length)) line2 = null;
 
-    return '\n' + (line1 ? line1 + '\n' : '') + (line2 ? line2 + '\n' : '') + line3 + '\n' + line4 + '\n';
+    return (line1 ? line1 + '\n' : '') + (line2 ? grey(line2) + '\n' : '') + line3 + '\n' + magenta(line4) + '\n';
 }
 
+var canFormat = (function () {
+  if (process.stdout && !process.stdout.isTTY) {
+    return false;
+  }
+
+  if (process.platform === 'win32') {
+    return true;
+  }
+
+  if ('COLORTERM' in process.env) {
+    return true;
+  }
+
+  if (process.env.TERM === 'dumb') {
+    return false;
+  }
+
+  if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(process.env.TERM)) {
+    return true;
+  }
+
+  return false;
+})();
+
 function format(str, begin, end) {
-    return '\u001b['+begin+'m' + str + '\u001b['+end+'m';
+    begin = canFormat ? '\u001b['+begin+'m' : '';
+    end = canFormat ? '\u001b['+end+'m' : '';
+    return begin + str + end;
+}
+function reset(str) {
+    return format(str, 0, 0);
 }
 function red(str) {
     return format(str, 31, 39);
 }
 function cyan(str) {
     return format(str, 36, 39);
+}
+function magenta(str) {
+    return format(str, 35, 39);
 }
 function green(str) {
     return format(str, 32, 39);
