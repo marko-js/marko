@@ -60,7 +60,7 @@ var proto = AsyncStream.prototype = {
     },
 
     getOutput: function () {
-        return this.writer === voidWriter ? this._originalWriter.toString() : this.writer.toString();
+        return this._originalWriter.toString();
     },
 
     beginAsync: function(options) {
@@ -222,7 +222,17 @@ var proto = AsyncStream.prototype = {
 
     emit: function(type, arg) {
         var events = this._events;
-        events.emit.apply(events, arguments);
+        switch(arguments.length) {
+            case 1:
+                events.emit(type);
+                break;
+            case 2:
+                events.emit(type, arg);
+                break;
+            default:
+                events.emit.apply(events, arguments);
+                break;
+        }
         return this;
     },
 
