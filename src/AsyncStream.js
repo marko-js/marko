@@ -14,7 +14,13 @@ function AsyncStream(writer, parent, global, buffer) {
     var tracker;
     var originalWriter;
 
-    if (!parent) {
+    if (parent) {
+        finalStream = parent.stream;
+        finalGlobal = parent.global;
+        events = parent._events;
+        tracker = parent._tracker;
+        originalWriter = parent._originalWriter;
+    } else {
         finalGlobal = global || (global = {});
         events = global.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
 
@@ -28,12 +34,6 @@ function AsyncStream(writer, parent, global, buffer) {
         finalStream = finalStream || writer;
         originalWriter = writer;
         tracker = new AsyncTracker(this, originalWriter);
-    } else {
-        finalStream = parent.stream;
-        finalGlobal = parent.global;
-        events = parent._events;
-        tracker = parent._tracker;
-        originalWriter = parent._originalWriter;
     }
 
     this.global = this.attributes /* legacy */ = finalGlobal;
