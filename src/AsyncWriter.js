@@ -284,29 +284,32 @@ var proto = AsyncStream.prototype = {
             }
         }
         return this;
+    },
+
+    // Deprecated BEGIN:
+    getAttributes: function() {
+        return this.global;
+    },
+    getAttribute: function(name) {
+        return this.global[name];
+    },
+    captureString: function(func, thisObj) {
+        var sb = new StringWriter();
+        this.swapWriter(sb, func, thisObj);
+        return sb.toString();
+    },
+    swapWriter: function(newWriter, func, thisObj) {
+        var currentWriter = this.writer;
+        this.writer = newWriter;
+        func.call(thisObj);
+        this.writer = currentWriter;
     }
+    // // Deprecated END
 };
 
 // alias:
 proto.w = AsyncStream.prototype.write;
 
-// deprecated:
-proto.getAttributes = function () {
-    return this.global;
-};
-proto.getAttribute = function (name) {
-    return this.global[name];
-};
-proto.captureString = function (func, thisObj) {
-    var sb = new StringWriter();
-    this.swapWriter(sb, func, thisObj);
-    return sb.toString();
-};
-proto.swapWriter = function (newWriter, func, thisObj) {
-    var currentWriter = this.writer;
-    this.writer = newWriter;
-    func.call(thisObj);
-    this.writer = currentWriter;
-};
+
 
 module.exports = AsyncStream;
