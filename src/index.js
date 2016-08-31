@@ -47,5 +47,5 @@ exports.create = function (writer, options) {
     return asyncStream;
 };
 
-exports.AsyncStream = AsyncStream;
+exports.AsyncStream = exports.AsyncWriter = AsyncStream;
 exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;
