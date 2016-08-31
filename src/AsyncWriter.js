@@ -6,7 +6,6 @@ var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
 
 var voidWriter = { write:function(){} };
-var ids = 0;
 
 function AsyncStream(writer, parent, global, buffer) {
     if (!parent) {
@@ -286,7 +285,7 @@ var proto = AsyncStream.prototype = {
         }
         return this;
     }
-}
+};
 
 // alias:
 proto.w = AsyncStream.prototype.write;

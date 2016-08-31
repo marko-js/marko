@@ -93,7 +93,7 @@ AsyncTracker.prototype = {
             }
         }
     },
-}
+};
 
 
 module.exports = AsyncTracker;
