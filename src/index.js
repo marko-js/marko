@@ -22,7 +22,7 @@
  */
 'use strict';
 
-var AsyncWriter = require('./AsyncWriter');
+var AsyncStream = require('./AsyncStream');
 
 exports.create = function (writer, options) {
     var global;
@@ -38,14 +38,14 @@ exports.create = function (writer, options) {
         buffer = options.buffer === true;
     }
 
-    var asyncWriter = new AsyncWriter(
+    var asyncStream = new AsyncStream(
         writer,
         null /* Internally used to pass parent */,
         global,
         buffer);    //Create a new context using the writer provided
 
-    return asyncWriter;
+    return asyncStream;
 };
 
-exports.AsyncWriter = AsyncWriter;
-exports.enableAsyncStackTrace = AsyncWriter.enableAsyncStackTrace;
+exports.AsyncStream = AsyncStream;
+exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;

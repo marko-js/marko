@@ -1,4 +1,4 @@
-var AsyncWriter = require('./AsyncWriter');
+var AsyncStream = require('./AsyncStream');
 
 function AsyncTracker(stream) {
     this.originalStream = stream;
@@ -38,10 +38,10 @@ AsyncTracker.prototype = {
         }
 
         if (timeout == null) {
-            timeout = AsyncWriter.DEFAULT_TIMEOUT;
+            timeout = AsyncStream.DEFAULT_TIMEOUT;
         }
 
-        newWriter.stack = AsyncWriter.INCLUDE_STACK ? new Error().stack : null;
+        newWriter.stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
         newWriter.name = name;
 
         if (timeout > 0) {
