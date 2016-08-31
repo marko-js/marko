@@ -13,14 +13,15 @@
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
-      "Patrick Steele-Idem <pnidem@gmail.com>",
-      "Michael Rawlings <ml.rawlings@gmail.com>"
+    "Patrick Steele-Idem <pnidem@gmail.com>",
+    "Michael Rawlings <ml.rawlings@gmail.com>"
   ],
   "dependencies": {
     "events": "^1.0.2"
   },
   "devDependencies": {
     "chai": "~1.8.1",
+    "jshint": "^2.9.3",
     "mocha": "~1.15.1",
     "through": "^2.3.4",
     "through2": "^0.6.5"
