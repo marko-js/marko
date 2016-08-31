@@ -1,8 +1,8 @@
 var AsyncStream = require('./AsyncStream');
 
-function AsyncTracker(stream) {
+function AsyncTracker(stream, originalWriter) {
     this.originalStream = stream;
-    this.originalWriter = stream._originalWriter;
+    this.originalWriter = originalWriter;
     this.remaining = 0;
     this.last = 0;
     this.ended = false;

@@ -8,29 +8,39 @@ var BufferedWriter = require('./BufferedWriter');
 var voidWriter = { write:function(){} };
 
 function AsyncStream(writer, parent, global, buffer) {
-    if (!parent) {
-        this.global = this.attributes /* legacy */ = global || (global = {});
-        this._events = global.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
+    var finalGlobal;
+    var events;
+    var finalStream;
+    var tracker;
+    var originalWriter;
 
-        var stream;
+    if (!parent) {
+        finalGlobal = global || (global = {});
+        events = global.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
 
         if (!writer) {
-            writer = new StringWriter(this._events);
+            writer = new StringWriter(events);
         } else if (buffer) {
-            stream = writer;
+            finalStream = writer;
             writer = new BufferedWriter(writer);
         }
 
-        this.stream = stream || writer;
-        this._originalWriter = writer;
-        this._tracker = new AsyncTracker(this);
+        finalStream = finalStream || writer;
+        originalWriter = writer;
+        tracker = new AsyncTracker(this, originalWriter);
     } else {
-        this.stream = parent.stream;
-        this.global = this.attributes /* legacy */ = parent.global;
-        this._events = parent._events;
-        this._tracker = parent._tracker;
-        this._originalWriter = parent._originalWriter;
+        finalStream = parent.stream;
+        finalGlobal = parent.global;
+        events = parent._events;
+        tracker = parent._tracker;
+        originalWriter = parent._originalWriter;
     }
+
+    this.global = this.attributes /* legacy */ = finalGlobal;
+    this._events = events;
+    this.stream = finalStream;
+    this._tracker = tracker;
+    this._originalWriter = originalWriter;
 
     this.data = {};
     this.writer = writer;
