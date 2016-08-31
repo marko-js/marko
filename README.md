@@ -94,3 +94,7 @@ require('fs').createReadStream('b.txt', 'utf8')
 out.write('C');
 out.end();
 ```
+
+# Debug mode
+
+Just replace `require('async-writer')` with `require('async-writer/debug')` and you'll get debug output and diagrams of the current state.

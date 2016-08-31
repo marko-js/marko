@@ -5,8 +5,15 @@ require('chai').should();
 var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
-
 var fsReadOptions = { encoding: 'utf8' };
+var asyncWriter = require('../');
+
+/* DEBUG INFO:
+   ===========
+   Want pretty debug statements and diagrams?
+   Uncomment the following statement: */
+
+// var asyncWriter = require('../debug');
 
 describe('async-writer' , function() {
 
@@ -21,7 +28,7 @@ describe('async-writer' , function() {
     });
 
     it('should render a series of sync calls correctly', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
         out.write('2');
         out.write('3');
@@ -35,7 +42,7 @@ describe('async-writer' , function() {
     });
 
     it('should render a series of sync and async calls correctly', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -61,7 +68,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to complete synchronously', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -80,7 +87,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow the async callback to provide data', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -98,7 +105,7 @@ describe('async-writer' , function() {
     });
 
     it('should handle timeouts correctly', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         var errors = [];
         out.on('error', function(e) {
             errors.push(e);
@@ -123,7 +130,7 @@ describe('async-writer' , function() {
     });
 
     it('should render nested async calls correctly', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -170,8 +177,42 @@ describe('async-writer' , function() {
         });
     });
 
+    it('should handle odd execution ordering', function(done) {
+        var outA = asyncWriter.create({ name:'outA' });
+
+        outA.on('finish', function() {
+            var output = outA.getOutput();
+            expect(output).to.equal('1234567');
+            done();
+        });
+
+        outA.write('1');
+
+        var outB = outA.beginAsync({ name:'outB' });
+
+        outA.write('3');
+
+        var outC = outA.beginAsync({ name:'outC' });
+        var outD = outC.beginAsync({ name:'outD' });
+
+        outB.write('2');
+        outB.end();
+
+        outA.write('7');
+
+        outC.write('5')
+
+        outD.write('4');
+        outD.end();
+
+        outC.write('6');
+        outC.end();
+
+        outA.end();
+    });
+
     it('should handle sync errors correctly', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         var errors = [];
         out.on('error', function(e) {
             errors.push(e);
@@ -195,7 +236,7 @@ describe('async-writer' , function() {
 
     it('should support chaining', function(done) {
         var errors = [];
-        var out = require('../').create()
+        var out = asyncWriter.create()
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -227,7 +268,7 @@ describe('async-writer' , function() {
         );
 
         var errors = [];
-        var out = require('../').create(through2)
+        var out = asyncWriter.create(through2)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -259,7 +300,7 @@ describe('async-writer' , function() {
         );
 
         var errors = [];
-        var out = require('../').create(through)
+        var out = asyncWriter.create(through)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -294,7 +335,7 @@ describe('async-writer' , function() {
         });
 
         var errors = [];
-        out = require('../').create(out)
+        out = asyncWriter.create(out)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -314,7 +355,7 @@ describe('async-writer' , function() {
 
     it('should support piping to an async writer', function(done) {
 
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -349,7 +390,7 @@ describe('async-writer' , function() {
                 done(e);
             });
 
-        out = require('../').create(through);
+        out = asyncWriter.create(through);
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -369,7 +410,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to flush last', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync({last: true});
@@ -389,7 +430,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to flush last asynchronously', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut = out.beginAsync({last: true});
@@ -428,7 +469,7 @@ describe('async-writer' , function() {
             done();
         });
 
-        var out = require('../').create(passthrough);
+        var out = asyncWriter.create(passthrough);
         out.write('hello');
         out.error('test');
     });
@@ -438,7 +479,7 @@ describe('async-writer' , function() {
         var PassThrough = stream.PassThrough;
         var passthrough = new PassThrough();
 
-        var out = require('../').create(passthrough);
+        var out = asyncWriter.create(passthrough);
         out.write('hello');
         try {
             out.error('test');
@@ -450,7 +491,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow multiple onLast calls', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -509,7 +550,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = require('../').create(through);
+        var out = asyncWriter.create(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -543,7 +584,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = require('../').create(through);
+        var out = asyncWriter.create(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync({ timeout: 50});
@@ -582,7 +623,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = require('../').create(through);
+        var out = asyncWriter.create(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -623,7 +664,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = require('../').create(through);
+        var out = asyncWriter.create(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -647,8 +688,8 @@ describe('async-writer' , function() {
     it('should track finished correctly', function(done) {
         var myGlobal = {};
 
-        var out1 = require('../').create(null, {global: myGlobal});
-        var out2 = require('../').create(null, {global: myGlobal});
+        var out1 = asyncWriter.create(null, {global: myGlobal});
+        var out2 = asyncWriter.create(null, {global: myGlobal});
 
         function handleFinished() {
             if (out1.data.__finishedFlag && out2.data.__finishedFlag) {
@@ -684,7 +725,7 @@ describe('async-writer' , function() {
     });
 
     it('should end correctly if top-level is ended asynchronously', function(done) {
-        var out = require('../').create();
+        var out = asyncWriter.create();
         out.name = 'outer';
 
         out.on('finish', function() {
@@ -709,7 +750,7 @@ describe('async-writer' , function() {
     });
 
     it('should end correctly if top-level is ended asynchronously when providing custom globals', function(done) {
-        var out = require('../').create(null, {global: { foo: 'bar' }});
+        var out = asyncWriter.create(null, {global: { foo: 'bar' }});
         out.name = 'outer';
 
         out.on('finish', function() {
