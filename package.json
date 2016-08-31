@@ -6,10 +6,16 @@
     "url": "https://github.com/marko-js/async-writer.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --ui bdd --reporter spec  ./test"
+    "test": "npm run mocha && npm run jshint",
+    "mocha": "mocha --ui bdd --reporter spec ./test/",
+    "mocha-debug": "node-debug _mocha ./test/",
+    "jshint": "jshint src/"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-  "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": [
+      "Patrick Steele-Idem <pnidem@gmail.com>",
+      "Michael Rawlings <ml.rawlings@gmail.com>"
+  ],
   "dependencies": {
     "events": "^1.0.2"
   },
@@ -19,7 +25,7 @@
     "through": "^2.3.4",
     "through2": "^0.6.5"
   },
-  "license": "Apache License v2.0",
+  "license": "Apache-2.0",
   "bin": {},
   "main": "src/index.js",
   "publishConfig": {
