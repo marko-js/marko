@@ -320,6 +320,4 @@ var proto = AsyncStream.prototype = {
 // alias:
 proto.w = AsyncStream.prototype.write;
 
-
-
 module.exports = AsyncStream;
