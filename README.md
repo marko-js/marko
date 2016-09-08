@@ -1,7 +1,7 @@
 marko-vdom
 ==========
 
-This module provides an optimized virtual DOM implementation where each virtual DOM node is API compatible with real DOM nodes for the minimal subset that is required to support DOM diffing/patching using [morphdom](https://github.com/patrick-steele-idem/morphdom). Each virtual DOM node supports the following properties required by [morphdom](https://github.com/patrick-steele-idem/morphdom):
+This module provides an optimized virtual DOM implementation where each virtual DOM node is API compatible with real DOM nodes for the minimal subset that is required to support DOM diffing/patching using [morphdom](https://github.com/patrick-steele-idem/morphdom). Each virtual DOM node supports the following properties and methods required by [morphdom](https://github.com/patrick-steele-idem/morphdom):
 
 - `firstChild`
 - `nextSibling`
@@ -12,6 +12,7 @@ This module provides an optimized virtual DOM implementation where each virtual 
 - `value`
 - `selected`
 - `disabled`
+- `hasAttributeNS(namespaceURI, name)`
 
 `marko-vdom` is namespace aware and will work correctly with SVG and MathML elements.
 
@@ -139,6 +140,16 @@ Returns a new [DocumentFragment](#DocumentFragment)
 
 ## `AttributeCollection`
 
+### Methods
+
+<a name="AttributeCollection-a"></a>
+
+#### `a(name, value)`
+
+<a name="AttributeCollection-as"></a>
+
+#### `as(attributes)`
+
 ---------------
 
 <a name="Comment"></a>
@@ -165,12 +176,38 @@ Always set to `1`
 
 ### Methods
 
+#### `a(name, value)`
+
+See [AttributeCollection#a](#AttributeCollection-a)
+
+#### `actualize()`
+
+#### `as(name, value)`
+
+See [AttributeCollection#a](#AttributeCollection-as)
+
+#### `c(value)`
+
 #### `cloneNode()`
 
 Performs a shallow clone of the node (`nextSibling` and `parentNode` will be `undefined` since a cloned node will always start out as detached)
+
+#### `e(tagName, attrCount, childCount)`
+
+#### `hasAttributeNS(namespaceURI, name)`
+
+#### `n(node)`
+
+#### `t(value)`
+
+See [AttributeCollection#a](#AttributeCollection-as
 
 ---------------
 
 <a name="Text"></a>
 
 ## `Text`
+
+# TODO
+
+- Add support for `node.isSameNode()`
