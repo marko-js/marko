@@ -3,11 +3,15 @@ var markoVDOM = require('../');
 var fs = require('fs');
 var toHTML = require('./util/toHTML');
 
+var jsdom = require("jsdom").jsdom;
+var document = jsdom('<html><body></body></html>');
+
 describe('marko-vdom', () => {
     require('./util/autotest').scanDir(
         path.join(__dirname, 'autotests-create'),
         function(dir, helpers, done) {
             helpers.vdom = markoVDOM;
+            helpers.document = document;
 
             var mainPath = path.join(dir, 'index.js');
             if (fs.existsSync(mainPath)) {

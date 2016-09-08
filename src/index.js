@@ -6,8 +6,8 @@ var Comment = require('./Comment');
 var AttributeCollection = require('./AttributeCollection');
 var DocumentFragment = require('./DocumentFragment');
 
-function createElement(tagName, attrCount, childCount) {
-    return new HTMLElement(tagName, attrCount, childCount);
+function createElement(tagName, attrCount, childCount, key) {
+    return new HTMLElement(tagName, attrCount, childCount, key);
 }
 
 function createText(value) {

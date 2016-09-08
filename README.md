@@ -57,7 +57,7 @@ el.appendChild(createElement('span', 0, 0));
 ```javascript
 var createElement = require('marko-vdom').createElement;
 
-var staticLink = createElement('a', 1, 1)
+var staticLink = createElement('a', 1, 1, 'abc123' /* key */)
     .a('href', 'http://ebay.com')
     .t('eBay')
 
@@ -114,7 +114,7 @@ Output DOM:
 
 ### Methods
 
-#### `createElement(tagName, attrCount, childCount)`
+#### `createElement(tagName, attrCount, childCount, key)`
 
 Returns a new [HTMLElement](#HTMLElement).
 
@@ -168,6 +168,21 @@ Returns a new [DocumentFragment](#DocumentFragment)
 
 ## `HTMLElement`
 
+### Constructors
+
+#### `HTMLElement(tagName, attrCount, childCount, key)`
+
+Parameters:
+
+- __tagName__ - The tag name for the new HTML element (`String`)
+- __attrCount__ - The number of attributes (if known) (an integer, `null` or `undefined`)
+- __childCount__ - The number of child nodes (if known) (an integer, `null` or `undefined`)
+- __key__ - A key for static nodes to use for `isSameNode()` checks
+
+#### `HTMLElement(htmlElement)`
+
+Used to do a shallow clone of another `HTMLElement`
+
 ### Properties
 
 #### `nodeType`
@@ -196,6 +211,10 @@ Performs a shallow clone of the node (`nextSibling` and `parentNode` will be `un
 
 #### `hasAttributeNS(namespaceURI, name)`
 
+#### `isSameNode(otherNode)`
+
+Called by `morphdom` to determine if the target `HTMLElement` (either virtual or real) node is the same as the current node. The `key` passed in to the constructor is used to do determine if the other node is the "same" node. If the other node is a real DOM node then the key is pulled from the `data-markokey` attribute.
+
 #### `n(node)`
 
 #### `t(value)`
@@ -207,7 +226,3 @@ See [AttributeCollection#a](#AttributeCollection-as
 <a name="Text"></a>
 
 ## `Text`
-
-# TODO
-
-- Add support for `node.isSameNode()`

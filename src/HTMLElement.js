@@ -3,8 +3,9 @@ var AttributeCollection = require('./AttributeCollection');
 var Text = require('./Text');
 var Comment = require('./Comment');
 var Node = require('./Node');
+var ATTR_KEY = 'data-markokey';
 
-function HTMLElement(tagName, attrCount, childCount) {
+function HTMLElement(tagName, attrCount, childCount, key) {
     var namespaceURI;
     var isTextArea;
 
@@ -13,6 +14,7 @@ function HTMLElement(tagName, attrCount, childCount) {
         tagName = htmlElement.nodeName;
         namespaceURI = htmlElement.namespaceURI;
         isTextArea = htmlElement._isTextArea;
+        key = htmlElement._key;
         Node.call(this, htmlElement);
         AttributeCollection.call(this, htmlElement);
     } else {
@@ -37,6 +39,7 @@ function HTMLElement(tagName, attrCount, childCount) {
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this._value = undefined;
+    this._key = key;
 }
 
 HTMLElement.prototype = {
@@ -59,8 +62,8 @@ HTMLElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrCount, childCount) {
-        var child = this.appendChild(new HTMLElement(tagName, attrCount, childCount));
+    e: function(tagName, attrCount, childCount, key) {
+        var child = this.appendChild(new HTMLElement(tagName, attrCount, childCount, key));
 
         if (attrCount === 0 && childCount === 0) {
             return this._finishChild();
@@ -135,6 +138,10 @@ HTMLElement.prototype = {
             }
         }
 
+        if (this._key) {
+            el.setAttribute(ATTR_KEY, this._key);
+        }
+
         return el;
     },
 
@@ -143,6 +150,16 @@ HTMLElement.prototype = {
         // is no chance that attributes with the same name will have
         // different namespaces
         return this._attrLookup[name] !== undefined;
+    },
+
+    isSameNode: function(otherNode) {
+        var key = this._key;
+        if (key) {
+            var otherKey = otherNode.actualize ? otherNode._key : otherNode.getAttribute(ATTR_KEY);
+            return key === otherKey;
+        } else {
+            return false;
+        }
     }
 };
 
