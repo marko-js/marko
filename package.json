@@ -1,7 +1,7 @@
 {
   "name": "marko-vdom",
-  "version": "0.1.0",
-  "description": "Virtual DOM implementation for Marko",
+  "version": "0.0.0",
+  "description": "Virtual DOM implementation for use with Marko and/or morphdom",
   "main": "src/index.js",
   "scripts": {
     "test": "npm run mocha && npm run jshint",
@@ -16,6 +16,7 @@
     "vdom",
     "dom",
     "marko",
+    "morphdom",
     "virtual",
     "virtual-dom"
   ],
