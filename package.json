@@ -1,0 +1,35 @@
+{
+  "name": "marko-vdom",
+  "version": "0.1.0",
+  "description": "Virtual DOM implementation for Marko",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run mocha && npm run jshint",
+    "mocha": "mocha --ui bdd --reporter spec ./test/",
+    "mocha-debug": "node-debug _mocha ./test/",
+    "jshint": "jshint src/",
+    "benchmark": "matcha benchmark/*.js",
+    "test-coverage": "istanbul cover _mocha -- --ui bdd --reporter spec ./test/ && npm run jshint",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
+  },
+  "keywords": [
+    "vdom",
+    "dom",
+    "marko",
+    "virtual",
+    "virtual-dom"
+  ],
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.12",
+    "istanbul": "^0.4.5",
+    "jsdom": "^9.4.2",
+    "jshint": "^2.9.3",
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "raptor-util": "^2.0.0"
+  }
+}
