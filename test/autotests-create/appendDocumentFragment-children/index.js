@@ -5,7 +5,9 @@ module.exports = function(helpers) {
     root.e('div')
         .as({ class: 'first-child' });
 
-    root.beginAsync();
+    var docFragment = root.appendDocumentFragment();
+    docFragment.appendChild(helpers.vdom.createElement('div')
+        .as({ class: 'middle-child' }));
 
     root.e('div')
         .as({ class: 'last-child' });

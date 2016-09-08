@@ -81,7 +81,7 @@ Node.prototype = {
         return nextSibling;
     },
 
-    beginAsync: function() {
+    appendDocumentFragment: function() {
         return this.appendChild(new DocumentFragment());
     },
 

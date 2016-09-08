@@ -88,7 +88,9 @@ function render() {
 }
 ```
 
-## Async document fragments
+## Document fragments
+
+Document fragments are containers for child nodes that can be appended as children nodes, but they are never visited when walking the DOM using `node.firstChild` and `node.nextSibling`. A `DocumentFragment` node can be modified with new children even after it has been inserted into the DOM.
 
 ```javascript
 var createElement = require('marko-vdom').createElement;
@@ -96,7 +98,7 @@ var createElement = require('marko-vdom').createElement;
 var div = createElement('div');
 documentFragment.appendChild(createElement('div'));
 
-var documentFragment = div.beginAsync();
+var documentFragment = div.appendDocumentFragment();
 
 documentFragment.appendChild(createElement('span'));
 
@@ -159,15 +161,15 @@ Returns a new [DocumentFragment](#DocumentFragment)
 
 ## `Comment`
 
-<a name="DocumentFragment"></a>
-
 ---------------
+
+<a name="DocumentFragment"></a>
 
 ## `DocumentFragment`
 
-<a name="HTMLElement"></a>
-
 ---------------
+
+<a name="HTMLElement"></a>
 
 ## `HTMLElement`
 
@@ -194,35 +196,77 @@ Always set to `1`
 
 ### Methods
 
-#### `a(name, value)`
+#### `a(name, value)` : [`Node`](#Node)
 
 See [AttributeCollection#a](#AttributeCollection-a)
 
-#### `actualize()`
+#### `actualize(document)` : `HTMLElement`
 
-#### `as(name, value)`
+Converts the virtual `HTMLElement` tree to a real `HTMLElement` tree using the provided `document`.
+
+#### `as(name, value)` : [`Node`](#Node)
 
 See [AttributeCollection#a](#AttributeCollection-as)
 
-#### `c(value)`
+#### `appendDocumentFragment()` : [`DocumentFragment`](#DocumentFragment)
 
-#### `cloneNode()`
+See [Node#appendDocumentFragment](#Node-appendDocumentFragment)
+
+#### `c(value)` : [`Node`](#Node)
+
+Shorthand method for creating a [Comment](#Comment) node and appending it as a child.
+
+#### `cloneNode()` : [`HTMLElement`](#HTMLElement)
 
 Performs a shallow clone of the node (`nextSibling` and `parentNode` will be `undefined` since a cloned node will always start out as detached)
 
-#### `e(tagName, attrCount, childCount)`
+#### `e(tagName, attrCount, childCount, key)` : [`Node`](#Node)
 
-#### `hasAttributeNS(namespaceURI, name)`
+Shorthand method for creating an [HTMLElement](#HTMLElement) node and appending it as a child.
 
-#### `isSameNode(otherNode)`
+#### `hasAttributeNS(namespaceURI, name)` : `boolean`
+
+#### `isSameNode(otherNode)` : `boolean`
 
 Called by `morphdom` to determine if the target `HTMLElement` (either virtual or real) node is the same as the current node. The `key` passed in to the constructor is used to do determine if the other node is the "same" node. If the other node is a real DOM node then the key is pulled from the `data-markokey` attribute.
 
-#### `n(node)`
+#### `n(node)` : [`Node`](#Node)
 
-#### `t(value)`
+Shorthand method for appending a node as a child. The provided is automatically cloned (using a shallow clone) since it is assumed that this method will be called to append a static/memoized DOM node and the original DOM node should not be modified.
 
-See [AttributeCollection#a](#AttributeCollection-as
+#### `t(value)` : [`Node`](#Node)
+
+Shorthand method for creating a [Text](#Text) node and appending it as a child.
+
+---------------
+
+<a name="Node"></a>
+
+## `Node`
+
+### Properties
+
+#### `firstChild` : [`Node`](#Node)
+
+Returns the first child node
+
+#### `nextSibling` : [`Node`](#Node)
+
+Returns the next sibling node
+
+### Methods
+
+<a name="Node-appendDocumentFragment"></a>
+
+#### `appendDocumentFragment()` : [`DocumentFragment`](#DocumentFragment)
+
+Creates and appends a new [DocumentFragment](#DocumentFragment) node and appends it as a child and the newly created [DocumentFragment](#DocumentFragment) node is returned.
+
+#### `removeChildren()`
+
+Clears out all child nodes
+
+
 
 ---------------
 
