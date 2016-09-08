@@ -61,6 +61,9 @@ var staticLink = createElement('a', 1, 1, 'abc123' /* key */)
     .a('href', 'http://ebay.com')
     .t('eBay')
 
+var realStaticLink = staticLink.actualize(document);
+console.log(staticLink.isSameNode(realStaticLink)); //Output: true
+
 function render() {
     createElement('div', 0, 1 /* childCount */)
         .n(staticLink);
