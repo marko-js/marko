@@ -1,6 +1,6 @@
 {
   "name": "marko-vdom",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Virtual DOM implementation for use with Marko and/or morphdom",
   "main": "src/index.js",
   "scripts": {
