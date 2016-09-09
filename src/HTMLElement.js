@@ -1,39 +1,36 @@
 var inherit = require('raptor-util/inherit');
+var extend = require('raptor-util/extend');
 var AttributeCollection = require('./AttributeCollection');
 var Text = require('./Text');
 var Comment = require('./Comment');
 var Node = require('./Node');
 var ATTR_KEY = 'data-markokey';
 
+function HTMLElementClone(other) {
+    extend(this, other);
+    this.parentNode = undefined;
+    this._nextSibling = undefined;
+}
+
 function HTMLElement(tagName, attrCount, childCount, key) {
     var namespaceURI;
     var isTextArea;
 
-    if (tagName instanceof HTMLElement) {
-        var htmlElement = tagName;
-        tagName = htmlElement.nodeName;
-        namespaceURI = htmlElement.namespaceURI;
-        isTextArea = htmlElement._isTextArea;
-        key = htmlElement._key;
-        Node.call(this, htmlElement);
-        AttributeCollection.call(this, htmlElement);
-    } else {
-        switch(tagName) {
-            case 'svg':
-                namespaceURI = 'http://www.w3.org/2000/svg';
-                break;
-            case 'math':
-                namespaceURI = 'http://www.w3.org/1998/Math/MathML';
-                break;
-            case 'textarea':
-            case 'TEXTAREA':
-                isTextArea = true;
-                break;
-        }
-
-        Node.call(this, childCount);
-        AttributeCollection.call(this, attrCount);
+    switch(tagName) {
+        case 'svg':
+            namespaceURI = 'http://www.w3.org/2000/svg';
+            break;
+        case 'math':
+            namespaceURI = 'http://www.w3.org/1998/Math/MathML';
+            break;
+        case 'textarea':
+        case 'TEXTAREA':
+            isTextArea = true;
+            break;
     }
+
+    Node.call(this, childCount);
+    AttributeCollection.call(this, attrCount);
 
     this._isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
@@ -48,7 +45,7 @@ HTMLElement.prototype = {
     _nsAware: true,
 
     cloneNode: function() {
-        return new HTMLElement(this);
+        return new HTMLElementClone(this);
     },
 
     a: AttributeCollection.prototype.a,
@@ -165,7 +162,7 @@ HTMLElement.prototype = {
 
 inherit(HTMLElement, Node);
 
-var proto = HTMLElement.prototype;
+var proto = HTMLElementClone.prototype = HTMLElement.prototype;
 
 Object.defineProperty(proto, 'checked', {
     get: function () {

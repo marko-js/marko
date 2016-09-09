@@ -17,30 +17,22 @@ function assignNamespace(node, namespaceURI) {
 
 function Node(finalChildCount) {
     var childNodes;
-    var childCount;
     var firstChild;
+    var lastChild;
 
-    if (finalChildCount instanceof Node) {
-        var node = finalChildCount;
-        childNodes = node.childNodes;
-        finalChildCount = node._finalChildCount;
-        childCount = node._childCount;
-        firstChild = node._firstChild;
+    if (finalChildCount === 0) {
+        childNodes = EMPTY_ARRAY;
+    } else if (finalChildCount > 0) {
+        childNodes = new Array(finalChildCount);
     } else {
-        if (finalChildCount > 0) {
-            childNodes = new Array(finalChildCount);
-        } else if (finalChildCount === 0) {
-            childNodes = EMPTY_ARRAY;
-        } else {
-            childNodes = [];
-        }
-        childCount = 0;
+        childNodes = [];
     }
 
     this.childNodes = childNodes;
     this._finalChildCount = finalChildCount;
-    this._childCount = childCount;
+    this._childCount = 0;
     this._firstChild = firstChild;
+    this._lastChild = lastChild;
 
     this.parentNode = undefined;
     this._nextSibling = undefined;
@@ -51,6 +43,7 @@ Node.prototype = {
         this.childNodes.length = 0;
         this._firstChild = undefined;
         this._childCount = 0;
+        this._lastChild = undefined;
     },
 
     get firstChild() {
@@ -108,8 +101,10 @@ Node.prototype = {
             if (index === 0) {
                 this._firstChild = child;
             } else {
-                this.childNodes[index-1]._nextSibling = child;
+                this._lastChild._nextSibling = child;
             }
+
+            this._lastChild = child;
         }
 
         return child;
