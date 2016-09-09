@@ -13,62 +13,49 @@ function AttributeCollection(finalAttrCount) {
     var id;
     var attributesArray;
     var attributesLookup;
-    var attrCount;
 
-    if (finalAttrCount && finalAttrCount._attrLookup) {
-        var attrCollection = finalAttrCount;
-        id = attrCollection.id;
-        attributesArray = attrCollection.attributes;
-        attributesLookup = attrCollection._attrLookup;
-        attrCount = attrCollection._attrCount;
+    if (finalAttrCount === 0) {
+        attributesArray = EMPTY_ARRAY;
+        attributesLookup = EMPTY_OBJECT;
     } else {
-        attrCount = 0;
-
-        if (finalAttrCount === 0) {
-            attributesArray = EMPTY_ARRAY;
-            attributesLookup = EMPTY_OBJECT;
-        } else {
-            attributesArray = finalAttrCount ? new Array(finalAttrCount) : [];
-            attributesLookup = {};
-        }
+        attributesArray = finalAttrCount ? new Array(finalAttrCount) : [];
+        attributesLookup = {};
     }
 
     this.id = id;
     this.attributes = attributesArray;
     this._attrLookup = attributesLookup;
     this._finalAttrCount = finalAttrCount;
-    this._attrCount = attrCount;
+    this._attrCount = 0;
 }
 
 AttributeCollection.prototype = {
     a: function(attrName, attrValue) {
-        /*jshint validthis: true */
         var attrNamespaceURI;
+        var attr;
 
-        if (attrName === 'xmlns') {
+        if (attrName === 'id') {
+            this.id = attrValue;
+        } else if (attrName === 'xmlns') {
             attrNamespaceURI = 'http://www.w3.org/2000/xmlns/';
         } else if (attrName === 'xlink:href') {
             attrNamespaceURI = 'http://www.w3.org/1999/xlink';
         }
 
-        if (attrValue === false || attrValue == null) {
-            if (this._finalAttrCount) {
-                // Shorten the array since we aren't going to add attributes with a null value or a false value
-                this.attributes.length--;
-            }
-        } else {
-            if (attrValue === true) {
-                attrValue = '';
-            } else if (attrName === 'id') {
-                this.id = attrValue;
-            }
+        if (typeof attrValue === 'string') {
+            attr = new Attr(attrNamespaceURI, attrName, attrValue);
+        } else if (attrValue === true) {
+            attr = new Attr(attrNamespaceURI, attrName, (attrValue = ''));
+        } else if (this._finalAttrCount) {
+            this.attributes.length = --this._finalAttrCount;
+        }
 
-            var attr = new Attr(attrNamespaceURI, attrName, attrValue);
+        if (attr) {
             this.attributes[this._attrCount++] = attr;
             this._attrLookup[attrName] = attrValue;
         }
 
-        return this._attrCount === this.attributes.length ?
+        return this._attrCount === this._finalAttrCount ?
             this._finishChild() :
             this;
     },
@@ -87,7 +74,6 @@ AttributeCollection.prototype = {
                     }
                 }
             }
-
         }
 
         return this._finishChild();
