@@ -24,12 +24,14 @@ Each virtual DOM node supports the following properties and methods required by 
 - `node.actualize(document)` <sup><a href="#actualize">[2]</a><sup>
 - `node.hasAttributeNS(namespaceURI, name)`
 - `node.isSameNode(anotherNode)` <sup><a href="#isSameNode">[3]</a><sup>
+- `node.assignAttributes(targetNode)` <sup><a href="#assignAttributes">[4]</a><sup>
 
 NOTES:
 
 1. <a name="attributes"></a>Unlike with real DOM nodes, `node.attributes` can either be an `Array` of [Attr](https://developer.mozilla.org/en-US/docs/Web/API/Attr) objects or an `Object` (where each property represents an attribute. e.g., `{ "class": "foo", "id": "bar" }`)
 2. <a name="actualize"></a>In addition to the standard DOM node methods and properties, a virtual DOM node must also provide a `node.actualize(document)` method. The `node.actualize(document)` will be called when the virtual DOM node needs to be upgraded to a real DOM node so that it can be moved into the real DOM.
 3. <a name="isSameNode"></a>A virtual DOM node may choose to implement `isSameNode(anotherNode)` to short-circuit diffing/patching a particular DOM subtree by treating two nodes as the "same"
+4. <a name="assignAttributes"></a>A virtual DOM node may choose to implement the non-standard `assignAttributes(targetNode)` to optimize copying the attributes from the virtual DOM node to the target DOM node
 
 `marko-vdom` is namespace aware and will work correctly with SVG and MathML elements.
 

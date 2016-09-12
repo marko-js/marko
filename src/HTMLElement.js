@@ -4,6 +4,8 @@ var Text = require('./Text');
 var Comment = require('./Comment');
 var Node = require('./Node');
 
+var NS_XLINK = 'http://www.w3.org/1999/xlink';
+var ATTR_HREF = 'href';
 var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
 var ATTR_MARKO_SAME_ID = 'data-marko-same-id';
 
@@ -44,6 +46,28 @@ HTMLElement.prototype = {
     nodeType: 1,
 
     _nsAware: true,
+
+    assignAttributes: function(targetNode) {
+        var attrs = this.attributes;
+        var attrName;
+        var targetValue;
+
+        for (attrName in attrs) {
+            var attrValue = attrs[attrName];
+            if (attrName === 'xlink:href') {
+                targetValue = targetNode.getAttributeNS(NS_XLINK, ATTR_HREF);
+                if (targetValue !== attrValue) {
+                    targetNode.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+                }
+            } else {
+                targetValue = targetNode.getAttribute(attrName);
+
+                if (targetValue !== attrValue) {
+                    targetNode.setAttribute(attrName, attrValue);
+                }
+            }
+        }
+    },
 
     cloneNode: function() {
         return new HTMLElementClone(this);
@@ -117,7 +141,7 @@ HTMLElement.prototype = {
                 }
 
                 if (attrName === 'xlink:href') {
-                    el.setAttributeNS('http://www.w3.org/1999/xlink', 'href', attrValue);
+                    el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
                 } else {
                     el.setAttribute(attrName, attrValue);
                 }
