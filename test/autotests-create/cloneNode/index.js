@@ -1,20 +1,23 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var el = helpers.vdom.createElement('div', 2 /* attrCount */, 1 /* childCount */)
-        .a('class', 'foo')
-        .a('onclick', 'doSomething()')
-        .e('svg', 2, 1)
-            .a('width', '100')
-            .a('height', '100')
-            .e('circle', 7, 0)
-                .a('cx', '50')
-                .a('cy', '50')
-                .a('r', '40')
-                .a('stroke', 'green')
-                .a('stroke-width', '4')
-                .a('fill', 'yellow')
-                .a('xlink:href', 'http://ebay.com/');
+    var el = helpers.vdom.createElement('div', {
+            'class': 'foo',
+            'onclick': 'doSomething()'
+        }, 1 /* childCount */)
+        .e('svg', {
+                width: '100',
+                height: '100'
+            }, 1)
+            .e('circle', {
+                'cx': '50',
+                'cy': '50',
+                'r': '40',
+                'stroke': 'green',
+                'stroke-width': '4',
+                'fill': 'yellow',
+                'xlink:href': 'http://ebay.com/'
+            }, 0);
 
     var clone = el.cloneNode();
     expect(clone).to.not.equal(el);
@@ -22,8 +25,7 @@ module.exports = function(helpers) {
     expect(clone.hasAttributeNS(null, 'class')).to.equal(true);
     expect(clone.firstChild).to.equal(el.firstChild);
 
-    var root = helpers.vdom.createElement('div', 1 /* attrCount */, -1 /* childCount */)
-        .a('class', 'root');
+    var root = helpers.vdom.createElement('div', { class: 'root' }, -1 /* childCount */);
 
     root.appendChild(clone);
 

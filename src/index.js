@@ -3,11 +3,10 @@
 var HTMLElement = require('./HTMLElement');
 var Text = require('./Text');
 var Comment = require('./Comment');
-var AttributeCollection = require('./AttributeCollection');
 var DocumentFragment = require('./DocumentFragment');
 
-function createElement(tagName, attrCount, childCount, key) {
-    return new HTMLElement(tagName, attrCount, childCount, key);
+function createElement(tagName, attrs, childCount, key) {
+    return new HTMLElement(tagName, attrs, childCount, key);
 }
 
 function createText(value) {
@@ -18,10 +17,6 @@ function createComment(value) {
     return new Comment(value);
 }
 
-function createAttributes(attrCount) {
-    return new AttributeCollection(attrCount);
-}
-
 function createDocumentFragment() {
     return new DocumentFragment();
 }
@@ -29,5 +24,4 @@ function createDocumentFragment() {
 exports.createElement = createElement;
 exports.createText = createText;
 exports.createComment = createComment;
-exports.createAttributes = createAttributes;
 exports.createDocumentFragment = createDocumentFragment;

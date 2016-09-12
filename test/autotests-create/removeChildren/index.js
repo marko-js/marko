@@ -1,10 +1,7 @@
 var expect = require('chai').expect;
 module.exports = function(helpers) {
-    var div = helpers.vdom.createElement('div', 2 /* attrCount */, 1 /* childCount */)
-        .a('class', 'foo')
-        .a('onclick', 'doSomething()')
-        .e('span', 1, 0)
-            .a('class', 'bar');
+    var div = helpers.vdom.createElement('div', null, 1 /* childCount */)
+        .e('span', { class: 'bar' }, 0);
 
     expect(div.firstChild.nodeName).to.equal('span');
 
@@ -12,7 +9,7 @@ module.exports = function(helpers) {
     expect(div.firstChild).to.equal(undefined);
     expect(div.childNodes.length).to.equal(0);
 
-    var newChild = helpers.vdom.createElement('h1', 0, 1)
+    var newChild = helpers.vdom.createElement('h1', null, 1)
         .t('New child');
 
     div.appendChild(newChild);

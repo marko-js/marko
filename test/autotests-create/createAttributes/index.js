@@ -1,16 +1,16 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var attributes = helpers.vdom.createAttributes(1)
-        .a('id', 'link')
-        .a('href', 'http://ebay.com');
+    var attributes = {
+        id: 'link',
+        href: 'http://ebay.com'
+    };
 
-    var el = helpers.vdom.createElement('div', 0, 2 /* childCount */)
-        .e('span', 0, 1)
-            .e('a', 0, 1)
-                .as(attributes)
+    var el = helpers.vdom.createElement('div', null, 2 /* childCount */)
+        .e('span', null, 1)
+            .e('a', attributes, 1)
                 .t('eBay')
-        .e('footer', 0, 0);
+        .e('footer', null, 0);
 
     expect(el.firstChild.firstChild.id).to.equal('link');
 

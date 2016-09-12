@@ -30,14 +30,34 @@ function toHTML(node) {
 
         var attributes = el.attributes;
         var attributesArray = [];
+        var attrName;
 
-        for (var i=0; i<attributes.length; i++) {
-            var attr = attributes[i];
-            var attrName = attr.name;
-            if (attr.namespaceURI) {
-                attrName = attr.namespaceURI + ':' + attrName;
+        if (typeof attributes.length === 'number') {
+            for (var i=0; i<attributes.length; i++) {
+                var attr = attributes[i];
+                if (attr.namespaceURI) {
+                    attrName = attr.namespaceURI + ':' + attr.localName;
+                } else {
+                    attrName = attr.name;
+                }
+                attributesArray.push(' ' + attrName + '="' + attr.value + '"');
             }
-            attributesArray.push(' ' + attrName + '="' + attr.value + '"');
+        } else {
+            for (attrName in attributes) {
+                var attrValue = attributes[attrName];
+                if (typeof attrValue !== 'string') {
+                    if (attrValue === true) {
+                        attrValue = '';
+                    } else if (!attrValue) {
+                        continue;
+                    }
+                }
+
+                if (attrName === 'xlink:href') {
+                    attrName = 'http://www.w3.org/1999/xlink:href';
+                }
+                attributesArray.push(' ' + attrName + '="' + attrValue + '"');
+            }
         }
 
         attributesArray.sort();

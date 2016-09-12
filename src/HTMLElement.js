@@ -1,10 +1,11 @@
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
-var AttributeCollection = require('./AttributeCollection');
 var Text = require('./Text');
 var Comment = require('./Comment');
 var Node = require('./Node');
-var ATTR_KEY = 'data-markokey';
+
+var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
+var ATTR_MARKO_SAME_ID = 'data-marko-same-id';
 
 function HTMLElementClone(other) {
     extend(this, other);
@@ -12,7 +13,7 @@ function HTMLElementClone(other) {
     this._nextSibling = undefined;
 }
 
-function HTMLElement(tagName, attrCount, childCount, key) {
+function HTMLElement(tagName, attrs, childCount, sameId) {
     var namespaceURI;
     var isTextArea;
 
@@ -30,13 +31,13 @@ function HTMLElement(tagName, attrCount, childCount, key) {
     }
 
     Node.call(this, childCount);
-    AttributeCollection.call(this, attrCount);
 
+    this.attributes = attrs || EMPTY_OBJECT;
     this._isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this._value = undefined;
-    this._key = key;
+    this._sameId = sameId;
 }
 
 HTMLElement.prototype = {
@@ -48,10 +49,6 @@ HTMLElement.prototype = {
         return new HTMLElementClone(this);
     },
 
-    a: AttributeCollection.prototype.a,
-
-    as: AttributeCollection.prototype.as,
-
     /**
      * Shorthand method for creating and appending an HTML element
      *
@@ -59,10 +56,10 @@ HTMLElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrCount, childCount, key) {
-        var child = this.appendChild(new HTMLElement(tagName, attrCount, childCount, key));
+    e: function(tagName, attrs, childCount, sameId) {
+        var child = this.appendChild(new HTMLElement(tagName, attrs, childCount, sameId));
 
-        if (attrCount === 0 && childCount === 0) {
+        if (childCount === 0) {
             return this._finishChild();
         } else {
             return child;
@@ -111,14 +108,19 @@ HTMLElement.prototype = {
 
         var i;
         var attributes = this.attributes;
-        var attrCount = attributes.length;
+        for (var attrName in attributes) {
+            var attrValue = attributes[attrName];
 
-        for (i=0; i<attrCount; i++) {
-            var attr = attributes[i];
-            if (attr.namespaceURI) {
-                el.setAttributeNS(attr.namespaceURI, attr.name, attr.value);
-            } else {
-                el.setAttribute(attr.name, attr.value);
+            if (attrValue !== false && attrValue != null) {
+                if (attrValue === true) {
+                    attrValue = '';
+                }
+
+                if (attrName === 'xlink:href') {
+                    el.setAttributeNS('http://www.w3.org/1999/xlink', 'href', attrValue);
+                } else {
+                    el.setAttribute(attrName, attrValue);
+                }
             }
         }
 
@@ -135,8 +137,8 @@ HTMLElement.prototype = {
             }
         }
 
-        if (this._key) {
-            el.setAttribute(ATTR_KEY, this._key);
+        if (this._sameId) {
+            el.setAttribute(ATTR_MARKO_SAME_ID, this._sameId);
         }
 
         return el;
@@ -146,14 +148,14 @@ HTMLElement.prototype = {
         // We don't care about the namespaces since the there
         // is no chance that attributes with the same name will have
         // different namespaces
-        return this._attrLookup[name] !== undefined;
+        return this.attributes[name] !== undefined;
     },
 
     isSameNode: function(otherNode) {
-        var key = this._key;
-        if (key) {
-            var otherKey = otherNode.actualize ? otherNode._key : otherNode.getAttribute(ATTR_KEY);
-            return key === otherKey;
+        var sameId = this._sameId;
+        if (sameId) {
+            var otherSameId = otherNode.actualize ? otherNode._sameId : otherNode.getAttribute(ATTR_MARKO_SAME_ID);
+            return sameId === otherSameId;
         } else {
             return false;
         }
@@ -166,19 +168,25 @@ var proto = HTMLElementClone.prototype = HTMLElement.prototype;
 
 Object.defineProperty(proto, 'checked', {
     get: function () {
-        return this._attrLookup.checked !== undefined;
+        return this.attributes.checked !== undefined;
     }
 });
 
 Object.defineProperty(proto, 'selected', {
     get: function () {
-        return this._attrLookup.selected !== undefined;
+        return this.attributes.selected !== undefined;
+    }
+});
+
+Object.defineProperty(proto, 'id', {
+    get: function () {
+        return this.attributes.id;
     }
 });
 
 Object.defineProperty(proto, 'value', {
     get: function () {
-        return this._value || this._attrLookup.value;
+        return this._value || this.attributes.value;
     },
     set: function (value) {
         this._value = value;
@@ -187,7 +195,7 @@ Object.defineProperty(proto, 'value', {
 
 Object.defineProperty(proto, 'disabled', {
     get: function () {
-        return this._attrLookup.disabled !== undefined;
+        return this.attributes.disabled !== undefined;
     }
 });
 

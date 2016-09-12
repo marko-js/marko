@@ -12,14 +12,26 @@ function virtualize(node) {
         var childNodes = node.childNodes;
         var childCount = childNodes.length;
 
-        var vdomEL = createElement(node.nodeName, attrCount, childCount);
+        var attrs;
 
         if (attrCount) {
+            attrs = {};
+
             for (var i=0; i<attrCount; i++) {
                 var attr = attributes[i];
-                vdomEL.a(attr.name, attr.value);
+                var attrName;
+
+                if (attr.namespaceURI === 'http://www.w3.org/1999/xlink' && attr.localName === 'href') {
+                    attrName = 'xlink:href';
+                } else {
+                    attrName = attr.name;
+                }
+
+                attrs[attrName] = attr.value;
             }
         }
+
+        var vdomEL = createElement(node.nodeName, attrs, childCount);
 
         if (vdomEL._isTextArea) {
             vdomEL.value = node.value;

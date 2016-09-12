@@ -1,7 +1,4 @@
 module.exports = function(helpers) {
-    return helpers.vdom.createElement('div', 2 /* attrCount */, 1 /* childCount */)
-        .a('class', 'foo')
-        .a('onclick', 'doSomething()')
-        .e('span', 1, 0)
-            .a('class', 'bar');
+    return helpers.vdom.createElement('div', { class: 'foo' }, 1 /* childCount */)
+        .e('span', { class: 'bar' }, 0);
 };

@@ -1,10 +1,8 @@
 module.exports = function(helpers) {
-    var attributes = helpers.vdom.createAttributes()
-        .as({ class: 'foo', id: 'bar' });
+    var attributes = { class: 'foo', id: 'bar' };
 
-    return helpers.vdom.createElement('div', 0 /* attrCount */, 2 /* childCount */)
-        .e('span', 0, 1)
-            .e('p', null, 0)
-                .as(attributes)
-        .e('a', 0, 0);
+    return helpers.vdom.createElement('div', null, 2 /* childCount */)
+        .e('span', null, 1)
+            .e('p', attributes, 0)
+        .e('a', null, 0);
 };
