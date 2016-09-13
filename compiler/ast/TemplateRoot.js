@@ -24,6 +24,18 @@ class TemplateRoot extends Node {
 
         var body = codegen.generateCode(this.body);
 
+        var templateRootBodyEvent = {
+            body,
+            context
+        };
+
+        // Emit an event to give code generators one more chance to optimize/finalize the AST
+        // before the final AST is returned. This VDOM AST nodes use this event to otpimize
+        // the AST by separating out static subtrees
+        context.emit('afterTemplateRootBodyGenerated', templateRootBodyEvent);
+
+        body = templateRootBodyEvent.body;
+
         var builder = codegen.builder;
 
         let renderStatements = [];
@@ -48,9 +60,7 @@ class TemplateRoot extends Node {
                             builder.identifierOut()
                         ],
                         renderStatements)
-
                 ]);
-
         } else {
             let createStatements = [];
             let staticNodes = context.getStaticNodes();

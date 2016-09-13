@@ -87,7 +87,7 @@ class CompiledTemplate {
         handleErrors(this.context);
 
         // console.log(module.id, 'FINAL AST:' + JSON.stringify(finalAST, null, 4));
-        var codeWriter = new CodeWriter(this.context.options);
+        var codeWriter = new CodeWriter(this.context.options, this.context.builder);
         codeWriter.write(this.ast);
 
         handleErrors(this.context);

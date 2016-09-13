@@ -61,6 +61,10 @@ function makeNode(arg) {
         return arg;
     } else if (arg == null) {
         return undefined;
+    } else if (Array.isArray(arg)) {
+        return arg.map((arg) => {
+            return makeNode(arg);
+        });
     } else {
         throw new Error('Argument should be a string or Node or null. Actual: ' + arg);
     }

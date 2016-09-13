@@ -1,10 +1,7 @@
 'use strict';
-var Node = require('./Node');
-var Literal = require('./Literal');
-var ok = require('assert').ok;
-var escapeXmlAttr = require('raptor-util/escapeXml').attr;
+
 var attr = require('raptor-util/attr');
-var compiler = require('../');
+var escapeXmlAttr = require('raptor-util/escapeXml').attr;
 
 function isStringLiteral(node) {
     return node.type === 'Literal' && typeof node.value === 'string';
@@ -112,98 +109,29 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
     return finalNodes;
 }
 
+module.exports = function generateCode(node, codegen) {
+    let name = node.name;
+    let value = node.value;
+    let argument = node.argument;
+    let escape = node.escape !== false;
+    var builder = codegen.builder;
 
-function beforeGenerateCode(event) {
-    event.codegen.isInAttribute = true;
-}
-
-function afterGenerateCode(event) {
-    event.codegen.isInAttribute = false;
-}
-
-class HtmlAttribute extends Node {
-    constructor(def) {
-        super('HtmlAttribute');
-
-        ok(def, 'Invalid attribute definition');
-        this.type = 'HtmlAttribute';
-        this.name = def.name;
-        this.value = def.value;
-        this.rawValue = def.rawValue;
-        this.escape = def.escape;
-
-        if (typeof this.value === 'string') {
-            this.value = compiler.builder.parseExpression(this.value);
-        }
-
-        if (this.value && !(this.value instanceof Node)) {
-            throw new Error('"value" should be a Node instance');
-        }
-
-        this.argument = def.argument;
-
-        this.def = def.def; // The attribute definition loaded from the taglib (if any)
-
-        this.on('beforeGenerateCode', beforeGenerateCode);
-        this.on('afterGenerateCode', afterGenerateCode);
+    if (!name) {
+        return null;
     }
 
-    isLiteralValue() {
-        return this.value instanceof Literal;
+    if (node.isLiteralValue()) {
+        return builder.htmlLiteral(attr(name, value.value));
+    } else if (value != null) {
+        return generateCodeForExpressionAttr(name, value, escape, codegen);
+    } else if (argument) {
+        return [
+            builder.htmlLiteral(' ' + name + '('),
+            builder.htmlLiteral(argument),
+            builder.htmlLiteral(')')
+        ];
+    } else {
+        // Attribute with no value is a boolean attribute
+        return builder.htmlLiteral(' ' + name);
     }
-
-    isLiteralString() {
-        return this.isLiteralValue() &&
-            typeof this.value.value === 'string';
-    }
-
-    isLiteralBoolean() {
-        return this.isLiteralValue() &&
-            typeof this.value.value === 'boolean';
-    }
-
-    generateHTMLCode(codegen) {
-        let name = this.name;
-        let value = this.value;
-        let argument = this.argument;
-        let escape = this.escape !== false;
-        var builder = codegen.builder;
-
-        if (!name) {
-            return null;
-        }
-
-        if (this.isLiteralValue()) {
-            return builder.htmlLiteral(attr(name, value.value));
-        } else if (value != null) {
-            return generateCodeForExpressionAttr(name, value, escape, codegen);
-        } else if (argument) {
-            return [
-                builder.htmlLiteral(' ' + name + '('),
-                builder.htmlLiteral(argument),
-                builder.htmlLiteral(')')
-            ];
-        } else {
-            // Attribute with no value is a boolean attribute
-            return builder.htmlLiteral(' ' + name);
-        }
-    }
-
-    walk(walker) {
-        this.value = walker.walk(this.value);
-    }
-
-    get literalValue() {
-        if (this.isLiteralValue()) {
-            return this.value.value;
-        } else {
-            throw new Error('Attribute value is not a literal value. Actual: ' + JSON.stringify(this.value, null, 2));
-        }
-    }
-}
-
-HtmlAttribute.isHtmlAttribute = function(attr) {
-    return (attr instanceof HtmlAttribute);
 };
-
-module.exports = HtmlAttribute;

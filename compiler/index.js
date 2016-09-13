@@ -133,7 +133,6 @@ function createInlineCompiler(filename, userOptions) {
 
     var compiler = defaultCompiler;
     var context = new CompileContext('', filename, compiler.builder, options);
-
     return new InlineCompiler(context, compiler);
 }
 

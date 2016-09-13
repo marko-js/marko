@@ -9,8 +9,10 @@ const Container = require('./ast/Container');
 const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
 
 class CodeWriter {
-    constructor(options) {
+    constructor(options, builder) {
+        ok(builder, '"builder" is required');
         options = options || {};
+        this.builder = builder;
         this.root = null;
         this._indentStr = options.indent != null ? options.indent : '  ';
         this._indentSize = this._indentStr.length;

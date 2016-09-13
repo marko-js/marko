@@ -39,9 +39,11 @@ class FinalNodes {
             return;
         }
 
-        if (node instanceof Html && this.lastNode instanceof Html) {
-            this.lastNode.append(node);
-            return;
+        if (node instanceof Html) {
+            if (this.lastNode instanceof Html) {
+                this.lastNode.append(node);
+                return;
+            }
         }
 
         if (node.setFinalNode) {
@@ -185,6 +187,7 @@ class CodeGenerator {
                 node.setCodeGenerator(null);
 
                 generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, false);
+
                 if (generatedCode != null && generatedCode !== node) {
                     node = null;
                     this._generateCode(generatedCode, finalNodes);

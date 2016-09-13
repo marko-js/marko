@@ -36,6 +36,7 @@
     "events": "^1.0.2",
     "htmljs-parser": "^1.5.3",
     "lasso-package-root": "^1.0.0",
+    "marko-vdom": "^0.3.0",
     "minimatch": "^3.0.2",
     "object-assign": "^4.1.0",
     "property-handlers": "^1.0.0",

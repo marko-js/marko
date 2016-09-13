@@ -109,7 +109,7 @@ Template.prototype = {
 
         if (localData.$global) {
             out.global = extend(out.global, localData.$global);
-            delete localData.$global;
+            localData.$global = null;
         }
 
         this._(localData, out);
@@ -145,7 +145,7 @@ Template.prototype = {
             if ((globalData = data.$global)) {
                 // We will *move* the "$global" property
                 // into the "out.global" object
-                delete data.$global;
+                data.$global = null;
             }
         } else {
             finalData = {};

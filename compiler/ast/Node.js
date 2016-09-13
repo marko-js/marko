@@ -193,6 +193,7 @@ class Node {
         delete result._events;
         delete result._finalNode;
         delete result._trimStartEnd;
+        delete result._childTextNormalized;
         return result;
     }
 

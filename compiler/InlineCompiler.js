@@ -58,6 +58,7 @@ class InlineCompiler {
     constructor(context, compiler) {
         this.context = context;
         this.compiler = compiler;
+        this.builder = context.builder;
 
         context.setInline(true);
     }
@@ -75,7 +76,7 @@ class InlineCompiler {
             return null;
         }
 
-        let codeWriter = new CodeWriter(this.context.options);
+        let codeWriter = new CodeWriter(this.context.options, this.builder);
         codeWriter.write(staticNodes);
         return codeWriter.getCode();
     }

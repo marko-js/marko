@@ -114,7 +114,7 @@ class Parser {
         var builder = this.context.builder;
 
         if (this.prevTextNode && this.prevTextNode.isLiteral()) {
-            this.prevTextNode.appendText(text);
+            this.prevTextNode.argument.value += text;
         } else {
             var escape = false;
             this.prevTextNode = builder.text(builder.literal(text), escape);

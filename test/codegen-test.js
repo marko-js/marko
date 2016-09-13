@@ -19,7 +19,7 @@ function createCodeGenerator(context) {
 }
 
 function createCodeWriter(context) {
-    return new CodeWriter(context);
+    return new CodeWriter(context, builder);
 }
 
 describe('compiler/codegen', function() {

@@ -13,6 +13,8 @@ var Node = require('./ast/Node');
 var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
+var EventEmitter = require('events').EventEmitter;
+var utilFingerprint = require('./util/fingerprint');
 
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
@@ -66,8 +68,9 @@ const helpers = {
     'loadTemplate': 'l'
 };
 
-class CompileContext {
+class CompileContext extends EventEmitter {
     constructor(src, filename, builder, options) {
+        super();
         ok(typeof src === 'string', '"src" string is required');
         ok(filename, '"filename" is required');
 
@@ -103,6 +106,8 @@ class CompileContext {
         }
 
         this._helpers = {};
+        this._imports = {};
+        this._fingerprint = undefined;
     }
 
     setInline(isInline) {
@@ -184,9 +189,16 @@ class CompileContext {
             throw new Error('"path" should be a string');
         }
 
-        return this.addStaticVar(varName, 'require("' + path + '")');
-    }
+        var varId = this._imports[path];
 
+        if (!varId) {
+            var builder = this.builder;
+            var requireFuncCall = this.builder.require(builder.literal(path));
+            this._imports[path] = varId = this.addStaticVar(varName, requireFuncCall);
+        }
+
+        return varId;
+    }
 
     addVar(name, init) {
         var actualVarName = this._uniqueVars.addVar(name, init);
@@ -526,6 +538,19 @@ class CompileContext {
         }
 
         return helperIdentifier;
+    }
+
+    getFingerprint(len) {
+        var fingerprint = this._fingerprint;
+        if (!fingerprint) {
+            this._fingerprint = fingerprint = utilFingerprint(this.src);
+        }
+
+        if (len == null || len >= this._fingerprint) {
+            return fingerprint;
+        } else {
+            return fingerprint.substring(0, len);
+        }
     }
 }
 
