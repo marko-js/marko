@@ -156,7 +156,7 @@ We are interested in the following performance characteristics:
 
 We encourage you to run the benchmarks on your machine and in various browsers. If you see any problems with the benchmarks, or if you would like clarifying information please open a Github issue.
 
-Please see [./docs/benchmark-results.md](Benchmark Results) for more detailed numbers.
+Please see [Benchmark Results](./docs/benchmark-results.md) for more detailed numbers.
 
 # API
 
