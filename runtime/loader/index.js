@@ -18,18 +18,18 @@
 var nodePath = require('path');
 var fs = require('fs');
 var Module = require('module').Module;
-var markoCompiler = require('../compiler');
+var markoCompiler = require('../../compiler');
 var cwd = process.cwd();
 var fsReadOptions = {encoding: 'utf8'};
 var extend = require('raptor-util/extend');
 
 if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
-    require('../hot-reload').enable();
+    require('../../hot-reload').enable();
 }
 
 // If process was launched with browser refresh then automatically
 // enable browser-refresh
-require('../browser-refresh').enable();
+require('../../browser-refresh').enable();
 
 function fixFlush() {
     try {

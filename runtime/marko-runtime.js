@@ -57,17 +57,7 @@ var extend = require('raptor-util/extend');
 
 exports.AsyncWriter = AsyncWriter;
 
-var stream;
-var STREAM = 'stream';
-
-var streamPath;
-try {
-    streamPath = require.resolve(STREAM);
-} catch(e) {}
-
-if (streamPath) {
-    stream = require(streamPath);
-}
+var stream = require('./stream');
 
 function renderCallback(renderFunc, data, globalData, callback) {
     var out = new AsyncWriter();
