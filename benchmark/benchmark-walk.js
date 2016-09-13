@@ -84,7 +84,7 @@ window.registerBenchmark('walk', function(app) {
         return toHTML(todomvcDOM);
     });
 
-    suite.add('virtual DOM', function() {
+    suite.add('marko-vdom', function() {
         return toHTML(todomvcDOMVirtual);
     });
 
