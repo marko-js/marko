@@ -3,6 +3,16 @@ Changelog
 
 # 3.x
 
+## 3.10.x
+
+### 3.10.1
+
+- Fixed [#44](https://github.com/marko-js/marko/issues/44) - Webpack compatibility fixes. Also see [marko-loader](https://github.com/marko-js/marko-loader) (A marko loader for webpack)
+
+### 3.10.0
+
+- Fixed [#357](https://github.com/marko-js/marko/issues/357)  - Deprecate `empty`/`notEmpty` in Marko v3
+
 ## 3.9.x
 
 ### 3.9.4

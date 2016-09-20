@@ -89,18 +89,6 @@ setTimeout(function() {
 require('./template.marko').render({}, out);
 ```
 
-### render(templatePath, templateData, stream.Writable)
-
-Deprecated. Do not use.
-
-### render(templatePath, templateData, callback)
-
-Deprecated. Do not use.
-
-### stream(templatePath, templateData) : stream.Readable
-
-Deprecated. Do not use.
-
 ## Properties
 
 ### helpers
