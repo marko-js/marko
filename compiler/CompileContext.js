@@ -108,6 +108,7 @@ class CompileContext extends EventEmitter {
         this._helpers = {};
         this._imports = {};
         this._fingerprint = undefined;
+        this._optimizers = undefined;
     }
 
     setInline(isInline) {
@@ -550,6 +551,22 @@ class CompileContext extends EventEmitter {
             return fingerprint;
         } else {
             return fingerprint.substring(0, len);
+        }
+    }
+
+    addOptimizer(optimizer) {
+        if (this._optimizers) {
+            this._optimizers.push(optimizer);
+        } else {
+            this._optimizers = [optimizer];
+        }
+    }
+
+    optimize(rootNode) {
+        if (this._optimizers) {
+            this._optimizers.forEach((optimizer) => {
+                optimizer.optimize(rootNode, this);
+            });
         }
     }
 }

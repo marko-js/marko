@@ -16,11 +16,12 @@ class TextVDOM extends Node {
 
     generateCode(codegen) {
         var context = codegen.context;
-        
-        // When there are any VDOM nodes in the AST then we need to optimize the intermediate AST
-        // before the final AST is returned. We use the "afterTemplateRootBodyGenerated" event
-        // to finalize the VDOM AST nodes.
-        vdomUtil.attachEventListeners(context);
+
+        vdomUtil.registerOptimizer(context);
+
+        // if (this.isStatic) {
+        //     this.createTextId = context.importModule('marko_createText', 'marko/vdom/createText');
+        // }
 
         return this;
     }

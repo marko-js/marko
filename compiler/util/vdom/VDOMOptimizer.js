@@ -49,26 +49,16 @@ class NodeVDOM extends Node {
     }
 }
 
-class EndElementNode extends Node {
-    constructor() {
-        super('EndElementNode');
-    }
-
-    writeCode(writer) {
-        writer.write('out.ee()');
-    }
-}
-
-function finalizeVDOMNodes(nodes, context) {
+function optimizeVDOMNodes(nodes, context) {
     let builder = context.builder;
     let nextNodeId = 0;
     let nextAttrsId = 0;
     function generateStaticNode(node) {
         if (node.type === 'HtmlElementVDOM') {
             node.createElementId = context.importModule('marko_createElement', 'marko/vdom/createElement');
-        } else {
+        }/* else {
             node.createTextId = context.importModule('marko_createText', 'marko/vdom/createText');
-        }
+        }*/
 
         let nextConstIdFunc = context.data[nextConstIdFuncSymbol];
         if (!nextConstIdFunc) {
@@ -108,14 +98,7 @@ function finalizeVDOMNodes(nodes, context) {
                         handleStaticAttributes(node);
                     }
 
-                    if (node.isHtmlOnly) {
-                        finalNodes.push(node);
-                    } else {
-                        finalNodes.push(node);
-                        finalNodes = finalNodes.concat(generateNodesForArray(node.body));
-                        node.body = null;
-                        finalNodes.push(new EndElementNode());
-                    }
+                    finalNodes.push(node);
                 }
             } else if (node.type === 'TextVDOM') {
                 let firstTextNode = node;
@@ -158,4 +141,12 @@ function finalizeVDOMNodes(nodes, context) {
     return walker.walk(nodes);
 }
 
-module.exports = finalizeVDOMNodes;
+class VDOMOptimizer {
+    optimize(node, context) {
+        if (node.body) {
+            node.body = optimizeVDOMNodes(node.body, context);
+        }
+    }
+}
+
+module.exports = VDOMOptimizer;

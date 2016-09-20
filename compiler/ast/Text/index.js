@@ -40,40 +40,6 @@ class Text extends Node {
             (argument.value.trim() === '');
     }
 
-    // _append(appendArgument) {
-    //     var argument = this.argument;
-    //
-    //     if (Array.isArray(argument)) {
-    //         var len = argument.length;
-    //         var last = argument[len-1];
-    //
-    //         if (last instanceof Literal && appendArgument instanceof Literal) {
-    //             last.value += appendArgument.value;
-    //         } else {
-    //             this.argument.push(appendArgument);
-    //         }
-    //     } else {
-    //         if (argument instanceof Literal && appendArgument instanceof Literal) {
-    //             argument.value += appendArgument.value;
-    //         } else {
-    //             this.argument = [ this.argument, appendArgument ];
-    //         }
-    //     }
-    // }
-    //
-    // append(text) {
-    //     var appendArgument = text.argument;
-    //     if (!appendArgument) {
-    //         return;
-    //     }
-    //
-    //     if (Array.isArray(appendArgument)) {
-    //         appendArgument.forEach(this._append, this);
-    //     } else {
-    //         this._append(appendArgument);
-    //     }
-    // }
-
     toJSON() {
         return {
             type: this.type,

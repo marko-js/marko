@@ -1,5 +1,6 @@
 'use strict';
 var HtmlElementVDOM = require('./HtmlElementVDOM');
+var EndElementVDOM = require('./EndElementVDOM');
 
 function checkAttributesStatic(attributes) {
     if (attributes) {
@@ -14,7 +15,6 @@ function checkAttributesStatic(attributes) {
 
     return true;
 }
-
 
 module.exports = function(node, codegen, vdomUtil) {
     var body = codegen.generateCode(node.body);
@@ -43,7 +43,7 @@ module.exports = function(node, codegen, vdomUtil) {
         }
     }
 
-    return new HtmlElementVDOM({
+    var htmlElVDOM = new HtmlElementVDOM({
         tagName,
         attributes,
         body,
@@ -52,4 +52,11 @@ module.exports = function(node, codegen, vdomUtil) {
         isHtmlOnly,
         dynamicAttributes
     });
+
+    if (isHtmlOnly) {
+        return htmlElVDOM;
+    } else {
+        htmlElVDOM.body = null;
+        return [htmlElVDOM].concat(body, new EndElementVDOM());
+    }
 };

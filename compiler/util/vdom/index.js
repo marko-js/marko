@@ -1,18 +1,19 @@
-var finalizeVDOMNodes = require('./finalizeVDOMNodes');
-var isStaticValue = require('./isStaticValue');
-var vdomEventListenersAttached = Symbol();
+'use strict';
 
-function attachEventListeners(context) {
+const VDOMOptimizer = require('./VDOMOptimizer');
+const isStaticValue = require('./isStaticValue');
+
+const OPTIMIZER_ADDED_KEY = Symbol();
+
+function registerOptimizer(context) {
     var data = context.data;
-    if (!data[vdomEventListenersAttached]) {
-        data[vdomEventListenersAttached] = true;
+    if (!data[OPTIMIZER_ADDED_KEY]) {
+        data[OPTIMIZER_ADDED_KEY] = true;
 
-        context.on('afterTemplateRootBodyGenerated', function(event) {
-            event.body = finalizeVDOMNodes(event.body, context);
-        });
+        context.addOptimizer(new VDOMOptimizer());
     }
 }
 
-exports.finalizeVDOMNodes = finalizeVDOMNodes;
+exports.registerOptimizer = registerOptimizer;
 exports.isStaticValue = isStaticValue;
-exports.attachEventListeners = attachEventListeners;
+exports.registerOptimizer = registerOptimizer;

@@ -45,10 +45,7 @@ class HtmlElementVDOM extends Node {
         let context = codegen.context;
         let builder = codegen.builder;
 
-        // When there are any VDOM nodes in the AST then we need to optimize the intermediate AST
-        // before the final AST is returned. We use the "afterTemplateRootBodyGenerated" event
-        // to finalize the VDOM AST nodes.
-        vdomUtil.attachEventListeners(context);
+        vdomUtil.registerOptimizer(context);
 
         let attributes = this.attributes;
         let dynamicAttributes = this.dynamicAttributes;
@@ -150,7 +147,7 @@ class HtmlElementVDOM extends Node {
             funcCall = builder.functionCall(
                 builder.identifier('e'),
                 createArgs);
-        } else if (this.isStatic) {
+        } else if (this.isStatic && this.createElementId) {
             funcCall = builder.functionCall(
                 this.createElementId,
                 createArgs);
