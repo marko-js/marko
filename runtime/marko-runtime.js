@@ -48,16 +48,11 @@ var loader;
 
 // If the optional "stream" module is available
 // then Readable will be a readable stream
-var Readable;
 
 var AsyncWriter = asyncWriter.AsyncWriter;
 var extend = require('raptor-util/extend');
 
-
-
 exports.AsyncWriter = AsyncWriter;
-
-var stream = require('./stream');
 
 function renderCallback(renderFunc, data, globalData, callback) {
     var out = new AsyncWriter();
@@ -192,51 +187,11 @@ Template.prototype = {
         // created in the context of another rendering job.
         return shouldEnd ? finalOut.end() : finalOut;
     },
-    stream: function(data) {
-        if (!stream) {
-            throw new Error('Module not found: stream');
-        }
 
-        return new Readable(this, data, this._options);
+    stream: function() {
+        throw new Error('You must require("marko/stream")');
     }
 };
-
-if (stream) {
-    Readable = function(template, data, options) {
-        Readable.$super.call(this);
-        this._t = template;
-        this._d = data;
-        this._options = options;
-        this._rendered = false;
-    };
-
-    Readable.prototype = {
-        write: function(data) {
-            if (data != null) {
-                this.push(data);
-            }
-        },
-        end: function() {
-            this.push(null);
-        },
-        _read: function() {
-            if (this._rendered) {
-                return;
-            }
-
-            this._rendered = true;
-
-            var template = this._t;
-            var data = this._d;
-
-            var out = asyncWriter.create(this, this._options);
-            template.render(data, out);
-            out.end();
-        }
-    };
-
-    require('raptor-util/inherit')(Readable, stream.Readable);
-}
 
 function createRenderProxy(template) {
     return function(data, out) {
