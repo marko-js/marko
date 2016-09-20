@@ -51,21 +51,23 @@ function requireResolve(builder, path) {
 }
 
 const helpers = {
+    'attr': 'a',
+    'attrs': 'as',
+    'classAttr': 'ca',
+    'classList': 'cl',
+    'createElement': 'e',
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
     'escapeScript': 'xs',
-    'str': 's',
-    'merge': 'm',
-    'classAttr': 'ca',
-    'styleAttr': 'sa',
-    'attr': 'a',
-    'attrs': 'as',
-    'loadTag': 't',
-    'forEachWithStatusVar': 'fv',
     'forEach': 'f',
     'forEachProp': 'fp',
-    'classList': 'cl',
-    'loadTemplate': 'l'
+    'forEachWithStatusVar': 'fv',
+    'loadTag': 't',
+    'loadTemplate': 'l',
+    'merge': 'm',
+    'str': 's',
+    'styleAttr': 'sa',
+    'createText': 't'
 };
 
 class CompileContext extends EventEmitter {

@@ -1,1 +1,1 @@
-module.exports = require('marko-vdom');
+module.exports = require('./runtime/vdom');
