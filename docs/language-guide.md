@@ -181,6 +181,22 @@ var myIncludeTarget = require('./my-include-target.marko');
 <include(data.myIncludeTarget) name="Frank" count=30/>
 ```
 
+## Including static text
+
+```xml
+<include-text('./foo.txt')/>
+```
+
+NOTE: Special HTML characters will be escaped. If you do not want escaping then use the `<include-html>` tag (see below)
+
+## Including static HTML
+
+```xml
+<include-html('./foo.html')/>
+```
+
+NOTE: Special HTML characters will _not_ be escaped since the file is expected to be an HTML file.
+
 # Variables
 
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
