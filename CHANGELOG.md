@@ -3,6 +3,16 @@ Changelog
 
 # 3.x
 
+## 3.11.x
+
+### 3.11.0
+
+- Introduced the `<include-html(path)>` tag for including static HTML:
+
+```xml
+<include-html('./foo.html')>
+```
+
 ## 3.10.x
 
 ### 3.10.1
