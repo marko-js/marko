@@ -88,9 +88,27 @@
             }
         ]
     },
+    "<include-html>": {
+        "code-generator": "./include-html-tag",
+        "autocomplete": [
+            {
+                "displayText": "include-html(<path>)",
+                "snippet": "include-html(${1:\"./foo.html\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
+    },
     "<include-text>": {
         "code-generator": "./include-text-tag",
         "autocomplete": [
+            {
+                "displayText": "include-text(<path>)",
+                "snippet": "include-text(${1:\"./foo.txt\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
             {
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
