@@ -5,6 +5,10 @@ Changelog
 
 ## 3.11.x
 
+### 3.11.1
+
+- Fixed [#370](https://github.com/marko-js/marko/issues/370) - HTML characters in loop separator string should not be escaped
+
 ### 3.11.0
 
 - Introduced the `<include-html(path)>` tag for including static HTML:
