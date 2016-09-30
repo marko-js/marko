@@ -11,7 +11,7 @@ function createVarsArray(vars) {
     });
 }
 
-var templateExports = null;
+
 
 class TemplateRoot extends Node {
     constructor(def) {
@@ -67,9 +67,7 @@ class TemplateRoot extends Node {
 
             createStatements.push(builder.returnStatement(renderFunction));
 
-            if (!templateExports) {
-                templateExports = builder.parseStatement('(module.exports = require("marko").c(__filename)).c(create)');
-            }
+            var templateExports = builder.parseStatement(`(module.exports = require("${context.getModuleRuntimeTarget()}").c(__filename)).c(create)`);
 
             return builder.program([
                 builder.functionDeclaration(

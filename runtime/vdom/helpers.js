@@ -21,4 +21,10 @@ var markoVDOM = require('marko-vdom');
 module.exports = {
     e: markoVDOM.createElement,
     t: markoVDOM.createText,
+    const: function(id) {
+        var i=0;
+        return function() {
+            return id + (i++);
+        };
+    }
 };

@@ -100,6 +100,7 @@ class CompileContext extends EventEmitter {
         this._preserveWhitespace = null;
         this._preserveComments = null;
         this.inline = this.options.inline === true;
+        this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko';
 
         this._helpersIdentifier = null;
 
@@ -570,6 +571,10 @@ class CompileContext extends EventEmitter {
                 optimizer.optimize(rootNode, this);
             });
         }
+    }
+
+    getModuleRuntimeTarget() {
+        return this._moduleRuntimeTarget;
     }
 }
 
