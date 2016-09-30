@@ -1,0 +1,19 @@
+{
+  "name": "async-vdom-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover _mocha"
+  },
+  "author": "Michael Rawlings <ml.rawlings@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "marko-vdom": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2"
+  }
+}
