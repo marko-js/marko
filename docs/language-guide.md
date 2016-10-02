@@ -632,6 +632,43 @@ Output:
 2c1b0a
 ```
 
+## while
+
+Any element can be repeated until a condition is met by using the `while` directive. The directive can be applied as an element or as an attribute.
+
+_Applied as an attribute:_
+
+```xml
+<var n=0/>
+<ul>
+    <li while(n < 4)>
+        ${n++}
+    </li>
+</ul>
+```
+
+_Applied as an element:_
+
+```xml
+<var n=0/>
+<ul>
+    <while(n < 4)>
+        <li>${n++}</li>
+    </while>
+</ul>
+
+```
+
+In both cases the output would be the following:
+
+```html
+<ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+</ul>
+```
+
 # Macros
 
 Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<def>` directive.
