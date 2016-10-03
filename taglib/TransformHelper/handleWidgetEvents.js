@@ -37,15 +37,31 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod) {
     }
 
     var builder = transformHelper.builder;
+    var attrValue;
+    var widgetIdExpression = builder.memberExpression(
+        builder.identifier('widget'),
+        builder.identifier('id'));
 
-    el.setAttributeValue(
-        'data-w-on' + eventType.value,
-        builder.concat(
-            targetMethod,
-            builder.literal('|'),
-            builder.memberExpression(
-                builder.identifier('widget'),
-                builder.identifier('id'))));
+    if (targetMethod.type === 'Literal') {
+        // We know the event handler is method is no conditional so we set the attribute correctly at compile time
+        attrValue = builder.concat(
+           targetMethod,
+           builder.literal('|'),
+           widgetIdExpression);
+    } else {
+
+        // The event handler method is conditional and it may resolve to a null method name. Therefore,
+        // we need to use a runtime helper to set the value correctly.
+        var markoWidgetsEventFuncId = transformHelper.context.importModule('markoWidgets_event',
+            transformHelper.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/event'));
+
+        attrValue = builder.functionCall(markoWidgetsEventFuncId, [
+                targetMethod,
+                widgetIdExpression
+            ]);
+    }
+
+    el.setAttributeValue('data-w-on' + eventType.value, attrValue);
 }
 
 function addDirectEventListener(transformHelper, eventType, targetMethod) {
