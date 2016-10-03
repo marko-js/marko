@@ -5,6 +5,10 @@ CHANGELOG
 
 ## 6.3.x
 
+### v6.3.5
+
+- Fixed [#160](https://github.com/marko-js/marko-widgets/issues/160) - Listeners for event delegation do not work if `document.body` is not available
+
 ### v6.3.4
 
 - Fixed [#154](https://github.com/marko-js/marko-widgets/issues/154) - Listeners for event delegation do not work if `document.body` is not available
