@@ -39,6 +39,10 @@ module.exports = function handleWidgetBind() {
 
     if (bindAttrValue == null) {
         modulePath = this.getDefaultWidgetModule();
+        if (!modulePath) {
+            this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
+            return;
+        }
     } else if (bindAttr.isLiteralValue()) {
         modulePath = bindAttr.literalValue; // The value of the literal value
         if (typeof modulePath !== 'string') {
