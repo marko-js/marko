@@ -76,7 +76,15 @@ function getLoadedTemplate(path) {
 exports.install = function(options) {
     options = options || {};
 
-    var compilerOptions = options.compilerOptions || {};
+    var compilerOptions = options.compilerOptions;
+
+    if (compilerOptions) {
+        require('./compiler').configure(compilerOptions);
+    }
+
+    if (!compilerOptions) {
+        compilerOptions = {};
+    }
 
     var extension = options.extension || '.marko';
 

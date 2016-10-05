@@ -1,6 +1,7 @@
 'use strict';
 require('./patch-module');
 require('marko/node-require').install();
+require('require-self-ref');
 
 var chai = require('chai');
 chai.config.includeStack = true;

@@ -5,6 +5,18 @@ Changelog
 
 ## 3.11.x
 
+### 3.11.2
+
+- Fixed [#318](https://github.com/marko-js/marko/issues/318) - Use compiler options passed to require hook to configure marko globally
+
+```javascript
+require('marko/node-require').install({
+    compilerOptions: {
+        writeToDisk: false
+    }
+});
+```
+
 ### 3.11.1
 
 - Fixed [#370](https://github.com/marko-js/marko/issues/370) - HTML characters in loop separator string should not be escaped
