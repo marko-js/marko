@@ -1,8 +1,9 @@
 Marko Widgets
 =============
 
-[![Build Status](https://travis-ci.org/marko-js/marko-widgets.svg?branch=master)](https://travis-ci.org/marko-js/marko-widgets) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko-widgets)
-[![NPM](https://nodei.co/npm/marko-widgets.png)](https://nodei.co/npm/marko-widgets/)
+[![Build Status](https://travis-ci.org/marko-js/marko-widgets.svg?branch=master)](https://travis-ci.org/marko-js/marko-widgets)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko-widgets)
+[![NPM](https://img.shields.io/npm/v/marko-widgets.svg)](https://www.npmjs.com/package/marko-widgets)
 [![Downloads](https://img.shields.io/npm/dm/marko-widgets.svg)](http://npm-stat.com/charts.html?package=marko-widgets)
 
 ![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
