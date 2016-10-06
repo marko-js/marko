@@ -5,6 +5,10 @@ Changelog
 
 ## 3.11.x
 
+### 3.11.3
+
+- Silently ignore errors when parsing tag definition code inlined in JavaScript
+
 ### 3.11.2
 
 - Fixed [#318](https://github.com/marko-js/marko/issues/318) - Use compiler options passed to require hook to configure marko globally
