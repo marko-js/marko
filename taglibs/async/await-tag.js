@@ -106,6 +106,8 @@ module.exports = function render(input, out) {
         }
 
         if (err) {
+            awaitInfo.error = err;
+            out.emit('await:error', awaitInfo);
             if (input.renderError) {
                 console.error('Await (' + name + ') failed. Error:', (err.stack || err));
                 input.renderError(targetOut);
@@ -113,6 +115,8 @@ module.exports = function render(input, out) {
                 targetOut.error(err);
             }
         } else if (renderTimeout) {
+            awaitInfo.timedout = true;
+            out.emit('await:timeout', awaitInfo);
             renderTimeout(targetOut);
         } else {
             if (input.renderBody) {
