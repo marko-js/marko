@@ -9,7 +9,7 @@ Yes, Marko has been battle-tested at [eBay](http://www.ebay.com/) and other comp
 
 # Can templates be compiled on the client?
 
-Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/fb55/htmlparser2). In short, always compile your templates on the server. [Lasso.js](https://github.com/lasso-js/lasso) is recommended for including compiled templates as part of a web page.
+Possibly, but it is not recommended and it will likely not work in older browsers. The compiler is optimized to produce small, high performance compiled templates, but the compiler itself is not small and it comes bundled with some heavyweight modules such as a [JavaScript HTML parser](https://github.com/philidem/htmljs-parser). In short, always compile your templates on the server. [Lasso.js](https://github.com/lasso-js/lasso) is recommended for including compiled templates as part of a web page.
 
 # Which web browsers are supported?
 
