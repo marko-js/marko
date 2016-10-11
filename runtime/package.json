@@ -1,7 +1,6 @@
 {
-    "main": "./marko-runtime.js",
+    "main": "./html/index.js",
     "browser": {
-        "./loader/index.js": "./loader/index-browser.js",
-        "./stream/index.js": "./stream/index-browser.js"
+        "./loader/index.js": "./loader/index-browser.js"
     }
 }

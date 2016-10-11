@@ -43,10 +43,24 @@ class HtmlElement extends Node {
     }
 
     generateHTMLCode(codegen) {
+        if (codegen.context.isMacro(this.tagName)) {
+            // At code generation time, if node tag corresponds to a registered macro
+            // then invoke the macro based on node HTML element instead of generating
+            // the code to render an HTML element.
+            return codegen.builder.invokeMacroFromEl(this);
+        }
+
         return generateHTMLCode(this, codegen);
     }
 
     generateVDOMCode(codegen) {
+        if (codegen.context.isMacro(this.tagName)) {
+            // At code generation time, if node tag corresponds to a registered macro
+            // then invoke the macro based on node HTML element instead of generating
+            // the code to render an HTML element.
+            return codegen.builder.invokeMacroFromEl(this);
+        }
+        
         return generateVDOMCode(this, codegen, vdomUtil);
     }
 

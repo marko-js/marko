@@ -21,6 +21,7 @@ module.exports = function(node, codegen, vdomUtil) {
     var tagName = codegen.generateCode(node.tagNameExpression);
     var attributes = codegen.generateCode(node.getAttributes());
     var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
+    var builder = codegen.builder;
 
     var isAttrsStatic = checkAttributesStatic(attributes);
     var isStatic = isAttrsStatic && node.isLiteralTagName();
@@ -30,6 +31,9 @@ module.exports = function(node, codegen, vdomUtil) {
         for (var i=0; i<body.length; i++) {
             let child = body[i];
             if (child.type === 'HtmlElementVDOM' || child.type === 'TextVDOM') {
+                if (child.type === 'TextVDOM' && child.escape === false) {
+                    isHtmlOnly = false;
+                }
                 if (!child.isHtmlOnly) {
                     isStatic = false;
                     isHtmlOnly = false;
@@ -43,6 +47,11 @@ module.exports = function(node, codegen, vdomUtil) {
         }
     }
 
+    var bodyOnlyIf = node.bodyOnlyIf;
+    if (bodyOnlyIf) {
+        isHtmlOnly = false;
+    }
+
     var htmlElVDOM = new HtmlElementVDOM({
         tagName,
         attributes,
@@ -53,7 +62,24 @@ module.exports = function(node, codegen, vdomUtil) {
         dynamicAttributes
     });
 
-    if (isHtmlOnly) {
+
+    if (bodyOnlyIf) {
+        htmlElVDOM.body = null;
+
+        var startIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
+            htmlElVDOM
+        ]);
+
+        var endIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
+            new EndElementVDOM()
+        ]);
+
+        return [
+            startIf,
+            body,
+            endIf
+        ];
+    } else if (isHtmlOnly) {
         return htmlElVDOM;
     } else {
         htmlElVDOM.body = null;

@@ -24,6 +24,9 @@ c) Else, generate one of the following:
 const Node = require('../../ast/Node');
 const nextConstIdFuncSymbol = Symbol();
 
+const OPTIONS_DEFAULT =             { optimizeTextNodes: true, optimizeStaticNodes: true };
+const OPTIONS_OPTIMIZE_TEXT_NODES = { optimizeTextNodes: true, optimizeStaticNodes: false };
+
 class NodeVDOM extends Node {
     constructor(variableIdentifier) {
         super('NodeVDOM');
@@ -49,20 +52,24 @@ class NodeVDOM extends Node {
     }
 }
 
-function optimizeVDOMNodes(nodes, context) {
+function generateNodesForArray(nodes, context, options) {
     let builder = context.builder;
     let nextNodeId = 0;
     let nextAttrsId = 0;
+
+    var optimizeTextNodes = options.optimizeTextNodes !== false;
+    var optimizeStaticNodes = options.optimizeStaticNodes !== false;
+
     function generateStaticNode(node) {
         if (node.type === 'HtmlElementVDOM') {
-            node.createElementId = context.importModule('marko_createElement', 'marko/vdom/createElement');
+            node.createElementId = context.helper('createElement');
         }/* else {
             node.createTextId = context.importModule('marko_createText', 'marko/vdom/createText');
         }*/
 
         let nextConstIdFunc = context.data[nextConstIdFuncSymbol];
         if (!nextConstIdFunc) {
-            let constId = context.importModule('marko_const', 'marko/runtime/vdom/const');
+            let constId = context.helper('const');
             let fingerprintLiteral = builder.literal(context.getFingerprint(6));
             nextConstIdFunc = context.data[nextConstIdFuncSymbol] = context.addStaticVar('marko_const_nextId', builder.functionCall(constId, [ fingerprintLiteral ]));
         }
@@ -84,15 +91,16 @@ function optimizeVDOMNodes(nodes, context) {
         }
     }
 
-    function generateNodesForArray(nodes) {
-        let finalNodes = [];
-        let i = 0;
+    let finalNodes = [];
+    let i = 0;
 
-        while (i<nodes.length) {
-            let node = nodes[i];
-            if (node.type === 'HtmlElementVDOM') {
+    while (i<nodes.length) {
+        let node = nodes[i];
+        if (node.type === 'HtmlElementVDOM') {
+            if (optimizeStaticNodes) {
                 if (node.isStatic) {
                     finalNodes.push(generateStaticNode(node));
+                    doOptimizeNode(node, context, OPTIONS_OPTIMIZE_TEXT_NODES);
                 } else {
                     if (node.isAttrsStatic) {
                         handleStaticAttributes(node);
@@ -100,52 +108,58 @@ function optimizeVDOMNodes(nodes, context) {
 
                     finalNodes.push(node);
                 }
-            } else if (node.type === 'TextVDOM') {
+            } else {
+                finalNodes.push(node);
+            }
+
+        } else if (node.type === 'TextVDOM') {
+            if (optimizeTextNodes) {
                 let firstTextNode = node;
+
                 // We will need to merge the text nodes into a single node
                 while(++i<nodes.length) {
                     let currentTextNode = nodes[i];
                     if (currentTextNode.type === 'TextVDOM') {
-                        firstTextNode.append(currentTextNode);
+                        if (!firstTextNode.append(currentTextNode)) {
+                            // If the current text node was not appendable then
+                            // we will stop. We can only merge text nodes that are compatible
+                            break;
+                        }
                     } else {
                         break;
                     }
                 }
 
-                // if (firstTextNode.isStatic) {
-                //     finalNodes.push(generateStaticNode(firstTextNode));
-                //     continue;
-                // } else {
-                //     finalNodes.push(firstTextNode);
-                // }
-                firstTextNode.isStatic = false;
+                // firstTextNode.isStatic = false;
                 finalNodes.push(firstTextNode);
-
                 continue;
             } else {
                 finalNodes.push(node);
             }
 
-            i++;
+        } else {
+            finalNodes.push(node);
         }
 
-        return finalNodes;
+        i++;
     }
 
+    return finalNodes;
+}
+
+function doOptimizeNode(node, context, options) {
     let walker = context.createWalker({
         enterArray(nodes) {
-            return generateNodesForArray(nodes);
+            return generateNodesForArray(nodes, context, options);
         }
     });
 
-    return walker.walk(nodes);
+    return walker.walk(node);
 }
 
 class VDOMOptimizer {
     optimize(node, context) {
-        if (node.body) {
-            node.body = optimizeVDOMNodes(node.body, context);
-        }
+        doOptimizeNode(node, context, OPTIONS_DEFAULT);
     }
 }
 

@@ -73,6 +73,10 @@ class HtmlElementVDOM extends Node {
             attributes.forEach((attr) => {
                 let value = attr.value;
 
+                if (value == null) {
+                    value = builder.literal(true);
+                }
+
                 if (!attr.name) {
                     return;
                 }
@@ -154,7 +158,6 @@ class HtmlElementVDOM extends Node {
         } else if (this.isHtmlOnly) {
             writer.write('out.');
             funcCall = builder.functionCall(
-
                 builder.identifier('e'),
                 createArgs);
         } else {

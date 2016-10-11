@@ -1,5 +1,5 @@
 <div class="overlay">
-    <div class="overlay-header ${data.header.className}" if(data.header)>
+    <div class="overlay-header ${data.header.className || ''}" if(data.header)>
         <invoke data.header.renderBody(out)/>
     </div>
 

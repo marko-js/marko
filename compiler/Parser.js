@@ -110,13 +110,17 @@ class Parser {
         return rootNode;
     }
 
-    handleCharacters(text) {
+    handleCharacters(text, parseMode) {
         var builder = this.context.builder;
 
-        if (this.prevTextNode && this.prevTextNode.isLiteral()) {
+        var escape = parseMode !== 'html';
+        // NOTE: If parseMode is 'static-text' or 'parsed-text' then that means that special
+        //       HTML characters may not have been escaped on the way in so we need to escape
+        //       them on the way out
+
+        if (this.prevTextNode && this.prevTextNode.isLiteral() && this.prevTextNode.escape === escape) {
             this.prevTextNode.argument.value += text;
         } else {
-            var escape = false;
             this.prevTextNode = builder.text(builder.literal(text), escape);
             this.parentNode.appendChild(this.prevTextNode);
         }

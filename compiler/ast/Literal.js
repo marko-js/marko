@@ -16,13 +16,15 @@ class Literal extends Node {
             if (isArray(this.value)) {
                 this.value = codegen.generateCode(this.value);
             } else if (typeof this.value === 'object') {
-                var newObject = {};
-                for (var k in this.value) {
-                    if (this.value.hasOwnProperty(k)) {
-                        newObject[k] = codegen.generateCode(this.value[k]);
+                if (!(this.value instanceof RegExp)) {
+                    var newObject = {};
+                    for (var k in this.value) {
+                        if (this.value.hasOwnProperty(k)) {
+                            newObject[k] = codegen.generateCode(this.value[k]);
+                        }
                     }
+                    this.value = newObject;
                 }
-                this.value = newObject;
             }
         }
         return this;

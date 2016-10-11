@@ -22,9 +22,9 @@ var path = require('path');
 var assert = require('assert');
 
 
-function compareHelper(dir, actual, suffix) {
-    var actualPath = path.join(dir, 'actual' + suffix);
-    var expectedPath = path.join(dir, 'expected' + suffix);
+function compareHelper(dir, actual, prefix, suffix) {
+    var actualPath = path.join(dir, prefix + 'actual' + suffix);
+    var expectedPath = path.join(dir, prefix + 'expected' + suffix);
 
     var isObject = typeof actual === 'string' ? false : true;
     var actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
@@ -51,8 +51,12 @@ function autoTest(name, dir, run, options, done) {
     options = options || {};
 
     var helpers = {
-        compare(actual, suffix) {
-            compareHelper(dir, actual, suffix);
+        compare(actual, prefix, suffix) {
+            if (arguments.length === 2) {
+                suffix = prefix;
+                prefix = null;
+            }
+            compareHelper(dir, actual, prefix || '', suffix || '');
         }
     };
 
@@ -64,6 +68,10 @@ exports.scanDir = function(autoTestDir, run, options) {
         fs.readdirSync(autoTestDir)
             .forEach(function(name) {
                 if (name.charAt(0) === '.') {
+                    return;
+                }
+
+                if (name.endsWith('.skip')) {
                     return;
                 }
 

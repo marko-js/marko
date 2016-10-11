@@ -1,10 +1,14 @@
 function create(__markoHelpers) {
+  var marko_str = __markoHelpers.s;
+
   return function render(data, out) {
     out.e("div", {
         foo: "bar",
         hello: "world"
       }, 1)
-      .t(("Hello " + name) + "!");
+      .t("Hello " +
+        marko_str(name) +
+        "!");
   };
 }
 

@@ -11,8 +11,6 @@ function createVarsArray(vars) {
     });
 }
 
-
-
 class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');

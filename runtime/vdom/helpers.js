@@ -17,8 +17,13 @@
 'use strict';
 
 var markoVDOM = require('marko-vdom');
+var commonHelpers = require('../helpers');
+var extend = require('raptor-util/extend');
+var runtime;
 
-module.exports = {
+var classList = commonHelpers.cl;
+
+module.exports = extend({
     e: markoVDOM.createElement,
     t: markoVDOM.createText,
     const: function(id) {
@@ -26,5 +31,66 @@ module.exports = {
         return function() {
             return id + (i++);
         };
+    },
+    /**
+     * Loads a template (__helpers.l --> marko_loadTemplate(path))
+     */
+    l: function(path) {
+        if (typeof path === 'string') {
+            return runtime.load(path);
+        } else {
+            // Assume it is already a pre-loaded template
+            return path;
+        }
+    },
+
+    /**
+     * Helper for generating the string for a style attribute
+     * @param  {[type]} style [description]
+     * @return {[type]}       [description]
+     */
+    sa: function(style) {
+        if (!style) {
+            return null;
+        }
+
+        if (typeof style === 'string') {
+            return style;
+        } else if (typeof style === 'object') {
+            var parts = [];
+            for (var name in style) {
+                if (style.hasOwnProperty(name)) {
+                    var value = style[name];
+                    if (value) {
+                        parts.push(name + ':' + value);
+                    }
+                }
+            }
+            return parts ? parts.join(';') : null;
+        } else {
+            return null;
+        }
+    },
+
+    /**
+     * Internal helper method to handle the "class" attribute. The value can either
+     * be a string, an array or an object. For example:
+     *
+     * ca('foo bar') ==> ' class="foo bar"'
+     * ca({foo: true, bar: false, baz: true}) ==> ' class="foo baz"'
+     * ca(['foo', 'bar']) ==> ' class="foo bar"'
+     */
+    ca: function(classNames) {
+        if (!classNames) {
+            return null;
+        }
+
+        if (typeof classNames === 'string') {
+            return classNames;
+        } else {
+            return classList(classNames);
+        }
     }
-};
+}, commonHelpers);
+
+runtime = require('./');

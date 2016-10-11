@@ -20,8 +20,7 @@ var fs = require('fs');
 var Module = require('module').Module;
 var markoCompiler = require('../../compiler');
 var cwd = process.cwd();
-var fsReadOptions = {encoding: 'utf8'};
-var extend = require('raptor-util/extend');
+var fsOptions = {encoding: 'utf8'};
 
 if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
     require('../../hot-reload').enable();
@@ -79,6 +78,8 @@ function getLoadedTemplate(path) {
 }
 
 function loadFile(templatePath, options) {
+    options = Object.assign({}, markoCompiler.defaultOptions, options);
+
     var targetFile = templatePath + '.js';
 
     // Short-circuit loading if the template has already been cached in the Node.js require cache
@@ -96,8 +97,6 @@ function loadFile(templatePath, options) {
     if (cachedTemplate) {
         return cachedTemplate;
     }
-
-    options = extend(extend({}, markoCompiler.defaultOptions), options);
 
     // If the `assumeUpToDate` option is true then we just assume that the compiled template on disk is up-to-date
     // if it exists
@@ -120,22 +119,16 @@ function loadFile(templatePath, options) {
     var filename = nodePath.basename(targetFile);
     var targetDir = nodePath.dirname(targetFile);
     var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
-    fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
+    fs.writeFileSync(tempFile, compiledSrc, fsOptions);
     fs.renameSync(tempFile, targetFile);
 
     return require(targetFile);
 }
 
 module.exports = function load(templatePath, templateSrc, options) {
-    var writeToDisk;
+    options = Object.assign({}, markoCompiler.defaultOptions, options);
 
-    if (options && (options.writeToDisk != null)) {
-        // options is provided and options.writeToDisk is non-null
-        writeToDisk = options.writeToDisk;
-    } else {
-        // writeToDisk should be inferred from defaultOptions
-        writeToDisk = markoCompiler.defaultOptions.writeToDisk;
-    }
+    var writeToDisk = options.writeToDisk;
 
     // If the template source is provided then we can compile the string
     // in memory and there is no need to read template file from disk or
@@ -148,10 +141,16 @@ module.exports = function load(templatePath, templateSrc, options) {
         // directly from the compiled source using the internals of the
         // Node.js module loading system.
         if (templateSrc === undefined) {
-            templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+            templateSrc = fs.readFileSync(templatePath, fsOptions);
         }
 
     	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
+
+        if (writeToDisk === true) {
+            var targetFile = templatePath + '.js';
+            fs.writeFileSync(targetFile, compiledSrc, fsOptions);
+        }
+
         return loadSource(templatePath, compiledSrc);
     } else {
         return loadFile(templatePath, options);

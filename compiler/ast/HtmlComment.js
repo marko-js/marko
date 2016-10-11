@@ -19,6 +19,19 @@ class HtmlComment extends Node {
         ];
     }
 
+    generateVDOMCode(codegen) {
+        var comment = this.comment;
+        var builder = codegen.builder;
+
+        return builder.functionCall(
+            builder.memberExpression(
+                builder.identifierOut(),
+                builder.identifier('comment')),
+            [
+                comment
+            ]);
+    }
+
     walk(walker) {
         this.comment = walker.walk(this.comment);
     }

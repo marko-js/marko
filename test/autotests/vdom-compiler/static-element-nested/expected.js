@@ -1,6 +1,7 @@
 function create(__markoHelpers) {
-  var marko_createElement = require("marko/vdom/createElement"),
-      marko_const = require("marko/runtime/vdom/const"),
+  var marko_str = __markoHelpers.s,
+      marko_createElement = __markoHelpers.e,
+      marko_const = __markoHelpers.const,
       marko_const_nextId = marko_const("69a896"),
       marko_node0 = marko_createElement("div", {
           "class": "hello",
@@ -11,7 +12,9 @@ function create(__markoHelpers) {
   return function render(data, out) {
     out.e("span", null, 2)
       .e("h1", null, 1)
-        .t(("Hello " + data.name) + "!")
+        .t("Hello " +
+          marko_str(data.name) +
+          "!")
       .n(marko_node0);
   };
 }

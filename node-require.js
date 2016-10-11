@@ -21,10 +21,13 @@ var fsReadOptions = { encoding: 'utf8' };
 
 function compile(templatePath, markoCompiler, compilerOptions) {
 
-    var writeToDisk = compilerOptions.writeToDisk;
-    if (writeToDisk == null) {
-        writeToDisk = markoCompiler.defaultOptions.writeToDisk;
+    if (compilerOptions) {
+        compilerOptions = markoCompiler.defaultOptions;
+    } else {
+        compilerOptions = Object.assign({}, markoCompiler.defaultOptions, compilerOptions);
     }
+    var writeToDisk = compilerOptions.writeToDisk;
+
     var templateSrc;
     var compiledSrc;
 
@@ -51,7 +54,7 @@ function compile(templatePath, markoCompiler, compilerOptions) {
             compiledSrc = fs.readFileSync(targetFile, fsReadOptions);
         } else {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-        	compiledSrc = markoCompiler.compile(templateSrc, templatePath);
+        	compiledSrc = markoCompiler.compile(templateSrc, templatePath, compilerOptions);
 
             // Write to a temporary file and move it into place to avoid problems
             // assocatiated with multiple processes write to the same file. We only
@@ -76,7 +79,7 @@ function getLoadedTemplate(path) {
 exports.install = function(options) {
     options = options || {};
 
-    var compilerOptions = options.compilerOptions || {};
+    var compilerOptions = options.compilerOptions;
 
     var extension = options.extension || '.marko';
 

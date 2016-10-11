@@ -9,7 +9,7 @@ class HtmlJsParser {
     parse(src, handlers) {
         var listeners = {
             onText(event) {
-                handlers.handleCharacters(event.value);
+                handlers.handleCharacters(event.value, event.parseMode);
             },
 
             onPlaceholder(event) {
@@ -32,7 +32,7 @@ class HtmlJsParser {
             },
 
             onCDATA(event) {
-                handlers.handleCharacters(event.value);
+                handlers.handleCharacters(event.value, 'static-text');
             },
 
             onOpenTag(event, parser) {

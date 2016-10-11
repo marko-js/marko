@@ -7,7 +7,7 @@ exports.checkError = function(e) {
     expect(e.message).to.contain('<custom-tag>');
 
     //includes the line number of the template
-    expect(e.message).to.contain('error-thrown-in-generator/template.marko:2');
+    expect(e.message).to.contain('template.marko:2');
 
     //retains original stack trace
     expect(e.stack.toString()).to.contain('custom-tag.js:2:11');

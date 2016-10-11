@@ -55,6 +55,7 @@ const helpers = {
     'attrs': 'as',
     'classAttr': 'ca',
     'classList': 'cl',
+    'const': 'const',
     'createElement': 'e',
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
@@ -516,7 +517,7 @@ class CompileContext extends EventEmitter {
     get helpersIdentifier() {
         if (!this._helpersIdentifier) {
             if (this.inline) {
-                this._helpersIdentifier = this.importModule('__markoHelpers', 'marko/runtime/helpers');
+                this._helpersIdentifier = this.importModule('__markoHelpers', 'marko/runtime/html/helpers');
             } else {
                 // The helpers variable is a parameter of the outer create function
                 this._helpersIdentifier = this.builder.identifier('__markoHelpers');

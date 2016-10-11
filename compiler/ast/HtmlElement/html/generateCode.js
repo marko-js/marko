@@ -13,15 +13,6 @@ module.exports = function generateCode(node, codegen) {
         tagName = node.tagNameExpression;
     }
 
-    var context = codegen.context;
-
-    if (context.isMacro(node.tagName)) {
-        // At code generation time, if node tag corresponds to a registered macro
-        // then invoke the macro based on node HTML element instead of generating
-        // the code to render an HTML element.
-        return codegen.builder.invokeMacroFromEl(node);
-    }
-
     var attributes = node._attributes && node._attributes.all;
     var body = node.body;
     var argument = node.argument;

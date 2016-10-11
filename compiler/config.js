@@ -34,7 +34,10 @@ if (g.__MARKO_CONFIG) {
          * If true, whitespace will be preserved in templates. Defaults to false.
          * @type {Boolean}
          */
-        preserveWhitespace: false
+        preserveWhitespace: false,
+
+        // The default output mode for compiled templates
+        output: 'html'
     };
 }
 

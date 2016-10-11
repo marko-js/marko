@@ -88,14 +88,17 @@ Template.prototype = {
         this._ = createFunc(helpers);
     },
     renderSync: function(data) {
-        var localData = data || {};
-        var out = new AsyncWriter();
-        out.sync();
+        var localData;
+        var globalData;
 
-        if (localData.$global) {
-            out.global = extend(out.global, localData.$global);
-            localData.$global = null;
+        if ((localData = data)) {
+            globalData = localData.$global;
+        } else {
+            localData = {};
         }
+
+        var out = new AsyncWriter(null, null, globalData);
+        out.sync();
 
         this._(localData, out);
         return out.getOutput();
@@ -275,4 +278,4 @@ exports._inline = createInlineMarkoTemplate;
 // loaded and cached. On the server, the loader will use
 // the compiler to compile the template and then load the generated
 // module file using the Node.js module loader
-loader = require('./loader');
+loader = require('../loader');

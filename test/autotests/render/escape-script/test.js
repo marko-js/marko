@@ -3,3 +3,5 @@ exports.templateData = {
         name: 'Evil </script>'
     }
 };
+
+exports.vdomSkip = true;
