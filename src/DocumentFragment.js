@@ -20,6 +20,19 @@ DocumentFragment.prototype = {
 
     cloneNode: function() {
         return new DocumentFragmentClone(this);
+    },
+
+    actualize: function(document) {
+        var docFragment = document.createDocumentFragment();
+
+        var curChild = this.firstChild;
+
+        while(curChild) {
+            docFragment.appendChild(curChild.actualize(document));
+            curChild = curChild.nextSibling;
+        }
+
+        return docFragment;
     }
 };
 

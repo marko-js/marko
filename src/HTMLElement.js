@@ -7,7 +7,7 @@ var Node = require('./Node');
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
-var ATTR_MARKO_SAME_ID = 'data-marko-same-id';
+var ATTR_MARKO_CONST = 'data-marko-const';
 
 function HTMLElementClone(other) {
     extend(this, other);
@@ -15,7 +15,7 @@ function HTMLElementClone(other) {
     this._nextSibling = undefined;
 }
 
-function HTMLElement(tagName, attrs, childCount, sameId) {
+function HTMLElement(tagName, attrs, childCount, constId) {
     var namespaceURI;
     var isTextArea;
 
@@ -39,7 +39,7 @@ function HTMLElement(tagName, attrs, childCount, sameId) {
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this._value = undefined;
-    this._sameId = sameId;
+    this._constId = constId;
 }
 
 HTMLElement.prototype = {
@@ -80,8 +80,8 @@ HTMLElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, childCount, sameId) {
-        var child = this.appendChild(new HTMLElement(tagName, attrs, childCount, sameId));
+    e: function(tagName, attrs, childCount, constId) {
+        var child = this.appendChild(new HTMLElement(tagName, attrs, childCount, constId));
 
         if (childCount === 0) {
             return this._finishChild();
@@ -130,7 +130,6 @@ HTMLElement.prototype = {
             el = document.createElement(tagName);
         }
 
-        var i;
         var attributes = this.attributes;
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
@@ -151,18 +150,16 @@ HTMLElement.prototype = {
         if (this._isTextArea) {
             el.value = this.value;
         } else {
-            var childNodes = this.childNodes;
-            if (childNodes) {
-                var childCount = childNodes.length;
-                for (i=0; i<childCount; ++i) {
-                    var childNode = childNodes[i];
-                    el.appendChild(childNode.actualize(document));
-                }
+            var curChild = this.firstChild;
+
+            while(curChild) {
+                el.appendChild(curChild.actualize(document));
+                curChild = curChild.nextSibling;
             }
         }
 
-        if (this._sameId) {
-            el.setAttribute(ATTR_MARKO_SAME_ID, this._sameId);
+        if (this._constId) {
+            el.setAttribute(ATTR_MARKO_CONST, this._constId);
         }
 
         return el;
@@ -176,10 +173,10 @@ HTMLElement.prototype = {
     },
 
     isSameNode: function(otherNode) {
-        var sameId = this._sameId;
-        if (sameId) {
-            var otherSameId = otherNode.actualize ? otherNode._sameId : otherNode.getAttribute(ATTR_MARKO_SAME_ID);
-            return sameId === otherSameId;
+        var constId = this._constId;
+        if (constId) {
+            var otherSameId = otherNode.actualize ? otherNode._constId : otherNode.getAttribute(ATTR_MARKO_CONST);
+            return constId === otherSameId;
         } else {
             return false;
         }

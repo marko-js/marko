@@ -2,7 +2,7 @@ var Node = require('./Node');
 var inherit = require('raptor-util/inherit');
 
 function Text(value) {
-    Node.call(this, 0 /* childCount */);
+    Node.call(this, -1 /* no children */);
     this.nodeValue = value;
 }
 

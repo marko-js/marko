@@ -16,23 +16,25 @@ function assignNamespace(node, namespaceURI) {
 }
 
 function Node(finalChildCount) {
-    var childNodes;
-    var firstChild;
-    var lastChild;
+    if (finalChildCount !== -1) {
+        var childNodes;
+        var firstChild;
+        var lastChild;
 
-    if (finalChildCount === 0) {
-        childNodes = EMPTY_ARRAY;
-    } else if (finalChildCount > 0) {
-        childNodes = new Array(finalChildCount);
-    } else {
-        childNodes = [];
+        if (finalChildCount === 0) {
+            childNodes = EMPTY_ARRAY;
+        } else if (finalChildCount > 0) {
+            childNodes = new Array(finalChildCount);
+        } else {
+            childNodes = [];
+        }
+
+        this.childNodes = childNodes;
+        this._finalChildCount = finalChildCount;
+        this._childCount = 0;
+        this._firstChild = firstChild;
+        this._lastChild = lastChild;
     }
-
-    this.childNodes = childNodes;
-    this._finalChildCount = finalChildCount;
-    this._childCount = 0;
-    this._firstChild = firstChild;
-    this._lastChild = lastChild;
 
     this.parentNode = undefined;
     this._nextSibling = undefined;
@@ -54,6 +56,16 @@ Node.prototype = {
         }
 
         return firstChild;
+    },
+
+    get lastChild() {
+        var lastChild = this._lastChild;
+
+        if (lastChild && lastChild.nodeType === 11 /* DocumentFragment */) {
+            return lastChild.lastChild;
+        }
+
+        return lastChild;
     },
 
     get nextSibling() {

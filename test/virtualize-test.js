@@ -4,7 +4,7 @@ var fs = require('fs');
 var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;
 
-describe('marko-vdom', () => {
+describe('marko-vdom/virtualize', () => {
     require('./util/autotest').scanDir(
         path.join(__dirname, 'autotests-virtualize'),
         function(dir, helpers, done) {

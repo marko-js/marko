@@ -25,7 +25,7 @@ module.exports = function(helpers) {
     expect(clone.hasAttributeNS(null, 'class')).to.equal(true);
     expect(clone.firstChild).to.equal(el.firstChild);
 
-    var root = helpers.vdom.createElement('div', { class: 'root' }, -1 /* childCount */);
+    var root = helpers.vdom.createElement('div', { class: 'root' });
 
     root.appendChild(clone);
 
