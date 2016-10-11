@@ -1,4 +1,4 @@
-var AsyncVDOMBuilder = require('.');
+var AsyncVDOMBuilder = require('../').AsyncVDOMBuilder;
 var createElement = require('marko-vdom').createElement;
 var expect = require('chai').expect;
 
