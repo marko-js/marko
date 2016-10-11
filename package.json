@@ -24,10 +24,14 @@
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
-    "Patrick Steele-Idem <pnidem@gmail.com>"
+    "Patrick Steele-Idem <pnidem@gmail.com>",
+    "Michael Rawlings <ml.rawlings@gmail.com>",
+    "Phillip Gates-Idem <phillip.idem@gmail.com>",
+    "Martin Aberer"
   ],
   "dependencies": {
     "app-module-path": "^1.0.5",
+    "async-vdom-builder": "^1.0.0",
     "async-writer": "^1.4.4",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
