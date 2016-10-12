@@ -17,7 +17,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "marko-vdom": "^0.3.0"
+    "marko-vdom": "^0.4.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
