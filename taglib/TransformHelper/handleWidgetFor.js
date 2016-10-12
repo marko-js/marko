@@ -16,16 +16,14 @@
 
 module.exports = function handleWidgetFor() {
     var el = this.el;
-    if (!el.hasAttribute('w-for')) {
-        return;
-    }
 
     var widgetFor = el.getAttributeValue('w-for');
+
+    el.removeAttribute('w-for');
 
     if (widgetFor == null) {
         return;
     }
-
 
     // Handle the "w-for" attribute
     if (el.hasAttribute('for')) {

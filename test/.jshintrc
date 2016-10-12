@@ -40,5 +40,6 @@
     "eqeqeq": false,
     "latedef": true,
     "unused": "vars",
-    "eqnull": true
+    "eqnull": true,
+    "expr": true
 }

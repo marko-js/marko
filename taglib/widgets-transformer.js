@@ -48,7 +48,9 @@ module.exports = function transform(el, context) {
 
     if (el.hasAttribute('w-id')) {
         transformHelper.assignWidgetId();
-    } else if (el.hasAttribute('w-for')) {
+    }
+
+    if (el.hasAttribute('w-for')) {
         transformHelper.handleWidgetFor();
     }
 
