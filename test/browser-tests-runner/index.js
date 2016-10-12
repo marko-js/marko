@@ -11,6 +11,7 @@ var spawn = require('child-process-promise').spawn;
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var mochaPhantomJSCommand = path.join(__dirname, '../../node_modules/.bin/mocha-phantomjs');
+var phantomjsBinPath = require('phantomjs-prebuilt').path;
 
 function generate(options) {
     return new Promise((resolve, reject) => {
@@ -112,7 +113,7 @@ function runTests(options) {
     return generate(options)
         .then((generated) => {
             console.log(`Running ${generated.url} using mocha-phantomjs...`);
-            return spawn(mochaPhantomJSCommand, [generated.url], {
+            return spawn(mochaPhantomJSCommand, ['-p', phantomjsBinPath, generated.url], {
                 stdio: 'inherit'
             });
         });
