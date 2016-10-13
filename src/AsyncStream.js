@@ -61,6 +61,7 @@ AsyncStream.enableAsyncStackTrace = function() {
 var proto = AsyncStream.prototype = {
     constructor: AsyncStream,
     isAsyncWriter: AsyncStream,
+    isAsyncStream: AsyncStream,
 
     sync: function() {
         this._sync = true;
