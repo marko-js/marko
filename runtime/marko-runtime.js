@@ -156,7 +156,7 @@ Template.prototype = {
         if (arguments.length === 3) {
             // render(data, out, callback)
             if (!finalOut || !finalOut.isAsyncWriter) {
-                finalOut = new AsyncWriter(finalOut);
+                finalOut = new AsyncWriter(globalData, finalOut);
                 shouldEnd = true;
             }
 
@@ -171,11 +171,12 @@ Template.prototype = {
             // By default, we will buffer rendering to a stream to prevent
             // the response from being "too chunky".
             finalOut = asyncWriter.create(finalOut, this._options);
-            shouldEnd = true;
-        }
 
-        if (globalData) {
-            extend(finalOut.global, globalData);
+            if (globalData) {
+                extend(finalOut.global, globalData);
+            }
+
+            shouldEnd = true;
         }
 
         // Invoke the compiled template's render function to have it
