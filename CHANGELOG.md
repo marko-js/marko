@@ -5,6 +5,10 @@ Changelog
 
 ## 3.11.x
 
+### 3.11.4
+
+- Update to `async-writer@2`
+
 ### 3.11.3
 
 - Silently ignore errors when parsing tag definition code inlined in JavaScript
