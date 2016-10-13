@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "app-module-path": "^1.0.5",
-    "async-writer": "^1.4.0",
+    "async-writer": "^2.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "deresolve": "^1.0.0",
