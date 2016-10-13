@@ -50,17 +50,17 @@ var loader;
 // then Readable will be a readable stream
 var Readable;
 
-var AsyncWriter = asyncWriter.AsyncWriter;
+var AsyncStream = asyncWriter.AsyncStream;
 var extend = require('raptor-util/extend');
 
 
 
-exports.AsyncWriter = AsyncWriter;
+exports.AsyncStream = AsyncStream;
 
 var stream = require('./stream');
 
 function renderCallback(renderFunc, data, globalData, callback) {
-    var out = new AsyncWriter();
+    var out = new AsyncStream();
     if (globalData) {
         extend(out.global, globalData);
     }
@@ -94,7 +94,7 @@ Template.prototype = {
     },
     renderSync: function(data) {
         var localData = data || {};
-        var out = new AsyncWriter();
+        var out = new AsyncStream();
         out.sync();
 
         if (localData.$global) {
@@ -121,9 +121,9 @@ Template.prototype = {
      * render(data, stream, callback)
      *
      * @param  {Object} data The view model data for the template
-     * @param  {AsyncWriter} out A Stream or an AsyncWriter instance
+     * @param  {AsyncStream} out A Stream or an AsyncStream instance
      * @param  {Function} callback A callback function
-     * @return {AsyncWriter} Returns the AsyncWriter instance that the template is rendered to
+     * @return {AsyncStream} Returns the AsyncStream instance that the template is rendered to
      */
     render: function(data, out, callback) {
         var renderFunc = this._;
@@ -155,8 +155,8 @@ Template.prototype = {
 
         if (arguments.length === 3) {
             // render(data, out, callback)
-            if (!finalOut || !finalOut.isAsyncWriter) {
-                finalOut = new AsyncWriter(globalData, finalOut);
+            if (!finalOut || !finalOut.isAsyncStream) {
+                finalOut = new AsyncStream(globalData, finalOut);
                 shouldEnd = true;
             }
 
@@ -165,7 +165,7 @@ Template.prototype = {
                     callback(null, finalOut.getOutput(), finalOut);
                 })
                 .once('error', callback);
-        } else if (!finalOut || !finalOut.isAsyncWriter) {
+        } else if (!finalOut || !finalOut.isAsyncStream) {
             // Assume the "finalOut" is really a stream
             //
             // By default, we will buffer rendering to a stream to prevent
@@ -186,9 +186,9 @@ Template.prototype = {
         // Automatically end output stream (the writer) if we
         // had to create an async writer (which might happen
         // if the caller did not provide a writer/out or the
-        // writer/out was not an AsyncWriter).
+        // writer/out was not an AsyncStream).
         //
-        // If out parameter was originally an AsyncWriter then
+        // If out parameter was originally an AsyncStream then
         // we assume that we are writing to output that was
         // created in the context of another rendering job.
         return shouldEnd ? finalOut.end() : finalOut;
@@ -304,7 +304,7 @@ function load(templatePath, templateSrc, options) {
 exports.load = load;
 
 exports.createWriter = function(writer) {
-    return new AsyncWriter(writer);
+    return new AsyncStream(null, writer);
 };
 
 exports.helpers = helpers;
