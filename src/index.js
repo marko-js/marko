@@ -26,7 +26,7 @@ var AsyncStream = require('./AsyncStream');
 
 exports.create = function (writer, options) {
     var global;
-    var buffer;
+    var shouldBuffer;
 
     if(arguments.length === 1 && typeof writer.write !== 'function') {
         options = writer;
@@ -35,14 +35,14 @@ exports.create = function (writer, options) {
 
     if (options) {
         global = options.global;
-        buffer = options.buffer === true;
+        shouldBuffer = options.buffer === true;
     }
 
     var asyncStream = new AsyncStream(
-        writer,
-        null /* Internally used to pass parent */,
         global,
-        buffer);    //Create a new context using the writer provided
+        writer,
+        null /* Internally used to pass state */,
+        shouldBuffer);    //Create a new context using the writer provided
 
     return asyncStream;
 };

@@ -1,50 +1,55 @@
 'use strict';
 
 var EventEmitter = require('events').EventEmitter;
-var AsyncTracker = require('./AsyncTracker');
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
 
 var voidWriter = { write:function(){} };
 
-function AsyncStream(writer, parent, global, buffer) {
-    var finalGlobal;
-    var events;
-    var finalStream;
-    var tracker;
-    var originalWriter;
+function State(stream, originalWriter, events) {
+    this.originalStream = stream;
+    this.originalWriter = originalWriter;
+    this.events = events;
 
-    if (parent) {
-        finalStream = parent.stream;
-        finalGlobal = parent.global;
-        events = parent._events;
-        tracker = parent._tracker;
-        originalWriter = parent._originalWriter;
+    this.remaining = 0;
+    this.lastCount = 0;
+    this.last = undefined; // Array
+    this.ended = false;
+    this.finished = false;
+    this.ids = 0;
+}
+
+function AsyncStream(global, writer, state, shouldBuffer) {
+    var finalGlobal = this.attributes = global || {};
+    var finalStream;
+
+    if (state) {
+        finalStream = state.stream;
     } else {
-        finalGlobal = global || (global = {});
-        events = global.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
+        var events = finalGlobal.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
 
         if (!writer) {
             writer = new StringWriter(events);
-        } else if (buffer) {
+        } else if (shouldBuffer) {
             finalStream = writer;
             writer = new BufferedWriter(writer);
         }
 
         finalStream = finalStream || writer;
-        originalWriter = writer;
-        tracker = new AsyncTracker(this, originalWriter);
+        state = new State(this, writer, events);
     }
 
-    this.global = this.attributes /* legacy */ = finalGlobal;
-    this._events = events;
+    this.global = finalGlobal;
     this.stream = finalStream;
-    this._tracker = tracker;
-    this._originalWriter = originalWriter;
+    this._state = state;
 
     this.data = {};
     this.writer = writer;
     writer.stream = this;
+
+    this._sync = false;
+    this._stack = undefined;
+    this._timeoutId = undefined;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -58,7 +63,7 @@ var proto = AsyncStream.prototype = {
     isAsyncWriter: AsyncStream,
 
     sync: function() {
-        this._isSync = true;
+        this._sync = true;
     },
 
     write: function (str) {
@@ -69,13 +74,15 @@ var proto = AsyncStream.prototype = {
     },
 
     getOutput: function () {
-        return this._originalWriter.toString();
+        return this._state.originalWriter.toString();
     },
 
     beginAsync: function(options) {
-        if (this._isSync) {
+        if (this._sync) {
             throw new Error('beginAsync() not allowed when using renderSync()');
         }
+
+        var state = this._state;
 
         var currentWriter = this.writer;
 
@@ -84,7 +91,7 @@ var proto = AsyncStream.prototype = {
            ┗━━━━━┛  prevWriter → currentWriter → nextWriter  */
 
         var newWriter = new StringWriter();
-        var newStream = new AsyncStream(currentWriter, this);
+        var newStream = new AsyncStream(this.global, currentWriter, state);
 
         this.writer = newWriter;
         newWriter.stream = this;
@@ -96,7 +103,48 @@ var proto = AsyncStream.prototype = {
            ┃ NOW ┃               ↓↑              ↓↑
            ┗━━━━━┛  prevWriter → currentWriter → newWriter → nextWriter  */
 
-        this._tracker.begin(newStream, this, options);
+       var timeout;
+       var name;
+
+       state.remaining++;
+
+       if (options != null) {
+           if (typeof options === 'number') {
+               timeout = options;
+           } else {
+               timeout = options.timeout;
+
+               if (options.last === true) {
+                   if (timeout == null) {
+                       // Don't assign a timeout to last flush fragments
+                       // unless it is explicitly given a timeout
+                       timeout = 0;
+                   }
+
+                   state.lastCount++;
+               }
+
+               name = options.name;
+           }
+       }
+
+       if (timeout == null) {
+           timeout = AsyncStream.DEFAULT_TIMEOUT;
+       }
+
+       newStream.stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
+       newStream.name = name;
+
+       if (timeout > 0) {
+           newStream._timeoutId = setTimeout(function() {
+               newStream.error(new Error('Async fragment ' + (name ? '(' + name + ') ': '') + 'timed out after ' + timeout + 'ms'));
+           }, timeout);
+       }
+
+       state.originalStream.emit('beginAsync', {
+           writer: newStream,
+           parentWriter: this
+       });
 
         return newStream;
     },
@@ -125,7 +173,45 @@ var proto = AsyncStream.prototype = {
            ┃     ┃  ──────────────┴────────────────────────────────
            ┗━━━━━┛    Flushed & garbage collected: nextWriter  */
 
-        this._tracker.end(this);
+
+       var state = this._state;
+
+       if (state.finished) {
+           return;
+       }
+
+       var remaining;
+
+       if (this === state.originalStream) {
+           remaining = state.remaining;
+           state.ended = true;
+       } else {
+           var timeoutId = this._timeoutId;
+
+           if (timeoutId) {
+               clearTimeout(timeoutId);
+           }
+
+           remaining = --state.remaining;
+       }
+
+       if (state.ended) {
+           if (!state.lastFired && (state.remaining - state.lastCount === 0)) {
+               state.lastFired = true;
+               state.lastCount = 0;
+               state.originalStream.emit('last');
+           }
+
+           if (remaining === 0) {
+               state.finished = true;
+               if (state.originalWriter.end) {
+                   state.originalWriter.end();
+               } else {
+                   state.originalStream.emit('finish');
+               }
+           }
+       }
+
         return this;
     },
 
@@ -187,30 +273,36 @@ var proto = AsyncStream.prototype = {
     },
 
     on: function(event, callback) {
-        if (event === 'finish' && this._originalWriter.finished) {
+        var state = this._state;
+
+        if (event === 'finish' && state.originalWriter.finished) {
             callback();
             return this;
         }
 
-        this._events.on(event, callback);
+        state.events.on(event, callback);
         return this;
     },
 
     once: function(event, callback) {
-        if (event === 'finish' && this._originalWriter.finished) {
+        var state = this._state;
+
+        if (event === 'finish' && state.originalWriter.finished) {
             callback();
             return this;
         }
 
-        this._events.once(event, callback);
+        state.events.once(event, callback);
         return this;
     },
 
     onLast: function(callback) {
-        var lastArray = this._last;
+        var state = this._state;
+
+        var lastArray = state.last;
 
         if (!lastArray) {
-            lastArray = this._last = [];
+            lastArray = state.last = [];
             var i = 0;
             var next = function next() {
                 if (i === lastArray.length) {
@@ -230,7 +322,7 @@ var proto = AsyncStream.prototype = {
     },
 
     emit: function(type, arg) {
-        var events = this._events;
+        var events = this._state.events;
         switch(arguments.length) {
             case 1:
                 events.emit(type);
@@ -246,24 +338,24 @@ var proto = AsyncStream.prototype = {
     },
 
     removeListener: function() {
-        var events = this._events;
+        var events = this._state.events;
         events.removeListener.apply(events, arguments);
         return this;
     },
 
     prependListener: function() {
-        var events = this._events;
+        var events = this._state.events;
         events.prependListener.apply(events, arguments);
         return this;
     },
 
     pipe: function(stream) {
-        this._originalWriter.pipe(stream);
+        this._state.originalWriter.pipe(stream);
         return this;
     },
 
     error: function(e) {
-        var stack = this.stack;
+        var stack = this._stack;
         var name = this.name;
 
         var message = 'Async fragment failed' + (name ? ' (' + name + ')': '') + '. Exception: ' + (e.stack || e) + (stack ? ('\nCreation stack trace: ' + stack) : '');
@@ -287,8 +379,10 @@ var proto = AsyncStream.prototype = {
     },
 
     flush: function() {
-        if (!this._tracker.finished) {
-            var stream = this._originalWriter;
+        var state = this._state;
+
+        if (!state.finished) {
+            var stream = state.originalWriter;
             if (stream && stream.flush) {
                 stream.flush();
             }
@@ -303,6 +397,11 @@ var proto = AsyncStream.prototype = {
     getAttribute: function(name) {
         return this.global[name];
     },
+
+    createOut: function() {
+        return new AsyncStream(this.global);
+    },
+
     captureString: function(func, thisObj) {
         var sb = new StringWriter();
         this.swapWriter(sb, func, thisObj);
@@ -318,6 +417,6 @@ var proto = AsyncStream.prototype = {
 };
 
 // alias:
-proto.w = AsyncStream.prototype.write;
+proto.w = proto.write;
 
 module.exports = AsyncStream;
