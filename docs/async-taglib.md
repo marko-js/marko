@@ -100,7 +100,7 @@ Specifying this will prevent the rendering from aborting.
 * __`name`__ (string): Name to assign to this await instance. Used for debugging purposes as well as by the `show-after` attribute (see below).
 * __`placeholder`__ (string): Placeholder text to show while waiting for a data provider to complete. Only applicable if `client-reorder` is set to `true`.
 * __`show-after`__ (string): When `client-reorder` is set to `true` then displaying this instance's content will be delayed until the referenced await instance is shown.
-* __`timeout`__ (integer): Override the default timeout of 10 seconds with this param. Units are inmilliseconds so `timeout="40000"` would give a 40 second timeout.
+* __`timeout`__ (integer): Override the default timeout of 10 seconds with this param. Units are inmilliseconds so `timeout=40000` would give a 40 second timeout.
 * __`timeout-message`__ (string): Message to output if the data provider times out. Specifying this will prevent the rendering from aborting.
 
 ## `<await-placeholder>`
