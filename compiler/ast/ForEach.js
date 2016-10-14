@@ -53,7 +53,7 @@ class ForEach extends Node {
 
                 body = body.items.concat([
                     builder.ifStatement(isNotLastTest, [
-                        builder.text(separator)
+                        builder.text(separator, false)
                     ])
                 ]);
             }

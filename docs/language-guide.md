@@ -181,6 +181,22 @@ var myIncludeTarget = require('./my-include-target.marko');
 <include(data.myIncludeTarget) name="Frank" count=30/>
 ```
 
+## Including static text
+
+```xml
+<include-text('./foo.txt')/>
+```
+
+NOTE: Special HTML characters will be escaped. If you do not want escaping then use the `<include-html>` tag (see below)
+
+## Including static HTML
+
+```xml
+<include-html('./foo.html')/>
+```
+
+NOTE: Special HTML characters will _not_ be escaped since the file is expected to be an HTML file.
+
 # Variables
 
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
@@ -614,6 +630,43 @@ Output:
 
 ```html
 2c1b0a
+```
+
+## while
+
+Any element can be repeated until a condition is met by using the `while` directive. The directive can be applied as an element or as an attribute.
+
+_Applied as an attribute:_
+
+```xml
+<var n=0/>
+<ul>
+    <li while(n < 4)>
+        ${n++}
+    </li>
+</ul>
+```
+
+_Applied as an element:_
+
+```xml
+<var n=0/>
+<ul>
+    <while(n < 4)>
+        <li>${n++}</li>
+    </while>
+</ul>
+
+```
+
+In both cases the output would be the following:
+
+```html
+<ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+</ul>
 ```
 
 # Macros

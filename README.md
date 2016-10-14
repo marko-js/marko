@@ -103,6 +103,23 @@ html lang="en"
             - No colors!
 ```
 
+Alternatively, you can choose to apply rendering logic as separate "tags":
+
+```html
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        h1 - Hello ${data.name}!
+        if(data.colors.length)
+            ul
+                for(color in data.colors)
+                    li - ${color}
+        else
+            div - No colors!
+```
+
 ## Mixed syntax
 
 You can even mix and match the concise syntax with the HTML syntax within the same document.

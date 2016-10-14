@@ -81,6 +81,12 @@ exports.install = function(options) {
 
     var compilerOptions = options.compilerOptions;
 
+    if (compilerOptions) {
+        require('./compiler').configure(compilerOptions);
+    } else {
+        compilerOptions = {};
+    }
+
     var extension = options.extension || '.marko';
 
     if (extension.charAt(0) !== '.') {

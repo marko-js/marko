@@ -267,7 +267,7 @@ function createInlineMarkoTemplate(filename, renderFunc) {
 exports.load = load;
 
 exports.createWriter = function(writer) {
-    return new AsyncStream(writer);
+    return new AsyncStream(null, writer);
 };
 
 exports.helpers = helpers;

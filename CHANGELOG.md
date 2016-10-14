@@ -3,6 +3,40 @@ Changelog
 
 # 3.x
 
+## 3.11.x
+
+### 3.11.4
+
+- Update to `async-writer@2`
+
+### 3.11.3
+
+- Silently ignore errors when parsing tag definition code inlined in JavaScript
+
+### 3.11.2
+
+- Fixed [#318](https://github.com/marko-js/marko/issues/318) - Use compiler options passed to require hook to configure marko globally
+
+```javascript
+require('marko/node-require').install({
+    compilerOptions: {
+        writeToDisk: false
+    }
+});
+```
+
+### 3.11.1
+
+- Fixed [#370](https://github.com/marko-js/marko/issues/370) - HTML characters in loop separator string should not be escaped
+
+### 3.11.0
+
+- Introduced the `<include-html(path)>` tag for including static HTML:
+
+```xml
+<include-html('./foo.html')>
+```
+
 ## 3.10.x
 
 ### 3.10.1

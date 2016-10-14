@@ -21,6 +21,7 @@
     "html-comment",
     "if",
     "include",
+    "include-html",
     "include-text",
     "invoke",
     "layout-placeholder",

@@ -8,6 +8,7 @@
     "for",
     "if",
     "include",
+    "include-html",
     "include-text",
     "invoke",
     "macro",

@@ -1,12 +1,12 @@
 /*
 * Copyright 2011 eBay Software Foundation
-* 
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
-* 
+*
 *    http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ var tokensRegExp = /"(?:[^"]|\\")*"|'(?:[^'])|(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n
 function extractTagDef(code) {
 
     var startMatches = tagStartRegExp.exec(code);
-    
+
     var tagDefStart;
     var tagDefEnd;
 
@@ -52,12 +52,24 @@ function extractTagDef(code) {
 
         if (tagDefStart != null && tagDefEnd != null) {
             var jsTagDef = code.substring(tagDefStart, tagDefEnd);
-            var tagDefObject = eval('(' + jsTagDef + ')');
+            var tagDefObject;
+
+            try {
+                // Try parsing it as JSON
+                tagDefObject = JSON.parse(jsTagDef);
+            } catch(e) {
+                // Try parsing it as JavaScript
+                try {
+                    tagDefObject = eval('(' + jsTagDef + ')');
+                } catch(e) {
+                    tagDefObject = {};
+                }
+            }
             return tagDefObject;
         }
     } else {
         return null;
-    }    
+    }
 }
 
 exports.extractTagDef = extractTagDef;
