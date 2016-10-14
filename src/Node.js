@@ -52,7 +52,12 @@ Node.prototype = {
         var firstChild = this._firstChild;
 
         if (firstChild && firstChild.nodeType === 11 /* DocumentFragment */) {
-            return firstChild.firstChild;
+            var nestedFirstChild = firstChild.firstChild;
+            // The first child is a DocumentFragment node.
+            // If the DocumentFragment node has a first child then we will return that.
+            // Otherwise, the DocumentFragment node is not *really* the first child and
+            // we need to skip to its next sibling
+            return nestedFirstChild || firstChild.nextSibling;
         }
 
         return firstChild;
@@ -129,6 +134,22 @@ Node.prototype = {
             return this;
         }
     }
+
+    // ,toJSON: function() {
+    //     var clone = Object.assign({
+    //         nodeType: this.nodeType
+    //     }, this);
+    //
+    //     for (var k in clone) {
+    //         if (k.startsWith('_')) {
+    //             delete clone[k];
+    //         }
+    //     }
+    //     delete clone._nextSibling;
+    //     delete clone._lastChild;
+    //     delete clone.parentNode;
+    //     return clone;
+    // }
 };
 
 module.exports = Node;
