@@ -13,34 +13,34 @@ function State(tree) {
     this.events = new EventEmitter();
     this.tree = tree;
     this.finished = false;
+    this.last = undefined;
+    this.lastFired = false;
+    this.lastCount = 0;
 }
 
-function AsyncVDOMBuilder(globalData, rootNode, state) {
-    var parentNode = rootNode;
-
+function AsyncVDOMBuilder(globalData, parentNode, state) {
     if (!parentNode) {
         parentNode = createDocumentFragment();
     }
 
-    var finalState = state;
-
-    if (finalState) {
-        finalState.remaining++;
+    if (state) {
+        state.remaining++;
     } else {
-        finalState = new State(parentNode);
+        state = new State(parentNode);
     }
 
-    this._state = finalState;
+    this._state = state;
     this._parent = parentNode;
     this.global = globalData || {};
     this._stack = [parentNode];
+    this._sync = false;
 }
 
 var range;
 
 var proto = AsyncVDOMBuilder.prototype = {
-    element: function(name, attr, childCount) {
-        var element = createElement(name, attr, childCount);
+    element: function(name, attrs, childCount) {
+        var element = createElement(name, attrs, childCount);
 
         var parent = this._parent;
 
@@ -48,7 +48,7 @@ var proto = AsyncVDOMBuilder.prototype = {
             parent.appendChild(element);
         }
 
-        return childCount > 0 ? element : this;
+        return childCount === 0 ? this : element;
     },
 
     n: function(node) {
@@ -142,19 +142,40 @@ var proto = AsyncVDOMBuilder.prototype = {
         var state = this._state;
 
         this._parent = null;
-        if(!--state.remaining) {
+
+        var remaining = --state.remaining;
+
+        if (!state.lastFired && (remaining - state.lastCount === 0)) {
+            state.lastFired = true;
+            state.lastCount = 0;
+            state.events.emit('last');
+        }
+
+        if (!remaining) {
             state.finished = true;
             state.events.emit('finish', state.tree);
         }
     },
 
-    beginAsync: function() {
-        if (this._isSync) {
+    beginAsync: function(options) {
+        if (this._sync) {
             throw new Error('beginAsync() not allowed when using renderSync()');
         }
 
+        var state = this._state;
+
+        if (options) {
+            if (options.last === true) {
+                state.lastCount++;
+            }
+        }
+
         var documentFragment = this._parent.appendDocumentFragment();
-        return new AsyncVDOMBuilder(this.global, documentFragment, this._state);
+        return new AsyncVDOMBuilder(this.global, documentFragment, state);
+    },
+
+    createOut: function(callback) {
+        return new AsyncVDOMBuilder(this.global);
     },
 
     flush: function() {
@@ -219,10 +240,38 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     sync: function() {
-        this._isSync = true;
+        this._sync = true;
     },
 
-    document: typeof document !== 'undefined' && document
+    onLast: function(callback) {
+        var state = this._state;
+
+        var lastArray = state.last;
+
+        if (!lastArray) {
+            lastArray = state.last = [];
+            var i = 0;
+            var next = function next() {
+                if (i === lastArray.length) {
+                    return;
+                }
+                var _next = lastArray[i++];
+                _next(next);
+            };
+
+            this.once('last', function() {
+                next();
+            });
+        }
+
+        lastArray.push(callback);
+        return this;
+    },
+
+
+    document: typeof document !== 'undefined' && document,
+
+    isVDOM: true
 };
 
 proto.e = proto.element;
