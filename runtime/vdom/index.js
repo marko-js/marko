@@ -53,10 +53,6 @@ var extend = require('raptor-util/extend');
 function renderCallback(renderFunc, data, globalData, callback) {
     var out = new AsyncVDOMBuilder(globalData);
 
-    if (globalData) {
-        extend(out.global, globalData);
-    }
-
     renderFunc(data, out);
 
     return out.end()

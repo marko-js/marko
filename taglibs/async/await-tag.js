@@ -1,7 +1,6 @@
 'use strict';
 
 var logger = require('raptor-logging').logger(module);
-var asyncWriter = require('async-writer');
 var AsyncValue = require('raptor-async/AsyncValue');
 var isClientReorderSupported = require('./client-reorder').isSupported;
 
@@ -67,7 +66,7 @@ module.exports = function render(input, out) {
     var arg = input.arg || {};
     arg.out = out;
 
-    var clientReorder = isClientReorderSupported && input.clientReorder === true;
+    var clientReorder = isClientReorderSupported && input.clientReorder === true && !out.isVDOM;
     var asyncOut;
     var timeoutId = null;
     var name = input.name || input._name;
@@ -173,26 +172,27 @@ module.exports = function render(input, out) {
             });
 
             var id = awaitInfo.id = input.name || (awaitContext.nextId++);
+            var placeholderIdAttrValue = 'afph' + id;
 
             if (renderPlaceholder) {
-                out.write('<span id="afph' + id + '">');
+                out.write('<span id="' + placeholderIdAttrValue + '">');
                 renderPlaceholder(out);
                 out.write('</span>');
             } else {
-                out.write('<noscript id="afph' + id + '"></noscript>');
+                out.write('<noscript id="' + placeholderIdAttrValue + '"></noscript>');
             }
 
             var asyncValue = awaitInfo.asyncValue = new AsyncValue();
 
             // If `client-reorder` is enabled then we asynchronously render the await instance to a new
             // AsyncWriter instance so that we can Write to a temporary in-memory buffer.
-            asyncOut = awaitInfo.out = asyncWriter.create(null, {global: out.global});
+            asyncOut = awaitInfo.out = out.createOut();
 
             awaitInfo.after = input.showAfter;
 
             var oldEmit = asyncOut.emit;
 
-            // Since we are rendering the await instance to a new and separate AsyncWriter instance,
+            // Since we are rendering the await instance to a new and separate out,
             // we want to proxy any child events to the main AsyncWriter in case anyone is interested
             // in those events. This is also needed for the following events to be handled correctly:
             //

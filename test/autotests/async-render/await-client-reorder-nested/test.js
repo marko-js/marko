@@ -5,22 +5,22 @@ exports.templateData = {
     outer: function(callback) {
         setTimeout(function() {
             callback(null, {});
-        }, 400);
+        }, 100);
     },
     inner1: function(callback) {
         setTimeout(function() {
             callback(null, {});
-        }, 500);
+        }, 200);
     },
     inner2: function(callback) {
         setTimeout(function() {
             callback(null, {});
-        }, 600);
+        }, 300);
     }
 };
 
-exports.checkHtml = function() {}
-exports.checkEvents = function(events, helpers) {
+exports.checkHtml = function() {};
+exports.checkEvents = function(events, helpers, out) {
     events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
@@ -34,5 +34,5 @@ exports.checkEvents = function(events, helpers) {
         };
     });
 
-    helpers.compare(events, '-events.json');
+    helpers.compare(events, out.isVDOM ? '-events-vdom.json' : '-events.json');
 };

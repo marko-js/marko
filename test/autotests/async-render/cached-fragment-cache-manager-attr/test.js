@@ -23,7 +23,7 @@ function createCache() {
 
                     cache[cacheKey] = value;
 
-                    callback(null, 'myCacheManager:' + value);
+                    callback(null, value);
                 });
             }, 10);
         }

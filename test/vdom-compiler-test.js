@@ -10,7 +10,7 @@ var fs = require('fs');
 
 require('marko/node-require').install();
 
-describe('vdom-compiler', function() {
+describe('compiler (vdom)', function() {
     var autoTestDir = path.join(__dirname, 'autotests/vdom-compiler');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {

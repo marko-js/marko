@@ -1,7 +1,7 @@
 <var count=0/>
 
 <macro foo(cacheName, cacheKey)>
-    <cached-fragment cache-key=cacheKey cache-name=cacheName cache-manager=data.myCacheManager>
+    <cached-fragment cache-key=cacheKey cache-name=(cacheName+(out.isVDOM ? '-vdom' : '')) cache-manager=data.myCacheManager>
         Count: ${count++}
     </cached-fragment>
 </macro>
