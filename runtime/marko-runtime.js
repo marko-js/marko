@@ -229,8 +229,13 @@ if (stream) {
 
             var template = this._t;
             var data = this._d;
+            var options = this._options;
 
-            var out = asyncWriter.create(this, this._options);
+            var globalData = data.$global;
+            var shouldBuffer = options && options.buffer !== false;
+
+            var out = new AsyncStream(globalData, this, null, shouldBuffer);
+
             template.render(data, out);
             out.end();
         }
