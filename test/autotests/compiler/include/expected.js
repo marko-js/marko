@@ -4,10 +4,10 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       loadTemplate = __helpers.l,
-      __target = loadTemplate(require.resolve("./target.marko"));
+      target_template = loadTemplate(require.resolve("./target.marko"));
 
   return function render(data, out) {
-    __target.render({}, out);
+    target_template.render({}, out);
   };
 }
 

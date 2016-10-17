@@ -4,21 +4,21 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       __loadTag = __helpers.t,
-      custom_tag_data = __loadTag(require("./custom-tag-data-tag")),
+      custom_tag_data_tag = __loadTag(require("./custom-tag-data-tag")),
       __merge = __helpers.m;
 
   return function render(data, out) {
-    custom_tag_data({
+    custom_tag_data_tag({
         name: "Frank",
         age: 32
       }, out);
 
-    custom_tag_data({
+    custom_tag_data_tag({
         name: "Frank".toUpperCase(),
         age: 32
       }, out);
 
-    custom_tag_data(__merge({
+    custom_tag_data_tag(__merge({
         age: 10
       }, {
         name: "Frank",

@@ -4,10 +4,10 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       __loadTag = __helpers.t,
-      test_import_var = __loadTag(require("./tags/test-import-var/renderer"));
+      test_import_var_tag = __loadTag(require("./tags/test-import-var/renderer"));
 
   return function render(data, out) {
-    test_import_var({
+    test_import_var_tag({
         name: "World",
         foo: data.foo,
         bar: data.bar,

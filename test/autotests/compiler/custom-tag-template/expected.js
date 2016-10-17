@@ -4,10 +4,10 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       loadTemplate = __helpers.l,
-      __hello = loadTemplate(require.resolve("./hello.marko"));
+      hello_template = loadTemplate(require.resolve("./hello.marko"));
 
   return function render(data, out) {
-    __hello.render({
+    hello_template.render({
         name: "Frank"
       }, out);
   };

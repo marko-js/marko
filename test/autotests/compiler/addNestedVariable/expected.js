@@ -4,10 +4,10 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       __loadTag = __helpers.t,
-      test_addNestedVariable = __loadTag(require("./tags/test-addNestedVariable/renderer"));
+      test_addNestedVariable_tag = __loadTag(require("./tags/test-addNestedVariable/renderer"));
 
   return function render(data, out) {
-    test_addNestedVariable({
+    test_addNestedVariable_tag({
         renderBody: function renderBody(out, foo) {
           out.w("Hello " +
             escapeXml(foo) +

@@ -378,6 +378,8 @@ class CompileContext {
         ok(typeof relativePath === 'string', '"path" should be a string');
         var builder = this.builder;
 
+        var varName = removeExt(path.basename(relativePath)) + '_template';
+
 
         // We want to add the following import:
         // var loadTemplate = __helpers.t;
@@ -386,7 +388,7 @@ class CompileContext {
         var loadTemplateVar = this.addStaticVar('loadTemplate', '__helpers.l');
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
         var loadFunctionCall = builder.functionCall(loadTemplateVar, [ requireResolveTemplate ]);
-        var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
+        var templateVar = this.addStaticVar(varName, loadFunctionCall);
         return templateVar;
     }
 

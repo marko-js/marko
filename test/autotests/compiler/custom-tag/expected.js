@@ -4,10 +4,10 @@ function create(__helpers) {
       notEmpty = __helpers.ne,
       escapeXml = __helpers.x,
       __loadTag = __helpers.t,
-      test_hello = __loadTag(require("./tags/test-hello/renderer"));
+      test_hello_tag = __loadTag(require("./tags/test-hello/renderer"));
 
   return function render(data, out) {
-    test_hello({
+    test_hello_tag({
         name: "World"
       }, out);
   };
