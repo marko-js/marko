@@ -342,10 +342,7 @@ class CustomTag extends HtmlElement {
 
             var loadTag = builder.functionCall(loadTagVar, loadTagArgs);
 
-            var tagVar = tagDef.name;
-            if (context.util.isJavaScriptReservedWord(tagVar)) {
-                tagVar = tagVar + 'Tag';
-            }
+            var tagVar = 'tag_' + tagDef.name;
 
             tagVar = codegen.addStaticVar(tagVar, loadTag);
             let tagArgs = [inputProps, 'out' ];
