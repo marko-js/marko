@@ -5,6 +5,10 @@ Changelog
 
 ## 3.11.x
 
+### 3.11.8
+
+- Fixes [#382](https://github.com/marko-js/marko/issues/382) - Local variable for tag should have prefix or suffix to avoid conflict
+
 ### 3.11.7
 
 - Fixes [#381](https://github.com/marko-js/marko/issues/381) - `$global` broken when using `template.stream()`
