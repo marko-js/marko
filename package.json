@@ -17,7 +17,9 @@
     "Michael Rawlings <ml.rawlings@gmail.com>"
   ],
   "dependencies": {
-    "events": "^1.0.2"
+    "events": "^1.0.2",
+    "marko-dom": "^1.0.0",
+    "raptor-pubsubm": "^1.0.0"
   },
   "devDependencies": {
     "chai": "~1.8.1",

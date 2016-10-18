@@ -3,8 +3,30 @@
 var EventEmitter = require('events').EventEmitter;
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
+var dom = require('marko-dom');
+var pubsub = require('raptor-pubsub');
+var defaultDocument = typeof document != 'undefined' && document;
 
 var voidWriter = { write:function(){} };
+
+function State(stream, originalWriter, events) {
+    this.originalStream = stream;
+    this.originalWriter = originalWriter;
+function checkAddedToDOM(asyncStream, method) {
+    if (!asyncStream.data._added) {
+        throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
+    }
+}
+
+function getWidgetDefs(asyncStream) {
+    var widgetsContext = asyncStream.global.widgets;
+    var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
+
+    if (!widgetDefs || widgetDefs.length === 0) {
+        throw new Error('No widget rendered');
+    }
+    return widgetDefs;
+}
 
 function State(root, stream, writer, events) {
     this.root = root;
@@ -52,6 +74,8 @@ function AsyncStream(global, writer, state, shouldBuffer) {
     this._sync = false;
     this._stack = undefined;
     this._timeoutId = undefined;
+
+    this._node = undefined;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -69,14 +93,14 @@ var proto = AsyncStream.prototype = {
         this._sync = true;
     },
 
-    write: function (str) {
+    write: function(str) {
         if (str != null) {
             this.writer.write(str.toString());
         }
         return this;
     },
 
-    getOutput: function () {
+    getOutput: function() {
         return this._state.writer.toString();
     },
 
@@ -215,7 +239,7 @@ var proto = AsyncStream.prototype = {
            }
        }
 
-        return this;
+       return this;
     },
 
     // flushNextOld: function(currentWriter) {
@@ -393,16 +417,132 @@ var proto = AsyncStream.prototype = {
         return this;
     },
 
+    createOut: function() {
+        return new AsyncStream(this.global);
+    },
+
+    // BEGIN DOM METHODS
+    getWidget: function() {
+        checkAddedToDOM(this, 'getWidget');
+
+        var rerenderWidget = this.global.__rerenderWidget;
+        if (rerenderWidget) {
+            return rerenderWidget;
+        }
+
+        return getWidgetDefs(this)[0].widget;
+    },
+    getWidgets: function(selector) {
+        checkAddedToDOM(this, 'getWidgets');
+
+        var widgetDefs = getWidgetDefs(this);
+
+        var widgets;
+        var i;
+        if (selector) {
+            // use the selector to find the widgets that the caller wants
+            widgets = [];
+            for (i = 0; i < widgetDefs.length; i++) {
+                var widget = widgetDefs[i].widget;
+                if (selector(widget)) {
+                    widgets.push(widget);
+                }
+            }
+        } else {
+            // return all widgets
+            widgets = new Array(widgetDefs.length);
+            for (i = 0; i < widgetDefs.length; i++) {
+                widgets[i] = widgetDefs[i].widget;
+            }
+        }
+        return widgets;
+    },
+
+    afterInsert: function(node) {
+        this.data._added = true;
+        pubsub.emit('dom/renderedToDOM', {
+            node: node,
+            out: this,
+            document: node.ownerDocument
+        });    // NOTE: This will trigger widgets to be initialized if there were any
+
+        return this;
+    },
+
+    appendTo: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.appendTo(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    replace: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.replace(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    replaceChildrenOf: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.replaceChildrenOf(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    insertBefore: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.insertBefore(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    insertAfter: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.insertAfter(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    prependTo: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.prependTo(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    getNode: function(doc) {
+        var node = this._node;
+        var curEl;
+        var newBodyEl;
+        var html = this.getOutput();
+
+        if (!doc) {
+            doc = defaultDocument;
+        }
+
+        if (!node) {
+            if (html) {
+                newBodyEl = doc.createElement('body');
+                newBodyEl.innerHTML = html;
+                if (newBodyEl.childNodes.length == 1) {
+                    // If the rendered component resulted in a single node then just use that node
+                    node = newBodyEl.childNodes[0];
+                } else {
+                    // Otherwise, wrap the nodes in a document fragment node
+                    node = doc.createDocumentFragment();
+                    while ((curEl = newBodyEl.firstChild)) {
+                        node.appendChild(curEl);
+                    }
+                }
+            } else {
+                // empty HTML so use empty document fragment (so that we're returning a valid DOM node)
+                node = doc.createDocumentFragment();
+            }
+            this._node = node;
+        }
+        return node;
+    },
+    toString: function() {
+        return this.getOutput();
+    },
+
+    // END DOM METHODS
+
     // Deprecated BEGIN:
     getAttributes: function() {
         return this.global;
     },
     getAttribute: function(name) {
         return this.global[name];
-    },
-
-    createOut: function() {
-        return new AsyncStream(this.global);
     },
 
     captureString: function(func, thisObj) {
