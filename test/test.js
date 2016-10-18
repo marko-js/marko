@@ -436,7 +436,7 @@ describe('async-writer' , function() {
 
         var asyncOut = out.beginAsync({last: true});
         var lastFiredCount = 0;
-        
+
         out.on('last', function() {
             lastFiredCount++;
         });
@@ -770,5 +770,45 @@ describe('async-writer' , function() {
 
             out.end();
         }, 10);
+    });
+
+    it('should support out.stream for accessing the original stream', function(done) {
+
+        var through = require('through');
+        var outStr = '';
+
+        var stream = through(
+            function write(str) {
+                outStr += str;
+            }
+        );
+
+        var out = asyncWriter.create(stream);
+        expect(out.stream).to.equal(stream);
+
+        var asyncOut1 = out.beginAsync();
+        expect(asyncOut1.stream).to.equal(stream);
+        setTimeout(function() {
+            expect(asyncOut1.stream).to.equal(stream);
+            asyncOut1.end();
+        }, 100);
+
+
+        var asyncOut2 = out.beginAsync();
+        expect(asyncOut2.stream).to.equal(stream);
+        setTimeout(function() {
+            expect(asyncOut2.stream).to.equal(stream);
+            asyncOut2.end();
+        }, 50);
+
+        out.on('end', function() {
+            expect(out.stream).to.equal(stream);
+            expect(asyncOut1.stream).to.equal(stream);
+            expect(asyncOut2.stream).to.equal(stream);
+            done();
+        });
+
+        out.end();
+
     });
 });

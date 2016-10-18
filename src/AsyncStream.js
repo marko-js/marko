@@ -6,9 +6,10 @@ var BufferedWriter = require('./BufferedWriter');
 
 var voidWriter = { write:function(){} };
 
-function State(stream, originalWriter, events) {
-    this.originalStream = stream;
-    this.originalWriter = originalWriter;
+function State(root, stream, writer, events) {
+    this.root = root;
+    this.stream = stream;
+    this.writer = writer;
     this.events = events;
 
     this.remaining = 0;
@@ -21,26 +22,27 @@ function State(stream, originalWriter, events) {
 
 function AsyncStream(global, writer, state, shouldBuffer) {
     var finalGlobal = this.attributes = global || {};
-    var finalStream;
+    var originalStream;
 
     if (state) {
-        finalStream = state.stream;
+        originalStream = state.stream;
     } else {
         var events = finalGlobal.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
 
-        if (!writer) {
-            writer = new StringWriter(events);
-        } else if (shouldBuffer) {
-            finalStream = writer;
-            writer = new BufferedWriter(writer);
+        if (writer) {
+            originalStream = writer;
+            if (shouldBuffer) {
+                writer = new BufferedWriter(writer);
+            }
+        } else {
+            writer = originalStream = new StringWriter(events);
         }
 
-        finalStream = finalStream || writer;
-        state = new State(this, writer, events);
+        state = new State(this, originalStream, writer, events);
     }
 
     this.global = finalGlobal;
-    this.stream = finalStream;
+    this.stream = originalStream;
     this._state = state;
 
     this.data = {};
@@ -75,7 +77,7 @@ var proto = AsyncStream.prototype = {
     },
 
     getOutput: function () {
-        return this._state.originalWriter.toString();
+        return this._state.writer.toString();
     },
 
     beginAsync: function(options) {
@@ -142,7 +144,7 @@ var proto = AsyncStream.prototype = {
            }, timeout);
        }
 
-       state.originalStream.emit('beginAsync', {
+       state.events.emit('beginAsync', {
            writer: newStream,
            parentWriter: this
        });
@@ -183,7 +185,7 @@ var proto = AsyncStream.prototype = {
 
        var remaining;
 
-       if (this === state.originalStream) {
+       if (this === state.root) {
            remaining = state.remaining;
            state.ended = true;
        } else {
@@ -200,15 +202,15 @@ var proto = AsyncStream.prototype = {
            if (!state.lastFired && (state.remaining - state.lastCount === 0)) {
                state.lastFired = true;
                state.lastCount = 0;
-               state.originalStream.emit('last');
+               state.events.emit('last');
            }
 
            if (remaining === 0) {
                state.finished = true;
-               if (state.originalWriter.end) {
-                   state.originalWriter.end();
+               if (state.writer.end) {
+                   state.writer.end();
                } else {
-                   state.originalStream.emit('finish');
+                   state.events.emit('finish');
                }
            }
        }
@@ -217,7 +219,7 @@ var proto = AsyncStream.prototype = {
     },
 
     // flushNextOld: function(currentWriter) {
-    //     if (currentWriter === this._originalWriter) {
+    //     if (currentWriter === this._state.writer) {
     //         var nextStream;
     //         var nextWriter = currentWriter.next;
     //
@@ -238,7 +240,7 @@ var proto = AsyncStream.prototype = {
     //
     //         // If there is a nextStream,
     //         // set its writer to currentWriter
-    //         // (which is the originalWriter)
+    //         // (which is the state.writer)
     //         if(nextStream) {
     //             nextStream.writer = currentWriter;
     //             currentWriter.stream = nextStream;
@@ -276,7 +278,7 @@ var proto = AsyncStream.prototype = {
     on: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.originalWriter.finished) {
+        if (event === 'finish' && state.finished) {
             callback();
             return this;
         }
@@ -288,7 +290,7 @@ var proto = AsyncStream.prototype = {
     once: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.originalWriter.finished) {
+        if (event === 'finish' && state.finished) {
             callback();
             return this;
         }
@@ -351,7 +353,7 @@ var proto = AsyncStream.prototype = {
     },
 
     pipe: function(stream) {
-        this._state.originalWriter.pipe(stream);
+        this._state.stream.pipe(stream);
         return this;
     },
 
@@ -383,9 +385,9 @@ var proto = AsyncStream.prototype = {
         var state = this._state;
 
         if (!state.finished) {
-            var stream = state.originalWriter;
-            if (stream && stream.flush) {
-                stream.flush();
+            var writer = state.writer;
+            if (writer && writer.flush) {
+                writer.flush();
             }
         }
         return this;

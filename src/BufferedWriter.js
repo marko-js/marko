@@ -30,12 +30,6 @@ BufferedWriter.prototype = {
             this._wrapped.end();
         }
     },
-    on: function(event, callback) {
-        return this._wrapped.on(event, callback);
-    },
-    once: function(event, callback) {
-        return this._wrapped.once(event, callback);
-    },
 
     clear: function() {
         this._buffer = '';
