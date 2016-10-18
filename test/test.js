@@ -200,7 +200,7 @@ describe('async-writer' , function() {
 
         outA.write('7');
 
-        outC.write('5')
+        outC.write('5');
 
         outD.write('4');
         outD.end();
@@ -325,6 +325,7 @@ describe('async-writer' , function() {
 
         var outFile = nodePath.join(__dirname, 'test.out');
         var out = fs.createWriteStream(outFile, fsReadOptions);
+        var errors = [];
 
         out.on('close', function() {
             var output  = fs.readFileSync(outFile, fsReadOptions);
@@ -334,7 +335,7 @@ describe('async-writer' , function() {
             done();
         });
 
-        var errors = [];
+
         out = asyncWriter.create(out)
             .on('error', function(e) {
                 errors.push(e);
@@ -434,6 +435,8 @@ describe('async-writer' , function() {
         out.write('1');
 
         var asyncOut = out.beginAsync({last: true});
+        var lastFiredCount = 0;
+        
         out.on('last', function() {
             lastFiredCount++;
         });
@@ -444,11 +447,6 @@ describe('async-writer' , function() {
                 asyncOut.end();
             }, 10);
         });
-
-        var lastFiredCount = 0;
-
-
-
 
         out.write('3');
         out.end();
