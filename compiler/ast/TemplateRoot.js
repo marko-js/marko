@@ -24,6 +24,8 @@ class TemplateRoot extends Node {
 
         context.optimize(this);
 
+        context.emit('beforeGenerateCodeTemplateRoot', this);
+
         var body = this.body;
 
         var builder = codegen.builder;
@@ -65,7 +67,8 @@ class TemplateRoot extends Node {
 
             createStatements.push(builder.returnStatement(renderFunction));
 
-            var templateExports = builder.parseStatement(`module.exports = require("${context.getModuleRuntimeTarget()}").c(__filename, create)`);
+            var template = `require("${context.getModuleRuntimeTarget()}").c(__filename, create)`;
+            var templateExports = this.generateExports(template, context);
 
             return builder.program([
                 builder.functionDeclaration(
@@ -77,6 +80,15 @@ class TemplateRoot extends Node {
                 templateExports
             ]);
         }
+    }
+
+    generateExports(template, context) {
+        var builder = context.builder;
+
+        return builder.assignment(
+            builder.memberExpression('module', 'exports'),
+            template
+        );
     }
 
     toJSON(prettyPrinter) {

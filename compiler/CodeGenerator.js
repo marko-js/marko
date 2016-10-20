@@ -155,11 +155,7 @@ class CodeGenerator {
         let oldCurrentNode = this._currentNode;
         this._currentNode = node;
 
-        var beforeAfterEvent;
-
-        if (node.listenerCount('beforeGenerateCode') || node.listenerCount('afterGenerateCode')) {
-            beforeAfterEvent = new GeneratorEvent(node, this);
-        }
+        var beforeAfterEvent = new GeneratorEvent(node, this);
 
         var isWhitespacePreserved = node.isPreserveWhitespace();
 
@@ -167,14 +163,14 @@ class CodeGenerator {
             this.context.beginPreserveWhitespace();
         }
 
-        if (beforeAfterEvent) {
-            beforeAfterEvent.isBefore = true;
-            beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
+        beforeAfterEvent.isBefore = true;
+        beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
+        this.context.emit('beforeGenerateCode:' + beforeAfterEvent.node.type, beforeAfterEvent);
+        this.context.emit('beforeGenerateCode', beforeAfterEvent);
 
-            if (beforeAfterEvent.insertedNodes) {
-                this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
-                beforeAfterEvent.insertedNodes = null;
-            }
+        if (beforeAfterEvent.insertedNodes) {
+            this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
+            beforeAfterEvent.insertedNodes = null;
         }
 
         let codeGeneratorFunc;
@@ -217,14 +213,14 @@ class CodeGenerator {
             }
         }
 
-        if (beforeAfterEvent) {
-            beforeAfterEvent.isBefore = false;
-            beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
+        beforeAfterEvent.isBefore = false;
+        beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
+        this.context.emit('afterGenerateCode:' + beforeAfterEvent.node.type, beforeAfterEvent);
+        this.context.emit('afterGenerateCode', beforeAfterEvent);
 
-            if (beforeAfterEvent.insertedNodes) {
-                this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
-                beforeAfterEvent.insertedNodes = null;
-            }
+        if (beforeAfterEvent.insertedNodes) {
+            this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
+            beforeAfterEvent.insertedNodes = null;
         }
 
         if (isWhitespacePreserved) {
