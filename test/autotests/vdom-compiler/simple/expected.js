@@ -28,4 +28,4 @@ function create(__markoHelpers) {
   };
 }
 
-(module.exports = require("marko/vdom").c(__filename)).c(create);
+module.exports = require("marko/vdom").c(__filename, create);

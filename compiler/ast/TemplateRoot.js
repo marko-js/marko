@@ -65,7 +65,7 @@ class TemplateRoot extends Node {
 
             createStatements.push(builder.returnStatement(renderFunction));
 
-            var templateExports = builder.parseStatement(`(module.exports = require("${context.getModuleRuntimeTarget()}").c(__filename)).c(create)`);
+            var templateExports = builder.parseStatement(`module.exports = require("${context.getModuleRuntimeTarget()}").c(__filename, create)`);
 
             return builder.program([
                 builder.functionDeclaration(
