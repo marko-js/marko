@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = function(builder) {
-    var templateRoot = builder.templateRoot;
+    var program = builder.program;
 
-    return templateRoot([
+    return program([
         builder.forRange({
             varName: 'i',
             from: 0,

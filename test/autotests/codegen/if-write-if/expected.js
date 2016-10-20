@@ -1,15 +1,9 @@
-function create(__markoHelpers) {
-  return function render(data, out) {
-    if (true) {
-      out.w("A");
-    }
-
-    out.w("B");
-
-    if (true) {
-      out.w("C");
-    }
-  };
+if (true) {
+  out.w("A");
 }
 
-module.exports = require("marko").c(__filename, create);
+out.w("B");
+
+if (true) {
+  out.w("C");
+}

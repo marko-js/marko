@@ -9,7 +9,7 @@ module.exports = function(builder) {
         builder.text(builder.literal('C'))
     ]);
 
-    return builder.templateRoot([
+    return builder.program([
         startIf,
         builder.text(builder.literal('B')),
         endIf
