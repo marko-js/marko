@@ -16,6 +16,7 @@
 
 'use strict';
 var isArray = Array.isArray;
+var load = require('./loader');
 
 function classListHelper(arg, classNames) {
     var len;
@@ -205,31 +206,6 @@ module.exports = {
         }
     },
 
-    // ----------------------------------
-    // The helpers listed below require an out
-    // ----------------------------------
-
-
-
-
-    /**
-     * Internal method to handle includes/partials
-     * @private
-     */
-    i: function(out, template, data) {
-        if (!template) {
-            return;
-        }
-
-        if (typeof template.render === 'function') {
-            template.render(data, out);
-        } else {
-            throw new Error('Invalid template: ' + template);
-        }
-
-        return this;
-    },
-
     /**
      * Merges object properties
      * @param  {[type]} object [description]
@@ -254,5 +230,10 @@ module.exports = {
      */
     cl: function() {
         return classList(arguments);
-    }
+    },
+
+    /**
+     * Loads a template (__helpers.l --> marko_loadTemplate(path))
+     */
+    l: load
 };

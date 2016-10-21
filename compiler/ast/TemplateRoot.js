@@ -39,7 +39,7 @@ class TemplateRoot extends Node {
         renderStatements = renderStatements.concat(body);
 
         if (context.inline) {
-            var createInlineMarkoTemplateVar = context.importModule('marko_createInlineTemplate', 'marko/runtime/inline');
+            var createInlineMarkoTemplateVar = context.helper('createInlineTemplate');
 
             return builder.functionCall(
                 createInlineMarkoTemplateVar,

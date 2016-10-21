@@ -77,7 +77,7 @@
   "bin": {
     "markoc": "bin/markoc"
   },
-  "main": "runtime/html/index.js",
+  "main": "runtime/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -85,7 +85,7 @@
     "./node-require.js": "./node-require-browser.js"
   },
   "homepage": "http://markojs.com/",
-  "version": "3.10.1",
+  "version": "4.0.0-beta.0",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }
