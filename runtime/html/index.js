@@ -185,6 +185,8 @@ exports.createWriter = function(writer) {
 
 exports._inline = createInlineMarkoTemplate;
 
+exports.createOut = createOut;
+
 exports.Template = Template;
 
 helpers = require('./helpers');
