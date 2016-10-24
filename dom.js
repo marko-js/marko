@@ -1,1 +1,1 @@
-module.exports = require('raptor-dom');
+module.exports = require('marko-dom');

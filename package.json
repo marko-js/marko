@@ -22,19 +22,17 @@
         "listener-tracker": "^1.0.2",
         "morphdom": "^1.4.6",
         "raptor-async": "^1.1.2",
-        "raptor-dom": "^1.1.0",
         "raptor-json": "^1.0.1",
         "raptor-logging": "^1.0.1",
         "raptor-polyfill": "^1.0.0",
         "raptor-pubsub": "^1.0.2",
-        "raptor-renderer": "^1.4.4",
         "raptor-util": "^2.0.0",
         "resolve-from": "^1.0.1",
         "try-require": "^1.2.1",
         "warp10": "^1.0.0"
     },
     "peerDependencies": {
-        "marko": "^3.0.0"
+        "marko": "^4.0.0-beta.0"
     },
     "devDependencies": {
         "app-module-path": "^1.0.1",
@@ -50,7 +48,7 @@
         "jshint": "^2.9.1",
         "lasso": "^2.4.1",
         "lasso-marko": "^2.0.4",
-        "marko": "^3.0.0-alpha.1",
+        "marko": "^4.0.0-beta.0",
         "mkdirp": "^0.5.1",
         "mocha": "^2.4.5",
         "mocha-phantomjs": "^4.1.0",
