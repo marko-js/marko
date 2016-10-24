@@ -1,4 +1,7 @@
 'use strict';
+// helpers provide a core set of various utility methods to compiled templates
+var helpers;
+
 /**
  * Method is for internal usage only. This method
  * is invoked by code in a compiled Marko template and
@@ -22,10 +25,6 @@ var AsyncStream = asyncWriter.AsyncStream;
 function createOut(globalData) {
     return new AsyncStream(globalData);
 }
-
-// helpers provide a core set of various utility methods
-// that are available in every template (empty, notEmpty, etc.)
-var helpers;
 
 // If the optional "stream" module is available
 // then Readable will be a readable stream
