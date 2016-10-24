@@ -16,7 +16,7 @@
 
 require('raptor-polyfill/string/endsWith');
 
-var repeatedId = require('../lib/repeated-id');
+var repeatedId = require('./repeated-id');
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for

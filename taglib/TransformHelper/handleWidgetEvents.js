@@ -15,7 +15,7 @@
  */
 var bubbleEventsLookup = {};
 
-require('../../lib/bubble').forEach(function(eventType) {
+require('../../src/bubble').forEach(function(eventType) {
     bubbleEventsLookup[eventType] = true;
 });
 

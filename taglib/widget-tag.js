@@ -17,7 +17,7 @@
 'use strict';
 var markoWidgets = require('../');
 var extend = require('raptor-util/extend');
-var widgetArgsId = require('../lib/widget-args-id');
+var widgetArgsId = require('../src/widget-args-id');
 var widgetBodyHelper = require('./helpers/widgetBody');
 
 var DUMMY_WIDGET_DEF = {

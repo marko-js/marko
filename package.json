@@ -12,7 +12,7 @@
         "test-browser-pages": "node test/browser-tests-runner/cli.js --pages --automated",
         "test-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server",
         "test-page": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server --page",
-        "jshint": "jshint lib/ taglib/ *.js"
+        "jshint": "jshint src/ taglib/ *.js"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
@@ -58,15 +58,15 @@
     },
     "license": "Apache-2.0",
     "bin": {},
-    "main": "lib/index.js",
+    "main": "src/index.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
     "browser": {
-        "./lib/index.js": "./lib/index-browser.js",
-        "./lib/uniqueId.js": "./lib/uniqueId-browser.js",
-        "./lib/init-widgets.js": "./lib/init-widgets-browser.js",
-        "./lib/defineWidget.js": "./lib/defineWidget-browser.js"
+        "./src/index.js": "./src/index-browser.js",
+        "./src/uniqueId.js": "./src/uniqueId-browser.js",
+        "./src/init-widgets.js": "./src/init-widgets-browser.js",
+        "./src/defineWidget.js": "./src/defineWidget-browser.js"
     },
     "version": "6.3.7"
 }

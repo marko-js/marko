@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var repeatedId = require('../lib/repeated-id');
+var repeatedId = require('./repeated-id');
 
 module.exports = function widgetArgsId(widgetArgs) {
     var widgetId = widgetArgs.id;
