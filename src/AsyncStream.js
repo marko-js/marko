@@ -1,17 +1,15 @@
 'use strict';
-
 var EventEmitter = require('events').EventEmitter;
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
 var dom = require('marko-dom');
-var pubsub = require('raptor-pubsub');
+var attr = require('marko-html-util/attr');
+var escapeXml = require('marko-html-util/escapeXml');
+
 var defaultDocument = typeof document != 'undefined' && document;
 
 var voidWriter = { write:function(){} };
 
-function State(stream, originalWriter, events) {
-    this.originalStream = stream;
-    this.originalWriter = originalWriter;
 function checkAddedToDOM(asyncStream, method) {
     if (!asyncStream.data._added) {
         throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
@@ -19,8 +17,7 @@ function checkAddedToDOM(asyncStream, method) {
 }
 
 function getWidgetDefs(asyncStream) {
-    var widgetsContext = asyncStream.global.widgets;
-    var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
+    var widgetDefs = asyncStream.data.widgets;
 
     if (!widgetDefs || widgetDefs.length === 0) {
         throw new Error('No widget rendered');
@@ -76,6 +73,8 @@ function AsyncStream(global, writer, state, shouldBuffer) {
     this._timeoutId = undefined;
 
     this._node = undefined;
+
+    this._elStack = undefined; // Array
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -169,8 +168,10 @@ var proto = AsyncStream.prototype = {
        }
 
        state.events.emit('beginAsync', {
-           writer: newStream,
-           parentWriter: this
+           writer: newStream, // Legacy
+           parentWriter: this, // Legacy
+           out: newStream,
+           parentOut: this
        });
 
         return newStream;
@@ -421,6 +422,33 @@ var proto = AsyncStream.prototype = {
         return new AsyncStream(this.global);
     },
 
+    beginElement: function(name, attrs) {
+
+        var str = '<' + name;
+        for (var attrName in attrs) {
+            str += attr(attrName, attrs[attrName]);
+        }
+
+        str += '>';
+
+        this.write(str);
+
+        if (this._elStack) {
+            this._elStack.push(name);
+        } else {
+            this._elStack = [name];
+        }
+    },
+
+    endElement: function() {
+        var tagName = this._elStack.pop();
+        this.write('</' + tagName + '>');
+    },
+
+    text: function(str) {
+        this.write(escapeXml(str));
+    },
+
     // BEGIN DOM METHODS
     getWidget: function() {
         checkAddedToDOM(this, 'getWidget');
@@ -459,8 +487,15 @@ var proto = AsyncStream.prototype = {
     },
 
     afterInsert: function(node) {
-        this.data._added = true;
-        pubsub.emit('dom/renderedToDOM', {
+        var data = this.data;
+        data._added = true;
+
+        var widgetsContext = this.global.widgets;
+        var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
+
+        data.widgets = widgetDefs;
+
+        dom.emit('renderedToDOM', {
             node: node,
             out: this,
             document: node.ownerDocument
