@@ -1,6 +1,6 @@
 'use strict';
 
-var escapeXml = require('raptor-util/escapeXml');
+var escapeXml = require('marko-html-util/escapeXml');
 var Literal = require('../..//Literal');
 
 module.exports = function(node, codegen) {
