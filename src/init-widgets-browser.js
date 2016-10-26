@@ -18,13 +18,13 @@ require('raptor-polyfill/array/forEach');
 require('raptor-polyfill/string/endsWith');
 
 var logger = require('raptor-logging').logger(module);
-var raptorPubsub = require('raptor-pubsub');
 var ready = require('marko-dom').ready;
 var _addEventListener = require('./addEventListener');
 var registry = require('./registry');
 var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
 var defaultDocument = typeof document != 'undefined' && document;
+var markoWidgets = require('../');
 
 function invokeWidgetEventHandler(widget, targetMethodName, args) {
     var method = widget[targetMethodName];
@@ -190,7 +190,7 @@ function initWidget(
             config: config
         };
 
-        raptorPubsub.emit('marko-widgets/initWidget', initEventArgs);
+        markoWidgets.emit('marko-widgets/initWidget', initEventArgs);
 
         widget._emitLifecycleEvent('beforeInit', initEventArgs);
         widget.initWidget(config);

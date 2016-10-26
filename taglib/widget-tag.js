@@ -48,18 +48,21 @@ function registerWidgetType(widgetType) {
 }
 
 function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
+    var tagName = existingWidget.el.tagName;
+    var hasUnpreservedBody = false;
+
     // We put a placeholder element in the output stream to ensure that the existing
     // DOM node is matched up correctly when using morphdom.
-    var tagName = existingWidget.el.tagName;
-    out.write('<' + tagName + ' id="' + existingWidget.id + '">');
-    var hasUnpreservedBody = false;
+
+    out.beginElement(tagName, { id: existingWidget.id });
 
     if (widgetBody && existingWidget.bodyEl) {
         hasUnpreservedBody = true;
         widgetBodyHelper(out, existingWidget.bodyEl.id, widgetBody, existingWidget);
     }
 
-    out.write('</' + tagName + '>');
+    out.endElement();
+
     existingWidget._reset(); // The widget is no longer dirty so reset internal flags
     widgetsContext.addPreservedDOMNode(existingWidget.el, null, hasUnpreservedBody); // Mark the element as being preserved (for morphdom)
 }
@@ -71,8 +74,8 @@ module.exports = function render(input, out) {
     if (!global.__widgetsBeginAsyncAdded) {
         global.__widgetsBeginAsyncAdded = true;
         out.on('beginAsync', function(event) {
-            var parentAsyncWriter = event.parentWriter;
-            var asyncWriter = event.writer;
+            var parentOut = event.parentOut;
+            var asyncOut = event.out;
             var widgetsContext = global.widgets;
             var widgetStack;
 
@@ -87,10 +90,10 @@ module.exports = function render(input, out) {
                 // parent block.
                 var nestedWidgetsContext = new markoWidgets.WidgetsContext(out);
                 nestedWidgetsContext.widgetStack = [widgetStack[widgetStack.length-1]];
-                asyncWriter.data.widgets = nestedWidgetsContext;
+                asyncOut.data.widgets = nestedWidgetsContext;
             }
 
-            asyncWriter.data.widgetArgs = parentAsyncWriter.data.widgetArgs;
+            asyncOut.data.widgetArgs = parentOut.data.widgetArgs;
         });
     }
 

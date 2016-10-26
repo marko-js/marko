@@ -1,9 +1,11 @@
+var pubsub = require('~/util/pubsub');
+
 function Widget(config) {
     this.name = config.name;
     var self = this;
 
     if (config.channel) {
-        require('raptor-pubsub').channel(config.channel).on('emitTestEvent2', function() {
+        pubsub.channel(config.channel).on('emitTestEvent2', function() {
             self.emitTestEvent2();
         });
     }

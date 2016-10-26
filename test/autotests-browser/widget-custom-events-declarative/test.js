@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var pubsub = require('~/util/pubsub');
 
 module.exports = function(helpers) {
     var widget = helpers.mount(require('./index'), {});
@@ -25,7 +26,7 @@ module.exports = function(helpers) {
     expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
     expect(received1[0].widget).to.equal(widget.getWidget('customEvents'));
 
-    require('raptor-pubsub').channel('customEvents-' + widget.id).emit('emitTestEvent2');
+    pubsub.channel('customEvents-' + widget.id).emit('emitTestEvent2');
 
     expect(received1.length).to.equal(1);
     expect(received2.length).to.equal(1);

@@ -1,4 +1,5 @@
 require('../util/patch-module');
+require('require-self-ref');
 require('marko/node-require').install();
 require('marko/express');
 
@@ -47,7 +48,12 @@ function generate(options) {
             fingerprintsEnabled: false,
             minify: false,
             plugins: [
-                'lasso-marko',
+                {
+                    plugin: 'lasso-marko',
+                    config: {
+                        output: 'html'
+                    }
+                },
                 require('./lasso-autotest-plugin')
             ]
         });

@@ -545,7 +545,13 @@ Widget.prototype = widgetProto = {
             var out = createOut(globalData);
             renderer(templateData, out);
 
-            var targetNode = out.isVDOM ? out.getOutput() : out.getNode(self.__document);
+            var targetNode;
+
+            if (out.isVDOM) {
+                targetNode = out.getOutput().firstChild;
+            } else {
+                targetNode = out.getNode(self.__document);
+            }
 
             var widgetsContext = out.global.widgets;
 
