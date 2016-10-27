@@ -23,6 +23,7 @@ var nodePath = require('path');
 var modifiedId = 1;
 var nextTemplateId = 0;
 var runtime;
+var loadMarkoTemplate = require('../').load;
 
 /**
  * Lazily require the Marko runtime because there is a circular dependency.
@@ -30,12 +31,12 @@ var runtime;
  * Marko runtime.
  */
 function _getMarkoRuntime() {
-    return runtime || (runtime = require('../runtime'));
+    return runtime || (runtime = require('../runtime/html'));
 }
 
 function tryReload(path, runtime) {
     try {
-        return runtime.load(path);
+        return loadMarkoTemplate(path);
     } catch(e) {
         return undefined;
     }

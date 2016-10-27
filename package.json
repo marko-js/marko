@@ -32,7 +32,7 @@
   "dependencies": {
     "app-module-path": "^1.0.5",
     "async-vdom-builder": "^1.0.0",
-    "async-writer": "^2.0.0",
+    "async-writer": "^3.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "deresolve": "^1.0.0",
@@ -41,6 +41,7 @@
     "he": "^1.1.0",
     "htmljs-parser": "^1.5.3",
     "lasso-package-root": "^1.0.0",
+    "marko-html-util": "^1.0.0",
     "marko-vdom": "^0.4.0",
     "minimatch": "^3.0.2",
     "object-assign": "^4.1.0",
@@ -54,7 +55,7 @@
     "raptor-regexp": "^1.0.0",
     "raptor-renderer": "^1.4.4",
     "raptor-strings": "^1.0.0",
-    "raptor-util": "^2.0.0",
+    "raptor-util": "^3.0.0",
     "resolve-from": "^1.0.0",
     "strip-json-comments": "^2.0.1",
     "try-require": "^1.2.1"
@@ -77,7 +78,7 @@
   "bin": {
     "markoc": "bin/markoc"
   },
-  "main": "runtime/html/index.js",
+  "main": "runtime/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -85,7 +86,7 @@
     "./node-require.js": "./node-require-browser.js"
   },
   "homepage": "http://markojs.com/",
-  "version": "3.10.1",
+  "version": "4.0.0-beta.0",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }

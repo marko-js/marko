@@ -25,4 +25,4 @@ function create(__markoHelpers) {
   };
 }
 
-module.exports = require("marko").c(__filename, create);
+module.exports = require("marko/html").c(__filename, create);

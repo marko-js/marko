@@ -19,7 +19,6 @@
 var markoVDOM = require('marko-vdom');
 var commonHelpers = require('../helpers');
 var extend = require('raptor-util/extend');
-var runtime;
 
 var classList = commonHelpers.cl;
 
@@ -31,17 +30,6 @@ module.exports = extend({
         return function() {
             return id + (i++);
         };
-    },
-    /**
-     * Loads a template (__helpers.l --> marko_loadTemplate(path))
-     */
-    l: function(path) {
-        if (typeof path === 'string') {
-            return runtime.load(path);
-        } else {
-            // Assume it is already a pre-loaded template
-            return path;
-        }
     },
 
     /**
@@ -90,7 +78,7 @@ module.exports = extend({
         } else {
             return classList(classNames);
         }
-    }
-}, commonHelpers);
+    },
 
-runtime = require('./');
+    i: require('./')._inline
+}, commonHelpers);

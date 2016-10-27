@@ -4,6 +4,37 @@ var Node = require('./Node');
 var isArray = Array.isArray;
 const isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
 
+function walkValue(value, walker) {
+    if (!value) {
+        return value;
+    } else if (value instanceof Node) {
+        return walker.walk(value);
+    } else if (isArray(value)) {
+        let array = value;
+        for (let i=0; i<array.length; i++) {
+            let el = array[i];
+            array[i] = walkValue(el, walker);
+        }
+        return array;
+    } else if (typeof value === 'object') {
+        let object = value;
+
+        let keys = Object.keys(object);
+        for (let i=0; i<keys.length; i++) {
+            let key = keys[i];
+            let oldValue = object[key];
+            let newValue = walkValue(oldValue, walker);
+            if (newValue !== oldValue) {
+                object[key] = newValue;
+            }
+        }
+
+        return object;
+    } else {
+        return value;
+    }
+}
+
 class Literal extends Node {
     constructor(def) {
         super('Literal');
@@ -80,6 +111,10 @@ class Literal extends Node {
 
             return result + ' }';
         }
+    }
+
+    walk(walker) {
+        walkValue(this.value, walker);
     }
 }
 

@@ -15,10 +15,9 @@
 */
 
 'use strict';
-var escapeXml = require('raptor-util/escapeXml');
+var escapeXml = require('marko-html-util/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
-var runtime = require('../'); // Circular dependency, but that is okay
-var attr = require('raptor-util/attr');
+var attr = require('marko-html-util/attr');
 var extend = require('raptor-util/extend');
 
 var STYLE_ATTR = 'style';
@@ -133,15 +132,5 @@ module.exports = extend({
         }
     },
 
-    /**
-     * Loads a template (__helpers.l --> marko_loadTemplate(path))
-     */
-    l: function(path) {
-        if (typeof path === 'string') {
-            return runtime.load(path);
-        } else {
-            // Assume it is already a pre-loaded template
-            return path;
-        }
-    }
+    i: require('./')._inline
 }, commonHelpers);

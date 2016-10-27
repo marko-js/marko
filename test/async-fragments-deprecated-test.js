@@ -6,6 +6,7 @@ chai.config.includeStack = true;
 var expect = require('chai').expect;
 var path = require('path');
 var marko = require('../');
+var markoRuntimeHtml = require('../runtime/html');
 var autotest = require('./autotest');
 var fs = require('fs');
 
@@ -41,7 +42,7 @@ describe('async-fragments (deprecated)', function() {
             } else {
                 var template = marko.load(templatePath, loadOptions);
                 var templateData = main.templateData || {};
-                var out = marko.createWriter();
+                var out = markoRuntimeHtml.createWriter();
                 var events = [];
                 var eventsByFragmentName = {};
 

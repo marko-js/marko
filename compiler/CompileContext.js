@@ -57,6 +57,7 @@ const helpers = {
     'classList': 'cl',
     'const': 'const',
     'createElement': 'e',
+    'createInlineTemplate': 'i',
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
     'escapeScript': 'xs',
@@ -103,7 +104,7 @@ class CompileContext extends EventEmitter {
         this._preserveComments = null;
         this.inline = this.options.inline === true;
         this.useMeta = this.options.meta;
-        this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko';
+        this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko/html';
 
         this._helpersIdentifier = null;
 

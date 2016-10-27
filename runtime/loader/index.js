@@ -15,6 +15,27 @@
 */
 
 'use strict';
+module.exports = function load(templatePath, templateSrc, options) {
+    if (arguments.length === 1) {
+        return doLoad(templatePath);
+    } else if (arguments.length === 2) {
+        // see if second argument is templateSrc (a String)
+        // or options (an Object)
+        var lastArg = arguments[arguments.length - 1];
+        if (typeof lastArg === 'string') {
+            return doLoad(templatePath, templateSrc);
+        } else {
+            var finalOptions = templateSrc;
+            return doLoad(templatePath, null, finalOptions);
+        }
+    } else if (arguments.length === 3) {
+        // assume function called according to function signature
+        return doLoad(templatePath, templateSrc, options);
+    } else {
+        throw new Error('Illegal arguments');
+    }
+};
+
 var nodePath = require('path');
 var fs = require('fs');
 var Module = require('module').Module;
@@ -125,39 +146,60 @@ function loadFile(templatePath, options) {
     return require(targetFile);
 }
 
-module.exports = function load(templatePath, templateSrc, options) {
+function createRenderProxy(template) {
+    return function(data, out) {
+        template._(data, out);
+    };
+}
+
+function doLoad(templatePath, templateSrc, options) {
     options = Object.assign({}, markoCompiler.defaultOptions, options);
 
-    var writeToDisk = options.writeToDisk;
-
-    // If the template source is provided then we can compile the string
-    // in memory and there is no need to read template file from disk or
-    // write compiled code to disk.
-    //
-    // If writeToDisk is false then there will be no up-to-date check
-    // since compiled source won't be written to disk.
-    if ((templateSrc != null) || (writeToDisk === false)) {
-        // Don't write the compiled template to disk. Instead, load it
-        // directly from the compiled source using the internals of the
-        // Node.js module loading system.
-        if (templateSrc === undefined) {
-            templateSrc = fs.readFileSync(templatePath, fsOptions);
-        }
-
-    	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
-
-        if (writeToDisk === true) {
-            var targetFile = templatePath + '.js';
-            fs.writeFileSync(targetFile, compiledSrc, fsOptions);
-        }
-
-        return loadSource(templatePath, compiledSrc);
+    var template;
+    if (typeof templatePath.render === 'function') {
+        template = templatePath;
     } else {
-        return loadFile(templatePath, options);
-    }
-};
+        var writeToDisk = options.writeToDisk;
 
-module.exports.loadSource = loadSource;
+
+        // If the template source is provided then we can compile the string
+        // in memory and there is no need to read template file from disk or
+        // write compiled code to disk.
+        //
+        // If writeToDisk is false then there will be no up-to-date check
+        // since compiled source won't be written to disk.
+        if ((templateSrc != null) || (writeToDisk === false)) {
+            // Don't write the compiled template to disk. Instead, load it
+            // directly from the compiled source using the internals of the
+            // Node.js module loading system.
+            if (templateSrc == null) {
+                templateSrc = fs.readFileSync(templatePath, fsOptions);
+            }
+
+        	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
+
+            if (writeToDisk === true) {
+                var targetFile = templatePath + '.js';
+                fs.writeFileSync(targetFile, compiledSrc, fsOptions);
+            }
+
+            template = loadSource(templatePath, compiledSrc);
+        } else {
+            template = loadFile(templatePath, options);
+        }
+    }
+
+    if (options.buffer != null) {
+        var Template = template.constructor;
+
+        template = new Template(
+            template.path,
+            createRenderProxy(template),
+            options);
+    }
+
+    return template;
+}
 
 require('../stream');
 require('../dependencies');

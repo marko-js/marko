@@ -8,7 +8,9 @@ exports.check = function(marko, markoCompiler, expect, done) {
         output += data;
     });
 
-    var out = marko.createWriter(stream);
+    var runtimeHtml = require('marko/html');
+
+    var out = runtimeHtml.createWriter(stream);
     out
         .on('end', function() {
             expect(output).to.equal('Hello John!');

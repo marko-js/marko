@@ -46,9 +46,5 @@ Readable.prototype = {
 require('raptor-util/inherit')(Readable, stream.Readable);
 
 require('./html').Template.prototype.stream = function(data) {
-    if (!stream) {
-        throw new Error('Module not found: stream');
-    }
-
     return new Readable(this, data, this._options);
 };
