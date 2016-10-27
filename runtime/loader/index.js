@@ -160,3 +160,4 @@ module.exports = function load(templatePath, templateSrc, options) {
 module.exports.loadSource = loadSource;
 
 require('../stream');
+require('../dependencies');

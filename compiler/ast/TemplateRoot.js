@@ -67,7 +67,25 @@ class TemplateRoot extends Node {
 
             createStatements.push(builder.returnStatement(renderFunction));
 
-            var template = `require("${context.getModuleRuntimeTarget()}").c(__filename, create)`;
+            var templateArgs = [
+                builder.identifier('__filename'),
+                builder.identifier('create')
+            ];
+
+            if(context.useMeta && context.meta) {
+                templateArgs.push(context.meta);
+            }
+
+            var template = builder.functionCall(
+                builder.memberExpression(
+                    builder.require(
+                        builder.literal(context.getModuleRuntimeTarget())
+                    ),
+                    builder.identifier('c')
+                ),
+                templateArgs
+            );
+
             var templateExports = this.generateExports(template, context);
 
             return builder.program([

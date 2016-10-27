@@ -34,8 +34,9 @@ var helpers = require('./helpers');
  * it is used to create a new Template instance.
  * @private
  */
- exports.c = function createTemplate(path, createFunc) {
+ exports.c = function createTemplate(path, createFunc, meta) {
      var template = new Template(path, lazyRender);
+     template.meta = meta;
      return template;
 
      function lazyRender() {

@@ -324,6 +324,10 @@ class CustomTag extends HtmlElement {
                 requireRendererFunctionCall // The first param is the renderer
             ];
 
+            if(rendererRequirePath) {
+                codegen.pushMeta('tags', builder.literal(rendererRequirePath), true);
+            }
+
             if (isNestedTag || hasNestedTags) {
                 if (isNestedTag) {
                     loadTagArgs.push(targetProperty); // targetProperty

@@ -90,6 +90,18 @@ class CodeGenerator {
         this.context.addStaticCode(code);
     }
 
+    addDependency(path, type, options) {
+        this.context.addDependency(path, type, options);
+    }
+
+    pushMeta(key, value, unique) {
+        this.context.pushMeta(key, value, unique);
+    }
+
+    setMeta(key, value) {
+        this.context.setMeta(key, value);
+    }
+
     getEscapeXmlAttrVar() {
         return this.context.getEscapeXmlAttrVar();
     }

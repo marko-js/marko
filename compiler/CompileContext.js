@@ -84,6 +84,7 @@ class CompileContext extends EventEmitter {
         this.dirname = path.dirname(filename);
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
+        this.meta = null;
 
         this.options = options || {};
 
@@ -101,6 +102,7 @@ class CompileContext extends EventEmitter {
         this._preserveWhitespace = null;
         this._preserveComments = null;
         this.inline = this.options.inline === true;
+        this.useMeta = this.options.meta;
         this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko';
 
         this._helpersIdentifier = null;
@@ -429,7 +431,50 @@ class CompileContext extends EventEmitter {
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
         var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
         var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
+
+        this.pushMeta('tags', builder.literal(relativePath), true);
+
         return templateVar;
+    }
+
+    addDependency(path, type, options) {
+        var dependency = (type ? type+':' : '') + path;
+        this.pushMeta('deps', this.builder.literal(dependency), true);
+    }
+
+    pushMeta(key, value, unique) {
+        var builder = this.builder;
+        var property;
+
+        if(!this.meta) {
+            this.meta = builder.objectExpression();
+        }
+
+        property = this.meta.properties.find(p => p.key.name === key);
+
+        if(!property) {
+            property = builder.property(key, builder.arrayExpression(value));
+            this.meta.properties.push(property);
+        } else if(!unique || !property.value.elements.some(e => e.toString() === value.toString())) {
+            property.value.elements.push(value);
+        }
+    }
+
+    setMeta(key, value) {
+        var builder = this.builder;
+        var property;
+
+        if(!this.meta) {
+            this.meta = builder.objectExpression();
+        }
+
+        property = this.meta.properties.find(p => p.key.value === key);
+
+        if(!property) {
+            property = builder.property(key, value);
+        } else {
+            property.value = value;
+        }
     }
 
     setPreserveWhitespace(preserveWhitespace) {

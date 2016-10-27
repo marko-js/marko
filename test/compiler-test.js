@@ -38,8 +38,12 @@ describe('compiler', function() {
             main.checkError(e);
             done();
 
+        } else if(main && main.checkTemplate) {
+            var template = require('marko').load(templatePath, main.compilerOptions);
+            main.checkTemplate(template);
+            done();
         } else {
-            var compiledSrc = compiler.compileFile(templatePath);
+            var compiledSrc = compiler.compileFile(templatePath, main && main.compilerOptions);
             helpers.compare(compiledSrc, '.js');
             done();
         }
