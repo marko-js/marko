@@ -70,7 +70,9 @@ class TransformHelper {
 
     getDefaultWidgetModule() {
         var dirname = this.dirname;
-        if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
+        if (fs.existsSync(nodePath.join(dirname, 'component.js'))) {
+            return './component';
+        } else if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
             return './widget';
         } else if (fs.existsSync(nodePath.join(dirname, 'index.js'))) {
             return './';

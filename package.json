@@ -10,8 +10,8 @@
     "test-server": "mocha --ui bdd --reporter spec ./test/",
     "test-browser": "node test/browser-tests-runner/cli.js test/browser-tests.js --automated && npm run test-browser-pages",
     "test-browser-pages": "node test/browser-tests-runner/cli.js --pages --automated",
-    "test-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server",
-    "test-page": "browser-refresh test/browser-tests-runner/cli.js test/autotests-browser.js --server --page",
+    "test-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/browser-tests.js --server",
+    "test-page": "browser-refresh test/browser-tests-runner/cli.js test/browser-tests.js --server --page",
     "jshint": "jshint src/ taglib/ *.js"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",

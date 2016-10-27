@@ -16,6 +16,8 @@
  */
 'use strict';
 
+var path = require('path');
+
 module.exports = function handleWidgetBind() {
     var el = this.el;
     var context = this.context;
@@ -62,7 +64,24 @@ module.exports = function handleWidgetBind() {
     }
 
     if (modulePath) {
-        let widgetTypeNode = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
+        let widgetTypeNode;
+        if(path.basename(modulePath) === 'component') {
+            widgetTypeNode = context.addStaticVar('__widgetType', builder.literal({
+                name: builder.literal(modulePath),
+                def: builder.functionDeclaration(null, [] /* params */, [
+                    builder.returnStatement(
+                        builder.memberExpression('module', 'exports')
+                    )
+                ])
+            }));
+            this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
+                root.node.generateExports = function(template) {
+                    return buildExport(builder, modulePath, template)
+                };
+            });
+        } else {
+            widgetTypeNode = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
+        }
         widgetAttrs.type = widgetTypeNode;
     }
 
@@ -94,3 +113,36 @@ module.exports = function handleWidgetBind() {
         extend: false
     });
 };
+
+function buildExport(builder, modulePath, template) {
+    return [
+        builder.assignment(
+            builder.var('component'),
+            builder.require(
+                builder.literal(modulePath)
+            )
+        ),
+        builder.assignment(
+            builder.var('template'),
+            template
+        ),
+        builder.assignment(
+            builder.memberExpression(
+                builder.identifier('module'),
+                builder.identifier('exports')
+            ),
+            builder.functionCall(
+                builder.memberExpression(
+                    builder.require(
+                        builder.literal('marko-widgets')
+                    ),
+                    builder.identifier('c')
+                ),
+                [
+                    builder.identifier('component'),
+                    builder.identifier('template')
+                ]
+            )
+        )
+    ];
+}
