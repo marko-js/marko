@@ -11,6 +11,7 @@ class ForEach extends Node {
         this.separator = def.separator;
         this.statusVarName = def.statusVarName;
         this.iterator = def.iterator;
+        this.isArray = def.isArray;
 
         ok(this.varName, '"varName" is required');
         ok(this.in != null, '"in" is required');
@@ -24,6 +25,7 @@ class ForEach extends Node {
         var iterator = this.iterator;
         var context = codegen.context;
         var builder = codegen.builder;
+        var isArray = this.isArray;
 
         if (separator && !statusVarName) {
             statusVarName = '__loop';
@@ -63,12 +65,34 @@ class ForEach extends Node {
                 builder.functionDeclaration(null, [varName, statusVarName], body)
             ]);
         } else {
-            return builder.functionCall(context.helper('forEach'), [
-                inExpression,
-                builder.functionDeclaration(null, [varName], this.body)
-            ]);
-        }
+            if (isArray) {
+                context.addVar(varName.name);
+                var indexVarId = context.addVar(varName.name + '__i');
+                var arrayVarId = context.addVar(varName.name + '__array');
+                var lengthVarId = context.addVar(varName.name + '__len');
 
+                var init = builder.sequenceExpression([
+                    builder.assignment(indexVarId, builder.literal(0)),
+                    builder.assignment(arrayVarId, inExpression),
+                    builder.assignment(lengthVarId, builder.binaryExpression(arrayVarId, '&&', builder.memberExpression(arrayVarId, builder.identifier('length'))))
+                ]);
+
+                var test = builder.binaryExpression(indexVarId, '<', lengthVarId);
+
+                var update = builder.unaryExpression(indexVarId, '++');
+
+                var loopBody = [
+                        builder.assignment(varName, builder.memberExpression(arrayVarId, indexVarId, true))
+                    ].concat(this.body);
+
+                return builder.forStatement(init, test, update, loopBody);
+            } else {
+                return builder.functionCall(context.helper('forEach'), [
+                    inExpression,
+                    builder.functionDeclaration(null, [varName], this.body)
+                ]);
+            }
+        }
     }
 
     walk(walker) {
