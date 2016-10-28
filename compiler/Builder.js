@@ -46,6 +46,7 @@ var ContainerNode = require('./ast/ContainerNode');
 var WhileStatement = require('./ast/WhileStatement');
 var DocumentType = require('./ast/DocumentType');
 var Declaration = require('./ast/Declaration');
+var SequenceExpression = require('./ast/SequenceExpression');
 
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
@@ -107,6 +108,11 @@ class Builder {
         left = makeNode(left);
         right = makeNode(right);
         return new BinaryExpression({left, operator, right});
+    }
+
+    sequenceExpression(expressions) {
+        expressions = makeNode(expressions);
+        return new SequenceExpression({expressions});
     }
 
     code(value) {
