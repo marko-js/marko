@@ -428,10 +428,11 @@ class CompileContext extends EventEmitter {
     importTemplate(relativePath) {
         ok(typeof relativePath === 'string', '"path" should be a string');
         var builder = this.builder;
+		var varName = removeExt(path.basename(relativePath)) + '_template';
 
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
         var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
-        var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
+        var templateVar = this.addStaticVar(varName, loadFunctionCall);
 
         this.pushMeta('tags', builder.literal(relativePath), true);
 

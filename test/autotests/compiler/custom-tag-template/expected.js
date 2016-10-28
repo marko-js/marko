@@ -1,9 +1,9 @@
 function create(__markoHelpers) {
   var marko_loadTemplate = __markoHelpers.l,
-      __hello = marko_loadTemplate(require.resolve("./hello.marko"));
+      hello_template = marko_loadTemplate(require.resolve("./hello.marko"));
 
   return function render(data, out) {
-    __hello.render({
+    hello_template.render({
         name: "Frank"
       }, out);
   };

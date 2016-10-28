@@ -1,6 +1,6 @@
 function create(__markoHelpers) {
   var marko_loadTag = __markoHelpers.t,
-      test_hello = marko_loadTag(require("./tags/test-hello/renderer")),
+      test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer")),
       marko_createElement = __markoHelpers.e,
       marko_const = __markoHelpers.const,
       marko_const_nextId = marko_const("b7b61f"),
@@ -12,7 +12,7 @@ function create(__markoHelpers) {
   return function render(data, out) {
     out.be("div");
 
-    test_hello({
+    test_hello_tag({
         name: "World",
         renderBody: function renderBody(out) {
           out.n(marko_node0);
