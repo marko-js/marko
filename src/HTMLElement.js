@@ -34,6 +34,13 @@ function HTMLElement(tagName, attrs, childCount, constId) {
 
     Node.call(this, childCount);
 
+    if (constId) {
+        if (!attrs) {
+            attrs = {};
+        }
+        attrs[ATTR_MARKO_CONST] = constId;
+    }
+
     this.attributes = attrs || EMPTY_OBJECT;
     this._isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
@@ -56,13 +63,18 @@ HTMLElement.prototype = {
             var attrValue = attrs[attrName];
             if (attrName === 'xlink:href') {
                 targetValue = targetNode.getAttributeNS(NS_XLINK, ATTR_HREF);
-                if (targetValue !== attrValue) {
+
+                if (attrValue == null || attrValue === false) {
+                    targetNode.removeAttributeNS(NS_XLINK, ATTR_HREF);
+                } else if (targetValue !== attrValue) {
                     targetNode.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
                 }
             } else {
                 targetValue = targetNode.getAttribute(attrName);
 
-                if (targetValue !== attrValue) {
+                if (attrValue == null || attrValue === false) {
+                    targetNode.removeAttribute(attrName);
+                } else if (targetValue !== attrValue) {
                     targetNode.setAttribute(attrName, attrValue);
                 }
             }
@@ -158,10 +170,6 @@ HTMLElement.prototype = {
             }
         }
 
-        if (this._constId) {
-            el.setAttribute(ATTR_MARKO_CONST, this._constId);
-        }
-
         return el;
     },
 
@@ -172,7 +180,15 @@ HTMLElement.prototype = {
         return this.attributes[name] !== undefined;
     },
 
+    getAttribute: function(name) {
+        return this.attributes[name];
+    },
+
     isSameNode: function(otherNode) {
+        if (otherNode.nodeType !== 1) {
+            return false;
+        }
+
         var constId = this._constId;
         if (constId) {
             var otherSameId = otherNode.actualize ? otherNode._constId : otherNode.getAttribute(ATTR_MARKO_CONST);
