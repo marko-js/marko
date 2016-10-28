@@ -1,3 +1,4 @@
+'use strict';
 /*
 This module is used to monkey patch `Template.prototype` to add a new `stream(templateData)` method. Since
 this module is likely not needed in the browser, we have split out the code into a separate module. This module

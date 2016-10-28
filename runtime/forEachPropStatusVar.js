@@ -1,3 +1,5 @@
+'use strict';
+
 function LoopStatus(getLength, isLast, isFirst, getIndex) {
     this.getLength = getLength;
     this.isLast = isLast;

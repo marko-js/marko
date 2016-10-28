@@ -1,3 +1,5 @@
+'use strict';
+
 var runtime;
 
 function setRuntime(_runtime) {
