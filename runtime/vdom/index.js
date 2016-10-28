@@ -105,7 +105,7 @@ Template.prototype = {
 
         if (out) {
             // The out can either be a callback function or AsyncStream...
-            if (out.isAsyncStream) {
+            if (out.isAsyncVDOMBuilder) {
                 if (callback) {
                     out
                         .on('finish', function() {
