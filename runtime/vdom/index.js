@@ -88,6 +88,7 @@ Template.prototype = {
      */
     render: function(data, out, callback) {
         var renderFunc = this._;
+
         var finalData;
         var globalData;
         if (data) {
@@ -102,52 +103,45 @@ Template.prototype = {
             finalData = {};
         }
 
-        if (typeof out === 'function') {
-            // Short circuit for render(data, callback)
-            return renderCallback(renderFunc, finalData, globalData, out);
+        if (out) {
+            // The out can either be a callback function or AsyncStream...
+            if (out.isAsyncStream) {
+                if (callback) {
+                    out
+                        .on('finish', function() {
+                            callback(null, out.getOutput(), out);
+                        })
+                        .once('error', callback);
+                }
+
+                if (globalData) {
+                    extend(out.global, globalData);
+                }
+
+                renderFunc(finalData, out);
+
+                return out;
+            } else if (typeof out === 'function') {
+                callback = out;
+                out = null;
+            }
         }
 
-        // NOTE: We create new vars here to avoid a V8 de-optimization due
-        //       to the following:
-        //       Assignment to parameter in arguments object
-        var finalOut = out;
+        var finalOut = new AsyncVDOMBuilder(globalData);
 
-        var shouldEnd = false;
-
-        if (arguments.length === 3) {
-            if (globalData) {
-                extend(finalOut.global, globalData);
-            }
-
+        if (callback) {
             finalOut
                 .on('finish', function() {
                     callback(null, finalOut.getOutput(), finalOut);
                 })
                 .once('error', callback);
-        } else if (!finalOut) {
-            // Assume the "finalOut" is really a stream
-            //
-            // By default, we will buffer rendering to a stream to prevent
-            // the response from being "too chunky".
-            finalOut = new AsyncVDOMBuilder(globalData);
-            shouldEnd = true;
         }
-
-
 
         // Invoke the compiled template's render function to have it
         // write out strings to the provided out.
         renderFunc(finalData, finalOut);
 
-        // Automatically end output stream (the writer) if we
-        // had to create an async writer (which might happen
-        // if the caller did not provide a writer/out or the
-        // writer/out was not an AsyncVDOMBuilder).
-        //
-        // If out parameter was originally an AsyncVDOMBuilder then
-        // we assume that we are writing to output that was
-        // created in the context of another rendering job.
-        return shouldEnd ? finalOut.end() : finalOut;
+        return finalOut.end();
     }
 };
 

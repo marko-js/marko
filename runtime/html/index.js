@@ -126,7 +126,7 @@ Template.prototype = {
         if (callback) {
             finalOut
                 .on('finish', function() {
-                    callback(null, finalOut.getOutput(), out);
+                    callback(null, finalOut.getOutput(), finalOut);
                 })
                 .once('error', callback);
         }
