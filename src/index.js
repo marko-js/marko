@@ -56,6 +56,8 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
 var range;
 
 var proto = AsyncVDOMBuilder.prototype = {
+    isAsyncVDOMBuilder: true,
+    
     element: function(name, attrs, childCount) {
         var element = createElement(name, attrs, childCount);
 
