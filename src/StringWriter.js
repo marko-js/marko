@@ -1,3 +1,5 @@
+'use strict';
+
 function StringWriter(events) {
     this.str = '';
     this.events = events;

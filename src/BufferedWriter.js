@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Simple wrapper that can be used to wrap a stream
  * to reduce the number of write calls. In Node.js world,

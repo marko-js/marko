@@ -70,6 +70,7 @@ function AsyncStream(global, writer, state, shouldBuffer) {
 
     this._sync = false;
     this._stack = undefined;
+    this.name = undefined;
     this._timeoutId = undefined;
 
     this._node = undefined;
@@ -85,7 +86,7 @@ AsyncStream.enableAsyncStackTrace = function() {
 
 var proto = AsyncStream.prototype = {
     constructor: AsyncStream,
-    isAsyncWriter: AsyncStream,
+    isAsyncWriter: AsyncStream, // Legacy
     isAsyncStream: AsyncStream,
 
     sync: function() {
