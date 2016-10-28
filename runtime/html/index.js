@@ -19,7 +19,6 @@ var helpers;
     }
 };
 
-var BUFFER_OPTIONS = { buffer: true };
 var asyncWriter = require('async-writer');
 var AsyncStream = asyncWriter.AsyncStream;
 
@@ -34,22 +33,10 @@ var extend = require('raptor-util/extend');
 
 exports.AsyncStream = AsyncStream;
 
-function renderCallback(renderFunc, data, globalData, callback) {
-    var out = new AsyncStream(globalData);
-
-    renderFunc(data, out);
-    return out.end()
-        .on('finish', function() {
-            callback(null, out.getOutput(), out);
-        })
-        .once('error', callback);
-}
-
 function Template(path, func, options) {
     this.path = path;
     this._ = func;
-    this._options = !options || options.buffer !== false ?
-        BUFFER_OPTIONS : null;
+    this._shouldBuffer = !options || options.shouldBuffer !=- false;
 }
 
 Template.prototype = {
@@ -93,6 +80,7 @@ Template.prototype = {
      */
     render: function(data, out, callback) {
         var renderFunc = this._;
+
         var finalData;
         var globalData;
         if (data) {
@@ -107,43 +95,40 @@ Template.prototype = {
             finalData = {};
         }
 
-        if (typeof out === 'function') {
-            // Short circuit for render(data, callback)
-            return renderCallback(renderFunc, finalData, globalData, out);
+        if (out) {
+            // The out can either be a callback function or AsyncStream...
+            if (out.isAsyncStream) {
+                if (callback) {
+                    out
+                        .on('finish', function() {
+                            callback(null, out.getOutput(), out);
+                        })
+                        .once('error', callback);
+                }
+
+                if (globalData) {
+                    extend(out.global, globalData);
+                }
+
+                renderFunc(finalData, out);
+
+                return out;
+            } else if (typeof out === 'function') {
+                callback = out;
+                out = null;
+            }
         }
 
-        // NOTE: We create new vars here to avoid a V8 de-optimization due
-        //       to the following:
-        //       Assignment to parameter in arguments object
-        var finalOut = out;
+        var shouldBuffer = this._shouldBuffer;
 
-        var shouldEnd = false;
+        var finalOut = new AsyncStream(globalData, out, null, shouldBuffer);
 
-        if (arguments.length === 3) {
-            // render(data, out, callback)
-            if (!finalOut || !finalOut.isAsyncStream) {
-                finalOut = new AsyncStream(globalData, finalOut);
-                shouldEnd = true;
-            }
-
+        if (callback) {
             finalOut
                 .on('finish', function() {
-                    callback(null, finalOut.getOutput(), finalOut);
+                    callback(null, finalOut.getOutput(), out);
                 })
                 .once('error', callback);
-        } else if (!finalOut || !finalOut.isAsyncStream) {
-            var options = this._options;
-            var shouldBuffer = options && options.shouldBuffer;
-            // Assume the "finalOut" is really a stream
-            //
-            // By default, we will buffer rendering to a stream to prevent
-            // the response from being "too chunky".
-            finalOut = new AsyncStream(globalData, finalOut, null, shouldBuffer);
-            shouldEnd = true;
-        }
-
-        if (globalData) {
-            extend(finalOut.global, globalData);
         }
 
         // Invoke the compiled template's render function to have it
@@ -158,7 +143,7 @@ Template.prototype = {
         // If out parameter was originally an AsyncStream then
         // we assume that we are writing to output that was
         // created in the context of another rendering job.
-        return shouldEnd ? finalOut.end() : finalOut;
+        return finalOut.end();
     },
 
     stream: function() {

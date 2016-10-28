@@ -1,19 +1,3 @@
-/*
-* Copyright 2011 eBay Software Foundation
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 'use strict';
 var isArray = Array.isArray;
 var load = require('./loader');
@@ -89,12 +73,25 @@ function resolveRenderer(handler) {
     return createDeferredRenderer(handler);
 }
 
-function LoopStatus(getLength, isLast, isFirst, getIndex) {
-    this.getLength = getLength;
-    this.isLast = isLast;
-    this.isFirst = isFirst;
-    this.getIndex = getIndex;
+function LoopStatus(len) {
+    this.i = 0;
+    this.len = len;
 }
+
+LoopStatus.prototype = {
+    getLength: function() {
+        return this.len;
+    },
+    isLast: function() {
+        return this.i === this.len - 1;
+    },
+    isFirst: function() {
+        return this.i === 0;
+    },
+    getIndex: function() {
+        return this.i;
+    }
+};
 
 module.exports = {
     /**
@@ -117,24 +114,12 @@ module.exports = {
         if (!array.forEach) {
             array = [array];
         }
-        var i = 0;
-        var len = array.length;
-        var loopStatus = new LoopStatus(
-                function getLength() {
-                    return len;
-                },
-                function isLast() {
-                    return i === len - 1;
-                },
-                function isFirst() {
-                    return i === 0;
-                },
-                function getIndex() {
-                    return i;
-                });
 
-        for (; i < len; i++) {
-            var o = array[i];
+        var len = array.length;
+        var loopStatus = new LoopStatus(len);
+
+        for (; loopStatus.i < len; loopStatus.i++) {
+            var o = array[loopStatus.i];
             callback(o, loopStatus);
         }
     },
