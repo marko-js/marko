@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
-
+var dom = require('marko-dom');
 var markoVdom = require('marko-vdom');
 var createElement = markoVdom.createElement;
 var createDocumentFragment = markoVdom.createDocumentFragment;
@@ -7,6 +7,22 @@ var createComment = markoVdom.createComment;
 var createText = markoVdom.createText;
 var virtualize = require('marko-vdom/virtualize');
 var specialHtmlRegexp = /[&<]/;
+var defaultDocument = typeof document != 'undefined' && document;
+
+function checkAddedToDOM(asyncStream, method) {
+    if (!asyncStream.data._added) {
+        throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
+    }
+}
+
+function getWidgetDefs(out) {
+    var widgetDefs = out.data.widgets;
+
+    if (!widgetDefs || widgetDefs.length === 0) {
+        throw new Error('No widget rendered');
+    }
+    return widgetDefs;
+}
 
 function State(tree) {
     this.remaining = 1;
@@ -29,6 +45,7 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
         state = new State(parentNode);
     }
 
+    this.data = {};
     this._state = state;
     this._parent = parentNode;
     this.global = globalData || {};
@@ -155,6 +172,8 @@ var proto = AsyncVDOMBuilder.prototype = {
             state.finished = true;
             state.events.emit('finish', state.tree);
         }
+
+        return this;
     },
 
     beginAsync: function(options) {
@@ -171,7 +190,14 @@ var proto = AsyncVDOMBuilder.prototype = {
         }
 
         var documentFragment = this._parent.appendDocumentFragment();
-        return new AsyncVDOMBuilder(this.global, documentFragment, state);
+        var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, state);
+
+        state.events.emit('beginAsync', {
+           out: asyncOut,
+           parentOut: this
+       });
+
+       return asyncOut;
     },
 
     createOut: function(callback) {
@@ -267,6 +293,118 @@ var proto = AsyncVDOMBuilder.prototype = {
         lastArray.push(callback);
         return this;
     },
+
+    // BEGIN DOM METHODS
+    getWidget: function() {
+        checkAddedToDOM(this, 'getWidget');
+
+        var rerenderWidget = this.global.__rerenderWidget;
+        if (rerenderWidget) {
+            return rerenderWidget;
+        }
+
+        return getWidgetDefs(this)[0].widget;
+    },
+    getWidgets: function(selector) {
+        checkAddedToDOM(this, 'getWidgets');
+
+        var widgetDefs = getWidgetDefs(this);
+
+        var widgets;
+        var i;
+        if (selector) {
+            // use the selector to find the widgets that the caller wants
+            widgets = [];
+            for (i = 0; i < widgetDefs.length; i++) {
+                var widget = widgetDefs[i].widget;
+                if (selector(widget)) {
+                    widgets.push(widget);
+                }
+            }
+        } else {
+            // return all widgets
+            widgets = new Array(widgetDefs.length);
+            for (i = 0; i < widgetDefs.length; i++) {
+                widgets[i] = widgetDefs[i].widget;
+            }
+        }
+        return widgets;
+    },
+
+    afterInsert: function(node) {
+        var data = this.data;
+        data._added = true;
+
+        var widgetsContext = this.global.widgets;
+        var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
+
+        data.widgets = widgetDefs;
+
+        dom.emit('renderedToDOM', {
+            node: node,
+            out: this,
+            document: node.ownerDocument
+        });    // NOTE: This will trigger widgets to be initialized if there were any
+
+        return this;
+    },
+
+    appendTo: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.appendTo(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    replace: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.replace(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    replaceChildrenOf: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.replaceChildrenOf(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    insertBefore: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.insertBefore(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    insertAfter: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.insertAfter(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    prependTo: function(referenceEl) {
+        var newNode = this.getNode(referenceEl.ownerDocument);
+        dom.prependTo(newNode, referenceEl);
+        return this.afterInsert(newNode);
+    },
+    getNode: function(doc) {
+        var node = this._node;
+        if (!node) {
+            var vdomTree = this.getOutput();
+
+            if (!doc) {
+                doc = this.document || defaultDocument;
+            }
+
+            node = vdomTree.actualize(doc);
+
+            if (node.nodeType === 11 /* DocumentFragment */) {
+                // If the DocumentFragment only has one child
+                // then just return that first child as the node
+                var childNodes = node.childNodes;
+                if (childNodes.length === 1) {
+                    node = childNodes[0];
+                }
+            }
+
+            this._node = node;
+        }
+        return node;
+    },
+
+    // END DOM METHODS
 
 
     document: typeof document !== 'undefined' && document,
