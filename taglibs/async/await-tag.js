@@ -61,7 +61,7 @@ function requestData(provider, args, callback, thisObj) {
     }
 }
 
-module.exports = function render(input, out) {
+module.exports = function awaitTag(input, out) {
     var dataProvider = input._dataProvider;
     var arg = input.arg || {};
     arg.out = out;
