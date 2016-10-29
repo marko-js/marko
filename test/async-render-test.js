@@ -64,6 +64,8 @@ describe('async render', function() {
 
                 addEventListener('await:begin');
                 addEventListener('await:beforeRender');
+                addEventListener('await:error');
+                addEventListener('await:timeout');
                 addEventListener('await:finish');
 
                 template.render(templateData, out, function(err, html) {
@@ -84,11 +86,9 @@ describe('async render', function() {
                     // Make sure all of the await instances were correctly ended
                     Object.keys(eventsByAwaitInstance).forEach(function(name) {
                         var events = eventsByAwaitInstance[name];
-                        expect(events).to.deep.equal([
-                            'await:begin',
-                            'await:beforeRender',
-                            'await:finish'
-                        ]);
+                        expect(events).to.include('await:begin');
+                        expect(events).to.include('await:beforeRender');
+                        expect(events).to.include('await:finish');
                     });
 
                     done();
