@@ -73,6 +73,17 @@ The marko-async taglib also supports out-of-order flushing. Enabling out-of-orde
 
 If `client-reorder` is `true` then a placeholder element will be rendered to the output instead of the final HTML for the await instance. The instance will be instead rendered at the end of the page and client-side JavaScript code will be used to move the await's contents into the proper place in the DOM. The `<await-reorderer>` will be where the out-of-order instances are rendered before they are moved into place. If there are any out-of-order instances then inline JavaScript code will be injected into the page at this location to move the DOM nodes into the proper place in the DOM.
 
+# Events
+
+You may listen to these events on the AsyncStream returned from a template's render
+method or the wrapped stream if it is an event emitter (like node's http `res` stream).
+
+- **`await:begin`** - emits an object with the keys `name`, `dataProvider`, and `clientReorder` when the `<await>` tag begins awaiting its promise/callback.
+- **`await:beforeRender`** - emits the same object with the key `out` (the async output stream) added once the promise/callback has returned and the `<await>` tag is about to render its contents.
+- **`await:error`** - emits the same object with the key `error` (the `Error`) added, if an error occurs
+- **`await:timeout`** - emits the same object with the key `timedout` (a boolean set to `true`) added, if a timeout occurs
+- **`await:finish`** - emits the same the key `finished` (a boolean set to `true`) added once the `<await>` tag finishes
+
 # Taglib API
 
 ## `<await>`
