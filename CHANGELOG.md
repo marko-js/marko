@@ -3,6 +3,12 @@ Changelog
 
 # 3.x
 
+## 3.12.x
+
+### 3.12.0
+
+- Add `await:error` and `await:timeout` events 
+
 ## 3.11.x
 
 ### 3.11.8
