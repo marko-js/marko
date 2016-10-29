@@ -1,0 +1,38 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.testDataProvider",
+            "clientReorder": false,
+            "error": {},
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.testDataProvider",
+            "clientReorder": false,
+            "error": {},
+            "finished": true
+        }
+    },
+    {
+        "event": "await:error",
+        "arg": {
+            "name": "data.testDataProvider",
+            "clientReorder": false,
+            "error": {},
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.testDataProvider",
+            "clientReorder": false,
+            "error": {},
+            "finished": true
+        }
+    }
+]

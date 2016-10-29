@@ -106,6 +106,8 @@ module.exports = function render(input, out) {
         }
 
         if (err) {
+            awaitInfo.error = err;
+            out.emit('await:error', awaitInfo);
             if (input.renderError) {
                 console.error('Await (' + name + ') failed. Error:', (err.stack || err));
                 input.renderError(targetOut);
@@ -156,6 +158,7 @@ module.exports = function render(input, out) {
                 var message = 'Await (' + name + ') timed out after ' + timeout + 'ms';
 
                 awaitInfo.timedout = true;
+                out.emit('await:timeout', awaitInfo);
 
                 if (renderTimeout) {
                     logger.error(message);

@@ -36,6 +36,15 @@
         }
     },
     {
+        "event": "await:timeout",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
         "event": "await:beforeRender",
         "arg": {
             "name": "userInfo1",
@@ -48,6 +57,15 @@
         "event": "await:finish",
         "arg": {
             "name": "userInfo1",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:timeout",
+        "arg": {
+            "name": "userInfo2",
             "clientReorder": false,
             "timedout": true,
             "finished": true
@@ -72,6 +90,15 @@
         }
     },
     {
+        "event": "await:timeout",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
         "event": "await:beforeRender",
         "arg": {
             "name": "userInfo3",
@@ -84,6 +111,15 @@
         "event": "await:finish",
         "arg": {
             "name": "userInfo3",
+            "clientReorder": false,
+            "timedout": true,
+            "finished": true
+        }
+    },
+    {
+        "event": "await:timeout",
+        "arg": {
+            "name": "userInfo4",
             "clientReorder": false,
             "timedout": true,
             "finished": true
