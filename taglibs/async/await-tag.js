@@ -115,8 +115,6 @@ module.exports = function render(input, out) {
                 targetOut.error(err);
             }
         } else if (renderTimeout) {
-            awaitInfo.timedout = true;
-            out.emit('await:timeout', awaitInfo);
             renderTimeout(targetOut);
         } else {
             if (input.renderBody) {
@@ -160,6 +158,7 @@ module.exports = function render(input, out) {
                 var message = 'Await (' + name + ') timed out after ' + timeout + 'ms';
 
                 awaitInfo.timedout = true;
+                out.emit('await:timeout', awaitInfo);
 
                 if (renderTimeout) {
                     logger.error(message);
