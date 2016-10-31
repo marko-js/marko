@@ -59,6 +59,17 @@ HTMLElement.prototype = {
         var attrName;
         var targetValue;
 
+        var preservedAttrs = attrs['data-preserve-attrs'];
+        if (preservedAttrs) {
+            attrs = extend({}, attrs);
+
+            preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
+            for (var i=0; i<preservedAttrs.length; i++) {
+                var preservedAttrName = preservedAttrs[i];
+                delete attrs[preservedAttrName];
+            }
+        }
+
         for (attrName in attrs) {
             var attrValue = attrs[attrName];
             if (attrName === 'xlink:href') {
