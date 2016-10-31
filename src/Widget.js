@@ -577,7 +577,7 @@ Widget.prototype = widgetProto = {
                 var id = fromEl.id;
                 var existingWidget;
 
-                var preservedAttrs = !out.isVDOM && toEl.getAttribute('data-w-preserve-attrs');
+                var preservedAttrs = !out.isVDOM && toEl.getAttribute('data-preserve-attrs');
                 if (preservedAttrs) {
                     preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
                     for (var i=0; i<preservedAttrs.length; i++) {

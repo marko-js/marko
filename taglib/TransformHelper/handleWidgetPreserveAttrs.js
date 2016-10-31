@@ -18,7 +18,7 @@ function handleWidgetEvents() {
     var el = this.el;
     var preserveAttrsExpression = el.getAttributeValue('w-preserve-attrs');
     el.removeAttribute('w-preserve-attrs');
-    el.setAttributeValue('data-w-preserve-attrs', preserveAttrsExpression);
+    el.setAttributeValue('data-preserve-attrs', preserveAttrsExpression);
 }
 
 module.exports = handleWidgetEvents;
