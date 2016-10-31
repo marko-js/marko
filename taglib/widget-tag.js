@@ -68,33 +68,35 @@ function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
 }
 
 
-module.exports = function render(input, out) {
+function handleBeginAsync(event) {
+    var parentOut = event.parentOut;
+    var asyncOut = event.out;
+    var widgetsContext = asyncOut.global.widgets;
+    var widgetStack;
+
+    if (widgetsContext && (widgetStack = widgetsContext.widgetStack).length) {
+        // All of the widgets in this async block should be
+        // initialized after the widgets in the parent. Therefore,
+        // we will create a new WidgetsContext for the nested
+        // async block and will create a new widget stack where the current
+        // widget in the parent block is the only widget in the nested
+        // stack (to begin with). This will result in top-level widgets
+        // of the async block being added as children of the widget in the
+        // parent block.
+        var nestedWidgetsContext = new markoWidgets.WidgetsContext(asyncOut);
+        nestedWidgetsContext.widgetStack = [widgetStack[widgetStack.length-1]];
+        asyncOut.data.widgets = nestedWidgetsContext;
+    }
+
+    asyncOut.data.widgetArgs = parentOut.data.widgetArgs;
+}
+
+module.exports = function widgetTag(input, out) {
     var global = out.global;
 
     if (!global.__widgetsBeginAsyncAdded) {
         global.__widgetsBeginAsyncAdded = true;
-        out.on('beginAsync', function(event) {
-            var parentOut = event.parentOut;
-            var asyncOut = event.out;
-            var widgetsContext = global.widgets;
-            var widgetStack;
-
-            if (widgetsContext && (widgetStack = widgetsContext.widgetStack).length) {
-                // All of the widgets in this async block should be
-                // initialized after the widgets in the parent. Therefore,
-                // we will create a new WidgetsContext for the nested
-                // async block and will create a new widget stack where the current
-                // widget in the parent block is the only widget in the nested
-                // stack (to begin with). This will result in top-level widgets
-                // of the async block being added as children of the widget in the
-                // parent block.
-                var nestedWidgetsContext = new markoWidgets.WidgetsContext(out);
-                nestedWidgetsContext.widgetStack = [widgetStack[widgetStack.length-1]];
-                asyncOut.data.widgets = nestedWidgetsContext;
-            }
-
-            asyncOut.data.widgetArgs = parentOut.data.widgetArgs;
-        });
+        out.on('beginAsync', handleBeginAsync);
     }
 
     var type = input.type;

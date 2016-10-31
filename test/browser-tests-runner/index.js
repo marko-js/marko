@@ -51,7 +51,7 @@ function generate(options) {
                 {
                     plugin: 'lasso-marko',
                     config: {
-                        output: 'html'
+                        output: 'vdom'
                     }
                 },
                 require('./lasso-autotest-plugin')

@@ -206,6 +206,20 @@ function hasCompatibleWidget(widgetsContext, existingWidget) {
     return existingWidget.__type === newWidgetDef.type;
 }
 
+function handleCustomEventWithMethodListener(widget, targetMethodName, args) {
+    // Remove the "eventType" argument
+    args = arrayFromArguments(args, 1);
+    args.push(widget);
+
+    var targetWidget = markoWidgets.getWidgetForEl(widget.__scope);
+    var targetMethod = targetWidget[targetMethodName];
+    if (!targetMethod) {
+        throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
+    }
+
+    targetMethod.apply(targetWidget, args);
+}
+
 var widgetProto;
 
 /**
@@ -256,19 +270,16 @@ Widget.prototype = widgetProto = {
     emit: function(eventType) {
         var customEvents = this.__customEvents;
         var targetMethodName;
-        var args;
 
         if (customEvents && (targetMethodName = customEvents[eventType])) {
-            args = args || arrayFromArguments(arguments, 1);
-            args.push(this);
+            var len = arguments.length;
 
-            var targetWidget = markoWidgets.getWidgetForEl(this.__scope);
-            var targetMethod = targetWidget[targetMethodName];
-            if (!targetMethod) {
-                throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
+            var args = new Array(len-1);
+            for (var i = 1; i < len; i++) {
+                args[i] = arguments[i];
             }
 
-            targetMethod.apply(targetWidget, args);
+            handleCustomEventWithMethodListener(this, targetMethodName, args);
         }
 
         return emit.apply(this, arguments);
@@ -566,7 +577,7 @@ Widget.prototype = widgetProto = {
                 var id = fromEl.id;
                 var existingWidget;
 
-                var preservedAttrs = toEl.getAttribute('data-w-preserve-attrs');
+                var preservedAttrs = !out.isVDOM && toEl.getAttribute('data-w-preserve-attrs');
                 if (preservedAttrs) {
                     preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
                     for (var i=0; i<preservedAttrs.length; i++) {

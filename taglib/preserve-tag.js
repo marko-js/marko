@@ -43,7 +43,8 @@ module.exports = function render(input, out) {
                     // then that means that we have need to render a placeholder to
                     // mark the target location. We can then replace the placeholder
                     // node with the existing DOM node
-                    out.write('<' + tagName + ' id="' + id + '"></' + tagName + '>');
+                    out.beginElement(tagName, { id: id });
+                    out.endElement();
                 }
 
                 widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
