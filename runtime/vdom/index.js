@@ -29,18 +29,6 @@ function createOut(globalData) {
 
 var extend = require('raptor-util/extend');
 
-function renderCallback(renderFunc, data, globalData, callback) {
-    var out = new AsyncVDOMBuilder(globalData);
-
-    renderFunc(data, out);
-
-    return out.end()
-        .on('finish', function() {
-            callback(null, out.getOutput(), out);
-        })
-        .once('error', callback);
-}
-
 function Template(path, func) {
     this.path = path;
     this._ = func;
