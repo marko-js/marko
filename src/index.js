@@ -324,7 +324,7 @@ exports.makeRenderable = exports.renderable = require('./renderable');
 exports.c = function(component, template) {
     component.template = template;
     return exports.defineComponent(component);
-}
+};
 
 // registerWidget is a no-op on the server.
 // Fixes https://github.com/marko-js/marko-widgets/issues/111

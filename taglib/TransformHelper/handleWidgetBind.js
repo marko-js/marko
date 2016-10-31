@@ -76,7 +76,7 @@ module.exports = function handleWidgetBind() {
             }));
             this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    return buildExport(builder, modulePath, template)
+                    return buildExport(builder, modulePath, template);
                 };
             });
         } else {

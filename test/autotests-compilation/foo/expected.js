@@ -10,10 +10,10 @@ function create(__markoHelpers) {
       marko_attr = __markoHelpers.a,
       marko_attrs = __markoHelpers.as,
       marko_loadTag = __markoHelpers.t,
-      w_widget = marko_loadTag(require("marko-widgets/taglib/widget-tag"));
+      w_widget_tag = marko_loadTag(require("marko-widgets/taglib/widget-tag"));
 
   return function render(data, out) {
-    w_widget({
+    w_widget_tag({
         type: __widgetType,
         _cfg: data.widgetConfig,
         _state: data.widgetState,

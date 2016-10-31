@@ -83,7 +83,7 @@ exports.makeRenderable = exports.renderable = require('./renderable');
 exports.c = function(component, template) {
     component.template = template;
     return exports.defineComponent(component);
-}
+};
 
 exports.batchUpdate = updateManager.batchUpdate;
 exports.onAfterUpdate = updateManager.onAfterUpdate;
