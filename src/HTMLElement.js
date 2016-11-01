@@ -9,6 +9,17 @@ var ATTR_HREF = 'href';
 var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
 var ATTR_MARKO_CONST = 'data-marko-const';
 
+function removePreservedAttributes(attrs) {
+    var preservedAttrs = attrs['data-preserve-attrs'];
+    if (preservedAttrs) {
+        for (var i=0, len=preservedAttrs.length; i<len; i++) {
+            var preservedAttrName = preservedAttrs[i];
+            delete attrs[preservedAttrName];
+        }
+    }
+    return attrs;
+}
+
 function HTMLElementClone(other) {
     extend(this, other);
     this.parentNode = undefined;
@@ -57,39 +68,92 @@ HTMLElement.prototype = {
     assignAttributes: function(targetNode) {
         var attrs = this.attributes;
         var attrName;
-        var targetValue;
+        var i;
 
-        var preservedAttrs = attrs['data-preserve-attrs'];
-        if (preservedAttrs) {
-            attrs = extend({}, attrs);
+        // We use expando properties to associate the previous HTML
+        // attributes provided as part of the VDOM node with the
+        // real HTMLElement DOM node. When diffing attributes,
+        // we only use our internal representation of the attributes.
+        // When diffing for the first time it's possible that the
+        // real HTMLElement node will not have the expando property
+        // so we build the attribute map from the expando property
 
-            preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
-            for (var i=0; i<preservedAttrs.length; i++) {
-                var preservedAttrName = preservedAttrs[i];
-                delete attrs[preservedAttrName];
+        var oldAttrs = targetNode._vattrs;
+        if (oldAttrs) {
+            if (oldAttrs === attrs) {
+                // For constant attributes the same object will be provided
+                // every render and we can use that to our advantage to
+                // not waste time diffing a constant, immutable attribute
+                // map.
+                return;
             }
+        } else {
+            // We need to build the attribute map from the real attributes
+            oldAttrs = {};
+
+            var oldAttributesList = targetNode.attributes;
+            for (i = oldAttributesList.length - 1; i >= 0; --i) {
+                var attr = oldAttributesList[i];
+
+                if (attr.specified !== false) {
+                    attrName = attr.name;
+                    var attrNamespaceURI = attr.namespaceURI;
+                    if (attrNamespaceURI === NS_XLINK) {
+                        oldAttrs['xlink:href'] = attr.value;
+                    } else {
+                        oldAttrs[attrName] = attr.value;
+                    }
+                }
+            }
+
+            // We don't want preserved attributes to show up in either the old
+            // or new attribute map.
+            removePreservedAttributes(oldAttrs);
         }
 
+        // In some cases we only want to set an attribute value for the first
+        // render or we don't want certain attributes to be touched. To support
+        // that use case we delete out all of the preserved attributes
+        // so it's as if they never existed.
+        var preservedAttrs = attrs['data-preserve-attrs'];
+        if (preservedAttrs) {
+            attrs = removePreservedAttributes(extend({}, attrs));
+        }
+
+        // Loop over all of the attributes in the attribute map and compare
+        // them to the value in the old map. However, if the value is
+        // null/undefined/false then we want to remove the attribute
         for (attrName in attrs) {
             var attrValue = attrs[attrName];
-            if (attrName === 'xlink:href') {
-                targetValue = targetNode.getAttributeNS(NS_XLINK, ATTR_HREF);
 
+            if (attrName === 'xlink:href') {
                 if (attrValue == null || attrValue === false) {
                     targetNode.removeAttributeNS(NS_XLINK, ATTR_HREF);
-                } else if (targetValue !== attrValue) {
+                } else if (oldAttrs[attrName] !== attrValue) {
                     targetNode.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
                 }
             } else {
-                targetValue = targetNode.getAttribute(attrName);
-
                 if (attrValue == null || attrValue === false) {
                     targetNode.removeAttribute(attrName);
-                } else if (targetValue !== attrValue) {
+                } else if (oldAttrs[attrName] !== attrValue) {
                     targetNode.setAttribute(attrName, attrValue);
                 }
             }
         }
+
+        // If there are any old attributes that are not in the new set of attributes
+        // then we need to remove those attributes from the target node
+        for (attrName in oldAttrs) {
+            if (attrs.hasOwnProperty(attrName) === false) {
+                if (attrName === 'xlink:href') {
+                    targetNode.removeAttributeNS(NS_XLINK, ATTR_HREF);
+                } else {
+                    targetNode.removeAttribute(attrName);
+                }
+            }
+        }
+
+        targetNode._vattrs = attrs;
     },
 
     cloneNode: function() {
