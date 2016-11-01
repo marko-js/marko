@@ -1,0 +1,59 @@
+/*
+ * Copyright 2011 eBay Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var widgets = require('../');
+
+module.exports = function render(input, out) {
+
+    var global = out.global;
+
+    if (global.__rerender === true) {
+        var id = input.id;
+
+        // See if the DOM node with the given ID already exists.
+        // If so, then reuse the existing DOM node instead of re-rendering
+        // the children. We have to put a placeholder node that will get
+        // replaced out if we find that the DOM node has already been rendered
+        var condition = input['if'];
+        if (condition !== false) {
+            var existingEl = document.getElementById(id);
+            if (existingEl) {
+                var widgetsContext = widgets.getWidgetsContext(out);
+                var bodyOnly = input.bodyOnly === true;
+                // Don't actually render anything since the element is already in the DOM,
+                // but keep track that the node is being preserved so that we can ignore
+                // it while transforming the old DOM
+
+                if (!bodyOnly) {
+                    var tagName = existingEl.tagName;
+                    // If we are preserving the entire DOM node (not just the body)
+                    // then that means that we have need to render a placeholder to
+                    // mark the target location. We can then replace the placeholder
+                    // node with the existing DOM node
+                    out.beginElement(tagName, { id: id });
+                    out.endElement();
+                }
+
+                widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
+                return;
+            }
+        }
+    }
+
+    if (input.renderBody) {
+        input.renderBody(out);
+    }
+};

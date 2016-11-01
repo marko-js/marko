@@ -1,0 +1,5 @@
+<div w-bind>
+	<input w-onMouseMove=(false && "handleMouseMove") w-id="inputWithoutHandler" type="button">
+	<input w-onMouseMove=(true && 'handleMouseMove') w-id="inputWithHandler" type="button">
+	<input w-onMouseMove='handleMouseMove' w-id="inputWithLiteralHandler" type="button">
+</div>

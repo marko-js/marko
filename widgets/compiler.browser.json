@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "require: ./taglib/*.js",
+        "require: ./taglib/TransformHelper/*.js"
+    ]
+}

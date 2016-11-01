@@ -1,0 +1,10 @@
+sudo: false
+node_js:
+- "4"
+- "5"
+- "6"
+- "7"
+language: node_js
+# Use latest version of npm
+before_install: npm install -g npm@*
+script: "npm test"
