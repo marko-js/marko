@@ -40,10 +40,27 @@ module.exports = function handleWidgetBind() {
     var widgetAttrs = {};
 
     if (bindAttrValue == null) {
-        modulePath = this.getDefaultWidgetModule();
-        if (!modulePath) {
-            this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
-            return;
+        let component = getInlineComponent(context);
+        if(component) {
+            widgetAttrs.type = context.addStaticVar('__widgetType', builder.literal({
+                name: builder.literal(path.basename(context.dirname)),
+                def: builder.functionDeclaration(null, [] /* params */, [
+                    builder.returnStatement(
+                        builder.memberExpression('module', 'exports')
+                    )
+                ])
+            }));
+            context.on('beforeGenerateCode:TemplateRoot', function(root) {
+                root.node.generateExports = function(template) {
+                    return buildExport(builder, component, template);
+                };
+            });
+        } else {
+            modulePath = this.getDefaultWidgetModule();
+            if (!modulePath) {
+                this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
+                return;
+            }
         }
     } else if (bindAttr.isLiteralValue()) {
         modulePath = bindAttr.literalValue; // The value of the literal value
@@ -74,9 +91,10 @@ module.exports = function handleWidgetBind() {
                     )
                 ])
             }));
-            this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
+            context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    return buildExport(builder, modulePath, template);
+                    var component = builder.require(builder.literal(modulePath));
+                    return buildExport(builder, component, template);
                 };
             });
         } else {
@@ -114,13 +132,26 @@ module.exports = function handleWidgetBind() {
     });
 };
 
-function buildExport(builder, modulePath, template) {
+function getInlineComponent(context) {
+    var builder = context.builder;
+    var component;
+    context.root.body.array.some(node => {
+        if(node.tagName === 'script' && node.getAttribute('component')) {
+            node.detach();
+            component = builder.selfInvokingFunction([
+                builder.code(node.body.array[0].argument.value)
+            ]);
+            return true;
+        }
+    });
+    return component;
+}
+
+function buildExport(builder, component, template) {
     return [
         builder.assignment(
             builder.var('component'),
-            builder.require(
-                builder.literal(modulePath)
-            )
+            component
         ),
         builder.assignment(
             builder.var('template'),
