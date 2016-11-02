@@ -20,8 +20,7 @@ var helpers;
     }
 };
 
-var asyncVdomBuilder = require('async-vdom-builder');
-var AsyncVDOMBuilder = asyncVdomBuilder.AsyncVDOMBuilder;
+var AsyncVDOMBuilder = require('./AsyncVDOMBuilder');
 
 function createOut(globalData) {
     return new AsyncVDOMBuilder(globalData);

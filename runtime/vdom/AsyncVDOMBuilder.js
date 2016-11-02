@@ -57,7 +57,7 @@ var range;
 
 var proto = AsyncVDOMBuilder.prototype = {
     isAsyncVDOMBuilder: true,
-    
+
     element: function(name, attrs, childCount) {
         var element = createElement(name, attrs, childCount);
 
@@ -420,4 +420,4 @@ proto.ee = proto.endElement;
 proto.t = proto.text;
 proto.h = proto.write = proto.html;
 
-exports.AsyncVDOMBuilder = AsyncVDOMBuilder;
+module.exports = AsyncVDOMBuilder;

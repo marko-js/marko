@@ -1,4 +1,4 @@
-var AsyncVDOMBuilder = require('../').AsyncVDOMBuilder;
+var AsyncVDOMBuilder = require('../runtime/vdom/AsyncVDOMBuilder');
 var createElement = require('marko-vdom').createElement;
 var expect = require('chai').expect;
 
@@ -45,7 +45,7 @@ it('async flush', function(done) {
     var out = new AsyncVDOMBuilder();
     out.on('update', function(tree) {
         expect(tree.childNodes.length).to.equal(1);
-    })
+    });
     out.once('finish', function(tree) {
         expect(tree.childNodes.length).to.equal(2);
         done();
