@@ -1,0 +1,8 @@
+sudo: false
+node_js:
+- "4"
+- "5"
+- "6"
+language: node_js
+script: "npm run test-coverage"
+after_success: "npm run coveralls"

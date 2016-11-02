@@ -1,0 +1,13 @@
+/work
+/build
+/.idea/
+/npm-debug.log
+/node_modules
+/*.sublime-workspace
+*.orig
+.DS_Store
+.vscode
+coverage
+.nvmrc
+~*
+/test
