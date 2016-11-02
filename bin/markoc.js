@@ -55,7 +55,7 @@ function relPath(path) {
     }
 }
 
-var args = require('raptor-args').createParser({
+var args = require('argly').createParser({
         '--help': {
             type: 'boolean',
             description: 'Show this help message'

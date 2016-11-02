@@ -15,7 +15,7 @@
  */
 var bubbleEventsLookup = {};
 
-require('../../src/bubble').forEach(function(eventType) {
+require('../../bubble').forEach(function(eventType) {
     bubbleEventsLookup[eventType] = true;
 });
 
@@ -53,7 +53,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod) {
         // The event handler method is conditional and it may resolve to a null method name. Therefore,
         // we need to use a runtime helper to set the value correctly.
         var markoWidgetsEventFuncId = transformHelper.context.importModule('markoWidgets_event',
-            transformHelper.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/event'));
+            transformHelper.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/event'));
 
         attrValue = builder.functionCall(markoWidgetsEventFuncId, [
                 targetMethod,

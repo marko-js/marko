@@ -54,7 +54,7 @@ module.exports = function handleWidgetBody() {
         widgetTagNode.setAttributeValue('body', this.getNestedIdExpression());
     }
 
-    let widgetBodyVar = context.importModule('__widgetBody', this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/widgetBody'));
+    let widgetBodyVar = context.importModule('__widgetBody', this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/widgetBody'));
 
     let widgetBodyFunctionCall = builder.functionCall(widgetBodyVar, [
         builder.identifierOut(),

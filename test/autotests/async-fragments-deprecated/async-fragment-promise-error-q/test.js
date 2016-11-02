@@ -1,9 +1,9 @@
-var deferred = require('raptor-promises').defer();
-
-setTimeout(function() {
-    deferred.resolve({});
-}, 200);
+var promise = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        resolve({});
+    }, 100);
+});
 
 exports.templateData = {
-    promiseData: deferred.promise
+    promiseData: promise
 };

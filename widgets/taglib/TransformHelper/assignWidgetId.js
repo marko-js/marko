@@ -39,7 +39,7 @@ module.exports = function assignWidgetId(isRepeated) {
             context.setFlag('hasWidgetVar');
 
             var getCurrentWidgetVar = context.importModule('__getCurrentWidget',
-                this.getMarkoWidgetsRequirePath('marko-widgets/taglib/helpers/getCurrentWidget'));
+                this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/getCurrentWidget'));
 
             context.addVar('widget', builder.functionCall(getCurrentWidgetVar, [builder.identifierOut()]));
         }

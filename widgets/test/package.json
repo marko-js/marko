@@ -1,9 +1,0 @@
-{
-    "name": "marko-widgets-test",
-    "version": "1.0.0",
-    "dependencies": {
-        "lasso": "*",
-        "marko-widgets": "*",
-        "browser-refresh-taglib": "*"
-    }
-}

@@ -7,7 +7,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
     expect(markoCompiler.config.writeToDisk).to.equal(true);
     expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
-    require('~/node-require').install({
+    require('marko/node-require').install({
         compilerOptions: {
             writeToDisk: false,
             preserveWhitespace: false

@@ -92,7 +92,7 @@ class WidgetArgs {
         var shouldProvideScope = id || customEvents;
 
         let widgetArgsVar = context.addStaticVar('__widgetArgs',
-            'require("' + getRequirePath('marko-widgets/taglib/helpers/widgetArgs', context) + '")');
+            'require("' + getRequirePath('marko/widgets/taglib/helpers/widgetArgs', context) + '")');
 
         var functionCallArgs = [
             builder.identifier('out')

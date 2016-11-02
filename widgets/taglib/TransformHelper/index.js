@@ -87,7 +87,7 @@ class TransformHelper {
 
     get markoWidgetsVar() {
         if (!this._markoWidgetsVar) {
-            this._markoWidgetsVar = this.context.importModule('__markoWidgets', this.getMarkoWidgetsRequirePath('marko-widgets'));
+            this._markoWidgetsVar = this.context.importModule('__markoWidgets', this.getMarkoWidgetsRequirePath('marko/widgets'));
         }
 
         return this._markoWidgetsVar;

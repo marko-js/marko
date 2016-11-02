@@ -1,4 +1,5 @@
 [
+    "_lasso-resources-root",
     "*",
     "a",
     "assign",
@@ -13,6 +14,7 @@
     "await-reorderer",
     "await-timeout",
     "bar",
+    "browser-refresh",
     "cached-fragment",
     "else",
     "else-if",
@@ -23,7 +25,14 @@
     "include",
     "include-html",
     "include-text",
+    "init-widgets",
     "invoke",
+    "lasso-body",
+    "lasso-head",
+    "lasso-img",
+    "lasso-page",
+    "lasso-resource",
+    "lasso-slot",
     "layout-placeholder",
     "layout-put",
     "layout-use",
@@ -36,5 +45,8 @@
     "textarea",
     "unless",
     "var",
-    "while"
+    "w-preserve",
+    "w-widget",
+    "while",
+    "widget-types"
 ]

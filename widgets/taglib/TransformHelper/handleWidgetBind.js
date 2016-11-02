@@ -134,7 +134,7 @@ function buildExport(builder, modulePath, template) {
             builder.functionCall(
                 builder.memberExpression(
                     builder.require(
-                        builder.literal('marko-widgets')
+                        builder.literal('marko/widgets')
                     ),
                     builder.identifier('c')
                 ),

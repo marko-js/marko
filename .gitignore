@@ -10,3 +10,4 @@
 coverage
 .nvmrc
 ~*
+/.cache

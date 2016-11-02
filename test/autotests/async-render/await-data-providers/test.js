@@ -1,14 +1,12 @@
 exports.templateData = {
     sharedData: function (args, done) {
-        var deferred = require('raptor-promises').defer();
-
-        setTimeout(function() {
-            deferred.resolve({
-                name: 'testSharedData'
-            });
-        }, 100);
-
-        return deferred.promise;
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve({
+                    name: 'testSharedData'
+                });
+            }, 100);
+        });
     },
     contextData: function (args, done) {
         setTimeout(function() {

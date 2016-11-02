@@ -18,16 +18,20 @@ exports.check = function(markoCompiler, expect) {
         transformers.push(transformer);
     });
 
-    expect(transformers.length).to.equal(2);
+    expect(transformers.length).to.equal(4);
     expect(transformers[0].path.indexOf('foo')).to.not.equal(-1);
     expect(transformers[1].path.indexOf('core-transformer')).to.not.equal(-1);
+    expect(transformers[2].path.indexOf('lasso-nonce-attr-transformer')).to.not.equal(-1);
+    expect(transformers[3].path.indexOf('widgets-transformer')).to.not.equal(-1);
 
     transformers = [];
     lookup.forEachTagTransformer('transform-bar', function(transformer) {
         transformers.push(transformer);
     });
 
-    expect(transformers.length).to.equal(2);
+    expect(transformers.length).to.equal(4);
     expect(transformers[0].path.indexOf('core-transformer')).to.not.equal(-1);
     expect(transformers[1].path.indexOf('bar')).to.not.equal(-1);
+    expect(transformers[2].path.indexOf('lasso-nonce-attr-transformer')).to.not.equal(-1);
+    expect(transformers[3].path.indexOf('widgets-transformer')).to.not.equal(-1);
 };

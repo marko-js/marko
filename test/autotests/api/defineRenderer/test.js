@@ -11,6 +11,6 @@ exports.check = function(marko, markoCompiler, expect, done) {
     });
 
     var renderResult = renderer.render({ firstName: 'John', lastName: 'Doe' });
-    expect(renderResult.html).to.equal('<div>Hello John Doe!</div>');
+    expect(renderResult.getOutput()).to.equal('<div>Hello John Doe!</div>');
     done();
 };

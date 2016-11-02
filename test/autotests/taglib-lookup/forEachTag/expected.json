@@ -2,6 +2,14 @@
     "*",
     "foo",
     "bar",
+    "lasso-page",
+    "lasso-slot",
+    "lasso-head",
+    "lasso-body",
+    "lasso-img",
+    "_lasso-resources-root",
+    "lasso-resource",
+    "browser-refresh",
     "assign",
     "else",
     "else-if",
@@ -35,5 +43,9 @@
     "async-fragment-placeholder",
     "async-fragment-timeout",
     "async-fragment-error",
-    "cached-fragment"
+    "cached-fragment",
+    "w-widget",
+    "init-widgets",
+    "w-preserve",
+    "widget-types"
 ]
