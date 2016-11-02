@@ -193,13 +193,22 @@ function initWidget(
         markoWidgets.emit('marko-widgets/initWidget', initEventArgs);
 
         widget._emitLifecycleEvent('beforeInit', initEventArgs);
+        copyConfigToWidget(widget, config);
         widget.initWidget(config);
         widget._emitLifecycleEvent('afterInit', initEventArgs);
 
         widget._emitLifecycleEvent('render', { firstRender: true });
+
+        widget._emitLifecycleEvent('mount');
     }
 
     return widget;
+}
+
+function copyConfigToWidget(widget, config) {
+    for(var key in config) {
+        widget[key] = config[key];
+    }
 }
 
 function initWidgetFromEl(el, state, config) {

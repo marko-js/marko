@@ -9,10 +9,11 @@ module.exports = function defineRenderer(def) {
     }
 
     var template = def.template;
-    var getInitialProps = def.getInitialProps;
+    var onInput = def.onInput;
+    var getInitialProps = def.getInitialProps; //deprecate
     var getTemplateData = def.getTemplateData;
-    var getInitialState = def.getInitialState;
-    var getWidgetConfig = def.getWidgetConfig;
+    var getInitialState = def.getInitialState; //deprecate
+    var getWidgetConfig = def.getWidgetConfig; //deprecate
     var getInitialBody = def.getInitialBody;
     var extendWidget = def.extendWidget;
 
@@ -43,6 +44,7 @@ module.exports = function defineRenderer(def) {
             }
 
             var widgetState;
+            var widgetConfig;
 
             if (getInitialState) {
                 // This is a state-ful widget. If this is a rerender then the "input"
@@ -72,6 +74,14 @@ module.exports = function defineRenderer(def) {
                         newProps = null;
                     }
                 }
+            }
+
+            if (onInput) {
+                var lightweightWidget = Object.create(def);
+                lightweightWidget.onInput(newProps);
+                widgetState = lightweightWidget.state;
+                widgetConfig = lightweightWidget;
+                delete widgetConfig.state;
             }
 
             if (!widgetState) {
@@ -114,6 +124,12 @@ module.exports = function defineRenderer(def) {
                 // If we have widget state then pass it to the template
                 // so that it is available to the widget tag
                 templateData.widgetState = widgetState;
+            }
+
+            if (widgetConfig) {
+                // If we have widget config then pass it to the template
+                // so that it is available to the widget tag
+                templateData.widgetConfig = widgetConfig;
             }
 
             if (newProps) {

@@ -40,6 +40,7 @@ var lifecycleEventMethods = {
     'destroy': 'onDestroy',
     'beforeUpdate': 'onBeforeUpdate',
     'update': 'onUpdate',
+    'mount': 'onMount',
     'render': 'onRender',
     'beforeInit': 'onBeforeInit',
     'afterInit': 'onAfterInit'
@@ -390,6 +391,15 @@ Widget.prototype = widgetProto = {
             }
             var newState = this.getInitialState(newProps);
             this.replaceState(newState);
+            return;
+        }
+
+        if (this.onInput) {
+            var prevState = this.state;
+            this.onInput(newProps || {});
+            if(this.state !== prevState) {
+                this.replaceState(this.state);
+            }
             return;
         }
 
