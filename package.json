@@ -14,7 +14,7 @@
   "scripts": {
     "test": "npm run mocha -s && npm run test-widgets -s && npm run jshint -s",
     "mocha": "mocha --ui bdd --reporter spec ./test/",
-    "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
+    "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run test-widgets && npm run jshint",
     "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
     "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
     "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
