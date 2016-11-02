@@ -19,8 +19,8 @@ var helpers;
     }
 };
 
-var asyncWriter = require('async-writer');
-var AsyncStream = asyncWriter.AsyncStream;
+
+var AsyncStream = require('./AsyncStream');
 
 function createOut(globalData) {
     return new AsyncStream(globalData);
@@ -36,7 +36,7 @@ exports.AsyncStream = AsyncStream;
 function Template(path, func, options) {
     this.path = path;
     this._ = func;
-    this._shouldBuffer = !options || options.shouldBuffer !=- false;
+    this._shouldBuffer = !options || options.shouldBuffer !== false;
 }
 
 Template.prototype = {
@@ -168,7 +168,6 @@ exports.Template = Template;
 helpers = require('./helpers');
 exports.helpers = helpers;
 
-
+exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;
 
 require('../')._setRuntime(exports);
-

@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 var fsReadOptions = { encoding: 'utf8' };
-var asyncWriter = require('../');
+var AsyncStream = require('../runtime/html/AsyncStream');
 
 /* DEBUG INFO:
    ===========
@@ -14,6 +14,22 @@ var asyncWriter = require('../');
    Uncomment the following statement: */
 
 // var asyncWriter = require('../debug');
+
+function createAsyncStream(options) {
+    if (typeof options.write === 'function') {
+        return new AsyncStream(null, options);
+    } else if (typeof options === 'object') {
+        var name = options.name;
+        var globalData = options.global;
+        var out = new AsyncStream(globalData);
+        if (name) {
+            out.name = name;
+        }
+        return out;
+    } else {
+        return new AsyncStream();
+    }
+}
 
 describe('async-writer' , function() {
 
@@ -28,7 +44,7 @@ describe('async-writer' , function() {
     });
 
     it('should render a series of sync calls correctly', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
         out.write('2');
         out.write('3');
@@ -42,7 +58,7 @@ describe('async-writer' , function() {
     });
 
     it('should render a series of sync and async calls correctly', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -68,7 +84,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to complete synchronously', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -87,7 +103,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow the async callback to provide data', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -105,7 +121,7 @@ describe('async-writer' , function() {
     });
 
     it('should handle timeouts correctly', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         var errors = [];
         out.on('error', function(e) {
             errors.push(e);
@@ -130,7 +146,7 @@ describe('async-writer' , function() {
     });
 
     it('should render nested async calls correctly', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync();
@@ -178,7 +194,7 @@ describe('async-writer' , function() {
     });
 
     it('should handle odd execution ordering', function(done) {
-        var outA = asyncWriter.create({ name:'outA' });
+        var outA = createAsyncStream({ name:'outA' });
 
         outA.on('finish', function() {
             var output = outA.getOutput();
@@ -212,7 +228,7 @@ describe('async-writer' , function() {
     });
 
     it('should handle sync errors correctly', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         var errors = [];
         out.on('error', function(e) {
             errors.push(e);
@@ -236,7 +252,7 @@ describe('async-writer' , function() {
 
     it('should support chaining', function(done) {
         var errors = [];
-        var out = asyncWriter.create()
+        var out = new AsyncStream()
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -268,7 +284,7 @@ describe('async-writer' , function() {
         );
 
         var errors = [];
-        var out = asyncWriter.create(through2)
+        var out = createAsyncStream(through2)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -300,7 +316,7 @@ describe('async-writer' , function() {
         );
 
         var errors = [];
-        var out = asyncWriter.create(through)
+        var out = createAsyncStream(through)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -336,7 +352,7 @@ describe('async-writer' , function() {
         });
 
 
-        out = asyncWriter.create(out)
+        out = createAsyncStream(out)
             .on('error', function(e) {
                 errors.push(e);
             })
@@ -356,12 +372,12 @@ describe('async-writer' , function() {
 
     it('should support piping to an async writer', function(done) {
 
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync();
 
-        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), fsReadOptions);
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'fixtures/AsyncStream/hello.txt'), fsReadOptions);
         helloReadStream.pipe(asyncOut);
 
         out.write('2');
@@ -391,12 +407,12 @@ describe('async-writer' , function() {
                 done(e);
             });
 
-        out = asyncWriter.create(through);
+        out = createAsyncStream(through);
         out.write('1');
 
         var asyncOut = out.beginAsync();
 
-        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'hello.txt'), fsReadOptions);
+        var helloReadStream = fs.createReadStream(nodePath.join(__dirname, 'fixtures/AsyncStream/hello.txt'), fsReadOptions);
         helloReadStream.pipe(asyncOut);
 
         out.write('2');
@@ -411,7 +427,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to flush last', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync({last: true});
@@ -431,7 +447,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow an async fragment to flush last asynchronously', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut = out.beginAsync({last: true});
@@ -467,7 +483,7 @@ describe('async-writer' , function() {
             done();
         });
 
-        var out = asyncWriter.create(passthrough);
+        var out = createAsyncStream(passthrough);
         out.write('hello');
         out.error('test');
     });
@@ -477,7 +493,7 @@ describe('async-writer' , function() {
         var PassThrough = stream.PassThrough;
         var passthrough = new PassThrough();
 
-        var out = asyncWriter.create(passthrough);
+        var out = createAsyncStream(passthrough);
         out.write('hello');
         try {
             out.error('test');
@@ -489,7 +505,7 @@ describe('async-writer' , function() {
     });
 
     it('should allow multiple onLast calls', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -548,7 +564,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = asyncWriter.create(through);
+        var out = createAsyncStream(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -582,7 +598,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = asyncWriter.create(through);
+        var out = createAsyncStream(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync({ timeout: 50});
@@ -621,7 +637,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = asyncWriter.create(through);
+        var out = createAsyncStream(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -662,7 +678,7 @@ describe('async-writer' , function() {
                 done();
             });
 
-        var out = asyncWriter.create(through);
+        var out = createAsyncStream(through);
         out.write('1');
 
         var asyncOut1 = out.beginAsync();
@@ -686,8 +702,8 @@ describe('async-writer' , function() {
     it('should track finished correctly', function(done) {
         var myGlobal = {};
 
-        var out1 = asyncWriter.create(null, {global: myGlobal});
-        var out2 = asyncWriter.create(null, {global: myGlobal});
+        var out1 = createAsyncStream({global: myGlobal});
+        var out2 = createAsyncStream({global: myGlobal});
 
         function handleFinished() {
             if (out1.data.__finishedFlag && out2.data.__finishedFlag) {
@@ -723,7 +739,7 @@ describe('async-writer' , function() {
     });
 
     it('should end correctly if top-level is ended asynchronously', function(done) {
-        var out = asyncWriter.create();
+        var out = new AsyncStream();
         out.name = 'outer';
 
         out.on('finish', function() {
@@ -748,7 +764,7 @@ describe('async-writer' , function() {
     });
 
     it('should end correctly if top-level is ended asynchronously when providing custom globals', function(done) {
-        var out = asyncWriter.create(null, {global: { foo: 'bar' }});
+        var out = createAsyncStream({global: { foo: 'bar' }});
         out.name = 'outer';
 
         out.on('finish', function() {
@@ -783,7 +799,7 @@ describe('async-writer' , function() {
             }
         );
 
-        var out = asyncWriter.create(stream);
+        var out = createAsyncStream(stream);
         expect(out.stream).to.equal(stream);
 
         var asyncOut1 = out.beginAsync();

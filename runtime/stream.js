@@ -9,13 +9,13 @@ line to your app:
 
 */
 var stream = require('stream');
-var asyncWriter = require('async-writer');
+var AsyncStream = require('./html/AsyncStream');
 
 function Readable(template, data, options) {
    Readable.$super.call(this);
    this._t = template;
    this._d = data;
-   this._options = options;
+   this._shouldBuffer = !options || options.shouldBuffer !== false;
    this._rendered = false;
 }
 
@@ -37,8 +37,9 @@ Readable.prototype = {
 
        var template = this._t;
        var data = this._d;
-
-       var out = asyncWriter.create(this, this._options);
+       var globalData = data && data.$global;
+       var shouldBuffer = this._shouldBuffer;
+       var out = new AsyncStream(globalData, this, null, shouldBuffer);
        template.render(data, out);
        out.end();
    }

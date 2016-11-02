@@ -38,7 +38,6 @@
     "argly": "^1.0.0",
     "app-module-path": "^1.0.5",
     "async-vdom-builder": "^1.0.0",
-    "async-writer": "^3.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "deresolve": "^1.0.0",
@@ -91,7 +90,8 @@
     "phantomjs-prebuilt": "^2.1.13",
     "request": "^2.72.0",
     "require-self-ref": "^2.0.1",
-    "through": "^2.3.4"
+    "through": "^2.3.4",
+    "through2": "^2.0.1"
   },
   "license": "Apache-2.0",
   "bin": {
