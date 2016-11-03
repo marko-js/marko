@@ -1,6 +1,3 @@
-var EventEmitter = require('events').EventEmitter;
-exports = module.exports = new EventEmitter();
-
 var dom = require('./dom');
 var ready = dom.ready;
 var EMPTY_OBJ = {};
