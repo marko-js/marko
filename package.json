@@ -56,7 +56,6 @@
     "lasso-package-root": "^1.0.0",
     "listener-tracker": "^1.0.2",
     "marko-html-util": "^1.0.0",
-    "marko-vdom": "^1.0.0",
     "minimatch": "^3.0.2",
     "morphdom": "^2.2.0",
     "object-assign": "^4.1.0",
