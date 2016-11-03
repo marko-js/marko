@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 var inherit = require('raptor-util/inherit');
-var dom = require('marko-dom');
+var dom = require('./dom');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
 var listenerTracker = require('listener-tracker');

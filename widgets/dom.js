@@ -1,1 +1,1 @@
-module.exports = require('marko-dom');
+module.exports = require('../runtime/dom');

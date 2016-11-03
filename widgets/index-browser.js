@@ -1,19 +1,20 @@
 var EventEmitter = require('events').EventEmitter;
 exports = module.exports = new EventEmitter();
 
-var dom = require('marko-dom');
+var dom = require('./dom');
 var ready = dom.ready;
 var EMPTY_OBJ = {};
 var Widget = require('./Widget');
 var initWidgets = require('./init-widgets');
 var updateManager = require('./update-manager');
+var events = require('../runtime/events');
 
 var WidgetsContext = exports.WidgetsContext = require('./WidgetsContext');
 exports.getWidgetsContext = WidgetsContext.getWidgetsContext;
 exports.Widget = Widget;
 exports.ready = ready;
 exports.onInitWidget = function(listener) {
-    exports.on('initWidget', listener);
+    events.on('initWidget', listener);
 };
 exports.attrs = function() {
     return EMPTY_OBJ;
@@ -40,7 +41,7 @@ exports.initAllWidgets = function() {
 
 // Subscribe to DOM manipulate events to handle creating and destroying widgets
 
-dom.on('beforeRemove', function(eventArgs) {
+events.on('dom/beforeRemove', function(eventArgs) {
         var el = eventArgs.el;
         var widget = el.id ? getWidgetForEl(el) : null;
         if (widget) {
@@ -50,7 +51,7 @@ dom.on('beforeRemove', function(eventArgs) {
             });
         }
     })
-    .on('renderedToDOM', function(eventArgs) {
+    .on('mountNode', function(eventArgs) {
         var out = eventArgs.out;
         var widgetsContext = out.global.widgets;
         if (widgetsContext) {

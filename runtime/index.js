@@ -1,5 +1,4 @@
 'use strict';
-
 var runtime;
 
 function setRuntime(_runtime) {
@@ -16,3 +15,4 @@ function createOut(globalData) {
 
 exports.createOut = createOut;
 exports.load = load;
+exports.events = require('./events');

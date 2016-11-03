@@ -1,6 +1,4 @@
-var EventEmitter = require('events').EventEmitter;
-
-exports = module.exports = new EventEmitter();
+var events = require('./events');
 
 function getNode(el) {
     if (typeof el === 'string') {
@@ -14,7 +12,7 @@ function getNode(el) {
 }
 
 function _beforeRemove(referenceEl) {
-    exports.emit('dom/beforeRemove', {
+    events.emit('dom/beforeRemove', {
         el: referenceEl
     });
 }
