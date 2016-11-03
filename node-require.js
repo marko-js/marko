@@ -76,7 +76,7 @@ function getLoadedTemplate(path) {
     return cached && cached.exports.render ? cached.exports : undefined;
 }
 
-exports.install = function(options) {
+ function install(options) {
     options = options || {};
 
     var compilerOptions = options.compilerOptions;
@@ -120,4 +120,8 @@ exports.install = function(options) {
         // source code that is being loaded. This allows stack traces to match up.
         module._compile(compiledSrc, targetFile);
     };
-};
+}
+
+install();
+
+exports.install = install;

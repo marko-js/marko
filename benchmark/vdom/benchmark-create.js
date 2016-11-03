@@ -1,4 +1,4 @@
-window.registerBenchmark('create', function(app) {
+module.exports = function(app) {
     var Suite = window.Benchmark.Suite;
 
     var names = [
@@ -53,4 +53,4 @@ window.registerBenchmark('create', function(app) {
 
         return promiseChain;
     };
-});
+};

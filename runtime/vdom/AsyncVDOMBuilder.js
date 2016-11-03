@@ -1,11 +1,12 @@
 var EventEmitter = require('events').EventEmitter;
 var dom = require('marko-dom');
-var markoVdom = require('marko-vdom');
-var createElement = markoVdom.createElement;
-var createDocumentFragment = markoVdom.createDocumentFragment;
-var createComment = markoVdom.createComment;
-var createText = markoVdom.createText;
-var virtualize = require('marko-vdom/virtualize');
+
+var HTMLElement = require('./HTMLElement');
+var DocumentFragment = require('./DocumentFragment');
+var Comment = require('./Comment');
+var Text = require('./Text');
+
+var virtualize = require('./virtualize');
 var specialHtmlRegexp = /[&<]/;
 var defaultDocument = typeof document != 'undefined' && document;
 
@@ -36,7 +37,7 @@ function State(tree) {
 
 function AsyncVDOMBuilder(globalData, parentNode, state) {
     if (!parentNode) {
-        parentNode = createDocumentFragment();
+        parentNode = new DocumentFragment();
     }
 
     if (state) {
@@ -59,7 +60,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     isAsyncVDOMBuilder: true,
 
     element: function(name, attrs, childCount) {
-        var element = createElement(name, attrs, childCount);
+        var element = new HTMLElement(name, attrs, childCount);
 
         var parent = this._parent;
 
@@ -91,14 +92,14 @@ var proto = AsyncVDOMBuilder.prototype = {
             if (lastChild && lastChild.nodeType === 3) {
                 lastChild.nodeValue += text;
             } else {
-                parent.appendChild(createText(text));
+                parent.appendChild(new Text(text));
             }
         }
         return this;
     },
 
     comment: function(comment) {
-        return this.node(createComment(comment));
+        return this.node(new Comment(comment));
     },
 
     html: function(html) {
@@ -125,7 +126,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
             var curChild = container.firstChild;
             if (curChild) {
-                vdomFragment = createDocumentFragment();
+                vdomFragment = new DocumentFragment();
                 while(curChild) {
                     vdomFragment.appendChild(virtualize(curChild));
                     curChild = curChild.nextSibling;
@@ -141,7 +142,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     beginElement: function(name, attrs) {
-        var element = createElement(name, attrs);
+        var element = new HTMLElement(name, attrs);
         var parent = this._parent;
         if (parent) {
             parent.appendChild(element);

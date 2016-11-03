@@ -1,8 +1,11 @@
+<lasso-page package-path="./browser.json"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>marko-vdom benchmarks</title>
+    <lasso-head/>
 </head>
 <body>
     <button type="button" data-benchmark="walk">
@@ -90,12 +93,6 @@
             </footer>
         </div>
     </section>
-    <script src="https://unpkg.com/react@15.3.1/dist/react.min.js"></script>
-    <script src="../dist/marko-vdom-umd.js"></script>
-    <script src="../node_modules/lodash/lodash.js"></script>
-    <script src="../node_modules/benchmark/benchmark.js"></script>
-    <script src="./app.js"></script>
-    <script src="./benchmark-walk.js"></script>
-    <script src="./benchmark-create.js"></script>
+    <lasso-body/>
 </body>
 </html>

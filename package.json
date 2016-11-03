@@ -5,7 +5,15 @@
     "templating",
     "template",
     "async",
-    "streaming"
+    "streaming",
+    "widgets",
+    "components",
+    "ui",
+    "vdom",
+    "dom",
+    "morphdom",
+    "virtual",
+    "virtual-dom"
   ],
   "repository": {
     "type": "git",
@@ -37,7 +45,6 @@
   "dependencies": {
     "argly": "^1.0.0",
     "app-module-path": "^1.0.5",
-    "async-vdom-builder": "^1.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "deresolve": "^1.0.0",
@@ -69,6 +76,7 @@
   },
   "devDependencies": {
     "async": "^0.9.0",
+    "benchmark": "^2.1.1",
     "bluebird": "^2.9.30",
     "browser-refresh": "^1.6.0",
     "browser-refresh-taglib": "^1.1.0",
@@ -90,6 +98,7 @@
     "phantomjs-prebuilt": "^2.1.13",
     "request": "^2.72.0",
     "require-self-ref": "^2.0.1",
+    "serve-static": "^1.11.1",
     "through": "^2.3.4",
     "through2": "^2.0.1"
   },

@@ -2,8 +2,10 @@
 /scratch.js
 *.generated.js
 
-actual.js
-actual.html
 *.actual.js
 *.actual.html
 /generated
+
+*-actual*
+actual.*
+actualized-expected.html

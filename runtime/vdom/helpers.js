@@ -16,15 +16,20 @@
 
 'use strict';
 
-var markoVDOM = require('marko-vdom');
+var HTMLElement = require('./HTMLElement');
+var Text = require('./Text');
 var commonHelpers = require('../helpers');
 var extend = require('raptor-util/extend');
 
 var classList = commonHelpers.cl;
 
 module.exports = extend({
-    e: markoVDOM.createElement,
-    t: markoVDOM.createText,
+    e: function(tagName, attrs, childCount, constId) {
+        return new HTMLElement(tagName, attrs, childCount, constId);
+    },
+    t: function(value) {
+        return new Text(value);
+    },
     const: function(id) {
         var i=0;
         return function() {

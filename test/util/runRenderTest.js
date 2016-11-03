@@ -1,5 +1,4 @@
 'use strict';
-
 const path = require('path');
 const fs = require('fs');
 const marko = require('marko');
@@ -7,11 +6,10 @@ const fsExtra = require('fs-extra');
 const domToHTML = require('./domToHTML');
 const domToString = require('./domToString');
 const jsdom = require("jsdom").jsdom;
-const markoVDOM = require('../../vdom');
 const expect = require('chai').expect;
 
 const defaultDocument = jsdom('<html><body></body></html>');
-markoVDOM.setDocument(defaultDocument); // We need this to parse HTML fragments on the server
+require('../../runtime/vdom').setDocument(defaultDocument); // We need this to parse HTML fragments on the server
 
 
 function createAsyncVerifier(main, helpers, out) {

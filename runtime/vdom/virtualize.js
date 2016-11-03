@@ -1,9 +1,7 @@
-var markoVDOM = require('./');
-
-var createElement = markoVDOM.createElement;
-var createText = markoVDOM.createText;
-var createComment = markoVDOM.createComment;
-var createDocumentFragment = markoVDOM.createDocumentFragment;
+var HTMLElement = require('./HTMLElement');
+var DocumentFragment = require('./DocumentFragment');
+var Comment = require('./Comment');
+var Text = require('./Text');
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
@@ -40,7 +38,7 @@ function virtualize(node) {
             }
         }
 
-        var vdomEL = createElement(node.nodeName, attrs, childCount);
+        var vdomEL = new HTMLElement(node.nodeName, attrs, childCount);
 
         if (vdomEL._isTextArea) {
             vdomEL.value = node.value;
@@ -50,11 +48,11 @@ function virtualize(node) {
 
         return vdomEL;
     } else if (node.nodeType === 3) { // Text node
-        return createText(node.nodeValue);
+        return new Text(node.nodeValue);
     } else if (node.nodeType === 8) { // Text node
-        return createComment(node.nodeValue);
+        return new Comment(node.nodeValue);
     } else if (node.nodeType === 11) { // DocumentFragment node
-        var vdomDocFragment = createDocumentFragment();
+        var vdomDocFragment = new DocumentFragment();
         virtualizeChildNodes(node, vdomDocFragment);
     }
 }

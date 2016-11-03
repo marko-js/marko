@@ -1,6 +1,6 @@
-window.registerBenchmark('walk', function(app) {
+module.exports = function(app) {
     var Suite = window.Benchmark.Suite;
-    var MarkoVDOM = window.MarkoVDOM;
+    var MarkoVDOM = app.vdom;
 
     var suite = new Suite('walk');
 
@@ -91,4 +91,4 @@ window.registerBenchmark('walk', function(app) {
     return function() {
         return app.runSuite(suite);
     };
-});
+};

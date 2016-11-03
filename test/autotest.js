@@ -52,7 +52,11 @@ function autoTest(name, dir, run, options, done) {
 
     var helpers = {
         compare(actual, prefix, suffix) {
-            if (arguments.length === 2) {
+            if (typeof prefix === 'object') {
+                var options = prefix;
+                prefix = options.prefix;
+                suffix = options.suffix;
+            } else if (arguments.length === 2) {
                 suffix = prefix;
                 prefix = null;
             }
