@@ -1,5 +1,5 @@
 var AsyncVDOMBuilder = require('../runtime/vdom/AsyncVDOMBuilder');
-var createElement = require('marko-vdom').createElement;
+var HTMLElement = require('../runtime/vdom/HTMLElement');
 var expect = require('chai').expect;
 
 it('sync', function() {
@@ -93,7 +93,7 @@ it('for loop', function(done) {
 });
 
 it('staticNode, text, comment', function(done) {
-    var staticNode = createElement('div', {}, 0, 'f891ea3');
+    var staticNode = new HTMLElement('div', {}, 0, 'f891ea3');
     var out = new AsyncVDOMBuilder();
 
     out.node(staticNode);
@@ -109,12 +109,12 @@ it('staticNode, text, comment', function(done) {
     });
 });
 
-it('should handle timeouts correctly');
-
-it('should handle sync errors correctly');
-
-it('should handle timeout errors correctly');
-
-it('should avoid writes after end');
-
-it('globals');
+// it('should handle timeouts correctly');
+//
+// it('should handle sync errors correctly');
+//
+// it('should handle timeout errors correctly');
+//
+// it('should avoid writes after end');
+//
+// it('globals');
