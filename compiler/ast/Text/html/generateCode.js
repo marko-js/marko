@@ -1,6 +1,6 @@
 'use strict';
 
-var escapeXml = require('marko-html-util/escapeXml');
+var escapeXml = require('../../../../runtime/html/escapeXml');
 var Literal = require('../..//Literal');
 
 module.exports = function(node, codegen) {

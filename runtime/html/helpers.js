@@ -1,7 +1,7 @@
 'use strict';
-var escapeXml = require('marko-html-util/escapeXml');
+var escapeXml = require('./escapeXml');
 var escapeXmlAttr = escapeXml.attr;
-var attr = require('marko-html-util/attr');
+var attr = require('./attr');
 var extend = require('raptor-util/extend');
 
 var STYLE_ATTR = 'style';

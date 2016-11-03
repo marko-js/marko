@@ -1,6 +1,6 @@
 'use strict';
 
-var escapeXml = require('marko-html-util/escapeXml');
+var escapeXml = require('../../runtime/html/escapeXml');
 var escapeXmlAttr = escapeXml.attr;
 
 var openTagOnly = {};

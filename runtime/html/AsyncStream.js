@@ -2,8 +2,8 @@
 var EventEmitter = require('events').EventEmitter;
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
-var attr = require('marko-html-util/attr');
-var escapeXml = require('marko-html-util/escapeXml');
+var attr = require('./attr');
+var escapeXml = require('./escapeXml');
 var extend = require('raptor-util/extend');
 
 var defaultDocument = typeof document != 'undefined' && document;

@@ -1,7 +1,7 @@
 'use strict';
 
-var attr = require('marko-html-util/attr');
-var escapeXmlAttr = require('marko-html-util/escapeXml').attr;
+var attr = require('../../../../runtime/html/attr');
+var escapeXmlAttr = require('../../../../runtime/html/escapeXml').attr;
 
 function isStringLiteral(node) {
     return node.type === 'Literal' && typeof node.value === 'string';
