@@ -33,7 +33,7 @@ var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
 
 
 var emit = EventEmitter.prototype.emit;
-var idRegExp = /^\#(\w+)( .*)?/;
+var idRegExp = /^\#(\S+)( .*)?/;
 
 var lifecycleEventMethods = {
     'beforeDestroy': 'onBeforeDestroy',
