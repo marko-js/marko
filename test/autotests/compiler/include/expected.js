@@ -1,10 +1,13 @@
-function create(__markoHelpers) {
-  var marko_loadTemplate = __markoHelpers.l,
-      target_template = marko_loadTemplate(require.resolve("./target.marko"));
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    target_template.render({}, out);
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_loadTemplate = marko_helpers.l,
+    target_template = marko_loadTemplate(require.resolve("./target.marko"));
+
+function render(data, out) {
+  target_template.render({}, out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

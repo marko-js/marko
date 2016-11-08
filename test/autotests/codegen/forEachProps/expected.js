@@ -1,11 +1,14 @@
-function create(__markoHelpers) {
-  var marko_forEachProp = __markoHelpers.fp;
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    marko_forEachProp(myObject, function(k, v) {
-      console.log("k:", k, "v:", v);
-    });
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_forEachProp = marko_helpers.fp;
+
+function render(data, out) {
+  marko_forEachProp(myObject, function(k, v) {
+    console.log("k:", k, "v:", v);
+  });
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

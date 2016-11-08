@@ -1,7 +1,9 @@
-function create(__markoHelpers) {
-  return function render(data, out) {
-    data.renderBody(out);
-  };
+var template = require("marko/html").c(__filename);
+
+module.exports = template;
+
+function render(data, out) {
+  data.renderBody(out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

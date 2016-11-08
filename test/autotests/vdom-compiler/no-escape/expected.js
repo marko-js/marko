@@ -1,13 +1,16 @@
-function create(__markoHelpers) {
-  var marko_str = __markoHelpers.s;
+var template = require("marko/vdom").c(__filename);
 
-  return function render(data, out) {
-    out.t("Hello " +
-      marko_str(name) +
-      "! ");
+module.exports = template;
 
-    out.h(marko_str(message));
-  };
+var marko_helpers = require("marko/runtime/vdom/helpers"),
+    marko_str = marko_helpers.s;
+
+function render(data, out) {
+  out.t("Hello " +
+    marko_str(name) +
+    "! ");
+
+  out.h(marko_str(message));
 }
 
-module.exports = require("marko/vdom").c(__filename, create);
+template._ = render;

@@ -1,15 +1,18 @@
-function create(__markoHelpers) {
-  var marko_loadTag = __markoHelpers.t,
-      test_body_function_tag = marko_loadTag(require("./tags/test-body-function/renderer"));
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    test_body_function_tag({
-        name: "World",
-        myBody: function myBody(foo, bar) {
-          out.w("This is the body content");
-        }
-      }, out);
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_loadTag = marko_helpers.t,
+    test_body_function_tag = marko_loadTag(require("./tags/test-body-function/renderer"));
+
+function render(data, out) {
+  test_body_function_tag({
+      name: "World",
+      myBody: function myBody(foo, bar) {
+        out.w("This is the body content");
+      }
+    }, out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

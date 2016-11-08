@@ -1,11 +1,15 @@
-function create(__markoHelpers) {
-  return function render(data, out) {
-    out.w("<div></div>");
-  };
+var template = require("marko/html").c(__filename);
+
+module.exports = template;
+
+function render(data, out) {
+  out.w("<div></div>");
 }
 
-module.exports = require("marko/html").c(__filename, create, {
+template._ = render;
+
+template.meta = {
     deps: [
         "./foo"
       ]
-  });
+  };

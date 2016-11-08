@@ -173,7 +173,7 @@ function doLoad(templatePath, templateSrc, options) {
         }
     }
 
-    if (options.buffer != null) {
+    if (options.buffer === false) {
         var Template = template.constructor;
 
         template = new Template(

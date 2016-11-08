@@ -1,16 +1,19 @@
-function create(__markoHelpers) {
-  var marko_createElement = __markoHelpers.e,
-      marko_const = __markoHelpers.const,
-      marko_const_nextId = marko_const("0524f9"),
-      marko_node0 = marko_createElement("div", {
-          "class": "hello",
-          onclick: "onClick()"
-        }, 1, marko_const_nextId())
-        .t("Hello World!");
+var template = require("marko/vdom").c(__filename);
 
-  return function render(data, out) {
-    out.n(marko_node0);
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/vdom/helpers"),
+    marko_createElement = marko_helpers.e,
+    marko_const = marko_helpers.const,
+    marko_const_nextId = marko_const("0524f9"),
+    marko_node0 = marko_createElement("div", {
+        "class": "hello",
+        onclick: "onClick()"
+      }, 1, marko_const_nextId())
+      .t("Hello World!");
+
+function render(data, out) {
+  out.n(marko_node0);
 }
 
-module.exports = require("marko/vdom").c(__filename, create);
+template._ = render;

@@ -1,3 +1,5 @@
+require('./util/patch-module');
+
 var fs = require('fs');
 var path = require('path');
 var testFilter = require('./util/autotest/test-filter');
@@ -5,7 +7,7 @@ var compiler = require('marko/compiler');
 var expect = require('chai').expect;
 
 require('marko/node-require').install();
-require('./util/patch-module');
+
 
 describe('marko-widgets (compilation)', function() {
     var testsPath = path.join(__dirname, './autotests/widgets-compilation');

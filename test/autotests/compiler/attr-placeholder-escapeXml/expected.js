@@ -1,13 +1,16 @@
-function create(__markoHelpers) {
-  var marko_escapeXmlAttr = __markoHelpers.xa;
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    out.w("<div foo=\"Hello " +
-      marko_escapeXmlAttr(data.name) +
-      "\"></div>");
+module.exports = template;
 
-    var foo = "Hello " + data.name;
-  };
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_escapeXmlAttr = marko_helpers.xa;
+
+function render(data, out) {
+  out.w("<div foo=\"Hello " +
+    marko_escapeXmlAttr(data.name) +
+    "\"></div>");
+
+  var foo = "Hello " + data.name;
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

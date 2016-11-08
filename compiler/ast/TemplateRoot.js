@@ -54,10 +54,31 @@ class TemplateRoot extends Node {
                         renderStatements)
                 ]);
         } else {
-            let createStatements = [];
+            var templateArgs = [
+                builder.identifier('__filename')
+            ];
+
+            let templateId = builder.identifier('template');
+
+            let body = [
+                builder.var(templateId, builder.functionCall(
+                    builder.memberExpression(
+                        builder.require(
+                            builder.literal(context.getModuleRuntimeTarget())
+                        ),
+                        builder.identifier('c')
+                    ),
+                    templateArgs
+                ))
+            ];
+
+            var templateExports = this.generateExports(templateId, context);
+
+            body = body.concat(templateExports);
+
             let staticNodes = context.getStaticNodes();
             if (staticNodes.length) {
-                createStatements = createStatements.concat(staticNodes);
+                body = body.concat(staticNodes);
             }
 
             let renderFunction = builder.functionDeclaration(
@@ -65,38 +86,20 @@ class TemplateRoot extends Node {
                 ['data', builder.identifierOut()],
                 renderStatements);
 
-            createStatements.push(builder.returnStatement(renderFunction));
+            body = body.concat([
+                renderFunction,
+                builder.assignment(
+                    builder.memberExpression(builder.identifier('template'), builder.identifier('_')),
+                    builder.identifier('render'))
+            ]);
 
-            var templateArgs = [
-                builder.identifier('__filename'),
-                builder.identifier('create')
-            ];
-
-            if(context.useMeta && context.meta) {
-                templateArgs.push(context.meta);
+            if (context.useMeta && context.meta) {
+                body.push(builder.assignment(
+                    builder.memberExpression(builder.identifier('template'), builder.identifier('meta')),
+                    context.meta));
             }
 
-            var template = builder.functionCall(
-                builder.memberExpression(
-                    builder.require(
-                        builder.literal(context.getModuleRuntimeTarget())
-                    ),
-                    builder.identifier('c')
-                ),
-                templateArgs
-            );
-
-            var templateExports = this.generateExports(template, context);
-
-            return builder.program([
-                builder.functionDeclaration(
-                    'create',
-                    [
-                        context.helpersIdentifier
-                    ],
-                    createStatements),
-                templateExports
-            ]);
+            return builder.program(body);
         }
     }
 

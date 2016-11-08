@@ -8,17 +8,9 @@ var helpers;
  * it is used to create a new Template instance.
  * @private
  */
- exports.c = function createTemplate(path, createFunc, meta) {
-     var template = new Template(path, lazyRender);
-     template.meta = meta;
-     return template;
-
-    function lazyRender() {
-        template._ = createFunc(helpers);
-        template._.apply(template, arguments);
-    }
+exports.c = function createTemplate(path) {
+     return new Template(path);
 };
-
 
 var AsyncStream = require('./AsyncStream');
 
@@ -37,6 +29,7 @@ function Template(path, func, options) {
     this.path = path;
     this._ = func;
     this._shouldBuffer = !options || options.shouldBuffer !== false;
+    this.meta = undefined;
 }
 
 Template.prototype = {

@@ -1,40 +1,43 @@
-function create(__markoHelpers) {
-  var marko_escapeXml = __markoHelpers.x,
-      marko_forEach = __markoHelpers.f;
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    out.w("Hello " +
-      marko_escapeXml(data.name) +
-      "! ");
+module.exports = template;
 
-    if (data.colors.length) {
-      out.w("<ul>");
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_escapeXml = marko_helpers.x,
+    marko_forEach = marko_helpers.f;
 
-      marko_forEach(data.colors, function(color) {
-        out.w("<li>" +
-          marko_escapeXml(color) +
-          "</li>");
-      });
+function render(data, out) {
+  out.w("Hello " +
+    marko_escapeXml(data.name) +
+    "! ");
 
-      out.w("</ul>");
-    } else {
-      out.w("<div>No colors!</div>");
-    }
+  if (data.colors.length) {
+    out.w("<ul>");
 
-    if (data.colors.length) {
-      out.w("<ul>");
+    marko_forEach(data.colors, function(color) {
+      out.w("<li>" +
+        marko_escapeXml(color) +
+        "</li>");
+    });
 
-      marko_forEach(data.colors, function(color) {
-        out.w("<li>" +
-          marko_escapeXml(color) +
-          "</li>");
-      });
+    out.w("</ul>");
+  } else {
+    out.w("<div>No colors!</div>");
+  }
 
-      out.w("</ul>");
-    } else {
-      out.w("<div>No colors!</div>");
-    }
-  };
+  if (data.colors.length) {
+    out.w("<ul>");
+
+    marko_forEach(data.colors, function(color) {
+      out.w("<li>" +
+        marko_escapeXml(color) +
+        "</li>");
+    });
+
+    out.w("</ul>");
+  } else {
+    out.w("<div>No colors!</div>");
+  }
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

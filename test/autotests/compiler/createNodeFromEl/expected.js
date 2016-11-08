@@ -1,20 +1,23 @@
-function create(__markoHelpers) {
-  var marko_loadTag = __markoHelpers.t,
-      test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    test_hello_tag({
-        name: "Frank"
-      }, out);
+module.exports = template;
 
-    test_hello_tag({
-        name: "Frank"
-      }, out);
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_loadTag = marko_helpers.t,
+    test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));
 
-    test_hello_tag({
-        name: "Frank"
-      }, out);
-  };
+function render(data, out) {
+  test_hello_tag({
+      name: "Frank"
+    }, out);
+
+  test_hello_tag({
+      name: "Frank"
+    }, out);
+
+  test_hello_tag({
+      name: "Frank"
+    }, out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

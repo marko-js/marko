@@ -1,13 +1,15 @@
-function create(__markoHelpers) {
-  var fooStatic = "Hello Foo",
-      barStatic = "Hello Bar";
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    var foo = "Hello Foo",
-        bar = "Hello Bar";
+module.exports = template;
 
-    out.w("<div></div>");
-  };
+var fooStatic = "Hello Foo",
+    barStatic = "Hello Bar";
+
+function render(data, out) {
+  var foo = "Hello Foo",
+      bar = "Hello Bar";
+
+  out.w("<div></div>");
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

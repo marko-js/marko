@@ -1,15 +1,18 @@
-function create(__markoHelpers) {
-  var marko_loadTag = __markoHelpers.t,
-      test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));
+var template = require("marko/vdom").c(__filename);
 
-  return function render(data, out) {
-    test_hello_tag({
-        name: "World",
-        renderBody: function renderBody(out) {
-          out.t("Body content");
-        }
-      }, out);
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/vdom/helpers"),
+    marko_loadTag = marko_helpers.t,
+    test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));
+
+function render(data, out) {
+  test_hello_tag({
+      name: "World",
+      renderBody: function renderBody(out) {
+        out.t("Body content");
+      }
+    }, out);
 }
 
-module.exports = require("marko/vdom").c(__filename, create);
+template._ = render;

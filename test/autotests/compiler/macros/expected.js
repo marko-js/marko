@@ -1,30 +1,33 @@
-function create(__markoHelpers) {
-  var marko_escapeXml = __markoHelpers.x,
-      marko_forEach = __markoHelpers.f;
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    function macro_renderTree(node, out, renderBody) {
-      out.w("Name: " +
-        marko_escapeXml(node.name) +
-        " Children: ");
+module.exports = template;
 
-      if (node.children) {
-        out.w("<ul>");
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_escapeXml = marko_helpers.x,
+    marko_forEach = marko_helpers.f;
 
-        marko_forEach(node.children, function(child) {
-          out.w("<li>");
+function render(data, out) {
+  function macro_renderTree(node, out, renderBody) {
+    out.w("Name: " +
+      marko_escapeXml(node.name) +
+      " Children: ");
 
-          macro_renderTree(child, out);
+    if (node.children) {
+      out.w("<ul>");
 
-          out.w("</li>");
-        });
+      marko_forEach(node.children, function(child) {
+        out.w("<li>");
 
-        out.w("</ul>");
-      }
+        macro_renderTree(child, out);
+
+        out.w("</li>");
+      });
+
+      out.w("</ul>");
     }
+  }
 
-    macro_renderTree(data.node, out);
-  };
+  macro_renderTree(data.node, out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

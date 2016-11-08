@@ -1,19 +1,22 @@
-function create(__markoHelpers) {
-  var marko_classList = __markoHelpers.cl,
-      marko_str = __markoHelpers.s,
-      marko_classAttr = __markoHelpers.ca;
+var template = require("marko/vdom").c(__filename);
 
-  return function render(data, out) {
-    out.e("div", {
-        "class": marko_classAttr(marko_classList("foo", {
-            bar: true,
-            baz: false
-          }))
-      }, 1)
-      .t("Hello " +
-        marko_str(name) +
-        "!");
-  };
+module.exports = template;
+
+var marko_helpers = require("marko/runtime/vdom/helpers"),
+    marko_classList = marko_helpers.cl,
+    marko_str = marko_helpers.s,
+    marko_classAttr = marko_helpers.ca;
+
+function render(data, out) {
+  out.e("div", {
+      "class": marko_classAttr(marko_classList("foo", {
+          bar: true,
+          baz: false
+        }))
+    }, 1)
+    .t("Hello " +
+      marko_str(name) +
+      "!");
 }
 
-module.exports = require("marko/vdom").c(__filename, create);
+template._ = render;

@@ -1,9 +1,11 @@
-function create(__markoHelpers) {
-  return function render(data, out) {
-    var foo = "Hello World";
+var template = require("marko/html").c(__filename);
 
-    out.w("<div></div>");
-  };
+module.exports = template;
+
+function render(data, out) {
+  var foo = "Hello World";
+
+  out.w("<div></div>");
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;

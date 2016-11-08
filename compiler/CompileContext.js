@@ -563,12 +563,8 @@ class CompileContext extends EventEmitter {
 
     get helpersIdentifier() {
         if (!this._helpersIdentifier) {
-            if (this.inline) {
-                this._helpersIdentifier = this.importModule('__markoHelpers', 'marko/runtime/html/helpers');
-            } else {
-                // The helpers variable is a parameter of the outer create function
-                this._helpersIdentifier = this.builder.identifier('__markoHelpers');
-            }
+            var target = this.outputType === 'vdom' ? 'marko/runtime/vdom/helpers' : 'marko/runtime/html/helpers';
+            this._helpersIdentifier = this.importModule('marko_helpers', target);
         }
         return this._helpersIdentifier;
     }

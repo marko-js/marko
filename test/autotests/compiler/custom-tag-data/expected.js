@@ -1,26 +1,29 @@
-function create(__markoHelpers) {
-  var marko_loadTag = __markoHelpers.t,
-      custom_tag_data_tag = marko_loadTag(require("./custom-tag-data-tag")),
-      marko_merge = __markoHelpers.m;
+var template = require("marko/html").c(__filename);
 
-  return function render(data, out) {
-    custom_tag_data_tag({
-        name: "Frank",
-        age: 32
-      }, out);
+module.exports = template;
 
-    custom_tag_data_tag({
-        name: "Frank".toUpperCase(),
-        age: 32
-      }, out);
+var marko_helpers = require("marko/runtime/html/helpers"),
+    marko_loadTag = marko_helpers.t,
+    custom_tag_data_tag = marko_loadTag(require("./custom-tag-data-tag")),
+    marko_merge = marko_helpers.m;
 
-    custom_tag_data_tag(marko_merge({
-        age: 10
-      }, {
-        name: "Frank",
-        age: 32
-      }), out);
-  };
+function render(data, out) {
+  custom_tag_data_tag({
+      name: "Frank",
+      age: 32
+    }, out);
+
+  custom_tag_data_tag({
+      name: "Frank".toUpperCase(),
+      age: 32
+    }, out);
+
+  custom_tag_data_tag(marko_merge({
+      age: 10
+    }, {
+      name: "Frank",
+      age: 32
+    }), out);
 }
 
-module.exports = require("marko/html").c(__filename, create);
+template._ = render;
