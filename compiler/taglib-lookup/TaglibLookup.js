@@ -143,6 +143,7 @@ class TaglibLookup {
 
         merge(this.merged, {
             tags: taglib.tags,
+            transformers: taglib.transformers,
             textTransformers: taglib.textTransformers,
             attributes: taglib.attributes,
             patternAttributes: taglib.patternAttributes
@@ -286,6 +287,13 @@ class TaglibLookup {
         return attrDef;
     }
 
+    forEachTemplateTransformer(callback, thisObj) {
+        var transformers = this.merged.transformers;
+        if (transformers && transformers.length) {
+            transformers.forEach(callback, thisObj);
+        }
+    }
+
     forEachNodeTransformer(node, callback, thisObj) {
         /*
          * Based on the type of node we have to choose how to transform it
@@ -332,7 +340,7 @@ class TaglibLookup {
                     this.merged.tags[tagName].forEachTransformer(addTransformer);
                 }
             }
-            
+
             if (this.merged.tags['*']) {
                 this.merged.tags['*'].forEachTransformer(addTransformer);
             }

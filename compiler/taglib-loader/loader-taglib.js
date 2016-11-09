@@ -301,6 +301,33 @@ class TaglibLoader {
         var taglib = this.taglib;
         taglib.id = value;
     }
+
+    transformer(value) {
+        // Marko allows a "text-transformer" to be registered. The provided
+        // text transformer will be called for any static text found in a template.
+        var taglib = this.taglib;
+        var dirname = this.dirname;
+
+        var transformer = new Taglib.Transformer();
+
+        if (typeof value === 'string') {
+            value = {
+                path: value
+            };
+        }
+
+        propertyHandlers(value, {
+            path(value) {
+                var path = resolve(value, dirname);
+                transformer.path = path;
+            }
+
+        }, this.dependencyChain.append('transformer').toString());
+
+        ok(transformer.path, '"path" is required for transformer');
+
+        taglib.addTransformer(transformer);
+    }
 }
 
 exports.loadTaglib = function(filePath, taglib, dependencyChain) {

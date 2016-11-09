@@ -45,6 +45,12 @@ function transformTreeHelper(node, context) {
 }
 
 function transformTree(rootNode, context) {
+
+    context.taglibLookup.forEachTemplateTransformer((transformer) => {
+        var transformFunc = transformer.getFunc();
+        rootNode = transformFunc(rootNode, context) || rootNode;
+    });
+
     /*
      * The tree is continuously transformed until we go through an entire pass where
      * there were no new nodes that needed to be transformed. This loop makes sure that

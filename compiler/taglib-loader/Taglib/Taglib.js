@@ -50,6 +50,7 @@ class Taglib {
         this.dirname = null;
         this.tags = {};
         this.textTransformers = [];
+        this.transformers = [];
         this.attributes = {};
         this.patternAttributes = [];
         this.inputFilesLookup = {};
@@ -90,6 +91,9 @@ class Taglib {
     }
     addTextTransformer(transformer) {
         this.textTransformers.push(transformer);
+    }
+    addTransformer(transformer) {
+        this.transformers.push(transformer);
     }
     forEachTag(callback, thisObj) {
         forEachEntry(this.tags, function (key, tag) {
