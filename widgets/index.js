@@ -328,4 +328,4 @@ exports.c = function(component, template) {
 
 // registerWidget is a no-op on the server.
 // Fixes https://github.com/marko-js/marko-widgets/issues/111
-exports.registerWidget = function() {};
+exports.registerWidget = function(typeName) { return typeName; };

@@ -33,7 +33,7 @@ class TransformHelper {
         this.widgetIdInfo = undefined;
         this.widgetArgs = undefined;
         this.containingWidgetNode = undefined;
-        this._markoWidgetsVar = undefined;
+        this._markoWidgetsVar = context.data.markoWidgetsVar;
         this.widgetStack = context.data.widgetStack || (context.data.widgetStack = []);
     }
 
@@ -85,9 +85,13 @@ class TransformHelper {
         return getRequirePath(target, this.context);
     }
 
+    set markoWidgetsVar(value) {
+        this._markoWidgetsVar = value;
+    }
+
     get markoWidgetsVar() {
         if (!this._markoWidgetsVar) {
-            this._markoWidgetsVar = this.context.importModule('__markoWidgets', this.getMarkoWidgetsRequirePath('marko/widgets'));
+            this._markoWidgetsVar = this.context.importModule('marko_widgets', this.getMarkoWidgetsRequirePath('marko/widgets'));
         }
 
         return this._markoWidgetsVar;
@@ -103,8 +107,8 @@ class TransformHelper {
         return builder.functionCall(widgetElId, arguments.length === 0 ? [] : [ id ]);
     }
 
-    buildWidgetTypeNode(path) {
-        return buildWidgetTypeNode(path, this.dirname, this.builder);
+    buildWidgetTypeNode(path, def) {
+        return buildWidgetTypeNode(path, this.dirname, def, this);
     }
 }
 

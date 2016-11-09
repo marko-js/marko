@@ -20,6 +20,12 @@ describe('marko-widgets (compilation)', function() {
 
             var testPath = path.join(testsPath, testName);
             var templatePath = path.join(testPath, 'index.marko');
+            if (!fs.existsSync(templatePath)) {
+                templatePath = path.join(testPath, 'template.marko');
+                if (!fs.existsSync(templatePath)) {
+                    return done(new Error('Template not found for test'));
+                }
+            }
             var mainPath = path.join(testPath, 'test.js');
             var main;
 

@@ -39,14 +39,6 @@ function getExistingWidget(id, type) {
     return null;
 }
 
-function registerWidgetType(widgetType) {
-    if (!widgetType.registered) {
-        // Only need to register the widget type once
-        widgetType.registered = true;
-        markoWidgets.registerWidget(widgetType);
-    }
-}
-
 function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
     var tagName = existingWidget.el.tagName;
     var hasUnpreservedBody = false;
@@ -99,14 +91,13 @@ module.exports = function widgetTag(input, out) {
         out.on('beginAsync', handleBeginAsync);
     }
 
-    var type = input.type;
+    var typeName = input.type;
     var config = input.config || input._cfg;
     var state = input.state || input._state;
     var props = input.props || input._props;
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
-    var typeName = type && type.name;
 
     var id = input.id;
     var extendList;
@@ -123,13 +114,6 @@ module.exports = function widgetTag(input, out) {
         id = id || widgetArgsId(widgetArgs);
         extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
-
-        if (extendList) {
-            extendList = extendList.map(function(extendType) {
-                registerWidgetType(extendType);
-                return extendType.name;
-            });
-        }
 
         if ((extendState = widgetArgs.extendState)) {
             if (state) {
@@ -176,8 +160,6 @@ module.exports = function widgetTag(input, out) {
     }
 
     if (typeName) {
-        registerWidgetType(type);
-
         var shouldRenderBody = true;
 
         if (existingWidget && !rerenderWidget) {

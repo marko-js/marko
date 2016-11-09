@@ -1,16 +1,11 @@
 var template = require("marko/html").c(__filename);
 
-var component = require("./component");
+module.exports = template;
 
-var template = template;
-
-var marko_widgets = require("marko/widgets/index");
-
-module.exports = marko_widgets.c(component, template);
-
-var marko_registerWidget = marko_widgets.registerWidget,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry/component", function() {
-      return module.exports;
+var marko_widgets = require("marko/widgets/index"),
+    marko_registerWidget = marko_widgets.registerWidget,
+    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/bind-widget/widget", function() {
+      return require("./widget");
     }),
     marko_widgetAttrs = marko_widgets.attrs,
     marko_helpers = require("marko/runtime/html/helpers"),

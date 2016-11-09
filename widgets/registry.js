@@ -20,21 +20,28 @@ var widgetTypes = {};
 var defineWidget;
 var defineRenderer;
 
-exports.register = function(typeName, type) {
-    if (arguments.length === 1) {
-        var widgetType = arguments[0];
-        typeName = widgetType.name;
-        type = widgetType.def();
+exports.register = function(typeName, def) {
+    if (typeof def === 'function') {
+        // We do this to kick off registering of nested widgets
+        // but we don't use the return value just yet since there
+        // is a good chance that it resulted in a circular dependency
+        def();
     }
-    registered[typeName] = type;
+
+    registered[typeName] = def;
     delete loaded[typeName];
     delete widgetTypes[typeName];
+    return typeName;
 };
 
 function load(typeName) {
     var target = loaded[typeName];
     if (target === undefined) {
         target = registered[typeName];
+
+        if (typeof target === 'function') {
+            target = target();
+        }
         if (!target) {
             target = require(typeName); // Assume the typeName has been fully resolved already
         }

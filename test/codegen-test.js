@@ -29,7 +29,7 @@ describe('compiler/codegen', function() {
         var main = require(path.join(dir, 'index.js'));
         var generateCodeFunc = main;
 
-        var context = new CompileContext('dummy', 'dummy.marko', builder);
+        var context = new CompileContext('dummy', path.join(dir, 'dummy.marko'), builder);
         var codegen = createCodeGenerator(context);
         var codeWriter = createCodeWriter(context);
 
@@ -44,7 +44,7 @@ describe('compiler/codegen', function() {
     it('should not allow a return outside a function', function() {
         let builder = compiler.createBuilder();
 
-        var context = new CompileContext('dummy', 'dummy.marko', builder);
+        var context = new CompileContext('dummy', path.join(autoTestDir, 'dummy.marko'), builder);
         var codegen = createCodeGenerator(context);
 
         var rootNode = builder.program([

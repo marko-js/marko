@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 'use strict';
-var TransformHelper = require('./TransformHelper');
+var getTransformHelper = require('./util/getTransformHelper');
 
 module.exports = function transform(el, context) {
-    var transformHelper = new TransformHelper(el, context);
+    var transformHelper = getTransformHelper(el, context);
 
     if (el.tagName === 'widget-types') {
         context.setFlag('hasWidgetTypes');

@@ -16,14 +16,34 @@
  */
 'use strict';
 
-var path = require('path');
+let path = require('path');
+
+function isTemplateMainEntry(context) {
+    let filename = path.basename(context.filename);
+    let ext = path.extname(filename);
+    if (ext) {
+        filename = filename.slice(0, 0 - ext.length);
+    }
+
+    return filename === 'index';
+}
+
+function isCombinedWidget(widgetModulePath) {
+    let filename = path.basename(widgetModulePath);
+    let ext = path.extname(filename);
+    if (ext) {
+        filename = filename.slice(0, 0 - ext.length);
+    }
+
+    return filename !== 'widget';
+}
 
 module.exports = function handleWidgetBind() {
-    var el = this.el;
-    var context = this.context;
-    var builder = this.builder;
+    let el = this.el;
+    let context = this.context;
+    let builder = this.builder;
 
-    var bindAttr = el.getAttribute('w-bind');
+    let bindAttr = el.getAttribute('w-bind');
     if (bindAttr == null) {
         return;
     }
@@ -34,10 +54,14 @@ module.exports = function handleWidgetBind() {
     el.removeAttribute('w-bind');
 
     // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
-    var bindAttrValue = bindAttr.value;
-    var modulePath;
+    let bindAttrValue = bindAttr.value;
+    let modulePath;
 
-    var widgetAttrs = {};
+    let widgetAttrs = {};
+
+    let isMain = isTemplateMainEntry(context);
+
+
 
     if (bindAttrValue == null) {
         modulePath = this.getDefaultWidgetModule();
@@ -59,33 +83,43 @@ module.exports = function handleWidgetBind() {
         }
 
         widgetAttrs.type = builder.computedMemberExpression(
-            builder.identifier('__widgetTypes'),
+            builder.identifier('marko_widgetTypes'),
             bindAttrValue);
+    }
+
+    let isComponentExport = isMain && isCombinedWidget(modulePath);
+
+    let transformHelper = this;
+
+    if (isComponentExport) {
+        transformHelper.markoWidgetsVar = builder.identifier('marko_widgets');
     }
 
     if (modulePath) {
         let widgetTypeNode;
-        if(path.basename(modulePath) === 'component') {
-            widgetTypeNode = context.addStaticVar('__widgetType', builder.literal({
-                name: builder.literal(modulePath),
-                def: builder.functionDeclaration(null, [] /* params */, [
-                    builder.returnStatement(
-                        builder.memberExpression('module', 'exports')
-                    )
-                ])
-            }));
+
+        let def;
+
+        if (isMain) {
+            def = builder.functionDeclaration(null, [], [
+                builder.returnStatement(builder.memberExpression(builder.identifier('module'), builder.identifier('exports')))
+            ]);
+        }
+
+        widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(modulePath, def));
+
+        widgetAttrs.type = widgetTypeNode;
+
+        if (isComponentExport) {
             this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    return buildExport(builder, modulePath, template);
+                    return buildExport(transformHelper, modulePath, template);
                 };
             });
-        } else {
-            widgetTypeNode = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
         }
-        widgetAttrs.type = widgetTypeNode;
     }
 
-    var id = el.getAttributeValue('id');
+    let id = el.getAttributeValue('id');
 
     if (el.hasAttribute('w-config')) {
         widgetAttrs.config = el.getAttributeValue('w-config');
@@ -96,13 +130,13 @@ module.exports = function handleWidgetBind() {
         widgetAttrs.id = id;
     }
 
-    var widgetNode = context.createNodeForEl('w-widget', widgetAttrs);
+    let widgetNode = context.createNodeForEl('w-widget', widgetAttrs);
     el.wrapWith(widgetNode);
 
     el.setAttributeValue('id', builder.memberExpression(builder.identifier('widget'), builder.identifier('id')));
 
-    // var _widgetAttrs = __markoWidgets.attrs;
-    var widgetAttrsVar = context.addStaticVar('__widgetAttrs',
+    // let _widgetAttrs = __markoWidgets.attrs;
+    let widgetAttrsVar = context.addStaticVar('marko_widgetAttrs',
         builder.memberExpression(this.markoWidgetsVar, builder.identifier('attrs')));
 
     el.addDynamicAttributes(builder.functionCall(widgetAttrsVar, [ builder.identifier('widget') ]));
@@ -114,7 +148,8 @@ module.exports = function handleWidgetBind() {
     });
 };
 
-function buildExport(builder, modulePath, template) {
+function buildExport(transformHelper, modulePath, template) {
+    let builder = transformHelper.builder;
     return [
         builder.assignment(
             builder.var('component'),
@@ -126,6 +161,7 @@ function buildExport(builder, modulePath, template) {
             builder.var('template'),
             template
         ),
+        builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
         builder.assignment(
             builder.memberExpression(
                 builder.identifier('module'),
@@ -133,9 +169,7 @@ function buildExport(builder, modulePath, template) {
             ),
             builder.functionCall(
                 builder.memberExpression(
-                    builder.require(
-                        builder.literal('marko/widgets')
-                    ),
+                    transformHelper.markoWidgetsVar,
                     builder.identifier('c')
                 ),
                 [

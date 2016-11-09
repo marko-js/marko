@@ -1,6 +1,9 @@
-var buildWidgetTypeNode = require('./util/buildWidgetTypeNode');
+var getTransformHelper = require('./util/getTransformHelper');
 
 module.exports = function codeGenerator(el, codegen) {
+    var context = codegen.context;
+    var transformHelper = getTransformHelper(el, context);
+
     var builder = codegen.builder;
 
     var attrs = el.getAttributes();
@@ -13,8 +16,8 @@ module.exports = function codeGenerator(el, codegen) {
             return;
         }
 
-        typesObject[attr.name] = buildWidgetTypeNode(attr.literalValue, codegen.context.dirname, codegen.builder);
+        typesObject[attr.name] = transformHelper.buildWidgetTypeNode(attr.literalValue);
     });
 
-    codegen.addStaticVar('__widgetTypes', builder.literal(typesObject));
+    codegen.addStaticVar('marko_widgetTypes', builder.literal(typesObject));
 };
