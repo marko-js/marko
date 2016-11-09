@@ -20,7 +20,7 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
     if (lassoModulesClientTransport) {
         var targetPath = resolveFrom(from, path);
         if (!targetPath) {
-            throw new Error('Widget module not fount: ' + path + ' (from ' + from + ')');
+            throw new Error('Widget module not found: ' + path + ' (from ' + from + ')');
         }
         typeName = lassoModulesClientTransport.getClientPath(targetPath);
     } else {
