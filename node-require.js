@@ -13,11 +13,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+'use strict';
 
-var path = require('path');
-var resolveFrom = require('resolve-from');
-var fs = require('fs');
-var fsReadOptions = { encoding: 'utf8' };
+const path = require('path');
+const resolveFrom = require('resolve-from');
+const fs = require('fs');
+const fsReadOptions = { encoding: 'utf8' };
+const consolidateExtensions = require('./util/consolidateExtensions');
 
 function compile(templatePath, markoCompiler, compilerOptions) {
 
@@ -76,9 +78,11 @@ function getLoadedTemplate(path) {
     return cached && cached.exports.render ? cached.exports : undefined;
 }
 
- function install(options) {
+function install(options) {
     options = options || {};
 
+    let extension = options.extension;
+    let extensions = options.extensions;
     var compilerOptions = options.compilerOptions;
 
     if (compilerOptions) {
@@ -87,17 +91,7 @@ function getLoadedTemplate(path) {
         compilerOptions = {};
     }
 
-    var extension = options.extension || '.marko';
-
-    if (extension.charAt(0) !== '.') {
-        extension = '.' + extension;
-    }
-
-    if (require.extensions[extension]) {
-        return;
-    }
-
-    require.extensions[extension] = function markoExtension(module, filename) {
+    function markoExtension(module, filename) {
         var targetFile = filename + '.js';
         var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
         if (cachedTemplate) {
@@ -119,7 +113,9 @@ function getLoadedTemplate(path) {
         // Append ".js" to the filename since that is where we write the compiled
         // source code that is being loaded. This allows stack traces to match up.
         module._compile(compiledSrc, targetFile);
-    };
+    }
+
+    consolidateExtensions(extension, extensions, require, markoExtension);
 }
 
 install();
