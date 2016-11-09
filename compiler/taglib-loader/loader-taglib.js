@@ -241,9 +241,7 @@ class TaglibLoader {
                             for (var j=0; j<dependencyNames.length; j++) {
                                 var dependencyName = dependencyNames[j];
 
-                                try {
-                                    importPath = resolveFrom(dirname, dependencyName + '/marko.json');
-                                } catch(e) {}
+                                importPath = resolveFrom(dirname, dependencyName + '/marko.json');
 
                                 if (importPath) {
                                     taglib.addImport(importPath);
@@ -252,7 +250,11 @@ class TaglibLoader {
                         }
                     } else {
                         importPath = resolveFrom(dirname, curImport);
-                        taglib.addImport(importPath);
+                        if (importPath) {
+                            taglib.addImport(importPath);
+                        } else {
+                            throw new Error('Import not fount: ' + curImport + ' (from ' + dirname + ')');
+                        }
                     }
                 }
             }

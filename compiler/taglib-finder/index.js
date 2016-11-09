@@ -148,16 +148,11 @@ function find(dirname, registeredTaglibs) {
         // Now look for `marko.json` from installed packages
         getAllDependencyNames(rootPkg).forEach((name) => {
             if (!excludedPackages[name]) {
-                let taglibPath;
-                try {
-                    taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
-                } catch(e) {
-                    // The installed dependency does not export a taglib... skip it
-                    return;
+                let taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
+                if (taglibPath) {
+                    var taglib = taglibLoader.load(taglibPath);
+                    helper.addTaglib(taglib);
                 }
-
-                var taglib = taglibLoader.load(taglibPath);
-                helper.addTaglib(taglib);
             }
         });
     }

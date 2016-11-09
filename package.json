@@ -43,8 +43,8 @@
     "Martin Aberer"
   ],
   "dependencies": {
-    "argly": "^1.0.0",
     "app-module-path": "^1.0.5",
+    "argly": "^1.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "deresolve": "^1.0.0",
@@ -66,7 +66,7 @@
     "raptor-promises": "^1.0.1",
     "raptor-regexp": "^1.0.0",
     "raptor-util": "^3.0.0",
-    "resolve-from": "^1.0.0",
+    "resolve-from": "^2.0.0",
     "strip-json-comments": "^2.0.1",
     "try-require": "^1.2.1",
     "warp10": "^1.0.0"
