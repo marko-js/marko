@@ -51,7 +51,7 @@ You can easily `require`/`import` a component and interact with it using the Jav
 ```js
 var myCounter = require('./src/components/my-counter');
 
-var widget = myComponent.render({
+var widget = myCounter.render({
         value: 10
     })
     .appendTo(document.body)
