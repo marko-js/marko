@@ -185,7 +185,7 @@ as long as none of the features in the section above are utilized.
 Additionally, [`marko-migrate`](https://github.com/marko-js/marko-migrate) will
 be updated to handle many of these non-breaking changes as well.
 
-### Deprecate `<script marko-init>` replace with `<render>` ([#397](https://github.com/marko-js/marko/issues/397))
+### Deprecate `<script marko-init>` replace with `render()` section ([#397](https://github.com/marko-js/marko/issues/397))
 
 **Old:**
 ```html
@@ -203,6 +203,12 @@ render()
     var name='World'
     <div>Hello ${format(name)}</div>
 ```
+
+### Only diff attributes that are rendered by Marko ([#417](https://github.com/marko-js/marko/issues/417))
+
+Previously, when diffing the DOM, all of the attributes on a real HTML element node were diffed with all of the attributes on a newly rendered HTML element node. This posed a problem when using Marko with third party libraries, such as animation libraries, that added HTML attributes that should have been left alone. The proposed workaround was to add the `w-preserve-attrs` attribute wherever needed.
+
+In Marko v4, only the attributes rendered by Marko are ever modified by Marko. Any attributes added by third-party libraries are simply ignored.
 
 ### Changes around binding widgets
 
@@ -258,21 +264,21 @@ or, since `widget.js` is automatically recognized
 **Old:**
 ```html
 <div w-bind>
-    <some-component onEvent="handleEvent"/>
+    <some-component w-onEvent="handleEvent"/>
 </div>
 ```
 or
 ```html
-<some-component w-extend onEvent="handleEvent"/>
+<some-component w-extend w-onEvent="handleEvent"/>
 ```
 
 **New:**
 ```html
-<some-component onEvent="handleEvent"/>
+<some-component onEvent('handleEvent')/>
 ```
 
 
-### Template as entry point for UI components ([marko-widgets#167](https://github.com/marko-js/marko-widgets/issues/167))
+### Template as entry point for UI components ([#416](https://github.com/marko-js/marko/issues/416))
 
 **Old:**
 
@@ -283,7 +289,9 @@ module.exports = require('marko-widgets').defineComponent({
     ...
 });
 ```
+
 `template.marko`
+
 ```html
 <div w-bind>
     ...
@@ -294,6 +302,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 
 `component.js`
+
 ```js
 module.exports = {
     ...
@@ -301,6 +310,7 @@ module.exports = {
 ```
 
 `index.marko`
+
 ```html
 <div>
     ...
@@ -314,7 +324,23 @@ module.exports = {
 
 #### References
 
+The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
+
 **Old:**
+
+```html
+<input type="text" w-id="name" />
+```
+
+**New:**
+```html
+<input type="text" ref="name" />
+```
+
+Similarly, `w-for` has been been replaced with `for-ref`:
+
+**Old:**
+
 ```html
 <label w-for="name">Name</label>
 <input type="text" w-id="name" />
@@ -326,7 +352,7 @@ module.exports = {
 <input type="text" ref="name" />
 ```
 
-#### Prevent update
+#### Prevent DOM update when rerendering
 
 **Old:**
 ```html
@@ -342,7 +368,7 @@ module.exports = {
 </div>
 ```
 
-#### Prevent attribute update
+#### Prevent HTML attribute update when rerendering
 
 **Old:**
 ```html
