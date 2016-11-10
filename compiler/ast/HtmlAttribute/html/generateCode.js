@@ -121,7 +121,13 @@ module.exports = function generateCode(node, codegen) {
     }
 
     if (node.isLiteralValue()) {
-        return builder.htmlLiteral(attr(name, value.value));
+        let literalValue = value.value;
+
+        if (literalValue instanceof RegExp) {
+            literalValue = literalValue.source;
+        }
+
+        return builder.htmlLiteral(attr(name, literalValue));
     } else if (value != null) {
         return generateCodeForExpressionAttr(name, value, escape, codegen);
     } else if (argument) {
