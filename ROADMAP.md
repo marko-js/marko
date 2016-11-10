@@ -8,14 +8,65 @@ If there is something that you think needs to be considered for this release out
 
 ## Notable changes/improvements
 
-### Merge in Marko Widgets ([#390](https://github.com/marko-js/marko/issues/390))
+### Single file components ([#399](https://github.com/marko-js/marko/issues/399))
 
-A big part of this release is a shift is focus from Marko being merely a
-templating language to a complete UI library.  As such, we are providing
-first-class support for components.
+Marko now supports combining HTML, rendering logic, client-side behavior and styling into a single file component.
 
-You will no longer need to install `marko-widgets` as an external library, and
-there is more cohesion between the templates and components/widgets.
+_src/components/my-counter/index.marko_
+
+```html
+<script>
+    // this top-level script tag is automatically
+    // detected as a component due to `module.exports`
+    // `export default` could be used as well
+    module.exports = {
+        onInput(input) {
+            this.state = { count: input.value || 0 };
+        },
+        increment() {
+            this.state.count++;
+        }
+    }
+</script>
+
+<style>
+    .count {
+        color:#09c;
+    }
+    .button {
+        background:#fff;
+    }
+</style>
+
+<div>
+    <span class="count">${data.count}</span>
+    <button class="button" on-click('increment')>
+        increment count
+    </button>
+</div>
+```
+
+You can easily `require`/`import` a component and interact with it using the JavaScript API:
+
+```js
+var myCounter = require('./src/components/my-counter');
+
+var widget = myComponent.render({
+        value: 10
+    })
+    .appendTo(document.body)
+    .getWidget();
+
+widget.increment();
+```
+
+Of course, a single file component can also be embedded in another template as a custom tag:
+
+```xml
+<div>
+    <my-counter value=10 />
+</div>
+```
 
 ### Virtual DOM support ([#366](https://github.com/marko-js/marko/issues/366))
 
@@ -24,10 +75,90 @@ than other libraries by an [order of magnitude](https://github.com/patrick-steel
 when rendering on the server.  However although we were _pretty_ fast in the
 browser, we weren't as fast as some of our competitors.
 
-That's changed.  Our initial benchmarks show a significant improvement in
-rendering time and we are consistently out performing React.  Supporting
-multiple compilation outputs allows optimizations in the browser that
-were not possible before.
+That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will render to an HTML stream/string and templates compiled for the browser will render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
+
+_HTML output (server-side):_
+
+```javascript
+function render(data, out) {
+  var colors = data.colors;
+
+  if (colors && colors.length) {
+    out.w("<ul>");
+
+    marko_forEach(colors, function(color) {
+      out.w("<li class=\"color\">" +
+        marko_escapeXml(color) +
+        "</li>");
+    });
+
+    out.w("</ul>");
+  } else {
+    out.w("<div>No colors!</div>");
+  }
+}
+```
+
+_VDOM output (browser-side):_
+
+```javascript
+var marko_attrs0 = {
+        "class": "color"
+      },
+    marko_node0 = marko_createElement("div", null, 1, marko_const_nextId())
+      .t("No colors!");
+
+function render(data, out) {
+  var colors = data.colors;
+
+  if (colors && colors.length) {
+    out.be("ul");
+
+    marko_forEach(colors, function(color) {
+      out.e("li", marko_attrs0, 1)
+        .t(marko_str(color));
+    });
+
+    out.ee();
+  } else {
+    out.n(marko_node0);
+  }
+}
+```
+
+The VDOM output allows optimizations that were previously not possible:
+
+- Static subtrees are pulled into variables that are only initialized once and reused for every render
+- Static attributes that are on dynamic elements are pulled out to static variables
+- Diffing is skipped when comparing static subtrees
+
+Our initial benchmarks show a significant improvement in
+rendering time and we are consistently outperforming React.
+
+### Merge in Marko Widgets ([#390](https://github.com/marko-js/marko/issues/390))
+
+A big part of this release is a shift in focus from Marko being merely a
+templating language to a complete UI library.  As such, we are providing
+first-class support for components.
+
+You will no longer need to install `marko-widgets` as an external library, and
+there is more cohesion between the templates and components/widgets.
+
+### DOM insertion methods ([#415](https://github.com/marko-js/marko/issues/415))
+
+Methods for inserting the output of rendering a template into the DOM have been introduced with Marko v4:
+
+```js
+// Append to an existing DOM node:
+require('./template.marko')
+    .renderSync({ name: 'Frank '})
+    .appendTo(document.body);
+
+// Replace an existing DOM node:
+require('./template.marko')
+    .renderSync({ name: 'Frank '})
+    .replace(document.getElementById('foo'));
+```
 
 ## Breaking changes/improvements
 
@@ -143,11 +274,10 @@ be updated to handle many of these non-breaking changes as well.
 
 **New:**
 ```html
-<var format=require('format')/>
-<render>
-    <var name='World'/>
+var format=require('format')
+render()
+    var name='World'
     <div>Hello ${format(name)}</div>
-</render>
 ```
 
 ### Changes around binding widgets
@@ -255,37 +385,6 @@ module.exports = {
 
 > The compiled template now exports the component
 
-### Single file component ([#399](https://github.com/marko-js/marko/issues/399))
-
-```html
-<script>
-    // this top-level script tag is automatically
-    // detected as a component due to `module.exports`
-    // `export default` could be used as well
-    module.exports = {
-        onInput(input) {
-            this.state = { count:0 };
-        },
-        increment() {
-            this.state.count++;
-        }
-    }
-</script>
-
-<style>
-    .count {
-        color:#09c;
-    }
-    .button {
-        background:#fff;
-    }
-</style>
-
-<div class="count">${data.count}</div>
-<button class="button" on-click('increment')>
-    increment count
-</button>
-```
 
 ### Rename w-* attributes ([#394](https://github.com/marko-js/marko/issues/394))
 
