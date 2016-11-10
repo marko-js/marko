@@ -303,26 +303,6 @@ module.exports = {
 <input type="text" ref="name" />
 ```
 
-#### Event handlers
-
-**Old:**
-```html
-<button w-on-click="handleClick">click me</button>
-```
-or
-```html
-<button w-onClick="handleClick">click me</button>
-```
-
-**New:**
-```html
-<button on-click="handleClick">click me</button>
-```
-or
-```html
-<button onClick="handleClick">click me</button>
-```
-
 #### Prevent update
 
 **Old:**
@@ -353,6 +333,54 @@ or
 <div style:no-update="color:#09c">
     ...
 </div>
+```
+
+#### Event handlers
+
+**Old:**
+```html
+<button w-on-click="handleClick">click me</button>
+```
+or
+```html
+<button w-onClick="handleClick">click me</button>
+```
+
+**New:**
+```html
+<button on-click('handleClick')>click me</button>
+```
+or
+```html
+<button onClick('handleClick')>click me</button>
+```
+
+### Allow on-* attribute to bind additional arguments ([#401](https://github.com/marko-js/marko/issues/401))
+
+**Old:**
+```html
+<ul for(color in colors)>
+    <li w-onClick="colorClick" data-color=color>${color}</li>
+</ul>
+```
+
+```js
+colorClick(event) {
+    console.log(event.target.getAttribute('data-color'), 'was clicked');
+}
+```
+
+**New:**
+```html
+<ul for(color in colors)>
+    <li onClick('colorClick', color)>${color}</li>
+</ul>
+```
+
+```js
+colorClick(color, event) {
+    console.log(color, 'was clicked');
+}
 ```
 
 ### Introduce the `<import>` tag ([#404](https://github.com/marko-js/marko/issues/404))
@@ -472,34 +500,6 @@ onInput(input) {
     <h1 no-update>${data.staticHeader}</h1>
     <div>${state.count}</div>
 ...
-```
-
-### Allow on-* attribute to bind additional arguments ([#401](https://github.com/marko-js/marko/issues/401))
-
-**Old:**
-```html
-<ul for(color in colors)>
-    <li w-onClick="colorClick" data-color=color>${color}</li>
-</ul>
-```
-
-```js
-colorClick(event) {
-    console.log(event.target.getAttribute('data-color'), 'was clicked');
-}
-```
-
-**New:**
-```html
-<ul for(color in colors)>
-    <li onClick('colorClick', color)>${color}</li>
-</ul>
-```
-
-```js
-colorClick(color, event) {
-    console.log(color, 'was clicked');
-}
 ```
 
 ### Make output of render Promise-compatible ([#251](https://github.com/marko-js/marko/issues/251))
