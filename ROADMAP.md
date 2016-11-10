@@ -70,14 +70,11 @@ Of course, a single file component can also be embedded in another template as a
 
 ### Virtual DOM support ([#366](https://github.com/marko-js/marko/issues/366))
 
-Because we output a raw html string to a stream, Marko has always been faster
-than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react)
-when rendering on the server.  However although we were _pretty_ fast in the
-browser, we weren't as fast as some of our competitors.
+Because we output a raw HTML string to a stream, Marko has always been faster than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react) when rendering on the server.  However although we were _pretty_ fast in the browser, we weren't as fast as some of our competitors.
 
-That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will render to an HTML stream/string and templates compiled for the browser will render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
+That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will continue to render to an HTML stream/string and templates compiled for the browser will render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
 
-_HTML output (server-side):_
+_Compiled for HTML output (server-side):_
 
 ```javascript
 function render(data, out) {
@@ -99,7 +96,7 @@ function render(data, out) {
 }
 ```
 
-_VDOM output (browser-side):_
+_Compiled for VDOM output (browser-side):_
 
 ```javascript
 var marko_attrs0 = {
@@ -144,6 +141,24 @@ first-class support for components.
 You will no longer need to install `marko-widgets` as an external library, and
 there is more cohesion between the templates and components/widgets.
 
+### Automatically watch widget state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
+
+**Old:**
+
+```js
+increment() {
+    this.setState('count', this.state.count+1);
+}
+```
+
+**New:**
+
+```js
+increment() {
+    this.state.count++;
+}
+```
+
 ### DOM insertion methods ([#415](https://github.com/marko-js/marko/issues/415))
 
 Methods for inserting the output of rendering a template into the DOM have been introduced with Marko v4:
@@ -158,97 +173,6 @@ require('./template.marko')
 require('./template.marko')
     .renderSync({ name: 'Frank '})
     .replace(document.getElementById('foo'));
-```
-
-## Breaking changes/improvements
-
-In order to move forward it was necessary to introduce a few (minor)
-breaking changes. We are also removing support for some features that were
-already logging deprecation messages in v3.
-
-### Consistent Rendering API ([#389](https://github.com/marko-js/marko/issues/389))
-
-**Old:**
-```js
-var template = require('./template.marko');
-var component = require('./my-component');
-var data = {};
-
-template.render(data); // returns `out`
-template.render(data, (err, html, out) => {});
-template.renderSync(data); // returns an html string
-
-widget.render(data); // returns a `RenderResult`
-widget.render(data, (err, renderResult) => {});
-widget.renderSync(data); // throws an error, not a method.
-```
-
-**New:**
-```js
-var template = require('./template.marko');
-var component = require('./my-component');
-var data = {};
-
-template.render(data); // returns `out`
-template.render(data, (err, out) => {});
-template.renderSync(data); // returns `out`
-
-widget.render(data); // returns `out`
-widget.render(data, (err, out) => {});
-widget.renderSync(data); // returns `out`
-```
-
-Also, `out` has been updated to implement DOM manipulation methods like
-`appendTo` that were previously only available from the `RenderResult` returned
-from widget renders.
-
-### Remove support for `empty`/`notEmpty` helpers ([#357](https://github.com/marko-js/marko/issues/357))
-
-> Already deprecated in v3
-
-The empty/notEmpty helpers were automatically being added to every compiled
-template. While they can be helpful, we feel it is better if the developer
-explicitly imports only the exact helpers that your code depends on for
-improved modularity.
-
-### Remove hyphenated properties from input model (`data`) [#356](https://github.com/marko-js/marko/issues/356)
-
-> Already deprecated in v3
-
-Given a template like this:
-
-```xml
-<include("./include-target.marko") first-name='Frank'/>
-```
-
-`include-target.marko` looks like:
-
-**Old:**
-```html
-- Hello ${data['first-name']}
-```
-
-**New:**
-```html
-- Hello ${data.firstName}
-```
-
-### Remove support for `<async-fragment>` and related tags ([#312](https://github.com/marko-js/marko/pull/312))
-
-> Already deprecated in v3
-
-**Old:**
-```html
-<async-fragment var="foo" data-provider=data.provider>
-    ${foo}
-</async-fragment>
-```
-
-**New:**
-```html
-<await(foo from data.provider)>
-    ${foo}
-</await>
 ```
 
 ## Non-breaking changes/improvements
@@ -759,22 +683,6 @@ Get debug output
 </div>
 ```
 
-### Automatically watch widget state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
-
-**Old:**
-```js
-increment() {
-    this.setState('count', this.state.count+1);
-}
-```
-
-**New:**
-```js
-increment() {
-    this.state.count++;
-}
-```
-
 ### Allow regular expression for an HTML attribute value ([#386](https://github.com/marko-js/marko/issues/386))
 
 **Old:**
@@ -787,4 +695,93 @@ increment() {
 ```html
 <!-- just use a regex -->
 <input type="text" pattern=/\w{2,20}/ />
+```
+
+## Breaking changes/improvements
+
+In order to move forward it was necessary to introduce a few (minor) breaking changes. We are also removing support for some features that were already logging deprecation messages in v3.
+
+### Consistent Rendering API ([#389](https://github.com/marko-js/marko/issues/389))
+
+**Old:**
+```js
+var template = require('./template.marko');
+var component = require('./my-component');
+var data = {};
+
+template.render(data); // returns `out`
+template.render(data, (err, html, out) => {});
+template.renderSync(data); // returns an html string
+
+widget.render(data); // returns a `RenderResult`
+widget.render(data, (err, renderResult) => {});
+widget.renderSync(data); // throws an error, not a method.
+```
+
+**New:**
+```js
+var template = require('./template.marko');
+var component = require('./my-component');
+var data = {};
+
+template.render(data); // returns `out`
+template.render(data, (err, out) => {});
+template.renderSync(data); // returns `out`
+
+widget.render(data); // returns `out`
+widget.render(data, (err, out) => {});
+widget.renderSync(data); // returns `out`
+```
+
+Also, `out` has been updated to implement DOM manipulation methods like
+`appendTo` that were previously only available from the `RenderResult` returned
+from widget renders.
+
+### Remove support for `empty`/`notEmpty` helpers ([#357](https://github.com/marko-js/marko/issues/357))
+
+> Already deprecated in v3
+
+The empty/notEmpty helpers were automatically being added to every compiled
+template. While they can be helpful, we feel it is better if the developer
+explicitly imports only the exact helpers that your code depends on for
+improved modularity.
+
+### Remove hyphenated properties from input model (`data`) [#356](https://github.com/marko-js/marko/issues/356)
+
+> Already deprecated in v3
+
+Given a template like this:
+
+```xml
+<include("./include-target.marko") first-name='Frank'/>
+```
+
+`include-target.marko` looks like:
+
+**Old:**
+```html
+- Hello ${data['first-name']}
+```
+
+**New:**
+```html
+- Hello ${data.firstName}
+```
+
+### Remove support for `<async-fragment>` and related tags ([#312](https://github.com/marko-js/marko/pull/312))
+
+> Already deprecated in v3
+
+**Old:**
+```html
+<async-fragment var="foo" data-provider=data.provider>
+    ${foo}
+</async-fragment>
+```
+
+**New:**
+```html
+<await(foo from data.provider)>
+    ${foo}
+</await>
 ```
