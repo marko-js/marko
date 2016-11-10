@@ -245,6 +245,8 @@ HTMLElement.prototype = {
             }
         }
 
+        el._vattrs = attributes;
+
         return el;
     },
 
