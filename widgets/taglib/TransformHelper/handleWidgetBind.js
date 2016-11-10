@@ -157,10 +157,6 @@ function buildExport(transformHelper, modulePath, template) {
                 builder.literal(modulePath)
             )
         ),
-        builder.assignment(
-            builder.var('template'),
-            template
-        ),
         builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
         builder.assignment(
             builder.memberExpression(
