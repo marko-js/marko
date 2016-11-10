@@ -19,7 +19,13 @@ const path = require('path');
 const resolveFrom = require('resolve-from');
 const fs = require('fs');
 const fsReadOptions = { encoding: 'utf8' };
-const consolidateExtensions = require('./util/consolidateExtensions');
+
+function normalizeExtension(extension) {
+    if (extension.charAt(0) !== '.') {
+        extension = '.' + extension;
+    }
+    return extension;
+}
 
 function compile(templatePath, markoCompiler, compilerOptions) {
 
@@ -81,8 +87,10 @@ function getLoadedTemplate(path) {
 function install(options) {
     options = options || {};
 
-    let extension = options.extension;
-    let extensions = options.extensions;
+    var requireExtensions = options.require ? // options.require introduced for testing
+        options.require.extensions :
+        require.extensions;
+
     var compilerOptions = options.compilerOptions;
 
     if (compilerOptions) {
@@ -91,7 +99,21 @@ function install(options) {
         compilerOptions = {};
     }
 
-    function markoExtension(module, filename) {
+    var extensions = [];
+
+    if (options.extension) {
+        extensions.push(options.extension);
+    }
+
+    if (options.extensions) {
+        extensions = extensions.concat(options.extensions);
+    }
+
+    if (extensions.length === 0) {
+        extensions.push('.marko');
+    }
+
+    function markoRequireExtension(module, filename) {
         var targetFile = filename + '.js';
         var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
         if (cachedTemplate) {
@@ -115,7 +137,13 @@ function install(options) {
         module._compile(compiledSrc, targetFile);
     }
 
-    consolidateExtensions(extension, extensions, require, markoExtension);
+    extensions.forEach((extension) => {
+        extension = normalizeExtension(extension);
+
+        if (!requireExtensions[extension]) {
+            requireExtensions[extension] = markoRequireExtension;
+        }
+    });
 }
 
 install();
