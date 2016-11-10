@@ -123,7 +123,7 @@ function parseExpression(src, builder, isExpression) {
                 let literalValue;
 
                 if (node.regex) {
-                    literalValue = new RegExp(node.regex.pattern, 'gi');
+                    literalValue = new RegExp(node.regex.pattern, node.regex.flags);
                 } else {
                     literalValue = node.value;
                 }
