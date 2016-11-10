@@ -16,9 +16,10 @@
 
 require('raptor-polyfill/string/endsWith');
 
-var extend = require('raptor-util/extend');
-var compiler = require('../compiler');
-var nodePath = require('path');
+const extend = require('raptor-util/extend');
+const compiler = require('../compiler');
+const nodePath = require('path');
+const fs = require('fs');
 
 var modifiedId = 1;
 var nextTemplateId = 0;
@@ -123,6 +124,11 @@ exports.enable = function() {
 };
 
 exports.handleFileModified = function(path) {
+    if (!fs.existsSync(path)) {
+        console.log('[marko/hot-reload] WARNING cannot resolve template path: ', path);
+        return;
+    }
+
     var runtime = _getMarkoRuntime();
     var basename = nodePath.basename(path);
 
