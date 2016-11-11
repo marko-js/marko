@@ -319,10 +319,7 @@ module.exports = {
 
 > The compiled template now exports the component
 
-
-### Rename w-* attributes ([#394](https://github.com/marko-js/marko/issues/394))
-
-#### References
+### Deprecate `w-id` and `w-for` in favor of `ref` and `ref-for` ([#394](https://github.com/marko-js/marko/issues/394))
 
 The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
 
@@ -352,7 +349,7 @@ Similarly, `w-for` has been been replaced with `for-ref`:
 <input type="text" ref="name" />
 ```
 
-#### Prevent DOM update when rerendering
+### Deprecate `w-preserve` ([#419](https://github.com/marko-js/marko/issues/419))
 
 **Old:**
 ```html
@@ -368,7 +365,7 @@ Similarly, `w-for` has been been replaced with `for-ref`:
 </div>
 ```
 
-#### Prevent HTML attribute update when rerendering
+### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
 
 **Old:**
 ```html
@@ -384,7 +381,7 @@ Similarly, `w-for` has been been replaced with `for-ref`:
 </div>
 ```
 
-#### Event handlers
+### Deprecate `w-on*` in favor of `on*()` ([#420](https://github.com/marko-js/marko/issues/420))
 
 **Old:**
 ```html
@@ -414,8 +411,10 @@ or
 ```
 
 ```js
-handleColorClick(event, el) {
-    console.log(el.getAttribute('data-color'), 'was clicked');
+{
+    handleColorClick(event, el) {
+        console.log(el.getAttribute('data-color'), 'was clicked');
+    }
 }
 ```
 
