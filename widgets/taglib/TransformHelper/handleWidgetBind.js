@@ -1,19 +1,3 @@
-
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 let path = require('path');
@@ -60,14 +44,32 @@ module.exports = function handleWidgetBind() {
     let widgetAttrs = {};
 
     let isMain = isTemplateMainEntry(context);
-
-
+    let transformHelper = this;
 
     if (bindAttrValue == null) {
-        modulePath = this.getDefaultWidgetModule();
-        if (!modulePath) {
-            this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
-            return;
+        let component = getInlineComponent(context);
+        if(component) {
+            widgetAttrs.type = context.addStaticVar(
+                'marko_widgetType',
+                this.buildWidgetTypeNode(
+                    context.filename,
+                    builder.functionDeclaration(null, [] /* params */, [
+                        builder.returnStatement(
+                            builder.memberExpression('module', 'exports')
+                        )
+                    ])));
+
+            context.on('beforeGenerateCode:TemplateRoot', function(root) {
+                root.node.generateExports = function(template) {
+                    return buildExport(transformHelper, component, template);
+                };
+            });
+        } else {
+            modulePath = this.getDefaultWidgetModule();
+            if (!modulePath) {
+                this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
+                return;
+            }
         }
     } else if (bindAttr.isLiteralValue()) {
         modulePath = bindAttr.literalValue; // The value of the literal value
@@ -88,8 +90,6 @@ module.exports = function handleWidgetBind() {
     }
 
     let isComponentExport = isMain && isCombinedWidget(modulePath);
-
-    let transformHelper = this;
 
     if (isComponentExport) {
         transformHelper.markoWidgetsVar = builder.identifier('marko_widgets');
@@ -113,7 +113,11 @@ module.exports = function handleWidgetBind() {
         if (isComponentExport) {
             this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    return buildExport(transformHelper, modulePath, template);
+                    var component = builder.require(
+                        builder.literal(modulePath)
+                    );
+
+                    return buildExport(transformHelper, component, template);
                 };
             });
         }
@@ -148,14 +152,27 @@ module.exports = function handleWidgetBind() {
     });
 };
 
-function buildExport(transformHelper, modulePath, template) {
+function getInlineComponent(context) {
+    var builder = context.builder;
+    var component;
+    context.root.body.array.some(node => {
+        if(node.tagName === 'script' && node.getAttribute('component')) {
+            node.detach();
+            component = builder.selfInvokingFunction([
+                builder.code(node.body.array[0].argument.value)
+            ]);
+            return true;
+        }
+    });
+    return component;
+}
+
+function buildExport(transformHelper, component, template) {
     let builder = transformHelper.builder;
     return [
         builder.assignment(
             builder.var('component'),
-            builder.require(
-                builder.literal(modulePath)
-            )
+            component
         ),
         builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
         builder.assignment(
