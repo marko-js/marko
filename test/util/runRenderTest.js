@@ -67,7 +67,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
     let actualDir;
 
     if (isVDOM) {
-        actualDir = path.join(dir, '../' + path.basename(dir) + '_vdom.skip');
+        actualDir = path.join(dir, '../~vdom.skip/' + path.basename(dir));
 
         fsExtra.removeSync(actualDir);
 
