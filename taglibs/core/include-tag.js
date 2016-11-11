@@ -18,12 +18,15 @@ module.exports = function codeGenerator(el, codegen) {
     }
 
     let templatePath = args[0];
-    let templateVar;
+    let targetVar;
+
+    var isTemplate = false;
 
     if (templatePath.type === 'Literal') {
-        templateVar = codegen.context.importTemplate(templatePath.value);
+        targetVar = codegen.context.importTemplate(templatePath.value);
+        isTemplate = true;
     } else {
-        templateVar = templatePath;
+        targetVar = templatePath;
     }
 
     let templateData = {};
@@ -55,8 +58,19 @@ module.exports = function codeGenerator(el, codegen) {
         templateData = builder.literal(templateData);
     }
 
-    let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
-    let renderArgs = [ templateData, 'out' ];
-    let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
-    return renderFunctionCall;
+    if (isTemplate) {
+        let renderMethod = builder.memberExpression(targetVar, builder.identifier('render'));
+        let renderArgs = [ templateData, 'out' ];
+        let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
+        return renderFunctionCall;
+    } else {
+        let includeVar = codegen.context.helper('include');
+        let includeArgs = [ targetVar, 'out'];
+
+        if (Object.keys(templateData).length > 0) {
+            includeArgs.push(templateData);
+        }
+
+        return builder.functionCall(includeVar, includeArgs);
+    }
 };

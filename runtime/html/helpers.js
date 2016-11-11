@@ -116,5 +116,5 @@ module.exports = extend({
         }
     },
 
-    i: require('./')._inline
+    inline: require('./')._inline
 }, commonHelpers);
