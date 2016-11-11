@@ -29,7 +29,7 @@ _src/components/my-counter/index.marko_
     }
 </script>
 
-<style>
+<style lang="less">
     .count {
         color:#09c;
     }
@@ -219,7 +219,7 @@ You will no longer need to install `marko-widgets` as an external library, and t
         };
     }    
     increment() {
-        this.setState('count', this.state.count+1);
+        this.state.count++;
     }
 }
 ```
@@ -237,7 +237,7 @@ In addition, the default state can now be declared:
         };
     }    
     increment() {
-        this.setState('count', this.state.count+1);
+        this.state.count++;
     }
 }
 ```
