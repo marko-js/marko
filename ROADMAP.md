@@ -469,42 +469,56 @@ or
 
 ### New widget lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
-**`onInput`** replaces `getInitialProps`, `getInitialState` and `getWidgetConfig`
+- **`onInput(input, out)`** replaces `getInitialProps`, `getInitialState`, `getWidgetConfig` and `getTemplateData`
 
-**`onMount`** replaces `init` (which ran when the component first mounts)
+- **`onMount()`** - replaces `init` (which runs when the component is first mounted to the DOM)
 
 **Old:**
 ```js
-getInitialProps(input) {
-    return {
-        initialCount: input.initialCount || 0
+{
+    getInitialProps(input) {
+        return {
+            initialCount: input.initialCount || 0
+        }
     }
-}
-getInitialState(input) {
-    return {
-        count:input.initialCount
-    };
-}
-getWidgetConfig(input) {
-    return {
-        initialCount: input.initialCount
+    getInitialState(input) {
+        return {
+            count: input.initialCount
+        };
     }
-}
-init(config) {
-    this.initialCount = config.initialCount;
-    console.log('the component mounted!')
+    getWidgetConfig(input) {
+        return {
+            initialCount: input.initialCount
+        }
+    }
+    getTemplateData(state, input) {
+        return {
+            count: state.count
+        }
+    }
+    init(config) {
+        this.initialCount = config.initialCount;
+        console.log('the component mounted!')
+    }
 }
 ```
 
 **New:**
 ```js
-onInput(input) {
-    var initialCount = input.initialCount || 0;
-    this.state = { count:initialCount };
-    this.initialCount = initialCount;
-}
-onMount() {
-    console.log('the component mounted!')
+{
+    onInput(input) {
+        var initialCount = input.count || 0;
+        this.state = { count: initialCount };
+        this.initialCount = initialCount;
+    }
+    getTemplateData(state, input) {
+        return {
+            count: state.count
+        }
+    }
+    onMount() {
+        console.log('the component mounted!')
+    }
 }
 ```
 
@@ -548,14 +562,21 @@ onMount() {
 ```js
 {
     onInput(input) {
+        // `this.state` will be available as the `state` variable
+        // in the template.
         this.state = {
             name: 'Frank',
             birthday: Date(2000, 12, 24)
-        }
-    },
-    getTemplateData(state, input) {
-        age: calculateAge(state.birthday) // Only need to pass values derived
-                                          // from the state to the template.
+        };
+    }
+    getTemplateData(state) {
+        // state is automatically available in the template, but we can also
+        // provide additional template data by returning it from this method
+        // and it will be available as part of the `data` variable.
+        return {
+            age: calculateAge(state.birthday) // Only need to pass values derived
+                                              // from the state to the template.
+        };
     }
     ...
 }
