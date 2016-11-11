@@ -39,7 +39,7 @@ _src/components/my-counter/index.marko_
 </style>
 
 <div>
-    <span class="count">${data.count}</span>
+    <span class="count">${state.count}</span>
     <button class="button" on-click('increment')>
         increment count
     </button>
@@ -70,9 +70,9 @@ Of course, a single file component can also be embedded in another template as a
 
 ### Virtual DOM support ([#366](https://github.com/marko-js/marko/issues/366))
 
-Because we outputted a raw HTML string to a stream, Marko has always been faster than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react) when rendering on the server.  However although we were _pretty_ fast in the browser, we weren't as fast as some of our competitors. This was mainly because the output HTML string needed to be parsed into a DOM in order to do DOM diffing/patching.
+Because Marko renders raw HTML strings to a stream on the server, Marko has always been faster than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react) when rendering on the server.  However although Marko has been _pretty_ fast in the browser, it was a little behind some of our competitors. This was mainly because the output HTML string needed to be parsed into a DOM in order to do DOM diffing/patching.
 
-That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will continue to render to an HTML stream/string and templates compiled for the browser will now render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
+That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will continue to render to an HTML stream/string and templates compiled for the browser will now render to a fast and lightweight virtual DOM tree. The code samples below show how the two different compilation outputs compare:
 
 _Compiled for HTML output (server-side):_
 
