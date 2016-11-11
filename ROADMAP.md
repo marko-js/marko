@@ -6,7 +6,7 @@ If there is something that you think needs to be considered for this release out
 
 *We appreciate your time and feedback!*
 
-## Notable changes/improvements
+## Notable Changes and Improvements
 
 ### Single file components ([#399](https://github.com/marko-js/marko/issues/399))
 
@@ -46,7 +46,7 @@ _src/components/my-counter/index.marko_
 </div>
 ```
 
-You can easily `require`/`import` a component and interact with it using the JavaScript API:
+You can easily `require`/`import` a single file component and interact with it using the exported JavaScript API:
 
 ```js
 var myCounter = require('./src/components/my-counter');
@@ -70,9 +70,9 @@ Of course, a single file component can also be embedded in another template as a
 
 ### Virtual DOM support ([#366](https://github.com/marko-js/marko/issues/366))
 
-Because we output a raw HTML string to a stream, Marko has always been faster than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react) when rendering on the server.  However although we were _pretty_ fast in the browser, we weren't as fast as some of our competitors.
+Because we outputted a raw HTML string to a stream, Marko has always been faster than other libraries by an [order of magnitude](https://github.com/patrick-steele-idem/marko-vs-react) when rendering on the server.  However although we were _pretty_ fast in the browser, we weren't as fast as some of our competitors. This was mainly because the output HTML string needed to be parsed into a DOM in order to do DOM diffing/patching.
 
-That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will continue to render to an HTML stream/string and templates compiled for the browser will render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
+That's changed. Marko now supports multiple compilation outputs. Templates compiled for the server will continue to render to an HTML stream/string and templates compiled for the browser will now render to a virtual DOM tree. The code samples below show how the two different compilation outputs compare:
 
 _Compiled for HTML output (server-side):_
 
@@ -129,346 +129,17 @@ The VDOM output allows optimizations that were previously not possible:
 - Static attributes that are on dynamic elements are pulled out to static variables
 - Diffing is skipped when comparing static subtrees
 
-Our initial benchmarks show a significant improvement in
-rendering time and we are consistently outperforming React.
+Our initial benchmarks show a significant improvement in rendering time and we are consistently outperforming React. The independent [morphdom](https://github.com/patrick-steele-idem/morphdom) library has been tweaked to support diffing with both a real DOM and a Marko virtual DOM.
 
 ### Merge in Marko Widgets ([#390](https://github.com/marko-js/marko/issues/390))
 
-A big part of this release is a shift in focus from Marko being merely a
-templating language to a complete UI library.  As such, we are providing
-first-class support for components.
+A big part of this release is a shift in focus from Marko being merely a templating language to a complete UI library.  As such, we are providing first-class support for components.
 
-You will no longer need to install `marko-widgets` as an external library, and
-there is more cohesion between the templates and components/widgets.
-
-### Automatically watch widget state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
-
-**Old:**
-
-```js
-increment() {
-    this.setState('count', this.state.count+1);
-}
-```
-
-**New:**
-
-```js
-increment() {
-    this.state.count++;
-}
-```
-
-### DOM insertion methods ([#415](https://github.com/marko-js/marko/issues/415))
-
-Methods for inserting the output of rendering a template into the DOM have been introduced with Marko v4:
-
-```js
-// Append to an existing DOM node:
-require('./template.marko')
-    .renderSync({ name: 'Frank '})
-    .appendTo(document.body);
-
-// Replace an existing DOM node:
-require('./template.marko')
-    .renderSync({ name: 'Frank '})
-    .replace(document.getElementById('foo'));
-```
-
-## Non-breaking changes/improvements
-
-A huge effort is being made to make this release as painless as possible and
-keep backwards compatibility wherever possible.  It should be possible to
-continue to use custom tags that were developed against v3 with the v4 release
-as long as none of the features in the section above are utilized.
-
-Additionally, [`marko-migrate`](https://github.com/marko-js/marko-migrate) will
-be updated to handle many of these non-breaking changes as well.
-
-### Deprecate `<script marko-init>` replace with `render()` section ([#397](https://github.com/marko-js/marko/issues/397))
-
-**Old:**
-```html
-<script marko-init>
-    var format = require('format');
-</script>
-<var name="World"/>
-<div>Hello ${format(name)}</div>
-```
-
-**New:**
-```html
-var format=require('format')
-render()
-    var name='World'
-    <div>Hello ${format(name)}</div>
-```
-
-### Only diff attributes that are rendered by Marko ([#417](https://github.com/marko-js/marko/issues/417))
-
-Previously, when diffing the DOM, all of the attributes on a real HTML element node were diffed with all of the attributes on a newly rendered HTML element node. This posed a problem when using Marko with third party libraries, such as animation libraries, that added HTML attributes that should have been left alone. The proposed workaround was to add the `w-preserve-attrs` attribute wherever needed.
-
-In Marko v4, only the attributes rendered by Marko are ever modified by Marko. Any attributes added by third-party libraries are simply ignored.
-
-### Changes around binding widgets
-
-#### Rename `w-bind` and make it optional when using a default name ([#394](https://github.com/marko-js/marko/issues/394), [#395](https://github.com/marko-js/marko/issues/395))
-
-**Old:**
-```html
-<div w-bind>
-    ...
-</div>
-```
-
-**New:**
-```html
-<div widget="./widget.js">
-    ...
-</div>
-```
-or, applied as a tag (see next: multiple top level DOM elements):
-```html
-<script widget="./widget.js"/>
-<div>
-    ...
-</div>
-```
-or, since `widget.js` is automatically recognized
-```html
-<div>
-    ...
-</div>
-```
-
-#### Allow multiple top-level DOM elements to be bound ([#393](https://github.com/marko-js/marko/issues/393))
-
-**Old:**
-```html
-<div w-bind>
-    <h1>The current count is, ${data.count}</h1>
-    <button onClick('incrementCount')>Increment Count</button>
-</div>
-```
-
-**New:**
-```html
-<h1>The current count is, ${data.count}</h1>
-<button onClick('incrementCount')>Increment Count</button>
-```
-
-#### Remove need for `w-extend` or wrapper `<div>` ([#392](https://github.com/marko-js/marko/issues/392))
-
-> `w-extend` is now deprecated
-
-**Old:**
-```html
-<div w-bind>
-    <some-component w-onEvent="handleEvent"/>
-</div>
-```
-or
-```html
-<some-component w-extend w-onEvent="handleEvent"/>
-```
-
-**New:**
-```html
-<some-component onEvent('handleEvent')/>
-```
-
-
-### Template as entry point for UI components ([#416](https://github.com/marko-js/marko/issues/416))
-
-**Old:**
-
-`index.js`
-```js
-module.exports = require('marko-widgets').defineComponent({
-    template: require('./template.marko'),
-    ...
-});
-```
-
-`template.marko`
-
-```html
-<div w-bind>
-    ...
-</div>
-```
-
-**New:**
-
-
-`component.js`
-
-```js
-module.exports = {
-    ...
-};
-```
-
-`index.marko`
-
-```html
-<div>
-    ...
-</div>
-```
-
-> The compiled template now exports the component
-
-### Deprecate `w-id` and `w-for` in favor of `ref` and `ref-for` ([#394](https://github.com/marko-js/marko/issues/394))
-
-The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
-
-**Old:**
-
-```html
-<input type="text" w-id="name" />
-```
-
-**New:**
-```html
-<input type="text" ref="name" />
-```
-
-Similarly, `w-for` has been been replaced with `for-ref`:
-
-**Old:**
-
-```html
-<label w-for="name">Name</label>
-<input type="text" w-id="name" />
-```
-
-**New:**
-```html
-<label for-ref="name">Name</label>
-<input type="text" ref="name" />
-```
-
-### Deprecate `w-preserve` ([#419](https://github.com/marko-js/marko/issues/419))
-
-**Old:**
-```html
-<div w-preserve>
-    ...
-</div>
-```
-
-**New:**
-```html
-<div no-update>
-    ...
-</div>
-```
-
-### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
-
-**Old:**
-```html
-<div style="color:#09c" w-preserve-attrs="style">
-    ...
-</div>
-```
-
-**New:**
-```html
-<div style:no-update="color:#09c">
-    ...
-</div>
-```
-
-### Deprecate `w-on*` in favor of `on*()` ([#420](https://github.com/marko-js/marko/issues/420))
-
-**Old:**
-```html
-<button w-on-click="handleClick">click me</button>
-```
-or
-```html
-<button w-onClick="handleClick">click me</button>
-```
-
-**New:**
-```html
-<button on-click('handleClick')>click me</button>
-```
-or
-```html
-<button onClick('handleClick')>click me</button>
-```
-
-### Allow on-* attribute to bind additional arguments ([#401](https://github.com/marko-js/marko/issues/401))
-
-**Old:**
-```html
-<ul for(color in colors)>
-    <li w-onClick="handleColorClick" data-color=color>${color}</li>
-</ul>
-```
-
-```js
-{
-    handleColorClick(event, el) {
-        console.log(el.getAttribute('data-color'), 'was clicked');
-    }
-}
-```
-
-**New:**
-```html
-<ul for(color in colors)>
-    <li onClick('handleColorClick', color)>${color}</li>
-</ul>
-```
-
-```js
-handleColorClick(color, event, el) {
-    console.log(color, 'was clicked');
-}
-```
-
-### Introduce the `<import>` tag ([#404](https://github.com/marko-js/marko/issues/404))
-
-Marko v4 introduces ES6 style imports for importing other JavaScript modules:
-
-**Old:**
-
-```html
-<script marko-init>
-    var helpers = require('./helpers');
-</script>
-<div>Total: ${helpers.formatCurrency(data.total))</div>
-```
-
-**New:**
-```html
-<import helpers from "./helpers"/>
-<div>Total: ${helpers.formatCurrency(data.total))</div>
-```
-
-### Allow dynamic custom tags/components to be used with `<include>` ([#139](https://github.com/marko-js/marko/issues/139))
-
-**Old:**
-```html
-<invoke data.myComponent.renderer({name: 'Frank'}, out)/>
-```
-
-**New:**
-```html
-<include(data.myComponent) name='Frank' />
-```
-or
-```html
-<include(data.myComponent, {name: 'Frank'}) />
-```
+You will no longer need to install `marko-widgets` as an external library, and there is more cohesion between the templates and components/widgets.
 
 ### New widget lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
-- **`onInput(input, out)`** replaces `getInitialProps`, `getInitialState`, `getWidgetConfig` and `getTemplateData`
+- **`onInput(input, out)`** replaces `getInitialProps`, `getInitialState` and `getWidgetConfig`
 
 - **`onMount()`** - replaces `init` (which runs when the component is first mounted to the DOM)
 
@@ -521,6 +192,204 @@ or
 }
 ```
 
+### Automatically watch widget state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
+
+**Old:**
+
+```js
+{
+    getInitialState(input) {
+        return {
+            count: input.count || 0
+        };
+    }    
+    increment() {
+        this.setState('count', this.state.count+1);
+    }
+}
+```
+
+**New:**
+
+```js
+{
+    onInput(input) {
+        this.state = {
+            count: input.count || 0
+        };
+    }    
+    increment() {
+        this.setState('count', this.state.count+1);
+    }
+}
+```
+
+In addition, the default state can now be declared:
+
+```js
+{
+    state: {
+        count: 0
+    }
+    onInput(input) {
+        this.state = {
+            count: input.count
+        };
+    }    
+    increment() {
+        this.setState('count', this.state.count+1);
+    }
+}
+```
+
+NOTE: The default state will be deeply cloned and used as the state. Any properties added to `this.state` will override the default state.
+
+### DOM insertion methods ([#415](https://github.com/marko-js/marko/issues/415))
+
+Methods for inserting the output of rendering a template into the DOM have been introduced with Marko v4:
+
+```js
+// Append to an existing DOM node:
+require('./template.marko')
+    .renderSync({ name: 'Frank '})
+    .appendTo(document.body);
+
+// Replace an existing DOM node:
+require('./template.marko')
+    .renderSync({ name: 'Frank '})
+    .replace(document.getElementById('foo'));
+```
+
+## Other Improvements
+
+### Only diff attributes that are rendered by Marko ([#417](https://github.com/marko-js/marko/issues/417))
+
+Previously, when diffing the DOM, all of the attributes on a real HTML element node were diffed with all of the attributes on a newly rendered HTML element node. This posed a problem when using Marko with third party libraries, such as animation libraries, that added HTML attributes that should have been left alone. The proposed workaround was to add the `w-preserve-attrs` attribute wherever needed.
+
+In Marko v4, only the attributes rendered by Marko are ever modified by Marko. Any attributes added by third-party libraries are simply ignored.
+
+### Allow multiple top-level DOM elements to be bound ([#393](https://github.com/marko-js/marko/issues/393))
+
+**Old:**
+```html
+<div w-bind>
+    <h1>The current count is, ${data.count}</h1>
+    <button onClick('incrementCount')>Increment Count</button>
+</div>
+```
+
+**New:**
+```html
+<h1>The current count is, ${data.count}</h1>
+<button onClick('incrementCount')>Increment Count</button>
+```
+
+### Template as entry point for UI components ([#416](https://github.com/marko-js/marko/issues/416))
+
+**Old:**
+
+`index.js`
+```js
+module.exports = require('marko-widgets').defineComponent({
+    template: require('./template.marko'),
+    ...
+});
+```
+
+`template.marko`
+
+```html
+<div w-bind>
+    ...
+</div>
+```
+
+**New:**
+
+
+`component.js`
+
+```js
+module.exports = {
+    ...
+};
+```
+
+`index.marko`
+
+```html
+<div>
+    ...
+</div>
+```
+
+> The compiled template now exports the component
+
+### Allow event handler attribute to bind additional arguments ([#401](https://github.com/marko-js/marko/issues/401))
+
+**Old:**
+```html
+<ul for(color in colors)>
+    <li w-onClick="handleColorClick" data-color=color>${color}</li>
+</ul>
+```
+
+```js
+handleColorClick(event, el) {
+    console.log(el.getAttribute('data-color'), 'was clicked');
+}
+```
+
+**New:**
+```html
+<ul for(color in colors)>
+    <li onClick('handleColorClick', color)>${color}</li>
+</ul>
+```
+
+```js
+handleColorClick(color, event, el) {
+    console.log(color, 'was clicked');
+}
+```
+
+NOTE: `w-on*` has been deprecated. See: [Deprecate `w-on*` in favor of `on*()`](#deprecate-w-on)
+
+### Introduce the `<import>` tag ([#404](https://github.com/marko-js/marko/issues/404))
+
+Marko v4 introduces ES6 style imports for importing other JavaScript modules:
+
+**Old:**
+
+```html
+<script marko-init>
+    var helpers = require('./helpers');
+</script>
+<div>Total: ${helpers.formatCurrency(data.total))</div>
+```
+
+**New:**
+```html
+import helpers from "./helpers"
+<div>Total: ${helpers.formatCurrency(data.total))</div>
+```
+
+### Allow dynamic custom tags/components to be used with `<include>` ([#139](https://github.com/marko-js/marko/issues/139))
+
+**Old:**
+```html
+<invoke data.myComponent.renderer({name: 'Frank'}, out)/>
+```
+
+**New:**
+```html
+<include(data.myComponent) name='Frank' />
+```
+or
+```html
+<include(data.myComponent, {name: 'Frank'}) />
+```
+
 ### Introduce `state` as a local variable ([#400](https://github.com/marko-js/marko/issues/400))
 
 **Old:**
@@ -531,8 +400,8 @@ or
 {
     getInitialState(input) {
         return {
-            name: 'Frank',
-            birthday: new Date(2000, 12, 24)
+            name: input.name,
+            birthday: input.birthday
         }
     },
     getTemplateData(state, input) {
@@ -564,8 +433,8 @@ or
         // `this.state` will be available as the `state` variable
         // in the template.
         this.state = {
-            name: 'Frank',
-            birthday: Date(2000, 12, 24)
+            name: input.name,
+            birthday: input.birthday
         };
     }
     getTemplateData(state) {
@@ -589,16 +458,11 @@ or
 </div>
 ```
 
-### Make output of render Promise-compatible ([#251](https://github.com/marko-js/marko/issues/251))
+### Make output of render `Promise`-compatible ([#251](https://github.com/marko-js/marko/issues/251))
 
 **Old:**
 ```js
-template.render({}, function(err, result) {});
-```
-```js
-template.render({})
-        .on('finish', function(result) {})
-        .on('error', function(err) {});
+template.render({}, function(err, html, out) {});
 ```
 
 **New:**
@@ -606,25 +470,13 @@ template.render({})
 template.render({})
         .then(function(result){})
         .catch(function(err) {});
-```
-> NOTE: callback/events still work as well
 
-### Deprecate `<init-widgets/>` ([#409](https://github.com/marko-js/marko/issues/409))
-
-**Old:**
-```html
-<html>
-    ...
-    <body>
-        ...
-        <init-widgets/>
-    </body>
-</html>
+// render() can now be used with async/await
+var out = await template.render({});
+out.appendTo(document.body);
 ```
 
-**New:**
-
-*Automatic widget initialization!*
+NOTE: callback/events still work as well
 
 ### Make `<await-reorderer/>` optional ([#410](https://github.com/marko-js/marko/issues/410))
 
@@ -686,7 +538,7 @@ var className = "foo"
 
 > NOTE: spaces are **allowed**, not required
 
-### Allow transformer to be registered at the template level ([#408](https://github.com/marko-js/marko/issues/408))
+### Allow compile-time transformers to be registered at the template level ([#408](https://github.com/marko-js/marko/issues/408))
 
 `marko.json`
 ```json
@@ -720,7 +572,9 @@ function foo() {
     console.log('bar');
 }/>
 ```
-or, in concise:
+
+Or, in concise:
+
 ```js
 function foo() {
     console.log('bar');
@@ -762,11 +616,205 @@ Get debug output
 <input type="text" pattern=/\w{2,20}/ />
 ```
 
-## Breaking changes/improvements
+## Deprecations
+
+A huge effort is being made to make this release as painless as possible and keep backwards compatibility wherever possible.  It should be possible to continue to use custom tags that were developed against v3 with the v4 release as long as there are no dependencies on features deprecated in Marko v3 that have now been removed in Marko v4 (see [Breaking Changes](#breaking-changes) below).
+
+Additionally, [`marko-migrate`](https://github.com/marko-js/marko-migrate) will be updated to handle many of the deprecations described below.
+
+### Deprecate `<script marko-init>` and replace with `render()` section ([#397](https://github.com/marko-js/marko/issues/397))
+
+**Old:**
+```html
+<script marko-init>
+    var format = require('format');
+</script>
+<var name="World"/>
+<div>Hello ${format(name)}</div>
+```
+
+**New:**
+```html
+var format=require('format')
+render()
+    var name='World'
+    <div>Hello ${format(name)}</div>
+```
+
+or, with the non-concise syntax:
+
+```html
+<var format=require('format')/>
+
+<render()>
+    <var name='World'/>
+    <div>Hello ${format(name)}</div>
+</render>
+```
+
+### Deprecate `w-bind` and make it optional when using a default name ([#394](https://github.com/marko-js/marko/issues/394), [#395](https://github.com/marko-js/marko/issues/395))
+
+**Old:**
+```html
+<div w-bind>
+    ...
+</div>
+```
+
+**New:**
+```html
+<div widget="./widget.js">
+    ...
+</div>
+```
+
+Or, applied as a tag (see next: multiple top level DOM elements):
+
+```html
+<script widget="./widget.js"/>
+<div>
+    ...
+</div>
+```
+
+Or, since `widget.js` is automatically recognized
+
+```html
+<div>
+    ...
+</div>
+```
+
+### Deprecate `w-id` and `w-for` in favor of `ref` and `ref-for` ([#394](https://github.com/marko-js/marko/issues/394))
+
+The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
+
+**Old:**
+
+```html
+<input type="text" w-id="name" />
+```
+
+**New:**
+```html
+<input type="text" ref="name" />
+```
+
+Similarly, `w-for` has been been replaced with `for-ref`:
+
+**Old:**
+
+```html
+<label w-for="name">Name</label>
+<input type="text" w-id="name" />
+```
+
+**New:**
+```html
+<label for-ref="name">Name</label>
+<input type="text" ref="name" />
+```
+
+<a name="deprecate-w-on"></a>
+
+### Deprecate `w-on*` in favor of `on*()` ([#420](https://github.com/marko-js/marko/issues/420))
+
+**Old:**
+```html
+<button w-on-click="handleClick">click me</button>
+```
+or
+```html
+<button w-onClick="handleClick">click me</button>
+```
+
+**New:**
+```html
+<button on-click('handleClick')>click me</button>
+```
+or
+```html
+<button onClick('handleClick')>click me</button>
+```
+
+### Deprecate `<init-widgets/>` ([#409](https://github.com/marko-js/marko/issues/409))
+
+**Old:**
+```html
+<html>
+    ...
+    <body>
+        ...
+        <init-widgets/>
+    </body>
+</html>
+```
+
+**New:**
+
+**Automatic widget initialization!**
+
+### Deprecate `w-preserve` and replace with `no-update` ([#419](https://github.com/marko-js/marko/issues/419))
+
+**Old:**
+```html
+<div w-preserve>
+    ...
+</div>
+```
+
+**New:**
+```html
+<div no-update>
+    ...
+</div>
+```
+
+### Deprecate `w-extend` and allow multiple widgets to be bound to the same HTML element ([#392](https://github.com/marko-js/marko/issues/392))
+
+> `w-extend` is now deprecated
+
+**Old:**
+```html
+<div w-bind>
+    <some-component w-onEvent="handleEvent"/>
+</div>
+```
+or
+```html
+<some-component w-extend w-onEvent="handleEvent"/>
+```
+
+**New:**
+```html
+<some-component onEvent('handleEvent')/>
+```
+
+NOTE: The outer most widget is what is returned when calling `getWidget()`/`getWidgetForEl()`.
+
+### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
+
+**Old:**
+```html
+<div style="color:#09c" w-preserve-attrs="style">
+    ...
+</div>
+```
+
+**New:**
+```html
+<div style:no-update="color:#09c">
+    ...
+</div>
+```
+
+<a name="breaking-changes"></a>
+
+## Breaking Changes
 
 In order to move forward it was necessary to introduce a few (minor) breaking changes. We are also removing support for some features that were already logging deprecation messages in v3.
 
-### Consistent Rendering API ([#389](https://github.com/marko-js/marko/issues/389))
+### Consistent rendering API ([#389](https://github.com/marko-js/marko/issues/389))
 
 **Old:**
 ```js
@@ -800,7 +848,9 @@ widget.renderSync(data); // returns `out`
 
 Also, `out` has been updated to implement DOM manipulation methods like `appendTo` that were previously only available from the `RenderResult` returned from widget renders.
 
-### Remove support for `empty`/`notEmpty` helpers ([#357](https://github.com/marko-js/marko/issues/357))
+NOTE: We will implement `out.toString()` and `out.toJSON()` so in many cases the `out` can be used as a string.
+
+### Remove support for deprecated `empty`/`notEmpty` helpers ([#357](https://github.com/marko-js/marko/issues/357))
 
 > Already deprecated in v3
 
@@ -809,7 +859,7 @@ template. While they can be helpful, we feel it is better if the developer
 explicitly imports only the exact helpers that your code depends on for
 improved modularity.
 
-### Remove hyphenated properties from input model (`data`) [#356](https://github.com/marko-js/marko/issues/356)
+### Remove hyphenated properties from input model [#356](https://github.com/marko-js/marko/issues/356)
 
 > Already deprecated in v3
 
@@ -831,7 +881,7 @@ Given a template like this:
 - Hello ${data.firstName}
 ```
 
-### Remove support for `<async-fragment>` and related tags ([#312](https://github.com/marko-js/marko/pull/312))
+### Remove support for deprecated `<async-fragment>` and related tags ([#312](https://github.com/marko-js/marko/pull/312))
 
 > Already deprecated in v3
 
