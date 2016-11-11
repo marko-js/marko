@@ -146,9 +146,16 @@ module.exports = {
         if (!o) {
             return;
         }
-        for (var k in o) {
-            if (o.hasOwnProperty(k)) {
-                func(k, o[k]);
+
+        if (Array.isArray(o)) {
+            for (var i=0; i<o.length; i++) {
+                func(i, o[i]);
+            }
+        } else {
+            for (var k in o) {
+                if (o.hasOwnProperty(k)) {
+                    func(k, o[k]);
+                }
             }
         }
     },
