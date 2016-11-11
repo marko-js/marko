@@ -71,6 +71,29 @@ module.exports = {
         return this;
     },
 
+    then: function(fn, fnErr) {
+        var self = this;
+        var promise = new Promise(function(resolve, reject) {
+            self.on('error', reject);
+            self.on('finish', function(data) {
+                try {
+                    resolve(fn(data));
+                } catch(err) {
+                    reject(err);
+                }
+            });
+        });
+
+        if (fnErr) {
+            promise = promise.catch(fnErr);
+        }
+        return promise;
+    },
+
+    catch: function(fnErr) {
+        return this.then(undefined, fnErr);
+    },
+
     appendTo: function(referenceEl) {
         var newNode = this.getNode(referenceEl.ownerDocument);
         dom.appendTo(newNode, referenceEl);
