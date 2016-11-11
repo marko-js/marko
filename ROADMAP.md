@@ -754,6 +754,49 @@ or
 
 **Automatic widget initialization!**
 
+### Deprecate `w-body` and replace with `include` ([#418](https://github.com/marko-js/marko/issues/418))
+
+**Old:**
+
+```html
+<div>
+    <h1>My Awesome Component</h1>
+    <div class="body" w-body=data.renderBody/>
+    </div>
+</div>
+```
+
+**New:**
+
+```html
+<div>
+    <h1>My Awesome Component</h1>
+    <div class="body" include(data.renderBody)/>
+</div>
+```
+
+Or, using the `<include>` tag:
+
+```html
+<div>
+    <h1>My Awesome Component</h1>
+    <div class="body">
+        <include(data.renderBody)/>
+    </div>
+</div>
+```
+
+Or, without any arguments:
+
+```html
+<div>
+    <h1>My Awesome Component</h1>
+    <div class="body">
+        <include/> <!-- equivalent to: <include()/>, <include(data.renderBody)/> -->
+    </div>
+</div>
+```
+
 ### Deprecate `w-preserve` and replace with `no-update` ([#419](https://github.com/marko-js/marko/issues/419))
 
 **Old:**
@@ -766,6 +809,22 @@ or
 **New:**
 ```html
 <div no-update>
+    ...
+</div>
+```
+
+### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
+
+**Old:**
+```html
+<div style="color:#09c" w-preserve-attrs="style">
+    ...
+</div>
+```
+
+**New:**
+```html
+<div style:no-update="color:#09c">
     ...
 </div>
 ```
@@ -791,22 +850,6 @@ or
 ```
 
 NOTE: The outer most widget is what is returned when calling `getWidget()`/`getWidgetForEl()`.
-
-### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
-
-**Old:**
-```html
-<div style="color:#09c" w-preserve-attrs="style">
-    ...
-</div>
-```
-
-**New:**
-```html
-<div style:no-update="color:#09c">
-    ...
-</div>
-```
 
 <a name="breaking-changes"></a>
 
