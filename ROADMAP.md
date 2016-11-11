@@ -859,7 +859,7 @@ template. While they can be helpful, we feel it is better if the developer
 explicitly imports only the exact helpers that your code depends on for
 improved modularity.
 
-### Remove hyphenated properties from input model [#356](https://github.com/marko-js/marko/issues/356)
+### Remove hyphenated properties from input model ([#356](https://github.com/marko-js/marko/issues/356))
 
 > Already deprecated in v3
 
