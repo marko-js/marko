@@ -409,32 +409,35 @@ or
 **Old:**
 ```html
 <ul for(color in colors)>
-    <li w-onClick="colorClick" data-color=color>${color}</li>
+    <li w-onClick="handleColorClick" data-color=color>${color}</li>
 </ul>
 ```
 
 ```js
-colorClick(event) {
-    console.log(event.target.getAttribute('data-color'), 'was clicked');
+handleColorClick(event, el) {
+    console.log(el.getAttribute('data-color'), 'was clicked');
 }
 ```
 
 **New:**
 ```html
 <ul for(color in colors)>
-    <li onClick('colorClick', color)>${color}</li>
+    <li onClick('handleColorClick', color)>${color}</li>
 </ul>
 ```
 
 ```js
-colorClick(color, event) {
+handleColorClick(color, event, el) {
     console.log(color, 'was clicked');
 }
 ```
 
 ### Introduce the `<import>` tag ([#404](https://github.com/marko-js/marko/issues/404))
 
+Marko v4 introduces ES6 style imports for importing other JavaScript modules:
+
 **Old:**
+
 ```html
 <script marko-init>
     var helpers = require('./helpers');
@@ -448,7 +451,7 @@ colorClick(color, event) {
 <div>Total: ${helpers.formatCurrency(data.total))</div>
 ```
 
-### Allow dynamic custom tags to be used with `<include>` ([#139](https://github.com/marko-js/marko/issues/139))
+### Allow dynamic custom tags/components to be used with `<include>` ([#139](https://github.com/marko-js/marko/issues/139))
 
 **Old:**
 ```html
@@ -466,7 +469,7 @@ or
 
 ### New widget lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
-**`onInput`** replaces `getInitialProps`, `getInitialState`, & `getWidgetConfig`
+**`onInput`** replaces `getInitialProps`, `getInitialState` and `getWidgetConfig`
 
 **`onMount`** replaces `init` (which ran when the component first mounts)
 
@@ -510,45 +513,60 @@ onMount() {
 **Old:**
 
 `component.js`
+
 ```js
-getInitialState(input) {
-    return {
-        name: 'Frank',
-        birthday: Date(2000, 12, 24)
-    }
-},
-getTemplateData(state, input) {
-    return {
-        age: Date() - state.birthday
-    }
-},
-...
+{
+    getInitialState(input) {
+        return {
+            name: 'Frank',
+            birthday: new Date(2000, 12, 24)
+        }
+    },
+    getTemplateData(state, input) {
+        return {
+            name: state.name,
+            age: calculateAge(state.birthday)
+        }
+    },
+    ...
+}
+
 ```
+
 `template.marko`
+
 ```html
-...
-    <h1 marko-body=data.staticHeader/>
-    <div>${data.count}</div>
-...
+<div>
+    Hello ${data.name}! You are ${data.age} year(s) old.
+</div>
 ```
 
 **New:**
 
 `component.js`
+
 ```js
-onInput(input) {
-    this.state = {
-        count:0
+{
+    onInput(input) {
+        this.state = {
+            name: 'Frank',
+            birthday: Date(2000, 12, 24)
+        }
+    },
+    getTemplateData(state, input) {
+        age: calculateAge(state.birthday) // Only need to pass values derived
+                                          // from the state to the template.
     }
-},
-...
+    ...
+}
 ```
+
 `template.marko`
+
 ```html
-...
-    <h1 no-update>${data.staticHeader}</h1>
-    <div>${state.count}</div>
-...
+<div>
+    Hello ${state.name}! You are ${data.age} year(s) old.
+</div>
 ```
 
 ### Make output of render Promise-compatible ([#251](https://github.com/marko-js/marko/issues/251))
@@ -657,6 +675,7 @@ var className = "foo"
 }
 ```
 `my-transformer.js`
+
 ```js
 module.exports = function transform(rootNode, context) {
     // ...
@@ -737,7 +756,7 @@ var data = {};
 
 template.render(data); // returns `out`
 template.render(data, (err, html, out) => {});
-template.renderSync(data); // returns an html string
+template.renderSync(data); // returns a String representing the HTML output
 
 widget.render(data); // returns a `RenderResult`
 widget.render(data, (err, renderResult) => {});
@@ -759,15 +778,13 @@ widget.render(data, (err, out) => {});
 widget.renderSync(data); // returns `out`
 ```
 
-Also, `out` has been updated to implement DOM manipulation methods like
-`appendTo` that were previously only available from the `RenderResult` returned
-from widget renders.
+Also, `out` has been updated to implement DOM manipulation methods like `appendTo` that were previously only available from the `RenderResult` returned from widget renders.
 
 ### Remove support for `empty`/`notEmpty` helpers ([#357](https://github.com/marko-js/marko/issues/357))
 
 > Already deprecated in v3
 
-The empty/notEmpty helpers were automatically being added to every compiled
+The `empty`/`notEmpty` helpers were automatically being added to every compiled
 template. While they can be helpful, we feel it is better if the developer
 explicitly imports only the exact helpers that your code depends on for
 improved modularity.
