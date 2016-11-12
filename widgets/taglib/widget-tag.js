@@ -210,7 +210,7 @@ module.exports = function widgetTag(input, out) {
 
         // Only render the widget if it needs to be rerendered
         if (shouldRenderBody) {
-            input.renderBody(out, widgetDef);
+            input.renderBody(out, widgetDef, state);
             markoWidgets.writeDomEventsEl(widgetDef, out);
         }
 

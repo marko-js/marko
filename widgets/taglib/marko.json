@@ -130,7 +130,7 @@
         "@id": "string",
         "@hasDomEvents": "number",
         "@body": "string",
-        "var": "widget",
+        "vars": ["widget", "state"],
         "import-var": {
             "_cfg": "data.widgetConfig",
             "_state": "data.widgetState",
