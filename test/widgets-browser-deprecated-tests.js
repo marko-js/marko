@@ -3,9 +3,9 @@
 var BrowserHelpers = require('./util/BrowserHelpers');
 
 if (typeof window !== 'undefined') {
-    describe('marko-widgets (browser)', function() {
+    describe('marko-widgets deprecated (browser)', function() {
         require('./util/autotest').runTests(
-            require('./autotests/widgets-browser/autotests.tests'),
+            require('./autotests/widgets-browser-deprecated/autotests.tests'),
             function run(testFunc, done) {
                 var helpers = new BrowserHelpers();
 

@@ -2,34 +2,27 @@
 var removeHyphens = require('../../compiler/util/removeDashes');
 
 module.exports = function codeGenerator(el, codegen) {
-    let argument = el.argument;
-    if (!argument) {
-        argument = 'data.renderBody';
-    }
-
     let builder = codegen.builder;
-    let args = builder.parseJavaScriptArgs(argument);
-    if (args.length === 0) {
-        codegen.addError('Template path is required for the <include(templatePath[, templateData])> tag');
-        return;
-    } else if (args.length > 2) {
-        codegen.addError('Wrong number of arguments passed to the <include> tag. Expected: <include(templatePath[, templateData])> tag');
-        return;
-    }
 
-    let templatePath = args[0];
-    let targetVar;
+    let target;
+    let data;
+
+    if (el.argument) {
+        let args = el.argument && builder.parseJavaScriptArgs(el.argument);
+        target = args[0];
+        data = args[1];
+    }
 
     var isTemplate = false;
 
-    if (templatePath.type === 'Literal') {
-        targetVar = codegen.context.importTemplate(templatePath.value);
-        isTemplate = true;
-    } else {
-        targetVar = templatePath;
+    if (target) {
+        if (target.type === 'Literal') {
+            target = codegen.context.importTemplate(target.value);
+            isTemplate = true;
+        }
     }
 
-    let templateData = {};
+    let finalData = {};
     let attrs = el.getAttributes();
     attrs.forEach((attr) => {
         var propName = attr.name;
@@ -37,40 +30,58 @@ module.exports = function codeGenerator(el, codegen) {
             propName = removeHyphens(propName); // Convert the property name to camel case
         }
 
-        templateData[propName] = attr.value;
+        finalData[propName] = attr.value;
     });
 
     if (el.body && el.body.length) {
-        templateData.renderBody = builder.renderBodyFunction(el.body);
+        finalData.renderBody = builder.renderBodyFunction(el.body);
     }
 
-    if (args.length === 2) {
-        if (Object.keys(templateData).length === 0) {
-            templateData = args[1];
+    if (data) {
+        if (Object.keys(finalData).length === 0) {
+            finalData = data;
         } else {
             let mergeVar = codegen.context.helper('merge');
-            templateData = builder.functionCall(mergeVar, [
-                builder.literal(templateData), // Input props from the attributes take precedence
-                args[1] // The template data object is passed as the second argument: <include("./foo.marko", { ... })/>
+            finalData = builder.functionCall(mergeVar, [
+                builder.literal(finalData), // Input props from the attributes take precedence
+                data // The template data object is passed as the second argument: <include("./foo.marko", { ... })/>
             ]);
         }
     } else {
-        templateData = builder.literal(templateData);
+        if (Object.keys(finalData).length === 0) {
+            finalData = null;
+        } else {
+            finalData = builder.literal(finalData);
+        }
     }
 
     if (isTemplate) {
-        let renderMethod = builder.memberExpression(targetVar, builder.identifier('render'));
-        let renderArgs = [ templateData, 'out' ];
+        let renderMethod = builder.memberExpression(target, builder.identifier('render'));
+        if (!finalData) {
+            finalData = builder.literal({});
+        }
+        let renderArgs = [ finalData, builder.identifierOut()  ];
         let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
         return renderFunctionCall;
     } else {
-        let includeVar = codegen.context.helper('include');
-        let includeArgs = [ targetVar, 'out'];
+        if (this.generateCodeForDynamicInclude) {
+            return this.generateCodeForDynamicInclude({
+                target: target,
+                data: finalData
+            }, codegen);
+        } else {
+            if (!target) {
+                target = builder.memberExpression(builder.identifier('data'), builder.identifier('renderBody'));
+            }
 
-        if (Object.keys(templateData).length > 0) {
-            includeArgs.push(templateData);
+            let includeVar = codegen.context.helper('include');
+            let includeArgs = [ target, builder.identifierOut() ];
+
+            if (finalData) {
+                includeArgs.push(finalData);
+            }
+
+            return builder.functionCall(includeVar, includeArgs);
         }
-
-        return builder.functionCall(includeVar, includeArgs);
     }
 };

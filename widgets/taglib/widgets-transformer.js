@@ -19,8 +19,19 @@ var getTransformHelper = require('./util/getTransformHelper');
 module.exports = function transform(el, context) {
     var transformHelper = getTransformHelper(el, context);
 
+    if (el.hasAttribute('w-body')) {
+        var bodyAttr = el.getAttributeValue('w-body');
+        el.removeAttribute('w-body');
+
+        let includeNode = context.createNodeForEl('include', null, bodyAttr && bodyAttr.toString());
+        el.appendChild(includeNode);
+    }
+
     if (el.tagName === 'widget-types') {
         context.setFlag('hasWidgetTypes');
+    } else if (el.tagName === 'include') {
+        transformHelper.handleIncludeNode(el);
+        return;
     }
 
     if (el.hasAttribute('w-el-id')) {

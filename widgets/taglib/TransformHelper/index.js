@@ -110,14 +110,18 @@ class TransformHelper {
     buildWidgetTypeNode(path, def) {
         return buildWidgetTypeNode(path, this.dirname, def, this);
     }
+
+    getTransformHelper(el) {
+        return new TransformHelper(el, this.context);
+    }
 }
 
 TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
 TransformHelper.prototype.getContainingWidgetNode = require('./getContainingWidgetNode');
+TransformHelper.prototype.handleIncludeNode = require('./handleIncludeNode');
 TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');
 TransformHelper.prototype.handleWidgetPreserve = require('./handleWidgetPreserve');
 TransformHelper.prototype.handleWidgetPreserveAttrs = require('./handleWidgetPreserveAttrs');
-TransformHelper.prototype.handleWidgetBody = require('./handleWidgetBody');
 TransformHelper.prototype.handleWidgetBind = require('./handleWidgetBind');
 TransformHelper.prototype.handleWidgetExtend = require('./handleWidgetExtend');
 TransformHelper.prototype.handleWidgetFor = require('./handleWidgetFor');

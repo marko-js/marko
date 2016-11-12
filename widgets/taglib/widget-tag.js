@@ -18,7 +18,7 @@
 var markoWidgets = require('../');
 var extend = require('raptor-util/extend');
 var widgetArgsId = require('../widget-args-id');
-var widgetBodyHelper = require('./helpers/widgetBody');
+var includeHelper = require('./helpers/include');
 
 var DUMMY_WIDGET_DEF = {
         elId: function () {
@@ -50,7 +50,7 @@ function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
 
     if (widgetBody && existingWidget.bodyEl) {
         hasUnpreservedBody = true;
-        widgetBodyHelper(out, existingWidget.bodyEl.id, widgetBody, existingWidget);
+        includeHelper(widgetBody, out, null, existingWidget.bodyEl.id, existingWidget.bodyEl.id);
     }
 
     out.endElement();

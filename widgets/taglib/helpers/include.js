@@ -1,9 +1,14 @@
-var markoWidgets = require('../../');
 var isBrowser = typeof window !== 'undefined';
+var normalInclude = require('../../../runtime/include');
+var markoWidgets = require('../../');
 
-module.exports = function widgetBody(out, id, content, widget) {
-    if (id != null && content == null) {
-        if (isBrowser) {
+module.exports = function include(target, out, data, id, widget) {
+    if (typeof target === 'string') {
+        out.text(target);
+    } else if (target) {
+        normalInclude(target, out, data);
+    } else if (isBrowser) {
+        if (id) {
             // There is no body content so let's see if we should reuse
             // the existing body content in the DOM
             var existingEl = document.getElementById(id);
@@ -11,12 +16,8 @@ module.exports = function widgetBody(out, id, content, widget) {
                 var widgetsContext = markoWidgets.getWidgetsContext(out);
                 widgetsContext.addPreservedDOMNode(existingEl, true /* body only */);
             }
+        } else {
+            throw new Error('Invalid include');
         }
-    } else if (typeof content === 'function') {
-        content(out, widget);
-    } else if (typeof content === 'string') {
-        out.text(content);
-    } else {
-        throw new Error('Unexpected content');
     }
 };
