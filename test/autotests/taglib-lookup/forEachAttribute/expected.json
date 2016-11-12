@@ -8,6 +8,7 @@
     "else-if",
     "else",
     "for",
+    "include",
     "while",
     "w-bind",
     "w-scope",
