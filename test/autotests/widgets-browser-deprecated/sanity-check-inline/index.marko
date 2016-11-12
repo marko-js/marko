@@ -1,0 +1,16 @@
+<div w-bind>
+    Hello ${data.name}!
+</div>
+
+<script component>
+    return {
+        onInput: function(input) {
+            this.state = {
+                name: input.name
+            };
+        },
+        setName: function(newName) {
+            this.setState('name', newName);
+        }
+    };
+</script>

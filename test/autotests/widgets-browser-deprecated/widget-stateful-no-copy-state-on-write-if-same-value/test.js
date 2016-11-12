@@ -6,12 +6,9 @@ module.exports = function(helpers) {
         label: 'Initial Label'
     });
 
-    expect(widget.el.className).to.contain('large');
-    expect(widget.el.innerHTML).to.contain('Initial Label');
-
     require('marko/widgets').batchUpdate(function() {
-        widget.setSize('small');
+        var oldState = widget.state;
+        widget.setState('size', 'large');
+        expect(widget.state).to.equal(oldState);
     });
-
-    expect(widget.el.className).to.contain('small');
 };
