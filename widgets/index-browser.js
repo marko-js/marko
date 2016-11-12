@@ -83,6 +83,11 @@ exports.c = function(component, template) {
     return exports.defineComponent(component);
 };
 
+exports.r = function(renderer, template) {
+    renderer.template = template;
+    return exports.defineRenderer(renderer);
+};
+
 exports.batchUpdate = updateManager.batchUpdate;
 exports.onAfterUpdate = updateManager.onAfterUpdate;
 

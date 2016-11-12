@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+var resolveFrom = require('resolve-from');
 
 function isTemplateMainEntry(context) {
     let filename = path.basename(context.filename);
@@ -12,7 +13,7 @@ function isTemplateMainEntry(context) {
     return filename === 'index';
 }
 
-function isCombinedWidget(widgetModulePath) {
+function checkCombinedComponent(widgetModulePath) {
     let filename = path.basename(widgetModulePath);
     let ext = path.extname(filename);
     if (ext) {
@@ -20,6 +21,13 @@ function isCombinedWidget(widgetModulePath) {
     }
 
     return filename !== 'widget';
+}
+
+function checkSplitComponent(context) {
+    let filename = context.filename;
+    let dir = path.dirname(filename);
+    let rendererPath = resolveFrom(dir, './renderer');
+    return rendererPath != null;
 }
 
 module.exports = function handleWidgetBind() {
@@ -61,7 +69,7 @@ module.exports = function handleWidgetBind() {
 
             context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    return buildExport(transformHelper, component, template);
+                    return buildComponentExport(transformHelper, component, template);
                 };
             });
         } else {
@@ -89,9 +97,20 @@ module.exports = function handleWidgetBind() {
             bindAttrValue);
     }
 
-    let isComponentExport = isMain && isCombinedWidget(modulePath);
+    let isComponentExport;
+    let isRendererExport;
+    let rendererPath;
 
-    if (isComponentExport) {
+    if (isMain) {
+        if (checkCombinedComponent(modulePath)) {
+            isComponentExport = true;
+        } else if (checkSplitComponent(context)) {
+            isRendererExport = true;
+            rendererPath = './renderer';
+        }
+    }
+
+    if (isComponentExport || isRendererExport) {
         transformHelper.markoWidgetsVar = builder.identifier('marko_widgets');
     }
 
@@ -100,7 +119,7 @@ module.exports = function handleWidgetBind() {
 
         let def;
 
-        if (isMain) {
+        if (isMain && isComponentExport) {
             def = builder.functionDeclaration(null, [], [
                 builder.returnStatement(builder.memberExpression(builder.identifier('module'), builder.identifier('exports')))
             ]);
@@ -110,14 +129,23 @@ module.exports = function handleWidgetBind() {
 
         widgetAttrs.type = widgetTypeNode;
 
-        if (isComponentExport) {
+        if (isComponentExport || isRendererExport) {
             this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    var component = builder.require(
-                        builder.literal(modulePath)
-                    );
+                    if (isComponentExport) {
+                        let component = builder.require(
+                            builder.literal(modulePath)
+                        );
 
-                    return buildExport(transformHelper, component, template);
+                        return buildComponentExport(transformHelper, component, template);
+                    } else {
+                        let renderer = builder.require(
+                            builder.literal(rendererPath)
+                        );
+
+                        return buildRendererExport(transformHelper, renderer, template);
+                    }
+
                 };
             });
         }
@@ -167,7 +195,7 @@ function getInlineComponent(context) {
     return component;
 }
 
-function buildExport(transformHelper, component, template) {
+function buildComponentExport(transformHelper, component, template) {
     let builder = transformHelper.builder;
     return [
         builder.assignment(
@@ -187,6 +215,33 @@ function buildExport(transformHelper, component, template) {
                 ),
                 [
                     builder.identifier('component'),
+                    builder.identifier('template')
+                ]
+            )
+        )
+    ];
+}
+
+function buildRendererExport(transformHelper, renderer, template) {
+    let builder = transformHelper.builder;
+    return [
+        builder.assignment(
+            builder.var('renderer'),
+            renderer
+        ),
+        builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
+        builder.assignment(
+            builder.memberExpression(
+                builder.identifier('module'),
+                builder.identifier('exports')
+            ),
+            builder.functionCall(
+                builder.memberExpression(
+                    transformHelper.markoWidgetsVar,
+                    builder.identifier('r')
+                ),
+                [
+                    builder.identifier('renderer'),
                     builder.identifier('template')
                 ]
             )
