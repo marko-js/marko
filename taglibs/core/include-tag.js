@@ -4,7 +4,7 @@ var removeHyphens = require('../../compiler/util/removeDashes');
 module.exports = function codeGenerator(el, codegen) {
     let argument = el.argument;
     if (!argument) {
-        return;
+        argument = 'data.renderBody';
     }
 
     let builder = codegen.builder;
