@@ -210,3 +210,5 @@ exports.registerTaglib = function(path) {
     taglibLookup.registerTaglib(path);
     clearCaches();
 };
+
+exports.isVDOMSupported = true;
