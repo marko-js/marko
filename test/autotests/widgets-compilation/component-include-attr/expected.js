@@ -23,7 +23,7 @@ function render(data, out) {
       _state: data.widgetState,
       _props: data.widgetProps,
       _body: data.widgetBody,
-      renderBody: function renderBody(out, widget) {
+      renderBody: function renderBody(out, widget, state) {
         out.w("<div" +
           marko_attr("id", widget.id) +
           marko_attrs(marko_widgetAttrs(widget)) +
