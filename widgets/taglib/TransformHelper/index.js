@@ -21,6 +21,7 @@ var nodePath = require('path');
 var WidgetArgs = require('./WidgetArgs');
 var getRequirePath = require('../getRequirePath');
 var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');
+var resolveFrom = require('resolve-from');
 
 class TransformHelper {
     constructor(el, context) {
@@ -70,11 +71,11 @@ class TransformHelper {
 
     getDefaultWidgetModule() {
         var dirname = this.dirname;
-        if (fs.existsSync(nodePath.join(dirname, 'component.js'))) {
+        if (resolveFrom(dirname, './component')) {
             return './component';
-        } else if (fs.existsSync(nodePath.join(dirname, 'widget.js'))) {
+        } else if (resolveFrom(dirname, './widget')) {
             return './widget';
-        } else if (fs.existsSync(nodePath.join(dirname, 'index.js'))) {
+        } else if (resolveFrom(dirname, './')) {
             return './';
         } else {
             return null;
