@@ -287,6 +287,22 @@ describe('async-writer' , function() {
         });
     });
 
+    it('should catch error in promise catch if `error` listener only set inside mixin', function(done) {
+        const out = new AsyncStream();
+
+        out.catch((err) => {
+            expect(err).to.be.an('error');
+            expect(out.getOutput()).to.equal('1');
+            done();
+        }).then((data) => {
+            throw new Error('Should not get here!');
+        });
+
+        out.write('1');
+        out.error(new Error('test'));
+        out.write('2');
+    });
+
     it('should support chaining', function(done) {
         var errors = [];
         var out = new AsyncStream()
