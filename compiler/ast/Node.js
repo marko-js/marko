@@ -385,6 +385,17 @@ class Node {
         if (!isPreserveWhitespace) {
             literalTextNodes.forEach(trim);
         }
+
+        literalTextNodes.forEach((textNode) => {
+            if (textNode.argument.value === '') {
+                textNode.detach();
+            }
+        });
+    }
+
+    get childCount() {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        return this.body.length;
     }
 }
 
