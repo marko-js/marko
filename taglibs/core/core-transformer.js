@@ -144,6 +144,14 @@ var coreAttrHandlers = [
             el.detach();
             return null;
         }
+    ],
+    [
+        'include', function(attr, node, el) {
+            var context = this.context;
+
+            var includeNode = context.createNodeForEl('include', null, attr.argument);
+            node.appendChild(includeNode);
+        }
     ]
 ];
 

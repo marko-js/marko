@@ -283,6 +283,23 @@
                 }
             ]
         },
+        "@include": {
+            "autocomplete": [
+                {
+                    "displayText": "include(<template>)",
+                    "snippet": "include(${1:\"./target.marko\"})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                },
+                {
+                    "displayText": "include()",
+                    "snippet": "include()",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                }
+            ]
+        },
         "@while": {
             "type": "statement",
             "autocomplete": [
