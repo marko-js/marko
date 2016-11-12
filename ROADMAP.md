@@ -761,7 +761,7 @@ or
 ```html
 <div>
     <h1>My Awesome Component</h1>
-    <div class="body" w-body=data.renderBody/>
+    <div class="body" w-body/>
     </div>
 </div>
 ```
@@ -771,28 +771,30 @@ or
 ```html
 <div>
     <h1>My Awesome Component</h1>
-    <div class="body" include(data.renderBody)/>
+    <div class="body" include()/>
 </div>
 ```
 
-Or, using the `<include>` tag:
+Or, as a tag:
 
 ```html
 <div>
     <h1>My Awesome Component</h1>
     <div class="body">
-        <include(data.renderBody)/>
+        <include()/>
     </div>
 </div>
 ```
 
-Or, without any arguments:
+NOTE: The parens (i.e., `()`) are optional for both the include attribute and the include tag
+
+Or, with an argument value:
 
 ```html
 <div>
     <h1>My Awesome Component</h1>
     <div class="body">
-        <include/> <!-- equivalent to: <include()/>, <include(data.renderBody)/> -->
+        <include(data.renderBody || data.label)/>
     </div>
 </div>
 ```
