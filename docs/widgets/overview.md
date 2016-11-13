@@ -257,7 +257,7 @@ module.exports = require('marko-widgets').defineComponent({
 ```xml
 <div w-bind>
 	<app-overlay title="My Overlay"
-		w-id="overlay"
+		ref="overlay"
 		w-onBeforeHide="handleOverlayBeforeHide">
 		Body content for overlay.
 	</app-overlay>

@@ -8,5 +8,5 @@ module.exports = function(helpers) {
 
     expect(forElId).to.exist;
     expect(inputEl.value).to.equal('test');
-    expect(label.getAttribute('w-for')).to.equal(null);
+    expect(label.getAttribute('for-ref')).to.equal(null);
 };

@@ -28,6 +28,24 @@
             "type": "expression",
             "preserve-name": true
         },
+        "@for-ref": {
+            "type": "string",
+            "preserve-name": true
+        },
+        "@ref": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "ref=\"<method>\"",
+                    "snippet": "ref=\"${1:method}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                }
+            ]
+        },
         "@w-for": {
             "type": "string",
             "preserve-name": true
@@ -37,7 +55,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "displayText": "w-id=\"<method>\"",
+                    "displayText": "w-id=\"<method>\" (Deprecated)",
                     "snippet": "w-id=\"${1:method}\"",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
                 },
