@@ -16,6 +16,8 @@
 
 module.exports = function handleWidgetFor() {
     var el = this.el;
+    var context = this.context;
+    
     var widgetFor;
     if (el.hasAttribute('for-ref')) {
         widgetFor = el.getAttributeValue('for-ref');
@@ -39,7 +41,7 @@ module.exports = function handleWidgetFor() {
 
     // Handle the "for-ref" attribute
     if (el.hasAttribute('for')) {
-        this.addError('The "for-ref" and "w-for" attribute cannot be used in conjuction with the "for" attribute.');
+        this.addError('The "for-ref" and "w-for" attribute cannot be used in conjuction with the "for" attribute. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
     } else {
         el.setAttributeValue(
             'for',
