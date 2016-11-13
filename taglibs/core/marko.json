@@ -9,6 +9,19 @@
             }
         ]
     },
+    "<const>": {
+        "node-factory": "./const-tag",
+        "autocomplete": [
+            {
+                "snippet": "const ${1:varName}=${2:value}",
+                "openTagOnly": true,
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            }
+        ]
+    },
     "<else>": {
         "node-factory": "./else-tag",
         "attributes": {},
@@ -124,6 +137,19 @@
             },
             {
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
+            }
+        ]
+    },
+    "<let>": {
+        "node-factory": "./let-tag",
+        "autocomplete": [
+            {
+                "snippet": "let ${1:varName}=${2:value}",
+                "openTagOnly": true,
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
             }
         ]
     },
