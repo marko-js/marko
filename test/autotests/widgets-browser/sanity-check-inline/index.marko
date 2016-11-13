@@ -2,8 +2,8 @@
     Hello ${data.name}!
 </div>
 
-<script component>
-    return {
+<script>
+    module.exports = {
         onInput: function(input) {
             this.state = {
                 name: input.name

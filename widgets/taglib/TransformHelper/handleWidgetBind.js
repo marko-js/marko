@@ -1,7 +1,10 @@
 'use strict';
 
-let path = require('path');
-var resolveFrom = require('resolve-from');
+const path = require('path');
+const resolveFrom = require('resolve-from');
+const esprima = require('esprima');
+const estraverse = require('estraverse');
+const escodegen = require('escodegen');
 
 function isTemplateMainEntry(context) {
     let filename = path.basename(context.filename);
@@ -102,7 +105,7 @@ module.exports = function handleWidgetBind() {
     let rendererPath;
 
     if (isMain) {
-        if (checkCombinedComponent(modulePath)) {
+        if (modulePath && checkCombinedComponent(modulePath)) {
             isComponentExport = true;
         } else if (checkSplitComponent(context)) {
             isRendererExport = true;
@@ -181,18 +184,65 @@ module.exports = function handleWidgetBind() {
 };
 
 function getInlineComponent(context) {
-    var builder = context.builder;
-    var component;
+    let builder = context.builder;
+    let component;
     context.root.body.array.some(node => {
-        if(node.tagName === 'script' && node.getAttribute('component')) {
-            node.detach();
-            component = builder.selfInvokingFunction([
-                builder.code(node.body.array[0].argument.value)
-            ]);
-            return true;
+        if(node.tagName === 'script') {
+            let hasExport = false;
+            let script = node.body.array[0].argument.value;
+            let tree = esprima.parse(script, { sourceType:'module' });
+            let updatedTree = estraverse.replace(tree, {
+                enter: function(node) {
+                    if(isModuleExports(node)) {
+                        hasExport = true;
+                        node.left = {
+                            type: 'Identifier',
+                            name: '__component'
+                        };
+                        this.break();
+                    } else if (node.type === 'ExportDefaultDeclaration') {
+                        hasExport = true;
+                        return {
+                            type: 'ExpressionStatement',
+                            expression: {
+                                type: 'AssignmentExpression',
+                                operator: '=',
+                                left: {
+                                    type: 'Identifier',
+                                    name: '__component'
+                                },
+                                right: node.declaration
+                            }
+                        };
+                    }
+                }
+            });
+
+            if(hasExport) {
+                node.detach();
+                component = builder.selfInvokingFunction([
+                    builder.var('__component'),
+                    builder.code(
+                        escodegen.generate(updatedTree)
+                    ),
+                    builder.returnStatement('__component')
+                ]);
+            }
+
+            return hasExport;
         }
     });
     return component;
+}
+
+function isModuleExports(node) {
+    return node.type === 'AssignmentExpression' &&
+           node.operator === '=' &&
+           node.left.type === 'MemberExpression' &&
+           node.left.object.type === 'Identifier' &&
+           node.left.object.name === 'module' &&
+           node.left.property.type === 'Identifier' &&
+           node.left.property.name === 'exports';
 }
 
 function buildComponentExport(transformHelper, component, template) {

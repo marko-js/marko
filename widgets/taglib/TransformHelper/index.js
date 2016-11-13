@@ -15,9 +15,6 @@
  */
 'use strict';
 
-var tryRequire = require('try-require');
-var fs = tryRequire('fs', require);
-var nodePath = require('path');
 var WidgetArgs = require('./WidgetArgs');
 var getRequirePath = require('../getRequirePath');
 var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');

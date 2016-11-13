@@ -1,7 +1,11 @@
 var template = require("marko/html").c(__filename);
 
 var component = (function() {
-  return {};
+  var __component;
+
+  __component = {};
+
+  return __component;
 })();
 
 var marko_widgets = require("marko/widgets/index");
