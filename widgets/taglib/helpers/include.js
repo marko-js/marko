@@ -6,7 +6,7 @@ module.exports = function include(target, out, data, id, widget) {
     if (typeof target === 'string') {
         out.text(target);
     } else if (target) {
-        normalInclude(target, out, data);
+        normalInclude(target, out, data || widget);
     } else if (isBrowser) {
         if (id) {
             // There is no body content so let's see if we should reuse

@@ -1,15 +1,14 @@
 'use strict';
-require('raptor-polyfill/array/forEach');
 require('raptor-polyfill/string/endsWith');
 
 var logger = require('raptor-logging').logger(module);
-var ready = require('./dom').ready;
 var _addEventListener = require('./addEventListener');
-var registry = require('./registry');
 var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
 var defaultDocument = typeof document != 'undefined' && document;
 var events = require('../runtime/events');
+
+var registry; // We initialize this later to avoid issues with circular dependencies
 
 function invokeWidgetEventHandler(widget, targetMethodName, args) {
     var method = widget[targetMethodName];
@@ -310,7 +309,7 @@ exports.initClientRendered = initClientRendered;
  *   	config: { w0: {...}, ... }
  *   }
  */
-exports.initServerRendered = function(dataIds, doc) {
+function initServerRendered(dataIds, doc) {
     var stateStore;
     var configStore;
     if (!doc) {
@@ -323,68 +322,54 @@ exports.initServerRendered = function(dataIds, doc) {
         dataIds = dataIds.ids;
     }
 
-    function doInit() {
-        // Ensure that event handlers to handle delegating events are
-        // always attached before initializing any widgets
-        eventDelegation.init();
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any widgets
+    eventDelegation.init();
 
-        if (typeof dataIds !== 'string') {
-            var idsEl = doc.getElementById('markoWidgets');
-            if (!idsEl) { // If there is no index then do nothing
-                return;
+    if (dataIds) {
+
+        stateStore = stateStore || window.$markoWidgetsState;
+        configStore = configStore || window.$markoWidgetsConfig;
+
+        // W have a comma-separated of widget element IDs that need to be initialized
+        var ids = dataIds.split(',');
+        var len = ids.length;
+        var state;
+        var config;
+        for (var i=0; i<len; i++) {
+            var id = ids[i];
+            var el = doc.getElementById(id);
+            if (!el) {
+                throw new Error('DOM node for widget with ID "' + id + '" not found');
             }
 
-            // Make sure widgets are only initialized once by checking a flag
-            if (doc.markoWidgetsInitialized === true) {
-                return;
+            if (stateStore) {
+                state = stateStore[id];
+                delete stateStore[id];
+            } else {
+                state = undefined;
             }
 
-            // Set flag to avoid trying to do this multiple times
-            doc.markoWidgetsInitialized = true;
-
-            dataIds = idsEl ? idsEl.getAttribute('data-ids') : null;
-
-        }
-
-        if (dataIds) {
-
-            stateStore = stateStore || window.$markoWidgetsState;
-            configStore = configStore || window.$markoWidgetsConfig;
-
-            // W have a comma-separated of widget element IDs that need to be initialized
-            var ids = dataIds.split(',');
-            var len = ids.length;
-            var state;
-            var config;
-            for (var i=0; i<len; i++) {
-                var id = ids[i];
-                var el = doc.getElementById(id);
-                if (!el) {
-                    throw new Error('DOM node for widget with ID "' + id + '" not found');
-                }
-
-                if (stateStore) {
-                    state = stateStore[id];
-                    delete stateStore[id];
-                } else {
-                    state = undefined;
-                }
-
-                if (configStore) {
-                    config = configStore[id];
-                    delete configStore[id];
-                } else {
-                    config = undefined;
-                }
-
-                initWidgetFromEl(el, state, config);
+            if (configStore) {
+                config = configStore[id];
+                delete configStore[id];
+            } else {
+                config = undefined;
             }
+
+            initWidgetFromEl(el, state, config);
         }
     }
+}
 
-    if (typeof dataIds === 'string') {
-        doInit();
-    } else {
-        ready(doInit, null, doc);
-    }
+exports.initServerRendered = initServerRendered;
+
+registry = require('./registry');
+
+if (window.$widgets) {
+    window.$widgets.forEach(initServerRendered);
+}
+
+window.$widgets = {
+    push: initServerRendered
 };

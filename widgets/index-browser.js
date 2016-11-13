@@ -2,7 +2,7 @@ var dom = require('./dom');
 var ready = dom.ready;
 var EMPTY_OBJ = {};
 var Widget = require('./Widget');
-var initWidgets = require('./init-widgets');
+var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');
 var events = require('../runtime/events');
 
@@ -32,10 +32,6 @@ function getWidgetForEl(id, document) {
 
 exports.get = exports.getWidgetForEl = getWidgetForEl;
 
-exports.initAllWidgets = function() {
-    initWidgets.initServerRendered(true /* scan DOM */);
-};
-
 // Subscribe to DOM manipulate events to handle creating and destroying widgets
 
 events.on('dom/beforeRemove', function(eventArgs) {
@@ -56,9 +52,7 @@ events.on('dom/beforeRemove', function(eventArgs) {
         }
     });
 
-exports.initWidgets = window.$markoWidgets = function(ids) {
-    initWidgets.initServerRendered(ids);
-};
+exports.initWidgets = initServerRendered;
 
 var JQUERY = 'jquery';
 var jquery = window.$;

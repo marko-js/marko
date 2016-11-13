@@ -160,7 +160,8 @@
                 "openTagOnly": true
             }
         ]
-
-
+    },
+    "<body>": {
+        "transformer": "./body-transformer.js"
     }
 }

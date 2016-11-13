@@ -37,6 +37,8 @@ function render(data, out) {
 
   browser_refresh_tag({}, out);
 
+  init_widgets_tag({}, out);
+
   out.w("</body></html>");
 }
 

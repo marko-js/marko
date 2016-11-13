@@ -31,6 +31,7 @@ module.exports = function assignWidgetId(isRepeated) {
     var idExpression;
 
     var containingWidgetNode = this.getContainingWidgetNode();
+
     if (!containingWidgetNode) {
         // We are assigning a widget ID to a nested widget in a template that does not have a widget.
         // That means we do not have access to the parent widget variable as part of a closure. We
@@ -54,7 +55,7 @@ module.exports = function assignWidgetId(isRepeated) {
     // 1) The HTML element already has an "id" attribute
     // 2) The HTML element has a "w-id" attribute (we already converted this
     //    to an "id" attribute above)
-    // 3) The HTML does not have an "id" or "w-el-id" attribute. We must add
+    // 3) The HTML does not have an "id" or "w-id" attribute. We must add
     //    an "id" attribute with a unique ID.
 
     var isCustomTag = el.type !== 'HtmlElement';

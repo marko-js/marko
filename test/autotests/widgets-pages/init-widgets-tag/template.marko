@@ -17,14 +17,14 @@ html lang="en"
 
         lasso-body
 
-        init-widgets
-
         script
             ---
             // window.fooWidget should not exist yet, but's store that in a variable to verify
-            window.afterInitWidgetsFooWidget = window.fooWidget;
-            window.afterInitWidgetsBarWidget = window.barWidget;
+            window.beforeInitWidgetsFooWidget = window.fooWidget;
+            window.beforeInitWidgetsBarWidget = window.barWidget;
             ---
+
+        init-widgets
 
         lasso-slot name="mocha-run"
 

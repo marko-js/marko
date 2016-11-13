@@ -1,18 +1,3 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 /**
 * Module to manage the lifecycle of widgets
 *
@@ -24,9 +9,6 @@ var WidgetsContext = require('./WidgetsContext');
 
 const WARP10_STATE_SERIALIZATION_OPTIONS = {var: '$markoWidgetsState', additive: true};
 const WARP10_CONFIG_SERIALIZATION_OPTIONS = {var: '$markoWidgetsConfig', additive: true};
-const TAG_START = '<noscript id="markoWidgets" data-ids="';
-const TAG_END = '"></noscript>';
-
 
 function WrappedString(val) {
     this.html = val;
@@ -80,113 +62,88 @@ exports.writeDomEventsEl = function(widgetDef, out) {
     }
 };
 
-exports.writeInitWidgetsCode = function(widgetsContext, out, options) {
-    var clearWidgets = true;
-    var scanDOM = false;
-    var immediate = false;
+function writeInitWidgetsCode(widgetsContext, out) {
+    var widgets = widgetsContext.getWidgets();
 
-    if (options) {
-        clearWidgets = options.clearWidgets !== false;
-        scanDOM = options.scanDOM === true;
-        immediate = options.immediate === true;
+    if (!widgets || !widgets.length) {
+        return;
     }
 
+    var ids = '';
 
-    if (scanDOM) {
-        out.write(TAG_START + '*' + TAG_END);
+    var commaRequired = false;
+    var writeWidgets;
+
+    // Build separate objects for storing widget state and widget config. These objects
+    // will be serialized and sent to the browser using warp10
+    var widgetStateStore = {};
+    var widgetConfigStore = {};
+
+    var writeWidget = function(widget) {
+
+        if (widget.children.length) {
+            // Depth-first search (children should be initialized before parent)
+            writeWidgets(widget.children);
+        }
+
+        if (commaRequired) {
+            ids += ',';
+        } else {
+            commaRequired = true;
+        }
+
+        var widgetConfig = widget.config;
+        if (widgetConfig) {
+            // Put the widget config in the store using the widget ID as the key
+            widgetConfigStore[widget.id] = widgetConfig;
+        }
+
+        var widgetState = widget.state;
+        if (widgetState) {
+            // Put the widget state in the store using the widget ID as the key
+            widgetStateStore[widget.id] = widgetState;
+        }
+
+        ids += widget.id;
+    };
+
+    writeWidgets = function(widgets) {
+        for (var i = 0, len = widgets.length; i < len; i++) {
+            writeWidget(widgets[i]);
+        }
+    };
+
+    writeWidgets(widgets);
+
+    var widgetStateDeserializationCode;
+    var widgetConfigDeserializationCode;
+
+    if (isObjectEmpty(widgetStateStore)) {
+        widgetStateDeserializationCode = '';
     } else {
-        var widgets = widgetsContext.getWidgets();
-
-        if (!widgets || !widgets.length) {
-            return;
-        }
-
-        var ids = '';
-
-        var commaRequired = false;
-        var writeWidgets;
-
-        // Build separate objects for storing widget state and widget config. These objects
-        // will be serialized and sent to the browser using warp10
-        var widgetStateStore = {};
-        var widgetConfigStore = {};
-
-        var writeWidget = function(widget) {
-
-            if (widget.children.length) {
-                // Depth-first search (children should be initialized before parent)
-                writeWidgets(widget.children);
-            }
-
-            if (commaRequired) {
-                ids += ',';
-            } else {
-                commaRequired = true;
-            }
-
-            var widgetConfig = widget.config;
-            if (widgetConfig) {
-                // Put the widget config in the store using the widget ID as the key
-                widgetConfigStore[widget.id] = widgetConfig;
-            }
-
-            var widgetState = widget.state;
-            if (widgetState) {
-                // Put the widget state in the store using the widget ID as the key
-                widgetStateStore[widget.id] = widgetState;
-            }
-
-            ids += widget.id;
-        };
-
-        writeWidgets = function(widgets) {
-            for (var i = 0, len = widgets.length; i < len; i++) {
-                writeWidget(widgets[i]);
-            }
-        };
-
-        writeWidgets(widgets);
-
-        var widgetStateDeserializationCode;
-        var widgetConfigDeserializationCode;
-
-        if (isObjectEmpty(widgetStateStore)) {
-            widgetStateDeserializationCode = '';
-        } else {
-            widgetStateDeserializationCode = warp10.serialize(widgetStateStore, WARP10_STATE_SERIALIZATION_OPTIONS) +
-                    ';\n';
-        }
-
-        if (isObjectEmpty(widgetConfigStore)) {
-            widgetConfigDeserializationCode = '';
-        } else {
-            widgetConfigDeserializationCode = warp10.serialize(widgetConfigStore,WARP10_CONFIG_SERIALIZATION_OPTIONS) +
-                    ';\n';
-        }
-
-        var cspNonce = out.global.cspNonce;
-        var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
-
-        if (immediate) {
-            out.write('<script' + nonceAttr + '>' +
-                widgetStateDeserializationCode +
-                widgetConfigDeserializationCode +
-                '$markoWidgets("' + ids + '")</script>');
-        } else {
-            out.write('<script' + nonceAttr + '>' +
-                widgetStateDeserializationCode +
-                widgetConfigDeserializationCode +
-                '</script>');
-
-            out.write(TAG_START + ids + TAG_END);
-        }
+        widgetStateDeserializationCode = warp10.serialize(widgetStateStore, WARP10_STATE_SERIALIZATION_OPTIONS) +
+                ';\n';
     }
 
-    if (clearWidgets !== false) {
-        widgetsContext.clearWidgets();
+    if (isObjectEmpty(widgetConfigStore)) {
+        widgetConfigDeserializationCode = '';
+    } else {
+        widgetConfigDeserializationCode = warp10.serialize(widgetConfigStore,WARP10_CONFIG_SERIALIZATION_OPTIONS) +
+                ';\n';
     }
-};
 
+    var cspNonce = out.global.cspNonce;
+    var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
+
+    out.write('<script' + nonceAttr + '>' +
+        widgetStateDeserializationCode +
+        widgetConfigDeserializationCode +
+        '(function(){var w=window;(w.$widgets||w.$widgets||(w.$widgets=[])).push("' + ids + '")})()</script>');
+
+    widgetsContext.clearWidgets();
+}
+
+exports.writeInitWidgetsCode = writeInitWidgetsCode;
 
 function getRenderedWidgets(widgetsContext) {
     if (!widgetsContext) {
@@ -196,12 +153,12 @@ function getRenderedWidgets(widgetsContext) {
     if (!(widgetsContext instanceof WidgetsContext)) {
         // Assume that the provided "widgetsContext" argument is
         // actually an AsyncWriter
-        var asyncWriter = widgetsContext;
-        if (!asyncWriter.global) {
+        var out = widgetsContext;
+        if (!out.global) {
             throw new Error('Invalid argument: ' + widgetsContext);
         }
 
-        widgetsContext = WidgetsContext.getWidgetsContext(asyncWriter);
+        widgetsContext = WidgetsContext.getWidgetsContext(out);
     }
 
     var widgets = widgetsContext.getWidgets();
