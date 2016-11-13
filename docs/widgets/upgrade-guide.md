@@ -15,7 +15,7 @@ Upgrade Guide
 - Integrated [morphdom](https://github.com/patrick-steele-idem/morphdom) to more efficiently transform the existing DOM instead of replacing it entirely
 - Significant performance improvements
 - Code cleanup
-- Stable IDs for widgets that are not assigned a `w-id`
+- Stable IDs for widgets that are not assigned a `ref`
 - New lifecycle event: 'onRender'
 
 ## v3 to v4

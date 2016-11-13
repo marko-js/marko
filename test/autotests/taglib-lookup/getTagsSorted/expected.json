@@ -14,6 +14,7 @@
     "await-reorderer",
     "await-timeout",
     "bar",
+    "body",
     "browser-refresh",
     "cached-fragment",
     "else",

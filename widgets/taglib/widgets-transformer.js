@@ -41,6 +41,9 @@ module.exports = function transform(el, context) {
 
     if (el.hasAttribute('w-bind')) {
         el.setFlag('hasWidgetBind');
+        if (el.hasAttribute('ref')) {
+            transformHelper.addError('The "ref" attribute cannot be used in conjunction with the "w-bind" attribute.');
+        }
         if (el.hasAttribute('w-id')) {
             transformHelper.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
         }
@@ -57,11 +60,11 @@ module.exports = function transform(el, context) {
         transformHelper.handleWidgetPreserve();
     }
 
-    if (el.hasAttribute('w-id')) {
+    if (el.hasAttribute('ref') || el.hasAttribute('w-id')) {
         transformHelper.assignWidgetId();
     }
 
-    if (el.hasAttribute('w-for')) {
+    if (el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {
         transformHelper.handleWidgetFor();
     }
 

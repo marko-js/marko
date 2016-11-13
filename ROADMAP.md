@@ -685,7 +685,7 @@ Or, since `widget.js` is automatically recognized
 </div>
 ```
 
-### Deprecate `w-id` and `w-for` in favor of `ref` and `ref-for` ([#394](https://github.com/marko-js/marko/issues/394))
+### Deprecate `w-id` and `w-for` in favor of `ref` and `for-ref` ([#394](https://github.com/marko-js/marko/issues/394))
 
 The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
 

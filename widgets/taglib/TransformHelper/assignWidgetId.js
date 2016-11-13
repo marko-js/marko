@@ -1,18 +1,3 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 module.exports = function assignWidgetId(isRepeated) {
@@ -27,6 +12,7 @@ module.exports = function assignWidgetId(isRepeated) {
     var context = this.context;
     var builder = this.builder;
 
+    let widgetRef;
     var nestedIdExpression;
     var idExpression;
 
@@ -53,29 +39,43 @@ module.exports = function assignWidgetId(isRepeated) {
     // We need to handle the following scenarios:
     //
     // 1) The HTML element already has an "id" attribute
-    // 2) The HTML element has a "w-id" attribute (we already converted this
+    // 2) The HTML element has a "ref" or "w-id" attribute (we already converted this
     //    to an "id" attribute above)
-    // 3) The HTML does not have an "id" or "w-id" attribute. We must add
+    // 3) The HTML does not have an "id" or "ref" attribute. We must add
     //    an "id" attribute with a unique ID.
 
     var isCustomTag = el.type !== 'HtmlElement';
 
+    if (el.hasAttribute('ref')) {
+        widgetRef = el.getAttributeValue('ref');
+
+        el.removeAttribute('ref');
+    }
+
     if (el.hasAttribute('w-id')) {
-        let widgetId = el.getAttributeValue('w-id');
+        console.warn('The "w-id" attribute is deprecated. Please use "ref" instead.');
+
+        if (widgetRef) {
+            this.addError('The "w-id attribute cannot be used in conjuction with the "ref" attribute.');
+            return;
+        }
+
+        widgetRef = el.getAttributeValue('w-id');
 
         el.removeAttribute('w-id');
+    }
 
-        idExpression = this.buildWidgetElIdFunctionCall(widgetId);
+    if (widgetRef) {
+        idExpression = this.buildWidgetElIdFunctionCall(widgetRef);
 
-        nestedIdExpression = widgetId;
-
+        nestedIdExpression = widgetRef;
 
         if (isCustomTag) {
             // The element is a custom tag
             this.getWidgetArgs().setId(nestedIdExpression);
         } else {
             if (el.hasAttribute('id')) {
-                this.addError('The "w-id" attribute cannot be used in conjuction with the "id" attribute');
+                this.addError('The "ref" and "w-id" attributes cannot be used in conjuction with the "id" attribute.');
                 return;
             }
             el.setAttributeValue('id', idExpression);
@@ -141,7 +141,6 @@ module.exports = function assignWidgetId(isRepeated) {
             if (isCustomTag) {
                 transformHelper.getWidgetArgs().setId(nestedIdExpression);
             } else {
-
                 el.setAttributeValue('id', idExpression);
             }
 

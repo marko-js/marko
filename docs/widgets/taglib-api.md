@@ -21,18 +21,18 @@ Bind to a JavaScript module named `./widget.js` or `./index.js` (searched for in
 <div w-bind>...</div>
 ```
 
-## w-id
+## ref
 
-Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID will be a concatenation of the parent widget ID with the provided value of the `w-id`.
+Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID will be a concatenation of the parent widget ID with the provided value of the `ref`.
 
 ### Examples
 
 
-#### Using `w-id` with an HTML element
+#### Using `ref` with an HTML element
 
 ```xml
 <div w-bind="./widget">
-    <button w-id="myButton" type="button">My Button</button>
+    <button ref="myButton" type="button">My Button</button>
 </div>
 ```
 
@@ -51,11 +51,11 @@ The containing widget can reference the nested DOM element using the following c
 var myButton = this.getEl('myButton');
 ```
 
-#### Using `w-id` with a nested widget
+#### Using `ref` with a nested widget
 
 ```xml
 <div w-bind="./widget">
-    <app-button w-id="myButton" label="My Button" />
+    <app-button ref="myButton" label="My Button" />
 </div>
 ```
 
@@ -196,10 +196,10 @@ The `w-for` attribute is used to render a `for` attribute that references a scop
 ```xml
 <form>
     <label w-for="yes">Yes</label>
-    <input type="radio" w-id="yes" value="yes">
+    <input type="radio" ref="yes" value="yes">
 
     <label w-for="no">No</label>
-    <input type="radio" w-id="no" value="no">
+    <input type="radio" ref="no" value="no">
 </form>
 ```
 
@@ -208,7 +208,7 @@ This will produce code similar to the following:
 ```html
 <form>
     <label for="w0-yes">Yes</label>
-    <input type="radio" w-id="w0-yes" value="yes">
+    <input type="radio" ref="w0-yes" value="yes">
 
     <label for="w0-no">No</label>
     <input type="radio" id="w0-no" value="no">

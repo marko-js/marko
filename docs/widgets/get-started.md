@@ -195,9 +195,9 @@ The following HTML template fragment contains a widget that has three nested [sa
 ```xml
 <div class="my-component" w-bind="./widget">
     <div class="btn-group">
-        <sample-button label="Click Me" variant="primary" w-id="primaryButton"/>
-        <sample-button label="Click Me" variant="success" w-id="successButton"/>
-        <sample-button label="Click Me" variant="danger" w-id="dangerButton"/>
+        <sample-button label="Click Me" variant="primary" ref="primaryButton"/>
+        <sample-button label="Click Me" variant="success" ref="successButton"/>
+        <sample-button label="Click Me" variant="danger" ref="dangerButton"/>
     </div>
     ...
 </div>
@@ -217,7 +217,7 @@ Marko Widgets also supports referencing _repeated_ nested widgets as shown below
 <div class="my-component" w-bind="./widget">
     <ul>
 		<li for="todoItem in data.todoItems">
-			<app-todo-item w-id="todoItems[]" todo-item="todoItem"/>
+			<app-todo-item ref="todoItems[]" todo-item="todoItem"/>
 		</li>
 	</ul>
 </div>
@@ -234,13 +234,13 @@ To try out and experiment with this code please see the documentation and source
 
 ## Referencing Nested DOM Elements
 
-DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `w-id` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
+DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `ref` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
 
 ```xml
 <form w-bind="./widget">
     ...
-    <button type="submit" w-id="submitButton">Submit</button>
-    <button type="button" w-id="cancelButton">Cancel</button>
+    <button type="submit" ref="submitButton">Submit</button>
+    <button type="button" ref="cancelButton">Cancel</button>
 </form>
 ```
 
@@ -283,7 +283,7 @@ Marko Widgets also supports referencing _repeated_ nested DOM elements as shown 
 ```xml
 <ul>
 	<li for="color in ['red', 'green', 'blue']"
-		w-id="colorListItems[]">
+		ref="colorListItems[]">
 		$color
 	</li>
 </ul>
@@ -347,12 +347,12 @@ NOTE: Event handler methods will be invoked with `this` being the widget instanc
 
 For performance reasons, Marko Widgets only adds one event listener to the root `document.body` element for each event type that bubbles. When Marko Widgets captures an event on `document.body` it will internally delegate the event to the appropriate widgets. For DOM events that do not bubble, Marko Widgets will automatically add DOM event listeners to each of the DOM nodes. If a widget is destroyed, Marko Widgets will automatically do the appropriate cleanup to remove DOM event listeners.
 
-You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
+You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `ref="<id>"` attribute. For example, in the template:
 
 ```xml
 <div w-bind>
-	<form w-id="form">
-		<input type="text" value="email" w-id="email">
+	<form ref="form">
+		<input type="text" value="email" ref="email">
 		<button>Submit</button>
 	</form>
 </div>
@@ -426,12 +426,12 @@ module.exports = require('marko-widgets').defineComponent({
 });
 ```
 
-You can also choose to add listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. The scoped widget ID should be assigned using the `w-id="<id>"` attribute. For example, in the template:
+You can also choose to add listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. The scoped widget ID should be assigned using the `ref="<id>"` attribute. For example, in the template:
 
 ```xml
 <div w-bind="./widget">
 	<app-overlay title="My Overlay"
-		w-id="myOverlay">
+		ref="myOverlay">
 
 		Content for overlay
 

@@ -257,6 +257,10 @@ var proto = AsyncVDOMBuilder.prototype = {
         this._sync = true;
     },
 
+    isSync: function() {
+        return this._sync === true;
+    },
+
     onLast: function(callback) {
         var state = this._state;
 
@@ -305,7 +309,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         }
         return node;
     },
-    
+
     isVDOM: true
 };
 

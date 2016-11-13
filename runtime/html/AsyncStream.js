@@ -78,6 +78,10 @@ var proto = AsyncStream.prototype = {
         this._sync = true;
     },
 
+    isSync: function() {
+        return this._sync === true;
+    },
+
     write: function(str) {
         if (str != null) {
             this.writer.write(str.toString());
