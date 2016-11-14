@@ -1,0 +1,29 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.outer",
+            "finished":true,
+            "clientReorder": true,
+            "id": 0
+        }
+    }
+]

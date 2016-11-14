@@ -9,7 +9,8 @@ var marko_helpers = require("marko/runtime/html/helpers"),
     lasso_body_tag = marko_loadTag(require("lasso/taglib/body-tag")),
     init_widgets_tag = marko_loadTag(require("marko/widgets/taglib/init-widgets-tag")),
     lasso_slot_tag = marko_loadTag(require("lasso/taglib/slot-tag")),
-    browser_refresh_tag = marko_loadTag(require("browser-refresh-taglib/refresh-tag"));
+    browser_refresh_tag = marko_loadTag(require("browser-refresh-taglib/refresh-tag")),
+    await_reorderer_tag = marko_loadTag(require("marko/taglibs/async/await-reorderer-tag"));
 
 function render(data, out) {
   lasso_page_tag({
@@ -36,6 +37,8 @@ function render(data, out) {
     }, out);
 
   browser_refresh_tag({}, out);
+
+  await_reorderer_tag({}, out);
 
   init_widgets_tag({}, out);
 
