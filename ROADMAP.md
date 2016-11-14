@@ -944,13 +944,13 @@ Given a template like this:
 </await>
 ```
 
-### Remove support for deprecated emitted `async` events ([#426](https://github.com/marko-js/marko/issues/426))
+### Remove support for emitting deprecated `async-fragment` events ([#426](https://github.com/marko-js/marko/issues/426))
 
 > Already deprecated in v3
 
 | Old                          | New                   |
 |------------------------------|-----------------------|
-|`asyncFragmentFinish`         | `await:finish`        |
+| `asyncFragmentFinish`        | `await:finish`        |
 | `asyncFragmentBegin`         | `await:begin`         |
 | `asyncFragmentBeforeRender`  | `await:beforeRender`  |
 | `asyncFragmentClientReorder` | `await:clientReorder` |
