@@ -86,7 +86,6 @@ module.exports = function awaitTag(input, out) {
     var beforeRenderEmitted = false;
 
     out.emit('await:begin', awaitInfo);
-    out.emit('asyncFragmentBegin', awaitInfo); // TODO: remove deprecated event
 
     function renderBody(err, data, renderTimeout) {
         if (awaitInfo.finished) return;
@@ -101,7 +100,6 @@ module.exports = function awaitTag(input, out) {
         if (!beforeRenderEmitted) {
             beforeRenderEmitted = true;
             out.emit('await:beforeRender', awaitInfo);
-            out.emit('asyncFragmentBeforeRender', awaitInfo); // TODO: remove deprecated event
         }
 
         if (err) {
@@ -123,7 +121,6 @@ module.exports = function awaitTag(input, out) {
 
         if (!clientReorder) {
             out.emit('await:finish', awaitInfo);
-            out.emit('asyncFragmentFinish', awaitInfo); // TODO: remove deprecated event
         }
 
         if (asyncOut) {
@@ -223,7 +220,6 @@ module.exports = function awaitTag(input, out) {
             }
 
             out.emit('await:clientReorder', awaitInfo);
-            out.emit('asyncFragmentClientReorder', awaitInfo); // TODO: remove deprecated event
         } else {
             out.flush(); // Flush everything up to this await instance
             asyncOut = awaitInfo.out = out.beginAsync({

@@ -46,7 +46,6 @@ module.exports = function(input, out) {
                 awaitInfo.out.writer = asyncOut.writer;
 
                 out.emit('await:finish', awaitInfo);
-                out.emit('asyncFragmentFinish', awaitInfo); // TODO: remove deprecated event
 
                 out.flush();
 
