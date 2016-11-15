@@ -1,21 +1,37 @@
-var clientReorder = require('./client-reorder');
+'use strict';
+
+const clientReorder = require('./client-reorder');
 
 module.exports = function(input, out) {
     var global = out.global;
 
     out.flush();
 
+    // We have already invoked an <await-reorderer. We do not need to do this
+    // work again.
+    if (global.__awaitReordererInvoked) {
+        return;
+    }
+
+    global.__awaitReordererInvoked = true;
+
+    // We cannot call beginSync() when using renderSync(). In this case we will
+    // ignore the await-reorderer tag.
+    if (out.isSync()) {
+        return;
+    }
+
     var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'await-reorderer' });
     out.onLast(function(next) {
         var awaitContext = global.__awaitContext;
+        var remaining;
 
-        if (!awaitContext || !awaitContext.instances.length) {
+        // Validate that we have remaining <await> instances that need handled
+        if (!awaitContext || !awaitContext.instances || !(remaining = awaitContext.instances.length)) {
             asyncOut.end();
             next();
             return;
         }
-
-        var remaining = awaitContext.instances.length;
 
         var done = false;
 
