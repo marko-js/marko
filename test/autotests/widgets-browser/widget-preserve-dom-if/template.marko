@@ -1,18 +1,18 @@
 <div w-bind>
     <h1>Preserve Begin</h1>
-    <span ref="preserve" w-preserve-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+    <span ref="preserve" no-update-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
 
-    <span ref="preserveBody" w-preserve-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+    <span ref="preserveBody" no-update-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
 
-    <app-stateful-rerender ref="widget" name=(data.renderId.toString()) w-preserve-if(data.preserveCondition) />
+    <app-stateful-rerender ref="widget" name=(data.renderId.toString()) no-update-if(data.preserveCondition) />
 
     <!-- Test without an ID -->
 
-    <span class="preserve" w-preserve-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+    <span class="preserve" no-update-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
 
-    <span class="preserve-body" w-preserve-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+    <span class="preserve-body" no-update-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
 
-    <app-stateful-rerender class="widget-no-id" name=(data.renderId.toString()) w-preserve-if(data.preserveCondition) data-renderId=data.renderId/>
+    <app-stateful-rerender class="widget-no-id" name=(data.renderId.toString()) no-update-if(data.preserveCondition) data-renderId=data.renderId/>
 
     <h1>Preserve End</h1>
 </div>

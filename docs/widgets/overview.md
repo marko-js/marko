@@ -373,12 +373,12 @@ Sometimes it is important to _not_ re-render a DOM subtree. This may due to eith
 - DOM nodes contains externally provided content
 - DOM nodes have internal state that needs to be maintained
 
-Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`, `w-preserve-if(<condition>)`, `w-preserve-body` or `w-preserve-body-if(<condition>)` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be reused and re-inserted into a widget's newly rendered DOM automatically.
+Marko Widgets allows DOM nodes to be preserved by putting a special `no-update`, `no-update-if(<condition>)`, `no-update-body` or `no-update-body-if(<condition>)` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be reused and re-inserted into a widget's newly rendered DOM automatically.
 
 ```xml
 <div w-bind>
 
-	<span w-preserve>
+	<span no-update>
 		<p>
 			The root span and all its children will never
 			be re-rendered.
@@ -387,7 +387,7 @@ Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`
 			Rendered at ${Date.now()}.
 		</p>
 	</span>
-	<div w-preserve-body>
+	<div no-update-body>
 		Only the children of the div will preserved and
 		the outer HTML div tag will be re-rendered.
 	</div>
@@ -395,7 +395,7 @@ Marko Widgets allows DOM nodes to be preserved by putting a special `w-preserve`
 	Don't rerender the search results if no search results
 	are provided.
 	<app-search-results items="data.searchResults"
-		w-preserve-if(data.searchResults == null)/>
+		no-update-if(data.searchResults == null)/>
 </div>
 ```
 

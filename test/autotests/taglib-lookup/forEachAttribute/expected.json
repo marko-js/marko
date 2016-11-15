@@ -23,6 +23,10 @@
     "w-preserve-body",
     "w-preserve-if",
     "w-preserve-body-if",
+    "no-update",
+    "no-update-body",
+    "no-update-if",
+    "no-update-body-if",
     "w-preserve-attrs",
     "w-on*"
 ]

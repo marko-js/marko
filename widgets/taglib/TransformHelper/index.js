@@ -57,6 +57,10 @@ class TransformHelper {
         return this.widgetIdInfo;
     }
 
+    getCompileContext() {
+        return this.context;
+    }
+
     getDefaultWidgetModule() {
         var dirname = this.dirname;
         if (resolveFrom(dirname, './component')) {
