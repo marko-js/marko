@@ -47,6 +47,7 @@
     "w-widget",
     "init-widgets",
     "w-preserve",
+    "no-update",
     "widget-types",
     "body"
 ]

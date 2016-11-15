@@ -123,9 +123,9 @@ For the example above it is assumed that the nested widget will emit the custom 
 this.emit('handleSomeCustomEvent', { foo: bar });
 ```
 
-<a name="w-preserve"></a>
+<a name="no-update"></a>
 
-## w-preserve
+## no-update
 
 Preserves the DOM subtree associated with the DOM element or widget such that it won't be modified or rerendered when rerendering the UI component.
 
@@ -133,7 +133,7 @@ Example:
 
 ```xml
 <div>
-    <table w-preserve> <!-- Don't ever rerender this table -->
+    <table no-update> <!-- Don't ever rerender this table -->
         ...
     </table>
 </div>
@@ -141,39 +141,39 @@ Example:
 
 ```xml
 <div>
-    <app-map w-preserve/> <!-- Don't ever rerender this UI component -->
+    <app-map no-update/> <!-- Don't ever rerender this UI component -->
 </div>
 ```
 
-## w-preserve-if
+## no-update-if
 
-Similar to [w-preserve](#w-preserve) except that the DOM subtree is conditionally preserved:
+Similar to [no-update](#no-update) except that the DOM subtree is conditionally preserved:
 
 ```xml
 <div>
-    <table w-preserve-if(data.tableData == null)>
+    <table no-update-if(data.tableData == null)>
         ...
     </table>
 </div>
 ```
 
-## w-preserve-body
+## no-update-body
 
-Similar to [w-preserve](#w-preserve) except that only the child DOM nodes are preserved:
+Similar to [no-update](#no-update) except that only the child DOM nodes are preserved:
 
 ```xml
-<div w-preserve-body> <!-- Don't ever rerender any nested DOM elements -->
+<div no-update-body> <!-- Don't ever rerender any nested DOM elements -->
     ...
 </div>
 ```
 
-## w-preserve-body-if
+## no-update-body-if
 
-Similar to [w-preserve-if](#w-preserve) except that only the child DOM nodes are preserved:
+Similar to [no-update-if](#no-update) except that only the child DOM nodes are preserved:
 
 ```xml
 <div>
-    <table w-preserve-if(data.tableData == null)>
+    <table no-update-if(data.tableData == null)>
         ...
     </table>
 </div>

@@ -97,6 +97,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
+                    "displayText": "w-preserve (Deprecated)",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
                 }
             ]
@@ -106,6 +107,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
+                    "displayText": "w-preserve-body (Deprecated)",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
                 }
             ]
@@ -114,6 +116,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
+                    "displayText": "w-preserve-if (Deprecated)",
                     "snippet": "w-preserve-if(${1:condition})",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
                 }
@@ -123,7 +126,44 @@
             "preserve-name": true,
             "autocomplete": [
                 {
+                    "displayText": "w-preserve-body-if (Deprecated)",
                     "snippet": "w-preserve-body-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-body": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "snippet": "no-update-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-body-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "snippet": "no-update-body-if(${1:condition})",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
                 }
             ]
@@ -162,6 +202,13 @@
         "@immediate": "boolean"
     },
     "<w-preserve>": {
+        "renderer": "./preserve-tag.js",
+        "@id": "string",
+        "@if": "expression",
+        "@body-only": "expression",
+        "autocomplete": []
+    },
+    "<no-update>": {
         "renderer": "./preserve-tag.js",
         "@id": "string",
         "@if": "expression",

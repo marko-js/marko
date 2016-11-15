@@ -53,7 +53,13 @@ module.exports = function transform(el, context) {
         transformHelper.handleWidgetExtend();
     }
 
-    if (el.hasAttribute('w-preserve') ||
+    if (/* New preserve attributes */
+        el.hasAttribute('no-update') ||
+        el.hasAttribute('no-update-body') ||
+        el.hasAttribute('no-update-if') ||
+        el.hasAttribute('no-update-body-if') ||
+        /* Old preserve attributes */
+        el.hasAttribute('w-preserve') ||
         el.hasAttribute('w-preserve-body') ||
         el.hasAttribute('w-preserve-if') ||
         el.hasAttribute('w-preserve-body-if')) {

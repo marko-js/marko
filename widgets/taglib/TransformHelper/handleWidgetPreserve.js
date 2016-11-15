@@ -16,12 +16,11 @@
 'use strict';
 
 function addPreserve(transformHelper, bodyOnly, condition) {
+    let el = transformHelper.el;
+    let context = transformHelper.context;
+    let builder = transformHelper.builder;
 
-    var el = transformHelper.el;
-    var context = transformHelper.context;
-    var builder = transformHelper.builder;
-
-    var preserveAttrs = {};
+    let preserveAttrs = {};
 
     if (bodyOnly) {
         preserveAttrs['body-only'] = builder.literal(bodyOnly);
@@ -31,13 +30,13 @@ function addPreserve(transformHelper, bodyOnly, condition) {
         preserveAttrs['if'] = condition;
     }
 
-    var widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
-    var idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
+    let widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
+    let idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
 
     preserveAttrs.id = transformHelper.getIdExpression();
 
-    var preserveNode = context.createNodeForEl('w-preserve', preserveAttrs);
-    var idVarNodeTarget;
+    let preserveNode = context.createNodeForEl('w-preserve', preserveAttrs);
+    let idVarNodeTarget;
 
     if (bodyOnly) {
         el.moveChildrenTo(preserveNode);
@@ -57,33 +56,127 @@ function addPreserve(transformHelper, bodyOnly, condition) {
     return preserveNode;
 }
 
+function deprecatedWarning(preserveType, transformHelper, el) {
+    let attribute = preserveType.attribute;
+    let suffix = preserveType.suffix;
+    let context = transformHelper.getCompileContext();
+
+    let newAttributeName = 'no-update';
+    if (suffix) {
+        newAttributeName += suffix;
+    }
+
+    console.warn(`The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead. (${el.pos ? context.getPosInfo(el.pos) : context.filename})`);
+}
+
+function preserveHandler(transformHelper, preserveType, el) {
+    if (preserveType.deprecated) {
+        deprecatedWarning(preserveType, transformHelper, el);
+    }
+
+    el.removeAttribute(preserveType.attribute);
+    addPreserve(transformHelper, false);
+}
+
+function preserveIfHandler(transformHelper, preserveType, el) {
+    if (preserveType.deprecated) {
+        deprecatedWarning(preserveType, transformHelper, el);
+    }
+
+    let attribute = preserveType.attribute;
+    let preserveIfAttr = el.getAttribute(attribute);
+    let preserveIfCondition = preserveIfAttr.argument;
+
+    if (!preserveIfCondition) {
+        transformHelper.addError(`The '${attribute}' attribute should have an argument. For example: <div ${attribute}(someCondition)>`);
+        return;
+    }
+
+    addPreserve(transformHelper, false, transformHelper.builder.expression(preserveIfCondition));
+    el.removeAttribute(attribute);
+}
+
+function preserveBodyHandler(transformHelper, preserveType, el) {
+    if (preserveType.deprecated) {
+        deprecatedWarning(preserveType, transformHelper, el);
+    }
+
+    el.removeAttribute(preserveType.attribute);
+    addPreserve(transformHelper, true);
+}
+
+function preserveBodyIfHandler(transformHelper, preserveType, el) {
+    if (preserveType.deprecated) {
+        deprecatedWarning(preserveType, transformHelper, el);
+    }
+
+    let attribute = preserveType.attribute;
+    let preserveBodyIfAttr = el.getAttribute(attribute);
+    let preserveBodyIfCondition = preserveBodyIfAttr.argument;
+
+    if (!preserveBodyIfCondition) {
+        transformHelper.addError(`The '${attribute}' attribute should have an argument. For example: <div ${attribute}(someCondition)>`);
+        return;
+    }
+
+    addPreserve(transformHelper, true, transformHelper.builder.expression(preserveBodyIfCondition));
+    el.removeAttribute('w-preserve-body-if');
+}
+
+const preserveTypes = [
+    // The new preserve types
+    {
+        attribute: 'no-update',
+        handler: preserveHandler
+    },
+    {
+        attribute: 'no-update-if',
+        handler: preserveIfHandler
+    },
+    {
+        attribute: 'no-update-body',
+        handler: preserveBodyHandler
+    },
+    {
+        attribute: 'no-update-body-if',
+        handler: preserveBodyIfHandler
+    },
+
+    // The deprecated preserve types
+    {
+        attribute: 'w-preserve',
+        handler: preserveHandler,
+        deprecated: true
+    },
+    {
+        attribute: 'w-preserve-if',
+        suffix: '-if',
+        handler: preserveIfHandler,
+        deprecated: true
+    },
+    {
+        attribute: 'w-preserve-body',
+        suffix: '-body',
+        handler: preserveBodyHandler,
+        deprecated: true
+    },
+    {
+        attribute: 'w-preserve-body-if',
+        suffix: '-body-if',
+        handler: preserveBodyIfHandler,
+        deprecated: true
+    }
+];
+
 module.exports = function handleWidgetPreserve() {
-    var el = this.el;
+    let el = this.el;
 
-    if (el.hasAttribute('w-preserve')) {
-        el.removeAttribute('w-preserve');
-        addPreserve(this, false);
-    } else if (el.hasAttribute('w-preserve-if')) {
-        let preserveIfAttr = el.getAttribute('w-preserve-if');
-        var preserveIfCondition = preserveIfAttr.argument;
-        if (!preserveIfCondition) {
-            this.addError('The `w-preserve-if` attribute should have an argument. For example: <div w-preserve-if(someCondition)>');
+    for (let i = 0; i < preserveTypes.length; i++) {
+        let preserveType = preserveTypes[i];
+
+        if (el.hasAttribute(preserveType.attribute)) {
+            preserveType.handler(this, preserveType, el);
             return;
         }
-        addPreserve(this, false, this.builder.expression(preserveIfCondition));
-        el.removeAttribute('w-preserve-if');
-    } else if (el.hasAttribute('w-preserve-body')) {
-        el.removeAttribute('w-preserve-body');
-        addPreserve(this, true);
-    } else if (el.hasAttribute('w-preserve-body-if')) {
-        let preserveBodyIfAttr = el.getAttribute('w-preserve-body-if');
-        var preserveBodyIfCondition = preserveBodyIfAttr.argument;
-        if (!preserveBodyIfCondition) {
-            this.addError('The `w-preserve-body-if` attribute should have an argument. For example: <div w-preserve-body-if(someCondition)>');
-            return;
-        }
-
-        addPreserve(this, true, this.builder.expression(preserveBodyIfCondition));
-        el.removeAttribute('w-preserve-body-if');
     }
 };
