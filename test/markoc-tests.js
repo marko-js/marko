@@ -32,5 +32,5 @@ describe('markoc' , function() {
 
         testModule.test(helpers);
         done();
-    });
+    }, { timeout:20000 });
 });

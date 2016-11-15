@@ -11,8 +11,10 @@ var defaultPageTemplate = require('./page-template.marko');
 var spawn = require('child-process-promise').spawn;
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var mochaPhantomJSCommand = path.join(__dirname, '../../node_modules/.bin/mocha-phantomjs');
+var md5Hex = require('md5-hex');
+var mochaPhantomJSCommand = require.resolve('mocha-phantomjs-core');
 var phantomjsBinPath = require('phantomjs-prebuilt').path;
+var shouldCover = !!process.env.NYC_CONFIG;
 
 function generate(options) {
     return new Promise((resolve, reject) => {
@@ -41,7 +43,7 @@ function generate(options) {
             }
         ];
 
-        var myLasso = lasso.create({
+        var lassoConfig = {
             outputDir: path.join(generatedDir, 'static'),
             urlPrefix: startServer ? '/static' : './static',
             bundlingEnabled: false,
@@ -56,7 +58,15 @@ function generate(options) {
                 },
                 require('./lasso-autotest-plugin')
             ]
-        });
+        };
+
+        if(shouldCover) {
+            lassoConfig.plugins.push(
+                require('./lasso-istanbul-plugin')
+            );
+        }
+
+        var myLasso = lasso.create(lassoConfig);
 
         var templateData = {
             lasso: myLasso,
@@ -119,10 +129,21 @@ function runTests(options) {
     return generate(options)
         .then((generated) => {
             console.log(`Running ${generated.url} using mocha-phantomjs...`);
-            return spawn(mochaPhantomJSCommand, ['-p', phantomjsBinPath, generated.url], {
+            var mochaPhantomJSOptions = { useColors:true };
+
+            if(shouldCover) {
+                mochaPhantomJSOptions.hooks = 'mocha-phantomjs-istanbul';
+                mochaPhantomJSOptions.coverageFile = getCoverageFile(options.testsFile);
+            }
+
+            return spawn(phantomjsBinPath, [mochaPhantomJSCommand, generated.url, 'spec', JSON.stringify(mochaPhantomJSOptions)], {
                 stdio: 'inherit'
             });
         });
+}
+
+function getCoverageFile(testsFile) {
+    return './.nyc_output/'+md5Hex(testsFile)+'.json';
 }
 
 exports.generate = generate;

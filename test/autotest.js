@@ -69,6 +69,9 @@ function autoTest(name, dir, run, options, done) {
 
 exports.scanDir = function(autoTestDir, run, options) {
     describe('autotest', function() {
+        if(options && options.timeout) {
+            this.timeout(options.timeout);
+        }
         fs.readdirSync(autoTestDir)
             .forEach(function(name) {
                 if (name.charAt(0) === '.') {

@@ -5,5 +5,5 @@ node_js:
 - "6"
 - "7"
 language: node_js
-script: "npm run test-coverage"
+script: "npm run test-generate-coverage"
 after_success: "npm run coveralls"

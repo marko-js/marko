@@ -11,3 +11,6 @@ coverage
 .nvmrc
 ~*
 /.cache
+*.marko.js
+/test/generated/
+.nyc_output

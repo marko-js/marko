@@ -20,9 +20,10 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "test": "npm run mocha -s && npm run test-widgets -s && npm run jshint -s",
+    "test": "npm run jshint -s && npm run mocha -s && npm run test-widgets -s",
     "mocha": "mocha --ui bdd --reporter spec ./test/",
-    "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run test-widgets && npm run jshint",
+    "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
+    "test-generate-coverage": "nyc -asc npm run test",
     "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
     "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
     "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
@@ -34,7 +35,7 @@
     "test-widgets-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server",
     "test-widgets-page": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server --page",
     "jshint": "jshint compiler/ runtime/ taglibs/ widgets/",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
@@ -86,15 +87,19 @@
     "express": "^4.13.4",
     "fs-extra": "^0.30.0",
     "ignoring-watcher": "^1.0.2",
-    "istanbul": "^0.4.3",
+    "istanbul-lib-instrument": "^1.3.0",
     "jquery": "^2.1.3",
     "jsdom": "^9.6.0",
     "jshint": "^2.5.0",
     "lasso": "^2.4.1",
     "lasso-marko": "^2.1.0",
+    "md5-hex": "^1.3.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.3",
-    "mocha-phantomjs": "^4.1.0",
+    "mocha-phantomjs-core": "^1.3.1",
+    "mocha-phantomjs-istanbul": "0.0.2",
+    "nyc": "^9.0.0",
+    "open": "0.0.5",
     "phantomjs-prebuilt": "^2.1.13",
     "request": "^2.72.0",
     "require-self-ref": "^2.0.1",
@@ -112,6 +117,13 @@
   },
   "browser": {
     "./node-require.js": "./node-require-browser.js"
+  },
+  "nyc": {
+    "exclude": [
+      "**/benchmark/**",
+      "**/coverage/**",
+      "**/test/**"
+    ]
   },
   "homepage": "http://markojs.com/",
   "version": "4.0.0-beta.2",
