@@ -48,7 +48,7 @@ var attachBubbleEventListeners = function() {
                 var target;
 
                 // Attributes will have the following form:
-                // w-on<event_type>="<target_method>|<widget_id>"
+                // on<event_type>("<target_method>|<widget_id>")
 
                 do {
                     if ((target = getEventAttribute(curNode, attrName))) {

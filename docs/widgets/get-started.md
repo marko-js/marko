@@ -308,8 +308,8 @@ Listeners can be attached declaratively as shown in the following sample code:
 
 ```xml
 <div w-bind>
-	<form w-onsubmit="handleFormSubmit">
-		<input type="text" value="email" w-onchange="handleEmailChange">
+	<form onsubmit("handleFormSubmit")>
+		<input type="text" value="email" onchange("handleEmailChange")>
 		<button>Submit</button>
 	</form>
 </div>
@@ -406,7 +406,7 @@ Listeners can be attached declaratively as shown in the following sample code:
 ```xml
 <div w-bind="./widget">
 	<app-overlay title="My Overlay"
-		w-onBeforeHide="handleOverlayBeforeHide">
+	 onBeforeHide("handleOverlayBeforeHide")>
 
 		Content for overlay
 
@@ -699,7 +699,7 @@ ___src/components/app-hello/template.marko:___
 
 ```xml
 <div w-bind
-	w-on-click="handleClick">
+ on-click("handleClick")>
 	Hello ${data.name}!
 </div>
 ```
@@ -736,7 +736,7 @@ ___src/components/app-hello/template.marko:___
 
 ```xml
 <div w-bind="./widget"
-	w-on-click="handleClick">
+ on-click("handleClick")>
 	Hello ${data.name}!
 </div>
 ```

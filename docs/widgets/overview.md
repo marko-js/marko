@@ -113,7 +113,7 @@ __src/components/app-hello/template.marko__
 
 ```xml
 <div w-bind
-	 w-onClick="handleClick">
+	 onClick("handleClick")>
 
 	Hello ${data.name}!
 
@@ -154,7 +154,7 @@ __src/components/app-hello/template.marko__
 
 ```xml
 <div w-bind
-	 w-onClick="handleClick"
+	 onClick("handleClick")
 	 style="background-color: ${data.color}">
 
 	Hello ${data.name}!
@@ -202,7 +202,7 @@ __src/components/app-hello/template.marko__
 
 ```xml
 <div w-bind
-	 w-onClick="handleClick"
+	 onClick("handleClick")
 	 style="background-color: ${data.color}">
 
 	Hello ${data.name}!
@@ -258,17 +258,17 @@ module.exports = require('marko-widgets').defineComponent({
 <div w-bind>
 	<app-overlay title="My Overlay"
 		ref="overlay"
-		w-onBeforeHide="handleOverlayBeforeHide">
+	 onBeforeHide("handleOverlayBeforeHide")>
 		Body content for overlay.
 	</app-overlay>
 
 	<button type="button"
-		w-onClick="handleShowButtonClick">
+	 onClick("handleShowButtonClick")>
 		Show Overlay
 	</button>
 
 	<button type="button"
-		w-onClick="handleHideButtonClick">
+	 onClick("handleHideButtonClick")>
 		Hide Overlay
 	</button>
 </div>

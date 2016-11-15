@@ -85,7 +85,7 @@ NOTE: For DOM events that bubble, efficient DOM event delegation will automatica
 
 ```xml
 <div w-bind="./widget">
-    <button w-onclick="handleMyButtonClick" type="button">My Button</button>
+    <button onClick("handleMyButtonClick") type="button">My Button</button>
 </div>
 ```
 
@@ -113,7 +113,7 @@ var myButton = this.getEl('myButton');
 
 ```xml
 <div w-bind="./widget">
-    <app-button w-onSomeCustomEvent="handleSomeCustomEvent" label="My Button" />
+    <app-button onSomeCustomEvent("handleSomeCustomEvent") label="My Button" />
 </div>
 ```
 

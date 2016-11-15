@@ -264,7 +264,7 @@ And, here is the corresponding Marko template for the UI component:
     <div>
         You clicked the button ${data.clickCount} ${data.timesMessage}.
     </div>
-    <button type="button" w-onclick="handleButtonClick">
+    <button type="button" onClick("handleButtonClick")>
         Click Me
     </button>
 </div>
