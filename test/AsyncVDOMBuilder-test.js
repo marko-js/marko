@@ -41,6 +41,15 @@ it('async', function(done) {
     });
 });
 
+it('promise', function(done) {
+    const out = new AsyncVDOMBuilder();
+    out.element('div', {}, 0);
+    out.end().then((tree) => {
+        expect(tree.childNodes.length).to.equal(1);
+        done();
+    });
+});
+
 it('async flush', function(done) {
     var out = new AsyncVDOMBuilder();
     out.on('update', function(tree) {

@@ -57,6 +57,19 @@ describe('async-writer' , function() {
         });
     });
 
+    it('should resolve promise upon finish', function() {
+        var out = new AsyncStream();
+
+        out.write('1');
+        out.write('2');
+
+        return out.end().then((data) => {
+            const output = out.getOutput();
+            expect(output).to.equal('12');
+            expect(data.getOutput()).to.equal('12');
+        });
+    });
+
     it('should render a series of sync and async calls correctly', function(done) {
         var out = new AsyncStream();
         out.write('1');
@@ -248,6 +261,46 @@ describe('async-writer' , function() {
             expect(output).to.equal('13');
             done();
         });
+    });
+
+    it('should catch error in promise catch', function(done) {
+        const out = new AsyncStream();
+
+        let errors = [];
+
+        out.on('error', function(e) {
+            errors.push(e);
+        });
+
+        out.write('1');
+
+        let asyncOut = out.beginAsync();
+        setTimeout(function() {
+            asyncOut.error(new Error('test'));
+        }, 10);
+
+        out.write('3');
+        out.end().catch((err) => {
+            expect(errors.length).to.equal(1);
+            expect(err).to.be.an('error');
+            done();
+        });
+    });
+
+    it('should catch error in promise catch if `error` listener only set inside mixin', function(done) {
+        const out = new AsyncStream();
+
+        out.catch((err) => {
+            expect(err).to.be.an('error');
+            expect(out.getOutput()).to.equal('1');
+            done();
+        }).then((data) => {
+            throw new Error('Should not get here!');
+        });
+
+        out.write('1');
+        out.error(new Error('test'));
+        out.write('2');
     });
 
     it('should support chaining', function(done) {

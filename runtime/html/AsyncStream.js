@@ -223,7 +223,7 @@ var proto = AsyncStream.prototype = {
                if (state.writer.end) {
                    state.writer.end();
                } else {
-                   state.events.emit('finish');
+                   state.events.emit('finish', this);
                }
            }
        }
@@ -292,7 +292,7 @@ var proto = AsyncStream.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback();
+            callback(this);
             return this;
         }
 
@@ -304,7 +304,7 @@ var proto = AsyncStream.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback();
+            callback(this);
             return this;
         }
 
