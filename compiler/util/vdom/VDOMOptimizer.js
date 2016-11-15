@@ -57,7 +57,6 @@ function generateNodesForArray(nodes, context, options) {
     let nextNodeId = 0;
     let nextAttrsId = 0;
 
-    var optimizeTextNodes = options.optimizeTextNodes !== false;
     var optimizeStaticNodes = options.optimizeStaticNodes !== false;
 
     function generateStaticNode(node) {
@@ -108,31 +107,6 @@ function generateNodesForArray(nodes, context, options) {
 
                     finalNodes.push(node);
                 }
-            } else {
-                finalNodes.push(node);
-            }
-
-        } else if (node.type === 'TextVDOM') {
-            if (optimizeTextNodes) {
-                let firstTextNode = node;
-
-                // We will need to merge the text nodes into a single node
-                while(++i<nodes.length) {
-                    let currentTextNode = nodes[i];
-                    if (currentTextNode.type === 'TextVDOM') {
-                        if (!firstTextNode.append(currentTextNode)) {
-                            // If the current text node was not appendable then
-                            // we will stop. We can only merge text nodes that are compatible
-                            break;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-
-                // firstTextNode.isStatic = false;
-                finalNodes.push(firstTextNode);
-                continue;
             } else {
                 finalNodes.push(node);
             }

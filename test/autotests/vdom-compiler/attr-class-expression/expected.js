@@ -4,7 +4,6 @@ module.exports = template;
 
 var marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_classList = marko_helpers.cl,
-    marko_str = marko_helpers.s,
     marko_classAttr = marko_helpers.ca;
 
 function render(data, out) {
@@ -13,10 +12,10 @@ function render(data, out) {
           bar: true,
           baz: false
         }))
-    }, 1)
-    .t("Hello " +
-      marko_str(name) +
-      "!");
+    }, 3)
+    .t("Hello ")
+    .t(name)
+    .t("!");
 }
 
 template._ = render;

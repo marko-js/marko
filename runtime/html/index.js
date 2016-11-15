@@ -12,7 +12,7 @@ exports.c = function createTemplate(path) {
      return new Template(path);
 };
 
-var AsyncStream = require('./AsyncStream');
+var AsyncStream;
 
 function createOut(globalData) {
     return new AsyncStream(globalData);
@@ -160,6 +160,10 @@ exports.Template = Template;
 
 helpers = require('./helpers');
 exports.helpers = helpers;
+
+
+
+AsyncStream = require('./AsyncStream');
 
 exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;
 

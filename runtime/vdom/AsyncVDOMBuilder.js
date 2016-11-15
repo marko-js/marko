@@ -4,11 +4,8 @@ var DocumentFragment = require('./DocumentFragment');
 var Comment = require('./Comment');
 var Text = require('./Text');
 var extend = require('raptor-util/extend');
-
-var virtualize = require('./virtualize');
-var specialHtmlRegexp = /[&<]/;
-var defaultDocument = typeof document != 'undefined' && document;
-
+var virtualizeHTML = require('./virtualizeHTML');
+var documentProvider = require('../document-provider');
 
 function State(tree) {
     this.remaining = 1;
@@ -38,8 +35,6 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
     this._stack = [parentNode];
     this._sync = false;
 }
-
-var range;
 
 var proto = AsyncVDOMBuilder.prototype = {
     isAsyncVDOMBuilder: true,
@@ -71,6 +66,22 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     text: function(text) {
+        var type = typeof text;
+
+        if (type !== 'string') {
+            if (text == null) {
+                return;
+            } else if (type === 'object') {
+                var safeHTML = text.safeHTML;
+                if (safeHTML) {
+                    var html = typeof safeHTML === 'function' ? text.safeHTML() : safeHTML;
+                    return this.html(html);
+                }
+            } else {
+                text = text.toString();
+            }
+        }
+
         var parent = this._parent;
         if (parent) {
             var lastChild = parent.lastChild;
@@ -88,39 +99,9 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     html: function(html) {
-        if (!specialHtmlRegexp.test(html)) {
-            return this.text(html);
-        }
-
-        var document = this.document;
-
-        if (!range && document.createRange) {
-            range = document.createRange();
-            range.selectNode(document.body);
-        }
-
-        var vdomFragment;
-
-        var fragment;
-        if (range && range.createContextualFragment) {
-            fragment = range.createContextualFragment(html);
-            vdomFragment = virtualize(fragment);
-        } else {
-            var container = document.createElement('body');
-            container.innerHTML = html;
-
-            var curChild = container.firstChild;
-            if (curChild) {
-                vdomFragment = new DocumentFragment();
-                while(curChild) {
-                    vdomFragment.appendChild(virtualize(curChild));
-                    curChild = curChild.nextSibling;
-                }
-            }
-        }
-
-        if (vdomFragment) {
-            this.node(vdomFragment);
+        if (html != null) {
+            var vdomNode = virtualizeHTML(html, documentProvider.document);
+            this.node(vdomNode);
         }
 
         return this;
@@ -291,7 +272,7 @@ var proto = AsyncVDOMBuilder.prototype = {
             var vdomTree = this.getOutput();
 
             if (!doc) {
-                doc = this.document || defaultDocument;
+                doc = documentProvider.document;
             }
 
             node = vdomTree.actualize(doc);

@@ -3,7 +3,6 @@ var template = require("marko/vdom").c(__filename);
 module.exports = template;
 
 var marko_helpers = require("marko/runtime/vdom/helpers"),
-    marko_str = marko_helpers.s,
     marko_forEach = marko_helpers.f,
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
@@ -12,17 +11,17 @@ var marko_helpers = require("marko/runtime/vdom/helpers"),
       .t("No colors!");
 
 function render(data, out) {
-  out.e("h1", null, 1)
-    .t("Hello " +
-      marko_str(data.name) +
-      "!");
+  out.e("h1", null, 3)
+    .t("Hello ")
+    .t(data.name)
+    .t("!");
 
   if (data.colors.length) {
     out.be("ul");
 
     marko_forEach(data.colors, function(color) {
       out.e("li", null, 1)
-        .t(marko_str(color));
+        .t(color);
     });
 
     out.ee();

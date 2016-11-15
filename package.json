@@ -91,7 +91,7 @@
     "jsdom": "^9.6.0",
     "jshint": "^2.5.0",
     "lasso": "^2.4.1",
-    "lasso-marko": "^2.0.4",
+    "lasso-marko": "^2.1.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.3",
     "mocha-phantomjs": "^4.1.0",

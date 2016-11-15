@@ -10,5 +10,5 @@ module.exports = function(helpers) {
 
     widget.destroy();
 
-    expect(widget.update()).to.be.undefined;
+    expect(widget.update() === undefined).to.equal(true);
 };

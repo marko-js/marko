@@ -136,14 +136,6 @@ exports.Template = Template;
 
 exports._inline = createInlineMarkoTemplate;
 
-/**
- * Used to associate a DOM Document with marko. This is needed
- * to parse HTML fragments to insert into the VDOM tree.
- */
-exports.setDocument = function(newDoc) {
-    AsyncVDOMBuilder.prototype.document = newDoc;
-};
-
 
 helpers = require('./helpers');
 exports.helpers = helpers;

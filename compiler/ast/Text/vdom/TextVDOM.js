@@ -21,16 +21,6 @@ class TextVDOM extends Node {
 
         vdomUtil.registerOptimizer(context);
 
-        var args = this.arguments;
-
-        for (var i=0, len=args.length; i<len; i++) {
-            var arg = args[i];
-            if (arg.type !== 'Literal') {
-                this.strFuncId = context.helper('str');
-                break;
-            }
-        }
-
         return this;
     }
 
@@ -70,7 +60,6 @@ class TextVDOM extends Node {
         let escape = this.escape;
 
         var funcName = escape ? 't' : 'h';
-        var strFuncId = this.strFuncId;
 
         function writeTextArgs() {
             writer.write('(');
@@ -84,15 +73,7 @@ class TextVDOM extends Node {
                     writer.writeIndent();
                 }
 
-                if (arg.type === 'Literal') {
-                    writer.write(arg);
-                } else {
-                    writer.write(strFuncId);
-                    writer.write('(');
-                    writer.write(arg);
-                    writer.write(')');
-                }
-
+                writer.write(arg);
             }
 
             writer.write(')');

@@ -1,7 +1,8 @@
 'use strict';
 
-var escapeXml = require('../../runtime/html/escapeXml');
-var escapeXmlAttr = escapeXml.attr;
+var runtimeHtmlHelpers = require('../../runtime/html/helpers');
+var escapeXml = runtimeHtmlHelpers.x;
+var escapeXmlAttr = runtimeHtmlHelpers.xa;
 
 var openTagOnly = {};
 

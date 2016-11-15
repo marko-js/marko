@@ -6,7 +6,7 @@ module.exports = function(helpers) {
     var forElId = label.getAttribute('for');
     var inputEl = document.getElementById(forElId);
 
-    expect(forElId).to.exist;
+    expect(!!forElId).to.equal(true);
     expect(inputEl.value).to.equal('test');
     expect(label.getAttribute('for-ref')).to.equal(null);
 };

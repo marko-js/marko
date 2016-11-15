@@ -1,8 +1,11 @@
+require('raptor-polyfill/string/startsWith');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
 var Text = require('./Text');
 var Comment = require('./Comment');
 var Node = require('./Node');
+var documentProvider = require('../document-provider');
+var virtualizeHTML;
 
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_HREF = 'href';
@@ -18,6 +21,16 @@ function removePreservedAttributes(attrs) {
         }
     }
     return attrs;
+}
+
+function convertAttrValue(type, value) {
+    if (value === true) {
+        return '';
+    } else if (type === 'object') {
+        return JSON.stringify(value);
+    } else {
+        return value.toString();
+    }
 }
 
 function HTMLElementClone(other) {
@@ -136,6 +149,19 @@ HTMLElement.prototype = {
                 if (attrValue == null || attrValue === false) {
                     targetNode.removeAttribute(attrName);
                 } else if (oldAttrs[attrName] !== attrValue) {
+
+                    if (attrName.startsWith('data-_')) {
+                        // Special attributes aren't copied to the real DOM. They are only
+                        // kept in the virtual attributes map
+                        continue;
+                    }
+
+                    var type = typeof attrValue;
+
+                    if (type !== 'string') {
+                        attrValue = convertAttrValue(type, attrValue);
+                    }
+
                     targetNode.setAttribute(attrName, attrValue);
                 }
             }
@@ -182,6 +208,20 @@ HTMLElement.prototype = {
      * @param  {String} value The text value for the new Text node
      */
     t: function(value) {
+        var type = typeof value;
+
+        if (type !== 'string') {
+            if (value == null) {
+                value = '';
+            } else if (type === 'object') {
+                var safeHTML = value.safeHTML;
+                var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.document);
+                this.appendChild(vdomNode);
+                return this._finishChild();
+            } else {
+                value = value.toString();
+            }
+        }
         this.appendChild(new Text(value));
         return this._finishChild();
     },
@@ -221,9 +261,17 @@ HTMLElement.prototype = {
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
 
+            if (attrName.startsWith('data-_')) {
+                continue;
+            }
+
             if (attrValue !== false && attrValue != null) {
-                if (attrValue === true) {
-                    attrValue = '';
+                var type = typeof attrValue;
+
+                if (type !== 'string') {
+                    // Special attributes aren't copied to the real DOM. They are only
+                    // kept in the virtual attributes map
+                    attrValue = convertAttrValue(type, attrValue);
                 }
 
                 if (attrName === 'xlink:href') {
@@ -314,3 +362,5 @@ Object.defineProperty(proto, 'disabled', {
 });
 
 module.exports = HTMLElement;
+
+virtualizeHTML = require('./virtualizeHTML');

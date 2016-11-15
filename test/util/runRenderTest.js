@@ -9,7 +9,7 @@ const jsdom = require("jsdom").jsdom;
 const expect = require('chai').expect;
 
 const defaultDocument = jsdom('<html><body></body></html>');
-require('../../runtime/vdom').setDocument(defaultDocument); // We need this to parse HTML fragments on the server
+require('../../').setDocument(defaultDocument); // We need this to parse HTML fragments on the server
 
 
 function createAsyncVerifier(main, helpers, out) {
@@ -179,10 +179,11 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                     getExpectedHtml(function(err, expectedHtml) {
                         fs.writeFileSync(path.join(dir, 'vdom-expected.generated.html'), expectedHtml, { encoding: 'utf8' });
 
+                        let actualizedDom = vdomTree.actualize(defaultDocument);
 
                         // NOTE: We serialie the virtual DOM tree into an HTML string and reparse so that we can
                         //       normalize the text
-                        let vdomHtml = domToHTML(vdomTree);
+                        let vdomHtml = domToHTML(actualizedDom);
                         let vdomRealDocument = jsdom('<html><body>' + vdomHtml + '</body></html>');
                         let vdomString = domToString(vdomRealDocument.body, { childrenOnly: true });
                         helpers.compare(vdomString, 'vdom-', '.generated.html');

@@ -2,11 +2,9 @@
 var EventEmitter = require('events').EventEmitter;
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
-var attr = require('./attr');
-var escapeXml = require('./escapeXml');
 var extend = require('raptor-util/extend');
-
-var defaultDocument = typeof document != 'undefined' && document;
+var documentProvider = require('../document-provider');
+var helpers;
 
 var voidWriter = { write:function(){} };
 
@@ -412,12 +410,10 @@ var proto = AsyncStream.prototype = {
         return new AsyncStream(this.global);
     },
 
-    beginElement: function(name, attrs) {
+    beginElement: function(name, elementAttrs) {
 
         var str = '<' + name;
-        for (var attrName in attrs) {
-            str += attr(attrName, attrs[attrName]);
-        }
+        helpers.as(elementAttrs);
 
         str += '>';
 
@@ -436,7 +432,7 @@ var proto = AsyncStream.prototype = {
     },
 
     text: function(str) {
-        this.write(escapeXml(str));
+        this.write(helpers.x(str));
     },
 
     getNode: function(doc) {
@@ -446,7 +442,7 @@ var proto = AsyncStream.prototype = {
         var html = this.getOutput();
 
         if (!doc) {
-            doc = this.document || defaultDocument;
+            doc = documentProvider.document;
         }
 
         if (!node) {
@@ -505,3 +501,5 @@ proto.w = proto.write;
 extend(proto, require('../OutMixins'));
 
 module.exports = AsyncStream;
+
+helpers = require('./helpers');

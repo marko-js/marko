@@ -1,5 +1,19 @@
 var _addEventListener = require('./addEventListener');
 var updateManager = require('./update-manager');
+var warp10Parse = require('warp10/parse');
+
+function getEventAttribute(el, attrName) {
+    var virtualAttrs = el._vattrs;
+
+    if (virtualAttrs) {
+        return el._vattrs[attrName];
+    } else {
+        var attrValue = el.getAttribute(attrName);
+        if (attrValue) {
+            return warp10Parse(attrValue);
+        }
+    }
+}
 
 var attachBubbleEventListeners = function() {
     var body = document.body;
@@ -30,17 +44,22 @@ var attachBubbleEventListeners = function() {
 
                 // Search up the tree looking DOM events mapped to target
                 // widget methods
-                var attrName = 'data-w-on' + eventType;
-                var targetMethod;
-                var targetWidget;
+                var attrName = 'data-_on' + eventType;
+                var target;
 
                 // Attributes will have the following form:
                 // w-on<event_type>="<target_method>|<widget_id>"
 
                 do {
-                    if ((targetMethod = curNode.getAttribute(attrName))) {
-                        var separator = targetMethod.lastIndexOf('|');
-                        var targetWidgetId = targetMethod.substring(separator+1);
+                    if ((target = getEventAttribute(curNode, attrName))) {
+                        var targetMethod = target[0];
+                        var targetWidgetId = target[1];
+                        var targetArgs;
+
+                        if (target.length > 2) {
+                            targetArgs = target.slice(2);
+                        }
+
                         var targetWidgetEl = document.getElementById(targetWidgetId);
                         if (!targetWidgetEl) {
                             // The target widget is not in the DOM anymore
@@ -50,12 +69,11 @@ var attachBubbleEventListeners = function() {
                             continue;
                         }
 
-                        targetWidget = targetWidgetEl.__widget;
+                        var targetWidget = targetWidgetEl.__widget;
 
                         if (!targetWidget) {
                             throw new Error('Widget not found: ' + targetWidgetId);
                         }
-                        targetMethod = targetMethod.substring(0, separator);
 
                         var targetFunc = targetWidget[targetMethod];
                         if (!targetFunc) {

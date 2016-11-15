@@ -1,5 +1,5 @@
 {
     "dependencies": [
-        "require: ./components/**/widget.js"
+        "require: ./components/app-button-split/widget"
     ]
 }
