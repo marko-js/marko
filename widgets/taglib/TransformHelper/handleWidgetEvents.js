@@ -89,6 +89,7 @@ function addCustomEventListener(transformHelper, eventType, targetMethod) {
 module.exports = function handleWidgetEvents() {
     var el = this.el;
     var builder = this.builder;
+    var context = this.context;
     var isCustomTag = el.type !== 'HtmlElement';
     // We configured the Marko compiler to attach a flag to nodes that
     // have one or more attributes that match the "w-on*" pattern.
@@ -100,15 +101,34 @@ module.exports = function handleWidgetEvents() {
         var attrs = el.getAttributes().concat([]);
 
         attrs.forEach((attr) => {
+            var eventType;
+            var targetMethod;
             var attrName = attr.name;
-            if (!attrName || !attrName.startsWith('w-on')) {
+            var args = attr.argument;
+
+            if (!attrName) {
+                return;
+            }
+
+            if (attrName.startsWith('on') && args) {
+                eventType = attrName.substring(2); // Chop off "on"
+                try {
+                    var parsedArgs = builder.parseExpression(args);
+                    targetMethod = builder.replacePlaceholderEscapeFuncs(parsedArgs, context);
+                } catch (err) {
+                    this.addError('Invalid Javascript Expression for "' + attrName + '": ' + err);
+                }
+            } else if (attrName.startsWith('w-on')) {
+                console.warn('"w-on*" attributes are deprecated. Please use "on*()" instead. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+                eventType = attrName.substring(4); // Chop off "w-on"
+                targetMethod = attr.value;
+            }
+
+            if (!eventType || !targetMethod) {
                 return;
             }
 
             el.removeAttribute(attrName);
-
-            var eventType = attrName.substring(4); // Chop off "w-on"
-            var targetMethod = attr.value;
 
             if (isCustomTag) {
                 var widgetArgs = this.getWidgetArgs();

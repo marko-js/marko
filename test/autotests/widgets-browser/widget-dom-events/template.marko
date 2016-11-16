@@ -1,20 +1,20 @@
 <div class="app-dom-events"
     w-bind="./widget"
-    w-onmousemove="handleRootMouseMove"
-    w-onClick="handleRootClick">
+    onMousemove("handleRootMouseMove")
+    onClick("handleRootClick")>
     <button type="button" ref="button"
-        w-onclick="handleButtonClick">
-        <span w-onmousemove="handleButtonSpanMouseMove">
+        onClick("handleButtonClick")>
+        <span onMousemove("handleButtonSpanMouseMove")>
             Button
         </span>
     </button>
 
     <a href="#foo" id="fooLink"
-        w-ondblclick="handleFooLinkDblClick"
-        w-onmouseout="handleFooLinkMouseOut">
+        onDblclick("handleFooLinkDblClick")
+        onMouseout("handleFooLinkMouseOut")>
     </a>
 
     <app-legacy-button ref="appButton">
-        <span ref="helloWorld" w-onmousedown="handleHelloWorldMouseDown">Hello World</span>
+        <span ref="helloWorld" onMousedown("handleHelloWorldMouseDown")>Hello World</span>
     </app-legacy-button>
 </div>

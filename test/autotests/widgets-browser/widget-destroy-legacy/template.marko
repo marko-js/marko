@@ -5,8 +5,8 @@
     <app-bar ref="barArray[]" label="1"/>
     <app-bar ref="barArray[]" label="2"/>
 
-    <app-custom-events w-onTestEvent="handleTestEvent1" ref="customEvents" />
-    <app-custom-events w-onTestEvent="handleTestEvent2" channel="customEvents-${widget.id}" />
+    <app-custom-events onTestEvent("handleTestEvent1") ref="customEvents" />
+    <app-custom-events onTestEvent("handleTestEvent2") channel="customEvents-${widget.id}" />
 
     <ul>
         <li for(color in ['red', 'green', 'blue']) ref="colorListItems[]">${color}</li>

@@ -51,6 +51,7 @@ var SequenceExpression = require('./ast/SequenceExpression');
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
+var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
 var isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
 var DEFAULT_BUILDER;
@@ -418,6 +419,10 @@ class Builder {
         ok(typeof str === 'string', '"str" should be a string expression');
         var parsed = parseStatement(str, DEFAULT_BUILDER);
         return parsed;
+    }
+
+    replacePlaceholderEscapeFuncs(node, context) {
+        return replacePlaceholderEscapeFuncs(node, context);
     }
 
     program(body) {

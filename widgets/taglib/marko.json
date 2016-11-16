@@ -64,6 +64,20 @@
                 }
             ]
         },
+        "@on*": {
+            "pattern": true,
+            "type": "statement",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasWidgetEvents",
+            "autocomplete": [
+                {
+                    "displayText": "on<event>(\"<method>\")",
+                    "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                }
+            ]
+        },
         "@w-on*": {
             "pattern": true,
             "type": "string",
