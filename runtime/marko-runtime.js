@@ -231,7 +231,7 @@ if (stream) {
             var data = this._d;
             var options = this._options;
 
-            var globalData = data.$global;
+            var globalData = data && data.$global;
             var shouldBuffer = options && options.buffer !== false;
 
             var out = new AsyncStream(globalData, this, null, shouldBuffer);
