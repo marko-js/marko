@@ -206,7 +206,9 @@ if (stream) {
     Readable = function(template, data, options) {
         Readable.$super.call(this);
         this._t = template;
-        this._d = data;
+        this._d = data || {
+            $global: {}
+        };
         this._options = options;
         this._rendered = false;
     };
