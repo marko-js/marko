@@ -206,9 +206,7 @@ if (stream) {
     Readable = function(template, data, options) {
         Readable.$super.call(this);
         this._t = template;
-        this._d = data || {
-            $global: {}
-        };
+        this._d = data;
         this._options = options;
         this._rendered = false;
     };
@@ -233,7 +231,7 @@ if (stream) {
             var data = this._d;
             var options = this._options;
 
-            var globalData = data.$global;
+            var globalData = data && data.$global;
             var shouldBuffer = options && options.buffer !== false;
 
             var out = new AsyncStream(globalData, this, null, shouldBuffer);
