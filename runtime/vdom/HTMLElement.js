@@ -15,6 +15,8 @@ var ATTR_MARKO_CONST = 'data-marko-const';
 function removePreservedAttributes(attrs) {
     var preservedAttrs = attrs['data-preserve-attrs'];
     if (preservedAttrs) {
+        preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
+
         for (var i=0, len=preservedAttrs.length; i<len; i++) {
             var preservedAttrName = preservedAttrs[i];
             delete attrs[preservedAttrName];
@@ -99,6 +101,8 @@ HTMLElement.prototype = {
                 // not waste time diffing a constant, immutable attribute
                 // map.
                 return;
+            } else {
+                oldAttrs = removePreservedAttributes(extend({}, oldAttrs));
             }
         } else {
             // We need to build the attribute map from the real attributes
