@@ -24,7 +24,7 @@ function promiseToCallback(promise, callback, thisObj) {
                 callback(err);
             });
         } else {
-            finalPromise = finalPromise.then(void 0, function(err) {
+            finalPromise = finalPromise.then(null, function(err) {
                 callback(err);
             });
         }
