@@ -76,8 +76,7 @@ WidgetDef.prototype = {
      * @param  {String} targetMethod The name of the method to invoke on the scoped widget
      * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
      */
-    addDomEvent: function(type, targetMethod, elId) {
-
+    addDomEvent: function(type, targetMethod, elId, extraArgs) {
         if (!targetMethod) {
             // The event handler method is allowed to be conditional. At render time if the target
             // method is null then we do not attach any direct event listeners.
@@ -90,6 +89,7 @@ WidgetDef.prototype = {
         this.domEvents.push(type);
         this.domEvents.push(targetMethod);
         this.domEvents.push(elId);
+        this.domEvents.push(extraArgs);
     },
     /**
      * Returns a string representation of the DOM events data.

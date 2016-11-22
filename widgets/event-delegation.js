@@ -1,19 +1,6 @@
 var _addEventListener = require('./addEventListener');
 var updateManager = require('./update-manager');
-var warp10Parse = require('warp10/parse');
-
-function getEventAttribute(el, attrName) {
-    var virtualAttrs = el._vattrs;
-
-    if (virtualAttrs) {
-        return el._vattrs[attrName];
-    } else {
-        var attrValue = el.getAttribute(attrName);
-        if (attrValue) {
-            return warp10Parse(attrValue);
-        }
-    }
-}
+var getObjectAttribute = require('./getObjectAttribute');
 
 var attachBubbleEventListeners = function() {
     var body = document.body;
@@ -51,13 +38,13 @@ var attachBubbleEventListeners = function() {
                 // on<event_type>("<target_method>|<widget_id>")
 
                 do {
-                    if ((target = getEventAttribute(curNode, attrName))) {
+                    if ((target = getObjectAttribute(curNode, attrName))) {
                         var targetMethod = target[0];
                         var targetWidgetId = target[1];
-                        var targetArgs;
+                        var extraArgs;
 
                         if (target.length > 2) {
-                            targetArgs = target.slice(2);
+                            extraArgs = target.slice(2);
                         }
 
                         var targetWidgetEl = document.getElementById(targetWidgetId);
@@ -80,8 +67,14 @@ var attachBubbleEventListeners = function() {
                             throw new Error('Method not found on widget ' + targetWidget.id + ': ' + targetMethod);
                         }
 
+
                         // Invoke the widget method
-                        targetWidget[targetMethod](event, curNode);
+                        if (extraArgs) {
+                            targetFunc.apply(targetWidget, extraArgs.concat(event, curNode));
+                        } else {
+                            targetFunc.call(targetWidget, event, curNode);
+                        }
+
                         if (propagationStopped) {
                             break;
                         }

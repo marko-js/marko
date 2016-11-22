@@ -39,7 +39,7 @@ class WidgetArgs {
         return this.id;
     }
 
-    addCustomEvent(eventType, targetMethod) {
+    addCustomEvent(eventType, targetMethod, extraArgs) {
         this.empty = false;
 
         if (!this.customEvents) {
@@ -48,6 +48,7 @@ class WidgetArgs {
 
         this.customEvents.push(eventType);
         this.customEvents.push(targetMethod);
+        this.customEvents.push(extraArgs);
     }
 
     setExtend(extendType, extendConfig, extendState) {
@@ -91,7 +92,7 @@ class WidgetArgs {
         // widget if it is needed
         var shouldProvideScope = id || customEvents;
 
-        let widgetArgsVar = context.addStaticVar('__widgetArgs',
+        let widgetArgsVar = context.addStaticVar('marko_widgetArgs',
             'require("' + getRequirePath('marko/widgets/taglib/helpers/widgetArgs', context) + '")');
 
         var functionCallArgs = [
@@ -133,8 +134,8 @@ class WidgetArgs {
         var context = transformHelper.context;
         var builder = transformHelper.builder;
 
-        var cleanupWidgetArgsVar = context.addStaticVar('_cleanupWidgetArgs',
-            '__widgetArgs.cleanup');
+        var cleanupWidgetArgsVar = context.addStaticVar('marko_cleanupWidgetArgs',
+            'marko_widgetArgs.cleanup');
 
         return builder.functionCall(cleanupWidgetArgsVar, [builder.identifierOut()]);
     }

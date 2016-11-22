@@ -13,11 +13,11 @@ module.exports = require('marko/widgets').defineComponent({
         this.clickEvent = null;
     },
 
-    handleButtonMouseMove: function(event, el) {
-        this.mouseMoveEvent = {event: event, el: el};
+    handleButtonMouseMove: function() {
+        this.mouseMoveEvent = arguments;
     },
 
-    handleButtonClick: function(event, el) {
-        this.clickEvent = {event: event, el: el};
+    handleButtonClick: function() {
+        this.clickEvent = arguments;
     }
 });

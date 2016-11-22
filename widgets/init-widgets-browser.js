@@ -7,6 +7,7 @@ var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
 var defaultDocument = typeof document != 'undefined' && document;
 var events = require('../runtime/events');
+var getObjectAttribute = require('./getObjectAttribute');
 
 var registry; // We initialize this later to avoid issues with circular dependencies
 
@@ -19,9 +20,13 @@ function invokeWidgetEventHandler(widget, targetMethodName, args) {
     method.apply(widget, args);
 }
 
-function addDOMEventListener(widget, el, eventType, targetMethodName) {
+function addDOMEventListener(widget, el, eventType, targetMethodName, extraArgs) {
     return _addEventListener(el, eventType, function(event) {
-        invokeWidgetEventHandler(widget, targetMethodName, [event, el]);
+        var args = [event, el];
+        if (extraArgs) {
+            args = extraArgs.concat(args);
+        }
+        invokeWidgetEventHandler(widget, targetMethodName, args);
     });
 }
 
@@ -60,6 +65,7 @@ function initWidget(
     var eventType;
     var targetMethodName;
     var widget;
+    var extraArgs;
 
     if (!el) {
         el = doc.getElementById(id);
@@ -112,14 +118,16 @@ function initWidget(
         if (domEvents) {
             var eventListenerHandles = [];
 
-            for (i=0, len=domEvents.length; i<len; i+=3) {
+            for (i=0, len=domEvents.length; i<len; i+=4) {
                 eventType = domEvents[i];
                 targetMethodName = domEvents[i+1];
                 var eventElId = domEvents[i+2];
+                extraArgs = domEvents[i+3];
+
                 var eventEl = getNestedEl(widget, eventElId, doc);
 
                 // The event mapping is for a DOM event (not a custom event)
-                var eventListenerHandle = addDOMEventListener(widget, eventEl, eventType, targetMethodName);
+                var eventListenerHandle = addDOMEventListener(widget, eventEl, eventType, targetMethodName, extraArgs);
                 eventListenerHandles.push(eventListenerHandle);
             }
 
@@ -132,10 +140,12 @@ function initWidget(
             widget.__customEvents = {};
             widget.__scope = scope;
 
-            for (i=0, len=customEvents.length; i<len; i+=2) {
+            for (i=0, len=customEvents.length; i<len; i+=3) {
                 eventType = customEvents[i];
                 targetMethodName = customEvents[i+1];
-                widget.__customEvents[eventType] = targetMethodName;
+                extraArgs = customEvents[i+2];
+
+                widget.__customEvents[eventType] = [targetMethodName, extraArgs];
             }
         }
 
@@ -213,15 +223,14 @@ function initWidgetFromEl(el, state, config) {
         var domEventsEl = doc.getElementById(id + '-$on');
         if (domEventsEl) {
             domEventsEl.parentNode.removeChild(domEventsEl);
-            domEvents = (domEventsEl.getAttribute('data-on') || '').split(',');
+            domEvents = getObjectAttribute(domEventsEl, 'data-_on');
         }
 
         el.removeAttribute('data-w-on');
     }
 
-    var customEvents = el.getAttribute('data-w-events');
+    var customEvents = getObjectAttribute(el, 'data-_events');
     if (customEvents) {
-        customEvents = customEvents.split(',');
         scope = customEvents[0];
         customEvents = customEvents.slice(1);
         el.removeAttribute('data-w-events');

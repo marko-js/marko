@@ -15,7 +15,7 @@ function WrappedString(val) {
 }
 
 WrappedString.prototype = {
-    toString: function() {
+    safeHTML: function() {
         return this.html;
     }
 };
@@ -39,7 +39,7 @@ exports.attrs = function(widgetDef) {
 
     var customEvents = widgetDef.customEvents;
     if (customEvents) {
-        attrs['data-w-events'] = widgetDef.scope + ',' + customEvents.join(',');
+        attrs['data-_events'] = [ widgetDef.scope ].concat(customEvents);
     }
 
     var extend = widgetDef.extend;
@@ -58,7 +58,10 @@ exports.attrs = function(widgetDef) {
 exports.writeDomEventsEl = function(widgetDef, out) {
     var domEvents = widgetDef.domEvents;
     if (domEvents) {
-        out.write('<span id="' + widgetDef.elId('$on') + '" data-on="' + domEvents.join(',') + '"></span>');
+        out.element('span', {
+            id: widgetDef.elId('$on'),
+            'data-_on': domEvents
+        });
     }
 };
 

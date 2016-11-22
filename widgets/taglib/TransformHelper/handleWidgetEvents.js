@@ -27,7 +27,7 @@ function isUpperCase(c) {
     return c == c.toUpperCase();
 }
 
-function addBubblingEventListener(transformHelper, eventType, targetMethod) {
+function addBubblingEventListener(transformHelper, eventType, targetMethod, extraArgs) {
     var containingWidgetNode = transformHelper.getContainingWidgetNode();
     var el = transformHelper.el;
 
@@ -47,15 +47,21 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod) {
     var markoWidgetsEventFuncId = transformHelper.context.importModule('markoWidgets_event',
         transformHelper.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/event'));
 
-    attrValue = builder.functionCall(markoWidgetsEventFuncId, [
+    var helperArgs = [
             targetMethod,
             widgetIdExpression
-        ]);
+        ];
+
+    if (extraArgs) {
+        helperArgs.push(builder.arrayExpression(extraArgs));
+    }
+
+    attrValue = builder.functionCall(markoWidgetsEventFuncId, helperArgs);
 
     el.setAttributeValue('data-_on' + eventType.value, attrValue);
 }
 
-function addDirectEventListener(transformHelper, eventType, targetMethod) {
+function addDirectEventListener(transformHelper, eventType, targetMethod, extraArgs) {
     var builder = transformHelper.builder;
     var el = transformHelper.el;
 
@@ -63,13 +69,18 @@ function addDirectEventListener(transformHelper, eventType, targetMethod) {
         builder.identifier('widget'),
         builder.identifier('addDomEvent'));
 
-    var addDomEventFunctionCall = builder.functionCall(
-        addDomEvent,
-        [
-            eventType,
-            targetMethod,
-            transformHelper.getNestedIdExpression()
-        ]);
+    var helperArgs = [
+        eventType,
+        targetMethod,
+        transformHelper.getNestedIdExpression()
+    ];
+
+    if (extraArgs) {
+        helperArgs.push(builder.arrayExpression(extraArgs));
+    }
+
+
+    var addDomEventFunctionCall = builder.functionCall(addDomEvent, helperArgs);
 
     el.onBeforeGenerateCode((event) => {
         event.insertCode(addDomEventFunctionCall);
@@ -80,10 +91,10 @@ function addDirectEventListener(transformHelper, eventType, targetMethod) {
     containingWidgetNode.setAttributeValue('hasDomEvents', builder.literal(1));
 }
 
-function addCustomEventListener(transformHelper, eventType, targetMethod) {
+function addCustomEventListener(transformHelper, eventType, targetMethod, extraArgs) {
     // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
     var widgetArgs = transformHelper.getWidgetArgs();
-    widgetArgs.addCustomEvent(eventType, targetMethod);
+    widgetArgs.addCustomEvent(eventType, targetMethod, extraArgs);
 }
 
 module.exports = function handleWidgetEvents() {
@@ -104,19 +115,29 @@ module.exports = function handleWidgetEvents() {
             var eventType;
             var targetMethod;
             var attrName = attr.name;
-            var args = attr.argument;
+            var argument = attr.argument;
+            var parsedArgs;
+            var extraArgs;
 
             if (!attrName) {
                 return;
             }
 
-            if (attrName.startsWith('on') && args) {
+            if (attrName.startsWith('on') && argument) {
                 eventType = attrName.substring(2); // Chop off "on"
                 try {
-                    var parsedArgs = builder.parseExpression(args);
-                    targetMethod = builder.replacePlaceholderEscapeFuncs(parsedArgs, context);
+                    parsedArgs = builder.parseJavaScriptArgs(argument);
                 } catch (err) {
                     this.addError('Invalid Javascript Expression for "' + attrName + '": ' + err);
+                    return;
+                }
+
+                targetMethod = builder.replacePlaceholderEscapeFuncs(parsedArgs[0], context);
+
+
+
+                if (parsedArgs.length > 1) {
+                    extraArgs = parsedArgs.slice(1);
                 }
             } else if (attrName.startsWith('w-on')) {
                 console.warn('"w-on*" attributes are deprecated. Please use "on*()" instead. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
@@ -150,7 +171,7 @@ module.exports = function handleWidgetEvents() {
                 eventType = builder.literal(eventType);
 
                 // Node is for a custom tag
-                addCustomEventListener(this, eventType, targetMethod);
+                addCustomEventListener(this, eventType, targetMethod, extraArgs);
             } else {
                 // We are adding an event listener for a DOM event (not a custom event)
                 //
@@ -175,11 +196,11 @@ module.exports = function handleWidgetEvents() {
                     // a "data-w-on{eventType}" attribute to the output HTML
                     // for this element that will be used to map the event
                     // to a method on the containing widget.
-                    addBubblingEventListener(this, eventType, targetMethod);
+                    addBubblingEventListener(this, eventType, targetMethod, extraArgs);
                 } else {
                     // The event does not bubble so we must attach a DOM
                     // event listener directly to the target element.
-                    addDirectEventListener(this, eventType, targetMethod);
+                    addDirectEventListener(this, eventType, targetMethod, extraArgs);
                 }
             }
         });

@@ -10,6 +10,7 @@ var extend = require('raptor-util/extend');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var marko = require('marko');
+var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
 
@@ -257,14 +258,15 @@ Widget.prototype = widgetProto = {
 
     emit: function(eventType) {
         var customEvents = this.__customEvents;
-        var targetMethodName;
+        var target;
 
-        if (customEvents && (targetMethodName = customEvents[eventType])) {
-            var len = arguments.length;
+        if (customEvents && (target = customEvents[eventType])) {
+            var targetMethodName = target[0];
+            var extraArgs = target[1];
 
-            var args = new Array(len-1);
-            for (var i = 1; i < len; i++) {
-                args[i] = arguments[i];
+            var args = slice.call(arguments, 1);
+            if (extraArgs) {
+                args = extraArgs.concat(args);
             }
 
             handleCustomEventWithMethodListener(this, targetMethodName, args);
