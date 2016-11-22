@@ -426,10 +426,10 @@ class CompileContext extends EventEmitter {
         return this._macros.registerMacro(name, params);
     }
 
-    importTemplate(relativePath) {
+    importTemplate(relativePath, varName) {
         ok(typeof relativePath === 'string', '"path" should be a string');
         var builder = this.builder;
-		var varName = removeExt(path.basename(relativePath)) + '_template';
+		varName = varName || removeExt(path.basename(relativePath)) + '_template';
 
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
         var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
