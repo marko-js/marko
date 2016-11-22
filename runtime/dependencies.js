@@ -1,9 +1,14 @@
 var path = require('path');
 var resolveFrom = require('resolve-from');
+var Template = require('./html').Template;
 
 function getDeps(template) {
   if(!template.meta && template.template) {
     template = template.template;
+  }
+
+  if(!(template instanceof Template)) {
+    return [];
   }
 
   if(template.deps) {
