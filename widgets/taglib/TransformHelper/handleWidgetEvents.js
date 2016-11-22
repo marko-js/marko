@@ -92,8 +92,15 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
 }
 
 function addCustomEventListener(transformHelper, eventType, targetMethod, extraArgs) {
+    var builder = transformHelper.builder;
+
     // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
     var widgetArgs = transformHelper.getWidgetArgs();
+
+    if (extraArgs) {
+        extraArgs = builder.arrayExpression(extraArgs);
+    }
+
     widgetArgs.addCustomEvent(eventType, targetMethod, extraArgs);
 }
 

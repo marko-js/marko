@@ -5,7 +5,6 @@ var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
-var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var extend = require('raptor-util/extend');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
@@ -195,10 +194,13 @@ function hasCompatibleWidget(widgetsContext, existingWidget) {
     return existingWidget.__type === newWidgetDef.type;
 }
 
-function handleCustomEventWithMethodListener(widget, targetMethodName, args) {
+function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
     // Remove the "eventType" argument
-    args = arrayFromArguments(args, 1);
     args.push(widget);
+
+    if (extraArgs) {
+        args = extraArgs.concat(args);
+    }
 
     var targetWidget = markoWidgets.getWidgetForEl(widget.__scope);
     var targetMethod = targetWidget[targetMethodName];
@@ -263,13 +265,9 @@ Widget.prototype = widgetProto = {
         if (customEvents && (target = customEvents[eventType])) {
             var targetMethodName = target[0];
             var extraArgs = target[1];
-
             var args = slice.call(arguments, 1);
-            if (extraArgs) {
-                args = extraArgs.concat(args);
-            }
 
-            handleCustomEventWithMethodListener(this, targetMethodName, args);
+            handleCustomEventWithMethodListener(this, targetMethodName, args, extraArgs);
         }
 
         return emit.apply(this, arguments);
