@@ -410,12 +410,23 @@ var proto = AsyncStream.prototype = {
         return new AsyncStream(this.global);
     },
 
+    element: function(tagName, elementAttrs, openTagOnly) {
+        var str = '<' + tagName +
+            helpers.as(elementAttrs) +
+            '>';
+
+        if (openTagOnly !== true) {
+            str += '</' + tagName + '>';
+        }
+
+        this.write(str);
+    },
+
     beginElement: function(name, elementAttrs) {
 
-        var str = '<' + name;
-        helpers.as(elementAttrs);
-
-        str += '>';
+        var str = '<' + name +
+            helpers.as(elementAttrs) +
+            '>';
 
         this.write(str);
 
