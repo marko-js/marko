@@ -62,7 +62,7 @@ function resolveRenderer(handler) {
     }
 
     if (typeof (renderer = handler.render) === 'function') {
-        return renderer;
+        return renderer.bind(handler);
     }
 
     // If the user code has a circular function then the renderer function

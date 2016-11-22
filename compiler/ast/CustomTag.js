@@ -312,13 +312,17 @@ class CustomTag extends HtmlElement {
 
         var finalNode;
 
+        var tagVar = tagDef.name + '_tag';
+
         if (tagDef.template) {
-            let templateRequirePath = context.getRequirePath(tagDef.template);
-            let templateVar = context.importTemplate(templateRequirePath);
-            let renderMethod = builder.memberExpression(templateVar, builder.identifier('render'));
-            let renderArgs = [ inputProps, 'out' ];
-            let renderFunctionCall = builder.functionCall(renderMethod, renderArgs);
-            finalNode = renderFunctionCall;
+            var templateRequirePath = context.getRequirePath(tagDef.template);
+            var templateVar = context.importTemplate(templateRequirePath, tagDef.name + '_template');
+
+            let loadTag = builder.functionCall(context.helper('loadTag'), [templateVar]);
+            tagVar = codegen.addStaticVar(tagVar, loadTag);
+
+            let tagFunctionCall = builder.functionCall(tagVar, [ inputProps, 'out' ]);
+            finalNode = tagFunctionCall;
         } else {
             var loadTagArgs = [
                 requireRendererFunctionCall // The first param is the renderer
@@ -342,9 +346,7 @@ class CustomTag extends HtmlElement {
                 }
             }
 
-            var loadTag = builder.functionCall(context.helper('loadTag'), loadTagArgs);
-
-            var tagVar = tagDef.name + '_tag';
+            let loadTag = builder.functionCall(context.helper('loadTag'), loadTagArgs);
 
             tagVar = codegen.addStaticVar(tagVar, loadTag);
             let tagArgs = [inputProps, 'out' ];
