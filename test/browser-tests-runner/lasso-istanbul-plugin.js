@@ -1,4 +1,6 @@
+var fs = require('fs');
 var istanbul = require('istanbul-lib-instrument');
+var resolve = require('lasso-resolve-from');
 
 module.exports = function(lasso, pluginConfig) {
     var instrumenter = istanbul.createInstrumenter();
@@ -15,7 +17,14 @@ module.exports = function(lasso, pluginConfig) {
                      || file.includes('benchmark/')
             ) return code;
 
-            return instrumenter.instrumentSync(code, context.dependency.file);
+            if(context.dependency.type === 'commonjs-def') {
+                var unwrappedCode = code.replace(/^\$\_mod[^\n]+?\{ /, '').replace(/\n\}\);$/, '');
+            }
+
+            var actualFile = resolve(__dirname, file).path;
+            var instrumentedCode = instrumenter.instrumentSync(unwrappedCode || code, actualFile);
+
+            return unwrappedCode ? code.replace(unwrappedCode, instrumentedCode) : instrumentedCode;
         }
     });
 }
