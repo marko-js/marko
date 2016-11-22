@@ -23,6 +23,10 @@ function promiseToCallback(promise, callback, thisObj) {
             finalPromise = finalPromise.fail(function(err) {
                 callback(err);
             });
+        } else {
+            finalPromise = finalPromise.then(void 0, function(err) {
+                callback(err);
+            });
         }
 
         if (finalPromise.done) {
