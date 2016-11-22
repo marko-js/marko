@@ -13,14 +13,15 @@ class SelfInvokingFunction extends Node {
     generateCode(codegen) {
         var params = this.params || [];
         var args = this.args || [];
-        var body = this.body;
+        var oldInFunction = codegen.inFunction;
+        codegen.inFunction = true;
+        var body = codegen.generateCode(this.body);
+        codegen.inFunction = oldInFunction;
 
-        codegen.write('(');
         var functionDeclaration = codegen.builder.functionDeclaration(null, params, body);
         var functionCall = codegen.builder.functionCall(functionDeclaration, args);
-        codegen.generateCode(functionCall);
 
-        codegen.write(')');
+        return functionCall;
     }
 
     walk(walker) {

@@ -1,6 +1,6 @@
 'use strict';
 var ok = require('assert').ok;
-var AttributePlaceholder = require('./ast/AttributePlaceholder');
+var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     'preserve-whitespace': function(attr, context) {
@@ -15,24 +15,6 @@ var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
 
 function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
-}
-
-function replacePlaceholderEscapeFuncs(node, context) {
-    var walker = context.createWalker({
-        exit: function(node, parent) {
-            if (node.type === 'FunctionCall' &&
-                node.callee.type === 'Identifier') {
-
-                if (node.callee.name === '$noEscapeXml') {
-                    return new AttributePlaceholder({escape: false, value: node.args[0]});
-                } else if (node.callee.name === '$escapeXml') {
-                    return new AttributePlaceholder({escape: true, value: node.args[0]});
-                }
-            }
-        }
-    });
-
-    return walker.walk(node);
 }
 
 function mergeShorthandClassNames(el, shorthandClassNames, context) {
@@ -56,26 +38,28 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
             prevClassName.value += ' ' + className.value;
         } else {
             finalClassNames.push(className);
+            prevClassName = className;
         }
-        prevClassName = className;
     }
 
     if (finalClassNames.length === 1) {
         el.setAttributeValue('class', finalClassNames[0]);
     } else {
-        var classListVar = context.addStaticVar('__classList', '__helpers.cl');
-        el.setAttributeValue('class', builder.functionCall(classListVar, finalClassNames));
+
+        el.setAttributeValue('class', builder.functionCall(context.helper('classList'), finalClassNames));
     }
 }
 
 class Parser {
-    constructor(parserImpl) {
+    constructor(parserImpl, options) {
         ok(parserImpl, '"parserImpl" is required');
 
         this.parserImpl = parserImpl;
 
         this.prevTextNode = null;
         this.stack = null;
+
+        this.raw = options && options.raw === true;
 
         // The context gets provided when parse is called
         // but we store it as part of the object so that the handler
@@ -108,13 +92,17 @@ class Parser {
         return rootNode;
     }
 
-    handleCharacters(text) {
+    handleCharacters(text, parseMode) {
         var builder = this.context.builder;
 
-        if (this.prevTextNode && this.prevTextNode.isLiteral()) {
-            this.prevTextNode.appendText(text);
+        var escape = parseMode !== 'html';
+        // NOTE: If parseMode is 'static-text' or 'parsed-text' then that means that special
+        //       HTML characters may not have been escaped on the way in so we need to escape
+        //       them on the way out
+
+        if (this.prevTextNode && this.prevTextNode.isLiteral() && this.prevTextNode.escape === escape) {
+            this.prevTextNode.argument.value += text;
         } else {
-            var escape = false;
             this.prevTextNode = builder.text(builder.literal(text), escape);
             this.parentNode.appendChild(this.prevTextNode);
         }
@@ -133,27 +121,33 @@ class Parser {
             argument = argument.value;
         }
 
-        if (tagNameExpression) {
-            tagName = builder.parseExpression(tagNameExpression);
-        } else if (tagName === 'marko-compiler-options') {
-            attributes.forEach(function (attr) {
-                let attrName = attr.name;
-                let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
+        var raw = this.raw;
 
-                if (!handler) {
-                    context.addError({
-                        code: 'ERR_INVALID_COMPILER_OPTION',
-                        message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
-                        pos: el.pos,
-                        node: el
-                    });
-                    return;
-                }
+        if (!raw) {
+            if (tagNameExpression) {
+                tagName = builder.parseExpression(tagNameExpression);
+            } else if (tagName === 'marko-compiler-options') {
+                this.parentNode.setTrimStartEnd(true);
 
-                handler(attr, context);
-            });
+                attributes.forEach(function (attr) {
+                    let attrName = attr.name;
+                    let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 
-            return;
+                    if (!handler) {
+                        context.addError({
+                            code: 'ERR_INVALID_COMPILER_OPTION',
+                            message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
+                            pos: el.pos,
+                            node: el
+                        });
+                        return;
+                    }
+
+                    handler(attr, context);
+                });
+
+                return;
+            }
         }
 
         this.prevTextNode = null;
@@ -183,11 +177,14 @@ class Parser {
                     }
 
                     if (valid) {
-                        attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                        if (raw) {
+                            attrValue = parsedExpression;
+                        } else {
+                            attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                        }
                     } else {
                         attrValue = null;
                     }
-
                 }
 
                 var attrDef = {
@@ -205,7 +202,19 @@ class Parser {
             })
         };
 
-        var node = this.context.createNodeForEl(elDef);
+        var node;
+
+        if (raw) {
+
+            node = builder.htmlElement(elDef);
+            node.pos = elDef.pos;
+
+            let taglibLookup = this.context.taglibLookup;
+            let tagDef = taglibLookup.getTag(tagName);
+            node.tagDef = tagDef;
+        } else {
+            node = this.context.createNodeForEl(elDef);
+        }
 
         if (attributeParseErrors.length) {
 
@@ -214,15 +223,29 @@ class Parser {
             });
         }
 
-        if (el.shorthandClassNames) {
-            mergeShorthandClassNames(node, el.shorthandClassNames, context);
-        }
+        if (raw) {
+            if (el.shorthandId) {
+                let parsed = builder.parseExpression(el.shorthandId.value);
+                node.rawShorthandId = parsed.value;
+            }
 
-        if (el.shorthandId) {
-            if (node.hasAttribute('id')) {
-                context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
-            } else {
-                node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+            if (el.shorthandClassNames) {
+                node.rawShorthandClassNames = el.shorthandClassNames.map((className) => {
+                    let parsed = builder.parseExpression(className.value);
+                    return parsed.value;
+                });
+            }
+        } else {
+            if (el.shorthandClassNames) {
+                mergeShorthandClassNames(node, el.shorthandClassNames, context);
+            }
+
+            if (el.shorthandId) {
+                if (node.hasAttribute('id')) {
+                    context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
+                } else {
+                    node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+                }
             }
         }
 
@@ -235,13 +258,17 @@ class Parser {
     }
 
     handleEndElement(elementName) {
-        if (elementName === 'marko-compiler-options') {
-            return;
+        if (this.raw !== true) {
+            if (elementName === 'marko-compiler-options') {
+                return;
+            }
         }
 
         this.prevTextNode = null;
 
         this.stack.pop();
+
+
     }
 
     handleComment(comment) {
@@ -252,10 +279,28 @@ class Parser {
         var preserveComment = this.context.isPreserveComments() ||
             isIEConditionalComment(comment);
 
-        if (preserveComment) {
+        if (this.raw || preserveComment) {
             var commentNode = builder.htmlComment(builder.literal(comment));
             this.parentNode.appendChild(commentNode);
         }
+    }
+
+    handleDeclaration(value) {
+        this.prevTextNode = null;
+
+        var builder = this.context.builder;
+
+        var declarationNode = builder.declaration(builder.literal(value));
+        this.parentNode.appendChild(declarationNode);
+    }
+
+    handleDocumentType(value) {
+        this.prevTextNode = null;
+
+        var builder = this.context.builder;
+
+        var docTypeNode = builder.documentType(builder.literal(value));
+        this.parentNode.appendChild(docTypeNode);
     }
 
     handleBodyTextPlaceholder(expression, escape) {

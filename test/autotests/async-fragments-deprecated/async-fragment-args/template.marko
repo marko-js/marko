@@ -1,0 +1,17 @@
+<ul>
+    <li for(userId in [0, 1, 2, 3])>
+        <async-fragment data-provider=data.userInfo var="userInfo" arg-userId=userId name=("user" + userId)>
+            <ul>
+                <li>
+                    <b>Name:</b> ${userInfo.name}
+                </li>
+                <li>
+                    <b>Gender:</b> ${userInfo.gender}
+                </li>
+                <li>
+                    <b>Occupation:</b> ${userInfo.occupation}
+                </li>
+            </ul>
+        </async-fragment>
+    </li>
+</ul>

@@ -6,35 +6,42 @@ var Parser = require('./Parser');
 var HtmlJsParser = require('./HtmlJsParser');
 var Builder = require('./Builder');
 var extend = require('raptor-util/extend');
-var NODE_ENV = process.env.NODE_ENV;
+var CompileContext = require('./CompileContext');
+var globalConfig = require('./config');
+var CompileContext = require('./CompileContext');
+var InlineCompiler = require('./InlineCompiler');
+var ok = require('assert').ok;
+
+var defaults = extend({}, globalConfig);
+
+Object.defineProperty(exports, 'defaultOptions', {
+    get: function() { return globalConfig;  },
+    enumerable: true,
+    configurable: false
+});
+
+Object.defineProperty(exports, 'config', {
+    get: function() { return globalConfig;  },
+    enumerable: true,
+    configurable: false
+});
+
 var defaultParser = new Parser(new HtmlJsParser());
+var rawParser = new Parser(
+    new HtmlJsParser({
+        ignorePlaceholders: true
+    }),
+    {
+        raw: true
+    });
 
-var defaultOptions = {
-        /**
-         * If true, then the compiler will check the disk to see if a previously compiled
-         * template is the same age or newer than the source template. If so, the previously
-         * compiled template will be loaded. Otherwise, the template will be recompiled
-         * and saved to disk.
-         *
-         * If false, the template will always be recompiled. If `writeToDisk` is false
-         * then this option will be ignored.
-         */
-        checkUpToDate: true,
-        /**
-         * If true (the default) then compiled templates will be written to disk. If false,
-         * compiled templates will not be written to disk (i.e., no `.marko.js` file will
-         * be generated)
-         */
-        writeToDisk: true,
+function configure(newConfig) {
+    if (!newConfig) {
+        newConfig = {};
+    }
 
-        /**
-         * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
-         */
-        assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
-    };
-
-function configure(config) {
-    extend(defaultOptions, config);
+    extend(globalConfig, defaults);
+    extend(globalConfig, newConfig);
 }
 
 var defaultCompiler = new Compiler({
@@ -52,21 +59,53 @@ function createWalker(options) {
     return new Walker(options);
 }
 
-function compileFile(filename, options, callback) {
-    var fs = req('fs');
-    var compiler;
+function _compile(src, filename, userOptions, callback) {
+    ok(filename, '"filename" argument is required');
+    ok(typeof filename === 'string', '"filename" argument should be a string');
 
+    var options = {};
+
+    extend(options, globalConfig);
+
+    if (userOptions) {
+        extend(options, userOptions);
+    }
+
+    var compiler = defaultCompiler;
+
+    var context = new CompileContext(src, filename, compiler.builder, options);
+
+    if (callback) {
+        let compiled;
+
+        try {
+            compiled = compiler.compile(src, context);
+        } catch(e) {
+            return callback(e);
+        }
+
+        callback(null, compiled.code);
+    } else {
+        let compiled = compiler.compile(src, context);
+        return compiled.code;
+    }
+}
+
+function compile(src, filename, options, callback) {
     if (typeof options === 'function') {
         callback = options;
         options = null;
     }
 
-    if (options) {
-        compiler = options.compiler;
-    }
+    return _compile(src, filename, options, callback);
+}
 
-    if (!compiler) {
-        compiler = defaultCompiler;
+function compileFile(filename, options, callback) {
+    var fs = req('fs');
+
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
     }
 
     if (callback) {
@@ -75,43 +114,26 @@ function compileFile(filename, options, callback) {
                 return callback(err);
             }
 
-            try {
-                callback(null, compiler.compile(templateSrc, filename, options));
-            } catch(e) {
-                callback(e);
-            }
+            _compile(templateSrc, filename, options, callback);
         });
     } else {
         let templateSrc = fs.readFileSync(filename, {encoding: 'utf8'});
-        return compiler.compile(templateSrc, filename, options);
+        return _compile(templateSrc, filename, options, callback);
     }
 }
 
-function compile(src, filename, options, callback) {
-    var compiler;
+function createInlineCompiler(filename, userOptions) {
+    var options = {};
 
-    if (typeof options === 'function') {
-        callback = options;
-        options = null;
+    extend(options, globalConfig);
+
+    if (userOptions) {
+        extend(options, userOptions);
     }
 
-    if (options) {
-        compiler = options.compiler;
-    }
-
-    if (!compiler) {
-        compiler = defaultCompiler;
-    }
-
-    if (callback) {
-        try {
-            callback(null, compiler.compile(src, filename, options));
-        } catch(e) {
-            callback(e);
-        }
-    } else {
-        return compiler.compile(src, filename, options);
-    }
+    var compiler = defaultCompiler;
+    var context = new CompileContext('', filename, compiler.builder, options);
+    return new InlineCompiler(context, compiler);
 }
 
 function checkUpToDate(templateFile, templateJsFile) {
@@ -133,10 +155,32 @@ function clearCaches() {
     exports.taglibLoader.clearCache();
 }
 
+function parseRaw(templateSrc, filename) {
+    var context = new CompileContext(templateSrc, filename, Builder.DEFAULT_BUILDER);
+    var parsed = rawParser.parse(templateSrc, context);
+
+    if (context.hasErrors()) {
+        var errors = context.getErrors();
+
+        var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
+        for (var i = 0, len = errors.length; i < len; i++) {
+            let error = errors[i];
+            message += (i + 1) + ') ' + error.toString() + '\n';
+        }
+        var error = new Error(message);
+        error.errors = errors;
+        throw error;
+    }
+
+    return parsed;
+}
+
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
-exports.defaultOptions = defaultOptions;
+exports.parseRaw = parseRaw;
+exports.createInlineCompiler = createInlineCompiler;
+
 exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;
 exports.createWalker = createWalker;
@@ -149,26 +193,22 @@ exports.taglibLookup = taglibLookup;
 exports.taglibLoader = require('./taglib-loader');
 exports.taglibFinder = require('./taglib-finder');
 
+function buildTaglibLookup(dirname) {
+    return taglibLookup.buildLookup(dirname);
+}
+
+exports.buildTaglibLookup = buildTaglibLookup;
+
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/cache/marko.json'));
+taglibLookup.registerTaglib(require.resolve('../widgets/taglib/marko.json'));
 
 exports.registerTaglib = function(path) {
     taglibLookup.registerTaglib(path);
     clearCaches();
 };
 
-/*
-exports.Taglib = require('./Taglib');
-
-exports.lookup = require('./taglib-lookup');
-exports.buildLookup = exports.lookup.buildLookup;
-exports.registerTaglib = exports.lookup.registerTaglib;
-exports.excludeDir = exports.lookup.excludeDir;
-exports.clearCaches = function() {
-    exports.lookup.clearCaches();
-    require('./taglib-finder').clearCaches();
-};
-*/
+exports.isVDOMSupported = true;

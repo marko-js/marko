@@ -55,7 +55,7 @@ function relPath(path) {
     }
 }
 
-var args = require('raptor-args').createParser({
+var args = require('argly').createParser({
         '--help': {
             type: 'boolean',
             description: 'Show this help message'
@@ -79,6 +79,10 @@ var args = require('raptor-args').createParser({
         '--paths -p': {
             type: 'string[]',
             description: 'Additional directories to add to the Node.js module search path'
+        },
+        '--vdom -v': {
+            type: 'boolean',
+            description: 'VDOM output'
         }
     })
     .usage('Usage: $0 <pattern> [options]')
@@ -109,6 +113,15 @@ var args = require('raptor-args').createParser({
     })
     .parse();
 
+var output = 'html';
+
+if (args.vdom) {
+    output = 'vdom';
+}
+
+var compileOptions = {
+    output: output
+};
 
 var force = args.force;
 if (force) {
@@ -307,7 +320,7 @@ if (args.clean) {
         var outPath = path + '.js';
         console.log('Compiling:\n  Input:  ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
         context.beginAsync();
-        markoCompiler.compileFile(path, function(err, src) {
+        markoCompiler.compileFile(path, compileOptions, function(err, src) {
             if (err) {
                 failed.push('Failed to compile "' + relPath(path) + '". Error: ' + (err.stack || err));
                 context.endAsync(err);

@@ -1,0 +1,10 @@
+<button ${data.rootAttrs}
+    onClick("handleClick")
+    w-bind="./widget">
+
+    <if(data.label)>
+        <span ref="label">${data.label}</span>
+    </if>
+    <invoke data.renderBody(out, widget)
+        else-if(data.renderBody)/>
+</button>

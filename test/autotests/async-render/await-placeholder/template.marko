@@ -1,0 +1,11 @@
+---
+BEFORE
+<await(testData from data.testDataProvider) client-reorder>
+    <await-placeholder>
+        Loading main...
+    </await-placeholder>
+    Hello ${testData.name}!
+</await>
+AFTER
+<await-reorderer/>
+---

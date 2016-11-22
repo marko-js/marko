@@ -1,4 +1,5 @@
 'use strict';
+require('./util/patch-module');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -7,10 +8,12 @@ var compiler = require('../compiler');
 var autotest = require('./autotest');
 var fs = require('fs');
 
-describe('compiler', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/compiler/autotest');
+require('marko/node-require').install();
 
-    autotest.scanDir(autoTestDir, function run(dir) {
+describe('compiler', function() {
+    var autoTestDir = path.join(__dirname, 'autotests/compiler');
+
+    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var templatePath = path.join(dir, 'template.marko');
         var mainPath = path.join(dir, 'test.js');
         var main;
@@ -18,6 +21,7 @@ describe('compiler', function() {
         if (fs.existsSync(mainPath)) {
             main = require(mainPath);
         }
+
         if (main && main.checkError) {
             var e;
 
@@ -32,11 +36,16 @@ describe('compiler', function() {
             }
 
             main.checkError(e);
-            return '$PASS$';
+            done();
 
+        } else if(main && main.checkTemplate) {
+            var template = require('marko').load(templatePath, main.compilerOptions);
+            main.checkTemplate(template);
+            done();
         } else {
-            var compiledSrc = compiler.compileFile(templatePath);
-            return compiledSrc;
+            var compiledSrc = compiler.compileFile(templatePath, main && main.compilerOptions);
+            helpers.compare(compiledSrc, '.js');
+            done();
         }
     });
 

@@ -1,48 +1,22 @@
 'use strict';
+require('./util/patch-module');
+
 var chai = require('chai');
 chai.config.includeStack = true;
 var path = require('path');
-var marko = require('../');
 var autotest = require('./autotest');
-var fs = require('fs');
+var runRenderTest = require('./util/runRenderTest');
 
 require('../node-require').install();
 
 describe('render', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/render/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/render');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir) {
-            var templatePath = path.join(dir, 'template.marko');
-            var mainPath = path.join(dir, 'test.js');
-
-            var main = fs.existsSync(mainPath) ? require(mainPath) : {};
-            var loadOptions = main && main.loadOptions;
-            
-            if (main.checkError) {
-                var e;
-
-                try {
-                    marko.load(templatePath, loadOptions);
-                } catch(_e) {
-                    e = _e;
-                }
-
-                if (!e) {
-                    throw new Error('Error expected');
-                }
-
-                main.checkError(e);
-                return '$PASS$';
-            } else {
-                var template = marko.load(templatePath, loadOptions);
-                var templateData = main.templateData || {};
-                var html = template.renderSync(templateData);
-                return html;
-            }
-        },
-        {
-            compareExtension: '.html'
+        function run(dir, helpers, done) {
+            runRenderTest(dir, helpers, done, {
+                output: 'html'
+            });
         });
 });

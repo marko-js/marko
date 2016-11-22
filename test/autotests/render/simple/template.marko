@@ -1,0 +1,16 @@
+<var rootClass=data.rootClass
+     colors=data.colors
+     message=data.message />
+
+<div class="hello-world ${rootClass}">
+    ${message}
+</div>
+
+<ul if(colors && colors.length)>
+    <li class="color" for(color in colors)>
+        ${color}
+    </li>
+</ul>
+<div else>
+    No colors!
+</div>

@@ -1,0 +1,12 @@
+{
+    "<foo>": {
+        "@name": "string",
+        "@age": "integer",
+        "@foo-on-*": {
+            "pattern": true
+        }
+    },
+    "<bar>": {
+        "@baz": "string"
+    }
+}

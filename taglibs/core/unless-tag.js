@@ -15,6 +15,13 @@ module.exports = function nodeFactory(elNode, context) {
 
     var builder = context.builder;
 
-    var test = builder.parseExpression(argument);
+    var test;
+    try {
+        test = builder.parseExpression(argument);
+    } catch(e) {
+        test = builder.literalFalse();
+        context.addError(elNode, 'Invalid expression for unless statement:\n' + e.message);
+    }
+
     return context.builder.ifStatement(builder.negate(test));
 };

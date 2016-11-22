@@ -10,15 +10,19 @@ class Code extends Node {
     }
 
     generateCode(codegen) {
+        return this;
+    }
+
+    writeCode(writer) {
         var code = this.value;
 
         if (!code) {
             return;
         }
 
-        code = adjustIndent(code, codegen.currentIndent);
+        code = adjustIndent(code, writer.currentIndent);
 
-        codegen.write(code);
+        writer.write(code);
     }
 }
 

@@ -11,16 +11,22 @@ class ConditionalExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.test = codegen.generateCode(this.test);
+        this.consequent = codegen.generateCode(this.consequent);
+        this.alternate = codegen.generateCode(this.alternate);
+        return this;
+    }
+
+    writeCode(writer) {
         var test = this.test;
         var consequent = this.consequent;
         var alternate = this.alternate;
 
-
-        codegen.generateCode(test);
-        codegen.write(' ? ');
-        codegen.generateCode(consequent);
-        codegen.write(' : ');
-        codegen.generateCode(alternate);
+        writer.write(test);
+        writer.write(' ? ');
+        writer.write(consequent);
+        writer.write(' : ');
+        writer.write(alternate);
     }
 
     isCompoundExpression() {

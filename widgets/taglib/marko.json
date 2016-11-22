@@ -1,0 +1,246 @@
+{
+    "<*>": {
+        "@w-bind": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#binding-behavior"
+                },
+                {
+                    "displayText": "w-bind=\"<widgetPath>\"",
+                    "snippet": "w-bind=\"${1:./widget}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#binding-behavior"
+                }
+            ]
+        },
+        "@w-scope": {
+            "type": "expression",
+            "preserve-name": true,
+            "autocomplete": []
+        },
+
+        "@w-extend": {
+            "type": "custom",
+            "preserve-name": true
+        },
+        "@w-config": {
+            "type": "expression",
+            "preserve-name": true
+        },
+        "@for-ref": {
+            "type": "string",
+            "preserve-name": true
+        },
+        "@ref": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "ref=\"<method>\"",
+                    "snippet": "ref=\"${1:method}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                }
+            ]
+        },
+        "@w-for": {
+            "type": "string",
+            "preserve-name": true
+        },
+        "@w-id": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-id=\"<method>\" (Deprecated)",
+                    "snippet": "w-id=\"${1:method}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                }
+            ]
+        },
+        "@on*": {
+            "pattern": true,
+            "type": "statement",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasWidgetEvents",
+            "autocomplete": [
+                {
+                    "displayText": "on<event>(\"<method>\")",
+                    "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                }
+            ]
+        },
+        "@w-on*": {
+            "pattern": true,
+            "type": "string",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasWidgetEvents",
+            "autocomplete": [
+                {
+                    "displayText": "w-on<event>=\"<method>\"",
+                    "snippet": "w-on${1:Click}=\"handle${2:Button}${1:Click}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                },
+                {
+                    "text": "w-on",
+                    "snippet": "w-on",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                }
+            ]
+        },
+        "@w-body": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "openTagOnly": true,
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                }
+            ]
+        },
+        "@w-preserve": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-preserve (Deprecated)",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@w-preserve-body": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-preserve-body (Deprecated)",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@w-preserve-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-preserve-if (Deprecated)",
+                    "snippet": "w-preserve-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@w-preserve-body-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-preserve-body-if (Deprecated)",
+                    "snippet": "w-preserve-body-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-body": {
+            "type": "flag",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "snippet": "no-update-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@no-update-body-if": {
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "snippet": "no-update-body-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                }
+            ]
+        },
+        "@w-preserve-attrs": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [
+                {
+                    "displayText": "w-preserve-attrs=\"attr1,attr2\"",
+                    "snippet": "w-preserve-attrs=\"${1:class,style}\"",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-attributes-during-re-render"
+                }
+            ]
+        },
+        "transformer": "./widgets-transformer.js"
+    },
+    "<w-widget>": {
+        "renderer": "./widget-tag.js",
+        "@type": "object",
+        "@config": "object",
+        "@id": "string",
+        "@hasDomEvents": "number",
+        "@body": "string",
+        "vars": ["widget", "state"],
+        "import-var": {
+            "_cfg": "data.widgetConfig",
+            "_state": "data.widgetState",
+            "_props": "data.widgetProps",
+            "_body": "data.widgetBody"
+        },
+        "autocomplete": []
+    },
+    "<init-widgets>": {
+        "renderer": "./init-widgets-tag.js",
+        "@immediate": "boolean"
+    },
+    "<w-preserve>": {
+        "renderer": "./preserve-tag.js",
+        "@id": "string",
+        "@if": "expression",
+        "@body-only": "expression",
+        "autocomplete": []
+    },
+    "<no-update>": {
+        "renderer": "./preserve-tag.js",
+        "@id": "string",
+        "@if": "expression",
+        "@body-only": "expression",
+        "autocomplete": []
+    },
+    "<widget-types>": {
+        "code-generator": "./widget-types-tag.js",
+        "@*": "string",
+        "autocomplete": [
+            {
+                "displayText": "widget-types default=\"<pat1h>\" alt=\"<path2>\"",
+                "snippet": "widget-types default=\"${1:./widget}\"",
+                "openTagOnly": true
+            }
+        ]
+    },
+    "<body>": {
+        "transformer": "./body-transformer.js"
+    }
+}

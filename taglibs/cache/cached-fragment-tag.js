@@ -31,19 +31,37 @@ module.exports = {
         cache.get(cacheKey,
             {
                 builder: function(callback) {
-                    var result = out.captureString(function () {
-                        if (input.renderBody) {
-                            input.renderBody(out);
-                        }
-                    });
-                    callback(null, result);
+                    var nestedOut = out.createOut();
+
+                    if (input.renderBody) {
+                        input.renderBody(nestedOut);
+                    }
+
+                    nestedOut.end();
+
+                    nestedOut
+                        .on('error', callback)
+                        .on('finish', function() {
+                            callback(null, nestedOut.getOutput());
+                        });
                 }
             }, function(err, result) {
                 if (err) {
                     return asyncOut.error(err);
                 }
 
-                asyncOut.end(result);
+                if (result.cloneNode) {
+                    var curChild = result.firstChild;
+                    while(curChild) {
+                        asyncOut.node(curChild.cloneNode());
+                        curChild = curChild.nextSibling;
+                    }
+                    asyncOut.end();
+                } else {
+                    asyncOut.end(result);
+                }
+
+
             });
     }
 };

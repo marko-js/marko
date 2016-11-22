@@ -2,7 +2,38 @@
 
 var Node = require('./Node');
 var isArray = Array.isArray;
-const isValidJavaScriptIdentifier = require('../util/isValidJavaScriptIdentifier');
+const isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
+
+function walkValue(value, walker) {
+    if (!value) {
+        return value;
+    } else if (value instanceof Node) {
+        return walker.walk(value);
+    } else if (isArray(value)) {
+        let array = value;
+        for (let i=0; i<array.length; i++) {
+            let el = array[i];
+            array[i] = walkValue(el, walker);
+        }
+        return array;
+    } else if (typeof value === 'object') {
+        let object = value;
+
+        let keys = Object.keys(object);
+        for (let i=0; i<keys.length; i++) {
+            let key = keys[i];
+            let oldValue = object[key];
+            let newValue = walkValue(oldValue, walker);
+            if (newValue !== oldValue) {
+                object[key] = newValue;
+            }
+        }
+
+        return object;
+    } else {
+        return value;
+    }
+}
 
 class Literal extends Node {
     constructor(def) {
@@ -11,8 +42,28 @@ class Literal extends Node {
     }
 
     generateCode(codegen) {
+
+        if (this.value != null) {
+            if (isArray(this.value)) {
+                this.value = codegen.generateCode(this.value);
+            } else if (typeof this.value === 'object') {
+                if (!(this.value instanceof RegExp)) {
+                    var newObject = {};
+                    for (var k in this.value) {
+                        if (this.value.hasOwnProperty(k)) {
+                            newObject[k] = codegen.generateCode(this.value[k]);
+                        }
+                    }
+                    this.value = newObject;
+                }
+            }
+        }
+        return this;
+    }
+
+    writeCode(writer) {
         var value = this.value;
-        codegen.writeLiteral(value);
+        writer.writeLiteral(value);
     }
 
     toString() {
@@ -31,6 +82,8 @@ class Literal extends Node {
             return '[' + value.join(', ') + ']';
         } else if (typeof value === 'number') {
             return value.toString();
+        } else if (value instanceof RegExp) {
+            return value.toString();
         } else if (typeof value === 'object') {
             let keys = Object.keys(value);
             if (keys.length === 0) {
@@ -47,7 +100,7 @@ class Literal extends Node {
                     result += ', ';
                 }
 
-                if (isValidJavaScriptIdentifier(k)) {
+                if (isValidJavaScriptVarName(k)) {
                     result += k + ': ';
                 } else {
                     result += JSON.stringify(k) + ': ';
@@ -58,6 +111,10 @@ class Literal extends Node {
 
             return result + ' }';
         }
+    }
+
+    walk(walker) {
+        walkValue(this.value, walker);
     }
 }
 

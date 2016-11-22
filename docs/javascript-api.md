@@ -52,7 +52,7 @@ Example **server-side** template compilation from string:
 
 ```javascript
 var templatePath = 'sample.marko';
-var templateSrc = 'Hello $!{data.name}';
+var templateSrc = '<div>Hello $!{data.name}</div>';
 var template = require('marko').load(templatePath, templateSrc);
 template.render({ name: 'Frank' }, process.stdout);
 ```
@@ -88,18 +88,6 @@ setTimeout(function() {
 
 require('./template.marko').render({}, out);
 ```
-
-### render(templatePath, templateData, stream.Writable)
-
-Deprecated. Do not use.
-
-### render(templatePath, templateData, callback)
-
-Deprecated. Do not use.
-
-### stream(templatePath, templateData) : stream.Readable
-
-Deprecated. Do not use.
 
 ## Properties
 
@@ -230,34 +218,6 @@ Default options:
 ```javascript
 {
     /**
-     * Set of tag names that should automatically have whitespace preserved.
-     * Alternatively, if value is `true` then whitespace will be preserved
-     * for all tags.
-     */
-    preserveWhitespace: {
-        'pre': true,
-        'textarea': true,
-        'script': true
-    },
-    /**
-     * Set of tag names that should be allowed to be rendered as a self-closing
-     * XML tag. A self-closing tag will only be rendered if the tag has no nested
-     * content. HTML doesn't allow self-closing tags so you should likely
-     * never use this.
-     */
-    allowSelfClosing: {},
-    /**
-     * Set of tag names that should be rendered with a start tag only.
-     */
-    startTagOnly: {
-        'img': true,
-        'br': true,
-        'input': true,
-        'meta': true,
-        'link': true,
-        'hr': true
-    },
-    /**
      * If true, then the compiler will check the disk to see if a previously compiled
      * template is the same age or newer than the source template. If so, the previously
      * compiled template will be loaded. Otherwise, the template will be recompiled
@@ -272,6 +232,53 @@ Default options:
      * compiled templates will not be written to disk (i.e., no `.marko.js` file will
      * be generated)
      */
-    writeToDisk: true
-}
+    writeToDisk: true,
+
+    /**
+     * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
+     */
+    assumeUpToDate: NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')
+};
 ```
+
+# require('marko/defineRenderer')
+
+Utility module for building a UI component with both a `renderer(input, out)` (for use as a Marko custom tag renderer) a `render(input)` method (for rendering the UI component and inserting the HTML in the DOM):
+
+
+_src/components/app-hello/index.js_
+
+```javascript
+var defineRenderer = require('marko/defineRenderer');
+
+module.exports = defineRenderer({
+	template: require('./template.marko'),
+	getTemplateData: function(input) {
+		var firstName = input.firstName;
+		var lastName = input.lastName;
+
+		return {
+			fullName: firstName + ' ' + lastName
+		};
+	}
+})
+```
+
+The UI component can be used as a custom tag:
+
+```xml
+<app-hello first-name="John" last-name="Doe" />
+```
+
+And it can also be rendered and inserted into the DOM:
+
+```javascript
+require('./src/components/app-hello')
+	.render({
+		firstName: 'John',
+		lastName: 'Doe'
+	})
+	.appendTo(document.body);
+```
+
+The return value of `render()` will be a [RenderResult](https://github.com/raptorjs/raptor-renderer#renderresult) instance.

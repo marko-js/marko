@@ -1,4 +1,5 @@
 'use strict';
+require('./util/patch-module');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -10,11 +11,12 @@ var autotest = require('./autotest');
 var fs = require('fs');
 
 describe('compiler/expression-toString', function() {
-    var autoTestDir = path.join(__dirname, 'fixtures/expression-toString/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/expression-toString');
 
-    autotest.scanDir(autoTestDir, function run(dir) {
+    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var input = fs.readFileSync(path.join(dir, 'input.js'), {encoding: 'utf8'});
         var parsed = builder.parseExpression(input);
-        return parsed.toString();
+        helpers.compare(parsed.toString(), '.js');
+        done();
     });
 });

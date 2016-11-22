@@ -13,6 +13,14 @@ module.exports = function nodeFactory(el, context) {
         return el;
     }
 
-    var elseIfStatement = context.builder.elseIfStatement(argument);
+    var test;
+    try {
+        test = context.builder.parseExpression(argument);
+    } catch(e) {
+        test = context.builder.literalFalse();
+        context.addError(el, 'Invalid expression for else-if statement:\n' + e.message);
+    }
+
+    var elseIfStatement = context.builder.elseIfStatement(test);
     return elseIfStatement;
 };

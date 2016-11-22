@@ -17,32 +17,94 @@
 
 var nodePath = require('path');
 var fs = require('fs');
-var jsonminify = require('jsonminify');
+var stripJsonComments = require('strip-json-comments');
 var tagDefFromCode = require('./tag-def-from-code');
 var loader = require('./loader');
 var fsReadOptions = { encoding: 'utf8' };
 var extend = require('raptor-util/extend');
 
+var tagFileTypes = [
+    'template',
+    'renderer',
+    'transformer',
+    'code-generator',
+    'node-factory',
+];
+
+var searchFiles = [
+    { name:'renderer', type:'renderer' },
+    { name:'index.marko', type:'template' },
+    { name:'index', type:'renderer' },
+    { name:'template.marko', type:'template' },
+    { name:'template.html', type:'template' },
+    { name:'code-generator', type:'code-generator' },
+    { name:'node-factory', type:'node-factory' },
+    { name:'transformer', type:'transformer' },
+];
+
 function createDefaultTagDef() {
     return {
-            attributes: {
-                '*': {
-                    type: 'string',
-                    targetProperty: null,
-                    preserveName: false
-                }
+        attributes: {
+            '*': {
+                type: 'string',
+                targetProperty: null,
+                preserveName: false
             }
-         };
+        }
+    };
 }
 
-function scanRequireExtensions(dir, childFilename, filename) {
-    var path;
-    for (var extension in require.extensions) {
-        path = nodePath.join(dir, childFilename, filename + extension);
-        if (fs.existsSync(path)) {
-            return path; // short circuit loop
+function getFileMap(dirname) {
+    var fileMap = {};
+    var files = fs.readdirSync(dirname);
+
+    files.forEach(file => {
+        var extName = nodePath.extname(file);
+        var baseName = file.slice(0, -1*extName.length);
+        var fullPath = nodePath.join(dirname, file);
+        fileMap[baseName] = fileMap[baseName] || {};
+        fileMap[baseName][extName] = fullPath;
+        fileMap[file] = fileMap[file] || {};
+        fileMap[file].__path = fullPath;
+    });
+
+    return fileMap;
+}
+
+function getPath(filename, fileMap) {
+    var file = fileMap[filename];
+
+    if(!file) return;
+    if(file.__path) return file.__path;
+    if(file.js) return file['.js'];
+
+    return file[Object.keys(file)[0]];
+}
+
+function findAndSetFile(tagDef, tagDirname) {
+    if(!fs.statSync(tagDirname).isDirectory()) {
+        return;
+    }
+
+    var fileMap = getFileMap(tagDirname);
+
+    for(var i = 0; i < searchFiles.length; i++) {
+        var name = searchFiles[i].name;
+        var type = searchFiles[i].type;
+        var path = getPath(name, fileMap);
+
+        if(path) {
+            tagDef[type] = path;
+            return true;
         }
     }
+}
+
+function hasFile(tagDef) {
+    for(var i = 0; i < tagFileTypes.length; i++) {
+        if(tagDef[tagFileTypes[i]]) return true;
+    }
+    return false;
 }
 
 /**
@@ -51,7 +113,7 @@ function scanRequireExtensions(dir, childFilename, filename) {
  * @param {String|Object} dir the path to directory to scan
  * @param {String} taglib the taglib that is being loaded
  */
-module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib) {
+module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib, dependencyChain) {
     var prefix;
 
     if (typeof dir === 'object') {
@@ -77,53 +139,29 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
-        var tagFile = nodePath.join(dir, childFilename, 'marko-tag.json');
+        var tagJsonPath = nodePath.join(tagDirname, 'marko-tag.json');
         var tag = null;
-        var rendererFile = scanRequireExtensions(dir, childFilename, 'renderer');
-        var indexFile = scanRequireExtensions(dir, childFilename, 'index');
-        var templateFile = nodePath.join(dir, childFilename, 'template.marko');
-        var templateFileAlt = nodePath.join(dir, childFilename, 'template.html');
-        var templateFileAlt2 = nodePath.join(dir, childFilename, 'template.marko.html');
-        var codeGeneratorFile = nodePath.join(dir, childFilename, 'code-generator.js');
-        var nodeFactoryFile = nodePath.join(dir, childFilename, 'node-factory.js');
         var tagDef = null;
 
-        // Record dependencies so that we can check if a template is up-to-date
-        taglib.addInputFile(tagFile);
-        taglib.addInputFile(rendererFile);
-        taglib.addInputFile(templateFile);
-
-        var hasTagFile = false;
-        if (fs.existsSync(tagFile)) {
-            hasTagFile = true;
+        var hasTagJson = false;
+        if (fs.existsSync(tagJsonPath)) {
+            hasTagJson = true;
             // marko-tag.json exists in the directory, use that as the tag definition
             try {
-                tagDef = JSON.parse(jsonminify(fs.readFileSync(tagFile, fsReadOptions)));
+                tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagJsonPath, fsReadOptions)));
             } catch(e) {
-                throw new Error('Unable to parse JSON file at path "' + tagFile + '". Error: ' + e);
+                throw new Error('Unable to parse JSON file at path "' + tagJsonPath + '". Error: ' + e);
             }
         } else {
+            tagJsonPath = null;
             tagDef = createDefaultTagDef();
         }
 
-        if (!tagDef.renderer && !tagDef.template && !tagDef['code-generator'] && !tagDef['node-factory'] && !tagDef.transformer) {
-            if (rendererFile) {
-                tagDef.renderer = rendererFile;
-            } else if (indexFile) {
-                tagDef.renderer = indexFile;
-            } else if (fs.existsSync(templateFile)) {
-                tagDef.template = templateFile;
-            } else if (fs.existsSync(templateFileAlt)) {
-                tagDef.template = templateFileAlt;
-            } else if (fs.existsSync(templateFileAlt2)) {
-                tagDef.template = templateFileAlt2;
-            } else if (fs.existsSync(codeGeneratorFile)) {
-                tagDef['code-generator'] = codeGeneratorFile;
-            } else if (fs.existsSync(nodeFactoryFile)) {
-                tagDef['node-factory'] = nodeFactoryFile;
-            } else {
-                if (hasTagFile) {
-                    throw new Error('Invalid tag file: ' + tagFile + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
+        if (!hasFile(tagDef)) {
+            var fileWasSet = findAndSetFile(tagDef, tagDirname);
+            if(!fileWasSet) {
+                if (hasTagJson) {
+                    throw new Error('Invalid tag file: ' + tagJsonPath + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
                 } else {
                     // Skip this directory... there doesn't appear to be anything in it
                     continue;
@@ -131,7 +169,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             }
         }
 
-        if (!hasTagFile && (tagDef.renderer || tagDef.template)) {
+        if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
             let templateCode = fs.readFileSync(tagDef.renderer || tagDef.template, fsReadOptions);
             let extractedTagDef = tagDefFromCode.extractTagDef(templateCode);
             if (extractedTagDef) {
@@ -139,7 +177,15 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             }
         }
 
-        tag = loader.tagLoader.loadTag(tagDef, tagsConfigPath, taglib, tagDirname);
+        let tagDependencyChain;
+
+        if (tagJsonPath) {
+            tagDependencyChain = dependencyChain.append(tagJsonPath);
+        } else {
+            tagDependencyChain = dependencyChain.append(tagDirname);
+        }
+
+        tag = loader.tagLoader.loadTag(tagDef, tagJsonPath || tagDirname, tagDependencyChain);
         tag.name = tag.name || tagName;
         taglib.addTag(tag);
     }

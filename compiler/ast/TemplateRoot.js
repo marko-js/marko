@@ -20,51 +20,96 @@ class TemplateRoot extends Node {
     generateCode(codegen) {
         var context = codegen.context;
 
+        this.body = codegen.generateCode(this.body);
+
+        context.optimize(this);
+
+        context.emit('beforeGenerateCodeTemplateRoot', this);
+
         var body = this.body;
-        codegen.addStaticVar('str', '__helpers.s');
-        codegen.addStaticVar('empty', '__helpers.e');
-        codegen.addStaticVar('notEmpty', '__helpers.ne');
-        codegen.addStaticVar('escapeXml', '__helpers.x');
 
         var builder = codegen.builder;
-        var program = builder.program;
-        var functionDeclaration = builder.functionDeclaration;
 
-        var returnStatement = builder.returnStatement;
-        var slot = builder.slot;
-
-        var staticsSlot = slot();
-        var varsSlot = slot();
-        varsSlot.noOutput = true;
-
-        body = [ varsSlot ].concat(body.items);
-
-        var outputNode = program([
-            functionDeclaration('create', ['__helpers'], [
-                staticsSlot,
-
-                returnStatement(
-                    functionDeclaration('render', ['data', 'out'], body))
-            ]),
-            '(module.exports = require("marko").c(__filename)).c(create)'
-        ]);
-
-        codegen.generateCode(outputNode);
-
-        var staticVars = context.getStaticVars();
-        var staticCodeArray = context.getStaticCode();
-
-        var staticContent = [builder.vars(createVarsArray(staticVars))];
-        if (staticCodeArray) {
-            staticCodeArray.forEach((code) => {
-                staticContent.push(code);
-            });
+        let renderStatements = [];
+        var vars = createVarsArray(context.getVars());
+        if (vars.length) {
+            renderStatements.push(builder.vars(vars));
         }
 
-        staticsSlot.setContent(staticContent);
+        renderStatements = renderStatements.concat(body);
 
-        var vars = context.getVars();
-        varsSlot.setContent(builder.vars(createVarsArray(vars)));
+        if (context.inline) {
+            var createInlineMarkoTemplateVar = context.helper('createInlineTemplate');
+
+            return builder.functionCall(
+                createInlineMarkoTemplateVar,
+                [
+                    builder.identifier('__filename'),
+                    builder.functionDeclaration(
+                        null,
+                        [
+                            builder.identifier('data'),
+                            builder.identifierOut()
+                        ],
+                        renderStatements)
+                ]);
+        } else {
+            var templateArgs = [
+                builder.identifier('__filename')
+            ];
+
+            let templateId = builder.identifier('template');
+
+            let body = [
+                builder.var(templateId, builder.functionCall(
+                    builder.memberExpression(
+                        builder.require(
+                            builder.literal(context.getModuleRuntimeTarget())
+                        ),
+                        builder.identifier('c')
+                    ),
+                    templateArgs
+                ))
+            ];
+
+            var templateExports = this.generateExports(templateId, context);
+
+            body = body.concat(templateExports);
+
+            let staticNodes = context.getStaticNodes();
+            if (staticNodes.length) {
+                body = body.concat(staticNodes);
+            }
+
+            let renderFunction = builder.functionDeclaration(
+                'render',
+                ['data', builder.identifierOut()],
+                renderStatements);
+
+            body = body.concat([
+                renderFunction,
+                builder.assignment(
+                    builder.memberExpression(builder.identifier('template'), builder.identifier('_')),
+                    builder.identifier('render'))
+            ]);
+
+            if (context.useMeta && context.meta) {
+                body.push(builder.assignment(
+                    builder.memberExpression(builder.identifier('template'), builder.identifier('meta')),
+                    context.meta));
+            }
+
+            return builder.program(body);
+        }
+    }
+
+    generateExports(template, context) {
+        var builder = context.builder;
+
+        return builder.assignment(
+            builder.memberExpression('module', 'exports'),
+            template
+        );
     }
 
     toJSON(prettyPrinter) {

@@ -18,14 +18,15 @@ var ok = require('assert').ok;
 var forEachEntry = require('raptor-util/forEachEntry');
 var loader = require('./loader');
 
-module.exports = function handleAttributes(value, parent, path) {
+module.exports = function handleAttributes(value, parent, dependencyChain) {
     ok(parent);
+    ok(dependencyChain);
 
-    forEachEntry(value, function(attrName, attrProps) {
+    forEachEntry(value, (attrName, attrProps) => {
         var attr = loader.attributeLoader.loadAttribute(
             attrName,
             attrProps,
-            '"' + attrName + '" attribute as part of ' + path);
+            dependencyChain.append('@' + attrName));
 
         parent.addAttribute(attr);
     });

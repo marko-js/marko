@@ -1,0 +1,5 @@
+{
+    "<baz>": {
+        "renderer": "./baz-tag.js"
+    }
+}

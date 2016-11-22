@@ -1,0 +1,15 @@
+<var count=0/>
+
+<macro foo(cacheName, cacheKey)>
+    <cached-fragment cache-key=cacheKey cache-name=(cacheName+(out.isVDOM ? '-vdom' : ''))>
+        Count: ${count++}
+    </cached-fragment>
+</macro>
+
+<foo('cacheA', 'keyA')/>
+<foo('cacheA', 'keyA')/>
+<foo('cacheA', 'keyB')/>
+
+<foo('cacheB', 'keyA')/>
+<foo('cacheB', 'keyA')/>
+<foo('cacheB', 'keyB')/>

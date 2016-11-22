@@ -1,14 +1,23 @@
-:information_source: ___The master branch currently contains the code for the next major version of Marko (Marko v3). The docs on markojs.com have not yet been updated.___
+<p align="center">
+    <a href="http://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko logo" width="300" /></a><br /><br />
+</p>
 
-![Marko Logo](https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png)
+Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) and lightweight HTML-based templating engine from eBay. Marko runs on Node.js and in the browser and it supports streaming, async rendering and custom tags. Templates are compiled to readable CommonJS modules. Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
 
-[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
+[![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
+[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master)](https://coveralls.io/github/marko-js/marko?branch=master)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
 
-Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) and lightweight HTML-based templating engine that compiles templates to CommonJS modules and supports streaming, async rendering and custom tags. Learn more on [http://markojs.com/](http://markojs.com/).
+# Get Involved
 
-You can try out Marko online: [Try Marko Online!](http://markojs.com/try-online/)
+- **Contributing**: Pull requests are welcome!
+    - Read [`CONTRIBUTING.md`](.github/CONTRIBUTING.md) and check out our [bite-sized](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Adifficulty%3Abite-sized) and [help-wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ahelp-wanted) issues
+    - Submit github issues for any feature enhancements, bugs or documentation problems
+- **Support**: Join our [gitter chat](https://gitter.im/marko-js/marko) to ask questions to get support from the maintainers and other Marko developers
+    - Questions/comments can also be posted as [github issues](https://github.com/marko-js/marko/issues)
+- **Discuss**: Tweet using the `#MarkoJS` hashtag and follow [@MarkoDevTeam](https://twitter.com/MarkoDevTeam)
 
 # Installation
 
@@ -33,7 +42,38 @@ Marko supports _both_ a familiar HTML syntax, as well as a more concise indentat
             Hello ${data.name}!
         </h1>
 
-        <ul if(notEmpty(data.colors))>
+        <if(data.colors.length)>
+            <ul>
+                <for(color in data.colors)>
+                    <li>
+                        ${color}
+                    </li>
+                </for>
+            </ul>
+        </if>
+        <else>
+            <div>
+                No colors!
+            </div>
+        </else>
+    </body>
+</html>
+```
+
+Alternatively, you can choose to apply rendering logic as "attributes":
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Marko Templating Engine</title>
+    </head>
+    <body>
+        <h1>
+            Hello ${data.name}!
+        </h1>
+
+        <ul if(data.colors.length)>
             <li for(color in data.colors)>
                 ${color}
             </li>
@@ -56,11 +96,28 @@ html lang="en"
         title - Marko Templating Engine
     body
         h1 - Hello ${data.name}!
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
             - No colors!
+```
+
+Alternatively, you can choose to apply rendering logic as separate "tags":
+
+```html
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        h1 - Hello ${data.name}!
+        if(data.colors.length)
+            ul
+                for(color in data.colors)
+                    li - ${color}
+        else
+            div - No colors!
 ```
 
 ## Mixed syntax
@@ -77,7 +134,7 @@ html lang="en"
         <h1>
             Hello ${data.name}!
         </h1>
-        ul if(notEmpty(data.colors))
+        ul if(data.colors.length)
             li for(color in data.colors)
                 ${color}
         div else
@@ -207,7 +264,7 @@ And, here is the corresponding Marko template for the UI component:
     <div>
         You clicked the button ${data.clickCount} ${data.timesMessage}.
     </div>
-    <button type="button" w-onclick="handleButtonClick">
+    <button type="button" onClick("handleButtonClick")>
         Click Me
     </button>
 </div>
@@ -217,32 +274,29 @@ And, here is the corresponding Marko template for the UI component:
 
 For more details on Marko Widgets, please check out the [Marko Widgets Documentation](http://markojs.com/docs/marko-widgets/).
 
+# Common issues
+
+## nodemon
+
+When `marko` compiles your server-side templates, a `.marko.js` file is created next to the original `.marko` file.
+Subsequently, `nodemon` will see the new `.marko.js` file and trigger a restart of your app and this can
+repeat indefinitely unless you configure `nodemon` to ignore `*.marko.js` files.
+To avoid this, simply add `"ignore": ["*.marko.js"]` to the `nodemon.json` file at the root of your project.
+
+As a better drop-in replacement with more features, you can install [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh).
+Be sure to add `*.marko.js` pattern to your `.gitignore` file and `browser-refresh`
+will automatically ignore the compiled marko templates when they are written to disk.
+
 # Changelog
 
 See [CHANGELOG.md](CHANGELOG.md)
-
-# Discuss
-
-- Chat channel:  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
-- Twitter: please use the `#MarkoJS` hashtag. Follow [@MarkoDevTeam](https://twitter.com/MarkoDevTeam)
-
-Questions or comments can also be posted on the [Marko Github issues](https://github.com/marko-js/marko/issues) page.
 
 # Maintainers
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
+* [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
-
-# Contribute
-
-Pull Requests welcome. Please make sure all tests pass:
-
-```
-npm test
-```
-
-Please submit Github issues for any feature enhancements, bugs or documentation problems.
 
 # License
 

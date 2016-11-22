@@ -1,0 +1,11 @@
+{
+    "<foo>": {
+        "@name": "string"
+    },
+    "<bar>": {
+        "@name": "string"
+    },
+    "<a>": {
+        "@name": "string"
+    }
+}

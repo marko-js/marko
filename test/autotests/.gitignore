@@ -1,0 +1,11 @@
+actual.js
+actual.html
+actual.json
+*.marko.js
+*.marko.vdom.js
+actual.txt
+error.txt
+actual-*
+*.generated.*
+__vdom__
+*.skip/

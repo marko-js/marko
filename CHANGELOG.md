@@ -1,6 +1,363 @@
 Changelog
 =========
 
+# 3.x
+
+## 3.11.x
+
+### 3.11.8
+
+- Fixes [#382](https://github.com/marko-js/marko/issues/382) - Local variable for tag should have prefix or suffix to avoid conflict
+
+### 3.11.7
+
+- Fixes [#381](https://github.com/marko-js/marko/issues/381) - `$global` broken when using `template.stream()`
+
+### 3.11.6
+
+- Internal change: `AsyncWriter` → `AsyncStream`
+
+### 3.11.5
+
+- (no changes)
+
+### 3.11.4
+
+- Update to `async-writer@2`
+
+### 3.11.3
+
+- Silently ignore errors when parsing tag definition code inlined in JavaScript
+
+### 3.11.2
+
+- Fixed [#318](https://github.com/marko-js/marko/issues/318) - Use compiler options passed to require hook to configure marko globally
+
+```javascript
+require('marko/node-require').install({
+    compilerOptions: {
+        writeToDisk: false
+    }
+});
+```
+
+### 3.11.1
+
+- Fixed [#370](https://github.com/marko-js/marko/issues/370) - HTML characters in loop separator string should not be escaped
+
+### 3.11.0
+
+- Introduced the `<include-html(path)>` tag for including static HTML:
+
+```xml
+<include-html('./foo.html')>
+```
+
+## 3.10.x
+
+### 3.10.1
+
+- Fixed [#44](https://github.com/marko-js/marko/issues/44) - Webpack compatibility fixes. Also see [marko-loader](https://github.com/marko-js/marko-loader) (A marko loader for webpack)
+
+### 3.10.0
+
+- Fixed [#357](https://github.com/marko-js/marko/issues/357)  - Deprecate `empty`/`notEmpty` in Marko v3
+
+## 3.9.x
+
+### 3.9.4
+
+- Fixed [#355](https://github.com/marko-js/marko/issues/355) - `status-var`/`separator` options not handled when looping over properties
+- Fixed [#354](https://github.com/marko-js/marko/issues/354) - regular expressions used in attribute values are not being handled correctly
+- Fixed [#353](https://github.com/marko-js/marko/issues/353) - `body-only-if` attribute does not work with custom tags (only HTML tags)
+
+### 3.9.3
+
+- Upgraded to `raptor-util@^2`
+
+### 3.9.2
+
+- Fixed [#327](https://github.com/marko-js/marko/issues/327) - alt attribute with empty string should be allowed ([Pull Request #350](https://github.com/marko-js/marko/pull/350) by [@mlrawlings](https://github.com/mlrawlings))
+
+### 3.9.1
+
+- Fixed [#348](https://github.com/marko-js/marko/issues/348) - exclude all `*.orig` and other files from published npm package
+
+### 3.9.0
+
+- Fixed [#231](https://github.com/marko-js/marko/issues/231) - Allow <assign count++>
+- Fixed [#345](https://github.com/marko-js/marko/issues/345) - Whitespace preservation now applies to all deeply nested text nodes
+- Fixed [#344](https://github.com/marko-js/marko/issues/344) - Introduced [defineRenderer](./docs/javascript-api.md#requiremarkodefinerenderer) for Marko
+- Docs: Added docs for excluding directories from taglib discovery ([@mlrawlings](https://github.com/mlrawlings))
+- Docs: Added docs for component autodiscovery ([@mlrawlings](https://github.com/mlrawlings))
+- Docs: Added docs for passing a data object to a custom tag
+
+## 3.8.x
+
+### 3.8.1
+
+- Fixed [#342](https://github.com/marko-js/marko/issues/342) - `await:finish` event not emitted for async fragments with client reorder and that complete synchronously
+
+### 3.8.0
+
+- Fixed [#329](https://github.com/marko-js/marko/issues/329) - Add autodiscover of components/ directory ([Pull Request #338](https://github.com/marko-js/marko/pull/338) by [@mlrawlings](https://github.com/mlrawlings))
+
+## 3.7.x
+
+### 3.7.4
+
+- Fixed [#339](https://github.com/marko-js/marko/issues/339) - Tag transformers are not being applied to tags with a dynamic tag name (fixes [#146](https://github.com/marko-js/marko-widgets/issues/146) for Marko Widgets)
+
+### 3.7.3
+
+- Fixed [#332](https://github.com/marko-js/marko/issues/332) and [#333](https://github.com/marko-js/marko/issues/333) - Correct values for `literalUndefined` and `literalFalse` in the Builder API [@bkuri](https://github.com/bkuri)
+- Fixed [#336](https://github.com/marko-js/marko/issues/336) - Upgraded to latest version of `minimatch`
+
+### 3.7.2
+
+- Fixed [#328](https://github.com/marko-js/marko/issues/328) - Improve error reporting when taglib/tag definition fails to load
+- Additional change to disable escaping for dynamic `Text` nodes added to body of `<script>` tag to fix [issue #326](https://github.com/marko-js/marko/issues/326)
+
+### 3.7.1
+
+- Improved escaping within the `<script>` tag to fix [issue #322](https://github.com/marko-js/marko/issues/322). Special HTML characters will no longer be escaped within the context of the `<script>` tag since browsers do not decode HTML entities within the `<script>` tag. Instead, only the ending `</script>` tag sequence is escaped using JavaScript string escaping sequences.
+
+### 3.7.0
+
+- Made change to make configuration a true singleton shared across all instances of `marko` loaded at runtime ([commit](https://github.com/marko-js/marko/commit/cd797322adf80f2890015de7b8f62301c2921a0a))
+
+## 3.6.x
+
+### 3.6.2
+
+- Improved support for hot reloading by automatically disabling `assumeUpToDate` if hot reload is enabled. ([Pull Request #320](https://github.com/marko-js/marko/pull/320) by [@ianvonholt](https://github.com/ianvonholt))
+
+### 3.6.1
+
+- Fixed a bug that was causing transforms to be run on detached nodes.  This was manifesting itself in the `<async-fragment>` to `<await>` transform if an `if()` attribute was present (or other core attributes that end up wrapping the tag it is defined on).
+
+### 3.6.0
+
+- Introduced a new and simpler `<await>` tag that should be used instead of the now deprecated `<async-fragment>` tag (see deprecation details below) ([Pull Request #312](https://github.com/marko-js/marko/pull/312) by [@mlrawlings](https://github.com/mlrawlings))
+
+#### Deprecations
+
+- Deprecated the `<async-fragment var="<var>" data-provider=<data-provider>>` tag in favor of the `<await(<var> from <data-provider>)>` tag:
+
+OLD:
+
+```xml
+<async-fragment var="userInfo" data-provider=data.userInfoPromise>
+    Hello ${userInfo.name}!
+</async-fragment>
+```
+
+NEW:
+
+```xml
+<await(userInfo from data.userInfoPromise)>
+    Hello ${userInfo.name}!
+</await>
+```
+
+The `<await>` tag supports all of the attributes of the previous `<async-fragment>` tag except for `var` and `data-provider`:
+
+```xml
+<await(userInfo from data.userInfoPromise) name="userInfo" timeout=10000 client-reorder>
+    Hello ${userInfo.name}!
+</await>
+```
+
+Finally, the nested tags for providing content for the placeholder, error and timeout messages have been renamed accordingly:
+
+```xml
+<await(userInfo from data.userInfoPromise) client-reorder>
+    <await-placeholder>
+        This is alternate content while the async fragment is loading.
+    </await-placeholder>
+    <await-timeout>
+        A timeout has occurred!
+    </await-timeout>
+    <await-error>
+        A error has occurred!
+    </await-error>
+
+    Hello ${userInfo.name}!
+</await>
+```
+
+## 3.5.x
+
+### 3.5.1
+
+- Fixes #316 - Autocomplete for tags is not updated when tag files updated despite clearing cache. This improves the [autocomplete-marko](https://github.com/marko-js/atom-autocomplete-marko) plugin for Atom.
+- Fixes #314 - Remove hyphens from include props
+- Deprecated:
+    - Properties passed in using the `<include>` tag should not be access using hyphens.
+
+For example, given the following template:
+
+```xml
+<include("./include-target.marko") first-name='Jane'/>
+```
+
+The `first-name` data should be accessed using the `firstName` property:
+
+```javascript
+var firstName = input.firstName;
+// NOT: var firstName = input['first-name'];
+```
+
+### 3.5.0
+
+- Added functionality to exclude specific directory or package from taglib finder ([Pull Request #309](https://github.com/marko-js/marko/pull/309) by [@oxala](https://github.com/oxala))
+
+## 3.4.x
+
+### 3.4.9
+
+- Fixed [https://github.com/marko-js/marko/issues/307] - Marko concise syntax, with multiple class names ([Pull Request #308](https://github.com/marko-js/marko/pull/308) by [@mlrawlings](https://github.com/mlrawlings))
+
+### 3.4.8
+
+- Added support for an "enum" attribute value
+
+### 3.4.7
+
+- Async fragment improvements ([Pull Request #305](https://github.com/marko-js/marko/pull/305) by [@mlrawlings](https://github.com/mlrawlings))
+    - Adds additional event info (finished/timedout) to the data emitted from <async-fragment> tags.
+    - Ensures that renderBody() is not called again if the fragment has already finished (timed out).
+    - Fixes `npm run test-async`
+    - Removes a redundant `async-fragment` timeout related test
+
+### 3.4.6
+
+- Updated autocomplete information
+
+### 3.4.5
+
+- Fixes #304 - async-fragment-tag-transformer.js being loaded by PhantomJS
+- Updated taglibs with additional information to support tooling
+- Added [Michael Rawlings](https://github.com/mlrawlings) as a maintainer
+
+### 3.4.4
+
+- Fixes #303 - `addStaticVar` is not generating unique variable names correctly
+
+### 3.4.3
+
+- Improved validation for macros ([@mlrawlings](https://github.com/mlrawlings), [PR #300](https://github.com/marko-js/marko/pull/300))
+- Added code coverage reporting ([@mlrawlings](https://github.com/mlrawlings), [PR #301](https://github.com/marko-js/marko/pull/301))
+
+### 3.4.2
+
+- Improved error reporting in cases when code generation fails ([@mlrawlings](https://github.com/mlrawlings))
+
+### 3.4.1
+
+- Additional tweaks for #298 - Always emit correct events for async fragments
+
+### 3.4.0
+
+- Fixes #298 - Always emit correct events for async fragments
+- Updated docs
+
+## 3.3.x
+
+### 3.3.0
+
+- Include async fragment name in the `asyncFragmentFinish` events ([@kprakasam](https://github.com/kprakasam))
+
+## 3.2.x
+
+### 3.2.0
+
+- Fixes #286 - Add res.marko(templateData) for use with Express ([@mlrawlings](https://github.com/mlrawlings))
+
+## 3.1.x
+
+### 3.1.9
+
+- Fixes #288 - Provide API for discovering custom tags and attributes for autocomplete/tooling purposes
+- Documentation improvements
+
+### 3.1.8
+
+- Fixes #280 - Switch from jsonminify to strip-json-comments
+- Updated docs for Koa and Hapi
+- Additional tests for Node.js v6
+
+### 3.1.7
+
+- Fixes #274 - marko-compiler-options tag is not properly ended when using raw parsing (for prettyprint)
+
+### 3.1.6
+
+- Fixes #268 - this.write is not a function for empty ArrayExpression
+
+### 3.1.5
+
+- Fixes #262 - node-require module removes `.marko` extension from filenames in compiled code
+
+### 3.1.4
+
+- Fixes #267 - Shorthand CSS class name cannot be combined with object/array class names
+
+### 3.1.3
+
+- Fixed #266 - Hot reloading fails if original template is deleted
+
+### 3.1.2
+
+- Fixed error reporting when using `compiler.parseRaw()`
+- Added test for #262
+
+### 3.1.1
+
+- Improved whitespace removal for text nodes directly below the root
+
+### 3.1.0
+
+- Fixes #254 - Allow preserve whitespace to be enabled at the global level
+
+## 3.0.x
+
+### 3.0.7
+
+- Fixes #240 - Always trim start and end of template (even if preserveWhitespace is true)
+- Fixes #260 - Circular custom tags causes infinite recursion when writeToDisk is set to false
+- Minor internal cleanup
+
+### 3.0.6
+
+- Don't wrap exception in `parseJavaScript` if error object was not created by Esprima
+
+### 3.0.5
+
+- Fixes #257 - Placeholders don't render for out-of-order async fragments
+
+### 3.0.4
+
+- Fixes #256 - Convert attributes to title case if no attributes are declared for a custom tag
+- Use `<noscript>` for out-of-order async fragment placeholders
+
+### 3.0.3
+
+- Make renderSync behave if no context was supplied ([PR #250](https://github.com/marko-js/marko/pull/250) by [@jsumners](https://github.com/jsumners))
+
+### 3.0.2
+
+- Store `tagDef` with `HtmlElement` node (needed for pretty printing)
+
+### 3.0.1
+
+- Docs: Fixed minor issues in docs
+- Reintroduced support for the `MARKO_CLEAN` environment variable: `MARK_CLEAN=true node server.js`
+
+### 3.0.0
+
+- See: [What's New in Marko v3](http://markojs.com/docs/marko/what-is-new-marko-v3/)
+
 # 2.x
 
 ## 2.8.x

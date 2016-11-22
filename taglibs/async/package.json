@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./client-reorder.js": "./client-reorder-browser.js"
+    }
+}

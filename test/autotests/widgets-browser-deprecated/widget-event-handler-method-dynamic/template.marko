@@ -1,0 +1,11 @@
+<div w-bind>
+	<h1>app-macro-events</h1>
+	<macro renderButton(id, label, handler)>
+		<button w-id="${id}" type="button" w-onClick="${handler}">
+			$label
+		</button>
+    </macro>
+
+	<renderButton id="foo" label="Foo" handler="handleFooClick"/>
+	<renderButton id="bar" label="Bar" handler="handleBarClick"/>
+</div>

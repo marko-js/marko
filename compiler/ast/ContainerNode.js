@@ -8,6 +8,10 @@ class ContainerNode extends Node {
         this.body = this.makeContainer(def.body);
     }
 
+    generateCode(codegen) {
+        return codegen.genereateCode(this.body);
+    }
+
     walk(walker) {
         this.body = walker.walk(this.body);
     }

@@ -2,15 +2,33 @@
 
 var Node = require('./Node');
 var Identifier = require('./Identifier');
+var isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
 
 class VariableDeclarator extends Node {
     constructor(def) {
         super('VariableDeclarator');
         this.id = def.id;
         this.init = def.init;
+
+        let name = this.id.name;
+        if (!name) {
+            throw new Error('"name" is required');
+        }
+
+        if (!isValidJavaScriptVarName(name)) {
+            var error = new Error('Invalid JavaScript variable name: ' + name);
+            error.code = 'INVALID_VAR_NAME';
+            throw error;
+        }
     }
 
     generateCode(codegen) {
+        this.id = codegen.generateCode(this.id);
+        this.init = codegen.generateCode(this.init);
+        return this;
+    }
+
+    writeCode(writer) {
         var id = this.id;
         var init = this.init;
 
@@ -18,11 +36,11 @@ class VariableDeclarator extends Node {
             throw new Error('Invalid variable name: ' + id);
         }
 
-        codegen.generateCode(id);
+        writer.write(id);
 
         if (init != null) {
-            codegen.write(' = ');
-            codegen.generateCode(init);
+            writer.write(' = ');
+            writer.write(init);
         }
     }
 

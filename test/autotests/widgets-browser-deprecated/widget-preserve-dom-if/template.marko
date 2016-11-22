@@ -1,0 +1,18 @@
+<div w-bind>
+    <h1>Preserve Begin</h1>
+    <span w-id="preserve" w-preserve-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+
+    <span w-id="preserveBody" w-preserve-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+
+    <app-stateful-rerender w-id="widget" name=(data.renderId.toString()) w-preserve-if(data.preserveCondition) />
+
+    <!-- Test without an ID -->
+
+    <span class="preserve" w-preserve-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+
+    <span class="preserve-body" w-preserve-body-if(data.preserveCondition) data-renderId=data.renderId>${data.renderId}</span>
+
+    <app-stateful-rerender class="widget-no-id" name=(data.renderId.toString()) w-preserve-if(data.preserveCondition) data-renderId=data.renderId/>
+
+    <h1>Preserve End</h1>
+</div>

@@ -13,13 +13,18 @@ class Return extends Node {
             throw new Error('"return" not allowed outside a function body');
         }
 
+        this.argument = codegen.generateCode(this.argument);
+        return this;
+    }
+
+    writeCode(writer) {
         var argument = this.argument;
 
         if (argument) {
-            codegen.write('return ');
-            codegen.generateCode(argument);
+            writer.write('return ');
+            writer.write(argument);
         } else {
-            codegen.write('return');
+            writer.write('return');
         }
     }
 

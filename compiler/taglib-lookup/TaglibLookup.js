@@ -35,6 +35,12 @@ function transformerComparator(a, b) {
     return a - b;
 }
 
+function TAG_COMPARATOR(a, b) {
+    a = a.name;
+    b = b.name;
+    return a.localeCompare(b);
+}
+
 function merge(target, source) {
     for (var k in source) {
         if (source.hasOwnProperty(k)) {
@@ -87,6 +93,8 @@ class TaglibLookup {
         this.merged = {};
         this.taglibsById = {};
         this._inputFiles = null;
+
+        this._sortedTags = undefined;
     }
 
     hasTaglib(taglib) {
@@ -129,16 +137,80 @@ class TaglibLookup {
             return;
         }
 
+        this._sortedTags = undefined;
+
         this.taglibsById[taglib.id] = taglib;
 
         merge(this.merged, {
             tags: taglib.tags,
+            transformers: taglib.transformers,
             textTransformers: taglib.textTransformers,
             attributes: taglib.attributes,
             patternAttributes: taglib.patternAttributes
         });
 
         this._mergeNestedTags(taglib);
+    }
+
+    getTagsSorted() {
+        var sortedTags = this._sortedTags;
+
+        if (sortedTags === undefined) {
+            sortedTags = this._sortedTags = [];
+            this.forEachTag((tag) => {
+                sortedTags.push(tag);
+            });
+            sortedTags.sort(TAG_COMPARATOR);
+        }
+
+        return sortedTags;
+    }
+
+    forEachTag(callback) {
+        var tags = this.merged.tags;
+        if (tags) {
+            for (var tagName in tags) {
+                if (tags.hasOwnProperty(tagName)) {
+                    var tag = tags[tagName];
+                    var result = callback(tag);
+                    if (result === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    forEachAttribute(tagName, callback) {
+        var tags = this.merged.tags;
+        if (!tags) {
+            return;
+        }
+
+        function findAttributesForTagName(tagName) {
+            var tag = tags[tagName];
+            if (!tag) {
+                return;
+            }
+
+            var attributes = tag.attributes;
+            if (!attributes) {
+                return;
+            }
+
+            for (var attrName in attributes) {
+                if (attributes.hasOwnProperty(attrName)) {
+                    callback(attributes[attrName], tag);
+                }
+            }
+
+            if (tag.patternAttributes) {
+                tag.patternAttributes.forEach(callback);
+            }
+        }
+
+        findAttributesForTagName(tagName); // Look for an exact match at the tag level
+        findAttributesForTagName('*'); // Including attributes that apply to all tags
     }
 
     getTag(element) {
@@ -157,7 +229,6 @@ class TaglibLookup {
     }
 
     getAttribute(element, attr) {
-
         if (typeof element === 'string') {
             element = {
                 tagName: element
@@ -216,11 +287,18 @@ class TaglibLookup {
         return attrDef;
     }
 
+    forEachTemplateTransformer(callback, thisObj) {
+        var transformers = this.merged.transformers;
+        if (transformers && transformers.length) {
+            transformers.forEach(callback, thisObj);
+        }
+    }
+
     forEachNodeTransformer(node, callback, thisObj) {
         /*
          * Based on the type of node we have to choose how to transform it
          */
-        if (node.tagName) {
+        if (node.tagName || node.tagNameExpression) {
             this.forEachTagTransformer(node, callback, thisObj);
         } else if (node instanceof Text) {
             this.forEachTextTransformer(callback, thisObj);
@@ -257,8 +335,10 @@ class TaglibLookup {
          */
 
         if (this.merged.tags) {
-            if (this.merged.tags[tagName]) {
-                this.merged.tags[tagName].forEachTransformer(addTransformer);
+            if (tagName) {
+                if (this.merged.tags[tagName]) {
+                    this.merged.tags[tagName].forEachTransformer(addTransformer);
+                }
             }
 
             if (this.merged.tags['*']) {

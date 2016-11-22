@@ -8,6 +8,8 @@ class Walker {
     constructor(options) {
         this._enter = options.enter || noop;
         this._exit = options.exit || noop;
+        this._enterArray = options.enterArray || noop;
+        this._exitArray = options.exitArray || noop;
         this._stopped = false;
         this._reset();
         this._stack = [];
@@ -38,6 +40,8 @@ class Walker {
     _walkArray(array) {
         var hasRemoval = false;
 
+        array = this._enterArray(array) || array;
+
         array.forEach((node, i) => {
             var transformed = this.walk(node);
             if (transformed == null) {
@@ -55,6 +59,8 @@ class Walker {
                 }
             }
         }
+
+        array = this._exitArray(array) || array;
 
         return array;
     }

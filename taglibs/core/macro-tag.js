@@ -1,13 +1,10 @@
 module.exports = function codeGenerator(elNode, codegen) {
 
     var attributes = elNode.attributes;
-    if (!attributes.length) {
-        return;
-    }
-
     var defAttr = attributes[0];
-    if (defAttr.argument == null) {
-        return;
+
+    if(!defAttr || defAttr.value !== undefined) {
+        return codegen.addError('The <macro> tag must contain a name as its first attribute, example: <macro greeting()>');
     }
 
     var body = elNode.body;

@@ -3,17 +3,17 @@
 var Node = require('./Node');
 var isCompoundExpression = require('../util/isCompoundExpression');
 
-function generateCodeForOperand(node, codegen) {
+function writeCodeForOperand(node, writer) {
     var wrap = isCompoundExpression(node);
 
     if (wrap) {
-        codegen.write('(');
+        writer.write('(');
     }
 
-    codegen.generateCode(node);
+    writer.write(node);
 
     if (wrap) {
-        codegen.write(')');
+        writer.write(')');
     }
 }
 
@@ -44,6 +44,35 @@ class BinaryExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.left = codegen.generateCode(this.left);
+        this.right = codegen.generateCode(this.right);
+
+        var left = this.left;
+        var right = this.right;
+        var operator = this.operator;
+
+        if (!left || !right) {
+            throw new Error('Invalid BinaryExpression: ' + this);
+        }
+
+        var builder = codegen.builder;
+
+        if (left.type === 'Literal' && right.type === 'Literal') {
+            if (operator === '+') {
+                return builder.literal(left.value + right.value);
+            } else if (operator === '-') {
+                return builder.literal(left.value - right.value);
+            } else if (operator === '*') {
+                return builder.literal(left.value * right.value);
+            } else if (operator === '/') {
+                return builder.literal(left.value / right.value);
+            }
+        }
+
+        return this;
+    }
+
+    writeCode(writer) {
         var left = this.left;
         var operator = this.operator;
         var right = this.right;
@@ -52,23 +81,11 @@ class BinaryExpression extends Node {
             throw new Error('Invalid BinaryExpression: ' + this);
         }
 
-        if (left.type === 'Literal' && right.type === 'Literal') {
-            if (operator === '+') {
-                return codegen.generateCode(codegen.builder.literal(left.value + right.value));
-            } else if (operator === '-') {
-                return codegen.generateCode(codegen.builder.literal(left.value - right.value));
-            } else if (operator === '*') {
-                return codegen.generateCode(codegen.builder.literal(left.value * right.value));
-            } else if (operator === '/') {
-                return codegen.generateCode(codegen.builder.literal(left.value / right.value));
-            }
-        }
-
-        generateCodeForOperand(left, codegen);
-        codegen.write(' ');
-        codegen.generateCode(operator);
-        codegen.write(' ');
-        generateCodeForOperand(right, codegen);
+        writeCodeForOperand(left, writer);
+        writer.write(' ');
+        writer.write(operator);
+        writer.write(' ');
+        writeCodeForOperand(right, writer);
     }
 
     isCompoundExpression() {

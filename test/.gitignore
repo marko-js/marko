@@ -1,2 +1,11 @@
 /node_modules
 /scratch.js
+*.generated.js
+
+*.actual.js
+*.actual.html
+/generated
+
+*-actual*
+actual.*
+actualized-expected.html

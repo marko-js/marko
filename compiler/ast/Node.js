@@ -6,6 +6,31 @@ var extend = require('raptor-util/extend');
 var inspect = require('util').inspect;
 var EventEmitter = require('events').EventEmitter;
 
+function trim(textNode) {
+    if (textNode.preserveWhitespace === true) {
+        return;
+    }
+
+    var text = textNode.argument.value;
+    var isFirst = textNode.isFirst;
+    var isLast = textNode.isLast;
+
+    if (isFirst) {
+        //First child
+        text = text.replace(/^\n\s*/g, '');
+    }
+    if (isLast) {
+        //Last child
+        text = text.replace(/\n\s*$/g, '');
+    }
+    if (/^\n\s*$/.test(text)) {
+        //Whitespace between elements
+        text = '';
+    }
+    text = text.replace(/\s+/g, ' ');
+    textNode.argument.value = text;
+}
+
 class Node {
     constructor(type) {
         this.type = type;
@@ -18,7 +43,10 @@ class Node {
         this._transformersApplied = {};
         this._preserveWhitespace = null;
         this._events = null;
+        this._childTextNormalized = undefined;
         this.data = {};
+        this._finalNode = false;
+        this._trimStartEnd = false;
     }
 
     on(event, listener) {
@@ -123,6 +151,22 @@ class Node {
         }
     }
 
+    get previousSibling() {
+        var container = this.container;
+
+        if (container) {
+            container.getPreviousSibling(this);
+        }
+    }
+
+    get nextSibling() {
+        var container = this.container;
+
+        if (container) {
+            container.getNextSibling(this);
+        }
+    }
+
     isTransformerApplied(transformer) {
         return this._transformersApplied[transformer.id] === true;
     }
@@ -147,6 +191,9 @@ class Node {
         delete result.tagDef;
         delete result._preserveWhitespace;
         delete result._events;
+        delete result._finalNode;
+        delete result._trimStartEnd;
+        delete result._childTextNormalized;
         return result;
     }
 
@@ -246,6 +293,109 @@ class Node {
         }
 
         return preserveWhitespace === true;
+    }
+
+    setFinalNode(isFinal) {
+        this._finalNode = true;
+    }
+
+    setTrimStartEnd(trimStartEnd) {
+        this._trimStartEnd = trimStartEnd;
+    }
+
+    _normalizeChildTextNodes(context) {
+        if (this._childTextNormalized) {
+            return;
+        }
+
+        this._childTextNormalized = true;
+
+        var trimStartEnd = this._trimStartEnd === true;
+
+        var isPreserveWhitespace = false;
+
+        if (context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
+            isPreserveWhitespace = true;
+        }
+
+        if (isPreserveWhitespace && trimStartEnd !== true) {
+            return;
+        }
+
+        var body = this.body;
+        if (!body) {
+            return;
+        }
+
+        var isFirst = true;
+
+        var currentTextLiteral = null;
+        var literalTextNodes = [];
+
+        body.forEach((curChild, i) => {
+            if (curChild.noOutput) {
+                // Skip over AST nodes that produce no HTML output
+                return;
+            }
+
+            if (curChild.type === 'Text' && curChild.isLiteral()) {
+                curChild.isFirst  = null;
+                curChild.isLast  = null;
+
+                if (currentTextLiteral &&
+                        currentTextLiteral.preserveWhitespace === curChild.preserveWhitespace &&
+                        currentTextLiteral.escape === curChild.escape) {
+                    currentTextLiteral.argument.value += curChild.argument.value;
+                    curChild.detach();
+                } else {
+                    currentTextLiteral = curChild;
+                    literalTextNodes.push(currentTextLiteral);
+                    if (isFirst) {
+                        currentTextLiteral.isFirst = true;
+                    }
+                }
+            } else {
+                currentTextLiteral = null;
+            }
+
+            isFirst = false;
+        });
+
+        if (currentTextLiteral) {
+            // Last child text
+            currentTextLiteral.isLast = true;
+        }
+
+        if (trimStartEnd) {
+            if (literalTextNodes.length) {
+                // We will only trim the first and last nodes
+                var firstTextNode = literalTextNodes[0];
+                var lastTextNode = literalTextNodes[literalTextNodes.length - 1];
+
+                if (firstTextNode.isFirst) {
+                    firstTextNode.argument.value = firstTextNode.argument.value.replace(/^\s*/, '');
+                }
+
+                if (lastTextNode.isLast) {
+                    lastTextNode.argument.value = lastTextNode.argument.value.replace(/\s*$/, '');
+                }
+            }
+        }
+
+        if (!isPreserveWhitespace) {
+            literalTextNodes.forEach(trim);
+        }
+
+        literalTextNodes.forEach((textNode) => {
+            if (textNode.argument.value === '') {
+                textNode.detach();
+            }
+        });
+    }
+
+    get childCount() {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        return this.body.length;
     }
 }
 

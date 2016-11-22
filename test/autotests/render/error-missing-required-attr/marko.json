@@ -1,0 +1,7 @@
+{
+    "<test-missing-required-attr>": {
+        "@name": {
+            "required": true
+        }
+    }
+}

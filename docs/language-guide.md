@@ -8,50 +8,50 @@ Language Guide
 Almost all of the Marko templating directives can be used as either an attribute or as an element. For example:
 
 _Applying directives using attributes:_
+
 ```xml
 <!-- Colors available -->
-<ul if="notEmpty(colors)">
-    <li for="color in colors">
-        $color
+<ul if(colors.length)>
+    <li for(color in colors)>
+        ${color}
     </li>
 </ul>
-
-<!-- No colors available -->
-<div if="empty(colors)">
+<!-- No colors available-->
+<div else>
     No colors!
 </div>
 ```
 
 _Applying directives using elements:_
+
 ```xml
 <!-- Colors available -->
-<if test="notEmpty(colors)">
+<if(colors.length)>
     <ul>
-        <for each="color in colors">
+        <for(color in colors)>
             <li>
-                $color
+                ${color}
             </li>
         </for>
     </ul>
 </if>
 
 <!-- No colors available -->
-<if test="empty(colors)">
+<else>
     <div>
         No colors!
     </div>
-</if>
+</else>
 ```
 
 The disadvantage of using elements to control structural logic is that they change the nesting of the elements which can impact readability. For this reason it is often more suitable to apply directives as attributes.
 
 # Text Replacement
 
-Dynamic text is supported using either `$<variable-reference>` or `${<javascript-expression>}`.
+Dynamic text is supported using `${<javascript-expression>}`.
 
 Examples:
 ```xml
-Hello $data.name!
 Hello ${data.name}!
 Hello ${data.name.toUpperCase()}!
 ```
@@ -71,31 +71,66 @@ Test: ${hello}
 -->
 ```
 
-# Expressions
+# Attributes
 
-Wherever expressions are allowed, they are treated as JavaScript expressions and copied out to the compiled template verbatim. However, you can choose to use alternate versions of the following JavaScript operators:
-
-JavaScript Operator | Marko Equivalent
-------------------- | -----------------
-`&&`                 | `and`
-<code>&#124;&#124;</code>                | `or`
-`===`               | `eq`
-`!==`               | `ne`
-`<`                 | `lt`
-`>`                 | `gt`
-`<=`                | `le`
-`>=`                | `ge`
-
-For example, both of the following are valid and equivalent:
+All attribute values are parsed as _JavaScript expressions_. In addition, placeholders (`${<javascript-expression>}`) are allowed in single and double quoted strings.
 
 ```xml
-<div if="searchResults.length > 100">
-    Show More
-</div>
+<div class=data.myClassName>
+<input type="checkbox" checked=data.isChecked/>
+
+<my-component string="Hello"/>
+<my-component number=1/>
+<my-component template-string="Hello ${name}"/>
+<my-component boolean=true/>
+<my-component array=[1, 2, 3]/>
+<my-component object={hello: 'world'}/>
+<my-component variable=name/>
+<my-component function-call=data.foo()/>
+<my-component complex-expression=1+2/>
+<my-component super-complex-expression=(data.foo() + data.bar(['a', 'b', 'c']))/>
 ```
 
+In addition, Marko has special support for the `class` and `style` attributes as shown below:
+
+## Style attribute
+
+The value of the style attribute can resolve to an object expression (in addition to a string value) as shown below:
+
 ```xml
-<div if="searchResults.length gt 100">
+<div style={color: 'red', 'font-weight': 'bold'}>
+```
+
+Output:
+
+```html
+<div style="color:red;font-weight:bold">
+```
+
+## Class attribute
+
+The value of the class attribute can resolve to an object expression or an array expression (in addition to a string value) as shown below:
+
+```xml
+<!-- array: -->
+<div class=['a', null, 'c']>
+
+<!-- object: -->
+<div class={a: true, b: false, c: true}>
+```
+
+In both cases, the output will be the same:
+
+```html
+<div class="a c">
+```
+
+# Expressions
+
+Wherever expressions are allowed, they are treated as JavaScript expressions and copied out to the compiled template verbatim. For example:
+
+```xml
+<div if(searchResults.length > 100)>
     Show More
 </div>
 ```
@@ -105,23 +140,22 @@ For example, both of the following are valid and equivalent:
 Marko supports includes/partials. Other Marko files can be included using the `<include>` tag and a relative path. For example:
 
 ```xml
-<include template="./greeting.marko" name="Frank" count="30"/>
+<include("./greeting.marko") name="Frank" count=30/>
 ```
 
-Alternatively, you can pass the template data using the `template-data` attribute whose value should be a JavaScript expression that resolves to the template data as shown below:
+Alternatively, you can pass the template data by providing a JavaScript expression as a second argument to the include tag:
 
 ```xml
-<include template="./greeting.marko" template-data="{ name: 'Frank', count: 30 }"/>
+<include("./greeting.marko", {name: "Frank", count: 30})/>
 ```
 
-The value of the `template` attribute can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
+The template expression provided as the first argument can also be a dynamic JavaScript expression that resolves to a loaded template as shown below:
 
 In your JavaScript controller:
 
 ```javascript
 var myIncludeTarget = require('./my-include-target.marko');
 var anotherIncludeTarget = require('./another-include-target.marko');
-
 
 template.render({
 		myIncludeTarget: myIncludeTarget,
@@ -133,39 +167,60 @@ template.render({
 And then in your template:
 
 ```xml
-<include template="${data.myIncludeTarget}" name="Frank" count="30"/>
-<include template="${data.anotherIncludeTarget}" name="Frank" count="30"/>
+<include(data.myIncludeTarget) name="Frank" count=30/>
+<include(data.anotherIncludeTarget) name="Frank" count=30/>
 ```
 
 You can also choose to load the include target within the calling template as shown below:
 
 ```xml
-<require module="./my-include-target.marko" var="myIncludeTarget" />
+<script marko-init>
+var myIncludeTarget = require('./my-include-target.marko');
+</script>
 ...
-<include template="${data.myIncludeTarget}" name="Frank" count="30"/>
+<include(data.myIncludeTarget) name="Frank" count=30/>
 ```
+
+## Including static text
+
+```xml
+<include-text('./foo.txt')/>
+```
+
+NOTE: Special HTML characters will be escaped. If you do not want escaping then use the `<include-html>` tag (see below)
+
+## Including static HTML
+
+```xml
+<include-html('./foo.html')/>
+```
+
+NOTE: Special HTML characters will _not_ be escaped since the file is expected to be an HTML file.
 
 # Variables
 
 Input data passed to a template is made available using a special `data` variable. It's possible to declare your own variables as shown in the following sample code:
 
 ```xml
-<var name="name" value="data.name.toUpperCase()" />
+<var name=data.name.toUpperCase()/>
 ```
 
 To assign a new value to an existing variable the `<assign>` tag can be used as shown in the following sample code:
 
 ```xml
-<assign var="name" value="data.name.toLowerCase()" />
+<assign name=data.name.toLowerCase()/>
 ```
 
-The `<with>` directive can be used to create scoped variables as shown in the following sample code:
+The `<var>` directive can also be used to create scoped variables as shown in the following sample code:
 
 ```xml
-<with vars="nameUpper=data.name.toUpperCase(); nameLower=data.name.toLowerCase()">
-    Hello $nameUpper!
-    Hello $nameLower!
-</with>
+<var nameUpper=data.name.toUpperCase() nameLower=data.name.toLowerCase()>
+    Hello ${nameUpper}!
+    Hello ${nameLower}!
+</var>
+<!--
+nameUpper and nameLower will be undefined here
+-->
 ```
 
 # Conditionals
@@ -181,39 +236,38 @@ Any element or fragment of HTML can be made conditional using the following dire
 *Applied as attributes:*
 
 ```xml
-<!--Simple if-->
-<div if="someCondition">
+<!-- Simple if -->
+<div if(someCondition)>
+    Hello World
+</div>
+<!-- Simple unless -->
+<div unless(someCondition)>
     Hello World
 </div>
 
-<!--Simple unless-->
-<div unless="someCondition">
-    Hello World
-</div>
-
-<!--Complex if-->
-<div if="test === 'a'">
-  A
-</div>
-<div else-if="test === 'b'">
-  B
-</div>
-<div else-if="test === 'c'">
-  C
-</div>
-<div else>
-  Something else
-</div>
-
-<!--Complex unless-->
-<div unless="test === 'a'">
+<!-- Complex if -->
+<div if(test === "a")>
     A
 </div>
-<div else-if="test === 'b'">
-  B
+<div else-if(test === "b")>
+    B
+</div>
+<div else-if(test === "c")>
+    C
 </div>
 <div else>
-  Something else
+    Something else
+</div>
+
+<!-- Complex unless -->
+<div unless(test === "a")>
+    A
+</div>
+<div else-if(test === "b")>
+    B
+</div>
+<div else>
+    Something else
 </div>
 ```
 
@@ -221,26 +275,25 @@ Any element or fragment of HTML can be made conditional using the following dire
 
 ```xml
 <!-- Colors available -->
-<!--Simple if-->
-<if test="someCondition">
+<!-- Simple if -->
+<if(someCondition)>
     <div>
         Hello World
     </div>
 </if>
 
-
-<!--Complex if-->
-<if test="test === 'a'">
+<!-- Complex if -->
+<if(test === "a")>
     <div>
         A
     </div>
 </if>
-<else-if test="test === 'b'">
+<else-if(test === "b")>
     <div>
         B
     </div>
 </else-if>
-<else-if test="test === 'c'">
+<else-if(test === "c")>
     <div>
         C
     </div>
@@ -257,45 +310,45 @@ Any element or fragment of HTML can be made conditional using the following dire
 The `unless` directive is also supported as an alternative to `if` in cases where the condition should be negated.
 
 ```xml
-<!--Simple unless-->
-<div unless="someCondition">
+<!-- Simple unless -->
+<div unless(someCondition)>
     Hello World
 </div>
 
-<!--Complex unless-->
-<div unless="test === 'a'">
+<!-- Complex unless -->
+<div unless(test === "a")>
     A
 </div>
-<div else-if="test === 'b'">
-  B
+<div else-if(test === "b")>
+    B
 </div>
 <div else>
-  Something else
+    Something else
 </div>
 ```
 
 *Applied as elements:*
 
 ```xml
-<!--Simple unless-->
-<unless test="someCondition">
+<!-- Simple unless -->
+<unless(someCondition)>
     <div>
         Hello World
     </div>
 </unless>
 
-<!--Complex unless-->
-<unless test="test === 'a'">
+<!-- Complex unless -->
+<unless(test === "a")>
     <div>
         A
     </div>
 </unless>
-<else-if test="test === 'b'">
+<else-if(test === "b")>
     <div>
         B
     </div>
 </else-if>
-<else-if test="test === 'c'">
+<else-if(test === "c")>
     <div>
         C
     </div>
@@ -309,49 +362,47 @@ The `unless` directive is also supported as an alternative to `if` in cases wher
 
 ## Shorthand Conditionals
 
-Shorthand conditionals allow for conditional values inside attributes or wherever expressions are allowed. Shorthand conditionals are of the following form:
-`{?<expression>;<true-template>[;<false-template>]}`
+Regular JavaScript can be used to achieve shorthand conditional values inside attributes or wherever expressions are allowed:
 
-For example:
 
 ```xml
-<div class="{?active;tab-active}">Hello</div>
+<div class=(active && 'tab-active')>Hello</div>
 ```
+
 With a value of `true` for `active`, the output would be the following:
 
-```xml
+```html
 <div class="tab-active">Hello</div>
 ```
 
 With a value of `false` for `active`, the output would be the following:
 
-```xml
+```html
 <div>Hello</div>
 ```
 
-_NOTE: If the expression inside an attribute evaluates to `null` or an empty string then the attribute is not included in the output._
+_NOTE: If an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output._
 
-As shown in the previous example, the "else" block for shorthand conditionals is optional. The usage of an else block is shown below:
+A ternary condition can also be used:
 
 ```xml
-<div class="{?active;tab-active;tab-inactive}">Hello</div>
+<div class=(active ? 'tab-active' : 'tab-inactive')>Hello</div>
 ```
 
 With a value of `false` for `active`, the output would be the following:
 
-```xml
+```html
 <div class="tab-inactive">Hello</div>
 ```
 
 ## Conditional Attributes
 
-Marko supports conditional attributes when the value of an attribute is an expression. Marko also supports [HTML `boolean` attributes](https://html.spec.whatwg.org/#boolean-attributes) (e.g., `<input type="checkbox" checked>`)  If an attribute value resolves to `null`, `undefined`, `false`  or an empty string then the attribute will not be rendered. If an attribute value resolves to `true` then only the attribute name will rendered.
+Marko supports conditional attributes when the value of an attribute is an expression. Marko also supports [HTML `boolean` attributes](https://html.spec.whatwg.org/#boolean-attributes) (e.g., `<input type="checkbox" checked>`)  If an attribute value resolves to `null`, `undefined`, or `false` then the attribute will not be rendered. If an attribute value resolves to `true` then only the attribute name will rendered.
 
 For example, given the following data:
 
 ```javascript
 {
-    title: '',
     active: true,
     checked: false,
     disabled: true
@@ -361,21 +412,15 @@ For example, given the following data:
 And the following template:
 
 ```xml
-<img src="foo.png" alt="${data.title}">
+<div class=(data.active && "tab-active")/>
 
-<div class="{?data.active;tab-active}"></div>
-
-<input type="checkbox"
-    checked="${data.checked}"
-    disabled="${data.disabled}">
+<input type="checkbox" checked=data.checked disabled=data.disabled/>
 ```
 
 The output HTML will be the following:
 
-```xml
-<img src="foo.png">
-
-<div></div>
+```html
+<div class="tab-active"></div>
 
 <input type="checkbox" disabled>
 ```
@@ -390,7 +435,7 @@ _Applied as an attribute:_
 
 ```xml
 <ul>
-    <li for="item in items">${item}</li>
+    <li for(item in items)>${item}</li>
 </ul>
 ```
 
@@ -398,7 +443,7 @@ _Applied as an element:_
 
 ```xml
 <ul>
-    <for each="item in items">
+    <for(item in items)>
         <li>${item}</li>
     </for>
 </ul>
@@ -413,7 +458,7 @@ Given the following value for items:
 
 The output would be the following:
 
-```xml
+```html
 <ul>
     <li>red</li>
     <li>green</li>
@@ -427,11 +472,11 @@ The `for` directive also supports a loop status variable in case you need to kno
 
 ```xml
 <ul>
-    <li for="color in colors; status-var=loop">
-        $color
+    <li for(color in colors | status-var=loop)>
+        ${color}
         ${loop.getIndex()+1}) of ${loop.getLength()}
-        <if test="loop.isFirst()"> - FIRST</if>
-        <if test="loop.isLast()"> - LAST</if>
+        <if(loop.isFirst())> - FIRST</if>
+        <if(loop.isLast())> - LAST</if>
     </li>
 </ul>
 ```
@@ -439,10 +484,11 @@ The `for` directive also supports a loop status variable in case you need to kno
 ### Loop Separator
 
 ```xml
-<for each="color in colors" separator=", ">$color</for>
-
+<for(color in colors | separator=", ")>${color}</for>
 <div>
-    <span for="color in colors; separator=', '" style="color: $color">$color</span>
+    <span for(color in colors | separator=", ") style="color: ${color}">
+        ${color}
+    </span>
 </div>
 ```
 
@@ -454,23 +500,23 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```xml
 <ul>
-    <li for="i from 0 to 10">
-        $i
+    <li for(i from 0 to 10)>
+        ${i}
     </li>
 </ul>
 ```
 
 ```xml
 <ul>
-    <li for="i from 0 to 10 step 2">
-        $i
+    <li for(i from 0 to 10 step 2)>
+        ${i}
     </li>
 </ul>
 ```
 
 ```xml
 <ul>
-    <li for="i from 0 to myArray.length-1">
+    <li for(i from 0 to myArray.length-1)>
         ${myArray[i]}
     </li>
 </ul>
@@ -481,11 +527,18 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 ```xml
 <ul>
-    <li for="(name,value) in settings">
-        <b>$name</b>:
-        $value
+    <li for(name,value in settings)>
+        <b>${name}</b>: ${value}
     </li>
 </ul>
+```
+
+### Native JavaScript for-loop
+
+```xml
+<for(var i=1; i<=3; i++)>
+    ${i}
+</for>
 ```
 
 ### Custom Iterator
@@ -510,25 +563,29 @@ The custom iterator can then be used in a template as shown below:
 _Applied as part of a `for` attribute:_
 
 ```xml
-<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator">
-    $item
+<div for(item in ['a', 'b', 'c'] | iterator=data.reverseIterator)>
+    ${item}
 </div>
-<!--
+```
+
 Output:
-<div>c</div><div>b</div><div>a</div>
--->
+
+```html
+<div>c</div>
+<div>b</div>
+<div>a</div>
 ```
 
 _Applied as part of a `<for>` element:_
 
 ```xml
-<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator">
-    $item
+<for(item in ['a', 'b', 'c'] | iterator=data.reverseIterator)>
+    ${item}
 </for>
-<!--
-Output:
+```
+
+```html
 cba
--->
 ```
 
 Custom iterators also support providing a custom status object for each loop iteration:
@@ -548,108 +605,117 @@ Custom iterators also support providing a custom status object for each loop ite
 _Applied as part of a `for` attribute:_
 
 ```xml
-<div for="item in ['a', 'b', 'c']; iterator=data.reverseIterator; status-var=status">
-    ${status.index}$item
+<div for(item in ['a', 'b', 'c'] | iterator=data.reverseIterator status-var=status)>
+    ${status.index}${item}
 </div>
-<!--
+```
+
 Output:
-<div>2c</div><div>1b</div><div>0a</div>
--->
+
+```html
+<div>2c</div>
+<div>1b</div>
+<div>0a</div>
 ```
 
 _Applied as part of a `<for>` element:_
 
 ```xml
-<for each="item in ['a', 'b', 'c']" iterator="data.reverseIterator" status-var="status">
-    ${status.index}$item
+<for(item in ['a', 'b', 'c'] | iterator=data.reverseIterator status-var=status)>
+    ${status.index}${item}
 </for>
-<!--
+```
+
 Output:
+
+```html
 2c1b0a
--->
+```
+
+## while
+
+Any element can be repeated until a condition is met by using the `while` directive. The directive can be applied as an element or as an attribute.
+
+_Applied as an attribute:_
+
+```xml
+<var n=0/>
+<ul>
+    <li while(n < 4)>
+        ${n++}
+    </li>
+</ul>
+```
+
+_Applied as an element:_
+
+```xml
+<var n=0/>
+<ul>
+    <while(n < 4)>
+        <li>${n++}</li>
+    </while>
+</ul>
+
+```
+
+In both cases the output would be the following:
+
+```html
+<ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+</ul>
 ```
 
 # Macros
 
 Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<def>` directive.
 
-## def
+## macro
 
-The `<def>` directive can be used to define a reusable function within a template.
+The `<macro>` directive can be used to define a reusable function within a template.
 
 ```xml
-<def function="greeting(name, count)">
-    Hello $name! You have $count new messages.
-</def>
+<macro greeting(name, count)>
+    Hello ${name}! You have ${count} new messages.
+</macro>
 ```
 
 The above macro can then be invoked as part of any expression. Alternatively, the [`<invoke>`](#invoke) directive can be used invoke a macro function using named attributes. The following sample template shows how to use macro functions inside expressions:
 
 ```xml
-<def function="greeting(name, count)">
-    Hello $name! You have $count new messages.
-</def>
-
-<p>
-    ${greeting("John", 10)}
-</p>
-<p>
-    ${greeting("Frank", 20)}
-</p>
-```
-
-## invoke
-
-The `<invoke>` directive can be used to invoke a function defined using the `<def>` directive or a function that is part of the input data to a template. The `<invoke>` directive allows arguments to be passed using element attributes, but that format is only supported for functions that were previously defined using the `<def>` directive.
-
-```xml
-<def function="greeting(name, count)">
+<macro greeting(name, count)>
     Hello ${name}! You have ${count} new messages.
-</def>
-
-<invoke function="greeting" name="John" count="${10}"/>
-<invoke function="greeting('Frank', 20)"/>
-```
-
-The output for the above template would be the following:
-
-```xml
+</macro>
 <p>
-    Hello John! You have 10 new messages.
+    <greeting("John", 10)/>
 </p>
 <p>
-    Hello Frank! You have 20 new messages.
+    <!-- Or, using named attributes: -->
+    <greeting name="Frank" count=20/>
 </p>
-```
-
-_NOTE:_ By default, the arguments will be of type "string" when using `<invoke>.` However, argument attributes support JavaScript expressions which allow for other types of arguments. Example:
-```xml
-count="10" <!-- string argument -->
-count="${10}"  <!-- number argument -->
 ```
 
 
 # Structure Manipulation
 
-## attrs
+## Dynamic attributes
 
 The `attrs` attribute allows attributes to be dynamically added to an element at runtime. The value of the attrs attribute should be an expression that resolves to an object with properties that correspond to the dynamic attributes. For example:
 
 ```xml
-<div attrs="myAttrs">
+<var myAttrs={style: "background-color: #FF0000;", "class": "my-div"} />
+
+<div ${myAttrs}>
     Hello World!
 </div>
 ```
 
-Given the following value for the `myAttrs` variable:
+Output:
 
-```javascript
-{style: "background-color: #FF0000;", "class": "my-div"}
-```
-
-The output would then be the following:
-
-```xml
+```html
 <div style="background-color: #FF0000;" class="my-div">
     Hello World!
 </div>
@@ -660,7 +726,7 @@ The output would then be the following:
 If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute to handle this use case. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 
 ```xml
-<a href="${data.linkUrl}" body-only-if="!data.linkUrl">
+<a href=data.linkUrl body-only-if(!data.linkUrl)>
     Some body content
 </a>
 ```
@@ -730,7 +796,7 @@ Example template:
     </a>
     <textarea>
 Hello
-World</textarea
+World</textarea>
 </div>
 ```
 
@@ -744,24 +810,26 @@ World</textarea</div>
 
 The following options are available to control whitespace removal:
 
-__Option 1)__ Disable whitespace removal using the `compiler-options` tag:
+__Option 1)__ Disable whitespace removal using the `marko-compiler-options` tag:
 
 ```xml
-<compiler-options whitespace="preserve" />
+<marko-compiler-options preserve-whitespace/>
 <div>
-    <img src="foo.jpg">
-    <img src="foo.jpg">
+    <img src="foo.jpg"/>
+    <img src="foo.jpg"/>
 </div>
 ```
 
-__Option 2)__ Disable whitespace removal using the `c-whitespace` attribute:
+__Option 2)__ Disable whitespace removal using the `marko-preserve-whitespace` attribute:
 
 ```xml
-<div c-whitespace="preserve">
-    <img src="foo.jpg">
-    <img src="foo.jpg">
+<div marko-preserve-whitespace>
+    <img src="foo.jpg"/>
+    <img src="foo.jpg"/>
 </div>
 ```
+
+NOTE: When whitespace preservation is enabled, whitespace will be preserved for text at any level below the tag that the `marko-preserve-whitespace` attribute is attached to.
 
 __Option 3)__ Disable _all_ whitespace removal by changing a compiler option
 
@@ -769,19 +837,19 @@ __Option 3)__ Disable _all_ whitespace removal by changing a compiler option
 require('marko/compiler').defaultOptions.preserveWhitespace = true;
 ```
 
-__Option 4)__ Control whitespace removal for specific tags
-
-```javascript
-require('marko/compiler').defaultOptions.preserveWhitespace = {
-    'pre': true,
-    'textarea': true,
-    'script': true
-};
-```
-
-__Option 5)__ Configured a custom tag to preserve whitespace
+__Option 4)__ Control whitespace removal for specific tags (in `marko.json`/`marko-tag.json`)
 
 Adding the `"preserve-whitespace": true` property to a tag definition will result in the Marko compiler preserving whitespace wherever that tag is encountered in a template.
+
+```javascript
+{
+    "<my-custom-tag>": {
+        "preserve-whitespace": true
+    }
+}
+```
+
+NOTE: When whitespace preservation is enabled, whitespace will be preserved for text at any level below the tag.
 
 # Helpers
 
@@ -803,7 +871,9 @@ The above module can then be imported into a template as shown in the following 
 _src/template.marko_:
 
 ```xml
-<require module="./util" var="util" />
+<script marko-init>
+    var util = require("./util");
+</script>
 
 <div>${util.reverse('reverse test')}</div>
 ```
@@ -832,11 +902,15 @@ Usage inside template:
 <div>${data.reverse('reverse test')}</div>
 ```
 
-Aside from custom helpers that can be built per-project, Marko has some built-in helpers with support for common tasks.
+# Miscellaneous
 
-__empty()/notEmpty()__
+## invoke
 
-To deal with "empty" data, Marko provides the empty() and notEmpty() helpers. Both helpers can be used to check for empty objects (objects, that are set to null), arrays of length zero or empty strings; empty() returns true for these cases exclusively. Therefore, not all "falsy" JavaScript values are reported as "empty" - e.g.: a boolean value that is set to "false" is not empty, hence notEmpty() would return "true". As their name already suggests, both helpers are contrary to each other.
+The `<invoke>` directive can be used to invoke a standard JavaScript function during rendering:
+
+```xml
+<invoke console.log('Hello World')/>
+```
 
 # Global Properties
 
@@ -866,7 +940,9 @@ The output would be the following:
 </div>
 ```
 
-# Custom Tags and Attributes
+<a name="custom-tags-and-attributes"></a>
+
+# Custom Tags and Custom Attributes
 
 Marko supports extending the language with custom tags and attributes. A custom tag or a custom attribute __must have at least one dash__ to indicate that is not part of the standard HTML grammar.
 
@@ -874,39 +950,53 @@ Below illustrates how to use a simple custom tag:
 
 ```xml
 <div>
-    <my-hello name="World"/>
+    <my-hello name="Frank" message-count="30"/>
 </div>
 ```
+
 
 The output of the above template might be the following:
 
-```xml
+```html
 <div>
-    Hello World!
+    Hello Frank! You have 30 new messages.
 </div>
 ```
 
-For information on how to use and create taglibs, please see the [Custom Taglibs](#custom-taglibs) section below.
+With Marko, attribute values can be JavaScript expressions:
+
+```xml
+<div>
+    <my-hello name=data.name.toUpperCase() message-count=data.messageCount/>
+</div>
+```
+
+You can also pass a data object by providing a JavaScript expression as an argument to the custom tag:
+
+```xml
+<div>
+    <my-hello({name: "Frank", messageCount: "30"})/>
+</div>
+```
+
+For information on how to use and create custom taglibs, please see the documentation for [Custom Taglibs](http://markojs.com/docs/marko/custom-taglibs/).
 
 # Async Taglib
 
-The async taglib allows portions of your template to be rendered asynchronously. An asynchronous fragment can be bound to a function that accepts an "args" objects and callback argument. When the data provider function completes and invokes the callback with the resulting data, the body of the async fragment is then rendered with the asynchronous data assigned to the specified variable. As an additional feature, asynchronous fragments allow parts of your page to render out-of-order while still providing the final HTML in the correct order allowing to have very reactive websites with almost instant visual feedback. Features like out-of-order rendering, that are based on client-reordering, require the use of JavaScript. Websites that have to render completely without JavaScript should avoid using this additional feature (they can still use asynchronous fragments though).
+The async taglib provides an `<await>` tag that allows portions of your template to be rendered asynchronously. An asynchronous fragment can be bound to a function that accepts an "args" objects and callback argument. When the data provider function completes and invokes the callback with the resulting data, the body of the async fragment is then rendered with the asynchronous data assigned to the specified variable. As an additional feature, asynchronous fragments allow parts of your page to render out-of-order while still providing the final HTML in the correct order allowing to have very reactive websites with almost instant visual feedback. Features like out-of-order rendering, that are based on client-reordering, require the use of JavaScript. Websites that have to render completely without JavaScript should avoid using this additional feature (they can still use asynchronous fragments though).
 
 Example:
 
 ```javascript
 template.render({
-        userProfileDataProvider: function(arg, callback) {
-            var userId = arg.userId;
-            userProfileService.getUserProfile(userId, callback);
-        }
+        userProfilePromise: new Promise(function (resolve, reject) {
+            // ...
+        })
     }, ...);
 ```
 
 ```xml
-<async-fragment data-provider="data.userProfileDataProvider"
-    var="userProfile"
-    arg-userId="${data.userId}">
+<await(userProfile from data.userProfilePromise)>
 
     <ul>
         <li>
@@ -920,14 +1010,14 @@ template.render({
         </li>
     </ul>
 
-</async-fragment>
+</await>
 ```
 
-For more details, please see [https://github.com/marko-js/marko-async](https://github.com/marko-js/marko-async).
+For more details, please see [Marko Async Taglib](http://markojs.com/docs/marko/async-taglib/).
 
 # Layout Taglib
 
-Marko provides a `layout` taglib to support separating out layout from content. The usage of of the `layout` taglib is shown in the sample code below:
+Marko provides a `layout` taglib to support separating out layout from content. The usage of the `layout` taglib is shown in the sample code below:
 
 _default-layout.marko:_
 
@@ -939,7 +1029,7 @@ _default-layout.marko:_
     <title><layout-placeholder name="title"/></title>
 </head>
 <body>
-    <h1 if="data.showHeader !== false">
+    <h1 if(data.showHeader !== false)>
         <layout-placeholder name="title"/>
     </h1>
     <p>
@@ -957,11 +1047,11 @@ _default-layout.marko:_
 _Usage of `default-layout.marko`:_
 
 ```xml
-<layout-use template="./default-layout.marko" show-header="$true">
+<layout-use("./default-layout.marko") show-header=true>
     <layout-put into="title">My Page</layout-put>
     <layout-put into="body">BODY CONTENT</layout-put>
 </layout-use>
 ```
 
 
-For more details, please see [https://github.com/marko-js/marko-layout](https://github.com/marko-js/marko-layout).
+For more details, please see [Marko Layout Taglib](http://markojs.com/docs/marko/layout-taglib/).

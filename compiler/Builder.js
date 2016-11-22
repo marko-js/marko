@@ -23,7 +23,6 @@ var Text = require('./ast/Text');
 var ForEach = require('./ast/ForEach');
 var ForEachProp = require('./ast/ForEachProp');
 var ForRange = require('./ast/ForRange');
-var Slot = require('./ast/Slot');
 var HtmlComment = require('./ast/HtmlComment');
 var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
@@ -45,10 +44,14 @@ var Expression = require('./ast/Expression');
 var Scriptlet = require('./ast/Scriptlet');
 var ContainerNode = require('./ast/ContainerNode');
 var WhileStatement = require('./ast/WhileStatement');
+var DocumentType = require('./ast/DocumentType');
+var Declaration = require('./ast/Declaration');
+var SequenceExpression = require('./ast/SequenceExpression');
 
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
 var parseJavaScriptArgs = require('./util/parseJavaScriptArgs');
+var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
 var isValidJavaScriptIdentifier = require('./util/isValidJavaScriptIdentifier');
 
 var DEFAULT_BUILDER;
@@ -60,16 +63,21 @@ function makeNode(arg) {
         return arg;
     } else if (arg == null) {
         return undefined;
+    } else if (Array.isArray(arg)) {
+        return arg.map((arg) => {
+            return makeNode(arg);
+        });
     } else {
         throw new Error('Argument should be a string or Node or null. Actual: ' + arg);
     }
 }
 
 var literalNull = new Literal({value: null});
-var literalUndefined = new Literal({value: null});
+var literalUndefined = new Literal({value: undefined});
 var literalTrue = new Literal({value: true});
-var literalFalse = new Literal({value: true});
+var literalFalse = new Literal({value: false});
 var identifierOut = new Identifier({name: 'out'});
+var identifierRequire = new Identifier({name: 'require'});
 
 class Builder {
     arrayExpression(elements) {
@@ -101,6 +109,11 @@ class Builder {
         left = makeNode(left);
         right = makeNode(right);
         return new BinaryExpression({left, operator, right});
+    }
+
+    sequenceExpression(expressions) {
+        expressions = makeNode(expressions);
+        return new SequenceExpression({expressions});
     }
 
     code(value) {
@@ -149,6 +162,14 @@ class Builder {
             node.setCodeGenerator(generateCode);
         }
         return node;
+    }
+
+    declaration(declaration) {
+        return new Declaration({declaration});
+    }
+
+    documentType(documentType) {
+        return new DocumentType({documentType});
     }
 
     elseStatement(body) {
@@ -256,6 +277,11 @@ class Builder {
         }
     }
 
+    htmlLiteral(htmlCode) {
+        var argument = new Literal({value: htmlCode});
+        return new Html({argument});
+    }
+
     identifier(name) {
         ok(typeof name === 'string', '"name" should be a string');
 
@@ -272,6 +298,8 @@ class Builder {
     }
 
     ifStatement(test, body, elseStatement) {
+        test = makeNode(test);
+
         return new If({test, body, else: elseStatement});
     }
 
@@ -393,6 +421,10 @@ class Builder {
         return parsed;
     }
 
+    replacePlaceholderEscapeFuncs(node, context) {
+        return replacePlaceholderEscapeFuncs(node, context);
+    }
+
     program(body) {
         return new Program({body});
     }
@@ -413,7 +445,7 @@ class Builder {
     require(path) {
         path = makeNode(path);
 
-        let callee = 'require';
+        let callee = identifierRequire;
         let args = [ path ];
         return new FunctionCall({callee, args});
     }
@@ -448,10 +480,6 @@ class Builder {
         }
 
         return new SelfInvokingFunction({params, args, body});
-    }
-
-    slot(onDone) {
-        return new Slot({onDone});
     }
 
     strictEquality(left, right) {

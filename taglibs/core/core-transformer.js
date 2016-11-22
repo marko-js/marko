@@ -47,7 +47,16 @@ var coreAttrHandlers = [
             if (!ifArgument) {
                 return false;
             }
-            var ifNode = this.builder.ifStatement(ifArgument);
+
+            var test;
+            try {
+                test = this.builder.parseExpression(ifArgument);
+            } catch(e) {
+                test = this.builder.literalFalse();
+                this.addError('Invalid expression for if statement:\n' + e.message);
+            }
+
+            var ifNode = this.builder.ifStatement(test);
             //Surround the existing node with an "If" node
             node.wrapWith(ifNode);
         }
@@ -58,8 +67,17 @@ var coreAttrHandlers = [
             if (!ifArgument) {
                 return false;
             }
-            ifArgument = this.builder.negate(ifArgument);
-            var ifNode = this.builder.ifStatement(ifArgument);
+
+            var test;
+            try {
+                test = this.builder.parseExpression(ifArgument);
+            } catch(e) {
+                test = this.builder.literalFalse();
+                this.addError('Invalid expression for unless statement:\n' + e.message);
+            }
+
+            test = this.builder.negate(test);
+            var ifNode = this.builder.ifStatement(test);
             //Surround the existing node with an "if" node
             node.wrapWith(ifNode);
         }
@@ -70,7 +88,16 @@ var coreAttrHandlers = [
             if (!elseIfArgument) {
                 return false;
             }
-            var elseIfNode = this.builder.elseIfStatement(elseIfArgument);
+
+            var test;
+            try {
+                test = this.builder.parseExpression(elseIfArgument);
+            } catch(e) {
+                test = this.builder.literalFalse();
+                this.addError('Invalid expression for else-if statement:\n' + e.message);
+            }
+
+            var elseIfNode = this.builder.elseIfStatement(test);
             //Surround the existing node with an "ElseIf" node
             node.wrapWith(elseIfNode);
         }
@@ -84,12 +111,20 @@ var coreAttrHandlers = [
     ],
     [
         'body-only-if', function(attr, node, el) {
-            var condition = attr.argument;
-            if (!condition) {
+            var argument = attr.argument;
+            if (!argument) {
                 return false;
             }
 
-            el.setBodyOnlyIf(condition);
+            var test;
+            try {
+                test = this.builder.parseExpression(argument);
+            } catch(e) {
+                test = this.builder.literalFalse();
+                this.addError('Invalid expression for body-only-if statement:\n' + e.message);
+            }
+
+            el.setBodyOnlyIf(test);
         }
     ],
     [
@@ -108,6 +143,14 @@ var coreAttrHandlers = [
             this.context.addStaticCode(bodyText);
             el.detach();
             return null;
+        }
+    ],
+    [
+        'include', function(attr, node, el) {
+            var context = this.context;
+
+            var includeNode = context.createNodeForEl('include', null, attr.argument);
+            node.appendChild(includeNode);
         }
     ]
 ];

@@ -13,5 +13,14 @@ module.exports = function nodeFactory(elNode, context) {
         return;
     }
 
-    return context.builder.ifStatement(argument);
+    var test;
+
+    try {
+        test = context.builder.parseExpression(argument);
+    } catch(e) {
+        test = context.builder.literalFalse();
+        context.addError(elNode, 'Invalid expression for if statement:\n' + e.message);
+    }
+
+    return context.builder.ifStatement(test);
 };

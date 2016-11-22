@@ -6,5 +6,11 @@
 /*.sublime-workspace
 *.orig
 .DS_Store
+.vscode
 coverage
 .nvmrc
+~*
+/.cache
+*.marko.js
+/test/generated/
+.nyc_output

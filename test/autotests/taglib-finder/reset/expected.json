@@ -1,0 +1,6 @@
+[
+  "/a/b/c/marko.json",
+  "/a/b/marko.json",
+  "/a/marko.json",
+  "/node_modules/included-dependency/marko.json"
+]

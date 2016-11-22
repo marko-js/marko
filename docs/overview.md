@@ -5,16 +5,87 @@ Marko is an eBay open source HTML-based templating engine that can be used to re
 
 Marko was founded on the philosophy that an HTML-based templating language is more natural and intuitive for generating HTML. Because the Marko compiler understands the structure of the HTML document, the directives in template files are less obtrusive and more powerful. Marko also retains the full power and flexibility of JavaScript by allowing JavaScript expressions inside templates.
 
-Marko supports [progressive HTML rendering](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) by writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous fragments so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
+Marko supports [progressive HTML rendering](http://markojs.com/docs/marko/async-taglib/) by writing directly to an output stream so that HTML can be sent over the wire sooner. Marko automatically flushes around asynchronous parts of the template so that the HTML is delivered in the optimized number of chunks. Because Marko is an asynchronous templating language, additional data can be asynchronously fetched even after rendering has begun. These characteristics make Marko an excellent choice for creating high performance websites.
 
 
 For building rich UI components with client-side behavior please check out the [marko-widgets](https://github.com/marko-js/marko-widgets) project.
 
 <a href="http://markojs.com/try-online/" target="_blank">Try Marko Online!</a>
 
-![Marko Syntax](syntax.png)
+# Syntax
 
-Improved syntax highlighting available for [Atom](https://atom.io/) by installing the [language-marko](https://atom.io/packages/language-marko) package and for [Sublime Text](http://www.sublimetext.com/) by installing the [marko-sublime](https://github.com/merwan7/sublime-marko) package.
+Marko supports _both_ a familiar HTML syntax, as well as a more concise indentation-based syntax. Both syntaxes are equally supported. Regardless of which syntax you choose, the compiled code will be exactly the same.
+
+Syntax highlighting is available in the following editors and IDEs:
+
+- Atom: [language-marko](https://atom.io/packages/language-marko)
+- Sublime Text: [marko-sublime](https://github.com/merwan7/sublime-marko)
+- WebStorm: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle) (See: [Importing TextMate Bundles](https://www.jetbrains.com/phpstorm/help/importing-textmate-bundles.html))
+- TextMate: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle)
+
+## HTML syntax
+
+```xml
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Marko Templating Engine</title>
+    </head>
+    <body>
+        <h1>
+            Hello ${data.name}!
+        </h1>
+
+        <ul if(data.colors.length)>
+            <li for(color in data.colors)>
+                ${color}
+            </li>
+        </ul>
+        <div else>
+            No colors!
+        </div>
+    </body>
+</html>
+```
+
+## Concise syntax
+
+The following concise template is equivalent to the previous template:
+
+```xml
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        h1 - Hello ${data.name}!
+        ul if(data.colors.length)
+            li for(color in data.colors)
+                ${color}
+        div else
+            - No colors!
+```
+
+## Mixed syntax
+
+You can even mix and match the concise syntax with the HTML syntax within the same document.
+The following template is equivalent to the previous templates:
+
+```xml
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Marko Templating Engine
+    body
+        <h1>
+            Hello ${data.name}!
+        </h1>
+        ul if(data.colors.length)
+            li for(color in data.colors)
+                ${color}
+        div else
+            - No colors!
+```
 
 # Sample Code
 
@@ -23,11 +94,10 @@ A basic template with text replacement, looping and conditionals is shown below:
 _hello-world.marko:_
 
 ```xml
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li style="color: $color" for="color in data.colors">
-        $color
+<h2>Hello ${data.name}!</h2>
+<ul if(data.colors.length)>
+    <li style="color: ${color}" for(color in data.colors)>
+        ${color}
     </li>
 </ul>
 <div else>
@@ -53,8 +123,8 @@ template.render({
 
 The output of running the above program will be the following (formatted for readability):
 
-```xml
-Hello World!
+```html
+<h2>Hello World!</h2>
 <ul>
     <li style="color: red">red</li>
     <li style="color: green">green</li>
@@ -74,7 +144,7 @@ For comparison, given the following data consisting of an empty array of colors:
 The output would be the following:
 
 ```xml
-Hello World!
+<h2>Hello World!</h2>
 <div>
     No colors!
 </div>
@@ -97,14 +167,14 @@ app.get('/profile', function(req, res) {
 
 Most front-end developers are familiar with, and comfortable with, templating languages such as [Handlebars](https://github.com/wycats/handlebars.js), [Dust](https://github.com/linkedin/dustjs) or [Mustache](http://mustache.github.io/) so why was Marko introduced?
 
-What makes Marko different is that it is an HTML-based templating language that does not rely on a custom language grammar. Any HTML file is a valid Marko template and vice-versa, and the Marko compiler uses an [off-the-shelf HTML parser](https://github.com/fb55/htmlparser2). Because Marko understands the HTML structure of the templates, it can do more powerful things that would not be possible in a text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows data templates to more closely resemble the final HTML structure.
+What makes Marko different is that it is an HTML-based templating language that allows [javascript expressions as attribute values](https://github.com/philidem/htmljs-parser). Any HTML file is a valid Marko template. Because Marko understands the HTML structure of the templates, it can support powerful functionality that would not be possible in text-based templating languages such as Handlerbars, Dust or Mustache. Marko allows developers to _extend the HTML language_ by introducing custom HTML elements and attributes. On top of that, utilizing the HTML structure for applying templating directives makes templates more readable and allows data templates to more closely resemble the final HTML structure.
 
 Let's compare Marko with Handlebars (a text-based templating language):
 
 __Handlebars:__
 
 ```xml
-Hello {{name}}!
+<h2>Hello {{name}}!</h2>
 
 {{#if colors}}
 <ul>
@@ -124,10 +194,9 @@ Hello {{name}}!
 __Marko:__
 
 ```xml
-Hello ${data.name}!
-
-<ul if="notEmpty(data.colors)">
-    <li class="color" for="color in data.colors">
+<h2>Hello ${data.name}!</h2>
+<ul if(data.colors.length)>
+    <li class="color" for(color in data.colors)>
         ${color}
     </li>
 </ul>

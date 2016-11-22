@@ -21,7 +21,7 @@ class ArrayContainer extends Container {
     }
 
     replaceChild(newChild, oldChild) {
-        ok(newChild, 'Invalid child');
+        ok(newChild, '"newChild" is required"');
 
         var array = this.array;
         var len = array.length;
@@ -50,20 +50,20 @@ class ArrayContainer extends Container {
     }
 
     prependChild(newChild) {
-        ok(newChild, 'Invalid child');
+        ok(newChild, '"newChild" is required"');
         this.array.unshift(newChild);
         newChild.container = this;
     }
 
     appendChild(newChild) {
-        ok(newChild, 'Invalid child');
+        ok(newChild, '"newChild" is required"');
         newChild.detach();
         this.array.push(newChild);
         newChild.container = this;
     }
 
     insertChildBefore(newChild, referenceNode) {
-        ok(newChild, 'Invalid child');
+        ok(newChild, '"newChild" is required"');
         ok(referenceNode, 'Invalid reference child');
 
         var array = this.array;
@@ -81,7 +81,7 @@ class ArrayContainer extends Container {
     }
 
     insertChildAfter(newChild, referenceNode) {
-        ok(newChild, 'Invalid child');
+        ok(newChild, '"newChild" is required"');
         ok(referenceNode, 'Invalid reference child');
 
         var array = this.array;
@@ -110,6 +110,42 @@ class ArrayContainer extends Container {
         }
 
         this.array.length = 0; // Clear out this container
+    }
+
+    getPreviousSibling(node) {
+        if (node.container !== this) {
+            throw new Error('Node does not belong to container: ' + node);
+        }
+        var array = this.array;
+
+        for (var i=0; i<array.length; i++) {
+            var curNode = array[i];
+            if (curNode.container !== this) {
+                continue;
+            }
+
+            if (curNode === node) {
+                return i-1 >= 0 ? array[i+1] : undefined;
+            }
+        }
+    }
+
+    getNextSibling(node) {
+        if (node.container !== this) {
+            throw new Error('Node does not belong to container: ' + node);
+        }
+        var array = this.array;
+
+        for (var i=0; i<array.length; i++) {
+            var curNode = array[i];
+            if (curNode.container !== this) {
+                continue;
+            }
+
+            if (curNode === node) {
+                return i+1 < array.length ? array[i+1] : undefined;
+            }
+        }
     }
 
     forEachNextSibling(node, callback, thisObj) {

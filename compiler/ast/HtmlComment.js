@@ -8,13 +8,28 @@ class HtmlComment extends Node {
         this.comment = def.comment;
     }
 
-    generateHtmlCode(codegen) {
+    generateHTMLCode(codegen) {
         var comment = this.comment;
-        var literal = codegen.builder.literal;
+        var builder = codegen.builder;
 
-        codegen.addWrite(literal('<!--'));
-        codegen.addWrite(comment);
-        codegen.addWrite(literal('-->'));
+        return [
+            builder.htmlLiteral('<!--'),
+            builder.html(comment),
+            builder.htmlLiteral('-->')
+        ];
+    }
+
+    generateVDOMCode(codegen) {
+        var comment = this.comment;
+        var builder = codegen.builder;
+
+        return builder.functionCall(
+            builder.memberExpression(
+                builder.identifierOut(),
+                builder.identifier('comment')),
+            [
+                comment
+            ]);
     }
 
     walk(walker) {

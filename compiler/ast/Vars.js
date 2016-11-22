@@ -12,51 +12,53 @@ class Vars extends Node {
 
     generateCode(codegen) {
         var declarations = this.declarations;
-        var kind = this.kind;
-        var isStatement = this.statement;
-        var body = this.body;
 
-        var hasBody = this.body && this.body.length;
+        if (!declarations || !declarations.length) {
+            return null;
+        }
 
-        if(hasBody) {
-
-            var scopedBody = [this].concat(this.body.items);
+        if (this.body && this.body.length) {
+            var scopedBody = [this].concat(this.body);
             this.body = null;
-
             return codegen.builder.selfInvokingFunction(scopedBody);
         }
+
+        return this;
+    }
+
+    writeCode(writer) {
+        var declarations = this.declarations;
+        var kind = this.kind;
+        var isStatement = this.statement;
+
 
         if (!declarations || !declarations.length) {
             return;
         }
 
-        codegen.incIndent(4);
+        writer.incIndent(4);
 
         for (let i=0; i<declarations.length; i++) {
             var declarator = declarations[i];
 
             if (i === 0) {
-                codegen.write(kind + ' ');
+                writer.write(kind + ' ');
             } else {
-                codegen.writeLineIndent();
+                writer.writeLineIndent();
             }
 
-            codegen.generateCode(declarator);
+            writer.write(declarator);
 
             if (i < declarations.length - 1) {
-                codegen.write(',\n');
+                writer.write(',\n');
             } else {
                 if (isStatement) {
-                    codegen.write(';\n');
+                    writer.write(';\n');
                 }
             }
         }
 
-        codegen.decIndent(4);
-
-        if (hasBody) {
-            codegen.generateCode(body);
-        }
+        writer.decIndent(4);
     }
 
     walk(walker) {

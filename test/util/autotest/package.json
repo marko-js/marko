@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./node-require.js": false
+    }
+}

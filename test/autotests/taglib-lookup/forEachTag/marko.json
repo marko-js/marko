@@ -1,0 +1,11 @@
+{
+    "<*>": {
+        "@global-attribute": "boolean"
+    },
+    "<foo>": {
+        "@name": "string"
+    },
+    "<bar>": {
+        "@name": "string"
+    }
+}

@@ -1,4 +1,4 @@
-module.exports = function render(input, context) {
+module.exports = function render(input, out) {
     var content = {};
 
     if (input.getContent) {
@@ -20,5 +20,5 @@ module.exports = function render(input, context) {
         }
     }
     templateData.layoutContent = content;
-    input.__template.render(templateData, context);
+    input.__template.render(templateData, out);
 };

@@ -57,6 +57,10 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     {
         name: 'groupClose',
         pattern: /[\}\)\]]/
+    },
+    {
+        name: 'array',
+        pattern: /array/
     }
 ]);
 
@@ -131,6 +135,7 @@ module.exports = function(str) {
     var toExpression;
     var stepExpression;
     var iteratorExpression;
+    var isArray;
 
     var forInit;
     var forTest;
@@ -169,6 +174,9 @@ module.exports = function(str) {
                 break;
             case 'iterator':
                 iteratorExpression = part;
+                break;
+            case 'array':
+                isArray = true;
                 break;
             case 'pipe':
                 if (part.length !== 0) {
@@ -254,6 +262,12 @@ module.exports = function(str) {
                     prevToken = token;
                 }
                 break;
+            case 'array':
+                if (depth === 0 && pipeFound && str.charAt(token.start-1) === ' ') {
+                    finishPrevPart(token.start);
+                    prevToken = token;
+                }
+                break;
         }
     });
 
@@ -326,14 +340,17 @@ module.exports = function(str) {
             'in': inExpression,
             'separator': separatorExpression,
             'statusVarName': statusVarName,
-            'iterator': iteratorExpression
+            'iterator': iteratorExpression,
+            'isArray': isArray
         };
     } else if (loopType === 'ForEachProp') {
         return {
             'loopType': loopType,
             'nameVarName': nameVarName,
             'valueVarName': valueVarName,
-            'in': inExpression
+            'in': inExpression,
+            'separator': separatorExpression,
+            'statusVarName': statusVarName
         };
     } else if (loopType === 'ForRange') {
         return {

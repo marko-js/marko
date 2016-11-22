@@ -27,10 +27,13 @@ class UniqueVars {
                 }
             }
 
-            entry.vars.push({
+            let newEntry = {
                 name: name + (++entry.counter),
                 value: value
-            });
+            };
+
+            entry.vars.push(newEntry);
+            return newEntry.name;
         } else {
             entry = {
                 vars: [

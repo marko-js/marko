@@ -9,32 +9,38 @@ class ObjectExpression extends Node {
     }
 
     generateCode(codegen) {
+        this.properties = codegen.generateCode(this.properties);
+
+        return this;
+    }
+
+    writeCode(writer) {
         var properties = this.properties;
 
         if (!properties || !properties.length) {
-            codegen.write('{}');
+            writer.write('{}');
             return;
         }
 
-        codegen.incIndent();
-        codegen.write('{\n');
-        codegen.incIndent();
+        writer.incIndent();
+        writer.write('{\n');
+        writer.incIndent();
 
         properties.forEach((prop, i) => {
-            codegen.writeLineIndent();
-            codegen.generateCode(prop);
+            writer.writeLineIndent();
+            writer.write(prop);
 
             if (i < properties.length - 1) {
-                codegen.write(',\n');
+                writer.write(',\n');
             } else {
-                codegen.write('\n');
+                writer.write('\n');
             }
         });
 
-        codegen.decIndent();
-        codegen.writeLineIndent();
-        codegen.write('}');
-        codegen.decIndent();
+        writer.decIndent();
+        writer.writeLineIndent();
+        writer.write('}');
+        writer.decIndent();
     }
 
     toJSON() {

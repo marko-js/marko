@@ -1,0 +1,5 @@
+{
+    "<custom-tag>": {
+        "renderer": "./custom-tag.js"
+    }
+}

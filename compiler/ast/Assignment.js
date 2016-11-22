@@ -11,23 +11,29 @@ class Assignment extends Node {
     }
 
     generateCode(codegen) {
+        this.left = codegen.generateCode(this.left);
+        this.right = codegen.generateCode(this.right);
+        return this;
+    }
+
+    writeCode(writer) {
         var left = this.left;
         var right = this.right;
         var operator = this.operator;
 
-        codegen.generateCode(left);
-        codegen.write(' '  + (operator || '=') + ' ');
+        writer.write(left);
+        writer.write(' '  + (operator || '=') + ' ');
 
         var wrap = right instanceof Assignment;
 
         if (wrap) {
-            codegen.write('(');
+            writer.write('(');
         }
 
-        codegen.generateCode(right);
+        writer.write(right);
 
         if (wrap) {
-            codegen.write(')');
+            writer.write(')');
         }
     }
 

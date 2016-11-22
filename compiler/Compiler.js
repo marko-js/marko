@@ -1,7 +1,7 @@
 'use strict';
 var ok = require('assert').ok;
 var CodeGenerator = require('./CodeGenerator');
-var CompileContext = require('./CompileContext');
+var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
@@ -9,6 +9,9 @@ const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 function transformNode(node, context) {
     try {
         context.taglibLookup.forEachNodeTransformer(node, function (transformer) {
+            if (node.isDetached()) {
+                return;    //The node might have been removed from the tree
+            }
             if (!node.isTransformerApplied(transformer)) {
                 //Check to make sure a transformer of a certain type is only applied once to a node
                 node.setTransformerApplied(transformer);
@@ -37,14 +40,17 @@ function transformTreeHelper(node, context) {
      *       sure that this is not a problem.
      */
     node.forEachChild(function (childNode) {
-        if (childNode.isDetached()) {
-            return;    //The child node might have been removed from the tree
-        }
         transformTreeHelper(childNode, context);
     });
 }
 
 function transformTree(rootNode, context) {
+
+    context.taglibLookup.forEachTemplateTransformer((transformer) => {
+        var transformFunc = transformer.getFunc();
+        rootNode = transformFunc(rootNode, context) || rootNode;
+    });
+
     /*
      * The tree is continuously transformed until we go through an entire pass where
      * there were no new nodes that needed to be transformed. This loop makes sure that
@@ -59,8 +65,47 @@ function transformTree(rootNode, context) {
     return rootNode;
 }
 
+function handleErrors(context) {
+    // If there were any errors then compilation failed.
+    if (context.hasErrors()) {
+        var errors = context.getErrors();
+
+        var message = 'An error occurred while trying to compile template at path "' + context.filename + '". Error(s) in template:\n';
+        for (var i = 0, len = errors.length; i < len; i++) {
+            let error = errors[i];
+            message += (i + 1) + ') ' + error.toString() + '\n';
+        }
+        var error = new Error(message);
+        error.errors = errors;
+        throw error;
+    }
+}
+
+class CompiledTemplate {
+    constructor(ast, context, codeGenerator) {
+        this.ast = ast;
+        this.context = context;
+        this.filename = context.filename;
+    }
+
+    get code() {
+        // STAGE 3: Generate the code using the final AST
+        handleErrors(this.context);
+
+        // console.log(module.id, 'FINAL AST:' + JSON.stringify(finalAST, null, 4));
+        var codeWriter = new CodeWriter(this.context.options, this.context.builder);
+        codeWriter.write(this.ast);
+
+        handleErrors(this.context);
+
+        // Return the generated code as the compiled output:
+        var compiledSrc = codeWriter.getCode();
+        return compiledSrc;
+    }
+}
+
 class Compiler {
-    constructor(options) {
+    constructor(options, userOptions, inline) {
         ok(options, '"options" is required');
 
         this.builder = options.builder;
@@ -70,21 +115,14 @@ class Compiler {
         ok(this.parser, '"options.parser" is required');
     }
 
-    compile(src, filename, options) {
+    compile(src, context) {
         ok(typeof src === 'string', '"src" argument should be a string');
-        ok(filename, '"filename" argument is required');
-        ok(typeof filename === 'string', '"filename" argument should be a string');
 
-        var context = new CompileContext(src, filename, this.builder);
-
-        if (options) {
-            if (options.preserveWhitespace) {
-                context.setPreserveWhitespace(true);
-            }
-        }
+        var codeGenerator = new CodeGenerator(context);
 
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
+
         context.root = ast;
         // console.log('ROOT', JSON.stringify(ast, null, 2));
 
@@ -92,27 +130,13 @@ class Compiler {
         var transformedAST = transformTree(ast, context);
         // console.log('transformedAST', JSON.stringify(ast, null, 2));
 
-        // STAGE 3: Generate the code using the final AST
-        var codeGenerator = new CodeGenerator(context);
-        codeGenerator.generateCode(transformedAST);
+        handleErrors(context);
 
-        // If there were any errors then compilation failed.
-        if (context.hasErrors()) {
-            var errors = context.getErrors();
+        var finalAST = codeGenerator.generateCode(transformedAST);
 
-            var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
-            for (var i = 0, len = errors.length; i < len; i++) {
-                let error = errors[i];
-                message += (i + 1) + ') ' + error.toString() + '\n';
-            }
-            var error = new Error(message);
-            error.errors = errors;
-            throw error;
-        }
+        handleErrors(context);
 
-        // Return the generated code as the compiled output:
-        var compiledSrc = codeGenerator.getCode();
-        return compiledSrc;
+        return new CompiledTemplate(finalAST, context);
     }
 }
 

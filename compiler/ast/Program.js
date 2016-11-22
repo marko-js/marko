@@ -8,12 +8,12 @@ class Program extends Node {
     }
 
     generateCode(codegen) {
-        var body = this.body;
-        codegen.generateStatements(body);
-        if (codegen._bufferedWrites) {
-            codegen._write('\n');
-            codegen._flushBufferedWrites();
-        }
+        this.body = codegen.generateCode(this.body);
+        return this;
+    }
+
+    writeCode(writer) {
+        writer.writeStatements(this.body);
     }
 
     walk(walker) {

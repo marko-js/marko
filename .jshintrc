@@ -1,4 +1,7 @@
 {
+    "predef": [
+        "document"
+    ],
     "node" : true,
     "esnext": true,
     "boss" : false,

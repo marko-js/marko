@@ -11,7 +11,11 @@ class Expression extends Node {
     }
 
     generateCode(codegen) {
-        codegen.generateCode(this.value);
+        return this;
+    }
+
+    writeCode(writer) {
+        writer.write(this.value);
     }
 
     isCompoundExpression() {

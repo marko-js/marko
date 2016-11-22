@@ -1,33 +1,162 @@
 {
     "<assign>": {
-        "code-generator": "./assign-tag"
+        "code-generator": "./assign-tag",
+        "open-tag-only": true,
+        "autocomplete": [
+            {
+                "snippet": "assign ${1:varName}=${2:value}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            }
+        ]
     },
     "<else>": {
-        "node-factory": "./else-tag"
+        "node-factory": "./else-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            }
+        ]
     },
     "<else-if>": {
-        "node-factory": "./else-if-tag"
+        "node-factory": "./else-if-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "snippet": "else-if(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            },
+            {
+                "snippet": "else-if",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            }
+        ]
     },
     "<for>": {
-        "code-generator": "./for-tag"
+        "code-generator": "./for-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "snippet": "for(${1:var} in ${2:array})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
+            },
+            {
+                "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
+            },
+            {
+                "snippet": "for(${1:name},${2:value} in ${3:object})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
+            },
+            {
+                "snippet": "for(${1:init}; ${2:test}; ${3:update})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+            },
+            {
+                "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
+            },
+            {
+                "snippet": "for",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
+            }
+        ]
     },
     "<if>": {
-        "node-factory": "./if-tag"
+        "node-factory": "./if-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "snippet": "if(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+            }
+        ]
     },
     "<include>": {
-        "code-generator": "./include-tag"
+        "code-generator": "./include-tag",
+        "autocomplete": [
+            {
+                "displayText": "include(<template>)",
+                "snippet": "include(${1:\"./target.marko\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
+    },
+    "<include-html>": {
+        "code-generator": "./include-html-tag",
+        "autocomplete": [
+            {
+                "displayText": "include-html(<path>)",
+                "snippet": "include-html(${1:\"./foo.html\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
     },
     "<include-text>": {
-        "code-generator": "./include-text-tag"
+        "code-generator": "./include-text-tag",
+        "autocomplete": [
+            {
+                "displayText": "include-text(<path>)",
+                "snippet": "include-text(${1:\"./foo.txt\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
     },
     "<invoke>": {
-        "code-generator": "./invoke-tag"
+        "code-generator": "./invoke-tag",
+        "autocomplete": [
+            {
+                "displayText": "invoke <function_call>",
+                "snippet": "invoke ${1:foo()}",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
+            }
+        ]
     },
     "<macro>": {
-        "code-generator": "./macro-tag"
+        "code-generator": "./macro-tag",
+        "autocomplete": [
+            {
+                "displayText": "macro <name>(<parmas>)",
+                "snippet": "macro ${1:name}(${2:param1, param2})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
+            }
+        ]
     },
     "<macro-body>": {
-        "code-generator": "./macro-body-tag"
+        "code-generator": "./macro-body-tag",
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
+                "openTagOnly": true
+            }
+        ]
+    },
+    "<marko-preserve-whitespace>": {
+        "code-generator": "./marko-preserve-whitespace-tag",
+        "preserve-whitespace": true,
+        "autocomplete": [
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#whitespace"
+            }
+        ]
     },
     "<pre>": {
         "preserve-whitespace": true
@@ -37,7 +166,13 @@
         "@marko-init": "boolean",
         "@*": {
             "ignore": true
-        }
+        },
+        "autocomplete": [
+            {
+                "snippet": "script marko-init",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
+            }
+        ]
     },
     "<style>": {
         "preserve-whitespace": true
@@ -46,20 +181,137 @@
         "preserve-whitespace": true
     },
     "<unless>": {
-        "node-factory": "./unless-tag"
+        "node-factory": "./unless-tag",
+        "autocomplete": [
+            {
+                "snippet": "unless(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
+            }
+        ]
     },
     "<var>": {
-        "node-factory": "./var-tag"
+        "node-factory": "./var-tag",
+        "autocomplete": [
+            {
+                "snippet": "var ${1:varName}=${2:value}",
+                "openTagOnly": true,
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
+            }
+        ]
     },
     "<while>": {
-        "code-generator": "./while-tag"
+        "code-generator": "./while-tag",
+        "autocomplete": [
+            {
+                "snippet": "while(${1:condition})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+            }
+        ]
     },
     "<*>": {
-        "@if": "argument",
-        "@else-if": "argument",
-        "@else": "argument",
-        "@for": "argument",
-        "@while": "argument",
+        "@body-only-if": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "body-only-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
+                }
+            ]
+        },
+        "@if": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                }
+            ]
+        },
+        "@else-if": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "else-if(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                }
+            ]
+        },
+        "@else": "statement",
+        "@for": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "for(${1:var} in ${2:array})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
+                },
+                {
+                    "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
+                },
+                {
+                    "snippet": "for(${1:name},${2:value} in ${3:object})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
+                },
+                {
+                    "snippet": "for(${1:init}; ${2:test}; ${3:update})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+                },
+                {
+                    "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
+                }
+            ]
+        },
+        "@include": {
+            "autocomplete": [
+                {
+                    "displayText": "include(<template>)",
+                    "snippet": "include(${1:\"./target.marko\"})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                },
+                {
+                    "displayText": "include()",
+                    "snippet": "include()",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                }
+            ]
+        },
+        "@while": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "while(${1:condition})",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+                },
+                {
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+                }
+            ]
+        },
         "transformer": {
             "path": "./core-transformer",
             "priority": 0

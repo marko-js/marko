@@ -13,6 +13,16 @@ var Node = require('./ast/Node');
 var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
+var EventEmitter = require('events').EventEmitter;
+var utilFingerprint = require('./util/fingerprint');
+
+const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
+
+const deresolveOptions = {
+    shouldRemoveExt(ext) {
+        return ext === '.js' || ext === '.json' || ext === '.es6';
+    }
+};
 
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
@@ -40,8 +50,32 @@ function requireResolve(builder, path) {
     return builder.functionCall(requireResolveNode, [ path ]);
 }
 
-class CompileContext {
-    constructor(src, filename, builder) {
+const helpers = {
+    'attr': 'a',
+    'attrs': 'as',
+    'classAttr': 'ca',
+    'classList': 'cl',
+    'const': 'const',
+    'createElement': 'e',
+    'createInlineTemplate': 'inline',
+    'escapeXml': 'x',
+    'escapeXmlAttr': 'xa',
+    'escapeScript': 'xs',
+    'forEach': 'f',
+    'forEachProp': 'fp',
+    'forEachWithStatusVar': 'fv',
+    'include': 'i',
+    'loadTag': 't',
+    'loadTemplate': 'l',
+    'merge': 'm',
+    'str': 's',
+    'styleAttr': 'sa',
+    'createText': 't'
+};
+
+class CompileContext extends EventEmitter {
+    constructor(src, filename, builder, options) {
+        super();
         ok(typeof src === 'string', '"src" string is required');
         ok(filename, '"filename" is required');
 
@@ -52,6 +86,11 @@ class CompileContext {
         this.dirname = path.dirname(filename);
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
+        this.meta = null;
+
+        this.options = options || {};
+
+        this.outputType = this.options.output || 'html';
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -64,6 +103,24 @@ class CompileContext {
         this._macros = null;
         this._preserveWhitespace = null;
         this._preserveComments = null;
+        this.inline = this.options.inline === true;
+        this.useMeta = this.options.meta;
+        this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko/html';
+
+        this._helpersIdentifier = null;
+
+        if (this.options.preserveWhitespace) {
+            this.setPreserveWhitespace(true);
+        }
+
+        this._helpers = {};
+        this._imports = {};
+        this._fingerprint = undefined;
+        this._optimizers = undefined;
+    }
+
+    setInline(isInline) {
+        this.inline = isInline === true;
     }
 
     getPosInfo(pos) {
@@ -74,7 +131,7 @@ class CompileContext {
     }
 
     setFlag(name) {
-        this._flags[name] = true;
+        this.pushFlag(name);
     }
 
     clearFlag(name) {
@@ -83,6 +140,24 @@ class CompileContext {
 
     isFlagSet(name) {
         return this._flags.hasOwnProperty(name);
+    }
+
+    pushFlag(name) {
+        if (this._flags.hasOwnProperty(name)) {
+            this._flags[name]++;
+        } else {
+            this._flags[name] = 1;
+        }
+    }
+
+    popFlag(name) {
+        if (!this._flags.hasOwnProperty(name)) {
+            throw new Error('popFlag() called for "' + name + '" when flag was not set');
+        }
+
+        if (--this._flags[name] === 0) {
+            delete this._flags[name];
+        }
     }
 
     addError(errorInfo) {
@@ -115,7 +190,7 @@ class CompileContext {
     }
 
     getRequirePath(targetFilename) {
-        return deresolve(targetFilename, this.dirname);
+        return deresolve(targetFilename, this.dirname, deresolveOptions);
     }
 
     importModule(varName, path) {
@@ -123,9 +198,16 @@ class CompileContext {
             throw new Error('"path" should be a string');
         }
 
-        return this.addStaticVar(varName, 'require("' + path + '")');
-    }
+        var varId = this._imports[path];
 
+        if (!varId) {
+            var builder = this.builder;
+            var requireFuncCall = this.builder.require(builder.literal(path));
+            this._imports[path] = varId = this.addStaticVar(varName, requireFuncCall);
+        }
+
+        return varId;
+    }
 
     addVar(name, init) {
         var actualVarName = this._uniqueVars.addVar(name, init);
@@ -167,10 +249,6 @@ class CompileContext {
 
     getStaticCode() {
         return this._staticCode;
-    }
-
-    getEscapeXmlAttrVar() {
-        return this.addStaticVar('escapeXmlAttr', '__helpers.xa');
     }
 
     getTagDef(tagName) {
@@ -227,6 +305,8 @@ class CompileContext {
 
         var node;
         var elNode = builder.htmlElement(elDef);
+        elNode.pos = elDef.pos;
+
         var taglibLookup = this.taglibLookup;
         var tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
         if (tagDef) {
@@ -249,6 +329,10 @@ class CompileContext {
 
         if (!node) {
             node = elNode;
+        }
+
+        if (tagDef && tagDef.noOutput) {
+            node.noOutput = true;
         }
 
         node.pos = elDef.pos;
@@ -342,28 +426,76 @@ class CompileContext {
         return this._macros.registerMacro(name, params);
     }
 
-    importTemplate(relativePath) {
+    importTemplate(relativePath, varName) {
         ok(typeof relativePath === 'string', '"path" should be a string');
         var builder = this.builder;
+		varName = varName || removeExt(path.basename(relativePath)) + '_template';
 
-
-        // We want to add the following import:
-        // var loadTemplate = __helpers.t;
-        // var template = loadTemplate(require.resolve(<templateRequirePath>))
-
-        var loadTemplateVar = this.addStaticVar('loadTemplate', '__helpers.l');
         var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
-        var loadFunctionCall = builder.functionCall(loadTemplateVar, [ requireResolveTemplate ]);
-        var templateVar = this.addStaticVar(removeExt(relativePath), loadFunctionCall);
+        var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
+        var templateVar = this.addStaticVar(varName, loadFunctionCall);
+
+        this.pushMeta('tags', builder.literal(relativePath), true);
+
         return templateVar;
+    }
+
+    addDependency(path, type, options) {
+        var dependency = (type ? type+':' : '') + path;
+        this.pushMeta('deps', this.builder.literal(dependency), true);
+    }
+
+    pushMeta(key, value, unique) {
+        var builder = this.builder;
+        var property;
+
+        if(!this.meta) {
+            this.meta = builder.objectExpression();
+        }
+
+        property = this.meta.properties.find(p => p.key.name === key);
+
+        if(!property) {
+            property = builder.property(key, builder.arrayExpression(value));
+            this.meta.properties.push(property);
+        } else if(!unique || !property.value.elements.some(e => e.toString() === value.toString())) {
+            property.value.elements.push(value);
+        }
+    }
+
+    setMeta(key, value) {
+        var builder = this.builder;
+        var property;
+
+        if(!this.meta) {
+            this.meta = builder.objectExpression();
+        }
+
+        property = this.meta.properties.find(p => p.key.value === key);
+
+        if(!property) {
+            property = builder.property(key, value);
+        } else {
+            property.value = value;
+        }
     }
 
     setPreserveWhitespace(preserveWhitespace) {
         this._preserveWhitespace = preserveWhitespace;
     }
 
+    beginPreserveWhitespace() {
+        this.pushFlag(FLAG_PRESERVE_WHITESPACE);
+    }
+
+    endPreserveWhitespace() {
+        this.popFlag(FLAG_PRESERVE_WHITESPACE);
+    }
+
     isPreserveWhitespace() {
-        return this._preserveWhitespace === true;
+        if (this.isFlagSet(FLAG_PRESERVE_WHITESPACE) || this._preserveWhitespace === true) {
+            return true;
+        }
     }
 
     setPreserveComments(preserveComments) {
@@ -405,10 +537,95 @@ class CompileContext {
 
         return pathExpression;
     }
+
+    getStaticNodes() {
+        let builder = this.builder;
+        let staticNodes = [];
+        let staticVars = this.getStaticVars();
+
+        let staticVarNodes = Object.keys(staticVars).map((varName) => {
+            var varInit = staticVars[varName];
+            return builder.variableDeclarator(varName, varInit);
+        });
+
+
+        if (staticVarNodes.length) {
+            staticNodes.push(this.builder.vars(staticVarNodes));
+        }
+
+        var staticCodeArray = this.getStaticCode();
+
+        if (staticCodeArray) {
+            staticNodes = staticNodes.concat(staticCodeArray);
+        }
+
+        return staticNodes;
+    }
+
+    get helpersIdentifier() {
+        if (!this._helpersIdentifier) {
+            var target = this.outputType === 'vdom' ? 'marko/runtime/vdom/helpers' : 'marko/runtime/html/helpers';
+            this._helpersIdentifier = this.importModule('marko_helpers', target);
+        }
+        return this._helpersIdentifier;
+    }
+
+    helper(name) {
+        var helperIdentifier = this._helpers[name];
+        if (!helperIdentifier) {
+            var methodName = helpers[name];
+            if (!methodName) {
+                throw new Error('Invalid helper: ' + name);
+            }
+            var methodIdentifier = this.builder.identifier(methodName);
+
+            helperIdentifier = this.addStaticVar(
+                'marko_' + name,
+                this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+
+            this._helpers[name] = helperIdentifier;
+        }
+
+        return helperIdentifier;
+    }
+
+    getFingerprint(len) {
+        var fingerprint = this._fingerprint;
+        if (!fingerprint) {
+            this._fingerprint = fingerprint = utilFingerprint(this.src);
+        }
+
+        if (len == null || len >= this._fingerprint) {
+            return fingerprint;
+        } else {
+            return fingerprint.substring(0, len);
+        }
+    }
+
+    addOptimizer(optimizer) {
+        if (this._optimizers) {
+            this._optimizers.push(optimizer);
+        } else {
+            this._optimizers = [optimizer];
+        }
+    }
+
+    optimize(rootNode) {
+        if (this._optimizers) {
+            this._optimizers.forEach((optimizer) => {
+                optimizer.optimize(rootNode, this);
+            });
+        }
+    }
+
+    getModuleRuntimeTarget() {
+        return this._moduleRuntimeTarget;
+    }
 }
 
 CompileContext.prototype.util = {
-    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier')
+    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier'),
+    isJavaScriptReservedWord: require('./util/isJavaScriptReservedWord')
 };
 
 module.exports = CompileContext;

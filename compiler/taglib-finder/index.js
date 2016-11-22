@@ -18,11 +18,29 @@
 var taglibLoader = require('../taglib-loader');
 var nodePath = require('path');
 var fs = require('fs');
+var lassoPackageRoot = require('lasso-package-root');
+var resolveFrom = require('resolve-from');
+var scanTagsDir = require('../taglib-loader/scanTagsDir');
+var Taglib = require('../taglib-loader/Taglib');
+var DependencyChain = require('../taglib-loader/DependencyChain');
+
 var existsCache = {};
 var findCache = {};
+var excludedDirs = {};
+var excludedPackages = {};
 var taglibsForNodeModulesDirCache = {};
-var raptorModulesUtil = require('raptor-modules/util');
-var resolveFrom = require('resolve-from');
+
+/**
+ * Reset all internal state to the default state. This
+ * was added for testing purposes.
+ */
+function reset() {
+    existsCache = {};
+    findCache = {};
+    excludedDirs = {};
+    excludedPackages = {};
+    taglibsForNodeModulesDirCache = {};
+}
 
 function existsCached(path) {
     var exists = existsCache[path];
@@ -35,7 +53,7 @@ function existsCached(path) {
 
 function getModuleRootPackage(dirname) {
     try {
-        return raptorModulesUtil.getModuleRootPackage(dirname);
+        return lassoPackageRoot.getRootPackage(dirname);
     } catch(e) {
         return undefined;
     }
@@ -97,13 +115,22 @@ function find(dirname, registeredTaglibs) {
     }
 
 
-    // First walk up the directory tree looking for marko.json files
+    // First walk up the directory tree looking for marko.json files or components/ directories
     let curDirname = dirname;
     while(true) {
-        let taglibPath = nodePath.join(curDirname, 'marko.json');
-        if (existsCached(taglibPath)) {
-            var taglib = taglibLoader.load(taglibPath);
-            helper.addTaglib(taglib);
+        if(!excludedDirs[curDirname]) {
+            let taglibPath = nodePath.join(curDirname, 'marko.json');
+            if (existsCached(taglibPath)) {
+                let taglib = taglibLoader.load(taglibPath);
+                helper.addTaglib(taglib);
+            } else {
+                let componentPath = nodePath.join(curDirname, 'components');
+                if (existsCached(componentPath) && !excludedDirs[componentPath] && !helper.alreadyAdded(componentPath)) {
+                    let taglib = new Taglib(componentPath);
+                    scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib, new DependencyChain([componentPath]));
+                    helper.addTaglib(taglib);
+                }
+            }
         }
 
         if (curDirname === rootDirname) {
@@ -120,16 +147,13 @@ function find(dirname, registeredTaglibs) {
     if (rootPkg) {
         // Now look for `marko.json` from installed packages
         getAllDependencyNames(rootPkg).forEach((name) => {
-            let taglibPath;
-            try {
-                taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
-            } catch(e) {
-                // The installed dependency does not export a taglib... skip it
-                return;
+            if (!excludedPackages[name]) {
+                let taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
+                if (taglibPath) {
+                    var taglib = taglibLoader.load(taglibPath);
+                    helper.addTaglib(taglib);
+                }
             }
-
-            var taglib = taglibLoader.load(taglibPath);
-            helper.addTaglib(taglib);
         });
     }
 
@@ -146,5 +170,16 @@ function clearCache() {
     taglibsForNodeModulesDirCache = {};
 }
 
+function excludeDir(dir) {
+    excludedDirs[dir] = true;
+}
+
+function excludePackage(name) {
+    excludedPackages[name] = true;
+}
+
+exports.reset = reset;
 exports.find = find;
 exports.clearCache = clearCache;
+exports.excludeDir = excludeDir;
+exports.excludePackage = excludePackage;

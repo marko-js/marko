@@ -12,34 +12,42 @@ class ForStatement extends Node {
     }
 
     generateCode(codegen) {
+        this.init = codegen.generateCode(this.init);
+        this.test = codegen.generateCode(this.test);
+        this.update = codegen.generateCode(this.update);
+        this.body = codegen.generateCode(this.body);
+        return this;
+    }
+
+    writeCode(writer) {
         var init = this.init;
         var test = this.test;
         var update = this.update;
         var body = this.body;
 
-        codegen.write('for (');
+        writer.write('for (');
 
         if (init) {
-            codegen.generateCode(init);
+            writer.write(init);
         }
 
-        codegen.write('; ');
+        writer.write('; ');
 
         if (test) {
-            codegen.generateCode(test);
+            writer.write(test);
         }
 
-        codegen.write('; ');
+        writer.write('; ');
 
         if (update) {
-            codegen.generateCode(update);
+            writer.write(update);
         }
 
-        codegen.write(') ');
+        writer.write(') ');
 
-        codegen.generateBlock(body);
+        writer.writeBlock(body);
 
-        codegen.write('\n');
+        writer.write('\n');
     }
 
     walk(walker) {

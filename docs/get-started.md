@@ -138,7 +138,7 @@ out.end();
 
 Despite rendering the first chunk asynchronously, the above program will stream out the output in the correct order to `index.html`:
 
-```xml
+```html
 BEGIN Hello World! END
 ```
 

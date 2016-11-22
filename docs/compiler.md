@@ -45,26 +45,23 @@ require('marko/compiler').compileFile(path, function(err, src) {
 
 ```javascript
 function create(__helpers) {
-  var str = __helpers.s,
-      empty = __helpers.e,
-      notEmpty = __helpers.ne,
-      escapeXml = __helpers.x,
-      forEach = __helpers.f,
-      escapeXmlAttr = __helpers.xa;
+  var marko_escapeXml = __helpers.x,
+      marko_forEach = __helpers.f,
+      marko_escapeXmlAttr = __helpers.xa;
 
   return function render(data, out) {
     out.w('Hello ' +
-      escapeXml(data.name) +
+      marko_escapeXml(data.name) +
       '! ');
 
-    if (notEmpty(data.colors)) {
+    if (data.colors.length) {
       out.w('<ul>');
 
-      forEach(data.colors, function(color) {
+      marko_forEach(data.colors, function(color) {
         out.w('<li style="color: ' +
-          escapeXmlAttr(color) +
+          marko_escapeXmlAttr(color) +
           '">' +
-          escapeXml(color) +
+          marko_escapeXml(color) +
           '</li>');
       });
 
@@ -82,7 +79,19 @@ The compiled output is designed to be both extremely readable and minifiable. Th
 
 
 ```javascript
-function create(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}}(module.exports=require("marko").c(__filename)).c(create);
+function create(a){var d=a.ne,c=a.x,e=a.f,f=a.xa;return function(a,b){b.w("Hello "+c(a.name)+"! ");d(a.colors.length)?(b.w("<ul>"),e(a.colors,function(a){b.w('<li style="color: '+f(a)+'">'+c(a)+"</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}}(module.exports=require("marko").c(__filename)).c(create);
 ```
 
 _File size: 223 bytes gzipped (300 bytes uncompressed)_
+
+# Compiler API
+
+See: [Marko Compiler - API](http://markojs.com/docs/marko/compiler/api/)
+
+# Compile-time Tags
+
+See: [Marko Compiler - Compile-time Tags](http://markojs.com/docs/marko/compiler/compile-time-tags/)
+
+# Advanced
+
+See: [Marko Compiler - Advanced](http://markojs.com/docs/marko/compiler/advanced/)

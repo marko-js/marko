@@ -1,4 +1,6 @@
 'use strict';
+require('./util/patch-module');
+
 var chai = require('chai');
 chai.config.includeStack = true;
 var autotest = require('./autotest');
@@ -8,18 +10,15 @@ var compiler = require('../compiler');
 
 describe('parseExpression' , function() {
 
-    var autoTestDir = path.join(__dirname, 'fixtures/parseExpression/autotest');
+    var autoTestDir = path.join(__dirname, 'autotests/parseExpression');
 
     autotest.scanDir(
         autoTestDir,
-        function run(dir) {
+        function run(dir, helpers, done) {
             var inputPath = path.join(dir, 'input.txt');
             var input = fs.readFileSync(inputPath, {encoding: 'utf8'});
             var parsed = compiler.builder.parseExpression(input);
-            return parsed;
-        },
-        {
-            deepEqual: true,
-            compareExtension: '.json'
+            helpers.compare(parsed, '.json');
+            return done();
         });
 });

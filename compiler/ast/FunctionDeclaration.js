@@ -12,6 +12,14 @@ class FunctionDeclaration extends Node {
     }
 
     generateCode(codegen) {
+        var oldInFunction = codegen.inFunction;
+        codegen.inFunction = true;
+        this.body = codegen.generateCode(this.body);
+        codegen.inFunction = oldInFunction;
+        return this;
+    }
+
+    writeCode(writer) {
         var name = this.name;
         var params = this.params;
         var body = this.body;
@@ -22,39 +30,37 @@ class FunctionDeclaration extends Node {
         }
 
         if (name) {
-            codegen.write('function ');
-            codegen.generateCode(name);
-            codegen.write('(');
+            writer.write('function ');
+            writer.write(name);
+            writer.write('(');
         } else {
-            codegen.write('function(');
+            writer.write('function(');
         }
 
         if (params && params.length) {
             for (let i=0, paramsLen = params.length; i<paramsLen; i++) {
                 if (i !== 0) {
-                    codegen.write(', ');
+                    writer.write(', ');
                 }
                 var param = params[i];
 
                 if (typeof param === 'string') {
-                    codegen.write(param);
+                    writer.write(param);
                 } else {
                     if (param.type !== 'Identifier') {
                         throw new Error('Illegal param ' + JSON.stringify(param) + ' for FunctionDeclaration: ' + JSON.stringify(this));
                     }
-                    codegen.generateCode(param);
+                    writer.write(param);
                 }
             }
         }
 
-        codegen.write(') ');
-        var oldInFunction = codegen.inFunction;
-        codegen.inFunction = true;
-        codegen.generateBlock(body);
-        codegen.inFunction = oldInFunction;
+        writer.write(') ');
+
+        writer.writeBlock(body);
 
         if (statement) {
-            codegen.write('\n');
+            writer.write('\n');
         }
     }
 
