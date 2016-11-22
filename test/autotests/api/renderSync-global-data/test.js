@@ -8,7 +8,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
           greeting: 'Greetings'
       }
     };
-    var output = template.renderSync(data);
-    expect(output).to.equal('Greetings John!');
+    var result = template.renderSync(data);
+    expect(result.toString()).to.equal('Greetings John!');
     done();
 };

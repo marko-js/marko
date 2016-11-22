@@ -3,6 +3,7 @@ var inherit = require('raptor-util/inherit');
 var dom = require('./dom');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
+var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
 var arrayFromArguments = require('raptor-util/arrayFromArguments');
 var extend = require('raptor-util/extend');
@@ -551,6 +552,7 @@ Widget.prototype = widgetProto = {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
             renderer(templateData, out);
+            var result = new RenderResult(out);
 
             var targetNode;
 
@@ -633,7 +635,7 @@ Widget.prototype = widgetProto = {
             });
 
             // Trigger any 'onUpdate' events for all of the rendered widgets
-            out.afterInsert(elToReplace);
+            result.afterInsert(elToReplace);
 
             self.__lifecycleState = null;
 

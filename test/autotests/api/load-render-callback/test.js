@@ -5,13 +5,13 @@ exports.check = function(marko, markoCompiler, expect, done) {
     template.render({
             name: 'John'
         },
-        function(err, html, out) {
+        function(err, result, out) {
             if (err) {
                 return done(err);
             }
 
-            expect(html).to.equal(out.getOutput());
-            expect(html).to.equal('Hello John!');
+            expect(result.toString()).to.equal(out.getOutput());
+            expect(result.toString()).to.equal('Hello John!');
             done();
         });
 };

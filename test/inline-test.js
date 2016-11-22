@@ -35,22 +35,22 @@ describe('inline', function() {
 
         var func = require(outputFile);
 
-        function handleOutput(html) {
-            helpers.compare(html, '.html');
+        function handleOutput(result) {
+            helpers.compare(result.toString(), '.html');
             done();
         }
 
         if (func.length === 1) {
-            func((err, html) => {
+            func((err, result) => {
                 if (err) {
                     return done(err);
                 }
 
-                handleOutput(html);
+                handleOutput(result);
             });
         } else {
-            let outputHtml = func();
-            handleOutput(outputHtml);
+            let result = func();
+            handleOutput(result);
         }
 
 

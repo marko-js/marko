@@ -2,6 +2,7 @@
 // helpers provide a core set of various utility methods
 // that are available in every template
 var helpers;
+var RenderResult = require('../RenderResult');
 
 /**
  * Method is for internal usage only. This method
@@ -9,7 +10,7 @@ var helpers;
  * it is used to create a new Template instance.
  * @private
  */
- exports.c = function createTemplate(path) {
+exports.c = function createTemplate(path) {
      return new Template(path);
 };
 
@@ -45,7 +46,7 @@ Template.prototype = {
         var out = new AsyncVDOMBuilder(globalData);
         out.sync();
         this._(localData, out);
-        return out.getOutput();
+        return new RenderResult(out);
     },
 
     /**
@@ -90,7 +91,7 @@ Template.prototype = {
                 if (callback) {
                     out
                         .on('finish', function() {
-                            callback(null, out.getOutput(), out);
+                            callback(null, new RenderResult(out), out);
                         })
                         .once('error', callback);
                 }
@@ -113,7 +114,7 @@ Template.prototype = {
         if (callback) {
             finalOut
                 .on('finish', function() {
-                    callback(null, finalOut.getOutput(), finalOut);
+                    callback(null, new RenderResult(finalOut), out);
                 })
                 .once('error', callback);
         }

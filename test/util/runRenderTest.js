@@ -140,10 +140,12 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                 asyncEventsVerifier = createAsyncVerifier(main, helpers, out);
             }
 
-            template.render(templateData, out, function(err, renderOutput) {
+            template.render(templateData, out, function(err, renderResult) {
                 if (err) {
                     return done(err);
                 }
+
+                var renderOutput = renderResult.getOutput();
 
                 if (isVDOM) {
                     let vdomTree = renderOutput;

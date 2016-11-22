@@ -3,9 +3,9 @@ var HTMLElement = require('./HTMLElement');
 var DocumentFragment = require('./DocumentFragment');
 var Comment = require('./Comment');
 var Text = require('./Text');
-var extend = require('raptor-util/extend');
 var virtualizeHTML = require('./virtualizeHTML');
 var documentProvider = require('../document-provider');
+var RenderResult = require('../RenderResult');
 
 function State(tree) {
     this.remaining = 1;
@@ -139,7 +139,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         if (!remaining) {
             state.finished = true;
-            state.events.emit('finish', state.tree);
+            state.events.emit('finish', this);
         }
 
         return this;
@@ -175,7 +175,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     flush: function() {
         var state = this._state;
-        state.events.emit('update', state.tree);
+        state.events.emit('update', this);
     },
 
     getOutput: function() {
@@ -186,7 +186,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback(state.tree);
+            callback(this);
             return this;
         }
 
@@ -198,7 +198,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback(state.tree);
+            callback(this);
             return this;
         }
 
@@ -266,6 +266,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         lastArray.push(callback);
         return this;
     },
+
     getNode: function(doc) {
         var node = this._node;
         if (!node) {
@@ -291,6 +292,22 @@ var proto = AsyncVDOMBuilder.prototype = {
         return node;
     },
 
+    then: function(fn, fnErr) {
+        var out = this;
+        var promise = new Promise(function(resolve, reject) {
+            out.on('error', reject);
+            out.on('finish', function() {
+                resolve(new RenderResult(out));
+            });
+        });
+
+        return Promise.resolve(promise).then(fn, fnErr);
+    },
+
+    catch: function(fnErr) {
+        return this.then(undefined, fnErr);
+    },
+
     isVDOM: true
 };
 
@@ -299,7 +316,5 @@ proto.be = proto.beginElement;
 proto.ee = proto.endElement;
 proto.t = proto.text;
 proto.h = proto.write = proto.html;
-
-extend(proto, require('../OutMixins'));
 
 module.exports = AsyncVDOMBuilder;

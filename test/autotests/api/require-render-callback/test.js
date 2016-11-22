@@ -7,12 +7,12 @@ exports.check = function(marko, markoCompiler, expect, done) {
         {
             name: 'John'
         },
-        function(err, output) {
+        function(err, result) {
             if (err) {
                 return done(err);
             }
 
-            expect(output).to.equal('Hello John!');
+            expect(result.toString()).to.equal('Hello John!');
             done();
         });
 };

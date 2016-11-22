@@ -2,8 +2,8 @@
 var EventEmitter = require('events').EventEmitter;
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
-var extend = require('raptor-util/extend');
 var documentProvider = require('../document-provider');
+var RenderResult = require('../RenderResult');
 var helpers;
 
 var voidWriter = { write:function(){} };
@@ -471,6 +471,22 @@ var proto = AsyncStream.prototype = {
         return this.getOutput();
     },
 
+    then: function(fn, fnErr) {
+        var out = this;
+        var promise = new Promise(function(resolve, reject) {
+            out.on('error', reject);
+            out.on('finish', function() {
+                resolve(new RenderResult(out));
+            });
+        });
+
+        return Promise.resolve(promise).then(fn, fnErr);
+    },
+
+    catch: function(fnErr) {
+        return this.then(undefined, fnErr);
+    },
+
     // END DOM METHODS
 
     // Deprecated BEGIN:
@@ -497,8 +513,6 @@ var proto = AsyncStream.prototype = {
 
 // alias:
 proto.w = proto.write;
-
-extend(proto, require('../OutMixins'));
 
 module.exports = AsyncStream;
 

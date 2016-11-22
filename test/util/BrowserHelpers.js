@@ -29,7 +29,7 @@ BrowserHelpers.prototype = {
     },
 
     mount: function(component, input) {
-        var renderResult = component.render(input)
+        var renderResult = component.renderSync(input)
             .appendTo(this.targetEl);
 
         var widget;

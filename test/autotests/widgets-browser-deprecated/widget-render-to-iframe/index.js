@@ -5,7 +5,7 @@ module.exports = require('marko/widgets').defineComponent({
 
 	renderIntoIframe: function() {
 		var frameEl = this.getFrameEl();
-		return iframeContentComponent.render({})
+		return iframeContentComponent.renderSync({})
             .appendTo(frameEl.contentWindow.document.body)
             .getWidget();
 	},

@@ -1,14 +1,14 @@
 var events = require('./events');
 var dom = require('./dom');
 
-function checkAddedToDOM(asyncStream, method) {
-    if (!asyncStream.data._added) {
+function checkAddedToDOM(result, method) {
+    if (!result.out.data._added) {
         throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
     }
 }
 
-function getWidgetDefs(asyncStream) {
-    var widgetDefs = asyncStream.data.widgets;
+function getWidgetDefs(result) {
+    var widgetDefs = result.out.data.widgets;
 
     if (!widgetDefs || widgetDefs.length === 0) {
         throw new Error('No widget rendered');
@@ -16,11 +16,15 @@ function getWidgetDefs(asyncStream) {
     return widgetDefs;
 }
 
-module.exports = {
+var RenderResult = module.exports = function RenderResult(out) {
+    this.out = out;
+};
+
+RenderResult.prototype = {
     getWidget: function() {
         checkAddedToDOM(this, 'getWidget');
 
-        var rerenderWidget = this.global.__rerenderWidget;
+        var rerenderWidget = this.out.global.__rerenderWidget;
         if (rerenderWidget) {
             return rerenderWidget;
         }
@@ -54,44 +58,22 @@ module.exports = {
     },
 
     afterInsert: function(node) {
-        var data = this.data;
+        var data = this.out.data;
         data._added = true;
 
-        var widgetsContext = this.global.widgets;
+        var widgetsContext = this.out.global.widgets;
         var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
 
         data.widgets = widgetDefs;
 
         events.emit('mountNode', {
             node: node,
-            out: this,
+            result: this,
+            out: this.out,
             document: node.ownerDocument
         });    // NOTE: This will trigger widgets to be initialized if there were any
 
         return this;
-    },
-
-    then: function(fn, fnErr) {
-        var self = this;
-        var promise = new Promise(function(resolve, reject) {
-            self.on('error', reject);
-            self.on('finish', function(data) {
-                try {
-                    resolve(fn(data));
-                } catch(err) {
-                    reject(err);
-                }
-            });
-        });
-
-        if (fnErr) {
-            promise = promise.catch(fnErr);
-        }
-        return promise;
-    },
-
-    catch: function(fnErr) {
-        return this.then(undefined, fnErr);
     },
 
     appendTo: function(referenceEl) {
@@ -123,6 +105,18 @@ module.exports = {
         var newNode = this.getNode(referenceEl.ownerDocument);
         dom.prependTo(newNode, referenceEl);
         return this.afterInsert(newNode);
+    },
+    getNode: function() {
+        return this.out.getNode();
+    },
+    getOutput: function() {
+        return this.out.getOutput();
+    },
+    toString: function() {
+        return this.out.toString();
+    },
+    toJSON: function() {
+        return this.getOutput();
     },
     document: typeof document !== 'undefined' && document
 };

@@ -31,7 +31,7 @@ function createAsyncStream(options) {
     }
 }
 
-describe('async-writer' , function() {
+describe('AsyncStream', function() {
 
     beforeEach(function(done) {
         // for (var k in require.cache) {
@@ -63,10 +63,10 @@ describe('async-writer' , function() {
         out.write('1');
         out.write('2');
 
-        return out.end().then((data) => {
+        return out.end().then((result) => {
             const output = out.getOutput();
             expect(output).to.equal('12');
-            expect(data.getOutput()).to.equal('12');
+            expect(result.toString()).to.equal('12');
         });
     });
 

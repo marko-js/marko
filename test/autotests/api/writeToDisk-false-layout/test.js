@@ -9,7 +9,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
 
     var templatePath = nodePath.join(__dirname, 'template.marko');
     var template = marko.load(templatePath);
-    expect(template.renderSync({name: 'Frank'})).to.equal('<div>Hello Frank!</div>');
+    expect(template.renderSync({name: 'Frank'}).toString()).to.equal('<div>Hello Frank!</div>');
 
     markoCompiler.configure({
         writeToDisk: false

@@ -26,6 +26,7 @@ module.exports = function defineWidget(def, renderer) {
         return {
             renderer: renderer,
             render: renderer.render,
+            renderSync: renderer.renderSync,
             extendWidget: function(widget) {
                 extendWidget(widget);
                 widget.renderer = renderer;
@@ -105,6 +106,7 @@ module.exports = function defineWidget(def, renderer) {
         // new widget constructor function
         Widget.renderer = proto.renderer = renderer;
         Widget.render = renderer.render;
+        Widget.renderSync = renderer.renderSync;
     }
 
     return Widget;

@@ -9,5 +9,5 @@ module.exports = function() {
         test-bar
         test-bar`;
 
-    return template1.renderSync() + '\n' + template2.renderSync();
+    return template1.renderSync().toString() + '\n' + template2.renderSync().toString();
 };

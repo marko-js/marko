@@ -8,8 +8,8 @@ exports.check = function(marko, markoCompiler, expect, done) {
             greeting: 'Greetings'
         }
     };
-    template.render(data, function(error, output) {
-        expect(output).to.equal('Greetings John!');
+    template.render(data, function(error, result) {
+        expect(result.toString()).to.equal('Greetings John!');
         done();
     });
 };

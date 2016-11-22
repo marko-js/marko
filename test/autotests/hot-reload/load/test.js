@@ -10,13 +10,13 @@ exports.check = function(marko, hotReload, expect) {
 
     var template = marko.load(tempTemplatePath);
 
-    expect(template.renderSync({ name: 'John' })).to.equal('Hello John!');
+    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!');
 
     fs.writeFileSync(tempTemplatePath, templateSrc + '!', { encoding: 'utf8' });
 
-    expect(template.renderSync({ name: 'John' })).to.equal('Hello John!');
+    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!');
 
     hotReload.handleFileModified(tempTemplatePath);
 
-    expect(template.renderSync({ name: 'John' })).to.equal('Hello John!!');
+    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!!');
 };

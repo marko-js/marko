@@ -67,10 +67,12 @@ describe('async-fragments (deprecated)', function() {
                 addEventListener('asyncFragmentBeforeRender');
                 addEventListener('asyncFragmentFinish');
 
-                template.render(templateData, out, function(err, html) {
+                template.render(templateData, out, function(err, result) {
                     if (err) {
                         return done(err);
                     }
+
+                    var html = result.toString();
 
                     if (main.checkHtml) {
                         main.checkHtml(html);

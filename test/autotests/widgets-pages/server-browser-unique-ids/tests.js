@@ -6,7 +6,7 @@ describe(path.basename(__dirname), function() {
     it('should generate a unique ID that is different for a UI component rendered on the server and browser', function() {
 
         var serverFooWidget = window.fooWidget;
-        var browserFooWidget = appFooComponent.render({}).appendTo(document.body).getWidget();
+        var browserFooWidget = appFooComponent.renderSync({}).appendTo(document.body).getWidget();
         expect(browserFooWidget.id).to.be.a('string');
         expect(serverFooWidget.id).to.be.a('string');
         expect(serverFooWidget.id).to.not.equal(browserFooWidget.id);

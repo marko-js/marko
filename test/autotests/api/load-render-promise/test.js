@@ -7,8 +7,8 @@ exports.check = function(marko, markoCompiler, expect, done) {
 
     template.render({
         name: 'John'
-    }).then((out) => {
-        expect(out.getOutput()).to.equal('Hello John!');
+    }).then((result) => {
+        expect(result.toString()).to.equal('Hello John!');
         done();
     }).catch((err) => {
         done(err);

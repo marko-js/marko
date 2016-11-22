@@ -10,7 +10,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
         var template = require(templatePath);
         delete require.cache[templatePath];
         expect(fs.existsSync(compiledPath)).to.equal(true);
-        expect(template.renderSync({name: 'Frank'})).to.equal('Hello Frank!');
+        expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
     } finally {
         fs.unlinkSync(compiledPath);
     }

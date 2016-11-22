@@ -1,5 +1,6 @@
 var marko = require('marko');
 var extend = require('raptor-util/extend');
+var RenderResult = require('../runtime/RenderResult');
 
 module.exports = function defineRenderer(def) {
     var renderer = def.renderer;
@@ -169,10 +170,29 @@ module.exports = function defineRenderer(def) {
 
     renderer.createOut = createOut;
 
-    renderer.render = function(input) {
+    renderer.render = function(input, cb) {
         var out = createOut();
         renderer(input, out);
-        return out.end();
+        out.end();
+
+        if(cb) {
+            out.on('finished', function() {
+                cb(null, new RenderResult(out));
+            });
+            out.on('error', function(err) {
+                cb(err);
+            });
+        }
+
+        return out;
+    };
+
+    renderer.renderSync = function(input) {
+        var out = createOut();
+        out.sync();
+        renderer(input, out);
+        out.end();
+        return new RenderResult(out);
     };
 
     return renderer;
