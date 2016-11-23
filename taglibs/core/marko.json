@@ -75,6 +75,10 @@
             }
         ]
     },
+    "<import>": {
+        "node-factory": "./import-tag",
+        "attributes": {}
+    },
     "<include>": {
         "code-generator": "./include-tag",
         "autocomplete": [
