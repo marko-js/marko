@@ -1,0 +1,6 @@
+[
+    {
+        "name": "$",
+        "value": "require(\"jquery\")"
+    }
+]

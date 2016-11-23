@@ -1,0 +1,13 @@
+[
+    {
+        "name": "greetings",
+        "value": "require(\"./greetings\")"
+    },
+    {
+        "name": "hi",
+        "value":{
+            "object": "greetings",
+            "property": "hello"
+        }
+    }
+]
