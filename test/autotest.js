@@ -39,11 +39,9 @@ function compareHelper(dir, actual, prefix, suffix) {
         fs.writeFileSync(expectedPath, expectedString, {encoding: 'utf8'});
     }
 
-    if (isObject) {
-        actual = JSON.parse(actualString);
-    }
+    actual = isObject ? JSON.parse(actualString) : actualString.replace(/\r?\n$/, '');
 
-    var expected = isObject ? JSON.parse(expectedString) : expectedString;
+    var expected = isObject ? JSON.parse(expectedString) : expectedString.replace(/\r?\n$/, '');
     assert.deepEqual(actual, expected);
 }
 
