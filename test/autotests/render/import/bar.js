@@ -1,1 +1,4 @@
-module.exports.bar = "Bar";
+module.exports = {
+    foo: "Foo",
+    bar: "Bar"
+};
