@@ -97,22 +97,43 @@ var resolveFrom = require('resolve-from');
 module.exports = function nodeFactory(el, context) {
     var builder = context.builder;
     var args = importToAssignmentsWithTags(el.argument);
+    var vars = {};
 
     args = args.map(arg => {
-        var value = builder.parseExpression(arg.value);
-        var exp = builder.expression(value);
-        var dirname = context.dirname;
-        var path;
-        try {
-            path = resolveFrom(dirname, exp.value.args[0].value);
-        } catch(e) {
-            context.addError('File not found: ' + path);
-            return;
+        if (typeof arg.value === "string") {
+            // "require('./foo')"
+            var value = builder.parseExpression(arg.value);
+            var dirname = context.dirname;
+            var path;
+            try {
+                path = resolveFrom(dirname, value.args[0].value);
+            } catch(e) {
+                context.addError('File not found: ' + path);
+                return;
+            }
+            var result = builder.require(builder.literal(path));
+            vars[arg.name] = result;
+            context.addStaticVar(arg.name, result);
+            return {
+                id: builder.identifier(arg.name),
+                init: result
+            };
+        } else {
+            // { bar } from "./bar"
+            var prop = vars[arg.value.object];
+            if (!prop) {
+                context.addError('Variable not found: ' + arg.value.object);
+                return;
+            }
+            return {
+                id: builder.identifier(arg.name),
+                init: builder.memberExpression(
+                    prop,
+                    builder.identifier(arg.value.property)
+                )
+            };
+
         }
-        return {
-            id: builder.identifier(arg.name),
-            init: builder.require(builder.literal(path))
-        };
     });
 
     // var args = [ { name: 'bar', value: 'require("./bar")' } ]
