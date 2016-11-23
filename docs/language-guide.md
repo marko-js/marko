@@ -1060,7 +1060,7 @@ For more details, please see [Marko Layout Taglib](http://markojs.com/docs/marko
 
 You can print out nested content inside a template.
 
-__src/components/app-alert/template.marko__
+_Usage of `src/components/app-alert/template.marko`:_
 
 ```xml
 <div class="alert alert-${data.type}">
@@ -1069,7 +1069,7 @@ __src/components/app-alert/template.marko__
 </div>
 ```
 
-The template can then be used as shown below:
+The template can then be `include` used as shown below:
 
 ```xml
 <include("src/components/app-alert/template.marko") type="success">
