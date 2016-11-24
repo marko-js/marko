@@ -26,7 +26,9 @@ module.exports = function codeGenerator(el, codegen) {
                 codegen.addError('File not found: ' + path);
                 return;
             }
-            var result = builder.require(builder.literal(path));
+            var resolve = codegen.resolvePath(builder.literal(arg.value));
+            var result = builder.require(resolve);
+            // var result = builder.require(builder.requireResolve(builder.literal(path)));
             vars[varName] = result;
 
             codegen.addStaticVar(varName, result);
