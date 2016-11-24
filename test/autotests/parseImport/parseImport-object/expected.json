@@ -1,6 +1,7 @@
 [
     {
         "name": "$",
-        "value": "require(\"jquery\")"
+        "value": "jquery",
+        "module": true
     }
 ]

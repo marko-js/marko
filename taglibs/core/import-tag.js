@@ -17,14 +17,14 @@ module.exports = function nodeFactory(el, context) {
             return;
         }
 
-        if (typeof arg.value === "string") {
+        if (arg.module) {
             // "require('./foo')"
-            var value = builder.parseExpression(arg.value);
             var dirname = context.dirname;
             var path;
             try {
-                path = resolveFrom(dirname, value.args[0].value);
+                path = resolveFrom(dirname, arg.value);
             } catch(e) {
+                console.log(e);
                 context.addError('File not found: ' + path);
                 return;
             }

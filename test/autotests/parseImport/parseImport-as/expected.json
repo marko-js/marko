@@ -1,7 +1,8 @@
 [
     {
         "name": "greetings",
-        "value": "require(\"./greetings\")"
+        "value": "./greetings",
+        "module": true
     },
     {
         "name": "hi",
