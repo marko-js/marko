@@ -1,3 +1,5 @@
+// TODO use helper to generate name
+
 function getSpecifiers(importDeclaration) {
     var match = /^(.+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
     if(!match) {

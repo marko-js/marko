@@ -1,6 +1,4 @@
 var isValidJavaScriptVarName = require('../../compiler/util/isValidJavaScriptVarName');
-
-var resolveFrom = require('resolve-from');
 var parseImport = require('./util/parseImport');
 
 module.exports = function codeGenerator(el, codegen) {
@@ -18,15 +16,13 @@ module.exports = function codeGenerator(el, codegen) {
 
         if (arg.module) {
             // needs to be require()'d
-            var dirname = codegen.context.dirname;
-            var path;
+            var resolve;
             try {
-                path = resolveFrom(dirname, arg.value);
+                resolve = codegen.resolvePath(builder.literal(arg.value));
             } catch(e) {
-                codegen.addError('File not found: ' + path);
+                codegen.addError('File not found: ' + arg.value);
                 return;
             }
-            var resolve = codegen.resolvePath(builder.literal(arg.value));
             var result = builder.require(resolve);
             // var result = builder.require(builder.requireResolve(builder.literal(path)));
             vars[varName] = result;
