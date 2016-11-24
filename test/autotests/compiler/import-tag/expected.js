@@ -2,8 +2,7 @@ var template = require("marko/html").c(__filename);
 
 module.exports = template;
 
-var __bar = require.resolve("./bar"),
-    bar = require(__bar);
+var bar = require("./bar");
 
 function render(data, out) {}
 

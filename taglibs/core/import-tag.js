@@ -16,14 +16,7 @@ module.exports = function codeGenerator(el, codegen) {
 
         if (arg.module) {
             // needs to be require()'d
-            var resolve;
-            try {
-                resolve = codegen.resolvePath(builder.literal(arg.value));
-            } catch(e) {
-                codegen.addError('File not found: ' + arg.value);
-                return;
-            }
-            var result = builder.require(resolve);
+            var result = builder.require(builder.literal(arg.value));
             // var result = builder.require(builder.requireResolve(builder.literal(path)));
             vars[varName] = result;
 
