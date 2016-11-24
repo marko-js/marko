@@ -44,5 +44,5 @@ module.exports = function codeGenerator(el, codegen) {
         }
     });
 
-    return null;
+    return [];
 };
