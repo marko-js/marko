@@ -76,8 +76,7 @@
         ]
     },
     "<import>": {
-        "node-factory": "./import-tag",
-        "attributes": {}
+        "code-generator": "./import-tag"
     },
     "<include>": {
         "code-generator": "./include-tag",
