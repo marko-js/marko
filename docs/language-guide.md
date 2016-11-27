@@ -135,6 +135,28 @@ Wherever expressions are allowed, they are treated as JavaScript expressions and
 </div>
 ```
 
+# Import
+
+You may import other packages or modules in an "ES6" style import to be used in your template. This was previously done in a `<script marko-init>` tag in plain js. Below are a few examples:
+
+```html
+<import( bar from './bar') />
+```
+
+will result in `var bar = require('./bar');` being added to you compiled template. Similarly:
+
+```html
+<import( mod, { bar as b } from './bar') />
+```
+
+will result in `var mod = require('./bar'), b = mod.bar;` being added. And simply:
+
+```html
+<import('./bar') />
+```
+
+will add `require('./bar')`.
+
 # Includes
 
 Marko supports includes/partials. Other Marko files can be included using the `<include>` tag and a relative path. For example:
