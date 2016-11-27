@@ -1,4 +1,4 @@
-// TODO use helper to generate name
+"use strict";
 
 function getSpecifiers(importDeclaration) {
     var match = /^(.+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
