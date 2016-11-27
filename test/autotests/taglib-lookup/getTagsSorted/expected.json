@@ -23,6 +23,7 @@
     "for",
     "html-comment",
     "if",
+    "import",
     "include",
     "include-html",
     "include-text",
