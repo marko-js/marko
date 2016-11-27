@@ -20,7 +20,11 @@ module.exports = function codeGenerator(el, codegen) {
             // var result = builder.require(builder.requireResolve(builder.literal(path)));
             vars[varName] = result;
 
-            codegen.addStaticVar(varName, result);
+            if (varName) {
+                codegen.addStaticVar(varName, result);
+            } else {
+                codegen.addStaticCode(result);
+            }
         } else {
             // ie: { bar } from "./bar"
             var prop = vars[arg.value.object];
