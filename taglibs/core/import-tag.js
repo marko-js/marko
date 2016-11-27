@@ -3,7 +3,7 @@ var parseImport = require('./util/parseImport');
 
 module.exports = function codeGenerator(el, codegen) {
     var builder = codegen.builder;
-    var args = parseImport(el.argument);
+    var args = parseImport(el.tagString);
     var vars = {};
 
     args.forEach(arg => {

@@ -137,22 +137,22 @@ Wherever expressions are allowed, they are treated as JavaScript expressions and
 
 # Import
 
-You may import other packages or modules in an "ES6" style import to be used in your template. This was previously done in a `<script marko-init>` tag in plain js. Below are a few examples:
+You may import other packages or modules in an "ES6" style import to be used in your template. Below are a few examples:
 
 ```html
-<import( bar from './bar') />
+<import bar from './bar' />
 ```
 
 will result in `var bar = require('./bar');` being added to you compiled template. Similarly:
 
 ```html
-<import( mod, { bar as b } from './bar') />
+<import mod, { bar as b } from './bar' />
 ```
 
 will result in `var mod = require('./bar'), b = mod.bar;` being added. And simply:
 
 ```html
-<import('./bar') />
+<import './bar' />
 ```
 
 will add `require('./bar')`.

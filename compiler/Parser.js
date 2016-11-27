@@ -108,7 +108,7 @@ class Parser {
         }
     }
 
-    handleStartElement(el) {
+    handleStartElement(el, parser) {
         var context = this.context;
         var builder = context.builder;
 
@@ -157,6 +157,7 @@ class Parser {
         var elDef = {
             tagName: tagName,
             argument: argument,
+            tagString: parser.substring(el.pos, el.endPos),
             openTagOnly: el.openTagOnly === true,
             selfClosed: el.selfClosed === true,
             pos: el.pos,

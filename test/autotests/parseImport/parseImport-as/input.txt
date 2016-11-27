@@ -1,1 +1,1 @@
-import { hello as hi } from "./greetings"
+<import { hello as hi } from "./greetings" />
