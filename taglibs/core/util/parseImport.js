@@ -1,13 +1,9 @@
 "use strict";
 
-function getImportStatement(tagString) {
-    return tagString.replace(/import/g, "").trim();
-}
-
 function getSpecifiers(importDeclaration) {
     var match = /^(.+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
     if(!match) {
-        return { moduleSpecifier: importDeclaration.trim() };
+        return { moduleSpecifier: importDeclaration.replace(/\"|\'/g, "").trim() };
     }
 
     return {
@@ -51,8 +47,7 @@ function getNames(importSpecifier) {
 }
 
 module.exports = function importToAssignments(tagString) {
-    var importStatement = getImportStatement(tagString);
-    var importDeclaration = importStatement.replace(/^import/, '');
+    var importDeclaration = tagString.replace(/^import/, '').trim();
     var specifiers = getSpecifiers(importDeclaration);
     var importSpecifierSet = specifiers.importSpecifierSet;
     var moduleSpecifier = specifiers.moduleSpecifier;

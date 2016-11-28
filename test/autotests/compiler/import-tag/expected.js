@@ -4,7 +4,7 @@ module.exports = template;
 
 var bar = require("./bar");
 
-require("\"./foo\"");
+require("./foo");
 
 function render(data, out) {}
 
