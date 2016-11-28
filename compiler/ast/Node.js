@@ -151,6 +151,11 @@ class Node {
         }
     }
 
+    get firstChild() {
+        var body = this.body;
+        return body && body.firstChild;
+    }
+
     get previousSibling() {
         var container = this.container;
 
