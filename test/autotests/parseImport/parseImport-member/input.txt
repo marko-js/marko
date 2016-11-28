@@ -1,1 +1,1 @@
-<import $, { fn } from "jquery" />
+import $, { fn } from "jquery"

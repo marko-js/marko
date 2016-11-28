@@ -4,7 +4,7 @@
     {
       "type": "HtmlElement",
       "tagName": "div",
-      "tagString": "<div w-bind>",
+      "tagString": "div w-bind",
       "attributes": [
         {
           "type": "HtmlAttribute",

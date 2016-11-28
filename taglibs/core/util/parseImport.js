@@ -1,7 +1,7 @@
 "use strict";
 
-function getImportStatement(str) {
-    return str.replace(/<import|import|\/>/g, "").trim();
+function getImportStatement(tagString) {
+    return tagString.replace(/import/g, "").trim();
 }
 
 function getSpecifiers(importDeclaration) {
