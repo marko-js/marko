@@ -136,6 +136,26 @@ exports.f = function forEachHelper(array, callback) {
         array(callback);
     }
 };
+
+exports.fr = function forRangeHelper(from, to, step, callback) {
+    if (step == null) {
+        step = from <= to ? 1 : -1;
+    }
+
+    var i;
+
+    if (step > 0) {
+        for (i=from; i<=to; i += step) {
+            callback(i);
+        }
+    } else {
+        for (i=to; i>=from; i += step) {
+            callback(i);
+        }
+    }
+
+};
+
 /**
  * Internal helper method for looping over the properties of any object
  * @private

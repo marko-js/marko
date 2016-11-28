@@ -64,6 +64,7 @@ const helpers = {
     'forEach': 'f',
     'forEachProp': 'fp',
     'forEachWithStatusVar': 'fv',
+    'forRange': 'fr',
     'include': 'i',
     'loadTag': 't',
     'loadTemplate': 'l',
