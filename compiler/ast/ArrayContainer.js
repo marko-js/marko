@@ -174,6 +174,10 @@ class ArrayContainer extends Container {
         }
     }
 
+    get firstChild() {
+        return this.array[0];
+    }
+
     get length() {
         return this.array.length;
     }
