@@ -59,20 +59,6 @@ exports.AsyncStream = AsyncStream;
 
 var stream = require('./stream');
 
-function renderCallback(renderFunc, data, globalData, callback) {
-    var out = new AsyncStream();
-    if (globalData) {
-        extend(out.global, globalData);
-    }
-
-    renderFunc(data, out);
-    return out.end()
-        .on('finish', function() {
-            callback(null, out.getOutput(), out);
-        })
-        .once('error', callback);
-}
-
 function Template(path, func, options) {
     this.path = path;
     this._ = func;
@@ -92,18 +78,32 @@ Template.prototype = {
     c: function(createFunc) {
         this._ = createFunc(helpers);
     },
-    renderSync: function(data) {
+    renderToString: function(data, callback) {
         var localData = data || {};
         var out = new AsyncStream();
-        out.sync();
+
+        if(!callback) {
+            out.sync();
+        }
 
         if (localData.$global) {
-            out.global = extend(out.global, localData.$global);
+            extend(out.global, localData.$global);
             delete localData.$global;
         }
 
         this._(localData, out);
+
+        if(callback) {
+            out.end();
+            return out.on('finish', function() {
+                callback(null, out.getOutput(), out);
+            }).once('error', callback);
+        }
+
         return out.getOutput();
+    },
+    renderSync: function(data) {
+        return this.renderToString(data);
     },
 
     /**
@@ -126,6 +126,14 @@ Template.prototype = {
      * @return {AsyncStream} Returns the AsyncStream instance that the template is rendered to
      */
     render: function(data, out, callback) {
+        if(typeof out === 'function') {
+            require('./deprecate').warn(
+                'The render callback will no longer receive a string in Marko v4.  '+
+                'Use `renderToString(data, callback)` instead.'
+            );
+            return this.renderToString(data, out /* callback */);
+        }
+
         var renderFunc = this._;
         var finalData;
         var globalData;
@@ -139,11 +147,6 @@ Template.prototype = {
             }
         } else {
             finalData = {};
-        }
-
-        if (typeof out === 'function') {
-            // Short circuit for render(data, callback)
-            return renderCallback(renderFunc, finalData, globalData, out);
         }
 
         // NOTE: We create new vars here to avoid a V8 de-optimization due
@@ -201,6 +204,13 @@ Template.prototype = {
         return new Readable(this, data, this._options);
     }
 };
+
+require('./deprecate')(
+    Template.prototype,
+    'renderSync',
+    'Please use `renderToString` instead of `renderSync`.  '+
+    'The behavior of `renderSync` is changing in the next version of Marko.'
+);
 
 if (stream) {
     Readable = function(template, data, options) {
