@@ -23,11 +23,14 @@ function warn(message) {
     if (!logger) return 0;
 
     var maxWarn = 20;
+    var stack;
     messageCounts[message] = messageCounts[message] || 0;
 
     if (messageCounts[message] < maxWarn) {
         messageCounts[message]++;
-        var stack = new Error().stack.split('\n').slice(4).join('\n');
+        try {
+            stack = new Error().stack.split('\n').slice(4).join('\n');
+        } catch(e);
         logger.warn(red('WARNING!!') + '\n' + message + '\n' + grey(stack));
     }
 
