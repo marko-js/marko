@@ -157,6 +157,11 @@ Template.prototype = {
         var shouldEnd = false;
 
         if (arguments.length === 3) {
+            require('./deprecate').warn(
+                'Support for `render(data, out, callback)` will be removed in v4. ' +
+                'If you would like to discuss, see: https://github.com/marko-js/marko/issues/451'
+            );
+
             // render(data, out, callback)
             if (!finalOut || !finalOut.isAsyncStream) {
                 finalOut = new AsyncStream(globalData, finalOut);
