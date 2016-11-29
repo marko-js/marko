@@ -19,20 +19,21 @@ module.exports = function codeGenerator(el, codegen) {
             var result = builder.require(builder.literal(arg.value));
 
             if (varName) {
-                vars[varName] = result;
-                codegen.addStaticVar(varName, result);
+                // saves identifier
+                vars[varName] = codegen.addStaticVar(varName, result);
             } else {
                 codegen.addStaticCode(result);
             }
         } else {
             // ie: { bar } from "./bar"
-            var prop = vars[arg.value.object];
-            if (!prop) {
+            var modIdentifier = vars[arg.value.object];
+            if (!modIdentifier) {
                 codegen.addError('Variable not found: ' + arg.value.object);
                 return;
             }
+
             codegen.addStaticVar(varName, builder.memberExpression(
-                prop,
+                modIdentifier,
                 builder.identifier(arg.value.property)
             ));
         }
