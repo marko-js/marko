@@ -30,7 +30,7 @@ function warn(message) {
         messageCounts[message]++;
         try {
             stack = new Error().stack.split('\n').slice(4).join('\n');
-        } catch(e) {};
+        } catch(e) {}
         logger.warn(red('WARNING!!') + '\n' + message + '\n' + grey(stack || ''));
     }
 
