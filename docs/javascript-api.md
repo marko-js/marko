@@ -103,7 +103,7 @@ The `Template` type.
 
 ## Methods
 
-### renderSync(templateData) : String
+### renderToString(templateData) : String
 
 Synchronously renders a template to a `String`.
 
@@ -113,8 +113,23 @@ Example usage:
 
 ```javascript
 var template = require('./template.marko');
-var html = template.renderSync({ name: 'Frank' });
+var html = template.renderToString({ name: 'Frank' });
 console.log(html);
+```
+
+### renderToString(templateData, callback)
+
+Asynchronously renders a template and provides the output to the provided callback function.
+
+```javascript
+var template = require('./template.marko');
+template.renderToString({ name: 'Frank' }, function(err, html, out) {
+	if (err) {
+		// Handle the error...
+	}
+
+	console.log(html);
+});
 ```
 
 ### render(templateData, stream.Writable)
@@ -130,7 +145,7 @@ template.render({ name: 'Frank' }, process.stdout);
 
 ### render(templateData, AsyncWriter)
 
-Renders a template to an [AsyncWriter](https://github.com/marko-js/async-writer) instance that wraps an underlying stream.
+Renders a template to an [AsyncWriter](https://github.com/marko-js/async-writer) instance that wraps an underlying stream.  When rendering to an AsyncWriter, the writer will not be ended, automatically.  You must call `out.end()` yourself.
 
 Example usage:
 
@@ -138,21 +153,7 @@ Example usage:
 var template = require('./template.marko');
 var out = require('marko').createWriter(process.stdout);
 template.render({ name: 'Frank' }, out);
-```
-
-### render(templateData, callback)
-
-Asynchronously renders a template and provides the output to the provided callback function.
-
-```javascript
-var template = require('./template.marko');
-template.render({ name: 'Frank' }, function(err, html, out) {
-	if (err) {
-		// Handel the error...
-	}
-
-	console.log(html);
-});
+out.end();
 ```
 
 _NOTE: The `out` argument will rarely be used, but it will be a reference to the [AsyncWriter](https://github.com/marko-js/async-writer) instance that was created to facilitate rendering of the template._
@@ -167,6 +168,12 @@ Example usage:
 var template = require('./template.marko');
 template.stream({ name: 'Frank' }).pipe(process.stdout);
 ```
+
+### renderSync(templateData) : String
+> Deprecated in v3, use `renderToString(templateData)` instead.
+
+### render(templateData, callback)
+> Deprecated in v3, use `renderToString(templateData, callback)` instead.
 
 # require('marko/compiler')
 
