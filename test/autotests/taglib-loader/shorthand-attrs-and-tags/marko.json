@@ -2,7 +2,7 @@
     "<shorthand-checkbox>": {
         "@label <label>": "string",
         "@checked": "boolean",
-        "<checked>": "boolean"
+        "<foo>": {}
     },
     "<shorthand-overlay>": {
         "nested-tags": {
