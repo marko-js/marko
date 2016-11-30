@@ -6,9 +6,9 @@ exports.check = function(taglibLoader, expect) {
 
     var shorthandCheckbox = taglib.tags['shorthand-checkbox'];
     expect(shorthandCheckbox.attributes.checked.type).to.equal('boolean');
-    expect(shorthandCheckbox.attributes.label.type).to.equal('string');
-    expect(shorthandCheckbox.nestedTags.label.type).to.equal('string');
-    expect(shorthandCheckbox.nestedTags.foo.type).to.equal('object');
+    expect(shorthandCheckbox.attributes.label.type).to.equal('object');
+    expect(shorthandCheckbox.nestedTags.label.type).to.equal('object');
+    expect(shorthandCheckbox.nestedTags.foo.attributes.bar.type).to.equal('string');
 
     var shorthandTabsTag = taglib.tags['shorthand-tabs'];
     expect(shorthandTabsTag.attributes.orientation != null).to.equal(true);

@@ -1,8 +1,10 @@
 {
     "<shorthand-checkbox>": {
-        "@label <label>": "string",
+        "@label <label>": "object",
         "@checked": "boolean",
-        "<foo>": {}
+        "<foo>": {
+            "@bar": "string"
+        }
     },
     "<shorthand-overlay>": {
         "nested-tags": {
