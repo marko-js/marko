@@ -1,5 +1,3 @@
-(function() {
-  for (var i = 0; i <= myArray.length; i += 2) {
-    console.log(i);
-  }
-})();
+marko_forRange(0, myArray.length, 2, function(i) {
+  console.log(i);
+});
