@@ -69,6 +69,7 @@ AsyncStream.enableAsyncStackTrace = function() {
 
 var proto = AsyncStream.prototype = {
     constructor: AsyncStream,
+    isAsyncOut: true,
     isAsyncWriter: AsyncStream, // Legacy
     isAsyncStream: AsyncStream,
 
@@ -89,6 +90,15 @@ var proto = AsyncStream.prototype = {
 
     getOutput: function() {
         return this._state.writer.toString();
+    },
+
+    toString: function() {
+        return this._state.writer.toString();
+    },
+
+    getResult: function() {
+        this._result = this._result || new RenderResult(this);
+        return this._result;
     },
 
     beginAsync: function(options) {
@@ -478,16 +488,13 @@ var proto = AsyncStream.prototype = {
         }
         return node;
     },
-    toString: function() {
-        return this.getOutput();
-    },
 
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
             out.on('error', reject);
             out.on('finish', function() {
-                resolve(new RenderResult(out));
+                resolve(out.getResult());
             });
         });
 

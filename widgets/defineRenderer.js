@@ -1,6 +1,6 @@
 var marko = require('marko');
 var extend = require('raptor-util/extend');
-var RenderResult = require('../runtime/RenderResult');
+var makeRenderable = require('../runtime/renderable');
 
 module.exports = function defineRenderer(def) {
     var renderer = def.renderer;
@@ -20,14 +20,6 @@ module.exports = function defineRenderer(def) {
 
     if (typeof template === 'string') {
         template = marko.load(template);
-    }
-
-    var createOut;
-
-    if (template) {
-        createOut = template.createOut;
-    } else {
-        createOut = def.createOut || marko.createOut;
     }
 
     if (!renderer) {
@@ -162,38 +154,14 @@ module.exports = function defineRenderer(def) {
 
             // Render the template associated with the component using the final template
             // data that we constructed
-            template.render(templateData, out);
+            template._(templateData, out);
         };
     }
 
     renderer._isRenderer = true;
+    renderer.createOut = template ? template.createOut : def.createOut;
 
-    renderer.createOut = createOut;
-
-    renderer.render = function(input, cb) {
-        var out = createOut();
-        renderer(input, out);
-        out.end();
-
-        if(cb) {
-            out.on('finished', function() {
-                cb(null, new RenderResult(out));
-            });
-            out.on('error', function(err) {
-                cb(err);
-            });
-        }
-
-        return out;
-    };
-
-    renderer.renderSync = function(input) {
-        var out = createOut();
-        out.sync();
-        renderer(input, out);
-        out.end();
-        return new RenderResult(out);
-    };
+    makeRenderable(renderer, renderer);
 
     return renderer;
 };

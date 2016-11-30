@@ -4,7 +4,7 @@ script marko-init
     var componentsTemplate = require('./components.marko');
 
     function componentsDataProvider(callback) {
-        componentsTemplate.render({}, function(err, html, out) {
+        componentsTemplate.renderToString({}, function(err, html, out) {
             var widgetIds = markoWidgets.getRenderedWidgetIds(out);
 
             // Serialize the HTML and the widget IDs to the browser

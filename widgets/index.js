@@ -279,7 +279,7 @@ exports.getRenderedWidgets = exports.getRenderedWidgetIds /* deprecated */ = fun
 exports.defineComponent = require('./defineComponent');
 exports.defineWidget = require('./defineWidget');
 exports.defineRenderer = require('./defineRenderer');
-exports.makeRenderable = exports.renderable = require('./renderable');
+exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
 exports.c = function(component, template) {
     component.template = template;
