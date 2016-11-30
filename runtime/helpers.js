@@ -6,7 +6,9 @@ function classListHelper(arg, classNames) {
 
     if (arg) {
         if (typeof arg === 'string') {
-            classNames.push(arg);
+            if (arg) {
+                classNames.push(arg);                
+            }
         } else if (typeof (len = arg.length) === 'number') {
             for (var i=0; i<len; i++) {
                 classListHelper(arg[i], classNames);
