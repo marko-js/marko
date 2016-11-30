@@ -3,11 +3,15 @@ Changelog
 
 # 3.x
 
+## 3.13.x
+
+### 3.13.0
+
 ## 3.12.x
 
 ### 3.12.0
 
-- Add `await:error` and `await:timeout` events 
+- Added warnings for using render methods when you want string output ([Pull Request #450](https://github.com/marko-js/marko/pull/450) by [@mlrawlings](https://github.com/mlrawlings))
 
 ## 3.11.x
 
