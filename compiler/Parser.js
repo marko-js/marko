@@ -108,7 +108,7 @@ class Parser {
         }
     }
 
-    handleStartElement(el) {
+    handleStartElement(el, parser) {
         var context = this.context;
         var builder = context.builder;
 
@@ -153,10 +153,14 @@ class Parser {
         this.prevTextNode = null;
 
         var attributeParseErrors = [];
+        // <div class="foo"> -> "div class=foo"
+        var tagString = parser.substring(el.pos, el.endPos)
+                              .replace(/<|\/>|>/g, "").trim();
 
         var elDef = {
             tagName: tagName,
             argument: argument,
+            tagString,
             openTagOnly: el.openTagOnly === true,
             selfClosed: el.selfClosed === true,
             pos: el.pos,

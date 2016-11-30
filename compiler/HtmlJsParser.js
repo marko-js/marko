@@ -37,7 +37,7 @@ class HtmlJsParser {
 
             onOpenTag(event, parser) {
                 event.selfClosed = false; // Don't allow self-closed tags
-                handlers.handleStartElement(event);
+                handlers.handleStartElement(event, parser);
 
                 var newParserState = handlers.getParserStateForTag(event);
                 if (newParserState) {

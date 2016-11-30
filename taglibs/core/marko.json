@@ -75,6 +75,9 @@
             }
         ]
     },
+    "<import>": {
+        "code-generator": "./import-tag"
+    },
     "<include>": {
         "code-generator": "./include-tag",
         "autocomplete": [
