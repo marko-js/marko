@@ -151,7 +151,7 @@ exports.fr = function forRangeHelper(from, to, step, callback) {
             callback(i);
         }
     } else {
-        for (i=to; i>=from; i += step) {
+        for (i=from; i>=to; i += step) {
             callback(i);
         }
     }
@@ -183,39 +183,28 @@ exports.fp = function forEachPropertyHelper(o, func) {
 /**
  * Helper to load a custom tag
  */
-exports.t = function loadTagHelper(renderer, targetProperty, isRepeated, hasNestedTags) {
+exports.t = function loadTagHelper(renderer, targetProperty, isRepeated) {
     if (renderer) {
         renderer = resolveRenderer(renderer);
     }
 
-    if (targetProperty || hasNestedTags) {
-        return function(input, out, parent, renderBody) {
-            // Handle nested tags
-            if (renderBody) {
-                renderBody(out, input);
-            }
+    return renderer;
+};
 
-            if (targetProperty) {
-                // If we are nested tag then we do not have a renderer
-                if (isRepeated) {
-                    var existingArray = parent[targetProperty];
-                    if (existingArray) {
-                        existingArray.push(input);
-                    } else {
-                        parent[targetProperty] = [input];
-                    }
-                } else {
-                    parent[targetProperty] = input;
-                }
+exports.n = function loadNestedTagHelper(targetProperty, isRepeated) {
+    return function(input, parent) {
+        // If we are nested tag then we do not have a renderer
+        if (isRepeated) {
+            var existingArray = parent[targetProperty];
+            if (existingArray) {
+                existingArray.push(input);
             } else {
-                // We are a tag with nested tags, but we have already found
-                // our nested tags by rendering the body
-                renderer(input, out);
+                parent[targetProperty] = [input];
             }
-        };
-    } else {
-        return renderer;
-    }
+        } else {
+            parent[targetProperty] = input;
+        }
+    };
 };
 
 /**
@@ -231,6 +220,20 @@ exports.m = function mergeHelper(into, source) {
         }
     }
     return into;
+};
+
+/**
+ * Merges nested tags by rendering the body
+ * @param  {[type]} object [description]
+ * @param  {[type]} source [description]
+ * @return {[type]}        [description]
+ */
+exports.mn = function mergeNestedTagsHelper(input) {
+    if (input.renderBody) {
+        input.renderBody(null, input);
+    }
+    input.renderBody = null;
+    return input;
 };
 
 /**

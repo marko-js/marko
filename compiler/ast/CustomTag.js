@@ -4,61 +4,55 @@ var HtmlElement = require('./HtmlElement');
 var removeDashes = require('../util/removeDashes');
 var safeVarName = require('../util/safeVarName');
 var ok = require('assert').ok;
+var tagLoader;
 
-function getNestedTagParentNode(nestedTagNode, parentTagName) {
-    var currentNode = nestedTagNode.parentNode;
-    while (currentNode) {
-        if (currentNode.type === 'CustomTag' && currentNode.tagDef.name === parentTagName) {
-            return currentNode;
-        }
-
-        currentNode = currentNode.parentNode;
-    }
-}
+var CUSTOM_TAG_KEY = Symbol('CustomTag');
 
 function getNestedVariables(elNode, tagDef, codegen) {
     var variableNames = [];
-    tagDef.forEachVariable((nestedVar) => {
-        var varName;
-        if (nestedVar.nameFromAttribute) {
-            var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
-            for (var i = 0, len = possibleNameAttributes.length; i < len; i++) {
-                var attrName = possibleNameAttributes[i];
-                var keep = false;
-                if (attrName.endsWith('|keep')) {
-                    keep = true;
-                    attrName = attrName.slice(0, 0 - '|keep'.length);
-                    possibleNameAttributes[i] = attrName;
-                }
-                varName = elNode.getAttributeValue(attrName);
-                if (varName) {
-                    if (varName.type !== 'Literal' || typeof varName.value !== 'string') {
-                        codegen.addError('The value of the ' + attrName + ' is expected to be a string');
-                        codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
-                        varName = '_var';    // Let it continue with errors
+    if (tagDef.forEachVariable) {
+        tagDef.forEachVariable((nestedVar) => {
+            var varName;
+            if (nestedVar.nameFromAttribute) {
+                var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
+                for (var i = 0, len = possibleNameAttributes.length; i < len; i++) {
+                    var attrName = possibleNameAttributes[i];
+                    var keep = false;
+                    if (attrName.endsWith('|keep')) {
+                        keep = true;
+                        attrName = attrName.slice(0, 0 - '|keep'.length);
+                        possibleNameAttributes[i] = attrName;
                     }
+                    varName = elNode.getAttributeValue(attrName);
+                    if (varName) {
+                        if (varName.type !== 'Literal' || typeof varName.value !== 'string') {
+                            codegen.addError('The value of the ' + attrName + ' is expected to be a string');
+                            codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
+                            varName = '_var';    // Let it continue with errors
+                        }
 
-                    varName = varName.value;
+                        varName = varName.value;
 
-                    if (!keep) {
-                        elNode.removeAttribute(attrName);
+                        if (!keep) {
+                            elNode.removeAttribute(attrName);
+                        }
+                        break;
                     }
-                    break;
+                }
+                if (!varName) {
+                    codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
+                    varName = '_var';    // Let it continue with errors
+                }
+            } else {
+                varName = nestedVar.name;
+                if (!varName) {
+                    codegen.addError('Variable name is required');
+                    varName = '_var';    // Let it continue with errors
                 }
             }
-            if (!varName) {
-                codegen.addError('Attribute ' + possibleNameAttributes.join(' or ') + ' is required');
-                varName = '_var';    // Let it continue with errors
-            }
-        } else {
-            varName = nestedVar.name;
-            if (!varName) {
-                codegen.addError('Variable name is required');
-                varName = '_var';    // Let it continue with errors
-            }
-        }
-        variableNames.push(codegen.builder.identifier(varName));
-    });
+            variableNames.push(codegen.builder.identifier(varName));
+        });
+    }
 
     if (elNode.additionalNestedVars.length) {
         elNode.additionalNestedVars.forEach((varName) => {
@@ -69,97 +63,45 @@ function getNestedVariables(elNode, tagDef, codegen) {
     return variableNames;
 }
 
-function buildInputProps(el, context) {
-    var tagDef = el.tagDef;
-    var inputProps = {};
+function getAllowedAttributesString(tagName, context) {
+    var attrNames = [];
 
-    function handleAttr(attrName, attrValue, attrDef) {
-        if (!attrDef) {
-            return; // Skip over attributes that are not supported
-        }
+    var tagDef = context.taglibLookup.getTag(tagName);
+    if (tagDef) {
+        tagDef.forEachAttribute((attrDef) => {
+            attrNames.push(attrDef.name);
+        });
 
-        if (attrValue == null) {
-            attrValue = context.builder.literalTrue();
-        }
+        return attrNames.length ? attrNames.join(', ') : '(none)';
+    } else {
+        return null;
+    }
+}
 
-        var propName;
-        var parentPropName;
+function checkIfNestedTagCanBeAddedDirectlyToInput(nestedTag, parentCustomTag) {
+    if (!nestedTag._isDirectlyNestedTag) {
+        return false;
+    }
 
-        if (attrDef.dynamicAttribute) {
-            // Dynamic attributes are allowed attributes
-            // that are not declared (i.e. "*" attributes)
-            //
-            if (attrDef.removeDashes === true || attrDef.preserveName === false) {
-                propName = removeDashes(attrName);
-            } else {
-                propName = attrName;
-            }
+    var isRepeated = nestedTag.tagDef.isRepeated;
+    if (!isRepeated) {
+        return true;
+    }
 
-            if (attrDef.targetProperty) {
-                parentPropName = attrDef.targetProperty;
-            }
-        } else {
-            // Attributes map to properties and we allow the taglib
-            // author to control how an attribute name resolves
-            // to a property name.
-            if (attrDef.targetProperty) {
-                propName = attrDef.targetProperty;
-            } else if (attrDef.preserveName === true) {
-                propName = attrName;
-            } else {
-                propName = removeDashes(attrName);
-            }
-        }
+    let tagName = nestedTag.tagDef.name;
+    let previousMatchingNestedTags = parentCustomTag._foundNestedTagsByName[tagName];
+    if (!previousMatchingNestedTags) {
+        return true;
+    }
 
-        if (attrDef.type === 'path') {
-            attrValue = context.resolvePath(attrValue);
-        } else if (attrDef.type === 'template') {
-            attrValue = context.resolveTemplate(attrValue);
-        }
-
-        if (parentPropName) {
-            let parent = inputProps[parentPropName] || (inputProps[parentPropName] = {});
-            parent[propName] = attrValue;
-        } else {
-            inputProps[propName] = attrValue;
+    for (let i=0; i<previousMatchingNestedTags.length; i++) {
+        let previousNestedTag = previousMatchingNestedTags[i];
+        if (!previousNestedTag._isDirectlyNestedTag) {
+            return false;
         }
     }
 
-    // Add default values for any attributes from the tag definition. These added properties may get overridden
-    // by get overridden from the attributes found on the actual HTML element.
-    tagDef.forEachAttribute(function (attrDef) {
-        if (attrDef.hasOwnProperty('defaultValue')) {
-            handleAttr(
-                attrDef.name,
-                context.builder.literal(attrDef.defaultValue),
-                attrDef);
-        }
-    });
-
-    // Loop over the attributes found on the HTML element and add the corresponding properties
-    // to the input object for the custom tag
-    el.forEachAttribute((attr) => {
-        var attrName = attr.name;
-        var attrDef = attr.def || context.taglibLookup.getAttribute(el.tagName, attr.name);
-
-        if (!attrDef) {
-            context.addError(el, 'Unsupported attribute of "' + attrName + '" found on the <' + el.tagName + '> custom tag.');
-            return; // Skip over attributes that are not supported
-        }
-
-        handleAttr(attrName, attr.value, attrDef);
-    });
-
-    // Imported variables are used to add input properties to a custom tag based on data/variables
-    // found in the compiled template
-    tagDef.forEachImportedVariable(function(importedVariable) {
-        let propName = importedVariable.targetProperty;
-        let propExpression = importedVariable.expression;
-
-        inputProps[propName] = propExpression;
-    });
-
-    return inputProps;
+    return true;
 }
 
 function getNextNestedTagVarName(tagDef, context) {
@@ -182,17 +124,235 @@ function getNextRenderBodyVar(context) {
     return 'renderBodyConditional'+ (nextVarInfo.next++);
 }
 
+function processDirectlyNestedTags(node, codegen) {
+    node.forEachChild((child) => {
+        if (child.type === 'CustomTag') {
+            let customTag = child;
+
+            var tagDef = customTag.resolveTagDef(codegen);
+            if (tagDef.isNestedTag) {
+                customTag._isDirectlyNestedTag = true;
+            }
+        } else if (child.type === 'If') {
+            if (child.nextSibling && child.nextSibling.type === 'Else') {
+                return;
+            }
+
+            let ifNode = child;
+
+            let childChild = child.childCount === 1 && child.firstChild;
+            if (childChild && childChild.type === 'CustomTag') {
+                let customTag = childChild;
+
+                let tagDef = customTag.resolveTagDef(codegen);
+                if (tagDef.isNestedTag && !tagDef.isRepeated) {
+                    let condition = codegen.generateCode(ifNode.test);
+                    customTag._isDirectlyNestedTag = true;
+                    customTag._condition = condition;
+                    ifNode.replaceWith(customTag);
+                }
+            }
+        }
+    });
+}
+
 class CustomTag extends HtmlElement {
     constructor(el, tagDef) {
         super(el);
         this.type = 'CustomTag';
         this.tagDef = tagDef;
         this.additionalNestedVars = [];
+        this._nestedTagVar = null;
+        this._inputProps = null;
+        this._isDirectlyNestedTag = false;
+        this._condition = null;
+        this._foundNestedTagsByName = {};
+        this._hasDynamicNestedTags = false;
+    }
+
+    buildInputProps(codegen) {
+        var inputProps = this._inputProps;
+        if (inputProps) {
+            return inputProps;
+        }
+
+        var context = codegen.context;
+        var tagDef = this.resolveTagDef(codegen);
+        inputProps = {};
+
+        function handleAttr(attrName, attrValue, attrDef) {
+            if (!attrDef) {
+                return; // Skip over attributes that are not supported
+            }
+
+            if (attrValue == null) {
+                attrValue = context.builder.literalTrue();
+            }
+
+            var propName;
+            var parentPropName;
+
+            if (attrDef.dynamicAttribute) {
+                // Dynamic attributes are allowed attributes
+                // that are not declared (i.e. "*" attributes)
+                //
+                if (attrDef.removeDashes === true || attrDef.preserveName === false) {
+                    propName = removeDashes(attrName);
+                } else {
+                    propName = attrName;
+                }
+
+                if (attrDef.targetProperty) {
+                    parentPropName = attrDef.targetProperty;
+                }
+            } else {
+                // Attributes map to properties and we allow the taglib
+                // author to control how an attribute name resolves
+                // to a property name.
+                if (attrDef.targetProperty) {
+                    propName = attrDef.targetProperty;
+                } else if (attrDef.preserveName === true) {
+                    propName = attrName;
+                } else {
+                    propName = removeDashes(attrName);
+                }
+            }
+
+            if (attrDef.type === 'path') {
+                attrValue = context.resolvePath(attrValue);
+            } else if (attrDef.type === 'template') {
+                attrValue = context.resolveTemplate(attrValue);
+            }
+
+            if (parentPropName) {
+                let parent = inputProps[parentPropName] || (inputProps[parentPropName] = {});
+                parent[propName] = attrValue;
+            } else {
+                inputProps[propName] = attrValue;
+            }
+        }
+
+        if (tagDef.forEachAttribute) {
+            // Add default values for any attributes from the tag definition. These added properties may get overridden
+            // by get overridden from the attributes found on the actual HTML element.
+            tagDef.forEachAttribute(function (attrDef) {
+                if (attrDef.hasOwnProperty('defaultValue')) {
+                    handleAttr(
+                        attrDef.name,
+                        context.builder.literal(attrDef.defaultValue),
+                        attrDef);
+                }
+            });
+        }
+
+        let tagName = tagDef.isNestedTag ? tagDef.name : this.tagName;
+
+        // Loop over the attributes found on the HTML element and add the corresponding properties
+        // to the input object for the custom tag
+        this.forEachAttribute((attr) => {
+            var attrName = attr.name;
+            var attrDef = attr.def || tagDef.getAttribute(attr.name);
+
+            if (!attrDef) {
+                var errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';
+                let allowedAttributesString = getAllowedAttributesString(tagName, context);
+                if (allowedAttributesString) {
+                    errorMessage += ' Allowed attributes: ' + allowedAttributesString;
+                }
+
+                context.addError(this,  errorMessage);
+                return; // Skip over attributes that are not supported
+            }
+
+            handleAttr(attrName, attr.value, attrDef);
+        });
+
+
+        if (tagDef.forEachImportedVariable) {
+            // Imported variables are used to add input properties to a custom tag based on data/variables
+            // found in the compiled template
+            tagDef.forEachImportedVariable(function(importedVariable) {
+                let propName = importedVariable.targetProperty;
+                let propExpression = importedVariable.expression;
+
+                inputProps[propName] = propExpression;
+            });
+        }
+
+        this._inputProps = inputProps;
+
+        return inputProps;
+    }
+
+    resolveTagDef(codegen) {
+        var context = codegen.context;
+        var tagDef = this.tagDef;
+        if (!tagDef) {
+            if (this.tagName && this.tagName.startsWith('@')) {
+                var parentCustomTag = context.getData(CUSTOM_TAG_KEY);
+
+                if (!parentCustomTag) {
+                    codegen.addError('Invalid usage of the <' + this.tagName + '> nested tag. Tag not nested within a custom tag.');
+                    return null;
+                }
+
+                var parentTagDef = parentCustomTag.tagDef;
+                if (!parentTagDef) {
+                    throw new Error('"tagDef" is expected for CustomTag: ' + parentCustomTag.tagName);
+                }
+
+                var nestedTagName = this.tagName.substring(1);
+
+                var fullyQualifiedName = parentCustomTag.tagDef.name + ':' + nestedTagName;
+                tagDef = this.tagDef = context.getTagDef(fullyQualifiedName);
+                if (!tagDef) {
+                    // This nested tag is not declared, but we will allow it to go through
+                    tagDef = this.tagDef = tagLoader.loadTag({
+                        name: fullyQualifiedName,
+                        attributes: {
+                            '*': {
+                                targetProperty: null
+                            }
+                        }
+                    }, context.filename);
+
+                    tagDef.isNestedTag = true;
+                    tagDef.isRepeated = false;
+                    tagDef.targetProperty = nestedTagName;
+                }
+            } else {
+                throw new Error('"tagDef" is required for CustomTag');
+            }
+            this.tagDef = tagDef;
+        }
+        return tagDef;
     }
 
     addNestedVariable(name) {
         ok(name, '"name" is required');
         this.additionalNestedVars.push(name);
+    }
+
+    addNestedTag(nestedTag) {
+        var tagName = nestedTag.tagDef.name;
+
+        var byNameArray = this._foundNestedTagsByName[tagName] ||
+            (this._foundNestedTagsByName[tagName] = []);
+
+        byNameArray.push(nestedTag);
+    }
+
+    getNestedTagVar(context) {
+        if (!this._nestedTagVar) {
+            var tagDef = this.tagDef;
+            var builder = context.builder;
+
+            var nextNestedTagVarName = getNextNestedTagVarName(tagDef, context);
+
+            this._nestedTagVar = builder.identifier(nextNestedTagVarName);
+        }
+
+        return this._nestedTagVar;
     }
 
     generateCode(codegen) {
@@ -202,44 +362,86 @@ class CustomTag extends HtmlElement {
         var builder = codegen.builder;
         var context = codegen.context;
 
-        var tagDef = this.tagDef;
+        var tagDef = this.resolveTagDef(codegen);
+
+        var parentCustomTag;
+
+        // console.log('BEGIN:', JSON.stringify(this, null, 2));
+
+        // console.log(module.id, 'generateCode BEGIN:', this.tagName, new Error().stack);
+
+        context.pushData(CUSTOM_TAG_KEY, this);
+        processDirectlyNestedTags(this, codegen);
+        var body = codegen.generateCode(this.body);
+        context.popData(CUSTOM_TAG_KEY);
+
+        // console.log(module.id, 'generateCode   END:', this.tagName);
 
         var isNestedTag = tagDef.isNestedTag === true;
-        var hasNestedTags = tagDef.hasNestedTags();
-        var parentTagName;
-        var isRepeated;
-        var targetProperty;
-
-        var bodyOnlyIf = this.bodyOnlyIf;
-
         if (isNestedTag) {
-            parentTagName = tagDef.parentTagName;
-            isRepeated = tagDef.isRepeated === true;
-            targetProperty = builder.literal(tagDef.targetProperty);
-        }
+            parentCustomTag = context.getData(CUSTOM_TAG_KEY);
 
-        var nestedTagVar;
+            // console.log('parentCustomTag:', parentCustomTag.tagName, 'child:', tagDef.name);
 
-        if (hasNestedTags) {
-            nestedTagVar = this.data.nestedTagVar = builder.identifier(getNextNestedTagVarName(tagDef, context));
-        }
+            if (!parentCustomTag) {
+                if (tagDef.parentTagName) {
+                    codegen.addError(`Invalid usage of the <${this.tagName}> nested tag. Tag not nested within a <${tagDef.parentTagName}> tag.`);
+                } else {
+                    codegen.addError(`Invalid usage of the <${this.tagName}> nested tag. Tag not nested within a custom tag.`);
+                }
 
-        let parentTagVar;
-
-        if (isNestedTag) {
-            let parentTagNode = getNestedTagParentNode(this, parentTagName);
-            if (!parentTagNode) {
-                codegen.addError('Invalid usage of the <' + this.tagName + '> nested tag. Tag not nested within a <' + parentTagName + '> tag.');
                 return null;
             }
-            parentTagVar = parentTagNode.data.nestedTagVar;
+
+            parentCustomTag.addNestedTag(this);
+
+            if (checkIfNestedTagCanBeAddedDirectlyToInput(this, parentCustomTag)) {
+                let inputProps = this.buildInputProps(codegen);
+
+                if (body && body.length) {
+                    inputProps.renderBody = codegen.builder.renderBodyFunction(body);
+                }
+
+                if (tagDef.isRepeated) {
+                    var currentValue = parentCustomTag.getAttributeValue(tagDef.targetProperty);
+                    if (currentValue) {
+                        currentValue.value.push(inputProps);
+                    } else {
+                        parentCustomTag.setAttributeValue(tagDef.targetProperty, builder.literal([
+                            inputProps
+                        ]));
+                    }
+                } else {
+                    let nestedTagValue = builder.literal(inputProps);
+                    if (this._condition) {
+                        nestedTagValue = builder.binaryExpression(this._condition, '&&', nestedTagValue);
+                    }
+                    parentCustomTag.setAttributeValue(tagDef.targetProperty, nestedTagValue);
+                }
+
+                return null;
+            } else {
+                this._isDirectlyNestedTag = false;
+                parentCustomTag._hasDynamicNestedTags = true;
+            }
         }
+
+        var hasDynamicNestedTags = this._hasDynamicNestedTags;
+
+        var bodyOnlyIf = this.bodyOnlyIf;
+        // let parentTagVar;
 
         var nestedVariableNames = getNestedVariables(this, tagDef, codegen);
 
-        var inputProps = buildInputProps(this, context);
+        var inputProps = this.buildInputProps(codegen);
+
+        // if (isNestedTag) {
+        //     isRepeated = tagDef.isRepeated === true;
+        //     targetProperty = tagDef.targetProperty;
+        //     parentTagVar = parentCustomTag.getNestedTagVar(context);
+        // }
+
         var renderBodyFunction;
-        var body = codegen.generateCode(this.body);
 
         if (body && body.length) {
             if (tagDef.bodyFunction) {
@@ -252,8 +454,8 @@ class CustomTag extends HtmlElement {
                 inputProps[bodyFunctionName] = builder.functionDeclaration(bodyFunctionName, bodyFunctionParams, body);
             } else {
                 renderBodyFunction = context.builder.renderBodyFunction(body);
-                if (nestedTagVar) {
-                    renderBodyFunction.params.push(nestedTagVar);
+                if (hasDynamicNestedTags) {
+                    renderBodyFunction.params.push(this._nestedTagVar);
                 } else {
                     if (nestedVariableNames && nestedVariableNames.length) {
                         renderBodyFunction.params = renderBodyFunction.params.concat(nestedVariableNames);
@@ -266,7 +468,7 @@ class CustomTag extends HtmlElement {
         var renderBodyFunctionVar;
         // Store the renderBody function with the input, but only if the body does not have
         // nested tags
-        if (renderBodyFunction && !hasNestedTags) {
+        if (renderBodyFunction) {
             if (bodyOnlyIf) {
                 // Move the renderBody function into a local variable
                 renderBodyFunctionVarIdentifier = builder.identifier(getNextRenderBodyVar(context));
@@ -297,11 +499,13 @@ class CustomTag extends HtmlElement {
             }
         }
 
+        if (hasDynamicNestedTags) {
+            inputProps = builder.functionCall(context.helper('mergeNestedTagsHelper'), [ inputProps ]);
+        }
+
         var rendererPath = tagDef.renderer;
         var rendererRequirePath;
         var requireRendererFunctionCall;
-
-
 
         if (rendererPath) {
             rendererRequirePath = context.getRequirePath(rendererPath);
@@ -312,52 +516,45 @@ class CustomTag extends HtmlElement {
 
         var finalNode;
 
-        var tagVar = tagDef.name + '_tag';
+        var tagVarName = tagDef.name + (tagDef.isNestedTag ? '_nested_tag' : '_tag');
 
         if (tagDef.template) {
             var templateRequirePath = context.getRequirePath(tagDef.template);
             var templateVar = context.importTemplate(templateRequirePath, tagDef.name + '_template');
 
             let loadTag = builder.functionCall(context.helper('loadTag'), [templateVar]);
-            tagVar = codegen.addStaticVar(tagVar, loadTag);
+            let tagVar = codegen.addStaticVar(tagVarName, loadTag);
 
             let tagFunctionCall = builder.functionCall(tagVar, [ inputProps, 'out' ]);
             finalNode = tagFunctionCall;
         } else {
-            var loadTagArgs = [
-                requireRendererFunctionCall // The first param is the renderer
-            ];
-
-            if(rendererRequirePath) {
+            if (rendererRequirePath) {
                 codegen.pushMeta('tags', builder.literal(rendererRequirePath), true);
             }
 
-            if (isNestedTag || hasNestedTags) {
-                if (isNestedTag) {
-                    loadTagArgs.push(targetProperty); // targetProperty
-                    loadTagArgs.push(builder.literal(isRepeated ? 1 : 0)); // isRepeated
-                } else {
-                    loadTagArgs.push(builder.literal(0)); // targetProperty
-                    loadTagArgs.push(builder.literal(0)); // isRepeated
+            let loadTag;
+            let tagArgs;
+
+            if (isNestedTag) {
+                let loadTagArgs = [ builder.literal(tagDef.targetProperty) ];
+
+                if (tagDef.isRepeated) {
+                    loadTagArgs.push(builder.literal(1)); // isRepeated
                 }
 
-                if (hasNestedTags) {
-                    loadTagArgs.push(builder.literal(1));
-                }
+                loadTag = builder.functionCall(context.helper('loadNestedTag'), loadTagArgs);
+
+                tagArgs = [inputProps, parentCustomTag.getNestedTagVar(context) ];
+            } else {
+                loadTag = builder.functionCall(context.helper('loadTag'), [
+                    requireRendererFunctionCall // The first param is the renderer
+                ]);
+
+                tagArgs = [inputProps, builder.identifierOut() ];
             }
 
-            let loadTag = builder.functionCall(context.helper('loadTag'), loadTagArgs);
+            let tagVar = codegen.addStaticVar(tagVarName, loadTag);
 
-            tagVar = codegen.addStaticVar(tagVar, loadTag);
-            let tagArgs = [inputProps, 'out' ];
-
-            if (isNestedTag || hasNestedTags) {
-                tagArgs.push(isNestedTag ? parentTagVar : builder.literal(0));
-
-                if (renderBodyFunction && hasNestedTags) {
-                    tagArgs.push(renderBodyFunction);
-                }
-            }
             let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
             finalNode = tagFunctionCall;
         }
@@ -384,3 +581,5 @@ class CustomTag extends HtmlElement {
 }
 
 module.exports = CustomTag;
+
+tagLoader = require('../taglib-loader/loader-tag');
