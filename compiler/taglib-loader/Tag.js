@@ -1,22 +1,7 @@
-/*
-* Copyright 2011 eBay Software Foundation
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
 'use strict';
 var forEachEntry = require('raptor-util/forEachEntry');
 var ok = require('assert').ok;
-var CustomTag = require('../../ast/CustomTag');
+var CustomTag;
 
 function inheritProps(sub, sup) {
     forEachEntry(sup, function (k, v) {
@@ -144,6 +129,25 @@ class Tag{
             }
         }
     }
+    getAttribute(attrName) {
+        var attributes = this.attributes;
+
+        // try by exact match first
+        var attribute = attributes[attrName] || attributes['*'];
+
+        if (attribute === undefined && this.patternAttributes) {
+            // try searching by pattern
+            for (var i = 0, len = this.patternAttributes.length; i < len; i++) {
+                var patternAttribute = this.patternAttributes[i];
+                if (patternAttribute.pattern.test(attrName)) {
+                    attribute = patternAttribute;
+                    break;
+                }
+            }
+        }
+
+        return attribute;
+    }
     addNestedVariable(nestedVariable) {
         if (!this.nestedVariables) {
             this.nestedVariables = {
@@ -243,3 +247,5 @@ class Tag{
 }
 
 module.exports = Tag;
+
+CustomTag = require('../ast/CustomTag');
