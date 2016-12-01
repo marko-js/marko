@@ -671,7 +671,7 @@ In both cases the output would be the following:
 
 # Macros
 
-Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<def>` directive.
+Parameterized macros allow for reusable fragments within an HTML template. A macro can be defined using the `<macro>` directive.
 
 ## macro
 
