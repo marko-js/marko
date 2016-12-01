@@ -195,7 +195,7 @@
         },
         "transformer": "./widgets-transformer.js"
     },
-    "<w-widget>": {
+    "<_widget>": {
         "renderer": "./widget-tag.js",
         "@type": "object",
         "@config": "object",

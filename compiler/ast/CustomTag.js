@@ -5,6 +5,7 @@ var removeDashes = require('../util/removeDashes');
 var safeVarName = require('../util/safeVarName');
 var ok = require('assert').ok;
 var tagLoader;
+var Node = require('./Node');
 
 var CUSTOM_TAG_KEY = Symbol('CustomTag');
 
@@ -156,6 +157,51 @@ function processDirectlyNestedTags(node, codegen) {
     });
 }
 
+function merge(props1, props2, context) {
+    if (!props2) {
+        return props1;
+    }
+
+    if (!(props2 instanceof Node)) {
+        if (Object.keys(props2).length === 0) {
+            return props1;
+        }
+    }
+
+    if (props1 instanceof Node) {
+        let mergeVar = context.helper('merge');
+        if (!(props2 instanceof Node)) {
+            props2 = context.builder.literal(props2);
+        }
+
+        return context.builder.functionCall(mergeVar, [
+            props2, // Input props from the attributes take precedence
+            props1
+        ]);
+    } else {
+        if (props2 instanceof Node) {
+            let mergeVar = context.helper('merge');
+
+            return context.builder.functionCall(mergeVar, [
+                props2, // Input props from the attributes take precedence
+                props1
+
+            ]);
+        } else {
+            if (props1._arg) {
+                let mergeVar = context.helper('merge');
+                props1._arg = context.builder.functionCall(mergeVar, [
+                    context.builder.literal(props2), // Input props from the attributes take precedence
+                    props1._arg
+                ]);
+                return props1;
+            } else {
+                return Object.assign(props1, props2);
+            }
+        }
+    }
+}
+
 class CustomTag extends HtmlElement {
     constructor(el, tagDef) {
         super(el);
@@ -168,6 +214,8 @@ class CustomTag extends HtmlElement {
         this._condition = null;
         this._foundNestedTagsByName = {};
         this._hasDynamicNestedTags = false;
+        this._additionalProps = null;
+        this._rendererPath = null;
     }
 
     buildInputProps(codegen) {
@@ -342,6 +390,26 @@ class CustomTag extends HtmlElement {
         byNameArray.push(nestedTag);
     }
 
+    addProps(additionalProps) {
+        if (!this._additionalProps) {
+            this._additionalProps = {};
+        }
+
+        Object.assign(this._additionalProps, additionalProps);
+    }
+
+    addProp(name, value) {
+        if (!this._additionalProps) {
+            this._additionalProps = {};
+        }
+        this._additionalProps[name] = value;
+    }
+
+    setRendererPath(path) {
+        ok(typeof path === 'string', '"path" should be a string');
+        this._rendererPath = path;
+    }
+
     getNestedTagVar(context) {
         if (!this._nestedTagVar) {
             var tagDef = this.tagDef;
@@ -364,25 +432,22 @@ class CustomTag extends HtmlElement {
 
         var tagDef = this.resolveTagDef(codegen);
 
+        if (!tagDef) {
+            // The tag def was not able to be resolved and an error should have already
+            // been added to the context
+            return null;
+        }
+
         var parentCustomTag;
-
-        // console.log('BEGIN:', JSON.stringify(this, null, 2));
-
-        // console.log(module.id, 'generateCode BEGIN:', this.tagName, new Error().stack);
 
         context.pushData(CUSTOM_TAG_KEY, this);
         processDirectlyNestedTags(this, codegen);
         var body = codegen.generateCode(this.body);
         context.popData(CUSTOM_TAG_KEY);
 
-        // console.log(module.id, 'generateCode   END:', this.tagName);
-
         var isNestedTag = tagDef.isNestedTag === true;
         if (isNestedTag) {
             parentCustomTag = context.getData(CUSTOM_TAG_KEY);
-
-            // console.log('parentCustomTag:', parentCustomTag.tagName, 'child:', tagDef.name);
-
             if (!parentCustomTag) {
                 if (tagDef.parentTagName) {
                     codegen.addError(`Invalid usage of the <${this.tagName}> nested tag. Tag not nested within a <${tagDef.parentTagName}> tag.`);
@@ -435,12 +500,6 @@ class CustomTag extends HtmlElement {
 
         var inputProps = this.buildInputProps(codegen);
 
-        // if (isNestedTag) {
-        //     isRepeated = tagDef.isRepeated === true;
-        //     targetProperty = tagDef.targetProperty;
-        //     parentTagVar = parentCustomTag.getNestedTagVar(context);
-        // }
-
         var renderBodyFunction;
 
         if (body && body.length) {
@@ -481,29 +540,31 @@ class CustomTag extends HtmlElement {
             bodyOnlyIf = null;
         }
 
-        inputProps = builder.literal(inputProps);
+        var argExpression;
 
-        var argument = this.argument;
+        if (this.argument) {
+            argExpression = builder.parseExpression(this.argument);
+        }
 
-        if (argument) {
-            argument = builder.parseExpression(argument);
+        var additionalProps = this._additionalProps;
 
-            if (Object.keys(inputProps.value).length === 0) {
-                inputProps = argument;
-            } else {
-                var mergeVar = context.helper('merge');
-                inputProps = builder.functionCall(mergeVar, [
-                    inputProps, // Input props from the attributes take precedence
-                    argument
-                ]);
-            }
+        if (additionalProps) {
+            inputProps = merge(additionalProps, inputProps, context);
+        }
+
+        if (argExpression) {
+            inputProps = merge(argExpression, inputProps, context);
+        }
+
+        if (!(inputProps instanceof Node)) {
+            inputProps = builder.literal(inputProps);
         }
 
         if (hasDynamicNestedTags) {
             inputProps = builder.functionCall(context.helper('mergeNestedTagsHelper'), [ inputProps ]);
         }
 
-        var rendererPath = tagDef.renderer;
+        var rendererPath = this._rendererPath || tagDef.renderer;
         var rendererRequirePath;
         var requireRendererFunctionCall;
 

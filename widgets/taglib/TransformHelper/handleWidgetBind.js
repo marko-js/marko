@@ -165,7 +165,7 @@ module.exports = function handleWidgetBind() {
         widgetAttrs.id = id;
     }
 
-    let widgetNode = context.createNodeForEl('w-widget', widgetAttrs);
+    let widgetNode = context.createNodeForEl('_widget', widgetAttrs);
     el.wrapWith(widgetNode);
 
     el.setAttributeValue('id', builder.memberExpression(builder.identifier('widget'), builder.identifier('id')));
