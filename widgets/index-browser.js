@@ -54,15 +54,7 @@ events.on('dom/beforeRemove', function(eventArgs) {
 
 exports.initWidgets = initServerRendered;
 
-var JQUERY = 'jquery';
 var jquery = window.$;
-
-if (!jquery) {
-    try {
-        jquery = require(JQUERY);
-    }
-    catch(e) {}
-}
 
 exports.$ = jquery;
 
