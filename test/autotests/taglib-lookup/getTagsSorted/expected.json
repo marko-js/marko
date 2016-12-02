@@ -1,5 +1,6 @@
 [
     "_lasso-resources-root",
+    "_widget",
     "*",
     "a",
     "assign",
@@ -49,7 +50,6 @@
     "unless",
     "var",
     "w-preserve",
-    "w-widget",
     "while",
     "widget-types"
 ]

@@ -45,7 +45,7 @@
     "async-fragment-timeout",
     "async-fragment-error",
     "cached-fragment",
-    "w-widget",
+    "_widget",
     "init-widgets",
     "w-preserve",
     "no-update",

@@ -6,6 +6,10 @@ const resolveFrom = require('resolve-from');
 function isTemplateMainEntry(context) {
     let filename = path.basename(context.filename);
     let ext = path.extname(filename);
+    if (ext === '.js') {
+        return false;
+    }
+
     if (ext) {
         filename = filename.slice(0, 0 - ext.length);
     }

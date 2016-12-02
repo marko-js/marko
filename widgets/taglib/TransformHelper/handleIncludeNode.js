@@ -39,7 +39,7 @@ module.exports = function(includeNode) {
 
         includeNode.onBeforeGenerateCode(function() {
             includeNode.addProp('_widgetId', parentTransformHelper.getIdExpression());
-            includeNode.addProp('_widget', builder.identifier('widget'));
+            includeNode.addProp('_arg', builder.identifier('widget'));
         });
     }
 
