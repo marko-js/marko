@@ -104,7 +104,7 @@ module.exports = function handleRootNodes() {
     var transformHelper = this;
 
     let walker = context.createWalker({
-        exit(node) {
+        enter(node) {
             if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
                     hasExplicitBind = true;
@@ -122,9 +122,9 @@ module.exports = function handleRootNodes() {
                     } else if (tagName !== 'style') {
                         rootNodes.push(node);
                     }
-                    // Don't recurse into children
-                    walker.skip();
                 }
+                walker.skip();
+
                 return;
             } else if (node.type === 'CustomTag') {
                 rootNodes.push(node);
