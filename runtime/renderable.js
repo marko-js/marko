@@ -13,18 +13,19 @@ module.exports = function(target, renderer) {
             var render = renderFunc || this._;
             var out = createOut(localData.$global);
 
-            if(!callback) {
-                out.sync();
-            } else {
+            if (callback) {
                 out.on('finish', function() {
                        callback(null, out.toString(), out);
                    })
                    .once('error', callback);
+
+                render(localData, out);
+                return out.end();
+            } else {
+                out.sync();
+                render(localData, out);
+                return out.toString();
             }
-
-            render(localData, out);
-
-            return callback ? out.end() : out.toString();
         },
 
         renderSync: function(data) {
@@ -72,7 +73,7 @@ module.exports = function(target, renderer) {
                 finalData = {};
             }
 
-            if(out && out.isAsyncOut){
+            if (out && out.isAsyncOut){
                 finalOut = out;
                 shouldEnd = false;
                 extend(out.global, globalData);

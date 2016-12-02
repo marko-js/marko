@@ -107,7 +107,7 @@ exports.xa = escapeXmlAttr;
  * prematurely ended and a new script tag could then be started that could then execute
  * arbitrary code.
  */
-exports.xs = function(val) {
+exports.xs = function escapeScriptHelper(val) {
     return (typeof val === 'string') ? val.replace(escapeEndingScriptTagRegExp, '\\u003C/') : val;
 };
 

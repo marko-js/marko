@@ -30,7 +30,7 @@
     "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
     "test-widgets": "npm run test-widgets-browser -s && npm run test-widgets-browser-deprecated -s && npm run jshint --silent",
     "test-widgets-browser": "node test/browser-tests-runner/cli.js test/widgets-browser-tests.js --automated && npm run test-widgets-browser-pages",
-    "test-widgets-browser-deprecated": "node test/browser-tests-runner/cli.js test/widgets-browser-deprecated-tests.js --automated && npm run test-widgets-browser-pages",
+    "test-widgets-browser-deprecated": "node test/browser-tests-runner/cli.js test/deprecated-widgets-browser-tests.js --automated && npm run test-widgets-browser-pages",
     "test-widgets-browser-pages": "node test/browser-tests-runner/cli.js --pages --automated",
     "test-widgets-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server",
     "test-widgets-page": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server --page",

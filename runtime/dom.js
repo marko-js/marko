@@ -116,4 +116,18 @@ exports.replaceChildrenOf = replaceChildrenOf;
 exports.insertBefore = insertBefore;
 exports.insertAfter = insertAfter;
 exports.prependTo = prependTo;
-exports.ready = require('./ready');
+
+exports.mixin = function(target, getNode, afterInsert) {
+    Object.keys(exports).forEach(function(methodName) {
+        var func = exports[methodName];
+
+        target[methodName] = function(referenceEl) {
+            var newNode = getNode.call(this, referenceEl.ownerDocument);
+            func.call(exports, newNode, referenceEl);
+            if (afterInsert) {
+                afterInsert.call(this, newNode);
+            }
+            return this;
+        };
+    });
+};

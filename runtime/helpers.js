@@ -7,7 +7,7 @@ function classListHelper(arg, classNames) {
     if (arg) {
         if (typeof arg === 'string') {
             if (arg) {
-                classNames.push(arg);                
+                classNames.push(arg);
             }
         } else if (typeof (len = arg.length) === 'number') {
             for (var i=0; i<len; i++) {
@@ -251,4 +251,3 @@ exports.cl = function classListHelper() {
  * Loads a template (__helpers.l --> marko_loadTemplate(path))
  */
 exports.l = require('./loader');
-exports.i = require('./include');

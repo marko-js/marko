@@ -1,24 +1,8 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 'use strict';
 var markoWidgets = require('../');
 var extend = require('raptor-util/extend');
 var widgetArgsId = require('../widget-args-id');
-var includeHelper = require('./helpers/include');
+var includeTag = require('./include-tag');
 
 var DUMMY_WIDGET_DEF = {
         elId: function () {
@@ -50,7 +34,10 @@ function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
 
     if (widgetBody && existingWidget.bodyEl) {
         hasUnpreservedBody = true;
-        includeHelper(widgetBody, out, null, existingWidget.bodyEl.id, existingWidget.bodyEl.id);
+        includeTag({
+            _target: widgetBody,
+            _widgetId: existingWidget.bodyEl.id
+        }, out);
     }
 
     out.endElement();
@@ -98,6 +85,7 @@ module.exports = function widgetTag(input, out) {
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
+    var els = input.els;
 
     var id = input.id;
     var extendList;
@@ -205,13 +193,13 @@ module.exports = function widgetTag(input, out) {
             createWidget: input.createWidget,
             extend: extendList,
             existingWidget: existingWidget,
-            bodyElId: bodyElId
+            bodyElId: bodyElId,
+            els: els
         });
 
         // Only render the widget if it needs to be rerendered
         if (shouldRenderBody) {
             input.renderBody(out, widgetDef, state);
-            markoWidgets.writeDomEventsEl(widgetDef, out);
         }
 
         widgetDef.end();

@@ -9,6 +9,8 @@ var extend = require('raptor-util/extend');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var marko = require('marko');
+var widgetLookup = require('./lookup').widgets;
+
 var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
@@ -79,28 +81,35 @@ function removeDOMEventListeners(widget) {
     }
 }
 
+function destroyEl(widget, el, removeNode, recursive) {
+    if (recursive) {
+        destroyRecursive(el);
+    }
+
+    if (removeNode && el.parentNode) {
+        //Remove the widget's DOM nodes from the DOM tree if the root element is known
+        el.parentNode.removeChild(el);
+    }
+
+    el.__widget = null;
+}
+
 function destroy(widget, removeNode, recursive) {
     if (widget.isDestroyed()) {
         return;
     }
 
-    var rootEl = widget.getEl();
 
     emitLifecycleEvent(widget, 'beforeDestroy');
     widget.__lifecycleState = 'destroyed';
 
-    if (rootEl) {
-        if (recursive) {
-            destroyRecursive(rootEl);
-        }
-
-        if (removeNode && rootEl.parentNode) {
-            //Remove the widget's DOM nodes from the DOM tree if the root element is known
-            rootEl.parentNode.removeChild(rootEl);
-        }
-
-        rootEl.__widget = null;
+    var els = widget.els;
+    for (var i=0; i<els.length; i++) {
+        destroyEl(widget, els[i], removeNode, recursive);
     }
+
+    widget.els = null;
+    widget.el = null;
 
     // Unsubscribe from all DOM events
     removeDOMEventListeners(widget);
@@ -109,6 +118,8 @@ function destroy(widget, removeNode, recursive) {
         widget.__subscriptions.removeAllListeners();
         widget.__subscriptions = null;
     }
+
+    delete widgetLookup[widget.id];
 
     emitLifecycleEvent(widget, 'destroy');
 }
@@ -211,6 +222,18 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     targetMethod.apply(targetWidget, args);
 }
 
+function getElId(widget, widgetElId, index) {
+    var id = widget.id;
+
+    var elId = widgetElId != null ? id + '-' + widgetElId : id;
+
+    if (index != null) {
+        elId += '[' + index + ']';
+    }
+
+    return elId;
+}
+
 var widgetProto;
 
 /**
@@ -273,19 +296,15 @@ Widget.prototype = widgetProto = {
         return emit.apply(this, arguments);
     },
     getElId: function (widgetElId, index) {
-        var elId = widgetElId != null ? this.id + '-' + widgetElId : this.id;
-
-        if (index != null) {
-            elId += '[' + index + ']';
-        }
-
-        return elId;
+        return getElId(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
+        var doc = this.__document;
+
         if (widgetElId != null) {
-            return this.__document.getElementById(this.getElId(widgetElId, index));
+            return doc.getElementById(getElId(this, widgetElId, index));
         } else {
-            return this.el || this.__document.getElementById(this.getElId());
+            return this.el || doc.getElementById(getElId(this));
         }
     },
     getEls: function(id) {
@@ -302,8 +321,8 @@ Widget.prototype = widgetProto = {
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = this.getElId(id, index);
-        return markoWidgets.getWidgetForEl(targetWidgetId, this.__document);
+        var targetWidgetId = getElId(this, id, index);
+        return widgetLookup[targetWidgetId];
     },
     getWidgets: function(id) {
         var widgets = [];
@@ -531,8 +550,6 @@ Widget.prototype = widgetProto = {
             throw new Error('Widget does not have a "renderer" property');
         }
 
-        var elToReplace = this.__document.getElementById(self.id);
-
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
@@ -548,6 +565,9 @@ Widget.prototype = widgetProto = {
             globalData.__rerenderState = props ? null : self.state;
         }
 
+        var els = this.els;
+        var doc = this.__document;
+
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
@@ -557,7 +577,12 @@ Widget.prototype = widgetProto = {
             var targetNode;
 
             if (out.isVDOM) {
-                targetNode = out.getOutput().firstChild;
+                if (els) {
+                    targetNode = out.getOutput();
+                } else {
+                    targetNode = out.getOutput().firstChild;
+                }
+
             } else {
                 targetNode = out.getNode(self.__document);
             }
@@ -628,14 +653,40 @@ Widget.prototype = widgetProto = {
                 }
             }
 
-            morphdom(elToReplace, targetNode, {
+            var morphdomOptions = {
                 onNodeDiscarded: onNodeDiscarded,
                 onBeforeElUpdated: onBeforeElUpdated,
                 onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-            });
+            };
 
-            // Trigger any 'onUpdate' events for all of the rendered widgets
-            result.afterInsert(elToReplace);
+            var fromEl;
+            if (els) {
+                var fromEls = {};
+                els.forEach(function(fromEl) {
+                    fromEls[fromEl.id] = fromEl;
+                });
+
+                var targetEl = targetNode.firstChild;
+                while(targetEl) {
+                    var id = targetEl.id;
+
+                    if (id) {
+                        fromEl = fromEls[id];
+                        if (fromEl) {
+                            morphdom(fromEl, targetEl, morphdomOptions);
+                        }
+                    }
+
+                    targetEl = targetEl.nextSibling;
+                }
+
+                result.afterInsert(els[0]);
+            } else {
+                fromEl = doc.getElementById(self.id);
+                morphdom(fromEl, targetNode, morphdomOptions);
+                // Trigger any 'onUpdate' events for all of the rendered widgets
+                result.afterInsert(fromEl);
+            }
 
             self.__lifecycleState = null;
 
@@ -650,29 +701,6 @@ Widget.prototype = widgetProto = {
                 resetWidget(self);
             }
         });
-    },
-
-    detach: function () {
-        dom.detach(this.el);
-
-    },
-    appendTo: function (targetEl) {
-        dom.appendTo(this.el, targetEl);
-    },
-    replace: function (targetEl) {
-        dom.replace(this.el, targetEl);
-    },
-    replaceChildrenOf: function (targetEl) {
-        dom.replaceChildrenOf(this.el, targetEl);
-    },
-    insertBefore: function (targetEl) {
-        dom.insertBefore(this.el, targetEl);
-    },
-    insertAfter: function (targetEl) {
-        dom.insertAfter(this.el, targetEl);
-    },
-    prependTo: function (targetEl) {
-        dom.prependTo(this.el, targetEl);
     },
     ready: function (callback) {
         var document = this.el.ownerDocument;
@@ -697,7 +725,7 @@ Widget.prototype = widgetProto = {
                     if (match[2] == null) {
                         return jquery(this.getEl(widgetElId));
                     } else {
-                        return jquery('#' + this.getElId(widgetElId) + match[2]);
+                        return jquery('#' + getElId(this, widgetElId) + match[2]);
                     }
                 } else {
                     var rootEl = this.getEl();
@@ -719,6 +747,34 @@ Widget.prototype = widgetProto = {
 };
 
 widgetProto.elId = widgetProto.getElId;
+
+// Add all of the following DOM methods to Widget.prototype:
+// - forEachChildEl(referenceEl)
+// - forEachChild(referenceEl)
+// - detach(referenceEl)
+// - appendTo(referenceEl)
+// - remove(referenceEl)
+// - removeChildren(referenceEl)
+// - replace(referenceEl)
+// - replaceChildrenOf(referenceEl)
+// - insertBefore(referenceEl)
+// - insertAfter(referenceEl)
+// - prependTo(referenceEl)
+dom.mixin(
+    widgetProto,
+    function getNode(doc) {
+        var els = this.els;
+        var elCount = els.length;
+        if (elCount > 1) {
+            var fragment = doc.createDocumentFragment();
+            for (var i=0; i<elCount; i++) {
+                fragment.appendChild(els[i]);
+            }
+            return fragment;
+        } else {
+            return this.els[0];
+        }
+    });
 
 inherit(Widget, EventEmitter);
 

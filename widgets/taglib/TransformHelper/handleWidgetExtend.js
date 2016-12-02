@@ -69,7 +69,7 @@ module.exports = function handleWidgetExtend() {
             builder.identifier('widgetState'));
     }
 
-    var widgetTypeVar = context.addStaticVar('__widgetType', this.buildWidgetTypeNode(modulePath));
+    var widgetTypeVar = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(modulePath));
 
     widgetArgs.setExtend(
             widgetTypeVar,

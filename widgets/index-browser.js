@@ -1,6 +1,4 @@
-var dom = require('./dom');
-var ready = dom.ready;
-var EMPTY_OBJ = {};
+var ready = require('../runtime/ready');
 var Widget = require('./Widget');
 var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');
@@ -12,9 +10,6 @@ exports.Widget = Widget;
 exports.ready = ready;
 exports.onInitWidget = function(listener) {
     events.on('initWidget', listener);
-};
-exports.attrs = function() {
-    return EMPTY_OBJ;
 };
 
 exports.writeDomEventsEl = function() {
@@ -54,15 +49,7 @@ events.on('dom/beforeRemove', function(eventArgs) {
 
 exports.initWidgets = initServerRendered;
 
-var JQUERY = 'jquery';
 var jquery = window.$;
-
-if (!jquery) {
-    try {
-        jquery = require(JQUERY);
-    }
-    catch(e) {}
-}
 
 exports.$ = jquery;
 

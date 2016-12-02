@@ -38,6 +38,7 @@ function WidgetDef(config, endFunc, out) {
     this.out = out; // The AsyncWriter that this widget is associated with
     this.hasDomEvents = config.hasDomEvents; // A flag to indicate if this widget has any
                                              // listeners for non-bubbling DOM events
+    this.els = config.els;
     this._nextId = 0; // The unique integer to use for the next scoped ID
 }
 
@@ -104,6 +105,21 @@ WidgetDef.prototype = {
      */
     nextId: function() {
         return this.id + '-w' + (this._nextId++);
+    },
+
+    toJSON: function() {
+        return  {
+            type: this.type,
+            id: this.id,
+            config: this.config,
+            state: this.state,
+            scope: this.scope,
+            domEvents: this.domEvents,
+            customEvents: this.customEvents,
+            extend: this.extend,
+            bodyElId: this.bodyElId,
+            els: this.els
+        };
     }
 };
 
