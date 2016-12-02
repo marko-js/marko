@@ -702,29 +702,6 @@ Widget.prototype = widgetProto = {
             }
         });
     },
-
-    detach: function () {
-        dom.detach(this.el);
-
-    },
-    appendTo: function (targetEl) {
-        dom.appendTo(this.el, targetEl);
-    },
-    replace: function (targetEl) {
-        dom.replace(this.el, targetEl);
-    },
-    replaceChildrenOf: function (targetEl) {
-        dom.replaceChildrenOf(this.el, targetEl);
-    },
-    insertBefore: function (targetEl) {
-        dom.insertBefore(this.el, targetEl);
-    },
-    insertAfter: function (targetEl) {
-        dom.insertAfter(this.el, targetEl);
-    },
-    prependTo: function (targetEl) {
-        dom.prependTo(this.el, targetEl);
-    },
     ready: function (callback) {
         var document = this.el.ownerDocument;
         markoWidgets.ready(callback, this, document);
@@ -770,6 +747,34 @@ Widget.prototype = widgetProto = {
 };
 
 widgetProto.elId = widgetProto.getElId;
+
+// Add all of the following DOM methods to Widget.prototype:
+// - forEachChildEl(referenceEl)
+// - forEachChild(referenceEl)
+// - detach(referenceEl)
+// - appendTo(referenceEl)
+// - remove(referenceEl)
+// - removeChildren(referenceEl)
+// - replace(referenceEl)
+// - replaceChildrenOf(referenceEl)
+// - insertBefore(referenceEl)
+// - insertAfter(referenceEl)
+// - prependTo(referenceEl)
+dom.mixin(
+    widgetProto,
+    function getNode(doc) {
+        var els = this.els;
+        var elCount = els.length;
+        if (elCount > 1) {
+            var fragment = doc.createDocumentFragment();
+            for (var i=0; i<elCount; i++) {
+                fragment.appendChild(els[i]);
+            }
+            return fragment;
+        } else {
+            return this.els[0];
+        }
+    });
 
 inherit(Widget, EventEmitter);
 

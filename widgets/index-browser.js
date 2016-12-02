@@ -1,5 +1,4 @@
-var dom = require('./dom');
-var ready = dom.ready;
+var ready = require('../runtime/ready');
 var Widget = require('./Widget');
 var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');

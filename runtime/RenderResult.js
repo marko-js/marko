@@ -20,7 +20,7 @@ var RenderResult = module.exports = function RenderResult(out) {
     this.out = out;
 };
 
-RenderResult.prototype = {
+var proto = RenderResult.prototype = {
     getWidget: function() {
         checkAddedToDOM(this, 'getWidget');
 
@@ -75,39 +75,8 @@ RenderResult.prototype = {
 
         return this;
     },
-
-    appendTo: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.appendTo(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    replace: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.replace(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    replaceChildrenOf: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.replaceChildrenOf(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    insertBefore: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.insertBefore(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    insertAfter: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.insertAfter(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    prependTo: function(referenceEl) {
-        var newNode = this.getNode(referenceEl.ownerDocument);
-        dom.prependTo(newNode, referenceEl);
-        return this.afterInsert(newNode);
-    },
-    getNode: function() {
-        return this.out.getNode();
+    getNode: function(doc) {
+        return this.out.getNode(doc);
     },
     getOutput: function() {
         return this.out.getOutput();
@@ -120,3 +89,24 @@ RenderResult.prototype = {
     },
     document: typeof document !== 'undefined' && document
 };
+
+// Add all of the following DOM methods to RenderResult.prototype:
+// - forEachChildEl(referenceEl)
+// - forEachChild(referenceEl)
+// - detach(referenceEl)
+// - appendTo(referenceEl)
+// - remove(referenceEl)
+// - removeChildren(referenceEl)
+// - replace(referenceEl)
+// - replaceChildrenOf(referenceEl)
+// - insertBefore(referenceEl)
+// - insertAfter(referenceEl)
+// - prependTo(referenceEl)
+dom.mixin(
+    proto,
+    function getNode() {
+        return this.getNode();
+    },
+    function afterInsert(newNode) {
+        this.afterInsert(newNode);
+    });
