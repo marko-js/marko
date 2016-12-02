@@ -222,6 +222,18 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     targetMethod.apply(targetWidget, args);
 }
 
+function getElId(widget, widgetElId, index) {
+    var id = widget.id;
+
+    var elId = widgetElId != null ? id + '-' + widgetElId : id;
+
+    if (index != null) {
+        elId += '[' + index + ']';
+    }
+
+    return elId;
+}
+
 var widgetProto;
 
 /**
@@ -284,21 +296,15 @@ Widget.prototype = widgetProto = {
         return emit.apply(this, arguments);
     },
     getElId: function (widgetElId, index) {
-        var elId = widgetElId != null ? this.id + '-' + widgetElId : this.id;
-
-        if (index != null) {
-            elId += '[' + index + ']';
-        }
-
-        return elId;
+        return getElId(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
         var doc = this.__document;
 
         if (widgetElId != null) {
-            return doc.getElementById(this.getElId(widgetElId, index));
+            return doc.getElementById(getElId(this, widgetElId, index));
         } else {
-            return this.el || doc.getElementById(this.getElId());
+            return this.el || doc.getElementById(getElId(this));
         }
     },
     getEls: function(id) {
@@ -315,7 +321,7 @@ Widget.prototype = widgetProto = {
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = this.getElId(id, index);
+        var targetWidgetId = getElId(this, id, index);
         return widgetLookup[targetWidgetId];
     },
     getWidgets: function(id) {
@@ -742,7 +748,7 @@ Widget.prototype = widgetProto = {
                     if (match[2] == null) {
                         return jquery(this.getEl(widgetElId));
                     } else {
-                        return jquery('#' + this.getElId(widgetElId) + match[2]);
+                        return jquery('#' + getElId(this, widgetElId) + match[2]);
                     }
                 } else {
                     var rootEl = this.getEl();
