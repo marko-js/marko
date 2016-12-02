@@ -20,30 +20,36 @@ function invokeWidgetEventHandler(widget, targetMethodName, args) {
     method.apply(widget, args);
 }
 
-function addDOMEventListener(widget, el, eventType, targetMethodName, extraArgs) {
-    return _addEventListener(el, eventType, function(event) {
+function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs, handles) {
+    var handle = _addEventListener(el, eventType, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
         }
+
         invokeWidgetEventHandler(widget, targetMethodName, args);
     });
+    handles.push(handle);
 }
 
-function getNestedEl(widget, nestedId, doc) {
+function getNestedEl(widget, nestedId, document) {
     if (nestedId == null) {
         return null;
-    }
 
+    }
     if (nestedId === '') {
         return widget.getEl();
     }
 
-    if (typeof nestedId === 'string' && nestedId.charAt(0) === '#') {
-        return doc.getElementById(nestedId.substring(1));
-    } else {
-        return widget.getEl(nestedId);
+    if (typeof nestedId === 'string') {
+        if (nestedId.charAt(0) === '#') {
+            return document.getElementById(nestedId.substring(1));
+        } else if (nestedId.slice(-2) === '[]') {
+            return widget.getEls(nestedId.slice(0, -2));
+        }
     }
+
+    return widget.getEl(nestedId);
 }
 
 function resolveEls(parentId, nestedId, doc, els) {
@@ -145,14 +151,13 @@ function initWidget(widgetDef, doc) {
             for (i=0, len=domEvents.length; i<len; i+=4) {
                 eventType = domEvents[i];
                 targetMethodName = domEvents[i+1];
-                var eventElId = domEvents[i+2];
+                var eventEl = document.getElementById(domEvents[i+2]);
                 extraArgs = domEvents[i+3];
 
-                var eventEl = getNestedEl(widget, eventElId, doc);
+
 
                 // The event mapping is for a DOM event (not a custom event)
-                var eventListenerHandle = addDOMEventListener(widget, eventEl, eventType, targetMethodName, extraArgs);
-                eventListenerHandles.push(eventListenerHandle);
+                addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
             }
 
             if (eventListenerHandles.length) {
