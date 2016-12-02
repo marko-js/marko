@@ -9,6 +9,8 @@ var extend = require('raptor-util/extend');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var marko = require('marko');
+var widgetLookup = require('./lookup').widgets;
+
 var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
@@ -79,28 +81,35 @@ function removeDOMEventListeners(widget) {
     }
 }
 
+function destroyEl(widget, el, removeNode, recursive) {
+    if (recursive) {
+        destroyRecursive(el);
+    }
+
+    if (removeNode && el.parentNode) {
+        //Remove the widget's DOM nodes from the DOM tree if the root element is known
+        el.parentNode.removeChild(el);
+    }
+
+    el.__widget = null;
+}
+
 function destroy(widget, removeNode, recursive) {
     if (widget.isDestroyed()) {
         return;
     }
 
-    var rootEl = widget.getEl();
 
     emitLifecycleEvent(widget, 'beforeDestroy');
     widget.__lifecycleState = 'destroyed';
 
-    if (rootEl) {
-        if (recursive) {
-            destroyRecursive(rootEl);
-        }
-
-        if (removeNode && rootEl.parentNode) {
-            //Remove the widget's DOM nodes from the DOM tree if the root element is known
-            rootEl.parentNode.removeChild(rootEl);
-        }
-
-        rootEl.__widget = null;
+    var els = widget.els;
+    for (var i=0; i<els.length; i++) {
+        destroyEl(widget, els[i], removeNode, recursive);
     }
+
+    widget.els = null;
+    widget.el = null;
 
     // Unsubscribe from all DOM events
     removeDOMEventListeners(widget);
@@ -109,6 +118,8 @@ function destroy(widget, removeNode, recursive) {
         widget.__subscriptions.removeAllListeners();
         widget.__subscriptions = null;
     }
+
+    delete widgetLookup[widget.id];
 
     emitLifecycleEvent(widget, 'destroy');
 }
@@ -282,10 +293,12 @@ Widget.prototype = widgetProto = {
         return elId;
     },
     getEl: function (widgetElId, index) {
+        var doc = this.__document;
+
         if (widgetElId != null) {
-            return this.__document.getElementById(this.getElId(widgetElId, index));
+            return doc.getElementById(this.getElId(widgetElId, index));
         } else {
-            return this.el || this.__document.getElementById(this.getElId());
+            return this.el || doc.getElementById(this.getElId());
         }
     },
     getEls: function(id) {
@@ -303,7 +316,7 @@ Widget.prototype = widgetProto = {
     },
     getWidget: function(id, index) {
         var targetWidgetId = this.getElId(id, index);
-        return markoWidgets.getWidgetForEl(targetWidgetId, this.__document);
+        return widgetLookup[targetWidgetId];
     },
     getWidgets: function(id) {
         var widgets = [];
@@ -531,8 +544,6 @@ Widget.prototype = widgetProto = {
             throw new Error('Widget does not have a "renderer" property');
         }
 
-        var elToReplace = this.__document.getElementById(self.id);
-
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
@@ -548,6 +559,9 @@ Widget.prototype = widgetProto = {
             globalData.__rerenderState = props ? null : self.state;
         }
 
+        var els = this.els;
+        var doc = this.__document;
+
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
@@ -557,7 +571,12 @@ Widget.prototype = widgetProto = {
             var targetNode;
 
             if (out.isVDOM) {
-                targetNode = out.getOutput().firstChild;
+                if (els) {
+                    targetNode = out.getOutput();
+                } else {
+                    targetNode = out.getOutput().firstChild;
+                }
+
             } else {
                 targetNode = out.getNode(self.__document);
             }
@@ -628,14 +647,40 @@ Widget.prototype = widgetProto = {
                 }
             }
 
-            morphdom(elToReplace, targetNode, {
+            var morphdomOptions = {
                 onNodeDiscarded: onNodeDiscarded,
                 onBeforeElUpdated: onBeforeElUpdated,
                 onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-            });
+            };
 
-            // Trigger any 'onUpdate' events for all of the rendered widgets
-            result.afterInsert(elToReplace);
+            var fromEl;
+            if (els) {
+                var fromEls = {};
+                els.forEach(function(fromEl) {
+                    fromEls[fromEl.id] = fromEl;
+                });
+
+                var targetEl = targetNode.firstChild;
+                while(targetEl) {
+                    var id = targetEl.id;
+
+                    if (id) {
+                        fromEl = fromEls[id];
+                        if (fromEl) {
+                            morphdom(fromEl, targetEl, morphdomOptions);
+                        }
+                    }
+
+                    targetEl = targetEl.nextSibling;
+                }
+
+                result.afterInsert(els[0]);
+            } else {
+                fromEl = doc.getElementById(self.id);
+                morphdom(fromEl, targetNode, morphdomOptions);
+                // Trigger any 'onUpdate' events for all of the rendered widgets
+                result.afterInsert(fromEl);
+            }
 
             self.__lifecycleState = null;
 

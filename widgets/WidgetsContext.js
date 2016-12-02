@@ -37,8 +37,11 @@ WidgetsContext.prototype = {
         var origLength = widgetStack.length;
         var parent = origLength ? widgetStack[origLength - 1] : null;
 
-        if (!widgetInfo.id) {
-            widgetInfo.id = _this._nextWidgetId();
+        var widgetId = widgetInfo.id;
+
+        if (!widgetId) {
+            widgetId = _this._nextWidgetId();
+            widgetInfo.id = widgetId;
         }
 
         widgetInfo.parent = parent;
@@ -48,7 +51,8 @@ WidgetsContext.prototype = {
         }
 
         var widgetDef = new WidgetDef(widgetInfo, end, this.out);
-        this.widgetsById[widgetInfo.id] = widgetDef;
+
+        this.widgetsById[widgetId] = widgetDef;
 
         if (parent) {
             //Check if it is a top-level widget

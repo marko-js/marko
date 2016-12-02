@@ -7,7 +7,7 @@ var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
 var defaultDocument = typeof document != 'undefined' && document;
 var events = require('../runtime/events');
-var getObjectAttribute = require('./getObjectAttribute');
+var widgetLookup = require('./lookup').widgets;
 
 var registry; // We initialize this later to avoid issues with circular dependencies
 
@@ -33,8 +33,8 @@ function addDOMEventListener(widget, el, eventType, targetMethodName, extraArgs)
 function getNestedEl(widget, nestedId, doc) {
     if (nestedId == null) {
         return null;
-
     }
+
     if (nestedId === '') {
         return widget.getEl();
     }
@@ -46,20 +46,36 @@ function getNestedEl(widget, nestedId, doc) {
     }
 }
 
-function initWidget(
-    type,
-    id,
-    config,
-    state,
-    scope,
-    domEvents,
-    customEvents,
-    extendList,
-    bodyElId,
-    existingWidget,
-    el,
-    doc) {
+function resolveEls(parentId, nestedId, doc, els) {
+    var actualId = nestedId ? parentId + '-' + nestedId : parentId;
+    var el = doc.getElementById(actualId);
+    if (el) {
+        els.push(el);
+    } else {
+        var widget = widgetLookup[actualId];
+        if (widget) {
+            var widgetEls = widget.els;
 
+            for (var i=0, len=widgetEls.length; i<len; i++) {
+                els.push(widgetEls[i]);
+            }
+        }
+    }
+}
+
+function initWidget(widgetDef, doc) {
+    var type = widgetDef.type;
+    var id = widgetDef.id;
+    var config = widgetDef.config;
+    var state = widgetDef.state;
+    var scope = widgetDef.scope;
+    var domEvents = widgetDef.domEvents;
+    var customEvents = widgetDef.customEvents;
+    var extendList = widgetDef.extend;
+    var bodyElId = widgetDef.bodyElId;
+    var existingWidget = widgetDef.existingWidget;
+    var elIds = widgetDef.els || [null];
+    var el;
     var i;
     var len;
     var eventType;
@@ -67,12 +83,15 @@ function initWidget(
     var widget;
     var extraArgs;
 
-    if (!el) {
-        el = doc.getElementById(id);
+    var els = [];
+
+    for (i=0, len=elIds.length; i<len; i++) {
+        resolveEls(id, elIds[i], doc, els);
     }
+    el = els[0];
 
     if (!existingWidget) {
-        existingWidget = el.__widget;
+        existingWidget = widgetLookup[id];
     }
 
     if (existingWidget && existingWidget.__type !== type) {
@@ -86,6 +105,8 @@ function initWidget(
     } else {
         widget = registry.createWidget(type, id, doc);
     }
+
+    widgetLookup[id] = widget;
 
     if (state) {
         for (var k in state) {
@@ -109,10 +130,13 @@ function initWidget(
         config = {};
     }
 
-    el.__widget = widget;
+    for(i=0; i<els.length; i++) {
+        els[i].__widget = widget;
+    }
 
     if (widget._isWidget) {
         widget.el = el;
+        widget.els = els;
         widget.bodyEl = getNestedEl(widget, bodyElId, doc);
 
         if (domEvents) {
@@ -173,6 +197,7 @@ function initWidget(
     } else {
         config.elId = id;
         config.el = el;
+        config.els = els;
     }
 
     if (existingWidget) {
@@ -205,61 +230,6 @@ function copyConfigToWidget(widget, config) {
     }
 }
 
-function initWidgetFromEl(el, state, config) {
-    if (el.__widget != null) {
-        // A widget is already bound to this element. Nothing to do...
-        return;
-    }
-
-    var doc = el.ownerDocument;
-    var scope;
-    var id = el.id;
-    var type = el.getAttribute('data-widget');
-    el.removeAttribute('data-widget');
-
-    var domEvents;
-    var hasDomEvents = el.getAttribute('data-w-on');
-    if (hasDomEvents) {
-        var domEventsEl = doc.getElementById(id + '-$on');
-        if (domEventsEl) {
-            domEventsEl.parentNode.removeChild(domEventsEl);
-            domEvents = getObjectAttribute(domEventsEl, 'data-_on');
-        }
-
-        el.removeAttribute('data-w-on');
-    }
-
-    var customEvents = getObjectAttribute(el, 'data-_events');
-    if (customEvents) {
-        scope = customEvents[0];
-        customEvents = customEvents.slice(1);
-        el.removeAttribute('data-w-events');
-    }
-
-    var extendList = el.getAttribute('data-w-extend');
-    if (extendList) {
-        extendList = extendList.split(',');
-        el.removeAttribute('data-w-extend');
-    }
-
-    var bodyElId = el.getAttribute('data-w-body');
-
-    initWidget(
-        type,
-        id,
-        config,
-        state,
-        scope,
-        domEvents,
-        customEvents,
-        extendList,
-        bodyElId,
-        null,
-        el,
-        doc);
-}
-
-
 // Create a helper function handle recursion
 function initClientRendered(widgetDefs, doc) {
     // Ensure that event handlers to handle delegating events are
@@ -275,17 +245,7 @@ function initClientRendered(widgetDefs, doc) {
         }
 
         var widget = initWidget(
-            widgetDef.type,
-            widgetDef.id,
-            widgetDef.config,
-            widgetDef.state,
-            widgetDef.scope,
-            widgetDef.domEvents,
-            widgetDef.customEvents,
-            widgetDef.extend,
-            widgetDef.bodyElId,
-            widgetDef.existingWidget,
-            null,
+            widgetDef,
             doc);
 
         widgetDef.widget = widget;
@@ -304,70 +264,22 @@ exports.initClientRendered = initClientRendered;
 
 /**
  * This method initializes all widgets that were rendered on the server by iterating over all
- * of the widget IDs. This method supports two signatures:
- *
- * initServerRendered(dataIds : String) - dataIds is a comma separated list of widget IDs. The state and config come
- *                                        from the following globals:
- *                                        - window.$markoWidgetsState
- *                                        - window.$markoWidgetsConfig
- * initServerRendered(renderedWidgets : Object) - dataIds is an object rendered by getRenderedWidgets with the following
- *                                                structure:
- *   {
- *   	ids: "w0,w1,w2",
- *   	state: { w0: {...}, ... }
- *   	config: { w0: {...}, ... }
- *   }
+ * of the widget IDs.
  */
-function initServerRendered(dataIds, doc) {
-    var stateStore;
-    var configStore;
-    if (!doc) {
-        doc = defaultDocument;
-    }
-
-    if (typeof dataIds === 'object') {
-        stateStore = dataIds.state ? warp10Finalize(dataIds.state) : null;
-        configStore = dataIds.config ? warp10Finalize(dataIds.config) : null;
-        dataIds = dataIds.ids;
-    }
-
+function initServerRendered(widgetDefs, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
     eventDelegation.init();
 
-    if (dataIds) {
+    widgetDefs = warp10Finalize(widgetDefs);
 
-        stateStore = stateStore || window.$markoWidgetsState;
-        configStore = configStore || window.$markoWidgetsConfig;
+    if (!doc) {
+        doc = defaultDocument;
+    }
 
-        // W have a comma-separated of widget element IDs that need to be initialized
-        var ids = dataIds.split(',');
-        var len = ids.length;
-        var state;
-        var config;
-        for (var i=0; i<len; i++) {
-            var id = ids[i];
-            var el = doc.getElementById(id);
-            if (!el) {
-                throw new Error('DOM node for widget with ID "' + id + '" not found');
-            }
-
-            if (stateStore) {
-                state = stateStore[id];
-                delete stateStore[id];
-            } else {
-                state = undefined;
-            }
-
-            if (configStore) {
-                config = configStore[id];
-                delete configStore[id];
-            } else {
-                config = undefined;
-            }
-
-            initWidgetFromEl(el, state, config);
-        }
+    for (var i=0, len=widgetDefs.length; i<len; i++) {
+        var widgetDef = widgetDefs[i];
+        initWidget(widgetDef, doc);
     }
 }
 
@@ -376,9 +288,9 @@ exports.initServerRendered = initServerRendered;
 registry = require('./registry');
 
 if (window.$widgets) {
-    window.$widgets.forEach(initServerRendered);
+    initServerRendered(window.$widgets);
 }
 
 window.$widgets = {
-    push: initServerRendered
+    concat: initServerRendered
 };

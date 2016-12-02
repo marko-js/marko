@@ -85,6 +85,7 @@ module.exports = function widgetTag(input, out) {
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
+    var els = input.els;
 
     var id = input.id;
     var extendList;
@@ -192,13 +193,13 @@ module.exports = function widgetTag(input, out) {
             createWidget: input.createWidget,
             extend: extendList,
             existingWidget: existingWidget,
-            bodyElId: bodyElId
+            bodyElId: bodyElId,
+            els: els
         });
 
         // Only render the widget if it needs to be rerendered
         if (shouldRenderBody) {
             input.renderBody(out, widgetDef, state);
-            markoWidgets.writeDomEventsEl(widgetDef, out);
         }
 
         widgetDef.end();

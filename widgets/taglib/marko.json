@@ -202,6 +202,7 @@
         "@id": "string",
         "@hasDomEvents": "number",
         "@body": "string",
+        "@els": "array",
         "vars": ["widget", "state"],
         "import-var": {
             "_cfg": "data.widgetConfig",
@@ -242,5 +243,6 @@
     },
     "<body>": {
         "transformer": "./body-transformer.js"
-    }
+    },
+    "transformer": "./widgets-transformer.js"
 }

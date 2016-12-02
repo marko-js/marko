@@ -3,6 +3,8 @@ var WidgetArgs = require('./WidgetArgs');
 var getRequirePath = require('../getRequirePath');
 var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');
 var resolveFrom = require('resolve-from');
+var INLINE_COMPONENT_KEY = Symbol('INLINE_COMPONENT');
+var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
 
 class TransformHelper {
     constructor(el, context) {
@@ -79,15 +81,18 @@ class TransformHelper {
     }
 
     set markoWidgetsVar(value) {
-        this._markoWidgetsVar = value;
+        this.context.data[MARKO_WIDGETS_VAR_KEY] = value;
     }
 
     get markoWidgetsVar() {
-        if (!this._markoWidgetsVar) {
-            this._markoWidgetsVar = this.context.importModule('marko_widgets', this.getMarkoWidgetsRequirePath('marko/widgets'));
+        if (!this.context.data[MARKO_WIDGETS_VAR_KEY]) {
+            this.context.data[MARKO_WIDGETS_VAR_KEY] =
+                this.context.importModule(
+                    'marko_widgets',
+                    this.getMarkoWidgetsRequirePath('marko/widgets'));
         }
 
-        return this._markoWidgetsVar;
+        return this.context.data[MARKO_WIDGETS_VAR_KEY];
     }
 
     buildWidgetElIdFunctionCall(id) {
@@ -107,10 +112,23 @@ class TransformHelper {
     getTransformHelper(el) {
         return new TransformHelper(el, this.context);
     }
+
+    setInlineComponent(inlineComponent) {
+        this.context.data[INLINE_COMPONENT_KEY] = inlineComponent;
+    }
+
+    getInlineComponent() {
+        return this.context.data[INLINE_COMPONENT_KEY];
+    }
+
+    hasInlineComponent() {
+        return this.context.data[INLINE_COMPONENT_KEY] != null;
+    }
 }
 
 TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
 TransformHelper.prototype.getContainingWidgetNode = require('./getContainingWidgetNode');
+TransformHelper.prototype.handleRootNodes = require('./handleRootNodes');
 TransformHelper.prototype.handleIncludeNode = require('./handleIncludeNode');
 TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');
 TransformHelper.prototype.handleWidgetPreserve = require('./handleWidgetPreserve');
