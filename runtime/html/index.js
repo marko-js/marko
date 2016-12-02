@@ -36,6 +36,33 @@ function Template(path, func, options) {
 Template.prototype = {
     createOut: createOut,
 
+    renderToString: function(data, callback) {
+        var localData;
+        var globalData;
+
+        if ((localData = data)) {
+            globalData = localData.$global;
+        } else {
+            localData = {};
+        }
+
+        var out = new AsyncStream(globalData);
+        if (callback) {
+            this._(localData, out);
+            out.end();
+
+            return out
+                .on('finish', function() {
+                    callback(null, out.getOutput().toString(), out);
+                })
+                .once('error', callback);
+        } else {
+            out.sync();
+            this._(localData, out);
+            return out.getOutput().toString();
+        }
+    },
+
     renderSync: function(data) {
         var localData;
         var globalData;
@@ -75,18 +102,13 @@ Template.prototype = {
     render: function(data, out, callback) {
         var renderFunc = this._;
 
-        var finalData;
+        var localData;
         var globalData;
-        if (data) {
-            finalData = data;
 
-            if ((globalData = data.$global)) {
-                // We will *move* the "$global" property
-                // into the "out.global" object
-                data.$global = null;
-            }
+        if ((localData = data)) {
+            globalData = localData.$global;
         } else {
-            finalData = {};
+            localData = {};
         }
 
         if (out) {
@@ -104,7 +126,7 @@ Template.prototype = {
                     extend(out.global, globalData);
                 }
 
-                renderFunc(finalData, out);
+                renderFunc(localData, out);
 
                 return out;
             } else if (typeof out === 'function') {
@@ -127,7 +149,7 @@ Template.prototype = {
 
         // Invoke the compiled template's render function to have it
         // write out strings to the provided out.
-        renderFunc(finalData, finalOut);
+        renderFunc(localData, finalOut);
 
         // Automatically end output stream (the writer) if we
         // had to create an async writer (which might happen
