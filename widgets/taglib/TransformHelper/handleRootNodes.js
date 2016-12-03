@@ -150,6 +150,10 @@ module.exports = function handleRootNodes() {
         return;
     }
 
+    if (!hasBindTarget) {
+        return;
+    }
+
     if (rootNodes.length === 0) {
         return;
     }
@@ -158,7 +162,7 @@ module.exports = function handleRootNodes() {
         // We can only bind a widget to multiple top-level elements if we can assign
         // all of the IDs
         return;
-    }
+    }    
 
     let widgetNode = context.createNodeForEl('_widget');
 
