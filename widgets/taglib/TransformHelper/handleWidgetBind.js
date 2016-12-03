@@ -128,13 +128,16 @@ module.exports = function handleWidgetBind() {
 
         let def;
 
+        var widgetPath = modulePath;
+
         if (isMain && isComponentExport) {
+            widgetPath = './' + path.basename(context.filename);
             def = builder.functionDeclaration(null, [], [
                 builder.returnStatement(builder.memberExpression(builder.identifier('module'), builder.identifier('exports')))
             ]);
         }
 
-        widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(modulePath, def));
+        widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(widgetPath, def));
 
         widgetAttrs.type = widgetTypeNode;
 
