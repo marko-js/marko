@@ -66,21 +66,7 @@ module.exports = function handleWidgetBind() {
 
     if (bindAttrValue == null) {
         if (inlineComponent) {
-            widgetAttrs.type = context.addStaticVar(
-                'marko_widgetType',
-                this.buildWidgetTypeNode(
-                    context.filename,
-                    builder.functionDeclaration(null, [] /* params */, [
-                        builder.returnStatement(
-                            builder.memberExpression('module', 'exports')
-                        )
-                    ])));
-
-            context.on('beforeGenerateCode:TemplateRoot', function(root) {
-                root.node.generateExports = function(template) {
-                    return buildComponentExport(transformHelper, inlineComponent, template);
-                };
-            });
+            modulePath = context.filename;
         } else {
             modulePath = this.getDefaultWidgetModule();
             if (!modulePath) {
@@ -137,6 +123,8 @@ module.exports = function handleWidgetBind() {
             ]);
         }
 
+        context.addDependency(widgetPath);
+
         widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(widgetPath, def));
 
         widgetAttrs.type = widgetTypeNode;
@@ -144,7 +132,9 @@ module.exports = function handleWidgetBind() {
         if (isComponentExport || isRendererExport) {
             this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
                 root.node.generateExports = function(template) {
-                    if (isComponentExport) {
+                    if(inlineComponent) {
+                        return buildComponentExport(transformHelper, inlineComponent, template);
+                    } else if (isComponentExport) {
                         let component = builder.require(
                             builder.literal(modulePath)
                         );
