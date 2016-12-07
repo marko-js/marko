@@ -1,5 +1,4 @@
 'use strict';
-var inherit = require('raptor-util/inherit');
 var dom = require('./dom');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
@@ -124,69 +123,6 @@ function destroy(widget, removeNode, recursive) {
     emitLifecycleEvent(widget, 'destroy');
 }
 
-function setState(widget, name, value, forceDirty, noQueue) {
-    if (typeof value === 'function') {
-        return;
-    }
-
-    if (value === null) {
-        // Treat null as undefined to simplify our comparison logic
-        value = undefined;
-    }
-
-    if (forceDirty) {
-        var dirtyState = widget.__dirtyState || (widget.__dirtyState = {});
-        dirtyState[name] = true;
-    } else if (widget.state[name] === value) {
-        return;
-    }
-
-    var clean = !widget.__dirty;
-
-    if (clean) {
-        // This is the first time we are modifying the widget state
-        // so introduce some properties to do some tracking of
-        // changes to the state
-        var currentState = widget.state;
-        widget.__dirty = true; // Mark the widget state as dirty (i.e. modified)
-        widget.__oldState = currentState;
-        widget.state = extend({}, currentState);
-        widget.__stateChanges = {};
-    }
-
-    widget.__stateChanges[name] = value;
-
-    if (value == null) {
-        // Don't store state properties with an undefined or null value
-        delete widget.state[name];
-    } else {
-        // Otherwise, store the new value in the widget state
-        widget.state[name] = value;
-    }
-
-    if (clean && noQueue !== true) {
-        // If we were clean before then we are now dirty so queue
-        // up the widget for update
-        updateManager.queueWidgetUpdate(widget);
-    }
-}
-
-function replaceState(widget, newState, noQueue) {
-    var k;
-
-    for (k in widget.state) {
-        if (widget.state.hasOwnProperty(k) && !newState.hasOwnProperty(k)) {
-            setState(widget, k, undefined, false, noQueue);
-        }
-    }
-
-    for (k in newState) {
-        if (newState.hasOwnProperty(k)) {
-            setState(widget, k, newState[k], false, noQueue);
-        }
-    }
-}
-
 function resetWidget(widget) {
     widget.__oldState = null;
     widget.__dirty = false;
@@ -246,7 +182,8 @@ function Widget(id, document) {
     this.id = id;
     this.el = null;
     this.bodyEl = null;
-    this.state = null;
+    this.__state = null;
+    this.__rawState = null;
     this.__subscriptions = null;
     this.__evHandles = null;
     this.__lifecycleState = null;
@@ -347,19 +284,29 @@ Widget.prototype = widgetProto = {
     getBodyEl: function() {
         return this.bodyEl;
     },
+    get state() {
+        return this.__state;
+    },
+    set state(value) {
+        if(!this.__state && value) {
+            this.__state = new this.State(this, value);
+        } else {
+            this.__state._replace(value);
+        }
+    },
     setState: function(name, value) {
         if (typeof name === 'object') {
             // Merge in the new state with the old state
             var newState = name;
             for (var k in newState) {
                 if (newState.hasOwnProperty(k)) {
-                    setState(this, k, newState[k]);
+                    this.state._set(k, newState[k], true /* ensure:true */);
                 }
             }
             return;
         }
 
-        setState(this, name, value);
+         this.state._set(name, value, true /* ensure:true */);
     },
 
     setStateDirty: function(name, value) {
@@ -367,11 +314,11 @@ Widget.prototype = widgetProto = {
             value = this.state[name];
         }
 
-        setState(this, name, value, true /* forceDirty */);
+        this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
     _replaceState: function(newState) {
-        replaceState(this, newState, true /* do not queue an update */ );
+        this.state._replace(newState, true /* do not queue an update */ );
     },
 
     _removeDOMEventListeners: function() {
@@ -379,7 +326,7 @@ Widget.prototype = widgetProto = {
     },
 
     replaceState: function(newState) {
-        replaceState(this, newState);
+        this.state._replace(newState);
     },
 
     /**
@@ -401,11 +348,7 @@ Widget.prototype = widgetProto = {
         }
 
         if (this.onInput) {
-            var prevState = this.state;
             this.onInput(newProps || {});
-            if(this.state !== prevState) {
-                this.replaceState(this.state);
-            }
             return;
         }
 
@@ -553,7 +496,7 @@ Widget.prototype = widgetProto = {
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
-        var templateData = extend({}, props || self.state);
+        var templateData = extend({}, props || self.__rawState);
 
         var globalData = {};
 
@@ -562,7 +505,7 @@ Widget.prototype = widgetProto = {
         globalData.__rerender = true;
 
         if (!props) {
-            globalData.__rerenderState = props ? null : self.state;
+            globalData.__rerenderState = props ? null : self.__rawState;
         }
 
         var els = this.els;
@@ -779,3 +722,24 @@ dom.mixin(
 inherit(Widget, EventEmitter);
 
 module.exports = Widget;
+
+function inherit(ctor, superCtor) {
+    var oldProto = ctor.prototype;
+    var newProto = ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+            value: ctor,
+            writable: true,
+            configurable: true
+        }
+    });
+    if (oldProto) {
+        var propertyNames = Object.getOwnPropertyNames(oldProto);
+        for (var i = 0; i < propertyNames.length; i++) {
+            var name = propertyNames[i];
+            var descriptor = Object.getOwnPropertyDescriptor(oldProto, name);
+            Object.defineProperty(newProto, name, descriptor);
+        }
+    }
+    ctor.prototype = newProto;
+    return ctor;
+}

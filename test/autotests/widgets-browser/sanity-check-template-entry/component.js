@@ -1,13 +1,10 @@
 module.exports = {
-    getInitialState: function(input) {
-        return {
+    onInput: function(input) {
+        this.state = {
             name: input.name
-        };
-    },
-    getTemplateData: function(state, input) {
-        return state;
+        }
     },
     setName: function(newName) {
-        this.setState('name', newName);
+        this.state.name = newName;
     }
 };

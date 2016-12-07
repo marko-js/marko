@@ -8,7 +8,7 @@ module.exports = {
     },
 
     onMount: function(config) {
-        expect(this.state).to.eql({ count:0 });
+        expect(this.state.count).to.eql(0);
         expect(this.foo).to.eql('bar');
         expect(this.array).to.eql([1,2,3]);
         this.onMountCalled = true;

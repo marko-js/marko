@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ var BaseState;
  var BaseWidget;
  var inherit;
+
 
 module.exports = function defineWidget(def, renderer) {
     if (def._isWidget) {
@@ -78,6 +80,10 @@ module.exports = function defineWidget(def, renderer) {
     // a widget so that we can short-circuit this work later
     Widget._isWidget = true;
 
+    // Set widget state constructor
+    proto.State = function State() { BaseState.apply(this, arguments); };
+    inherit(proto.State, BaseState);
+
     if (!renderer) {
         renderer = WidgetClass.renderer || WidgetClass.prototype.renderer;
         if (renderer) {
@@ -112,6 +118,24 @@ module.exports = function defineWidget(def, renderer) {
     return Widget;
 };
 
+BaseState = require('./State');
 BaseWidget = require('./Widget');
-inherit = require('raptor-util/inherit');
 
+function inherit(ctor, superCtor, shouldExtend) {
+    var oldProto = ctor.prototype;
+    var newProto = ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        writable: true,
+        configurable: true
+      }
+    });
+    if(oldProto && shouldExtend !== false) {
+        Object.getOwnPropertyNames(oldProto).forEach(function(key) {
+            var descriptor = Object.getOwnPropertyDescriptor(oldProto, key);
+            Object.defineProperty(newProto, key, descriptor);
+        });
+    }
+    ctor.prototype = newProto;
+    return ctor;
+}
