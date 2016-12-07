@@ -122,10 +122,12 @@ exports.mixin = function(target, getNode, afterInsert) {
         var func = exports[methodName];
 
         target[methodName] = function(referenceEl) {
-            var newNode = getNode.call(this, referenceEl.ownerDocument);
+            var doc = referenceEl.ownerDocument;
+
+            var newNode = getNode.call(this, doc);
             func.call(exports, newNode, referenceEl);
             if (afterInsert) {
-                afterInsert.call(this, newNode);
+                afterInsert.call(this, doc);
             }
             return this;
         };

@@ -83,7 +83,7 @@ module.exports = function assignWidgetId(isRepeated) {
     } else if (el.hasAttribute('id')) {
         idExpression = el.getAttributeValue('id');
 
-        if (el.isFlagSet('hasWidgetBind') || el.isFlagSet('hasWidgetExtend')) {
+        if (el.isFlagSet('hasWidgetBind')) {
             // We have to attach a listener to the root element of the widget
             // We will use an empty string as an indicator that it is the root widget
             // element.

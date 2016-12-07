@@ -10,9 +10,6 @@ function getContainingWidgetNode() {
         if (curNode.tagName === '_widget') {
             this.containingWidgetNode = curNode;
             return this.containingWidgetNode;
-        } else if (curNode.isFlagSet('hasWidgetExtend')) {
-            this.containingWidgetNode = curNode;
-            return this.containingWidgetNode;
         }
 
         curNode = curNode.parentNode;

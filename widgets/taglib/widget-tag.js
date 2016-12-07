@@ -1,6 +1,6 @@
 'use strict';
 var markoWidgets = require('../');
-var extend = require('raptor-util/extend');
+var widgetLookup = require('../lookup').widgets;
 var widgetArgsId = require('../widget-args-id');
 var includeTag = require('./include-tag');
 
@@ -8,20 +8,6 @@ var DUMMY_WIDGET_DEF = {
         elId: function () {
         }
     };
-
-/**
- * Look in in the DOM to see if a widget with the same ID and type already exists.
- */
-function getExistingWidget(id, type) {
-    var existingEl = document.getElementById(id);
-    var existingWidget;
-
-    if (existingEl && (existingWidget = existingEl.__widget) && existingWidget.__type === type) {
-        return existingWidget;
-    }
-
-    return null;
-}
 
 function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
     var tagName = existingWidget.el.tagName;
@@ -85,39 +71,18 @@ module.exports = function widgetTag(input, out) {
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
-    var els = input.els;
-
+    var roots = input.roots;
     var id = input.id;
-    var extendList;
     var hasDomEvents = input.hasDomEvents;
     var customEvents;
     var scope;
-    var extendState;
-    var extendConfig;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
         scope = widgetArgs.scope;
 
         id = id || widgetArgsId(widgetArgs);
-        extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
-
-        if ((extendState = widgetArgs.extendState)) {
-            if (state) {
-                extend(state, extendState);
-            } else {
-                state = extendState;
-            }
-        }
-
-        if ((extendConfig = widgetArgs.extendConfig)) {
-            if (config) {
-                extend(config, extendConfig);
-            } else {
-                config = extendConfig;
-            }
-        }
     }
 
     var rerenderWidget = global.__rerenderWidget;
@@ -140,7 +105,11 @@ module.exports = function widgetTag(input, out) {
         id = rerenderWidget.id;
         delete global.__rerenderWidget;
     } else if (isRerender) {
-        existingWidget = getExistingWidget(id, typeName);
+        // Look in in the DOM to see if a widget with the same ID and type already exists.
+        existingWidget = widgetLookup[id];
+        if (existingWidget && existingWidget.__type !== typeName) {
+            existingWidget = undefined;
+        }
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -191,10 +160,9 @@ module.exports = function widgetTag(input, out) {
             customEvents: customEvents,
             scope: scope,
             createWidget: input.createWidget,
-            extend: extendList,
             existingWidget: existingWidget,
             bodyElId: bodyElId,
-            els: els
+            roots: roots
         });
 
         // Only render the widget if it needs to be rerendered

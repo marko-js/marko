@@ -44,29 +44,10 @@ function getNestedEl(widget, nestedId, document) {
     if (typeof nestedId === 'string') {
         if (nestedId.charAt(0) === '#') {
             return document.getElementById(nestedId.substring(1));
-        } else if (nestedId.slice(-2) === '[]') {
-            return widget.getEls(nestedId.slice(0, -2));
         }
     }
 
     return widget.getEl(nestedId);
-}
-
-function resolveEls(parentId, nestedId, doc, els) {
-    var actualId = nestedId ? parentId + '-' + nestedId : parentId;
-    var el = doc.getElementById(actualId);
-    if (el) {
-        els.push(el);
-    } else {
-        var widget = widgetLookup[actualId];
-        if (widget) {
-            var widgetEls = widget.els;
-
-            for (var i=0, len=widgetEls.length; i<len; i++) {
-                els.push(widgetEls[i]);
-            }
-        }
-    }
 }
 
 function initWidget(widgetDef, doc) {
@@ -77,10 +58,9 @@ function initWidget(widgetDef, doc) {
     var scope = widgetDef.scope;
     var domEvents = widgetDef.domEvents;
     var customEvents = widgetDef.customEvents;
-    var extendList = widgetDef.extend;
     var bodyElId = widgetDef.bodyElId;
     var existingWidget = widgetDef.existingWidget;
-    var elIds = widgetDef.els || [null];
+
     var el;
     var i;
     var len;
@@ -88,13 +68,6 @@ function initWidget(widgetDef, doc) {
     var targetMethodName;
     var widget;
     var extraArgs;
-
-    var els = [];
-
-    for (i=0, len=elIds.length; i<len; i++) {
-        resolveEls(id, elIds[i], doc, els);
-    }
-    el = els[0];
 
     if (!existingWidget) {
         existingWidget = widgetLookup[id];
@@ -110,6 +83,41 @@ function initWidget(widgetDef, doc) {
         widget = existingWidget;
     } else {
         widget = registry.createWidget(type, id, doc);
+    }
+
+    var els;
+    var rootIds = widgetDef.roots;
+    var rootWidgets;
+
+    if (rootIds) {
+        els = [];
+        for (i=0, len=rootIds.length; i<len; i++) {
+            var rootId = rootIds[i];
+            var nestedId = id + '-' + rootId;
+            var rootWidget = widgetLookup[nestedId];
+            if (rootWidget) {
+                rootWidget.__rootFor = widget;
+                if (rootWidgets) {
+                    rootWidgets.push(rootWidget);
+                } else {
+                    rootWidgets = widget.__rootWidgets = [rootWidget];
+                }
+
+            } else {
+                var rootEl = doc.getElementById(nestedId);
+                if (rootEl) {
+                    rootEl.__widget = widget;
+                    els.push(rootEl);
+                }
+            }
+        }
+
+        el = els[0];
+    } else {
+        var widgetEl = doc.getElementById(id);
+        el = widgetEl;
+        el.__widget = widget;
+        els = [el];
     }
 
     widgetLookup[id] = widget;
@@ -136,13 +144,10 @@ function initWidget(widgetDef, doc) {
         config = {};
     }
 
-    for(i=0; i<els.length; i++) {
-        els[i].__widget = widget;
-    }
-
     if (widget._isWidget) {
         widget.el = el;
         widget.els = els;
+        widget.__rootWidgets = rootWidgets;
         widget.bodyEl = getNestedEl(widget, bodyElId, doc);
 
         if (domEvents) {
@@ -175,28 +180,6 @@ function initWidget(widgetDef, doc) {
                 extraArgs = customEvents[i+2];
 
                 widget.__customEvents[eventType] = [targetMethodName, extraArgs];
-            }
-        }
-
-        if (extendList) {
-            // If one or more "w-extend" attributes were used for this
-            // widget then call those modules to now extend the widget
-            // that we created
-            for (i=0, len=extendList.length; i<len; i++) {
-                var extendType = extendList[i];
-
-                if (!existingWidget) {
-                    // Only extend a widget the first time the widget is created. If we are updating
-                    // an existing widget then we don't re-extend it
-                    var extendModule = registry.load(extendType);
-                    var extendFunc = extendModule.extendWidget || extendModule.extend;
-
-                    if (typeof extendFunc !== 'function') {
-                        throw new Error('extendWidget(widget, cfg) method missing: ' + extendType);
-                    }
-
-                    extendFunc(widget);
-                }
             }
         }
     } else {

@@ -134,7 +134,6 @@ TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');
 TransformHelper.prototype.handleWidgetPreserve = require('./handleWidgetPreserve');
 TransformHelper.prototype.handleWidgetPreserveAttrs = require('./handleWidgetPreserveAttrs');
 TransformHelper.prototype.handleWidgetBind = require('./handleWidgetBind');
-TransformHelper.prototype.handleWidgetExtend = require('./handleWidgetExtend');
 TransformHelper.prototype.handleWidgetFor = require('./handleWidgetFor');
 
 module.exports = TransformHelper;

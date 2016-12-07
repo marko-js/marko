@@ -21,19 +21,6 @@ module.exports = function defineWidget(def, renderer) {
         return def;
     }
 
-    var extendWidget = def.extendWidget;
-    if (extendWidget) {
-        return {
-            renderer: renderer,
-            render: renderer.render,
-            renderSync: renderer.renderSync,
-            extendWidget: function(widget) {
-                extendWidget(widget);
-                widget.renderer = renderer;
-            }
-        };
-    }
-
     var WidgetClass;
     var proto;
 

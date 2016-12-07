@@ -162,7 +162,7 @@ module.exports = function handleRootNodes() {
         // We can only bind a widget to multiple top-level elements if we can assign
         // all of the IDs
         return;
-    }    
+    }
 
     let widgetNode = context.createNodeForEl('_widget');
 
@@ -175,8 +175,10 @@ module.exports = function handleRootNodes() {
         curNode.setAttributeValue('w-bind');
         curNode.data.widgetNode = widgetNode;
 
-        if (rootNodes.length > 1 && !curNode.hasAttribute('ref')) {
-            curNode.setAttributeValue('ref', builder.literal('_r' + (nextRef++)));
+        if (!curNode.hasAttribute('ref')) {
+            if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
+                curNode.setAttributeValue('ref', builder.literal('_r' + (nextRef++)));
+            }
         }
     });
 };

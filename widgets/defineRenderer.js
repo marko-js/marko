@@ -1,4 +1,4 @@
-var marko = require('marko');
+var marko = require('../');
 var extend = require('raptor-util/extend');
 var makeRenderable = require('../runtime/renderable');
 
@@ -16,7 +16,6 @@ module.exports = function defineRenderer(def) {
     var getInitialState = def.getInitialState; //deprecate
     var getWidgetConfig = def.getWidgetConfig; //deprecate
     var getInitialBody = def.getInitialBody;
-    var extendWidget = def.extendWidget;
 
     if (typeof template === 'string') {
         template = marko.load(template);
@@ -39,37 +38,22 @@ module.exports = function defineRenderer(def) {
             var widgetState;
             var widgetConfig;
 
-            if (getInitialState) {
+            if (global.__rerenderWidget && global.__rerenderState) {
                 // This is a state-ful widget. If this is a rerender then the "input"
                 // will be the new state. If we have state then we should use the input
                 // as the widget state and skip the steps of converting the input
                 // to a widget state.
+                var isFirstWidget = !global.__firstWidgetFound;
 
-                if (global.__rerenderWidget && global.__rerenderState) {
-                    var isFirstWidget = !global.__firstWidgetFound;
-
-                    if (!isFirstWidget || extendWidget) {
-                        // We are the not first top-level widget or we are being extended
-                        // so use the merged rerender state as defaults for the input
-                        // and use that to rebuild the new state. This is kind of a hack
-                        // but extending widgets requires this hack since there is no
-                        // single state since the widget state is split between the
-                        // widget being extended and the widget doing the extending.
-                        for (var k in global.__rerenderState) {
-                            if (global.__rerenderState.hasOwnProperty(k) && !input.hasOwnProperty(k)) {
-                                newProps[k] = global.__rerenderState[k];
-                            }
-                        }
-                    } else {
-                        // We are the first widget and we are not being extended
-                        // and we are not extending so use the input as the state
-                        widgetState = input;
-                        newProps = null;
-                    }
+                if (isFirstWidget) {
+                    // We are the first widget and we are not being extended
+                    // and we are not extending so use the input as the state
+                    widgetState = input;
+                    newProps = null;
                 }
             }
 
-            if (onInput) {
+            if (newProps && onInput) {
                 var lightweightWidget = Object.create(def);
                 lightweightWidget.onInput(newProps);
                 widgetState = lightweightWidget.state;

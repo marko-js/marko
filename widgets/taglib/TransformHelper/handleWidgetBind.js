@@ -186,11 +186,11 @@ module.exports = function handleWidgetBind() {
     var ref = el.getAttributeValue('ref');
 
     if (el.hasAttribute('ref')) {
-        var els = widgetNode.getAttributeValue('els');
-        if (els) {
-            els.value.push(ref);
+        var roots = widgetNode.getAttributeValue('roots');
+        if (roots) {
+            roots.value.push(ref);
         } else {
-            widgetNode.setAttributeValue('els', builder.literal([ref]));
+            widgetNode.setAttributeValue('roots', builder.literal([ref]));
         }
     } else {
         el.setAttributeValue('id',
