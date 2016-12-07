@@ -7,7 +7,7 @@ var marko_widgets = require("marko/widgets/index");
 module.exports = marko_widgets.c(component, template);
 
 var marko_registerWidget = marko_widgets.registerWidget,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry/component", function() {
+    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry/index.marko", function() {
       return module.exports;
     }),
     marko_helpers = require("marko/runtime/html/helpers"),

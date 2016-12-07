@@ -47,9 +47,6 @@ module.exports = function transform(el, context) {
     if (el.hasAttribute('w-bind')) {
         el.setFlag('hasWidgetBind');
         transformHelper.handleWidgetBind();
-    } else if (el.hasAttribute('w-extend')) {
-        el.setFlag('hasWidgetExtend');
-        transformHelper.handleWidgetExtend();
     }
 
     if (/* New preserve attributes */

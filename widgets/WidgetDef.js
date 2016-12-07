@@ -29,16 +29,16 @@ function WidgetDef(config, endFunc, out) {
     this.config = config.config; // Widget config object (may be null)
     this.state = config.state; // Widget state object (may be null)
     this.scope = config.scope; // The ID of the widget that this widget is scoped within
-    this.domEvents = null; // An array of DOM events that need to be added (in sets of three)
     this.customEvents = config.customEvents; // An array containing information about custom events
     this.bodyElId = config.bodyElId; // The ID for the default body element (if any any)
-    this.children = []; // An array of nested WidgetDef instances
-    this.end = endFunc; // A function that when called will pop this widget def off the stack
-    this.extend = config.extend; // Information about other widgets that extend this widget.
-    this.out = out; // The AsyncWriter that this widget is associated with
     this.hasDomEvents = config.hasDomEvents; // A flag to indicate if this widget has any
                                              // listeners for non-bubbling DOM events
-    this.els = config.els;
+    this.roots = config.roots;
+
+    this.children = []; // An array of nested WidgetDef instances
+    this.end = endFunc; // A function that when called will pop this widget def off the stack
+    this.domEvents = null; // An array of DOM events that need to be added (in sets of three)
+    this.out = out; // The AsyncWriter that this widget is associated with
     this._nextId = 0; // The unique integer to use for the next scoped ID
 }
 
@@ -116,9 +116,8 @@ WidgetDef.prototype = {
             scope: this.scope,
             domEvents: this.domEvents,
             customEvents: this.customEvents,
-            extend: this.extend,
             bodyElId: this.bodyElId,
-            els: this.els
+            roots: this.roots
         };
     }
 };

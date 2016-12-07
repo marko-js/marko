@@ -38,16 +38,6 @@ function removeListener(eventListenerHandle) {
     eventListenerHandle.remove();
 }
 
-function destroyRecursive(el) {
-    dom.forEachChildEl(el, function (childEl) {
-        var descendentWidget = childEl.__widget;
-        if (descendentWidget) {
-            destroy(descendentWidget, false, false);
-        }
-        destroyRecursive(childEl);
-    });
-}
-
 /**
  * This method handles invoking a widget's event handler method
  * (if present) while also emitting the event through
@@ -80,32 +70,36 @@ function removeDOMEventListeners(widget) {
     }
 }
 
-function destroyEl(widget, el, removeNode, recursive) {
-    if (recursive) {
-        destroyRecursive(el);
-    }
+function destroyWidgetForEl(el) {
+    var widgetToDestroy = el.__widget;
+    if (widgetToDestroy) {
+        destroyWidgetHelper(widgetToDestroy);
+        el.__widget = null;
 
-    if (removeNode && el.parentNode) {
-        //Remove the widget's DOM nodes from the DOM tree if the root element is known
-        el.parentNode.removeChild(el);
+        while ((widgetToDestroy = widgetToDestroy.__rootFor)) {
+            widgetToDestroy.__rootFor = null;
+            destroyWidgetHelper(widgetToDestroy);
+        }
     }
-
-    el.__widget = null;
+}
+function destroyElRecursive(el) {
+    var curChild = el.firstChild;
+    while(curChild) {
+        if (curChild.nodeType === 1) {
+            destroyElRecursive(curChild);
+            destroyWidgetForEl(curChild);
+        }
+        curChild = curChild.nextSibling;
+    }
 }
 
-function destroy(widget, removeNode, recursive) {
+function destroyWidgetHelper(widget) {
     if (widget.isDestroyed()) {
         return;
     }
 
-
     emitLifecycleEvent(widget, 'beforeDestroy');
     widget.__lifecycleState = 'destroyed';
-
-    var els = widget.els;
-    for (var i=0; i<els.length; i++) {
-        destroyEl(widget, els[i], removeNode, recursive);
-    }
 
     widget.els = null;
     widget.el = null;
@@ -149,7 +143,8 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
         args = extraArgs.concat(args);
     }
 
-    var targetWidget = markoWidgets.getWidgetForEl(widget.__scope);
+
+    var targetWidget = widgetLookup[widget.__scope];
     var targetMethod = targetWidget[targetMethodName];
     if (!targetMethod) {
         throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
@@ -170,6 +165,28 @@ function getElId(widget, widgetElId, index) {
     return elId;
 }
 
+
+function getAllRootEls(widget, rootEls) {
+    var i, len;
+
+    var widgetEls = widget.els;
+
+    for (i=0, len=widgetEls.length; i<len; i++) {
+        var widgetEl = widgetEls[i];
+        rootEls[widgetEl.id] = widgetEl;
+    }
+
+    var rootWidgets = widget.__rootWidgets;
+    if (rootWidgets) {
+        for (i=0, len=rootWidgets.length; i<len; i++) {
+            var rootWidget = rootWidgets[i];
+            getAllRootEls(rootWidget, rootEls);
+        }
+    }
+
+    return rootEls;
+}
+
 var widgetProto;
 
 /**
@@ -184,6 +201,7 @@ function Widget(id, document) {
     this.bodyEl = null;
     this.__state = null;
     this.__rawState = null;
+    this.__roots = null;
     this.__subscriptions = null;
     this.__evHandles = null;
     this.__lifecycleState = null;
@@ -274,9 +292,33 @@ Widget.prototype = widgetProto = {
         }
         return widgets;
     },
-    destroy: function (options) {
-        options = options || {};
-        destroy(this, options.removeNode !== false, options.recursive !== false);
+    destroy: function () {
+        if (this.isDestroyed()) {
+            return;
+        }
+
+        var i, len;
+
+        var els = this.els;
+
+        for (i=0, len=els.length; i<len; i++) {
+            var el = els[i];
+            destroyElRecursive(el);
+
+            var parentNode = el.parentNode;
+            if (parentNode) {
+                parentNode.removeChild(el);
+            }
+        }
+
+        var rootWidgets = this.__rootWidgets;
+        if (rootWidgets) {
+            for (i=0, len=rootWidgets.length; i<len; i++) {
+                rootWidgets[i].destroy();
+            }
+        }
+
+        destroyWidgetHelper(this);
     },
     isDestroyed: function () {
         return this.__lifecycleState === 'destroyed';
@@ -508,7 +550,7 @@ Widget.prototype = widgetProto = {
             globalData.__rerenderState = props ? null : self.__rawState;
         }
 
-        var els = this.els;
+        var fromEls = getAllRootEls(this, {});
         var doc = this.__document;
 
         updateManager.batchUpdate(function() {
@@ -517,25 +559,13 @@ Widget.prototype = widgetProto = {
             renderer(templateData, out);
             var result = new RenderResult(out);
 
-            var targetNode;
-
-            if (out.isVDOM) {
-                if (els) {
-                    targetNode = out.getOutput();
-                } else {
-                    targetNode = out.getOutput().firstChild;
-                }
-
-            } else {
-                targetNode = out.getNode(self.__document);
-            }
+            var targetNode = out.getOutput();
 
             var widgetsContext = out.global.widgets;
 
             function onNodeDiscarded(node) {
-                var widget = node.__widget;
-                if (widget) {
-                    destroy(widget, false, false);
+                if (node.nodeType === 1) {
+                    destroyWidgetForEl(node);
                 }
             }
 
@@ -581,7 +611,7 @@ Widget.prototype = widgetProto = {
                             // We found a widget in an old DOM node that does not have
                             // a compatible widget that was rendered so we need to
                             // destroy the old widget
-                            destroy(existingWidget, false, false);
+                            destroyWidgetHelper(existingWidget);
                         }
                     }
                 }
@@ -603,33 +633,22 @@ Widget.prototype = widgetProto = {
             };
 
             var fromEl;
-            if (els) {
-                var fromEls = {};
-                els.forEach(function(fromEl) {
-                    fromEls[fromEl.id] = fromEl;
-                });
 
-                var targetEl = targetNode.firstChild;
-                while(targetEl) {
-                    var id = targetEl.id;
+            var targetEl = targetNode.firstChild;
+            while(targetEl) {
+                var id = targetEl.id;
 
-                    if (id) {
-                        fromEl = fromEls[id];
-                        if (fromEl) {
-                            morphdom(fromEl, targetEl, morphdomOptions);
-                        }
+                if (id) {
+                    fromEl = fromEls[id];
+                    if (fromEl) {
+                        morphdom(fromEl, targetEl, morphdomOptions);
                     }
-
-                    targetEl = targetEl.nextSibling;
                 }
 
-                result.afterInsert(els[0]);
-            } else {
-                fromEl = doc.getElementById(self.id);
-                morphdom(fromEl, targetNode, morphdomOptions);
-                // Trigger any 'onUpdate' events for all of the rendered widgets
-                result.afterInsert(fromEl);
+                targetEl = targetEl.nextSibling;
             }
+
+            result.afterInsert(doc);
 
             self.__lifecycleState = null;
 

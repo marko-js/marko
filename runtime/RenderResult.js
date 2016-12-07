@@ -57,7 +57,7 @@ var proto = RenderResult.prototype = {
         return widgets;
     },
 
-    afterInsert: function(node) {
+    afterInsert: function(doc) {
         var data = this.out.data;
         data._added = true;
 
@@ -67,10 +67,9 @@ var proto = RenderResult.prototype = {
         data.widgets = widgetDefs;
 
         events.emit('mountNode', {
-            node: node,
             result: this,
             out: this.out,
-            document: node.ownerDocument
+            document: doc
         });    // NOTE: This will trigger widgets to be initialized if there were any
 
         return this;
@@ -107,6 +106,6 @@ dom.mixin(
     function getNode() {
         return this.getNode();
     },
-    function afterInsert(newNode) {
-        this.afterInsert(newNode);
+    function afterInsert(doc) {
+        this.afterInsert(doc);
     });

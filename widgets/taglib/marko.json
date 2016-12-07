@@ -19,11 +19,6 @@
             "preserve-name": true,
             "autocomplete": []
         },
-
-        "@w-extend": {
-            "type": "custom",
-            "preserve-name": true
-        },
         "@w-config": {
             "type": "expression",
             "preserve-name": true
@@ -202,7 +197,7 @@
         "@id": "string",
         "@hasDomEvents": "number",
         "@body": "string",
-        "@els": "array",
+        "@roots": "array",
         "vars": ["widget", "state"],
         "import-var": {
             "_cfg": "data.widgetConfig",

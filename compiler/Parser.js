@@ -209,7 +209,6 @@ class Parser {
         var node;
 
         if (raw) {
-
             node = builder.htmlElement(elDef);
             node.pos = elDef.pos;
 

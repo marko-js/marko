@@ -357,6 +357,7 @@ class CompileContext extends EventEmitter {
             // NOTE: The tag definition can't be determined now since it will be
             //       determined by the parent custom tag.
             node = builder.customTag(elNode);
+            node.body = node.makeContainer(node.body.items);
         } else {
             tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
             if (tagDef) {
