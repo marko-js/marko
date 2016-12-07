@@ -42,10 +42,11 @@ class Literal extends Node {
     }
 
     generateCode(codegen) {
-
         if (this.value != null) {
             if (isArray(this.value)) {
-                this.value = codegen.generateCode(this.value);
+                for (var i=0; i<this.value.length; i++) {
+                    this.value[i] = codegen.generateCode(this.value[i]);
+                }
             } else if (typeof this.value === 'object') {
                 if (!(this.value instanceof RegExp)) {
                     var newObject = {};
