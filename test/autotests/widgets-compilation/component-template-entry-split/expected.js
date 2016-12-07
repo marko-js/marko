@@ -2,7 +2,7 @@ var template = require("marko/html").c(__filename);
 
 var renderer = require("./renderer");
 
-var marko_widgets = require("marko/widgets/index");
+var marko_widgets = require("marko/widgets");
 
 module.exports = marko_widgets.r(renderer, template);
 
