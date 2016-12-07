@@ -5,6 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
 var extend = require('raptor-util/extend');
+var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var marko = require('marko');
@@ -741,24 +742,3 @@ dom.mixin(
 inherit(Widget, EventEmitter);
 
 module.exports = Widget;
-
-function inherit(ctor, superCtor) {
-    var oldProto = ctor.prototype;
-    var newProto = ctor.prototype = Object.create(superCtor.prototype, {
-        constructor: {
-            value: ctor,
-            writable: true,
-            configurable: true
-        }
-    });
-    if (oldProto) {
-        var propertyNames = Object.getOwnPropertyNames(oldProto);
-        for (var i = 0; i < propertyNames.length; i++) {
-            var name = propertyNames[i];
-            var descriptor = Object.getOwnPropertyDescriptor(oldProto, name);
-            Object.defineProperty(newProto, name, descriptor);
-        }
-    }
-    ctor.prototype = newProto;
-    return ctor;
-}

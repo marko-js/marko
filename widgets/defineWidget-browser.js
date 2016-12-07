@@ -107,22 +107,4 @@ module.exports = function defineWidget(def, renderer) {
 
 BaseState = require('./State');
 BaseWidget = require('./Widget');
-
-function inherit(ctor, superCtor, shouldExtend) {
-    var oldProto = ctor.prototype;
-    var newProto = ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        writable: true,
-        configurable: true
-      }
-    });
-    if(oldProto && shouldExtend !== false) {
-        Object.getOwnPropertyNames(oldProto).forEach(function(key) {
-            var descriptor = Object.getOwnPropertyDescriptor(oldProto, key);
-            Object.defineProperty(newProto, key, descriptor);
-        });
-    }
-    ctor.prototype = newProto;
-    return ctor;
-}
+inherit = require('raptor-util/inherit');

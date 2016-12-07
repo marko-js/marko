@@ -69,7 +69,7 @@
     "raptor-polyfill": "^1.0.0",
     "raptor-promises": "^1.0.1",
     "raptor-regexp": "^1.0.0",
-    "raptor-util": "^3.0.0",
+    "raptor-util": "^3.1.0",
     "resolve-from": "^2.0.0",
     "strip-json-comments": "^2.0.1",
     "try-require": "^1.2.1",
