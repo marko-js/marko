@@ -8,7 +8,7 @@ var component = (function() {
   return marko_component;
 })();
 
-var marko_widgets = require("marko/widgets/index");
+var marko_widgets = require("marko/widgets");
 
 module.exports = marko_widgets.c(component, template);
 
