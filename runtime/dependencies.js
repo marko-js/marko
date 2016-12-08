@@ -11,7 +11,7 @@ function getDeps(template) {
     return [];
   }
 
-  if(template.deps) {
+  if(false && template.deps) {
     return template.deps;
   }
 
