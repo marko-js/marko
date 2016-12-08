@@ -86,7 +86,7 @@ function handleStyleElement(styleEl, transformHelper) {
     var langAttr = styleEl.getAttribute('lang');
     var lang = langAttr ? langAttr.value.value : 'css';
     var context = transformHelper.context;
-    context.addDependency({ type:lang, code:styleCode, path:'./'+path.basename(context.filename)+'.'+lang });
+    context.addDependency({ type:lang, code:styleCode, virtualPath:'./'+path.basename(context.filename)+'.'+lang });
     styleEl.detach();
 }
 
