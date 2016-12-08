@@ -53,7 +53,7 @@ function createDeferredRenderer(handler) {
 }
 
 function resolveRenderer(handler) {
-    var renderer = handler.renderer;
+    var renderer = handler.renderer || handler._;
 
     if (renderer) {
         return renderer;

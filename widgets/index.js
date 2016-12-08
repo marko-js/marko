@@ -95,9 +95,11 @@ exports.defineWidget = require('./defineWidget');
 exports.defineRenderer = require('./defineRenderer');
 exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
-exports.c = function(component, template) {
+exports.c = function(componentDef, template) {
+    componentDef.template = template;
+    var component = exports.defineComponent(componentDef);
     component.template = template;
-    return exports.defineComponent(component);
+    return component;
 };
 
 exports.r = function(renderer, template) {
