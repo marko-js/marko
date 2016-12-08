@@ -1,6 +1,7 @@
 var _addEventListener = require('./addEventListener');
 var updateManager = require('./update-manager');
 var getObjectAttribute = require('./getObjectAttribute');
+var widgetLookup = require('./lookup').widgets;
 
 var attachBubbleEventListeners = function() {
     var body = document.body;
@@ -39,6 +40,7 @@ var attachBubbleEventListeners = function() {
 
                 do {
                     if ((target = getObjectAttribute(curNode, attrName))) {
+
                         var targetMethod = target[0];
                         var targetWidgetId = target[1];
                         var extraArgs;
@@ -47,16 +49,7 @@ var attachBubbleEventListeners = function() {
                             extraArgs = target.slice(2);
                         }
 
-                        var targetWidgetEl = document.getElementById(targetWidgetId);
-                        if (!targetWidgetEl) {
-                            // The target widget is not in the DOM anymore
-                            // which can happen when the widget and its
-                            // children are removed from the DOM while
-                            // processing the event.
-                            continue;
-                        }
-
-                        var targetWidget = targetWidgetEl.__widget;
+                        var targetWidget = widgetLookup[targetWidgetId];
 
                         if (!targetWidget) {
                             throw new Error('Widget not found: ' + targetWidgetId);
@@ -66,7 +59,6 @@ var attachBubbleEventListeners = function() {
                         if (!targetFunc) {
                             throw new Error('Method not found on widget ' + targetWidget.id + ': ' + targetMethod);
                         }
-
 
                         // Invoke the widget method
                         if (extraArgs) {
