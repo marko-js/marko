@@ -24,7 +24,8 @@ module.exports = function defineWidget(def, renderer) {
             _isWidget: true,
             renderer: renderer,
             render: renderer.render,
-            renderSync: renderer.renderSync
+            renderSync: renderer.renderSync,
+            template: renderer.template
         };
     } else {
         return {_isWidget: true};

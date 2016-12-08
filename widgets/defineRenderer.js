@@ -144,6 +144,7 @@ module.exports = function defineRenderer(def) {
 
     renderer._isRenderer = true;
     renderer.createOut = template ? template.createOut : def.createOut;
+    renderer.template = template;
 
     makeRenderable(renderer, renderer);
 
