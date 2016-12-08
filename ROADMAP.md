@@ -51,7 +51,7 @@ You can easily `require`/`import` a single file component and interact with it u
 ```js
 var myCounter = require('./src/components/my-counter');
 
-var widget = myCounter.render({
+var widget = myCounter.renderSync({
         value: 10
     })
     .appendTo(document.body)
