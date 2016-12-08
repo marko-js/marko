@@ -13,7 +13,7 @@ template.meta = {
         {
             type: "css",
             code: ".foo{}",
-            path: "./index.marko.css"
+            virtualPath: "./index.marko.css"
           }
       ]
   };
