@@ -81,6 +81,15 @@ function handleScriptElement(scriptEl, transformHelper) {
     }
 }
 
+function handleStyleElement(styleEl, transformHelper) {
+    var styleCode = styleEl.bodyText;
+    var langAttr = styleEl.getAttribute('lang');
+    var lang = langAttr ? langAttr.value.value : 'css';
+    var context = transformHelper.context;
+    context.addDependency({ type:lang, code:styleCode, path:'./'+path.basename(context.filename)+'.'+lang });
+    styleEl.detach();
+}
+
 module.exports = function handleRootNodes() {
     var context = this.context;
     var builder = this.builder;
@@ -99,6 +108,10 @@ module.exports = function handleRootNodes() {
         hasBindTarget = true;
     } else if (resolveFrom(dirname, './widget')) {
         hasBindTarget = true;
+    }
+
+    if (resolveFrom(dirname, './style.css')) {
+        context.addDependency('./style.css');
     }
 
     var rootNodes = [];
@@ -124,7 +137,9 @@ module.exports = function handleRootNodes() {
 
                     if (tagName === 'script') {
                         handleScriptElement(node, transformHelper);
-                    } else if (tagName !== 'style') {
+                    } else if (tagName === 'style') {
+                        handleStyleElement(node, transformHelper);
+                    } else {
                         rootNodes.push(node);
                     }
                 }
