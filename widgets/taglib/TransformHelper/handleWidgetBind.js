@@ -123,7 +123,8 @@ module.exports = function handleWidgetBind() {
             ]);
         }
 
-        context.addDependency(widgetPath);
+        context.addDependency({ type:'require', path:widgetPath });
+        context.addDependency({ type:'require', path:'marko/widgets' });
 
         widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(widgetPath, def));
 
