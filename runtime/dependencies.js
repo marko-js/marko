@@ -11,7 +11,7 @@ function getDeps(template) {
     return [];
   }
 
-  if(template.deps) {
+  if(false && template.deps) {
     return template.deps;
   }
 
@@ -47,7 +47,13 @@ function resolveDep(dep, root) {
   if(typeof dep === 'string') {
       dep = parseDependencyString(dep);
   }
-  return Object.assign({}, dep, { path:resolveFrom(root, dep.path) });
+  if(dep.path) {
+    return Object.assign({}, dep, { path:resolveFrom(root, dep.path) });
+  } else if(dep.virtualPath) {
+    return Object.assign({}, dep, { virtualPath:path.resolve(root, dep.virtualPath) });
+  } else {
+    return dep;
+  }
 }
 
 function parseDependencyString(string) {

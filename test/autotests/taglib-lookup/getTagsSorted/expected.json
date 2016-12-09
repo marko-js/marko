@@ -1,5 +1,6 @@
 [
     "_lasso-resources-root",
+    "_widget",
     "*",
     "a",
     "assign",
@@ -23,6 +24,7 @@
     "for",
     "html-comment",
     "if",
+    "import",
     "include",
     "include-html",
     "include-text",
@@ -48,7 +50,6 @@
     "unless",
     "var",
     "w-preserve",
-    "w-widget",
     "while",
     "widget-types"
 ]

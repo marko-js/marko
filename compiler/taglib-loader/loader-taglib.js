@@ -1,18 +1,3 @@
-/*
-* Copyright 2011 eBay Software Foundation
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
 'use strict';
 
 var ok = require('assert').ok;
@@ -21,13 +6,14 @@ var handleAttributes = require('./handleAttributes');
 var scanTagsDir = require('./scanTagsDir');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
-var Taglib = require('./Taglib');
+var types = require('./types');
 var jsonFileReader = require('./json-file-reader');
-var loader = require('./loader');
 var tryRequire = require('try-require');
 var resolveFrom = tryRequire('resolve-from', require);
 var DependencyChain = require('./DependencyChain');
 var createError = require('raptor-util/createError');
+var tagLoader = require('./loader-tag');
+var attributeLoader = require('./loader-attribute');
 
 function exists(path) {
     try {
@@ -67,7 +53,7 @@ class TaglibLoader {
 
         var taglibProps = jsonFileReader.readFileSync(filePath);
 
-        taglib = this.taglib = taglib || new Taglib(filePath);
+        taglib = this.taglib = taglib || new types.Taglib(filePath);
 
         propertyHandlers(taglibProps, this, this.dependencyChain.toString());
 
@@ -116,7 +102,7 @@ class TaglibLoader {
             tagObject = value;
         }
 
-        var tag = loader.tagLoader.loadTag(tagObject, tagFilePath, dependencyChain);
+        var tag = tagLoader.loadTag(tagObject, tagFilePath, dependencyChain);
 
         if (tag.name === undefined) {
             tag.name = tagName;
@@ -137,7 +123,7 @@ class TaglibLoader {
         } else if (name.startsWith('@')) {
             var attrName = name.substring(1);
 
-            var attr = loader.attributeLoader.loadAttribute(
+            var attr = attributeLoader.loadAttribute(
                 attrName,
                 value,
                 this.dependencyChain.append('@' + attrName));
@@ -267,7 +253,7 @@ class TaglibLoader {
         var taglib = this.taglib;
         var dirname = this.dirname;
 
-        var transformer = new Taglib.Transformer();
+        var transformer = new types.Transformer();
 
         if (typeof value === 'string') {
             value = {
@@ -308,7 +294,7 @@ class TaglibLoader {
         var taglib = this.taglib;
         var dirname = this.dirname;
 
-        var transformer = new Taglib.Transformer();
+        var transformer = new types.Transformer();
 
         if (typeof value === 'string') {
             value = {

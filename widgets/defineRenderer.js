@@ -1,6 +1,6 @@
-var marko = require('marko');
+var marko = require('../');
 var extend = require('raptor-util/extend');
-var RenderResult = require('../runtime/RenderResult');
+var makeRenderable = require('../runtime/renderable');
 
 module.exports = function defineRenderer(def) {
     var renderer = def.renderer;
@@ -16,18 +16,9 @@ module.exports = function defineRenderer(def) {
     var getInitialState = def.getInitialState; //deprecate
     var getWidgetConfig = def.getWidgetConfig; //deprecate
     var getInitialBody = def.getInitialBody;
-    var extendWidget = def.extendWidget;
 
     if (typeof template === 'string') {
         template = marko.load(template);
-    }
-
-    var createOut;
-
-    if (template) {
-        createOut = template.createOut;
-    } else {
-        createOut = def.createOut || marko.createOut;
     }
 
     if (!renderer) {
@@ -47,37 +38,22 @@ module.exports = function defineRenderer(def) {
             var widgetState;
             var widgetConfig;
 
-            if (getInitialState) {
+            if (global.__rerenderWidget && global.__rerenderState) {
                 // This is a state-ful widget. If this is a rerender then the "input"
                 // will be the new state. If we have state then we should use the input
                 // as the widget state and skip the steps of converting the input
                 // to a widget state.
+                var isFirstWidget = !global.__firstWidgetFound;
 
-                if (global.__rerenderWidget && global.__rerenderState) {
-                    var isFirstWidget = !global.__firstWidgetFound;
-
-                    if (!isFirstWidget || extendWidget) {
-                        // We are the not first top-level widget or we are being extended
-                        // so use the merged rerender state as defaults for the input
-                        // and use that to rebuild the new state. This is kind of a hack
-                        // but extending widgets requires this hack since there is no
-                        // single state since the widget state is split between the
-                        // widget being extended and the widget doing the extending.
-                        for (var k in global.__rerenderState) {
-                            if (global.__rerenderState.hasOwnProperty(k) && !input.hasOwnProperty(k)) {
-                                newProps[k] = global.__rerenderState[k];
-                            }
-                        }
-                    } else {
-                        // We are the first widget and we are not being extended
-                        // and we are not extending so use the input as the state
-                        widgetState = input;
-                        newProps = null;
-                    }
+                if (isFirstWidget) {
+                    // We are the first widget and we are not being extended
+                    // and we are not extending so use the input as the state
+                    widgetState = input;
+                    newProps = null;
                 }
             }
 
-            if (onInput) {
+            if (newProps && onInput) {
                 var lightweightWidget = Object.create(def);
                 lightweightWidget.onInput(newProps);
                 widgetState = lightweightWidget.state;
@@ -162,38 +138,15 @@ module.exports = function defineRenderer(def) {
 
             // Render the template associated with the component using the final template
             // data that we constructed
-            template.render(templateData, out);
+            template._(templateData, out);
         };
     }
 
     renderer._isRenderer = true;
+    renderer.createOut = template ? template.createOut : def.createOut;
+    renderer.template = template;
 
-    renderer.createOut = createOut;
-
-    renderer.render = function(input, cb) {
-        var out = createOut();
-        renderer(input, out);
-        out.end();
-
-        if(cb) {
-            out.on('finished', function() {
-                cb(null, new RenderResult(out));
-            });
-            out.on('error', function(err) {
-                cb(err);
-            });
-        }
-
-        return out;
-    };
-
-    renderer.renderSync = function(input) {
-        var out = createOut();
-        out.sync();
-        renderer(input, out);
-        out.end();
-        return new RenderResult(out);
-    };
+    makeRenderable(renderer, renderer);
 
     return renderer;
 };

@@ -1,6 +1,4 @@
-var dom = require('./dom');
-var ready = dom.ready;
-var EMPTY_OBJ = {};
+var ready = require('../runtime/ready');
 var Widget = require('./Widget');
 var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');
@@ -13,21 +11,29 @@ exports.ready = ready;
 exports.onInitWidget = function(listener) {
     events.on('initWidget', listener);
 };
-exports.attrs = function() {
-    return EMPTY_OBJ;
-};
 
 exports.writeDomEventsEl = function() {
     /* Intentionally empty in the browser */
 };
 
-function getWidgetForEl(id, document) {
-    if (!id) {
-        return undefined;
-    }
+function getWidgetForEl(el, doc) {
+    if (el) {
+        var node = typeof el === 'string' ? (doc || window.document).getElementById(el) : el;
+        if (node) {
+            var widget = node.__widget;
 
-    var node = typeof id === 'string' ? (document || window.document).getElementById(id) : id;
-    return (node && node.__widget) || undefined;
+            while(widget) {
+                var rootFor = widget.__rootFor;
+                if (rootFor)  {
+                    widget = rootFor;
+                } else {
+                    break;
+                }
+            }
+
+            return widget;
+        }
+    }
 }
 
 exports.get = exports.getWidgetForEl = getWidgetForEl;
@@ -54,15 +60,7 @@ events.on('dom/beforeRemove', function(eventArgs) {
 
 exports.initWidgets = initServerRendered;
 
-var JQUERY = 'jquery';
 var jquery = window.$;
-
-if (!jquery) {
-    try {
-        jquery = require(JQUERY);
-    }
-    catch(e) {}
-}
 
 exports.$ = jquery;
 
@@ -70,7 +68,7 @@ exports.registerWidget = require('./registry').register;
 exports.defineComponent = require('./defineComponent');
 exports.defineWidget = require('./defineWidget');
 exports.defineRenderer = require('./defineRenderer');
-exports.makeRenderable = exports.renderable = require('./renderable');
+exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
 exports.c = function(component, template) {
     component.template = template;

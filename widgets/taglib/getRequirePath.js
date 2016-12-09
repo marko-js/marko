@@ -1,8 +1,10 @@
 var resolveFrom = require('resolve-from');
-require('require-self-ref');
-require('~/test/util/patch-module');
 
 module.exports = function getRequirePath(target, context) {
+    if (target === 'marko' || target.startsWith('marko/')) {
+        return target;
+    }
+
     var resolvedTarget = resolveFrom(context.dirname, target);
     if (!resolvedTarget) {
         throw new Error('Unable to resolve "' + target + '" from "' + context.dirname + '"');

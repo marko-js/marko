@@ -1,43 +1,13 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 'use strict';
 var markoWidgets = require('../');
-var extend = require('raptor-util/extend');
+var widgetLookup = require('../lookup').widgets;
 var widgetArgsId = require('../widget-args-id');
-var includeHelper = require('./helpers/include');
+var includeTag = require('./include-tag');
 
 var DUMMY_WIDGET_DEF = {
         elId: function () {
         }
     };
-
-/**
- * Look in in the DOM to see if a widget with the same ID and type already exists.
- */
-function getExistingWidget(id, type) {
-    var existingEl = document.getElementById(id);
-    var existingWidget;
-
-    if (existingEl && (existingWidget = existingEl.__widget) && existingWidget.__type === type) {
-        return existingWidget;
-    }
-
-    return null;
-}
 
 function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
     var tagName = existingWidget.el.tagName;
@@ -50,7 +20,10 @@ function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
 
     if (widgetBody && existingWidget.bodyEl) {
         hasUnpreservedBody = true;
-        includeHelper(widgetBody, out, null, existingWidget.bodyEl.id, existingWidget.bodyEl.id);
+        includeTag({
+            _target: widgetBody,
+            _widgetId: existingWidget.bodyEl.id
+        }, out);
     }
 
     out.endElement();
@@ -98,38 +71,18 @@ module.exports = function widgetTag(input, out) {
     var widgetArgs = out.data.widgetArgs;
     var bodyElId = input.body;
     var widgetBody = input._body;
-
+    var roots = input.roots;
     var id = input.id;
-    var extendList;
     var hasDomEvents = input.hasDomEvents;
     var customEvents;
     var scope;
-    var extendState;
-    var extendConfig;
 
     if (widgetArgs) {
         delete out.data.widgetArgs;
         scope = widgetArgs.scope;
 
         id = id || widgetArgsId(widgetArgs);
-        extendList = widgetArgs.extend;
         customEvents = widgetArgs.customEvents;
-
-        if ((extendState = widgetArgs.extendState)) {
-            if (state) {
-                extend(state, extendState);
-            } else {
-                state = extendState;
-            }
-        }
-
-        if ((extendConfig = widgetArgs.extendConfig)) {
-            if (config) {
-                extend(config, extendConfig);
-            } else {
-                config = extendConfig;
-            }
-        }
     }
 
     var rerenderWidget = global.__rerenderWidget;
@@ -152,7 +105,11 @@ module.exports = function widgetTag(input, out) {
         id = rerenderWidget.id;
         delete global.__rerenderWidget;
     } else if (isRerender) {
-        existingWidget = getExistingWidget(id, typeName);
+        // Look in in the DOM to see if a widget with the same ID and type already exists.
+        existingWidget = widgetLookup[id];
+        if (existingWidget && existingWidget.__type !== typeName) {
+            existingWidget = undefined;
+        }
     }
 
     if (!id && input.hasOwnProperty('id')) {
@@ -203,15 +160,14 @@ module.exports = function widgetTag(input, out) {
             customEvents: customEvents,
             scope: scope,
             createWidget: input.createWidget,
-            extend: extendList,
             existingWidget: existingWidget,
-            bodyElId: bodyElId
+            bodyElId: bodyElId,
+            roots: roots
         });
 
         // Only render the widget if it needs to be rerendered
         if (shouldRenderBody) {
             input.renderBody(out, widgetDef, state);
-            markoWidgets.writeDomEventsEl(widgetDef, out);
         }
 
         widgetDef.end();

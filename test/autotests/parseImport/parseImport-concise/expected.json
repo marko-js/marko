@@ -1,0 +1,14 @@
+[
+    {
+        "name": "greetings",
+        "value": "./greetings",
+        "module": true
+    },
+    {
+        "name": "hi",
+        "value":{
+            "object": "greetings",
+            "property": "hello"
+        }
+    }
+]

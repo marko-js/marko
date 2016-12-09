@@ -2,7 +2,7 @@
     "dependencies": [
         {
             "type": "require",
-            "path": "./client-init",
+            "path": "./init-widgets-browser",
             "run": true,
             "if": "!flags.contains('marko-widgets/no-client-init')"
         }

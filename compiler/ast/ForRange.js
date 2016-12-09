@@ -18,6 +18,8 @@ class ForRange extends Node {
     }
 
     generateCode(codegen) {
+        var context = codegen.context;
+
         var varName = this.varName;
         var from = this.from;
         var to = this.to;
@@ -25,13 +27,9 @@ class ForRange extends Node {
 
         var builder = codegen.builder;
 
-        var comparison = '<=';
-
         if (varName instanceof Identifier) {
             varName = varName.name;
         }
-
-        var updateExpression;
 
         if (step == null) {
             let fromLiteral = (from instanceof Literal) && from.value;
@@ -39,56 +37,22 @@ class ForRange extends Node {
 
             if (typeof fromLiteral === 'number' && typeof toLiteral === 'number') {
                 if (fromLiteral > toLiteral) {
-                    updateExpression = varName + '--';
-                    comparison = '>=';
+                    step = builder.literal(-1);
                 } else {
-                    updateExpression = varName + '++';
+                    step = builder.literal(1);
                 }
-            }
-        } else {
-            let stepLiteral;
-
-            if (step instanceof Literal) {
-                stepLiteral = step.value;
-            } else if (typeof step === 'number') {
-                stepLiteral = step;
-            }
-
-            if (typeof stepLiteral === 'number') {
-                if (stepLiteral < 0) {
-                    comparison = '>=';
-                }
-
-                if (stepLiteral === 1) {
-                    updateExpression = varName + '++';
-                } else if (stepLiteral  === -1) {
-                    updateExpression = varName + '--';
-                } else if (stepLiteral > 0) {
-                    updateExpression = varName + ' += ' + stepLiteral;
-                } else if (stepLiteral === 0) {
-                    throw new Error('Invalid step of 0');
-                } else if (stepLiteral < 0) {
-                    stepLiteral = 0-stepLiteral; // Make the step positive and switch to -=
-                    updateExpression = varName + ' -= ' + stepLiteral;
-                }
-            } else {
-                updateExpression = builder.assignment(varName, step, '+=');
             }
         }
 
-        if (updateExpression == null) {
-            updateExpression = varName + '++';
+        if (step == null) {
+            step = builder.literalNull();
         }
 
-        return builder.selfInvokingFunction([
-            builder.forStatement({
-                init: [
-                    builder.vars([ { id: varName, init: from }])
-                ],
-                test: builder.binaryExpression(varName, comparison, to),
-                update: updateExpression,
-                body: this.body
-            })
+        return builder.functionCall(context.helper('forRange'), [
+            from,
+            to,
+            step,
+            builder.functionDeclaration(null, [varName], this.body)
         ]);
     }
 

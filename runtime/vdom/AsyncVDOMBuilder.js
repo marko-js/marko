@@ -37,6 +37,7 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
 }
 
 var proto = AsyncVDOMBuilder.prototype = {
+    isAsyncOut: true,
     isAsyncVDOMBuilder: true,
 
     element: function(name, attrs, childCount) {
@@ -182,6 +183,11 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this._state.tree;
     },
 
+    getResult: function() {
+        this._result = this._result || new RenderResult(this);
+        return this._result;
+    },
+
     on: function(event, callback) {
         var state = this._state;
 
@@ -292,12 +298,16 @@ var proto = AsyncVDOMBuilder.prototype = {
         return node;
     },
 
+    toString: function() {
+        return this.getNode().outerHTML;
+    },
+
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
             out.on('error', reject);
             out.on('finish', function() {
-                resolve(new RenderResult(out));
+                resolve(out.getResult());
             });
         });
 

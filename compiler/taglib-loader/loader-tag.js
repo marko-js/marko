@@ -26,10 +26,11 @@ var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
 var handleAttributes = require('./handleAttributes');
 var propertyHandlers = require('property-handlers');
 var forEachEntry = require('raptor-util/forEachEntry');
-var loader = require('./loader');
 var markoCompiler = require('../');
 var createError = require('raptor-util/createError');
-var Taglib = require('./Taglib');
+var types = require('./types');
+var attributeLoader = require('./loader-attribute');
+var DependencyChain = require('./DependencyChain');
 
 function exists(path) {
     try {
@@ -80,7 +81,7 @@ class TagLoader {
     }
 
     _load(tagProps, filePath) {
-        this.tag = new Taglib.Tag();
+        this.tag = new types.Tag();
         this.filePath = filePath;
         this.dirname = nodePath.dirname(filePath);
 
@@ -194,18 +195,18 @@ class TagLoader {
                         // and attribute definition.
                         var propNameDashes = removeDashes(k);
 
-                        if (loader.tagLoader.isSupportedProperty(propNameDashes) &&
-                            loader.attributeLoader.isSupportedProperty(propNameDashes)) {
+                        if (exports.isSupportedProperty(propNameDashes) &&
+                            attributeLoader.isSupportedProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with a tag
                             // and attribute
                             tagProps[k] = value[k];
                             attrProps[k] = value[k];
                             delete value[k];
-                        } else if (loader.tagLoader.isSupportedProperty(propNameDashes)) {
+                        } else if (exports.isSupportedProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with a tag
                             tagProps[k] = value[k];
                             delete value[k];
-                        } else if (loader.attributeLoader.isSupportedProperty(propNameDashes)) {
+                        } else if (attributeLoader.isSupportedProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with an attr
                             attrProps[k] = value[k];
                             delete value[k];
@@ -252,7 +253,7 @@ class TagLoader {
                 // This is a shorthand attribute
                 var attrName = part.substring(1);
 
-                var attr = loader.attributeLoader.loadAttribute(
+                var attr = attributeLoader.loadAttribute(
                     attrName,
                     attrProps,
                     dependencyChain.append(part));
@@ -281,6 +282,15 @@ class TagLoader {
                 // this target property was explicitly provided
                 nestedTag.targetProperty = attrProps.targetProperty || nestedTagTargetProperty;
                 tag.addNestedTag(nestedTag);
+
+                if (!nestedTag.isRepeated) {
+                    let attr = attributeLoader.loadAttribute(
+                        nestedTag.targetProperty,
+                        { type: 'object' },
+                        dependencyChain.append(part));
+
+                    tag.addAttribute(attr);
+                }
             } else {
                 return false;
             }
@@ -393,7 +403,7 @@ class TagLoader {
         var tag = this.tag;
         var dirname = this.dirname;
 
-        var transformer = new Taglib.Transformer();
+        var transformer = new types.Transformer();
 
         if (typeof value === 'string') {
             // The value is a simple string type
@@ -562,12 +572,22 @@ class TagLoader {
         var tag = this.tag;
 
         forEachEntry(value, (nestedTagName, nestedTagDef) => {
+            var dependencyChain = this.dependencyChain.append(`nestedTags["${nestedTagName}]`);
             var nestedTag = loadTag(
                 nestedTagDef,
                 filePath,
-                this.dependencyChain.append(`nestedTags["${nestedTagName}]`));
+                dependencyChain);
             nestedTag.name = nestedTagName;
             tag.addNestedTag(nestedTag);
+
+            if (!nestedTag.isRepeated) {
+                let attr = attributeLoader.loadAttribute(
+                    nestedTag.targetProperty,
+                    { type: 'object' },
+                    dependencyChain);
+
+                tag.addAttribute(attr);
+            }
         });
     }
     escapeXmlBody(value) {
@@ -608,7 +628,10 @@ function isSupportedProperty(name) {
 function loadTag(tagProps, filePath, dependencyChain) {
     ok(typeof tagProps === 'object', 'Invalid "tagProps"');
     ok(typeof filePath === 'string');
-    ok(dependencyChain);
+
+    if (!dependencyChain) {
+        dependencyChain = new DependencyChain([filePath]);
+    }
 
     var tagLoader = new TagLoader(dependencyChain);
     try {

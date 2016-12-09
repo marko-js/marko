@@ -6,7 +6,9 @@ function classListHelper(arg, classNames) {
 
     if (arg) {
         if (typeof arg === 'string') {
-            classNames.push(arg);
+            if (arg) {
+                classNames.push(arg);
+            }
         } else if (typeof (len = arg.length) === 'number') {
             for (var i=0; i<len; i++) {
                 classListHelper(arg[i], classNames);
@@ -51,7 +53,7 @@ function createDeferredRenderer(handler) {
 }
 
 function resolveRenderer(handler) {
-    var renderer = handler.renderer;
+    var renderer = handler.renderer || handler._;
 
     if (renderer) {
         return renderer;
@@ -136,6 +138,26 @@ exports.f = function forEachHelper(array, callback) {
         array(callback);
     }
 };
+
+exports.fr = function forRangeHelper(from, to, step, callback) {
+    if (step == null) {
+        step = from <= to ? 1 : -1;
+    }
+
+    var i;
+
+    if (step > 0) {
+        for (i=from; i<=to; i += step) {
+            callback(i);
+        }
+    } else {
+        for (i=from; i>=to; i += step) {
+            callback(i);
+        }
+    }
+
+};
+
 /**
  * Internal helper method for looping over the properties of any object
  * @private
@@ -161,39 +183,28 @@ exports.fp = function forEachPropertyHelper(o, func) {
 /**
  * Helper to load a custom tag
  */
-exports.t = function loadTagHelper(renderer, targetProperty, isRepeated, hasNestedTags) {
+exports.t = function loadTagHelper(renderer, targetProperty, isRepeated) {
     if (renderer) {
         renderer = resolveRenderer(renderer);
     }
 
-    if (targetProperty || hasNestedTags) {
-        return function(input, out, parent, renderBody) {
-            // Handle nested tags
-            if (renderBody) {
-                renderBody(out, input);
-            }
+    return renderer;
+};
 
-            if (targetProperty) {
-                // If we are nested tag then we do not have a renderer
-                if (isRepeated) {
-                    var existingArray = parent[targetProperty];
-                    if (existingArray) {
-                        existingArray.push(input);
-                    } else {
-                        parent[targetProperty] = [input];
-                    }
-                } else {
-                    parent[targetProperty] = input;
-                }
+exports.n = function loadNestedTagHelper(targetProperty, isRepeated) {
+    return function(input, parent) {
+        // If we are nested tag then we do not have a renderer
+        if (isRepeated) {
+            var existingArray = parent[targetProperty];
+            if (existingArray) {
+                existingArray.push(input);
             } else {
-                // We are a tag with nested tags, but we have already found
-                // our nested tags by rendering the body
-                renderer(input, out);
+                parent[targetProperty] = [input];
             }
-        };
-    } else {
-        return renderer;
-    }
+        } else {
+            parent[targetProperty] = input;
+        }
+    };
 };
 
 /**
@@ -212,6 +223,20 @@ exports.m = function mergeHelper(into, source) {
 };
 
 /**
+ * Merges nested tags by rendering the body
+ * @param  {[type]} object [description]
+ * @param  {[type]} source [description]
+ * @return {[type]}        [description]
+ */
+exports.mn = function mergeNestedTagsHelper(input) {
+    if (input.renderBody) {
+        input.renderBody(null, input);
+    }
+    input.renderBody = null;
+    return input;
+};
+
+/**
  * classList(a, b, c, ...)
  * Joines a list of class names with spaces. Empty class names are omitted.
  *
@@ -226,4 +251,3 @@ exports.cl = function classListHelper() {
  * Loads a template (__helpers.l --> marko_loadTemplate(path))
  */
 exports.l = require('./loader');
-exports.i = require('./include');

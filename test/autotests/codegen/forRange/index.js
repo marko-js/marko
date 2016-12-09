@@ -6,9 +6,9 @@ module.exports = function(builder) {
     return program([
         builder.forRange({
             varName: 'i',
-            from: 0,
+            from: builder.literal(0),
             to: 'myArray.length',
-            step: 2,
+            step: builder.literal(2),
             body: [
                 builder.functionCall('console.log', [
                     builder.identifier('i')

@@ -47,6 +47,7 @@ var WhileStatement = require('./ast/WhileStatement');
 var DocumentType = require('./ast/DocumentType');
 var Declaration = require('./ast/Declaration');
 var SequenceExpression = require('./ast/SequenceExpression');
+var CustomTag = require('./ast/CustomTag');
 
 var parseExpression = require('./util/parseExpression');
 var parseStatement = require('./util/parseStatement');
@@ -162,6 +163,10 @@ class Builder {
             node.setCodeGenerator(generateCode);
         }
         return node;
+    }
+
+    customTag(el, tagDef) {
+        return new CustomTag(el, tagDef);
     }
 
     declaration(declaration) {

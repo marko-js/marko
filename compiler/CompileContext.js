@@ -64,9 +64,12 @@ const helpers = {
     'forEach': 'f',
     'forEachProp': 'fp',
     'forEachWithStatusVar': 'fv',
+    'forRange': 'fr',
     'include': 'i',
+    'loadNestedTag': 'n',
     'loadTag': 't',
     'loadTemplate': 'l',
+    'mergeNestedTagsHelper': 'mn',
     'merge': 'm',
     'str': 's',
     'styleAttr': 'sa',
@@ -86,6 +89,7 @@ class CompileContext extends EventEmitter {
         this.dirname = path.dirname(filename);
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
+        this._dataStacks = {};
         this.meta = null;
 
         this.options = options || {};
@@ -158,6 +162,44 @@ class CompileContext extends EventEmitter {
         if (--this._flags[name] === 0) {
             delete this._flags[name];
         }
+    }
+
+    pushData(key, data) {
+        var dataStack = this._dataStacks[key];
+        if (!dataStack) {
+            dataStack = this._dataStacks[key] = [];
+        }
+
+        dataStack.push(data);
+
+        return {
+            pop: () => {
+                this.popData(key);
+            }
+        };
+    }
+
+    popData(key) {
+        var dataStack = this._dataStacks[key];
+
+        if (!dataStack || dataStack.length === 0) {
+            throw new Error('No data pushed for "' + key + '"');
+        }
+
+        dataStack.pop();
+
+        if (dataStack.length === 0) {
+            delete this.data[key];
+        }
+    }
+
+    getData(name) {
+        var dataStack = this._dataStacks[name];
+        if (dataStack) {
+            return dataStack[dataStack.length - 1];
+        }
+
+        return this.data[name];
     }
 
     addError(errorInfo) {
@@ -307,28 +349,38 @@ class CompileContext extends EventEmitter {
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
 
-        var taglibLookup = this.taglibLookup;
-        var tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
-        if (tagDef) {
-            var nodeFactoryFunc = tagDef.getNodeFactory();
-            if (nodeFactoryFunc) {
-                var newNode = nodeFactoryFunc(elNode, this);
-                if (!(newNode instanceof Node)) {
-                    throw new Error('Invalid node returned from node factory for tag "' + tagName + '".');
-                }
+        var tagDef;
 
-                if (newNode != node) {
-                    // Make sure the body container is associated with the correct node
-                    if (newNode.body && newNode.body !== node) {
-                        newNode.body = newNode.makeContainer(newNode.body.items);
+        var taglibLookup = this.taglibLookup;
+
+        if (typeof tagName === 'string' && tagName.startsWith('@')) {
+            // NOTE: The tag definition can't be determined now since it will be
+            //       determined by the parent custom tag.
+            node = builder.customTag(elNode);
+            node.body = node.makeContainer(node.body.items);
+        } else {
+            tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
+            if (tagDef) {
+                var nodeFactoryFunc = tagDef.getNodeFactory();
+                if (nodeFactoryFunc) {
+                    var newNode = nodeFactoryFunc(elNode, this);
+                    if (!(newNode instanceof Node)) {
+                        throw new Error('Invalid node returned from node factory for tag "' + tagName + '".');
                     }
-                    node = newNode;
+
+                    if (newNode != node) {
+                        // Make sure the body container is associated with the correct node
+                        if (newNode.body && newNode.body !== node) {
+                            newNode.body = newNode.makeContainer(newNode.body.items);
+                        }
+                        node = newNode;
+                    }
                 }
             }
-        }
 
-        if (!node) {
-            node = elNode;
+            if (!node) {
+                node = elNode;
+            }
         }
 
         if (tagDef && tagDef.noOutput) {
@@ -441,8 +493,13 @@ class CompileContext extends EventEmitter {
     }
 
     addDependency(path, type, options) {
-        var dependency = (type ? type+':' : '') + path;
-        this.pushMeta('deps', this.builder.literal(dependency), true);
+        var dependency;
+        if(typeof path === 'object') {
+            dependency = this.builder.parseExpression(JSON.stringify(path));
+        } else {
+            dependency = this.builder.literal((type ? type+':' : '') + path);
+        }
+        this.pushMeta('deps', dependency, true);
     }
 
     pushMeta(key, value, unique) {

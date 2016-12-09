@@ -19,6 +19,11 @@ var getTransformHelper = require('./util/getTransformHelper');
 module.exports = function transform(el, context) {
     var transformHelper = getTransformHelper(el, context);
 
+    if (el.type === 'TemplateRoot') {
+        transformHelper.handleRootNodes();
+        return;
+    }
+
     if (el.hasAttribute('w-body')) {
         var bodyAttr = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
@@ -41,16 +46,7 @@ module.exports = function transform(el, context) {
 
     if (el.hasAttribute('w-bind')) {
         el.setFlag('hasWidgetBind');
-        if (el.hasAttribute('ref')) {
-            transformHelper.addError('The "ref" attribute cannot be used in conjunction with the "w-bind" attribute.');
-        }
-        if (el.hasAttribute('w-id')) {
-            transformHelper.addError('The "w-id" attribute cannot be used in conjuntion with the "w-bind" attribute.');
-        }
         transformHelper.handleWidgetBind();
-    } else if (el.hasAttribute('w-extend')) {
-        el.setFlag('hasWidgetExtend');
-        transformHelper.handleWidgetExtend();
     }
 
     if (/* New preserve attributes */

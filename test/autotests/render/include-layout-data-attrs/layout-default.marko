@@ -1,0 +1,19 @@
+<h1 if(data.showHeader !== false)>
+    <if(data.header)>
+        <include(data.header)/>
+    </if>
+    <else>
+        DEFAULT TITLE
+    </else>
+</h1>
+<div>
+    <include(data.body)/>
+</div>
+<h1 if(data.showFooter !== false)>
+    <if(data.footer)>
+        <include(data.footer)/>
+    </if>
+    <else>
+        DEFAULT FOOTER
+    </else>
+</h1>

@@ -1,14 +1,16 @@
 'use strict';
-var inherit = require('raptor-util/inherit');
 var dom = require('./dom');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
 var extend = require('raptor-util/extend');
+var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var marko = require('marko');
+var widgetLookup = require('./lookup').widgets;
+
 var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
@@ -35,16 +37,6 @@ var lifecycleEventMethods = {
 
 function removeListener(eventListenerHandle) {
     eventListenerHandle.remove();
-}
-
-function destroyRecursive(el) {
-    dom.forEachChildEl(el, function (childEl) {
-        var descendentWidget = childEl.__widget;
-        if (descendentWidget) {
-            destroy(descendentWidget, false, false);
-        }
-        destroyRecursive(childEl);
-    });
 }
 
 /**
@@ -79,28 +71,39 @@ function removeDOMEventListeners(widget) {
     }
 }
 
-function destroy(widget, removeNode, recursive) {
+function destroyWidgetForEl(el) {
+    var widgetToDestroy = el.__widget;
+    if (widgetToDestroy) {
+        destroyWidgetHelper(widgetToDestroy);
+        el.__widget = null;
+
+        while ((widgetToDestroy = widgetToDestroy.__rootFor)) {
+            widgetToDestroy.__rootFor = null;
+            destroyWidgetHelper(widgetToDestroy);
+        }
+    }
+}
+function destroyElRecursive(el) {
+    var curChild = el.firstChild;
+    while(curChild) {
+        if (curChild.nodeType === 1) {
+            destroyElRecursive(curChild);
+            destroyWidgetForEl(curChild);
+        }
+        curChild = curChild.nextSibling;
+    }
+}
+
+function destroyWidgetHelper(widget) {
     if (widget.isDestroyed()) {
         return;
     }
 
-    var rootEl = widget.getEl();
-
     emitLifecycleEvent(widget, 'beforeDestroy');
     widget.__lifecycleState = 'destroyed';
 
-    if (rootEl) {
-        if (recursive) {
-            destroyRecursive(rootEl);
-        }
-
-        if (removeNode && rootEl.parentNode) {
-            //Remove the widget's DOM nodes from the DOM tree if the root element is known
-            rootEl.parentNode.removeChild(rootEl);
-        }
-
-        rootEl.__widget = null;
-    }
+    widget.els = null;
+    widget.el = null;
 
     // Unsubscribe from all DOM events
     removeDOMEventListeners(widget);
@@ -110,70 +113,9 @@ function destroy(widget, removeNode, recursive) {
         widget.__subscriptions = null;
     }
 
+    delete widgetLookup[widget.id];
+
     emitLifecycleEvent(widget, 'destroy');
-}
-
-function setState(widget, name, value, forceDirty, noQueue) {
-    if (typeof value === 'function') {
-        return;
-    }
-
-    if (value === null) {
-        // Treat null as undefined to simplify our comparison logic
-        value = undefined;
-    }
-
-    if (forceDirty) {
-        var dirtyState = widget.__dirtyState || (widget.__dirtyState = {});
-        dirtyState[name] = true;
-    } else if (widget.state[name] === value) {
-        return;
-    }
-
-    var clean = !widget.__dirty;
-
-    if (clean) {
-        // This is the first time we are modifying the widget state
-        // so introduce some properties to do some tracking of
-        // changes to the state
-        var currentState = widget.state;
-        widget.__dirty = true; // Mark the widget state as dirty (i.e. modified)
-        widget.__oldState = currentState;
-        widget.state = extend({}, currentState);
-        widget.__stateChanges = {};
-    }
-
-    widget.__stateChanges[name] = value;
-
-    if (value == null) {
-        // Don't store state properties with an undefined or null value
-        delete widget.state[name];
-    } else {
-        // Otherwise, store the new value in the widget state
-        widget.state[name] = value;
-    }
-
-    if (clean && noQueue !== true) {
-        // If we were clean before then we are now dirty so queue
-        // up the widget for update
-        updateManager.queueWidgetUpdate(widget);
-    }
-}
-
-function replaceState(widget, newState, noQueue) {
-    var k;
-
-    for (k in widget.state) {
-        if (widget.state.hasOwnProperty(k) && !newState.hasOwnProperty(k)) {
-            setState(widget, k, undefined, false, noQueue);
-        }
-    }
-
-    for (k in newState) {
-        if (newState.hasOwnProperty(k)) {
-            setState(widget, k, newState[k], false, noQueue);
-        }
-    }
 }
 
 function resetWidget(widget) {
@@ -202,13 +144,48 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
         args = extraArgs.concat(args);
     }
 
-    var targetWidget = markoWidgets.getWidgetForEl(widget.__scope);
+
+    var targetWidget = widgetLookup[widget.__scope];
     var targetMethod = targetWidget[targetMethodName];
     if (!targetMethod) {
         throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
     }
 
     targetMethod.apply(targetWidget, args);
+}
+
+function getElId(widget, widgetElId, index) {
+    var id = widget.id;
+
+    var elId = widgetElId != null ? id + '-' + widgetElId : id;
+
+    if (index != null) {
+        elId += '[' + index + ']';
+    }
+
+    return elId;
+}
+
+
+function getAllRootEls(widget, rootEls) {
+    var i, len;
+
+    var widgetEls = widget.els;
+
+    for (i=0, len=widgetEls.length; i<len; i++) {
+        var widgetEl = widgetEls[i];
+        rootEls[widgetEl.id] = widgetEl;
+    }
+
+    var rootWidgets = widget.__rootWidgets;
+    if (rootWidgets) {
+        for (i=0, len=rootWidgets.length; i<len; i++) {
+            var rootWidget = rootWidgets[i];
+            getAllRootEls(rootWidget, rootEls);
+        }
+    }
+
+    return rootEls;
 }
 
 var widgetProto;
@@ -223,7 +200,9 @@ function Widget(id, document) {
     this.id = id;
     this.el = null;
     this.bodyEl = null;
-    this.state = null;
+    this.__state = null;
+    this.__rawState = null;
+    this.__roots = null;
     this.__subscriptions = null;
     this.__evHandles = null;
     this.__lifecycleState = null;
@@ -273,19 +252,15 @@ Widget.prototype = widgetProto = {
         return emit.apply(this, arguments);
     },
     getElId: function (widgetElId, index) {
-        var elId = widgetElId != null ? this.id + '-' + widgetElId : this.id;
-
-        if (index != null) {
-            elId += '[' + index + ']';
-        }
-
-        return elId;
+        return getElId(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
+        var doc = this.__document;
+
         if (widgetElId != null) {
-            return this.__document.getElementById(this.getElId(widgetElId, index));
+            return doc.getElementById(getElId(this, widgetElId, index));
         } else {
-            return this.el || this.__document.getElementById(this.getElId());
+            return this.el || doc.getElementById(getElId(this));
         }
     },
     getEls: function(id) {
@@ -302,8 +277,8 @@ Widget.prototype = widgetProto = {
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = this.getElId(id, index);
-        return markoWidgets.getWidgetForEl(targetWidgetId, this.__document);
+        var targetWidgetId = getElId(this, id, index);
+        return widgetLookup[targetWidgetId];
     },
     getWidgets: function(id) {
         var widgets = [];
@@ -318,9 +293,33 @@ Widget.prototype = widgetProto = {
         }
         return widgets;
     },
-    destroy: function (options) {
-        options = options || {};
-        destroy(this, options.removeNode !== false, options.recursive !== false);
+    destroy: function () {
+        if (this.isDestroyed()) {
+            return;
+        }
+
+        var i, len;
+
+        var els = this.els;
+
+        for (i=0, len=els.length; i<len; i++) {
+            var el = els[i];
+            destroyElRecursive(el);
+
+            var parentNode = el.parentNode;
+            if (parentNode) {
+                parentNode.removeChild(el);
+            }
+        }
+
+        var rootWidgets = this.__rootWidgets;
+        if (rootWidgets) {
+            for (i=0, len=rootWidgets.length; i<len; i++) {
+                rootWidgets[i].destroy();
+            }
+        }
+
+        destroyWidgetHelper(this);
     },
     isDestroyed: function () {
         return this.__lifecycleState === 'destroyed';
@@ -328,19 +327,29 @@ Widget.prototype = widgetProto = {
     getBodyEl: function() {
         return this.bodyEl;
     },
+    get state() {
+        return this.__state;
+    },
+    set state(value) {
+        if(!this.__state && value) {
+            this.__state = new this.State(this, value);
+        } else {
+            this.__state._replace(value);
+        }
+    },
     setState: function(name, value) {
         if (typeof name === 'object') {
             // Merge in the new state with the old state
             var newState = name;
             for (var k in newState) {
                 if (newState.hasOwnProperty(k)) {
-                    setState(this, k, newState[k]);
+                    this.state._set(k, newState[k], true /* ensure:true */);
                 }
             }
             return;
         }
 
-        setState(this, name, value);
+         this.state._set(name, value, true /* ensure:true */);
     },
 
     setStateDirty: function(name, value) {
@@ -348,11 +357,11 @@ Widget.prototype = widgetProto = {
             value = this.state[name];
         }
 
-        setState(this, name, value, true /* forceDirty */);
+        this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
     _replaceState: function(newState) {
-        replaceState(this, newState, true /* do not queue an update */ );
+        this.state._replace(newState, true /* do not queue an update */ );
     },
 
     _removeDOMEventListeners: function() {
@@ -360,7 +369,7 @@ Widget.prototype = widgetProto = {
     },
 
     replaceState: function(newState) {
-        replaceState(this, newState);
+        this.state._replace(newState);
     },
 
     /**
@@ -382,11 +391,7 @@ Widget.prototype = widgetProto = {
         }
 
         if (this.onInput) {
-            var prevState = this.state;
             this.onInput(newProps || {});
-            if(this.state !== prevState) {
-                this.replaceState(this.state);
-            }
             return;
         }
 
@@ -531,12 +536,10 @@ Widget.prototype = widgetProto = {
             throw new Error('Widget does not have a "renderer" property');
         }
 
-        var elToReplace = this.__document.getElementById(self.id);
-
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
-        var templateData = extend({}, props || self.state);
+        var templateData = extend({}, props || self.__rawState);
 
         var globalData = {};
 
@@ -545,8 +548,11 @@ Widget.prototype = widgetProto = {
         globalData.__rerender = true;
 
         if (!props) {
-            globalData.__rerenderState = props ? null : self.state;
+            globalData.__rerenderState = props ? null : self.__rawState;
         }
+
+        var fromEls = getAllRootEls(this, {});
+        var doc = this.__document;
 
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
@@ -554,20 +560,13 @@ Widget.prototype = widgetProto = {
             renderer(templateData, out);
             var result = new RenderResult(out);
 
-            var targetNode;
-
-            if (out.isVDOM) {
-                targetNode = out.getOutput().firstChild;
-            } else {
-                targetNode = out.getNode(self.__document);
-            }
+            var targetNode = out.getOutput();
 
             var widgetsContext = out.global.widgets;
 
             function onNodeDiscarded(node) {
-                var widget = node.__widget;
-                if (widget) {
-                    destroy(widget, false, false);
+                if (node.nodeType === 1) {
+                    destroyWidgetForEl(node);
                 }
             }
 
@@ -613,7 +612,7 @@ Widget.prototype = widgetProto = {
                             // We found a widget in an old DOM node that does not have
                             // a compatible widget that was rendered so we need to
                             // destroy the old widget
-                            destroy(existingWidget, false, false);
+                            destroyWidgetHelper(existingWidget);
                         }
                     }
                 }
@@ -628,14 +627,29 @@ Widget.prototype = widgetProto = {
                 }
             }
 
-            morphdom(elToReplace, targetNode, {
+            var morphdomOptions = {
                 onNodeDiscarded: onNodeDiscarded,
                 onBeforeElUpdated: onBeforeElUpdated,
                 onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-            });
+            };
 
-            // Trigger any 'onUpdate' events for all of the rendered widgets
-            result.afterInsert(elToReplace);
+            var fromEl;
+
+            var targetEl = targetNode.firstChild;
+            while(targetEl) {
+                var id = targetEl.id;
+
+                if (id) {
+                    fromEl = fromEls[id];
+                    if (fromEl) {
+                        morphdom(fromEl, targetEl, morphdomOptions);
+                    }
+                }
+
+                targetEl = targetEl.nextSibling;
+            }
+
+            result.afterInsert(doc);
 
             self.__lifecycleState = null;
 
@@ -650,29 +664,6 @@ Widget.prototype = widgetProto = {
                 resetWidget(self);
             }
         });
-    },
-
-    detach: function () {
-        dom.detach(this.el);
-
-    },
-    appendTo: function (targetEl) {
-        dom.appendTo(this.el, targetEl);
-    },
-    replace: function (targetEl) {
-        dom.replace(this.el, targetEl);
-    },
-    replaceChildrenOf: function (targetEl) {
-        dom.replaceChildrenOf(this.el, targetEl);
-    },
-    insertBefore: function (targetEl) {
-        dom.insertBefore(this.el, targetEl);
-    },
-    insertAfter: function (targetEl) {
-        dom.insertAfter(this.el, targetEl);
-    },
-    prependTo: function (targetEl) {
-        dom.prependTo(this.el, targetEl);
     },
     ready: function (callback) {
         var document = this.el.ownerDocument;
@@ -697,7 +688,7 @@ Widget.prototype = widgetProto = {
                     if (match[2] == null) {
                         return jquery(this.getEl(widgetElId));
                     } else {
-                        return jquery('#' + this.getElId(widgetElId) + match[2]);
+                        return jquery('#' + getElId(this, widgetElId) + match[2]);
                     }
                 } else {
                     var rootEl = this.getEl();
@@ -719,6 +710,34 @@ Widget.prototype = widgetProto = {
 };
 
 widgetProto.elId = widgetProto.getElId;
+
+// Add all of the following DOM methods to Widget.prototype:
+// - forEachChildEl(referenceEl)
+// - forEachChild(referenceEl)
+// - detach(referenceEl)
+// - appendTo(referenceEl)
+// - remove(referenceEl)
+// - removeChildren(referenceEl)
+// - replace(referenceEl)
+// - replaceChildrenOf(referenceEl)
+// - insertBefore(referenceEl)
+// - insertAfter(referenceEl)
+// - prependTo(referenceEl)
+dom.mixin(
+    widgetProto,
+    function getNode(doc) {
+        var els = this.els;
+        var elCount = els.length;
+        if (elCount > 1) {
+            var fragment = doc.createDocumentFragment();
+            for (var i=0; i<elCount; i++) {
+                fragment.appendChild(els[i]);
+            }
+            return fragment;
+        } else {
+            return this.els[0];
+        }
+    });
 
 inherit(Widget, EventEmitter);
 

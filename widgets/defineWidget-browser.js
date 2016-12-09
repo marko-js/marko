@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ var BaseState;
  var BaseWidget;
  var inherit;
+
 
 module.exports = function defineWidget(def, renderer) {
     if (def._isWidget) {
         return def;
-    }
-
-    var extendWidget = def.extendWidget;
-    if (extendWidget) {
-        return {
-            renderer: renderer,
-            render: renderer.render,
-            renderSync: renderer.renderSync,
-            extendWidget: function(widget) {
-                extendWidget(widget);
-                widget.renderer = renderer;
-            }
-        };
     }
 
     var WidgetClass;
@@ -78,6 +67,10 @@ module.exports = function defineWidget(def, renderer) {
     // a widget so that we can short-circuit this work later
     Widget._isWidget = true;
 
+    // Set widget state constructor
+    proto.State = function State() { BaseState.apply(this, arguments); };
+    inherit(proto.State, BaseState);
+
     if (!renderer) {
         renderer = WidgetClass.renderer || WidgetClass.prototype.renderer;
         if (renderer) {
@@ -112,6 +105,6 @@ module.exports = function defineWidget(def, renderer) {
     return Widget;
 };
 
+BaseState = require('./State');
 BaseWidget = require('./Widget');
 inherit = require('raptor-util/inherit');
-

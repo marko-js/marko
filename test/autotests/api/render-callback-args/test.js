@@ -3,8 +3,8 @@ exports.check = function(marko, markoCompiler, expect, done) {
     var data = {
         name: 'John'
     };
-    template.render(data, function(error, result, out) {
-        expect(result.toString()).to.equal('Hello John!');
+    template.renderToString(data, function(error, html, out) {
+        expect(html).to.equal('Hello John!');
         expect(out != null).to.equal(true);
         done();
     });

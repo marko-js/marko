@@ -75,8 +75,12 @@
             }
         ]
     },
+    "<import>": {
+        "code-generator": "./import-tag"
+    },
     "<include>": {
-        "code-generator": "./include-tag",
+        "renderer": "./include-tag",
+        "transformer": "./include-tag-transformer",
         "autocomplete": [
             {
                 "displayText": "include(<template>)",

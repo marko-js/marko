@@ -25,6 +25,7 @@ class HtmlElement extends Node {
         this.tagName = null;
         this.tagNameExpression = null;
         this.setTagName(def.tagName);
+        this.tagString = def.tagString;
         this._attributes = def.attributes;
         this.body = this.makeContainer(def.body);
         this.argument = def.argument;
@@ -60,7 +61,7 @@ class HtmlElement extends Node {
             // the code to render an HTML element.
             return codegen.builder.invokeMacroFromEl(this);
         }
-        
+
         return generateVDOMCode(this, codegen, vdomUtil);
     }
 
@@ -85,6 +86,17 @@ class HtmlElement extends Node {
 
     addAttribute(attr) {
         this._attributes.addAttribute(attr);
+    }
+
+    setAttributeValues(attrs) {
+        if (!attrs) {
+            return;
+        }
+
+        for(var attrName in attrs) {
+            var attrValue = attrs[attrName];
+            this.setAttributeValue(attrName, attrValue);
+        }
     }
 
     setAttributeValue(name, value) {
@@ -151,6 +163,7 @@ class HtmlElement extends Node {
             type: this.type,
             tagName: this.tagName,
             attributes: this._attributes,
+            tagString: this.tagString,
             argument: this.argument,
             body: this.body,
             bodyOnlyIf: this.bodyOnlyIf,
