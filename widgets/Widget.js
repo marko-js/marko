@@ -8,7 +8,6 @@ var extend = require('raptor-util/extend');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
-var marko = require('marko');
 var widgetLookup = require('./lookup').widgets;
 
 var slice = Array.prototype.slice;
