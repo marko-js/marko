@@ -1,5 +1,6 @@
 'use strict';
 var dom = require('./dom');
+var marko = require('../');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
