@@ -32,53 +32,69 @@ function isModuleExports(node) {
            node.left.property.name === 'exports';
 }
 
+function isModuleExportsStatement(node) {
+    return node.type === 'ExpressionStatement' &&
+           isModuleExports(node.expression);
+}
+
 function handleScriptElement(scriptEl, transformHelper) {
     let builder = transformHelper.builder;
 
     let hasExport = false;
+    let needsComponentVar;
 
     var scriptCode = scriptEl.bodyText;
 
     let tree = esprima.parse(scriptCode, { sourceType:'module' });
     let updatedTree = estraverse.replace(tree, {
         enter: function(node) {
-            if(isModuleExports(node)) {
+            if (isModuleExports(node)) {
                 hasExport = true;
+                needsComponentVar = true;
                 node.left = {
                     type: 'Identifier',
                     name: 'marko_component'
                 };
                 this.break();
+            } else if (isModuleExportsStatement(node)) {
+                hasExport = true;
+                return createComponentDeclaration(node.expression.right);
             } else if (node.type === 'ExportDefaultDeclaration') {
                 hasExport = true;
-                return {
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'AssignmentExpression',
-                        operator: '=',
-                        left: {
-                            type: 'Identifier',
-                            name: 'marko_component'
-                        },
-                        right: node.declaration
-                    }
-                };
+                return createComponentDeclaration(node.declaration);
             }
         }
     });
 
-    if (hasExport) {
-        scriptEl.detach();
-        var inlineComponent = builder.selfInvokingFunction([
-            builder.var('marko_component'),
-            builder.code(
-                escodegen.generate(updatedTree)
-            ),
-            builder.returnStatement('marko_component')
-        ]);
+    function createComponentDeclaration(value) {
+        return {
+            type: 'VariableDeclaration',
+            declarations: [
+                {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'marko_component'
+                    },
+                    init: value
+                }
+            ],
+            kind: 'var'
+        };
+    }
 
-        var inlineComponentVar = transformHelper.context.addStaticVar('marko_component', inlineComponent);
-        transformHelper.setInlineComponent(inlineComponentVar);
+    if (hasExport) {
+        let componentVar;
+
+        if (needsComponentVar) {
+            componentVar = transformHelper.context.addStaticVar('marko_component');
+        } else {
+            componentVar = builder.identifier('marko_component');
+        }
+
+        transformHelper.setInlineComponent(componentVar);
+        transformHelper.context.addStaticCode(escodegen.generate(updatedTree));
+        scriptEl.detach();
     }
 }
 
