@@ -17,6 +17,8 @@ class Vars extends Node {
             return null;
         }
 
+        this.declarations = codegen.generateCode(this.declarations);
+
         if (this.body && this.body.length) {
             var scopedBody = [this].concat(this.body);
             this.body = null;
