@@ -21,7 +21,7 @@ function render(data, out, widget, state) {
 
   include_tag({
       _target: widget.body,
-      _widgetId: widget.elId(0),
+      _elId: widget.elId(0),
       _arg: widget
     }, out);
 
