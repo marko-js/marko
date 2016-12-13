@@ -1,6 +1,6 @@
-var template = require("marko/html").c(__filename);
+var marko_template = require("marko/html").t(__filename);
 
-module.exports = template;
+module.exports = marko_template;
 
 var marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
@@ -45,4 +45,4 @@ function render(data, out) {
   out.w("</body></html>");
 }
 
-template._ = render;
+marko_template._ = render;

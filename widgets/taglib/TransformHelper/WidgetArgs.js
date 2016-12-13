@@ -1,7 +1,5 @@
 'use strict';
 
-var getRequirePath = require('../getRequirePath');
-
 class WidgetArgs {
 
     constructor() {
@@ -12,7 +10,6 @@ class WidgetArgs {
 
     setId(id) {
         this.empty = false;
-
         this.id = id;
     }
 
@@ -39,20 +36,6 @@ class WidgetArgs {
 
         var el = transformHelper.el;
 
-        let widgetArgsFunctionCall = this.buildWidgetArgsFunctionCall(transformHelper);
-        let cleanupWidgetArgsFunctionCall = this.buildCleanupWidgetArgsFunctionCall(transformHelper);
-
-        el.onBeforeGenerateCode((event) => {
-            event.insertCode(widgetArgsFunctionCall);
-        });
-
-        el.onAfterGenerateCode((event) => {
-            event.insertCode(cleanupWidgetArgsFunctionCall);
-        });
-    }
-
-    buildWidgetArgsFunctionCall(transformHelper) {
-        var context = transformHelper.context;
         var builder = transformHelper.builder;
 
         var id = this.id;
@@ -62,33 +45,44 @@ class WidgetArgs {
         // widget if it is needed
         var shouldProvideScope = id || customEvents;
 
-        let widgetArgsVar = context.addStaticVar('marko_widgetArgs',
-            'require("' + getRequirePath('marko/widgets/taglib/helpers/widgetArgs', context) + '")');
-
-        var functionCallArgs = [
-            builder.identifier('out')
-        ];
+        var args = [];
 
         if (shouldProvideScope) {
-            functionCallArgs.push(builder.memberExpression(
-                builder.identifier('widget'),
-                builder.identifier('id')
-            ));
+            args.push(builder.identifier('widget'));
         } else {
-            functionCallArgs.push(builder.literalNull());
+            args.push(builder.literalNull());
         }
 
         if (id != null) {
-            functionCallArgs.push(id);
+            args.push(id);
         } else {
-            functionCallArgs.push(builder.literalNull());
+            args.push(builder.literalNull());
         }
 
         if (customEvents) {
-            functionCallArgs.push(builder.literal(customEvents));
+            args.push(builder.literal(customEvents));
         }
 
-        return builder.functionCall(widgetArgsVar, functionCallArgs);
+        if (!el.tagDef || !el.tagDef.template) {
+            let widgetArgsVar = transformHelper.context.addStaticVar('marko_widgetArgs',
+                builder.require(builder.literal('marko/widgets/taglib/helpers/widgetArgs')));
+
+            let widgetArgsFunctionCall = builder.functionCall(widgetArgsVar, [
+                builder.identifierOut(),
+                builder.literal(args)
+            ]);
+            let cleanupWidgetArgsFunctionCall = this.buildCleanupWidgetArgsFunctionCall(transformHelper);
+
+            el.onBeforeGenerateCode((event) => {
+                event.insertCode(widgetArgsFunctionCall);
+            });
+
+            el.onAfterGenerateCode((event) => {
+                event.insertCode(cleanupWidgetArgsFunctionCall);
+            });
+        } else {
+            el.setAttributeValue('$w', builder.literal(args));
+        }
     }
 
     buildCleanupWidgetArgsFunctionCall(transformHelper) {

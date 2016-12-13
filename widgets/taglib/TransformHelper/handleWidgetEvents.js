@@ -15,10 +15,9 @@ function isUpperCase(c) {
 }
 
 function addBubblingEventListener(transformHelper, eventType, targetMethod, extraArgs) {
-    var containingWidgetNode = transformHelper.getContainingWidgetNode();
     var el = transformHelper.el;
 
-    if (!containingWidgetNode) {
+    if (transformHelper.hasBoundWidgetForTemplate() === false) {
         transformHelper.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
         return;
     }

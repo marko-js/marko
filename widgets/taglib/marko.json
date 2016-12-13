@@ -1,5 +1,9 @@
 {
     "<*>": {
+        "@$w": {
+            "target-property": null,
+            "autocomplete": []
+        },
         "@w-bind": {
             "type": "string",
             "preserve-name": true,
@@ -191,20 +195,7 @@
         "transformer": "./widgets-transformer.js"
     },
     "<_widget>": {
-        "renderer": "./widget-tag.js",
-        "@type": "object",
-        "@config": "object",
-        "@id": "string",
-        "@hasDomEvents": "number",
-        "@body": "string",
-        "@roots": "array",
-        "vars": ["widget", "state"],
-        "import-var": {
-            "_cfg": "data.widgetConfig",
-            "_state": "data.widgetState",
-            "_props": "data.widgetProps",
-            "_body": "data.widgetBody"
-        },
+        "code-generator": "./widget-tag.js",
         "autocomplete": []
     },
     "<init-widgets>": {
@@ -230,7 +221,7 @@
         "@*": "string",
         "autocomplete": [
             {
-                "displayText": "widget-types default=\"<pat1h>\" alt=\"<path2>\"",
+                "displayText": "widget-types default=\"<path1>\" alt=\"<path2>\"",
                 "snippet": "widget-types default=\"${1:./widget}\"",
                 "openTagOnly": true
             }

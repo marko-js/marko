@@ -1,6 +1,6 @@
-var template = require("marko/html").c(__filename);
+var marko_template = require("marko/html").t(__filename);
 
-module.exports = template;
+module.exports = marko_template;
 
 var marko_helpers = require("marko/runtime/html/helpers"),
     marko_classAttr = marko_helpers.ca,
@@ -23,4 +23,4 @@ function render(data, out) {
     " b\"></div>");
 }
 
-template._ = render;
+marko_template._ = render;

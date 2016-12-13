@@ -77,7 +77,8 @@ function handleScriptElement(scriptEl, transformHelper) {
             builder.returnStatement('marko_component')
         ]);
 
-        transformHelper.setInlineComponent(inlineComponent);
+        var inlineComponentVar = transformHelper.context.addStaticVar('marko_component', inlineComponent);
+        transformHelper.setInlineComponent(inlineComponentVar);
     }
 }
 
@@ -179,16 +180,10 @@ module.exports = function handleRootNodes() {
         return;
     }
 
-    let widgetNode = context.createNodeForEl('_widget');
-
-    context.root.moveChildrenTo(widgetNode);
-    context.root.appendChild(widgetNode);
-
     var nextRef = 0;
 
     rootNodes.forEach((curNode, i) => {
         curNode.setAttributeValue('w-bind');
-        curNode.data.widgetNode = widgetNode;
 
         if (!curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {

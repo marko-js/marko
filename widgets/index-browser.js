@@ -65,20 +65,12 @@ var jquery = window.$;
 exports.$ = jquery;
 
 exports.registerWidget = require('./registry').register;
-exports.defineComponent = require('./defineComponent');
-exports.defineWidget = require('./defineWidget');
-exports.defineRenderer = require('./defineRenderer');
+exports.defineComponent = require('./defineComponent'); // Deprecated
+exports.defineWidget /* deprecated */ = exports.w = require('./defineWidget');
+exports.defineRenderer = require('./defineRenderer'); // Deprecated
 exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
-exports.c = function(component, template) {
-    component.template = template;
-    return exports.defineComponent(component);
-};
-
-exports.r = function(renderer, template) {
-    renderer.template = template;
-    return exports.defineRenderer(renderer);
-};
+exports.r = require('./renderer');
 
 exports.batchUpdate = updateManager.batchUpdate;
 exports.onAfterUpdate = updateManager.onAfterUpdate;

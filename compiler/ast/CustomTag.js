@@ -299,7 +299,8 @@ class CustomTag extends HtmlElement {
         // to the input object for the custom tag
         this.forEachAttribute((attr) => {
             var attrName = attr.name;
-            var attrDef = attr.def || tagDef.getAttribute(attr.name);
+
+            var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
             if (!attrDef) {
                 var errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';

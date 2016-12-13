@@ -31,11 +31,10 @@ function WidgetDef(config, endFunc, out) {
     this.scope = config.scope; // The ID of the widget that this widget is scoped within
     this.customEvents = config.customEvents; // An array containing information about custom events
     this.bodyElId = config.bodyElId; // The ID for the default body element (if any any)
-    this.hasDomEvents = config.hasDomEvents; // A flag to indicate if this widget has any
-                                             // listeners for non-bubbling DOM events
     this.roots = config.roots;
+    this.body = config.body;
 
-    this.children = []; // An array of nested WidgetDef instances
+    this.children = null; // An array of nested WidgetDef instances
     this.end = endFunc; // A function that when called will pop this widget def off the stack
     this.domEvents = null; // An array of DOM events that need to be added (in sets of three)
     this.out = out; // The AsyncWriter that this widget is associated with
@@ -48,7 +47,13 @@ WidgetDef.prototype = {
      * so that we can instantiate nested widgets before their parents.
      */
     addChild: function (widgetDef) {
-        this.children.push(widgetDef);
+        var children = this.children;
+
+        if (children) {
+            children.push(widgetDef);
+        } else {
+            this.children = [widgetDef];
+        }
     },
     /**
      * This helper method generates a unique and fully qualified DOM element ID

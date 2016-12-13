@@ -8,7 +8,7 @@ var makeRenderable = require('../renderable');
  * it is used to create a new Template instance.
  * @private
  */
-exports.c = function createTemplate(path) {
+exports.t = function createTemplate(path) {
      return new Template(path);
 };
 

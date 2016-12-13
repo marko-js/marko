@@ -24,10 +24,13 @@ exports.uniqueId = require('./uniqueId');
 function flattenHelper(widgets, flattened) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];
+        if (!widgetDef.type) {
+            continue;
+        }
 
         var children = widgetDef.children;
 
-        if (children.length) {
+        if (children) {
             // Depth-first search (children should be initialized before parent)
             flattenHelper(children, flattened);
         }
@@ -95,17 +98,8 @@ exports.defineWidget = require('./defineWidget');
 exports.defineRenderer = require('./defineRenderer');
 exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
-exports.c = function(componentDef, template) {
-    componentDef.template = template;
-    var component = exports.defineComponent(componentDef);
-    component.template = template;
-    return component;
-};
-
-exports.r = function(renderer, template) {
-    renderer.template = template;
-    return exports.defineRenderer(renderer);
-};
+exports.r = require('./renderer');
+exports.w = function() { /* no op for defining a widget on teh server */ };
 
 // registerWidget is a no-op on the server.
 // Fixes https://github.com/marko-js/marko-widgets/issues/111

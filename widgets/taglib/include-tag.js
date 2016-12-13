@@ -10,7 +10,7 @@ module.exports = function include(input, out) {
     } else if (target) {
         normalInclude(input, out);
     } else if (isBrowser) {
-        var widgetId = input._widgetId;
+        var widgetId = input._arg.id;
 
         // Thereis no body content so let's see if we should reuse
         // the existing body content in the DOM

@@ -1,6 +1,6 @@
-var template = require("marko/html").c(__filename);
+var marko_template = require("marko/html").t(__filename);
 
-module.exports = template;
+module.exports = marko_template;
 
 var bar = require("./bar"),
     foo = bar.f;
@@ -9,4 +9,4 @@ require("./foo");
 
 function render(data, out) {}
 
-template._ = render;
+marko_template._ = render;

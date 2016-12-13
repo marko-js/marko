@@ -32,15 +32,15 @@ WidgetsContext.prototype = {
     },
 
     beginWidget: function (widgetInfo, callback) {
-        var _this = this;
-        var widgetStack = _this.widgetStack;
+        var self = this;
+        var widgetStack = self.widgetStack;
         var origLength = widgetStack.length;
         var parent = origLength ? widgetStack[origLength - 1] : null;
 
         var widgetId = widgetInfo.id;
 
         if (!widgetId) {
-            widgetId = _this._nextWidgetId();
+            widgetId = self._nextWidgetId();
             widgetInfo.id = widgetId;
         }
 
@@ -58,7 +58,7 @@ WidgetsContext.prototype = {
             //Check if it is a top-level widget
             parent.addChild(widgetDef);
         } else {
-            _this.widgets.push(widgetDef);
+            self.widgets.push(widgetDef);
         }
         widgetStack.push(widgetDef);
 

@@ -34,6 +34,24 @@ function checkSplitComponent(context) {
     return rendererPath != null;
 }
 
+function checkIsInnerBind(el) {
+    var curNode = el;
+
+    while (true) {
+        if (curNode.data.hasBoundWidget) {
+            return true;
+        }
+
+        curNode = curNode.parentNode;
+
+        if (!curNode) {
+            break;
+        }
+    }
+
+    return false;
+}
+
 module.exports = function handleWidgetBind() {
     let el = this.el;
     let context = this.context;
@@ -44,16 +62,20 @@ module.exports = function handleWidgetBind() {
         return;
     }
 
-    // A widget is bound to the el...
-
     // Remove the w-bind attribute since we don't want it showing up in the output DOM
     el.removeAttribute('w-bind');
+
+    var isInnerBind = checkIsInnerBind(el.parentNode);
+
+    el.data.hasBoundWidget = true;
+
+    // A widget is bound to the el...
 
     // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
     let bindAttrValue = bindAttr.value;
     let modulePath;
 
-    let widgetAttrs = {};
+    var widgetProps = isInnerBind ? {} : this.getWidgetProps();
 
     let isMain = isTemplateMainEntry(context);
     let transformHelper = this;
@@ -87,10 +109,16 @@ module.exports = function handleWidgetBind() {
             return;
         }
 
-        widgetAttrs.type = builder.computedMemberExpression(
-            builder.identifier('marko_widgetTypes'),
-            bindAttrValue);
+        el.insertSiblingBefore(
+            builder.assignment(
+                builder.memberExpression(builder.identifier('widget'), builder.identifier('type')),
+                builder.memberExpression(
+                    builder.identifier('marko_widgetTypes'),
+                    bindAttrValue,
+                    true /* computed */)));
     }
+
+    var renderingLogic;
 
     if (inlineComponent) {
         isComponentExport = true;
@@ -105,20 +133,24 @@ module.exports = function handleWidgetBind() {
         }
     }
 
-    if (isComponentExport || isRendererExport) {
-        transformHelper.markoWidgetsVar = builder.identifier('marko_widgets');
+
+    if (inlineComponent) {
+        renderingLogic = inlineComponent;
+    } else if (isComponentExport) {
+        renderingLogic = context.addStaticVar('marko_component', builder.require(builder.literal(modulePath)));
+    } else if (rendererPath) {
+        renderingLogic = context.addStaticVar('marko_component', builder.require(builder.literal(rendererPath)));
     }
 
     if (modulePath) {
         let widgetTypeNode;
 
-        let def;
-
         var widgetPath = modulePath;
+        var widgetTypeImport;
 
         if (isMain && isComponentExport) {
             widgetPath = './' + path.basename(context.filename);
-            def = builder.functionDeclaration(null, [], [
+            widgetTypeImport = builder.functionDeclaration(null, [], [
                 builder.returnStatement(builder.memberExpression(builder.identifier('module'), builder.identifier('exports')))
             ]);
         }
@@ -126,63 +158,110 @@ module.exports = function handleWidgetBind() {
         context.addDependency({ type:'require', path:widgetPath });
         context.addDependency({ type:'require', path:'marko/widgets' });
 
-        widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(widgetPath, def));
+        widgetTypeNode = context.addStaticVar('marko_widgetType', this.buildWidgetTypeNode(widgetPath, widgetTypeImport));
 
-        widgetAttrs.type = widgetTypeNode;
+        widgetProps.type = widgetTypeNode;
+    }
 
-        if (isComponentExport || isRendererExport) {
-            this.context.on('beforeGenerateCode:TemplateRoot', function(root) {
-                root.node.generateExports = function(template) {
-                    if(inlineComponent) {
-                        return buildComponentExport(transformHelper, inlineComponent, template);
-                    } else if (isComponentExport) {
-                        let component = builder.require(
-                            builder.literal(modulePath)
-                        );
+    if (el.hasAttribute('w-config')) {
+        el.insertSiblingBefore(
+            builder.assignment(
+                builder.memberExpression(builder.identifier('widget'), builder.identifier('config')),
+                el.getAttributeValue('w-config')));
 
-                        return buildComponentExport(transformHelper, component, template);
-                    } else {
-                        let renderer = builder.require(
-                            builder.literal(rendererPath)
-                        );
-
-                        return buildRendererExport(transformHelper, renderer, template);
-                    }
-
-                };
-            });
-        }
+        el.removeAttribute('w-config');
     }
 
     let id = el.getAttributeValue('id');
 
-    if (el.hasAttribute('w-config')) {
-        widgetAttrs.config = el.getAttributeValue('w-config');
-        el.removeAttribute('w-config');
-    }
-
     if (id) {
-        widgetAttrs.id = id;
+        widgetProps.id = id;
     }
 
-    let widgetNode = el.data.widgetNode;
+    if (isInnerBind) {
+        // let widgetOptionsVar = context.addStaticVar(
+        //     'widgetOptions',
+        //     builder.functionCall(
+        //         builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('r')),
+        //         [
+        //             builder.renderBodyFunction([el]),
+        //             builder.literal(widgetProps)
+        //         ]));
+        //
+        // widgetProps._ = widgetOptionsVar;
 
-    if (widgetNode) {
-        widgetNode.setAttributeValues(widgetAttrs);
-    } else {
-        widgetNode = context.createNodeForEl('_widget', widgetAttrs);
+        el.setAttributeValue('id',
+            builder.memberExpression(
+                builder.identifier('widget'),
+                builder.identifier('id')));
+
+        // TODO Deprecation warning for inner binds
+        let widgetNode = context.createNodeForEl('_widget', {
+            props: builder.literal(widgetProps)
+        });
         el.wrapWith(widgetNode);
+        return;
     }
+
+    if (this.firstBind) {
+        this.context.on('beforeGenerateCode:TemplateRoot', function(eventArgs) {
+            eventArgs.node.addRenderFunctionParam(builder.identifier('widget'));
+            eventArgs.node.addRenderFunctionParam(builder.identifier('state'));
+            eventArgs.node.generateAssignRenderCode = function(eventArgs) {
+                let nodes = [];
+                let templateVar = eventArgs.templateVar;
+                let templateRendererMember = eventArgs.templateRendererMember;
+                let renderFunctionVar = eventArgs.renderFunctionVar;
+
+                var createRendererArgs = [
+                    renderFunctionVar,
+                    builder.literal(widgetProps)
+                ];
+
+                if (renderingLogic) {
+                    createRendererArgs.push(renderingLogic);
+                }
+
+                nodes.push(builder.assignment(
+                    templateRendererMember,
+                    builder.functionCall(
+                        builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('r')),
+                        createRendererArgs)));
+
+                if (inlineComponent || isComponentExport) {
+                    nodes.push(builder.assignment(
+                        builder.memberExpression(templateVar, builder.identifier('Widget')),
+                        builder.functionCall(
+                            builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('w')),
+                            [
+                                renderingLogic,
+                                templateRendererMember
+                            ])));
+                }
+
+                return nodes;
+            };
+        });
+    }
+
+
+
+    // let widgetNode = el.data.widgetNode;
+    //
+    // if (widgetNode) {
+    //     widgetNode.setAttributeValues(widgetProps);
+    // } else {
+    //     widgetNode = context.createNodeForEl('_widget', widgetProps);
+    //     el.wrapWith(widgetNode);
+    // }
 
     var ref = el.getAttributeValue('ref');
 
     if (el.hasAttribute('ref')) {
-        var roots = widgetNode.getAttributeValue('roots');
-        if (roots) {
-            roots.value.push(ref);
-        } else {
-            widgetNode.setAttributeValue('roots', builder.literal([ref]));
+        if (!widgetProps.roots) {
+            widgetProps.roots = [];
         }
+        widgetProps.roots.push(ref);
     } else {
         el.setAttributeValue('id',
             builder.memberExpression(
@@ -190,63 +269,9 @@ module.exports = function handleWidgetBind() {
                 builder.identifier('id')));
     }
 
-    this.widgetStack.push({
-        widgetNode: widgetNode,
-        el: el,
-        extend: false
-    });
+    // this.widgetStack.push({
+    //     widgetNode: widgetNode,
+    //     el: el,
+    //     extend: false
+    // });
 };
-
-function buildComponentExport(transformHelper, component, template) {
-    let builder = transformHelper.builder;
-    return [
-        builder.assignment(
-            builder.var('component'),
-            component
-        ),
-        builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
-        builder.assignment(
-            builder.memberExpression(
-                builder.identifier('module'),
-                builder.identifier('exports')
-            ),
-            builder.functionCall(
-                builder.memberExpression(
-                    transformHelper.markoWidgetsVar,
-                    builder.identifier('c')
-                ),
-                [
-                    builder.identifier('component'),
-                    builder.identifier('template')
-                ]
-            )
-        )
-    ];
-}
-
-function buildRendererExport(transformHelper, renderer, template) {
-    let builder = transformHelper.builder;
-    return [
-        builder.assignment(
-            builder.var('renderer'),
-            renderer
-        ),
-        builder.var(transformHelper.markoWidgetsVar, builder.require(builder.literal(transformHelper.getMarkoWidgetsRequirePath('marko/widgets')))),
-        builder.assignment(
-            builder.memberExpression(
-                builder.identifier('module'),
-                builder.identifier('exports')
-            ),
-            builder.functionCall(
-                builder.memberExpression(
-                    transformHelper.markoWidgetsVar,
-                    builder.identifier('r')
-                ),
-                [
-                    builder.identifier('renderer'),
-                    builder.identifier('template')
-                ]
-            )
-        )
-    ];
-}

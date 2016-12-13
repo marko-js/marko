@@ -114,8 +114,7 @@ function initWidget(widgetDef, doc) {
 
         el = els[0];
     } else {
-        var widgetEl = doc.getElementById(id);
-        el = widgetEl;
+        el = doc.getElementById(id);
         el.__widget = widget;
         els = [el];
     }
@@ -228,8 +227,12 @@ function initClientRendered(widgetDefs, doc) {
     for (var i=0,len=widgetDefs.length; i<len; i++) {
         var widgetDef = widgetDefs[i];
 
-        if (widgetDef.children.length) {
+        if (widgetDef.children) {
             initClientRendered(widgetDef.children, doc);
+        }
+
+        if (!widgetDef.type) {
+            continue;
         }
 
         var widget = initWidget(

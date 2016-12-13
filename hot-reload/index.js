@@ -12,7 +12,22 @@ var modifiedId = 1;
 var HOT_RELOAD_KEY = Symbol('HOT_RELOAD');
 
 
+function cleaResolvePathCache() {
+    var modulePathCache = require('module').Module._pathCache;
+    if (!modulePathCache) {
+        console.log('[marko/hot-reload] WARNING: Missing: require("module").Module._pathCache [' + __filename + ']');
+        return;
+    }
+
+    var keys = Object.keys(modulePathCache);
+    keys.forEach(function(key) {
+        delete modulePathCache[key];
+    });
+}
+
 function tryReloadTemplate(path) {
+    path = path.replace(/\.js$/, '');
+
     try {
         return marko.load(path);
     } catch(e) {
@@ -32,90 +47,61 @@ exports.enable = function() {
     // installed in the project will have hot reload enabled.
     process.env.MARKO_HOT_RELOAD = 'true';
 
-    var oldCreateTemplate = runtime.c;
-
-    function patchMethods(obj, methodNames, reloadFunc) {
-        var hotReloadData = obj[HOT_RELOAD_KEY] || (obj[HOT_RELOAD_KEY] = {});
-        hotReloadData._modifiedId = modifiedId;
-        hotReloadData._latest = obj;
-
-        methodNames.forEach(function(methodName) {
-            hotReloadData[methodName] = obj[methodName];
-
-            obj[methodName] = function hotReloadWrapper() {
-                if (hotReloadData.modifiedId !== modifiedId) {
-                    hotReloadData.modifiedId = modifiedId;
-                    hotReloadData._latest = reloadFunc() || obj;
-                }
-
-                var latest = hotReloadData._latest;
-                return latest[HOT_RELOAD_KEY][methodName].apply(latest, arguments);
+    function createHotReloadProxy(func, template, methodName) {
+        var hotReloadData = template[HOT_RELOAD_KEY];
+        if (!hotReloadData) {
+            hotReloadData = template[HOT_RELOAD_KEY] = {
+                modifiedId: modifiedId,
+                latest: template,
+                originals: {}
             };
-        });
+        }
+
+        hotReloadData.originals[methodName] = func;
+
+        var templatePath = template.path;
+
+        function hotReloadProxy() {
+            if (hotReloadData.modifiedId !== modifiedId) {
+                hotReloadData.modifiedId = modifiedId;
+                hotReloadData.latest = tryReloadTemplate(templatePath) || template;
+
+                if (hotReloadData.latest !== template) {
+                    template.meta = hotReloadData.latest.meta;
+                    console.log('[marko/hot-reload] Template successfully reloaded: ' + templatePath);
+                }
+            }
+
+            var latest = hotReloadData.latest;
+            var originals = latest[HOT_RELOAD_KEY] && latest[HOT_RELOAD_KEY].originals;
+            if (!originals) {
+                originals = latest;
+            }
+
+            var targetFunc = originals._;
+            return targetFunc.apply(latest, arguments);
+        }
+
+        return hotReloadProxy;
     }
 
-    runtime.c = function hotReloadCreateTemplate(path) {
-        var originalTemplate = oldCreateTemplate.apply(runtime, arguments);
-        path = path.replace(/\.js$/, '');
+    var oldCreateTemplate = runtime.t;
 
+    runtime.t = function hotReloadCreateTemplate(path) {
+        var originalTemplate = oldCreateTemplate.apply(runtime, arguments);
         var actualRenderFunc;
 
-        var firstSet = true;
-
         Object.defineProperty(originalTemplate, '_', {
-            configurable: true,
-
             get: function() {
                 return actualRenderFunc;
             },
 
             set: function(renderFunc) {
-                actualRenderFunc = renderFunc;
-                if (firstSet) {
-                    firstSet = false;
-                    patchMethods(originalTemplate, ['_'], function reloadTemplate() {
-                        var latestTemplate = tryReloadTemplate(path);
-                        if (latestTemplate) {
-                            if (latestTemplate !== originalTemplate) {
-                                console.log('[marko/hot-reload] Reloaded template: ' + path);
-                                originalTemplate.meta = latestTemplate.meta;
-                            }
-
-                            if (latestTemplate.template) {
-                                // The template might export a component that has a template property.
-                                return latestTemplate.template;
-                            } else {
-                                return latestTemplate;
-                            }
-                        }
-                    });
-                }
+                actualRenderFunc = createHotReloadProxy(renderFunc, originalTemplate, '_');
             }
         });
 
         return originalTemplate;
-    };
-
-    var oldCreateComponent = widgets.c;
-
-    widgets.c = function hotReloadCreateComponent(componentDef, template) {
-        var path = template.path;
-        path = path.replace(/\.js$/, '');
-
-        var originalComponent = oldCreateComponent.apply(runtime, arguments);
-
-        patchMethods(originalComponent, ['renderer', 'render', 'renderSync'], function reloadTemplate() {
-            var latestComponent = tryReloadTemplate(path);
-            if (latestComponent) {
-                if (latestComponent !== originalComponent) {
-                    console.log('[marko/hot-reload] Reloaded template: ' + path);
-                }
-                return latestComponent;
-            }
-
-        });
-
-        return originalComponent;
     };
 };
 
@@ -131,6 +117,7 @@ exports.handleFileModified = function(path) {
         console.log('[marko/hot-reload] File modified: ' + path);
         runtime.cache = {};
         compiler.clearCaches();
+        cleaResolvePathCache();
         modifiedId++;
     }
 

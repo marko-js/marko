@@ -1,14 +1,14 @@
-var template = require("marko/html").c(__filename);
+var marko_template = require("marko/html").t(__filename);
 
-module.exports = template;
+module.exports = marko_template;
 
 function render(data, out) {
   out.w("<div></div>");
 }
 
-template._ = render;
+marko_template._ = render;
 
-template.meta = {
+marko_template.meta = {
     deps: [
         {
             type: "css",

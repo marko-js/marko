@@ -20,4 +20,6 @@ module.exports = function codeGenerator(el, codegen) {
     });
 
     codegen.addStaticVar('marko_widgetTypes', builder.literal(typesObject));
+
+    return null;
 };

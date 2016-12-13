@@ -15,6 +15,16 @@ class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');
         this.body = this.makeContainer(def.body);
+        this.extraRenderParams = null;
+        this.generateAssignRenderCode = null;
+    }
+
+    addRenderFunctionParam(id) {
+        if (!this.extraRenderParams) {
+            this.extraRenderParams = [];
+        }
+
+        this.extraRenderParams.push(id);
     }
 
     generateCode(codegen) {
@@ -23,8 +33,6 @@ class TemplateRoot extends Node {
         this.body = codegen.generateCode(this.body);
 
         context.optimize(this);
-
-        context.emit('beforeGenerateCodeTemplateRoot', this);
 
         var body = this.body;
 
@@ -54,62 +62,78 @@ class TemplateRoot extends Node {
                         renderStatements)
                 ]);
         } else {
-            var templateArgs = [
-                builder.identifier('__filename')
-            ];
-
-            let templateId = builder.identifier('template');
-
             let body = [
-                builder.var(templateId, builder.functionCall(
+                builder.var('marko_template', builder.functionCall(
                     builder.memberExpression(
                         builder.require(
                             builder.literal(context.getModuleRuntimeTarget())
                         ),
-                        builder.identifier('c')
+                        builder.identifier('t')
                     ),
-                    templateArgs
-                ))
+                    [
+                        builder.identifier('__filename')
+                    ]
+                )),
+                builder.assignment(
+                    builder.moduleExports(),
+                    builder.identifier('marko_template'))
             ];
-
-            var templateExports = this.generateExports(templateId, context);
-
-            body = body.concat(templateExports);
 
             let staticNodes = context.getStaticNodes();
             if (staticNodes.length) {
                 body = body.concat(staticNodes);
             }
 
+            var renderParams = [builder.identifier('data'), builder.identifierOut()];
+            if (this.extraRenderParams) {
+                renderParams = renderParams.concat(this.extraRenderParams);
+            }
+
             let renderFunction = builder.functionDeclaration(
                 'render',
-                ['data', builder.identifierOut()],
+                renderParams,
                 renderStatements);
 
             body = body.concat([
                 renderFunction,
-                builder.assignment(
-                    builder.memberExpression(builder.identifier('template'), builder.identifier('_')),
-                    builder.identifier('render'))
             ]);
+
+            var assignRenderCode;
+
+            let templateVar = builder.identifier('marko_template');
+            let renderFunctionVar = builder.identifier('render');
+            let templateRendererMember = builder.memberExpression(
+                builder.identifier('marko_template'),
+                builder.identifier('_'));
+
+            if (this.generateAssignRenderCode) {
+                var eventArgs = {
+                    context,
+                    templateVar,
+                    templateRendererMember,
+                    renderFunctionVar
+                };
+
+                assignRenderCode = this.generateAssignRenderCode(eventArgs);
+            } else {
+
+                assignRenderCode = builder.assignment(
+                    templateRendererMember,
+                    renderFunctionVar);
+            }
+
+            if (assignRenderCode) {
+                body = body.concat(assignRenderCode);
+            }
 
             if (context.useMeta && context.meta) {
                 body.push(builder.assignment(
-                    builder.memberExpression(builder.identifier('template'), builder.identifier('meta')),
+                    builder.memberExpression(builder.identifier('marko_template'), builder.identifier('meta')),
                     context.meta));
             }
 
             return builder.program(body);
         }
-    }
-
-    generateExports(template, context) {
-        var builder = context.builder;
-
-        return builder.assignment(
-            builder.memberExpression('module', 'exports'),
-            template
-        );
     }
 
     toJSON(prettyPrinter) {

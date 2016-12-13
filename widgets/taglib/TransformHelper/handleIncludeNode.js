@@ -6,8 +6,7 @@ module.exports = function(includeNode) {
     var builder = this.builder;
     var context = this.context;
 
-    let widgetTagNode = this.getContainingWidgetNode();
-    if (!widgetTagNode) {
+    if (!this.hasBoundWidgetForTemplate()) {
         return;
     }
 
@@ -28,16 +27,17 @@ module.exports = function(includeNode) {
             }
         } else {
             parentTransformHelper.assignWidgetId(false /* not repeated */);
-            widgetTagNode.setAttributeValue('body', parentTransformHelper.getNestedIdExpression());
-        }
-
-        if (!includeNode.data.includeTarget) {
-            includeNode.addProp('_target', builder.memberExpression(builder.identifier('data'), builder.identifier('widgetBody')));
+            var widgetProps = this.getWidgetProps();
+            widgetProps.body = parentTransformHelper.getNestedIdExpression();
         }
 
         includeNode.setRendererPath(includeTagForWidgets);
 
         includeNode.onBeforeGenerateCode(function() {
+            if (!includeNode.data.includeTarget) {
+                includeNode.addProp('_target', builder.memberExpression(builder.identifier('widget'), builder.identifier('body')));
+            }
+
             includeNode.addProp('_widgetId', parentTransformHelper.getIdExpression());
             includeNode.addProp('_arg', builder.identifier('widget'));
         });

@@ -1,6 +1,6 @@
-var template = require("marko/html").c(__filename);
+var marko_template = require("marko/html").t(__filename);
 
-module.exports = template;
+module.exports = marko_template;
 
 var marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.registerWidget,
@@ -10,33 +10,25 @@ var marko_widgets = require("marko/widgets"),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/widgets/taglib/include-tag")),
-    marko_attr = marko_helpers.a,
-    _widget_tag = marko_loadTag(require("marko/widgets/taglib/widget-tag"));
+    marko_attr = marko_helpers.a;
 
-function render(data, out) {
-  _widget_tag({
-      type: marko_widgetType,
-      body: 0,
-      _cfg: data.widgetConfig,
-      _state: data.widgetState,
-      _props: data.widgetProps,
-      _body: data.widgetBody,
-      renderBody: function renderBody(out, widget, state) {
-        out.w("<div" +
-          marko_attr("id", widget.id) +
-          "><h1>Header</h1><div" +
-          marko_attr("id", widget.elId(0)) +
-          ">");
+function render(data, out, widget, state) {
+  out.w("<div" +
+    marko_attr("id", widget.id) +
+    "><h1>Header</h1><div" +
+    marko_attr("id", widget.elId(0)) +
+    ">");
 
-        include_tag({
-            _target: data.widgetBody,
-            _widgetId: widget.elId(0),
-            _arg: widget
-          }, out);
-
-        out.w("</div></div>");
-      }
+  include_tag({
+      _target: widget.body,
+      _widgetId: widget.elId(0),
+      _arg: widget
     }, out);
+
+  out.w("</div></div>");
 }
 
-template._ = render;
+marko_template._ = marko_widgets.r(render, {
+    type: marko_widgetType,
+    body: 0
+  });

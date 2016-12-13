@@ -5,6 +5,8 @@ var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');
 var resolveFrom = require('resolve-from');
 var INLINE_COMPONENT_KEY = Symbol('INLINE_COMPONENT');
 var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
+var WIDGET_PROPS_KEY;
+
 
 class TransformHelper {
     constructor(el, context) {
@@ -17,7 +19,20 @@ class TransformHelper {
         this.widgetArgs = undefined;
         this.containingWidgetNode = undefined;
         this._markoWidgetsVar = context.data.markoWidgetsVar;
-        this.widgetStack = context.data.widgetStack || (context.data.widgetStack = []);
+        this.firstBind = false;
+    }
+
+    hasBoundWidgetForTemplate() {
+        return this.context.data[WIDGET_PROPS_KEY] != null;
+    }
+
+    getWidgetProps() {
+        var widgetProps = this.context.data[WIDGET_PROPS_KEY];
+        if (!widgetProps) {
+            this.firstBind = true;
+            widgetProps = this.context.data[WIDGET_PROPS_KEY] = {};
+        }
+        return widgetProps;
     }
 
     addError(message, code) {
@@ -127,7 +142,6 @@ class TransformHelper {
 }
 
 TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
-TransformHelper.prototype.getContainingWidgetNode = require('./getContainingWidgetNode');
 TransformHelper.prototype.handleRootNodes = require('./handleRootNodes');
 TransformHelper.prototype.handleIncludeNode = require('./handleIncludeNode');
 TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');

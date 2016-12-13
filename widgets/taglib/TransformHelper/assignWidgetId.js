@@ -16,16 +16,16 @@ module.exports = function assignWidgetId(isRepeated) {
     var nestedIdExpression;
     var idExpression;
 
-    var containingWidgetNode = this.getContainingWidgetNode();
 
-    if (!containingWidgetNode) {
+
+    if (!this.hasBoundWidgetForTemplate()) {
         // We are assigning a widget ID to a nested widget in a template that does not have a widget.
         // That means we do not have access to the parent widget variable as part of a closure. We
         // need to look it up out of the `out.data` map
         if (!context.isFlagSet('hasWidgetVar')) {
             context.setFlag('hasWidgetVar');
 
-            var getCurrentWidgetVar = context.importModule('__getCurrentWidget',
+            var getCurrentWidgetVar = context.importModule('marko_getCurrentWidget',
                 this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/getCurrentWidget'));
 
             context.addVar('widget', builder.functionCall(getCurrentWidgetVar, [builder.identifierOut()]));
