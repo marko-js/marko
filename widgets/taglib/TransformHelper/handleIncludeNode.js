@@ -38,7 +38,7 @@ module.exports = function(includeNode) {
                 includeNode.addProp('_target', builder.memberExpression(builder.identifier('widget'), builder.identifier('body')));
             }
 
-            includeNode.addProp('_widgetId', parentTransformHelper.getIdExpression());
+            includeNode.addProp('_elId', parentTransformHelper.getIdExpression());
             includeNode.addProp('_arg', builder.identifier('widget'));
         });
     }
