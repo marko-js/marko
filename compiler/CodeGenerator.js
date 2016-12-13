@@ -196,7 +196,9 @@ class CodeGenerator {
 
                 generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, false);
 
-                if (generatedCode != null && generatedCode !== node) {
+                if (generatedCode === null) {
+                    node = null;
+                } else if (generatedCode !== undefined && generatedCode !== node) {
                     node = null;
                     this._generateCode(generatedCode, finalNodes);
                 }
