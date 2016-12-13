@@ -1,8 +1,5 @@
-var marko_template = require("marko/html").t(__filename);
-
-module.exports = marko_template;
-
-var bar = require("./bar"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    bar = require("./bar"),
     foo = bar.f;
 
 require("./foo");

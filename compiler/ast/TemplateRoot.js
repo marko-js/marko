@@ -62,24 +62,26 @@ class TemplateRoot extends Node {
                         renderStatements)
                 ]);
         } else {
-            let body = [
-                builder.var('marko_template', builder.functionCall(
-                    builder.memberExpression(
-                        builder.require(
-                            builder.literal(context.getModuleRuntimeTarget())
-                        ),
-                        builder.identifier('t')
-                    ),
-                    [
-                        builder.identifier('__filename')
-                    ]
-                )),
+            let templateDeclaration = builder.variableDeclarator('marko_template',
                 builder.assignment(
                     builder.moduleExports(),
-                    builder.identifier('marko_template'))
-            ];
+                    builder.functionCall(
+                        builder.memberExpression(
+                            builder.require(
+                                builder.literal(context.getModuleRuntimeTarget())
+                            ),
+                            builder.identifier('t')
+                        ),
+                        [
+                            builder.identifier('__filename')
+                        ]
+                    )
+                )
+            );
 
-            let staticNodes = context.getStaticNodes();
+            let body = [];
+
+            let staticNodes = context.getStaticNodes([templateDeclaration]);
             if (staticNodes.length) {
                 body = body.concat(staticNodes);
             }

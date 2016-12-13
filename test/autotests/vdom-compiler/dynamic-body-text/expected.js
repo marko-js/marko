@@ -1,8 +1,5 @@
-var marko_template = require("marko/vdom").t(__filename);
-
-module.exports = marko_template;
-
-var marko_attrs0 = {
+var marko_template = module.exports = require("marko/vdom").t(__filename),
+    marko_attrs0 = {
         "class": "foo"
       };
 

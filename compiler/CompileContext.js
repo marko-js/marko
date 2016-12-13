@@ -595,7 +595,7 @@ class CompileContext extends EventEmitter {
         return pathExpression;
     }
 
-    getStaticNodes() {
+    getStaticNodes(additionalVars) {
         let builder = this.builder;
         let staticNodes = [];
         let staticVars = this.getStaticVars();
@@ -605,6 +605,9 @@ class CompileContext extends EventEmitter {
             return builder.variableDeclarator(varName, varInit);
         });
 
+        if(additionalVars) {
+            staticVarNodes = additionalVars.concat(staticVarNodes);
+        }
 
         if (staticVarNodes.length) {
             staticNodes.push(this.builder.vars(staticVarNodes));

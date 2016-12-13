@@ -1,8 +1,5 @@
-var marko_template = require("marko/html").t(__filename);
-
-module.exports = marko_template;
-
-var marko_component = require("./component"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_component = require("./component"),
     marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.registerWidget,
     marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry/index.marko", function() {

@@ -1,8 +1,5 @@
-var marko_template = require("marko/html").t(__filename);
-
-module.exports = marko_template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
     marko_str = marko_helpers.s;
 
