@@ -18,7 +18,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     var el = transformHelper.el;
 
     if (transformHelper.hasBoundWidgetForTemplate() === false) {
-        transformHelper.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+        transformHelper.addError('Unable to handle event ' + eventType + '. HTML element is not nested within a widget.');
         return;
     }
 
