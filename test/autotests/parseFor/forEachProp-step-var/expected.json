@@ -1,0 +1,23 @@
+{
+    "loopType": "ForEachProp",
+    "nameVarName": {
+        "type": "Identifier",
+        "name": "stepIndex"
+    },
+    "valueVarName": {
+        "type": "Identifier",
+        "name": "step"
+    },
+    "in": {
+        "type": "MemberExpression",
+        "object": {
+            "type": "Identifier",
+            "name": "state"
+        },
+        "property": {
+            "type": "Identifier",
+            "name": "steps"
+        },
+        "computed": false
+    }
+}
