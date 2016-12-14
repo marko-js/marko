@@ -3,16 +3,13 @@
 var WidgetDef = require('./WidgetDef');
 var uniqueId = require('./uniqueId');
 var initWidgets = require('./init-widgets');
-
-var PRESERVE_EL = 1;
-var PRESERVE_EL_BODY = 2;
-var PRESERVE_EL_UNPRESERVED_BODY = 4;
+var EMPTY_OBJECT = {};
 
 function WidgetsContext(out) {
     this.out = out;
     this.widgets = [];
     this.widgetStack = [];
-    this.preserved = null;
+    this.preserved = EMPTY_OBJECT;
     this.reusableWidgets = null;
     this.reusableWidgetsById = null;
     this.widgetsById = {};
@@ -83,33 +80,12 @@ WidgetsContext.prototype = {
         this.clearWidgets();
     },
 
-    isPreservedEl: function(id) {
-        var preserved = this.preserved;
-        return preserved && (preserved[id] & PRESERVE_EL);
-    },
-
-    isPreservedBodyEl: function(id) {
-        var preserved = this.preserved;
-        return preserved && (preserved[id] & PRESERVE_EL_BODY);
-    },
-
-    hasUnpreservedBody: function(id) {
-        var preserved = this.preserved;
-        return preserved && (preserved[id] & PRESERVE_EL_UNPRESERVED_BODY);
-    },
-
-    addPreservedDOMNode: function(existingEl, bodyOnly, hasUnppreservedBody) {
-        var preserved = this.preserved || (this.preserved = {});
-
-        var value = bodyOnly ?
-            PRESERVE_EL_BODY :
-            PRESERVE_EL;
-
-        if (hasUnppreservedBody) {
-            value |= PRESERVE_EL_UNPRESERVED_BODY;
+    preservedDOMNode: function(existingEl, bodyOnly, bodyEl) {
+        var preserved = this.preserved ;
+        if (preserved === EMPTY_OBJECT) {
+            preserved = this.preserved = {};
         }
-
-        preserved[existingEl.id] = value;
+        preserved[existingEl.id] = { bodyOnly: bodyOnly, bodyEl: bodyEl};
     }
 };
 

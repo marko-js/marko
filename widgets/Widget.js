@@ -10,6 +10,7 @@ var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var widgetLookup = require('./lookup').widgets;
+var getRootEls = markoWidgets._roots;
 
 var slice = Array.prototype.slice;
 
@@ -164,28 +165,6 @@ function getElId(widget, widgetElId, index) {
     }
 
     return elId;
-}
-
-
-function getAllRootEls(widget, rootEls) {
-    var i, len;
-
-    var widgetEls = widget.els;
-
-    for (i=0, len=widgetEls.length; i<len; i++) {
-        var widgetEl = widgetEls[i];
-        rootEls[widgetEl.id] = widgetEl;
-    }
-
-    var rootWidgets = widget.__rootWidgets;
-    if (rootWidgets) {
-        for (i=0, len=rootWidgets.length; i<len; i++) {
-            var rootWidget = rootWidgets[i];
-            getAllRootEls(rootWidget, rootEls);
-        }
-    }
-
-    return rootEls;
 }
 
 var widgetProto;
@@ -551,7 +530,7 @@ Widget.prototype = widgetProto = {
             globalData.__rerenderState = props ? null : self.__rawState;
         }
 
-        var fromEls = getAllRootEls(this, {});
+        var fromEls = getRootEls(this, {});
         var doc = this.__document;
 
         updateManager.batchUpdate(function() {
@@ -589,12 +568,11 @@ Widget.prototype = widgetProto = {
                 }
 
                 if (widgetsContext && id) {
-                    if (widgetsContext.isPreservedEl(id)) {
+                    var preserved = widgetsContext.preserved[id];
 
-                        if (widgetsContext.hasUnpreservedBody(id)) {
-                            existingWidget = fromEl.__widget;
-
-                            morphdom(existingWidget.bodyEl, toEl, {
+                    if (preserved && !preserved.bodyOnly) {
+                        if (preserved.bodyEl) {
+                            morphdom(preserved.bodyEl, toEl, {
                                 childrenOnly: true,
                                 onNodeDiscarded: onNodeDiscarded,
                                 onBeforeElUpdated: onBeforeElUpdated,
@@ -607,7 +585,7 @@ Widget.prototype = widgetProto = {
                         // the morphing will take place when the reused widget updates.
                         return MORPHDOM_SKIP;
                     } else {
-                        existingWidget = fromEl.__widget;
+                        existingWidget = markoWidgets.getWidgetForEl(fromEl);
                         if (existingWidget && !hasCompatibleWidget(widgetsContext, existingWidget)) {
                             // We found a widget in an old DOM node that does not have
                             // a compatible widget that was rendered so we need to
@@ -619,8 +597,10 @@ Widget.prototype = widgetProto = {
             }
 
             function onBeforeElChildrenUpdated(el) {
-                if (widgetsContext && el.id) {
-                    if (widgetsContext.isPreservedBodyEl(el.id)) {
+                var id = el.id;
+                if (widgetsContext && id) {
+                    var preserved = widgetsContext.preserved[id];
+                    if (preserved && preserved.bodyOnly) {
                         // Don't morph the children since they are preserved
                         return MORPHDOM_SKIP;
                     }
