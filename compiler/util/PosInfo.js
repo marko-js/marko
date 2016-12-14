@@ -19,7 +19,7 @@ class PosInfo {
     }
 
     toString() {
-        return this.path + ":" + this.line + ":" + this.column;
+        return this.path + (this.line != null ? (":" + this.line + ":" + this.column) : '');
     }
 }
 
