@@ -5,6 +5,10 @@ Changelog
 
 ## 3.13.x
 
+### 3.13.1
+
+Fixes [#465](https://github.com/marko-js/marko/issues/465)
+
 ### 3.13.0
 
 ## 3.12.x
