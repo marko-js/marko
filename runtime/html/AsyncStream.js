@@ -503,30 +503,7 @@ var proto = AsyncStream.prototype = {
 
     catch: function(fnErr) {
         return this.then(undefined, fnErr);
-    },
-
-    // END DOM METHODS
-
-    // Deprecated BEGIN:
-    getAttributes: function() {
-        return this.global;
-    },
-    getAttribute: function(name) {
-        return this.global[name];
-    },
-
-    captureString: function(func, thisObj) {
-        var sb = new StringWriter();
-        this.swapWriter(sb, func, thisObj);
-        return sb.toString();
-    },
-    swapWriter: function(newWriter, func, thisObj) {
-        var currentWriter = this.writer;
-        this.writer = newWriter;
-        func.call(thisObj);
-        this.writer = currentWriter;
     }
-    // // Deprecated END
 };
 
 // alias:
