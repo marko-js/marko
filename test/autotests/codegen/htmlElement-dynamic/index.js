@@ -2,7 +2,7 @@
 
 module.exports = function(builder) {
     return builder.htmlElement(
-        builder.expression('data.tagName'),
+        builder.memberExpression('data', 'tagName'),
         [
             {
                 name: 'class',

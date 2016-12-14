@@ -9,6 +9,7 @@ const ok = require('assert').ok;
 const Container = require('./ast/Container');
 const util = require('util');
 const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
+const isCompoundExpression = require('./util/isCompoundExpression');
 const createError = require('raptor-util/createError');
 
 class GeneratorEvent {
@@ -475,7 +476,17 @@ class Generator {
                 this._write(this._indentStr);
             }
 
+            let wrap = isCompoundExpression(write);
+
+            if (wrap) {
+                this._write('(');
+            }
+
             this.generateCode(write);
+
+            if (wrap) {
+                this._write(')');
+            }
         }
 
         this._write(');\n');
