@@ -2,6 +2,7 @@
 
 var ok = require('assert').ok;
 var path = require('path');
+var complain = require('complain');
 var taglibLookup = require('./taglib-lookup');
 var charProps = require('char-props');
 var deresolve = require('./util/deresolve');
@@ -200,6 +201,16 @@ class CompileContext extends EventEmitter {
         }
 
         return this.data[name];
+    }
+
+    deprecate(message, node) {
+        var location = node && node.pos;
+
+        if (location != null) {
+            location = this.getPosInfo(location).toString();
+        }
+
+        complain(message, { location });
     }
 
     addError(errorInfo) {
