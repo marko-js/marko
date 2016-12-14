@@ -53,7 +53,7 @@ module.exports = function assignWidgetId(isRepeated) {
     }
 
     if (el.hasAttribute('w-id')) {
-        console.warn('The "w-id" attribute is deprecated. Please use "ref" instead. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+        context.deprecate('The "w-id" attribute is deprecated. Please use "ref" instead.', el);
 
         if (widgetRef) {
             this.addError('The "w-id attribute cannot be used in conjuction with the "ref" attribute.');

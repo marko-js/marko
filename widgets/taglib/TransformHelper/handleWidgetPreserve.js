@@ -66,7 +66,7 @@ function deprecatedWarning(preserveType, transformHelper, el) {
         newAttributeName += suffix;
     }
 
-    console.warn(`The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead. (${el.pos ? context.getPosInfo(el.pos) : context.filename})`);
+    context.deprecate(`The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead.`, el);
 }
 
 function preserveHandler(transformHelper, preserveType, el) {
