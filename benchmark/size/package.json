@@ -1,0 +1,36 @@
+{
+  "name": "size-benchmark",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm install --silent && npm link ../../",
+    "build": "npm run setup && npm run bundle --silent && npm run minify --silent",
+    "bundle": "mkdir -p build/bundles && npm run bundle-marko --silent && npm run bundle-react --silent",
+    "bundle-marko": "NODE_ENV=production browserify -t envify -t markoify --extension='.marko' -o build/bundles/marko.js marko/client.js",
+    "bundle-react": "NODE_ENV=production browserify -t envify -t babelify --extension='.jsx' -o build/bundles/react.js react/client.jsx",
+    "bundle-vue": "NODE_ENV=production browserify -t envify -t vueify --extension='.vue' -o build/bundles/vue.js vue/client.js",
+    "minify": "node minify.js",
+    "http-server": "http-server"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-transform-react-constant-elements": "^6.9.1",
+    "babel-preset-react": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "envify": "^4.0.0",
+    "format-number": "^2.0.1",
+    "google-closure-compiler-js": "^20161201.0.0",
+    "http-server": "^0.9.0",
+    "markoify": "^2.1.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "vue": "^2.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko.git"
+  }
+}
