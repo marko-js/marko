@@ -135,6 +135,14 @@ class CompileContext extends EventEmitter {
         return new PosInfo(this.filename, line, column);
     }
 
+    getNodePos(node) {
+        if (node.pos) {
+            return this.getPosInfo(node.pos);
+        } else {
+            return new PosInfo(this.filename);
+        }
+    }
+
     setFlag(name) {
         this.pushFlag(name);
     }

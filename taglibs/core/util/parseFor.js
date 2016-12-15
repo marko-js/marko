@@ -64,6 +64,9 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     }
 ]);
 
+var inRegExp = /^([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
+
+
 function throwError(message) {
     var error = new Error(message);
     error.code = 'INVALID_FOR';
@@ -141,6 +144,20 @@ module.exports = function(str) {
     var forTest;
     var forUpdate;
 
+    var inRegExpMatches = inRegExp.exec(str);
+    if (inRegExpMatches) {
+        if (inRegExpMatches[1] && inRegExpMatches[2]) {
+            loopType = 'ForEachProp';
+            nameVarName = inRegExpMatches[1];
+            valueVarName = inRegExpMatches[2];
+        } else {
+            loopType = 'ForEach';
+            varName = inRegExpMatches[1];
+        }
+
+        str = ' in ' + str.substring(inRegExpMatches[0].length);
+    }
+
     function finishVarName(end) {
         varName = str.substring(0, end).trim();
     }
@@ -196,9 +213,7 @@ module.exports = function(str) {
                 depth--;
                 break;
             case 'in':
-                if (depth === 0 && !loopType) {
-                    loopType = 'ForEach';
-                    finishVarName(token.start);
+                if (depth === 0) {
                     prevToken = token;
                 }
                 break;
@@ -273,16 +288,6 @@ module.exports = function(str) {
 
     finishPrevPart(str.length);
 
-    if (loopType === 'ForEach') {
-        var nameValue = varName.split(/\s*,\s*/);
-        if (nameValue.length === 2) {
-            nameVarName = buildIdentifier(nameValue[0], 'Invalid name variable');
-            valueVarName = buildIdentifier(nameValue[1], 'Invalid value variable');
-            varName = null;
-            loopType = 'ForEachProp';
-        }
-    }
-
     if (inExpression) {
         inExpression = parseExpression(inExpression, 'Invalid "in" expression');
     }
@@ -309,6 +314,14 @@ module.exports = function(str) {
 
     if (varName != null) {
         varName = buildIdentifier(varName, 'Invalid variable name');
+    }
+
+    if (nameVarName) {
+        nameVarName = buildIdentifier(nameVarName, 'Invalid name variable');
+    }
+
+    if (valueVarName) {
+        valueVarName = buildIdentifier(valueVarName, 'Invalid value variable');
     }
 
     if (statusVarName) {

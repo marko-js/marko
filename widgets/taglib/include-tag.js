@@ -12,12 +12,12 @@ module.exports = function include(input, out) {
     } else if (isBrowser) {
         var elId = input._elId;
 
-        // Thereis no body content so let's see if we should reuse
+        // There's no body content so let's see if we should reuse
         // the existing body content in the DOM
         var existingEl = document.getElementById(elId);
         if (existingEl) {
             var widgetsContext = markoWidgets.getWidgetsContext(out);
-            widgetsContext.addPreservedDOMNode(existingEl, true /* body only */);
+            widgetsContext.preservedDOMNode(existingEl, true /* body only */);
         }
     }
 };

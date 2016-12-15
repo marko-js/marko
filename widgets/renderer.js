@@ -2,6 +2,7 @@ var markoWidgets = require('./');
 var widgetLookup = require('./lookup').widgets;
 var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
+var getRootEls = markoWidgets._roots;
 
 function resolveWidgetRef(out, ref, scope) {
     if (ref.charAt(0) === '#') {
@@ -19,27 +20,43 @@ function resolveWidgetRef(out, ref, scope) {
     }
 }
 
-function preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody) {
-    var tagName = existingWidget.el.tagName;
-    var hasUnpreservedBody = false;
+function preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody) {
+    var rootEls = getRootEls(existingWidget, {});
+    var rootElIds = Object.keys(rootEls);
 
-    // We put a placeholder element in the output stream to ensure that the existing
-    // DOM node is matched up correctly when using morphdom.
+    var bodyEl;
 
-    out.beginElement(tagName, { id: existingWidget.id });
-
-    if (widgetBody && existingWidget.bodyEl) {
-        hasUnpreservedBody = true;
-        includeTag({
-            _target: widgetBody,
-            _widgetId: existingWidget.bodyEl.id
-        }, out);
+    if (widgetBody && (bodyEl = existingWidget.bodyEl)) {
+        if (rootElIds.length > 1) {
+            // If there are multiple roots then we don't know which root el
+            // contains the body element so we will just need to rerender the
+            // UI component
+            return false;
+        }
     }
 
-    out.endElement();
+    for (var elId in rootEls) {
+        var el = rootEls[elId];
+        var tagName = el.tagName;
+
+        // We put a placeholder element in the output stream to ensure that the existing
+        // DOM node is matched up correctly when using morphdom.
+
+        out.beginElement(tagName, { id: elId });
+
+        if (bodyEl) {
+            includeTag({
+                _target: widgetBody
+            }, out);
+        }
+
+        out.endElement();
+
+        widgetsContext.preservedDOMNode(el, false, bodyEl); // Mark the element as being preserved (for morphdom)
+    }
 
     existingWidget._reset(); // The widget is no longer dirty so reset internal flags
-    widgetsContext.addPreservedDOMNode(existingWidget.el, null, hasUnpreservedBody); // Mark the element as being preserved (for morphdom)
+    return true;
 }
 
 
@@ -245,8 +262,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             throw new Error('Invalid widget ID for "' + typeName + '"');
         }
 
-        var shouldRenderBody = true;
-
         if (existingWidget && !rerenderWidget) {
             // This is a nested widget found during a rerender. We don't want to needlessly
             // rerender the widget if that is not necessary. If the widget is a stateful
@@ -260,18 +275,18 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                 if (existingWidget._processUpdateHandlers() === true) {
                     // If _processUpdateHandlers() returns true then that means
                     // that the widget is now up-to-date and we can skip rerendering it.
-                    shouldRenderBody = false;
-                    preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody);
-                    return;
+                    if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
+                        return;
+                    }
                 }
             }
 
             // If the widget is not dirty (no state changes) and shouldUpdate() returns false
             // then skip rerendering the widget.
             if (!existingWidget.isDirty() && !existingWidget.shouldUpdate(input, widgetState)) {
-                shouldRenderBody = false;
-                preserveWidgetEl(existingWidget, out, widgetsContext, widgetBody);
-                return;
+                if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
+                    return;
+                }
             }
         }
 
@@ -299,12 +314,9 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             body: widgetBody
         });
 
-        // Only render the widget if it needs to be rerendered
-        if (shouldRenderBody) {
-            // Render the template associated with the component using the final template
-            // data that we constructed
-            templateRenderFunc(templateData, out, widgetDef, widgetState);
-        }
+        // Render the template associated with the component using the final template
+        // data that we constructed
+        templateRenderFunc(templateData, out, widgetDef, widgetState);
 
         widgetDef.end();
     };

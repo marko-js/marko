@@ -1,0 +1,1 @@
+i, color in ['red', 'green', 'blue']
