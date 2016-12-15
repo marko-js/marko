@@ -212,7 +212,8 @@ class CompileContext extends EventEmitter {
     }
 
     deprecate(message, node) {
-        var location = node && node.pos;
+        var currentNode = node || this._currentNode;
+        var location = currentNode && currentNode.pos;
 
         if (location != null) {
             location = this.getPosInfo(location).toString();
@@ -239,6 +240,11 @@ class CompileContext extends EventEmitter {
                 code
             };
         }
+
+        if(errorInfo && !errorInfo.node) {
+            errorInfo.node = this._currentNode;
+        }
+
         this._errors.push(new CompileError(errorInfo, this));
     }
 
@@ -367,6 +373,8 @@ class CompileContext extends EventEmitter {
         var node;
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
+
+        this._currentNode = elNode;
 
         var tagDef;
 

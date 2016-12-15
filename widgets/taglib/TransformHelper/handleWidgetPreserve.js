@@ -66,7 +66,7 @@ function deprecatedWarning(preserveType, transformHelper, el) {
         newAttributeName += suffix;
     }
 
-    context.deprecate(`The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead.`, el);
+    context.deprecate(`The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead.`);
 }
 
 function preserveHandler(transformHelper, preserveType, el) {

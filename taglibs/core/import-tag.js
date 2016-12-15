@@ -10,7 +10,7 @@ module.exports = function codeGenerator(el, codegen) {
         var varName = arg.name;
 
         if (!isValidJavaScriptVarName(varName)) {
-            codegen.addError(el, 'Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
+            codegen.addError('Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
             return;
         }
 

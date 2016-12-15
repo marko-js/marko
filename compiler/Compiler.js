@@ -17,6 +17,8 @@ function transformNode(node, context) {
                 node.setTransformerApplied(transformer);
                 //Mark the node as have been transformed by the current transformer
                 context.setFlag(FLAG_TRANSFORMER_APPLIED);
+                //Set the current node
+                context._currentNode = node;
                 //Set the flag to indicate that a node was transformed
                 // node.compiler = this;
                 var transformerFunc = transformer.getFunc();

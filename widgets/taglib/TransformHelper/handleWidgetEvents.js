@@ -134,7 +134,7 @@ module.exports = function handleWidgetEvents() {
                     extraArgs = parsedArgs.slice(1);
                 }
             } else if (attrName.startsWith('w-on')) {
-                context.deprecate('"w-on*" attributes are deprecated. Please use "on*()" instead.', el);
+                context.deprecate('"w-on*" attributes are deprecated. Please use "on*()" instead.');
                 eventType = attrName.substring(4); // Chop off "w-on"
                 targetMethod = attr.value;
             }

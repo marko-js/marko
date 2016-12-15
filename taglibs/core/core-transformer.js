@@ -138,7 +138,7 @@ var coreAttrHandlers = [
                 this.addError('The "marko-init" attribute should only be used on the <script> tag');
                 return;
             }
-            this.context.deprecate('The "marko-init" attribute is deprecated.  Use "template-helpers" instead.', node);
+            this.context.deprecate('The "marko-init" attribute is deprecated.  Use "template-helpers" instead.');
             var bodyText = el.bodyText;
             el.noOutput = true;
             this.context.addStaticCode(bodyText);

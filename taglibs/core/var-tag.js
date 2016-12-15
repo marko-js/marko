@@ -8,7 +8,7 @@ module.exports = function nodeFactory(el, context) {
         var varName = attr.name;
 
         if (!isValidJavaScriptVarName(varName)) {
-            context.addError(el, 'Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
+            context.addError('Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
             hasError = true;
             return;
         }

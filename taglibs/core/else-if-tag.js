@@ -4,12 +4,12 @@ module.exports = function nodeFactory(el, context) {
 
 
     if (!argument) {
-        context.addError(el, 'Invalid <else-if> tag. Argument is missing. Example; <if(foo === true)>');
+        context.addError('Invalid <else-if> tag. Argument is missing. Example; <if(foo === true)>');
         return el;
     }
 
     if (attributes.length) {
-        context.addError(el, 'Invalid <else-if> tag. Attributes not allowed.');
+        context.addError('Invalid <else-if> tag. Attributes not allowed.');
         return el;
     }
 
@@ -18,7 +18,7 @@ module.exports = function nodeFactory(el, context) {
         test = context.builder.parseExpression(argument);
     } catch(e) {
         test = context.builder.literalFalse();
-        context.addError(el, 'Invalid expression for else-if statement:\n' + e.message);
+        context.addError('Invalid expression for else-if statement:\n' + e.message);
     }
 
     var elseIfStatement = context.builder.elseIfStatement(test);

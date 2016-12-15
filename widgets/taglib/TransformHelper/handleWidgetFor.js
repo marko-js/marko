@@ -17,7 +17,7 @@
 module.exports = function handleWidgetFor() {
     var el = this.el;
     var context = this.context;
-    
+
     var widgetFor;
     if (el.hasAttribute('for-ref')) {
         widgetFor = el.getAttributeValue('for-ref');
@@ -25,7 +25,7 @@ module.exports = function handleWidgetFor() {
     }
 
     if (el.hasAttribute('w-for')) {
-        console.warn('The "w-for" tag is deprecated. Please use "for-ref" instead.');
+        context.deprecate('The "w-for" tag is deprecated. Please use "for-ref" instead.');
         if (widgetFor) {
             this.addError('The "w-for" tag cannot be used with "for-ref".');
             return;
