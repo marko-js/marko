@@ -3,14 +3,6 @@ var forEachEntry = require('raptor-util/forEachEntry');
 var ok = require('assert').ok;
 var CustomTag;
 
-function inheritProps(sub, sup) {
-    forEachEntry(sup, function (k, v) {
-        if (!sub[k]) {
-            sub[k] = v;
-        }
-    });
-}
-
 function createCustomTagNodeFactory(tagDef) {
     return function nodeFactory(el) {
         return new CustomTag(el, tagDef);
@@ -41,28 +33,6 @@ class Tag{
         this.body = null;
         this.type = null; // Only applicable for nested tags
         this._nodeFactory = undefined;
-    }
-
-    inheritFrom(superTag) {
-        var subTag = this;
-        /*
-         * Have the sub tag inherit any properties from the super tag that are not in the sub tag
-         */
-        forEachEntry(superTag, function (k, v) {
-            if (subTag[k] === undefined) {
-                subTag[k] = v;
-            }
-        });
-        [
-            'attributes',
-            'transformers',
-            'nestedVariables',
-            'importedVariables',
-            'bodyFunction'
-        ].forEach(function (propName) {
-            inheritProps(subTag[propName], superTag[propName]);
-        });
-        subTag.patternAttributes = superTag.patternAttributes.concat(subTag.patternAttributes);
     }
 
     forEachVariable(callback, thisObj) {
