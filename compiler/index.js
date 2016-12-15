@@ -100,6 +100,17 @@ function compile(src, filename, options, callback) {
     return _compile(src, filename, options, callback);
 }
 
+function compileForBrowser(src, filename, options, callback) {
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
+    }
+
+    options = Object.assign({output: 'vdom'}, options);
+
+    return compile(src, filename, options, callback);
+}
+
 function compileFile(filename, options, callback) {
     var fs = req('fs');
 
@@ -121,6 +132,17 @@ function compileFile(filename, options, callback) {
         return _compile(templateSrc, filename, options, callback);
     }
 }
+
+function compileFileForBrowser(filename, options, callback) {
+    if (typeof options === 'function') {
+        callback = options;
+        options = null;
+    }
+
+    options = Object.assign({output: 'vdom'}, options);
+    return compileFile(filename, options, callback);
+}
+
 
 function createInlineCompiler(filename, userOptions) {
     var options = {};
@@ -178,6 +200,8 @@ function parseRaw(templateSrc, filename) {
 exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
+exports.compileForBrowser = compileForBrowser;
+exports.compileFileForBrowser = compileFileForBrowser;
 exports.parseRaw = parseRaw;
 exports.createInlineCompiler = createInlineCompiler;
 
