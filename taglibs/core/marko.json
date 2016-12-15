@@ -168,12 +168,13 @@
     "<script>": {
         "preserve-whitespace": true,
         "@marko-init": "boolean",
+        "@template-helpers": "boolean",
         "@*": {
             "ignore": true
         },
         "autocomplete": [
             {
-                "snippet": "script marko-init",
+                "snippet": "script template-helpers",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
             }
         ]

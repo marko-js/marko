@@ -138,6 +138,20 @@ var coreAttrHandlers = [
                 this.addError('The "marko-init" attribute should only be used on the <script> tag');
                 return;
             }
+            this.context.deprecate('The "marko-init" attribute is deprecated.  Use "template-helpers" instead.', node);
+            var bodyText = el.bodyText;
+            el.noOutput = true;
+            this.context.addStaticCode(bodyText);
+            el.detach();
+            return null;
+        }
+    ],
+    [
+        'template-helpers', function(attr, node, el) {
+            if (el.tagName !== 'script') {
+                this.addError('The "template-helpers" attribute should only be used on the <script> tag');
+                return;
+            }
             var bodyText = el.bodyText;
             el.noOutput = true;
             this.context.addStaticCode(bodyText);
