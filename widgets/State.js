@@ -65,7 +65,7 @@ State.prototype = {
         var self = this;
         var rawState = self._raw;
 
-        if (!shouldEnsure) {
+        if (shouldEnsure) {
             ensure(self, name);
         }
 
