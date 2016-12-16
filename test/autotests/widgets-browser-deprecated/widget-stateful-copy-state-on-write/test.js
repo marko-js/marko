@@ -4,13 +4,13 @@ module.exports = function(helpers) {
     var widget = helpers.mount(require('./index'), {});
 
     require('marko/widgets').batchUpdate(function() {
-        var oldState = widget.__rawState;
+        var oldState = widget.state.toJSON();
         widget.setState('foo', 'bar');
 
-        expect(widget.__rawState).to.not.equal(oldState);
+        expect(widget.state.toJSON()).to.not.equal(oldState);
 
-        oldState = widget.__rawState;
+        oldState = widget.state.toJSON();
         widget.setState('hello', 'world');
-        expect(widget.__rawState).to.equal(oldState);
+        expect(widget.state.toJSON()).to.equal(oldState);
     });
 };

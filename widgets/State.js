@@ -6,7 +6,7 @@ function ensure(state, propertyName) {
     if (!proto.hasOwnProperty(propertyName)) {
         Object.defineProperty(proto, propertyName, {
             get: function() {
-                return this.__widget.__rawState[propertyName];
+                return this._raw[propertyName];
             },
             set: function(value) {
                 this._set(propertyName, value, false /* ensure:false */);
@@ -16,12 +16,17 @@ function ensure(state, propertyName) {
 }
 
 function State(widget, initialState) {
-    this.__widget = widget;
-    widget.__rawState = initialState || {};
+    this._widget = widget;
+    this._raw = initialState || {};
 
-    if(initialState) {
+    this._dirty = false;
+    this._old = null;
+    this._changes = null;
+    this._forced = null; // An object that we use to keep tracking of state properties that were forced to be dirty
+
+    if (initialState) {
         for(var key in initialState) {
-            if(initialState.hasOwnProperty(key)) {
+            if (initialState.hasOwnProperty(key)) {
                 ensure(this, key);
             }
         }
@@ -29,13 +34,23 @@ function State(widget, initialState) {
 }
 
 State.prototype = {
+    _reset: function() {
+        var self = this;
+
+        self._dirty = false;
+        self._old = null;
+        self._changes = null;
+        self._forced = null;
+    },
+
     _replace: function(newState, noQueue) {
         var state = this;
-        var widget = state.__widget;
         var key;
 
-        for (key in widget.__rawState) {
-            if (widget.__rawState.hasOwnProperty(key) && !newState.hasOwnProperty(key)) {
+        var rawState = this._raw;
+
+        for (key in rawState) {
+            if (rawState.hasOwnProperty(key) && !newState.hasOwnProperty(key)) {
                 state._set(key, undefined, false /* ensure:false */, false /* forceDirty:false */, noQueue);
             }
         }
@@ -47,11 +62,11 @@ State.prototype = {
         }
     },
     _set: function(name, value, shouldEnsure, forceDirty, noQueue) {
-        var state = this;
-        var widget = state.__widget;
+        var self = this;
+        var rawState = self._raw;
 
         if (!shouldEnsure) {
-            ensure(state, name);
+            ensure(self, name);
         }
 
         if (typeof value === 'function') {
@@ -64,43 +79,42 @@ State.prototype = {
         }
 
         if (forceDirty) {
-            var dirtyState = widget.__dirtyState || (widget.__dirtyState = {});
-            dirtyState[name] = true;
-        } else if (widget.__rawState[name] === value) {
+            var forcedDirtyState = this._forced || (this._forced = {});
+            forcedDirtyState[name] = true;
+        } else if (rawState[name] === value) {
             return;
         }
 
-        var clean = !widget.__dirty;
+        var clean = !this._dirty;
 
         if (clean) {
             // This is the first time we are modifying the widget state
             // so introduce some properties to do some tracking of
             // changes to the state
-            var currentState = widget.__rawState;
-            widget.__dirty = true; // Mark the widget state as dirty (i.e. modified)
-            widget.__oldState = currentState;
-            widget.__rawState = extend({}, currentState);
-            widget.__stateChanges = {};
+            this._dirty = true; // Mark the widget state as dirty (i.e. modified)
+            this._old = rawState;
+            this._raw = rawState = extend({}, rawState);
+            this._changes = {};
         }
 
-        widget.__stateChanges[name] = value;
+        this._changes[name] = value;
 
         if (value == null) {
             // Don't store state properties with an undefined or null value
-            delete widget.__rawState[name];
+            delete rawState[name];
         } else {
             // Otherwise, store the new value in the widget state
-            widget.__rawState[name] = value;
+            rawState[name] = value;
         }
 
         if (clean && noQueue !== true) {
             // If we were clean before then we are now dirty so queue
             // up the widget for update
-            updateManager.queueWidgetUpdate(widget);
+            updateManager.queueWidgetUpdate(self._widget);
         }
     },
     toJSON: function() {
-        return this.__widget.__rawState;
+        return this._raw;
     }
 };
 

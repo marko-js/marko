@@ -119,10 +119,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             out.on('beginAsync', handleBeginAsync);
         }
 
-        if (!input) {
-            // Make sure we always have a non-null input object
-            input = {};
-        }
+
 
         if (renderingLogic === undefined) {
             // LEGACY - This should be removed when `defineRenderer` is removed but we use it
@@ -140,23 +137,17 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         var rerenderInfo = outGlobal.$w;
         var rerenderWidget;
-        var rerenderWidgetState;
 
-        if (rerenderInfo) {
-            rerenderWidget = rerenderInfo[RERENDER_WIDGET_INDEX];
-            rerenderWidgetState = rerenderInfo[RERENDER_WIDGET_STATE_INDEX];
+        if (rerenderInfo && (rerenderWidget = rerenderInfo[RERENDER_WIDGET_INDEX])) {
             rerenderInfo[RERENDER_WIDGET_INDEX] = null;
-        }
 
-        if (rerenderWidget && rerenderWidgetState) {
-            // This is a state-ful widget. If this is a rerender then the "input"
-            // will be the new state. If we have state then we should use the input
-            // as the widget state and skip the steps of converting the input
-            // to a widget state.
-            // We are the first widget and we are not being extended
-            // and we are not extending so use the input as the state
-            widgetState = input;
-            input = null;
+            if (!input) {
+                widgetState = rerenderInfo[RERENDER_WIDGET_STATE_INDEX];
+                input = null;
+            }
+        } else if (!input) {
+            // Make sure we always have a non-null input object
+            input = {};
         }
 
         var widgetArgs;
@@ -268,14 +259,10 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             // rerender the widget if that is not necessary. If the widget is a stateful
             // widget then we update the existing widget with the new state.
             if (widgetState) {
-                existingWidget._replaceState(widgetState); // Update the existing widget state using the internal/private
-                                                     // method to ensure that another update is not queued up
-
-                // If the widget has custom state update handlers then we will use those methods
-                // to update the widget.
-                if (existingWidget._processUpdateHandlers() === true) {
+                if (existingWidget._replaceState(widgetState)) {
                     // If _processUpdateHandlers() returns true then that means
-                    // that the widget is now up-to-date and we can skip rerendering it.
+                    // that the widget is now up-to-date and we can skip rerendering it, but only if we
+                    // are able to preserve the existing widget els
                     if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
                         return;
                     }

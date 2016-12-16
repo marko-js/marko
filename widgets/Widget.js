@@ -5,7 +5,6 @@ var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
-var extend = require('raptor-util/extend');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
@@ -119,11 +118,8 @@ function destroyWidgetHelper(widget) {
 }
 
 function resetWidget(widget) {
-    widget.__oldState = null;
-    widget.__dirty = false;
-    widget.__stateChanges = null;
     widget.__newProps = null;
-    widget.__dirtyState = null;
+    widget.__state._reset();
 }
 
 function hasCompatibleWidget(widgetsContext, existingWidget) {
@@ -166,6 +162,63 @@ function getElId(widget, widgetElId, index) {
     return elId;
 }
 
+/**
+ * This method is used to process "update_<stateName>" handler functions.
+ * If all of the modified state properties have a user provided update handler
+ * then a rerender will be bypassed and, instead, the DOM will be updated
+ * looping over and invoking the custom update handlers.
+ * @return {boolean} Returns true if if the DOM was updated. False, otherwise.
+ */
+function processUpdateHandlers(widget, stateChanges, oldState) {
+    var handlerMethod;
+    var handlers = [];
+
+
+    for (var propName in stateChanges) {
+        if (stateChanges.hasOwnProperty(propName)) {
+            var handlerMethodName = 'update_' + propName;
+
+            handlerMethod = widget[handlerMethodName];
+            if (handlerMethod) {
+                handlers.push([propName, handlerMethod]);
+            } else {
+                // This state change does not have a state handler so return false
+                // to force a rerender
+                return false;
+            }
+        }
+    }
+
+    // If we got here then all of the changed state properties have
+    // an update handler or there are no state properties that actually
+    // changed.
+
+    if (!handlers.length) {
+        return true;
+    }
+
+    // Otherwise, there are handlers for all of the changed properties
+    // so apply the updates using those handlers
+
+    emitLifecycleEvent(widget, 'beforeUpdate');
+
+    for (var i=0, len=handlers.length; i<len; i++) {
+        var handler = handlers[i];
+        var propertyName = handler[0];
+        handlerMethod = handler[1];
+
+        var newValue = stateChanges[propertyName];
+        var oldValue = oldState[propertyName];
+        handlerMethod.call(widget, newValue, oldValue);
+    }
+
+    emitLifecycleEvent(widget, 'update');
+
+    resetWidget(widget);
+
+    return true;
+}
+
 var widgetProto;
 
 /**
@@ -179,18 +232,13 @@ function Widget(id, document) {
     this.el = null;
     this.bodyEl = null;
     this.__state = null;
-    this.__rawState = null;
     this.__roots = null;
     this.__subscriptions = null;
     this.__evHandles = null;
     this.__lifecycleState = null;
     this.__customEvents = null;
     this.__scope = null;
-    this.__dirty = false;
-    this.__oldState = null;
-    this.__stateChanges = null;
     this.__updateQueued = false;
-    this.__dirtyState = null; // An object that we use to keep tracking of state properties that were forced to be dirty
     this.__document = document;
 }
 
@@ -338,10 +386,6 @@ Widget.prototype = widgetProto = {
         this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
-    _replaceState: function(newState) {
-        this.state._replace(newState, true /* do not queue an update */ );
-    },
-
     _removeDOMEventListeners: function() {
         removeDOMEventListeners(this);
     },
@@ -398,101 +442,44 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        if (!this.__dirty) {
+        var state = this.__state;
+
+        if (!state._dirty) {
             // Don't even bother trying to update this widget since it is
             // not marked as dirty.
             return;
         }
 
-        if (!this._processUpdateHandlers()) {
-            this.doUpdate(this.__stateChanges, this.__oldState);
+        var stateChanges = state._changes;
+        var oldState = state._old;
+
+        if (!processUpdateHandlers(this, stateChanges, oldState, state)) {
+            this.doUpdate(stateChanges, oldState);
         }
 
         // Reset all internal properties for tracking state changes, etc.
         resetWidget(this);
     },
 
+    _replaceState: function(newState) {
+        var state = this.__state;
+
+        // Update the existing widget state using the internal/private
+        // method to ensure that another update is not queued up
+        state._replace(newState, true /* do not queue an update */);
+
+
+        // If the widget has custom state update handlers then we will use those methods
+        // to update the widget.
+        return processUpdateHandlers(this, state._changes, state._old);
+    },
+
     isDirty: function() {
-        return this.__dirty;
+        return this.__state._dirty;
     },
 
     _reset: function() {
         resetWidget(this);
-    },
-
-    /**
-     * This method is used to process "update_<stateName>" handler functions.
-     * If all of the modified state properties have a user provided update handler
-     * then a rerender will be bypassed and, instead, the DOM will be updated
-     * looping over and invoking the custom update handlers.
-     * @return {boolean} Returns true if if the DOM was updated. False, otherwise.
-     */
-    _processUpdateHandlers: function() {
-        var stateChanges = this.__stateChanges;
-        var oldState = this.__oldState;
-
-        var handlerMethod;
-        var handlers = [];
-
-        var newValue;
-        var oldValue;
-
-        for (var propName in stateChanges) {
-            if (stateChanges.hasOwnProperty(propName)) {
-                newValue = stateChanges[propName];
-                oldValue = oldState[propName];
-
-                if (oldValue === newValue) {
-                    // Only do an update for this state property if it is actually
-                    // different from the old state or if it was forced to be dirty
-                    // using setStateDirty(propName)
-                    var dirtyState = this.__dirtyState;
-                    if (dirtyState == null || !dirtyState.hasOwnProperty(propName)) {
-                        continue;
-                    }
-                }
-
-                var handlerMethodName = 'update_' + propName;
-
-                handlerMethod = this[handlerMethodName];
-                if (handlerMethod) {
-                    handlers.push([propName, handlerMethod]);
-                } else {
-                    // This state change does not have a state handler so return false
-                    // to force a rerender
-                    return false;
-                }
-            }
-        }
-
-        // If we got here then all of the changed state properties have
-        // an update handler or there are no state properties that actually
-        // changed.
-
-        if (!handlers.length) {
-            return true;
-        }
-
-        // Otherwise, there are handlers for all of the changed properties
-        // so apply the updates using those handlers
-
-        emitLifecycleEvent(this, 'beforeUpdate');
-
-        for (var i=0, len=handlers.length; i<len; i++) {
-            var handler = handlers[i];
-            var propertyName = handler[0];
-            handlerMethod = handler[1];
-
-            newValue = stateChanges[propertyName];
-            oldValue = oldState[propertyName];
-            handlerMethod.call(this, newValue, oldValue);
-        }
-
-        emitLifecycleEvent(this, 'update');
-
-        resetWidget(this);
-
-        return true;
     },
 
     shouldUpdate: function(newState, newProps) {
@@ -517,11 +504,10 @@ Widget.prototype = widgetProto = {
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
-        var rawState;
-        var templateData = props ? props : (rawState = self.__rawState);
+        var state = self.__state;
 
         var globalData = {};
-        globalData.$w = [self, rawState];
+        globalData.$w = [self, !props && state && state._raw];
 
         var fromEls = markoWidgets._roots(this, {});
         var doc = this.__document;
@@ -529,7 +515,7 @@ Widget.prototype = widgetProto = {
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
-            renderer(templateData, out);
+            renderer(props, out);
             var result = new RenderResult(out);
 
             var targetNode = out.getOutput();
