@@ -4,6 +4,9 @@ var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
 var getRootEls = markoWidgets._roots;
 
+var RERENDER_WIDGET_INDEX = 0;
+var RERENDER_WIDGET_STATE_INDEX = 1;
+
 function resolveWidgetRef(out, ref, scope) {
     if (ref.charAt(0) === '#') {
         return ref.substring(1);
@@ -135,19 +138,25 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         var widgetConfig;
         var widgetBody;
 
-        if (outGlobal.__rerenderWidget && outGlobal.__rerenderState) {
+        var rerenderInfo = outGlobal.$w;
+        var rerenderWidget;
+        var rerenderWidgetState;
+
+        if (rerenderInfo) {
+            rerenderWidget = rerenderInfo[RERENDER_WIDGET_INDEX];
+            rerenderWidgetState = rerenderInfo[RERENDER_WIDGET_STATE_INDEX];
+            rerenderInfo[RERENDER_WIDGET_INDEX] = null;
+        }
+
+        if (rerenderWidget && rerenderWidgetState) {
             // This is a state-ful widget. If this is a rerender then the "input"
             // will be the new state. If we have state then we should use the input
             // as the widget state and skip the steps of converting the input
             // to a widget state.
-            var isFirstWidget = !outGlobal.__firstWidgetFound;
-
-            if (isFirstWidget) {
-                // We are the first widget and we are not being extended
-                // and we are not extending so use the input as the state
-                widgetState = input;
-                input = null;
-            }
+            // We are the first widget and we are not being extended
+            // and we are not extending so use the input as the state
+            widgetState = input;
+            input = null;
         }
 
         var widgetArgs;
@@ -203,12 +212,8 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             widgetArgs = input.$w;
         }
 
-        outGlobal.__firstWidgetFound = true;
-
         var customEvents;
         var scope;
-
-
 
         var id = assignedId;
 
@@ -231,9 +236,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             customEvents = widgetArgs[2];
         }
 
-        var rerenderWidget = outGlobal.__rerenderWidget;
-        var isRerender = outGlobal.__rerender === true;
-
         var widgetsContext = markoWidgets.getWidgetsContext(out);
 
         if (!id) {
@@ -249,8 +251,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         if (rerenderWidget) {
             existingWidget = rerenderWidget;
             id = rerenderWidget.id;
-            delete outGlobal.__rerenderWidget;
-        } else if (isRerender) {
+        } else if (rerenderInfo) {
             // Look in in the DOM to see if a widget with the same ID and type already exists.
             existingWidget = widgetLookup[id];
             if (existingWidget && existingWidget.__type !== typeName) {

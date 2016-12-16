@@ -520,14 +520,7 @@ Widget.prototype = widgetProto = {
         var templateData = extend({}, props || self.__rawState);
 
         var globalData = {};
-
-        globalData.__rerenderWidget = self;
-        globalData.__rerenderEl = self.el;
-        globalData.__rerender = true;
-
-        if (!props) {
-            globalData.__rerenderState = props ? null : self.__rawState;
-        }
+        globalData.$w = [self, !props && self.__rawState];
 
         var fromEls = markoWidgets._roots(this, {});
         var doc = this.__document;
