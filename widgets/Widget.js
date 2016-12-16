@@ -190,7 +190,7 @@ function Widget(id, document) {
     this.__oldState = null;
     this.__stateChanges = null;
     this.__updateQueued = false;
-    this.__dirtyState = null;
+    this.__dirtyState = null; // An object that we use to keep tracking of state properties that were forced to be dirty
     this.__document = document;
 }
 
