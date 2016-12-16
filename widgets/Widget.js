@@ -10,7 +10,6 @@ var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
 var widgetLookup = require('./lookup').widgets;
-var getRootEls = markoWidgets._roots;
 
 var slice = Array.prototype.slice;
 
@@ -530,7 +529,7 @@ Widget.prototype = widgetProto = {
             globalData.__rerenderState = props ? null : self.__rawState;
         }
 
-        var fromEls = getRootEls(this, {});
+        var fromEls = markoWidgets._roots(this, {});
         var doc = this.__document;
 
         updateManager.batchUpdate(function() {
