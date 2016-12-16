@@ -386,10 +386,6 @@ Widget.prototype = widgetProto = {
         this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
-    _removeDOMEventListeners: function() {
-        removeDOMEventListeners(this);
-    },
-
     replaceState: function(newState) {
         this.state._replace(newState);
     },
@@ -478,8 +474,12 @@ Widget.prototype = widgetProto = {
         return this.__state._dirty;
     },
 
-    _reset: function() {
+    _reset: function(shouldRemoveDOMEventListeners) {
         resetWidget(this);
+
+        if (shouldRemoveDOMEventListeners) {
+            removeDOMEventListeners(this);
+        }
     },
 
     shouldUpdate: function(newState, newProps) {
@@ -509,8 +509,8 @@ Widget.prototype = widgetProto = {
         var globalData = {};
         globalData.$w = [self, !props && state && state._raw];
 
-        var fromEls = markoWidgets._roots(this, {});
-        var doc = this.__document;
+        var fromEls = markoWidgets._roots(self, {});
+        var doc = self.__document;
 
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;

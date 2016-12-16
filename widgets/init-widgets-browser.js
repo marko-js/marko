@@ -78,8 +78,7 @@ function initWidget(widgetDef, doc) {
     }
 
     if (existingWidget) {
-        existingWidget._removeDOMEventListeners();
-        existingWidget._reset();
+        existingWidget._reset(true /* shouldRemoveDOMEventListeners */);
         widget = existingWidget;
     } else {
         widget = registry.createWidget(type, id, doc);
