@@ -1,7 +1,6 @@
 var AsyncValue = require('raptor-async/AsyncValue');
 
 var afterUpdateAsyncValue = null;
-var afterUpdateAsyncValue = null;
 var updatesScheduled = false;
 
 var batchStack = []; // A stack of batched updates
