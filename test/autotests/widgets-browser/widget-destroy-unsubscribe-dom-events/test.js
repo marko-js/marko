@@ -3,14 +3,14 @@ var expect = require('chai').expect;
 module.exports = function(helpers) {
     var widget = helpers.mount(require('./index'), {});
 
-    expect(Array.isArray(widget.__evHandles)).to.equal(true);
+    expect(Array.isArray(widget.$__domEventListenerHandles)).to.equal(true);
 
     var el = widget.el;
     var fooLink = widget.getEl('fooLink');
 
     widget.destroy();
 
-    expect(widget.__evHandles).to.equal(null);
+    expect(widget.$__domEventListenerHandles).to.equal(null);
 
     // Make sure the widget is removed from the DOM tree
 

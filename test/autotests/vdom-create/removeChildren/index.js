@@ -7,7 +7,6 @@ module.exports = function(helpers) {
 
     div.removeChildren();
     expect(div.firstChild).to.equal(undefined);
-    expect(div.childNodes.length).to.equal(0);
 
     var newChild = helpers.vdom.createElement('h1', null, 1)
         .t('New child');
@@ -15,7 +14,7 @@ module.exports = function(helpers) {
     div.appendChild(newChild);
 
     expect(div.firstChild).to.equal(newChild);
-    expect(div.childNodes.length).to.equal(1);
+    expect(div.firstChild.nextSibling).to.equal(undefined);
 
     return div;
 };

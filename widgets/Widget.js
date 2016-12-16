@@ -62,10 +62,10 @@ function emitLifecycleEvent(widget, eventType, eventArg) {
 }
 
 function removeDOMEventListeners(widget) {
-    var eventListenerHandles = widget.__evHandles;
+    var eventListenerHandles = widget.$__domEventListenerHandles;
     if (eventListenerHandles) {
         eventListenerHandles.forEach(removeListener);
-        widget.__evHandles = null;
+        widget.$__domEventListenerHandles = null;
     }
 }
 
@@ -75,8 +75,8 @@ function destroyWidgetForEl(el) {
         destroyWidgetHelper(widgetToDestroy);
         el.__widget = null;
 
-        while ((widgetToDestroy = widgetToDestroy.__rootFor)) {
-            widgetToDestroy.__rootFor = null;
+        while ((widgetToDestroy = widgetToDestroy.$__rootFor)) {
+            widgetToDestroy.$__rootFor = null;
             destroyWidgetHelper(widgetToDestroy);
         }
     }
@@ -98,7 +98,7 @@ function destroyWidgetHelper(widget) {
     }
 
     emitLifecycleEvent(widget, 'beforeDestroy');
-    widget.__lifecycleState = 'destroyed';
+    widget.$__lifecycleState = 'destroyed';
 
     widget.els = null;
     widget.el = null;
@@ -106,9 +106,9 @@ function destroyWidgetHelper(widget) {
     // Unsubscribe from all DOM events
     removeDOMEventListeners(widget);
 
-    if (widget.__subscriptions) {
-        widget.__subscriptions.removeAllListeners();
-        widget.__subscriptions = null;
+    if (widget.$__subscriptions) {
+        widget.$__subscriptions.removeAllListeners();
+        widget.$__subscriptions = null;
     }
 
     delete widgetLookup[widget.id];
@@ -117,8 +117,8 @@ function destroyWidgetHelper(widget) {
 }
 
 function resetWidget(widget) {
-    widget.__newProps = null;
-    widget.__state._reset();
+    widget.$__newProps = null;
+    widget.$__state._reset();
 }
 
 function hasCompatibleWidget(widgetsContext, existingWidget) {
@@ -128,7 +128,7 @@ function hasCompatibleWidget(widgetsContext, existingWidget) {
         return false;
     }
 
-    return existingWidget.__type === newWidgetDef.type;
+    return existingWidget.$__type === newWidgetDef.type;
 }
 
 function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
@@ -140,7 +140,7 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     }
 
 
-    var targetWidget = widgetLookup[widget.__scope];
+    var targetWidget = widgetLookup[widget.$__scope];
     var targetMethod = targetWidget[targetMethodName];
     if (!targetMethod) {
         throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
@@ -230,15 +230,15 @@ function Widget(id, document) {
     this.id = id;
     this.el = null;
     this.bodyEl = null;
-    this.__state = null;
-    this.__roots = null;
-    this.__subscriptions = null;
-    this.__evHandles = null;
-    this.__lifecycleState = null;
-    this.__customEvents = null;
-    this.__scope = null;
-    this.__updateQueued = false;
-    this.__document = document;
+    this.$__state = null;
+    this.$__roots = null;
+    this.$__subscriptions = null;
+    this.$__domEventListenerHandles = null;
+    this.$__lifecycleState = null;
+    this.$__customEvents = null;
+    this.$__scope = null;
+    this.$__updateQueued = false;
+    this.$__document = document;
 }
 
 Widget.prototype = widgetProto = {
@@ -249,9 +249,9 @@ Widget.prototype = widgetProto = {
             throw new Error('target is required');
         }
 
-        var tracker = this.__subscriptions;
+        var tracker = this.$__subscriptions;
         if (!tracker) {
-            this.__subscriptions = tracker = listenerTracker.createTracker();
+            this.$__subscriptions = tracker = listenerTracker.createTracker();
         }
 
 
@@ -263,7 +263,7 @@ Widget.prototype = widgetProto = {
     },
 
     emit: function(eventType) {
-        var customEvents = this.__customEvents;
+        var customEvents = this.$__customEvents;
         var target;
 
         if (customEvents && (target = customEvents[eventType])) {
@@ -280,7 +280,7 @@ Widget.prototype = widgetProto = {
         return getElIdHelper(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
-        var doc = this.__document;
+        var doc = this.$__document;
 
         if (widgetElId != null) {
             return doc.getElementById(getElIdHelper(this, widgetElId, index));
@@ -337,7 +337,7 @@ Widget.prototype = widgetProto = {
             }
         }
 
-        var rootWidgets = this.__rootWidgets;
+        var rootWidgets = this.$__rootWidgets;
         if (rootWidgets) {
             for (i=0, len=rootWidgets.length; i<len; i++) {
                 rootWidgets[i].destroy();
@@ -347,19 +347,19 @@ Widget.prototype = widgetProto = {
         destroyWidgetHelper(this);
     },
     isDestroyed: function () {
-        return this.__lifecycleState === 'destroyed';
+        return this.$__lifecycleState === 'destroyed';
     },
     getBodyEl: function() {
         return this.bodyEl;
     },
     get state() {
-        return this.__state;
+        return this.$__state;
     },
     set state(value) {
-        if(!this.__state && value) {
-            this.__state = new this.State(this, value);
+        if(!this.$__state && value) {
+            this.$__state = new this.State(this, value);
         } else {
-            this.__state._replace(value);
+            this.$__state._replace(value);
         }
     },
     setState: function(name, value) {
@@ -412,11 +412,11 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        if (!this.__newProps) {
+        if (!this.$__newProps) {
             updateManager.queueWidgetUpdate(this);
         }
 
-        this.__newProps = newProps;
+        this.$__newProps = newProps;
     },
 
     update: function() {
@@ -424,7 +424,7 @@ Widget.prototype = widgetProto = {
           return;
         }
 
-        var newProps = this.__newProps;
+        var newProps = this.$__newProps;
 
         if (this.shouldUpdate(newProps, this.state) === false) {
             resetWidget(this);
@@ -437,7 +437,7 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        var state = this.__state;
+        var state = this.$__state;
 
         if (!state._dirty) {
             // Don't even bother trying to update this widget since it is
@@ -457,7 +457,7 @@ Widget.prototype = widgetProto = {
     },
 
     _replaceState: function(newState) {
-        var state = this.__state;
+        var state = this.$__state;
 
         // Update the existing widget state using the internal/private
         // method to ensure that another update is not queued up
@@ -470,7 +470,7 @@ Widget.prototype = widgetProto = {
     },
 
     isDirty: function() {
-        return this.__state._dirty;
+        return this.$__state._dirty;
     },
 
     _reset: function(shouldRemoveDOMEventListeners) {
@@ -501,15 +501,15 @@ Widget.prototype = widgetProto = {
         }
 
         var renderer = self.renderer;
-        self.__lifecycleState = 'rerender';
+        self.$__lifecycleState = 'rerender';
 
-        var state = self.__state;
+        var state = self.$__state;
 
         var globalData = {};
         globalData.$w = [self, !props && state && state._raw];
 
         var fromEls = markoWidgets._roots(self, {});
-        var doc = self.__document;
+        var doc = self.$__document;
 
         updateManager.batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
@@ -609,7 +609,7 @@ Widget.prototype = widgetProto = {
 
             result.afterInsert(doc);
 
-            self.__lifecycleState = null;
+            self.$__lifecycleState = null;
 
             if (!props) {
                 // We have re-rendered with the new state so our state
@@ -640,7 +640,7 @@ domInsert(
         var els = this.els;
         var elCount = els.length;
         if (elCount > 1) {
-            var fragment = widget.__document.createDocumentFragment();
+            var fragment = widget.$__document.createDocumentFragment();
             for (var i=0; i<elCount; i++) {
                 fragment.appendChild(els[i]);
             }

@@ -1,8 +1,12 @@
 {
-  "browser": {
-    "./index.js": "./index-browser.js",
-    "./uniqueId.js": "./uniqueId-browser.js",
-    "./init-widgets.js": "./init-widgets-browser.js",
-    "./defineWidget.js": "./defineWidget-browser.js"
-  }
+    "browser": {
+        "./index.js": "./index-browser.js",
+        "./uniqueId.js": "./uniqueId-browser.js",
+        "./init-widgets.js": "./init-widgets-browser.js",
+        "./defineWidget.js": "./defineWidget-browser.js"
+    },
+    "minprops": {
+        "exclude": ["r"],
+        "matchPrefix": "$__"
+    }
 }

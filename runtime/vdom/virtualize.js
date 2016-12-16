@@ -49,7 +49,7 @@ function virtualize(node) {
         return vdomEL;
     } else if (node.nodeType === 3) { // Text node
         return new Text(node.nodeValue);
-    } else if (node.nodeType === 8) { // Text node
+    } else if (node.nodeType === 8) { // Comment node
         return new Comment(node.nodeValue);
     } else if (node.nodeType === 11) { // DocumentFragment node
         var vdomDocFragment = new DocumentFragment();

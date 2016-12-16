@@ -1,7 +1,4 @@
 'use strict';
-require('raptor-polyfill/string/endsWith');
-
-var logger = require('raptor-logging').logger(module);
 var _addEventListener = require('./addEventListener');
 var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
@@ -73,7 +70,7 @@ function initWidget(widgetDef, doc) {
         existingWidget = widgetLookup[id];
     }
 
-    if (existingWidget && existingWidget.__type !== type) {
+    if (existingWidget && existingWidget.$__type !== type) {
         existingWidget = null;
     }
 
@@ -95,11 +92,11 @@ function initWidget(widgetDef, doc) {
             var nestedId = id + '-' + rootId;
             var rootWidget = widgetLookup[nestedId];
             if (rootWidget) {
-                rootWidget.__rootFor = widget;
+                rootWidget.$__rootFor = widget;
                 if (rootWidgets) {
                     rootWidgets.push(rootWidget);
                 } else {
-                    rootWidgets = widget.__rootWidgets = [rootWidget];
+                    rootWidgets = widget.$__rootWidgets = [rootWidget];
                 }
 
             } else {
@@ -133,11 +130,6 @@ function initWidget(widgetDef, doc) {
 
     widget.state = state || {}; // First time rendering so use the provided state or an empty state object
 
-    // The user-provided constructor function
-    if (logger.isDebugEnabled()) {
-        logger.debug('Creating widget: ' + type + ' (' + id + ')');
-    }
-
     if (!config) {
         config = {};
     }
@@ -145,7 +137,7 @@ function initWidget(widgetDef, doc) {
     if (widget._isWidget) {
         widget.el = el;
         widget.els = els;
-        widget.__rootWidgets = rootWidgets;
+        widget.$__rootWidgets = rootWidgets;
         widget.bodyEl = getNestedEl(widget, bodyElId, doc);
 
         if (domEvents) {
@@ -164,20 +156,20 @@ function initWidget(widgetDef, doc) {
             }
 
             if (eventListenerHandles.length) {
-                widget.__evHandles = eventListenerHandles;
+                widget.$__domEventListenerHandles = eventListenerHandles;
             }
         }
 
         if (customEvents) {
-            widget.__customEvents = {};
-            widget.__scope = scope;
+            widget.$__customEvents = {};
+            widget.$__scope = scope;
 
             for (i=0, len=customEvents.length; i<len; i+=3) {
                 eventType = customEvents[i];
                 targetMethodName = customEvents[i+1];
                 extraArgs = customEvents[i+2];
 
-                widget.__customEvents[eventType] = [targetMethodName, extraArgs];
+                widget.$__customEvents[eventType] = [targetMethodName, extraArgs];
             }
         }
     } else {

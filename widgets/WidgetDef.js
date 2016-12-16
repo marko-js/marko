@@ -1,22 +1,6 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-require('raptor-polyfill/string/endsWith');
-
+'use strict';
 var repeatedId = require('./repeated-id');
+var repeatedRegExp = /\[\]$/;
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for
@@ -67,7 +51,7 @@ WidgetDef.prototype = {
         if (nestedId == null) {
             return this.id;
         } else {
-            if (typeof nestedId === 'string' && nestedId.endsWith('[]')) {
+            if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
                 return repeatedId.nextId(this.out, this.id, nestedId);
             } else {
                 return this.id + '-' + nestedId;

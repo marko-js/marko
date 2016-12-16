@@ -4,8 +4,8 @@ var extend = require('raptor-util/extend');
 
 function DocumentFragmentClone(other) {
     extend(this, other);
-    this.parentNode = undefined;
-    this._nextSibling = undefined;
+    this.$__parentNode = undefined;
+    this.$__nextSibling = undefined;
 }
 
 function DocumentFragment(documentFragment) {
@@ -16,7 +16,7 @@ function DocumentFragment(documentFragment) {
 DocumentFragment.prototype = {
     nodeType: 11,
 
-    _nsAware: true,
+    $__nsAware: true,
 
     cloneNode: function() {
         return new DocumentFragmentClone(this);

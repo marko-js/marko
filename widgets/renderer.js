@@ -3,9 +3,12 @@ var widgetLookup = require('./lookup').widgets;
 var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
 var getRootEls = markoWidgets._roots;
+var repeatedRegExp = /\[\]$/;
 
 var RERENDER_WIDGET_INDEX = 0;
 var RERENDER_WIDGET_STATE_INDEX = 1;
+
+var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
 function resolveWidgetRef(out, ref, scope) {
     if (ref.charAt(0) === '#') {
@@ -13,7 +16,7 @@ function resolveWidgetRef(out, ref, scope) {
     } else {
         var resolvedId;
 
-        if (ref.endsWith('[]')) {
+        if (repeatedRegExp.test(ref)) {
             resolvedId = repeatedId.nextId(out, scope, ref);
         } else {
             resolvedId = scope + '-' + ref;
@@ -114,8 +117,8 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
     return function renderer(input, out, renderingLogicLegacy /* needed by defineRenderer */) {
         var outGlobal = out.global;
 
-        if (!outGlobal.__widgetsBeginAsyncAdded) {
-            outGlobal.__widgetsBeginAsyncAdded = true;
+        if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
+            outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
             out.on('beginAsync', handleBeginAsync);
         }
 
@@ -245,7 +248,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         } else if (rerenderInfo) {
             // Look in in the DOM to see if a widget with the same ID and type already exists.
             existingWidget = widgetLookup[id];
-            if (existingWidget && existingWidget.__type !== typeName) {
+            if (existingWidget && existingWidget.$__type !== typeName) {
                 existingWidget = undefined;
             }
         }

@@ -29,8 +29,8 @@ module.exports = function(helpers) {
 
     root.appendChild(clone);
 
-    expect(el.parentNode).to.equal(undefined);
-    expect(clone.parentNode).to.equal(root);
+    expect(el.$__parentNode).to.equal(undefined);
+    expect(clone.$__parentNode).to.equal(root);
 
     return root;
 };

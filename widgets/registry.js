@@ -79,7 +79,7 @@ function getWidgetClass(typeName) {
     }
 
     // Make the widget "type" accessible on each widget instance
-    WidgetClass.prototype.__type = typeName;
+    WidgetClass.prototype.$__type = typeName;
 
     widgetTypes[typeName] = WidgetClass;
 
@@ -96,7 +96,7 @@ exports.createWidget = function(typeName, id, document) {
         widget = new WidgetClass(id, document);
     } else if (WidgetClass.initWidget) {
         widget = WidgetClass;
-        widget.__document = document;
+        widget.$__document = document;
     }
     return widget;
 };

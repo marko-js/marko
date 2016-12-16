@@ -1,0 +1,6 @@
+{
+    "minprops": {
+        "exclude": ["c", "ca", "e", "n", "sa", "t"],
+        "matchPrefix": "$__"
+    }
+}

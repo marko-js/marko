@@ -22,7 +22,7 @@ function getWidgetForEl(el, doc) {
             var widget = node.__widget;
 
             while(widget) {
-                var rootFor = widget.__rootFor;
+                var rootFor = widget.$__rootFor;
                 if (rootFor)  {
                     widget = rootFor;
                 } else {
@@ -47,7 +47,7 @@ function getRootEls(widget, rootEls) {
         rootEls[widgetEl.id] = widgetEl;
     }
 
-    var rootWidgets = widget.__rootWidgets;
+    var rootWidgets = widget.$__rootWidgets;
     if (rootWidgets) {
         for (i=0, len=rootWidgets.length; i<len; i++) {
             var rootWidget = rootWidgets[i];

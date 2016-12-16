@@ -1,4 +1,3 @@
-require('raptor-polyfill/string/startsWith');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
 var Text = require('./Text');
@@ -11,6 +10,8 @@ var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
 var ATTR_MARKO_CONST = 'data-marko-const';
+
+var specialAttrRegexp = /^data-_/;
 
 function removePreservedAttributes(attrs) {
     var preservedAttrs = attrs['data-preserve-attrs'];
@@ -37,8 +38,8 @@ function convertAttrValue(type, value) {
 
 function HTMLElementClone(other) {
     extend(this, other);
-    this.parentNode = undefined;
-    this._nextSibling = undefined;
+    this.$__parentNode = undefined;
+    this.$__nextSibling = undefined;
 }
 
 function HTMLElement(tagName, attrs, childCount, constId) {
@@ -68,7 +69,7 @@ function HTMLElement(tagName, attrs, childCount, constId) {
     }
 
     this.attributes = attrs || EMPTY_OBJECT;
-    this._isTextArea = isTextArea;
+    this.$__isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this._value = undefined;
@@ -78,7 +79,7 @@ function HTMLElement(tagName, attrs, childCount, constId) {
 HTMLElement.prototype = {
     nodeType: 1,
 
-    _nsAware: true,
+    $__nsAware: true,
 
     assignAttributes: function(targetNode) {
         var attrs = this.attributes;
@@ -154,7 +155,7 @@ HTMLElement.prototype = {
                     targetNode.removeAttribute(attrName);
                 } else if (oldAttrs[attrName] !== attrValue) {
 
-                    if (attrName.startsWith('data-_')) {
+                    if (specialAttrRegexp.test(attrName)) {
                         // Special attributes aren't copied to the real DOM. They are only
                         // kept in the virtual attributes map
                         continue;
@@ -201,7 +202,7 @@ HTMLElement.prototype = {
         var child = this.appendChild(new HTMLElement(tagName, attrs, childCount, constId));
 
         if (childCount === 0) {
-            return this._finishChild();
+            return this.$__finishChild();
         } else {
             return child;
         }
@@ -221,13 +222,13 @@ HTMLElement.prototype = {
                 var safeHTML = value.safeHTML;
                 var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.document);
                 this.appendChild(vdomNode);
-                return this._finishChild();
+                return this.$__finishChild();
             } else {
                 value = value.toString();
             }
         }
         this.appendChild(new Text(value));
-        return this._finishChild();
+        return this.$__finishChild();
     },
 
     /**
@@ -236,7 +237,7 @@ HTMLElement.prototype = {
      */
     c: function(value) {
         this.appendChild(new Comment(value));
-        return this._finishChild();
+        return this.$__finishChild();
     },
 
     /**
@@ -247,7 +248,7 @@ HTMLElement.prototype = {
      */
     n: function(node) {
         this.appendChild(node.cloneNode());
-        return this._finishChild();
+        return this.$__finishChild();
     },
 
     actualize: function(document) {
@@ -265,7 +266,7 @@ HTMLElement.prototype = {
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
 
-            if (attrName.startsWith('data-_')) {
+            if (specialAttrRegexp.test(attrName)) {
                 continue;
             }
 
@@ -286,7 +287,7 @@ HTMLElement.prototype = {
             }
         }
 
-        if (this._isTextArea) {
+        if (this.$__isTextArea) {
             el.value = this.value;
         } else {
             var curChild = this.firstChild;

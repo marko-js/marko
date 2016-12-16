@@ -1,6 +1,4 @@
 'use strict';
-require('raptor-polyfill/string/startsWith');
-
 var warp10 = require('warp10');
 var extend = require('raptor-util/extend');
 
@@ -69,7 +67,7 @@ function attr(name, value, shouldEscape) {
     } else if (value == null || value === false) {
         return '';
     } else if (typeof value === 'object') {
-        if (name.startsWith('data-_')) {
+        if (name.substring(0, 6) === 'data-_') {
             value = warp10.stringify(value);
         } else {
             value = JSON.stringify(value);

@@ -73,7 +73,7 @@ module.exports = function(target, renderer) {
                 finalData = {};
             }
 
-            if (out && out.isAsyncOut){
+            if (out && out.isOut){
                 finalOut = out;
                 shouldEnd = false;
                 extend(out.global, globalData);

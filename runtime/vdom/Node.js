@@ -4,12 +4,12 @@ var DocumentFragment;
 
 function assignNamespace(node, namespaceURI) {
     node.namespaceURI = namespaceURI;
-    var childNodes = node.childNodes;
-    var childCount = node._childCount;
+    var childNodes = node.$__childNodes;
+    var childCount = node.$__childCount;
 
     for (var i=0; i<childCount; i++) {
         var child = childNodes[i];
-        if (child._nsAware) {
+        if (child.$__nsAware) {
             assignNamespace(childNodes[i], namespaceURI);
         }
     }
@@ -29,27 +29,27 @@ function Node(finalChildCount) {
             childNodes = [];
         }
 
-        this.childNodes = childNodes;
-        this._finalChildCount = finalChildCount;
-        this._childCount = 0;
-        this._firstChild = firstChild;
-        this._lastChild = lastChild;
+        this.$__childNodes = childNodes;
+        this.$__finalChildCount = finalChildCount;
+        this.$__childCount = 0;
+        this.$__firstChild = firstChild;
+        this.$__lastChild = lastChild;
     }
 
-    this.parentNode = undefined;
-    this._nextSibling = undefined;
+    this.$__parentNode = undefined;
+    this.$__nextSibling = undefined;
 }
 
 Node.prototype = {
     removeChildren: function() {
-        this.childNodes.length = 0;
-        this._firstChild = undefined;
-        this._childCount = 0;
-        this._lastChild = undefined;
+        this.$__childNodes.length = 0;
+        this.$__firstChild = undefined;
+        this.$__childCount = 0;
+        this.$__lastChild = undefined;
     },
 
     get firstChild() {
-        var firstChild = this._firstChild;
+        var firstChild = this.$__firstChild;
 
         if (firstChild && firstChild.nodeType === 11 /* DocumentFragment */) {
             var nestedFirstChild = firstChild.firstChild;
@@ -64,7 +64,7 @@ Node.prototype = {
     },
 
     get lastChild() {
-        var lastChild = this._lastChild;
+        var lastChild = this.$__lastChild;
 
         if (lastChild && lastChild.nodeType === 11 /* DocumentFragment */) {
             return lastChild.lastChild;
@@ -74,7 +74,7 @@ Node.prototype = {
     },
 
     get nextSibling() {
-        var nextSibling = this._nextSibling;
+        var nextSibling = this.$__nextSibling;
 
         if (nextSibling) {
             if (nextSibling.nodeType === 11 /* DocumentFragment */) {
@@ -82,7 +82,7 @@ Node.prototype = {
                 return firstChild || nextSibling.nextSibling;
             }
         } else {
-            var parentNode = this.parentNode;
+            var parentNode = this.$__parentNode;
             if (parentNode && parentNode.nodeType === 11) {
                 return parentNode.nextSibling;
             }
@@ -96,7 +96,7 @@ Node.prototype = {
     },
 
     appendChild: function(child) {
-        if (this._isTextArea) {
+        if (this.$__isTextArea) {
             if (child.nodeType === 3) {
                 var currentValue = this.value;
                 this.value = currentValue ? currentValue + child.nodeValue : child.nodeValue;
@@ -106,30 +106,30 @@ Node.prototype = {
         } else {
             var namespaceURI;
 
-            if (child._nsAware && (namespaceURI = this.namespaceURI) && !child.namespaceURI) {
+            if (child.$__nsAware && (namespaceURI = this.namespaceURI) && !child.namespaceURI) {
                 assignNamespace(child, namespaceURI);
             }
 
-            var index = this._childCount++;
-            this.childNodes[index] = child;
+            var index = this.$__childCount++;
+            this.$__childNodes[index] = child;
 
-            child.parentNode = this;
+            child.$__parentNode = this;
 
             if (index === 0) {
-                this._firstChild = child;
+                this.$__firstChild = child;
             } else {
-                this._lastChild._nextSibling = child;
+                this.$__lastChild.$__nextSibling = child;
             }
 
-            this._lastChild = child;
+            this.$__lastChild = child;
         }
 
         return child;
     },
 
-    _finishChild: function() {
-        if (this._childCount === this._finalChildCount && this.parentNode) {
-            return this.parentNode._finishChild();
+    $__finishChild: function finishChild() {
+        if (this.$__childCount === this.$__finalChildCount && this.$__parentNode) {
+            return this.$__parentNode.$__finishChild();
         } else {
             return this;
         }
