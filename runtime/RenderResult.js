@@ -1,5 +1,5 @@
 var events = require('./events');
-var dom = require('./dom');
+var domInsert = require('./dom-insert');
 
 function checkAddedToDOM(result, method) {
     if (!result.out.data._added) {
@@ -16,9 +16,11 @@ function getWidgetDefs(result) {
     return widgetDefs;
 }
 
-var RenderResult = module.exports = function RenderResult(out) {
-    this.out = out;
-};
+function RenderResult(out) {
+   this.out = out;
+}
+
+module.exports = RenderResult;
 
 var proto = RenderResult.prototype = {
     getWidget: function() {
@@ -89,23 +91,18 @@ var proto = RenderResult.prototype = {
     document: typeof document !== 'undefined' && document
 };
 
-// Add all of the following DOM methods to RenderResult.prototype:
-// - forEachChildEl(referenceEl)
-// - forEachChild(referenceEl)
-// - detach(referenceEl)
+// Add all of the following DOM methods to Widget.prototype:
 // - appendTo(referenceEl)
-// - remove(referenceEl)
-// - removeChildren(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)
 // - insertBefore(referenceEl)
 // - insertAfter(referenceEl)
 // - prependTo(referenceEl)
-dom.mixin(
+domInsert(
     proto,
-    function getNode() {
-        return this.getNode();
+    function getEl(renderResult, referenceEl) {
+        return renderResult.getNode(referenceEl.ownerDocument);
     },
-    function afterInsert(doc) {
-        this.afterInsert(doc);
+    function afterInsert(renderResult, referenceEl) {
+        return renderResult.afterInsert(referenceEl.ownerDocument);
     });

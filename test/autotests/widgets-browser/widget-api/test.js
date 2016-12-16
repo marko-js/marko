@@ -14,7 +14,6 @@ module.exports = function(helpers) {
     expect(widget.destroy).to.be.a('function');
     expect(widget.isDestroyed).to.be.a('function');
     expect(widget.rerender).to.be.a('function');
-    expect(widget.detach).to.be.a('function');
     expect(widget.appendTo).to.be.a('function');
     expect(widget.replace).to.be.a('function');
     expect(widget.replaceChildrenOf).to.be.a('function');

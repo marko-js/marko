@@ -1,5 +1,5 @@
 'use strict';
-var dom = require('./dom');
+var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
 var markoWidgets = require('./');
 var EventEmitter = require('events').EventEmitter;
@@ -648,6 +648,7 @@ Widget.prototype = widgetProto = {
         var document = this.el.ownerDocument;
         markoWidgets.ready(callback, this, document);
     },
+
     $: function (arg) {
         var jquery = markoWidgets.$;
 
@@ -691,24 +692,19 @@ Widget.prototype = widgetProto = {
 widgetProto.elId = widgetProto.getElId;
 
 // Add all of the following DOM methods to Widget.prototype:
-// - forEachChildEl(referenceEl)
-// - forEachChild(referenceEl)
-// - detach(referenceEl)
 // - appendTo(referenceEl)
-// - remove(referenceEl)
-// - removeChildren(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)
 // - insertBefore(referenceEl)
 // - insertAfter(referenceEl)
 // - prependTo(referenceEl)
-dom.mixin(
+domInsert(
     widgetProto,
-    function getNode(doc) {
+    function getEl(widget) {
         var els = this.els;
         var elCount = els.length;
         if (elCount > 1) {
-            var fragment = doc.createDocumentFragment();
+            var fragment = widget.__document.createDocumentFragment();
             for (var i=0; i<elCount; i++) {
                 fragment.appendChild(els[i]);
             }
@@ -716,6 +712,9 @@ dom.mixin(
         } else {
             return this.els[0];
         }
+    },
+    function afterInsert(widget) {
+        return widget;
     });
 
 inherit(Widget, EventEmitter);
