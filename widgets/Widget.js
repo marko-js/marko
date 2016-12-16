@@ -21,7 +21,6 @@ var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
 
 
 var emit = EventEmitter.prototype.emit;
-var idRegExp = /^\#(\S+)( .*)?/;
 
 var lifecycleEventMethods = {
     'beforeDestroy': 'onBeforeDestroy',
@@ -150,7 +149,7 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     targetMethod.apply(targetWidget, args);
 }
 
-function getElId(widget, widgetElId, index) {
+function getElIdHelper(widget, widgetElId, index) {
     var id = widget.id;
 
     var elId = widgetElId != null ? id + '-' + widgetElId : id;
@@ -278,15 +277,15 @@ Widget.prototype = widgetProto = {
         return emit.apply(this, arguments);
     },
     getElId: function (widgetElId, index) {
-        return getElId(this, widgetElId, index);
+        return getElIdHelper(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
         var doc = this.__document;
 
         if (widgetElId != null) {
-            return doc.getElementById(getElId(this, widgetElId, index));
+            return doc.getElementById(getElIdHelper(this, widgetElId, index));
         } else {
-            return this.el || doc.getElementById(getElId(this));
+            return this.el || doc.getElementById(getElIdHelper(this));
         }
     },
     getEls: function(id) {
@@ -303,7 +302,7 @@ Widget.prototype = widgetProto = {
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = getElId(this, id, index);
+        var targetWidgetId = getElIdHelper(this, id, index);
         return widgetLookup[targetWidgetId];
     },
     getWidgets: function(id) {
@@ -623,49 +622,6 @@ Widget.prototype = widgetProto = {
                 resetWidget(self);
             }
         });
-    },
-    ready: function (callback) {
-        var document = this.el.ownerDocument;
-        markoWidgets.ready(callback, this, document);
-    },
-
-    $: function (arg) {
-        var jquery = markoWidgets.$;
-
-        var args = arguments;
-        if (args.length === 1) {
-            //Handle an "ondomready" callback function
-            if (typeof arg === 'function') {
-                var _this = this;
-                return _this.ready(function() {
-                    arg.call(_this);
-                });
-            } else if (typeof arg === 'string') {
-                var match = idRegExp.exec(arg);
-                //Reset the search to 0 so the next call to exec will start from the beginning for the new string
-                if (match != null) {
-                    var widgetElId = match[1];
-                    if (match[2] == null) {
-                        return jquery(this.getEl(widgetElId));
-                    } else {
-                        return jquery('#' + getElId(this, widgetElId) + match[2]);
-                    }
-                } else {
-                    var rootEl = this.getEl();
-                    if (!rootEl) {
-                        throw new Error('Root element is not defined for widget');
-                    }
-                    if (rootEl) {
-                        return jquery(arg, rootEl);
-                    }
-                }
-            }
-        } else if (args.length === 2 && typeof args[1] === 'string') {
-            return jquery(arg, this.getEl(args[1]));
-        } else if (args.length === 0) {
-            return jquery(this.el);
-        }
-        return jquery.apply(window, arguments);
     }
 };
 

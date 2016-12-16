@@ -1,13 +1,12 @@
-var ready = require('../runtime/ready');
 var Widget = require('./Widget');
 var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');
 var events = require('../runtime/events');
-
 var WidgetsContext = exports.WidgetsContext = require('./WidgetsContext');
+
 exports.getWidgetsContext = WidgetsContext.getWidgetsContext;
 exports.Widget = Widget;
-exports.ready = ready;
+
 exports.onInitWidget = function(listener) {
     events.on('initWidget', listener);
 };
@@ -82,10 +81,6 @@ events.on('dom/beforeRemove', function(eventArgs) {
     });
 
 exports.initWidgets = initServerRendered;
-
-var jquery = window.$;
-
-exports.$ = jquery;
 
 exports.registerWidget = require('./registry').register;
 exports.defineComponent = require('./defineComponent'); // Deprecated

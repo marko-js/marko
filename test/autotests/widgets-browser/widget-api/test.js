@@ -20,6 +20,4 @@ module.exports = function(helpers) {
     expect(widget.insertBefore).to.be.a('function');
     expect(widget.insertAfter).to.be.a('function');
     expect(widget.prependTo).to.be.a('function');
-    expect(widget.ready).to.be.a('function');
-    expect(widget.$).to.be.a('function');
 };

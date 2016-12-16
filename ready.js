@@ -119,7 +119,7 @@ function bindReady(doc) {
     }
 }
 
-module.exports = function(callback, thisObj, doc) {
+function ready(callback, thisObj, doc) {
     if (isReady) {
         return callback.call(thisObj);
     }
@@ -130,4 +130,14 @@ module.exports = function(callback, thisObj, doc) {
         readyBound = true;
         bindReady(doc || defaultDocument);
     }
+}
+
+module.exports = ready;
+
+module.exports.patchWidget = function() {
+    require('./widgets/Widget').prototype.ready = function (callback) {
+        var document = this.el.ownerDocument;
+        ready(callback, this, document);
+    };
 };
+
