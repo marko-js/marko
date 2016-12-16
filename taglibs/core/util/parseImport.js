@@ -30,7 +30,7 @@ function getImportSpecifierGroups(importSpecifierSet) {
 function getVariableName(moduleSpecifier) {
     var withoutPath = /([^\/\\]+)$/.exec(moduleSpecifier)[1];
     var withoutExtension = withoutPath.replace(/\.[a-z0-9]+$/i, '');
-    return withoutExtension.replace(/[^a-z0-9]+([a-z])/gi, (_, p1) => p1.toUpperCase());
+    return withoutExtension.replace(/[^a-z0-9]+([a-z])/gi, (_, p1) => p1.toUpperCase())+'_module';
 }
 
 function getNames(importSpecifier) {
