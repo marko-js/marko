@@ -517,10 +517,11 @@ Widget.prototype = widgetProto = {
         var renderer = self.renderer;
         self.__lifecycleState = 'rerender';
 
-        var templateData = extend({}, props || self.__rawState);
+        var rawState;
+        var templateData = props ? props : (rawState = self.__rawState);
 
         var globalData = {};
-        globalData.$w = [self, !props && self.__rawState];
+        globalData.$w = [self, rawState];
 
         var fromEls = markoWidgets._roots(this, {});
         var doc = this.__document;
