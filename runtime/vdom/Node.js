@@ -1,48 +1,28 @@
-var EMPTY_ARRAY = require('./util').EMPTY_ARRAY;
-
 var DocumentFragment;
 
 function assignNamespace(node, namespaceURI) {
     node.namespaceURI = namespaceURI;
-    var childNodes = node.$__childNodes;
-    var childCount = node.$__childCount;
 
-    for (var i=0; i<childCount; i++) {
-        var child = childNodes[i];
-        if (child.$__nsAware) {
-            assignNamespace(childNodes[i], namespaceURI);
+    var curChild = node.$__firstChild;
+    while(curChild) {
+        if (curChild.$__nsAware) {
+            assignNamespace(curChild, namespaceURI);
         }
+        curChild = curChild.$__nextSibling;
     }
 }
 
 function Node(finalChildCount) {
-    if (finalChildCount !== -1) {
-        var childNodes;
-        var firstChild;
-        var lastChild;
-
-        if (finalChildCount === 0) {
-            childNodes = EMPTY_ARRAY;
-        } else if (finalChildCount > 0) {
-            childNodes = new Array(finalChildCount);
-        } else {
-            childNodes = [];
-        }
-
-        this.$__childNodes = childNodes;
-        this.$__finalChildCount = finalChildCount;
-        this.$__childCount = 0;
-        this.$__firstChild = firstChild;
-        this.$__lastChild = lastChild;
-    }
-
+    this.$__finalChildCount = finalChildCount;
+    this.$__childCount = 0;
+    this.$__firstChild = undefined;
+    this.$__lastChild = undefined;
     this.$__parentNode = undefined;
     this.$__nextSibling = undefined;
 }
 
 Node.prototype = {
     removeChildren: function() {
-        this.$__childNodes.length = 0;
         this.$__firstChild = undefined;
         this.$__childCount = 0;
         this.$__lastChild = undefined;
@@ -110,15 +90,16 @@ Node.prototype = {
                 assignNamespace(child, namespaceURI);
             }
 
-            var index = this.$__childCount++;
-            this.$__childNodes[index] = child;
+            this.$__childCount++;
+
+            var lastChild = this.$__lastChild;
 
             child.$__parentNode = this;
 
-            if (index === 0) {
-                this.$__firstChild = child;
+            if (lastChild) {
+                lastChild.$__nextSibling = child;
             } else {
-                this.$__lastChild.$__nextSibling = child;
+                this.$__firstChild = child;
             }
 
             this.$__lastChild = child;
