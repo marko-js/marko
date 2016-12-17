@@ -24,7 +24,7 @@ var attachBubbleEventListeners = function() {
                 propagationStopped = true;
             };
 
-            updateManager.batchUpdate(function() {
+            updateManager.$__batchUpdate(function() {
                 var curNode = event.target;
                 if (!curNode) {
                     return;

@@ -118,7 +118,7 @@ function destroyWidgetHelper(widget) {
 
 function resetWidget(widget) {
     widget.$__newProps = null;
-    widget.$__state._reset();
+    widget.$__state.$__reset();
 }
 
 function hasCompatibleWidget(widgetsContext, existingWidget) {
@@ -242,7 +242,7 @@ function Widget(id, document) {
 }
 
 Widget.prototype = widgetProto = {
-    _isWidget: true,
+    $__isWidget: true,
 
     subscribeTo: function(target) {
         if (!target) {
@@ -255,7 +255,7 @@ Widget.prototype = widgetProto = {
         }
 
 
-        var subscribeToOptions = target._isWidget ?
+        var subscribeToOptions = target.$__isWidget ?
             WIDGET_SUBSCRIBE_TO_OPTIONS :
             NON_WIDGET_SUBSCRIBE_TO_OPTIONS;
 
@@ -359,7 +359,7 @@ Widget.prototype = widgetProto = {
         if(!this.$__state && value) {
             this.$__state = new this.State(this, value);
         } else {
-            this.$__state._replace(value);
+            this.$__state.$__replace(value);
         }
     },
     setState: function(name, value) {
@@ -368,13 +368,13 @@ Widget.prototype = widgetProto = {
             var newState = name;
             for (var k in newState) {
                 if (newState.hasOwnProperty(k)) {
-                    this.state._set(k, newState[k], true /* ensure:true */);
+                    this.state.$__set(k, newState[k], true /* ensure:true */);
                 }
             }
             return;
         }
 
-         this.state._set(name, value, true /* ensure:true */);
+         this.state.$__set(name, value, true /* ensure:true */);
     },
 
     setStateDirty: function(name, value) {
@@ -382,11 +382,11 @@ Widget.prototype = widgetProto = {
             value = this.state[name];
         }
 
-        this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
+        this.state.$__set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
     replaceState: function(newState) {
-        this.state._replace(newState);
+        this.state.$__replace(newState);
     },
 
     /**
@@ -413,7 +413,7 @@ Widget.prototype = widgetProto = {
         }
 
         if (!this.$__newProps) {
-            updateManager.queueWidgetUpdate(this);
+            updateManager.$__queueWidgetUpdate(this);
         }
 
         this.$__newProps = newProps;
@@ -439,14 +439,14 @@ Widget.prototype = widgetProto = {
 
         var state = this.$__state;
 
-        if (!state._dirty) {
+        if (!state.$__dirty) {
             // Don't even bother trying to update this widget since it is
             // not marked as dirty.
             return;
         }
 
-        var stateChanges = state._changes;
-        var oldState = state._old;
+        var stateChanges = state.$__changes;
+        var oldState = state.$__old;
 
         if (!processUpdateHandlers(this, stateChanges, oldState, state)) {
             this.doUpdate(stateChanges, oldState);
@@ -456,21 +456,21 @@ Widget.prototype = widgetProto = {
         resetWidget(this);
     },
 
-    _replaceState: function(newState) {
+    $__replaceState: function(newState) {
         var state = this.$__state;
 
         // Update the existing widget state using the internal/private
         // method to ensure that another update is not queued up
-        state._replace(newState, true /* do not queue an update */);
+        state.$__replace(newState, true /* do not queue an update */);
 
 
         // If the widget has custom state update handlers then we will use those methods
         // to update the widget.
-        return processUpdateHandlers(this, state._changes, state._old);
+        return processUpdateHandlers(this, state.$__changes, state.$__old);
     },
 
     isDirty: function() {
-        return this.$__state._dirty;
+        return this.$__state.$__dirty;
     },
 
     _reset: function(shouldRemoveDOMEventListeners) {
@@ -489,7 +489,7 @@ Widget.prototype = widgetProto = {
         this.rerender();
     },
 
-    _emitLifecycleEvent: function(eventType, eventArg) {
+    $__emitLifecycleEvent: function(eventType, eventArg) {
         emitLifecycleEvent(this, eventType, eventArg);
     },
 
@@ -506,12 +506,12 @@ Widget.prototype = widgetProto = {
         var state = self.$__state;
 
         var globalData = {};
-        globalData.$w = [self, !props && state && state._raw];
+        globalData.$w = [self, !props && state && state.$__raw];
 
-        var fromEls = markoWidgets._roots(self, {});
+        var fromEls = markoWidgets.$__roots(self, {});
         var doc = self.$__document;
 
-        updateManager.batchUpdate(function() {
+        updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
             renderer(props, out);

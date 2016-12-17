@@ -38,4 +38,4 @@ exports.Template = Template;
 exports.createOut = createOut;
 exports.helpers = require('./helpers');
 
-require('../')._setRuntime(exports);
+require('../').$__setRuntime(exports);

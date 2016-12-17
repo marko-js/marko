@@ -4,7 +4,7 @@ var makeRenderable = require('../runtime/renderable');
 module.exports = function defineRenderer(renderingLogic) {
     var renderer = renderingLogic.renderer;
 
-    if (renderer && renderer._isRenderer) {
+    if (renderer && renderer.$__isRenderer) {
         return renderer;
     }
 
@@ -25,7 +25,7 @@ module.exports = function defineRenderer(renderingLogic) {
         };
     }
 
-    renderer._isRenderer = true;
+    renderer.$__isRenderer = true;
     renderer.createOut = template ? template.createOut : renderingLogic.createOut;
     renderer.template = template;
 

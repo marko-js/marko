@@ -15,19 +15,19 @@
  */
 
 module.exports = function defineWidget(def, renderer) {
-    if (def._isWidget) {
+    if (def.$__isWidget) {
         return def;
     }
 
     if (renderer) {
         return {
-            _isWidget: true,
+            $__isWidget: true,
             renderer: renderer,
             render: renderer.render,
             renderSync: renderer.renderSync,
             template: renderer.template
         };
     } else {
-        return {_isWidget: true};
+        return {$__isWidget: true};
     }
 };

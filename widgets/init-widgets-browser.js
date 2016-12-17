@@ -134,7 +134,7 @@ function initWidget(widgetDef, doc) {
         config = {};
     }
 
-    if (widget._isWidget) {
+    if (widget.$__isWidget) {
         widget.el = el;
         widget.els = els;
         widget.$__rootWidgets = rootWidgets;
@@ -179,8 +179,8 @@ function initWidget(widgetDef, doc) {
     }
 
     if (existingWidget) {
-        widget._emitLifecycleEvent('update');
-        widget._emitLifecycleEvent('render', {});
+        widget.$__emitLifecycleEvent('update');
+        widget.$__emitLifecycleEvent('render', {});
     } else {
         var initEventArgs = {
             widget: widget,
@@ -189,14 +189,14 @@ function initWidget(widgetDef, doc) {
 
         events.emit('initWidget', initEventArgs);
 
-        widget._emitLifecycleEvent('beforeInit', initEventArgs);
+        widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
         copyConfigToWidget(widget, config);
         widget.initWidget(config);
-        widget._emitLifecycleEvent('afterInit', initEventArgs);
+        widget.$__emitLifecycleEvent('afterInit', initEventArgs);
 
-        widget._emitLifecycleEvent('render', { firstRender: true });
+        widget.$__emitLifecycleEvent('render', { firstRender: true });
 
-        widget._emitLifecycleEvent('mount');
+        widget.$__emitLifecycleEvent('mount');
     }
 
     return widget;

@@ -2,7 +2,7 @@ var markoWidgets = require('./');
 var widgetLookup = require('./lookup').widgets;
 var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
-var getRootEls = markoWidgets._roots;
+var getRootEls = markoWidgets.$__roots;
 var repeatedRegExp = /\[\]$/;
 
 var RERENDER_WIDGET_INDEX = 0;
@@ -17,7 +17,7 @@ function resolveWidgetRef(out, ref, scope) {
         var resolvedId;
 
         if (repeatedRegExp.test(ref)) {
-            resolvedId = repeatedId.nextId(out, scope, ref);
+            resolvedId = repeatedId.$__nextId(out, scope, ref);
         } else {
             resolvedId = scope + '-' + ref;
         }
@@ -262,7 +262,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             // rerender the widget if that is not necessary. If the widget is a stateful
             // widget then we update the existing widget with the new state.
             if (widgetState) {
-                if (existingWidget._replaceState(widgetState)) {
+                if (existingWidget.$__replaceState(widgetState)) {
                     // If _processUpdateHandlers() returns true then that means
                     // that the widget is now up-to-date and we can skip rerendering it, but only if we
                     // are able to preserve the existing widget els
@@ -289,7 +289,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             (getInitialState && widgetState /*legacy*/) || input) || {};
 
         if (existingWidget) {
-            existingWidget._emitLifecycleEvent('beforeUpdate');
+            existingWidget.$__emitLifecycleEvent('beforeUpdate');
         }
 
         var widgetDef = widgetsContext.beginWidget({

@@ -8,7 +8,7 @@ var virtualizeHTML;
 
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_HREF = 'href';
-var EMPTY_OBJECT = require('./util').EMPTY_OBJECT;
+var EMPTY_OBJECT = Object.freeze({});
 var ATTR_MARKO_CONST = 'data-marko-const';
 
 var specialAttrRegexp = /^data-_/;
@@ -72,8 +72,8 @@ function HTMLElement(tagName, attrs, childCount, constId) {
     this.$__isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
-    this._value = undefined;
-    this._constId = constId;
+    this.$__value = undefined;
+    this.$__constId = constId;
 }
 
 HTMLElement.prototype = {
@@ -220,7 +220,7 @@ HTMLElement.prototype = {
                 value = '';
             } else if (type === 'object') {
                 var safeHTML = value.safeHTML;
-                var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.document);
+                var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.$__document);
                 this.appendChild(vdomNode);
                 return this.$__finishChild();
             } else {
@@ -319,9 +319,9 @@ HTMLElement.prototype = {
             return false;
         }
 
-        var constId = this._constId;
+        var constId = this.$__constId;
         if (constId) {
-            var otherSameId = otherNode.actualize ? otherNode._constId : otherNode.getAttribute(ATTR_MARKO_CONST);
+            var otherSameId = otherNode.actualize ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
             return constId === otherSameId;
         } else {
             return false;
@@ -353,10 +353,10 @@ Object.defineProperty(proto, 'id', {
 
 Object.defineProperty(proto, 'value', {
     get: function () {
-        return this._value || this.attributes.value;
+        return this.$__value || this.attributes.value;
     },
     set: function (value) {
-        this._value = value;
+        this.$__value = value;
     }
 });
 

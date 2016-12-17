@@ -461,7 +461,7 @@ var proto = AsyncStream.prototype = {
         var html = this.getOutput();
 
         if (!doc) {
-            doc = documentProvider.document;
+            doc = documentProvider.$__document;
         }
 
         if (!node) {

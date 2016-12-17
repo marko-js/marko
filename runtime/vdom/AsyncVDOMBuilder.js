@@ -102,7 +102,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     html: function(html) {
         if (html != null) {
-            var vdomNode = virtualizeHTML(html, documentProvider.document);
+            var vdomNode = virtualizeHTML(html, documentProvider.$__document);
             this.node(vdomNode);
         }
 
@@ -185,8 +185,8 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     getResult: function() {
-        this._result = this._result || new RenderResult(this);
-        return this._result;
+        this.$__result = this.$__result || new RenderResult(this);
+        return this.$__result;
     },
 
     on: function(event, callback) {
@@ -275,12 +275,12 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     getNode: function(doc) {
-        var node = this._node;
+        var node = this.$__node;
         if (!node) {
             var vdomTree = this.getOutput();
 
             if (!doc) {
-                doc = documentProvider.document;
+                doc = documentProvider.$__document;
             }
 
             node = vdomTree.actualize(doc);
@@ -297,7 +297,7 @@ var proto = AsyncVDOMBuilder.prototype = {
                 }
             }
 
-            this._node = node;
+            this.$__node = node;
         }
         return node;
     },

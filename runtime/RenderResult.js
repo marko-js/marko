@@ -2,13 +2,13 @@ var events = require('./events');
 var domInsert = require('./dom-insert');
 
 function checkAddedToDOM(result, method) {
-    if (!result.out.data._added) {
+    if (!result.$__added) {
         throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
     }
 }
 
 function getWidgetDefs(result) {
-    var widgetDefs = result.out.data.widgets;
+    var widgetDefs = result.$__out.data.widgets;
 
     if (!widgetDefs || widgetDefs.length === 0) {
         throw new Error('No widget rendered');
@@ -17,7 +17,8 @@ function getWidgetDefs(result) {
 }
 
 function RenderResult(out) {
-   this.out = out;
+   this.out = this.$__out = out;
+   this.$__added = false;
 }
 
 module.exports = RenderResult;
@@ -26,7 +27,8 @@ var proto = RenderResult.prototype = {
     getWidget: function() {
         checkAddedToDOM(this, 'getWidget');
 
-        var rerenderWidget = this.out.global.__rerenderWidget;
+        var rerenderWidgetInfo = this.$__out.global.$w;
+        var rerenderWidget = rerenderWidgetInfo && rerenderWidgetInfo[0];
         if (rerenderWidget) {
             return rerenderWidget;
         }
@@ -60,30 +62,31 @@ var proto = RenderResult.prototype = {
     },
 
     afterInsert: function(doc) {
-        var data = this.out.data;
-        data._added = true;
+        this.$__added = true;
 
-        var widgetsContext = this.out.global.widgets;
+        var data = this.$__out.data;
+
+        var widgetsContext = this.$__out.global.widgets;
         var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
 
         data.widgets = widgetDefs;
 
         events.emit('mountNode', {
             result: this,
-            out: this.out,
+            out: this.$__out,
             document: doc
         });    // NOTE: This will trigger widgets to be initialized if there were any
 
         return this;
     },
     getNode: function(doc) {
-        return this.out.getNode(doc);
+        return this.$__out.getNode(doc);
     },
     getOutput: function() {
-        return this.out.getOutput();
+        return this.$__out.getOutput();
     },
     toString: function() {
-        return this.out.toString();
+        return this.$__out.toString();
     },
     toJSON: function() {
         return this.getOutput();

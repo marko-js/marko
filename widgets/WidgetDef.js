@@ -52,7 +52,7 @@ WidgetDef.prototype = {
             return this.id;
         } else {
             if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
-                return repeatedId.nextId(this.out, this.id, nestedId);
+                return repeatedId.$__nextId(this.out, this.id, nestedId);
             } else {
                 return this.id + '-' + nestedId;
             }

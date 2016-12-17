@@ -6,7 +6,7 @@ var runtime;
 function setRuntime(_runtime) {
     runtime = _runtime;
 }
-exports._setRuntime = setRuntime;
+exports.$__setRuntime = setRuntime;
 
 function createOut(globalData) {
     return runtime.createOut(globalData);
@@ -17,7 +17,7 @@ function createOut(globalData) {
  * to parse HTML fragments to insert into the VDOM tree.
  */
 exports.setDocument = function(newDoc) {
-    documentProvider.document = newDoc;
+    documentProvider.$__document = newDoc;
 };
 
 exports.createOut = createOut;

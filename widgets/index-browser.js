@@ -58,7 +58,7 @@ function getRootEls(widget, rootEls) {
     return rootEls;
 }
 
-exports._roots = getRootEls;
+exports.$__roots = getRootEls;
 
 // Subscribe to DOM manipulate events to handle creating and destroying widgets
 
@@ -90,7 +90,7 @@ exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
 exports.r = require('./renderer');
 
-exports.batchUpdate = updateManager.batchUpdate;
-exports.onAfterUpdate = updateManager.onAfterUpdate;
+exports.batchUpdate = updateManager.$__batchUpdate;
+exports.onAfterUpdate = updateManager.$__onAfterUpdate;
 
 window.$MARKO_WIDGETS = exports; // Helpful when debugging... WARNING: DO NOT USE IN REAL CODE!

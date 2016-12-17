@@ -1,1 +1,1 @@
-exports.document = typeof document != 'undefined' && document;
+exports.$__document = typeof document != 'undefined' && document;

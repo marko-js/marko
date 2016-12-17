@@ -74,7 +74,7 @@ function getWidgetClass(typeName) {
         renderer = defineRenderer(WidgetClass);
     }
 
-    if (!WidgetClass._isWidget) {
+    if (!WidgetClass.$__isWidget) {
         WidgetClass = defineWidget(WidgetClass, renderer);
     }
 

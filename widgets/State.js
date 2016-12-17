@@ -6,23 +6,23 @@ function ensure(state, propertyName) {
     if (!proto.hasOwnProperty(propertyName)) {
         Object.defineProperty(proto, propertyName, {
             get: function() {
-                return this._raw[propertyName];
+                return this.$__raw[propertyName];
             },
             set: function(value) {
-                this._set(propertyName, value, false /* ensure:false */);
+                this.$__set(propertyName, value, false /* ensure:false */);
             }
         });
     }
 }
 
 function State(widget, initialState) {
-    this._widget = widget;
-    this._raw = initialState || {};
+    this.$__widget = widget;
+    this.$__raw = initialState || {};
 
-    this._dirty = false;
-    this._old = null;
-    this._changes = null;
-    this._forced = null; // An object that we use to keep tracking of state properties that were forced to be dirty
+    this.$__dirty = false;
+    this.$__old = null;
+    this.$__changes = null;
+    this.$__forced = null; // An object that we use to keep tracking of state properties that were forced to be dirty
 
     if (initialState) {
         for(var key in initialState) {
@@ -34,36 +34,36 @@ function State(widget, initialState) {
 }
 
 State.prototype = {
-    _reset: function() {
+    $__reset: function() {
         var self = this;
 
-        self._dirty = false;
-        self._old = null;
-        self._changes = null;
-        self._forced = null;
+        self.$__dirty = false;
+        self.$__old = null;
+        self.$__changes = null;
+        self.$__forced = null;
     },
 
-    _replace: function(newState, noQueue) {
+    $__replace: function(newState, noQueue) {
         var state = this;
         var key;
 
-        var rawState = this._raw;
+        var rawState = this.$__raw;
 
         for (key in rawState) {
             if (rawState.hasOwnProperty(key) && !newState.hasOwnProperty(key)) {
-                state._set(key, undefined, false /* ensure:false */, false /* forceDirty:false */, noQueue);
+                state.$__set(key, undefined, false /* ensure:false */, false /* forceDirty:false */, noQueue);
             }
         }
 
         for (key in newState) {
             if (newState.hasOwnProperty(key)) {
-                state._set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */, noQueue);
+                state.$__set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */, noQueue);
             }
         }
     },
-    _set: function(name, value, shouldEnsure, forceDirty, noQueue) {
+    $__set: function(name, value, shouldEnsure, forceDirty, noQueue) {
         var self = this;
-        var rawState = self._raw;
+        var rawState = self.$__raw;
 
         if (shouldEnsure) {
             ensure(self, name);
@@ -79,25 +79,25 @@ State.prototype = {
         }
 
         if (forceDirty) {
-            var forcedDirtyState = this._forced || (this._forced = {});
+            var forcedDirtyState = this.$__forced || (this.$__forced = {});
             forcedDirtyState[name] = true;
         } else if (rawState[name] === value) {
             return;
         }
 
-        var clean = !this._dirty;
+        var clean = !this.$__dirty;
 
         if (clean) {
             // This is the first time we are modifying the widget state
             // so introduce some properties to do some tracking of
             // changes to the state
-            this._dirty = true; // Mark the widget state as dirty (i.e. modified)
-            this._old = rawState;
-            this._raw = rawState = extend({}, rawState);
-            this._changes = {};
+            this.$__dirty = true; // Mark the widget state as dirty (i.e. modified)
+            this.$__old = rawState;
+            this.$__raw = rawState = extend({}, rawState);
+            this.$__changes = {};
         }
 
-        this._changes[name] = value;
+        this.$__changes[name] = value;
 
         if (value == null) {
             // Don't store state properties with an undefined or null value
@@ -110,11 +110,11 @@ State.prototype = {
         if (clean && noQueue !== true) {
             // If we were clean before then we are now dirty so queue
             // up the widget for update
-            updateManager.queueWidgetUpdate(self._widget);
+            updateManager.$__queueWidgetUpdate(self.$__widget);
         }
     },
     toJSON: function() {
-        return this._raw;
+        return this.$__raw;
     }
 };
 

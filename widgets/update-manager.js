@@ -140,6 +140,6 @@ function queueWidgetUpdate(widget) {
     }
 }
 
-exports.queueWidgetUpdate = queueWidgetUpdate;
-exports.batchUpdate = batchUpdate;
-exports.onAfterUpdate = onAfterUpdate;
+exports.$__queueWidgetUpdate = queueWidgetUpdate;
+exports.$__batchUpdate = batchUpdate;
+exports.$__onAfterUpdate = onAfterUpdate;
