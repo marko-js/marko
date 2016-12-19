@@ -22,6 +22,7 @@ Syntax highlighting is available in the following editors and IDEs:
 - Sublime Text: [marko-sublime](https://github.com/merwan7/sublime-marko)
 - WebStorm: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle) (See: [Importing TextMate Bundles](https://www.jetbrains.com/phpstorm/help/importing-textmate-bundles.html))
 - TextMate: [marko.tmbundle](https://github.com/marko-js/marko-tmbundle)
+- Visual Studio Code: [vscode-marko](https://marketplace.visualstudio.com/items?itemName=pcanella.marko)
 
 ## HTML syntax
 
