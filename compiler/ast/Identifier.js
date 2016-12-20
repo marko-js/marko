@@ -5,7 +5,7 @@ var Node = require('./Node');
 class Identifier extends Node {
     constructor(def) {
         super('Identifier');
-        this.name = def.name;
+        this.name = def ? def.name : undefined;
     }
 
     generateCode(codegen) {
