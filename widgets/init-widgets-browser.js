@@ -208,11 +208,18 @@ function copyConfigToWidget(widget, config) {
     }
 }
 
-// Create a helper function handle recursion
+/**
+ * This method is used to initialized widgets associated with UI components
+ * rendered in the browser. While rendering UI components a "widgets context"
+ * is added to the rendering context to keep up with which widgets are rendered.
+ * When ready, the widgets can then be initialized by walking the widget tree
+ * in the widgets context (nested widgets are initialized before ancestor widgets).
+ * @param  {Array<marko-widgets/lib/WidgetDef>} widgetDefs An array of WidgetDef instances
+ */
 function initClientRendered(widgetDefs, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
-    eventDelegation.init();
+    eventDelegation.$__init();
 
     doc = doc || window.doc;
     for (var i=0,len=widgetDefs.length; i<len; i++) {
@@ -235,23 +242,13 @@ function initClientRendered(widgetDefs, doc) {
 }
 
 /**
- * This method is used to initialized widgets associated with UI components
- * rendered in the browser. While rendering UI components a "widgets context"
- * is added to the rendering context to keep up with which widgets are rendered.
- * When ready, the widgets can then be initialized by walking the widget tree
- * in the widgets context (nested widgets are initialized before ancestor widgets).
- * @param  {Array<marko-widgets/lib/WidgetDef>} widgetDefs An array of WidgetDef instances
- */
-exports.initClientRendered = initClientRendered;
-
-/**
  * This method initializes all widgets that were rendered on the server by iterating over all
  * of the widget IDs.
  */
 function initServerRendered(widgetDefs, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
-    eventDelegation.init();
+    eventDelegation.$__init();
 
     widgetDefs = warp10Finalize(widgetDefs);
 
@@ -265,7 +262,8 @@ function initServerRendered(widgetDefs, doc) {
     }
 }
 
-exports.initServerRendered = initServerRendered;
+exports.$__initClientRendered = initClientRendered;
+exports.$__initServerRendered = initServerRendered;
 
 registry = require('./registry');
 

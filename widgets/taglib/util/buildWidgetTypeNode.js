@@ -13,7 +13,7 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
     var builder = context.builder;
 
     var registerWidget = context.addStaticVar('marko_registerWidget',
-        builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('registerWidget')));
+        builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('rw')));
 
     var typeName;
 

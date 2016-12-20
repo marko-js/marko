@@ -2,6 +2,7 @@
 var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
 var markoWidgets = require('./');
+var getRootEls = require('./getRootEls');
 var EventEmitter = require('events').EventEmitter;
 var RenderResult = require('../runtime/RenderResult');
 var listenerTracker = require('listener-tracker');
@@ -18,7 +19,6 @@ var WIDGET_SUBSCRIBE_TO_OPTIONS = null;
 var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
-
 
 var emit = EventEmitter.prototype.emit;
 
@@ -508,7 +508,7 @@ Widget.prototype = widgetProto = {
         var globalData = {};
         globalData.$w = [self, !props && state && state.$__raw];
 
-        var fromEls = markoWidgets.$__roots(self, {});
+        var fromEls = getRootEls(self, {});
         var doc = self.$__document;
 
         updateManager.$__batchUpdate(function() {

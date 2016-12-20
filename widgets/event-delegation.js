@@ -1,4 +1,4 @@
-var _addEventListener = require('./addEventListener');
+var addEventListener = require('./addEventListener');
 var updateManager = require('./update-manager');
 var getObjectAttribute = require('./getObjectAttribute');
 var widgetLookup = require('./lookup').widgets;
@@ -13,7 +13,7 @@ var attachBubbleEventListeners = function() {
     // with the event to find any mappings for event. Each mapping
     // is from a DOM event type to a method of a widget.
     require('./bubble').forEach(function addBubbleHandler(eventType) {
-        _addEventListener(body, eventType, function(event) {
+        addEventListener(body, eventType, function(event) {
             var propagationStopped = false;
 
             // Monkey-patch to fix #97
@@ -77,7 +77,7 @@ var attachBubbleEventListeners = function() {
     });
 };
 
-exports.init = function() {
+exports.$__init = function() {
     if (attachBubbleEventListeners) {
         // Only attach event listeners once...
         attachBubbleEventListeners();

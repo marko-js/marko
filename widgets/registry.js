@@ -83,7 +83,7 @@ function createWidget(typeName, id, document) {
     return widget;
 }
 
-exports.register = register;
+exports.$__register = register;
 exports.createWidget = createWidget;
 exports.load = load;
 

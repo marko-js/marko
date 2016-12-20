@@ -2,7 +2,7 @@ var markoWidgets = require('./');
 var widgetLookup = require('./lookup').widgets;
 var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
-var getRootEls = markoWidgets.$__roots;
+var getRootEls = require('./getRootEls');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
 
@@ -82,7 +82,7 @@ function handleBeginAsync(event) {
         // stack (to begin with). This will result in top-level widgets
         // of the async block being added as children of the widget in the
         // parent block.
-        var nestedWidgetsContext = new markoWidgets.WidgetsContext(asyncOut, widgetStack[widgetStack.length-1]);
+        var nestedWidgetsContext = new WidgetsContext(asyncOut, widgetStack[widgetStack.length-1]);
         asyncOut.data.widgets = nestedWidgetsContext;
     }
     asyncOut.data.$w = parentOut.data.$w;

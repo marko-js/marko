@@ -49,7 +49,7 @@ WidgetsContext.prototype = {
     $__initWidgets: function (document) {
         var widgetDefs = this.$__widgets;
         if (widgetDefs) {
-            initWidgets.initClientRendered(widgetDefs, document);
+            initWidgets.$__initClientRendered(widgetDefs, document);
             this.$__clearWidgets();
         }
     },

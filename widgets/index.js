@@ -97,8 +97,9 @@ exports.defineRenderer = require('./defineRenderer');
 exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
 exports.r = require('./renderer');
+
 exports.w = function() { /* no op for defining a widget on teh server */ };
 
 // registerWidget is a no-op on the server.
 // Fixes https://github.com/marko-js/marko-widgets/issues/111
-exports.registerWidget = function(typeName) { return typeName; };
+exports.rw = function(typeName) { return typeName; };

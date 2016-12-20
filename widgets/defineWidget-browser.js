@@ -16,10 +16,6 @@ module.exports = function defineWidget(def, renderer) {
     if (typeof def === 'function') {
         WidgetClass = def;
         proto = WidgetClass.prototype;
-
-        if (proto.render && proto.render.length === 2) {
-            throw new Error('"render(input, out)" is no longer supported. Use "renderer(input, out)" instead.');
-        }
     } else if (typeof def === 'object') {
         WidgetClass = def.init || function() {};
         proto = WidgetClass.prototype = def;
