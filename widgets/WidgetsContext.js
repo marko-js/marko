@@ -1,101 +1,78 @@
 'use strict';
 
 var WidgetDef = require('./WidgetDef');
-var uniqueId = require('./uniqueId');
 var initWidgets = require('./init-widgets');
 var EMPTY_OBJECT = {};
 
-function WidgetsContext(out) {
-    this.out = out;
-    this.widgets = [];
-    this.widgetStack = [];
-    this.preserved = EMPTY_OBJECT;
-    this.reusableWidgets = null;
-    this.reusableWidgetsById = null;
-    this.widgetsById = {};
+function WidgetsContext(out, root) {
+    if (!root) {
+        root = new WidgetDef(EMPTY_OBJECT, null, out);
+    }
+
+    this.$__out = out;
+    this.$__widgetStack = [root];
+    this.$__preserved = EMPTY_OBJECT;
+    this.$__widgetsById = {};
 }
 
 WidgetsContext.prototype = {
-    getWidgets: function () {
-        return this.widgets;
+    get $__widgets() {
+        return this.$__widgetStack[0].$__children;
     },
 
-    getWidgetStack: function() {
-        return this.widgetStack;
-    },
-
-    getCurrentWidget: function() {
-        return this.widgetStack.length ? this.widgetStack[this.widgetStack.length - 1] : undefined;
-    },
-
-    beginWidget: function (widgetInfo, callback) {
+    $__beginWidget: function (widgetInfo, callback) {
         var self = this;
-        var widgetStack = self.widgetStack;
+        var widgetStack = self.$__widgetStack;
         var origLength = widgetStack.length;
-        var parent = origLength ? widgetStack[origLength - 1] : null;
+        var parent = widgetStack[origLength - 1];
 
         var widgetId = widgetInfo.id;
 
         if (!widgetId) {
-            widgetId = self._nextWidgetId();
-            widgetInfo.id = widgetId;
+            widgetInfo.id = widgetId = parent.$__nextId();
         }
-
-        widgetInfo.parent = parent;
 
         function end() {
             widgetStack.length = origLength;
         }
 
-        var widgetDef = new WidgetDef(widgetInfo, end, this.out);
-
-        this.widgetsById[widgetId] = widgetDef;
-
-        if (parent) {
-            //Check if it is a top-level widget
-            parent.addChild(widgetDef);
-        } else {
-            self.widgets.push(widgetDef);
-        }
+        var widgetDef = new WidgetDef(widgetInfo, end, this.$__out);
+        this.$__widgetsById[widgetId] = widgetDef;
+        parent.$__addChild(widgetDef);
         widgetStack.push(widgetDef);
 
         return widgetDef;
     },
-    getWidget: function(id) {
-        return this.widgetsById[id];
+    $__clearWidgets: function () {
+        this.$__widgetStack = [new WidgetDef(EMPTY_OBJECT, null, this.$__out)];
     },
-    hasWidgets: function () {
-        return this.widgets.length !== 0;
-    },
-    clearWidgets: function () {
-        this.widgets = [];
-        this.widgetStack = [];
-    },
-    _nextWidgetId: function () {
-        return uniqueId(this.out);
-    },
-    initWidgets: function (document) {
-        var widgetDefs = this.widgets;
-        initWidgets.initClientRendered(widgetDefs, document);
-        this.clearWidgets();
-    },
-
-    preservedDOMNode: function(existingEl, bodyOnly, bodyEl) {
-        var preserved = this.preserved ;
-        if (preserved === EMPTY_OBJECT) {
-            preserved = this.preserved = {};
+    $__initWidgets: function (document) {
+        var widgetDefs = this.$__widgets;
+        if (widgetDefs) {
+            initWidgets.initClientRendered(widgetDefs, document);
+            this.$__clearWidgets();
         }
-        preserved[existingEl.id] = { bodyOnly: bodyOnly, bodyEl: bodyEl};
+    },
+    $__nextWidgetId: function() {
+        var widgetStack = this.$__widgetStack;
+        var parent = widgetStack[widgetStack.length - 1];
+        return parent.$__nextId();
+    },
+    $__preserveDOMNode: function(existingEl, bodyOnly, bodyEl) {
+        var preserved = this.$__preserved ;
+        if (preserved === EMPTY_OBJECT) {
+            preserved = this.$__preserved = {};
+        }
+        preserved[existingEl.id] = { bodyOnly: bodyOnly, bodyEl: bodyEl };
     }
 };
 
-WidgetsContext.getWidgetsContext = function (out) {
+WidgetsContext.$__getWidgetsContext = function (out) {
     var global = out.global;
 
     return out.data.widgets ||
         global.widgets ||
         (global.widgets = new WidgetsContext(out));
 };
-
 
 module.exports = WidgetsContext;

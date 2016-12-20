@@ -1,6 +1,7 @@
 'use strict';
 var repeatedId = require('./repeated-id');
 var repeatedRegExp = /\[\]$/;
+var uniqueId = require('./uniqueId');
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for
@@ -8,35 +9,45 @@ var repeatedRegExp = /\[\]$/;
  * later (after the rendered HTML has been added to the DOM)
  */
 function WidgetDef(config, endFunc, out) {
-    this.type = config.type; // The widget module type name that is passed to the factory
+    this.$__type = config.$__type; // The widget module type name that is passed to the factory
     this.id = config.id; // The unique ID of the widget
-    this.config = config.config; // Widget config object (may be null)
-    this.state = config.state; // Widget state object (may be null)
-    this.scope = config.scope; // The ID of the widget that this widget is scoped within
-    this.customEvents = config.customEvents; // An array containing information about custom events
+    this.$__config = config.$__config; // Widget config object (may be null)
+    this.$__state = config.$__state; // Widget state object (may be null)
+    this.$__scope = config.$__scope; // The ID of the widget that this widget is scoped within
+    this.$__customEvents = config.$__customEvents; // An array containing information about custom events
     this.bodyElId = config.bodyElId; // The ID for the default body element (if any any)
-    this.roots = config.roots;
+    this.$__roots = config.$__roots;
     this.body = config.body;
+    this.$__existingWidget = config.$__existingWidget;
 
-    this.children = null; // An array of nested WidgetDef instances
-    this.end = endFunc; // A function that when called will pop this widget def off the stack
-    this.domEvents = null; // An array of DOM events that need to be added (in sets of three)
-    this.out = out; // The AsyncWriter that this widget is associated with
-    this._nextId = 0; // The unique integer to use for the next scoped ID
+    this.$__children = null; // An array of nested WidgetDef instances
+    this.$__end = endFunc; // A function that when called will pop this widget def off the stack
+    this.$__domEvents = null; // An array of DOM events that need to be added (in sets of three)
+    this.$__out = out; // The AsyncWriter that this widget is associated with
+    this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
+    this.widget = null; // This ised by RenderResult to reference the associated widget instance after creation
 }
 
 WidgetDef.prototype = {
+    t: function(typeName) {
+        this.$__type = typeName;
+    },
+
+    c: function(config) {
+        this.$__config = config;
+    },
+
     /**
      * Register a nested widget for this widget. We maintain a tree of widgets
      * so that we can instantiate nested widgets before their parents.
      */
-    addChild: function (widgetDef) {
-        var children = this.children;
+    $__addChild: function (widgetDef) {
+        var children = this.$__children;
 
         if (children) {
             children.push(widgetDef);
         } else {
-            this.children = [widgetDef];
+            this.$__children = [widgetDef];
         }
     },
     /**
@@ -52,7 +63,7 @@ WidgetDef.prototype = {
             return this.id;
         } else {
             if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
-                return repeatedId.$__nextId(this.out, this.id, nestedId);
+                return repeatedId.$__nextId(this.$__out, this.id, nestedId);
             } else {
                 return this.id + '-' + nestedId;
             }
@@ -66,47 +77,39 @@ WidgetDef.prototype = {
      * @param  {String} targetMethod The name of the method to invoke on the scoped widget
      * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
      */
-    addDomEvent: function(type, targetMethod, elId, extraArgs) {
+     e: function(type, targetMethod, elId, extraArgs) {
         if (!targetMethod) {
             // The event handler method is allowed to be conditional. At render time if the target
             // method is null then we do not attach any direct event listeners.
             return;
         }
 
-        if (!this.domEvents) {
-            this.domEvents = [];
+        if (!this.$__domEvents) {
+            this.$__domEvents = [];
         }
-        this.domEvents.push(type);
-        this.domEvents.push(targetMethod);
-        this.domEvents.push(elId);
-        this.domEvents.push(extraArgs);
-    },
-    /**
-     * Returns a string representation of the DOM events data.
-     */
-    getDomEventsAttr: function() {
-        if (this.domEvents) {
-            return this.domEvents.join(',');
-        }
+        this.$__domEvents.push(type);
+        this.$__domEvents.push(targetMethod);
+        this.$__domEvents.push(elId);
+        this.$__domEvents.push(extraArgs);
     },
     /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM widget
      */
-    nextId: function() {
-        return this.id + '-w' + (this._nextId++);
+    $__nextId: function() {
+        return this.id ? this.id + '-w' + (this.$__nextIdIndex++) : uniqueId(this.$__out);
     },
 
-    toJSON: function() {
+    $__toJSON: function() {
         return  {
-            type: this.type,
+            $__type: this.$__type,
             id: this.id,
-            config: this.config,
-            state: this.state,
-            scope: this.scope,
-            domEvents: this.domEvents,
-            customEvents: this.customEvents,
+            $__config: this.$__config,
+            $__state: this.$__state,
+            $__scope: this.$__scope,
+            $__domEvents: this.$__domEvents,
+            $__customEvents: this.$__customEvents,
             bodyElId: this.bodyElId,
-            roots: this.roots
+            $__roots: this.$__roots
         };
     }
 };

@@ -1,16 +1,17 @@
 var events = require('./events');
 var domInsert = require('./dom-insert');
+var EMPTY_ARRAY = [];
 
 function checkAddedToDOM(result, method) {
-    if (!result.$__added) {
+    if (!result.$__widgets) {
         throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
     }
 }
 
 function getWidgetDefs(result) {
-    var widgetDefs = result.$__out.data.widgets;
+    var widgetDefs = result.$__widgets;
 
-    if (!widgetDefs || widgetDefs.length === 0) {
+    if (widgetDefs.length === 0) {
         throw new Error('No widget rendered');
     }
     return widgetDefs;
@@ -18,7 +19,7 @@ function getWidgetDefs(result) {
 
 function RenderResult(out) {
    this.out = this.$__out = out;
-   this.$__added = false;
+   this.$__widgets = null;
 }
 
 module.exports = RenderResult;
@@ -62,14 +63,9 @@ var proto = RenderResult.prototype = {
     },
 
     afterInsert: function(doc) {
-        this.$__added = true;
-
-        var data = this.$__out.data;
-
-        var widgetsContext = this.$__out.global.widgets;
-        var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
-
-        data.widgets = widgetDefs;
+        var out = this.$__out;
+        var widgetsContext = out.global.widgets;
+        this.$__widgets = (widgetsContext && widgetsContext.$__widgets) || EMPTY_ARRAY;
 
         events.emit('mountNode', {
             result: this,

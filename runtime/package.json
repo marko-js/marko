@@ -1,9 +1,5 @@
 {
     "browser": {
         "./loader/index.js": "./loader/index-browser.js"
-    },
-    "minprops": {
-        "exclude": ["c", "ca", "e", "n", "sa", "t"],
-        "matchPrefix": "$__"
     }
 }

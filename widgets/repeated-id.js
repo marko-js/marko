@@ -1,17 +1,17 @@
 var REPEATED_ID_KEY = '$rep';
 
 function RepeatedId() {
-    this.nextIdLookup = {};
+    this.$__nextIdLookup = {};
 }
 
 RepeatedId.prototype = {
-    nextId: function(parentId, id) {
+    $__nextId: function(parentId, id) {
         var indexLookupKey = parentId + '-' + id;
-        var currentIndex = this.nextIdLookup[indexLookupKey];
+        var currentIndex = this.$__nextIdLookup[indexLookupKey];
         if (currentIndex == null) {
-            currentIndex = this.nextIdLookup[indexLookupKey] = 0;
+            currentIndex = this.$__nextIdLookup[indexLookupKey] = 0;
         } else {
-            currentIndex = ++this.nextIdLookup[indexLookupKey];
+            currentIndex = ++this.$__nextIdLookup[indexLookupKey];
         }
 
         return indexLookupKey.slice(0, -2) + '[' + currentIndex + ']';
@@ -24,5 +24,5 @@ exports.$__nextId = function(out, parentId, id) {
         repeatedId = out.global[REPEATED_ID_KEY] = new RepeatedId();
     }
 
-    return repeatedId.nextId(parentId, id);
+    return repeatedId.$__nextId(parentId, id);
 };

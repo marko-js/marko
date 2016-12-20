@@ -2,9 +2,7 @@ var Widget = require('./Widget');
 var initServerRendered = require('./init-widgets').initServerRendered;
 var updateManager = require('./update-manager');
 var events = require('../runtime/events');
-var WidgetsContext = exports.WidgetsContext = require('./WidgetsContext');
 
-exports.getWidgetsContext = WidgetsContext.getWidgetsContext;
 exports.Widget = Widget;
 
 exports.onInitWidget = function(listener) {
@@ -76,7 +74,7 @@ events.on('dom/beforeRemove', function(eventArgs) {
         var out = eventArgs.out;
         var widgetsContext = out.global.widgets;
         if (widgetsContext) {
-            widgetsContext.initWidgets(eventArgs.document);
+            widgetsContext.$__initWidgets(eventArgs.document);
         }
     });
 

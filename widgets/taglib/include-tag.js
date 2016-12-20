@@ -1,6 +1,6 @@
 var isBrowser = typeof window !== 'undefined';
 var normalInclude = require('../../taglibs/core/include-tag');
-var markoWidgets = require('../');
+var WidgetsContext = require('../WidgetsContext');
 
 module.exports = function include(input, out) {
     var target = input._target;
@@ -16,8 +16,8 @@ module.exports = function include(input, out) {
         // the existing body content in the DOM
         var existingEl = document.getElementById(elId);
         if (existingEl) {
-            var widgetsContext = markoWidgets.getWidgetsContext(out);
-            widgetsContext.preservedDOMNode(existingEl, true /* body only */);
+            var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
+            widgetsContext.$__preserveDOMNode(existingEl, true /* body only */);
         }
     }
 };

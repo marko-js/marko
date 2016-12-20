@@ -1,4 +1,4 @@
-var widgets = require('../');
+var WidgetsContext = require('../WidgetsContext');
 
 module.exports = function render(input, out) {
 
@@ -15,7 +15,7 @@ module.exports = function render(input, out) {
         if (condition !== false) {
             var existingEl = document.getElementById(id);
             if (existingEl) {
-                var widgetsContext = widgets.getWidgetsContext(out);
+                var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
                 var bodyOnly = input.bodyOnly === true;
                 // Don't actually render anything since the element is already in the DOM,
                 // but keep track that the node is being preserved so that we can ignore
@@ -31,7 +31,7 @@ module.exports = function render(input, out) {
                     out.endElement();
                 }
 
-                widgetsContext.preservedDOMNode(existingEl, bodyOnly);
+                widgetsContext.$__preserveDOMNode(existingEl, bodyOnly);
                 return;
             }
         }

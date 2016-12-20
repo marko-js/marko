@@ -53,7 +53,7 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
 
     var addDomEvent = builder.memberExpression(
         builder.identifier('widget'),
-        builder.identifier('addDomEvent'));
+        builder.identifier('e'));
 
     let widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
     let idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();

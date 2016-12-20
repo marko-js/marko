@@ -5,7 +5,7 @@ module.exports = function(helpers) {
         includeWidget: false
     });
 
-    expect(widget).to.equal(undefined);
+    expect(widget == null).to.equal(true);
 
     expect(helpers.targetEl.innerHTML).contain('[app-conditional-widget]');
 

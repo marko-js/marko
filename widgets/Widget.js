@@ -123,12 +123,12 @@ function resetWidget(widget) {
 
 function hasCompatibleWidget(widgetsContext, existingWidget) {
     var id = existingWidget.id;
-    var newWidgetDef = widgetsContext.getWidget(id);
+    var newWidgetDef = widgetsContext.$__widgetsById[id];
     if (!newWidgetDef) {
         return false;
     }
 
-    return existingWidget.$__type === newWidgetDef.type;
+    return existingWidget.$__type === newWidgetDef.$__type;
 }
 
 function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
@@ -546,7 +546,7 @@ Widget.prototype = widgetProto = {
                 }
 
                 if (widgetsContext && id) {
-                    var preserved = widgetsContext.preserved[id];
+                    var preserved = widgetsContext.$__preserved[id];
 
                     if (preserved && !preserved.bodyOnly) {
                         if (preserved.bodyEl) {
@@ -577,7 +577,7 @@ Widget.prototype = widgetProto = {
             function onBeforeElChildrenUpdated(el) {
                 var id = el.id;
                 if (widgetsContext && id) {
-                    var preserved = widgetsContext.preserved[id];
+                    var preserved = widgetsContext.$__preserved[id];
                     if (preserved && preserved.bodyOnly) {
                         // Don't morph the children since they are preserved
                         return MORPHDOM_SKIP;

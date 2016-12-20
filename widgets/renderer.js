@@ -4,6 +4,7 @@ var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
 var getRootEls = markoWidgets.$__roots;
 var repeatedRegExp = /\[\]$/;
+var WidgetsContext = require('./WidgetsContext');
 
 var RERENDER_WIDGET_INDEX = 0;
 var RERENDER_WIDGET_STATE_INDEX = 1;
@@ -58,7 +59,7 @@ function preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody) {
 
         out.endElement();
 
-        widgetsContext.preservedDOMNode(el, false, bodyEl); // Mark the element as being preserved (for morphdom)
+        widgetsContext.$__preserveDOMNode(el, false, bodyEl); // Mark the element as being preserved (for morphdom)
     }
 
     existingWidget._reset(); // The widget is no longer dirty so reset internal flags
@@ -72,7 +73,7 @@ function handleBeginAsync(event) {
     var widgetsContext = asyncOut.global.widgets;
     var widgetStack;
 
-    if (widgetsContext && (widgetStack = widgetsContext.widgetStack).length) {
+    if (widgetsContext && (widgetStack = widgetsContext.$__widgetStack)) {
         // All of the widgets in this async block should be
         // initialized after the widgets in the parent. Therefore,
         // we will create a new WidgetsContext for the nested
@@ -81,8 +82,7 @@ function handleBeginAsync(event) {
         // stack (to begin with). This will result in top-level widgets
         // of the async block being added as children of the widget in the
         // parent block.
-        var nestedWidgetsContext = new markoWidgets.WidgetsContext(asyncOut);
-        nestedWidgetsContext.widgetStack = [widgetStack[widgetStack.length-1]];
+        var nestedWidgetsContext = new markoWidgets.WidgetsContext(asyncOut, widgetStack[widgetStack.length-1]);
         asyncOut.data.widgets = nestedWidgetsContext;
     }
     asyncOut.data.$w = parentOut.data.$w;
@@ -230,14 +230,10 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             customEvents = widgetArgs[2];
         }
 
-        var widgetsContext = markoWidgets.getWidgetsContext(out);
+        var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
 
         if (!id) {
-            var parentWidget = widgetsContext.getCurrentWidget();
-
-            if (parentWidget) {
-                id = parentWidget.nextId();
-            }
+            id = widgetsContext.$__nextWidgetId();
         }
 
         var existingWidget;
@@ -292,16 +288,16 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             existingWidget.$__emitLifecycleEvent('beforeUpdate');
         }
 
-        var widgetDef = widgetsContext.beginWidget({
-            type: typeName,
+        var widgetDef = widgetsContext.$__beginWidget({
+            $__type: typeName,
             id: id,
-            config: widgetConfig,
-            state: widgetState,
-            customEvents: customEvents,
-            scope: scope,
-            existingWidget: existingWidget,
+            $__config: widgetConfig,
+            $__state: widgetState,
+            $__customEvents: customEvents,
+            $__scope: scope,
+            $__existingWidget: existingWidget,
             bodyElId: bodyElId,
-            roots: roots,
+            $__roots: roots,
             body: widgetBody
         });
 
@@ -309,6 +305,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         // data that we constructed
         templateRenderFunc(templateData, out, widgetDef, widgetState);
 
-        widgetDef.end();
+        widgetDef.$__end();
     };
 };

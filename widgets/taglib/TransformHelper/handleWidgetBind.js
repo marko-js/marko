@@ -110,12 +110,14 @@ module.exports = function handleWidgetBind() {
         }
 
         el.insertSiblingBefore(
-            builder.assignment(
-                builder.memberExpression(builder.identifier('widget'), builder.identifier('type')),
-                builder.memberExpression(
-                    builder.identifier('marko_widgetTypes'),
-                    bindAttrValue,
-                    true /* computed */)));
+            builder.functionCall(
+                builder.memberExpression(builder.identifier('widget'), builder.identifier('t')),
+                [
+                    builder.memberExpression(
+                        builder.identifier('marko_widgetTypes'),
+                        bindAttrValue,
+                        true /* computed */)
+                ]));
     }
 
     var renderingLogic;
@@ -165,9 +167,11 @@ module.exports = function handleWidgetBind() {
 
     if (el.hasAttribute('w-config')) {
         el.insertSiblingBefore(
-            builder.assignment(
-                builder.memberExpression(builder.identifier('widget'), builder.identifier('config')),
-                el.getAttributeValue('w-config')));
+            builder.functionCall(
+                builder.memberExpression(builder.identifier('widget'), builder.identifier('c')),
+                [
+                    el.getAttributeValue('w-config')
+                ]));
 
         el.removeAttribute('w-config');
     }

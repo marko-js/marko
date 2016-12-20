@@ -48,15 +48,15 @@ function getNestedEl(widget, nestedId, document) {
 }
 
 function initWidget(widgetDef, doc) {
-    var type = widgetDef.type;
+    var type = widgetDef.$__type;
     var id = widgetDef.id;
-    var config = widgetDef.config;
-    var state = widgetDef.state;
-    var scope = widgetDef.scope;
-    var domEvents = widgetDef.domEvents;
-    var customEvents = widgetDef.customEvents;
+    var config = widgetDef.$__config;
+    var state = widgetDef.$__state;
+    var scope = widgetDef.$__scope;
+    var domEvents = widgetDef.$__domEvents;
+    var customEvents = widgetDef.$__customEvents;
     var bodyElId = widgetDef.bodyElId;
-    var existingWidget = widgetDef.existingWidget;
+    var existingWidget = widgetDef.$__existingWidget;
 
     var el;
     var i;
@@ -82,7 +82,7 @@ function initWidget(widgetDef, doc) {
     }
 
     var els;
-    var rootIds = widgetDef.roots;
+    var rootIds = widgetDef.$__roots;
     var rootWidgets;
 
     if (rootIds) {
@@ -218,11 +218,11 @@ function initClientRendered(widgetDefs, doc) {
     for (var i=0,len=widgetDefs.length; i<len; i++) {
         var widgetDef = widgetDefs[i];
 
-        if (widgetDef.children) {
-            initClientRendered(widgetDef.children, doc);
+        if (widgetDef.$__children) {
+            initClientRendered(widgetDef.$__children, doc);
         }
 
-        if (!widgetDef.type) {
+        if (!widgetDef.$__type) {
             continue;
         }
 

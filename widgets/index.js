@@ -17,30 +17,28 @@ WrappedString.prototype = {
     }
 };
 
-exports.WidgetsContext = WidgetsContext;
-exports.getWidgetsContext = WidgetsContext.getWidgetsContext;
 exports.uniqueId = require('./uniqueId');
 
 function flattenHelper(widgets, flattened) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];
-        if (!widgetDef.type) {
+        if (!widgetDef.$__type) {
             continue;
         }
 
-        var children = widgetDef.children;
+        var children = widgetDef.$__children;
 
         if (children) {
             // Depth-first search (children should be initialized before parent)
             flattenHelper(children, flattened);
         }
 
-        flattened.push(widgetDef.toJSON());
+        flattened.push(widgetDef.$__toJSON());
     }
 }
 
 function getRenderedWidgets(widgetsContext) {
-    var widgets = widgetsContext.getWidgets();
+    var widgets = widgetsContext.$__widgets;
     if (!widgets || !widgets.length) {
         return;
     }
@@ -65,7 +63,7 @@ function writeInitWidgetsCode(widgetsContext, out) {
         warp10.stringify(renderedWidgets).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
          ')})()</script>');
 
-    widgetsContext.clearWidgets();
+    widgetsContext.$__clearWidgets();
 }
 
 exports.writeInitWidgetsCode = writeInitWidgetsCode;
@@ -77,7 +75,7 @@ exports.writeInitWidgetsCode = writeInitWidgetsCode;
  * @param  {WidgetsContext|AsyncWriter} widgetsContext A WidgetsContext or an AsyncWriter
  * @return {Object} An object with information about the rendered widgets that can be serialized to JSON. The object should be treated as opaque
  */
-exports.getRenderedWidgets = exports.getRenderedWidgetIds /* deprecated */ = function(widgetsContext) {
+exports.getRenderedWidgets = function(widgetsContext) {
     if (!(widgetsContext instanceof WidgetsContext)) {
         // Assume that the provided "widgetsContext" argument is
         // actually an AsyncWriter
@@ -86,7 +84,7 @@ exports.getRenderedWidgets = exports.getRenderedWidgetIds /* deprecated */ = fun
             throw new Error('Invalid argument: ' + widgetsContext);
         }
 
-        widgetsContext = WidgetsContext.getWidgetsContext(out);
+        widgetsContext = WidgetsContext.$__getWidgetsContext(out);
     }
 
     var renderedWidgets = getRenderedWidgets(widgetsContext);

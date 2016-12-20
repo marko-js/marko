@@ -25,18 +25,13 @@ module.exports = function render(input, out) {
         });
 
         if (out.isSync()) {
-            var widgetsContext = WidgetsContext.getWidgetsContext(out);
-            if (widgetsContext.hasWidgets()) {
-                writeInitWidgetsCode(widgetsContext, out);
-            }
+            var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
+            writeInitWidgetsCode(widgetsContext, out);
         } else {
             var asyncOut = out.beginAsync({ last: true, timeout: -1 });
             out.onLast(function(next) {
-                var widgetsContext = WidgetsContext.getWidgetsContext(out);
-                if (widgetsContext.hasWidgets()) {
-                    writeInitWidgetsCode(widgetsContext, asyncOut);
-                }
-
+                var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
+                writeInitWidgetsCode(widgetsContext, asyncOut);
                 asyncOut.end();
                 next();
             });
