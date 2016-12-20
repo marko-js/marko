@@ -1,9 +1,3 @@
-function Widget(config) {
-    this.name = config.name;
-}
+module.exports = {
 
-Widget.prototype = {
-    
 };
-
-exports.Widget = Widget;

@@ -10,3 +10,10 @@ exports.render = function(input, out) {
         },
         out);
 };
+
+module.exports = {
+    onInput: function(input) {
+        var label = input.label || 'BAR';
+        this.label = label;
+    }
+};

@@ -7,5 +7,9 @@ module.exports = {
         this.appendHtml = function(html) {
             el.innerHTML += html;
         };
+    },
+
+    emitTestEvent: function() {
+        this.emit('testEvent', 'a', 'b');
     }
 };

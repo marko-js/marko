@@ -1,7 +1,8 @@
 var pubsub = require('~/util/pubsub');
 
 module.exports = {
-    onMount() {
+    onMount: function() {
+
         var self = this;
 
         if (this.channel) {
