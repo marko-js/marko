@@ -63,7 +63,7 @@ WidgetsContext.prototype = {
         if (preserved === EMPTY_OBJECT) {
             preserved = this.$__preserved = {};
         }
-        preserved[existingEl.id] = { bodyOnly: bodyOnly, bodyEl: bodyEl };
+        preserved[existingEl.id] = { $__bodyOnly: bodyOnly, $__bodyEl: bodyEl };
     }
 };
 

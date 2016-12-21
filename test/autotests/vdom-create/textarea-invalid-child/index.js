@@ -5,7 +5,7 @@ module.exports = function(helpers) {
         helpers.vdom.createElement('textarea', 0 /* attrCount */, 2 /* childCount */)
             .e('div', 0, 0)
             .t('bar');
-    }).to.throw('Invalid child');
+    }).to.throw('');
 
     return null;
 };

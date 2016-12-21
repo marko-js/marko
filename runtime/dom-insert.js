@@ -6,7 +6,7 @@ function resolveEl(el) {
         var elId = el;
         el = document.getElementById(elId);
         if (!el) {
-            throw new Error('Target element not found: "' + elId + '"');
+            throw Error('Not found: ' + elId);
         }
     }
     return el;

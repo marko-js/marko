@@ -106,7 +106,7 @@ function compileForBrowser(src, filename, options, callback) {
         options = null;
     }
 
-    options = Object.assign({output: 'vdom'}, options);
+    options = extend({output: 'vdom'}, options);
 
     return compile(src, filename, options, callback);
 }
@@ -139,7 +139,7 @@ function compileFileForBrowser(filename, options, callback) {
         options = null;
     }
 
-    options = Object.assign({output: 'vdom'}, options);
+    options = extend({output: 'vdom'}, options);
     return compileFile(filename, options, callback);
 }
 

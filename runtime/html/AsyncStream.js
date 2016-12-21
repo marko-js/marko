@@ -1,5 +1,5 @@
 'use strict';
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('events-light');
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
 var documentProvider = require('../document-provider');

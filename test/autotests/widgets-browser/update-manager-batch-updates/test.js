@@ -9,9 +9,8 @@ module.exports = function(helpers) {
     expect(widget.el.className).to.contain('large');
     expect(widget.el.innerHTML).to.contain('Initial Label');
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.setSize('small');
-    });
+    widget.setSize('small');
+    widget.update();
 
     expect(widget.el.className).to.contain('small');
 };

@@ -20,7 +20,7 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "test": "npm run jshint -s && npm run mocha -s && npm run test-widgets -s",
+    "test": "npm run jshint -s && npm run mocha -s && npm run test-widgets -s && npm run test-widgets-deprecated -s",
     "mocha": "mocha --ui bdd --reporter spec ./test/",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm run test",
@@ -28,10 +28,12 @@
     "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
     "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
     "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
-    "test-widgets": "npm run test-widgets-browser -s && npm run test-widgets-browser-deprecated -s && npm run jshint --silent",
-    "test-widgets-browser": "node test/browser-tests-runner/cli.js test/widgets-browser-tests.js --automated && npm run test-widgets-browser-pages",
-    "test-widgets-browser-deprecated": "node test/browser-tests-runner/cli.js test/deprecated-widgets-browser-tests.js --automated && npm run test-widgets-browser-pages",
-    "test-widgets-browser-pages": "node test/browser-tests-runner/cli.js --pages --automated",
+    "test-widgets": "npm run test-widgets-browser -s && npm run test-widgets-pages -s",
+    "test-widgets-deprecated": "npm run test-widgets-browser-deprecated -s && npm run test-widgets-pages-deprecated -s",
+    "test-widgets-browser": "node test/browser-tests-runner/cli.js test/widgets-browser-tests.js --automated",
+    "test-widgets-browser-deprecated": "node test/browser-tests-runner/cli.js test/deprecated-widgets-browser-tests.js --automated && npm run test-widgets-pages-deprecated -s",
+    "test-widgets-pages": "node test/browser-tests-runner/cli.js --pages --automated",
+    "test-widgets-pages-deprecated": "node test/browser-tests-runner/cli.js --pagesDeprecated --automated",
     "test-widgets-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server",
     "test-widgets-page": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server --page",
     "jshint": "jshint compiler/ runtime/ taglibs/ widgets/",
@@ -55,11 +57,12 @@
     "esprima": "^3.1.1",
     "estraverse": "^4.2.0",
     "events": "^1.0.2",
+    "events-light": "^1.0.0",
     "he": "^1.1.0",
     "htmljs-parser": "^1.5.3",
     "lasso-modules-client": "^1.0.0",
     "lasso-package-root": "^1.0.0",
-    "listener-tracker": "^1.0.2",
+    "listener-tracker": "^2.0.0",
     "minimatch": "^3.0.2",
     "morphdom": "^2.2.0",
     "object-assign": "^4.1.0",
@@ -133,7 +136,15 @@
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   },
   "minprops": {
-    "exclude": ["c", "ca", "e", "n", "r", "sa", "t"],
+    "exclude": [
+      "c",
+      "ca",
+      "e",
+      "n",
+      "r",
+      "sa",
+      "t"
+    ],
     "matchPrefix": "$__"
   }
 }

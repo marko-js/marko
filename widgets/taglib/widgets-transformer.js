@@ -21,6 +21,7 @@ module.exports = function transform(el, context) {
         context.setFlag('hasWidgetTypes');
     } else if (el.tagName === 'include') {
         transformHelper.handleIncludeNode(el);
+        transformHelper.getWidgetArgs().compile(transformHelper);
         return;
     }
 
@@ -65,6 +66,8 @@ module.exports = function transform(el, context) {
 
     // Handle w-on* properties
     transformHelper.handleWidgetEvents();
+
+    transformHelper.getWidgetArgs().compile(transformHelper);
 
     // If we need to pass any information to a nested widget then
     // we start that information in the "out" so that it can be picked

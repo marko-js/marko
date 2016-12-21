@@ -27,7 +27,7 @@ module.exports = function(helpers) {
 
     var root = helpers.vdom.createElement('div', { class: 'root' });
 
-    root.appendChild(clone);
+    root.$__appendChild(clone);
 
     expect(el.$__parentNode).to.equal(undefined);
     expect(clone.$__parentNode).to.equal(root);

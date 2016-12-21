@@ -15,9 +15,9 @@ function WidgetDef(config, endFunc, out) {
     this.$__state = config.$__state; // Widget state object (may be null)
     this.$__scope = config.$__scope; // The ID of the widget that this widget is scoped within
     this.$__customEvents = config.$__customEvents; // An array containing information about custom events
-    this.bodyElId = config.bodyElId; // The ID for the default body element (if any any)
+    this.$__bodyElId = config.$__bodyElId; // The ID for the default body element (if any any)
     this.$__roots = config.$__roots;
-    this.body = config.body;
+    this.body = config.$__body;
     this.$__existingWidget = config.$__existingWidget;
 
     this.$__children = null; // An array of nested WidgetDef instances
@@ -25,7 +25,7 @@ function WidgetDef(config, endFunc, out) {
     this.$__domEvents = null; // An array of DOM events that need to be added (in sets of three)
     this.$__out = out; // The AsyncWriter that this widget is associated with
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
-    this.widget = null; // This ised by RenderResult to reference the associated widget instance after creation
+    this.widget = null; // This is used by RenderResult to reference the associated widget instance after creation
 }
 
 WidgetDef.prototype = {

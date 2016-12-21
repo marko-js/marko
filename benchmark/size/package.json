@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install --silent && npm link ../../",
-    "build": "npm run setup && npm run bundle --silent && npm run minify --silent",
-    "bundle": "mkdir -p build/bundles && npm run bundle-marko --silent && npm run bundle-react --silent && npm run bundle-vue --silent",
+    "build": "npm run bundle --silent && npm run minify --silent",
+    "build-marko": "npm run bundle-marko --silent && node minify.js marko",
+    "bundle": "mkdir -p build/bundles && npm run bundle-marko && npm run bundle-react && npm run bundle-vue && npm run bundle-preact",
     "bundle-marko": "NODE_ENV=production browserify -t envify -t markoify --extension='.marko' --global-transform minprops/browserify -o build/bundles/marko.js marko/client.js",
     "bundle-react": "NODE_ENV=production browserify -t envify -t babelify --extension='.jsx' --global-transform minprops/browserify -o build/bundles/react.js react/client.jsx",
+    "bundle-preact": "NODE_ENV=production browserify -t envify -t babelify --extension='.jsx' --global-transform minprops/browserify -o build/bundles/preact.js preact/client.jsx",
     "bundle-vue": "NODE_ENV=production browserify -t envify -t vueify --extension='.vue' --global-transform minprops/browserify -o build/bundles/vue.js vue/client.js",
     "minify": "node minify.js",
     "http-server": "http-server"
@@ -17,7 +19,11 @@
   "license": "MIT",
   "dependencies": {
     "babel-plugin-transform-react-constant-elements": "^6.9.1",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-loose": "^8.0.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "envify": "^4.0.0",
@@ -26,13 +32,18 @@
     "http-server": "^0.9.0",
     "markoify": "^2.1.1",
     "minprops": "mlrawlings/minprops",
+    "preact": "^7.1.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "uglify-js": "^2.7.5",
     "vue": "^2.1.6",
     "vueify": "^9.4.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/marko.git"
+  },
+  "browser": {
+    "events": "events-light"
   }
 }

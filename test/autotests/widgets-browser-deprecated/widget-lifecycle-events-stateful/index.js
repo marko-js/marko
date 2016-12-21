@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineComponent({
+module.exports = require('marko/widgets/legacy').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getInitialState: function(input) {
@@ -27,6 +27,7 @@ module.exports = require('marko/widgets').defineComponent({
 
 	update_messageCount: function(newMessageCount) {
 		this.getWidget('nestedStateful').setMessageCount(newMessageCount);
+		this.getWidget('nestedStateful').update();
 	},
 
 	setName: function(newName) {

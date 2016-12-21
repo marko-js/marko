@@ -30,15 +30,14 @@ module.exports = function(helpers) {
         'init',
         'onRender:firstRender']);
 
-    require('marko/widgets').batchUpdate(function() {
-        // NOTE: messageCount has an update handler
-        widget.setState('messageCount', 999);
-        expect(targetEl.innerHTML).to.contain('Hello Frank!');
-        expect(targetEl.innerHTML).to.contain('10');
-        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init',
-            'onRender:firstRender']);
-    });
+    // NOTE: messageCount has an update handler
+    widget.setState('messageCount', 999);
+    expect(targetEl.innerHTML).to.contain('Hello Frank!');
+    expect(targetEl.innerHTML).to.contain('10');
+    expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+        'init',
+        'onRender:firstRender']);
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello Frank!');
     expect(targetEl.innerHTML).to.contain('999');
@@ -60,17 +59,17 @@ module.exports = function(helpers) {
         'init',
         'onRender:firstRender']);
 
-    require('marko/widgets').batchUpdate(function() {
-        // NOTE: name does *not* have an update handler
-        widget.setState('name', 'Jane');
-        expect(targetEl.innerHTML).to.contain('Hello Frank!');
-        expect(targetEl.innerHTML).to.contain('999');
-        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init',
-            'onRender:firstRender',
-            'onBeforeUpdate',
-            'onUpdate']);
-    });
+
+    // NOTE: name does *not* have an update handler
+    widget.setState('name', 'Jane');
+    expect(targetEl.innerHTML).to.contain('Hello Frank!');
+    expect(targetEl.innerHTML).to.contain('999');
+    expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+        'init',
+        'onRender:firstRender',
+        'onBeforeUpdate',
+        'onUpdate']);
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello Jane!');
     expect(targetEl.innerHTML).to.contain('999');

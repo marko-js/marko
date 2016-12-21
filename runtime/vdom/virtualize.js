@@ -6,7 +6,7 @@ var Text = require('./Text');
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
     while(curChild) {
-        vdomParent.appendChild(virtualize(curChild));
+        vdomParent.$__appendChild(virtualize(curChild));
         curChild = curChild.nextSibling;
     }
 }
@@ -40,7 +40,7 @@ function virtualize(node) {
 
         var vdomEL = new HTMLElement(node.nodeName, attrs, childCount);
 
-        if (vdomEL._isTextArea) {
+        if (vdomEL.$__isTextArea) {
             vdomEL.value = node.value;
         } else {
             virtualizeChildNodes(node, vdomEL);

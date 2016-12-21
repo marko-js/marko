@@ -1,11 +1,13 @@
 'use strict';
+/* jshint newcap:false */
+
 var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
 var markoWidgets = require('./');
 var getRootEls = require('./getRootEls');
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('events-light');
 var RenderResult = require('../runtime/RenderResult');
-var listenerTracker = require('listener-tracker');
+var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
@@ -34,7 +36,7 @@ var lifecycleEventMethods = {
 };
 
 function removeListener(eventListenerHandle) {
-    eventListenerHandle.remove();
+    eventListenerHandle();
 }
 
 /**
@@ -143,7 +145,7 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     var targetWidget = widgetLookup[widget.$__scope];
     var targetMethod = targetWidget[targetMethodName];
     if (!targetMethod) {
-        throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
+        throw Error('Method not found: ' + targetMethodName);
     }
 
     targetMethod.apply(targetWidget, args);
@@ -229,7 +231,7 @@ function Widget(id, document) {
     EventEmitter.call(this);
     this.id = id;
     this.el = null;
-    this.bodyEl = null;
+    this.$__bodyEl = null;
     this.$__state = null;
     this.$__roots = null;
     this.$__subscriptions = null;
@@ -246,14 +248,13 @@ Widget.prototype = widgetProto = {
 
     subscribeTo: function(target) {
         if (!target) {
-            throw new Error('target is required');
+            throw TypeError();
         }
 
         var tracker = this.$__subscriptions;
         if (!tracker) {
-            this.$__subscriptions = tracker = listenerTracker.createTracker();
+            this.$__subscriptions = tracker = new SubscriptionTracker();
         }
-
 
         var subscribeToOptions = target.$__isWidget ?
             WIDGET_SUBSCRIBE_TO_OPTIONS :
@@ -348,9 +349,6 @@ Widget.prototype = widgetProto = {
     },
     isDestroyed: function () {
         return this.$__lifecycleState === 'destroyed';
-    },
-    getBodyEl: function() {
-        return this.bodyEl;
     },
     get state() {
         return this.$__state;
@@ -469,7 +467,7 @@ Widget.prototype = widgetProto = {
         return processUpdateHandlers(this, state.$__changes, state.$__old);
     },
 
-    isDirty: function() {
+    get $__isDirty() {
         return this.$__state.$__dirty;
     },
 
@@ -497,7 +495,7 @@ Widget.prototype = widgetProto = {
         var self = this;
 
         if (!self.renderer) {
-            throw new Error('Widget does not have a "renderer" property');
+            throw Error('No renderer');
         }
 
         var renderer = self.renderer;
@@ -548,9 +546,9 @@ Widget.prototype = widgetProto = {
                 if (widgetsContext && id) {
                     var preserved = widgetsContext.$__preserved[id];
 
-                    if (preserved && !preserved.bodyOnly) {
-                        if (preserved.bodyEl) {
-                            morphdom(preserved.bodyEl, toEl, {
+                    if (preserved && !preserved.$__bodyOnly) {
+                        if (preserved.$__bodyEl) {
+                            morphdom(preserved.$__bodyEl, toEl, {
                                 childrenOnly: true,
                                 onNodeDiscarded: onNodeDiscarded,
                                 onBeforeElUpdated: onBeforeElUpdated,
@@ -578,7 +576,7 @@ Widget.prototype = widgetProto = {
                 var id = el.id;
                 if (widgetsContext && id) {
                     var preserved = widgetsContext.$__preserved[id];
-                    if (preserved && preserved.bodyOnly) {
+                    if (preserved && preserved.$__bodyOnly) {
                         // Don't morph the children since they are preserved
                         return MORPHDOM_SKIP;
                     }

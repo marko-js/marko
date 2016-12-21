@@ -46,9 +46,10 @@ module.exports = function assignWidgetId(isRepeated) {
 
     var isCustomTag = el.type !== 'HtmlElement';
 
+
+
     if (el.hasAttribute('ref')) {
         widgetRef = el.getAttributeValue('ref');
-
         el.removeAttribute('ref');
     }
 

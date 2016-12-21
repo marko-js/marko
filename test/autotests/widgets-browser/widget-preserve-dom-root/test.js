@@ -9,9 +9,8 @@ module.exports = function(helpers) {
     expect(widget.el.innerHTML).to.contain('Frank');
     expect(widget.el.innerHTML).to.contain('30');
 
-    require('marko/widgets').batchUpdate(function() { // Force the HTML update to be immediate
-        widget.setName('John');
-    });
+    widget.setName('John');
+    widget.update();
 
     expect(widget.el.innerHTML).to.not.contain('John');
     expect(widget.el.innerHTML).to.contain('Frank');

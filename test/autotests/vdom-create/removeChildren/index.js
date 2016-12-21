@@ -11,7 +11,7 @@ module.exports = function(helpers) {
     var newChild = helpers.vdom.createElement('h1', null, 1)
         .t('New child');
 
-    div.appendChild(newChild);
+    div.$__appendChild(newChild);
 
     expect(div.firstChild).to.equal(newChild);
     expect(div.firstChild.nextSibling).to.equal(undefined);

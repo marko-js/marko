@@ -22,12 +22,12 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             clickCount: 0,
             name: 'Frank',
             colors: ['red', 'green', 'blue']
-        }
+        };
     },
     methods: {
         handleButtonClick: function() {

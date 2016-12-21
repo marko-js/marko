@@ -199,7 +199,7 @@ HTMLElement.prototype = {
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
     e: function(tagName, attrs, childCount, constId) {
-        var child = this.appendChild(new HTMLElement(tagName, attrs, childCount, constId));
+        var child = this.$__appendChild(new HTMLElement(tagName, attrs, childCount, constId));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -221,13 +221,13 @@ HTMLElement.prototype = {
             } else if (type === 'object') {
                 var safeHTML = value.safeHTML;
                 var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.$__document);
-                this.appendChild(vdomNode);
+                this.$__appendChild(vdomNode);
                 return this.$__finishChild();
             } else {
                 value = value.toString();
             }
         }
-        this.appendChild(new Text(value));
+        this.$__appendChild(new Text(value));
         return this.$__finishChild();
     },
 
@@ -236,7 +236,7 @@ HTMLElement.prototype = {
      * @param  {String} value The value for the new Comment node
      */
     c: function(value) {
-        this.appendChild(new Comment(value));
+        this.$__appendChild(new Comment(value));
         return this.$__finishChild();
     },
 
@@ -247,7 +247,7 @@ HTMLElement.prototype = {
      * @param  {String} value The value for the new Comment node
      */
     n: function(node) {
-        this.appendChild(node.cloneNode());
+        this.$__appendChild(node.cloneNode());
         return this.$__finishChild();
     },
 

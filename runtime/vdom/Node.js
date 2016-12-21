@@ -1,3 +1,5 @@
+/* jshint newcap:false */
+
 var DocumentFragment;
 
 function assignNamespace(node, namespaceURI) {
@@ -71,17 +73,17 @@ Node.prototype = {
         return nextSibling;
     },
 
-    appendDocumentFragment: function() {
-        return this.appendChild(new DocumentFragment());
+    $__appendDocumentFragment: function() {
+        return this.$__appendChild(new DocumentFragment());
     },
 
-    appendChild: function(child) {
+    $__appendChild: function(child) {
         if (this.$__isTextArea) {
             if (child.nodeType === 3) {
                 var currentValue = this.value;
                 this.value = currentValue ? currentValue + child.nodeValue : child.nodeValue;
             } else {
-                throw new Error('Invalid child');
+                throw TypeError();
             }
         } else {
             var namespaceURI;

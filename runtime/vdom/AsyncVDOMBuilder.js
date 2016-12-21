@@ -1,4 +1,4 @@
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('events-light');
 var HTMLElement = require('./HTMLElement');
 var DocumentFragment = require('./DocumentFragment');
 var Comment = require('./Comment');
@@ -47,7 +47,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         var parent = this.$__parent;
 
         if(parent) {
-            parent.appendChild(element);
+            parent.$__appendChild(element);
         }
 
         return childCount === 0 ? this : element;
@@ -62,7 +62,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     node: function(node) {
         var parent = this.$__parent;
         if (parent) {
-            parent.appendChild(node);
+            parent.$__appendChild(node);
         }
         return this;
     },
@@ -90,7 +90,7 @@ var proto = AsyncVDOMBuilder.prototype = {
             if (lastChild && lastChild.nodeType === 3) {
                 lastChild.nodeValue += text;
             } else {
-                parent.appendChild(new Text(text));
+                parent.$__appendChild(new Text(text));
             }
         }
         return this;
@@ -113,7 +113,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         var element = new HTMLElement(name, attrs);
         var parent = this.$__parent;
         if (parent) {
-            parent.appendChild(element);
+            parent.$__appendChild(element);
             this.$__stack.push(element);
             this.$__parent = element;
         }
@@ -149,7 +149,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     beginAsync: function(options) {
         if (this.$__sync) {
-            throw new Error('beginAsync() not allowed when using renderSync()');
+            throw Error('Not allowed');
         }
 
         var state = this.$__state;
@@ -160,7 +160,7 @@ var proto = AsyncVDOMBuilder.prototype = {
             }
         }
 
-        var documentFragment = this.$__parent.appendDocumentFragment();
+        var documentFragment = this.$__parent.$__appendDocumentFragment();
         var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, state);
 
         state.$__events.emit('beginAsync', {
@@ -232,12 +232,6 @@ var proto = AsyncVDOMBuilder.prototype = {
     removeListener: function() {
         var events = this.$__state.$__events;
         events.removeListener.apply(events, arguments);
-        return this;
-    },
-
-    prependListener: function() {
-        var events = this.$__state.$__events;
-        events.prependListener.apply(events, arguments);
         return this;
     },
 

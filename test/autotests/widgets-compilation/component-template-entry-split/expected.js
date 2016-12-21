@@ -1,7 +1,7 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
     marko_component = require("./renderer"),
     marko_widgets = require("marko/widgets"),
-    marko_registerWidget = marko_widgets.registerWidget,
+    marko_registerWidget = marko_widgets.rw,
     marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry-split/widget", function() {
       return require("./widget");
     }),

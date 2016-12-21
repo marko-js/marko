@@ -4,7 +4,7 @@ var EMPTY_ARRAY = [];
 
 function checkAddedToDOM(result, method) {
     if (!result.$__widgets) {
-        throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
+        throw Error('Not added to DOM');
     }
 }
 
@@ -12,7 +12,7 @@ function getWidgetDefs(result) {
     var widgetDefs = result.$__widgets;
 
     if (widgetDefs.length === 0) {
-        throw new Error('No widget rendered');
+        throw Error('No widget');
     }
     return widgetDefs;
 }

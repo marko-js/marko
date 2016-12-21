@@ -3,8 +3,8 @@ module.exports = function(helpers) {
 
     root.e('div', { class: 'first-child' });
 
-    var docFragment = root.appendDocumentFragment();
-    docFragment.appendChild(helpers.vdom.createElement('div', { class: 'middle-child' }));
+    var docFragment = root.$__appendDocumentFragment();
+    docFragment.$__appendChild(helpers.vdom.createElement('div', { class: 'middle-child' }));
 
     root.e('div', { class: 'last-child' });
 

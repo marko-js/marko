@@ -7,18 +7,6 @@ var warp10 = require('warp10');
 var WidgetsContext = require('./WidgetsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function WrappedString(val) {
-    this.html = val;
-}
-
-WrappedString.prototype = {
-    safeHTML: function() {
-        return this.html;
-    }
-};
-
-exports.uniqueId = require('./uniqueId');
-
 function flattenHelper(widgets, flattened) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];

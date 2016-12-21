@@ -6,7 +6,6 @@ module.exports = function(helpers) {
     expect(widget.emit).to.be.a('function');
     expect(widget.on).to.be.a('function');
     expect(widget.once).to.be.a('function');
-    expect(widget.addListener).to.be.a('function');
     expect(widget.subscribeTo).to.be.a('function');
     expect(widget.getElId).to.be.a('function');
     expect(widget.elId).to.be.a('function');

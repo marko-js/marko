@@ -63,7 +63,9 @@ class WidgetArgs {
             args.push(builder.literal(customEvents));
         }
 
-        if (!el.tagDef || !el.tagDef.template) {
+        if (el.tagDef && el.tagDef.template) {
+            el.setAttributeValue('$w', builder.literal(args));
+        } else {
             let widgetArgsVar = transformHelper.context.addStaticVar('marko_widgetArgs',
                 builder.require(builder.literal('marko/widgets/taglib/helpers/widgetArgs')));
 
@@ -80,8 +82,6 @@ class WidgetArgs {
             el.onAfterGenerateCode((event) => {
                 event.insertCode(cleanupWidgetArgsFunctionCall);
             });
-        } else {
-            el.setAttributeValue('$w', builder.literal(args));
         }
     }
 

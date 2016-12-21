@@ -1,8 +1,8 @@
 'use strict';
-var _addEventListener = require('./addEventListener');
 var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
-var defaultDocument = typeof document != 'undefined' && document;
+var win = window;
+var defaultDocument = document;
 var events = require('../runtime/events');
 var widgetLookup = require('./lookup').widgets;
 
@@ -11,14 +11,21 @@ var registry; // We initialize this later to avoid issues with circular dependen
 function invokeWidgetEventHandler(widget, targetMethodName, args) {
     var method = widget[targetMethodName];
     if (!method) {
-        throw new Error('Widget ' + widget.id + ' does not have method named "' + targetMethodName + '"');
+        throw Error('Method not found: ' + targetMethodName);
     }
 
     method.apply(widget, args);
 }
 
+function addEventListenerHelper(el, eventType, listener) {
+    el.addEventListener(eventType, listener, false);
+    return function remove() {
+        el.removeEventListener(eventType, listener);
+    };
+}
+
 function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs, handles) {
-    var handle = _addEventListener(el, eventType, function(event) {
+    var handle = addEventListenerHelper(el, eventType, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -55,7 +62,7 @@ function initWidget(widgetDef, doc) {
     var scope = widgetDef.$__scope;
     var domEvents = widgetDef.$__domEvents;
     var customEvents = widgetDef.$__customEvents;
-    var bodyElId = widgetDef.bodyElId;
+    var bodyElId = widgetDef.$__bodyElId;
     var existingWidget = widgetDef.$__existingWidget;
 
     var el;
@@ -138,7 +145,7 @@ function initWidget(widgetDef, doc) {
         widget.el = el;
         widget.els = els;
         widget.$__rootWidgets = rootWidgets;
-        widget.bodyEl = getNestedEl(widget, bodyElId, doc);
+        widget.$__bodyEl = getNestedEl(widget, bodyElId, doc);
 
         if (domEvents) {
             var eventListenerHandles = [];
@@ -221,7 +228,7 @@ function initClientRendered(widgetDefs, doc) {
     // always attached before initializing any widgets
     eventDelegation.$__init();
 
-    doc = doc || window.doc;
+    doc = doc || defaultDocument;
     for (var i=0,len=widgetDefs.length; i<len; i++) {
         var widgetDef = widgetDefs[i];
 
@@ -267,10 +274,10 @@ exports.$__initServerRendered = initServerRendered;
 
 registry = require('./registry');
 
-if (window.$widgets) {
+if (win.$widgets) {
     initServerRendered(window.$widgets);
 }
 
-window.$widgets = {
+win.$widgets = {
     concat: initServerRendered
 };

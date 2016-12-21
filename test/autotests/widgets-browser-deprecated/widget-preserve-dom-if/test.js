@@ -24,11 +24,9 @@ module.exports = function(helpers) {
 
     var renderId = 10;
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.rerender({
-            preserveCondition: true,
-            renderId: renderId
-        });
+    widget.rerender({
+        preserveCondition: true,
+        renderId: renderId
     });
 
     var timestamps = getTimestamps();
@@ -63,11 +61,9 @@ module.exports = function(helpers) {
     renderId = 100;
 
     // Do not preserve
-    require('marko/widgets').batchUpdate(function() {
-        widget.rerender({
-            preserveCondition: false,
-            renderId: renderId
-        });
+    widget.rerender({
+        preserveCondition: false,
+        renderId: renderId
     });
 
     timestamps = getTimestamps();

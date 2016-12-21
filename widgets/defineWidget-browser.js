@@ -1,4 +1,5 @@
 'use strict';
+/* jshint newcap:false */
 
  var BaseState;
  var BaseWidget;
@@ -20,7 +21,7 @@ module.exports = function defineWidget(def, renderer) {
         WidgetClass = def.init || function() {};
         proto = WidgetClass.prototype = def;
     } else {
-        throw new Error('Invalid widget');
+        throw TypeError();
     }
 
     // We don't use the constructor provided by the user

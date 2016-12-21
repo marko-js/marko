@@ -10,7 +10,7 @@ module.exports = function getCurrentWidget(out) {
     var len;
 
     if (!widgetsContext || (len = (widgetStack = widgetsContext.$__widgetStack).length) < 2) {
-        throw new Error('No widget found');
+        throw Error('No widget found');
     }
 
     return widgetStack[len - 1];

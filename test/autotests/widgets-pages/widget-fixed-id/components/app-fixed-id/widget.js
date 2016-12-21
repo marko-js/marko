@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
 
 function Widget(config) {
-    this.label = config.label;
     this.name = 'app-fixed-id';
     window.appFixedId = this;
 }

@@ -1,10 +1,10 @@
 var alertType=state.alertType
 var alertMessage=state.alertMessage
 
-<div w-bind>
-    <app-transclusion-alert type=data.alertType>
+<div>
+    <app-transclusion-alert type=alertType>
         <p>
-            <b>${data.alertType}</b> $!{data.alertMessage}
+            <b>${alertType}</b> ${alertMessage}
         </p>
     </app-transclusion-alert>
 </div>

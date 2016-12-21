@@ -14,9 +14,8 @@ module.exports = function(helpers) {
     expect(widget.state.name).to.equal('Frank');
     expect(widget.state.count).to.equal(30);
 
-    require('marko/widgets').batchUpdate(function() { // Force the HTML update to be immediate
-        widget.setState('name', 'John');
-    });
+    widget.setState('name', 'John');
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello John! You have 30 new messages.');
     expect(targetEl.innerHTML).to.contain('foo: bar');

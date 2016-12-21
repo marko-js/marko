@@ -1,7 +1,19 @@
-var addEventListener = require('./addEventListener');
 var updateManager = require('./update-manager');
-var getObjectAttribute = require('./getObjectAttribute');
 var widgetLookup = require('./lookup').widgets;
+var warp10Parse = require('warp10/parse');
+
+function getObjectAttribute(el, attrName) {
+    var virtualAttrs = el._vattrs;
+
+    if (virtualAttrs) {
+        return el._vattrs[attrName];
+    } else {
+        var attrValue = el.getAttribute(attrName);
+        if (attrValue) {
+            return warp10Parse(attrValue);
+        }
+    }
+}
 
 var attachBubbleEventListeners = function() {
     var body = document.body;
@@ -13,7 +25,7 @@ var attachBubbleEventListeners = function() {
     // with the event to find any mappings for event. Each mapping
     // is from a DOM event type to a method of a widget.
     require('./bubble').forEach(function addBubbleHandler(eventType) {
-        addEventListener(body, eventType, function(event) {
+        body.addEventListener(eventType, function(event) {
             var propagationStopped = false;
 
             // Monkey-patch to fix #97
@@ -52,12 +64,12 @@ var attachBubbleEventListeners = function() {
                         var targetWidget = widgetLookup[targetWidgetId];
 
                         if (!targetWidget) {
-                            throw new Error('Widget not found: ' + targetWidgetId);
+                            continue;
                         }
 
                         var targetFunc = targetWidget[targetMethod];
                         if (!targetFunc) {
-                            throw new Error('Method not found on widget ' + targetWidget.id + ': ' + targetMethod);
+                            throw Error('Method not found: ' + targetMethod);
                         }
 
                         // Invoke the widget method

@@ -1,5 +1,4 @@
-module.exports = require('marko/widgets').defineRenderer({
-    template: require.resolve('./template.marko'),
+module.exports = {
     getInitialBody: function(input) {
         return input.label || input.renderBody;
     },
@@ -41,4 +40,4 @@ module.exports = require('marko/widgets').defineRenderer({
             rootAttrs: rootAttrs
         };
     }
-});
+};

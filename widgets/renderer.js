@@ -1,4 +1,3 @@
-var markoWidgets = require('./');
 var widgetLookup = require('./lookup').widgets;
 var includeTag = require('./taglib/include-tag');
 var repeatedId = require('./repeated-id');
@@ -33,7 +32,7 @@ function preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody) {
 
     var bodyEl;
 
-    if (widgetBody && (bodyEl = existingWidget.bodyEl)) {
+    if (widgetBody && (bodyEl = existingWidget.$__bodyEl)) {
         if (rootElIds.length > 1) {
             // If there are multiple roots then we don't know which root el
             // contains the body element so we will just need to rerender the
@@ -249,10 +248,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             }
         }
 
-        if (!id && widgetProps.hasOwnProperty('id')) {
-            throw new Error('Invalid widget ID for "' + typeName + '"');
-        }
-
         if (existingWidget && !rerenderWidget) {
             // This is a nested widget found during a rerender. We don't want to needlessly
             // rerender the widget if that is not necessary. If the widget is a stateful
@@ -270,7 +265,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
             // If the widget is not dirty (no state changes) and shouldUpdate() returns false
             // then skip rerendering the widget.
-            if (!existingWidget.isDirty() && !existingWidget.shouldUpdate(input, widgetState)) {
+            if (!existingWidget.$__dirty && !existingWidget.shouldUpdate(input, widgetState)) {
                 if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
                     return;
                 }
@@ -296,9 +291,9 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             $__customEvents: customEvents,
             $__scope: scope,
             $__existingWidget: existingWidget,
-            bodyElId: bodyElId,
+            $__bodyElId: bodyElId,
             $__roots: roots,
-            body: widgetBody
+            $__body: widgetBody
         });
 
         // Render the template associated with the component using the final template

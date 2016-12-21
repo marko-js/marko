@@ -15,6 +15,10 @@ module.exports = function(includeNode) {
     parentNode._normalizeChildTextNodes(context);
 
     if (parentNode.childCount === 1) {
+        if (includeNode.hasAttribute('ref')) {
+            this.assignWidgetId();
+        }
+
         let parentTransformHelper = this.getTransformHelper(parentNode);
 
         if (includeNode.argument) {

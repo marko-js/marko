@@ -9,5 +9,6 @@ module.exports = {
     update_buttonSize: function(newSize) {
         var button1Widget = this.getWidget('button1');
         button1Widget.setSize(newSize);
+        button1Widget.update();
     }
 };

@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineWidget({
+module.exports = {
     init: function() {
         window.appButtonSplit = this;
     },
@@ -8,4 +8,4 @@ module.exports = require('marko/widgets').defineWidget({
     setLabel: function(label) {
         this.el.innerHTML = label;
     }
-});
+};

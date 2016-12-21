@@ -28,7 +28,7 @@ module.exports = function virtualizeHTML(html, doc) {
 
         var curChild = container.firstChild;
         while(curChild) {
-            vdomFragment.appendChild(virtualize(curChild));
+            vdomFragment.$__appendChild(virtualize(curChild));
             curChild = curChild.nextSibling;
         }
     }

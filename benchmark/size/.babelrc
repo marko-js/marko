@@ -1,4 +1,0 @@
-{
-    "presets": ["react"],
-    "plugins": ["transform-react-constant-elements"]
-}

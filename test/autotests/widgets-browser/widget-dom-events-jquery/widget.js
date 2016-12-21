@@ -1,4 +1,3 @@
-function Widget(config) {
-}
+module.exports = {
 
-exports.Widget = Widget;
+};
