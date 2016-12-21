@@ -20,7 +20,7 @@
     "url": "https://github.com/marko-js/marko.git"
   },
   "scripts": {
-    "test": "npm run jshint -s && npm run mocha -s && npm run test-widgets -s && npm run test-widgets-deprecated -s",
+    "test": "npm run jshint -s && npm run mocha -s && npm run test-widgets -s && npm run test-widgets-deprecated -s && npm run jshint",
     "mocha": "mocha --ui bdd --reporter spec ./test/",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm run test",
