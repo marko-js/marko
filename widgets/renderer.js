@@ -283,18 +283,16 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             existingWidget.$__emitLifecycleEvent('beforeUpdate');
         }
 
-        var widgetDef = widgetsContext.$__beginWidget({
-            $__type: typeName,
-            id: id,
-            $__config: widgetConfig,
-            $__state: widgetState,
-            $__customEvents: customEvents,
-            $__scope: scope,
-            $__existingWidget: existingWidget,
-            $__bodyElId: bodyElId,
-            $__roots: roots,
-            $__body: widgetBody
-        });
+        var widgetDef = widgetsContext.$__beginWidget(id);
+        widgetDef.$__type = typeName;
+        widgetDef.$__config = widgetConfig;
+        widgetDef.$__state = widgetState;
+        widgetDef.$__customEvents = customEvents;
+        widgetDef.$__scope = scope;
+        widgetDef.$__existingWidget = existingWidget;
+        widgetDef.$__bodyElId = bodyElId;
+        widgetDef.$__roots = roots;
+        widgetDef.body = widgetBody;
 
         // Render the template associated with the component using the final template
         // data that we constructed

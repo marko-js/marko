@@ -5,6 +5,7 @@ var win = window;
 var defaultDocument = document;
 var events = require('../runtime/events');
 var widgetLookup = require('./lookup').widgets;
+var WidgetDef = require('./WidgetDef');
 
 var registry; // We initialize this later to avoid issues with circular dependencies
 
@@ -252,19 +253,22 @@ function initClientRendered(widgetDefs, doc) {
  * This method initializes all widgets that were rendered on the server by iterating over all
  * of the widget IDs.
  */
-function initServerRendered(widgetDefs, doc) {
+function initServerRendered(renderedWidgets, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
     eventDelegation.$__init();
 
-    widgetDefs = warp10Finalize(widgetDefs);
+    renderedWidgets = warp10Finalize(renderedWidgets);
+
+    var widgetDefs = renderedWidgets[0];
+    var typesArray = renderedWidgets[1];
 
     if (!doc) {
         doc = defaultDocument;
     }
 
     for (var i=0, len=widgetDefs.length; i<len; i++) {
-        var widgetDef = widgetDefs[i];
+        var widgetDef = WidgetDef.$__deserialize(widgetDefs[i], typesArray);
         initWidget(widgetDef, doc);
     }
 }

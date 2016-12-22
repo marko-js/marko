@@ -8,27 +8,34 @@ var uniqueId = require('./uniqueId');
  * a single widget and this information is used to instantiate the widget
  * later (after the rendered HTML has been added to the DOM)
  */
-function WidgetDef(config, endFunc, out) {
-    this.$__type = config.$__type; // The widget module type name that is passed to the factory
-    this.id = config.id; // The unique ID of the widget
-    this.$__config = config.$__config; // Widget config object (may be null)
-    this.$__state = config.$__state; // Widget state object (may be null)
-    this.$__scope = config.$__scope; // The ID of the widget that this widget is scoped within
-    this.$__customEvents = config.$__customEvents; // An array containing information about custom events
-    this.$__bodyElId = config.$__bodyElId; // The ID for the default body element (if any any)
-    this.$__roots = config.$__roots;
-    this.body = config.$__body;
-    this.$__existingWidget = config.$__existingWidget;
-
-    this.$__children = null; // An array of nested WidgetDef instances
-    this.$__end = endFunc; // A function that when called will pop this widget def off the stack
-    this.$__domEvents = null; // An array of DOM events that need to be added (in sets of three)
+function WidgetDef(id, out, widgetStack, widgetStackLen) {
+    this.id = id;
     this.$__out = out; // The AsyncWriter that this widget is associated with
+    this.$__widgetStack = widgetStack;
+    this.$__widgetStackLen = widgetStackLen;
+
+    this.$__type =              // The widget module type name that is passed to the factory
+        this.$__config =        // Widget config object (may be null)
+        this.$__state =         // Widget state object (may be null)
+        this.$__scope =         // The ID of the widget that this widget is scoped within
+        this.$__customEvents =  // An array containing information about custom events
+        this.$__bodyElId =      // The ID for the default body element (if any any)
+        this.$__roots =         // IDs of root elements if there are multiple root elements
+        this.body =
+        this.$__existingWidget =
+        this.$__children = // An array of nested WidgetDef instances
+        this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
+        this.widget = // This is used by RenderResult to reference the associated widget instance after creation
+        null;
+
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
-    this.widget = null; // This is used by RenderResult to reference the associated widget instance after creation
 }
 
 WidgetDef.prototype = {
+    $__end: function() {
+        this.$__widgetStack.length = this.$__widgetStackLen;
+    },
+
     t: function(typeName) {
         this.$__type = typeName;
     },
@@ -99,19 +106,42 @@ WidgetDef.prototype = {
         return this.id ? this.id + '-w' + (this.$__nextIdIndex++) : uniqueId(this.$__out);
     },
 
-    $__toJSON: function() {
-        return  {
-            $__type: this.$__type,
-            id: this.id,
-            $__config: this.$__config,
-            $__state: this.$__state,
-            $__scope: this.$__scope,
-            $__domEvents: this.$__domEvents,
-            $__customEvents: this.$__customEvents,
-            bodyElId: this.bodyElId,
-            $__roots: this.$__roots
+    $__toJSON: function(typeIndex) {
+        var customEvents = this.$__customEvents;
+        var extra = {
+            p: customEvents && this.$__scope, // Only serialize scope if we need to attach custom events
+            e: this.$__domEvents,
+            ce: this.$__customEvents,
+            b: this.$__bodyElId,
+            c: this.$__config
         };
+
+        var result = [
+            this.id,        // 0 = id
+            typeIndex,   // 1 = type
+            this.$__roots,  // 2 = root el ids
+            this.$__state,  // 3 = state
+            extra           // 4
+        ];
+        return result;
     }
+};
+
+WidgetDef.$__deserialize = function(o, types) {
+    var extra = o[4];
+    var typeIndex = o[1];
+
+    return {
+        id: o[0],
+        $__type: types[typeIndex],
+        $__roots: o[2],
+        $__state: o[3],
+        $__scope: extra.p,
+        $__domEvents: extra.e,
+        $__customEvents: extra.ce,
+        $__bodyElId: extra.b,
+        $__config: extra.c
+    };
 };
 
 module.exports = WidgetDef;

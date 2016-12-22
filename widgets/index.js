@@ -7,21 +7,29 @@ var warp10 = require('warp10');
 var WidgetsContext = require('./WidgetsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function flattenHelper(widgets, flattened) {
+function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];
-        if (!widgetDef.$__type) {
+        var type = widgetDef.$__type;
+        if (!type) {
             continue;
+        }
+
+        var typeIndex = typesLookup[type];
+        if (typeIndex === undefined) {
+            typeIndex = typesArray.length;
+            typesArray.push(type);
+            typesLookup[type] = typeIndex;
         }
 
         var children = widgetDef.$__children;
 
         if (children) {
             // Depth-first search (children should be initialized before parent)
-            flattenHelper(children, flattened);
+            flattenHelper(children, flattened, typesArray, typesLookup);
         }
 
-        flattened.push(widgetDef.$__toJSON());
+        flattened.push(widgetDef.$__toJSON(typeIndex));
     }
 }
 
@@ -32,8 +40,11 @@ function getRenderedWidgets(widgetsContext) {
     }
 
     var flattened = [];
-    flattenHelper(widgets, flattened);
-    return flattened;
+    var typesLookup = {};
+    var typesArray = [];
+
+    flattenHelper(widgets, flattened, typesArray, typesLookup);
+    return [flattened, typesArray];
 }
 
 
