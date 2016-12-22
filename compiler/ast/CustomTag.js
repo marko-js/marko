@@ -216,6 +216,7 @@ class CustomTag extends HtmlElement {
         this._hasDynamicNestedTags = false;
         this._additionalProps = null;
         this._rendererPath = null;
+        this.dynamicAttributes = undefined;
     }
 
     buildInputProps(codegen) {
@@ -299,6 +300,9 @@ class CustomTag extends HtmlElement {
         // to the input object for the custom tag
         this.forEachAttribute((attr) => {
             var attrName = attr.name;
+            if (!attrName) {
+                return; // Skip attributes with no names
+            }
 
             var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
@@ -557,6 +561,12 @@ class CustomTag extends HtmlElement {
             inputProps = merge(argExpression, inputProps, context);
         }
 
+        if (this.dynamicAttributes) {
+            this.dynamicAttributes.forEach((dynamicAttributesExpression) => {
+                inputProps = merge(dynamicAttributesExpression, inputProps, context);
+            });
+        }
+
         if (!(inputProps instanceof Node)) {
             inputProps = builder.literal(inputProps);
         }
@@ -639,6 +649,14 @@ class CustomTag extends HtmlElement {
         } else {
             return finalNode;
         }
+    }
+
+    addDynamicAttributes(expression) {
+        if (!this.dynamicAttributes) {
+            this.dynamicAttributes = [];
+        }
+
+        this.dynamicAttributes.push(expression);
     }
 }
 
