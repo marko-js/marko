@@ -66,7 +66,6 @@ class Html extends Node {
                 }
 
                 if (isCompoundExpression(arg)) {
-                    console.log(arg);
                     writer.write(['(', arg, ')']);
                 } else {
                     writer.write(arg);
