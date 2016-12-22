@@ -35,17 +35,23 @@ class HtmlJsParser {
                 handlers.handleCharacters(event.value, 'static-text');
             },
 
+            onOpenTagName(event, parser) {
+                event.selfClosed = false; // Don't allow self-closed tags
+
+                var tagParseOptions = handlers.getTagParseOptions(event);
+                
+                if (tagParseOptions) {
+                    event.setParseOptions(tagParseOptions);
+                }
+            },
+
             onOpenTag(event, parser) {
                 event.selfClosed = false; // Don't allow self-closed tags
                 handlers.handleStartElement(event, parser);
 
-                var newParserState = handlers.getParserStateForTag(event);
-                if (newParserState) {
-                    if (newParserState === 'parsed-text') {
-                        parser.enterParsedTextContentState();
-                    } else if (newParserState === 'static-text') {
-                        parser.enterStaticTextContentState();
-                    }
+                var tagParseOptions = handlers.getTagParseOptions(event);
+                if (tagParseOptions) {
+                    event.setParseOptions(tagParseOptions);
                 }
             },
 

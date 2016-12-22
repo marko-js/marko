@@ -1,6 +1,7 @@
 'use strict';
 var ok = require('assert').ok;
 var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
+var extend = require('raptor-util/extend');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     'preserve-whitespace': function(attr, context) {
@@ -48,6 +49,48 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
 
         el.setAttributeValue('class', builder.functionCall(context.helper('classList'), finalClassNames));
     }
+}
+
+function getParserStateForTag(parser, el, tagDef) {
+    var attributes = el.attributes;
+    if (attributes) {
+        for (var i=0; i<attributes.length; i++) {
+            var attr = attributes[i];
+            var attrName = attr.name;
+            if (attrName === 'marko-body') {
+                var parseMode;
+
+                if (attr.literalValue) {
+                    parseMode = attr.literalValue;
+                }
+
+                if (parseMode === 'static-text' ||
+                    parseMode === 'parsed-text' ||
+                    parseMode === 'html') {
+                    return parseMode;
+                } else {
+                    parser.context.addError({
+                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
+                        code: 'ERR_INVALID_ATTR'
+                    });
+                    return;
+                }
+            } else if (attrName === 'template-helpers') {
+                return 'static-text';
+            } else if (attrName === 'marko-init') {
+                return 'static-text';
+            }
+        }
+    }
+
+    if (tagDef) {
+        var body = tagDef.body;
+        if (body) {
+            return body; // 'parsed-text' | 'static-text' | 'html'
+        }
+    }
+
+    return null; // Default parse state
 }
 
 class Parser {
@@ -337,48 +380,27 @@ class Parser {
         return last.node;
     }
 
-    getParserStateForTag(el) {
-        var attributes = el.attributes;
-
-        for (var i=0; i<attributes.length; i++) {
-            var attr = attributes[i];
-            var attrName = attr.name;
-            if (attrName === 'marko-body') {
-                var parseMode;
-
-                if (attr.literalValue) {
-                    parseMode = attr.literalValue;
-                }
-
-                if (parseMode === 'static-text' ||
-                    parseMode === 'parsed-text' ||
-                    parseMode === 'html') {
-                    return parseMode;
-                } else {
-                    this.context.addError({
-                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
-                        code: 'ERR_INVALID_ATTR'
-                    });
-                    return;
-                }
-            } else if (attrName === 'template-helpers') {
-                return 'static-text';
-            } else if (attrName === 'marko-init') {
-                return 'static-text';
-            }
-        }
-
+    getTagParseOptions(el) {
         var tagName = el.tagName;
         var tagDef = this.context.getTagDef(tagName);
 
-        if (tagDef) {
-            var body = tagDef.body;
-            if (body) {
-                return body; // 'parsed-text' | 'static-text' | 'html'
-            }
+        var state = getParserStateForTag(this, el, tagDef);
+        var parseOptions = tagDef && tagDef.parseOptions;
+
+        if (!state && !parseOptions) {
+            return;
         }
 
-        return null; // Default parse state
+        if (parseOptions) {
+            if (state) {
+                // We need to merge in the state to the returned parse options
+                parseOptions = extend({ state: state }, parseOptions);
+            }
+        } else {
+            parseOptions = { state: state };
+        }
+
+        return parseOptions;
     }
 
     isOpenTagOnly(tagName) {

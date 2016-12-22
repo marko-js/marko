@@ -619,6 +619,10 @@ class TagLoader {
     autocomplete(value) {
         this.tag.autocomplete = value;
     }
+
+    parseOptions(value) {
+        this.tag.parseOptions = value;
+    }
 }
 
 function isSupportedProperty(name) {

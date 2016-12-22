@@ -76,7 +76,10 @@
         ]
     },
     "<import>": {
-        "code-generator": "./import-tag"
+        "code-generator": "./import-tag",
+        "parse-options": {
+            "relaxRequireCommas": true
+        }
     },
     "<include>": {
         "renderer": "./include-tag",
