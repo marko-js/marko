@@ -47,9 +47,9 @@ function writeInitWidgetsCode(widgetsContext, out) {
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
     out.write('<script' + nonceAttr + '>' +
-        '(function(){var w=window;(w.$widgets||w.$widgets||(w.$widgets=[])).concat(' +
+        '(function(){var w=window;w.$widgets=((w.$widgets||[]).concat(' +
         warp10.stringify(renderedWidgets).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
-         ')})()</script>');
+         ')||w.$widgets)})()</script>');
 
     widgetsContext.$__clearWidgets();
 }
