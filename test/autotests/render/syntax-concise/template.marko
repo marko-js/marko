@@ -4,9 +4,9 @@ var currentPage='home'
 <!DOCTYPE html>
 html lang="en"
     head
-        title - ${pageTitle}
+        title -- ${pageTitle}
     body
-        h1 - ${pageTitle}
+        h1 -- ${pageTitle}
 
         p
             ---
@@ -21,15 +21,15 @@ html lang="en"
                 ${feature}
 
         ul if(data.colors && data.colors.length)
-            li for(color in data.colors) - ${color}
+            li for(color in data.colors) -- ${color}
         div else
-            - No colors!
+            -- No colors!
 
         tabs
             tabs:tab title="Tab 1"
-                - Body content for Tab 1
+                -- Body content for Tab 1
             tabs:tab title="Tab 2"
-                - Body content for Tab 2
+                -- Body content for Tab 2
 
         script type='text/javascript'
             ---
@@ -40,7 +40,7 @@ html lang="en"
 
         macro navLink(id, href, title)
             li
-                a.nav-link class=(id === currentPage && 'active') href=href - ${title}
+                a.nav-link class=(id === currentPage && 'active') href=href -- ${title}
 
         ul
             navLink('home', '/', 'Home')
