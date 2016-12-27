@@ -64,7 +64,7 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     }
 ]);
 
-var inRegExp = /^([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
+var inRegExp = /^\s*([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
 
 
 function throwError(message) {
