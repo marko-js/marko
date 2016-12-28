@@ -1,3 +1,5 @@
+var loadWidget = require('./loadWidget');
+
 var registered = {};
 var loaded = {};
 var widgetTypes = {};
@@ -27,7 +29,7 @@ function load(typeName) {
             target = target();
         }
         if (!target) {
-            target = require(typeName); // Assume the typeName has been fully resolved already
+            target = loadWidget(typeName); // Assume the typeName has been fully resolved already
         }
         loaded[typeName] = target || null;
     }

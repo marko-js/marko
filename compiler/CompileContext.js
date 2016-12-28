@@ -510,9 +510,17 @@ class CompileContext extends EventEmitter {
         var builder = this.builder;
 		varName = varName || removeExt(path.basename(relativePath)) + '_template';
 
-        var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
-        var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
-        var templateVar = this.addStaticVar(varName, loadFunctionCall);
+        var templateVar;
+
+        if (this.options.browser) {
+            // When compiling a Marko template for the browser we just use `require('./template.marko')`
+            templateVar = this.addStaticVar(varName, builder.require(builder.literal(relativePath)));
+        } else {
+            // When compiling a Marko template for the server we just use `loadTemplate(require.resolve('./template.marko'))`
+            let loadTemplateArg = requireResolve(builder, builder.literal(relativePath));
+            let loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ loadTemplateArg ]);
+            templateVar = this.addStaticVar(varName, loadFunctionCall);
+        }
 
         this.pushMeta('tags', builder.literal(relativePath), true);
 

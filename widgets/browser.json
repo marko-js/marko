@@ -6,5 +6,11 @@
             "run": true,
             "if": "!flags.contains('marko-widgets/no-client-init')"
         }
+    ],
+    "requireRemap": [
+        {
+            "from": "./loadWidget.js",
+            "to": "./loadWidget-dynamic.js"
+        }
     ]
 }
