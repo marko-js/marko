@@ -105,7 +105,7 @@ class Parser {
             node: rootNode
         });
 
-        this.parserImpl.parse(src, this);
+        this.parserImpl.parse(src, this, context.filename);
 
         return rootNode;
     }

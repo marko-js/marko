@@ -3,11 +3,17 @@ Changelog
 
 # 3.x
 
+## 3.14.x
+
+### 3.14.0
+
+- Fixed [#483](https://github.com/marko-js/marko/issues/483) - Upgrade Marko v3 to `htmljs-parser@^2` and enable `legacyCompatibility` option
+
 ## 3.13.x
 
 ### 3.13.2
 
-- Fixed [#478](TagLookup fails when merging taglibs) - TagLookup fails when merging taglibs
+- Fixed [#478](https://github.com/marko-js/marko/issues/478) - TagLookup fails when merging taglibs
 
 ### 3.13.1
 

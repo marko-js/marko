@@ -1,84 +1,84 @@
 {
-    "name": "marko",
-    "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
-    "keywords": [
-        "templating",
-        "template",
-        "async",
-        "streaming"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/marko-js/marko.git"
-    },
-    "scripts": {
-        "test": "npm run mocha && npm run jshint",
-        "mocha": "mocha --ui bdd --reporter spec ./test/",
-        "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
-        "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
-        "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
-        "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
-        "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
-        "jshint": "jshint compiler/ runtime/ taglibs/",
-        "coveralls": "cat ./coverage/lcov.info | coveralls"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": [
-        "Patrick Steele-Idem <pnidem@gmail.com>"
-    ],
-    "dependencies": {
-        "app-module-path": "^1.0.5",
-        "async-writer": "^2.0.0",
-        "browser-refresh-client": "^1.0.0",
-        "char-props": "~0.1.5",
-        "deresolve": "^1.0.0",
-        "esprima": "^2.7.0",
-        "events": "^1.0.2",
-        "htmljs-parser": "^1.5.3",
-        "lasso-package-root": "^1.0.0",
-        "minimatch": "^3.0.2",
-        "object-assign": "^4.1.0",
-        "property-handlers": "^1.0.0",
-        "raptor-args": "^1.0.0",
-        "raptor-async": "^1.1.2",
-        "raptor-json": "^1.0.1",
-        "raptor-logging": "^1.0.1",
-        "raptor-polyfill": "^1.0.0",
-        "raptor-promises": "^1.0.1",
-        "raptor-regexp": "^1.0.0",
-        "raptor-renderer": "^1.4.4",
-        "raptor-strings": "^1.0.0",
-        "raptor-util": "^2.0.0",
-        "resolve-from": "^1.0.0",
-        "strip-json-comments": "^2.0.1",
-        "try-require": "^1.2.1"
-    },
-    "devDependencies": {
-        "bluebird": "^2.9.30",
-        "chai": "^3.3.0",
-        "coveralls": "^2.11.9",
-        "express": "^4.13.4",
-        "istanbul": "^0.4.3",
-        "jshint": "^2.5.0",
-        "mocha": "^2.3.3",
-        "request": "^2.72.0",
-        "require-self-ref": "^2.0.1",
-        "through": "^2.3.4"
-    },
-    "license": "Apache-2.0",
-    "bin": {
-        "markoc": "bin/markoc"
-    },
-    "main": "runtime/marko-runtime.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "browser": {
-        "./node-require.js": "./node-require-browser.js"
-    },
-    "homepage": "http://markojs.com/",
-    "logo": {
-        "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
-    },
-    "version": "3.13.2"
+  "name": "marko",
+  "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
+  "keywords": [
+    "templating",
+    "template",
+    "async",
+    "streaming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko.git"
+  },
+  "scripts": {
+    "test": "npm run mocha && npm run jshint",
+    "mocha": "mocha --ui bdd --reporter spec ./test/",
+    "test-coverage": "istanbul cover _mocha --include-all-sources -- --ui bdd --reporter spec ./test && npm run jshint",
+    "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
+    "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
+    "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
+    "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
+    "jshint": "jshint compiler/ runtime/ taglibs/",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
+  },
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "maintainers": [
+    "Patrick Steele-Idem <pnidem@gmail.com>"
+  ],
+  "dependencies": {
+    "app-module-path": "^1.0.5",
+    "async-writer": "^2.0.0",
+    "browser-refresh-client": "^1.0.0",
+    "char-props": "~0.1.5",
+    "deresolve": "^1.0.0",
+    "esprima": "^2.7.0",
+    "events": "^1.0.2",
+    "htmljs-parser": "^2.2.1",
+    "lasso-package-root": "^1.0.0",
+    "minimatch": "^3.0.2",
+    "object-assign": "^4.1.0",
+    "property-handlers": "^1.0.0",
+    "raptor-args": "^1.0.0",
+    "raptor-async": "^1.1.2",
+    "raptor-json": "^1.0.1",
+    "raptor-logging": "^1.0.1",
+    "raptor-polyfill": "^1.0.0",
+    "raptor-promises": "^1.0.1",
+    "raptor-regexp": "^1.0.0",
+    "raptor-renderer": "^1.4.4",
+    "raptor-strings": "^1.0.0",
+    "raptor-util": "^2.0.0",
+    "resolve-from": "^1.0.0",
+    "strip-json-comments": "^2.0.1",
+    "try-require": "^1.2.1"
+  },
+  "devDependencies": {
+    "bluebird": "^2.9.30",
+    "chai": "^3.3.0",
+    "coveralls": "^2.11.9",
+    "express": "^4.13.4",
+    "istanbul": "^0.4.3",
+    "jshint": "^2.5.0",
+    "mocha": "^2.3.3",
+    "request": "^2.72.0",
+    "require-self-ref": "^2.0.1",
+    "through": "^2.3.4"
+  },
+  "license": "Apache-2.0",
+  "bin": {
+    "markoc": "bin/markoc"
+  },
+  "main": "runtime/marko-runtime.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "browser": {
+    "./node-require.js": "./node-require-browser.js"
+  },
+  "homepage": "http://markojs.com/",
+  "logo": {
+    "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
+  },
+  "version": "3.13.2"
 }

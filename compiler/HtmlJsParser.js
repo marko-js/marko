@@ -6,7 +6,7 @@ class HtmlJsParser {
         this.ignorePlaceholders = options && options.ignorePlaceholders === true;
     }
 
-    parse(src, handlers) {
+    parse(src, handlers, filename) {
         var listeners = {
             onText(event) {
                 handlers.handleCharacters(event.value);
@@ -84,9 +84,11 @@ class HtmlJsParser {
             ignorePlaceholders: this.ignorePlaceholders,
             isOpenTagOnly: function(tagName) {
                 return handlers.isOpenTagOnly(tagName);
-            }
+            },
+            legacyCompatibility: true
+
         });
-        parser.parse(src);
+        parser.parse(src, filename);
     }
 }
 
