@@ -3,7 +3,7 @@ console.log('Minifying JavaScript bundles...');
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
-
+const UglifyJS = require("uglify-js");
 const formatNumber = require('format-number')();
 
 var buildDir = path.join(__dirname, 'build');
@@ -41,12 +41,9 @@ var minifiers = {
     },
     uglify: function minifyUglifyJS(src, file) {
         try {
-            var UglifyJS = require("uglify-js");
-            var options = {
+            return UglifyJS.minify(src, {
                 fromString: true
-            };
-
-            return UglifyJS.minify(src, options).code;
+            }).code;
         } catch(e) {
             if (e.line != null) {
                 console.error(`Failed to minify ${file}`);
@@ -57,11 +54,15 @@ var minifiers = {
             throw e;
         }
 
+    },
+    both: function(src, file) {
+        var withGCC = minifiers.gcc(src, file);
+        var withBoth = minifiers.uglify(withGCC, file);
+        return withBoth.length < withGCC.length ? withBoth : withGCC;
     }
 };
 
-
-var minify = minifiers.gcc;
+var minifier = minifiers.both;
 
 var bundleFiles = fs.readdirSync(bundlesDir);
 
@@ -86,7 +87,7 @@ bundleFiles.forEach((filename) => {
 
     var src = fs.readFileSync(file, { encoding: 'utf8' });
 
-    var minifiedSrc = minify(src, file);
+    var minifiedSrc = minifier(src, file);
 
     console.log(`Done minifying ${file}`);
 
