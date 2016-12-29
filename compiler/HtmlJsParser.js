@@ -6,7 +6,7 @@ class HtmlJsParser {
         this.ignorePlaceholders = options && options.ignorePlaceholders === true;
     }
 
-    parse(src, handlers) {
+    parse(src, handlers, filename) {
         var listeners = {
             onText(event) {
                 handlers.handleCharacters(event.value, event.parseMode);
@@ -39,7 +39,7 @@ class HtmlJsParser {
                 event.selfClosed = false; // Don't allow self-closed tags
 
                 var tagParseOptions = handlers.getTagParseOptions(event);
-                
+
                 if (tagParseOptions) {
                     event.setParseOptions(tagParseOptions);
                 }
@@ -92,7 +92,7 @@ class HtmlJsParser {
                 return handlers.isOpenTagOnly(tagName);
             }
         });
-        parser.parse(src);
+        parser.parse(src, filename);
     }
 }
 
