@@ -171,6 +171,10 @@ exports.fp = function forEachPropertyHelper(o, func) {
         for (var i=0; i<o.length; i++) {
             func(i, o[i]);
         }
+    } else if (typeof Map && o instanceof Map) {
+        o.forEach(function(v, k) {
+            func(k, v);
+        });
     } else {
         for (var k in o) {
             if (o.hasOwnProperty(k)) {
