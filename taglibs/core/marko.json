@@ -9,6 +9,17 @@
             }
         ]
     },
+    "<body-slot>": {
+        "code-generator": "./body-slot-tag",
+        "attributes": {},
+        "autocomplete": [
+            {
+                "displayText": "body-slot",
+                "snippet": "body-slot",
+                "openTagOnly": true
+            }
+        ]
+    },
     "<else>": {
         "node-factory": "./else-tag",
         "attributes": {},
@@ -299,8 +310,8 @@
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {
-                    "displayText": "include()",
-                    "snippet": "include()",
+                    "displayText": "include(data.renderBody)",
+                    "snippet": "include(data.renderBody)",
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {

@@ -142,6 +142,7 @@ class TransformHelper {
 }
 
 TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
+TransformHelper.prototype.handleBodySlotNode = require('./handleBodySlotNode');
 TransformHelper.prototype.handleRootNodes = require('./handleRootNodes');
 TransformHelper.prototype.handleIncludeNode = require('./handleIncludeNode');
 TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');

@@ -21,7 +21,11 @@ module.exports = function(includeNode) {
 
         let parentTransformHelper = this.getTransformHelper(parentNode);
 
-        if (includeNode.argument) {
+        if (includeNode.data.bodySlot) {
+            parentTransformHelper.assignWidgetId(false /* not repeated */);
+            var widgetProps = this.getWidgetProps();
+            widgetProps.body = parentTransformHelper.getNestedIdExpression();
+        } else {
             let widgetIdInfo = parentTransformHelper.assignWidgetId(true /* repeated */);
             if (!widgetIdInfo.idVarNode) {
                 let idVarNode = widgetIdInfo.createIdVarNode();
@@ -29,19 +33,11 @@ module.exports = function(includeNode) {
                     event.insertCode(idVarNode);
                 });
             }
-        } else {
-            parentTransformHelper.assignWidgetId(false /* not repeated */);
-            var widgetProps = this.getWidgetProps();
-            widgetProps.body = parentTransformHelper.getNestedIdExpression();
         }
 
         includeNode.setRendererPath(includeTagForWidgets);
 
         includeNode.onBeforeGenerateCode(function() {
-            if (!includeNode.data.includeTarget) {
-                includeNode.addProp('_target', builder.memberExpression(builder.identifier('widget'), builder.identifier('body')));
-            }
-
             includeNode.addProp('_elId', parentTransformHelper.getIdExpression());
             includeNode.addProp('_arg', builder.identifier('widget'));
         });

@@ -159,8 +159,10 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                 var lightweightWidget = Object.create(renderingLogic);
                 lightweightWidget.onInput(input);
                 widgetState = lightweightWidget.state;
+                widgetBody = lightweightWidget.body;
                 widgetConfig = lightweightWidget;
                 delete widgetConfig.state;
+                delete widgetConfig.body;
             } else {
                 if (getWidgetConfig) {
                     // If getWidgetConfig() was implemented then use that to
@@ -172,16 +174,17 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                 } else {
                     widgetConfig = input.widgetConfig;
                 }
+
+                if (getInitialBody) {
+                    // If we have widget a widget body then pass it to the template
+                    // so that it is available to the widget tag and can be inserted
+                    // at the w-body marker
+                    widgetBody = getInitialBody(input, out);
+                }
             }
 
-            if (getInitialBody) {
-                // If we have widget a widget body then pass it to the template
-                // so that it is available to the widget tag and can be inserted
-                // at the w-body marker
-                widgetBody = getInitialBody(input, out);
-            } else {
+            if (!widgetBody) {
                 // Default to using the nested content as the widget body
-                // getInitialBody was not implemented
                 widgetBody = input.renderBody;
             }
 
@@ -292,7 +295,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         widgetDef.$__existingWidget = existingWidget;
         widgetDef.$__bodyElId = bodyElId;
         widgetDef.$__roots = roots;
-        widgetDef.body = widgetBody;
+        widgetDef.b = widgetBody;
 
         // Render the template associated with the component using the final template
         // data that we constructed

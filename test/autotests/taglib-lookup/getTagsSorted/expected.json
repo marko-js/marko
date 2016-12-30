@@ -16,6 +16,7 @@
     "await-timeout",
     "bar",
     "body",
+    "body-slot",
     "browser-refresh",
     "cached-fragment",
     "else",

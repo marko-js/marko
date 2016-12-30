@@ -96,14 +96,12 @@
                 }
             ]
         },
+        "@body-slot": {
+            "preserve-name": true
+        },
         "@w-body": {
             "preserve-name": true,
-            "autocomplete": [
-                {
-                    "openTagOnly": true,
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
-                }
-            ]
+            "autocomplete": []
         },
         "@w-preserve": {
             "type": "flag",

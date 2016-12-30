@@ -125,17 +125,6 @@ function initWidget(widgetDef, doc) {
 
     widgetLookup[id] = widget;
 
-    if (state) {
-        for (var k in state) {
-            if (state.hasOwnProperty(k)) {
-                var v = state[k];
-                if (typeof v === 'function' || v == null) {
-                    delete state[k];
-                }
-            }
-        }
-    }
-
     widget.state = state || {}; // First time rendering so use the provided state or an empty state object
 
     if (!config) {

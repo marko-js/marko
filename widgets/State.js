@@ -69,10 +69,6 @@ State.prototype = {
             ensure(self, name);
         }
 
-        if (typeof value === 'function') {
-            return;
-        }
-
         if (value === null) {
             // Treat null as undefined to simplify our comparison logic
             value = undefined;

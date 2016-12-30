@@ -403,6 +403,10 @@ class CustomTag extends HtmlElement {
         Object.assign(this._additionalProps, additionalProps);
     }
 
+    hasProp(name) {
+        return this._additionalProps && this._additionalProps.hasOwnProperty(name);
+    }
+
     addProp(name, value) {
         if (!this._additionalProps) {
             this._additionalProps = {};

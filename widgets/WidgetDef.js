@@ -21,7 +21,7 @@ function WidgetDef(id, out, widgetStack, widgetStackLen) {
         this.$__customEvents =  // An array containing information about custom events
         this.$__bodyElId =      // The ID for the default body element (if any any)
         this.$__roots =         // IDs of root elements if there are multiple root elements
-        this.body =
+        this.b =
         this.$__existingWidget =
         this.$__children = // An array of nested WidgetDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)

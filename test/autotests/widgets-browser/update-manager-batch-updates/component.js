@@ -6,10 +6,7 @@ module.exports = {
             className: input['class'],
             attrs: input['*']
         };
-    },
-
-    getInitialBody: function(input) {
-        return input.label || input.renderBody;
+        this.body = input.label || input.renderBody;
     },
     getTemplateData: function(state, input) {
         var rootAttrs = {};
