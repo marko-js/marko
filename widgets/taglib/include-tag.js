@@ -17,7 +17,7 @@ module.exports = function include(input, out) {
         var existingEl = document.getElementById(elId);
         if (existingEl) {
             var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-            widgetsContext.$__preserveDOMNode(existingEl, true /* body only */);
+            widgetsContext.$__preserveDOMNode(elId, true /* body only */);
         }
     }
 };

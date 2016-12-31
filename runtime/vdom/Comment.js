@@ -13,7 +13,7 @@ Comment.prototype = {
         return document.createComment(this.nodeValue);
     },
 
-    cloneNode: function() {
+    $__cloneNode: function() {
         return new Comment(this.nodeValue);
     }
 };

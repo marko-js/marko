@@ -1,20 +1,15 @@
-function IdProvider(out) {
-    var global = this.global = out.global;
-    this.$__prefix = global.widgetIdPrefix || 'w';
+var KEY = Symbol();
 
-    if (global._nextWidgetId == null) {
-        global._nextWidgetId = 0;
-    }
+function UniqueId(out) {
+    this.prefix = out.global.widgetIdPrefix || 'w';
+    this.nextId = 0;
 }
-
-IdProvider.prototype.$__nextId = function() {
-    return this.$__prefix + (this.global._nextWidgetId++);
-};
 
 module.exports = function (out) {
     var global = out.global;
-    var idProvider = global._widgetIdProvider ||
-        (global._widgetIdProvider = new IdProvider(out));
 
-    return idProvider.$__nextId();
+    var idProvider = global[KEY] ||
+        (global[KEY] = new UniqueId(out));
+
+    return idProvider.prefix + (idProvider.nextId++);
 };

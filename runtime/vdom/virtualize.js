@@ -16,9 +16,6 @@ function virtualize(node) {
         var attributes = node.attributes;
         var attrCount = attributes.length;
 
-        var childNodes = node.childNodes;
-        var childCount = childNodes.length;
-
         var attrs;
 
         if (attrCount) {
@@ -38,7 +35,7 @@ function virtualize(node) {
             }
         }
 
-        var vdomEL = new HTMLElement(node.nodeName, attrs, childCount);
+        var vdomEL = new HTMLElement(node.nodeName, attrs);
 
         if (vdomEL.$__isTextArea) {
             vdomEL.value = node.value;

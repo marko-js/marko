@@ -1,3 +1,3 @@
 var widgets = {};
 
-exports.widgets = widgets;
+exports.$__widgets = widgets;

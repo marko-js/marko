@@ -10,23 +10,22 @@ module.exports = function transform(el, context) {
     }
 
     if (el.hasAttribute('w-body')) {
+        let builder = context.builder;
         let bodyValue = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
 
-        if (bodyValue) {
-            let includeNode = context.createNodeForEl('include');
-            includeNode.addProp('_target', bodyValue);
-            el.appendChild(includeNode);
-        } else {
-            el.setAttributeValue('body-slot', null);
+        let includeNode = context.createNodeForEl('include');
+
+        if (!bodyValue) {
+            bodyValue = builder.memberExpression(
+                builder.identifier('widget'),
+                builder.identifier('b'));
+
+            includeNode.data.bodySlot = true;
         }
-    }
 
-    if (el.hasAttribute('body-slot')) {
-        el.removeAttribute('body-slot');
-
-        let bodySlotNode = context.createNodeForEl('body-slot');
-        el.appendChild(bodySlotNode);
+        includeNode.addProp('_target', bodyValue);
+        el.appendChild(includeNode);
     }
 
     if (el.tagName === 'widget-types') {
@@ -34,9 +33,6 @@ module.exports = function transform(el, context) {
     } else if (el.tagName === 'include') {
         transformHelper.handleIncludeNode(el);
         transformHelper.getWidgetArgs().compile(transformHelper);
-        return;
-    } else if (el.tagName === 'body-slot') {
-        transformHelper.handleBodySlotNode(el);
         return;
     }
 

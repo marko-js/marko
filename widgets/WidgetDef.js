@@ -1,5 +1,5 @@
 'use strict';
-var repeatedId = require('./repeated-id');
+var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var uniqueId = require('./uniqueId');
 
@@ -19,13 +19,12 @@ function WidgetDef(id, out, widgetStack, widgetStackLen) {
         this.$__state =         // Widget state object (may be null)
         this.$__scope =         // The ID of the widget that this widget is scoped within
         this.$__customEvents =  // An array containing information about custom events
-        this.$__bodyElId =      // The ID for the default body element (if any any)
         this.$__roots =         // IDs of root elements if there are multiple root elements
         this.b =
         this.$__existingWidget =
         this.$__children = // An array of nested WidgetDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
-        this.widget = // This is used by RenderResult to reference the associated widget instance after creation
+        this.$__widget = // This is used by RenderResult to reference the associated widget instance after creation
         null;
 
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
@@ -70,7 +69,7 @@ WidgetDef.prototype = {
             return this.id;
         } else {
             if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
-                return repeatedId.$__nextId(this.$__out, this.id, nestedId);
+                return nextRepeatedId(this.$__out, this.id, nestedId);
             } else {
                 return this.id + '-' + nestedId;
             }
@@ -112,7 +111,6 @@ WidgetDef.prototype = {
             p: customEvents && this.$__scope, // Only serialize scope if we need to attach custom events
             e: this.$__domEvents,
             ce: this.$__customEvents,
-            b: this.$__bodyElId,
             c: this.$__config
         };
 
@@ -139,7 +137,6 @@ WidgetDef.$__deserialize = function(o, types) {
         $__scope: extra.p,
         $__domEvents: extra.e,
         $__customEvents: extra.ce,
-        $__bodyElId: extra.b,
         $__config: extra.c
     };
 };

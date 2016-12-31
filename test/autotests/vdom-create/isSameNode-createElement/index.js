@@ -4,7 +4,7 @@ module.exports = function(helpers) {
     var div = helpers.vdom.createElement('div', null, 0 /* childCount */, 'abc123' /* key */);
     var span = helpers.vdom.createElement('span', null, 0 /* childCount */);
 
-    var divClone = div.cloneNode();
+    var divClone = div.$__cloneNode();
     expect(div.isSameNode(divClone)).to.equal(true);
     expect(divClone.isSameNode(div)).to.equal(true);
 

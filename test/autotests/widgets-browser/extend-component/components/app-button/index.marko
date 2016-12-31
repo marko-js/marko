@@ -4,5 +4,7 @@
         'app-button-' + state.variant,
         'app-button-' + state.size
     ] onClick("handleClick")>
-    <span body-slot/>
+    <span>
+        <include(state.body)/>
+    </span>
 </button>

@@ -1,15 +1,10 @@
 module.exports = {
 
     onInput: function(input) {
-        var type = input.type || 'success';
-
         this.state = {
-            type: type
+            type: input.type || 'success',
+            body: input.message || input.renderBody
         };
-    },
-
-    getInitialBody: function(input) {
-        return input.message || input.renderBody;
     },
 
     setType: function(newType) {

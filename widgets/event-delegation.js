@@ -1,5 +1,5 @@
 var updateManager = require('./update-manager');
-var widgetLookup = require('./lookup').widgets;
+var widgetLookup = require('./lookup').$__widgets;
 var warp10Parse = require('warp10/parse');
 
 function getObjectAttribute(el, attrName) {

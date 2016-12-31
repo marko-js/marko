@@ -4,8 +4,9 @@ var eventDelegation = require('./event-delegation');
 var win = window;
 var defaultDocument = document;
 var events = require('../runtime/events');
-var widgetLookup = require('./lookup').widgets;
+var widgetLookup = require('./lookup').$__widgets;
 var WidgetDef = require('./WidgetDef');
+var extend = require('raptor-util/extend');
 
 var registry; // We initialize this later to avoid issues with circular dependencies
 
@@ -37,24 +38,6 @@ function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs
     handles.push(handle);
 }
 
-function getNestedEl(widget, nestedId, document) {
-    if (nestedId == null) {
-        return null;
-
-    }
-    if (nestedId === '') {
-        return widget.getEl();
-    }
-
-    if (typeof nestedId === 'string') {
-        if (nestedId.charAt(0) === '#') {
-            return document.getElementById(nestedId.substring(1));
-        }
-    }
-
-    return widget.getEl(nestedId);
-}
-
 function initWidget(widgetDef, doc) {
     var type = widgetDef.$__type;
     var id = widgetDef.id;
@@ -63,7 +46,6 @@ function initWidget(widgetDef, doc) {
     var scope = widgetDef.$__scope;
     var domEvents = widgetDef.$__domEvents;
     var customEvents = widgetDef.$__customEvents;
-    var bodyElId = widgetDef.$__bodyElId;
     var existingWidget = widgetDef.$__existingWidget;
 
     var el;
@@ -83,10 +65,10 @@ function initWidget(widgetDef, doc) {
     }
 
     if (existingWidget) {
-        existingWidget._reset(true /* shouldRemoveDOMEventListeners */);
+        existingWidget.$__reset(true /* shouldRemoveDOMEventListeners */);
         widget = existingWidget;
     } else {
-        widget = registry.createWidget(type, id, doc);
+        widget = registry.$__createWidget(type, id, doc);
     }
 
     var els;
@@ -110,7 +92,7 @@ function initWidget(widgetDef, doc) {
             } else {
                 var rootEl = doc.getElementById(nestedId);
                 if (rootEl) {
-                    rootEl.__widget = widget;
+                    rootEl._w = widget;
                     els.push(rootEl);
                 }
             }
@@ -119,7 +101,7 @@ function initWidget(widgetDef, doc) {
         el = els[0];
     } else {
         el = doc.getElementById(id);
-        el.__widget = widget;
+        el._w = widget;
         els = [el];
     }
 
@@ -135,7 +117,6 @@ function initWidget(widgetDef, doc) {
         widget.el = el;
         widget.els = els;
         widget.$__rootWidgets = rootWidgets;
-        widget.$__bodyEl = getNestedEl(widget, bodyElId, doc);
 
         if (domEvents) {
             var eventListenerHandles = [];
@@ -187,8 +168,8 @@ function initWidget(widgetDef, doc) {
         events.emit('initWidget', initEventArgs);
 
         widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
-        copyConfigToWidget(widget, config);
-        widget.initWidget(config);
+        extend(widget, config);
+        widget.$__initWidget(config);
         widget.$__emitLifecycleEvent('afterInit', initEventArgs);
 
         widget.$__emitLifecycleEvent('render', { firstRender: true });
@@ -197,12 +178,6 @@ function initWidget(widgetDef, doc) {
     }
 
     return widget;
-}
-
-function copyConfigToWidget(widget, config) {
-    for(var key in config) {
-        widget[key] = config[key];
-    }
 }
 
 /**
@@ -234,7 +209,7 @@ function initClientRendered(widgetDefs, doc) {
             widgetDef,
             doc);
 
-        widgetDef.widget = widget;
+        widgetDef.$__widget = widget;
     }
 }
 

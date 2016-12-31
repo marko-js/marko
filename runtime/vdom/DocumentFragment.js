@@ -18,7 +18,7 @@ DocumentFragment.prototype = {
 
     $__nsAware: true,
 
-    cloneNode: function() {
+    $__cloneNode: function() {
         return new DocumentFragmentClone(this);
     },
 

@@ -4,9 +4,9 @@ module.exports = {
             size: input.size || 'normal',
             variant: input.variant || 'primary',
             className: input['class'],
-            attrs: input['*']
+            attrs: input['*'],
+            body: input.label || input.renderBody
         };
-        this.body = input.label || input.renderBody;
     },
     getTemplateData: function(state, input) {
         var rootAttrs = {};

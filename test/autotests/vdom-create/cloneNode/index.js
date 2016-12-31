@@ -19,7 +19,7 @@ module.exports = function(helpers) {
                 'xlink:href': 'http://ebay.com/'
             }, 0);
 
-    var clone = el.cloneNode();
+    var clone = el.$__cloneNode();
     expect(clone).to.not.equal(el);
     expect(clone.nodeName).to.equal('div');
     expect(clone.hasAttributeNS(null, 'class')).to.equal(true);

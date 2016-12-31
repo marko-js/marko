@@ -34,31 +34,23 @@ var proto = RenderResult.prototype = {
             return rerenderWidget;
         }
 
-        return getWidgetDefs(this)[0].widget;
+        return getWidgetDefs(this)[0].$__widget;
     },
     getWidgets: function(selector) {
         checkAddedToDOM(this, 'getWidgets');
 
         var widgetDefs = getWidgetDefs(this);
 
-        var widgets;
+        var widgets = [];
         var i;
-        if (selector) {
-            // use the selector to find the widgets that the caller wants
-            widgets = [];
-            for (i = 0; i < widgetDefs.length; i++) {
-                var widget = widgetDefs[i].widget;
-                if (selector(widget)) {
-                    widgets.push(widget);
-                }
-            }
-        } else {
-            // return all widgets
-            widgets = new Array(widgetDefs.length);
-            for (i = 0; i < widgetDefs.length; i++) {
-                widgets[i] = widgetDefs[i].widget;
+
+        for (i = 0; i < widgetDefs.length; i++) {
+            var widget = widgetDefs[i].$__widget;
+            if (!selector || selector(widget)) {
+                widgets.push(widget);
             }
         }
+
         return widgets;
     },
 

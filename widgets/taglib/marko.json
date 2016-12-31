@@ -96,9 +96,6 @@
                 }
             ]
         },
-        "@body-slot": {
-            "preserve-name": true
-        },
         "@w-body": {
             "preserve-name": true,
             "autocomplete": []

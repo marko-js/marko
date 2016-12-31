@@ -11,29 +11,31 @@ var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('morphdom');
-var widgetLookup = require('./lookup').widgets;
+var widgetLookup = require('./lookup').$__widgets;
 
 var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
 
-var WIDGET_SUBSCRIBE_TO_OPTIONS = null;
+var WIDGET_SUBSCRIBE_TO_OPTIONS;
 var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
 
 var emit = EventEmitter.prototype.emit;
 
-var lifecycleEventMethods = {
-    'beforeDestroy': 'onBeforeDestroy',
-    'destroy': 'onDestroy',
-    'beforeUpdate': 'onBeforeUpdate',
-    'update': 'onUpdate',
-    'mount': 'onMount',
-    'render': 'onRender',
-    'beforeInit': 'onBeforeInit',
-    'afterInit': 'onAfterInit'
-};
+var lifecycleEventMethods = {};
+
+['beforeDestroy',
+'destroy',
+'beforeUpdate',
+'update',
+'mount',
+'render',
+'beforeInit',
+'afterInit'].forEach(function(eventName) {
+    lifecycleEventMethods[eventName] = 'on' + eventName.charAt(0).toUpperCase() + eventName.substring(1);
+});
 
 function removeListener(eventListenerHandle) {
     eventListenerHandle();
@@ -72,10 +74,10 @@ function removeDOMEventListeners(widget) {
 }
 
 function destroyWidgetForEl(el) {
-    var widgetToDestroy = el.__widget;
+    var widgetToDestroy = el._w;
     if (widgetToDestroy) {
         destroyWidgetHelper(widgetToDestroy);
-        el.__widget = null;
+        el._w = null;
 
         while ((widgetToDestroy = widgetToDestroy.$__rootFor)) {
             widgetToDestroy.$__rootFor = null;
@@ -95,12 +97,12 @@ function destroyElRecursive(el) {
 }
 
 function destroyWidgetHelper(widget) {
-    if (widget.isDestroyed()) {
+    if (widget.$__destroyed) {
         return;
     }
 
     emitLifecycleEvent(widget, 'beforeDestroy');
-    widget.$__lifecycleState = 'destroyed';
+    widget.$__destroyed = true;
 
     widget.els = null;
     widget.el = null;
@@ -236,7 +238,7 @@ function Widget(id, document) {
     this.$__roots = null;
     this.$__subscriptions = null;
     this.$__domEventListenerHandles = null;
-    this.$__lifecycleState = null;
+    this.$__destroyed = false;
     this.$__customEvents = null;
     this.$__scope = null;
     this.$__updateQueued = false;
@@ -303,14 +305,13 @@ Widget.prototype = widgetProto = {
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = getElIdHelper(this, id, index);
-        return widgetLookup[targetWidgetId];
+        return widgetLookup[getElIdHelper(this, id, index)];
     },
     getWidgets: function(id) {
         var widgets = [];
         var i=0;
         while(true) {
-            var widget = this.getWidget(id, i);
+            var widget = widgetLookup[getElIdHelper(this, id, i)];
             if (!widget) {
                 break;
             }
@@ -320,7 +321,7 @@ Widget.prototype = widgetProto = {
         return widgets;
     },
     destroy: function () {
-        if (this.isDestroyed()) {
+        if (this.$__destroyed) {
             return;
         }
 
@@ -348,43 +349,47 @@ Widget.prototype = widgetProto = {
         destroyWidgetHelper(this);
     },
     isDestroyed: function () {
-        return this.$__lifecycleState === 'destroyed';
+        return this.$__destroyed;
     },
     get state() {
         return this.$__state;
     },
     set state(value) {
         if(!this.$__state && value) {
-            this.$__state = new this.State(this, value);
+            this.$__state = new this.$__State(this, value);
         } else {
             this.$__state.$__replace(value);
         }
     },
     setState: function(name, value) {
+        var state = this.$__state;
+
         if (typeof name === 'object') {
             // Merge in the new state with the old state
             var newState = name;
             for (var k in newState) {
                 if (newState.hasOwnProperty(k)) {
-                    this.state.$__set(k, newState[k], true /* ensure:true */);
+                    state.$__set(k, newState[k], true /* ensure:true */);
                 }
             }
             return;
         }
 
-         this.state.$__set(name, value, true /* ensure:true */);
+         state.$__set(name, value, true /* ensure:true */);
     },
 
     setStateDirty: function(name, value) {
+        var state = this.$__state;
+
         if (arguments.length === 1) {
-            value = this.state[name];
+            value = state[name];
         }
 
-        this.state.$__set(name, value, true /* ensure:true */, true /* forceDirty:true */);
+        state.$__set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
     replaceState: function(newState) {
-        this.state.$__replace(newState);
+        this.$__state.$__replace(newState);
     },
 
     /**
@@ -418,13 +423,15 @@ Widget.prototype = widgetProto = {
     },
 
     update: function() {
-        if (this.isDestroyed()) {
-          return;
+        if (this.$__destroyed) {
+            return;
         }
 
         var newProps = this.$__newProps;
 
-        if (this.shouldUpdate(newProps, this.state) === false) {
+        var state = this.$__state;
+
+        if (this.shouldUpdate(newProps, state) === false) {
             resetWidget(this);
             return;
         }
@@ -435,7 +442,7 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        var state = this.$__state;
+
 
         if (!state.$__dirty) {
             // Don't even bother trying to update this widget since it is
@@ -471,7 +478,7 @@ Widget.prototype = widgetProto = {
         return this.$__state.$__dirty;
     },
 
-    _reset: function(shouldRemoveDOMEventListeners) {
+    $__reset: function(shouldRemoveDOMEventListeners) {
         resetWidget(this);
 
         if (shouldRemoveDOMEventListeners) {
@@ -499,7 +506,6 @@ Widget.prototype = widgetProto = {
         }
 
         var renderer = self.renderer;
-        self.$__lifecycleState = 'rerender';
 
         var state = self.$__state;
 
@@ -547,15 +553,6 @@ Widget.prototype = widgetProto = {
                     var preserved = widgetsContext.$__preserved[id];
 
                     if (preserved && !preserved.$__bodyOnly) {
-                        if (preserved.$__bodyEl) {
-                            morphdom(preserved.$__bodyEl, toEl, {
-                                childrenOnly: true,
-                                onNodeDiscarded: onNodeDiscarded,
-                                onBeforeElUpdated: onBeforeElUpdated,
-                                onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-                            });
-                        }
-
                         // Don't morph elements that are associated with widgets that are being
                         // reused or elements that are being preserved. For widgets being reused,
                         // the morphing will take place when the reused widget updates.
@@ -606,8 +603,6 @@ Widget.prototype = widgetProto = {
             }
 
             result.afterInsert(doc);
-
-            self.$__lifecycleState = null;
 
             if (!props) {
                 // We have re-rendered with the new state so our state

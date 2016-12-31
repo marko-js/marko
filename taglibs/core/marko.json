@@ -9,17 +9,6 @@
             }
         ]
     },
-    "<body-slot>": {
-        "code-generator": "./body-slot-tag",
-        "attributes": {},
-        "autocomplete": [
-            {
-                "displayText": "body-slot",
-                "snippet": "body-slot",
-                "openTagOnly": true
-            }
-        ]
-    },
     "<else>": {
         "node-factory": "./else-tag",
         "attributes": {},

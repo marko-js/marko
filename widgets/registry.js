@@ -86,8 +86,7 @@ function createWidget(typeName, id, document) {
 }
 
 exports.$__register = register;
-exports.createWidget = createWidget;
-exports.load = load;
+exports.$__createWidget = createWidget;
 
 defineWidget = require('./defineWidget');
 defineRenderer = require('./defineRenderer');

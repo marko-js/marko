@@ -56,7 +56,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     n: function(node) {
         // NOTE: We do a shallow clone since we assume the node is being reused
         //       and a node can only have one parent node.
-        return this.node(node.cloneNode());
+        return this.node(node.$__cloneNode());
     },
 
     node: function(node) {
@@ -185,8 +185,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     getResult: function() {
-        this.$__result = this.$__result || new RenderResult(this);
-        return this.$__result;
+        return this.$__result || (this.$__result = new RenderResult(this));
     },
 
     on: function(event, callback) {

@@ -43,7 +43,7 @@ module.exports = function defineWidget(def, renderer) {
     // we he have set up the prototype chain using the inherit function
     proto = Widget.prototype = WidgetClass.prototype;
 
-    proto.initWidget = WidgetClass;
+    proto.$__initWidget = WidgetClass;
 
     proto.constructor = def.constructor = Widget;
 
@@ -51,9 +51,10 @@ module.exports = function defineWidget(def, renderer) {
     // a widget so that we can short-circuit this work later
     Widget.$__isWidget = true;
 
-    // Set widget state constructor
-    proto.State = function State() { BaseState.apply(this, arguments); };
-    inherit(proto.State, BaseState);
+    function State() { BaseState.apply(this, arguments); }
+    inherit(State, BaseState);
+    proto.$__State = State;
+
 
     if (!renderer) {
         renderer = WidgetClass.renderer || WidgetClass.prototype.renderer;

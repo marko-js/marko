@@ -1,6 +1,5 @@
-var widgetLookup = require('./lookup').widgets;
-var includeTag = require('./taglib/include-tag');
-var repeatedId = require('./repeated-id');
+var widgetLookup = require('./lookup').$__widgets;
+var nextRepeatedId = require('./nextRepeatedId');
 var getRootEls = require('./getRootEls');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
@@ -17,7 +16,7 @@ function resolveWidgetRef(out, ref, scope) {
         var resolvedId;
 
         if (repeatedRegExp.test(ref)) {
-            resolvedId = repeatedId.$__nextId(out, scope, ref);
+            resolvedId = nextRepeatedId(out, scope, ref);
         } else {
             resolvedId = scope + '-' + ref;
         }
@@ -26,45 +25,22 @@ function resolveWidgetRef(out, ref, scope) {
     }
 }
 
-function preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody) {
+function preserveWidgetEls(existingWidget, out, widgetsContext) {
     var rootEls = getRootEls(existingWidget, {});
-    var rootElIds = Object.keys(rootEls);
-
-    var bodyEl;
-
-    if (widgetBody && (bodyEl = existingWidget.$__bodyEl)) {
-        if (rootElIds.length > 1) {
-            // If there are multiple roots then we don't know which root el
-            // contains the body element so we will just need to rerender the
-            // UI component
-            return false;
-        }
-    }
 
     for (var elId in rootEls) {
         var el = rootEls[elId];
-        var tagName = el.tagName;
 
         // We put a placeholder element in the output stream to ensure that the existing
         // DOM node is matched up correctly when using morphdom.
+        out.element(el.tagName, { id: elId });
 
-        out.beginElement(tagName, { id: elId });
-
-        if (bodyEl) {
-            includeTag({
-                _target: widgetBody
-            }, out);
-        }
-
-        out.endElement();
-
-        widgetsContext.$__preserveDOMNode(el, false, bodyEl); // Mark the element as being preserved (for morphdom)
+        widgetsContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
     }
 
-    existingWidget._reset(); // The widget is no longer dirty so reset internal flags
+    existingWidget.$__reset(); // The widget is no longer dirty so reset internal flags
     return true;
 }
-
 
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
@@ -109,7 +85,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
     }
 
     var typeName = widgetProps.type;
-    var bodyElId = widgetProps.body;
     var roots = widgetProps.roots;
     var assignedId = widgetProps.id;
 
@@ -159,10 +134,8 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                 var lightweightWidget = Object.create(renderingLogic);
                 lightweightWidget.onInput(input);
                 widgetState = lightweightWidget.state;
-                widgetBody = lightweightWidget.body;
                 widgetConfig = lightweightWidget;
                 delete widgetConfig.state;
-                delete widgetConfig.body;
             } else {
                 if (getWidgetConfig) {
                     // If getWidgetConfig() was implemented then use that to
@@ -256,22 +229,14 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             // rerender the widget if that is not necessary. If the widget is a stateful
             // widget then we update the existing widget with the new state.
             if (widgetState) {
-                if (existingWidget.$__replaceState(widgetState)) {
-                    // If _processUpdateHandlers() returns true then that means
-                    // that the widget is now up-to-date and we can skip rerendering it, but only if we
-                    // are able to preserve the existing widget els
-                    if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
-                        return;
-                    }
-                }
+                existingWidget.$__replaceState(widgetState);
             }
 
             // If the widget is not dirty (no state changes) and shouldUpdate() returns false
             // then skip rerendering the widget.
-            if (!existingWidget.$__dirty && !existingWidget.shouldUpdate(input, widgetState)) {
-                if (preserveWidgetEls(existingWidget, out, widgetsContext, widgetBody)) {
-                    return;
-                }
+            if (!widgetBody && (!existingWidget.$__isDirty || !existingWidget.shouldUpdate(input, widgetState))) {
+                preserveWidgetEls(existingWidget, out, widgetsContext);
+                return;
             }
         }
 
@@ -293,7 +258,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         widgetDef.$__customEvents = customEvents;
         widgetDef.$__scope = scope;
         widgetDef.$__existingWidget = existingWidget;
-        widgetDef.$__bodyElId = bodyElId;
         widgetDef.$__roots = roots;
         widgetDef.b = widgetBody;
 

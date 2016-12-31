@@ -32,7 +32,6 @@ if (!setImmediate) {
     }
 }
 
-
 function notifyAfterUpdateListeners() {
     var len = queuedListeners.length;
     if (len) {
@@ -102,7 +101,7 @@ function batchUpdate(func) {
     var isOuter = batchStack.length === 0;
 
     var batch = {
-        queue: null
+        $__queue: null
     };
 
     batchStack.push(batch);
@@ -113,8 +112,8 @@ function batchUpdate(func) {
         try {
             // Update all of the widgets that where queued up
             // in this batch (if any)
-            if (batch.queue) {
-                updateWidgets(batch.queue);
+            if (batch.$__queue) {
+                updateWidgets(batch.$__queue);
             }
         } finally {
             // Now that we have completed the update of all the widgets
@@ -154,10 +153,10 @@ function queueWidgetUpdate(widget) {
         // We default the batch queue to null to avoid creating an Array instance
         // unnecessarily. If it is null then we create a new Array, otherwise
         // we push it onto the existing Array queue
-        if (batch.queue) {
-            batch.queue.push(widget);
+        if (batch.$__queue) {
+            batch.$__queue.push(widget);
         } else {
-            batch.queue = [widget];
+            batch.$__queue = [widget];
         }
     } else {
         // We are not within a batched update. We need to schedule a batch update

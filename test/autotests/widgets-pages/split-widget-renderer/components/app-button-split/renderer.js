@@ -1,7 +1,4 @@
 module.exports = {
-    getInitialBody: function(input) {
-        return input.label || input.renderBody;
-    },
     getTemplateData: function(state, input) {
         var rootAttrs = {};
 
@@ -37,7 +34,8 @@ module.exports = {
 
         return {
             type: type,
-            rootAttrs: rootAttrs
+            rootAttrs: rootAttrs,
+            body: input.label || input.renderBody
         };
     }
 };

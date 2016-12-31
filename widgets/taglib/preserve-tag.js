@@ -27,11 +27,10 @@ module.exports = function render(input, out) {
                     // then that means that we have need to render a placeholder to
                     // mark the target location. We can then replace the placeholder
                     // node with the existing DOM node
-                    out.beginElement(tagName, { id: id });
-                    out.endElement();
+                    out.element(tagName, { id: id });
                 }
 
-                widgetsContext.$__preserveDOMNode(existingEl, bodyOnly);
+                widgetsContext.$__preserveDOMNode(id, bodyOnly);
                 return;
             }
         }

@@ -187,7 +187,7 @@ HTMLElement.prototype = {
         targetNode._vattrs = attrs;
     },
 
-    cloneNode: function() {
+    $__cloneNode: function() {
         return new HTMLElementClone(this);
     },
 
@@ -247,7 +247,7 @@ HTMLElement.prototype = {
      * @param  {String} value The value for the new Comment node
      */
     n: function(node) {
-        this.$__appendChild(node.cloneNode());
+        this.$__appendChild(node.$__cloneNode());
         return this.$__finishChild();
     },
 

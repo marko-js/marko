@@ -52,12 +52,12 @@ WidgetsContext.prototype = {
         var parent = widgetStack[widgetStack.length - 1];
         return parent.$__nextId();
     },
-    $__preserveDOMNode: function(existingEl, bodyOnly, bodyEl) {
+    $__preserveDOMNode: function(elId, bodyOnly) {
         var preserved = this.$__preserved ;
         if (preserved === EMPTY_OBJECT) {
             preserved = this.$__preserved = {};
         }
-        preserved[existingEl.id] = { $__bodyOnly: bodyOnly, $__bodyEl: bodyEl };
+        preserved[elId] = { $__bodyOnly: bodyOnly };
     }
 };
 

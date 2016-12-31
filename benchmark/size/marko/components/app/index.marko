@@ -14,13 +14,13 @@
     };
 </script>
 div
-    h1 - Hello ${state.name}!
+    h1 -- Hello ${state.name}!
     div.colors
         ul if(state.colors.length)
             for(color in state.colors)
                 li.color style="background-color: ${color}"
-                    - ${color}
+                    -- ${color}
         div else
-            - No colors!
+            -- No colors!
     button type="button" onClick('handleButtonClick')
-        - You clicked the button ${state.clickCount} time(s)
+        -- You clicked the button ${state.clickCount} time(s)

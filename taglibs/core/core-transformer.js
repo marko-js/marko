@@ -170,24 +170,6 @@ var coreAttrHandlers = [
                 context.addError(el, 'The include attribute must have an argument. For example: include("./target.marko") or include(data.renderBody)');
             }
         }
-    ],
-    [
-        'body-slot', function(attr, node, el) {
-            var context = this.context;
-
-            if (attr.argument) {
-                context.addError(el, 'The body-slot attribute should not have an argument.');
-                return;
-            }
-
-            if (attr.value) {
-                context.addError(el, 'The body-slot attribute should not have a value.');
-                return;
-            }
-
-            var bodySlot = context.createNodeForEl('body-slot');
-            node.appendChild(bodySlot);
-        }
     ]
 ];
 

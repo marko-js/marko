@@ -3,9 +3,9 @@ var className=('alert alert-'+type)
 
 <div class=className role="alert">
     <div>
-        <h1>ALERT! ${type} ${Date.now()}</h1>
+        <h1>ALERT! ${type}</h1>
         <div>
-            <body-slot/>
+            <include(state.body)/>
         </div>
     </div>
 </div>

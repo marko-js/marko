@@ -13,7 +13,7 @@ Text.prototype = {
         return document.createTextNode(this.nodeValue);
     },
 
-    cloneNode: function() {
+    $__cloneNode: function() {
         return new Text(this.nodeValue);
     }
 };

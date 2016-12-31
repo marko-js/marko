@@ -8,7 +8,7 @@ function getWidgetForEl(el, doc) {
     if (el) {
         var node = typeof el === 'string' ? (doc || window.document).getElementById(el) : el;
         if (node) {
-            var widget = node.__widget;
+            var widget = node._w;
 
             while(widget) {
                 var rootFor = widget.$__rootFor;

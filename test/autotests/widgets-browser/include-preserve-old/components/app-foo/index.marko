@@ -2,7 +2,8 @@
     module.exports = {
         onInput: function(input) {
             this.state = {
-                name: input.name
+                name: input.name,
+                body: input.renderBody
             };
         }
     };
@@ -10,5 +11,7 @@
 
 <div.foo>
     <span>Hello ${state.name}!</span>
-    <div.body><body-slot/></div>
+    <div.body>
+        <include(state.body)/>
+    </div>
 </div>
