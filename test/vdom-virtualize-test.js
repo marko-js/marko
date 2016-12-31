@@ -1,5 +1,5 @@
 var path = require('path');
-var virtualize = require('../runtime/vdom/virtualize');
+var virtualize = require('../runtime/vdom/vdom').$__virtualize;
 var fs = require('fs');
 var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;

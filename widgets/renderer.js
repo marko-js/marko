@@ -1,6 +1,5 @@
-var widgetLookup = require('./lookup').$__widgets;
+var widgetLookup = require('./util').$__widgetLookup;
 var nextRepeatedId = require('./nextRepeatedId');
-var getRootEls = require('./getRootEls');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
 
@@ -26,7 +25,7 @@ function resolveWidgetRef(out, ref, scope) {
 }
 
 function preserveWidgetEls(existingWidget, out, widgetsContext) {
-    var rootEls = getRootEls(existingWidget, {});
+    var rootEls = existingWidget.$__getRootEls({});
 
     for (var elId in rootEls) {
         var el = rootEls[elId];
@@ -96,8 +95,6 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             out.on('beginAsync', handleBeginAsync);
         }
 
-
-
         if (renderingLogic === undefined) {
             // LEGACY - This should be removed when `defineRenderer` is removed but we use it
             // now to run the rendering logic that is passed in at render time. The reason we don't
@@ -137,6 +134,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                 widgetConfig = lightweightWidget;
                 delete widgetConfig.state;
             } else {
+                // Deprecated legacy methods... this code block should be removed in the future
                 if (getWidgetConfig) {
                     // If getWidgetConfig() was implemented then use that to
                     // get the widget config. The widget config will be passed
@@ -154,14 +152,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                     // at the w-body marker
                     widgetBody = getInitialBody(input, out);
                 }
-            }
 
-            if (!widgetBody) {
-                // Default to using the nested content as the widget body
-                widgetBody = input.renderBody;
-            }
-
-            if (!widgetState) {
                 // If we do not have state then we need to go through the process
                 // of converting the input to a widget state, or simply normalizing
                 // the input using getInitialProps
@@ -176,6 +167,11 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                     // from the input properties
                     widgetState = getInitialState(input, out);
                 }
+            }
+
+            if (!widgetBody) {
+                // Default to using the nested content as the widget body
+                widgetBody = input.renderBody;
             }
 
             widgetArgs = input.$w;
@@ -228,13 +224,16 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             // This is a nested widget found during a rerender. We don't want to needlessly
             // rerender the widget if that is not necessary. If the widget is a stateful
             // widget then we update the existing widget with the new state.
+            var shouldPreserve;
+
             if (widgetState) {
                 existingWidget.$__replaceState(widgetState);
+                shouldPreserve = !widgetBody && !existingWidget.$__isDirty;
             }
 
             // If the widget is not dirty (no state changes) and shouldUpdate() returns false
             // then skip rerendering the widget.
-            if (!widgetBody && (!existingWidget.$__isDirty || !existingWidget.shouldUpdate(input, widgetState))) {
+            if (shouldPreserve || !existingWidget.shouldUpdate(input, widgetState)) {
                 preserveWidgetEls(existingWidget, out, widgetsContext);
                 return;
             }

@@ -1,5 +1,7 @@
-var events = require('./events');
 var extend = require('raptor-util/extend');
+var widgetsUtil = require('../widgets/util');
+var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
+var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
 
 function resolveEl(el) {
     if (typeof el === 'string') {
@@ -13,33 +15,34 @@ function resolveEl(el) {
 }
 
 function beforeRemove(referenceEl) {
-    events.emit('dom/beforeRemove', {
-        el: referenceEl
-    });
+    destroyElRecursive(referenceEl);
+    destroyWidgetForEl(referenceEl);
 }
 
 module.exports = function(target, getEl, afterInsert) {
     extend(target, {
         appendTo: function(referenceEl) {
+            referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            resolveEl(referenceEl).appendChild(el);
+            referenceEl.appendChild(el);
             return afterInsert(this, referenceEl);
         },
         prependTo: function(referenceEl) {
+            referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
             referenceEl.insertBefore(el, referenceEl.firstChild || null);
             return afterInsert(this, referenceEl);
         },
         replace: function(referenceEl) {
-            var el = getEl(this, referenceEl);
             referenceEl = resolveEl(referenceEl);
+            var el = getEl(this, referenceEl);
             beforeRemove(referenceEl);
             referenceEl.parentNode.replaceChild(el, referenceEl);
             return afterInsert(this, referenceEl);
         },
         replaceChildrenOf: function(referenceEl) {
-            var el = getEl(this, referenceEl);
             referenceEl = resolveEl(referenceEl);
+            var el = getEl(this, referenceEl);
 
             var curChild = referenceEl.firstChild;
             while(curChild) {
@@ -53,14 +56,14 @@ module.exports = function(target, getEl, afterInsert) {
             return afterInsert(this, referenceEl);
         },
         insertBefore: function(referenceEl) {
-            var el = getEl(this, referenceEl);
             referenceEl = resolveEl(referenceEl);
+            var el = getEl(this, referenceEl);
             referenceEl.parentNode.insertBefore(el, referenceEl);
             return afterInsert(this, referenceEl);
         },
         insertAfter: function(referenceEl) {
-            var el = getEl(this, referenceEl);
             referenceEl = resolveEl(referenceEl);
+            var el = getEl(this, referenceEl);
             el = el;
             var nextSibling = referenceEl.nextSibling;
             var parentNode = referenceEl.parentNode;

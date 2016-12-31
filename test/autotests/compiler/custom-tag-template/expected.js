@@ -1,7 +1,7 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_helpers = require("marko/runtime/html/helpers"),
-    marko_loadTemplate = marko_helpers.l,
+    marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
     hello_template = marko_loadTemplate(require.resolve("./hello.marko")),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     hello_tag = marko_loadTag(hello_template);
 

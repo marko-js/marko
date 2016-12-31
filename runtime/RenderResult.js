@@ -1,6 +1,4 @@
-var events = require('./events');
 var domInsert = require('./dom-insert');
-var EMPTY_ARRAY = [];
 
 function checkAddedToDOM(result, method) {
     if (!result.$__widgets) {
@@ -57,27 +55,24 @@ var proto = RenderResult.prototype = {
     afterInsert: function(doc) {
         var out = this.$__out;
         var widgetsContext = out.global.widgets;
-        this.$__widgets = (widgetsContext && widgetsContext.$__widgets) || EMPTY_ARRAY;
-
-        events.emit('mountNode', {
-            result: this,
-            out: this.$__out,
-            document: doc
-        });    // NOTE: This will trigger widgets to be initialized if there were any
+        if (widgetsContext) {
+            this.$__widgets = widgetsContext.$__widgets;
+            widgetsContext.$__initWidgets(doc);
+        }
 
         return this;
     },
     getNode: function(doc) {
-        return this.$__out.getNode(doc);
+        return this.$__out.$__getNode(doc);
     },
     getOutput: function() {
-        return this.$__out.getOutput();
+        return this.$__out.$__getOutput();
     },
     toString: function() {
         return this.$__out.toString();
     },
     toJSON: function() {
-        return this.getOutput();
+        return this.$__out.$__getOutput();
     },
     document: typeof document !== 'undefined' && document
 };

@@ -1,7 +1,5 @@
 /* jshint newcap:false */
 
-var DocumentFragment;
-
 function assignNamespace(node, namespaceURI) {
     node.namespaceURI = namespaceURI;
 
@@ -14,26 +12,27 @@ function assignNamespace(node, namespaceURI) {
     }
 }
 
-function Node(finalChildCount) {
-    this.$__finalChildCount = finalChildCount;
-    this.$__childCount = 0;
-    this.$__firstChild = undefined;
-    this.$__lastChild = undefined;
-    this.$__parentNode = undefined;
-    this.$__nextSibling = undefined;
-}
+function Node() {}
 
 Node.prototype = {
-    removeChildren: function() {
-        this.$__firstChild = undefined;
+    $__Node: function(finalChildCount) {
+        this.$__finalChildCount = finalChildCount;
         this.$__childCount = 0;
+        this.$__firstChild = undefined;
         this.$__lastChild = undefined;
+        this.$__parentNode = undefined;
+        this.$__nextSibling = undefined;
     },
+    // removeChildren: function() {
+    //     this.$__firstChild = undefined;
+    //     this.$__childCount = 0;
+    //     this.$__lastChild = undefined;
+    // },
 
     get firstChild() {
         var firstChild = this.$__firstChild;
 
-        if (firstChild && firstChild.nodeType === 11 /* DocumentFragment */) {
+        if (firstChild && firstChild.$__DocumentFragment) {
             var nestedFirstChild = firstChild.firstChild;
             // The first child is a DocumentFragment node.
             // If the DocumentFragment node has a first child then we will return that.
@@ -45,27 +44,17 @@ Node.prototype = {
         return firstChild;
     },
 
-    get lastChild() {
-        var lastChild = this.$__lastChild;
-
-        if (lastChild && lastChild.nodeType === 11 /* DocumentFragment */) {
-            return lastChild.lastChild;
-        }
-
-        return lastChild;
-    },
-
     get nextSibling() {
         var nextSibling = this.$__nextSibling;
 
         if (nextSibling) {
-            if (nextSibling.nodeType === 11 /* DocumentFragment */) {
+            if (nextSibling.$__DocumentFragment) {
                 var firstChild = nextSibling.firstChild;
                 return firstChild || nextSibling.nextSibling;
             }
         } else {
             var parentNode = this.$__parentNode;
-            if (parentNode && parentNode.nodeType === 11) {
+            if (parentNode && parentNode.$__DocumentFragment) {
                 return parentNode.nextSibling;
             }
         }
@@ -73,15 +62,11 @@ Node.prototype = {
         return nextSibling;
     },
 
-    $__appendDocumentFragment: function() {
-        return this.$__appendChild(new DocumentFragment());
-    },
-
     $__appendChild: function(child) {
         if (this.$__isTextArea) {
-            if (child.nodeType === 3) {
-                var currentValue = this.value;
-                this.value = currentValue ? currentValue + child.nodeValue : child.nodeValue;
+            if (child.$__Text) {
+                var childValue = child.nodeValue;
+                this.$__value = (this.$__value || '') + childValue;
             } else {
                 throw TypeError();
             }
@@ -136,5 +121,3 @@ Node.prototype = {
 };
 
 module.exports = Node;
-
-DocumentFragment = require('./DocumentFragment');

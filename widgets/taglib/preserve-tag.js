@@ -1,4 +1,5 @@
 var WidgetsContext = require('../WidgetsContext');
+var getElementById = require('../util').$__getElementById;
 
 module.exports = function render(input, out) {
 
@@ -13,7 +14,7 @@ module.exports = function render(input, out) {
         // replaced out if we find that the DOM node has already been rendered
         var condition = input['if'];
         if (condition !== false) {
-            var existingEl = document.getElementById(id);
+            var existingEl = getElementById(out.$__document, id);
             if (existingEl) {
                 var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
                 var bodyOnly = input.bodyOnly === true;

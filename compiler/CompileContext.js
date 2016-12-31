@@ -58,22 +58,29 @@ const helpers = {
     'classList': 'cl',
     'const': 'const',
     'createElement': 'e',
-    'createInlineTemplate': 'inline',
+    'createInlineTemplate': {
+        vdom: { module: 'marko/runtime/vdom/helper-createInlineTemplate'},
+        html: { module: 'marko/runtime/html/helper-createInlineTemplate'}
+    },
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
     'escapeScript': 'xs',
     'forEach': 'f',
-    'forEachProp': 'fp',
-    'forEachWithStatusVar': 'fv',
-    'forRange': 'fr',
+    'forEachProp': { module: 'marko/runtime/helper-forEachProperty' },
+    'forEachPropStatusVar': { module: 'marko/runtime/helper-forEachPropStatusVar' },
+    'forEachWithStatusVar': { module: 'marko/runtime/helper-forEachWithStatusVar' },
+    'forRange': { module: 'marko/runtime/helper-forRange' },
     'include': 'i',
-    'loadNestedTag': 'n',
+    'loadNestedTag': { module: 'marko/runtime/helper-loadNestedTag' },
     'loadTag': 't',
-    'loadTemplate': 'l',
-    'mergeNestedTagsHelper': 'mn',
-    'merge': 'm',
+    'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
+    'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
+    'merge': { module: 'marko/runtime/helper-merge' },
     'str': 's',
-    'styleAttr': 'sa',
+    'styleAttr': {
+        vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
+        html: 'sa'
+    },
     'createText': 't'
 };
 
@@ -672,15 +679,32 @@ class CompileContext extends EventEmitter {
     helper(name) {
         var helperIdentifier = this._helpers[name];
         if (!helperIdentifier) {
-            var methodName = helpers[name];
-            if (!methodName) {
+            var helperInfo = helpers[name];
+
+            if (helperInfo && typeof helperInfo === 'object') {
+                if (!helperInfo.module) {
+                    helperInfo = helperInfo[this.outputType];
+                }
+            }
+
+            if (!helperInfo) {
                 throw new Error('Invalid helper: ' + name);
             }
-            var methodIdentifier = this.builder.identifier(methodName);
 
-            helperIdentifier = this.addStaticVar(
-                'marko_' + name,
-                this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+            if (typeof helperInfo === 'string') {
+                let methodName = helperInfo;
+                var methodIdentifier = this.builder.identifier(methodName);
+
+                helperIdentifier = this.addStaticVar(
+                    'marko_' + name,
+                    this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+            } else if (helperInfo && helperInfo.module) {
+                helperIdentifier = this.addStaticVar(
+                    'marko_' + name,
+                    this.builder.require(this.builder.literal(helperInfo.module)));
+            } else {
+                throw new Error('Invalid helper: ' + name);
+            }
 
             this._helpers[name] = helperIdentifier;
         }

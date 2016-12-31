@@ -12,7 +12,7 @@ var autotest = require('./autotest');
 var marko = require('../');
 var markoCompiler = require('../compiler');
 
-describe('api' , function() {
+describe('api (compiler)' , function() {
     var autoTestDir = nodePath.join(__dirname, 'autotests/api-compiler');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {

@@ -1,1 +1,0 @@
-exports.$__document = typeof document != 'undefined' && document;

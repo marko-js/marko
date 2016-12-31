@@ -1,5 +1,6 @@
 {
     "browser": {
-        "./loader/index.js": "./loader/index-browser.js"
+        "./loader/index.js": "./loader/index-browser.js",
+        "./env-init.js": false
     }
 }

@@ -29,7 +29,21 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             flattenHelper(children, flattened, typesArray, typesLookup);
         }
 
-        flattened.push(widgetDef.$__toJSON(typeIndex));
+        var customEvents = widgetDef.$__customEvents;
+        var extra = {
+            p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
+            e: widgetDef.$__domEvents,
+            ce: widgetDef.$__customEvents,
+            c: widgetDef.$__config
+        };
+
+        flattened.push([
+            widgetDef.id,        // 0 = id
+            typeIndex,           // 1 = type
+            widgetDef.$__roots,  // 2 = root el ids
+            widgetDef.$__state,  // 3 = state
+            extra                // 4
+        ]);
     }
 }
 

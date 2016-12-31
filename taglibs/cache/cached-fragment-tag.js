@@ -19,15 +19,15 @@ module.exports = {
 
                     if (input.renderBody) {
                         input.renderBody(nestedOut);
-                    }
-
-                    nestedOut.end();
+                    }                    
 
                     nestedOut
                         .on('error', callback)
-                        .on('finish', function() {
-                            callback(null, nestedOut.getOutput());
+                        .on('finish', function(result) {
+                            callback(null, result.getOutput());
                         });
+
+                    nestedOut.end();
                 }
             }, function(err, result) {
                 if (err) {

@@ -37,6 +37,11 @@ var minifiers = {
         };
 
         const out = gcc.compile(options);
+
+        // if (out.errors && out.errors.length) {
+        //     console.error(out.errors);
+        //     throw new Error(`Minification failed for ${file}`);
+        // }
         return out.compiledCode;
     },
     uglify: function minifyUglifyJS(src, file) {

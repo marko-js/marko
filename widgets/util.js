@@ -5,11 +5,13 @@ function UniqueId(out) {
     this.nextId = 0;
 }
 
-module.exports = function (out) {
+function nextWidgetId(out) {
     var global = out.global;
 
     var idProvider = global[KEY] ||
         (global[KEY] = new UniqueId(out));
 
     return idProvider.prefix + (idProvider.nextId++);
-};
+}
+
+exports.$__nextWidgetId = nextWidgetId;

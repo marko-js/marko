@@ -1,82 +1,22 @@
 'use strict';
-var warp10 = require('warp10');
 var extend = require('raptor-util/extend');
 
 var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
 var escapeEndingScriptTagRegExp = /<\//g;
 
-var elTest = /[&<]/;
-var elTestReplace = /[&<]/g;
-var attrTest = /[&<\"\n]/;
-var attrReplace = /[&<\"\n]/g;
-var stringifiedAttrTest = /[&\'\n]/;
-var stringifiedAttrReplace = /[&\'\n]/g;
+var escape = require('./escape');
+var escapeXml = escape.escapeXml;
+var escapeXmlAttr = escape.escapeXmlAttr;
+var attrHelper = require('./helper-attr');
+var attrsHelper = require('./helper-attrs');
+
 
 var classList;
 
-var replacements = {
-    '<': '&lt;',
-    '&': '&amp;',
-    '"': '&quot;',
-    '\'': '&#39;',
-    '\n': '&#10;' //Preserve new lines so that they don't get normalized as space
-};
 
-function replaceChar(match) {
-    return replacements[match];
-}
 
-function escapeStr(str, regexpTest, regexpReplace) {
-    return regexpTest.test(str) ? str.replace(regexpReplace, replaceChar) : str;
-}
 
-function escapeXmlHelper(value, regexpTest, regexpReplace) {
-    // check for most common case first
-    if (typeof value === 'string') {
-        return escapeStr(value, regexpTest, regexpReplace);
-    } else if (value == null) {
-        return '';
-    } else if (typeof value === 'object') {
-        var safeHTML = value.safeHTML;
-        if (safeHTML != null) {
-            return value.safeHTML;
-        } else {
-            return '';
-        }
-    } else if (value === true || value === false || typeof value === 'number') {
-        return value.toString();
-    }
-
-    return escapeStr(value.toString(), regexpTest, regexpReplace);
-}
-
-function escapeXml(value) {
-    return escapeXmlHelper(value, elTest, elTestReplace);
-}
-
-function escapeXmlAttr(value) {
-    return escapeXmlHelper(value, attrTest, attrReplace);
-}
-
-function attr(name, value, shouldEscape) {
-    if (typeof value === 'string') {
-        return ' ' + name + '="' + (shouldEscape !== false ? escapeStr(value, attrTest, attrReplace) : value) + '"';
-    } else if (value === true) {
-        return ' ' + name;
-    } else if (value == null || value === false) {
-        return '';
-    } else if (typeof value === 'object') {
-        if (name.substring(0, 6) === 'data-_') {
-            value = warp10.stringify(value);
-        } else {
-            value = JSON.stringify(value);
-        }
-        return ' ' + name + "='" + escapeStr(value, stringifiedAttrTest, stringifiedAttrReplace) + "'";
-    } else {
-        return ' ' + name + '=' + value; // number (doesn't need quotes)
-    }
-}
 
 
 /**
@@ -113,24 +53,13 @@ exports.xs = function escapeScriptHelper(val) {
  * Internal method to render a single HTML attribute
  * @private
  */
-exports.a = attr;
+exports.a = attrHelper;
 
 /**
  * Internal method to render multiple HTML attributes based on the properties of an object
  * @private
  */
-exports.as = function(arg) {
-    if (typeof arg === 'object') {
-        var out = '';
-        for (var attrName in arg) {
-            out += attr(attrName, arg[attrName]);
-        }
-        return out;
-    } else if (typeof arg === 'string') {
-        return arg;
-    }
-    return '';
-};
+exports.as = attrsHelper;
 
 /**
  * Internal helper method to handle the "style" attribute. The value can either
@@ -145,7 +74,7 @@ exports.sa = function(style) {
     }
 
     if (typeof style === 'string') {
-        return attr(STYLE_ATTR, style, false);
+        return attrHelper(STYLE_ATTR, style, false);
     } else if (typeof style === 'object') {
         var parts = [];
         for (var name in style) {
@@ -156,7 +85,7 @@ exports.sa = function(style) {
                 }
             }
         }
-        return parts ? attr(STYLE_ATTR, parts.join(';'), false) : '';
+        return parts ? attrHelper(STYLE_ATTR, parts.join(';'), false) : '';
     } else {
         return '';
     }
@@ -176,9 +105,9 @@ exports.ca = function(classNames) {
     }
 
     if (typeof classNames === 'string') {
-        return attr(CLASS_ATTR, classNames, false);
+        return attrHelper(CLASS_ATTR, classNames, false);
     } else {
-        return attr(CLASS_ATTR, classList(classNames), false);
+        return attrHelper(CLASS_ATTR, classList(classNames), false);
     }
 };
 
@@ -187,5 +116,3 @@ exports.ca = function(classNames) {
 var commonHelpers = require('../helpers');
 classList = commonHelpers.cl;
 extend(exports, commonHelpers);
-
-exports.inline = require('./')._inline;

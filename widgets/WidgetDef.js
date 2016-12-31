@@ -1,7 +1,7 @@
 'use strict';
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
-var uniqueId = require('./uniqueId');
+var nextWidgetId = require('./util').$__nextWidgetId;
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for
@@ -90,38 +90,20 @@ WidgetDef.prototype = {
             return;
         }
 
-        if (!this.$__domEvents) {
-            this.$__domEvents = [];
-        }
-        this.$__domEvents.push(type);
-        this.$__domEvents.push(targetMethod);
-        this.$__domEvents.push(elId);
-        this.$__domEvents.push(extraArgs);
+        var domEvents = this.$__domEvents;
+        this.$__domEvents = (domEvents || (this.$__domEvents = [])).concat([
+            type,
+            targetMethod,
+            elId,
+            extraArgs]);
     },
     /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM widget
      */
     $__nextId: function() {
-        return this.id ? this.id + '-w' + (this.$__nextIdIndex++) : uniqueId(this.$__out);
-    },
-
-    $__toJSON: function(typeIndex) {
-        var customEvents = this.$__customEvents;
-        var extra = {
-            p: customEvents && this.$__scope, // Only serialize scope if we need to attach custom events
-            e: this.$__domEvents,
-            ce: this.$__customEvents,
-            c: this.$__config
-        };
-
-        var result = [
-            this.id,        // 0 = id
-            typeIndex,   // 1 = type
-            this.$__roots,  // 2 = root el ids
-            this.$__state,  // 3 = state
-            extra           // 4
-        ];
-        return result;
+        return this.id ?
+            this.id + '-w' + (this.$__nextIdIndex++) :
+            nextWidgetId(this.$__out);
     }
 };
 

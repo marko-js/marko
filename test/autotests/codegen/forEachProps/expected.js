@@ -1,6 +1,5 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_helpers = require("marko/runtime/html/helpers"),
-    marko_forEachProp = marko_helpers.fp;
+    marko_forEachProp = require("marko/runtime/helper-forEachProperty");
 
 function render(data, out) {
   marko_forEachProp(myObject, function(k, v) {

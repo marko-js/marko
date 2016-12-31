@@ -7,7 +7,7 @@ function LoopStatus(getLength, isLast, isFirst, getIndex) {
     this.getIndex = getIndex;
 }
 
-module.exports = function forEachPropStatusVar(object, callback) {
+module.exports = function forEachPropStatusVarHelper(object, callback) {
     var keys = Object.keys(object);
 
     var i = 0;

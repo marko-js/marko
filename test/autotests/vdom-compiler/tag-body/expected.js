@@ -1,4 +1,4 @@
-var marko_template = module.exports = require("marko/vdom").t(__filename),
+var marko_template = module.exports = require("marko/vdom").t(),
     marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_loadTag = marko_helpers.t,
     test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));

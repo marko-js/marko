@@ -23,7 +23,8 @@ var vdomHelpers = {
     },
     createDocumentFragment: function() {
         return new DocumentFragment();
-    }
+    },
+    HTMLElement: HTMLElement
 };
 
 describe('marko-vdom', () => {

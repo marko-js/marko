@@ -2,15 +2,17 @@ var Node = require('./Node');
 var inherit = require('raptor-util/inherit');
 
 function Text(value) {
-    Node.call(this, -1 /* no children */);
+    this.$__Node(-1 /* no children */);
     this.nodeValue = value;
 }
 
 Text.prototype = {
+    $__Text: true,
+
     nodeType: 3,
 
-    actualize: function(document) {
-        return document.createTextNode(this.nodeValue);
+    actualize: function(doc) {
+        return doc.createTextNode(this.nodeValue);
     },
 
     $__cloneNode: function() {

@@ -1,12 +1,10 @@
+var Node = require('./Node');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
-var Text = require('./Text');
-var Comment = require('./Comment');
-var Node = require('./Node');
-var documentProvider = require('../document-provider');
-var virtualizeHTML;
+var defineProperty = Object.defineProperty;
 
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
+var ATTR_XLINK_HREF = 'xlink:href';
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = Object.freeze({});
 var ATTR_MARKO_CONST = 'data-marko-const';
@@ -59,7 +57,7 @@ function HTMLElement(tagName, attrs, childCount, constId) {
             break;
     }
 
-    Node.call(this, childCount);
+    this.$__Node(childCount);
 
     if (constId) {
         if (!attrs) {
@@ -68,7 +66,7 @@ function HTMLElement(tagName, attrs, childCount, constId) {
         attrs[ATTR_MARKO_CONST] = constId;
     }
 
-    this.attributes = attrs || EMPTY_OBJECT;
+    this.$__attributes = attrs || EMPTY_OBJECT;
     this.$__isTextArea = isTextArea;
     this.namespaceURI = namespaceURI;
     this.nodeName = tagName;
@@ -77,115 +75,11 @@ function HTMLElement(tagName, attrs, childCount, constId) {
 }
 
 HTMLElement.prototype = {
+    $__HTMLElement: true,
+
     nodeType: 1,
 
     $__nsAware: true,
-
-    assignAttributes: function(targetNode) {
-        var attrs = this.attributes;
-        var attrName;
-        var i;
-
-        // We use expando properties to associate the previous HTML
-        // attributes provided as part of the VDOM node with the
-        // real HTMLElement DOM node. When diffing attributes,
-        // we only use our internal representation of the attributes.
-        // When diffing for the first time it's possible that the
-        // real HTMLElement node will not have the expando property
-        // so we build the attribute map from the expando property
-
-        var oldAttrs = targetNode._vattrs;
-        if (oldAttrs) {
-            if (oldAttrs === attrs) {
-                // For constant attributes the same object will be provided
-                // every render and we can use that to our advantage to
-                // not waste time diffing a constant, immutable attribute
-                // map.
-                return;
-            } else {
-                oldAttrs = removePreservedAttributes(extend({}, oldAttrs));
-            }
-        } else {
-            // We need to build the attribute map from the real attributes
-            oldAttrs = {};
-
-            var oldAttributesList = targetNode.attributes;
-            for (i = oldAttributesList.length - 1; i >= 0; --i) {
-                var attr = oldAttributesList[i];
-
-                if (attr.specified !== false) {
-                    attrName = attr.name;
-                    var attrNamespaceURI = attr.namespaceURI;
-                    if (attrNamespaceURI === NS_XLINK) {
-                        oldAttrs['xlink:href'] = attr.value;
-                    } else {
-                        oldAttrs[attrName] = attr.value;
-                    }
-                }
-            }
-
-            // We don't want preserved attributes to show up in either the old
-            // or new attribute map.
-            removePreservedAttributes(oldAttrs);
-        }
-
-        // In some cases we only want to set an attribute value for the first
-        // render or we don't want certain attributes to be touched. To support
-        // that use case we delete out all of the preserved attributes
-        // so it's as if they never existed.
-        var preservedAttrs = attrs['data-preserve-attrs'];
-        if (preservedAttrs) {
-            attrs = removePreservedAttributes(extend({}, attrs));
-        }
-
-        // Loop over all of the attributes in the attribute map and compare
-        // them to the value in the old map. However, if the value is
-        // null/undefined/false then we want to remove the attribute
-        for (attrName in attrs) {
-            var attrValue = attrs[attrName];
-
-            if (attrName === 'xlink:href') {
-                if (attrValue == null || attrValue === false) {
-                    targetNode.removeAttributeNS(NS_XLINK, ATTR_HREF);
-                } else if (oldAttrs[attrName] !== attrValue) {
-                    targetNode.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
-                }
-            } else {
-                if (attrValue == null || attrValue === false) {
-                    targetNode.removeAttribute(attrName);
-                } else if (oldAttrs[attrName] !== attrValue) {
-
-                    if (specialAttrRegexp.test(attrName)) {
-                        // Special attributes aren't copied to the real DOM. They are only
-                        // kept in the virtual attributes map
-                        continue;
-                    }
-
-                    var type = typeof attrValue;
-
-                    if (type !== 'string') {
-                        attrValue = convertAttrValue(type, attrValue);
-                    }
-
-                    targetNode.setAttribute(attrName, attrValue);
-                }
-            }
-        }
-
-        // If there are any old attributes that are not in the new set of attributes
-        // then we need to remove those attributes from the target node
-        for (attrName in oldAttrs) {
-            if (attrs.hasOwnProperty(attrName) === false) {
-                if (attrName === 'xlink:href') {
-                    targetNode.removeAttributeNS(NS_XLINK, ATTR_HREF);
-                } else {
-                    targetNode.removeAttribute(attrName);
-                }
-            }
-        }
-
-        targetNode._vattrs = attrs;
-    },
 
     $__cloneNode: function() {
         return new HTMLElementClone(this);
@@ -208,37 +102,7 @@ HTMLElement.prototype = {
         }
     },
 
-    /**
-     * Shorthand method for creating and appending a Text node with a given value
-     * @param  {String} value The text value for the new Text node
-     */
-    t: function(value) {
-        var type = typeof value;
 
-        if (type !== 'string') {
-            if (value == null) {
-                value = '';
-            } else if (type === 'object') {
-                var safeHTML = value.safeHTML;
-                var vdomNode = virtualizeHTML(safeHTML || '', documentProvider.$__document);
-                this.$__appendChild(vdomNode);
-                return this.$__finishChild();
-            } else {
-                value = value.toString();
-            }
-        }
-        this.$__appendChild(new Text(value));
-        return this.$__finishChild();
-    },
-
-    /**
-     * Shorthand method for creating and appending a Comment node with a given value
-     * @param  {String} value The value for the new Comment node
-     */
-    c: function(value) {
-        this.$__appendChild(new Comment(value));
-        return this.$__finishChild();
-    },
 
     /**
      * Shorthand method for creating and appending a static node. The provided node is automatically cloned
@@ -251,18 +115,18 @@ HTMLElement.prototype = {
         return this.$__finishChild();
     },
 
-    actualize: function(document) {
+    actualize: function(doc) {
         var el;
         var namespaceURI = this.namespaceURI;
         var tagName = this.nodeName;
 
         if (namespaceURI) {
-            el = document.createElementNS(namespaceURI, tagName);
+            el = doc.createElementNS(namespaceURI, tagName);
         } else {
-            el = document.createElement(tagName);
+            el = doc.createElement(tagName);
         }
 
-        var attributes = this.attributes;
+        var attributes = this.$__attributes;
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
 
@@ -279,7 +143,7 @@ HTMLElement.prototype = {
                     attrValue = convertAttrValue(type, attrValue);
                 }
 
-                if (attrName === 'xlink:href') {
+                if (attrName === ATTR_XLINK_HREF) {
                     el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
                 } else {
                     el.setAttribute(attrName, attrValue);
@@ -288,12 +152,12 @@ HTMLElement.prototype = {
         }
 
         if (this.$__isTextArea) {
-            el.value = this.value;
+            el.value = this.$__value;
         } else {
             var curChild = this.firstChild;
 
             while(curChild) {
-                el.appendChild(curChild.actualize(document));
+                el.appendChild(curChild.actualize(doc));
                 curChild = curChild.nextSibling;
             }
         }
@@ -307,25 +171,23 @@ HTMLElement.prototype = {
         // We don't care about the namespaces since the there
         // is no chance that attributes with the same name will have
         // different namespaces
-        return this.attributes[name] !== undefined;
+        return this.$__attributes[name] !== undefined;
     },
 
     getAttribute: function(name) {
-        return this.attributes[name];
+        return this.$__attributes[name];
     },
 
     isSameNode: function(otherNode) {
-        if (otherNode.nodeType !== 1) {
-            return false;
+        if (otherNode.nodeType == 1) {
+            var constId = this.$__constId;
+            if (constId) {
+                var otherSameId = otherNode.$__Node ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
+                return constId === otherSameId;
+            }
         }
 
-        var constId = this.$__constId;
-        if (constId) {
-            var otherSameId = otherNode.actualize ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
-            return constId === otherSameId;
-        } else {
-            return false;
-        }
+        return false;
     }
 };
 
@@ -333,39 +195,130 @@ inherit(HTMLElement, Node);
 
 var proto = HTMLElementClone.prototype = HTMLElement.prototype;
 
-Object.defineProperty(proto, 'checked', {
+['checked', 'selected', 'disabled'].forEach(function(name) {
+    defineProperty(proto, name, {
+        get: function () {
+            return this.$__attributes[name] !== undefined;
+        }
+    });
+});
+
+defineProperty(proto, 'id', {
     get: function () {
-        return this.attributes.checked !== undefined;
+        return this.$__attributes.id;
     }
 });
 
-Object.defineProperty(proto, 'selected', {
+defineProperty(proto, 'value', {
     get: function () {
-        return this.attributes.selected !== undefined;
+        return this.$__value || this.$__attributes.value;
     }
 });
 
-Object.defineProperty(proto, 'id', {
-    get: function () {
-        return this.attributes.id;
-    }
-});
+HTMLElement.$__morphAttrs = function(fromEl, toEl) {
+    var attrs = toEl.$__attributes;
+    var attrName;
+    var i;
 
-Object.defineProperty(proto, 'value', {
-    get: function () {
-        return this.$__value || this.attributes.value;
-    },
-    set: function (value) {
-        this.$__value = value;
-    }
-});
+    // We use expando properties to associate the previous HTML
+    // attributes provided as part of the VDOM node with the
+    // real HTMLElement DOM node. When diffing attributes,
+    // we only use our internal representation of the attributes.
+    // When diffing for the first time it's possible that the
+    // real HTMLElement node will not have the expando property
+    // so we build the attribute map from the expando property
 
-Object.defineProperty(proto, 'disabled', {
-    get: function () {
-        return this.attributes.disabled !== undefined;
+    var oldAttrs = fromEl._vattrs;
+    if (oldAttrs) {
+        if (oldAttrs === attrs) {
+            // For constant attributes the same object will be provided
+            // every render and we can use that to our advantage to
+            // not waste time diffing a constant, immutable attribute
+            // map.
+            return;
+        } else {
+            oldAttrs = removePreservedAttributes(extend({}, oldAttrs));
+        }
+    } else {
+        // We need to build the attribute map from the real attributes
+        oldAttrs = {};
+
+        var oldAttributesList = fromEl.attributes;
+        for (i = oldAttributesList.length - 1; i >= 0; --i) {
+            var attr = oldAttributesList[i];
+
+            if (attr.specified !== false) {
+                attrName = attr.name;
+                var attrNamespaceURI = attr.namespaceURI;
+                if (attrNamespaceURI === NS_XLINK) {
+                    oldAttrs[ATTR_XLINK_HREF] = attr.value;
+                } else {
+                    oldAttrs[attrName] = attr.value;
+                }
+            }
+        }
+
+        // We don't want preserved attributes to show up in either the old
+        // or new attribute map.
+        removePreservedAttributes(oldAttrs);
     }
-});
+
+    // In some cases we only want to set an attribute value for the first
+    // render or we don't want certain attributes to be touched. To support
+    // that use case we delete out all of the preserved attributes
+    // so it's as if they never existed.
+    var preservedAttrs = attrs['data-preserve-attrs'];
+    if (preservedAttrs) {
+        attrs = removePreservedAttributes(extend({}, attrs));
+    }
+
+    // Loop over all of the attributes in the attribute map and compare
+    // them to the value in the old map. However, if the value is
+    // null/undefined/false then we want to remove the attribute
+    for (attrName in attrs) {
+        var attrValue = attrs[attrName];
+
+        if (attrName === ATTR_XLINK_HREF) {
+            if (attrValue == null || attrValue === false) {
+                fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
+            } else if (oldAttrs[attrName] !== attrValue) {
+                fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+            }
+        } else {
+            if (attrValue == null || attrValue === false) {
+                fromEl.removeAttribute(attrName);
+            } else if (oldAttrs[attrName] !== attrValue) {
+
+                if (specialAttrRegexp.test(attrName)) {
+                    // Special attributes aren't copied to the real DOM. They are only
+                    // kept in the virtual attributes map
+                    continue;
+                }
+
+                var type = typeof attrValue;
+
+                if (type !== 'string') {
+                    attrValue = convertAttrValue(type, attrValue);
+                }
+
+                fromEl.setAttribute(attrName, attrValue);
+            }
+        }
+    }
+
+    // If there are any old attributes that are not in the new set of attributes
+    // then we need to remove those attributes from the target node
+    for (attrName in oldAttrs) {
+        if (attrs.hasOwnProperty(attrName) === false) {
+            if (attrName === ATTR_XLINK_HREF) {
+                fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
+            } else {
+                fromEl.removeAttribute(attrName);
+            }
+        }
+    }
+
+    fromEl._vattrs = attrs;
+};
 
 module.exports = HTMLElement;
-
-virtualizeHTML = require('./virtualizeHTML');

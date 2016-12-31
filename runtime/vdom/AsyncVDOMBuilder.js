@@ -1,14 +1,18 @@
 var EventEmitter = require('events-light');
-var HTMLElement = require('./HTMLElement');
-var DocumentFragment = require('./DocumentFragment');
-var Comment = require('./Comment');
-var Text = require('./Text');
-var virtualizeHTML = require('./virtualizeHTML');
-var documentProvider = require('../document-provider');
+var vdom = require('./vdom');
+var HTMLElement = vdom.$__HTMLElement;
+var DocumentFragment = vdom.$__DocumentFragment;
+var Comment = vdom.$__Comment;
+var Text = vdom.$__Text;
+var virtualizeHTML = vdom.$__virtualizeHTML;
 var RenderResult = require('../RenderResult');
+var defaultDocument = vdom.$__defaultDocument;
 
 var FLAG_FINISHED = 1;
 var FLAG_LAST_FIRED = 2;
+
+var EVENT_UPDATE = 'update';
+var EVENT_FINISH = 'finish';
 
 function State(tree) {
     this.$__remaining = 1;
@@ -39,7 +43,8 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
 }
 
 var proto = AsyncVDOMBuilder.prototype = {
-    isOut: true,
+    $__isOut: true,
+    $__document: defaultDocument,
 
     element: function(name, attrs, childCount) {
         var element = new HTMLElement(name, attrs, childCount);
@@ -87,7 +92,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         var parent = this.$__parent;
         if (parent) {
             var lastChild = parent.lastChild;
-            if (lastChild && lastChild.nodeType === 3) {
+            if (lastChild && lastChild.$__Text) {
                 lastChild.nodeValue += text;
             } else {
                 parent.$__appendChild(new Text(text));
@@ -102,7 +107,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     html: function(html) {
         if (html != null) {
-            var vdomNode = virtualizeHTML(html, documentProvider.$__document);
+            var vdomNode = virtualizeHTML(html, this.$__document);
             this.node(vdomNode);
         }
 
@@ -141,7 +146,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         if (!remaining) {
             state.$__flags |= FLAG_FINISHED;
-            state.$__events.emit('finish', this);
+            state.$__events.emit(EVENT_FINISH, this.$__getResult());
         }
 
         return this;
@@ -176,23 +181,26 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     flush: function() {
-        var state = this.$__state;
-        state.$__events.emit('update', this);
+        var events = this.$__state.$__events;
+
+        if (events.listenerCount(EVENT_UPDATE)) {
+            events.emit(EVENT_UPDATE, new RenderResult(this));
+        }
     },
 
-    getOutput: function() {
+    $__getOutput: function() {
         return this.$__state.$__tree;
     },
 
-    getResult: function() {
+    $__getResult: function() {
         return this.$__result || (this.$__result = new RenderResult(this));
     },
 
     on: function(event, callback) {
         var state = this.$__state;
 
-        if (event === 'finish' && (state.$__flags & FLAG_FINISHED)) {
-            callback(this);
+        if (event === EVENT_FINISH && (state.$__flags & FLAG_FINISHED)) {
+            callback(this.$__getResult());
             return this;
         }
 
@@ -203,8 +211,8 @@ var proto = AsyncVDOMBuilder.prototype = {
     once: function(event, callback) {
         var state = this.$__state;
 
-        if (event === 'finish' && (state.$__flags & FLAG_FINISHED)) {
-            callback(this);
+        if (event === EVENT_FINISH && (state.$__flags & FLAG_FINISHED)) {
+            callback(this.$__getResult());
             return this;
         }
 
@@ -267,45 +275,31 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    getNode: function(doc) {
+    $__getNode: function(doc) {
         var node = this.$__node;
         if (!node) {
-            var vdomTree = this.getOutput();
+            var vdomTree = this.$__getOutput();
 
             if (!doc) {
-                doc = documentProvider.$__document;
+                doc = this.$__document;
             }
 
-            node = vdomTree.actualize(doc);
-
-            if (node.nodeType === 11 /* DocumentFragment */) {
-                var firstChild = node.firstChild;
-                if (firstChild) {
-                    var nextSibling = firstChild.nextSibling;
-                    if (!nextSibling) {
-                        // If the DocumentFragment only has one child
-                        // then just return that first child as the node
-                        node = firstChild;
-                    }
-                }
-            }
-
-            this.$__node = node;
+            node = this.$__node = vdomTree.actualize(doc);
         }
         return node;
     },
 
     toString: function() {
-        return this.getNode().outerHTML;
+        return this.$__getNode().outerHTML;
     },
 
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
-            out.on('error', reject);
-            out.on('finish', function() {
-                resolve(out.getResult());
-            });
+            out.on('error', reject)
+                .on(EVENT_FINISH, function(result) {
+                    resolve(result);
+                });
         });
 
         return Promise.resolve(promise).then(fn, fnErr);

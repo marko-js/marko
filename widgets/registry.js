@@ -72,15 +72,15 @@ function getWidgetClass(typeName) {
     return WidgetClass;
 }
 
-function createWidget(typeName, id, document) {
+function createWidget(typeName, id, doc) {
     var WidgetClass = getWidgetClass(typeName);
     var widget;
     if (typeof WidgetClass === 'function') {
         // The widget is a constructor function that we can invoke to create a new instance of the widget
-        widget = new WidgetClass(id, document);
+        widget = new WidgetClass(id, doc);
     } else if (WidgetClass.initWidget) {
         widget = WidgetClass;
-        widget.$__document = document;
+        widget.$__document = doc;
     }
     return widget;
 }

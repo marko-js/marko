@@ -1,4 +1,4 @@
-var marko_template = module.exports = require("marko/vdom").t(__filename);
+var marko_template = module.exports = require("marko/vdom").t();
 
 function render(data, out) {
   var attrs = {

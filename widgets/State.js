@@ -62,11 +62,10 @@ State.prototype = {
         }
     },
     $__set: function(name, value, shouldEnsure, forceDirty, noQueue) {
-        var self = this;
-        var rawState = self.$__raw;
+        var rawState = this.$__raw;
 
         if (shouldEnsure) {
-            ensure(self, name);
+            ensure(this, name);
         }
 
         if (value === null) {
@@ -106,7 +105,7 @@ State.prototype = {
         if (clean && noQueue !== true) {
             // If we were clean before then we are now dirty so queue
             // up the widget for update
-            updateManager.$__queueWidgetUpdate(self.$__widget);
+            updateManager.$__queueWidgetUpdate(this.$__widget);
         }
     },
     toJSON: function() {

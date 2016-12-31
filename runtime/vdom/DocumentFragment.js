@@ -9,12 +9,14 @@ function DocumentFragmentClone(other) {
 }
 
 function DocumentFragment(documentFragment) {
-    Node.call(this, null /* childCount */);
+    this.$__Node(null /* childCount */);
     this.namespaceURI = undefined;
 }
 
 DocumentFragment.prototype = {
     nodeType: 11,
+
+    $__DocumentFragment: true,
 
     $__nsAware: true,
 
@@ -22,13 +24,13 @@ DocumentFragment.prototype = {
         return new DocumentFragmentClone(this);
     },
 
-    actualize: function(document) {
-        var docFragment = document.createDocumentFragment();
+    actualize: function(doc) {
+        var docFragment = doc.createDocumentFragment();
 
         var curChild = this.firstChild;
 
         while(curChild) {
-            docFragment.appendChild(curChild.actualize(document));
+            docFragment.appendChild(curChild.actualize(doc));
             curChild = curChild.nextSibling;
         }
 

@@ -1,7 +1,6 @@
 'use strict';
 
 var updatesScheduled = false;
-var queuedListeners = [];
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
 
@@ -32,17 +31,6 @@ if (!setImmediate) {
     }
 }
 
-function notifyAfterUpdateListeners() {
-    var len = queuedListeners.length;
-    if (len) {
-        for (var i=0; i<len; i++) {
-            queuedListeners[i]();
-        }
-
-        queuedListeners.length = 0;
-    }
-}
-
 /**
  * This function is called when we schedule the update of "unbatched"
  * updates to widgets.
@@ -58,8 +46,6 @@ function updateUnbatchedWidgets() {
             updatesScheduled = false;
         }
     }
-
-    notifyAfterUpdateListeners();
 }
 
 function scheduleUpdates() {
@@ -72,11 +58,6 @@ function scheduleUpdates() {
     updatesScheduled = true;
 
     setImmediate(updateUnbatchedWidgets);
-}
-
-function onAfterUpdate(callback) {
-    queuedListeners.push(callback);
-    scheduleUpdates();
 }
 
 function updateWidgets(queue) {
@@ -98,8 +79,6 @@ function batchUpdate(func) {
     // is the outer batched update. After the outer
     // batched update completes we invoke the "afterUpdate"
     // event listeners.
-    var isOuter = batchStack.length === 0;
-
     var batch = {
         $__queue: null
     };
@@ -119,12 +98,6 @@ function batchUpdate(func) {
             // Now that we have completed the update of all the widgets
             // in this batch we need to remove it off the top of the stack
             batchStack.length--;
-
-            if (isOuter) {
-                // If there were any listeners for the "afterUpdate" event
-                // then notify those listeners now
-                notifyAfterUpdateListeners();
-            }
         }
     }
 }
@@ -169,4 +142,3 @@ function queueWidgetUpdate(widget) {
 
 exports.$__queueWidgetUpdate = queueWidgetUpdate;
 exports.$__batchUpdate = batchUpdate;
-exports.$__onAfterUpdate = onAfterUpdate;

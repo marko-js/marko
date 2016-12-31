@@ -9,6 +9,7 @@ line to your app:
 
 */
 var stream = require('stream');
+var Template = require('./html/Template');
 var AsyncStream = require('./html/AsyncStream');
 
 function Readable(template, data, options) {
@@ -47,6 +48,6 @@ Readable.prototype = {
 
 require('raptor-util/inherit')(Readable, stream.Readable);
 
-require('./html').Template.prototype.stream = function(data) {
+Template.prototype.stream = function(data) {
     return new Readable(this, data, this._options);
 };

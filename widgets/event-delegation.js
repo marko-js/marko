@@ -1,5 +1,5 @@
 var updateManager = require('./update-manager');
-var widgetLookup = require('./lookup').$__widgets;
+var widgetLookup = require('./util').$__widgetLookup;
 var warp10Parse = require('warp10/parse');
 
 function getObjectAttribute(el, attrName) {
@@ -15,8 +15,8 @@ function getObjectAttribute(el, attrName) {
     }
 }
 
-var attachBubbleEventListeners = function() {
-    var body = document.body;
+function attachBubbleEventListeners(doc) {
+    var body = doc.body;
     // Here's where we handle event delegation using our own mechanism
     // for delegating events. For each event that we have white-listed
     // as supporting bubble, we will attach a listener to the root
@@ -87,12 +87,11 @@ var attachBubbleEventListeners = function() {
             });
         });
     });
-};
+}
 
-exports.$__init = function() {
-    if (attachBubbleEventListeners) {
-        // Only attach event listeners once...
-        attachBubbleEventListeners();
-        attachBubbleEventListeners = null; // This is a one time thing
+exports.$__init = function(doc) {
+    if (!doc.$wb) {
+        doc.$wb = true;
+        attachBubbleEventListeners(doc);
     }
 };

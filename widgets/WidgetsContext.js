@@ -40,10 +40,10 @@ WidgetsContext.prototype = {
     $__clearWidgets: function () {
         this.$__widgetStack = [new WidgetDef(null /* id */, this.$__out)];
     },
-    $__initWidgets: function (document) {
+    $__initWidgets: function (doc) {
         var widgetDefs = this.$__widgets;
         if (widgetDefs) {
-            initWidgets.$__initClientRendered(widgetDefs, document);
+            initWidgets.$__initClientRendered(widgetDefs, doc);
             this.$__clearWidgets();
         }
     },

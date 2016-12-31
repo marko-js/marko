@@ -4,7 +4,9 @@ var eventDelegation = require('./event-delegation');
 var win = window;
 var defaultDocument = document;
 var events = require('../runtime/events');
-var widgetLookup = require('./lookup').$__widgets;
+var widgetsUtil = require('./util');
+var widgetLookup = widgetsUtil.$__widgetLookup;
+var getElementById = widgetsUtil.$__getElementById;
 var WidgetDef = require('./WidgetDef');
 var extend = require('raptor-util/extend');
 
@@ -27,7 +29,7 @@ function addEventListenerHelper(el, eventType, listener) {
 }
 
 function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs, handles) {
-    var handle = addEventListenerHelper(el, eventType, function(event) {
+    var removeListener = addEventListenerHelper(el, eventType, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -35,7 +37,7 @@ function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs
 
         invokeWidgetEventHandler(widget, targetMethodName, args);
     });
-    handles.push(handle);
+    handles.push(removeListener);
 }
 
 function initWidget(widgetDef, doc) {
@@ -65,7 +67,8 @@ function initWidget(widgetDef, doc) {
     }
 
     if (existingWidget) {
-        existingWidget.$__reset(true /* shouldRemoveDOMEventListeners */);
+        existingWidget.$__reset();
+        existingWidget.$__removeDOMEventListeners();
         widget = existingWidget;
     } else {
         widget = registry.$__createWidget(type, id, doc);
@@ -90,7 +93,7 @@ function initWidget(widgetDef, doc) {
                 }
 
             } else {
-                var rootEl = doc.getElementById(nestedId);
+                var rootEl = getElementById(doc, nestedId);
                 if (rootEl) {
                     rootEl._w = widget;
                     els.push(rootEl);
@@ -100,7 +103,7 @@ function initWidget(widgetDef, doc) {
 
         el = els[0];
     } else {
-        el = doc.getElementById(id);
+        el = getElementById(doc, id);
         el._w = widget;
         els = [el];
     }
@@ -124,10 +127,8 @@ function initWidget(widgetDef, doc) {
             for (i=0, len=domEvents.length; i<len; i+=4) {
                 eventType = domEvents[i];
                 targetMethodName = domEvents[i+1];
-                var eventEl = document.getElementById(domEvents[i+2]);
+                var eventEl = getElementById(doc, domEvents[i+2]);
                 extraArgs = domEvents[i+3];
-
-
 
                 // The event mapping is for a DOM event (not a custom event)
                 addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
@@ -191,7 +192,7 @@ function initWidget(widgetDef, doc) {
 function initClientRendered(widgetDefs, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
-    eventDelegation.$__init();
+    eventDelegation.$__init(doc);
 
     doc = doc || defaultDocument;
     for (var i=0,len=widgetDefs.length; i<len; i++) {
@@ -220,7 +221,7 @@ function initClientRendered(widgetDefs, doc) {
 function initServerRendered(renderedWidgets, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
-    eventDelegation.$__init();
+    eventDelegation.$__init(doc || defaultDocument);
 
     renderedWidgets = warp10Finalize(renderedWidgets);
 

@@ -1,4 +1,4 @@
-var marko_template = module.exports = require("marko/vdom").t(__filename),
+var marko_template = module.exports = require("marko/vdom").t(),
     marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_forEach = marko_helpers.f,
     marko_createElement = marko_helpers.e,

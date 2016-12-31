@@ -5,8 +5,8 @@ exports.check = function(marko, markoCompiler, expect, done) {
 
     var out = runtimeHtml.createWriter();
     out
-        .on('finish', function() {
-            expect(out.getOutput()).to.equal('Hello John!');
+        .on('finish', function(result) {
+            expect(result.getOutput()).to.equal('Hello John!');
             done();
         })
         .on('error', function(e) {

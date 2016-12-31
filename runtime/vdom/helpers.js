@@ -1,7 +1,9 @@
 'use strict';
 
-var HTMLElement = require('./HTMLElement');
-var Text = require('./Text');
+var vdom = require('./vdom');
+var HTMLElement = vdom.$__HTMLElement;
+var Text = vdom.$__Text;
+
 var commonHelpers = require('../helpers');
 var extend = require('raptor-util/extend');
 
@@ -23,34 +25,6 @@ exports.const = function(id) {
 };
 
 /**
- * Helper for generating the string for a style attribute
- * @param  {[type]} style [description]
- * @return {[type]}       [description]
- */
-exports.sa = function(style) {
-    if (!style) {
-        return null;
-    }
-
-    if (typeof style === 'string') {
-        return style;
-    } else if (typeof style === 'object') {
-        var parts = [];
-        for (var name in style) {
-            if (style.hasOwnProperty(name)) {
-                var value = style[name];
-                if (value) {
-                    parts.push(name + ':' + value);
-                }
-            }
-        }
-        return parts ? parts.join(';') : null;
-    } else {
-        return null;
-    }
-};
-
-/**
  * Internal helper method to handle the "class" attribute. The value can either
  * be a string, an array or an object. For example:
  *
@@ -69,7 +43,5 @@ exports.ca = function(classNames) {
         return classList(classNames);
     }
 };
-
-exports.inline = require('./')._inline;
 
 extend(exports, commonHelpers);

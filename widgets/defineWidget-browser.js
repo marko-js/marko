@@ -30,8 +30,8 @@ module.exports = function defineWidget(def, renderer) {
     // Instead, we store their constructor in the "initWidget"
     // property and that method gets called later inside
     // init-widgets-browser.js
-    function Widget(id, document) {
-        BaseWidget.call(this, id, document);
+    function Widget(id, doc) {
+        BaseWidget.call(this, id, doc);
     }
 
     if (!proto.$__isWidget) {

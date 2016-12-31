@@ -1,9 +1,9 @@
-var marko = require('./index');
+var defaultCreateOut = require('./createOut');
 var extend = require('raptor-util/extend');
 
 module.exports = function(target, renderer) {
     var renderFunc = renderer && (renderer.renderer || renderer.render || renderer);
-    var createOut = target.createOut || renderer.createOut || marko.createOut;
+    var createOut = target.createOut || renderer.createOut || defaultCreateOut;
 
     return extend(target, {
         createOut: createOut,
@@ -35,7 +35,7 @@ module.exports = function(target, renderer) {
             out.sync();
 
             render(localData, out);
-            return out.getResult();
+            return out.$__getResult();
         },
 
         /**
@@ -61,7 +61,7 @@ module.exports = function(target, renderer) {
             var finalData;
             var globalData;
             var render = renderFunc || this._;
-            var shouldBuffer = this._shouldBuffer;
+            var shouldBuffer = this.$__shouldBuffer;
             var shouldEnd = true;
 
             if (data) {
@@ -73,7 +73,7 @@ module.exports = function(target, renderer) {
                 finalData = {};
             }
 
-            if (out && out.isOut){
+            if (out && out.$__isOut) {
                 finalOut = out;
                 shouldEnd = false;
                 extend(out.global, globalData);
@@ -92,12 +92,14 @@ module.exports = function(target, renderer) {
             if (callback) {
                 finalOut
                     .on('finish', function() {
-                        callback(null, finalOut.getResult());
+                        callback(null, finalOut.$__getResult());
                     })
                     .once('error', callback);
             }
 
-            finalOut.global.template = finalOut.global.template || this;
+            globalData = finalOut.global;
+
+            globalData.template = globalData.template || this;
 
             render(finalData, finalOut);
 

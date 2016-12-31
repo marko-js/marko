@@ -17,7 +17,7 @@ describe('AsyncVDOMBuilder', function() {
     it('sync', function() {
         var out = new AsyncVDOMBuilder();
         out.element('div', {}, 0);
-        var tree = out.getOutput();
+        var tree = out.$__getOutput();
         expect(getChildNodes(tree).length).to.equal(1);
     });
 

@@ -1,5 +1,7 @@
 'use strict';
-import { h, Component } from 'preact';
+var preact = require('preact');
+var h = preact.h;
+var Component = preact.Component;
 
 function renderColor(color) {
     var style = {

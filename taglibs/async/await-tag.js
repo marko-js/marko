@@ -212,8 +212,8 @@ module.exports = function awaitTag(input, out) {
             };
 
             asyncOut
-                .on('finish', function() {
-                    asyncValue.resolve(asyncOut.getOutput());
+                .on('finish', function(result) {
+                    asyncValue.resolve(result.getOutput());
                 })
                 .on('error', function(err) {
                     asyncValue.reject(err);
