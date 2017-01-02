@@ -34,16 +34,16 @@ function getVariableName(moduleSpecifier) {
 }
 
 function getNames(importSpecifier) {
-       var names = importSpecifier.split(/\bas\b/);
+   var names = importSpecifier.split(/\s*(?:\bas\b|:)\s*/);
 
-       if (names.length == 1) {
-            names[1] = names[0];
-       }
+   if (names.length == 1) {
+        names[1] = names[0];
+   }
 
-       return {
-            exported: names[0].trim(),
-            local: names[1].trim()
-       };
+   return {
+        exported: names[0].trim(),
+        local: names[1].trim()
+   };
 }
 
 module.exports = function importToAssignments(tagString) {
