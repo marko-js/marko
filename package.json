@@ -112,7 +112,7 @@
     "through": "^2.3.4",
     "through2": "^2.0.1"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bin": {
     "markoc": "bin/markoc"
   },

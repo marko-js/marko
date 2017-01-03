@@ -300,4 +300,4 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # License
 
-Apache License v2.0
+MIT
