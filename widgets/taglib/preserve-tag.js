@@ -5,7 +5,7 @@ module.exports = function render(input, out) {
 
     var global = out.global;
 
-    if (global.$w) {
+    if (global.$w !== undefined) {
         var id = input.id;
 
         // See if the DOM node with the given ID already exists.

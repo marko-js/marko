@@ -277,11 +277,11 @@ Widget.prototype = widgetProto = {
         return this.$__state;
     },
     set state(value) {
-        var state = this.$__state;
-        if(!state && value) {
-            this.$__state = new this.$__State(this, value);
-        } else {
+        if (value) {
+            var state = this.$__state || (this.$__state = new this.$__State(this));
             state.$__replace(value);
+        } else {
+            this.$__state = null;
         }
     },
     setState: function(name, value) {
@@ -401,7 +401,10 @@ Widget.prototype = widgetProto = {
 
     $__reset: function() {
         this.$__newProps = null;
-        this.$__state.$__reset();
+        var state = this.$__state;
+        if (state) {
+            state.$__reset();
+        }
     },
 
     shouldUpdate: function(newState, newProps) {
@@ -424,10 +427,9 @@ Widget.prototype = widgetProto = {
             throw TypeError();
         }
 
-        var state = self.$__state;
-
-        var globalData = {};
-        globalData.$w = [self, !props && state && state.$__raw];
+        var globalData = {
+            $w: self
+        };
 
         var fromEls = self.$__getRootEls({});
         var doc = self.$__document;

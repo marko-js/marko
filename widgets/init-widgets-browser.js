@@ -110,10 +110,8 @@ function initWidget(widgetDef, doc) {
 
     widgetLookup[id] = widget;
 
-    widget.state = state || {}; // First time rendering so use the provided state or an empty state object
-
-    if (!config) {
-        config = {};
+    if (state) {
+        widget.$__state = new widget.$__State(widget, state);
     }
 
     if (widget.$__isWidget) {
@@ -152,6 +150,7 @@ function initWidget(widgetDef, doc) {
             }
         }
     } else {
+        config = config || {};
         config.elId = id;
         config.el = el;
         config.els = els;
@@ -169,7 +168,10 @@ function initWidget(widgetDef, doc) {
         events.emit('initWidget', initEventArgs);
 
         widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
-        extend(widget, config);
+        if (config) {
+            extend(widget, config);
+        }
+
         widget.$__initWidget(config);
         widget.$__emitLifecycleEvent('afterInit', initEventArgs);
 

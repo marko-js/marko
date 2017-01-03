@@ -3,9 +3,6 @@ var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
 
-var RERENDER_WIDGET_INDEX = 0;
-var RERENDER_WIDGET_STATE_INDEX = 1;
-
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
 function resolveWidgetRef(out, ref, scope) {
@@ -105,78 +102,23 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             }
         }
 
-        var widgetState;
+
         var widgetConfig;
         var widgetBody;
+        var widgetState; // This is the pending widget state that needs to be assigned to the new widget
+        var finalWidgetState; // This is the final widget state
 
-        var rerenderInfo = outGlobal.$w;
-        var rerenderWidget;
+        var rootRerenderWidget = outGlobal.$w;
+        var isRerender = rootRerenderWidget !== undefined;
 
-        if (rerenderInfo && (rerenderWidget = rerenderInfo[RERENDER_WIDGET_INDEX])) {
-            rerenderInfo[RERENDER_WIDGET_INDEX] = null;
-
-            if (!input) {
-                widgetState = rerenderInfo[RERENDER_WIDGET_STATE_INDEX];
-                input = null;
-            }
+        if (rootRerenderWidget) {
+            outGlobal.$w = null;
         } else if (!input) {
             // Make sure we always have a non-null input object
             input = {};
         }
 
-        var widgetArgs;
-
-        if (input) {
-            if (onInput) {
-                var lightweightWidget = Object.create(renderingLogic);
-                lightweightWidget.onInput(input);
-                widgetState = lightweightWidget.state;
-                widgetConfig = lightweightWidget;
-                delete widgetConfig.state;
-            } else {
-                // Deprecated legacy methods... this code block should be removed in the future
-                if (getWidgetConfig) {
-                    // If getWidgetConfig() was implemented then use that to
-                    // get the widget config. The widget config will be passed
-                    // to the widget constructor. If rendered on the server the
-                    // widget config will be serialized to a JSON-like data
-                    // structure and stored in a "data-w-config" attribute.
-                    widgetConfig = getWidgetConfig(input, out);
-                } else {
-                    widgetConfig = input.widgetConfig;
-                }
-
-                if (getInitialBody) {
-                    // If we have widget a widget body then pass it to the template
-                    // so that it is available to the widget tag and can be inserted
-                    // at the w-body marker
-                    widgetBody = getInitialBody(input, out);
-                }
-
-                // If we do not have state then we need to go through the process
-                // of converting the input to a widget state, or simply normalizing
-                // the input using getInitialProps
-
-                if (getInitialProps) {
-                    // This optional method is used to normalize input state
-                    input = getInitialProps(input, out) || {};
-                }
-
-                if (getInitialState) {
-                    // This optional method is used to derive the widget state
-                    // from the input properties
-                    widgetState = getInitialState(input, out);
-                }
-            }
-
-            if (!widgetBody) {
-                // Default to using the nested content as the widget body
-                widgetBody = input.renderBody;
-            }
-
-            widgetArgs = input.$w;
-        }
-
+        var widgetArgs = input && input.$w;
         var customEvents;
         var scope;
 
@@ -209,10 +151,10 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         var existingWidget;
 
-        if (rerenderWidget) {
-            existingWidget = rerenderWidget;
-            id = rerenderWidget.id;
-        } else if (rerenderInfo) {
+        if (rootRerenderWidget) {
+            existingWidget = rootRerenderWidget;
+            id = rootRerenderWidget.id;
+        } else if (isRerender) {
             // Look in in the DOM to see if a widget with the same ID and type already exists.
             existingWidget = widgetLookup[id];
             if (existingWidget && existingWidget.$__type !== typeName) {
@@ -220,22 +162,88 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             }
         }
 
-        if (existingWidget && !rerenderWidget) {
-            // This is a nested widget found during a rerender. We don't want to needlessly
-            // rerender the widget if that is not necessary. If the widget is a stateful
-            // widget then we update the existing widget with the new state.
-            var shouldPreserve;
+        if (input) {
+            if (onInput) {
+                if (existingWidget) {
+                    existingWidget.onInput(input);
+                } else {
+                    var lightweightWidget = Object.create(renderingLogic);
+                    lightweightWidget.onInput(input);
+                    widgetState = finalWidgetState = lightweightWidget.state;
+                    widgetConfig = lightweightWidget;
+                    delete widgetConfig.state;
+                }
+            } else {
+                // Deprecated legacy methods... this code block should be removed in the future
+                if (getWidgetConfig) {
+                    // If getWidgetConfig() was implemented then use that to
+                    // get the widget config. The widget config will be passed
+                    // to the widget constructor. If rendered on the server the
+                    // widget config will be serialized to a JSON-like data
+                    // structure and stored in a "data-w-config" attribute.
+                    widgetConfig = getWidgetConfig(input, out);
+                } else {
+                    widgetConfig = input.widgetConfig;
+                }
 
-            if (widgetState) {
-                existingWidget.$__replaceState(widgetState);
-                shouldPreserve = !widgetBody && !existingWidget.$__isDirty;
+                if (getInitialBody) {
+                    // If we have widget a widget body then pass it to the template
+                    // so that it is available to the widget tag and can be inserted
+                    // at the w-body marker
+                    widgetBody = getInitialBody(input, out);
+                }
+
+                // If we do not have state then we need to go through the process
+                // of converting the input to a widget state, or simply normalizing
+                // the input using getInitialProps
+
+                if (getInitialProps) {
+                    // This optional method is used to normalize input state
+                    input = getInitialProps(input, out) || {};
+                }
+
+                if (getInitialState) {
+                    // This optional method is used to derive the widget state
+                    // from the input properties
+                    widgetState = finalWidgetState = getInitialState(input, out);
+                }
             }
 
-            // If the widget is not dirty (no state changes) and shouldUpdate() returns false
-            // then skip rerendering the widget.
-            if (shouldPreserve || !existingWidget.shouldUpdate(input, widgetState)) {
-                preserveWidgetEls(existingWidget, out, widgetsContext);
-                return;
+            if (!widgetBody) {
+                // Default to using the nested content as the widget body
+                widgetBody = input.renderBody;
+            }
+        }
+
+        if (existingWidget) {
+            var existingState = existingWidget.$__state;
+
+            if (!widgetState) {
+                finalWidgetState = existingState && existingState.$__raw;
+            }
+
+            if (!rootRerenderWidget) {
+                // This is a nested widget found during a rerender. We don't want to needlessly
+                // rerender the widget if that is not necessary. If the widget is a stateful
+                // widget then we update the existing widget with the new state.
+                var shouldPreserve;
+
+                if (existingState) {
+                    if (widgetState) {
+                        // This will only be true if getInitialState was true
+                        existingWidget.$__replaceState(widgetState);
+                        widgetState = null;
+                    }
+
+                    shouldPreserve = !widgetBody && !existingWidget.$__isDirty;
+                }
+
+                // If the widget is not dirty (no state changes) and shouldUpdate() returns false
+                // then skip rerendering the widget.
+                if (shouldPreserve || !existingWidget.shouldUpdate(input, finalWidgetState)) {
+                    preserveWidgetEls(existingWidget, out, widgetsContext);
+                    return;
+                }
             }
         }
 
@@ -243,8 +251,8 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         // data. If that method is not provided then just use the
         // the state (if provided) or the input data.
         var templateData = (getTemplateData ?
-            getTemplateData(widgetState, input, out) :
-            (getInitialState && widgetState /*legacy*/) || input) || {};
+            getTemplateData(finalWidgetState, input, out) :
+            (getInitialState && finalWidgetState /*legacy*/) || input) || {};
 
         if (existingWidget) {
             existingWidget.$__emitLifecycleEvent('beforeUpdate');
@@ -262,7 +270,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateData, out, widgetDef, widgetState);
+        templateRenderFunc(templateData, out, widgetDef, finalWidgetState);
 
         widgetDef.$__end();
     };
