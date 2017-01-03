@@ -12,15 +12,13 @@ var ATTR_MARKO_CONST = 'data-marko-const';
 var specialAttrRegexp = /^data-_/;
 
 function removePreservedAttributes(attrs) {
-    var preservedAttrs = attrs['data-preserve-attrs'];
+    var preservedAttrs = attrs._noUpdate;
     if (preservedAttrs) {
-        preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
-
-        for (var i=0, len=preservedAttrs.length; i<len; i++) {
-            var preservedAttrName = preservedAttrs[i];
+        preservedAttrs.forEach(function(preservedAttrName) {
             delete attrs[preservedAttrName];
-        }
+        });
     }
+
     return attrs;
 }
 
@@ -267,10 +265,7 @@ HTMLElement.$__morphAttrs = function(fromEl, toEl) {
     // render or we don't want certain attributes to be touched. To support
     // that use case we delete out all of the preserved attributes
     // so it's as if they never existed.
-    var preservedAttrs = attrs['data-preserve-attrs'];
-    if (preservedAttrs) {
-        attrs = removePreservedAttributes(extend({}, attrs));
-    }
+    attrs = removePreservedAttributes(extend({}, attrs));
 
     // Loop over all of the attributes in the attribute map and compare
     // them to the value in the old map. However, if the value is

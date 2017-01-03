@@ -181,7 +181,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "displayText": "w-preserve-attrs=\"attr1,attr2\"",
+                    "displayText": "w-preserve-attrs=\"attr1,attr2\" (Deprecated)",
                     "snippet": "w-preserve-attrs=\"${1:class,style}\"",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-attributes-during-re-render"
                 }
