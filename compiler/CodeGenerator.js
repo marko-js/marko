@@ -23,7 +23,10 @@ class GeneratorEvent {
     }
 
     insertCode(newCode) {
-        this.insertedNodes = newCode;
+        if (!this.insertedNodes) {
+            this.insertedNodes = [];
+        }
+        this.insertedNodes = this.insertedNodes.concat(newCode);
     }
 }
 
