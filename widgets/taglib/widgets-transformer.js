@@ -67,13 +67,12 @@ module.exports = function transform(el, context) {
         transformHelper.handleWidgetFor();
     }
 
-    if (el.hasAttribute('w-preserve-attrs')) {
-        transformHelper.handleWidgetPreserveAttrs();
-    }
-
     if (el.hasAttribute('w-body')) {
         transformHelper.handleWidgetBody();
     }
+
+    // Handle w-preserve-attrs and :no-update attributes
+    transformHelper.handleWidgetPreserveAttrs();
 
     // Handle w-on* properties
     transformHelper.handleWidgetEvents();

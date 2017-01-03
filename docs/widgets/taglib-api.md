@@ -179,12 +179,12 @@ Similar to [no-update-if](#no-update) except that only the child DOM nodes are p
 </div>
 ```
 
-## w-preserve-attrs
+## :no-update
 
 This custom attribute is used to prevent select DOM elements from being modified during a rerender:
 
 ```xml
-<div w-preserve-attrs="class,style">
+<div class:no-update=data.className style:no-update=data.styles>
     ...
 </div>
 ```
