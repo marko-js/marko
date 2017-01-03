@@ -198,7 +198,8 @@ var proto = HTMLElementClone.prototype = HTMLElement.prototype;
 ['checked', 'selected', 'disabled'].forEach(function(name) {
     defineProperty(proto, name, {
         get: function () {
-            return this.$__attributes[name] !== undefined;
+            var value = this.$__attributes[name];
+            return value !== false && value != null;
         }
     });
 });

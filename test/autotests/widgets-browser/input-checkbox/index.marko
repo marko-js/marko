@@ -1,0 +1,19 @@
+<script>
+    module.exports = {
+        onInput: function(input) {
+            this.state = { first: true, second: false }
+        },
+        toggleValue: function(e) {
+            this.state[ e.target.value ] = e.target.checked
+        }
+    }
+</script>
+<div id="the-component">
+    <input type="checkbox" name="opts[]" value="first" checked=state.first
+        on-change('toggleValue') ref="first"/>
+    First Checkbox
+    <br/>
+    <input type="checkbox" name="opts[]" value="second" checked=state.second
+        on-change('toggleValue') ref="second"/>
+    Second Checkbox
+</div>
