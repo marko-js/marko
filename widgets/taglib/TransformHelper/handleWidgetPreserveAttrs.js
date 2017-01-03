@@ -32,7 +32,7 @@ function handleWidgetPreserveAttrs() {
     });
 
     if (noUpdateAttrs.length) {
-        el.setAttributeValue('_noUpdate', builder.literal(noUpdateAttrs));
+        el.setAttributeValue('data-_noupdate', builder.literal(noUpdateAttrs));
     }
 }
 
