@@ -12,7 +12,7 @@ var ATTR_MARKO_CONST = 'data-marko-const';
 var specialAttrRegexp = /^data-_/;
 
 function removePreservedAttributes(attrs) {
-    var preservedAttrs = attrs._noUpdate;
+    var preservedAttrs = attrs['data-_noupdate'];
     if (preservedAttrs) {
         preservedAttrs.forEach(function(preservedAttrName) {
             delete attrs[preservedAttrName];
