@@ -454,18 +454,6 @@ Widget.prototype = widgetProto = {
                 var id = fromEl.id;
                 var existingWidget;
 
-                var preservedAttrs = !out.isVDOM && toEl.getAttribute('data-_noupdate');
-                if (preservedAttrs) {
-                    preservedAttrs.forEach(function(preservedAttrName) {
-                        var preservedAttrValue = fromEl.getAttribute(preservedAttrName);
-                        if (preservedAttrValue == null) {
-                            toEl.removeAttribute(preservedAttrName);
-                        } else {
-                            toEl.setAttribute(preservedAttrName, preservedAttrValue);
-                        }
-                    });
-                }
-
                 if (widgetsContext && id) {
                     var preserved = widgetsContext.$__preserved[id];
 
