@@ -220,6 +220,7 @@ class TaglibLoader {
                     var basename = nodePath.basename(curImport);
                     if (basename === 'package.json') {
                         var packagePath = resolve(curImport, dirname);
+                        var packageDir = nodePath.dirname(packagePath);
                         var pkg = jsonFileReader.readFileSync(packagePath);
                         var dependencies = pkg.dependencies;
                         if (dependencies) {
@@ -227,7 +228,7 @@ class TaglibLoader {
                             for (var j=0; j<dependencyNames.length; j++) {
                                 var dependencyName = dependencyNames[j];
 
-                                importPath = resolveFrom(dirname, dependencyName + '/marko.json');
+                                importPath = resolveFrom(packageDir, dependencyName + '/marko.json');
 
                                 if (importPath) {
                                     taglib.addImport(importPath);
