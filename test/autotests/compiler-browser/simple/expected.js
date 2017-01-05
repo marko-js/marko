@@ -5,6 +5,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("6597f2"),
     marko_node0 = marko_createElement("div", null, 1, marko_const_nextId())
+      .t("No colors!"),
+    marko_node1 = marko_createElement("div", null, 1, marko_const_nextId())
       .t("No colors!");
 
 function render(data, out) {
@@ -37,7 +39,7 @@ function render(data, out) {
 
     out.ee();
   } else {
-    out.n(marko_node0);
+    out.n(marko_node1);
   }
 }
 
