@@ -1,5 +1,5 @@
 var extend = require('raptor-util/extend');
-var widgetsUtil = require('../widgets/util');
+var widgetsUtil = require('../widgets/util-browser');
 var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
 var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
 
@@ -49,6 +49,7 @@ module.exports = function(target, getEl, afterInsert) {
                 if (curChild.nodeType === 1) {
                     beforeRemove(curChild);
                 }
+                curChild = curChild.nextSibling;
             }
 
             referenceEl.innerHTML = '';
