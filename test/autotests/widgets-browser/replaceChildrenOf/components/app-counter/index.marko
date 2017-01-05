@@ -1,0 +1,16 @@
+<script>
+    module.exports = {
+        onInput: function(input) {
+            this.state = {
+                counter: input.value
+            }
+        },
+
+        increment: function() {
+            this.state.counter++;
+        }
+    }
+</script>
+<div>
+    Count: ${state.counter}
+</div>
