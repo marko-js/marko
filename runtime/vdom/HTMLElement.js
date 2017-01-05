@@ -210,7 +210,7 @@ defineProperty(proto, 'id', {
 
 defineProperty(proto, 'value', {
     get: function () {
-        return this.$__value || this.$__attributes.value;
+        return this.$__value || this.$__attributes.value || '';
     }
 });
 
