@@ -62,6 +62,8 @@ module.exports = function handleWidgetBind() {
         return;
     }
 
+    context.deprecate('The "w-bind" attribute is deprecated. Please remove it.');
+
     // Remove the w-bind attribute since we don't want it showing up in the output DOM
     el.removeAttribute('w-bind');
 
