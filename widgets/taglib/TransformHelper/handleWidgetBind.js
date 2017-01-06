@@ -57,13 +57,23 @@ module.exports = function handleWidgetBind() {
     let context = this.context;
     let builder = this.builder;
 
+    let internalBindAttr = el.getAttribute('_widgetbind');
     let bindAttr = el.getAttribute('w-bind');
-    if (bindAttr == null) {
-        return;
-    }
+    let bindAttrValue;
 
-    // Remove the w-bind attribute since we don't want it showing up in the output DOM
-    el.removeAttribute('w-bind');
+    if (internalBindAttr == null && bindAttr == null) {
+        return;
+    } else if (bindAttr != null) {
+        context.deprecate('The "w-bind" attribute is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/421');
+
+        // Remove the w-bind attribute since we don't want it showing up in the output DOM
+        el.removeAttribute('w-bind');
+
+        // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
+        bindAttrValue = bindAttr.value;
+    } else if (internalBindAttr != null) {
+        el.removeAttribute('_widgetbind');
+    }
 
     var isInnerBind = checkIsInnerBind(el.parentNode);
 
@@ -71,8 +81,6 @@ module.exports = function handleWidgetBind() {
 
     // A widget is bound to the el...
 
-    // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
-    let bindAttrValue = bindAttr.value;
     let modulePath;
 
     var widgetProps = isInnerBind ? {} : this.getWidgetProps();
@@ -92,7 +100,7 @@ module.exports = function handleWidgetBind() {
         } else {
             modulePath = this.getDefaultWidgetModule();
             if (!modulePath) {
-                this.addError('Invalid "w-bind" attribute. No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
+                this.addError('No corresponding JavaScript module found in the same directory (either "widget.js" or "index.js"). Actual: ' + modulePath);
                 return;
             }
         }

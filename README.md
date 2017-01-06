@@ -261,7 +261,7 @@ module.exports = require('marko-widgets').defineComponent({
 And, here is the corresponding Marko template for the UI component:
 
 ```xml
-<div class="click-count" w-bind>
+<div class="click-count">
     Hello ${data.greetingName}!
     <div>
         You clicked the button ${data.clickCount} ${data.timesMessage}.

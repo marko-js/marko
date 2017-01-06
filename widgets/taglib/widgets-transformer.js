@@ -41,7 +41,7 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute('w-bind')) {
+    if (el.hasAttribute('_widgetbind') || el.hasAttribute('w-bind')) {
         el.setFlag('hasWidgetBind');
         transformHelper.handleWidgetBind();
     }
