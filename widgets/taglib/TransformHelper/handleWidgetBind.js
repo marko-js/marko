@@ -94,6 +94,12 @@ module.exports = function handleWidgetBind() {
     let isRendererExport;
     let rendererPath;
 
+    const hasWidgetTypes = context.isFlagSet('hasWidgetTypes');
+
+    if (hasWidgetTypes) {
+        context.deprecate('The <widget-types> tag is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/514');
+    }
+
     if (bindAttrValue == null) {
         if (inlineComponent) {
             modulePath = context.filename;
@@ -112,7 +118,7 @@ module.exports = function handleWidgetBind() {
         }
     } else {
         // This is a dynamic expression. The <widget-types> should have been found.
-        if (!context.isFlagSet('hasWidgetTypes')) {
+        if (!hasWidgetTypes) {
             this.addError('The <widget-types> tag must be used to declare widgets when the value of the "w-bind" attribute is a dynamic expression.');
             return;
         }
