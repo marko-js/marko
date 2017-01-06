@@ -37,11 +37,24 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             c: widgetDef.$__config
         };
 
+        var state = widgetDef.$__state;
+
+        if (state) {
+            // Update state properties with an `undefined` value to have a `null`
+            // value so that the property name will be serialized down to the browser.
+            // This ensures that we add the proper getter/setter for the state property.
+            for (var k in state) {
+                if (state[k] === undefined) {
+                    state[k] = null;
+                }
+            }
+        }
+
         flattened.push([
             widgetDef.id,        // 0 = id
             typeIndex,           // 1 = type
             widgetDef.$__roots,  // 2 = root el ids
-            widgetDef.$__state,  // 3 = state
+            state,               // 3 = state
             extra                // 4
         ]);
     }

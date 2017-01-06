@@ -13,17 +13,10 @@ html lang="en"
         div id="testsTarget"
 
         app-foo
+        app-state-watch
+
 
         lasso-body
-
-        init-widgets immediate
-
-        script
-            ---
-            // window.fooWidget should not exist yet, but's store that in a variable to verify
-            window.afterInitWidgetsFooWidget = window.fooWidget;
-            window.afterInitWidgetsBarWidget = window.barWidget;
-            ---
 
         lasso-slot name="mocha-run"
 
