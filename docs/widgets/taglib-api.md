@@ -264,26 +264,3 @@ $markoWidgets("w0,w1,w2")
 ```
 
 When immediate widget initialization is enabled, widgets will be initialized before the DOM ready event. In addition, inline widget initialization code will be appended to each async fragment.
-
-## `<widget-types>`
-
-Used to conditionally bind a widget:
-
-```xml
-<widget-types default="./widget" mobile="./widget-mobile"/>
-
-<div w-bind=(data.isMobile ? 'default' : 'mobile')>
-    ...
-</div>
-```
-
-The `<widget-types>` can also be used to disabling binding of a widget:
-
-
-```xml
-<widget-types default="./"/>
-
-<div w-bind=(data.includeWidget ? 'default' : null)>
-
-</div>
-```
