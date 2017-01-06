@@ -3,24 +3,6 @@ Marko Widgets Taglib
 
 # Custom attributes
 
-## w-bind
-
-This attribute is used to bind a widget to a DOM element.
-
-### Examples
-
-Bind to a JavaScript module named `./widget.js` that exports the widget definition:
-
-```xml
-<div w-bind="./widget">...</div>
-```
-
-Bind to a JavaScript module named `./widget.js` or `./index.js` (searched for in that order) that exports the widget definition:
-
-```xml
-<div w-bind>...</div>
-```
-
 ## ref
 
 Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID will be a concatenation of the parent widget ID with the provided value of the `ref`.
@@ -31,7 +13,7 @@ Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID 
 #### Using `ref` with an HTML element
 
 ```xml
-<div w-bind="./widget">
+<div>
     <button ref="myButton" type="button">My Button</button>
 </div>
 ```
@@ -54,7 +36,7 @@ var myButton = this.getEl('myButton');
 #### Using `ref` with a nested widget
 
 ```xml
-<div w-bind="./widget">
+<div>
     <app-button ref="myButton" label="My Button" />
 </div>
 ```
@@ -84,7 +66,7 @@ NOTE: For DOM events that bubble, efficient DOM event delegation will automatica
 #### Using `w-on*` with a nested HTML element
 
 ```xml
-<div w-bind="./widget">
+<div>
     <button onClick("handleMyButtonClick") type="button">My Button</button>
 </div>
 ```
@@ -112,7 +94,7 @@ var myButton = this.getEl('myButton');
 #### Using `w-on*` with a nested widget
 
 ```xml
-<div w-bind="./widget">
+<div>
     <app-button onSomeCustomEvent("handleSomeCustomEvent") label="My Button" />
 </div>
 ```

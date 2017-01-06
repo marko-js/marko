@@ -30,18 +30,11 @@ A few definitions before you get started:
 
 ## Binding Behavior
 
-Using the bindings for Marko, you can bind a widget to a rendered DOM element using the custom `w-bind` attribute as shown in the following sample template:
+Marko will search for a widget module by first checking to see if `widget.js`
+exists and then `index.js` and automatically bind accordingly. Example:
 
 ```xml
-<div class="my-component" w-bind="./widget">
-    <div>Click Me</div>
-</div>
-```
-
-You can also choose to leave the value of the `w-bind` attribute empty. If the value of `w-bind` is empty then `marko-widgets` will search for a widget module by first checking to see if `widget.js` exists and then `index.js`. Example:
-
-```xml
-<div class="my-component" w-bind>
+<div class="my-component">
     <div>Click Me</div>
 </div>
 ```
@@ -193,7 +186,7 @@ The `marko-widgets` taglib also provides support for allowing a widget to commun
 The following HTML template fragment contains a widget that has three nested [sample-button](https://github.com/marko-js-samples/marko-sample-components/tree/master/components/sample-button) widgets. Each nested [sample-button](https://github.com/marko-js-samples/marko-sample-components/tree/master/components/sample-button) is assigned an ID (i.e. `primaryButton`, `successButton` and `dangerButton`).
 
 ```xml
-<div class="my-component" w-bind="./widget">
+<div class="my-component">
     <div class="btn-group">
         <sample-button label="Click Me" variant="primary" ref="primaryButton"/>
         <sample-button label="Click Me" variant="success" ref="successButton"/>
@@ -214,7 +207,7 @@ this.getWidget('dangerButton').on('click', function() {
 Marko Widgets also supports referencing _repeated_ nested widgets as shown below:
 
 ```xml
-<div class="my-component" w-bind="./widget">
+<div class="my-component">
     <ul>
 		<li for="todoItem in data.todoItems">
 			<app-todo-item ref="todoItems[]" todo-item="todoItem"/>
@@ -237,7 +230,7 @@ To try out and experiment with this code please see the documentation and source
 DOM elements nested within a widget can be given unique IDs based on the containing widget's ID. These DOM elements can then be efficiently looked up by the containing widget using methods provided. The `ref` custom attribute can be used to assign DOM element IDs to HTML elements that are prefixed with the widget's ID. For example, given the following HTML template fragment:
 
 ```xml
-<form w-bind="./widget">
+<form>
     ...
     <button type="submit" ref="submitButton">Submit</button>
     <button type="button" ref="cancelButton">Cancel</button>
@@ -307,11 +300,11 @@ A widget can subscribe to events on a nested DOM element.
 Listeners can be attached declaratively as shown in the following sample code:
 
 ```xml
-<div w-bind>
-	<form onsubmit("handleFormSubmit")>
-		<input type="text" value="email" onchange("handleEmailChange")>
-		<button>Submit</button>
-	</form>
+<div>
+    <form onsubmit("handleFormSubmit")>
+        <input type="text" value="email" onchange("handleEmailChange")>
+            <button>Submit</button>
+    </form>
 </div>
 ```
 
@@ -350,7 +343,7 @@ For performance reasons, Marko Widgets only adds one event listener to the root 
 You can also choose to add listeners in JavaScript code by assigning an "element id" to the nested DOM element (only needs to be unique within the scope of the containing widget) so that the nested DOM element can be referenced by the containing widget. The scoped widget element ID should be assigned using the `ref="<id>"` attribute. For example, in the template:
 
 ```xml
-<div w-bind>
+<div>
 	<form ref="form">
 		<input type="text" value="email" ref="email">
 		<button>Submit</button>
@@ -404,7 +397,7 @@ A widget can subscribe to events on nested widgets. Every widget extends [EventE
 Listeners can be attached declaratively as shown in the following sample code:
 
 ```xml
-<div w-bind="./widget">
+<div>
 	<app-overlay title="My Overlay"
 	 onBeforeHide("handleOverlayBeforeHide")>
 
@@ -429,7 +422,7 @@ module.exports = require('marko-widgets').defineComponent({
 You can also choose to add listeners in JavaScript code by assigning an "id" to the nested widget (only needs to be unique within the scope of the containing widget) so that the nested widget can be referenced by the containing widget. The scoped widget ID should be assigned using the `ref="<id>"` attribute. For example, in the template:
 
 ```xml
-<div w-bind="./widget">
+<div>
 	<app-overlay title="My Overlay"
 		ref="myOverlay">
 
@@ -583,7 +576,7 @@ __src/pages/index/template.marko:__
 <body>
     <div>Marko Widgets: Bind</div>
 
-    <div class="my-component" w-bind="./widget">
+    <div class="my-component">
         <div>Click Me</div>
     </div>
 
@@ -698,9 +691,8 @@ src/components/app-hello/
 ___src/components/app-hello/template.marko:___
 
 ```xml
-<div w-bind
- on-click("handleClick")>
-	Hello ${data.name}!
+<div on-click("handleClick")>
+    Hello ${data.name}!
 </div>
 ```
 
@@ -735,9 +727,8 @@ src/components/app-hello/
 ___src/components/app-hello/template.marko:___
 
 ```xml
-<div w-bind="./widget"
- on-click("handleClick")>
-	Hello ${data.name}!
+<div on-click("handleClick")>
+    Hello ${data.name}!
 </div>
 ```
 

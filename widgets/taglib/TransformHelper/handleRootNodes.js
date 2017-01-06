@@ -199,7 +199,7 @@ module.exports = function handleRootNodes() {
     var nextRef = 0;
 
     rootNodes.forEach((curNode, i) => {
-        curNode.setAttributeValue('w-bind');
+        curNode.setAttributeValue('_widgetbind');
 
         if (!curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
