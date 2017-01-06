@@ -13,12 +13,12 @@ function normalizeExtension(extension) {
 }
 
 function compile(templatePath, markoCompiler, compilerOptions) {
-
     if (compilerOptions) {
-        compilerOptions = markoCompiler.defaultOptions;
-    } else {
         compilerOptions = Object.assign({}, markoCompiler.defaultOptions, compilerOptions);
+    } else {
+        compilerOptions = markoCompiler.defaultOptions;
     }
+
     var writeToDisk = compilerOptions.writeToDisk;
 
     var templateSrc;
@@ -124,10 +124,7 @@ function install(options) {
 
     extensions.forEach((extension) => {
         extension = normalizeExtension(extension);
-
-        if (!requireExtensions[extension]) {
-            requireExtensions[extension] = markoRequireExtension;
-        }
+        requireExtensions[extension] = markoRequireExtension;
     });
 }
 
