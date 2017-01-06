@@ -720,6 +720,25 @@ The above macro can then be invoked as part of any expression. Alternatively, th
 </p>
 ```
 
+### macro-body
+
+You can also place a <macro-body> tag within your macro to accept wrapped macro body content.
+
+```xml
+<macro step(number)>
+    <div class="step">
+        <span class="step-number">Step ${number}:</span>
+        <macro-body/>
+    </div>
+</macro>
+
+<step(1)>First do this</step>
+<step(2)>Then do this</step>
+<step(3)>
+    Lastly, do this <em>slightly</em> complicated thing...
+</step>
+```
+
 
 # Structure Manipulation
 
