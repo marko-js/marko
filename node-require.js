@@ -1,4 +1,5 @@
 'use strict';
+require('./runtime/env-init');
 
 const path = require('path');
 const resolveFrom = require('resolve-from');
