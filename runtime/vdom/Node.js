@@ -63,6 +63,8 @@ Node.prototype = {
     },
 
     $__appendChild: function(child) {
+        this.$__childCount++;
+        
         if (this.$__isTextArea) {
             if (child.$__Text) {
                 var childValue = child.nodeValue;
@@ -76,8 +78,6 @@ Node.prototype = {
             if (child.$__nsAware && (namespaceURI = this.namespaceURI) && !child.namespaceURI) {
                 assignNamespace(child, namespaceURI);
             }
-
-            this.$__childCount++;
 
             var lastChild = this.$__lastChild;
 
