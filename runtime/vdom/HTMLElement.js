@@ -215,7 +215,7 @@ defineProperty(proto, 'value', {
 });
 
 HTMLElement.$__morphAttrs = function(fromEl, toEl) {
-    var attrs = toEl.$__attributes;
+    var attrs = toEl.$__attributes || toEl._vattrs;
     var attrName;
     var i;
 
