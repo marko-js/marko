@@ -1,8 +1,10 @@
 'use strict';
 var ok = require('assert').ok;
+var path = require('path');
 var CodeGenerator = require('./CodeGenerator');
 var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
+var resolveDep = require('../runtime/dependencies').resolveDep;
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 
@@ -88,6 +90,12 @@ class CompiledTemplate {
         this.ast = ast;
         this.context = context;
         this.filename = context.filename;
+    }
+
+    get dependencies() {
+        var meta = eval('('+this.context.meta.toString()+')');
+        var root = path.dirname(this.filename);
+        return (meta.deps || []).map(dep => resolveDep(dep, root));
     }
 
     get code() {

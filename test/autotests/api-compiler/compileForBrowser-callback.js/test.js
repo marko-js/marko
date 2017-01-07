@@ -6,9 +6,9 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var templatePath = path.join(__dirname, 'template.marko');
 
     var templateSrc = fs.readFileSync(templatePath, { encoding: 'utf8' });
-    
-    compiler.compileForBrowser(templateSrc, templatePath, {}, function(err, compiledSrc) {
-        helpers.compare(compiledSrc, '.js');
+
+    compiler.compileForBrowser(templateSrc, templatePath, {}, function(err, compiledTemplate) {
+        helpers.compare(compiledTemplate.code, '.js');
 
         done();
     });

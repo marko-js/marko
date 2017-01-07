@@ -2,6 +2,9 @@ var path = require('path');
 var resolveFrom = require('resolve-from');
 var Template = require('./html/Template');
 
+exports.getDeps = getDeps;
+exports.resolveDep = resolveDep;
+
 function getDeps(template) {
     if (!template.meta && template.template) {
         template = template.template;
@@ -47,17 +50,18 @@ function resolveDep(dep, root) {
     if (typeof dep === 'string') {
         dep = parseDependencyString(dep);
     }
+
     if (dep.path) {
-        return Object.assign({}, dep, {
-            path: resolveFrom(root, dep.path)
-        });
+        dep.path = resolveFrom(root, dep.path);
+
+        if(dep.path && !dep.type) {
+            dep.type = dep.path.slice(dep.path.lastIndexOf('.')+1);
+        }
     } else if (dep.virtualPath) {
-        return Object.assign({}, dep, {
-            virtualPath: path.resolve(root, dep.virtualPath)
-        });
-    } else {
-        return dep;
+        dep.virtualPath = path.resolve(root, dep.virtualPath);
     }
+
+    return dep;
 }
 
 function parseDependencyString(string) {

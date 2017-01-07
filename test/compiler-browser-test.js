@@ -38,13 +38,15 @@ describe('compiler (browser target)', function() {
             main.checkError(e);
             done();
 
-        } else if (main && main.checkTemplate) {
-            var template = require('marko').load(templatePath, main.compilerOptions);
-            main.checkTemplate(template);
-            done();
         } else {
-            var compiledSrc = compiler.compileFileForBrowser(templatePath, main && main.compilerOptions);
-            helpers.compare(compiledSrc, '.js');
+            var compiledTemplate = compiler.compileFileForBrowser(templatePath, main && main.compilerOptions);
+
+            if(main && main.checkTemplate) {
+                main.checkTemplate(compiledTemplate);
+            } else {
+                helpers.compare(compiledTemplate.code, '.js');
+            }
+
             done();
         }
     });

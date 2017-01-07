@@ -84,10 +84,10 @@ function _compile(src, filename, userOptions, callback) {
             return callback(e);
         }
 
-        callback(null, compiled.code);
+        callback(null, userOptions.sourceOnly ? compiled.code : compiled);
     } else {
         let compiled = compiler.compile(src, context);
-        return compiled.code;
+        return userOptions.sourceOnly ? compiled.code : compiled;
     }
 }
 
@@ -96,6 +96,9 @@ function compile(src, filename, options, callback) {
         callback = options;
         options = null;
     }
+
+    options = options || {};
+    options.sourceOnly = options.sourceOnly !== false;
 
     return _compile(src, filename, options, callback);
 }
@@ -106,7 +109,7 @@ function compileForBrowser(src, filename, options, callback) {
         options = null;
     }
 
-    options = extend({output: 'vdom', browser: true}, options);
+    options = extend({output: 'vdom', browser: true, sourceOnly: false}, options);
 
     return compile(src, filename, options, callback);
 }
@@ -118,6 +121,9 @@ function compileFile(filename, options, callback) {
         callback = options;
         options = null;
     }
+
+    options = options || {};
+    options.sourceOnly = options.sourceOnly !== false;
 
     if (callback) {
         fs.readFile(filename, {encoding: 'utf8'}, function(err, templateSrc) {
@@ -139,7 +145,7 @@ function compileFileForBrowser(filename, options, callback) {
         options = null;
     }
 
-    options = extend({output: 'vdom', browser: true}, options);
+    options = extend({output: 'vdom', browser: true, sourceOnly: false}, options);
     return compileFile(filename, options, callback);
 }
 
