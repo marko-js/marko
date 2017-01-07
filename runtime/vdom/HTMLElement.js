@@ -210,7 +210,11 @@ defineProperty(proto, 'id', {
 
 defineProperty(proto, 'value', {
     get: function () {
-        return this.$__value || this.$__attributes.value || '';
+        var value = this.$__value;
+        if (value == null) {
+            value = this.$__attributes.value;
+        }
+        return value != null ? value.toString() : '';
     }
 });
 
