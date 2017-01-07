@@ -93,9 +93,14 @@ class CompiledTemplate {
     }
 
     get dependencies() {
-        var meta = eval('('+this.context.meta.toString()+')');
-        var root = path.dirname(this.filename);
-        return (meta.deps || []).map(dep => resolveDep(dep, root));
+        var meta = this.context.meta;
+        if (meta) {
+            meta = eval('('+this.context.meta.toString()+')');
+            var root = path.dirname(this.filename);
+            return (meta.deps || []).map(dep => resolveDep(dep, root));
+        } else {
+            return [];
+        }
     }
 
     get code() {
