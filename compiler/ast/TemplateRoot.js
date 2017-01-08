@@ -134,7 +134,7 @@ class TemplateRoot extends Node {
             if (context.useMeta && context.meta) {
                 body.push(builder.assignment(
                     builder.memberExpression(builder.identifier('marko_template'), builder.identifier('meta')),
-                    context.meta));
+                    builder.literal(context.meta)));
             }
 
             return builder.program(body);

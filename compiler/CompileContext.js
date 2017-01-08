@@ -541,45 +541,26 @@ class CompileContext extends EventEmitter {
     addDependency(path, type, options) {
         var dependency;
         if(typeof path === 'object') {
-            dependency = this.builder.parseExpression(JSON.stringify(path));
+            dependency = path;
         } else {
-            dependency = this.builder.literal((type ? type+':' : '') + path);
+            dependency = (type ? type+':' : '') + path;
         }
         this.pushMeta('deps', dependency, true);
     }
 
     pushMeta(key, value, unique) {
-        var builder = this.builder;
         var property;
 
         if(!this.meta) {
-            this.meta = builder.objectExpression();
+            this.meta = {};
         }
 
-        property = this.meta.properties.find(p => p.key.name === key);
+        property = this.meta[key];
 
         if(!property) {
-            property = builder.property(key, builder.arrayExpression(value));
-            this.meta.properties.push(property);
-        } else if(!unique || !property.value.elements.some(e => e.toString() === value.toString())) {
-            property.value.elements.push(value);
-        }
-    }
-
-    setMeta(key, value) {
-        var builder = this.builder;
-        var property;
-
-        if(!this.meta) {
-            this.meta = builder.objectExpression();
-        }
-
-        property = this.meta.properties.find(p => p.key.value === key);
-
-        if(!property) {
-            property = builder.property(key, value);
-        } else {
-            property.value = value;
+            this.meta[key] = [value];
+        } else if(!unique || !property.some(e => e.toString() === value.toString())) {
+            property.push(value);
         }
     }
 

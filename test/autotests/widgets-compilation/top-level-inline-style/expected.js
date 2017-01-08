@@ -8,10 +8,10 @@ marko_template._ = render;
 
 marko_template.meta = {
     deps: [
-        {
-            type: "css",
-            code: ".foo{}",
-            virtualPath: "./index.marko.css"
-          }
-      ]
+      {
+          type: "css",
+          code: ".foo{}",
+          virtualPath: "./index.marko.css"
+        }
+    ]
   };
