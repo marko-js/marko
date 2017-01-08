@@ -10,6 +10,7 @@ module.exports = function transform(el, context) {
     }
 
     if (el.hasAttribute('w-body')) {
+        context.deprecate('The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492');
         let builder = context.builder;
         let bodyValue = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
