@@ -62,6 +62,9 @@
             }
         ]
     },
+    "<function>": {
+        "code-generator": "./function-tag"
+    },
     "<if>": {
         "node-factory": "./if-tag",
         "attributes": {},
