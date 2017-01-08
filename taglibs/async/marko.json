@@ -104,30 +104,35 @@
         "transformer": {
             "path": "./async-fragment-to-await-transformer",
             "priority": -1
-        }
+        },
+        "deprecated": true
     },
     "<async-fragments>": {
         "transformer": {
             "path": "./async-fragment-to-await-transformer",
             "priority": -1
-        }
+        },
+        "deprecated": true
     },
     "<async-fragment-placeholder>": {
         "transformer": {
             "path": "./async-fragment-to-await-transformer",
             "priority": -1
-        }
+        },
+        "deprecated": true
     },
     "<async-fragment-timeout>": {
         "transformer": {
             "path": "./async-fragment-to-await-transformer",
             "priority": -1
-        }
+        },
+        "deprecated": true
     },
     "<async-fragment-error>": {
         "transformer": {
             "path": "./async-fragment-to-await-transformer",
             "priority": -1
-        }
+        },
+        "deprecated": true
     }
 }

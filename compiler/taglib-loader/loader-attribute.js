@@ -167,6 +167,10 @@ class AttrLoader {
     enum(value) {
         this.attr.enum = value;
     }
+
+    deprecated(value) {
+        this.attr.deprecated = value;
+    }
 }
 
 exports.isSupportedProperty = function(name) {

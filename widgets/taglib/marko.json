@@ -7,16 +7,19 @@
         "@w-bind": {
             "type": "string",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-scope": {
             "type": "expression",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-config": {
             "type": "expression",
-            "preserve-name": true
+            "preserve-name": true,
+            "deprecated": true
         },
         "@for-ref": {
             "type": "string",
@@ -39,12 +42,14 @@
         "@w-for": {
             "type": "string",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-id": {
             "type": "string",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@on*": {
             "pattern": true,
@@ -66,21 +71,25 @@
             "allow-expressions": true,
             "preserve-name": true,
             "set-flag": "hasWidgetEvents",
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-body": {
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-preserve": {
             "type": "flag",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-preserve-body": {
             "type": "flag",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-preserve-if": {
             "preserve-name": true,
@@ -88,7 +97,8 @@
         },
         "@w-preserve-body-if": {
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "@no-update": {
             "type": "flag",
@@ -129,7 +139,8 @@
         "@w-preserve-attrs": {
             "type": "string",
             "preserve-name": true,
-            "autocomplete": []
+            "autocomplete": [],
+            "deprecated": true
         },
         "transformer": "./widgets-transformer.js"
     },
@@ -146,7 +157,8 @@
         "@id": "string",
         "@if": "expression",
         "@body-only": "expression",
-        "autocomplete": []
+        "autocomplete": [],
+        "deprecated": true
     },
     "<no-update>": {
         "renderer": "./preserve-tag.js",
@@ -158,7 +170,8 @@
     "<widget-types>": {
         "code-generator": "./widget-types-tag.js",
         "@*": "string",
-        "autocomplete": []
+        "autocomplete": [],
+        "deprecated": true
     },
     "<body>": {
         "transformer": "./body-transformer.js"

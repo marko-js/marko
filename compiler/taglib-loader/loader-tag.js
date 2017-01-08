@@ -608,6 +608,10 @@ class TagLoader {
     parseOptions(value) {
         this.tag.parseOptions = value;
     }
+
+    deprecated(value) {
+        this.tag.deprecated = value;
+    }
 }
 
 function isSupportedProperty(name) {
