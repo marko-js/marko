@@ -8,6 +8,9 @@ marko_template._ = render;
 
 marko_template.meta = {
     deps: [
-      "./style.css"
+      "./style.css",
+      "./style.less",
+      "./style.scss",
+      "./style.styl"
     ]
   };

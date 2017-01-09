@@ -2,6 +2,7 @@
 
 var resolveFrom = require('resolve-from');
 var path = require('path');
+var fs = require('fs');
 
 function isTemplateMainEntry(context) {
     let filename = path.basename(context.filename);
@@ -127,9 +128,11 @@ module.exports = function handleRootNodes() {
         hasBindTarget = true;
     }
 
-    if (resolveFrom(dirname, './style.css')) {
-        context.addDependency('./style.css');
-    }
+    fs.readdirSync(dirname).forEach(file => {
+        if(/^style\.\w+$/.test(file)) {
+            context.addDependency('./' + file);
+        }
+    });
 
     var rootNodes = [];
     var hasExplicitBind = false;
