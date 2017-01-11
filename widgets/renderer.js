@@ -165,10 +165,10 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         if (input) {
             if (onInput) {
                 if (existingWidget) {
-                    existingWidget.onInput(input);
+                    existingWidget.onInput(input, out);
                 } else {
                     var lightweightWidget = Object.create(renderingLogic);
-                    lightweightWidget.onInput(input);
+                    lightweightWidget.onInput(input, out);
                     widgetState = finalWidgetState = lightweightWidget.state;
                     widgetConfig = lightweightWidget;
                     delete widgetConfig.state;
