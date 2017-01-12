@@ -365,7 +365,7 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        if (!state.$__dirty) {
+        if (!(state && state.$__dirty)) {
             // Don't even bother trying to update this widget since it is
             // not marked as dirty.
             return;
