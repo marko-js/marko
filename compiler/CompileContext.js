@@ -559,7 +559,7 @@ class CompileContext extends EventEmitter {
 
         if(!property) {
             this.meta[key] = [value];
-        } else if(!unique || !property.some(e => e.toString() === value.toString())) {
+        } else if(!unique || !property.some(e => JSON.stringify(e) === JSON.stringify(value))) {
             property.push(value);
         }
     }
