@@ -1,4 +1,3 @@
-var updateManager = require('./update-manager');
 var widgetLookup = require('./util').$__widgetLookup;
 var warp10Parse = require('warp10/parse');
 
@@ -36,55 +35,53 @@ function attachBubbleEventListeners(doc) {
                 propagationStopped = true;
             };
 
-            updateManager.$__batchUpdate(function() {
-                var curNode = event.target;
-                if (!curNode) {
-                    return;
-                }
+            var curNode = event.target;
+            if (!curNode) {
+                return;
+            }
 
-                // Search up the tree looking DOM events mapped to target
-                // widget methods
-                var attrName = 'data-_on' + eventType;
-                var target;
+            // Search up the tree looking DOM events mapped to target
+            // widget methods
+            var attrName = 'data-_on' + eventType;
+            var target;
 
-                // Attributes will have the following form:
-                // on<event_type>("<target_method>|<widget_id>")
+            // Attributes will have the following form:
+            // on<event_type>("<target_method>|<widget_id>")
 
-                do {
-                    if ((target = getObjectAttribute(curNode, attrName))) {
+            do {
+                if ((target = getObjectAttribute(curNode, attrName))) {
 
-                        var targetMethod = target[0];
-                        var targetWidgetId = target[1];
-                        var extraArgs;
+                    var targetMethod = target[0];
+                    var targetWidgetId = target[1];
+                    var extraArgs;
 
-                        if (target.length > 2) {
-                            extraArgs = target.slice(2);
-                        }
-
-                        var targetWidget = widgetLookup[targetWidgetId];
-
-                        if (!targetWidget) {
-                            continue;
-                        }
-
-                        var targetFunc = targetWidget[targetMethod];
-                        if (!targetFunc) {
-                            throw Error('Method not found: ' + targetMethod);
-                        }
-
-                        // Invoke the widget method
-                        if (extraArgs) {
-                            targetFunc.apply(targetWidget, extraArgs.concat(event, curNode));
-                        } else {
-                            targetFunc.call(targetWidget, event, curNode);
-                        }
-
-                        if (propagationStopped) {
-                            break;
-                        }
+                    if (target.length > 2) {
+                        extraArgs = target.slice(2);
                     }
-                } while((curNode = curNode.parentNode) && curNode.getAttribute);
-            });
+
+                    var targetWidget = widgetLookup[targetWidgetId];
+
+                    if (!targetWidget) {
+                        continue;
+                    }
+
+                    var targetFunc = targetWidget[targetMethod];
+                    if (!targetFunc) {
+                        throw Error('Method not found: ' + targetMethod);
+                    }
+
+                    // Invoke the widget method
+                    if (extraArgs) {
+                        targetFunc.apply(targetWidget, extraArgs.concat(event, curNode));
+                    } else {
+                        targetFunc.call(targetWidget, event, curNode);
+                    }
+
+                    if (propagationStopped) {
+                        break;
+                    }
+                }
+            } while((curNode = curNode.parentNode) && curNode.getAttribute);
         });
     });
 }
