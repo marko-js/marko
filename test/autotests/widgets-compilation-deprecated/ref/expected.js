@@ -1,33 +1,36 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_component = require("./component"),
     marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.rw,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-include-attr/index.marko", function() {
+    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/ref/index.marko", function() {
       return module.exports;
     }),
+    marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
+    app_foo_template = marko_loadTemplate(require.resolve("./components/app-foo")),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/widgets/taglib/include-tag")),
+    app_foo_tag = marko_loadTag(app_foo_template),
     marko_attr = marko_helpers.a;
 
+var marko_component = {
+    onMount: function () {
+    }
+};
+
 function render(data, out, widget, state) {
-  out.w("<div" +
+  out.w("<div class=\"root\"" +
     marko_attr("id", widget.id) +
-    "><h1>Header</h1>");
-
-  var __widgetId1 = widget.elId("0[]");
-
-  out.w("<div" +
-    marko_attr("id", __widgetId1) +
     ">");
 
-  include_tag({
-      _target: data.renderBody,
-      _elId: __widgetId1,
-      _arg: widget
+  app_foo_tag({
+      $w: [
+        widget,
+        "foo"
+      ]
     }, out);
 
-  out.w("</div></div>");
+  out.w("<a href=\"ebay.com\"" +
+    marko_attr("id", widget.elId("link")) +
+    ">eBay</a></div>");
 }
 
 marko_template._ = marko_widgets.r(render, {
