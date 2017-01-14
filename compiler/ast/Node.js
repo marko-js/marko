@@ -17,13 +17,13 @@ function trim(textNode) {
 
     if (isFirst) {
         //First child
-        text = text.replace(/^\n\s*/g, '');
+        text = text.replace(/^\r?\n\s*/g, '');
     }
     if (isLast) {
         //Last child
-        text = text.replace(/\n\s*$/g, '');
+        text = text.replace(/\r?\n\s*$/g, '');
     }
-    if (/^\n\s*$/.test(text)) {
+    if (/^\r?\n\s*$/.test(text)) {
         //Whitespace between elements
         text = '';
     }
@@ -308,7 +308,7 @@ class Node {
         this._trimStartEnd = trimStartEnd;
     }
 
-    _normalizeChildTextNodes(context) {
+    _normalizeChildTextNodes(context, forceTrim) {
         if (this._childTextNormalized) {
             return;
         }
@@ -319,9 +319,12 @@ class Node {
 
         var isPreserveWhitespace = false;
 
-        if (context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
-            isPreserveWhitespace = true;
+        if (!forceTrim) {
+            if (context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
+                isPreserveWhitespace = true;
+            }
         }
+
 
         if (isPreserveWhitespace && trimStartEnd !== true) {
             return;

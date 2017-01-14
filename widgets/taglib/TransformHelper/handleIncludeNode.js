@@ -11,8 +11,7 @@ module.exports = function(includeNode) {
     }
 
     var parentNode = includeNode.parentNode;
-
-    parentNode._normalizeChildTextNodes(context);
+    parentNode._normalizeChildTextNodes(context, true /* force trim */);
 
     if (parentNode.childCount === 1) {
         if (includeNode.hasAttribute('ref')) {
