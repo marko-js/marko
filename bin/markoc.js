@@ -5,6 +5,13 @@ var resolveFrom = require('resolve-from');
 
 // Try to use the Marko compiler installed with the project
 var markoCompilerPath;
+const markocPkgVersion = require('../package.json').version;
+
+var markoPkgVersion;
+try {
+    var markoPkgPath = resolveFrom(process.cwd(), 'marko/package.json');
+    markoPkgVersion = require(markoPkgPath).version;
+} catch(e) {}
 
 try {
     markoCompilerPath = resolveFrom(process.cwd(), 'marko/compiler');
@@ -64,9 +71,13 @@ var args = require('argly').createParser({
             type: 'string[]',
             description: 'Additional directories to add to the Node.js module search path'
         },
-        '--vdom -v': {
+        '--vdom -V': {
             type: 'boolean',
             description: 'VDOM output'
+        },
+        '--version -v': {
+            type: 'boolean',
+            description: 'Print markoc and marko compiler versions to the console'
         }
     })
     .usage('Usage: $0 <pattern> [options]')
@@ -78,9 +89,15 @@ var args = require('argly').createParser({
         if (result.help) {
             this.printUsage();
             process.exit(0);
-        }
+        } else if (result.version) {
+            console.log('markoc@' + markocPkgVersion);
 
-        if (!result.files || result.files.length === 0) {
+            if (markoPkgVersion) {
+                console.log('marko@' + markoPkgVersion);
+            }
+
+            process.exit(0);
+        } else if (!result.files || result.files.length === 0) {
             this.printUsage();
             process.exit(1);
         }
