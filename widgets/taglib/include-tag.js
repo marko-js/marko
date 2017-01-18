@@ -5,9 +5,7 @@ var getElementById = require('../util').$__getElementById;
 module.exports = function include(input, out) {
     var target = input._target;
 
-    if (typeof target === 'string') {
-        out.text(target);
-    } else if (target) {
+    if (target != null) {
         normalInclude(input, out);
     } else if (getElementById) {
         var elId = input._elId;
