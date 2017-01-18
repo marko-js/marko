@@ -195,19 +195,19 @@ class Parser {
 
         this.prevTextNode = null;
 
+        var tagDef = el.tagName ? this.context.getTagDef(el.tagName) : null;
+
         var attributeParseErrors = [];
         // <div class="foo"> -> "div class=foo"
         var tagString = parser.substring(el.pos, el.endPos)
-                              .replace(/<|\/>|>/g, "").trim();
+                              .replace(/^<|\/>$|>$/g, "").trim();
 
-        var elDef = {
-            tagName: tagName,
-            argument: argument,
-            tagString,
-            openTagOnly: el.openTagOnly === true,
-            selfClosed: el.selfClosed === true,
-            pos: el.pos,
-            attributes: attributes.map((attr) => {
+        var shouldParsedAttributes = !tagDef || tagDef.parseAttributes !== false;
+
+        var parsedAttributes = [];
+
+        if (shouldParsedAttributes) {
+            attributes.forEach((attr) => {
                 var attrValue;
                 if (attr.hasOwnProperty('literalValue')) {
                     attrValue = builder.literal(attr.literalValue);
@@ -219,8 +219,14 @@ class Parser {
                     try {
                         parsedExpression = builder.parseExpression(attr.value);
                     } catch(e) {
-                        valid = false;
-                        attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                        if (shouldParsedAttributes) {
+                            valid = false;
+                            attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                        } else {
+                            // Attribute failed to parse. Skip it...
+                            return;
+                        }
+
                     }
 
                     if (valid) {
@@ -245,8 +251,18 @@ class Parser {
                     attrDef.argument = attr.argument.value;
                 }
 
-                return attrDef;
-            })
+                parsedAttributes.push(attrDef);
+            });            
+        }
+
+        var elDef = {
+            tagName: tagName,
+            argument: argument,
+            tagString,
+            openTagOnly: el.openTagOnly === true,
+            selfClosed: el.selfClosed === true,
+            pos: el.pos,
+            attributes: parsedAttributes
         };
 
         var node;
@@ -254,9 +270,6 @@ class Parser {
         if (raw) {
             node = builder.htmlElement(elDef);
             node.pos = elDef.pos;
-
-            let taglibLookup = this.context.taglibLookup;
-            let tagDef = taglibLookup.getTag(tagName);
             node.tagDef = tagDef;
         } else {
             node = this.context.createNodeForEl(elDef);

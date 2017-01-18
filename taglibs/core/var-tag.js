@@ -1,6 +1,16 @@
 var isValidJavaScriptVarName = require('../../compiler/util/isValidJavaScriptVarName');
 
 module.exports = function nodeFactory(el, context) {
+    var vars;
+
+    try {
+        vars = context.builder.parseStatement(el.tagString);
+    } catch(e) {}
+
+    if (vars) {
+        return vars;
+    }
+
     var builder = context.builder;
     var hasError = false;
 
