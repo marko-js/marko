@@ -79,14 +79,12 @@ var proto = AsyncVDOMBuilder.prototype = {
             if (text == null) {
                 return;
             } else if (type === 'object') {
-                var safeHTML = text.safeHTML;
-                if (safeHTML) {
-                    var html = typeof safeHTML === 'function' ? text.safeHTML() : safeHTML;
-                    return this.html(html);
+                if (text.toHTML) {
+                    return this.h(text.toHTML());
                 }
-            } else {
-                text = text.toString();
             }
+
+            text = text.toString();
         }
 
         var parent = this.$__parent;

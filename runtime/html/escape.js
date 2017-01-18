@@ -26,11 +26,8 @@ function escapeXmlHelper(value, regexpTest, regexpReplace) {
     } else if (value == null) {
         return '';
     } else if (typeof value === 'object') {
-        var safeHTML = value.safeHTML;
-        if (safeHTML != null) {
-            return value.safeHTML;
-        } else {
-            return '';
+        if (value.toHTML) {
+            return value.toHTML();
         }
     } else if (value === true || value === false || typeof value === 'number') {
         return value.toString();
