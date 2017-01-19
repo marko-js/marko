@@ -213,6 +213,29 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.updateExpression(argument, node.operator, node.prefix);
             }
+            case 'VariableDeclarator': {
+                var id = convert(node.id);
+                if (!id) {
+                    return null;
+                }
+
+                var init;
+
+                if (node.init) {
+                    init = convert(node.init);
+                    if (!init) {
+                        return null;
+                    }
+                }
+
+                return builder.variableDeclarator(id, init);
+            }
+            case 'VariableDeclaration': {
+                var kind = node.kind;
+                var declarations = convert(node.declarations);
+
+                return builder.vars(declarations, kind);
+            }
             default:
                 return null;
         }

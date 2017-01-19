@@ -100,20 +100,19 @@ var Node_prototype = Node.prototype;
  */
 Node_prototype.t = function(value) {
     var type = typeof value;
+    var vdomNode;
 
     if (type !== 'string') {
         if (value == null) {
             value = '';
         } else if (type === 'object') {
-            var safeHTML = value.safeHTML;
-            var vdomNode = virtualizeHTML(safeHTML || '', document);
-            this.$__appendChild(vdomNode);
-            return this.$__finishChild();
-        } else {
-            value = value.toString();
+            if (value.toHTML) {
+                vdomNode = virtualizeHTML(value.toHTML(), document);
+            }
         }
     }
-    this.$__appendChild(new Text(value));
+
+    this.$__appendChild(vdomNode || new Text(value.toString()));
     return this.$__finishChild();
 };
 
