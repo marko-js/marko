@@ -65,6 +65,8 @@ class HtmlElementVDOM extends Node {
                     } else if (typeof literalValue === 'number') {
                         value.value = literalValue.toString();
                     }
+                } else if (value.type === 'AttributePlaceholder') {
+                    value = codegen.builder.functionCall(context.helper('str'), [value]);
                 }
 
                 attributesArg[name] = value;
