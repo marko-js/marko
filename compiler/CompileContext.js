@@ -523,7 +523,7 @@ class CompileContext extends EventEmitter {
 
         var templateVar;
 
-        if (this.options.browser) {
+        if (this.options.browser || this.options.requireTemplates) {
             // When compiling a Marko template for the browser we just use `require('./template.marko')`
             templateVar = this.addStaticVar(varName, builder.require(builder.literal(relativePath)));
         } else {

@@ -1,13 +1,15 @@
 require('./stream');
 require('./dependencies');
 
-if (process.env.hasOwnProperty('MARKO_HOT_RELOAD')) {
-    require('../hot-reload').enable();
-}
+if (!process.env.BUNDLE) {
+    if (process.env.MARKO_HOT_RELOAD) {
+        require('../hot-reload').enable();
+    }
 
-// If process was launched with browser refresh then automatically
-// enable browser-refresh
-require('../browser-refresh').enable();
+    // If process was launched with browser refresh then automatically
+    // enable browser-refresh
+    require('../browser-refresh').enable();
+}
 
 function fixFlush() {
     try {

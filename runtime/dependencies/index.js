@@ -1,6 +1,6 @@
 var path = require('path');
 var resolveFrom = require('resolve-from');
-var Template = require('./html/Template');
+var Template = require('../html/Template');
 
 exports.getDeps = getDeps;
 exports.resolveDep = resolveDep;
