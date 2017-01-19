@@ -11,7 +11,6 @@ var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require('./helper-attr');
 var attrsHelper = require('./helper-attrs');
 
-
 var classList;
 
 
@@ -68,6 +67,9 @@ exports.as = attrsHelper;
  * sa('color: red; font-weight: bold') ==> ' style="color: red; font-weight: bold"'
  * sa({color: 'red', 'font-weight': 'bold'}) ==> ' style="color: red; font-weight: bold"'
  */
+
+var dashedNames = {};
+
 exports.sa = function(style) {
     if (!style) {
         return '';
@@ -76,16 +78,18 @@ exports.sa = function(style) {
     if (typeof style === 'string') {
         return attrHelper(STYLE_ATTR, style, false);
     } else if (typeof style === 'object') {
-        var parts = [];
+        var styles = '';
         for (var name in style) {
-            if (style.hasOwnProperty(name)) {
-                var value = style[name];
-                if (value) {
-                    parts.push(name + ':' + value);
+            var value = style[name];
+            if (value != null) {
+                var nameDashed = dashedNames[name];
+                if (!nameDashed) {
+                    nameDashed = dashedNames[name] = name.replace(/([A-Z])/g, '-$1').toLowerCase();
                 }
+                styles += nameDashed + ':' + value + ';';
             }
         }
-        return parts ? attrHelper(STYLE_ATTR, parts.join(';'), false) : '';
+        return styles ? ' ' + STYLE_ATTR + '="' + styles +'"' : '';
     } else {
         return '';
     }

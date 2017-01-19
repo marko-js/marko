@@ -1,3 +1,5 @@
+var dashedNames = {};
+
 /**
  * Helper for generating the string for a style attribute
  * @param  {[type]} style [description]
@@ -11,16 +13,18 @@ module.exports = function(style) {
     if (typeof style === 'string') {
         return style;
     } else if (typeof style === 'object') {
-        var parts = [];
+        var styles = '';
         for (var name in style) {
-            if (style.hasOwnProperty(name)) {
-                var value = style[name];
-                if (value) {
-                    parts.push(name + ':' + value);
+            var value = style[name];
+            if (value) {
+                var nameDashed = dashedNames[name];
+                if (!nameDashed) {
+                    nameDashed = dashedNames[name] = name.replace(/([A-Z])/g, '-$1').toLowerCase();
                 }
+                styles += nameDashed + ':' + value + ';';
             }
         }
-        return parts ? parts.join(';') : null;
+        return styles || null;
     } else {
         return null;
     }
