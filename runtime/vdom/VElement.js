@@ -1,4 +1,4 @@
-var Node = require('./Node');
+var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
 var defineProperty = Object.defineProperty;
@@ -32,13 +32,13 @@ function convertAttrValue(type, value) {
     }
 }
 
-function HTMLElementClone(other) {
+function VVElementClone(other) {
     extend(this, other);
     this.$__parentNode = undefined;
     this.$__nextSibling = undefined;
 }
 
-function HTMLElement(tagName, attrs, childCount, constId) {
+function VElement(tagName, attrs, childCount, constId) {
     var namespaceURI;
     var isTextArea;
 
@@ -55,7 +55,7 @@ function HTMLElement(tagName, attrs, childCount, constId) {
             break;
     }
 
-    this.$__Node(childCount);
+    this.$__VNode(childCount);
 
     if (constId) {
         if (!attrs) {
@@ -72,15 +72,15 @@ function HTMLElement(tagName, attrs, childCount, constId) {
     this.$__constId = constId;
 }
 
-HTMLElement.prototype = {
-    $__HTMLElement: true,
+VElement.prototype = {
+    $__VElement: true,
 
     nodeType: 1,
 
     $__nsAware: true,
 
     $__cloneNode: function() {
-        return new HTMLElementClone(this);
+        return new VVElementClone(this);
     },
 
     /**
@@ -91,7 +91,7 @@ HTMLElement.prototype = {
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
     e: function(tagName, attrs, childCount, constId) {
-        var child = this.$__appendChild(new HTMLElement(tagName, attrs, childCount, constId));
+        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, constId));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -180,7 +180,7 @@ HTMLElement.prototype = {
         if (otherNode.nodeType == 1) {
             var constId = this.$__constId;
             if (constId) {
-                var otherSameId = otherNode.$__Node ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
+                var otherSameId = otherNode.$__VNode ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
                 return constId === otherSameId;
             }
         }
@@ -189,9 +189,9 @@ HTMLElement.prototype = {
     }
 };
 
-inherit(HTMLElement, Node);
+inherit(VElement, VNode);
 
-var proto = HTMLElementClone.prototype = HTMLElement.prototype;
+var proto = VVElementClone.prototype = VElement.prototype;
 
 ['checked', 'selected', 'disabled'].forEach(function(name) {
     defineProperty(proto, name, {
@@ -218,17 +218,17 @@ defineProperty(proto, 'value', {
     }
 });
 
-HTMLElement.$__morphAttrs = function(fromEl, toEl) {
+VElement.$__morphAttrs = function(fromEl, toEl) {
     var attrs = toEl.$__attributes || toEl._vattrs;
     var attrName;
     var i;
 
     // We use expando properties to associate the previous HTML
     // attributes provided as part of the VDOM node with the
-    // real HTMLElement DOM node. When diffing attributes,
+    // real VElement DOM node. When diffing attributes,
     // we only use our internal representation of the attributes.
     // When diffing for the first time it's possible that the
-    // real HTMLElement node will not have the expando property
+    // real VElement node will not have the expando property
     // so we build the attribute map from the expando property
 
     var oldAttrs = fromEl._vattrs;
@@ -321,4 +321,4 @@ HTMLElement.$__morphAttrs = function(fromEl, toEl) {
     fromEl._vattrs = attrs;
 };
 
-module.exports = HTMLElement;
+module.exports = VElement;

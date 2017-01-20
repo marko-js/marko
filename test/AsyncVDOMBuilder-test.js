@@ -1,5 +1,5 @@
 var AsyncVDOMBuilder = require('../runtime/vdom/AsyncVDOMBuilder');
-var HTMLElement = require('../runtime/vdom/HTMLElement');
+var VElement = require('../runtime/vdom/VElement');
 var expect = require('chai').expect;
 
 function getChildNodes(parentNode) {
@@ -117,7 +117,7 @@ describe('AsyncVDOMBuilder', function() {
     });
 
     it('staticNode, text, comment', function(done) {
-        var staticNode = new HTMLElement('div', {}, 0, 'f891ea3');
+        var staticNode = new VElement('div', {}, 0, 'f891ea3');
         var out = new AsyncVDOMBuilder();
 
         out.node(staticNode);

@@ -12,10 +12,10 @@ function assignNamespace(node, namespaceURI) {
     }
 }
 
-function Node() {}
+function VNode() {}
 
-Node.prototype = {
-    $__Node: function(finalChildCount) {
+VNode.prototype = {
+    $__VNode: function(finalChildCount) {
         this.$__finalChildCount = finalChildCount;
         this.$__childCount = 0;
         this.$__firstChild = undefined;
@@ -64,7 +64,7 @@ Node.prototype = {
 
     $__appendChild: function(child) {
         this.$__childCount++;
-        
+
         if (this.$__isTextArea) {
             if (child.$__Text) {
                 var childValue = child.nodeValue;
@@ -120,4 +120,4 @@ Node.prototype = {
     // }
 };
 
-module.exports = Node;
+module.exports = VNode;

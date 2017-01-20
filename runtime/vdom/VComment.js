@@ -1,12 +1,12 @@
-var Node = require('./Node');
+var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 
-function Comment(value) {
-    this.$__Node(-1 /* no children */);
+function VComment(value) {
+    this.$__VNode(-1 /* no children */);
     this.nodeValue = value;
 }
 
-Comment.prototype = {
+VComment.prototype = {
     nodeType: 8,
 
     actualize: function(doc) {
@@ -14,10 +14,10 @@ Comment.prototype = {
     },
 
     $__cloneNode: function() {
-        return new Comment(this.nodeValue);
+        return new VComment(this.nodeValue);
     }
 };
 
-inherit(Comment, Node);
+inherit(VComment, VNode);
 
-module.exports = Comment;
+module.exports = VComment;
