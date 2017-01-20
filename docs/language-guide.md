@@ -1096,3 +1096,31 @@ _Usage of `default-layout.marko`:_
 
 
 For more details, please see [Marko Layout Taglib](http://markojs.com/docs/marko/layout-taglib/).
+
+# Container template
+
+You can print out nested content inside a template.
+
+_Usage of `src/components/app-alert/template.marko`:_
+
+```xml
+<div class="alert alert-${data.type}">
+	<i class="alert-icon"/>
+	<invoke data.renderBody(out) />
+</div>
+```
+
+The template can then be `include` used as shown below:
+
+```xml
+<include("src/components/app-alert/template.marko") type="success">
+	This is a success alert
+</include>
+
+<include("src/components/app-alert/template.marko")>
+	This is a success alert
+</include>
+
+<include("src/components/app-alert/template.marko") type="success" />
+
+```
