@@ -5,6 +5,10 @@ Changelog
 
 ## 3.14.x
 
+### 3.14.1
+
+- Fixed [#543](https://github.com/marko-js/marko/issues/543) - Expression grouping with parentheses not respected
+
 ### 3.14.0
 
 - Fixed [#483](https://github.com/marko-js/marko/issues/483) - Upgrade Marko v3 to `htmljs-parser@^2` and enable `legacyCompatibility` option

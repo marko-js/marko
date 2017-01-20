@@ -1,6 +1,7 @@
 'use strict';
 
 var Node = require('./Node');
+var isCompoundExpression = require('../util/isCompoundExpression');
 
 class MemberExpression extends Node {
     constructor(def) {
@@ -15,7 +16,19 @@ class MemberExpression extends Node {
         var property = this.property;
         var computed = this.computed;
 
+
+
+        var wrapWithParens = isCompoundExpression(object);
+
+        if (wrapWithParens) {
+            codegen.write('(');
+        }
+
         codegen.generateCode(object);
+
+        if (wrapWithParens) {
+            codegen.write(')');
+        }
 
         if (computed) {
             codegen.write('[');
