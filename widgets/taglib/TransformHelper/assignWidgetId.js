@@ -16,8 +16,6 @@ module.exports = function assignWidgetId(isRepeated) {
     var nestedIdExpression;
     var idExpression;
 
-
-
     if (!this.hasBoundWidgetForTemplate()) {
         // We are assigning a widget ID to a nested widget in a template that does not have a widget.
         // That means we do not have access to the parent widget variable as part of a closure. We
