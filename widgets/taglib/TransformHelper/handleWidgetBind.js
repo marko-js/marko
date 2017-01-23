@@ -75,6 +75,8 @@ module.exports = function handleWidgetBind() {
         el.removeAttribute('_widgetbind');
     }
 
+    this.setHasBoundWidgetForTemplate();
+
     var isInnerBind = checkIsInnerBind(el.parentNode);
 
     el.data.hasBoundWidget = true;

@@ -93,6 +93,7 @@ function handleScriptElement(scriptEl, transformHelper) {
             componentVar = builder.identifier('marko_component');
         }
 
+        transformHelper.setHasBoundWidgetForTemplate();
         transformHelper.setInlineComponent(componentVar);
         transformHelper.context.addStaticCode(escodegen.generate(updatedTree));
         scriptEl.detach();
@@ -104,7 +105,12 @@ function handleStyleElement(styleEl, transformHelper) {
     var langAttr = styleEl.getAttribute('lang');
     var lang = langAttr ? langAttr.value.value : 'css';
     var context = transformHelper.context;
-    context.addDependency({ type:lang, code:styleCode, virtualPath:'./'+path.basename(context.filename)+'.'+lang });
+    context.addDependency({
+        type:lang,
+        code:styleCode,
+        virtualPath:'./'+path.basename(context.filename)+'.'+lang,
+        path: './'+path.basename(context.filename)
+    });
     styleEl.detach();
 }
 
@@ -143,8 +149,11 @@ module.exports = function handleRootNodes() {
 
     let walker = context.createWalker({
         enter(node) {
-            if (node.type === 'HtmlElement') {
+            if (node.type === 'TemplateRoot' || !node.type) {
+                // Don't worry about the TemplateRoot or an Container node
+            } else if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
+                    transformHelper.setHasBoundWidgetForTemplate();
                     hasExplicitBind = true;
                 } else {
                     if (node.hasAttribute('id')) {
@@ -168,6 +177,9 @@ module.exports = function handleRootNodes() {
                 return;
             } else if (node.type === 'CustomTag') {
                 rootNodes.push(node);
+                walker.skip();
+                return;
+            } else {
                 walker.skip();
                 return;
             }
@@ -198,6 +210,8 @@ module.exports = function handleRootNodes() {
         // all of the IDs
         return;
     }
+
+    transformHelper.setHasBoundWidgetForTemplate();
 
     var nextRef = 0;
 

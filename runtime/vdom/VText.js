@@ -1,12 +1,12 @@
-var Node = require('./Node');
+var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 
-function Text(value) {
-    this.$__Node(-1 /* no children */);
+function VText(value) {
+    this.$__VNode(-1 /* no children */);
     this.nodeValue = value;
 }
 
-Text.prototype = {
+VText.prototype = {
     $__Text: true,
 
     nodeType: 3,
@@ -16,10 +16,10 @@ Text.prototype = {
     },
 
     $__cloneNode: function() {
-        return new Text(this.nodeValue);
+        return new VText(this.nodeValue);
     }
 };
 
-inherit(Text, Node);
+inherit(VText, VNode);
 
-module.exports = Text;
+module.exports = VText;

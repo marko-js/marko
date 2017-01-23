@@ -6,7 +6,7 @@ var resolveFrom = require('resolve-from');
 var INLINE_COMPONENT_KEY = Symbol('INLINE_COMPONENT');
 var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
 var WIDGET_PROPS_KEY;
-
+var HAS_WIDGET_KEY = Symbol('HAS_WIDGET');
 
 class TransformHelper {
     constructor(el, context) {
@@ -22,8 +22,12 @@ class TransformHelper {
         this.firstBind = false;
     }
 
+    setHasBoundWidgetForTemplate() {
+        this.context.data[HAS_WIDGET_KEY] = true;
+    }
+
     hasBoundWidgetForTemplate() {
-        return this.context.data[WIDGET_PROPS_KEY] != null;
+        return this.context.data[HAS_WIDGET_KEY] || this.context.data[WIDGET_PROPS_KEY] != null;
     }
 
     getWidgetProps() {

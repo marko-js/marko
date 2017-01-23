@@ -11,7 +11,8 @@ marko_template.meta = {
       {
           type: "css",
           code: ".foo{}",
-          virtualPath: "./index.marko.css"
+          virtualPath: "./index.marko.css",
+          path: "./index.marko"
         }
     ]
   };

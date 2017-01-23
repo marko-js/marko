@@ -49,6 +49,7 @@ function flattenAttrConcats(node) {
 
 function generateCodeForExpressionAttr(name, value, escape, codegen) {
     var flattenedConcats = flattenAttrConcats(value);
+
     var hasLiteral = false;
     var builder = codegen.builder;
     var finalNodes = [];
@@ -64,7 +65,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
 
 
     for (let i=0; i<flattenedConcats.length; i++) {
-        if (flattenedConcats[i].type === 'Literal') {
+        if (flattenedConcats[i].type === 'Literal' || flattenedConcats[i].type === 'AttributePlaceholder') {
             hasLiteral = true;
             break;
         }

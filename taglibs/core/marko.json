@@ -138,7 +138,7 @@
         ]
     },
     "<macro>": {
-        "code-generator": "./macro-tag",
+        "node-factory": "./macro-tag",
         "autocomplete": [
             {
                 "displayText": "macro <name>(<parmas>)",

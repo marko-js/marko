@@ -57,7 +57,9 @@ function resolveDep(dep, root) {
         if(dep.path && !dep.type) {
             dep.type = dep.path.slice(dep.path.lastIndexOf('.')+1);
         }
-    } else if (dep.virtualPath) {
+    }
+
+    if (dep.virtualPath) {
         dep.virtualPath = path.resolve(root, dep.virtualPath);
     }
 

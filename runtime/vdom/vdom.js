@@ -1,8 +1,8 @@
-var Node = require('./Node');
-var Comment = require('./Comment');
-var DocumentFragment = require('./DocumentFragment');
-var HTMLElement = require('./HTMLElement');
-var Text = require('./Text');
+var VNode = require('./VNode');
+var VComment = require('./VComment');
+var VDocumentFragment = require('./VDocumentFragment');
+var VElement = require('./VElement');
+var VText = require('./VText');
 var defaultDocument = typeof document != 'undefined' && document;
 
 var specialHtmlRegexp = /[&<]/;
@@ -41,7 +41,7 @@ function virtualize(node) {
                 }
             }
 
-            var vdomEL = new HTMLElement(node.nodeName, attrs);
+            var vdomEL = new VElement(node.nodeName, attrs);
 
             if (vdomEL.$__isTextArea) {
                 vdomEL.$__value = node.value;
@@ -51,11 +51,11 @@ function virtualize(node) {
 
             return vdomEL;
         case 3:
-            return new Text(node.nodeValue);
+            return new VText(node.nodeValue);
         case 8:
-            return new Comment(node.nodeValue);
+            return new VComment(node.nodeValue);
         case 11:
-            var vdomDocFragment = new DocumentFragment();
+            var vdomDocFragment = new VDocumentFragment();
             virtualizeChildNodes(node, vdomDocFragment);
             return vdomDocFragment;
     }
@@ -63,7 +63,7 @@ function virtualize(node) {
 
 function virtualizeHTML(html, doc) {
     if (!specialHtmlRegexp.test(html)) {
-        return new Text(html);
+        return new VText(html);
     }
 
     if (!range && doc.createRange) {
@@ -80,7 +80,7 @@ function virtualizeHTML(html, doc) {
     } else {
         var container = doc.createElement('body');
         container.innerHTML = html;
-        vdomFragment = new DocumentFragment();
+        vdomFragment = new VDocumentFragment();
 
         var curChild = container.firstChild;
         while(curChild) {
@@ -92,7 +92,7 @@ function virtualizeHTML(html, doc) {
     return vdomFragment;
 }
 
-var Node_prototype = Node.prototype;
+var Node_prototype = VNode.prototype;
 
 /**
  * Shorthand method for creating and appending a Text node with a given value
@@ -112,7 +112,7 @@ Node_prototype.t = function(value) {
         }
     }
 
-    this.$__appendChild(vdomNode || new Text(value.toString()));
+    this.$__appendChild(vdomNode || new VText(value.toString()));
     return this.$__finishChild();
 };
 
@@ -121,18 +121,18 @@ Node_prototype.t = function(value) {
  * @param  {String} value The value for the new Comment node
  */
 Node_prototype.c = function(value) {
-    this.$__appendChild(new Comment(value));
+    this.$__appendChild(new VComment(value));
     return this.$__finishChild();
 };
 
 Node_prototype.$__appendDocumentFragment = function() {
-    return this.$__appendChild(new DocumentFragment());
+    return this.$__appendChild(new VDocumentFragment());
 };
 
-exports.$__Comment = Comment;
-exports.$__DocumentFragment = DocumentFragment;
-exports.$__HTMLElement = HTMLElement;
-exports.$__Text = Text;
+exports.$__VComment = VComment;
+exports.$__VDocumentFragment = VDocumentFragment;
+exports.$__VElement = VElement;
+exports.$__VText = VText;
 exports.$__virtualize = virtualize;
 exports.$__virtualizeHTML = virtualizeHTML;
 exports.$__defaultDocument = defaultDocument;

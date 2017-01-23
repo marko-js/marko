@@ -1,19 +1,19 @@
-var Node = require('./Node');
+var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
 
-function DocumentFragmentClone(other) {
+function VDocumentFragmentClone(other) {
     extend(this, other);
     this.$__parentNode = undefined;
     this.$__nextSibling = undefined;
 }
 
-function DocumentFragment(documentFragment) {
-    this.$__Node(null /* childCount */);
+function VDocumentFragment(documentFragment) {
+    this.$__VNode(null /* childCount */);
     this.namespaceURI = undefined;
 }
 
-DocumentFragment.prototype = {
+VDocumentFragment.prototype = {
     nodeType: 11,
 
     $__DocumentFragment: true,
@@ -21,7 +21,7 @@ DocumentFragment.prototype = {
     $__nsAware: true,
 
     $__cloneNode: function() {
-        return new DocumentFragmentClone(this);
+        return new VDocumentFragmentClone(this);
     },
 
     actualize: function(doc) {
@@ -38,8 +38,8 @@ DocumentFragment.prototype = {
     }
 };
 
-inherit(DocumentFragment, Node);
+inherit(VDocumentFragment, VNode);
 
-DocumentFragmentClone.prototype = DocumentFragment.prototype;
+VDocumentFragmentClone.prototype = VDocumentFragment.prototype;
 
-module.exports = DocumentFragment;
+module.exports = VDocumentFragment;

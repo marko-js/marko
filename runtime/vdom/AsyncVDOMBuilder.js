@@ -1,9 +1,9 @@
 var EventEmitter = require('events-light');
 var vdom = require('./vdom');
-var HTMLElement = vdom.$__HTMLElement;
-var DocumentFragment = vdom.$__DocumentFragment;
-var Comment = vdom.$__Comment;
-var Text = vdom.$__Text;
+var VElement = vdom.$__VElement;
+var VDocumentFragment = vdom.$__VDocumentFragment;
+var VComment = vdom.$__VComment;
+var VText = vdom.$__VText;
 var virtualizeHTML = vdom.$__virtualizeHTML;
 var RenderResult = require('../RenderResult');
 var defaultDocument = vdom.$__defaultDocument;
@@ -25,7 +25,7 @@ function State(tree) {
 
 function AsyncVDOMBuilder(globalData, parentNode, state) {
     if (!parentNode) {
-        parentNode = new DocumentFragment();
+        parentNode = new VDocumentFragment();
     }
 
     if (state) {
@@ -47,7 +47,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     $__document: defaultDocument,
 
     element: function(name, attrs, childCount) {
-        var element = new HTMLElement(name, attrs, childCount);
+        var element = new VElement(name, attrs, childCount);
 
         var parent = this.$__parent;
 
@@ -93,14 +93,14 @@ var proto = AsyncVDOMBuilder.prototype = {
             if (lastChild && lastChild.$__Text) {
                 lastChild.nodeValue += text;
             } else {
-                parent.$__appendChild(new Text(text));
+                parent.$__appendChild(new VText(text));
             }
         }
         return this;
     },
 
     comment: function(comment) {
-        return this.node(new Comment(comment));
+        return this.node(new VComment(comment));
     },
 
     html: function(html) {
@@ -113,7 +113,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     beginElement: function(name, attrs) {
-        var element = new HTMLElement(name, attrs);
+        var element = new VElement(name, attrs);
         var parent = this.$__parent;
         if (parent) {
             parent.$__appendChild(element);
@@ -274,7 +274,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     $__getNode: function(doc) {
-        var node = this.$__node;
+        var node = this.$__VNode;
         if (!node) {
             var vdomTree = this.$__getOutput();
 
@@ -282,7 +282,7 @@ var proto = AsyncVDOMBuilder.prototype = {
                 doc = this.$__document;
             }
 
-            node = this.$__node = vdomTree.actualize(doc);
+            node = this.$__VNode = vdomTree.actualize(doc);
         }
         return node;
     },

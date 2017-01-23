@@ -1,8 +1,8 @@
 'use strict';
 
 var vdom = require('./vdom');
-var HTMLElement = vdom.$__HTMLElement;
-var Text = vdom.$__Text;
+var VElement = vdom.$__VElement;
+var VText = vdom.$__VText;
 
 var commonHelpers = require('../helpers');
 var extend = require('raptor-util/extend');
@@ -10,11 +10,11 @@ var extend = require('raptor-util/extend');
 var classList = commonHelpers.cl;
 
 exports.e = function(tagName, attrs, childCount, constId) {
-    return new HTMLElement(tagName, attrs, childCount, constId);
+    return new VElement(tagName, attrs, childCount, constId);
 };
 
 exports.t = function(value) {
-    return new Text(value);
+    return new VText(value);
 };
 
 exports.const = function(id) {
