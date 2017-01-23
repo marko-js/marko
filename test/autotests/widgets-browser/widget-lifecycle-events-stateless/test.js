@@ -12,27 +12,30 @@ module.exports = function(helpers) {
 
     expect(widget.lifecycleEvents).to.deep.equal([
         'init',
-        'onRender:firstRender'
+        'onRender:firstRender',
+        'mount'
     ]);
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.setProps({
-            name: 'Jane',
-            messageCount: 30
-        });
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
-
-        expect(widget.lifecycleEvents).to.deep.equal([
-            'init',
-            'onRender:firstRender'
-        ]);
+    widget.setProps({
+        name: 'Jane',
+        messageCount: 30
     });
+    expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
+
+    expect(widget.lifecycleEvents).to.deep.equal([
+        'init',
+        'onRender:firstRender',
+        'mount'
+    ]);
+
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello Jane! You have 30 new messages.');
 
     expect(widget.lifecycleEvents).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender'
@@ -43,6 +46,7 @@ module.exports = function(helpers) {
     expect(widget.lifecycleEvents).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender',

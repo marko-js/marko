@@ -1,10 +1,11 @@
 'use strict';
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('events-light');
 var StringWriter = require('./StringWriter');
 var BufferedWriter = require('./BufferedWriter');
-var documentProvider = require('../document-provider');
+var defaultDocument = typeof document != 'undefined' && document;
 var RenderResult = require('../RenderResult');
-var helpers;
+var attrsHelper = require('./helper-attrs');
+var escapeXml = require('./escape').escapeXml;
 
 var voidWriter = { write:function(){} };
 
@@ -37,7 +38,7 @@ function AsyncStream(global, writer, state, shouldBuffer) {
                 writer = new BufferedWriter(writer);
             }
         } else {
-            writer = originalStream = new StringWriter(events);
+            writer = originalStream = new StringWriter();
         }
 
         state = new State(this, originalStream, writer, events);
@@ -69,9 +70,8 @@ AsyncStream.enableAsyncStackTrace = function() {
 
 var proto = AsyncStream.prototype = {
     constructor: AsyncStream,
-    isAsyncOut: true,
-    isAsyncWriter: AsyncStream, // Legacy
-    isAsyncStream: AsyncStream,
+    $__document: defaultDocument,
+    $__isOut: true,
 
     sync: function() {
         this._sync = true;
@@ -88,15 +88,22 @@ var proto = AsyncStream.prototype = {
         return this;
     },
 
-    getOutput: function() {
+    $__getOutput: function() {
         return this._state.writer.toString();
+    },
+
+    /**
+     * Legacy...
+     */
+    getOutput: function() {
+        return this.$__getOutput();
     },
 
     toString: function() {
         return this._state.writer.toString();
     },
 
-    getResult: function() {
+    $__getResult: function() {
         this._result = this._result || new RenderResult(this);
         return this._result;
     },
@@ -230,10 +237,11 @@ var proto = AsyncStream.prototype = {
 
            if (remaining === 0) {
                state.finished = true;
+
                if (state.writer.end) {
                    state.writer.end();
                } else {
-                   state.events.emit('finish', this);
+                   state.events.emit('finish', this.$__getResult());
                }
            }
        }
@@ -302,7 +310,7 @@ var proto = AsyncStream.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback(this);
+            callback(this.$__getResult());
             return this;
         }
 
@@ -314,7 +322,7 @@ var proto = AsyncStream.prototype = {
         var state = this._state;
 
         if (event === 'finish' && state.finished) {
-            callback(this);
+            callback(this.$__getResult());
             return this;
         }
 
@@ -422,7 +430,7 @@ var proto = AsyncStream.prototype = {
 
     element: function(tagName, elementAttrs, openTagOnly) {
         var str = '<' + tagName +
-            helpers.as(elementAttrs) +
+            attrsHelper(elementAttrs) +
             '>';
 
         if (openTagOnly !== true) {
@@ -435,7 +443,7 @@ var proto = AsyncStream.prototype = {
     beginElement: function(name, elementAttrs) {
 
         var str = '<' + name +
-            helpers.as(elementAttrs) +
+            attrsHelper(elementAttrs) +
             '>';
 
         this.write(str);
@@ -453,17 +461,17 @@ var proto = AsyncStream.prototype = {
     },
 
     text: function(str) {
-        this.write(helpers.x(str));
+        this.write(escapeXml(str));
     },
 
-    getNode: function(doc) {
+    $__getNode: function(doc) {
         var node = this._node;
         var curEl;
         var newBodyEl;
-        var html = this.getOutput();
+        var html = this.$__getOutput();
 
         if (!doc) {
-            doc = documentProvider.document;
+            doc = this.$__document;
         }
 
         if (!node) {
@@ -493,8 +501,8 @@ var proto = AsyncStream.prototype = {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
             out.on('error', reject);
-            out.on('finish', function() {
-                resolve(out.getResult());
+            out.on('finish', function(result) {
+                resolve(result);
             });
         });
 
@@ -503,35 +511,10 @@ var proto = AsyncStream.prototype = {
 
     catch: function(fnErr) {
         return this.then(undefined, fnErr);
-    },
-
-    // END DOM METHODS
-
-    // Deprecated BEGIN:
-    getAttributes: function() {
-        return this.global;
-    },
-    getAttribute: function(name) {
-        return this.global[name];
-    },
-
-    captureString: function(func, thisObj) {
-        var sb = new StringWriter();
-        this.swapWriter(sb, func, thisObj);
-        return sb.toString();
-    },
-    swapWriter: function(newWriter, func, thisObj) {
-        var currentWriter = this.writer;
-        this.writer = newWriter;
-        func.call(thisObj);
-        this.writer = currentWriter;
     }
-    // // Deprecated END
 };
 
 // alias:
 proto.w = proto.write;
 
 module.exports = AsyncStream;
-
-helpers = require('./helpers');

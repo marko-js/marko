@@ -13,9 +13,8 @@ module.exports = function(helpers) {
 
     widget.getEl('hello2').removeAttribute('class');
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.setState('name', 'Frank');
-    });
+    widget.setState('name', 'Frank');
+    widget.update();
 
     expect(helloEl.innerHTML).to.equal('Hello Frank!');
     expect(widget.getEl('hello2').getAttribute('class')).to.equal(null);

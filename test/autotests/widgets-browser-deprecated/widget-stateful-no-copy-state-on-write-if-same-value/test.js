@@ -6,9 +6,8 @@ module.exports = function(helpers) {
         label: 'Initial Label'
     });
 
-    require('marko/widgets').batchUpdate(function() {
-        var oldState = widget.state;
-        widget.setState('size', 'large');
-        expect(widget.state).to.equal(oldState);
-    });
+    var oldState = widget.state;
+    widget.setState('size', 'large');
+    expect(widget.state).to.equal(oldState);
+    widget.update();
 };

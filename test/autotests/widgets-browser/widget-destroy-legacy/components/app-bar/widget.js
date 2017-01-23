@@ -1,15 +1,11 @@
-function Widget(config) {
-    this.label = config.label;
-    this.name = 'app-bar';
+module.exports = {
+    onMount: function() {
+        this.name = 'app-bar';
 
-    var $el = this.$();
+        var el = this.el;
 
-    this.appendHtml = function(html) {
-        $el.append(html);
-    };
-}
-
-Widget.prototype = {
+        this.appendHtml = function(html) {
+            el.innerHTML += html;
+        };
+    }
 };
-
-exports.Widget = Widget;

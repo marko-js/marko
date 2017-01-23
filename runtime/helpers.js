@@ -1,6 +1,10 @@
 'use strict';
 var isArray = Array.isArray;
 
+function isFunction(arg) {
+    return typeof arg === 'function';
+}
+
 function classListHelper(arg, classNames) {
     var len;
 
@@ -40,9 +44,9 @@ function createDeferredRenderer(handler) {
     // This is the initial function that will do the rendering. We replace
     // the renderer with the actual renderer func on the first render
     deferredRenderer.renderer = function(input, out) {
-        var rendererFunc = handler.renderer || handler.render;
-        if (typeof rendererFunc !== 'function') {
-            throw new Error('Invalid tag handler: ' + handler);
+        var rendererFunc = handler.renderer || handler._ || handler.render;
+        if (!isFunction(rendererFunc)) {
+            throw Error('Invalid renderer');
         }
         // Use the actual renderer from now on
         deferredRenderer.renderer = rendererFunc;
@@ -59,12 +63,8 @@ function resolveRenderer(handler) {
         return renderer;
     }
 
-    if (typeof handler === 'function') {
+    if (isFunction(handler)) {
         return handler;
-    }
-
-    if (typeof (renderer = handler.render) === 'function') {
-        return renderer.bind(handler);
     }
 
     // If the user code has a circular function then the renderer function
@@ -73,26 +73,6 @@ function resolveRenderer(handler) {
     // try to get access to it later.
     return createDeferredRenderer(handler);
 }
-
-function LoopStatus(len) {
-    this.i = 0;
-    this.len = len;
-}
-
-LoopStatus.prototype = {
-    getLength: function() {
-        return this.len;
-    },
-    isLast: function() {
-        return this.i === this.len - 1;
-    },
-    isFirst: function() {
-        return this.i === 0;
-    },
-    getIndex: function() {
-        return this.i;
-    }
-};
 
 /**
  * Internal helper method to prevent null/undefined from being written out
@@ -104,27 +84,6 @@ exports.s = function strHelper(str) {
 };
 
 /**
- * Internal helper method to handle loops with a status variable
- * @private
- */
-exports.fv = function forEachStatusVariableHelper(array, callback) {
-    if (!array) {
-        return;
-    }
-    if (!array.forEach) {
-        array = [array];
-    }
-
-    var len = array.length;
-    var loopStatus = new LoopStatus(len);
-
-    for (; loopStatus.i < len; loopStatus.i++) {
-        var o = array[loopStatus.i];
-        callback(o, loopStatus);
-    }
-};
-
-/**
  * Internal helper method to handle loops without a status variable
  * @private
  */
@@ -133,50 +92,9 @@ exports.f = function forEachHelper(array, callback) {
         for (var i=0; i<array.length; i++) {
             callback(array[i]);
         }
-    } else if (typeof array === 'function') {
+    } else if (isFunction(array)) {
         // Also allow the first argument to be a custom iterator function
         array(callback);
-    }
-};
-
-exports.fr = function forRangeHelper(from, to, step, callback) {
-    if (step == null) {
-        step = from <= to ? 1 : -1;
-    }
-
-    var i;
-
-    if (step > 0) {
-        for (i=from; i<=to; i += step) {
-            callback(i);
-        }
-    } else {
-        for (i=from; i>=to; i += step) {
-            callback(i);
-        }
-    }
-
-};
-
-/**
- * Internal helper method for looping over the properties of any object
- * @private
- */
-exports.fp = function forEachPropertyHelper(o, func) {
-    if (!o) {
-        return;
-    }
-
-    if (Array.isArray(o)) {
-        for (var i=0; i<o.length; i++) {
-            func(i, o[i]);
-        }
-    } else {
-        for (var k in o) {
-            if (o.hasOwnProperty(k)) {
-                func(k, o[k]);
-            }
-        }
     }
 };
 
@@ -191,51 +109,6 @@ exports.t = function loadTagHelper(renderer, targetProperty, isRepeated) {
     return renderer;
 };
 
-exports.n = function loadNestedTagHelper(targetProperty, isRepeated) {
-    return function(input, parent) {
-        // If we are nested tag then we do not have a renderer
-        if (isRepeated) {
-            var existingArray = parent[targetProperty];
-            if (existingArray) {
-                existingArray.push(input);
-            } else {
-                parent[targetProperty] = [input];
-            }
-        } else {
-            parent[targetProperty] = input;
-        }
-    };
-};
-
-/**
- * Merges object properties
- * @param  {[type]} object [description]
- * @param  {[type]} source [description]
- * @return {[type]}        [description]
- */
-exports.m = function mergeHelper(into, source) {
-    for (var k in source) {
-        if (source.hasOwnProperty(k) && !into.hasOwnProperty(k)) {
-            into[k] = source[k];
-        }
-    }
-    return into;
-};
-
-/**
- * Merges nested tags by rendering the body
- * @param  {[type]} object [description]
- * @param  {[type]} source [description]
- * @return {[type]}        [description]
- */
-exports.mn = function mergeNestedTagsHelper(input) {
-    if (input.renderBody) {
-        input.renderBody(null, input);
-    }
-    input.renderBody = null;
-    return input;
-};
-
 /**
  * classList(a, b, c, ...)
  * Joines a list of class names with spaces. Empty class names are omitted.
@@ -246,8 +119,3 @@ exports.mn = function mergeNestedTagsHelper(input) {
 exports.cl = function classListHelper() {
     return classList(arguments);
 };
-
-/**
- * Loads a template (__helpers.l --> marko_loadTemplate(path))
- */
-exports.l = require('./loader');

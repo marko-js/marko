@@ -1,6 +1,16 @@
 var isValidJavaScriptVarName = require('../../compiler/util/isValidJavaScriptVarName');
 
 module.exports = function nodeFactory(el, context) {
+    var vars;
+
+    try {
+        vars = context.builder.parseStatement(el.tagString);
+    } catch(e) {}
+
+    if (vars) {
+        return vars;
+    }
+
     var builder = context.builder;
     var hasError = false;
 
@@ -8,7 +18,7 @@ module.exports = function nodeFactory(el, context) {
         var varName = attr.name;
 
         if (!isValidJavaScriptVarName(varName)) {
-            context.addError(el, 'Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
+            context.addError('Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
             hasError = true;
             return;
         }

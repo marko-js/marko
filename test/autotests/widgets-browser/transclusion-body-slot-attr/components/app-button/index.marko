@@ -1,0 +1,33 @@
+<script>
+module.exports = {
+    onInput: function(input) {
+        this.state = {
+            size: input.size || 'normal',
+            variant: input.variant || 'primary',
+            body: input.renderBody
+        };
+    },
+
+    // Add any other methods here
+    setVariant: function(variant) {
+        this.state.variant = variant;
+    },
+
+    setSize: function(size) {
+        this.state.size = size;
+    },
+
+    setLabel: function(label) {
+        this.state.label = label;
+    }
+};
+</script>
+
+var variantClassName=(state.variant !== 'primary' && 'app-button-' + state.variant)
+var sizeClassName=(state.size !== 'normal' && 'app-button-' + state.size)
+
+<button class=['app-button', variantClassName, sizeClassName]>
+    <span>
+        <include(state.body)/>
+    </span>
+</button>

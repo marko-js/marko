@@ -50,8 +50,8 @@ describe('AsyncStream', function() {
         out.write('3');
         out.write('4');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('1234');
             done();
         });
@@ -64,7 +64,7 @@ describe('AsyncStream', function() {
         out.write('2');
 
         return out.end().then((result) => {
-            const output = out.getOutput();
+            const output = result.getOutput();
             expect(output).to.equal('12');
             expect(result.toString()).to.equal('12');
         });
@@ -89,8 +89,8 @@ describe('AsyncStream', function() {
         }, 10);
 
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('1234');
             done();
         });
@@ -108,8 +108,8 @@ describe('AsyncStream', function() {
 
         out.write('3');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });
@@ -126,8 +126,8 @@ describe('AsyncStream', function() {
 
         out.write('3');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });
@@ -151,9 +151,9 @@ describe('AsyncStream', function() {
         out.write('3');
         out.end();
 
-        out.on('finish', function() {
+        out.on('finish', function(result) {
             expect(errors.length).to.equal(1);
-            expect(out.getOutput()).to.equal('13');
+            expect(result.getOutput()).to.equal('13');
             done();
         });
     });
@@ -199,8 +199,8 @@ describe('AsyncStream', function() {
         }, 10);
 
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('12a2b2c34a4b4c');
             done();
         });
@@ -209,8 +209,8 @@ describe('AsyncStream', function() {
     it('should handle odd execution ordering', function(done) {
         var outA = createAsyncStream({ name:'outA' });
 
-        outA.on('finish', function() {
-            var output = outA.getOutput();
+        outA.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('1234567');
             done();
         });
@@ -255,8 +255,8 @@ describe('AsyncStream', function() {
         }, 10);
         out.write('3');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(errors.length).to.equal(1);
             expect(output).to.equal('13');
             done();
@@ -292,7 +292,7 @@ describe('AsyncStream', function() {
 
         out.catch((err) => {
             expect(err).to.be.an('error');
-            expect(out.getOutput()).to.equal('1');
+            expect(out.$__getOutput()).to.equal('1');
             done();
         }).then((data) => {
             throw new Error('Should not get here!');
@@ -309,8 +309,8 @@ describe('AsyncStream', function() {
             .on('error', function(e) {
                 errors.push(e);
             })
-            .on('finish', function() {
-                var output = out.getOutput();
+            .on('finish', function(result) {
+                var output = result.getOutput();
                 expect(errors.length).to.equal(1);
                 expect(output).to.equal('13');
                 done();
@@ -435,8 +435,8 @@ describe('AsyncStream', function() {
 
         out.write('2');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('1Hello World2');
             done();
         });
@@ -492,8 +492,8 @@ describe('AsyncStream', function() {
 
         out.write('3');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });
@@ -519,9 +519,9 @@ describe('AsyncStream', function() {
 
         out.write('3');
         out.end();
-        out.on('finish', function() {
+        out.on('finish', function(result) {
             expect(lastFiredCount).to.equal(1);
-            var output = out.getOutput();
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });
@@ -590,8 +590,8 @@ describe('AsyncStream', function() {
 
         out.write('5');
         out.end();
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('12345');
             expect(onLastCount).to.equal(2);
             expect(lastOutput).to.deep.equal(['a', 'b']);
@@ -795,8 +795,8 @@ describe('AsyncStream', function() {
         var out = new AsyncStream();
         out.name = 'outer';
 
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });
@@ -820,8 +820,8 @@ describe('AsyncStream', function() {
         var out = createAsyncStream({global: { foo: 'bar' }});
         out.name = 'outer';
 
-        out.on('finish', function() {
-            var output = out.getOutput();
+        out.on('finish', function(result) {
+            var output = result.getOutput();
             expect(output).to.equal('123');
             done();
         });

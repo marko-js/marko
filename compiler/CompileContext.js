@@ -2,6 +2,7 @@
 
 var ok = require('assert').ok;
 var path = require('path');
+var complain = require('complain');
 var taglibLookup = require('./taglib-lookup');
 var charProps = require('char-props');
 var deresolve = require('./util/deresolve');
@@ -57,22 +58,29 @@ const helpers = {
     'classList': 'cl',
     'const': 'const',
     'createElement': 'e',
-    'createInlineTemplate': 'inline',
+    'createInlineTemplate': {
+        vdom: { module: 'marko/runtime/vdom/helper-createInlineTemplate'},
+        html: { module: 'marko/runtime/html/helper-createInlineTemplate'}
+    },
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
     'escapeScript': 'xs',
     'forEach': 'f',
-    'forEachProp': 'fp',
-    'forEachWithStatusVar': 'fv',
-    'forRange': 'fr',
+    'forEachProp': { module: 'marko/runtime/helper-forEachProperty' },
+    'forEachPropStatusVar': { module: 'marko/runtime/helper-forEachPropStatusVar' },
+    'forEachWithStatusVar': { module: 'marko/runtime/helper-forEachWithStatusVar' },
+    'forRange': { module: 'marko/runtime/helper-forRange' },
     'include': 'i',
-    'loadNestedTag': 'n',
+    'loadNestedTag': { module: 'marko/runtime/helper-loadNestedTag' },
     'loadTag': 't',
-    'loadTemplate': 'l',
-    'mergeNestedTagsHelper': 'mn',
-    'merge': 'm',
+    'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
+    'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
+    'merge': { module: 'marko/runtime/helper-merge' },
     'str': 's',
-    'styleAttr': 'sa',
+    'styleAttr': {
+        vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
+        html: 'sa'
+    },
     'createText': 't'
 };
 
@@ -132,6 +140,14 @@ class CompileContext extends EventEmitter {
         let line = srcCharProps.lineAt(pos)+1;
         let column = srcCharProps.columnAt(pos);
         return new PosInfo(this.filename, line, column);
+    }
+
+    getNodePos(node) {
+        if (node.pos) {
+            return this.getPosInfo(node.pos);
+        } else {
+            return new PosInfo(this.filename);
+        }
     }
 
     setFlag(name) {
@@ -202,6 +218,17 @@ class CompileContext extends EventEmitter {
         return this.data[name];
     }
 
+    deprecate(message, node) {
+        var currentNode = node || this._currentNode;
+        var location = currentNode && currentNode.pos;
+
+        if (location != null) {
+            location = this.getPosInfo(location).toString();
+        }
+
+        complain(message, { location });
+    }
+
     addError(errorInfo) {
         if (errorInfo instanceof Node) {
             let node = arguments[0];
@@ -220,6 +247,11 @@ class CompileContext extends EventEmitter {
                 code
             };
         }
+
+        if(errorInfo && !errorInfo.node) {
+            errorInfo.node = this._currentNode;
+        }
+
         this._errors.push(new CompileError(errorInfo, this));
     }
 
@@ -320,6 +352,10 @@ class CompileContext extends EventEmitter {
             elDef = { tagName, argument, attributes, openTagOnly, selfClosed };
         }
 
+        if (elDef.tagName === '') {
+            elDef.tagName = tagName = 'assign';
+        }
+
         if (!attributes) {
             attributes = elDef.attributes = [];
         } else if (typeof attributes === 'object') {
@@ -348,6 +384,8 @@ class CompileContext extends EventEmitter {
         var node;
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
+
+        this._currentNode = elNode;
 
         var tagDef;
 
@@ -483,9 +521,17 @@ class CompileContext extends EventEmitter {
         var builder = this.builder;
 		varName = varName || removeExt(path.basename(relativePath)) + '_template';
 
-        var requireResolveTemplate = requireResolve(builder, builder.literal(relativePath));
-        var loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ requireResolveTemplate ]);
-        var templateVar = this.addStaticVar(varName, loadFunctionCall);
+        var templateVar;
+
+        if (this.options.browser || this.options.requireTemplates) {
+            // When compiling a Marko template for the browser we just use `require('./template.marko')`
+            templateVar = this.addStaticVar(varName, builder.require(builder.literal(relativePath)));
+        } else {
+            // When compiling a Marko template for the server we just use `loadTemplate(require.resolve('./template.marko'))`
+            let loadTemplateArg = requireResolve(builder, builder.literal(relativePath));
+            let loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ loadTemplateArg ]);
+            templateVar = this.addStaticVar(varName, loadFunctionCall);
+        }
 
         this.pushMeta('tags', builder.literal(relativePath), true);
 
@@ -495,45 +541,26 @@ class CompileContext extends EventEmitter {
     addDependency(path, type, options) {
         var dependency;
         if(typeof path === 'object') {
-            dependency = this.builder.parseExpression(JSON.stringify(path));
+            dependency = path;
         } else {
-            dependency = this.builder.literal((type ? type+':' : '') + path);
+            dependency = (type ? type+':' : '') + path;
         }
         this.pushMeta('deps', dependency, true);
     }
 
     pushMeta(key, value, unique) {
-        var builder = this.builder;
         var property;
 
         if(!this.meta) {
-            this.meta = builder.objectExpression();
+            this.meta = {};
         }
 
-        property = this.meta.properties.find(p => p.key.name === key);
+        property = this.meta[key];
 
         if(!property) {
-            property = builder.property(key, builder.arrayExpression(value));
-            this.meta.properties.push(property);
-        } else if(!unique || !property.value.elements.some(e => e.toString() === value.toString())) {
-            property.value.elements.push(value);
-        }
-    }
-
-    setMeta(key, value) {
-        var builder = this.builder;
-        var property;
-
-        if(!this.meta) {
-            this.meta = builder.objectExpression();
-        }
-
-        property = this.meta.properties.find(p => p.key.value === key);
-
-        if(!property) {
-            property = builder.property(key, value);
-        } else {
-            property.value = value;
+            this.meta[key] = [value];
+        } else if(!unique || !property.some(e => JSON.stringify(e) === JSON.stringify(value))) {
+            property.push(value);
         }
     }
 
@@ -595,7 +622,7 @@ class CompileContext extends EventEmitter {
         return pathExpression;
     }
 
-    getStaticNodes() {
+    getStaticNodes(additionalVars) {
         let builder = this.builder;
         let staticNodes = [];
         let staticVars = this.getStaticVars();
@@ -605,6 +632,9 @@ class CompileContext extends EventEmitter {
             return builder.variableDeclarator(varName, varInit);
         });
 
+        if(additionalVars) {
+            staticVarNodes = additionalVars.concat(staticVarNodes);
+        }
 
         if (staticVarNodes.length) {
             staticNodes.push(this.builder.vars(staticVarNodes));
@@ -630,15 +660,32 @@ class CompileContext extends EventEmitter {
     helper(name) {
         var helperIdentifier = this._helpers[name];
         if (!helperIdentifier) {
-            var methodName = helpers[name];
-            if (!methodName) {
+            var helperInfo = helpers[name];
+
+            if (helperInfo && typeof helperInfo === 'object') {
+                if (!helperInfo.module) {
+                    helperInfo = helperInfo[this.outputType];
+                }
+            }
+
+            if (!helperInfo) {
                 throw new Error('Invalid helper: ' + name);
             }
-            var methodIdentifier = this.builder.identifier(methodName);
 
-            helperIdentifier = this.addStaticVar(
-                'marko_' + name,
-                this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+            if (typeof helperInfo === 'string') {
+                let methodName = helperInfo;
+                var methodIdentifier = this.builder.identifier(methodName);
+
+                helperIdentifier = this.addStaticVar(
+                    'marko_' + name,
+                    this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+            } else if (helperInfo && helperInfo.module) {
+                helperIdentifier = this.addStaticVar(
+                    'marko_' + name,
+                    this.builder.require(this.builder.literal(helperInfo.module)));
+            } else {
+                throw new Error('Invalid helper: ' + name);
+            }
 
             this._helpers[name] = helperIdentifier;
         }

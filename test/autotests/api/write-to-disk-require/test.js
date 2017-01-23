@@ -4,6 +4,10 @@ var fs = require('fs');
 exports.check = function(marko, markoCompiler, expect, done) {
     var compiledPath;
 
+    require('marko/compiler').configure({
+        writeToDisk: true
+    });
+
     try {
         var templatePath = nodePath.join(__dirname, 'template.marko');
         compiledPath = nodePath.join(__dirname, 'template.marko.js');

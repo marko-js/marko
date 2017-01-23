@@ -3,6 +3,24 @@ Changelog
 
 # 3.x
 
+## 3.13.x
+
+### 3.13.2
+
+- Fixed [#478](TagLookup fails when merging taglibs) - TagLookup fails when merging taglibs
+
+### 3.13.1
+
+- Fixes [#465](https://github.com/marko-js/marko/issues/465)
+
+### 3.13.0
+
+## 3.12.x
+
+### 3.12.0
+
+- Added warnings for using render methods when you want string output ([Pull Request #450](https://github.com/marko-js/marko/pull/450) by [@mlrawlings](https://github.com/mlrawlings))
+
 ## 3.11.x
 
 ### 3.11.8

@@ -3,24 +3,6 @@ Marko Widgets Taglib
 
 # Custom attributes
 
-## w-bind
-
-This attribute is used to bind a widget to a DOM element.
-
-### Examples
-
-Bind to a JavaScript module named `./widget.js` that exports the widget definition:
-
-```xml
-<div w-bind="./widget">...</div>
-```
-
-Bind to a JavaScript module named `./widget.js` or `./index.js` (searched for in that order) that exports the widget definition:
-
-```xml
-<div w-bind>...</div>
-```
-
 ## ref
 
 Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID will be a concatenation of the parent widget ID with the provided value of the `ref`.
@@ -31,7 +13,7 @@ Used to assign a _scoped_ ID to a nested widget or a nested DOM element. The ID 
 #### Using `ref` with an HTML element
 
 ```xml
-<div w-bind="./widget">
+<div>
     <button ref="myButton" type="button">My Button</button>
 </div>
 ```
@@ -54,7 +36,7 @@ var myButton = this.getEl('myButton');
 #### Using `ref` with a nested widget
 
 ```xml
-<div w-bind="./widget">
+<div>
     <app-button ref="myButton" label="My Button" />
 </div>
 ```
@@ -84,7 +66,7 @@ NOTE: For DOM events that bubble, efficient DOM event delegation will automatica
 #### Using `w-on*` with a nested HTML element
 
 ```xml
-<div w-bind="./widget">
+<div>
     <button onClick("handleMyButtonClick") type="button">My Button</button>
 </div>
 ```
@@ -112,7 +94,7 @@ var myButton = this.getEl('myButton');
 #### Using `w-on*` with a nested widget
 
 ```xml
-<div w-bind="./widget">
+<div>
     <app-button onSomeCustomEvent("handleSomeCustomEvent") label="My Button" />
 </div>
 ```
@@ -179,12 +161,12 @@ Similar to [no-update-if](#no-update) except that only the child DOM nodes are p
 </div>
 ```
 
-## w-preserve-attrs
+## :no-update
 
 This custom attribute is used to prevent select DOM elements from being modified during a rerender:
 
 ```xml
-<div w-preserve-attrs="class,style">
+<div class:no-update=data.className style:no-update=data.styles>
     ...
 </div>
 ```
@@ -264,26 +246,3 @@ $markoWidgets("w0,w1,w2")
 ```
 
 When immediate widget initialization is enabled, widgets will be initialized before the DOM ready event. In addition, inline widget initialization code will be appended to each async fragment.
-
-## `<widget-types>`
-
-Used to conditionally bind a widget:
-
-```xml
-<widget-types default="./widget" mobile="./widget-mobile"/>
-
-<div w-bind=(data.isMobile ? 'default' : 'mobile')>
-    ...
-</div>
-```
-
-The `<widget-types>` can also be used to disabling binding of a widget:
-
-
-```xml
-<widget-types default="./"/>
-
-<div w-bind=(data.includeWidget ? 'default' : null)>
-
-</div>
-```

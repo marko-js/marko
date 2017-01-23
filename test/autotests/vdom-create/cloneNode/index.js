@@ -19,7 +19,7 @@ module.exports = function(helpers) {
                 'xlink:href': 'http://ebay.com/'
             }, 0);
 
-    var clone = el.cloneNode();
+    var clone = el.$__cloneNode();
     expect(clone).to.not.equal(el);
     expect(clone.nodeName).to.equal('div');
     expect(clone.hasAttributeNS(null, 'class')).to.equal(true);
@@ -27,10 +27,10 @@ module.exports = function(helpers) {
 
     var root = helpers.vdom.createElement('div', { class: 'root' });
 
-    root.appendChild(clone);
+    root.$__appendChild(clone);
 
-    expect(el.parentNode).to.equal(undefined);
-    expect(clone.parentNode).to.equal(root);
+    expect(el.$__parentNode).to.equal(undefined);
+    expect(clone.$__parentNode).to.equal(root);
 
     return root;
 };

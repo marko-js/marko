@@ -1,0 +1,28 @@
+{
+    "loopType": "ForEachProp",
+    "nameVarName": {
+        "type": "Identifier",
+        "name": "i"
+    },
+    "valueVarName": {
+        "type": "Identifier",
+        "name": "color"
+    },
+    "in": {
+        "type": "ArrayExpression",
+        "elements": [
+            {
+                "type": "Literal",
+                "value": "red"
+            },
+            {
+                "type": "Literal",
+                "value": "green"
+            },
+            {
+                "type": "Literal",
+                "value": "blue"
+            }
+        ]
+    }
+}

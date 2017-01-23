@@ -55,6 +55,14 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.binaryExpression(left, node.operator, right);
             }
+            case 'BlockStatement': {
+                let body = convert(node.body);
+                if (!body) {
+                    return null;
+                }
+
+                return body;
+            }
             case 'CallExpression': {
                 let callee = convert(node.callee);
 
@@ -194,6 +202,14 @@ function parseExpression(src, builder, isExpression) {
                 }
                 return builder.property(key, value);
             }
+            case 'ReturnStatement': {
+                let argument = convert(node.argument);
+                if (!argument) {
+                    return null;
+                }
+
+                return builder.returnStatement(argument);
+            }
             case 'ThisExpression': {
                 return builder.thisExpression();
             }
@@ -212,6 +228,33 @@ function parseExpression(src, builder, isExpression) {
                 }
 
                 return builder.updateExpression(argument, node.operator, node.prefix);
+            }
+            case 'VariableDeclarator': {
+                var id = convert(node.id);
+                if (!id) {
+                    return null;
+                }
+
+                var init;
+
+                if (node.init) {
+                    init = convert(node.init);
+                    if (!init) {
+                        return null;
+                    }
+                }
+
+                return builder.variableDeclarator(id, init);
+            }
+            case 'VariableDeclaration': {
+                var kind = node.kind;
+
+                var declarations = convert(node.declarations);
+
+                if (!declarations) {
+                    return null;
+                }
+                return builder.vars(declarations, kind);
             }
             default:
                 return null;

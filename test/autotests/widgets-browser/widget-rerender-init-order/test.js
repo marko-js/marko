@@ -11,9 +11,8 @@ module.exports = function(helpers) {
 
     window.rerenderInitOrder = [];
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.setState('version', 1);
-    });
+    widget.setState('version', 1);
+    widget.update();
 
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
     expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);

@@ -20,25 +20,28 @@ module.exports = function(helpers) {
 
     expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
         'init',
-        'onRender:firstRender']);
+        'onRender:firstRender',
+        'mount']);
 
     expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
         'init',
-        'onRender:firstRender']);
+        'onRender:firstRender',
+        'mount']);
 
     expect(widgetLifecycleEvents.foo).to.deep.equal([
         'init',
-        'onRender:firstRender']);
+        'onRender:firstRender',
+        'mount']);
 
-    require('marko/widgets').batchUpdate(function() {
-        // NOTE: messageCount has an update handler
-        widget.setState('messageCount', 999);
-        expect(targetEl.innerHTML).to.contain('Hello Frank!');
-        expect(targetEl.innerHTML).to.contain('10');
-        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init',
-            'onRender:firstRender']);
-    });
+    // NOTE: messageCount has an update handler
+    widget.setState('messageCount', 999);
+    expect(targetEl.innerHTML).to.contain('Hello Frank!');
+    expect(targetEl.innerHTML).to.contain('10');
+    expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+        'init',
+        'onRender:firstRender',
+        'mount']);
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello Frank!');
     expect(targetEl.innerHTML).to.contain('999');
@@ -46,31 +49,34 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate']);
 
     expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender']);
 
     expect(widgetLifecycleEvents.foo).to.deep.equal([
         'init',
-        'onRender:firstRender']);
+        'onRender:firstRender',
+        'mount']);
 
-    require('marko/widgets').batchUpdate(function() {
-        // NOTE: name does *not* have an update handler
-        widget.setState('name', 'Jane');
-        expect(targetEl.innerHTML).to.contain('Hello Frank!');
-        expect(targetEl.innerHTML).to.contain('999');
-        expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
-            'init',
-            'onRender:firstRender',
-            'onBeforeUpdate',
-            'onUpdate']);
-    });
+    // NOTE: name does *not* have an update handler
+    widget.setState('name', 'Jane');
+    expect(targetEl.innerHTML).to.contain('Hello Frank!');
+    expect(targetEl.innerHTML).to.contain('999');
+    expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
+        'init',
+        'onRender:firstRender',
+        'mount',
+        'onBeforeUpdate',
+        'onUpdate']);
+    widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello Jane!');
     expect(targetEl.innerHTML).to.contain('999');
@@ -78,6 +84,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onBeforeUpdate',
@@ -87,6 +94,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents[widget.getWidget('nestedStateful').id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender']);
@@ -94,6 +102,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents.foo).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender']);
@@ -105,6 +114,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents[widget.id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onBeforeUpdate',
@@ -116,6 +126,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents[nestedStateful.id]).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender',
@@ -125,6 +136,7 @@ module.exports = function(helpers) {
     expect(widgetLifecycleEvents.foo).to.deep.equal([
         'init',
         'onRender:firstRender',
+        'mount',
         'onBeforeUpdate',
         'onUpdate',
         'onRender',

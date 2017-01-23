@@ -1,18 +1,15 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_classAttr = marko_helpers.ca,
-    marko_attr = marko_helpers.a,
-    marko_escapeXmlAttr = marko_helpers.xa,
-    marko_str = marko_helpers.s;
+    marko_str = marko_helpers.s,
+    marko_escapeXmlAttr = marko_helpers.xa;
 
 function render(data, out) {
   out.w("<div" +
     marko_classAttr(data.className) +
-    marko_attr("class2", data.className, false) +
-    " foo=\"a" +
+    " class2=\"" +
+    marko_str(data.className) +
+    "\" foo=\"a" +
     marko_escapeXmlAttr(data.foo) +
     "b\" bar=\"a " +
     marko_escapeXmlAttr(data.foo) +
@@ -23,4 +20,4 @@ function render(data, out) {
     " b\"></div>");
 }
 
-template._ = render;
+marko_template._ = render;

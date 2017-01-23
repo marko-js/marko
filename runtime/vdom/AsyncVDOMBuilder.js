@@ -1,52 +1,58 @@
-var EventEmitter = require('events').EventEmitter;
-var HTMLElement = require('./HTMLElement');
-var DocumentFragment = require('./DocumentFragment');
-var Comment = require('./Comment');
-var Text = require('./Text');
-var virtualizeHTML = require('./virtualizeHTML');
-var documentProvider = require('../document-provider');
+var EventEmitter = require('events-light');
+var vdom = require('./vdom');
+var VElement = vdom.$__VElement;
+var VDocumentFragment = vdom.$__VDocumentFragment;
+var VComment = vdom.$__VComment;
+var VText = vdom.$__VText;
+var virtualizeHTML = vdom.$__virtualizeHTML;
 var RenderResult = require('../RenderResult');
+var defaultDocument = vdom.$__defaultDocument;
+
+var FLAG_FINISHED = 1;
+var FLAG_LAST_FIRED = 2;
+
+var EVENT_UPDATE = 'update';
+var EVENT_FINISH = 'finish';
 
 function State(tree) {
-    this.remaining = 1;
-    this.events = new EventEmitter();
-    this.tree = tree;
-    this.finished = false;
-    this.last = undefined;
-    this.lastFired = false;
-    this.lastCount = 0;
+    this.$__remaining = 1;
+    this.$__events = new EventEmitter();
+    this.$__tree = tree;
+    this.$__last = undefined;
+    this.$__lastCount = 0;
+    this.$__flags = 0;
 }
 
 function AsyncVDOMBuilder(globalData, parentNode, state) {
     if (!parentNode) {
-        parentNode = new DocumentFragment();
+        parentNode = new VDocumentFragment();
     }
 
     if (state) {
-        state.remaining++;
+        state.$__remaining++;
     } else {
         state = new State(parentNode);
     }
 
     this.data = {};
-    this._state = state;
-    this._parent = parentNode;
+    this.$__state = state;
+    this.$__parent = parentNode;
     this.global = globalData || {};
-    this._stack = [parentNode];
-    this._sync = false;
+    this.$__stack = [parentNode];
+    this.$__sync = false;
 }
 
 var proto = AsyncVDOMBuilder.prototype = {
-    isAsyncOut: true,
-    isAsyncVDOMBuilder: true,
+    $__isOut: true,
+    $__document: defaultDocument,
 
     element: function(name, attrs, childCount) {
-        var element = new HTMLElement(name, attrs, childCount);
+        var element = new VElement(name, attrs, childCount);
 
-        var parent = this._parent;
+        var parent = this.$__parent;
 
         if(parent) {
-            parent.appendChild(element);
+            parent.$__appendChild(element);
         }
 
         return childCount === 0 ? this : element;
@@ -55,13 +61,13 @@ var proto = AsyncVDOMBuilder.prototype = {
     n: function(node) {
         // NOTE: We do a shallow clone since we assume the node is being reused
         //       and a node can only have one parent node.
-        return this.node(node.cloneNode());
+        return this.node(node.$__cloneNode());
     },
 
     node: function(node) {
-        var parent = this._parent;
+        var parent = this.$__parent;
         if (parent) {
-            parent.appendChild(node);
+            parent.$__appendChild(node);
         }
         return this;
     },
@@ -73,35 +79,33 @@ var proto = AsyncVDOMBuilder.prototype = {
             if (text == null) {
                 return;
             } else if (type === 'object') {
-                var safeHTML = text.safeHTML;
-                if (safeHTML) {
-                    var html = typeof safeHTML === 'function' ? text.safeHTML() : safeHTML;
-                    return this.html(html);
+                if (text.toHTML) {
+                    return this.h(text.toHTML());
                 }
-            } else {
-                text = text.toString();
             }
+
+            text = text.toString();
         }
 
-        var parent = this._parent;
+        var parent = this.$__parent;
         if (parent) {
             var lastChild = parent.lastChild;
-            if (lastChild && lastChild.nodeType === 3) {
+            if (lastChild && lastChild.$__Text) {
                 lastChild.nodeValue += text;
             } else {
-                parent.appendChild(new Text(text));
+                parent.$__appendChild(new VText(text));
             }
         }
         return this;
     },
 
     comment: function(comment) {
-        return this.node(new Comment(comment));
+        return this.node(new VComment(comment));
     },
 
     html: function(html) {
         if (html != null) {
-            var vdomNode = virtualizeHTML(html, documentProvider.document);
+            var vdomNode = virtualizeHTML(html, this.$__document);
             this.node(vdomNode);
         }
 
@@ -109,60 +113,60 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     beginElement: function(name, attrs) {
-        var element = new HTMLElement(name, attrs);
-        var parent = this._parent;
+        var element = new VElement(name, attrs);
+        var parent = this.$__parent;
         if (parent) {
-            parent.appendChild(element);
-            this._stack.push(element);
-            this._parent = element;
+            parent.$__appendChild(element);
+            this.$__stack.push(element);
+            this.$__parent = element;
         }
         return this;
     },
 
     endElement: function() {
-        var stack = this._stack;
+        var stack = this.$__stack;
         stack.pop();
-        this._parent = stack[stack.length-1];
+        this.$__parent = stack[stack.length-1];
     },
 
     end: function() {
-        var state = this._state;
+        var state = this.$__state;
 
-        this._parent = null;
+        this.$__parent = null;
 
-        var remaining = --state.remaining;
+        var remaining = --state.$__remaining;
 
-        if (!state.lastFired && (remaining - state.lastCount === 0)) {
-            state.lastFired = true;
-            state.lastCount = 0;
-            state.events.emit('last');
+        if (!(state.$__flags & FLAG_LAST_FIRED) && (remaining - state.$__lastCount === 0)) {
+            state.$__flags |= FLAG_LAST_FIRED;
+            state.$__lastCount = 0;
+            state.$__events.emit('last');
         }
 
         if (!remaining) {
-            state.finished = true;
-            state.events.emit('finish', this);
+            state.$__flags |= FLAG_FINISHED;
+            state.$__events.emit(EVENT_FINISH, this.$__getResult());
         }
 
         return this;
     },
 
     beginAsync: function(options) {
-        if (this._sync) {
-            throw new Error('beginAsync() not allowed when using renderSync()');
+        if (this.$__sync) {
+            throw Error('Not allowed');
         }
 
-        var state = this._state;
+        var state = this.$__state;
 
         if (options) {
-            if (options.last === true) {
-                state.lastCount++;
+            if (options.last) {
+                state.$__lastCount++;
             }
         }
 
-        var documentFragment = this._parent.appendDocumentFragment();
+        var documentFragment = this.$__parent.$__appendDocumentFragment();
         var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, state);
 
-        state.events.emit('beginAsync', {
+        state.$__events.emit('beginAsync', {
            out: asyncOut,
            parentOut: this
        });
@@ -175,45 +179,47 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     flush: function() {
-        var state = this._state;
-        state.events.emit('update', this);
+        var events = this.$__state.$__events;
+
+        if (events.listenerCount(EVENT_UPDATE)) {
+            events.emit(EVENT_UPDATE, new RenderResult(this));
+        }
     },
 
-    getOutput: function() {
-        return this._state.tree;
+    $__getOutput: function() {
+        return this.$__state.$__tree;
     },
 
-    getResult: function() {
-        this._result = this._result || new RenderResult(this);
-        return this._result;
+    $__getResult: function() {
+        return this.$__result || (this.$__result = new RenderResult(this));
     },
 
     on: function(event, callback) {
-        var state = this._state;
+        var state = this.$__state;
 
-        if (event === 'finish' && state.finished) {
-            callback(this);
+        if (event === EVENT_FINISH && (state.$__flags & FLAG_FINISHED)) {
+            callback(this.$__getResult());
             return this;
         }
 
-        state.events.on(event, callback);
+        state.$__events.on(event, callback);
         return this;
     },
 
     once: function(event, callback) {
-        var state = this._state;
+        var state = this.$__state;
 
-        if (event === 'finish' && state.finished) {
-            callback(this);
+        if (event === EVENT_FINISH && (state.$__flags & FLAG_FINISHED)) {
+            callback(this.$__getResult());
             return this;
         }
 
-        state.events.once(event, callback);
+        state.$__events.once(event, callback);
         return this;
     },
 
     emit: function(type, arg) {
-        var events = this._state.events;
+        var events = this.$__state.$__events;
         switch(arguments.length) {
             case 1:
                 events.emit(type);
@@ -229,32 +235,26 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     removeListener: function() {
-        var events = this._state.events;
+        var events = this.$__state.$__events;
         events.removeListener.apply(events, arguments);
         return this;
     },
 
-    prependListener: function() {
-        var events = this._state.events;
-        events.prependListener.apply(events, arguments);
-        return this;
-    },
-
     sync: function() {
-        this._sync = true;
+        this.$__sync = true;
     },
 
     isSync: function() {
-        return this._sync === true;
+        return this.$__sync;
     },
 
     onLast: function(callback) {
-        var state = this._state;
+        var state = this.$__state;
 
-        var lastArray = state.last;
+        var lastArray = state.$__last;
 
         if (!lastArray) {
-            lastArray = state.last = [];
+            lastArray = state.$__last = [];
             var i = 0;
             var next = function next() {
                 if (i === lastArray.length) {
@@ -273,42 +273,31 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    getNode: function(doc) {
-        var node = this._node;
+    $__getNode: function(doc) {
+        var node = this.$__VNode;
         if (!node) {
-            var vdomTree = this.getOutput();
+            var vdomTree = this.$__getOutput();
 
             if (!doc) {
-                doc = documentProvider.document;
+                doc = this.$__document;
             }
 
-            node = vdomTree.actualize(doc);
-
-            if (node.nodeType === 11 /* DocumentFragment */) {
-                // If the DocumentFragment only has one child
-                // then just return that first child as the node
-                var childNodes = node.childNodes;
-                if (childNodes.length === 1) {
-                    node = childNodes[0];
-                }
-            }
-
-            this._node = node;
+            node = this.$__VNode = vdomTree.actualize(doc);
         }
         return node;
     },
 
     toString: function() {
-        return this.getNode().outerHTML;
+        return this.$__getNode().outerHTML;
     },
 
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
-            out.on('error', reject);
-            out.on('finish', function() {
-                resolve(out.getResult());
-            });
+            out.on('error', reject)
+                .on(EVENT_FINISH, function(result) {
+                    resolve(result);
+                });
         });
 
         return Promise.resolve(promise).then(fn, fnErr);

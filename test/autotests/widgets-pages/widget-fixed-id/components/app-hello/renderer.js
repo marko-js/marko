@@ -1,16 +1,13 @@
-var template = require('marko').load(require.resolve('./template.marko'));
+module.exports = {
+    onInput: function(input) {
+        this.name = input.name;
+    },
 
-module.exports = function(input, out) {
-    var className = input['class'] || 'app-hello';
-
-    template.render(
-        {
+    getTemplateData: function(state, input) {
+        var className = input['class'] || 'app-hello';
+        return {
             name: input.name,
-            className: className,
-            widgetConfig: {
-                name: input.name
-            }
-        },
-        out);
-
+            className: className
+        };
+    }
 };

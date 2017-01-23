@@ -1,29 +1,50 @@
-var AsyncValue = require('raptor-async/AsyncValue');
+'use strict';
 
-var afterUpdateAsyncValue = null;
-var afterUpdateAsyncValue = null;
 var updatesScheduled = false;
-
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
+
+var win = window;
+var setImmediate = win.setImmediate;
+
+if (!setImmediate) {
+    if (win.postMessage) {
+        var queue = [];
+        var messageName = 'si';
+        win.addEventListener('message', function (event) {
+            var source = event.source;
+            if (source == win || !source && event.data === messageName) {
+                event.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        setImmediate = function(fn) {
+            queue.push(fn);
+            win.postMessage(messageName, '*');
+        };
+    } else {
+        setImmediate = setTimeout;
+    }
+}
 
 /**
  * This function is called when we schedule the update of "unbatched"
  * updates to widgets.
  */
 function updateUnbatchedWidgets() {
-    if (!unbatchedQueue.length) {
-        // No widgets to update
-        return;
-    }
-
-    try {
-        updateWidgets(unbatchedQueue);
-    } finally {
-        // Reset the flag now that this scheduled batch update
-        // is complete so that we can later schedule another
-        // batched update if needed
-        updatesScheduled = false;
+    if (unbatchedQueue.length) {
+        try {
+            updateWidgets(unbatchedQueue);
+        } finally {
+            // Reset the flag now that this scheduled batch update
+            // is complete so that we can later schedule another
+            // batched update if needed
+            updatesScheduled = false;
+        }
     }
 }
 
@@ -36,26 +57,16 @@ function scheduleUpdates() {
 
     updatesScheduled = true;
 
-    process.nextTick(updateUnbatchedWidgets);
-}
-
-function onAfterUpdate(callback) {
-    scheduleUpdates();
-
-    if (!afterUpdateAsyncValue) {
-        afterUpdateAsyncValue = new AsyncValue();
-    }
-
-    afterUpdateAsyncValue.done(callback);
+    setImmediate(updateUnbatchedWidgets);
 }
 
 function updateWidgets(queue) {
     // Loop over the widgets in the queue and update them.
-    // NOTE: Is it okay if the queue grows during the iteration
+    // NOTE: It is okay if the queue grows during the iteration
     //       since we will still get to them at the end
     for (var i=0; i<queue.length; i++) {
         var widget = queue[i];
-        widget.__updateQueued = false; // Reset the "__updateQueued" flag
+        widget.$__updateQueued = false; // Reset the "__updateQueued" flag
         widget.update(); // Do the actual widget update
     }
 
@@ -68,10 +79,8 @@ function batchUpdate(func) {
     // is the outer batched update. After the outer
     // batched update completes we invoke the "afterUpdate"
     // event listeners.
-    var isOuter = batchStack.length === 0;
-
     var batch = {
-        queue: null
+        $__queue: null
     };
 
     batchStack.push(batch);
@@ -82,28 +91,19 @@ function batchUpdate(func) {
         try {
             // Update all of the widgets that where queued up
             // in this batch (if any)
-            if (batch.queue) {
-                updateWidgets(batch.queue);
+            if (batch.$__queue) {
+                updateWidgets(batch.$__queue);
             }
         } finally {
             // Now that we have completed the update of all the widgets
             // in this batch we need to remove it off the top of the stack
             batchStack.length--;
-
-            if (isOuter) {
-                // If there were any listeners for the "afterUpdate" event
-                // then notify those listeners now
-                if (afterUpdateAsyncValue) {
-                    afterUpdateAsyncValue.resolve();
-                    afterUpdateAsyncValue = null;
-                }
-            }
         }
     }
 }
 
 function queueWidgetUpdate(widget) {
-    if (widget.__updateQueued) {
+    if (widget.$__updateQueued) {
         // The widget has already been queued up for an update. Once
         // the widget has actually been updated we will reset the
         // "__updateQueued" flag so that it can be queued up again.
@@ -112,7 +112,7 @@ function queueWidgetUpdate(widget) {
         return;
     }
 
-    widget.__updateQueued = true;
+    widget.$__updateQueued = true;
 
     var batchStackLen = batchStack.length;
 
@@ -126,10 +126,10 @@ function queueWidgetUpdate(widget) {
         // We default the batch queue to null to avoid creating an Array instance
         // unnecessarily. If it is null then we create a new Array, otherwise
         // we push it onto the existing Array queue
-        if (batch.queue) {
-            batch.queue.push(widget);
+        if (batch.$__queue) {
+            batch.$__queue.push(widget);
         } else {
-            batch.queue = [widget];
+            batch.$__queue = [widget];
         }
     } else {
         // We are not within a batched update. We need to schedule a batch update
@@ -140,6 +140,5 @@ function queueWidgetUpdate(widget) {
     }
 }
 
-exports.queueWidgetUpdate = queueWidgetUpdate;
-exports.batchUpdate = batchUpdate;
-exports.onAfterUpdate = onAfterUpdate;
+exports.$__queueWidgetUpdate = queueWidgetUpdate;
+exports.$__batchUpdate = batchUpdate;

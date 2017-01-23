@@ -3,9 +3,13 @@ require('../patch-module');
 require('marko/node-require');
 require('marko/express');
 
+var isProduction = process.env.NODE_ENV === 'production';
+
 require('lasso').configure({
     outputDir: __dirname + '/static',
-    bundlingEnabled: false
+    bundlingEnabled: isProduction,
+    fingerprintsEnabled: isProduction,
+    minify: isProduction
 });
 
 var express = require('express');

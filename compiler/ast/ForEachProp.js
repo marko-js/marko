@@ -33,7 +33,7 @@ class ForEachProp extends Node {
         var builder = codegen.builder;
 
         if (statusVarName) {
-            let helperVar = builder.require(builder.literal('marko/runtime/forEachPropStatusVar'));
+            let helperVar = context.helper('forEachPropStatusVar');
             let forEachVarName = codegen.addStaticVar('forEacPropStatusVar', helperVar);
             let body = this.body;
 

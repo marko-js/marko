@@ -6,7 +6,6 @@ module.exports = function(helpers) {
     expect(widget.emit).to.be.a('function');
     expect(widget.on).to.be.a('function');
     expect(widget.once).to.be.a('function');
-    expect(widget.addListener).to.be.a('function');
     expect(widget.subscribeTo).to.be.a('function');
     expect(widget.getElId).to.be.a('function');
     expect(widget.elId).to.be.a('function');
@@ -14,13 +13,10 @@ module.exports = function(helpers) {
     expect(widget.destroy).to.be.a('function');
     expect(widget.isDestroyed).to.be.a('function');
     expect(widget.rerender).to.be.a('function');
-    expect(widget.detach).to.be.a('function');
     expect(widget.appendTo).to.be.a('function');
     expect(widget.replace).to.be.a('function');
     expect(widget.replaceChildrenOf).to.be.a('function');
     expect(widget.insertBefore).to.be.a('function');
     expect(widget.insertAfter).to.be.a('function');
     expect(widget.prependTo).to.be.a('function');
-    expect(widget.ready).to.be.a('function');
-    expect(widget.$).to.be.a('function');
 };

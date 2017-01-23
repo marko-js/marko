@@ -1,11 +1,6 @@
-function Widget(config) {
-    this.name = 'app-foo';
-    this.config = config;
-    this.getWidget('bar').appendHtml('FOO');
-}
-
-Widget.prototype = {
-
+module.exports = {
+    onMount: function() {
+        this.name = 'app-foo';
+        this.getWidget('bar').appendHtml('FOO');
+    }
 };
-
-exports.Widget = Widget;

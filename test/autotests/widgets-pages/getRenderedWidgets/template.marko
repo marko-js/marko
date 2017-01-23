@@ -5,7 +5,7 @@ script marko-init
 
     function componentsDataProvider(callback) {
         componentsTemplate.renderToString({}, function(err, html, out) {
-            var widgetIds = markoWidgets.getRenderedWidgetIds(out);
+            var widgetIds = markoWidgets.getRenderedWidgets(out);
 
             // Serialize the HTML and the widget IDs to the browser
             callback(null, {
@@ -22,7 +22,7 @@ lasso-page dependencies=data.browserDependencies lasso=data.lasso
 html lang="en"
     head
         meta charset="UTF-8"
-        title - Marko Widgets Tests
+        title -- Marko Widgets Tests
         lasso-head
     body
         await(components from componentsDataProvider)

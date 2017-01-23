@@ -5,6 +5,8 @@ module.exports = function include(input, out) {
     if (target) {
         if (typeof target === 'function') {
             target(out, arg);
+        } else if (typeof target === 'string') {
+            out.text(target);
         } else if (typeof target === 'object') {
             if (target.renderBody) {
                 target.renderBody(out, arg);
@@ -12,6 +14,8 @@ module.exports = function include(input, out) {
                 target.renderer(arg, out);
             } else if (target.render) {
                 target.render(arg, out);
+            } else if (target.safeHTML) {
+                out.write(target.safeHTML);
             }
         } else {
             throw new Error('Invalid include target: ' + target);

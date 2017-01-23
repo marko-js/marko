@@ -12,3 +12,6 @@ coverage
 .nvmrc
 /benchmark
 /.cache
+.nyc_output
+~*
+yarn.lock

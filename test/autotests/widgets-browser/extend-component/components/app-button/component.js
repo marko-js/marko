@@ -3,12 +3,9 @@ module.exports = {
         return {
             size: input.size || 'normal',
             variant: input.variant || 'primary',
-            className: input['class']
+            className: input['class'],
+            body: input.label || input.renderBody
         };
-    },
-
-    getInitialBody: function(input) {
-        return input.label || input.renderBody;
     },
 
     handleClick: function(event) {

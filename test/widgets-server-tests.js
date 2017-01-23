@@ -5,6 +5,7 @@ describe('marko-widgets (server)', function() {
     require('./util/autotest').runTests(
         require('./autotests/widgets-server/autotests.tests'),
         function run(testFunc, done) {
+            require('marko/compiler').configure({ output: 'html' });
             var helpers = {};
 
             if (testFunc.length === 1) {

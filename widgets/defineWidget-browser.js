@@ -1,25 +1,13 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+'use strict';
+/* jshint newcap:false */
+
  var BaseState;
  var BaseWidget;
  var inherit;
 
 
 module.exports = function defineWidget(def, renderer) {
-    if (def._isWidget) {
+    if (def.$__isWidget) {
         return def;
     }
 
@@ -29,15 +17,11 @@ module.exports = function defineWidget(def, renderer) {
     if (typeof def === 'function') {
         WidgetClass = def;
         proto = WidgetClass.prototype;
-
-        if (proto.render && proto.render.length === 2) {
-            throw new Error('"render(input, out)" is no longer supported. Use "renderer(input, out)" instead.');
-        }
     } else if (typeof def === 'object') {
         WidgetClass = def.init || function() {};
         proto = WidgetClass.prototype = def;
     } else {
-        throw new Error('Invalid widget');
+        throw TypeError();
     }
 
     // We don't use the constructor provided by the user
@@ -46,11 +30,11 @@ module.exports = function defineWidget(def, renderer) {
     // Instead, we store their constructor in the "initWidget"
     // property and that method gets called later inside
     // init-widgets-browser.js
-    function Widget(id, document) {
-        BaseWidget.call(this, id, document);
+    function Widget(id, doc) {
+        BaseWidget.call(this, id, doc);
     }
 
-    if (!proto._isWidget) {
+    if (!proto.$__isWidget) {
         // Inherit from Widget if they didn't already
         inherit(WidgetClass, BaseWidget);
     }
@@ -59,17 +43,18 @@ module.exports = function defineWidget(def, renderer) {
     // we he have set up the prototype chain using the inherit function
     proto = Widget.prototype = WidgetClass.prototype;
 
-    proto.initWidget = WidgetClass;
+    proto.$__initWidget = WidgetClass;
 
     proto.constructor = def.constructor = Widget;
 
     // Set a flag on the constructor function to make it clear this is
     // a widget so that we can short-circuit this work later
-    Widget._isWidget = true;
+    Widget.$__isWidget = true;
 
-    // Set widget state constructor
-    proto.State = function State() { BaseState.apply(this, arguments); };
-    inherit(proto.State, BaseState);
+    function State() { BaseState.apply(this, arguments); }
+    inherit(State, BaseState);
+    proto.$__State = State;
+
 
     if (!renderer) {
         renderer = WidgetClass.renderer || WidgetClass.prototype.renderer;

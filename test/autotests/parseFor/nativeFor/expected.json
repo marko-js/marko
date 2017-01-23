@@ -1,36 +1,50 @@
 {
-  "loopType": "For",
-  "init": {
-    "type": "Expression",
-    "value": "var i=0"
-  },
-  "test": {
-    "type": "BinaryExpression",
-    "left": {
-      "type": "Identifier",
-      "name": "i"
+    "loopType": "For",
+    "init": {
+        "type": "Vars",
+        "kind": "var",
+        "declarations": [
+            {
+                "type": "VariableDeclarator",
+                "id": {
+                    "type": "Identifier",
+                    "name": "i"
+                },
+                "init": {
+                    "type": "Literal",
+                    "value": 0
+                }
+            }
+        ],
+        "body": []
     },
-    "operator": "<",
-    "right": {
-      "type": "MemberExpression",
-      "object": {
-        "type": "Identifier",
-        "name": "foo"
-      },
-      "property": {
-        "type": "Identifier",
-        "name": "length"
-      },
-      "computed": false
+    "test": {
+        "type": "BinaryExpression",
+        "left": {
+            "type": "Identifier",
+            "name": "i"
+        },
+        "operator": "<",
+        "right": {
+            "type": "MemberExpression",
+            "object": {
+                "type": "Identifier",
+                "name": "foo"
+            },
+            "property": {
+                "type": "Identifier",
+                "name": "length"
+            },
+            "computed": false
+        }
+    },
+    "update": {
+        "type": "UpdateExpression",
+        "argument": {
+            "type": "Identifier",
+            "name": "i"
+        },
+        "operator": "++",
+        "prefix": false
     }
-  },
-  "update": {
-    "type": "UpdateExpression",
-    "argument": {
-      "type": "Identifier",
-      "name": "i"
-    },
-    "operator": "++",
-    "prefix": false
-  }
 }

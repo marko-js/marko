@@ -10,7 +10,8 @@ var options = require('argly').createParser({
         '--server': 'boolean',
         '--tests-file *': 'string',
         '--page': 'string',
-        '--pages': 'string[]'
+        '--pages': 'boolean',
+        '--pagesDeprecated': 'boolean'
     })
     .parse();
 
@@ -38,8 +39,9 @@ function go() {
     }
 }
 
-if (options.pages) {
-    var pageNames = fs.readdirSync(path.resolve(__dirname, '../autotests/widgets-pages'));
+if (options.pages || options.pagesDeprecated) {
+    var pagesPath = options.pages ? path.resolve(__dirname, '../autotests/widgets-pages') : path.resolve(__dirname, '../autotests/widgets-pages-deprecated');
+    var pageNames = fs.readdirSync(pagesPath);
     var promise = pageNames.reduce(function(previousValue, pageName) {
         return previousValue
             .then(() => {

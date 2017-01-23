@@ -1,8 +1,5 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_escapeXmlAttr = marko_helpers.xa;
 
 function render(data, out) {
@@ -13,4 +10,4 @@ function render(data, out) {
   var foo = "Hello " + data.name;
 }
 
-template._ = render;
+marko_template._ = render;

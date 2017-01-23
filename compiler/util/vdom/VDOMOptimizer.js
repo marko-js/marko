@@ -21,11 +21,36 @@ c) Else, generate one of the following:
 
 */
 
+
 const Node = require('../../ast/Node');
-const nextConstIdFuncSymbol = Symbol();
+const OPTIMIZER_CONTEXT_KEY = Symbol();
 
 const OPTIONS_DEFAULT =             { optimizeTextNodes: true, optimizeStaticNodes: true };
 const OPTIONS_OPTIMIZE_TEXT_NODES = { optimizeTextNodes: true, optimizeStaticNodes: false };
+
+class OptimizerContext {
+    constructor(context) {
+        this.context = context;
+
+        this.nextAttrsId = 0;
+        this.nextNodeId = 0;
+        this._nextConstIdFunc = null;
+    }
+
+    get nextConstIdFunc() {
+        let nextConstIdFunc = this._nextConstIdFunc;
+        if (!nextConstIdFunc) {
+            let context = this.context;
+            let builder = context.builder;
+            let constId = this.context.helper('const');
+            let fingerprintLiteral = builder.literal(context.getFingerprint(6));
+            nextConstIdFunc = this._nextConstIdFunc = context.addStaticVar(
+                'marko_const_nextId',
+                builder.functionCall(constId, [ fingerprintLiteral ]));
+        }
+        return nextConstIdFunc;
+    }
+}
 
 class NodeVDOM extends Node {
     constructor(variableIdentifier) {
@@ -54,8 +79,10 @@ class NodeVDOM extends Node {
 
 function generateNodesForArray(nodes, context, options) {
     let builder = context.builder;
-    let nextNodeId = 0;
-    let nextAttrsId = 0;
+
+    var optimizerContext = context[OPTIMIZER_CONTEXT_KEY] ||
+        (context[OPTIMIZER_CONTEXT_KEY] = new OptimizerContext(context));
+
 
     var optimizeStaticNodes = options.optimizeStaticNodes !== false;
 
@@ -66,17 +93,10 @@ function generateNodesForArray(nodes, context, options) {
             node.createTextId = context.importModule('marko_createText', 'marko/vdom/createText');
         }*/
 
-        let nextConstIdFunc = context.data[nextConstIdFuncSymbol];
-        if (!nextConstIdFunc) {
-            let constId = context.helper('const');
-            let fingerprintLiteral = builder.literal(context.getFingerprint(6));
-            nextConstIdFunc = context.data[nextConstIdFuncSymbol] = context.addStaticVar('marko_const_nextId', builder.functionCall(constId, [ fingerprintLiteral ]));
-        }
-
-        node.nextConstId = builder.functionCall(nextConstIdFunc, []);
+        node.nextConstId = builder.functionCall(optimizerContext.nextConstIdFunc, []);
 
         node.isStaticRoot = true;
-        let staticNodeId = context.addStaticVar('marko_node' + (nextNodeId++), node);
+        let staticNodeId = context.addStaticVar('marko_node' + (optimizerContext.nextNodeId++), node);
 
         return new NodeVDOM(staticNodeId);
     }
@@ -85,7 +105,7 @@ function generateNodesForArray(nodes, context, options) {
         var attributesArg = node.attributesArg;
         if (attributesArg) {
             node.isStaticRoot = true;
-            let staticAttrsId = context.addStaticVar('marko_attrs' + (nextAttrsId++), attributesArg);
+            let staticAttrsId = context.addStaticVar('marko_attrs' + (optimizerContext.nextAttrsId++), attributesArg);
             node.attributesArg = staticAttrsId;
         }
     }

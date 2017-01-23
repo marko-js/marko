@@ -1,18 +1,20 @@
 'use strict';
 
-var HTMLElement = require('./HTMLElement');
-var Text = require('./Text');
+var vdom = require('./vdom');
+var VElement = vdom.$__VElement;
+var VText = vdom.$__VText;
+
 var commonHelpers = require('../helpers');
 var extend = require('raptor-util/extend');
 
 var classList = commonHelpers.cl;
 
 exports.e = function(tagName, attrs, childCount, constId) {
-    return new HTMLElement(tagName, attrs, childCount, constId);
+    return new VElement(tagName, attrs, childCount, constId);
 };
 
 exports.t = function(value) {
-    return new Text(value);
+    return new VText(value);
 };
 
 exports.const = function(id) {
@@ -20,34 +22,6 @@ exports.const = function(id) {
     return function() {
         return id + (i++);
     };
-};
-
-/**
- * Helper for generating the string for a style attribute
- * @param  {[type]} style [description]
- * @return {[type]}       [description]
- */
-exports.sa = function(style) {
-    if (!style) {
-        return null;
-    }
-
-    if (typeof style === 'string') {
-        return style;
-    } else if (typeof style === 'object') {
-        var parts = [];
-        for (var name in style) {
-            if (style.hasOwnProperty(name)) {
-                var value = style[name];
-                if (value) {
-                    parts.push(name + ':' + value);
-                }
-            }
-        }
-        return parts ? parts.join(';') : null;
-    } else {
-        return null;
-    }
 };
 
 /**
@@ -69,7 +43,5 @@ exports.ca = function(classNames) {
         return classList(classNames);
     }
 };
-
-exports.inline = require('./')._inline;
 
 extend(exports, commonHelpers);

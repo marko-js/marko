@@ -17,8 +17,8 @@ var tagFileTypes = [
 ];
 
 var searchFiles = [
-    { name:'renderer', type:'renderer' },
     { name:'index.marko', type:'template' },
+    { name:'renderer', type:'renderer' },
     { name:'index', type:'renderer' },
     { name:'template.marko', type:'template' },
     { name:'template.html', type:'template' },

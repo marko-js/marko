@@ -51,7 +51,7 @@ You can easily `require`/`import` a single file component and interact with it u
 ```js
 var myCounter = require('./src/components/my-counter');
 
-var widget = myCounter.render({
+var widget = myCounter.renderSync({
         value: 10
     })
     .appendTo(document.body)
@@ -685,6 +685,17 @@ Or, since `widget.js` is automatically recognized
 </div>
 ```
 
+### Deprecate `widget-types` ([#514](https://github.com/marko-js/marko/issues/514))
+
+**Old:**
+```html
+<widget-types default="./widget" mobile="./widget-mobile"/>
+
+<div w-bind=(data.isMobile ? 'default' : 'mobile')>
+    ...
+</div>
+```
+
 ### Deprecate `w-id` and `w-for` in favor of `ref` and `for-ref` ([#394](https://github.com/marko-js/marko/issues/394))
 
 The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w-id` has been replaced with the `ref` attribute:
@@ -799,7 +810,7 @@ Or, with an argument value:
 </div>
 ```
 
-### Deprecate `w-preserve` and replace with `no-update` ([#419](https://github.com/marko-js/marko/issues/419))
+### Deprecate `w-preserve*` and replace with `no-update*` ([#419](https://github.com/marko-js/marko/issues/419))
 
 **Old:**
 ```html
@@ -815,7 +826,7 @@ Or, with an argument value:
 </div>
 ```
 
-### Deprecate `w-preserve-attrs` ([#422](https://github.com/marko-js/marko/issues/422))
+### Deprecate `w-preserve-attrs` and replace with `:no-update` ([#422](https://github.com/marko-js/marko/issues/422))
 
 **Old:**
 ```html

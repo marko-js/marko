@@ -2,6 +2,7 @@
 
 var resolveFrom = require('resolve-from');
 var path = require('path');
+var fs = require('fs');
 
 function isTemplateMainEntry(context) {
     let filename = path.basename(context.filename);
@@ -32,52 +33,70 @@ function isModuleExports(node) {
            node.left.property.name === 'exports';
 }
 
+function isModuleExportsStatement(node) {
+    return node.type === 'ExpressionStatement' &&
+           isModuleExports(node.expression);
+}
+
 function handleScriptElement(scriptEl, transformHelper) {
     let builder = transformHelper.builder;
 
     let hasExport = false;
+    let needsComponentVar;
 
     var scriptCode = scriptEl.bodyText;
 
     let tree = esprima.parse(scriptCode, { sourceType:'module' });
     let updatedTree = estraverse.replace(tree, {
         enter: function(node) {
-            if(isModuleExports(node)) {
+            if (isModuleExports(node)) {
                 hasExport = true;
+                needsComponentVar = true;
                 node.left = {
                     type: 'Identifier',
                     name: 'marko_component'
                 };
                 this.break();
+            } else if (isModuleExportsStatement(node)) {
+                hasExport = true;
+                return createComponentDeclaration(node.expression.right);
             } else if (node.type === 'ExportDefaultDeclaration') {
                 hasExport = true;
-                return {
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'AssignmentExpression',
-                        operator: '=',
-                        left: {
-                            type: 'Identifier',
-                            name: 'marko_component'
-                        },
-                        right: node.declaration
-                    }
-                };
+                return createComponentDeclaration(node.declaration);
             }
         }
     });
 
-    if (hasExport) {
-        scriptEl.detach();
-        var inlineComponent = builder.selfInvokingFunction([
-            builder.var('marko_component'),
-            builder.code(
-                escodegen.generate(updatedTree)
-            ),
-            builder.returnStatement('marko_component')
-        ]);
+    function createComponentDeclaration(value) {
+        return {
+            type: 'VariableDeclaration',
+            declarations: [
+                {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'marko_component'
+                    },
+                    init: value
+                }
+            ],
+            kind: 'var'
+        };
+    }
 
-        transformHelper.setInlineComponent(inlineComponent);
+    if (hasExport) {
+        let componentVar;
+
+        if (needsComponentVar) {
+            componentVar = transformHelper.context.addStaticVar('marko_component');
+        } else {
+            componentVar = builder.identifier('marko_component');
+        }
+
+        transformHelper.setHasBoundWidgetForTemplate();
+        transformHelper.setInlineComponent(componentVar);
+        transformHelper.context.addStaticCode(escodegen.generate(updatedTree));
+        scriptEl.detach();
     }
 }
 
@@ -86,7 +105,12 @@ function handleStyleElement(styleEl, transformHelper) {
     var langAttr = styleEl.getAttribute('lang');
     var lang = langAttr ? langAttr.value.value : 'css';
     var context = transformHelper.context;
-    context.addDependency({ type:lang, code:styleCode, virtualPath:'./'+path.basename(context.filename)+'.'+lang });
+    context.addDependency({
+        type:lang,
+        code:styleCode,
+        virtualPath:'./'+path.basename(context.filename)+'.'+lang,
+        path: './'+path.basename(context.filename)
+    });
     styleEl.detach();
 }
 
@@ -110,9 +134,11 @@ module.exports = function handleRootNodes() {
         hasBindTarget = true;
     }
 
-    if (resolveFrom(dirname, './style.css')) {
-        context.addDependency('./style.css');
-    }
+    fs.readdirSync(dirname).forEach(file => {
+        if(/^style\.\w+$/.test(file)) {
+            context.addDependency('./' + file);
+        }
+    });
 
     var rootNodes = [];
     var hasExplicitBind = false;
@@ -123,8 +149,11 @@ module.exports = function handleRootNodes() {
 
     let walker = context.createWalker({
         enter(node) {
-            if (node.type === 'HtmlElement') {
+            if (node.type === 'TemplateRoot' || !node.type) {
+                // Don't worry about the TemplateRoot or an Container node
+            } else if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
+                    transformHelper.setHasBoundWidgetForTemplate();
                     hasExplicitBind = true;
                 } else {
                     if (node.hasAttribute('id')) {
@@ -148,6 +177,9 @@ module.exports = function handleRootNodes() {
                 return;
             } else if (node.type === 'CustomTag') {
                 rootNodes.push(node);
+                walker.skip();
+                return;
+            } else {
                 walker.skip();
                 return;
             }
@@ -179,16 +211,12 @@ module.exports = function handleRootNodes() {
         return;
     }
 
-    let widgetNode = context.createNodeForEl('_widget');
-
-    context.root.moveChildrenTo(widgetNode);
-    context.root.appendChild(widgetNode);
+    transformHelper.setHasBoundWidgetForTemplate();
 
     var nextRef = 0;
 
     rootNodes.forEach((curNode, i) => {
-        curNode.setAttributeValue('w-bind');
-        curNode.data.widgetNode = widgetNode;
+        curNode.setAttributeValue('_widgetbind');
 
         if (!curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {

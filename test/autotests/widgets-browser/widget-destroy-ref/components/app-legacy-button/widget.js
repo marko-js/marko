@@ -1,8 +1,5 @@
-function Widget(config) {
-    this.name = 'app-legacy-button';
-}
-
-Widget.prototype = {
+module.exports = {
+    onMount: function() {
+        this.name = 'app-legacy-button';
+    }
 };
-
-exports.Widget = Widget;

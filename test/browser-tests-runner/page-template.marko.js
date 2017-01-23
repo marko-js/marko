@@ -1,8 +1,5 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     lasso_page_tag = marko_loadTag(require("lasso/taglib/page-tag")),
     lasso_head_tag = marko_loadTag(require("lasso/taglib/head-tag")),
@@ -45,4 +42,4 @@ function render(data, out) {
   out.w("</body></html>");
 }
 
-template._ = render;
+marko_template._ = render;

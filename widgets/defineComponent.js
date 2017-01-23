@@ -8,7 +8,7 @@ var defineRenderer;
 var defineWidget;
 
 module.exports = function defineComponent(def) {
-    if (def._isWidget) {
+    if (def.$__isWidget) {
         return def;
     }
 

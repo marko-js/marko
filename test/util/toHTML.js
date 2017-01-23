@@ -28,7 +28,7 @@ function toHTML(node) {
 
         html += indent + '<' + tagName;
 
-        var attributes = el.attributes;
+        var attributes = el.attributes || el.$__attributes;
         var attributesArray = [];
         var attrName;
 

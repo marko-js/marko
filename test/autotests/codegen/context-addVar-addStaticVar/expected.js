@@ -1,8 +1,5 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var fooStatic = "Hello Foo",
+var marko_template = module.exports = require("marko/html").t(__filename),
+    fooStatic = "Hello Foo",
     barStatic = "Hello Bar";
 
 function render(data, out) {
@@ -12,4 +9,4 @@ function render(data, out) {
   out.w("<div></div>");
 }
 
-template._ = render;
+marko_template._ = render;

@@ -4,17 +4,17 @@ module.exports = function(helpers) {
     var docFragmentA = helpers.vdom.createDocumentFragment();
 
     var docFragmentAA = helpers.vdom.createDocumentFragment();
-    docFragmentA.appendChild(docFragmentAA);
+    docFragmentA.$__appendChild(docFragmentAA);
 
-    docFragmentAA.appendChild(helpers.vdom.createElement('div', { class: 'aa1' }));
-    docFragmentAA.appendChild(helpers.vdom.createElement('div', { class: 'aa2' }));
+    docFragmentAA.$__appendChild(helpers.vdom.createElement('div', { class: 'aa1' }));
+    docFragmentAA.$__appendChild(helpers.vdom.createElement('div', { class: 'aa2' }));
 
     var docFragmentB = helpers.vdom.createDocumentFragment();
-    docFragmentB.appendChild(helpers.vdom.createElement('div', { class: 'b1' }));
-    docFragmentB.appendChild(helpers.vdom.createElement('div', { class: 'b2' }));
+    docFragmentB.$__appendChild(helpers.vdom.createElement('div', { class: 'b1' }));
+    docFragmentB.$__appendChild(helpers.vdom.createElement('div', { class: 'b2' }));
 
-    root.appendChild(docFragmentA);
-    root.appendChild(docFragmentB);
+    root.$__appendChild(docFragmentA);
+    root.$__appendChild(docFragmentB);
 
     return root;
 };

@@ -14,9 +14,8 @@ module.exports = function(helpers) {
     expect(button1Widget.el.innerHTML).to.contain('Initial Label');
     expect(button2Widget.el.innerHTML).to.contain('Initial Label');
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.setState('buttonSize', 'large');
-    });
+    widget.setState('buttonSize', 'large');
+    widget.update();
 
     expect(button1Widget).to.equal(widget.getWidget('button1'));
     expect(button2Widget).to.equal(widget.getWidget('button2'));

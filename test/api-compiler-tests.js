@@ -12,11 +12,11 @@ var autotest = require('./autotest');
 var marko = require('../');
 var markoCompiler = require('../compiler');
 
-describe('api' , function() {
+describe('api (compiler)' , function() {
     var autoTestDir = nodePath.join(__dirname, 'autotests/api-compiler');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var test = require(nodePath.join(dir, 'test.js'));
-        test.check(marko, markoCompiler, expect, done);
+        test.check(marko, markoCompiler, expect, helpers, done);
     });
 });

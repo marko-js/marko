@@ -58,7 +58,7 @@ Marko Widgets allows you to declaratively bind behavior to an HTML element insid
 __src/components/app-hello/template.marko__
 
 ```xml
-<div w-bind>
+<div>
 	Hello ${data.name}!
 </div>
 ```
@@ -112,11 +112,8 @@ widget.setProps({
 __src/components/app-hello/template.marko__
 
 ```xml
-<div w-bind
-	 onClick("handleClick")>
-
-	Hello ${data.name}!
-
+<div onClick("handleClick")>
+    Hello ${data.name}!
 </div>
 ```
 
@@ -153,7 +150,7 @@ Let's create a stateful widget that changes to yellow when you click on it:
 __src/components/app-hello/template.marko__
 
 ```xml
-<div w-bind
+<div
 	 onClick("handleClick")
 	 style="background-color: ${data.color}">
 
@@ -201,7 +198,7 @@ If you want to avoid re-rendering a widget for a particular state property chang
 __src/components/app-hello/template.marko__
 
 ```xml
-<div w-bind
+<div
 	 onClick("handleClick")
 	 style="background-color: ${data.color}">
 
@@ -255,7 +252,7 @@ module.exports = require('marko-widgets').defineComponent({
 ## Complex Widget
 
 ```xml
-<div w-bind>
+<div>
 	<app-overlay title="My Overlay"
 		ref="overlay"
 	 onBeforeHide("handleOverlayBeforeHide")>
@@ -309,7 +306,7 @@ A container widget supports nested content. When the container widget is re-rend
 __src/components/app-alert/template.marko__
 
 ```xml
-<div class="alert alert-${data.type}" w-bind>
+<div class="alert alert-${data.type}">
 	<i class="alert-icon"/>
 	<span w-body></span>
 </div>
@@ -376,7 +373,7 @@ Sometimes it is important to _not_ re-render a DOM subtree. This may due to eith
 Marko Widgets allows DOM nodes to be preserved by putting a special `no-update`, `no-update-if(<condition>)`, `no-update-body` or `no-update-body-if(<condition>)` attribute on the HTML tags that should be preserved. Preserved DOM nodes will be reused and re-inserted into a widget's newly rendered DOM automatically.
 
 ```xml
-<div w-bind>
+<div>
 
 	<span no-update>
 		<p>
@@ -403,10 +400,10 @@ Marko Widgets allows DOM nodes to be preserved by putting a special `no-update`,
 
 Similar to preserving DOM nodes, Marko Widgets also makes it possible to preserve specific attributes on a DOM node. This can be helpful if a separately library is modifying DOM attributes and those changes should be preserved during a rerender. This is mostly the case with `class` and `style` attributes when using a animation/tweening engines such as [Velocity.js](http://julian.com/research/velocity/) or [GSAP](http://greensock.com/gsap).
 
-The `w-preserve-attrs` attribute can be applied to any DOM element and it expects a comma-separated list of attribute names as shown below:
+The `:no-update` attribute can be applied to any DOM element and it expects a single attribute name to the left of the colon as shown below:
 
 ```xml
-<div w-preserve-attrs="class,style">
+<div class:no-update=data.className style:no-update=data.styles>
 	...
 </div>
 ```

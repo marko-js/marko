@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineComponent({
+module.exports = require('marko/widgets/legacy').defineComponent({
     template: require.resolve('./template.marko'),
     getInitialProps: function(input, out) {
         var name = input.name;

@@ -1,0 +1,18 @@
+<script>
+    module.exports = {
+    	handleColorMouseOver: function(color) {
+    		this.mouseOverColor = color;
+    	},
+
+        handleColorMouseOut: function(color) {
+    		this.mouseOutColor = color;
+    	}
+    };
+</script>
+<div>
+    <ul>
+        <li for(color in data.colors) onMouseOver("handleColorMouseOver", color) onMouseOut("handleColorMouseOut", color)>
+            ${color}
+        </li>
+    </ul>
+</div>

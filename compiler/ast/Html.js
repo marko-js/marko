@@ -2,6 +2,7 @@
 
 var Node = require('./Node');
 var Literal = require('./Literal');
+var isCompoundExpression = require('../util/isCompoundExpression');
 
 class Html extends Node {
     constructor(def) {
@@ -64,7 +65,11 @@ class Html extends Node {
                     writer.writeIndent();
                 }
 
-                writer.write(arg);
+                if (isCompoundExpression(arg)) {
+                    writer.write(['(', arg, ')']);
+                } else {
+                    writer.write(arg);
+                }
             }
 
             writer.write(')');

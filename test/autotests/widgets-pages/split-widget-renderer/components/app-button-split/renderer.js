@@ -1,8 +1,4 @@
-module.exports = require('marko/widgets').defineRenderer({
-    template: require.resolve('./template.marko'),
-    getInitialBody: function(input) {
-        return input.label || input.renderBody;
-    },
+module.exports = {
     getTemplateData: function(state, input) {
         var rootAttrs = {};
 
@@ -38,7 +34,8 @@ module.exports = require('marko/widgets').defineRenderer({
 
         return {
             type: type,
-            rootAttrs: rootAttrs
+            rootAttrs: rootAttrs,
+            body: input.label || input.renderBody
         };
     }
-});
+};

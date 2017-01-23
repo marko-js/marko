@@ -21,9 +21,8 @@ module.exports = function(helpers) {
     expect(widget.state.message).to.equal(states.original.message);
     expect(widget.state.colors).to.deep.equal(states.original.colors);
 
-    require('marko/widgets').batchUpdate(function() {
-        widget.replaceState(states.new);
-    });
+    widget.replaceState(states.new);
+    widget.update();
 
     expect(widget.state.heading).to.equal(states.new.heading);
     expect(widget.state.message).to.equal(states.new.message); // undefined

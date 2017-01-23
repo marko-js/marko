@@ -1,26 +1,11 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var widgets = require('../');
+var WidgetsContext = require('../WidgetsContext');
+var getElementById = require('../util').$__getElementById;
 
 module.exports = function render(input, out) {
 
     var global = out.global;
 
-    if (global.__rerender === true) {
+    if (global.$w !== undefined) {
         var id = input.id;
 
         // See if the DOM node with the given ID already exists.
@@ -29,9 +14,9 @@ module.exports = function render(input, out) {
         // replaced out if we find that the DOM node has already been rendered
         var condition = input['if'];
         if (condition !== false) {
-            var existingEl = document.getElementById(id);
+            var existingEl = getElementById(out.$__document, id);
             if (existingEl) {
-                var widgetsContext = widgets.getWidgetsContext(out);
+                var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
                 var bodyOnly = input.bodyOnly === true;
                 // Don't actually render anything since the element is already in the DOM,
                 // but keep track that the node is being preserved so that we can ignore
@@ -43,11 +28,10 @@ module.exports = function render(input, out) {
                     // then that means that we have need to render a placeholder to
                     // mark the target location. We can then replace the placeholder
                     // node with the existing DOM node
-                    out.beginElement(tagName, { id: id });
-                    out.endElement();
+                    out.element(tagName, { id: id });
                 }
 
-                widgetsContext.addPreservedDOMNode(existingEl, bodyOnly);
+                widgetsContext.$__preserveDOMNode(id, bodyOnly);
                 return;
             }
         }

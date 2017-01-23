@@ -62,6 +62,9 @@
             }
         ]
     },
+    "<function>": {
+        "code-generator": "./function-tag"
+    },
     "<if>": {
         "node-factory": "./if-tag",
         "attributes": {},
@@ -76,7 +79,10 @@
         ]
     },
     "<import>": {
-        "code-generator": "./import-tag"
+        "code-generator": "./import-tag",
+        "parse-options": {
+            "relaxRequireCommas": true
+        }
     },
     "<include>": {
         "renderer": "./include-tag",
@@ -132,7 +138,7 @@
         ]
     },
     "<macro>": {
-        "code-generator": "./macro-tag",
+        "node-factory": "./macro-tag",
         "autocomplete": [
             {
                 "displayText": "macro <name>(<parmas>)",
@@ -168,12 +174,13 @@
     "<script>": {
         "preserve-whitespace": true,
         "@marko-init": "boolean",
+        "@template-helpers": "boolean",
         "@*": {
             "ignore": true
         },
         "autocomplete": [
             {
-                "snippet": "script marko-init",
+                "snippet": "script template-helpers",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
             }
         ]
@@ -295,8 +302,8 @@
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {
-                    "displayText": "include()",
-                    "snippet": "include()",
+                    "displayText": "include(data.renderBody)",
+                    "snippet": "include(data.renderBody)",
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {

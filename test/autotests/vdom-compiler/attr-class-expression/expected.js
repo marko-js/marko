@@ -1,8 +1,5 @@
-var template = require("marko/vdom").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/vdom/helpers"),
+var marko_template = module.exports = require("marko/vdom").t(),
+    marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_classList = marko_helpers.cl,
     marko_classAttr = marko_helpers.ca;
 
@@ -18,4 +15,4 @@ function render(data, out) {
     .t("!");
 }
 
-template._ = render;
+marko_template._ = render;

@@ -3,11 +3,11 @@
 module.exports = function transform(el, context) {
     var argument = el.argument;
     if (!argument) {
-        context.addError(el, 'Invalid <layout-use> tag. Expected: <layout-use(template[, data]) ...>');
+        context.addError('Invalid <layout-use> tag. Expected: <layout-use(template[, data]) ...>');
         return;
     }
 
-    console.warn('The <layout-use> tag is deprecated. Please use <include> instead. See: https://github.com/marko-js/marko/issues/452 (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+    context.deprecate('The <layout-use> tag is deprecated. Please use <include> instead. See: https://github.com/marko-js/marko/issues/452');
 
     var builder = context.builder;
 

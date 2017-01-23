@@ -1,8 +1,5 @@
-var template = require("marko/vdom").c(__filename);
-
-module.exports = template;
-
-var marko_attrs0 = {
+var marko_template = module.exports = require("marko/vdom").t(),
+    marko_attrs0 = {
         "class": "foo"
       };
 
@@ -13,4 +10,4 @@ function render(data, out) {
     .t("!");
 }
 
-template._ = render;
+marko_template._ = render;

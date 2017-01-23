@@ -4,14 +4,14 @@ var isObjectEmpty = require('raptor-util/isObjectEmpty');
 
 module.exports = function transform(el, context) {
     if(!el.argument) {
-        context.addError(el, 'Invalid <await> tag. Argument is missing. Example: <await(user from data.userProvider)>');
+        context.addError('Invalid <await> tag. Argument is missing. Example: <await(user from data.userProvider)>');
         return;
     }
 
     var match = /^([$A-Z_][0-9A-Z_$]*) from (.*)$/i.exec(el.argument);
 
     if(!match) {
-        context.addError(el, 'Invalid <await> tag. Argument is malformed. Example: <await(user from data.userProvider)>');
+        context.addError('Invalid <await> tag. Argument is malformed. Example: <await(user from data.userProvider)>');
         return;
     }
 
@@ -19,7 +19,7 @@ module.exports = function transform(el, context) {
     var dataProviderAttr = match[2];
 
     if (!context.util.isValidJavaScriptIdentifier(varName)) {
-        context.addError(el, 'Invalid <await> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <await(user from data.userProvider)>');
+        context.addError('Invalid <await> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <await(user from data.userProvider)>');
         return;
     }
 

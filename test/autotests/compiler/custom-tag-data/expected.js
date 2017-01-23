@@ -1,11 +1,8 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     custom_tag_data_tag = marko_loadTag(require("./custom-tag-data-tag")),
-    marko_merge = marko_helpers.m;
+    marko_merge = require("marko/runtime/helper-merge");
 
 function render(data, out) {
   custom_tag_data_tag({
@@ -26,4 +23,4 @@ function render(data, out) {
     }), out);
 }
 
-template._ = render;
+marko_template._ = render;

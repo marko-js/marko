@@ -10,7 +10,7 @@ var makeRenderable = require('../renderable');
  * it is used to create a new Template instance.
  * @private
  */
-exports.c = function createTemplate(path) {
+exports.t = function createTemplate(path) {
      return new Template(path);
 };
 
@@ -24,18 +24,13 @@ function createOut(globalData, parent, state) {
     return new AsyncVDOMBuilder(globalData, parent, state);
 }
 
-Template.prototype = {
+var Template_prototype = Template.prototype = {
     createOut: createOut
 };
 
-makeRenderable(Template.prototype);
-
-exports._inline = function(filename, renderFunc) {
-    return new Template(filename, renderFunc);
-};
+makeRenderable(Template_prototype);
 
 exports.Template = Template;
-exports.createOut = createOut;
-exports.helpers = require('./helpers');
+exports.$__createOut = createOut;
 
-require('../')._setRuntime(exports);
+require('../createOut').$__setCreateOut(createOut);

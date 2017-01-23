@@ -15,11 +15,10 @@ function isUpperCase(c) {
 }
 
 function addBubblingEventListener(transformHelper, eventType, targetMethod, extraArgs) {
-    var containingWidgetNode = transformHelper.getContainingWidgetNode();
     var el = transformHelper.el;
 
-    if (!containingWidgetNode) {
-        transformHelper.addError('Unable to handle event "' + eventType + '". HTML element is not nested within a widget.');
+    if (transformHelper.hasBoundWidgetForTemplate() === false) {
+        transformHelper.addError('Unable to handle event ' + eventType + '. HTML element is not nested within a widget.');
         return;
     }
 
@@ -54,7 +53,7 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
 
     var addDomEvent = builder.memberExpression(
         builder.identifier('widget'),
-        builder.identifier('addDomEvent'));
+        builder.identifier('e'));
 
     let widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
     let idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
@@ -135,7 +134,7 @@ module.exports = function handleWidgetEvents() {
                     extraArgs = parsedArgs.slice(1);
                 }
             } else if (attrName.startsWith('w-on')) {
-                console.warn('"w-on*" attributes are deprecated. Please use "on*()" instead. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+                context.deprecate('"w-on*" attributes are deprecated. Please use "on*()" instead.');
                 eventType = attrName.substring(4); // Chop off "w-on"
                 targetMethod = attr.value;
             }

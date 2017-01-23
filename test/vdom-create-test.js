@@ -6,24 +6,25 @@ var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;
 var document = jsdom('<html><body></body></html>');
 
-var HTMLElement = require('../runtime/vdom/HTMLElement');
-var Text = require('../runtime/vdom/Text');
-var Comment = require('../runtime/vdom/Comment');
-var DocumentFragment = require('../runtime/vdom/DocumentFragment');
+var VElement = require('../runtime/vdom/VElement');
+var VText = require('../runtime/vdom/VText');
+var VComment = require('../runtime/vdom/VComment');
+var VDocumentFragment = require('../runtime/vdom/VDocumentFragment');
 
 var vdomHelpers = {
     createElement: function(tagName, attrs, childCount, constId) {
-        return new HTMLElement(tagName, attrs, childCount, constId);
+        return new VElement(tagName, attrs, childCount, constId);
     },
     createText: function(value) {
-        return new Text(value);
+        return new VText(value);
     },
     createComment: function(value) {
-        return new Comment(value);
+        return new VComment(value);
     },
     createDocumentFragment: function() {
-        return new DocumentFragment();
-    }
+        return new VDocumentFragment();
+    },
+    VElement: VElement
 };
 
 describe('marko-vdom', () => {

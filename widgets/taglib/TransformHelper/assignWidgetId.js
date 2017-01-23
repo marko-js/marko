@@ -16,16 +16,14 @@ module.exports = function assignWidgetId(isRepeated) {
     var nestedIdExpression;
     var idExpression;
 
-    var containingWidgetNode = this.getContainingWidgetNode();
-
-    if (!containingWidgetNode) {
+    if (!this.hasBoundWidgetForTemplate()) {
         // We are assigning a widget ID to a nested widget in a template that does not have a widget.
         // That means we do not have access to the parent widget variable as part of a closure. We
         // need to look it up out of the `out.data` map
         if (!context.isFlagSet('hasWidgetVar')) {
             context.setFlag('hasWidgetVar');
 
-            var getCurrentWidgetVar = context.importModule('__getCurrentWidget',
+            var getCurrentWidgetVar = context.importModule('marko_getCurrentWidget',
                 this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/getCurrentWidget'));
 
             context.addVar('widget', builder.functionCall(getCurrentWidgetVar, [builder.identifierOut()]));
@@ -46,14 +44,15 @@ module.exports = function assignWidgetId(isRepeated) {
 
     var isCustomTag = el.type !== 'HtmlElement';
 
+
+
     if (el.hasAttribute('ref')) {
         widgetRef = el.getAttributeValue('ref');
-
         el.removeAttribute('ref');
     }
 
     if (el.hasAttribute('w-id')) {
-        console.warn('The "w-id" attribute is deprecated. Please use "ref" instead. (' + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+        context.deprecate('The "w-id" attribute is deprecated. Please use "ref" instead.');
 
         if (widgetRef) {
             this.addError('The "w-id attribute cannot be used in conjuction with the "ref" attribute.');

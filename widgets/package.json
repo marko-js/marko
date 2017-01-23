@@ -1,8 +1,8 @@
 {
-  "browser": {
-    "./index.js": "./index-browser.js",
-    "./uniqueId.js": "./uniqueId-browser.js",
-    "./init-widgets.js": "./init-widgets-browser.js",
-    "./defineWidget.js": "./defineWidget-browser.js"
-  }
+    "browser": {
+        "./index.js": "./index-browser.js",
+        "./init-widgets.js": "./init-widgets-browser.js",
+        "./defineWidget.js": "./defineWidget-browser.js",
+        "./util.js": "./util-browser.js"
+    }
 }

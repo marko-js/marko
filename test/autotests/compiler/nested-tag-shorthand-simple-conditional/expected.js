@@ -1,10 +1,7 @@
-var template = require("marko/html").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/html/helpers"),
-    marko_loadTemplate = marko_helpers.l,
+var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
     test_message_template = marko_loadTemplate(require.resolve("./components/test-message/template.marko")),
+    marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     test_message_tag = marko_loadTag(test_message_template);
 
@@ -18,4 +15,4 @@ function render(data, out) {
     }, out);
 }
 
-template._ = render;
+marko_template._ = render;

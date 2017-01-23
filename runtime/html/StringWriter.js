@@ -1,19 +1,10 @@
 'use strict';
 
-function StringWriter(events) {
+function StringWriter() {
     this.str = '';
-    this.events = events;
-    this.finished = false;
 }
 
 StringWriter.prototype = {
-    end: function() {
-        this.finished = true;
-        if (this.events) {
-            this.events.emit('finish');
-        }
-    },
-
     write: function(str) {
         this.str += str;
         return this;

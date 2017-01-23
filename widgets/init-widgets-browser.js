@@ -1,27 +1,35 @@
 'use strict';
-require('raptor-polyfill/string/endsWith');
-
-var logger = require('raptor-logging').logger(module);
-var _addEventListener = require('./addEventListener');
 var warp10Finalize = require('warp10/finalize');
 var eventDelegation = require('./event-delegation');
-var defaultDocument = typeof document != 'undefined' && document;
+var win = window;
+var defaultDocument = document;
 var events = require('../runtime/events');
-var widgetLookup = require('./lookup').widgets;
+var widgetsUtil = require('./util');
+var widgetLookup = widgetsUtil.$__widgetLookup;
+var getElementById = widgetsUtil.$__getElementById;
+var WidgetDef = require('./WidgetDef');
+var extend = require('raptor-util/extend');
 
 var registry; // We initialize this later to avoid issues with circular dependencies
 
 function invokeWidgetEventHandler(widget, targetMethodName, args) {
     var method = widget[targetMethodName];
     if (!method) {
-        throw new Error('Widget ' + widget.id + ' does not have method named "' + targetMethodName + '"');
+        throw Error('Method not found: ' + targetMethodName);
     }
 
     method.apply(widget, args);
 }
 
+function addEventListenerHelper(el, eventType, listener) {
+    el.addEventListener(eventType, listener, false);
+    return function remove() {
+        el.removeEventListener(eventType, listener);
+    };
+}
+
 function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs, handles) {
-    var handle = _addEventListener(el, eventType, function(event) {
+    var removeListener = addEventListenerHelper(el, eventType, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -29,37 +37,18 @@ function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs
 
         invokeWidgetEventHandler(widget, targetMethodName, args);
     });
-    handles.push(handle);
-}
-
-function getNestedEl(widget, nestedId, document) {
-    if (nestedId == null) {
-        return null;
-
-    }
-    if (nestedId === '') {
-        return widget.getEl();
-    }
-
-    if (typeof nestedId === 'string') {
-        if (nestedId.charAt(0) === '#') {
-            return document.getElementById(nestedId.substring(1));
-        }
-    }
-
-    return widget.getEl(nestedId);
+    handles.push(removeListener);
 }
 
 function initWidget(widgetDef, doc) {
-    var type = widgetDef.type;
+    var type = widgetDef.$__type;
     var id = widgetDef.id;
-    var config = widgetDef.config;
-    var state = widgetDef.state;
-    var scope = widgetDef.scope;
-    var domEvents = widgetDef.domEvents;
-    var customEvents = widgetDef.customEvents;
-    var bodyElId = widgetDef.bodyElId;
-    var existingWidget = widgetDef.existingWidget;
+    var config = widgetDef.$__config;
+    var state = widgetDef.$__state;
+    var scope = widgetDef.$__scope;
+    var domEvents = widgetDef.$__domEvents;
+    var customEvents = widgetDef.$__customEvents;
+    var existingWidget = widgetDef.$__existingWidget;
 
     var el;
     var i;
@@ -73,20 +62,20 @@ function initWidget(widgetDef, doc) {
         existingWidget = widgetLookup[id];
     }
 
-    if (existingWidget && existingWidget.__type !== type) {
+    if (existingWidget && existingWidget.$__type !== type) {
         existingWidget = null;
     }
 
     if (existingWidget) {
-        existingWidget._removeDOMEventListeners();
-        existingWidget._reset();
+        existingWidget.$__reset();
+        existingWidget.$__removeDOMEventListeners();
         widget = existingWidget;
     } else {
-        widget = registry.createWidget(type, id, doc);
+        widget = registry.$__createWidget(type, id, doc);
     }
 
     var els;
-    var rootIds = widgetDef.roots;
+    var rootIds = widgetDef.$__roots;
     var rootWidgets;
 
     if (rootIds) {
@@ -96,17 +85,17 @@ function initWidget(widgetDef, doc) {
             var nestedId = id + '-' + rootId;
             var rootWidget = widgetLookup[nestedId];
             if (rootWidget) {
-                rootWidget.__rootFor = widget;
+                rootWidget.$__rootFor = widget;
                 if (rootWidgets) {
                     rootWidgets.push(rootWidget);
                 } else {
-                    rootWidgets = widget.__rootWidgets = [rootWidget];
+                    rootWidgets = widget.$__rootWidgets = [rootWidget];
                 }
 
             } else {
-                var rootEl = doc.getElementById(nestedId);
+                var rootEl = getElementById(doc, nestedId);
                 if (rootEl) {
-                    rootEl.__widget = widget;
+                    rootEl._w = widget;
                     els.push(rootEl);
                 }
             }
@@ -114,41 +103,21 @@ function initWidget(widgetDef, doc) {
 
         el = els[0];
     } else {
-        var widgetEl = doc.getElementById(id);
-        el = widgetEl;
-        el.__widget = widget;
+        el = getElementById(doc, id);
+        el._w = widget;
         els = [el];
     }
 
     widgetLookup[id] = widget;
 
     if (state) {
-        for (var k in state) {
-            if (state.hasOwnProperty(k)) {
-                var v = state[k];
-                if (typeof v === 'function' || v == null) {
-                    delete state[k];
-                }
-            }
-        }
+        widget.$__state = new widget.$__State(widget, state);
     }
 
-    widget.state = state || {}; // First time rendering so use the provided state or an empty state object
-
-    // The user-provided constructor function
-    if (logger.isDebugEnabled()) {
-        logger.debug('Creating widget: ' + type + ' (' + id + ')');
-    }
-
-    if (!config) {
-        config = {};
-    }
-
-    if (widget._isWidget) {
+    if (widget.$__isWidget) {
         widget.el = el;
         widget.els = els;
-        widget.__rootWidgets = rootWidgets;
-        widget.bodyEl = getNestedEl(widget, bodyElId, doc);
+        widget.$__rootWidgets = rootWidgets;
 
         if (domEvents) {
             var eventListenerHandles = [];
@@ -156,41 +125,40 @@ function initWidget(widgetDef, doc) {
             for (i=0, len=domEvents.length; i<len; i+=4) {
                 eventType = domEvents[i];
                 targetMethodName = domEvents[i+1];
-                var eventEl = document.getElementById(domEvents[i+2]);
+                var eventEl = getElementById(doc, domEvents[i+2]);
                 extraArgs = domEvents[i+3];
-
-
 
                 // The event mapping is for a DOM event (not a custom event)
                 addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
             }
 
             if (eventListenerHandles.length) {
-                widget.__evHandles = eventListenerHandles;
+                widget.$__domEventListenerHandles = eventListenerHandles;
             }
         }
 
         if (customEvents) {
-            widget.__customEvents = {};
-            widget.__scope = scope;
+            widget.$__customEvents = {};
+            widget.$__scope = scope;
 
             for (i=0, len=customEvents.length; i<len; i+=3) {
                 eventType = customEvents[i];
                 targetMethodName = customEvents[i+1];
                 extraArgs = customEvents[i+2];
 
-                widget.__customEvents[eventType] = [targetMethodName, extraArgs];
+                widget.$__customEvents[eventType] = [targetMethodName, extraArgs];
             }
         }
     } else {
+        config = config || {};
         config.elId = id;
         config.el = el;
         config.els = els;
     }
 
     if (existingWidget) {
-        widget._emitLifecycleEvent('update');
-        widget._emitLifecycleEvent('render', {});
+        widget.$__emitLifecycleEvent('update');
+        widget.$__emitLifecycleEvent('render', {});
     } else {
         var initEventArgs = {
             widget: widget,
@@ -199,45 +167,20 @@ function initWidget(widgetDef, doc) {
 
         events.emit('initWidget', initEventArgs);
 
-        widget._emitLifecycleEvent('beforeInit', initEventArgs);
-        copyConfigToWidget(widget, config);
-        widget.initWidget(config);
-        widget._emitLifecycleEvent('afterInit', initEventArgs);
+        widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
+        if (config) {
+            extend(widget, config);
+        }
 
-        widget._emitLifecycleEvent('render', { firstRender: true });
+        widget.$__initWidget(config);
+        widget.$__emitLifecycleEvent('afterInit', initEventArgs);
 
-        widget._emitLifecycleEvent('mount');
+        widget.$__emitLifecycleEvent('render', { firstRender: true });
+
+        widget.$__emitLifecycleEvent('mount');
     }
 
     return widget;
-}
-
-function copyConfigToWidget(widget, config) {
-    for(var key in config) {
-        widget[key] = config[key];
-    }
-}
-
-// Create a helper function handle recursion
-function initClientRendered(widgetDefs, doc) {
-    // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any widgets
-    eventDelegation.init();
-
-    doc = doc || window.doc;
-    for (var i=0,len=widgetDefs.length; i<len; i++) {
-        var widgetDef = widgetDefs[i];
-
-        if (widgetDef.children.length) {
-            initClientRendered(widgetDef.children, doc);
-        }
-
-        var widget = initWidget(
-            widgetDef,
-            doc);
-
-        widgetDef.widget = widget;
-    }
 }
 
 /**
@@ -248,37 +191,64 @@ function initClientRendered(widgetDefs, doc) {
  * in the widgets context (nested widgets are initialized before ancestor widgets).
  * @param  {Array<marko-widgets/lib/WidgetDef>} widgetDefs An array of WidgetDef instances
  */
-exports.initClientRendered = initClientRendered;
+function initClientRendered(widgetDefs, doc) {
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any widgets
+    eventDelegation.$__init(doc);
+
+    doc = doc || defaultDocument;
+    for (var i=0,len=widgetDefs.length; i<len; i++) {
+        var widgetDef = widgetDefs[i];
+
+        if (widgetDef.$__children) {
+            initClientRendered(widgetDef.$__children, doc);
+        }
+
+        if (!widgetDef.$__type) {
+            continue;
+        }
+
+        var widget = initWidget(
+            widgetDef,
+            doc);
+
+        widgetDef.$__widget = widget;
+    }
+}
 
 /**
  * This method initializes all widgets that were rendered on the server by iterating over all
  * of the widget IDs.
  */
-function initServerRendered(widgetDefs, doc) {
+function initServerRendered(renderedWidgets, doc) {
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
-    eventDelegation.init();
+    eventDelegation.$__init(doc || defaultDocument);
 
-    widgetDefs = warp10Finalize(widgetDefs);
+    renderedWidgets = warp10Finalize(renderedWidgets);
+
+    var widgetDefs = renderedWidgets[0];
+    var typesArray = renderedWidgets[1];
 
     if (!doc) {
         doc = defaultDocument;
     }
 
     for (var i=0, len=widgetDefs.length; i<len; i++) {
-        var widgetDef = widgetDefs[i];
+        var widgetDef = WidgetDef.$__deserialize(widgetDefs[i], typesArray);
         initWidget(widgetDef, doc);
     }
 }
 
-exports.initServerRendered = initServerRendered;
+exports.$__initClientRendered = initClientRendered;
+exports.$__initServerRendered = initServerRendered;
 
 registry = require('./registry');
 
-if (window.$widgets) {
+if (win.$widgets) {
     initServerRendered(window.$widgets);
 }
 
-window.$widgets = {
+win.$widgets = {
     concat: initServerRendered
 };

@@ -1,0 +1,16 @@
+<div>
+    <app-foo onTest('handleFooTest')/>
+</div>
+
+<script>
+    module.exports = {
+        onMount: function() {
+            var fooEl = document.querySelector('.foo');
+            var fooWidget = this.fooWidget = require('marko/widgets').getWidgetForEl(fooEl);
+            fooWidget.emitTestEvent();
+        },
+        handleFooTest: function() {
+            this.fooEvent = arguments;
+        }
+    };
+</script>

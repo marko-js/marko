@@ -1,139 +1,44 @@
 'use strict';
-var dom = require('./dom');
-var markoWidgets = require('./');
-var EventEmitter = require('events').EventEmitter;
+/* jshint newcap:false */
+
+var domInsert = require('../runtime/dom-insert');
+var marko = require('../');
+var widgetsUtil = require('./util');
+var getWidgetForEl = widgetsUtil.$__getWidgetForEl;
+var widgetLookup = widgetsUtil.$__widgetLookup;
+var emitLifecycleEvent = widgetsUtil.$__emitLifecycleEvent;
+var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
+var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
+var getElementById = widgetsUtil.$__getElementById;
+var EventEmitter = require('events-light');
 var RenderResult = require('../runtime/RenderResult');
-var listenerTracker = require('listener-tracker');
-var extend = require('raptor-util/extend');
+var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
-var morphdom = require('morphdom');
-var marko = require('marko');
-var widgetLookup = require('./lookup').widgets;
+var morphAttrs = require('../runtime/vdom/VElement').$__morphAttrs;
+var morphdomFactory = require('morphdom/factory');
+var morphdom = morphdomFactory(morphAttrs);
+
 
 var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
 
-var WIDGET_SUBSCRIBE_TO_OPTIONS = null;
+var WIDGET_SUBSCRIBE_TO_OPTIONS;
 var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
 
-
 var emit = EventEmitter.prototype.emit;
-var idRegExp = /^\#(\S+)( .*)?/;
 
-var lifecycleEventMethods = {
-    'beforeDestroy': 'onBeforeDestroy',
-    'destroy': 'onDestroy',
-    'beforeUpdate': 'onBeforeUpdate',
-    'update': 'onUpdate',
-    'mount': 'onMount',
-    'render': 'onRender',
-    'beforeInit': 'onBeforeInit',
-    'afterInit': 'onAfterInit'
-};
-
-function removeListener(eventListenerHandle) {
-    eventListenerHandle.remove();
-}
-
-/**
- * This method handles invoking a widget's event handler method
- * (if present) while also emitting the event through
- * the standard EventEmitter.prototype.emit method.
- *
- * Special events and their corresponding handler methods
- * include the following:
- *
- * beforeDestroy --> onBeforeDestroy
- * destroy       --> onDestroy
- * beforeUpdate  --> onBeforeUpdate
- * update        --> onUpdate
- * render        --> onRender
- */
-function emitLifecycleEvent(widget, eventType, eventArg) {
-    var listenerMethod = widget[lifecycleEventMethods[eventType]];
-
-    if (listenerMethod) {
-        listenerMethod.call(widget, eventArg);
-    }
-
-    widget.emit(eventType, eventArg);
-}
-
-function removeDOMEventListeners(widget) {
-    var eventListenerHandles = widget.__evHandles;
-    if (eventListenerHandles) {
-        eventListenerHandles.forEach(removeListener);
-        widget.__evHandles = null;
-    }
-}
-
-function destroyWidgetForEl(el) {
-    var widgetToDestroy = el.__widget;
-    if (widgetToDestroy) {
-        destroyWidgetHelper(widgetToDestroy);
-        el.__widget = null;
-
-        while ((widgetToDestroy = widgetToDestroy.__rootFor)) {
-            widgetToDestroy.__rootFor = null;
-            destroyWidgetHelper(widgetToDestroy);
-        }
-    }
-}
-function destroyElRecursive(el) {
-    var curChild = el.firstChild;
-    while(curChild) {
-        if (curChild.nodeType === 1) {
-            destroyElRecursive(curChild);
-            destroyWidgetForEl(curChild);
-        }
-        curChild = curChild.nextSibling;
-    }
-}
-
-function destroyWidgetHelper(widget) {
-    if (widget.isDestroyed()) {
-        return;
-    }
-
-    emitLifecycleEvent(widget, 'beforeDestroy');
-    widget.__lifecycleState = 'destroyed';
-
-    widget.els = null;
-    widget.el = null;
-
-    // Unsubscribe from all DOM events
-    removeDOMEventListeners(widget);
-
-    if (widget.__subscriptions) {
-        widget.__subscriptions.removeAllListeners();
-        widget.__subscriptions = null;
-    }
-
-    delete widgetLookup[widget.id];
-
-    emitLifecycleEvent(widget, 'destroy');
-}
-
-function resetWidget(widget) {
-    widget.__oldState = null;
-    widget.__dirty = false;
-    widget.__stateChanges = null;
-    widget.__newProps = null;
-    widget.__dirtyState = null;
+function removeListener(removeEventListenerHandle) {
+    removeEventListenerHandle();
 }
 
 function hasCompatibleWidget(widgetsContext, existingWidget) {
     var id = existingWidget.id;
-    var newWidgetDef = widgetsContext.getWidget(id);
-    if (!newWidgetDef) {
-        return false;
-    }
-
-    return existingWidget.__type === newWidgetDef.type;
+    var newWidgetDef = widgetsContext.$__widgetsById[id];
+    return newWidgetDef && existingWidget.$__type == newWidgetDef.$__type;
 }
 
 function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
@@ -145,16 +50,16 @@ function handleCustomEventWithMethodListener(widget, targetMethodName, args, ext
     }
 
 
-    var targetWidget = widgetLookup[widget.__scope];
+    var targetWidget = widgetLookup[widget.$__scope];
     var targetMethod = targetWidget[targetMethodName];
     if (!targetMethod) {
-        throw new Error('Method not found for widget ' + targetWidget.id + ': ' + targetMethodName);
+        throw Error('Method not found: ' + targetMethodName);
     }
 
     targetMethod.apply(targetWidget, args);
 }
 
-function getElId(widget, widgetElId, index) {
+function getElIdHelper(widget, widgetElId, index) {
     var id = widget.id;
 
     var elId = widgetElId != null ? id + '-' + widgetElId : id;
@@ -166,26 +71,57 @@ function getElId(widget, widgetElId, index) {
     return elId;
 }
 
+/**
+ * This method is used to process "update_<stateName>" handler functions.
+ * If all of the modified state properties have a user provided update handler
+ * then a rerender will be bypassed and, instead, the DOM will be updated
+ * looping over and invoking the custom update handlers.
+ * @return {boolean} Returns true if if the DOM was updated. False, otherwise.
+ */
+function processUpdateHandlers(widget, stateChanges, oldState) {
+    var handlerMethod;
+    var handlers;
 
-function getAllRootEls(widget, rootEls) {
-    var i, len;
+    for (var propName in stateChanges) {
+        if (stateChanges.hasOwnProperty(propName)) {
+            var handlerMethodName = 'update_' + propName;
 
-    var widgetEls = widget.els;
-
-    for (i=0, len=widgetEls.length; i<len; i++) {
-        var widgetEl = widgetEls[i];
-        rootEls[widgetEl.id] = widgetEl;
-    }
-
-    var rootWidgets = widget.__rootWidgets;
-    if (rootWidgets) {
-        for (i=0, len=rootWidgets.length; i<len; i++) {
-            var rootWidget = rootWidgets[i];
-            getAllRootEls(rootWidget, rootEls);
+            handlerMethod = widget[handlerMethodName];
+            if (handlerMethod) {
+                (handlers || (handlers=[])).push([propName, handlerMethod]);
+            } else {
+                // This state change does not have a state handler so return false
+                // to force a rerender
+                return;
+            }
         }
     }
 
-    return rootEls;
+    // If we got here then all of the changed state properties have
+    // an update handler or there are no state properties that actually
+    // changed.
+    if (handlers) {
+        // Otherwise, there are handlers for all of the changed properties
+        // so apply the updates using those handlers
+
+        emitLifecycleEvent(widget, 'beforeUpdate');
+
+        for (var i=0, len=handlers.length; i<len; i++) {
+            var handler = handlers[i];
+            var propertyName = handler[0];
+            handlerMethod = handler[1];
+
+            var newValue = stateChanges[propertyName];
+            var oldValue = oldState[propertyName];
+            handlerMethod.call(widget, newValue, oldValue);
+        }
+
+        emitLifecycleEvent(widget, 'update');
+
+        widget.$__reset();
+    }
+
+    return true;
 }
 
 var widgetProto;
@@ -195,50 +131,44 @@ var widgetProto;
  *
  * NOTE: Any methods that are prefixed with an underscore should be considered private!
  */
-function Widget(id, document) {
+function Widget(id, doc) {
     EventEmitter.call(this);
     this.id = id;
-    this.el = null;
-    this.bodyEl = null;
-    this.__state = null;
-    this.__rawState = null;
-    this.__roots = null;
-    this.__subscriptions = null;
-    this.__evHandles = null;
-    this.__lifecycleState = null;
-    this.__customEvents = null;
-    this.__scope = null;
-    this.__dirty = false;
-    this.__oldState = null;
-    this.__stateChanges = null;
-    this.__updateQueued = false;
-    this.__dirtyState = null;
-    this.__document = document;
+    this.el =
+        this.$__state =
+        this.$__roots =
+        this.$__subscriptions =
+        this.$__domEventListenerHandles =
+        this.$__customEvents =
+        this.$__scope =
+        null;
+
+    this.$__destroyed =
+        this.$__updateQueued =
+        false;
+
+    this.$__document = doc;
 }
 
 Widget.prototype = widgetProto = {
-    _isWidget: true,
+    $__isWidget: true,
 
     subscribeTo: function(target) {
         if (!target) {
-            throw new Error('target is required');
+            throw TypeError();
         }
 
-        var tracker = this.__subscriptions;
-        if (!tracker) {
-            this.__subscriptions = tracker = listenerTracker.createTracker();
-        }
+        var subscriptions = this.$__subscriptions || (subscriptions = new SubscriptionTracker());
 
-
-        var subscribeToOptions = target._isWidget ?
+        var subscribeToOptions = target.$__isWidget ?
             WIDGET_SUBSCRIBE_TO_OPTIONS :
             NON_WIDGET_SUBSCRIBE_TO_OPTIONS;
 
-        return tracker.subscribeTo(target, subscribeToOptions);
+        return subscriptions.subscribeTo(target, subscribeToOptions);
     },
 
     emit: function(eventType) {
-        var customEvents = this.__customEvents;
+        var customEvents = this.$__customEvents;
         var target;
 
         if (customEvents && (target = customEvents[eventType])) {
@@ -252,49 +182,42 @@ Widget.prototype = widgetProto = {
         return emit.apply(this, arguments);
     },
     getElId: function (widgetElId, index) {
-        return getElId(this, widgetElId, index);
+        return getElIdHelper(this, widgetElId, index);
     },
     getEl: function (widgetElId, index) {
-        var doc = this.__document;
+        var doc = this.$__document;
 
         if (widgetElId != null) {
-            return doc.getElementById(getElId(this, widgetElId, index));
+            return getElementById(doc, getElIdHelper(this, widgetElId, index));
         } else {
-            return this.el || doc.getElementById(getElId(this));
+            return this.el || getElementById(doc, getElIdHelper(this));
         }
     },
     getEls: function(id) {
         var els = [];
-        var i=0;
-        while(true) {
-            var el = this.getEl(id, i);
-            if (!el) {
-                break;
-            }
+        var i = 0;
+        var el;
+        while((el = this.getEl(id, i))) {
             els.push(el);
             i++;
         }
         return els;
     },
     getWidget: function(id, index) {
-        var targetWidgetId = getElId(this, id, index);
-        return widgetLookup[targetWidgetId];
+        return widgetLookup[getElIdHelper(this, id, index)];
     },
     getWidgets: function(id) {
         var widgets = [];
-        var i=0;
-        while(true) {
-            var widget = this.getWidget(id, i);
-            if (!widget) {
-                break;
-            }
+        var i = 0;
+        var widget;
+        while((widget = widgetLookup[getElIdHelper(this, id, i)])) {
             widgets.push(widget);
             i++;
         }
         return widgets;
     },
-    destroy: function () {
-        if (this.isDestroyed()) {
+    destroy: function() {
+        if (this.$__destroyed) {
             return;
         }
 
@@ -312,64 +235,83 @@ Widget.prototype = widgetProto = {
             }
         }
 
-        var rootWidgets = this.__rootWidgets;
+        var rootWidgets = this.$__rootWidgets;
         if (rootWidgets) {
             for (i=0, len=rootWidgets.length; i<len; i++) {
                 rootWidgets[i].destroy();
             }
         }
 
-        destroyWidgetHelper(this);
+        this.$__destroyShallow();
     },
-    isDestroyed: function () {
-        return this.__lifecycleState === 'destroyed';
+
+    $__destroyShallow: function() {
+        if (this.$__destroyed) {
+            return;
+        }
+
+        emitLifecycleEvent(this, 'beforeDestroy');
+        this.$__destroyed = true;
+
+        this.els = null;
+        this.el = null;
+
+        // Unsubscribe from all DOM events
+        this.$__removeDOMEventListeners();
+
+        var subscriptions = this.$__subscriptions;
+        if (subscriptions) {
+            subscriptions.removeAllListeners();
+            this.$__subscriptions = null;
+        }
+
+        delete widgetLookup[this.id];
+
+        emitLifecycleEvent(this, 'destroy');
     },
-    getBodyEl: function() {
-        return this.bodyEl;
+
+    isDestroyed: function() {
+        return this.$__destroyed;
     },
     get state() {
-        return this.__state;
+        return this.$__state;
     },
     set state(value) {
-        if(!this.__state && value) {
-            this.__state = new this.State(this, value);
+        if (value) {
+            var state = this.$__state || (this.$__state = new this.$__State(this));
+            state.$__replace(value);
         } else {
-            this.__state._replace(value);
+            this.$__state = null;
         }
     },
     setState: function(name, value) {
-        if (typeof name === 'object') {
+        var state = this.$__state;
+
+        if (typeof name == 'object') {
             // Merge in the new state with the old state
             var newState = name;
             for (var k in newState) {
                 if (newState.hasOwnProperty(k)) {
-                    this.state._set(k, newState[k], true /* ensure:true */);
+                    state.$__set(k, newState[k], true /* ensure:true */);
                 }
             }
-            return;
+        } else {
+            state.$__set(name, value, true /* ensure:true */);
         }
-
-         this.state._set(name, value, true /* ensure:true */);
     },
 
     setStateDirty: function(name, value) {
-        if (arguments.length === 1) {
-            value = this.state[name];
+        var state = this.$__state;
+
+        if (arguments.length == 1) {
+            value = state[name];
         }
 
-        this.state._set(name, value, true /* ensure:true */, true /* forceDirty:true */);
-    },
-
-    _replaceState: function(newState) {
-        this.state._replace(newState, true /* do not queue an update */ );
-    },
-
-    _removeDOMEventListeners: function() {
-        removeDOMEventListeners(this);
+        state.$__set(name, value, true /* ensure:true */, true /* forceDirty:true */);
     },
 
     replaceState: function(newState) {
-        this.state._replace(newState);
+        this.$__state.$__replace(newState);
     },
 
     /**
@@ -381,191 +323,129 @@ Widget.prototype = widgetProto = {
      * @param {Object} props The widget's new props
      */
     setProps: function(newProps) {
-        if (this.getInitialState) {
-            if (this.getInitialProps) {
-                newProps = this.getInitialProps(newProps) || {};
+        var onInput = this.onInput;
+        var getInitialState;
+
+        if (onInput) {
+            onInput.call(this, newProps || {});
+        } else if ((getInitialState = this.getInitialState)) {
+            var getInitialProps = this.getInitialProps;
+
+            if (getInitialProps) {
+                newProps = getInitialProps.call(this, newProps) || {};
             }
-            var newState = this.getInitialState(newProps);
-            this.replaceState(newState);
-            return;
-        }
+            var newState = getInitialState.call(this, newProps);
+            this.$__state.$__replace(newState);
+        } else {
+            if (!this.$__newProps) {
+                updateManager.$__queueWidgetUpdate(this);
+            }
 
-        if (this.onInput) {
-            this.onInput(newProps || {});
-            return;
+            this.$__newProps = newProps;
         }
-
-        if (!this.__newProps) {
-            updateManager.queueWidgetUpdate(this);
-        }
-
-        this.__newProps = newProps;
     },
 
     update: function() {
-        if (this.isDestroyed()) {
-          return;
+        if (this.$__destroyed) {
+            return;
         }
 
-        var newProps = this.__newProps;
+        var newProps = this.$__newProps;
 
-        if (this.shouldUpdate(newProps, this.state) === false) {
-            resetWidget(this);
+        var state = this.$__state;
+
+        if (this.shouldUpdate(newProps, state) === false) {
+            this.$__reset();
             return;
         }
 
         if (newProps) {
-            resetWidget(this);
+            this.$__reset();
             this.rerender(newProps);
             return;
         }
 
-        if (!this.__dirty) {
+        if (!(state && state.$__dirty)) {
             // Don't even bother trying to update this widget since it is
             // not marked as dirty.
             return;
         }
 
-        if (!this._processUpdateHandlers()) {
-            this.doUpdate(this.__stateChanges, this.__oldState);
+        var stateChanges = state.$__changes;
+        var oldState = state.$__old;
+
+        if (!processUpdateHandlers(this, stateChanges, oldState, state)) {
+            this.doUpdate(stateChanges, oldState);
         }
 
         // Reset all internal properties for tracking state changes, etc.
-        resetWidget(this);
+        this.$__reset();
     },
 
-    isDirty: function() {
-        return this.__dirty;
+    $__replaceState: function(newState) {
+        var state = this.$__state;
+
+        // Update the existing widget state using the internal/private
+        // method to ensure that another update is not queued up
+        state.$__replace(newState, true /* do not queue an update */);
+
+
+        // If the widget has custom state update handlers then we will use those methods
+        // to update the widget.
+        return processUpdateHandlers(this, state.$__changes, state.$__old);
     },
 
-    _reset: function() {
-        resetWidget(this);
+    get $__isDirty() {
+        return this.$__state.$__dirty;
     },
 
-    /**
-     * This method is used to process "update_<stateName>" handler functions.
-     * If all of the modified state properties have a user provided update handler
-     * then a rerender will be bypassed and, instead, the DOM will be updated
-     * looping over and invoking the custom update handlers.
-     * @return {boolean} Returns true if if the DOM was updated. False, otherwise.
-     */
-    _processUpdateHandlers: function() {
-        var stateChanges = this.__stateChanges;
-        var oldState = this.__oldState;
-
-        var handlerMethod;
-        var handlers = [];
-
-        var newValue;
-        var oldValue;
-
-        for (var propName in stateChanges) {
-            if (stateChanges.hasOwnProperty(propName)) {
-                newValue = stateChanges[propName];
-                oldValue = oldState[propName];
-
-                if (oldValue === newValue) {
-                    // Only do an update for this state property if it is actually
-                    // different from the old state or if it was forced to be dirty
-                    // using setStateDirty(propName)
-                    var dirtyState = this.__dirtyState;
-                    if (dirtyState == null || !dirtyState.hasOwnProperty(propName)) {
-                        continue;
-                    }
-                }
-
-                var handlerMethodName = 'update_' + propName;
-
-                handlerMethod = this[handlerMethodName];
-                if (handlerMethod) {
-                    handlers.push([propName, handlerMethod]);
-                } else {
-                    // This state change does not have a state handler so return false
-                    // to force a rerender
-                    return false;
-                }
-            }
+    $__reset: function() {
+        this.$__newProps = null;
+        var state = this.$__state;
+        if (state) {
+            state.$__reset();
         }
-
-        // If we got here then all of the changed state properties have
-        // an update handler or there are no state properties that actually
-        // changed.
-
-        if (!handlers.length) {
-            return true;
-        }
-
-        // Otherwise, there are handlers for all of the changed properties
-        // so apply the updates using those handlers
-
-        emitLifecycleEvent(this, 'beforeUpdate');
-
-        for (var i=0, len=handlers.length; i<len; i++) {
-            var handler = handlers[i];
-            var propertyName = handler[0];
-            handlerMethod = handler[1];
-
-            newValue = stateChanges[propertyName];
-            oldValue = oldState[propertyName];
-            handlerMethod.call(this, newValue, oldValue);
-        }
-
-        emitLifecycleEvent(this, 'update');
-
-        resetWidget(this);
-
-        return true;
     },
 
     shouldUpdate: function(newState, newProps) {
         return true;
     },
 
-    doUpdate: function (stateChanges, oldState) {
+    doUpdate: function() {
         this.rerender();
     },
 
-    _emitLifecycleEvent: function(eventType, eventArg) {
+    $__emitLifecycleEvent: function(eventType, eventArg) {
         emitLifecycleEvent(this, eventType, eventArg);
     },
 
     rerender: function(props) {
         var self = this;
-
-        if (!self.renderer) {
-            throw new Error('Widget does not have a "renderer" property');
-        }
-
         var renderer = self.renderer;
-        self.__lifecycleState = 'rerender';
 
-        var templateData = extend({}, props || self.__rawState);
-
-        var globalData = {};
-
-        globalData.__rerenderWidget = self;
-        globalData.__rerenderEl = self.el;
-        globalData.__rerender = true;
-
-        if (!props) {
-            globalData.__rerenderState = props ? null : self.__rawState;
+        if (!renderer) {
+            throw TypeError();
         }
 
-        var fromEls = getAllRootEls(this, {});
-        var doc = this.__document;
+        var globalData = {
+            $w: self
+        };
 
-        updateManager.batchUpdate(function() {
+        var fromEls = self.$__getRootEls({});
+        var doc = self.$__document;
+
+        updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
-            renderer(templateData, out);
+            out.$__document = self.$__document;
+            renderer(props, out);
             var result = new RenderResult(out);
-
-            var targetNode = out.getOutput();
+            var targetNode = out.$__getOutput();
 
             var widgetsContext = out.global.widgets;
 
             function onNodeDiscarded(node) {
-                if (node.nodeType === 1) {
+                if (node.nodeType == 1) {
                     destroyWidgetForEl(node);
                 }
             }
@@ -574,53 +454,31 @@ Widget.prototype = widgetProto = {
                 var id = fromEl.id;
                 var existingWidget;
 
-                var preservedAttrs = !out.isVDOM && toEl.getAttribute('data-preserve-attrs');
-                if (preservedAttrs) {
-                    preservedAttrs = preservedAttrs.split(/\s*[,]\s*/);
-                    for (var i=0; i<preservedAttrs.length; i++) {
-                        var preservedAttrName = preservedAttrs[i];
-                        var preservedAttrValue = fromEl.getAttribute(preservedAttrName);
-                        if (preservedAttrValue == null) {
-                            toEl.removeAttribute(preservedAttrName);
-                        } else {
-                            toEl.setAttribute(preservedAttrName, preservedAttrValue);
-                        }
-                    }
-                }
-
                 if (widgetsContext && id) {
-                    if (widgetsContext.isPreservedEl(id)) {
+                    var preserved = widgetsContext.$__preserved[id];
 
-                        if (widgetsContext.hasUnpreservedBody(id)) {
-                            existingWidget = fromEl.__widget;
-
-                            morphdom(existingWidget.bodyEl, toEl, {
-                                childrenOnly: true,
-                                onNodeDiscarded: onNodeDiscarded,
-                                onBeforeElUpdated: onBeforeElUpdated,
-                                onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-                            });
-                        }
-
+                    if (preserved && !preserved.$__bodyOnly) {
                         // Don't morph elements that are associated with widgets that are being
                         // reused or elements that are being preserved. For widgets being reused,
                         // the morphing will take place when the reused widget updates.
                         return MORPHDOM_SKIP;
                     } else {
-                        existingWidget = fromEl.__widget;
+                        existingWidget = getWidgetForEl(fromEl);
                         if (existingWidget && !hasCompatibleWidget(widgetsContext, existingWidget)) {
                             // We found a widget in an old DOM node that does not have
                             // a compatible widget that was rendered so we need to
                             // destroy the old widget
-                            destroyWidgetHelper(existingWidget);
+                            existingWidget.$__destroyShallow();
                         }
                     }
                 }
             }
 
             function onBeforeElChildrenUpdated(el) {
-                if (widgetsContext && el.id) {
-                    if (widgetsContext.isPreservedBodyEl(el.id)) {
+                var id = el.id;
+                if (widgetsContext && id) {
+                    var preserved = widgetsContext.$__preserved[id];
+                    if (preserved && preserved.$__bodyOnly) {
                         // Don't morph the children since they are preserved
                         return MORPHDOM_SKIP;
                     }
@@ -651,8 +509,6 @@ Widget.prototype = widgetProto = {
 
             result.afterInsert(doc);
 
-            self.__lifecycleState = null;
-
             if (!props) {
                 // We have re-rendered with the new state so our state
                 // is no longer dirty. Before updating a widget
@@ -661,82 +517,67 @@ Widget.prototype = widgetProto = {
                 // widget was queued for update and the re-rendered
                 // before the update occurred then nothing will happen
                 // at the time of the update.
-                resetWidget(self);
+                self.$__reset();
             }
         });
     },
-    ready: function (callback) {
-        var document = this.el.ownerDocument;
-        markoWidgets.ready(callback, this, document);
-    },
-    $: function (arg) {
-        var jquery = markoWidgets.$;
 
-        var args = arguments;
-        if (args.length === 1) {
-            //Handle an "ondomready" callback function
-            if (typeof arg === 'function') {
-                var _this = this;
-                return _this.ready(function() {
-                    arg.call(_this);
-                });
-            } else if (typeof arg === 'string') {
-                var match = idRegExp.exec(arg);
-                //Reset the search to 0 so the next call to exec will start from the beginning for the new string
-                if (match != null) {
-                    var widgetElId = match[1];
-                    if (match[2] == null) {
-                        return jquery(this.getEl(widgetElId));
-                    } else {
-                        return jquery('#' + getElId(this, widgetElId) + match[2]);
-                    }
-                } else {
-                    var rootEl = this.getEl();
-                    if (!rootEl) {
-                        throw new Error('Root element is not defined for widget');
-                    }
-                    if (rootEl) {
-                        return jquery(arg, rootEl);
-                    }
-                }
-            }
-        } else if (args.length === 2 && typeof args[1] === 'string') {
-            return jquery(arg, this.getEl(args[1]));
-        } else if (args.length === 0) {
-            return jquery(this.el);
+    $__getRootEls: function(rootEls) {
+        var i, len;
+
+        var widgetEls = this.els;
+
+        for (i=0, len=widgetEls.length; i<len; i++) {
+            var widgetEl = widgetEls[i];
+            rootEls[widgetEl.id] = widgetEl;
         }
-        return jquery.apply(window, arguments);
+
+        var rootWidgets = this.$__rootWidgets;
+        if (rootWidgets) {
+            for (i=0, len=rootWidgets.length; i<len; i++) {
+                var rootWidget = rootWidgets[i];
+                rootWidget.$__getRootEls(rootEls);
+            }
+        }
+
+        return rootEls;
+    },
+
+    $__removeDOMEventListeners: function() {
+        var eventListenerHandles = this.$__domEventListenerHandles;
+        if (eventListenerHandles) {
+            eventListenerHandles.forEach(removeListener);
+            this.$__domEventListenerHandles = null;
+        }
     }
 };
 
 widgetProto.elId = widgetProto.getElId;
 
 // Add all of the following DOM methods to Widget.prototype:
-// - forEachChildEl(referenceEl)
-// - forEachChild(referenceEl)
-// - detach(referenceEl)
 // - appendTo(referenceEl)
-// - remove(referenceEl)
-// - removeChildren(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)
 // - insertBefore(referenceEl)
 // - insertAfter(referenceEl)
 // - prependTo(referenceEl)
-dom.mixin(
+domInsert(
     widgetProto,
-    function getNode(doc) {
+    function getEl(widget) {
         var els = this.els;
         var elCount = els.length;
         if (elCount > 1) {
-            var fragment = doc.createDocumentFragment();
+            var fragment = widget.$__document.createDocumentFragment();
             for (var i=0; i<elCount; i++) {
                 fragment.appendChild(els[i]);
             }
             return fragment;
         } else {
-            return this.els[0];
+            return els[0];
         }
+    },
+    function afterInsert(widget) {
+        return widget;
     });
 
 inherit(Widget, EventEmitter);

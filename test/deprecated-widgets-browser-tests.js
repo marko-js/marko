@@ -9,16 +9,32 @@ if (typeof window !== 'undefined') {
             function run(testFunc, done) {
                 var helpers = new BrowserHelpers();
 
-                if (testFunc.length === 1) {
-                    testFunc(helpers);
-                    helpers._cleanup();
-                    done();
-                } else {
-                    testFunc(helpers, function(err) {
-                        helpers._cleanup();
-                        done(err);
-                    });
+                require('marko/jquery').patchWidget(window.$);
+                require('marko/ready').patchWidget();
+
+                function cleanup() {
+                    delete require('marko/widgets/Widget').prototype.$;
+                    delete require('marko/widgets/Widget').prototype.ready;
                 }
+
+                try {
+                    if (testFunc.length === 1) {
+                        testFunc(helpers);
+                        helpers._cleanup();
+                        cleanup();
+                        done();
+                    } else {
+                        testFunc(helpers, function(err) {
+                            helpers._cleanup();
+                            cleanup();
+                            done(err);
+                        });
+                    }
+                } catch(e) {
+                    cleanup();
+                    throw e;
+                }
+
             });
     });
 }

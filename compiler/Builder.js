@@ -353,6 +353,19 @@ class Builder {
         return new MemberExpression({object, property, computed});
     }
 
+    moduleExports(value) {
+        let object = new Identifier({name: 'module'});
+        let property = new Identifier({name: 'exports'});
+
+        var moduleExports = new MemberExpression({object, property });
+
+        if (value) {
+            return new Assignment({left: moduleExports, right: value, operator: '='});
+        } else {
+            return moduleExports;
+        }
+    }
+
     negate(argument) {
         argument = makeNode(argument);
 
@@ -441,9 +454,11 @@ class Builder {
         return new Property({key, value});
     }
 
-    renderBodyFunction(body) {
+    renderBodyFunction(body, params) {
         let name = 'renderBody';
-        let params = [new Identifier({name: 'out'})];
+        if (!params) {
+            params = [new Identifier({name: 'out'})];
+        }
         return new FunctionDeclaration({name, params, body});
     }
 

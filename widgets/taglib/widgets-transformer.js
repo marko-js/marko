@@ -1,18 +1,3 @@
-/*
- * Copyright 2011 eBay Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 var getTransformHelper = require('./util/getTransformHelper');
 
@@ -25,10 +10,22 @@ module.exports = function transform(el, context) {
     }
 
     if (el.hasAttribute('w-body')) {
-        var bodyAttr = el.getAttributeValue('w-body');
+        context.deprecate('The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492');
+        let builder = context.builder;
+        let bodyValue = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
 
-        let includeNode = context.createNodeForEl('include', null, bodyAttr && bodyAttr.toString());
+        let includeNode = context.createNodeForEl('include');
+
+        if (!bodyValue) {
+            bodyValue = builder.memberExpression(
+                builder.identifier('widget'),
+                builder.identifier('b'));
+
+            includeNode.data.bodySlot = true;
+        }
+
+        includeNode.addProp('_target', bodyValue);
         el.appendChild(includeNode);
     }
 
@@ -36,6 +33,7 @@ module.exports = function transform(el, context) {
         context.setFlag('hasWidgetTypes');
     } else if (el.tagName === 'include') {
         transformHelper.handleIncludeNode(el);
+        transformHelper.getWidgetArgs().compile(transformHelper);
         return;
     }
 
@@ -44,7 +42,7 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute('w-bind')) {
+    if (el.hasAttribute('_widgetbind') || el.hasAttribute('w-bind')) {
         el.setFlag('hasWidgetBind');
         transformHelper.handleWidgetBind();
     }
@@ -70,16 +68,17 @@ module.exports = function transform(el, context) {
         transformHelper.handleWidgetFor();
     }
 
-    if (el.hasAttribute('w-preserve-attrs')) {
-        transformHelper.handleWidgetPreserveAttrs();
-    }
-
     if (el.hasAttribute('w-body')) {
         transformHelper.handleWidgetBody();
     }
 
+    // Handle w-preserve-attrs and :no-update attributes
+    transformHelper.handleWidgetPreserveAttrs();
+
     // Handle w-on* properties
     transformHelper.handleWidgetEvents();
+
+    transformHelper.getWidgetArgs().compile(transformHelper);
 
     // If we need to pass any information to a nested widget then
     // we start that information in the "out" so that it can be picked

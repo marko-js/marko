@@ -15,13 +15,7 @@ module.exports = function transform(oldNode, context) {
     var varName;
     var argument;
 
-    context.data = context.data || {};
-    context.data.warnings = context.data.warnings || {};
-
-    if(!context.data.warnings[oldTag]) {
-        console.warn('The <'+oldTag+'> tag is deprecated.  Please use <'+newTag+'> instead.');
-        context.data.warnings[oldTag] = true;
-    }
+    context.deprecate('The <'+oldTag+'> tag is deprecated.  Please use <'+newTag+'> instead.');
 
     if(oldTag == 'async-fragment'/* new: <await> */) {
         // need to convert data-provider and var attributes

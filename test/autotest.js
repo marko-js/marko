@@ -16,12 +16,6 @@ if (enabledTestNames && enabledTestNames.length > 1) {
     });
 }
 
-var fs = require('fs');
-var enabledTest = process.env.TEST;
-var path = require('path');
-var assert = require('assert');
-
-
 function compareHelper(dir, actual, prefix, suffix) {
     var actualPath = path.join(dir, prefix + 'actual' + suffix);
     var expectedPath = path.join(dir, prefix + 'expected' + suffix);
@@ -66,7 +60,14 @@ function autoTest(name, dir, run, options, done) {
 }
 
 exports.scanDir = function(autoTestDir, run, options) {
-    describe('autotest', function() {
+    var testGroup = path.basename(autoTestDir);
+    var describeFunc = describe;
+
+    if(enabledTest && testGroup === enabledTest) {
+        describeFunc = describe.only;
+    }
+
+    describeFunc('autotest', function() {
         if(options && options.timeout) {
             this.timeout(options.timeout);
         }
@@ -80,13 +81,13 @@ exports.scanDir = function(autoTestDir, run, options) {
                     return;
                 }
 
-                if (enabledTests && !enabledTests[name]) {
+                if (enabledTests && !enabledTests[name] && !enabledTests[testGroup] && !enabledTests[testGroup+'/'+name]) {
                     return;
                 }
 
                 var itFunc = it;
 
-                if (enabledTest && name === enabledTest) {
+                if (enabledTest && (name === enabledTest || testGroup+'/'+name === enabledTest)) {
                     itFunc = it.only;
                 }
 

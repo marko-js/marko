@@ -28,7 +28,7 @@ describe('compiler (vdom)', function() {
             var e;
 
             try {
-                compiler.compileFile(templatePath, compilerOptions);
+                compiler.compileFileForBrowser(templatePath, compilerOptions);
             } catch(_e) {
                 e = _e;
             }
@@ -41,8 +41,8 @@ describe('compiler (vdom)', function() {
             done();
 
         } else {
-            var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
-            helpers.compare(compiledSrc, '.js');
+            var compiledTemplate = compiler.compileFileForBrowser(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
+            helpers.compare(compiledTemplate.code, '.js');
             done();
         }
     });

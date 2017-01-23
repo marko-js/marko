@@ -1,4 +1,4 @@
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var configModulePath = require.resolve('../../../../compiler/config');
     var config = require(configModulePath);
 

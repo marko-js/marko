@@ -1,8 +1,5 @@
-var template = require("marko/vdom").c(__filename);
-
-module.exports = template;
-
-var marko_helpers = require("marko/runtime/vdom/helpers"),
+var marko_template = module.exports = require("marko/vdom").t(),
+    marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_forEach = marko_helpers.f,
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
@@ -30,4 +27,4 @@ function render(data, out) {
   }
 }
 
-template._ = render;
+marko_template._ = render;

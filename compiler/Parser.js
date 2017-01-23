@@ -1,6 +1,7 @@
 'use strict';
 var ok = require('assert').ok;
 var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
+var extend = require('raptor-util/extend');
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     'preserve-whitespace': function(attr, context) {
@@ -50,6 +51,48 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
     }
 }
 
+function getParserStateForTag(parser, el, tagDef) {
+    var attributes = el.attributes;
+    if (attributes) {
+        for (var i=0; i<attributes.length; i++) {
+            var attr = attributes[i];
+            var attrName = attr.name;
+            if (attrName === 'marko-body') {
+                var parseMode;
+
+                if (attr.literalValue) {
+                    parseMode = attr.literalValue;
+                }
+
+                if (parseMode === 'static-text' ||
+                    parseMode === 'parsed-text' ||
+                    parseMode === 'html') {
+                    return parseMode;
+                } else {
+                    parser.context.addError({
+                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
+                        code: 'ERR_INVALID_ATTR'
+                    });
+                    return;
+                }
+            } else if (attrName === 'template-helpers') {
+                return 'static-text';
+            } else if (attrName === 'marko-init') {
+                return 'static-text';
+            }
+        }
+    }
+
+    if (tagDef) {
+        var body = tagDef.body;
+        if (body) {
+            return body; // 'parsed-text' | 'static-text' | 'html'
+        }
+    }
+
+    return null; // Default parse state
+}
+
 class Parser {
     constructor(parserImpl, options) {
         ok(parserImpl, '"parserImpl" is required');
@@ -87,7 +130,7 @@ class Parser {
             node: rootNode
         });
 
-        this.parserImpl.parse(src, this);
+        this.parserImpl.parse(src, this, context.filename);
 
         return rootNode;
     }
@@ -152,19 +195,19 @@ class Parser {
 
         this.prevTextNode = null;
 
+        var tagDef = el.tagName ? this.context.getTagDef(el.tagName) : null;
+
         var attributeParseErrors = [];
         // <div class="foo"> -> "div class=foo"
         var tagString = parser.substring(el.pos, el.endPos)
-                              .replace(/<|\/>|>/g, "").trim();
+                              .replace(/^<|\/>$|>$/g, "").trim();
 
-        var elDef = {
-            tagName: tagName,
-            argument: argument,
-            tagString,
-            openTagOnly: el.openTagOnly === true,
-            selfClosed: el.selfClosed === true,
-            pos: el.pos,
-            attributes: attributes.map((attr) => {
+        var shouldParsedAttributes = !tagDef || tagDef.parseAttributes !== false;
+
+        var parsedAttributes = [];
+
+        if (shouldParsedAttributes) {
+            attributes.forEach((attr) => {
                 var attrValue;
                 if (attr.hasOwnProperty('literalValue')) {
                     attrValue = builder.literal(attr.literalValue);
@@ -176,8 +219,14 @@ class Parser {
                     try {
                         parsedExpression = builder.parseExpression(attr.value);
                     } catch(e) {
-                        valid = false;
-                        attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                        if (shouldParsedAttributes) {
+                            valid = false;
+                            attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                        } else {
+                            // Attribute failed to parse. Skip it...
+                            return;
+                        }
+
                     }
 
                     if (valid) {
@@ -202,8 +251,18 @@ class Parser {
                     attrDef.argument = attr.argument.value;
                 }
 
-                return attrDef;
-            })
+                parsedAttributes.push(attrDef);
+            });            
+        }
+
+        var elDef = {
+            tagName: tagName,
+            argument: argument,
+            tagString,
+            openTagOnly: el.openTagOnly === true,
+            selfClosed: el.selfClosed === true,
+            pos: el.pos,
+            attributes: parsedAttributes
         };
 
         var node;
@@ -211,9 +270,6 @@ class Parser {
         if (raw) {
             node = builder.htmlElement(elDef);
             node.pos = elDef.pos;
-
-            let taglibLookup = this.context.taglibLookup;
-            let tagDef = taglibLookup.getTag(tagName);
             node.tagDef = tagDef;
         } else {
             node = this.context.createNodeForEl(elDef);
@@ -337,46 +393,27 @@ class Parser {
         return last.node;
     }
 
-    getParserStateForTag(el) {
-        var attributes = el.attributes;
-
-        for (var i=0; i<attributes.length; i++) {
-            var attr = attributes[i];
-            var attrName = attr.name;
-            if (attrName === 'marko-body') {
-                var parseMode;
-
-                if (attr.literalValue) {
-                    parseMode = attr.literalValue;
-                }
-
-                if (parseMode === 'static-text' ||
-                    parseMode === 'parsed-text' ||
-                    parseMode === 'html') {
-                    return parseMode;
-                } else {
-                    this.context.addError({
-                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
-                        code: 'ERR_INVALID_ATTR'
-                    });
-                    return;
-                }
-            } else if (attrName === 'marko-init') {
-                return 'static-text';
-            }
-        }
-
+    getTagParseOptions(el) {
         var tagName = el.tagName;
         var tagDef = this.context.getTagDef(tagName);
 
-        if (tagDef) {
-            var body = tagDef.body;
-            if (body) {
-                return body; // 'parsed-text' | 'static-text' | 'html'
-            }
+        var state = getParserStateForTag(this, el, tagDef);
+        var parseOptions = tagDef && tagDef.parseOptions;
+
+        if (!state && !parseOptions) {
+            return;
         }
 
-        return null; // Default parse state
+        if (parseOptions) {
+            if (state) {
+                // We need to merge in the state to the returned parse options
+                parseOptions = extend({ state: state }, parseOptions);
+            }
+        } else {
+            parseOptions = { state: state };
+        }
+
+        return parseOptions;
     }
 
     isOpenTagOnly(tagName) {

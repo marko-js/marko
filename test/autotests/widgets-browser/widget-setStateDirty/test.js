@@ -9,10 +9,9 @@ module.exports = function(helpers) {
     expect(widget.el.innerHTML).to.contain('green');
     expect(widget.el.innerHTML).to.contain('blue');
 
-    require('marko/widgets').batchUpdate(function() {
-        // NOTE: name does *not* have an update handler
-        widget.addColor('orange');
-    });
+    // NOTE: name does *not* have an update handler
+    widget.addColor('orange');
+    widget.update();
 
     expect(widget.el.innerHTML).to.contain('red');
     expect(widget.el.innerHTML).to.contain('green');

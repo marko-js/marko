@@ -6,19 +6,25 @@ module.exports = function(includeNode) {
     var builder = this.builder;
     var context = this.context;
 
-    let widgetTagNode = this.getContainingWidgetNode();
-    if (!widgetTagNode) {
+    if (!this.hasBoundWidgetForTemplate()) {
         return;
     }
 
     var parentNode = includeNode.parentNode;
-
-    parentNode._normalizeChildTextNodes(context);
+    parentNode._normalizeChildTextNodes(context, true /* force trim */);
 
     if (parentNode.childCount === 1) {
+        if (includeNode.hasAttribute('ref')) {
+            this.assignWidgetId();
+        }
+
         let parentTransformHelper = this.getTransformHelper(parentNode);
 
-        if (includeNode.argument) {
+        if (includeNode.data.bodySlot) {
+            parentTransformHelper.assignWidgetId(false /* not repeated */);
+            var widgetProps = this.getWidgetProps();
+            widgetProps.body = parentTransformHelper.getNestedIdExpression();
+        } else {
             let widgetIdInfo = parentTransformHelper.assignWidgetId(true /* repeated */);
             if (!widgetIdInfo.idVarNode) {
                 let idVarNode = widgetIdInfo.createIdVarNode();
@@ -26,19 +32,12 @@ module.exports = function(includeNode) {
                     event.insertCode(idVarNode);
                 });
             }
-        } else {
-            parentTransformHelper.assignWidgetId(false /* not repeated */);
-            widgetTagNode.setAttributeValue('body', parentTransformHelper.getNestedIdExpression());
-        }
-
-        if (!includeNode.data.includeTarget) {
-            includeNode.addProp('_target', builder.memberExpression(builder.identifier('data'), builder.identifier('widgetBody')));
         }
 
         includeNode.setRendererPath(includeTagForWidgets);
 
         includeNode.onBeforeGenerateCode(function() {
-            includeNode.addProp('_widgetId', parentTransformHelper.getIdExpression());
+            includeNode.addProp('_elId', parentTransformHelper.getIdExpression());
             includeNode.addProp('_arg', builder.identifier('widget'));
         });
     }

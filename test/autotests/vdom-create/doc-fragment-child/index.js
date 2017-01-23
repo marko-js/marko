@@ -12,10 +12,10 @@ module.exports = function(helpers) {
         class: 'foo2'
     });
 
-    docFragment.appendChild(div1);
-    docFragment.appendChild(div2);
+    docFragment.$__appendChild(div1);
+    docFragment.$__appendChild(div2);
 
-    root.appendChild(docFragment);
+    root.$__appendChild(docFragment);
 
     return root;
 };

@@ -1,15 +1,16 @@
 'use strict';
+const jsdom = require("jsdom").jsdom;
+const defaultDocument = jsdom('<html><body></body></html>');
+
 const path = require('path');
 const fs = require('fs');
 const marko = require('marko');
 const fsExtra = require('fs-extra');
 const domToHTML = require('./domToHTML');
 const domToString = require('./domToString');
-const jsdom = require("jsdom").jsdom;
+
 const expect = require('chai').expect;
 
-const defaultDocument = jsdom('<html><body></body></html>');
-require('../../').setDocument(defaultDocument); // We need this to parse HTML fragments on the server
 
 
 function createAsyncVerifier(main, helpers, out) {
@@ -141,8 +142,8 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
             }
 
             out.on('error', done);
-            out.on('finish', function() {
-                var renderOutput = out.getOutput();
+            out.on('finish', function(result) {
+                var renderOutput = result.getOutput();
 
                 if (isVDOM) {
                     let vdomTree = renderOutput;
@@ -158,6 +159,9 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         }
 
                         require('marko/compiler').configure({ output: 'html' });
+                        require('marko/runtime/vdom/AsyncVDOMBuilder').prototype.$__document = defaultDocument;
+                        global.document = defaultDocument;
+
                         let htmlTemplatePath = path.join(dir, 'template.marko');
                         let htmlTemplate = marko.load(htmlTemplatePath);
                         let htmlMainPath = path.join(dir, 'test.js');

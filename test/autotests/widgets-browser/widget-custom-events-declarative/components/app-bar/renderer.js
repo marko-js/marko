@@ -1,12 +1,11 @@
-var template = require('marko').load(require.resolve('./template.marko'));
+module.exports = {
+    onInput: function(input) {
+        this.label = input.label || 'BAR';
+    },
 
-exports.render = function(input, out) {
-    var label = input.label || 'BAR';
-    template.render({
-            label: label,
-            widgetConfig: {
-                label: label
-            }
-        },
-        out);
+    getTemplateData: function(state, input) {
+        return {
+            label: input.label || 'BAR'
+        };
+    }
 };

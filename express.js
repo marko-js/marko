@@ -1,3 +1,5 @@
+require('./runtime/env-init');
+
 var assign = require('object-assign');
 var express = module.parent.require('express');
 var response = express.response;
@@ -8,7 +10,7 @@ response.marko = response.marko || function(template, data) {
             'res.marko does not take a template name or path like res.render.  ' +
             'Instead you should use `require(\'./path/to/template.marko\')` ' +
             'and pass the loaded template to this function.'
-        )
+        );
     }
 
     var res = this;

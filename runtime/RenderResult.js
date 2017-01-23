@@ -1,111 +1,94 @@
-var events = require('./events');
-var dom = require('./dom');
+var domInsert = require('./dom-insert');
 
 function checkAddedToDOM(result, method) {
-    if (!result.out.data._added) {
-        throw new Error('Cannot call ' + method + '() until after HTML fragment is added to DOM.');
+    if (!result.$__widgets) {
+        throw Error('Not added to DOM');
     }
 }
 
 function getWidgetDefs(result) {
-    var widgetDefs = result.out.data.widgets;
+    var widgetDefs = result.$__widgets;
 
-    if (!widgetDefs || widgetDefs.length === 0) {
-        throw new Error('No widget rendered');
+    if (widgetDefs.length === 0) {
+        throw Error('No widget');
     }
     return widgetDefs;
 }
 
-var RenderResult = module.exports = function RenderResult(out) {
-    this.out = out;
-};
+function RenderResult(out) {
+   this.out = this.$__out = out;
+   this.$__widgets = null;
+}
+
+module.exports = RenderResult;
 
 var proto = RenderResult.prototype = {
     getWidget: function() {
         checkAddedToDOM(this, 'getWidget');
 
-        var rerenderWidget = this.out.global.__rerenderWidget;
+        var rerenderWidgetInfo = this.$__out.global.$w;
+        var rerenderWidget = rerenderWidgetInfo && rerenderWidgetInfo[0];
         if (rerenderWidget) {
             return rerenderWidget;
         }
 
-        return getWidgetDefs(this)[0].widget;
+        return getWidgetDefs(this)[0].$__widget;
     },
     getWidgets: function(selector) {
         checkAddedToDOM(this, 'getWidgets');
 
         var widgetDefs = getWidgetDefs(this);
 
-        var widgets;
+        var widgets = [];
         var i;
-        if (selector) {
-            // use the selector to find the widgets that the caller wants
-            widgets = [];
-            for (i = 0; i < widgetDefs.length; i++) {
-                var widget = widgetDefs[i].widget;
-                if (selector(widget)) {
-                    widgets.push(widget);
-                }
-            }
-        } else {
-            // return all widgets
-            widgets = new Array(widgetDefs.length);
-            for (i = 0; i < widgetDefs.length; i++) {
-                widgets[i] = widgetDefs[i].widget;
+
+        for (i = 0; i < widgetDefs.length; i++) {
+            var widget = widgetDefs[i].$__widget;
+            if (!selector || selector(widget)) {
+                widgets.push(widget);
             }
         }
+
         return widgets;
     },
 
     afterInsert: function(doc) {
-        var data = this.out.data;
-        data._added = true;
-
-        var widgetsContext = this.out.global.widgets;
-        var widgetDefs = widgetsContext ? widgetsContext.widgets : null;
-
-        data.widgets = widgetDefs;
-
-        events.emit('mountNode', {
-            result: this,
-            out: this.out,
-            document: doc
-        });    // NOTE: This will trigger widgets to be initialized if there were any
+        var out = this.$__out;
+        var widgetsContext = out.global.widgets;
+        if (widgetsContext) {
+            this.$__widgets = widgetsContext.$__widgets;
+            widgetsContext.$__initWidgets(doc);
+        }
 
         return this;
     },
     getNode: function(doc) {
-        return this.out.getNode(doc);
+        return this.$__out.$__getNode(doc);
     },
     getOutput: function() {
-        return this.out.getOutput();
+        return this.$__out.$__getOutput();
     },
     toString: function() {
-        return this.out.toString();
+        return this.$__out.toString();
     },
     toJSON: function() {
-        return this.getOutput();
+        return this.$__out.$__getOutput();
     },
     document: typeof document !== 'undefined' && document
 };
 
-// Add all of the following DOM methods to RenderResult.prototype:
-// - forEachChildEl(referenceEl)
-// - forEachChild(referenceEl)
-// - detach(referenceEl)
+// Add all of the following DOM methods to Widget.prototype:
 // - appendTo(referenceEl)
-// - remove(referenceEl)
-// - removeChildren(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)
 // - insertBefore(referenceEl)
 // - insertAfter(referenceEl)
 // - prependTo(referenceEl)
-dom.mixin(
+domInsert(
     proto,
-    function getNode() {
-        return this.getNode();
+    function getEl(renderResult, referenceEl) {
+        return renderResult.getNode(referenceEl.ownerDocument);
     },
-    function afterInsert(doc) {
-        this.afterInsert(doc);
+    function afterInsert(renderResult, referenceEl) {
+        return renderResult.afterInsert(referenceEl.ownerDocument);
     });

@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineComponent({
+module.exports = require('marko/widgets/legacy').defineComponent({
     template: require.resolve('./template.marko'),
     getInitialState: function(input) {
         return {
@@ -16,5 +16,6 @@ module.exports = require('marko/widgets').defineComponent({
     update_buttonSize: function(newSize) {
         var button1Widget = this.getWidget('button1');
         button1Widget.setSize(newSize);
+        button1Widget.update();
     }
 });

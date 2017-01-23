@@ -1,8 +1,10 @@
 'use strict';
 var ok = require('assert').ok;
+var path = require('path');
 var CodeGenerator = require('./CodeGenerator');
 var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
+var resolveDep = require('../runtime/dependencies').resolveDep;
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 
@@ -17,6 +19,8 @@ function transformNode(node, context) {
                 node.setTransformerApplied(transformer);
                 //Mark the node as have been transformed by the current transformer
                 context.setFlag(FLAG_TRANSFORMER_APPLIED);
+                //Set the current node
+                context._currentNode = node;
                 //Set the flag to indicate that a node was transformed
                 // node.compiler = this;
                 var transformerFunc = transformer.getFunc();
@@ -86,6 +90,16 @@ class CompiledTemplate {
         this.ast = ast;
         this.context = context;
         this.filename = context.filename;
+    }
+
+    get dependencies() {
+        var meta = this.context.meta;
+        if (meta) {
+            var root = path.dirname(this.filename);
+            return (meta.deps || []).map(dep => resolveDep(dep, root));
+        } else {
+            return [];
+        }
     }
 
     get code() {
