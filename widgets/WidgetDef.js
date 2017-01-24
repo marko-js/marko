@@ -25,7 +25,7 @@ function WidgetDef(id, out, widgetStack, widgetStackLen) {
         this.$__children = // An array of nested WidgetDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
         this.$__widget = // This is used by RenderResult to reference the associated widget instance after creation
-        null;
+        undefined;
 
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
 }

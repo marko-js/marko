@@ -1,6 +1,8 @@
 var widgetLookup = require('./util').$__widgetLookup;
 var warp10Parse = require('warp10/parse');
 
+var listenersAttached;
+
 function getObjectAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;
 
@@ -87,8 +89,8 @@ function attachBubbleEventListeners(doc) {
 }
 
 exports.$__init = function(doc) {
-    if (!doc.$wb) {
-        doc.$wb = true;
+    if (!listenersAttached) {
+        listenersAttached = true;
         attachBubbleEventListeners(doc);
     }
 };

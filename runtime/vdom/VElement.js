@@ -11,9 +11,12 @@ var ATTR_MARKO_CONST = 'data-marko-const';
 
 var specialAttrRegexp = /^data-_/;
 
-function removePreservedAttributes(attrs) {
+function removePreservedAttributes(attrs, clone) {
     var preservedAttrs = attrs['data-_noupdate'];
     if (preservedAttrs) {
+        if (clone) {
+            attrs = extend({}, attrs);
+        }
         preservedAttrs.forEach(function(preservedAttrName) {
             delete attrs[preservedAttrName];
         });
@@ -128,7 +131,7 @@ VElement.prototype = {
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
 
-            if (specialAttrRegexp.test(attrName)) {
+            if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
                 continue;
             }
 
@@ -240,7 +243,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
             // map.
             return;
         } else {
-            oldAttrs = removePreservedAttributes(extend({}, oldAttrs));
+            oldAttrs = removePreservedAttributes(oldAttrs, true);
         }
     } else {
         // We need to build the attribute map from the real attributes
@@ -263,14 +266,14 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
 
         // We don't want preserved attributes to show up in either the old
         // or new attribute map.
-        removePreservedAttributes(oldAttrs);
+        removePreservedAttributes(oldAttrs, false);
     }
 
     // In some cases we only want to set an attribute value for the first
     // render or we don't want certain attributes to be touched. To support
     // that use case we delete out all of the preserved attributes
     // so it's as if they never existed.
-    attrs = removePreservedAttributes(extend({}, attrs));
+    attrs = removePreservedAttributes(attrs, true);
 
     // Loop over all of the attributes in the attribute map and compare
     // them to the value in the old map. However, if the value is
@@ -278,10 +281,10 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     for (attrName in attrs) {
         var attrValue = attrs[attrName];
 
-        if (attrName === ATTR_XLINK_HREF) {
+        if (attrName == ATTR_XLINK_HREF) {
             if (attrValue == null || attrValue === false) {
                 fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
-            } else if (oldAttrs[attrName] !== attrValue) {
+            } else if (oldAttrs[attrName] != attrValue) {
                 fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
             }
         } else {
@@ -289,7 +292,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
                 fromEl.removeAttribute(attrName);
             } else if (oldAttrs[attrName] !== attrValue) {
 
-                if (specialAttrRegexp.test(attrName)) {
+                if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
                     // Special attributes aren't copied to the real DOM. They are only
                     // kept in the virtual attributes map
                     continue;
@@ -309,8 +312,8 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // If there are any old attributes that are not in the new set of attributes
     // then we need to remove those attributes from the target node
     for (attrName in oldAttrs) {
-        if (attrs.hasOwnProperty(attrName) === false) {
-            if (attrName === ATTR_XLINK_HREF) {
+        if (!(attrName in attrs)) {
+            if (attrName == ATTR_XLINK_HREF) {
                 fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
             } else {
                 fromEl.removeAttribute(attrName);

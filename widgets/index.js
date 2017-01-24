@@ -6,6 +6,7 @@
 var warp10 = require('warp10');
 var WidgetsContext = require('./WidgetsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
+var isObjectEmpty = require('raptor-util/isObjectEmpty');
 
 function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     for (var i = 0, len = widgets.length; i < len; i++) {
@@ -30,11 +31,17 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         }
 
         var customEvents = widgetDef.$__customEvents;
+        var config = widgetDef.$__config;
+
+        if (isObjectEmpty(config)) {
+            config = undefined;
+        }
+
         var extra = {
             p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
             e: widgetDef.$__domEvents,
             ce: widgetDef.$__customEvents,
-            c: widgetDef.$__config
+            c: config
         };
 
         var state = widgetDef.$__state;
@@ -71,7 +78,7 @@ function getRenderedWidgets(widgetsContext) {
     var typesArray = [];
 
     flattenHelper(widgets, flattened, typesArray, typesLookup);
-    return [flattened, typesArray];
+    return {w: flattened, t: typesArray};
 }
 
 
@@ -85,9 +92,9 @@ function writeInitWidgetsCode(widgetsContext, out) {
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
     out.write('<script' + nonceAttr + '>' +
-        '(function(){var w=window;w.$widgets=((w.$widgets||[]).concat(' +
+        '(function(){var w=window;w.$widgets=(w.$widgets||[]).concat(' +
         warp10.stringify(renderedWidgets).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
-         ')||w.$widgets)})()</script>');
+         ')||w.$widgets})()</script>');
 
     widgetsContext.$__clearWidgets();
 }

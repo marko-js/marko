@@ -221,20 +221,35 @@ function initClientRendered(widgetDefs, doc) {
  * of the widget IDs.
  */
 function initServerRendered(renderedWidgets, doc) {
+    var i=0, len;
+    if (!arguments.length) {
+        renderedWidgets = win.$widgets;
+
+        win.$widgets = {
+            concat: initServerRendered
+        };
+
+        if (renderedWidgets && (len=renderedWidgets.length)) {
+            for (; i<len; i++) {
+                initServerRendered(renderedWidgets[i], doc);
+            }
+        }
+        return;
+    }
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any widgets
     eventDelegation.$__init(doc || defaultDocument);
 
     renderedWidgets = warp10Finalize(renderedWidgets);
 
-    var widgetDefs = renderedWidgets[0];
-    var typesArray = renderedWidgets[1];
+    var widgetDefs = renderedWidgets.w;
+    var typesArray = renderedWidgets.t;
 
     if (!doc) {
         doc = defaultDocument;
     }
 
-    for (var i=0, len=widgetDefs.length; i<len; i++) {
+    for (len=widgetDefs.length; i<len; i++) {
         var widgetDef = WidgetDef.$__deserialize(widgetDefs[i], typesArray);
         initWidget(widgetDef, doc);
     }
@@ -244,11 +259,3 @@ exports.$__initClientRendered = initClientRendered;
 exports.$__initServerRendered = initServerRendered;
 
 registry = require('./registry');
-
-if (win.$widgets) {
-    initServerRendered(window.$widgets);
-}
-
-win.$widgets = {
-    concat: initServerRendered
-};
