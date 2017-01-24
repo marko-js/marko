@@ -114,6 +114,43 @@ function handleStyleElement(styleEl, transformHelper) {
     styleEl.detach();
 }
 
+function methodToProperty(method) {
+    return {
+        type: 'Property',
+        key: method.key,
+        computed: false,
+        value: method.value,
+        kind: 'init',
+        method: true,
+        shorthand: false
+    };
+}
+
+function classToObject(cls, transformHelper) {
+    return {
+        type: 'ObjectExpression',
+        properties: cls.body.body.map((method) => {
+            if(method.type != 'MethodDefinition') {
+                throw Error('Only methods are allowed on single file component class definitions.');
+            }
+            return methodToProperty(method);
+        })
+    };
+}
+
+function handleClassDeclaration(classEl, transformHelper) {
+    if(!/^class\s*\{/.test(classEl.tagString)) return;
+
+    let tree = esprima.parse('('+classEl.tagString+')');
+    let expression = tree.body[0].expression;
+    let object = classToObject(expression);
+    let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
+
+    transformHelper.setHasBoundWidgetForTemplate();
+    transformHelper.setInlineComponent(componentVar);
+    classEl.detach()
+}
+
 module.exports = function handleRootNodes() {
     var context = this.context;
     var builder = this.builder;
@@ -177,9 +214,16 @@ module.exports = function handleRootNodes() {
                 return;
             } else if (node.type === 'CustomTag') {
                 rootNodes.push(node);
+
                 walker.skip();
                 return;
             } else {
+                var tagName = node.tagName && node.tagName.toLowerCase();
+
+                if (tagName === 'class') {
+                    handleClassDeclaration(node, transformHelper);
+                }
+
                 walker.skip();
                 return;
             }

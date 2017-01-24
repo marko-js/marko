@@ -9,6 +9,9 @@
             }
         ]
     },
+    "<class>": {
+        "code-generator": "./class-tag"
+    },
     "<else>": {
         "node-factory": "./else-tag",
         "attributes": {},
