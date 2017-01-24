@@ -47,6 +47,7 @@
     "no-update",
     "pre",
     "script",
+    "static",
     "style",
     "textarea",
     "unless",

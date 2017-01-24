@@ -188,6 +188,9 @@
             }
         ]
     },
+    "<static>": {
+        "code-generator": "./static-tag"
+    },
     "<style>": {
         "preserve-whitespace": true
     },

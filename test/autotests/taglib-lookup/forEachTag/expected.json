@@ -27,6 +27,7 @@
     "marko-preserve-whitespace",
     "pre",
     "script",
+    "static",
     "style",
     "textarea",
     "unless",
