@@ -1,10 +1,9 @@
 'use strict';
 
-var resolveFrom = require('resolve-from');
 var path = require('path');
 var fs = require('fs');
 
-function isTemplateMainEntry(context) {
+function getFileNameNoExt(context) {
     let filename = path.basename(context.filename);
     let ext = path.extname(filename);
 
@@ -16,7 +15,7 @@ function isTemplateMainEntry(context) {
         filename = filename.slice(0, 0 - ext.length);
     }
 
-    return filename === 'index';
+    return filename;
 }
 
 const esprima = require('esprima');
@@ -148,32 +147,34 @@ function handleClassDeclaration(classEl, transformHelper) {
 
     transformHelper.setHasBoundWidgetForTemplate();
     transformHelper.setInlineComponent(componentVar);
-    classEl.detach()
+    classEl.detach();
 }
 
 module.exports = function handleRootNodes() {
     var context = this.context;
     var builder = this.builder;
+    var filename = getFileNameNoExt(context);
+    var isEntry = 'index' === filename;
 
-    if (!isTemplateMainEntry(context)) {
-        // We only support implicit binds in `index.marko`
-        return;
+    if(!filename) {
+        return; // inline component
     }
+
+    var filematch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
+    var stylematch = new RegExp('^'+filematch+'style\\.\\w+');
+    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+');
+    var widgetmatch = new RegExp('^'+filematch+'widget\\.\\w+');
 
     var templateRoot = this.el;
 
     var dirname = this.dirname;
     var hasBindTarget = false;
 
-    if (resolveFrom(dirname, './component')) {
-        hasBindTarget = true;
-    } else if (resolveFrom(dirname, './widget')) {
-        hasBindTarget = true;
-    }
-
     fs.readdirSync(dirname).forEach(file => {
-        if(/^style\.\w+$/.test(file)) {
+        if(stylematch.test(file)) {
             context.addDependency('./' + file);
+        } else if(componentmatch.test(file) || widgetmatch.test(file)) {
+            hasBindTarget = true;
         }
     });
 
@@ -186,6 +187,8 @@ module.exports = function handleRootNodes() {
 
     let walker = context.createWalker({
         enter(node) {
+            var tagName = node.tagName && node.tagName.toLowerCase();
+
             if (node.type === 'TemplateRoot' || !node.type) {
                 // Don't worry about the TemplateRoot or an Container node
             } else if (node.type === 'HtmlElement') {
@@ -199,9 +202,7 @@ module.exports = function handleRootNodes() {
                         assignedId = node.getAttributeValue('id');
                     }
 
-                    var tagName = node.tagName && node.tagName.toLowerCase();
-
-                    if (tagName === 'script') {
+                    if (isEntry && tagName === 'script') {
                         handleScriptElement(node, transformHelper);
                     } else if (tagName === 'style') {
                         handleStyleElement(node, transformHelper);
@@ -218,8 +219,6 @@ module.exports = function handleRootNodes() {
                 walker.skip();
                 return;
             } else {
-                var tagName = node.tagName && node.tagName.toLowerCase();
-
                 if (tagName === 'class') {
                     handleClassDeclaration(node, transformHelper);
                 }
