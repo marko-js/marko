@@ -163,9 +163,9 @@ module.exports = function handleRootNodes() {
     }
 
     var filematch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
-    var stylematch = new RegExp('^'+filematch+'style\\.\\w+');
-    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+');
-    var widgetmatch = new RegExp('^'+filematch+'widget\\.\\w+');
+    var stylematch = new RegExp('^'+filematch+'style\\.\\w+$');
+    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+$');
+    var widgetmatch = new RegExp('^'+filematch+'widget\\.\\w+$');
 
     var templateRoot = this.el;
 
