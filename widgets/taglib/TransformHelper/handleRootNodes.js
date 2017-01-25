@@ -84,6 +84,8 @@ function handleScriptElement(scriptEl, transformHelper) {
     }
 
     if (hasExport) {
+        transformHelper.context.deprecate('Using <script> with an export to create a single file component will be removed in the next release candidate.  Use class instead. \nSee https://github.com/marko-js/marko/issues/547');
+
         let componentVar;
 
         if (needsComponentVar) {
