@@ -11,7 +11,7 @@
     "bundle-marko": "NODE_ENV=production rollup -c marko/rollup.config.js",
     "bundle-react": "NODE_ENV=production rollup -c react/rollup.config.js",
     "bundle-preact": "NODE_ENV=production rollup -c preact/rollup.config.js",
-    "bundle-vue": "NODE_ENV=production browserify -t envify -t vueify --extension='.vue' --global-transform minprops/browserify -o build/bundles/vue.js vue/client.js",
+    "bundle-vue": "NODE_ENV=production rollup -c vue/rollup.config.js",
     "minify": "node minify.js",
     "http-server": "http-server"
   },
@@ -27,7 +27,6 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "babelify": "^7.3.0",
-    "browserify": "^13.1.1",
     "envify": "^4.0.0",
     "format-number": "^2.0.1",
     "google-closure-compiler-js": "^20161201.0.0",
@@ -53,5 +52,6 @@
   },
   "browser": {
     "events": "events-light"
-  }
+  },
+  "devDependencies": {}
 }

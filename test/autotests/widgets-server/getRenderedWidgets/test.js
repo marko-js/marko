@@ -6,11 +6,10 @@ module.exports = function(helpers, done) {
 
     template.renderToString({}, function(err, html, out) {
 		var renderedWidgets = markoWidgets.getRenderedWidgets(out);
-        expect(renderedWidgets).to.be.an('array');
+        expect(renderedWidgets).to.be.an('object');
 
-        expect(renderedWidgets.length).to.equal(2);
-
-        var widgetDefs = renderedWidgets[0];
+        expect(Object.keys(renderedWidgets).length).to.equal(2);
+        var widgetDefs = renderedWidgets.w;
         expect(widgetDefs.length).to.equal(3);
 
         expect(widgetDefs[0][0]).to.equal('w0-w0');

@@ -2,9 +2,9 @@
     "dependencies": [
         {
             "type": "require",
-            "path": "./init-widgets-browser",
+            "path": "./boot",
             "run": true,
-            "if": "!flags.contains('marko-widgets/no-client-init')"
+            "if": "!flags.contains('marko/widgets/no-boot')"
         }
     ],
     "requireRemap": [
