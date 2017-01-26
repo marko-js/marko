@@ -11,6 +11,11 @@ module.exports = function(includeNode) {
     }
 
     var parentNode = includeNode.parentNode;
+
+    if (!parentNode.hasAttribute) {
+        return;
+    }
+
     parentNode._normalizeChildTextNodes(context, true /* force trim */);
 
     if (parentNode.childCount === 1) {
