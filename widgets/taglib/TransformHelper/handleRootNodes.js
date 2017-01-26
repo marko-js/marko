@@ -102,16 +102,50 @@ function handleScriptElement(scriptEl, transformHelper) {
 }
 
 function handleStyleElement(styleEl, transformHelper) {
-    var styleCode = styleEl.bodyText;
-    var langAttr = styleEl.getAttribute('lang');
-    var lang = langAttr ? langAttr.value.value : 'css';
+    if (styleEl.bodyText) {
+        return;
+    }
+
+    var attrs = styleEl.attributes;
+
+    var styleCode;
+    var lang = 'css';
+
+    var hasStyleBlock = false;
+
+    for (var i=attrs.length-1; i>=0; i--) {
+        var attr = attrs[i];
+        var name = attr.name;
+        if (name.startsWith('{')) {
+            hasStyleBlock = true;
+
+            styleCode = name.slice(1, -1);
+        } else if (name === 'class') {
+            if (attr.value.type !== 'Literal' || typeof attr.value.value !== 'string') {
+                return;
+            }
+
+            lang = attr.value.value;
+        } else {
+            if (hasStyleBlock) {
+                transformHelper.context.addError(styleEl, 'Unsupported attribute on the component style tag: ' + attr.name);
+                return;
+            }
+        }
+    }
+
+    if (styleCode == null) {
+        return;
+    }
+
     var context = transformHelper.context;
     context.addDependency({
-        type:lang,
-        code:styleCode,
-        virtualPath:'./'+path.basename(context.filename)+'.'+lang,
+        type: lang,
+        code: styleCode.trim(),
+        virtualPath: './'+path.basename(context.filename)+'.'+lang,
         path: './'+path.basename(context.filename)
     });
+
     styleEl.detach();
 }
 
