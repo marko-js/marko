@@ -24,7 +24,8 @@ module.exports = [
     'select',
     'change',
     'submit',
-    'reset'
+    'reset',
+    'input'
     // 'focus', <-- Does not bubble
     // 'blur', <-- Does not bubble
     // 'focusin', <-- Not supported in all browsers
