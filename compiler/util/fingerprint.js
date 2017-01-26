@@ -1,7 +1,5 @@
-var crypto = require('crypto');
+var sha1 = require('simple-sha1');
 
 module.exports = function(str) {
-    var shasum = crypto.createHash('sha1');
-    shasum.update(str);
-    return shasum.digest('hex');
+    return sha1.sync(str);
 };

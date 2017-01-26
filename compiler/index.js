@@ -11,6 +11,7 @@ var globalConfig = require('./config');
 var CompileContext = require('./CompileContext');
 var InlineCompiler = require('./InlineCompiler');
 var ok = require('assert').ok;
+var fs = require('fs');
 
 var defaults = extend({}, globalConfig);
 
@@ -48,8 +49,6 @@ var defaultCompiler = new Compiler({
     parser: defaultParser,
     builder: Builder.DEFAULT_BUILDER
 });
-
-var req = require;
 
 function createBuilder(options) {
     return new Builder(options);
@@ -115,8 +114,6 @@ function compileForBrowser(src, filename, options, callback) {
 }
 
 function compileFile(filename, options, callback) {
-    var fs = req('fs');
-
     if (typeof options === 'function') {
         callback = options;
         options = null;

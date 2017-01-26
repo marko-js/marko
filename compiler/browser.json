@@ -1,5 +1,6 @@
 {
     "dependencies": [
-        "../taglibs/compiler.browser.json"
+        "../taglibs/compiler.browser.json",
+        "../widgets/compiler.browser.json"
     ]
 }
