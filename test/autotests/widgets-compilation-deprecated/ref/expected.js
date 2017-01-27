@@ -16,7 +16,7 @@ var marko_component = {
     }
 };
 
-function render(data, out, widget, state) {
+function render(input, out, widget, state) {
   out.w("<div class=\"root\"" +
     marko_attr("id", widget.id) +
     ">");

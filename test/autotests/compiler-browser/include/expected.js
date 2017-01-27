@@ -4,7 +4,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/taglibs/core/include-tag"));
 
-function render(data, out) {
+function render(input, out) {
   include_tag({
       _target: include_target_template,
       foo: "bar"

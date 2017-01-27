@@ -6,7 +6,9 @@ class Foo {
     }
 };
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   var foo = new Foo();
 }
 

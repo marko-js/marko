@@ -3,9 +3,11 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     test_nested_tags_overlay_tag = marko_loadTag(require("./tags/test-nested-tags-overlay/renderer"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   test_nested_tags_overlay_tag({
-      header: data.header,
+      header: input.header,
       body: {
           className: "my-body",
           renderBody: function renderBody(out) {

@@ -1,7 +1,9 @@
 var marko_template = module.exports = require("marko/html").t(__filename);
 
-function render(data, out) {
-  data.renderBody(out);
+function render(input, out) {
+  var data = input;
+
+  input.renderBody(out);
 }
 
 marko_template._ = render;

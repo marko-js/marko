@@ -3,13 +3,15 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_escapeXml = marko_helpers.x,
     marko_str = marko_helpers.s;
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   out.w("Hello " +
-    marko_escapeXml(data.name) +
+    marko_escapeXml(input.name) +
     "! Hello " +
-    marko_str(data.name) +
+    marko_str(input.name) +
     "! Hello " +
-    marko_str(data.missing) +
+    marko_str(input.missing) +
     "!");
 }
 

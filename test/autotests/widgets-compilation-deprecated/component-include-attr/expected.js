@@ -9,7 +9,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     include_tag = marko_loadTag(require("marko/widgets/taglib/include-tag")),
     marko_attr = marko_helpers.a;
 
-function render(data, out, widget, state) {
+function render(input, out, widget, state) {
   out.w("<div" +
     marko_attr("id", widget.id) +
     "><h1>Header</h1><div" +

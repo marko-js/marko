@@ -4,7 +4,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     custom_tag_data_tag = marko_loadTag(require("./custom-tag-data-tag")),
     marko_merge = require("marko/runtime/helper-merge");
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   custom_tag_data_tag({
       name: "Frank",
       age: 32

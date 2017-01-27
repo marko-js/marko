@@ -3,7 +3,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
         "class": "foo"
       };
 
-function render(data, out) {
+function render(input, out) {
   out.e("div", marko_attrs0, 3)
     .t("Hello ")
     .t(name)

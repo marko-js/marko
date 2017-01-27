@@ -4,6 +4,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     asset_module2 = require("./test2/asset"),
     asset = asset_module2.asset;
 
-function render(data, out) {}
+function render(input, out) {
+  var data = input;
+}
 
 marko_template._ = render;

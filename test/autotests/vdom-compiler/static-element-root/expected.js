@@ -9,7 +9,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
       }, 1, marko_const_nextId())
       .t("Hello World!");
 
-function render(data, out) {
+function render(input, out) {
   out.n(marko_node0);
 }
 

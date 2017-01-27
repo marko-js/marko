@@ -1,7 +1,7 @@
 {
     "renderer": "./renderer",
     "import-var": {
-        "foo": "data.foo",
-        "bar": "data.bar"
+        "foo": "input.foo",
+        "bar": "input.bar"
     }
 }

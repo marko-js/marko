@@ -4,19 +4,21 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_str = marko_helpers.s,
     marko_escapeXmlAttr = marko_helpers.xa;
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   out.w("<div" +
-    marko_classAttr(data.className) +
+    marko_classAttr(input.className) +
     " class2=\"" +
-    marko_str(data.className) +
+    marko_str(input.className) +
     "\" foo=\"a" +
-    marko_escapeXmlAttr(data.foo) +
+    marko_escapeXmlAttr(input.foo) +
     "b\" bar=\"a " +
-    marko_escapeXmlAttr(data.foo) +
+    marko_escapeXmlAttr(input.foo) +
     " b\" baz=\"a " +
-    marko_str(data.foo) +
+    marko_str(input.foo) +
     " b\" nested=\"a " +
-    marko_str(data.foo + ("nested " + data.bar)) +
+    marko_str(input.foo + ("nested " + input.bar)) +
     " b\"></div>");
 }
 

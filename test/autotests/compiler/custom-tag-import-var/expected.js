@@ -3,11 +3,13 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     test_import_var_tag = marko_loadTag(require("./tags/test-import-var/renderer"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   test_import_var_tag({
       name: "World",
-      foo: data.foo,
-      bar: data.bar,
+      foo: input.foo,
+      bar: input.bar,
       renderBody: function renderBody(out) {
         out.w("This is the body content");
       }

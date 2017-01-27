@@ -10,6 +10,8 @@ var fs = require('fs');
 
 require('marko/node-require').install();
 
+var stripVarData = require('./util/stripVarData');
+
 describe('compiler (browser target)', function() {
     var autoTestDir = path.join(__dirname, 'autotests/compiler-browser');
 
@@ -44,7 +46,10 @@ describe('compiler (browser target)', function() {
             if(main && main.checkTemplate) {
                 main.checkTemplate(compiledTemplate);
             } else {
-                helpers.compare(compiledTemplate.code, '.js');
+                var actualSrc = compiledTemplate.code;
+                actualSrc = stripVarData(actualSrc);
+
+                helpers.compare(actualSrc, '.js');
             }
 
             done();

@@ -8,6 +8,7 @@ var expect = require('chai').expect;
 
 require('marko/node-require').install();
 
+var stripVarData = require('./util/stripVarData');
 
 describe('marko-widgets (compilation, deprecated)', function() {
     var testsPath = path.join(__dirname, './autotests/widgets-compilation-deprecated');
@@ -50,6 +51,8 @@ describe('marko-widgets (compilation, deprecated)', function() {
                 done();
             } else {
                 var actualSrc = compiler.compileFile(templatePath, main && main.compilerOptions);
+                actualSrc = stripVarData(actualSrc);
+                
                 var actualPath = path.join(testPath, './actual.js');
                 var expectedPath = path.join(testPath, './expected.js');
                 fs.writeFileSync(actualPath, actualSrc);
