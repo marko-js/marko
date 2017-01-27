@@ -5,11 +5,11 @@
     </head>
     <body>
         <h1>
-            Hello ${data.name}!
+            Hello ${input.name}!
         </h1>
 
-        <ul if(data.colors.length)>
-            <li for(color in data.colors)>
+        <ul if(input.colors.length)>
+            <li for(color in input.colors)>
                 ${color}
             </li>
         </ul>

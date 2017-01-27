@@ -9,7 +9,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     browser_refresh_tag = marko_loadTag(require("browser-refresh-taglib/refresh-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/taglibs/async/await-reorderer-tag"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   lasso_page_tag({
       dependencies: data.browserDependencies,
       lasso: data.lasso,
