@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
       }, 1, marko_const_nextId())
       .t("Body content");
 
-function render(data, out) {
+function render(input, out) {
   out.be("div");
 
   test_hello_tag({

@@ -1,9 +1,9 @@
 <div>
     <h1>
-        Hello ${data.name}! You have ${data.count} new messages.
+        Hello ${input.name}! You have ${input.count} new messages.
     </h1>
-    <p if(data.renderBody)>
-        <invoke data.renderBody(out)/>
+    <p if(input.renderBody)>
+        <invoke input.renderBody(out)/>
     </p>
     <p else>
         No body!

@@ -7,6 +7,8 @@ function bar() {
 }
 var baz = 456;
 
-function render(data, out) {}
+function render(input, out) {
+  var data = input;
+}
 
 marko_template._ = render;

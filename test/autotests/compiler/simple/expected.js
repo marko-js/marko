@@ -3,15 +3,17 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_escapeXml = marko_helpers.x,
     marko_forEach = marko_helpers.f;
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   out.w("Hello " +
-    marko_escapeXml(data.name) +
+    marko_escapeXml(input.name) +
     "! ");
 
-  if (data.colors.length) {
+  if (input.colors.length) {
     out.w("<ul>");
 
-    marko_forEach(data.colors, function(color) {
+    marko_forEach(input.colors, function(color) {
       out.w("<li>" +
         marko_escapeXml(color) +
         "</li>");
@@ -22,10 +24,10 @@ function render(data, out) {
     out.w("<div>No colors!</div>");
   }
 
-  if (data.colors.length) {
+  if (input.colors.length) {
     out.w("<ul>");
 
-    marko_forEach(data.colors, function(color) {
+    marko_forEach(input.colors, function(color) {
       out.w("<li>" +
         marko_escapeXml(color) +
         "</li>");

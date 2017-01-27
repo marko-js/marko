@@ -12,7 +12,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
 
 var marko_component = {};
 
-function render(data, out, widget, state) {
+function render(input, out, widget, state) {
   function macro_renderButton(color, out, renderBody) {
     out.w("<button" +
       marko_attr("data-_onclick", markoWidgets_event("handleColorClick", widget.id, [

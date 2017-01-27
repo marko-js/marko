@@ -1,17 +1,17 @@
-<h1 if(data.showHeader !== false)>
-    <if(data.header)>
-        <include(data.header)/>
+<h1 if(input.showHeader !== false)>
+    <if(input.header)>
+        <include(input.header)/>
     </if>
     <else>
         DEFAULT TITLE
     </else>
 </h1>
 <div>
-    <include(data.body)/>
+    <include(input.body)/>
 </div>
-<h1 if(data.showFooter !== false)>
-    <if(data.footer)>
-        <include(data.footer)/>
+<h1 if(input.showFooter !== false)>
+    <if(input.footer)>
+        <include(input.footer)/>
     </if>
     <else>
         DEFAULT FOOTER

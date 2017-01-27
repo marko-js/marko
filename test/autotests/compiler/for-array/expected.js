@@ -2,7 +2,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x;
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   var color,
       color__i,
       color__array,

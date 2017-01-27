@@ -1,6 +1,6 @@
 var marko_template = module.exports = require("marko/vdom").t();
 
-function render(data, out) {
+function render(input, out) {
   out.t("Hello ");
 
   out.t(name);

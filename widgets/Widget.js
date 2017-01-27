@@ -158,7 +158,7 @@ Widget.prototype = widgetProto = {
             throw TypeError();
         }
 
-        var subscriptions = this.$__subscriptions || (subscriptions = new SubscriptionTracker());
+        var subscriptions = this.$__subscriptions || (this.$__subscriptions = new SubscriptionTracker());
 
         var subscribeToOptions = target.$__isWidget ?
             WIDGET_SUBSCRIBE_TO_OPTIONS :

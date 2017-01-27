@@ -3,7 +3,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_classList = marko_helpers.cl,
     marko_classAttr = marko_helpers.ca;
 
-function render(data, out) {
+function render(input, out) {
   out.e("div", {
       "class": marko_classAttr(marko_classList("foo", {
           bar: true,

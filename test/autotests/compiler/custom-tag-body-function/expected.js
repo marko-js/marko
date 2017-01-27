@@ -3,7 +3,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     test_body_function_tag = marko_loadTag(require("./tags/test-body-function/renderer"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   test_body_function_tag({
       name: "World",
       myBody: function myBody(foo, bar) {

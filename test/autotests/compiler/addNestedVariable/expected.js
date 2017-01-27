@@ -4,7 +4,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     test_addNestedVariable_tag = marko_loadTag(require("./tags/test-addNestedVariable/renderer"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   test_addNestedVariable_tag({
       renderBody: function renderBody(out, foo) {
         out.w("Hello " +

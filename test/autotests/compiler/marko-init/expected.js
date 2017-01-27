@@ -5,7 +5,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
 
 var name = '${name}<div if(foo)></div>';
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   out.w("Hello " +
     marko_escapeXml(name) +
     "!");

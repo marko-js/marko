@@ -75,6 +75,7 @@
     "raptor-regexp": "^1.0.0",
     "raptor-util": "^3.1.0",
     "resolve-from": "^2.0.0",
+    "simple-sha1": "^2.1.0",
     "strip-json-comments": "^2.0.1",
     "try-require": "^1.2.1",
     "warp10": "^1.0.0"

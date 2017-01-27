@@ -5,7 +5,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     test_message_tag = marko_loadTag(test_message_template);
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   test_message_tag({
       body: someCondition && {
           renderBody: function renderBody(out) {

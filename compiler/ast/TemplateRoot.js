@@ -38,7 +38,9 @@ class TemplateRoot extends Node {
 
         var builder = codegen.builder;
 
-        let renderStatements = [];
+        let renderStatements = [
+            builder.var('data', builder.identifier('input'))
+        ];
         var vars = createVarsArray(context.getVars());
         if (vars.length) {
             renderStatements.push(builder.vars(vars));
@@ -56,7 +58,7 @@ class TemplateRoot extends Node {
                     builder.functionDeclaration(
                         null,
                         [
-                            builder.identifier('data'),
+                            builder.identifier('input'),
                             builder.identifierOut()
                         ],
                         renderStatements)
@@ -89,7 +91,7 @@ class TemplateRoot extends Node {
                 body = body.concat(staticNodes);
             }
 
-            var renderParams = [builder.identifier('data'), builder.identifierOut()];
+            var renderParams = [builder.identifier('input'), builder.identifierOut()];
             if (this.extraRenderParams) {
                 renderParams = renderParams.concat(this.extraRenderParams);
             }

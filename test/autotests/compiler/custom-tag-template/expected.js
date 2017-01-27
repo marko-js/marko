@@ -5,7 +5,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     hello_tag = marko_loadTag(hello_template);
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   hello_tag({
       name: "Frank"
     }, out);

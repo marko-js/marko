@@ -5,7 +5,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/taglibs/core/include-tag"));
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   include_tag({
       _target: target_template
     }, out);

@@ -1,13 +1,13 @@
-<h1 if(data.showHeader !== false)>
-    <if(data.header)>
-        <include(data.header)/>
+<h1 if(input.showHeader !== false)>
+    <if(input.header)>
+        <include(input.header)/>
     </if>
     <else>
         DEFAULT TITLE
     </else>
 </h1>
 <div>
-    <include(data.body)/>
+    <include(input.body)/>
 </div>
-<include(data.footer)/>
-<include(data.empty)/>
+<include(input.footer)/>
+<include(input.empty)/>

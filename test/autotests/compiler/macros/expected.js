@@ -3,7 +3,9 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_escapeXml = marko_helpers.x,
     marko_forEach = marko_helpers.f;
 
-function render(data, out) {
+function render(input, out) {
+  var data = input;
+
   function macro_renderTree(node, out, renderBody) {
     out.w("Name: " +
       marko_escapeXml(node.name) +
@@ -24,7 +26,7 @@ function render(data, out) {
     }
   }
 
-  macro_renderTree(data.node, out);
+  macro_renderTree(input.node, out);
 }
 
 marko_template._ = render;

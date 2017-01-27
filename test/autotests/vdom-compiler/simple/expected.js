@@ -3,20 +3,20 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_forEach = marko_helpers.f,
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
-    marko_const_nextId = marko_const("733fee"),
+    marko_const_nextId = marko_const("9e11e1"),
     marko_node0 = marko_createElement("div", null, 1, marko_const_nextId())
       .t("No colors!");
 
-function render(data, out) {
+function render(input, out) {
   out.e("h1", null, 3)
     .t("Hello ")
-    .t(data.name)
+    .t(input.name)
     .t("!");
 
-  if (data.colors.length) {
+  if (input.colors.length) {
     out.be("ul");
 
-    marko_forEach(data.colors, function(color) {
+    marko_forEach(input.colors, function(color) {
       out.e("li", null, 1)
         .t(color);
     });

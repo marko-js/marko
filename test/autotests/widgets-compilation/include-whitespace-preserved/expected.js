@@ -11,7 +11,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
 
 var marko_component = {};
 
-function render(data, out, widget, state) {
+function render(input, out, widget, state) {
   var __widgetId0 = widget.id;
 
   out.w("<div" +
