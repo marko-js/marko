@@ -168,9 +168,9 @@ function initWidget(widgetDef, doc) {
         events.emit('initWidget', initEventArgs);
 
         widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
-        if (config) {
-            extend(widget, config);
-        }
+
+        if (config) extend(widget, config);
+        widget.input = widgetDef.$__input;
 
         widget.$__initWidget(config);
         widget.$__emitLifecycleEvent('afterInit', initEventArgs);

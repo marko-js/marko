@@ -108,17 +108,18 @@ WidgetDef.prototype = {
 };
 
 WidgetDef.$__deserialize = function(o, types) {
-    var extra = o[4];
+    var extra = o[3];
     var typeIndex = o[1];
 
     return {
         id: o[0],
         $__type: types[typeIndex],
-        $__roots: o[2],
-        $__state: o[3],
+        $__input: o[2],
+        $__roots: extra.r,
+        $__state: extra.s,
         $__scope: extra.p,
-        $__domEvents: extra.e,
-        $__customEvents: extra.ce,
+        $__domEvents: extra.d,
+        $__customEvents: extra.e,
         $__config: extra.c
     };
 };

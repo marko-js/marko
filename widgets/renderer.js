@@ -141,6 +141,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             }
             id = id || resolveWidgetRef(out, ref, scope);
             customEvents = widgetArgs[2];
+            delete input.$w;
         }
 
         var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
@@ -164,15 +165,17 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         if (input) {
             if (onInput) {
+                var updatedInput;
                 if (existingWidget) {
-                    existingWidget.onInput(input, out);
+                    updatedInput = existingWidget.onInput(input, out);
                 } else {
                     var lightweightWidget = Object.create(renderingLogic);
-                    lightweightWidget.onInput(input, out);
+                    updatedInput = lightweightWidget.onInput(input, out);
                     widgetState = finalWidgetState = lightweightWidget.state;
                     widgetConfig = lightweightWidget;
                     delete widgetConfig.state;
                 }
+                input = updatedInput === undefined ? input : updatedInput;
             } else {
                 // Deprecated legacy methods... this code block should be removed in the future
                 if (getWidgetConfig) {
@@ -250,18 +253,24 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
         // Use getTemplateData(state, props, out) to get the template
         // data. If that method is not provided then just use the
         // the state (if provided) or the input data.
-        var templateData = (getTemplateData ?
+        var templateInput = getTemplateData ?
             getTemplateData(finalWidgetState, input, out) :
-            (getInitialState && finalWidgetState /*legacy*/) || input) || {};
+            (getInitialState && finalWidgetState /*legacy*/) ||
+            input ||
+            (existingWidget && existingWidget.input) ||
+            (rootRerenderWidget && rootRerenderWidget.input) ||
+            {};
 
         if (existingWidget) {
             existingWidget.$__emitLifecycleEvent('beforeUpdate');
+            existingWidget.input = templateInput;
         }
 
         var widgetDef = widgetsContext.$__beginWidget(id);
         widgetDef.$__type = typeName;
-        widgetDef.$__config = widgetConfig;
+        widgetDef.$__input = templateInput;
         widgetDef.$__state = widgetState;
+        widgetDef.$__config = widgetConfig;
         widgetDef.$__customEvents = customEvents;
         widgetDef.$__scope = scope;
         widgetDef.$__existingWidget = existingWidget;
@@ -270,7 +279,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateData, out, widgetDef, finalWidgetState);
+        templateRenderFunc(templateInput, out, widgetDef, finalWidgetState);
 
         widgetDef.$__end();
     };

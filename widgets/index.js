@@ -33,16 +33,10 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         var customEvents = widgetDef.$__customEvents;
         var config = widgetDef.$__config;
 
+
         if (isObjectEmpty(config)) {
             config = undefined;
         }
-
-        var extra = {
-            p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
-            e: widgetDef.$__domEvents,
-            ce: widgetDef.$__customEvents,
-            c: config
-        };
 
         var state = widgetDef.$__state;
 
@@ -57,12 +51,20 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             }
         }
 
+        var extra = {
+            p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
+            d: widgetDef.$__domEvents,
+            e: widgetDef.$__customEvents,
+            c: config,
+            s: state,
+            r: widgetDef.$__roots
+        };
+
         flattened.push([
             widgetDef.id,        // 0 = id
             typeIndex,           // 1 = type
-            widgetDef.$__roots,  // 2 = root el ids
-            state,               // 3 = state
-            extra                // 4
+            widgetDef.$__input,  // 2 = input
+            extra                // 3
         ]);
     }
 }
