@@ -1,6 +1,6 @@
 module.exports = {
-    getInitialState: function(input) {
-        return {
+    onInput: function(input) {
+        this.state = {
             size: input.size || 'normal',
             variant: input.variant || 'primary',
             className: input['class'],

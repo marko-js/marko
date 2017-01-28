@@ -1,13 +1,12 @@
-<script>
-module.exports = {
-    onInput: function(attrs) {
+class {
+    onInput(attrs) {
         this.state = { code: '// Your code here', errorText: '' }
-    },
-    submit: function() {
+    }
+    submit() {
         this.state.errorText = 'Placeholder error'
     }
 }
-</script>
+
 <div class="code-editor">
     <h3>Code Editor</h3>
     <div>

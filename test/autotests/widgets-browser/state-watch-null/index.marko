@@ -1,12 +1,10 @@
-<script>
-    module.exports = {
-        onInput: function(input) {
-            this.state = {
-                name: null
-            }
+class {
+    onInput(input) {
+        this.state = {
+            name: null
         }
-    };
-</script>
+    }
+}
 
 <div>
     Hello ${state.name || ''}!

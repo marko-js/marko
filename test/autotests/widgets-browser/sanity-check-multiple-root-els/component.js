@@ -1,6 +1,6 @@
 module.exports = {
-    getInitialState: function(input) {
-        return {
+    onInput: function(input) {
+        this.state = {
             name: input.name,
             age: input.age,
             url: input.url

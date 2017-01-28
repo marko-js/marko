@@ -1,6 +1,6 @@
 module.exports = {
-    getTemplateData() {
-        return {
+    onInput() {
+        this.state = {
             name: 'Frank'
         };
     }

@@ -1,16 +1,15 @@
-<script>
-    module.exports = {
-        onInput: function(input) {
-            this.state = {
-                counter: input.value
-            }
-        },
-
-        increment: function() {
-            this.state.counter++;
+class {
+    onInput(input) {
+        this.state = {
+            counter: input.value
         }
     }
-</script>
+
+    increment() {
+        this.state.counter++;
+    }
+}
+
 <div>
     Count: ${state.counter}
 </div>

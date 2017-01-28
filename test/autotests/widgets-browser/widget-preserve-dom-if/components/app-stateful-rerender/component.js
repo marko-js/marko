@@ -3,17 +3,9 @@ module.exports = {
         this.state = {
             name: input.name,
             count: input.count,
-            className: input['class']
-        };
-    },
-
-    getTemplateData:function(state, input){
-         return  {
-            name: state.name,
-            count: state.count,
+            className: input['class'],
             foo: 'bar',
-            hello: 'world',
-            className: state.className
+            hello: 'world'
         };
     }
 };

@@ -6,12 +6,6 @@ module.exports = {
 		};
 	},
 
-	getTemplateData: function(state, input) {
-		return {
-			messageCount: state.messageCount
-		};
-	},
-
 	init: function() {
 		if (this.INIT_CALLED) {
 			throw new Error('Doublie init()');

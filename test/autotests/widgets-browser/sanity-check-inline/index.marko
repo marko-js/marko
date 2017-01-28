@@ -2,15 +2,13 @@
     Hello ${state.name}!
 </div>
 
-<script>
-    module.exports = {
-        onInput: function(input) {
-            this.state = {
-                name: input.name
-            };
-        },
-        setName: function(newName) {
-            this.setState('name', newName);
-        }
-    };
-</script>
+class {
+    onInput(input) {
+        this.state = {
+            name: input.name
+        };
+    }
+    setName(newName) {
+        this.setState('name', newName);
+    }
+}

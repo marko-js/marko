@@ -1,5 +1,14 @@
+import widgetlessComponent from './components/app-widgetless';
+import simpleComponent from './components/app-simple';
+
+static var components = [
+    widgetlessComponent,
+    widgetlessComponent,
+    simpleComponent
+];
+
 <div class="app-repeated-id-widgetless">
-    <for(component in input.components)>
+    <for(component in components)>
         <include(component) ref="childWidget[]" />
     </for>
 </div>

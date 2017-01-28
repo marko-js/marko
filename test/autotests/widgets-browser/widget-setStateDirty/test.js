@@ -9,7 +9,6 @@ module.exports = function(helpers) {
     expect(widget.el.innerHTML).to.contain('green');
     expect(widget.el.innerHTML).to.contain('blue');
 
-    // NOTE: name does *not* have an update handler
     widget.addColor('orange');
     widget.update();
 

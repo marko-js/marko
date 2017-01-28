@@ -1,13 +1,12 @@
-<script>
-    module.exports = {
-        onInput: function(input) {
-            this.state = { first: true, second: false }
-        },
-        toggleValue: function(e) {
-            this.state[ e.target.value ] = e.target.checked
-        }
+class {
+    onInput(input) {
+        this.state = { first: true, second: false }
     }
-</script>
+    toggleValue(e) {
+        this.state[ e.target.value ] = e.target.checked
+    }
+}
+
 <div id="the-component">
     <input type="checkbox" name="opts[]" value="first" checked=state.first
         on-change('toggleValue') ref="first"/>

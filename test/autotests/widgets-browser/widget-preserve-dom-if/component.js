@@ -1,5 +1,5 @@
 module.exports = {
-    getTemplateData: function(state, input) {
+    onInput: function(input) {
         return {
             preserveCondition: input.preserveCondition,
             renderId: input.renderId || 0
