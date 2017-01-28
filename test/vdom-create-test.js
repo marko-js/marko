@@ -6,10 +6,12 @@ var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;
 var document = jsdom('<html><body></body></html>');
 
-var VElement = require('../runtime/vdom/VElement');
-var VText = require('../runtime/vdom/VText');
-var VComment = require('../runtime/vdom/VComment');
-var VDocumentFragment = require('../runtime/vdom/VDocumentFragment');
+var vdom = require('../runtime/vdom/vdom');
+var VElement = vdom.$__VElement;
+var VText = vdom.$__VText;
+var VComment = vdom.$__VComment;
+var VDocumentFragment = vdom.$__VDocumentFragment;
+
 
 var vdomHelpers = {
     createElement: function(tagName, attrs, childCount, constId) {
