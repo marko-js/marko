@@ -172,7 +172,8 @@ VElement.prototype = {
         // We don't care about the namespaces since the there
         // is no chance that attributes with the same name will have
         // different namespaces
-        return this.$__attributes[name] !== undefined;
+        var value = this.$__attributes[name];
+        return value != null && value !== false;
     },
 
     getAttribute: function(name) {
