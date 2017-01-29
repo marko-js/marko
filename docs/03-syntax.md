@@ -6,15 +6,15 @@ Marko's syntax is based on HTML, so you basically already know it.  Marko extend
 
 ## Text replacement
 
-When you render a Marko template, you pass data that is then available within the template as `data`.  You can then use `${}` to insert a value into the template:
+When you render a Marko template, you pass input data that is then available within the template as `input`.  You can then use `${}` to insert a value into the template:
 
 ```xml
 <div>
-    Hello ${data.name}
+    Hello ${input.name}
 </div>
 ```
 
-You can actually pass any javascript expression here and it will work:
+You can actually pass any javascript expression here and the result of the expression will be inserted into the HTML output:
 
 ```xml
 <div>
@@ -22,7 +22,7 @@ You can actually pass any javascript expression here and it will work:
 </div>
 ```
 
-These values are automatically escaped so you don't accidentally insert malicious code.  If you do need to pass unescaped html, you can use `$!{}`:
+These values are automatically escaped so you don't accidentally insert malicious code.  If you do need to pass unescaped HTML, you can use `$!{}`:
 
 ```xml
 <div>
@@ -30,15 +30,17 @@ These values are automatically escaped so you don't accidentally insert maliciou
 </div>
 ```
 
+### Escaping placeholders
+
 If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
 
 ```xml
 <div>
-    Placeholder example: \${data}
+    Placeholder example: <code>\${input}</code>
 </div>
 ```
 
-### Root level text
+## Root level text
 
 Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`]() to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 
@@ -51,8 +53,8 @@ Text at the root of a template (outside any tags) must be prefixed with the [con
 A big improvement over HTML are the typed attributes Marko provides (instead of just strings).
 
 ```xml
-<div class=data.myClassName/>
-<input type="checkbox" checked=data.isChecked/>
+<div class=input.myClassName/>
+<input type="checkbox" checked=input.isChecked/>
 
 <tag string="Hello"/>
 <tag number=1/>
@@ -61,7 +63,7 @@ A big improvement over HTML are the typed attributes Marko provides (instead of 
 <tag array=[1, 2, 3]/>
 <tag object={hello: 'world'}/>
 <tag variable=name/>
-<tag function-call=data.foo()/>
+<tag function-call=input.foo()/>
 ```
 
 ### Attribute expressions
@@ -190,7 +192,7 @@ Directives are denoted by parenthesis and take an argument instead of a value.  
 Most directives support javascript expressions, and some even support multiple arguments:
 
 ```xml
-<include(target, data)/>
+<include(target, input)/>
 ```
 
 Others allow a custom syntax:
@@ -202,19 +204,49 @@ Directives are used by many of our [Core Tags]() for control-flow (`<if>`, `<els
 
 ## Dynamic javascript
 
-Scriptlets are a way to inject javascript around your template code:
+If you want to run JavaScript within the context of your template, without producing output, you can insert a single-line Javascript statement using the `$ <code>` syntax.
+
+A line that starts with a `$` followed by a space will execute the code that follows.
 
 ```xml
+$ var name = input.name;
+
 <div>
-    Hello, ${data.name}
-    <% console.log('The value rendered was', data.name) %>
+    Hello, ${name}
+    $ console.log('The value rendered was', name);
 </div>
 ```
 
+If you have multiple lines of JavaScript to insert, you can use the `$${ <code> }` syntax.  The code inside the `{}` will be executed.
+
 ```xml
-<% if(true) { %>
-    <div>Hello, ${data.name}</div>
-<% } %>
+$${
+    var id = 0;
+    function nextId() {
+        return id++;
+    }
+}
+
+<div>Hello, World ${nextId()}</div>
+<div>Hello, World ${nextId()}</div>
+<div>Hello, World ${nextId()}</div>
 ```
 
-The [Core Tags]() will cover most use cases and you can create your own [Custom Tags]() so you probably won't ever use scriptlets, but isn't it nice to know you have an escape hatch if you ever need it?
+### Escaping dollar signs
+
+If you need to output a `$` at the beginning of a line, you can escape it: `\$`.
+
+```xml
+<p>You can run JS in a Marko template like this:</p>
+<code>
+    // single line
+    \$ var foo = 123;
+
+    // multiple lines
+    \$$ {
+        function bar() {
+
+        }
+    }
+</code>
+```
