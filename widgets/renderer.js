@@ -88,15 +88,11 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
             input = {};
         }
 
-        var widgetArgs = input && input.$w;
+        var widgetArgs = input && input.$w || out.data.$w;
         var customEvents;
         var scope;
 
         var id = assignedId;
-
-        if (!widgetArgs) {
-            widgetArgs = out.data.$w;
-        }
 
         if (widgetArgs) {
             scope = widgetArgs[0];
@@ -116,9 +112,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
 
         var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
 
-        if (!id) {
-            id = widgetsContext.$__nextWidgetId();
-        }
+        id = id || widgetsContext.$__nextWidgetId();
 
         var existingWidget;
 
@@ -162,17 +156,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
                 // This is a nested widget found during a rerender. We don't want to needlessly
                 // rerender the widget if that is not necessary. If the widget is a stateful
                 // widget then we update the existing widget with the new state.
-                var shouldPreserve;
-
-                if (existingState) {
-                    if (widgetState) {
-                        // This will only be true if getInitialState was true
-                        existingWidget.$__replaceState(widgetState);
-                        widgetState = null;
-                    }
-
-                    shouldPreserve = !widgetBody && !existingWidget.$__isDirty;
-                }
+                var shouldPreserve = existingState && !widgetBody && !existingWidget.$__isDirty;
 
                 // If the widget is not dirty (no state changes) and shouldUpdate() returns false
                 // then skip rerendering the widget.
