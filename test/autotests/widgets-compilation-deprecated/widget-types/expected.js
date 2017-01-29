@@ -1,5 +1,5 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_widgets = require("marko/widgets"),
+    marko_widgets = require("marko/widgets/legacy"),
     marko_registerWidget = marko_widgets.rw,
     marko_widgetTypes = {
         "default": marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/widget-types/widget", function() {

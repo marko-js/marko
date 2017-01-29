@@ -1,10 +1,9 @@
 var loadWidget = require('./loadWidget');
+var defineWidget = require('./defineWidget');
 
 var registered = {};
 var loaded = {};
 var widgetTypes = {};
-var defineWidget;
-var defineRenderer;
 
 function register(typeName, def) {
     if (typeof def === 'function') {
@@ -49,19 +48,12 @@ function getWidgetClass(typeName) {
 
     WidgetClass = load(typeName);
 
-    var renderer;
-
-
     if (WidgetClass.Widget) {
         WidgetClass = WidgetClass.Widget;
     }
 
-    if (WidgetClass.renderer) {
-        renderer = defineRenderer(WidgetClass);
-    }
-
     if (!WidgetClass.$__isWidget) {
-        WidgetClass = defineWidget(WidgetClass, renderer);
+        WidgetClass = defineWidget(WidgetClass, WidgetClass.renderer);
     }
 
     // Make the widget "type" accessible on each widget instance
@@ -87,6 +79,3 @@ function createWidget(typeName, id, doc) {
 
 exports.$__register = register;
 exports.$__createWidget = createWidget;
-
-defineWidget = require('./defineWidget');
-defineRenderer = require('./defineRenderer');

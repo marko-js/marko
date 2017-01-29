@@ -108,7 +108,7 @@ class TransformHelper {
             this.context.data[MARKO_WIDGETS_VAR_KEY] =
                 this.context.importModule(
                     'marko_widgets',
-                    this.getMarkoWidgetsRequirePath('marko/widgets'));
+                    this.getMarkoWidgetsRequirePath(this.isLegacyWidget ? 'marko/widgets/legacy' : 'marko/widgets'));
         }
 
         return this.context.data[MARKO_WIDGETS_VAR_KEY];

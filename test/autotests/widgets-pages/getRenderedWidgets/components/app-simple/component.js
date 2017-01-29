@@ -14,11 +14,8 @@ module.exports = {
             messageCount: input.messageCount
 		};
 	},
-	getTemplateData: function(state, input) {
-		return state;
-	},
 
-	init: function(widgetConfig) {
+	onMount: function() {
 		window.simpleWidgets.push(this);
 
 		this.widgetConfig = {

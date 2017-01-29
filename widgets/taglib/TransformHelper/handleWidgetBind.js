@@ -64,7 +64,8 @@ module.exports = function handleWidgetBind() {
     if (internalBindAttr == null && bindAttr == null) {
         return;
     } else if (bindAttr != null) {
-        context.deprecate('The "w-bind" attribute is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/421');
+        context.deprecate('Legacy widgets using w-bind and defineRenderer/defineWidget or defineComponent are deprecated. See: https://github.com/marko-js/marko/issues/421');
+        this.isLegacyWidget = true;
 
         // Remove the w-bind attribute since we don't want it showing up in the output DOM
         el.removeAttribute('w-bind');

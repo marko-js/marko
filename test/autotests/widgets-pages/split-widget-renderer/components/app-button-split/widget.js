@@ -1,5 +1,5 @@
 module.exports = {
-    init: function() {
+    onMount: function() {
         window.appButtonSplit = this;
     },
     setColor: function(color) {

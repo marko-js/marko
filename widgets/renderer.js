@@ -59,49 +59,19 @@ function handleBeginAsync(event) {
     asyncOut.data.$w = parentOut.data.$w;
 }
 
-module.exports = function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
-    var onInput;
-    var getInitialProps;
-    var getTemplateData;
-    var getInitialState;
-    var getWidgetConfig;
-    var getInitialBody;
-
-    function initRendereringLogic() {
-        onInput = renderingLogic.onInput;
-        getInitialProps = renderingLogic.getInitialProps; //deprecate
-        getTemplateData = renderingLogic.getTemplateData;
-        getInitialState = renderingLogic.getInitialState; //deprecate
-        getWidgetConfig = renderingLogic.getWidgetConfig; //deprecate
-        getInitialBody = renderingLogic.getInitialBody;
-    }
-
-    if (renderingLogic) {
-        initRendereringLogic();
-    }
-
+function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
+    var onInput = renderingLogic && renderingLogic.onInput;
     var typeName = widgetProps.type;
     var roots = widgetProps.roots;
     var assignedId = widgetProps.id;
 
-    return function renderer(input, out, renderingLogicLegacy /* needed by defineRenderer */) {
+    return function renderer(input, out) {
         var outGlobal = out.global;
 
         if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
             outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
             out.on('beginAsync', handleBeginAsync);
         }
-
-        if (renderingLogic === undefined) {
-            // LEGACY - This should be removed when `defineRenderer` is removed but we use it
-            // now to run the rendering logic that is passed in at render time. The reason we don't
-            // get the rendering logic until now is that in older versions the `defineRenderer` was
-            // invoked before template rendering
-            if ((renderingLogic = renderingLogicLegacy)) {
-                initRendereringLogic();
-            }
-        }
-
 
         var widgetConfig;
         var widgetBody;
@@ -176,46 +146,9 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
                     delete widgetConfig.state;
                 }
                 input = updatedInput === undefined ? input : updatedInput;
-            } else {
-                // Deprecated legacy methods... this code block should be removed in the future
-                if (getWidgetConfig) {
-                    // If getWidgetConfig() was implemented then use that to
-                    // get the widget config. The widget config will be passed
-                    // to the widget constructor. If rendered on the server the
-                    // widget config will be serialized to a JSON-like data
-                    // structure and stored in a "data-w-config" attribute.
-                    widgetConfig = getWidgetConfig(input, out);
-                } else {
-                    widgetConfig = input.widgetConfig;
-                }
-
-                if (getInitialBody) {
-                    // If we have widget a widget body then pass it to the template
-                    // so that it is available to the widget tag and can be inserted
-                    // at the w-body marker
-                    widgetBody = getInitialBody(input, out);
-                }
-
-                // If we do not have state then we need to go through the process
-                // of converting the input to a widget state, or simply normalizing
-                // the input using getInitialProps
-
-                if (getInitialProps) {
-                    // This optional method is used to normalize input state
-                    input = getInitialProps(input, out) || {};
-                }
-
-                if (getInitialState) {
-                    // This optional method is used to derive the widget state
-                    // from the input properties
-                    widgetState = finalWidgetState = getInitialState(input, out);
-                }
             }
-
-            if (!widgetBody) {
-                // Default to using the nested content as the widget body
-                widgetBody = input.renderBody;
-            }
+            // Default to using the nested content as the widget body
+            widgetBody = input.renderBody;
         }
 
         if (existingWidget) {
@@ -250,13 +183,7 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
             }
         }
 
-        // Use getTemplateData(state, props, out) to get the template
-        // data. If that method is not provided then just use the
-        // the state (if provided) or the input data.
-        var templateInput = getTemplateData ?
-            getTemplateData(finalWidgetState, input, out) :
-            (getInitialState && finalWidgetState /*legacy*/) ||
-            input ||
+        var templateInput = input ||
             (existingWidget && existingWidget.input) ||
             (rootRerenderWidget && rootRerenderWidget.input) ||
             {};
@@ -283,4 +210,11 @@ module.exports = function createRendererFunc(templateRenderFunc, widgetProps, re
 
         widgetDef.$__end();
     };
-};
+}
+
+module.exports = createRendererFunc;
+
+// exports used by the legacy renderer
+createRendererFunc.$__resolveWidgetRef = resolveWidgetRef;
+createRendererFunc.$__preserveWidgetEls = preserveWidgetEls;
+createRendererFunc.$__handleBeginAsync = handleBeginAsync;

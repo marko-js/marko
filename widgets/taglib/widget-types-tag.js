@@ -4,6 +4,8 @@ module.exports = function codeGenerator(el, codegen) {
     var context = codegen.context;
     var transformHelper = getTransformHelper(el, context);
 
+    transformHelper.isLegacyWidget = true;
+
     var builder = codegen.builder;
 
     var attrs = el.getAttributes();
