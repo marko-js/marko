@@ -156,7 +156,7 @@ function methodToProperty(method) {
         computed: false,
         value: method.value,
         kind: 'init',
-        method: true,
+        method: false,
         shorthand: false
     };
 }
