@@ -145,6 +145,7 @@ function Widget(id, doc) {
 
     this.$__destroyed =
         this.$__updateQueued =
+        this.$__inputDirty =
         false;
 
     this.$__document = doc;
@@ -396,11 +397,12 @@ Widget.prototype = widgetProto = {
     },
 
     get $__isDirty() {
-        return this.$__state.$__dirty;
+        return this.$__inputDirty || this.$__state.$__dirty;
     },
 
     $__reset: function() {
         this.$__newProps = null;
+        this.$__inputDirty = false;
         var state = this.$__state;
         if (state) {
             state.$__reset();

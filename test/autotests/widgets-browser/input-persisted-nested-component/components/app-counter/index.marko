@@ -1,0 +1,16 @@
+class {
+    onInput() {
+        if (!this.state) {
+            this.state = {
+                count: 0
+            };
+        }
+    }
+    increment() {
+        this.state.count++;
+    }
+}
+
+<div style={ color:input.color }>
+    Current count is <span.count>${state.count}</span>
+</div>

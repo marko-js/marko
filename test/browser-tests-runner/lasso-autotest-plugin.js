@@ -37,6 +37,10 @@ module.exports = function(lasso, pluginConfig) {
                 });
 
                 callback(null, 'module.exports = [\n  ' + tests.join(',\n  ') + ']');
+            },
+
+            getLastModified() {
+                return -1;
             }
         });
 };
