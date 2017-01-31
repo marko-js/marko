@@ -1,11 +1,10 @@
 var expect = require('chai').expect;
 
-function Widget(config) {
-    this.name = 'app-fixed-id';
-    window.appFixedId = this;
-}
-
-Widget.prototype = {
+module.exports = {
+    onMount: function() {
+        this.name = 'app-fixed-id';
+        window.appFixedId = this;
+    },
     testGetWidget: function() {
         var helloWidget = this.getWidget('hello');
         expect(helloWidget != null).to.equal(true);
@@ -15,5 +14,3 @@ Widget.prototype = {
         expect(wrapperEl != null).to.equal(true);
     }
 };
-
-exports.Widget = Widget;

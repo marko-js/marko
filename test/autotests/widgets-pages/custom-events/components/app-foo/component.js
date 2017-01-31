@@ -1,5 +1,5 @@
 module.exports = {
-	init: function() {
+	onMount: function() {
 		window.fooWidget = this;
 		this.pressEvent = undefined;
 	},

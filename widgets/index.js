@@ -15,11 +15,12 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         var widget = widgetDef.$__widget;
         var state = widget.state;
         var input = widget.input;
+        var typeName = widget.typeName;
 
         widget.state = undefined; // We don't use `delete` to avoid V8 deoptimization
         widget.input = undefined; // We don't use `delete` to avoid V8 deoptimization
+        widget.typeName = undefined;
 
-        var typeName = widget.typeName;
 
         if (!typeName) {
             continue;

@@ -2,7 +2,8 @@ var extend = require('raptor-util/extend');
 
 function createServerWidgetClass(renderingLogic) {
     class ServerWidget {
-        constructor(input, out, typeName) {
+        constructor(id, input, out, typeName) {
+            this.id = id;
             this.$__updatedInput = undefined;
             this.$__input = undefined;
             this.$__state = undefined;
@@ -52,14 +53,14 @@ function createServerWidgetClass(renderingLogic) {
 
     return ServerWidget;
 }
-function createWidget(renderingLogic, input, out, typeName) {
+function createWidget(renderingLogic, id, input, out, typeName) {
 
     var ServerWidget = renderingLogic.ServerWidget;
     if (!ServerWidget) {
         ServerWidget = renderingLogic.ServerWidget = createServerWidgetClass(renderingLogic);
     }
 
-    var widget = new ServerWidget(input, out, typeName);
+    var widget = new ServerWidget(id, input, out, typeName);
     var updatedInput;
 
     updatedInput = updatedInput || input;

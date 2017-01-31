@@ -1,5 +1,5 @@
 module.exports = {
-    init: function() {
+    onMount: function() {
         this.type = 'app-hello';
     }
 };
