@@ -6,7 +6,7 @@ module.exports = {
         };
     },
 
-    init: function(widgetConfig) {
+    onMount: function() {
         window.fooWidget = this;
         this.mouseMoveEvent = null;
         this.clickEvent = null;

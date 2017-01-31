@@ -1,4 +1,5 @@
-exports.Widget = function(config) {
-    this.type = 'app-hello';
-    this.name = config.name;
+module.exports = {
+    onMount: function() {
+        this.type = 'app-hello';
+    }
 };

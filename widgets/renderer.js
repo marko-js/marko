@@ -111,7 +111,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
         id = id || widgetsContext.$__nextWidgetId();
 
         if (registry.$__isServer) {
-            widget = registry.$__createWidget(renderingLogic, input, out, typeName);
+            widget = registry.$__createWidget(renderingLogic, id, input, out, typeName);
             input = widget.$__updatedInput;
         } else {
             if (!widget) {

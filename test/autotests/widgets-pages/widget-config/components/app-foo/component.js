@@ -3,7 +3,7 @@ module.exports = {
         this.name = 'app-foo';
     },
 
-    init: function(widgetConfig) {
+    onMount: function(widgetConfig) {
         this.widgetConfig = {
             name: this.name
         };

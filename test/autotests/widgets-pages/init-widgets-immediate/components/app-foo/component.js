@@ -8,7 +8,7 @@ module.exports = {
         this.name = 'foo';
     },
 
-    init: function() {
+    onMount: function() {
         window.fooWidget = this;
         this.widgetConfig = {
             type: this.type,

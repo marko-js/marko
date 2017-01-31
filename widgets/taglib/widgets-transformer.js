@@ -78,15 +78,11 @@ module.exports = function transform(el, context) {
     // Handle w-on* properties
     transformHelper.handleWidgetEvents();
 
-    transformHelper.getWidgetArgs().compile(transformHelper);
-
     // If we need to pass any information to a nested widget then
     // we start that information in the "out" so that it can be picked
     // up later by the nested widget. We call this "widget args" and
     // we generate compiled code that stores the widget args in the out
     // for the next widget and then we also insert cleanup code to remove
     // the data out of the out
-    if (el.type !== 'HtmlElement') { // Only custom tags can have nested widgets
-        transformHelper.getWidgetArgs().compile(transformHelper);
-    }
+    transformHelper.getWidgetArgs().compile(transformHelper);
 };

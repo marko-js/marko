@@ -36,6 +36,7 @@
     "test-widgets-pages-deprecated": "node test/browser-tests-runner/cli.js --pagesDeprecated --automated",
     "test-widgets-browser-dev": "browser-refresh test/browser-tests-runner/cli.js test/widgets-browser-tests.js --server",
     "test-page": "node test/browser-tests-runner/cli.js test/widgets-browser-tests.js --automated --page",
+    "test-pages": "npm run test-widgets-pages",
     "jshint": "jshint compiler/ runtime/ taglibs/ widgets/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
