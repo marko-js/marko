@@ -11,7 +11,7 @@ module.exports = function(helpers) {
 
     // Button widget will not rerender since it's state did not change and that means that the
     // button content will remain as 'John' instead of 'Frank'
-    widget.setProps({ name: 'John '});
+    widget.input = { name: 'John '};
     widget.update();
 
     expect(buttonWidget.el.innerHTML).to.contain('John');

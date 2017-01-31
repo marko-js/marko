@@ -1,81 +1,77 @@
-var loadWidget = require('./loadWidget');
-var defineWidget = require('./defineWidget');
+var extend = require('raptor-util/extend');
 
-var registered = {};
-var loaded = {};
-var widgetTypes = {};
+function createServerWidgetClass(renderingLogic) {
+    class ServerWidget {
+        constructor(input, out, typeName) {
+            this.$__updatedInput = undefined;
+            this.$__input = undefined;
+            this.$__state = undefined;
+            this.typeName = typeName;
 
-function register(typeName, def) {
-    if (typeof def === 'function') {
-        // We do this to kick off registering of nested widgets
-        // but we don't use the return value just yet since there
-        // is a good chance that it resulted in a circular dependency
-        def();
-    }
+            if (this.onCreate) {
+                this.onCreate();
+            }
 
-    registered[typeName] = def;
-    delete loaded[typeName];
-    delete widgetTypes[typeName];
-    return typeName;
-}
+            if (this.onInput) {
+                var updatedInput = this.onInput(input, out) || input;
 
-function load(typeName) {
-    var target = loaded[typeName];
-    if (target === undefined) {
-        target = registered[typeName];
+                if (this.$__input === undefined) {
+                    this.$__input = updatedInput;
+                }
 
-        if (typeof target === 'function') {
-            target = target();
+                this.$__updatedInput = updatedInput;
+
+            } else {
+                this.$__input = this.$__updatedInput = input;
+            }
         }
-        if (!target) {
-            target = loadWidget(typeName); // Assume the typeName has been fully resolved already
+
+        set input(newInput) {
+            this.$__input = newInput;
         }
-        loaded[typeName] = target || null;
+
+        get input() {
+            return this.$__input;
+        }
+
+
+        set state(newState) {
+            this.$__state = newState;
+        }
+
+        get state() {
+            return this.$__state;
+        }
+
+        get $__rawState() {
+            return this.$__state;
+        }
     }
 
-    if (target == null) {
-        throw new Error('Unable to load: ' + typeName);
-    }
-    return target;
+    extend(ServerWidget.prototype, renderingLogic);
+
+    return ServerWidget;
 }
+function createWidget(renderingLogic, input, out, typeName) {
 
-function getWidgetClass(typeName) {
-    var WidgetClass = widgetTypes[typeName];
-
-    if (WidgetClass) {
-        return WidgetClass;
+    var ServerWidget = renderingLogic.ServerWidget;
+    if (!ServerWidget) {
+        ServerWidget = renderingLogic.ServerWidget = createServerWidgetClass(renderingLogic);
     }
 
-    WidgetClass = load(typeName);
+    var widget = new ServerWidget(input, out, typeName);
+    var updatedInput;
 
-    if (WidgetClass.Widget) {
-        WidgetClass = WidgetClass.Widget;
+    updatedInput = updatedInput || input;
+
+    if (widget.$__input === undefined) {
+        widget.$__input = updatedInput;
     }
 
-    if (!WidgetClass.$__isWidget) {
-        WidgetClass = defineWidget(WidgetClass, WidgetClass.renderer);
-    }
+    widget.$__updatedInput = updatedInput;
 
-    // Make the widget "type" accessible on each widget instance
-    WidgetClass.prototype.$__type = typeName;
-
-    widgetTypes[typeName] = WidgetClass;
-
-    return WidgetClass;
-}
-
-function createWidget(typeName, id, doc) {
-    var WidgetClass = getWidgetClass(typeName);
-    var widget;
-    if (typeof WidgetClass === 'function') {
-        // The widget is a constructor function that we can invoke to create a new instance of the widget
-        widget = new WidgetClass(id, doc);
-    } else if (WidgetClass.initWidget) {
-        widget = WidgetClass;
-        widget.$__document = doc;
-    }
     return widget;
 }
 
-exports.$__register = register;
+exports.$__isServer = true;
 exports.$__createWidget = createWidget;

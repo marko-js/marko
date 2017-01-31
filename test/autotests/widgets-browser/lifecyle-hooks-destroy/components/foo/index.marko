@@ -1,0 +1,13 @@
+import hooks from '../../hooks';
+import { expect } from 'chai';
+
+class {
+    onDestroy(){
+        expect(document.getElementById(this.id)).to.equal(this.el);
+        hooks.record('foo:destroy');
+    }
+}
+
+<div.foo>
+	Hello <span.name>${input.name}</span>!
+</div>

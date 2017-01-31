@@ -3,6 +3,7 @@
         "./index.js": "./index-browser.js",
         "./init-widgets.js": "./init-widgets-browser.js",
         "./defineWidget.js": "./defineWidget-browser.js",
+        "./registry.js": "./registry-browser.js",
         "./util.js": "./util-browser.js"
     }
 }

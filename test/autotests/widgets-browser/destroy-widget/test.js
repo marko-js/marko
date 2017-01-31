@@ -14,9 +14,10 @@ module.exports = function(helpers) {
 
     expect(simple != null).to.equal(true);
 
-    widget.setProps({
+    widget.input = {
         showSimple: false
-    });
+    };
+
     widget.update();
 
     expect(simpleDestroyed).to.equal(true);

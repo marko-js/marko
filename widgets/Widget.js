@@ -38,7 +38,7 @@ function removeListener(removeEventListenerHandle) {
 function hasCompatibleWidget(widgetsContext, existingWidget) {
     var id = existingWidget.id;
     var newWidgetDef = widgetsContext.$__widgetsById[id];
-    return newWidgetDef && existingWidget.$__type == newWidgetDef.$__type;
+    return newWidgetDef && existingWidget.$__type == newWidgetDef.$__widget.$__type;
 }
 
 function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
@@ -104,8 +104,6 @@ function processUpdateHandlers(widget, stateChanges, oldState) {
         // Otherwise, there are handlers for all of the changed properties
         // so apply the updates using those handlers
 
-        emitLifecycleEvent(widget, 'beforeUpdate');
-
         for (var i=0, len=handlers.length; i<len; i++) {
             var handler = handlers[i];
             var propertyName = handler[0];
@@ -122,6 +120,30 @@ function processUpdateHandlers(widget, stateChanges, oldState) {
     }
 
     return true;
+}
+
+function checkInputChanged(existingWidget, oldInput, newInput) {
+    if (oldInput != newInput) {
+        if (oldInput == null || newInput == null) {
+            return true;
+        }
+
+        var oldKeys = Object.keys(oldInput);
+        var newKeys = Object.keys(newInput);
+        var len = oldKeys.length;
+        if (len !== newKeys.length) {
+            return true;
+        }
+
+        for (var i=0; i<len; i++) {
+            var key = oldKeys[i];
+            if (oldInput[key] !== newInput[key]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 var widgetProto;
@@ -145,7 +167,7 @@ function Widget(id, doc) {
 
     this.$__destroyed =
         this.$__updateQueued =
-        this.$__inputDirty =
+        this.$__dirty =
         false;
 
     this.$__document = doc;
@@ -226,6 +248,15 @@ Widget.prototype = widgetProto = {
 
         var els = this.els;
 
+        this.$__destroyShallow();
+
+        var rootWidgets = this.$__rootWidgets;
+        if (rootWidgets) {
+            for (i=0, len=rootWidgets.length; i<len; i++) {
+                rootWidgets[i].destroy();
+            }
+        }
+
         for (i=0, len=els.length; i<len; i++) {
             var el = els[i];
             destroyElRecursive(el);
@@ -235,15 +266,6 @@ Widget.prototype = widgetProto = {
                 parentNode.removeChild(el);
             }
         }
-
-        var rootWidgets = this.$__rootWidgets;
-        if (rootWidgets) {
-            for (i=0, len=rootWidgets.length; i<len; i++) {
-                rootWidgets[i].destroy();
-            }
-        }
-
-        this.$__destroyShallow();
     },
 
     $__destroyShallow: function() {
@@ -251,10 +273,9 @@ Widget.prototype = widgetProto = {
             return;
         }
 
-        emitLifecycleEvent(this, 'beforeDestroy');
+        emitLifecycleEvent(this, 'destroy');
         this.$__destroyed = true;
 
-        this.els = null;
         this.el = null;
 
         // Unsubscribe from all DOM events
@@ -267,8 +288,6 @@ Widget.prototype = widgetProto = {
         }
 
         delete widgetLookup[this.id];
-
-        emitLifecycleEvent(this, 'destroy');
     },
 
     isDestroyed: function() {
@@ -277,13 +296,31 @@ Widget.prototype = widgetProto = {
     get state() {
         return this.$__state;
     },
-    set state(value) {
-        if (value) {
-            var state = this.$__state || (this.$__state = new this.$__State(this));
-            state.$__replace(value);
-        } else {
+    set state(newState) {
+        var state = this.$__state;
+        if (!state && !newState) {
+            return;
+        }
+
+        if (!state) {
+                state = this.$__state = new this.$__State(this);
+        }
+
+        state.$__replace(newState || {});
+
+        if (state.$__dirty) {
+            this.$__queueUpdate();
+        }
+
+        if (!newState) {
             this.$__state = null;
         }
+    },
+    get input() {
+        return this.$__input;
+    },
+    set input(newInput) {
+        this.$__setInput(newInput);
     },
     setState: function(name, value) {
         var state = this.$__state;
@@ -323,86 +360,72 @@ Widget.prototype = widgetProto = {
      *
      * @param {Object} props The widget's new props
      */
-    setProps: function(newProps) {
-        var onInput = this.onInput;
-        var getInitialState;
+    $__setInput: function(newInput, onInput, out) {
+        onInput = onInput || this.onInput;
+        var updatedInput;
+
+        var oldInput = this.$__input;
+        this.$__input = undefined;
 
         if (onInput) {
-            onInput.call(this, newProps || {});
-        } else if ((getInitialState = this.getInitialState)) {
-            var getInitialProps = this.getInitialProps;
+            updatedInput = onInput.call(this, newInput || {}, out);
+        }
 
-            if (getInitialProps) {
-                newProps = getInitialProps.call(this, newProps) || {};
-            }
-            var newState = getInitialState.call(this, newProps);
-            this.$__state.$__replace(newState);
-        } else {
-            if (!this.$__newProps) {
-                updateManager.$__queueWidgetUpdate(this);
-            }
+        newInput = updatedInput || newInput;
 
-            this.$__newProps = newProps;
+        if (checkInputChanged(this, oldInput, newInput)) {
+            this.$__dirty = true;
+            this.$__queueUpdate();
+        }
+
+        if (this.$__input === undefined) {
+            this.$__input = newInput;
+        }
+
+        return newInput;
+    },
+
+    $__queueUpdate: function() {
+        if (!this.$__updateQueued) {
+            this.$__updateQueued = true;
+            updateManager.$__queueWidgetUpdate(this);
         }
     },
 
     update: function() {
-        if (this.$__destroyed) {
+        if (this.$__destroyed || !this.$__isDirty) {
             return;
         }
 
-        var newProps = this.$__newProps;
-
+        var input = this.$__input;
         var state = this.$__state;
 
-        if (this.shouldUpdate(newProps, state) === false) {
-            this.$__reset();
-            return;
+        if (!this.$__dirty && state && state.$__dirty) {
+            if (processUpdateHandlers(this, state.$__changes, state.$__old, state)) {
+                state.$__dirty = false;
+            }
         }
 
-        if (newProps) {
-            this.$__reset();
-            this.rerender(newProps);
-            return;
+        if (this.$__isDirty) {
+            // The UI component is still dirty after process state handlers
+            // then we should rerender
+
+            if (this.shouldUpdate(input, state) !== false) {
+                this.doUpdate();
+            }
         }
 
-        if (!(state && state.$__dirty)) {
-            // Don't even bother trying to update this widget since it is
-            // not marked as dirty.
-            return;
-        }
-
-        var stateChanges = state.$__changes;
-        var oldState = state.$__old;
-
-        if (!processUpdateHandlers(this, stateChanges, oldState, state)) {
-            this.doUpdate(stateChanges, oldState);
-        }
-
-        // Reset all internal properties for tracking state changes, etc.
         this.$__reset();
     },
 
-    $__replaceState: function(newState) {
-        var state = this.$__state;
-
-        // Update the existing widget state using the internal/private
-        // method to ensure that another update is not queued up
-        state.$__replace(newState, true /* do not queue an update */);
-
-
-        // If the widget has custom state update handlers then we will use those methods
-        // to update the widget.
-        return processUpdateHandlers(this, state.$__changes, state.$__old);
-    },
 
     get $__isDirty() {
-        return this.$__inputDirty || this.$__state.$__dirty;
+        return this.$__dirty || (this.$__state && this.$__state.$__dirty);
     },
 
     $__reset: function() {
-        this.$__newProps = null;
-        this.$__inputDirty = false;
+        this.$__dirty = false;
+        this.$__updateQueued = false;
         var state = this.$__state;
         if (state) {
             state.$__reset();
@@ -421,7 +444,11 @@ Widget.prototype = widgetProto = {
         emitLifecycleEvent(this, eventType, eventArg);
     },
 
-    rerender: function(props) {
+    rerender: function(input) {
+        if (input) {
+            this.input = input;
+        }
+
         var self = this;
         var renderer = self.renderer;
 
@@ -435,12 +462,13 @@ Widget.prototype = widgetProto = {
 
         var fromEls = self.$__getRootEls({});
         var doc = self.$__document;
+        input = this.$__input;
 
         updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
             out.$__document = self.$__document;
-            renderer(props, out);
+            renderer(input, out);
             var result = new RenderResult(out);
             var targetNode = out.$__getOutput();
 
@@ -510,17 +538,6 @@ Widget.prototype = widgetProto = {
             }
 
             result.afterInsert(doc);
-
-            if (!props) {
-                // We have re-rendered with the new state so our state
-                // is no longer dirty. Before updating a widget
-                // we check if a widget is dirty. If a widget is not
-                // dirty then we abort the update. Therefore, if the
-                // widget was queued for update and the re-rendered
-                // before the update occurred then nothing will happen
-                // at the time of the update.
-                self.$__reset();
-            }
         });
     },
 
@@ -551,6 +568,11 @@ Widget.prototype = widgetProto = {
             eventListenerHandles.forEach(removeListener);
             this.$__domEventListenerHandles = null;
         }
+    },
+
+    get $__rawState() {
+        var state = this.$__state;
+        return state && state.$__raw;
     }
 };
 

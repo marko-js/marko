@@ -2,6 +2,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var charProps = require('char-props');
 
 function getFileNameNoExt(context) {
     let filename = path.basename(context.filename);
@@ -168,7 +169,16 @@ function classToObject(cls, transformHelper) {
             if(method.type != 'MethodDefinition') {
                 throw Error('Only methods are allowed on single file component class definitions.');
             }
-            return methodToProperty(method);
+
+            if (method.kind === 'method') {
+                return methodToProperty(method);
+            } else if (method.kind === 'constructor') {
+                let converted = methodToProperty(method);
+                converted.key.name = 'onCreate';
+                return converted;
+            } else {
+                return method;
+            }
         })
     };
 }
@@ -176,7 +186,29 @@ function classToObject(cls, transformHelper) {
 function handleClassDeclaration(classEl, transformHelper) {
     if(!/^class\s*\{/.test(classEl.tagString)) return;
 
-    let tree = esprima.parse('('+classEl.tagString+')');
+    let tree;
+    var wrappedSrc = '('+classEl.tagString+'\n)';
+
+    try {
+        tree = esprima.parse(wrappedSrc);
+    } catch(err) {
+        var message = 'Unable to parse JavaScript for componnet class. Error: ' + err;
+
+        if (err.index != null) {
+            var errorIndex = err.index;
+            // message += '\n' + err.description;
+            if (errorIndex != null && errorIndex >= 0) {
+                transformHelper.context.addError({
+                    pos: classEl.pos + errorIndex,
+                    message: message
+                });
+                return;
+            }
+        }
+
+        transformHelper.context.addError(classEl, message);
+        return;
+    }
     let expression = tree.body[0].expression;
     let object = classToObject(expression);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));

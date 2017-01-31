@@ -2,6 +2,7 @@ var widgetLookup = require('./util').$__widgetLookup;
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
+var registry = require('./registry');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -59,6 +60,8 @@ function handleBeginAsync(event) {
     asyncOut.data.$w = parentOut.data.$w;
 }
 
+
+
 function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
     var onInput = renderingLogic && renderingLogic.onInput;
     var typeName = widgetProps.type;
@@ -73,124 +76,92 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
             out.on('beginAsync', handleBeginAsync);
         }
 
-        var widgetConfig;
-        var widgetBody;
-        var widgetState; // This is the pending widget state that needs to be assigned to the new widget
-        var finalWidgetState; // This is the final widget state
-
-        var rootRerenderWidget = outGlobal.$w;
-        var isRerender = rootRerenderWidget !== undefined;
-
-        if (rootRerenderWidget) {
-            outGlobal.$w = null;
-        } else if (!input) {
-            // Make sure we always have a non-null input object
-            input = {};
-        }
-
-        var widgetArgs = input && input.$w || out.data.$w;
+        var widget = outGlobal.$w;
+        var isRerender = widget !== undefined;
+        var id = assignedId;
+        var isExisting;
         var customEvents;
         var scope;
 
-        var id = assignedId;
+        if (widget) {
+            id = widget.id;
+            isExisting = true;
+            outGlobal.$w = null;
+        } else {
+            var widgetArgs = input && input.$w || out.data.$w;
 
-        if (widgetArgs) {
-            scope = widgetArgs[0];
+            if (widgetArgs) {
+                scope = widgetArgs[0];
 
-            if (scope) {
-                scope = scope.id;
+                if (scope) {
+                    scope = scope.id;
+                }
+
+                var ref = widgetArgs[1];
+                if (ref != null) {
+                    ref = ref.toString();
+                }
+                id = id || resolveWidgetRef(out, ref, scope);
+                customEvents = widgetArgs[2];
+                delete input.$w;
             }
-
-            var ref = widgetArgs[1];
-            if (ref != null) {
-                ref = ref.toString();
-            }
-            id = id || resolveWidgetRef(out, ref, scope);
-            customEvents = widgetArgs[2];
-            delete input.$w;
         }
 
         var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-
         id = id || widgetsContext.$__nextWidgetId();
 
-        var existingWidget;
+        if (registry.$__isServer) {
+            widget = registry.$__createWidget(renderingLogic, input, out, typeName);
+            input = widget.$__updatedInput;
+        } else {
+            if (!widget) {
+                if (isRerender) {
+                    // Look in in the DOM to see if a widget with the same ID and type already exists.
+                    widget = widgetLookup[id];
+                    if (widget && widget.$__type !== typeName) {
+                        widget = undefined;
+                    }
+                }
 
-        if (rootRerenderWidget) {
-            existingWidget = rootRerenderWidget;
-            id = rootRerenderWidget.id;
-        } else if (isRerender) {
-            // Look in in the DOM to see if a widget with the same ID and type already exists.
-            existingWidget = widgetLookup[id];
-            if (existingWidget && existingWidget.$__type !== typeName) {
-                existingWidget = undefined;
-            }
-        }
-
-        if (input) {
-            if (onInput) {
-                var updatedInput;
-                if (existingWidget) {
-                    updatedInput = existingWidget.onInput(input, out);
+                if (widget) {
+                    isExisting = true;
                 } else {
-                    var lightweightWidget = Object.create(renderingLogic);
-                    updatedInput = lightweightWidget.onInput(input, out);
-                    widgetState = finalWidgetState = lightweightWidget.state;
-                    widgetConfig = lightweightWidget;
-                    delete widgetConfig.state;
+                    isExisting = false;
+                    // We need to create a new instance of the widget
+                    widget = registry.$__createWidget(typeName, id);
                 }
-                input = updatedInput === undefined ? input : updatedInput;
-            }
-            // Default to using the nested content as the widget body
-            widgetBody = input.renderBody;
-        }
 
-        if (existingWidget) {
-            var existingState = existingWidget.$__state;
+                // Set this flag to prevent the widget from being queued for update
+                // based on the new input. The widget is about to be rerendered
+                // so we don't want to queue it up as a result of calling `setInput()`
+                widget.$__updateQueued = true;
 
-            if (!widgetState) {
-                finalWidgetState = existingState && existingState.$__raw;
-            }
+                if (!isExisting) {
+                    widget.$__emitLifecycleEvent('create');
+                }
 
-            if (!rootRerenderWidget) {
-                // This is a nested widget found during a rerender. We don't want to needlessly
-                // rerender the widget if that is not necessary. If the widget is a stateful
-                // widget then we update the existing widget with the new state.
-                var shouldPreserve = existingState && !widgetBody && !existingWidget.$__isDirty;
+                input = widget.$__setInput(input, onInput, out);
 
-                // If the widget is not dirty (no state changes) and shouldUpdate() returns false
-                // then skip rerendering the widget.
-                if (shouldPreserve || !existingWidget.shouldUpdate(input, finalWidgetState)) {
-                    preserveWidgetEls(existingWidget, out, widgetsContext);
-                    return;
+                if (isExisting) {
+                    if (!widget.$__isDirty || !widget.shouldUpdate(input, widget.$__state)) {
+                        preserveWidgetEls(widget, out, widgetsContext);
+                        return;
+                    }
                 }
             }
+
+            widget.$__emitLifecycleEvent('render', out);
         }
 
-        var templateInput = input ||
-            (existingWidget && existingWidget.input) ||
-            (rootRerenderWidget && rootRerenderWidget.input) ||
-            {};
-
-        if (existingWidget) {
-            existingWidget.$__emitLifecycleEvent('beforeUpdate');
-            existingWidget.input = templateInput;
-        }
-
-        var widgetDef = widgetsContext.$__beginWidget(id);
-        widgetDef.$__type = typeName;
-        widgetDef.$__input = templateInput;
-        widgetDef.$__state = widgetState;
-        widgetDef.$__config = widgetConfig;
+        var widgetDef = widgetsContext.$__beginWidget(widget);
         widgetDef.$__customEvents = customEvents;
         widgetDef.$__scope = scope;
-        widgetDef.$__existingWidget = existingWidget;
         widgetDef.$__roots = roots;
-        widgetDef.b = widgetBody;
+        widgetDef.$__isExisting = isExisting;
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateInput, out, widgetDef, finalWidgetState);
+        templateRenderFunc(input, out, widgetDef, widget.$__rawState);
 
         widgetDef.$__end();
     };

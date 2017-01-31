@@ -10,19 +10,19 @@ module.exports = function(helpers) {
 
     expect(targetEl.innerHTML).to.contain('Hello Frank! You have 10 new messages.');
 
-    widget.setProps({
+    widget.input = {
         name: 'John',
         messageCount: 20
-    });
+    };
 
     widget.update();
 
     expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
 
-    widget.setProps({
+    widget.input = {
         name: 'Jane',
         messageCount: 30
-    });
+    };
 
     expect(targetEl.innerHTML).to.contain('Hello John! You have 20 new messages.');
 

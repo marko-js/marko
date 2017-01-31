@@ -1,4 +1,3 @@
-var updateManager = require('./update-manager');
 var extend = require('raptor-util/extend');
 
 function ensure(state, propertyName) {
@@ -43,7 +42,7 @@ State.prototype = {
         self.$__forced = null;
     },
 
-    $__replace: function(newState, noQueue) {
+    $__replace: function(newState) {
         var state = this;
         var key;
 
@@ -51,17 +50,17 @@ State.prototype = {
 
         for (key in rawState) {
             if (rawState.hasOwnProperty(key) && !newState.hasOwnProperty(key)) {
-                state.$__set(key, undefined, false /* ensure:false */, false /* forceDirty:false */, noQueue);
+                state.$__set(key, undefined, false /* ensure:false */, false /* forceDirty:false */);
             }
         }
 
         for (key in newState) {
             if (newState.hasOwnProperty(key)) {
-                state.$__set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */, noQueue);
+                state.$__set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */);
             }
         }
     },
-    $__set: function(name, value, shouldEnsure, forceDirty, noQueue) {
+    $__set: function(name, value, shouldEnsure, forceDirty) {
         var rawState = this.$__raw;
 
         if (shouldEnsure) {
@@ -80,9 +79,7 @@ State.prototype = {
             return;
         }
 
-        var clean = !this.$__dirty;
-
-        if (clean) {
+        if (!this.$__dirty) {
             // This is the first time we are modifying the widget state
             // so introduce some properties to do some tracking of
             // changes to the state
@@ -90,6 +87,7 @@ State.prototype = {
             this.$__old = rawState;
             this.$__raw = rawState = extend({}, rawState);
             this.$__changes = {};
+            this.$__widget.$__queueUpdate();
         }
 
         this.$__changes[name] = value;
@@ -100,12 +98,6 @@ State.prototype = {
         } else {
             // Otherwise, store the new value in the widget state
             rawState[name] = value;
-        }
-
-        if (clean && noQueue !== true) {
-            // If we were clean before then we are now dirty so queue
-            // up the widget for update
-            updateManager.$__queueWidgetUpdate(this.$__widget);
         }
     },
     toJSON: function() {

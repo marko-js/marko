@@ -8,9 +8,8 @@ var widgetsUtil = require('./util');
 var widgetLookup = widgetsUtil.$__widgetLookup;
 var getElementById = widgetsUtil.$__getElementById;
 var WidgetDef = require('./WidgetDef');
-var extend = require('raptor-util/extend');
-
-var registry; // We initialize this later to avoid issues with circular dependencies
+// var extend = require('raptor-util/extend');
+// var registry = require('./registry');
 
 function invokeWidgetEventHandler(widget, targetMethodName, args) {
     var method = widget[targetMethodName];
@@ -41,45 +40,28 @@ function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs
 }
 
 function initWidget(widgetDef, doc) {
-    var type = widgetDef.$__type;
-    var id = widgetDef.id;
-    var config = widgetDef.$__config;
-    var state = widgetDef.$__state;
+    var widget = widgetDef.$__widget;
     var scope = widgetDef.$__scope;
     var domEvents = widgetDef.$__domEvents;
     var customEvents = widgetDef.$__customEvents;
-    var existingWidget = widgetDef.$__existingWidget;
 
-    var el;
+    widget.$__reset();
+    widget.$__document = doc;
+
+    var isExisting = widgetDef.$__isExisting;
     var i;
     var len;
     var eventType;
     var targetMethodName;
-    var widget;
     var extraArgs;
+    var id = widget.id;
 
-    if (!existingWidget) {
-        existingWidget = widgetLookup[id];
-    }
-
-    if (existingWidget && existingWidget.$__type !== type) {
-        existingWidget = null;
-    }
-
-    if (existingWidget) {
-        existingWidget.$__reset();
-        existingWidget.$__removeDOMEventListeners();
-        widget = existingWidget;
-    } else {
-        widget = registry.$__createWidget(type, id, doc);
-    }
-
-    var els;
     var rootIds = widgetDef.$__roots;
-    var rootWidgets;
 
     if (rootIds) {
-        els = [];
+        var rootWidgets;
+
+        var els = [];
         for (i=0, len=rootIds.length; i<len; i++) {
             var rootId = rootIds[i];
             var nestedId = id + '-' + rootId;
@@ -91,7 +73,6 @@ function initWidget(widgetDef, doc) {
                 } else {
                     rootWidgets = widget.$__rootWidgets = [rootWidget];
                 }
-
             } else {
                 var rootEl = getElementById(doc, nestedId);
                 if (rootEl) {
@@ -101,86 +82,58 @@ function initWidget(widgetDef, doc) {
             }
         }
 
-        el = els[0];
-    } else {
-        el = getElementById(doc, id);
-        el._w = widget;
-        els = [el];
-    }
-
-    widgetLookup[id] = widget;
-
-    if (state) {
-        widget.$__state = new widget.$__State(widget, state);
-    }
-
-    if (widget.$__isWidget) {
-        widget.el = el;
+        widget.el = els[0];
         widget.els = els;
-        widget.$__rootWidgets = rootWidgets;
-
-        if (domEvents) {
-            var eventListenerHandles = [];
-
-            for (i=0, len=domEvents.length; i<len; i+=4) {
-                eventType = domEvents[i];
-                targetMethodName = domEvents[i+1];
-                var eventEl = getElementById(doc, domEvents[i+2]);
-                extraArgs = domEvents[i+3];
-
-                // The event mapping is for a DOM event (not a custom event)
-                addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
-            }
-
-            if (eventListenerHandles.length) {
-                widget.$__domEventListenerHandles = eventListenerHandles;
-            }
-        }
-
-        if (customEvents) {
-            widget.$__customEvents = {};
-            widget.$__scope = scope;
-
-            for (i=0, len=customEvents.length; i<len; i+=3) {
-                eventType = customEvents[i];
-                targetMethodName = customEvents[i+1];
-                extraArgs = customEvents[i+2];
-
-                widget.$__customEvents[eventType] = [targetMethodName, extraArgs];
-            }
-        }
-    } else {
-        config = config || {};
-        config.elId = id;
-        config.el = el;
-        config.els = els;
+        widgetLookup[id] = widget;
+    } else if (!isExisting) {
+        var el = getElementById(doc, id);
+        el._w = widget;
+        widget.el = el;
+        widget.els = [el];
+        widgetLookup[id] = widget;
     }
 
-    if (existingWidget) {
+    if (isExisting) {
+        widget.$__removeDOMEventListeners();
+    }
+
+    if (domEvents) {
+        var eventListenerHandles = [];
+
+        for (i=0, len=domEvents.length; i<len; i+=4) {
+            eventType = domEvents[i];
+            targetMethodName = domEvents[i+1];
+            var eventEl = getElementById(doc, domEvents[i+2]);
+            extraArgs = domEvents[i+3];
+
+            // The event mapping is for a DOM event (not a custom event)
+            addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
+        }
+
+        if (eventListenerHandles.length) {
+            widget.$__domEventListenerHandles = eventListenerHandles;
+        }
+    }
+
+    if (customEvents) {
+        widget.$__customEvents = {};
+        widget.$__scope = scope;
+
+        for (i=0, len=customEvents.length; i<len; i+=3) {
+            eventType = customEvents[i];
+            targetMethodName = customEvents[i+1];
+            extraArgs = customEvents[i+2];
+
+            widget.$__customEvents[eventType] = [targetMethodName, extraArgs];
+        }
+    }
+
+    if (isExisting) {
         widget.$__emitLifecycleEvent('update');
-        widget.$__emitLifecycleEvent('render', {});
     } else {
-        var initEventArgs = {
-            widget: widget,
-            config: config
-        };
-
-        events.emit('initWidget', initEventArgs);
-
-        widget.$__emitLifecycleEvent('beforeInit', initEventArgs);
-
-        if (config) extend(widget, config);
-        widget.input = widgetDef.$__input;
-
-        widget.$__initWidget(config);
-        widget.$__emitLifecycleEvent('afterInit', initEventArgs);
-
-        widget.$__emitLifecycleEvent('render', { firstRender: true });
-
+        events.emit('mountWidget', widget);
         widget.$__emitLifecycleEvent('mount');
     }
-
-    return widget;
 }
 
 /**
@@ -204,15 +157,9 @@ function initClientRendered(widgetDefs, doc) {
             initClientRendered(widgetDef.$__children, doc);
         }
 
-        if (!widgetDef.$__type) {
-            continue;
-        }
-
-        var widget = initWidget(
+        initWidget(
             widgetDef,
             doc);
-
-        widgetDef.$__widget = widget;
     }
 }
 
@@ -257,5 +204,3 @@ function initServerRendered(renderedWidgets, doc) {
 
 exports.$__initClientRendered = initClientRendered;
 exports.$__initServerRendered = initServerRendered;
-
-registry = require('./registry');

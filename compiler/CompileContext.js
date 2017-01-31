@@ -234,17 +234,22 @@ class CompileContext extends EventEmitter {
             let node = arguments[0];
             let message = arguments[1];
             let code = arguments[2];
+            let pos = arguments[3];
             errorInfo = {
                 node,
                 message,
-                code
+                code,
+                pos
             };
         } else if (typeof errorInfo === 'string') {
             let message = arguments[0];
             let code = arguments[1];
+            let pos = arguments[2];
+
             errorInfo = {
                 message,
-                code
+                code,
+                pos
             };
         }
 

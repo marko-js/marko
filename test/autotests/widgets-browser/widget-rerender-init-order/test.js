@@ -11,7 +11,7 @@ module.exports = function(helpers) {
 
     window.rerenderInitOrder = [];
 
-    widget.setProps('version', 1);
+    widget.input = { 'version':  1};
     widget.update();
 
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);

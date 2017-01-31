@@ -2,30 +2,30 @@
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var nextWidgetId = require('./util').$__nextWidgetId;
+var extend = require('raptor-util/extend');
+var registry = require('./registry');
+var EMPTY_OBJECT = {};
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for
  * a single widget and this information is used to instantiate the widget
  * later (after the rendered HTML has been added to the DOM)
  */
-function WidgetDef(id, out, widgetStack, widgetStackLen) {
-    this.id = id;
+function WidgetDef(widget, widgetId, out, widgetStack, widgetStackLen) {
     this.$__out = out; // The AsyncWriter that this widget is associated with
     this.$__widgetStack = widgetStack;
     this.$__widgetStackLen = widgetStackLen;
+    this.$__widget = widget;
+    this.id = widgetId;
 
-    this.$__type =              // The widget module type name that is passed to the factory
-        this.$__config =        // Widget config object (may be null)
-        this.$__state =         // Widget state object (may be null)
-        this.$__scope =         // The ID of the widget that this widget is scoped within
+    this.$__scope =         // The ID of the widget that this widget is scoped within
         this.$__customEvents =  // An array containing information about custom events
         this.$__roots =         // IDs of root elements if there are multiple root elements
-        this.b =
-        this.$__existingWidget =
         this.$__children = // An array of nested WidgetDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
-        this.$__widget = // This is used by RenderResult to reference the associated widget instance after creation
         undefined;
+
+    this.$__isExisting = false;
 
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
 }
@@ -33,14 +33,6 @@ function WidgetDef(id, out, widgetStack, widgetStackLen) {
 WidgetDef.prototype = {
     $__end: function() {
         this.$__widgetStack.length = this.$__widgetStackLen;
-    },
-
-    t: function(typeName) {
-        this.$__type = typeName;
-    },
-
-    c: function(config) {
-        this.$__config = config;
     },
 
     /**
@@ -108,19 +100,38 @@ WidgetDef.prototype = {
 };
 
 WidgetDef.$__deserialize = function(o, types) {
-    var extra = o[3];
-    var typeIndex = o[1];
+    var id        = o[0];
+    var typeName  = types[o[1]];
+    var input     = o[2];
+    var extra     = o[3];
+
+    var state = extra.s;
+    var widgetProps = extra.w;
+
+    var widget = registry.$__createWidget(typeName, id);
+
+    // Preview newly created widget from being queued for update since we are
+    // just building it from the server info
+    widget.$__updateQueued = true;
+
+    if (state) {
+        // We go through the setter here so that we convert the state object
+        // to an instance of `State`
+        widget.state = state;
+    }
+
+    widget.$__input = input || EMPTY_OBJECT;
+
+    if (widgetProps) {
+        extend(widget, widgetProps);
+    }
 
     return {
-        id: o[0],
-        $__type: types[typeIndex],
-        $__input: o[2],
+        $__widget: widget,
         $__roots: extra.r,
-        $__state: extra.s,
         $__scope: extra.p,
         $__domEvents: extra.d,
-        $__customEvents: extra.e,
-        $__config: extra.c
+        $__customEvents: extra.e
     };
 };
 

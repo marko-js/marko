@@ -9,7 +9,7 @@ module.exports = function(helpers) {
     expect(buttonWidget.el.innerHTML).to.contain('Frank');
     expect(buttonWidget.el.className).to.equal('app-button app-button-small');
 
-    widget.setProps({ name: 'John '});
+    widget.input = { name: 'John '};
     widget.update();
 
     expect(buttonWidget.el.innerHTML).to.contain('John');

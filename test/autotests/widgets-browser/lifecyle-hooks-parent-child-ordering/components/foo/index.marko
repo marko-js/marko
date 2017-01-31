@@ -1,0 +1,24 @@
+import hooks from '../../hooks';
+import { expect } from 'chai';
+
+class {
+    onCreate() {
+        hooks.record('foo:create');
+    }
+
+    onRender(){
+        hooks.record('foo:render');
+    }
+
+    onMount(){
+        hooks.record('foo:mount');
+    }
+
+    onUpdate(){
+        hooks.record('foo:update');
+    }
+}
+
+<div.foo>
+	Hello <span.name>${input.name}</span>!
+</div>

@@ -1,0 +1,23 @@
+import hooks from '../../hooks';
+
+class {
+    onCreate() {
+        hooks.record('foo', 'create', arguments, this);
+    }
+
+    onRender(){
+        hooks.record('foo', 'render', arguments, this);
+    }
+
+    onMount(){
+        hooks.record('foo', 'mount', arguments, this);
+    }
+
+    onUpdate(){
+        hooks.record('foo', 'update', arguments, this);
+    }
+}
+
+<div.foo>
+	Hello <span.name>${input.name}</span>!
+</div>

@@ -11,16 +11,25 @@ var isObjectEmpty = require('raptor-util/isObjectEmpty');
 function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];
-        var type = widgetDef.$__type;
-        if (!type) {
+        var customEvents = widgetDef.$__customEvents;
+        var widget = widgetDef.$__widget;
+        var state = widget.state;
+        var input = widget.input;
+
+        widget.state = undefined; // We don't use `delete` to avoid V8 deoptimization
+        widget.input = undefined; // We don't use `delete` to avoid V8 deoptimization
+
+        var typeName = widget.typeName;
+
+        if (!typeName) {
             continue;
         }
 
-        var typeIndex = typesLookup[type];
+        var typeIndex = typesLookup[typeName];
         if (typeIndex === undefined) {
             typeIndex = typesArray.length;
-            typesArray.push(type);
-            typesLookup[type] = typeIndex;
+            typesArray.push(typeName);
+            typesLookup[typeName] = typeIndex;
         }
 
         var children = widgetDef.$__children;
@@ -30,15 +39,15 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             flattenHelper(children, flattened, typesArray, typesLookup);
         }
 
-        var customEvents = widgetDef.$__customEvents;
-        var config = widgetDef.$__config;
 
+        var hasProps = false;
 
-        if (isObjectEmpty(config)) {
-            config = undefined;
+        for (var key in widget) {
+            if (widget[key] !== undefined) {
+                hasProps = true;
+                break;
+            }
         }
-
-        var state = widgetDef.$__state;
 
         if (state) {
             // Update state properties with an `undefined` value to have a `null`
@@ -55,7 +64,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
             d: widgetDef.$__domEvents,
             e: widgetDef.$__customEvents,
-            c: config,
+            w: hasProps ? widget : undefined,
             s: state,
             r: widgetDef.$__roots
         };
@@ -63,7 +72,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         flattened.push([
             widgetDef.id,        // 0 = id
             typeIndex,           // 1 = type
-            widgetDef.$__input,  // 2 = input
+            input,               // 2 = input
             extra                // 3
         ]);
     }

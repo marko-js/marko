@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var assert = require('assert');
+var markoWidgets = require('marko/widgets');
 
 function BrowserHelpers() {
     this.logOutput = [];
@@ -46,6 +47,10 @@ BrowserHelpers.prototype = {
 
     log: function(data) {
         this.logOutput.push(data);
+    },
+
+    getWidgetForEl: function(el) {
+        return markoWidgets.getWidgetForEl(el);
     },
 
 

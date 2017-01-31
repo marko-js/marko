@@ -6,7 +6,7 @@ var EMPTY_OBJECT = {};
 
 function WidgetsContext(out, root) {
     if (!root) {
-        root = new WidgetDef(null, out);
+        root = new WidgetDef(null, null, out);
     }
 
     this.$__out = out;
@@ -20,17 +20,19 @@ WidgetsContext.prototype = {
         return this.$__widgetStack[0].$__children;
     },
 
-    $__beginWidget: function(widgetId) {
+    $__beginWidget: function(widget) {
         var self = this;
         var widgetStack = self.$__widgetStack;
         var origLength = widgetStack.length;
         var parent = widgetStack[origLength - 1];
 
+        var widgetId = widget.id;
+
         if (!widgetId) {
-            widgetId = parent.$__nextId();
+            widgetId = widget.id = parent.$__nextId();
         }
 
-        var widgetDef = new WidgetDef(widgetId, this.$__out, widgetStack, origLength);
+        var widgetDef = new WidgetDef(widget, widgetId, this.$__out, widgetStack, origLength);
         this.$__widgetsById[widgetId] = widgetDef;
         parent.$__addChild(widgetDef);
         widgetStack.push(widgetDef);

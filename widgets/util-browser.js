@@ -24,15 +24,14 @@ function getWidgetForEl(el, doc) {
 
 var lifecycleEventMethods = {};
 
-['beforeDestroy',
-'destroy',
-'beforeUpdate',
-'update',
-'mount',
-'render',
-'beforeInit',
-'afterInit'].forEach(function(eventName) {
-    lifecycleEventMethods[eventName] = 'on' + eventName.charAt(0).toUpperCase() + eventName.substring(1);
+[
+    'create',
+    'render',
+    'update',
+    'mount',
+    'destroy',
+].forEach(function(eventName) {
+    lifecycleEventMethods[eventName] = 'on' + eventName[0].toUpperCase() + eventName.substring(1);
 });
 
 /**
@@ -75,8 +74,8 @@ function destroyElRecursive(el) {
     var curChild = el.firstChild;
     while(curChild) {
         if (curChild.nodeType == 1) {
-            destroyElRecursive(curChild);
             destroyWidgetForEl(curChild);
+            destroyElRecursive(curChild);
         }
         curChild = curChild.nextSibling;
     }
