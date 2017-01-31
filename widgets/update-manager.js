@@ -66,7 +66,6 @@ function updateWidgets(queue) {
     //       since we will still get to them at the end
     for (var i=0; i<queue.length; i++) {
         var widget = queue[i];
-        widget.$__updateQueued = false; // Reset the "__updateQueued" flag
         widget.update(); // Do the actual widget update
     }
 
@@ -103,17 +102,6 @@ function batchUpdate(func) {
 }
 
 function queueWidgetUpdate(widget) {
-    if (widget.$__updateQueued) {
-        // The widget has already been queued up for an update. Once
-        // the widget has actually been updated we will reset the
-        // "__updateQueued" flag so that it can be queued up again.
-        // Since the widget has already been queued up there is nothing
-        // that needs to be done.
-        return;
-    }
-
-    widget.$__updateQueued = true;
-
     var batchStackLen = batchStack.length;
 
     if (batchStackLen) {
