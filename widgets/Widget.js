@@ -387,7 +387,6 @@ Widget.prototype = widgetProto = {
 
     $__queueUpdate: function() {
         if (!this.$__updateQueued) {
-            this.$__updateQueued = true;
             updateManager.$__queueWidgetUpdate(this);
         }
     },
