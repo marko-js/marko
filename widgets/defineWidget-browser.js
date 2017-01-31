@@ -18,7 +18,7 @@ module.exports = function defineWidget(def, renderer) {
         WidgetClass = def;
         proto = WidgetClass.prototype;
     } else if (typeof def === 'object') {
-        WidgetClass = def.init || function() {};
+        WidgetClass = function() {};
         proto = WidgetClass.prototype = def;
     } else {
         throw TypeError();
@@ -43,7 +43,7 @@ module.exports = function defineWidget(def, renderer) {
     // we he have set up the prototype chain using the inherit function
     proto = Widget.prototype = WidgetClass.prototype;
 
-    proto.$__initWidget = WidgetClass;
+    proto.onCreate = proto.onCreate || WidgetClass;
 
     proto.constructor = def.constructor = Widget;
 
