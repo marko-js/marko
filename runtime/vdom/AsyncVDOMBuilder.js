@@ -314,6 +314,6 @@ proto.e = proto.element;
 proto.be = proto.beginElement;
 proto.ee = proto.endElement;
 proto.t = proto.text;
-proto.h = proto.write = proto.html;
+proto.h = proto.w = proto.write = proto.html;
 
 module.exports = AsyncVDOMBuilder;
