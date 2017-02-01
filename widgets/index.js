@@ -6,7 +6,6 @@
 var warp10 = require('warp10');
 var WidgetsContext = require('./WidgetsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
-var isObjectEmpty = require('raptor-util/isObjectEmpty');
 
 function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     for (var i = 0, len = widgets.length; i < len; i++) {
@@ -135,11 +134,6 @@ exports.getRenderedWidgets = function(widgetsContext) {
     var renderedWidgets = getRenderedWidgets(widgetsContext);
     return warp10.stringifyPrepare(renderedWidgets);
 };
-
-exports.defineComponent = require('./defineComponent');
-exports.defineWidget = require('./defineWidget');
-exports.defineRenderer = require('./defineRenderer');
-exports.makeRenderable = exports.renderable = require('../runtime/renderable');
 
 exports.r = require('./renderer');
 

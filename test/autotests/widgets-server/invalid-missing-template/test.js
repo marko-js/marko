@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var defineComponent = require('marko/widgets').defineComponent;
+    var defineComponent = require('marko/widgets/legacy').defineComponent;
     expect(function() {
         defineComponent({
         	// template: require.resolve('./template.marko'),
