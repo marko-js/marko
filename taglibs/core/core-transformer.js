@@ -164,11 +164,16 @@ var coreAttrHandlers = [
         'include', function(attr, node, el) {
             var context = this.context;
 
-            if (attr.argument) {
-                var includeNode = context.createNodeForEl('include', null, attr.argument);
-                node.appendChild(includeNode);
+            if (typeof attr.argument === 'string') {
+                if (attr.argument) {
+                    var includeNode = context.createNodeForEl('include', null, attr.argument);
+                    node.appendChild(includeNode);                    
+                } else {
+                    context.addError(el, 'The include attribute must have an argument. For example: include("./target.marko") or include(data.renderBody)');
+                }
+
             } else {
-                context.addError(el, 'The include attribute must have an argument. For example: include("./target.marko") or include(data.renderBody)');
+                return false;
             }
         }
     ]

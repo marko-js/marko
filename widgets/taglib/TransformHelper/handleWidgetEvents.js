@@ -146,10 +146,7 @@ module.exports = function handleWidgetEvents() {
             el.removeAttribute(attrName);
 
             if (isCustomTag) {
-                var widgetArgs = this.getWidgetArgs();
-                if (widgetArgs.getId() == null) {
-                    widgetArgs.setId(builder.literal(this.nextUniqueId()));
-                }
+                this.assignWidgetId(true /* repeated */);
 
                 // We are adding an event listener for a custom event (not a DOM event)
                 if (eventType.startsWith('-')) {

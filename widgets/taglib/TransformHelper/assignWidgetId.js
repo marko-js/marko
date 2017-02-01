@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function assignWidgetId(isRepeated) {
+
     // First check if we have already assigned an ID to thie element
     var widgetIdInfo = this.widgetIdInfo;
 
