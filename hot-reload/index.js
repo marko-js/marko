@@ -2,6 +2,7 @@ require('raptor-polyfill/string/endsWith');
 
 const nodePath = require('path');
 const fs = require('fs');
+const nodeRequire = require('../node-require');
 
 var compiler;
 var marko;
@@ -10,7 +11,6 @@ var widgets;
 
 var modifiedId = 1;
 var HOT_RELOAD_KEY = Symbol('HOT_RELOAD');
-
 
 function cleaResolvePathCache() {
     var modulePathCache = require('module').Module._pathCache;
@@ -105,10 +105,51 @@ exports.enable = function() {
     };
 };
 
-exports.handleFileModified = function(path) {
+/**
+ * Checks whether a path ends with a custom Marko extension
+ */
+function _endsWithMarkoExtension(path, requireExtensions) {
+    for (var i = 0; i < requireExtensions.length; i++) {
+        if (path.endsWith(requireExtensions[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function normalizeExtension(extension) {
+    if (extension.charAt(0) !== '.') {
+        extension = '.' + extension;
+    }
+    return extension;
+}
+
+exports.handleFileModified = function(path, options) {
     if (!fs.existsSync(path)) {
         console.log('[marko/hot-reload] WARNING cannot resolve template path: ', path);
         return;
+    }
+
+    options = options || {};
+
+    // Default hot-reloaded extensions
+    var requireExtensions = ['.marko', '.marko.html', '.marko.xml'];
+
+    if (options.extension) {
+        requireExtensions.push(options.extension);
+    }
+
+    if (options.extensions) {
+        requireExtensions = requireExtensions.concat(options.extensions);
+    }
+
+    var nodeRequireExtensions = nodeRequire.getExtensions();
+    if (nodeRequireExtensions) {
+        requireExtensions = requireExtensions.concat(nodeRequireExtensions);
+    }
+
+    for (var i = 0; i < requireExtensions.length; i++) {
+        requireExtensions[i] = normalizeExtension(requireExtensions[i]);
     }
 
     var basename = nodePath.basename(path);
@@ -130,7 +171,7 @@ exports.handleFileModified = function(path) {
                 delete require.cache[filename];
             }
         });
-    } else if (path.endsWith('.marko') || path.endsWith('.marko.html') || path.endsWith('.marko.xml')) {
+    } else if (_endsWithMarkoExtension(path, requireExtensions)) {
         handleFileModified();
         delete require.cache[path];
         delete require.cache[path + '.js'];
