@@ -4,7 +4,6 @@ var repeatedRegExp = /\[\]$/;
 var nextWidgetId = require('./util').$__nextWidgetId;
 var extend = require('raptor-util/extend');
 var registry = require('./registry');
-var EMPTY_OBJECT = {};
 
 /**
  * A WidgetDef is used to hold the metadata collected at runtime for
@@ -120,7 +119,7 @@ WidgetDef.$__deserialize = function(o, types) {
         widget.state = state;
     }
 
-    widget.$__input = input || EMPTY_OBJECT;
+    widget.$__input = input;
 
     if (widgetProps) {
         extend(widget, widgetProps);

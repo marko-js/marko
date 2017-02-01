@@ -163,11 +163,13 @@ function Widget(id, doc) {
         this.$__domEventListenerHandles =
         this.$__customEvents =
         this.$__scope =
+        this.$__renderInput =
         null;
 
     this.$__destroyed =
         this.$__updateQueued =
         this.$__dirty =
+        this.$__settingInput =
         false;
 
     this.$__document = doc;
@@ -316,12 +318,6 @@ Widget.prototype = widgetProto = {
             this.$__state = null;
         }
     },
-    get input() {
-        return this.$__input;
-    },
-    set input(newInput) {
-        this.$__setInput(newInput);
-    },
     setState: function(name, value) {
         var state = this.$__state;
 
@@ -352,14 +348,16 @@ Widget.prototype = widgetProto = {
         this.$__state.$__replace(newState);
     },
 
-    /**
-     * Recalculate the new state from the given props using the widget's
-     * getInitialState(props) method. If the widget does not have a
-     * getInitialState(props) then it is re-rendered with the new props
-     * as input.
-     *
-     * @param {Object} props The widget's new props
-     */
+    get input() {
+        return this.$__input;
+    },
+    set input(newInput) {
+        if (this.$__settingInput) {
+            this.$__input = newInput;
+        } else {
+            this.$__setInput(newInput);
+        }
+    },
     $__setInput: function(newInput, onInput, out) {
         onInput = onInput || this.onInput;
         var updatedInput;
@@ -368,13 +366,16 @@ Widget.prototype = widgetProto = {
         this.$__input = undefined;
 
         if (onInput) {
+            // We need to set a flag to preview `this.input = foo` inside
+            // onInput causing infinite recursion
+            this.$__settingInput = true;
             updatedInput = onInput.call(this, newInput || {}, out);
+            this.$__settingInput = false;
         }
 
-        newInput = updatedInput || newInput;
+        newInput = this.$__renderInput = updatedInput || newInput;
 
-        if (checkInputChanged(this, oldInput, newInput)) {
-            this.$__dirty = true;
+        if ((this.$__dirty = checkInputChanged(this, oldInput, newInput))) {
             this.$__queueUpdate();
         }
 
@@ -425,6 +426,7 @@ Widget.prototype = widgetProto = {
     $__reset: function() {
         this.$__dirty = false;
         this.$__updateQueued = false;
+        this.$__renderInput = null;
         var state = this.$__state;
         if (state) {
             state.$__reset();
@@ -461,7 +463,7 @@ Widget.prototype = widgetProto = {
 
         var fromEls = self.$__getRootEls({});
         var doc = self.$__document;
-        input = this.$__input;
+        input = this.$__renderInput || this.$__input;
 
         updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;

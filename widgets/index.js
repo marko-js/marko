@@ -11,6 +11,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     for (var i = 0, len = widgets.length; i < len; i++) {
         var widgetDef = widgets[i];
         var customEvents = widgetDef.$__customEvents;
+        var id = widgetDef.id;
         var widget = widgetDef.$__widget;
         var state = widget.state;
         var input = widget.input;
@@ -19,6 +20,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         widget.state = undefined; // We don't use `delete` to avoid V8 deoptimization
         widget.input = undefined; // We don't use `delete` to avoid V8 deoptimization
         widget.typeName = undefined;
+        widget.id = undefined;
 
 
         if (!typeName) {
@@ -43,9 +45,8 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         var hasProps = false;
 
         for (var key in widget) {
-            if (widget[key] !== undefined) {
+            if (widget.hasOwnProperty(key) && widget[key] !== undefined) {
                 hasProps = true;
-                break;
             }
         }
 
@@ -70,7 +71,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         };
 
         flattened.push([
-            widgetDef.id,        // 0 = id
+            id,                  // 0 = id
             typeIndex,           // 1 = type
             input,               // 2 = input
             extra                // 3

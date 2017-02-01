@@ -113,6 +113,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
         if (registry.$__isServer) {
             widget = registry.$__createWidget(renderingLogic, id, input, out, typeName);
             input = widget.$__updatedInput;
+            widget.$__updatedInput = undefined; // We don't want $__updatedInput to be serialized to the browser
         } else {
             if (!widget) {
                 if (isRerender) {

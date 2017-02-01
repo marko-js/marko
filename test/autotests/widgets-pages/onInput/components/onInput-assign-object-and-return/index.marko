@@ -1,0 +1,20 @@
+class {
+    onInput(input) {
+        this.input = {
+            name: input.name.toUpperCase()
+        };
+
+        return {
+            name: input.name.toLowerCase()
+        };
+    }
+
+    onMount() {
+        var widgetsLookup = window.widgets || (window.widgets = {});
+        widgetsLookup['onInput-assign-object-and-return'] = this;
+    }
+}
+
+<div>
+    Hello <span.name>${input.name}</span>!
+</div>
