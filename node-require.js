@@ -5,6 +5,7 @@ const path = require('path');
 const resolveFrom = require('resolve-from');
 const fs = require('fs');
 const fsReadOptions = { encoding: 'utf8' };
+const MARKO_EXTENSIONS = Symbol('MARKO_EXTENSIONS');
 
 function normalizeExtension(extension) {
     if (extension.charAt(0) !== '.') {
@@ -123,12 +124,20 @@ function install(options) {
         module._compile(compiledSrc, targetFile);
     }
 
+    requireExtensions[MARKO_EXTENSIONS] = requireExtensions[MARKO_EXTENSIONS] ||
+        (requireExtensions[MARKO_EXTENSIONS] = []);
+
     extensions.forEach((extension) => {
         extension = normalizeExtension(extension);
         requireExtensions[extension] = markoRequireExtension;
+        requireExtensions[MARKO_EXTENSIONS].push(extension);
     });
 }
 
 install();
 
 exports.install = install;
+
+exports.getExtensions = function() {
+    return require.extensions[MARKO_EXTENSIONS];
+};
