@@ -1,3 +1,5 @@
+'use strict';
+
 var extend = require('raptor-util/extend');
 
 function createServerWidgetClass(renderingLogic) {
