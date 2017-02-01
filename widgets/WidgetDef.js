@@ -108,7 +108,7 @@ WidgetDef.$__deserialize = function(o, types) {
     var state = extra.s;
     var widgetProps = extra.w;
 
-    var widget = registry.$__createWidget(typeName, id);
+    var widget = typeName /* legacy */ && registry.$__createWidget(typeName, id);
 
     // Preview newly created widget from being queued for update since we are
     // just building it from the server info

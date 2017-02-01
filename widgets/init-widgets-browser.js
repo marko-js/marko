@@ -41,6 +41,11 @@ function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs
 
 function initWidget(widgetDef, doc) {
     var widget = widgetDef.$__widget;
+
+    if (!widget || !widget.$__isWidget) {
+        return; // legacy
+    }
+
     var scope = widgetDef.$__scope;
     var domEvents = widgetDef.$__domEvents;
     var customEvents = widgetDef.$__customEvents;

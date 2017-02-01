@@ -2,7 +2,6 @@
 
 var path = require('path');
 var fs = require('fs');
-var charProps = require('char-props');
 
 function getFileNameNoExt(context) {
     let filename = path.basename(context.filename);

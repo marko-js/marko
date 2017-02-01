@@ -1,5 +1,5 @@
-var marko = require('../');
-var makeRenderable = require('../runtime/renderable');
+var marko = require('../../');
+var makeRenderable = require('../../runtime/renderable');
 
 module.exports = function defineRenderer(renderingLogic) {
     var renderer = renderingLogic.renderer;
