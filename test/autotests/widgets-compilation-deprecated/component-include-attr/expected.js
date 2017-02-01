@@ -1,8 +1,9 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
     marko_widgets = require("marko/widgets/legacy"),
     marko_registerWidget = marko_widgets.rw,
+    marko_defineWidget = marko_widgets.w,
     marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/component-include-attr/index", function() {
-      return require("./");
+      return marko_defineWidget(require("./"));
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,

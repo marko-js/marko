@@ -28,8 +28,17 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
     }
 
     if (!def) {
+        var returnValue = builder.require(builder.literal(path));
+
+        if (transformHelper.isLegacyWidget) {
+            var defineWidget = context.addStaticVar('marko_defineWidget',
+                builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('w')));
+
+            returnValue = builder.functionCall(defineWidget, [returnValue]);
+        }
+
         def = builder.functionDeclaration(null, [] /* params */, [
-            builder.returnStatement(builder.require(builder.literal(path)))
+            builder.returnStatement(returnValue)
         ]);
     }
 
