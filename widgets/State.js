@@ -2,7 +2,7 @@ var extend = require('raptor-util/extend');
 
 function ensure(state, propertyName) {
     var proto = state.constructor.prototype;
-    if (!proto.hasOwnProperty(propertyName)) {
+    if (!(propertyName in proto)) {
         Object.defineProperty(proto, propertyName, {
             get: function() {
                 return this.$__raw[propertyName];
@@ -25,11 +25,13 @@ function State(widget, initialState) {
 
     if (initialState) {
         for(var key in initialState) {
-            if (initialState.hasOwnProperty(key)) {
+            if (initialState[HAS_OWN_PROP](key)) {
                 ensure(this, key);
             }
         }
     }
+
+    Object.seal(this);
 }
 
 State.prototype = {
@@ -49,15 +51,13 @@ State.prototype = {
         var rawState = this.$__raw;
 
         for (key in rawState) {
-            if (rawState.hasOwnProperty(key) && !newState.hasOwnProperty(key)) {
+            if (!(key in newState)) {
                 state.$__set(key, undefined, false /* ensure:false */, false /* forceDirty:false */);
             }
         }
 
         for (key in newState) {
-            if (newState.hasOwnProperty(key)) {
-                state.$__set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */);
-            }
+            state.$__set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */);
         }
     },
     $__set: function(name, value, shouldEnsure, forceDirty) {
