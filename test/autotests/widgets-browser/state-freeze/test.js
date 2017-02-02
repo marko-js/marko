@@ -7,5 +7,5 @@ module.exports = function(helpers) {
 
     expect(function() {
         widget.state.foo = 'bar';
-    }).to.throw(TypeError, 'Can\'t add property foo');
+    }).to.throw(TypeError);
 };
