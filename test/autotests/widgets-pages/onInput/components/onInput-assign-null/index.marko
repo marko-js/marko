@@ -1,0 +1,14 @@
+class {
+    onInput(input) {
+        this.input = null;
+    }
+
+    onMount() {
+        var widgetsLookup = window.widgets || (window.widgets = {});
+        widgetsLookup['onInput-assign-null'] = this;
+    }
+}
+
+<div>
+    Hello <span.name>${input.name}</span>!
+</div>

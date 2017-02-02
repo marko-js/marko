@@ -8,6 +8,12 @@ function BrowserHelpers() {
 }
 
 BrowserHelpers.prototype = {
+    triggerEvent: function(el, type) {
+        var ev = document.createEvent("Event");
+        ev.initEvent(type, true, true);
+        el.dispatchEvent(ev);
+    },
+
     triggerMouseEvent: function(el, type) {
         var ev = document.createEvent("MouseEvent");
         ev.initMouseEvent(

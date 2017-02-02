@@ -14,7 +14,6 @@ function createServerWidgetClass(renderingLogic) {
             if (this.onCreate) {
                 this.onCreate();
             }
-
             if (this.onInput) {
                 var updatedInput = this.onInput(input, out) || input;
 
@@ -23,7 +22,6 @@ function createServerWidgetClass(renderingLogic) {
                 }
 
                 this.$__updatedInput = updatedInput;
-
             } else {
                 this.$__input = this.$__updatedInput = input;
             }
@@ -36,7 +34,6 @@ function createServerWidgetClass(renderingLogic) {
         get input() {
             return this.$__input;
         }
-
 
         set state(newState) {
             this.$__state = newState;
@@ -63,16 +60,6 @@ function createWidget(renderingLogic, id, input, out, typeName) {
     }
 
     var widget = new ServerWidget(id, input, out, typeName);
-    var updatedInput;
-
-    updatedInput = updatedInput || input;
-
-    if (widget.$__input === undefined) {
-        widget.$__input = updatedInput;
-    }
-
-    widget.$__updatedInput = updatedInput;
-
     return widget;
 }
 
