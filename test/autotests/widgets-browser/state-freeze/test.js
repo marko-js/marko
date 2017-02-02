@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 module.exports = function(helpers) {
     var widget = helpers.mount(require('./index'), {});
 
-    expect(() => {
+    expect(function() {
         widget.state.foo = 'bar';
     }).to.throw(TypeError, 'Can\'t add property foo');
 };
