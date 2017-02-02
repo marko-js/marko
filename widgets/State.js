@@ -25,9 +25,7 @@ function State(widget, initialState) {
 
     if (initialState) {
         for(var key in initialState) {
-            if (initialState[HAS_OWN_PROP](key)) {
-                ensure(this, key);
-            }
+            ensure(this, key);
         }
     }
 
