@@ -8,4 +8,8 @@ describe(path.basename(__dirname), function() {
         widget.setLabel('New Label');
         expect(widget.el.innerHTML).to.equal('New Label');
     });
+
+    it('should allow UI component to only have a widget and an index.marko', function() {
+        expect(window.widgetOnly).to.be.an('object');
+    });
 });

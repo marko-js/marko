@@ -1,6 +1,7 @@
 'use strict';
 
-var extend = require('raptor-util/extend');
+const extend = require('raptor-util/extend');
+const SERVER_WIDGET_KEY = Symbol();
 
 function createServerWidgetClass(renderingLogic) {
     class ServerWidget {
@@ -53,10 +54,9 @@ function createServerWidgetClass(renderingLogic) {
     return ServerWidget;
 }
 function createWidget(renderingLogic, id, input, out, typeName) {
-
-    var ServerWidget = renderingLogic.ServerWidget;
+    var ServerWidget = renderingLogic[SERVER_WIDGET_KEY];
     if (!ServerWidget) {
-        ServerWidget = renderingLogic.ServerWidget = createServerWidgetClass(renderingLogic);
+        ServerWidget = renderingLogic[SERVER_WIDGET_KEY] = createServerWidgetClass(renderingLogic);
     }
 
     var widget = new ServerWidget(id, input, out, typeName);
