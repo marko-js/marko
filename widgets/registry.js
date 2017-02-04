@@ -26,6 +26,10 @@ function createServerWidgetClass(renderingLogic) {
             } else {
                 this.$__input = this.$__updatedInput = input;
             }
+
+            if (this.onRender) {
+                this.onRender(out);
+            }
         }
 
         set input(newInput) {
