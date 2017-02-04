@@ -47,7 +47,13 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
         el.setAttributeValue('class', finalClassNames[0]);
     } else {
 
-        el.setAttributeValue('class', builder.functionCall(context.helper('classList'), finalClassNames));
+        el.setAttributeValue(
+            'class',
+            builder.functionCall(
+                context.helper('classList'),
+                [
+                    builder.literal(finalClassNames)
+                ]));
     }
 }
 
@@ -252,7 +258,7 @@ class Parser {
                 }
 
                 parsedAttributes.push(attrDef);
-            });            
+            });
         }
 
         var elDef = {
