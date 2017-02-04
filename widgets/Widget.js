@@ -205,7 +205,9 @@ Widget.prototype = widgetProto = {
             handleCustomEventWithMethodListener(this, targetMethodName, args, extraArgs);
         }
 
-        return emit.apply(this, arguments);
+        if (this.listenerCount(eventType)) {
+            return emit.apply(this, arguments);
+        }
     },
     getElId: function (widgetElId, index) {
         return getElIdHelper(this, widgetElId, index);

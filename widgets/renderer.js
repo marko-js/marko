@@ -1,4 +1,6 @@
-var widgetLookup = require('./util').$__widgetLookup;
+var widgetsUtil = require('./util');
+var widgetLookup = widgetsUtil.$__widgetLookup;
+var emitLifecycleEvent = widgetsUtil.$__emitLifecycleEvent;
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var WidgetsContext = require('./WidgetsContext');
@@ -72,9 +74,11 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
     return function renderer(input, out) {
         var outGlobal = out.global;
 
-        if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
-            outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
-            out.on('beginAsync', handleBeginAsync);
+        if (!out.isSync()) {
+            if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
+                outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
+                out.on('beginAsync', handleBeginAsync);
+            }
         }
 
         var widget = outGlobal.$w;
@@ -139,7 +143,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
                 widget.$__updateQueued = true;
 
                 if (!isExisting) {
-                    widget.$__emitLifecycleEvent('create');
+                    emitLifecycleEvent(widget, 'create');
                 }
 
                 input = widget.$__setInput(input, onInput, out);
@@ -152,7 +156,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
                 }
             }
 
-            widget.$__emitLifecycleEvent('render', out);
+            emitLifecycleEvent(widget, 'render', out);
         }
 
         var widgetDef = widgetsContext.$__beginWidget(widget);
