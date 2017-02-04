@@ -137,57 +137,69 @@ A big part of this release is a shift in focus from Marko being merely a templat
 
 You will no longer need to install `marko-widgets` as an external library, and there is more cohesion between the templates and components/widgets.
 
-### New widget lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
+### Improved component lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
-- **`onInput(input, out)`** replaces `getInitialProps`, `getInitialState` and `getWidgetConfig`
 
-- **`onMount()`** - replaces `init` (which runs when the component is first mounted to the DOM)
+- `getInitialState()` ➔ `onInput(input)`
+- `getWidgetConfig()` ➔ `onInput(input)`
+- `init(config)` ➔ `onMount()`
+- `getTemplateData(input, state)` ➔ (no longer needed)
+- `getInitialProps(input)` ➔ (no longer needed)
 
-**Old:**
+
 ```js
-{
-    getInitialProps(input) {
-        return {
-            initialCount: input.initialCount || 0
+class {
+    onCreate(input) {
+        this.state = {
+            count: 0
         }
+        this.initialCount = input.
     }
-    getInitialState(input) {
-        return {
-            count: input.initialCount
-        };
-    }
-    getWidgetConfig(input) {
-        return {
-            initialCount: input.initialCount
-        }
-    }
-    getTemplateData(state, input) {
-        return {
-            count: state.count
-        }
-    }
-    init(config) {
-        this.initialCount = config.initialCount;
-        console.log('the component mounted!')
-    }
-}
-```
 
-**New:**
-```js
-{
     onInput(input) {
-        var initialCount = input.count || 0;
-        this.state = { count: initialCount };
-        this.initialCount = initialCount;
-    }
-    getTemplateData(state, input) {
-        return {
-            count: state.count
+        if (input.count) {
+            // if the parent component passes a value
+            // for count, we'll reset our state to that
+            // value
+            this.state.count = input.count;
+            this.initialCount = input.count;
         }
     }
+
+    onRender(out) {
+        // Called for every render. This widget
+        // may or may not be mounted.
+        // During render we have access to the `out`.
+        console.log('The template is about to be rendered!');
+    }
+
     onMount() {
-        console.log('the component mounted!')
+        console.log('The component has mounted!');
+
+        console.log('Count: ' + this.state.count);
+        console.log('Initial count: ' + this.initialCount);
+    }
+
+    onUpdate() {
+        console.log('The DOM has been updated!');
+    }
+
+    onDestroy() {
+        console.log('The component is about to be destroyed :(')
+    }
+
+    // Helper methods:
+
+    reset() {
+        this.state.count = this.initialCount;        
+    }
+
+    increment() {
+        this.state.count++;
+    }
+
+    decrement() {
+        this.state.count--;
     }
 }
 ```
