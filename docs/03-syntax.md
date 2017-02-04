@@ -14,7 +14,7 @@ When you render a Marko template, you pass input data that is then available wit
 </div>
 ```
 
-You can actually pass any javascript expression here and the result of the expression will be inserted into the HTML output:
+You can actually pass any JavaScript expression here and the result of the expression will be inserted into the HTML output:
 
 ```xml
 <div>
@@ -68,7 +68,7 @@ A big improvement over HTML are the typed attributes Marko provides (instead of 
 
 ### Attribute expressions
 
-Any javascript expression is a valid attribute value, provided it meets the following criteria:
+Any JavaScript expression is a valid attribute value, provided it meets the following criteria:
 
 _It does not contain any spaces_
 
@@ -95,7 +95,7 @@ _Or, commas are used to delimit attributes_
 tag sum=1 + 2, difference=3 - 4
 ```
 
-> **ProTip:** If you use commas to separate two attributes, you must use commas to separate _all_ attributes for that tag.
+> **Note:** If you use commas to separate two attributes, you must use commas to separate _all_ attributes for that tag.
 
 #### Attribute whitespace
 
@@ -131,10 +131,10 @@ With a value of `false` for `active`, the output would be the following:
 ### Dynamic attributes
 You can use the `${}` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
 ```js
-var attrs = { class:'active', href:'https://ebay.com/' };
+template.render({ attrs:{ class:'active', href:'https://ebay.com/' } });
 ```
 ```xml
-<a ${attrs} target="_blank">eBay</a>
+<a ${input.attrs} target="_blank">eBay</a>
 ```
 would output the following HTML:
 ```html
@@ -173,6 +173,24 @@ In both cases, the output will be the same:
 <div class="a c"></div>
 ```
 
+## Shorthand attributes
+
+Marko provides a shorthand for declaring classes and ids on an element:
+
+```xml
+<div.my-class/>
+<span#my-id/>
+<button#submit.primary.large/>
+```
+
+Yields this HTML:
+
+```html
+<div class="my-class"></div>
+<span id="my-id"></span>
+<button id="submit" class="primary large"></button>
+```
+
 ## Directives
 
 Directives are denoted by parenthesis and take an argument instead of a value.  Many directives may be used as both tags and attributes.
@@ -189,7 +207,7 @@ Directives are denoted by parenthesis and take an argument instead of a value.  
 </strong>
 ```
 
-Most directives support javascript expressions, and some even support multiple arguments:
+Most directives support JavaScript expressions, and some even support multiple arguments:
 
 ```xml
 <include(target, input)/>
@@ -197,14 +215,16 @@ Most directives support javascript expressions, and some even support multiple a
 
 Others allow a custom syntax:
 ```xml
-<await(value from promise)/>
+<for(item in items)/>
 ```
 
 Directives are used by many of our [Core Tags]() for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features.  You can also use them in your own [Custom Tags]().
 
-## Dynamic javascript
+## Inline JavaScript
 
-If you want to run JavaScript within the context of your template, without producing output, you can insert a single-line Javascript statement using the `$ <code>` syntax.
+> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`]() it.
+
+To execute JavaScript in your template you can insert a Javascript statement using the `$ <code>` syntax.
 
 A line that starts with a `$` followed by a space will execute the code that follows.
 
@@ -217,19 +237,51 @@ $ var name = input.name;
 </div>
 ```
 
-If you have multiple lines of JavaScript to insert, you can use the `$${ <code> }` syntax.  The code inside the `{}` will be executed.
+A statement may continue onto subsequent lines if new lines are bounded by `{}`, `[]`, `()`, ``` `` ```, or `/**/`:
 
 ```xml
-$${
-    var id = 0;
-    function nextId() {
-        return id++;
-    }
-}
+$ var person = {
+    name: 'Frank',
+    age: 32
+};
+```
 
-<div>Hello, World ${nextId()}</div>
-<div>Hello, World ${nextId()}</div>
-<div>Hello, World ${nextId()}</div>
+Multiple statements or an unbounded statement may be used by wrapping the statement(s) in a block:
+
+```xml
+$ {
+    var bgColor = getRandomColor();
+    var textColor = isLight(bgColor)
+        ? 'black'
+        : 'white';
+}
+```
+
+### Static JavaScript
+> **Static:** The JavaScript code that follows `static` will run once when the template is loaded and be shared by all calls to render. It must be declared at the top level and does not have access to values passed in at render.
+
+Inline JavaScript will run each time your template is rendered, if you only want to initialize some values once, use the `static` keyword:
+
+```xml
+static var count = 0;
+static var formatter = new Formatter();
+
+static function sum(a, b) {
+    return a + b;
+};
+
+<div>${formatter.format(sum(2, 3))}</div>
+```
+
+Like inline Javascript, multiple statements or an unbounded statement may be used by wrapping the statement(s) in a block:
+
+```xml
+static {
+    var base = 2;
+    function sum(a, b) {
+        return base + a + b;
+    };
+}
 ```
 
 ### Escaping dollar signs
@@ -239,14 +291,6 @@ If you need to output a `$` at the beginning of a line, you can escape it: `\$`.
 ```xml
 <p>You can run JS in a Marko template like this:</p>
 <code>
-    // single line
-    \$ var foo = 123;
-
-    // multiple lines
-    \$$ {
-        function bar() {
-
-        }
-    }
+    \$ var num = 123;
 </code>
 ```
