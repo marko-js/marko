@@ -91,6 +91,20 @@ function getElementById(doc, id) {
     return doc.getElementById(id);
 }
 
+function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
+    if (handlerMethodName) {
+        var widget = widgetDef.$__widget;
+        var bubblingDomEvents = widget.$__bubblingDomEvents ||
+            ( widget.$__bubblingDomEvents = [] );
+
+        var eventIndex = bubblingDomEvents.length;
+        var entry = extraArgs ? [handlerMethodName, extraArgs] : [handlerMethodName];
+        bubblingDomEvents.push(entry);
+
+        return [widgetDef.id, eventIndex];
+    }
+}
+
 exports.$__widgetLookup = widgetLookup;
 exports.$__getWidgetForEl = getWidgetForEl;
 exports.$__emitLifecycleEvent = emitLifecycleEvent;
@@ -98,3 +112,4 @@ exports.$__destroyWidgetForEl = destroyWidgetForEl;
 exports.$__destroyElRecursive = destroyElRecursive;
 exports.$__nextWidgetId = nextWidgetId;
 exports.$__getElementById = getElementById;
+exports.$__attachBubblingEvent = attachBubblingEvent;

@@ -161,6 +161,7 @@ function Widget(id, doc) {
         this.$__roots =
         this.$__subscriptions =
         this.$__domEventListenerHandles =
+        this.$__bubblingDomEvents =
         this.$__customEvents =
         this.$__scope =
         this.$__renderInput =

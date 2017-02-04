@@ -1,5 +1,4 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    markoWidgets_event = require("marko/widgets/taglib/helpers/event"),
     marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.rw,
     marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/macro-widget/index.marko", function() {
@@ -15,7 +14,7 @@ var marko_component = {};
 function render(input, out, widget, state) {
   function macro_renderButton(color, out, renderBody) {
     out.w("<button" +
-      marko_attr("data-_onclick", markoWidgets_event("handleColorClick", widget.id, [
+      marko_attr("data-_onclick", widget.d("handleColorClick", [
         color
       ])) +
       ">" +

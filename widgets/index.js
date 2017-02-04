@@ -22,7 +22,6 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         widget.typeName = undefined;
         widget.id = undefined;
 
-
         if (!typeName) {
             continue;
         }
@@ -64,6 +63,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         var extra = {
             p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
             d: widgetDef.$__domEvents,
+            b: widgetDef.$__bubblingDomEvents,
             e: widgetDef.$__customEvents,
             w: hasProps ? widget : undefined,
             s: state,

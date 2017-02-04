@@ -1,9 +1,8 @@
 var widgetLookup = require('./util').$__widgetLookup;
-var warp10Parse = require('warp10/parse');
 
 var listenersAttached;
 
-function getObjectAttribute(el, attrName) {
+function getEventAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;
 
     if (virtualAttrs) {
@@ -11,7 +10,9 @@ function getObjectAttribute(el, attrName) {
     } else {
         var attrValue = el.getAttribute(attrName);
         if (attrValue) {
-            return warp10Parse(attrValue);
+            var parts = attrValue.split(' ');
+            parts[1] = parseInt(parts[1], 10);
+            return parts;
         }
     }
 }
@@ -51,26 +52,25 @@ function attachBubbleEventListeners(doc) {
             // on<event_type>("<target_method>|<widget_id>")
 
             do {
-                if ((target = getObjectAttribute(curNode, attrName))) {
+                if ((target = getEventAttribute(curNode, attrName))) {
 
-                    var targetMethod = target[0];
-                    var targetWidgetId = target[1];
-                    var extraArgs;
 
-                    if (target.length > 2) {
-                        extraArgs = target.slice(2);
-                    }
-
+                    var targetWidgetId = target[0];
                     var targetWidget = widgetLookup[targetWidgetId];
 
                     if (!targetWidget) {
                         continue;
                     }
 
+                    var eventEntry = targetWidget.$__bubblingDomEvents[target[1]];
+                    var targetMethod = eventEntry[0];
+
                     var targetFunc = targetWidget[targetMethod];
                     if (!targetFunc) {
                         throw Error('Method not found: ' + targetMethod);
                     }
+
+                    var extraArgs = eventEntry[1];
 
                     // Invoke the widget method
                     if (extraArgs) {
