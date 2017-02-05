@@ -1,5 +1,8 @@
 module.exports = {
-	handleColorClick: function(color) {
-		this.color = color;
+    onCreate: function() {
+        this.clicked = false;
+    },
+	handleButtonClick: function() {
+		this.clicked = true;
 	}
 };

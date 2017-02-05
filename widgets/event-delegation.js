@@ -1,4 +1,5 @@
 var widgetLookup = require('./util').$__widgetLookup;
+var isArray = Array.isArray;
 
 var listenersAttached;
 
@@ -10,8 +11,12 @@ function getEventAttribute(el, attrName) {
     } else {
         var attrValue = el.getAttribute(attrName);
         if (attrValue) {
+            // <method_name> <widget_id>[ <extra_args_index]
             var parts = attrValue.split(' ');
-            parts[1] = parseInt(parts[1], 10);
+            if (parts.length == 3) {
+                parts[2] = parseInt(parts[2], 10);
+            }
+
             return parts;
         }
     }
@@ -54,23 +59,30 @@ function attachBubbleEventListeners(doc) {
             do {
                 if ((target = getEventAttribute(curNode, attrName))) {
 
+                    var targetMethod = target[0];
+                    var targetWidgetId = target[1];
+                    var extraArgs = target[2];
 
-                    var targetWidgetId = target[0];
                     var targetWidget = widgetLookup[targetWidgetId];
+
 
                     if (!targetWidget) {
                         continue;
                     }
-
-                    var eventEntry = targetWidget.$__bubblingDomEvents[target[1]];
-                    var targetMethod = eventEntry[0];
 
                     var targetFunc = targetWidget[targetMethod];
                     if (!targetFunc) {
                         throw Error('Method not found: ' + targetMethod);
                     }
 
-                    var extraArgs = eventEntry[1];
+                    if (extraArgs != null) {
+                        if (typeof extraArgs === 'number') {
+                            extraArgs = targetWidget.$__bubblingDomEvents[extraArgs];
+                            if (!isArray(extraArgs)) {
+                                extraArgs = [extraArgs];
+                            }
+                        }
+                    }
 
                     // Invoke the widget method
                     if (extraArgs) {

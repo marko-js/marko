@@ -93,15 +93,9 @@ function getElementById(doc, id) {
 
 function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
-        var widget = widgetDef.$__widget;
-        var bubblingDomEvents = widget.$__bubblingDomEvents ||
-            ( widget.$__bubblingDomEvents = [] );
-
-        var eventIndex = bubblingDomEvents.length;
-        var entry = extraArgs ? [handlerMethodName, extraArgs] : [handlerMethodName];
-        bubblingDomEvents.push(entry);
-
-        return [widgetDef.id, eventIndex];
+        return extraArgs ?
+            [handlerMethodName, widgetDef.id, extraArgs] :
+            [handlerMethodName, widgetDef.id];
     }
 }
 

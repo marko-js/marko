@@ -37,8 +37,8 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     }
 
     var attrValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
-
-    el.setAttributeValue('data-_on' + eventType.value, attrValue);
+    var attrName = 'data-_on' + eventType.value;
+    el.setAttributeValue(attrName, attrValue, false);
 }
 
 function addDirectEventListener(transformHelper, eventType, targetMethod, extraArgs) {

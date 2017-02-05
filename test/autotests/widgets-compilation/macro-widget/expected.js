@@ -16,7 +16,7 @@ function render(input, out, widget, state) {
     out.w("<button" +
       marko_attr("data-_onclick", widget.d("handleColorClick", [
         color
-      ])) +
+      ]), false) +
       ">" +
       marko_escapeXml(color) +
       "</button>");
