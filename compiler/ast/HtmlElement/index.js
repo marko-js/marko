@@ -99,8 +99,8 @@ class HtmlElement extends Node {
         }
     }
 
-    setAttributeValue(name, value) {
-        this._attributes.setAttributeValue(name, value);
+    setAttributeValue(name, value, escape) {
+        this._attributes.setAttributeValue(name, value, escape);
     }
 
     replaceAttributes(newAttributes) {
