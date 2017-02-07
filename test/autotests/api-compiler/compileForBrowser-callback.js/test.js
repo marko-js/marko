@@ -7,11 +7,11 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
 
     var templateSrc = fs.readFileSync(templatePath, { encoding: 'utf8' });
 
-    compiler.compileForBrowser(templateSrc, templatePath, {}, function(err, compiledTemplate) {
+    compiler.compileForBrowser(templateSrc, templatePath, {
+        writeVersionComment: false
+    }, function(err, compiledTemplate) {
         helpers.compare(compiledTemplate.code, '.js');
 
         done();
     });
-
-
 };

@@ -17,6 +17,8 @@ var Walker = require('./Walker');
 var EventEmitter = require('events').EventEmitter;
 var utilFingerprint = require('./util/fingerprint');
 
+const markoPkgVersion = require('../package.json').version;
+
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
 const deresolveOptions = {
@@ -102,7 +104,12 @@ class CompileContext extends EventEmitter {
 
         this.options = options || {};
 
+        const writeVersionComment = this.options.writeVersionComment;
+
         this.outputType = this.options.output || 'html';
+        this.compilerType = this.options.compilerType || 'marko';
+        this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
+        this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();

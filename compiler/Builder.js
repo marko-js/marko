@@ -9,6 +9,7 @@ var FunctionDeclaration = require('./ast/FunctionDeclaration');
 var FunctionCall = require('./ast/FunctionCall');
 var Literal = require('./ast/Literal');
 var Identifier = require('./ast/Identifier');
+var Comment = require('./ast/Comment');
 var If = require('./ast/If');
 var ElseIf = require('./ast/ElseIf');
 var Else = require('./ast/Else');
@@ -271,6 +272,10 @@ class Builder {
 
     htmlComment(comment) {
         return new HtmlComment({comment});
+    }
+
+    comment(comment) {
+        return new Comment({comment});
     }
 
     htmlElement(tagName, attributes, body, argument, openTagOnly, selfClosed) {

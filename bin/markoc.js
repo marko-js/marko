@@ -121,7 +121,9 @@ if (args.vdom) {
 }
 
 var compileOptions = {
-    output: output
+    output: output,
+    compilerType: 'markoc',
+    compilerVersion: markoPkgVersion || markocPkgVersion
 };
 
 var force = args.force;

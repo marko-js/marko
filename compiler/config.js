@@ -37,7 +37,13 @@ if (g.__MARKO_CONFIG) {
         preserveWhitespace: false,
 
         // The default output mode for compiled templates
-        output: 'html'
+        output: 'html',
+
+        /**
+         * Whether the version should be written to the template as a comment e.g.
+         * // Compiled using marko@4.0.0 - DO NOT EDIT
+         */
+        writeVersionComment: true
     };
 }
 
