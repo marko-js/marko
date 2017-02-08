@@ -1,6 +1,8 @@
 var isValidJavaScriptVarName = require('../../compiler/util/isValidJavaScriptVarName');
 
 module.exports = function nodeFactory(el, context) {
+    context.deprecate('The "<var>" tag is deprecated. Please use "$" for JavaScript in the template. See: https://github.com/marko-js/marko/issues/558');
+
     var vars;
 
     try {

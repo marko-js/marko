@@ -1,12 +1,15 @@
-module.exports = function codeGenerator(elNode, generator) {
+module.exports = function codeGenerator(elNode, codegen) {
+    var context = codegen.context;
+    context.deprecate('The "<assign>" tag is deprecated. Please use "$" for JavaScript in the template. See: https://github.com/marko-js/marko/issues/558');
+
     var attributes = elNode.attributes;
 
     if (!attributes) {
-        generator.addError('Invalid <assign> tag. Argument is missing. Example; <assign x=123 />');
+        codegen.addError('Invalid <assign> tag. Argument is missing. Example; <assign x=123 />');
         return elNode;
     }
 
-    var builder = generator.builder;
+    var builder = codegen.builder;
 
     return attributes.map((attr) => {
         if (attr.value == null) {
