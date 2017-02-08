@@ -15,7 +15,7 @@ class {
 <div>
     <ul>
         <for(color in input.colors)>
-            <li ref=color on-attach('handleAttach', color)>
+            <li key=color on-attach('handleAttach', color)>
                 ${color}
             </li>
         </for>

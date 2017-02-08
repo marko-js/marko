@@ -265,8 +265,6 @@ module.exports = function handleWidgetBind() {
         });
     }
 
-
-
     // let widgetNode = el.data.widgetNode;
     //
     // if (widgetNode) {
@@ -276,12 +274,17 @@ module.exports = function handleWidgetBind() {
     //     el.wrapWith(widgetNode);
     // }
 
-    var ref = el.getAttributeValue('ref');
-
-    if (el.hasAttribute('ref')) {
+    if (el.hasAttribute('key')) {
         if (!widgetProps.roots) {
             widgetProps.roots = [];
         }
+        var key = el.getAttributeValue('key');
+        widgetProps.roots.push(key);
+    } else if (el.hasAttribute('ref')) {
+        if (!widgetProps.roots) {
+            widgetProps.roots = [];
+        }
+        var ref = el.getAttributeValue('ref');
         widgetProps.roots.push(ref);
     } else {
         el.setAttributeValue('id',

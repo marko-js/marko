@@ -1,14 +1,14 @@
 div
-    button ref="button" onMouseMove('handleButtonMouseMove') onClick("handleButtonClick")
+    button key="button" onMouseMove('handleButtonMouseMove') onClick("handleButtonClick")
     button [
-            ref="ok"
+            key="ok"
             type="button"
             onClick('handleButtonClick', {type: 'ok'})
             onMouseMove('handleButtonMouseMove', {type: 'ok'})
         ]
         -- OK
     button [
-            ref="cancel"
+            key="cancel"
             type="button"
             onClick('handleButtonClick', {type: 'cancel'})
             onMouseMove('handleButtonMouseMove', {type: 'cancel'})

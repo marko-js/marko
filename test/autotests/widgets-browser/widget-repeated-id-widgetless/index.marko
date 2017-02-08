@@ -9,6 +9,6 @@ static var components = [
 
 <div class="app-repeated-id-widgetless">
     <for(component in components)>
-        <include(component) ref="childWidget[]" />
+        <include(component) key="childWidget[]" />
     </for>
 </div>
