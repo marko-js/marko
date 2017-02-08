@@ -61,6 +61,7 @@
     "events-light": "^1.0.0",
     "he": "^1.1.0",
     "htmljs-parser": "^2.3.0",
+    "lasso-caching-fs": "^1.0.1",
     "lasso-modules-client": "^2.0.3",
     "lasso-package-root": "^1.0.0",
     "listener-tracker": "^2.0.0",

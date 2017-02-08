@@ -2,14 +2,13 @@
 
 var taglibLoader = require('../taglib-loader');
 var nodePath = require('path');
-var fs = require('fs');
 var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
 var scanTagsDir = require('../taglib-loader/scanTagsDir');
 var Taglib = require('../taglib-loader/Taglib');
 var DependencyChain = require('../taglib-loader/DependencyChain');
+var lassoCachingFS = require('lasso-caching-fs');
 
-var existsCache = {};
 var findCache = {};
 var excludedDirs = {};
 var excludedPackages = {};
@@ -20,7 +19,7 @@ var taglibsForNodeModulesDirCache = {};
  * was added for testing purposes.
  */
 function reset() {
-    existsCache = {};
+    lassoCachingFS.clearCaches();
     findCache = {};
     excludedDirs = {};
     excludedPackages = {};
@@ -28,12 +27,7 @@ function reset() {
 }
 
 function existsCached(path) {
-    var exists = existsCache[path];
-    if (exists === undefined) {
-        exists = fs.existsSync(path);
-        existsCache[path] = exists;
-    }
-    return exists;
+    return lassoCachingFS.existsSync(path);
 }
 
 function getModuleRootPackage(dirname) {
@@ -105,17 +99,23 @@ function find(dirname, registeredTaglibs) {
     while(true) {
         if(!excludedDirs[curDirname]) {
             let taglibPath = nodePath.join(curDirname, 'marko.json');
+            let taglib;
+
             if (existsCached(taglibPath)) {
-                let taglib = taglibLoader.load(taglibPath);
+                taglib = taglibLoader.load(taglibPath);
                 helper.addTaglib(taglib);
-            } else {
-                let componentPath = nodePath.join(curDirname, 'components');
-                if (existsCached(componentPath) && !excludedDirs[componentPath] && !helper.alreadyAdded(componentPath)) {
-                    let taglib = new Taglib(componentPath);
-                    scanTagsDir(componentPath, nodePath.dirname(componentPath), './components', taglib, new DependencyChain([componentPath]));
+            }
+
+            if (!taglib || taglib.tagsDir === undefined) {
+                let componentsPath = nodePath.join(curDirname, 'components');
+
+                if (existsCached(componentsPath) && !excludedDirs[componentsPath] && !helper.alreadyAdded(componentsPath)) {
+                    let taglib = new Taglib(componentsPath);
+                    scanTagsDir(componentsPath, nodePath.dirname(componentsPath), './components', taglib, new DependencyChain([componentsPath]));
                     helper.addTaglib(taglib);
                 }
             }
+
         }
 
         if (curDirname === rootDirname) {
@@ -150,7 +150,7 @@ function find(dirname, registeredTaglibs) {
 }
 
 function clearCache() {
-    existsCache = {};
+    lassoCachingFS.clearCaches();
     findCache = {};
     taglibsForNodeModulesDirCache = {};
 }

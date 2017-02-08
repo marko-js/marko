@@ -188,12 +188,16 @@ class TaglibLoader {
         var path = this.filePath;
         var dirname = this.dirname;
 
-        if (Array.isArray(dir)) {
-            for (var i = 0; i < dir.length; i++) {
-                scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
+        taglib.tagsDir = dir;
+
+        if (dir != null) {
+            if (Array.isArray(dir)) {
+                for (var i = 0; i < dir.length; i++) {
+                    scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
+                }
+            } else {
+                scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
             }
-        } else {
-            scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
         }
     }
 
