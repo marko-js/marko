@@ -1,5 +1,7 @@
 'use strict';
 
+var ATTACH_DETACH_KEY = Symbol('attach-detach');
+
 var bubbleEventsLookup = {};
 
 require('../../bubble').forEach(function(eventType) {
@@ -39,6 +41,16 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     var attrValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
     var attrName = 'data-_on' + eventType.value;
     el.setAttributeValue(attrName, attrValue, false);
+
+    if (eventType.value === 'attach' || eventType.value === 'detach') {
+        if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
+            transformHelper.context.data[ATTACH_DETACH_KEY] = true;
+            
+            let requireFuncCall = builder.require(builder.literal('marko/widgets/attach-detach'));
+            transformHelper.context.addStaticCode(requireFuncCall);
+        }
+
+    }
 }
 
 function addDirectEventListener(transformHelper, eventType, targetMethod, extraArgs) {

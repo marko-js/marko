@@ -22,6 +22,40 @@ function getEventAttribute(el, attrName) {
     }
 }
 
+function delegateEvent(node, target, event) {
+    var targetMethod = target[0];
+    var targetWidgetId = target[1];
+    var extraArgs = target[2];
+
+    var targetWidget = widgetLookup[targetWidgetId];
+
+
+    if (!targetWidget) {
+        return;
+    }
+
+    var targetFunc = targetWidget[targetMethod];
+    if (!targetFunc) {
+        throw Error('Method not found: ' + targetMethod);
+    }
+
+    if (extraArgs != null) {
+        if (typeof extraArgs === 'number') {
+            extraArgs = targetWidget.$__bubblingDomEvents[extraArgs];
+            if (!isArray(extraArgs)) {
+                extraArgs = [extraArgs];
+            }
+        }
+    }
+
+    // Invoke the widget method
+    if (extraArgs) {
+        targetFunc.apply(targetWidget, extraArgs.concat(event, node));
+    } else {
+        targetFunc.call(targetWidget, event, node);
+    }
+}
+
 function attachBubbleEventListeners(doc) {
     var body = doc.body;
     // Here's where we handle event delegation using our own mechanism
@@ -58,38 +92,7 @@ function attachBubbleEventListeners(doc) {
 
             do {
                 if ((target = getEventAttribute(curNode, attrName))) {
-
-                    var targetMethod = target[0];
-                    var targetWidgetId = target[1];
-                    var extraArgs = target[2];
-
-                    var targetWidget = widgetLookup[targetWidgetId];
-
-
-                    if (!targetWidget) {
-                        continue;
-                    }
-
-                    var targetFunc = targetWidget[targetMethod];
-                    if (!targetFunc) {
-                        throw Error('Method not found: ' + targetMethod);
-                    }
-
-                    if (extraArgs != null) {
-                        if (typeof extraArgs === 'number') {
-                            extraArgs = targetWidget.$__bubblingDomEvents[extraArgs];
-                            if (!isArray(extraArgs)) {
-                                extraArgs = [extraArgs];
-                            }
-                        }
-                    }
-
-                    // Invoke the widget method
-                    if (extraArgs) {
-                        targetFunc.apply(targetWidget, extraArgs.concat(event, curNode));
-                    } else {
-                        targetFunc.call(targetWidget, event, curNode);
-                    }
+                    delegateEvent(curNode, target, event);
 
                     if (propagationStopped) {
                         break;
@@ -99,6 +102,13 @@ function attachBubbleEventListeners(doc) {
         });
     });
 }
+
+function noop() {}
+
+exports.$__handleNodeAttach = noop;
+exports.$__handleNodeDetach = noop;
+exports.$__delegateEvent = delegateEvent;
+exports.$__getEventAttribute = getEventAttribute;
 
 exports.$__init = function(doc) {
     if (!listenersAttached) {

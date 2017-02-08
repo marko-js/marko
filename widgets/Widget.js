@@ -18,7 +18,7 @@ var updateManager = require('./update-manager');
 var morphAttrs = require('../runtime/vdom/VElement').$__morphAttrs;
 var morphdomFactory = require('morphdom/factory');
 var morphdom = morphdomFactory(morphAttrs);
-
+var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;
 
@@ -144,6 +144,16 @@ function checkInputChanged(existingWidget, oldInput, newInput) {
     }
 
     return false;
+}
+
+function handleNodeDiscarded(node) {
+    if (node.nodeType == 1) {
+        destroyWidgetForEl(node);
+    }
+}
+
+function handleBeforeNodeDiscarded(node) {
+    return eventDelegation.$__handleNodeDetach(node);
 }
 
 var widgetProto;
@@ -478,12 +488,6 @@ Widget.prototype = widgetProto = {
 
             var widgetsContext = out.global.widgets;
 
-            function onNodeDiscarded(node) {
-                if (node.nodeType == 1) {
-                    destroyWidgetForEl(node);
-                }
-            }
-
             function onBeforeElUpdated(fromEl, toEl) {
                 var id = fromEl.id;
                 var existingWidget;
@@ -519,8 +523,14 @@ Widget.prototype = widgetProto = {
                 }
             }
 
+            function handleNodeAdded(node) {
+                eventDelegation.$__handleNodeAttach(node, out);
+            }
+
             var morphdomOptions = {
-                onNodeDiscarded: onNodeDiscarded,
+                onBeforeNodeDiscarded: handleBeforeNodeDiscarded,
+                onNodeDiscarded: handleNodeDiscarded,
+                onNodeAdded: handleNodeAdded,
                 onBeforeElUpdated: onBeforeElUpdated,
                 onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
             };
@@ -542,6 +552,8 @@ Widget.prototype = widgetProto = {
             }
 
             result.afterInsert(doc);
+
+            out.emit('$__widgetsInitialized');
         });
     },
 
