@@ -19,7 +19,15 @@ function create(__helpers) {
       str(data.foo) +
       " b\" nested=\"a " +
       str(data.foo + ("nested " + data.bar)) +
-      " b\"></div>");
+      " b\"></div><div" +
+      classAttr([
+        "non",
+        "empty",
+        "array"
+      ]) +
+      "></div><div" +
+      classAttr([]) +
+      "></div>");
   };
 }
 

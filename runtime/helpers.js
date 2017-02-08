@@ -52,7 +52,7 @@ function classListHelper(arg, classNames) {
 function classList(classList) {
     var classNames = [];
     classListHelper(classList, classNames);
-    return classNames.join(' ');
+    return classNames.join(' ') || null;
 }
 
 function createDeferredRenderer(handler) {
