@@ -7,7 +7,7 @@ Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) an
 > :rocket: The upcoming Marko v4 release with a lot of exciting improvements is almost ready! Please see the [ROADMAP](./ROADMAP.md) to find out what's changing.
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
-[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master)](https://coveralls.io/github/marko-js/marko?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master&cache-bust=1)](https://coveralls.io/github/marko-js/marko?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
