@@ -323,14 +323,14 @@ module.exports = function handleRootNodes() {
 
     transformHelper.setHasBoundWidgetForTemplate();
 
-    var nextRef = 0;
+    var nextKey = 0;
 
     rootNodes.forEach((curNode, i) => {
         curNode.setAttributeValue('_widgetbind');
 
-        if (!curNode.hasAttribute('ref')) {
+        if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
-                curNode.setAttributeValue('ref', builder.literal('_r' + (nextRef++)));
+                curNode.setAttributeValue('key', builder.literal('_r' + (nextKey++)));
             }
         }
     });

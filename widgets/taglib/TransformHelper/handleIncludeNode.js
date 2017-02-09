@@ -19,7 +19,7 @@ module.exports = function(includeNode) {
     parentNode._normalizeChildTextNodes(context, true /* force trim */);
 
     if (parentNode.childCount === 1) {
-        if (includeNode.hasAttribute('ref')) {
+        if (includeNode.hasAttribute('key') || includeNode.hasAttribute('ref')) {
             this.assignWidgetId();
         }
 

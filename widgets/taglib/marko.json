@@ -21,23 +21,35 @@
             "preserve-name": true,
             "deprecated": true
         },
-        "@for-ref": {
+        "@for-key": {
             "type": "string",
             "preserve-name": true
         },
-        "@ref": {
+        "@key": {
             "type": "string",
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "displayText": "ref=\"<method>\"",
-                    "snippet": "ref=\"${1:method}\"",
+                    "displayText": "key=\"<method>\"",
+                    "snippet": "key=\"${1:method}\"",
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
                 },
                 {
                     "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
                 }
             ]
+        },
+        "@for-ref": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [],
+            "deprecated": true
+        },
+        "@ref": {
+            "type": "string",
+            "preserve-name": true,
+            "autocomplete": [],
+            "deprecated": true
         },
         "@w-for": {
             "type": "string",
