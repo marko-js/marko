@@ -246,6 +246,7 @@ module.exports = function handleRootNodes() {
             context.addDependency('./' + file);
         } else if(componentmatch.test(file) || widgetmatch.test(file)) {
             hasBindTarget = true;
+            this.context.data.widgetModule = './'+file;
         }
     });
 

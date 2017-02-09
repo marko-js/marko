@@ -84,7 +84,12 @@ class TransformHelper {
 
     getDefaultWidgetModule() {
         var dirname = this.dirname;
-        if (resolveFrom(dirname, './component')) {
+
+        console.log('getDefaultWidgetModule', this.widgetModule);
+
+        if (this.context.data.widgetModule) {
+            return this.context.data.widgetModule;
+        } else if (resolveFrom(dirname, './component')) {
             return './component';
         } else if (resolveFrom(dirname, './widget')) {
             return './widget';
