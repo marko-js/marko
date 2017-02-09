@@ -16,6 +16,9 @@ var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
 var EventEmitter = require('events').EventEmitter;
 var utilFingerprint = require('./util/fingerprint');
+var htmlElements = require('./util/html-elements');
+
+const markoPkgVersion = require('../package.json').version;
 
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
@@ -102,7 +105,12 @@ class CompileContext extends EventEmitter {
 
         this.options = options || {};
 
+        const writeVersionComment = this.options.writeVersionComment;
+
         this.outputType = this.options.output || 'html';
+        this.compilerType = this.options.compilerType || 'marko';
+        this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
+        this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -118,6 +126,8 @@ class CompileContext extends EventEmitter {
         this.inline = this.options.inline === true;
         this.useMeta = this.options.meta;
         this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko/html';
+        this.unrecognizedTags = [];
+        this._parsingFinished = false;
 
         this._helpersIdentifier = null;
 
@@ -345,6 +355,13 @@ class CompileContext extends EventEmitter {
         }
     }
 
+    addErrorUnrecognizedTag(tagName, elNode) {
+        this.addError({
+            node: elNode,
+            message: 'Unrecognized tag: ' + tagName + ' - More details: https://github.com/marko-js/marko/wiki/Error:-Unrecognized-Tag'
+        });
+    }
+
     createNodeForEl(tagName, attributes, argument, openTagOnly, selfClosed) {
         var elDef;
         var builder = this.builder;
@@ -402,7 +419,27 @@ class CompileContext extends EventEmitter {
             node = builder.customTag(elNode);
             node.body = node.makeContainer(node.body.items);
         } else {
-            tagDef = typeof tagName === 'string' ? taglibLookup.getTag(tagName) : null;
+            if (typeof tagName === 'string') {
+                tagDef = taglibLookup.getTag(tagName);
+                if (!tagDef &&
+                        !this.isMacro(tagName) &&
+                        tagName.indexOf(':') === -1 &&
+                        !htmlElements.isRegisteredElement(tagName, this.dirname)) {
+
+                    if (this._parsingFinished) {
+                        this.addErrorUnrecognizedTag(tagName, elNode);
+                    } else {
+                        // We don't throw an error right away since the tag
+                        // may be a macro that gets registered later
+                        this.unrecognizedTags.push({
+                            node: elNode,
+                            tagName: tagName
+                        });
+                    }
+
+                }
+            }
+
             if (tagDef) {
                 var nodeFactoryFunc = tagDef.getNodeFactory();
                 if (nodeFactoryFunc) {

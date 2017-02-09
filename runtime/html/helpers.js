@@ -116,7 +116,34 @@ exports.ca = function(classNames) {
 };
 
 
+function classList(arg) {
+    var len, name, value, str = '';
+
+    if (arg) {
+        if (typeof arg === 'string') {
+            if (arg) {
+                str += ' ' + arg;
+            }
+        } else if (typeof (len = arg.length) === 'number') {
+            for (var i=0; i<len; i++) {
+                value = classList(arg[i]);
+                if (value) {
+                    str += ' ' + value;
+                }
+            }
+        } else if (typeof arg === 'object') {
+            for (name in arg) {
+                value = arg[name];
+                if (value) {
+                    str += ' ' + name;
+                }
+            }
+        }
+    }
+
+    return (str && str.slice(1)) || null;
+}
 
 var commonHelpers = require('../helpers');
-classList = commonHelpers.cl;
 extend(exports, commonHelpers);
+exports.cl = classList;

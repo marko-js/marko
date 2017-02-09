@@ -1,5 +1,7 @@
 'use strict';
 
+var ATTACH_DETACH_KEY = Symbol('attach-detach');
+
 var bubbleEventsLookup = {};
 
 require('../../bubble').forEach(function(eventType) {
@@ -23,28 +25,32 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     }
 
     var builder = transformHelper.builder;
-    var attrValue;
-    var widgetIdExpression = builder.memberExpression(
+
+    var addBubblingEventMethod = builder.memberExpression(
         builder.identifier('widget'),
-        builder.identifier('id'));
+        builder.identifier('d'));
 
-    // The event handler method is conditional and it may resolve to a null method name. Therefore,
-    // we need to use a runtime helper to set the value correctly.
-    var markoWidgetsEventFuncId = transformHelper.context.importModule('markoWidgets_event',
-        transformHelper.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/event'));
-
-    var helperArgs = [
-            targetMethod,
-            widgetIdExpression
+    var addBubblingEventArgs = [
+            targetMethod
         ];
 
     if (extraArgs) {
-        helperArgs.push(builder.arrayExpression(extraArgs));
+        addBubblingEventArgs.push(builder.arrayExpression(extraArgs));
     }
 
-    attrValue = builder.functionCall(markoWidgetsEventFuncId, helperArgs);
+    var attrValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
+    var attrName = 'data-_on' + eventType.value;
+    el.setAttributeValue(attrName, attrValue, false);
 
-    el.setAttributeValue('data-_on' + eventType.value, attrValue);
+    if (eventType.value === 'attach' || eventType.value === 'detach') {
+        if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
+            transformHelper.context.data[ATTACH_DETACH_KEY] = true;
+            
+            let requireFuncCall = builder.require(builder.literal('marko/widgets/attach-detach'));
+            transformHelper.context.addStaticCode(requireFuncCall);
+        }
+
+    }
 }
 
 function addDirectEventListener(transformHelper, eventType, targetMethod, extraArgs) {

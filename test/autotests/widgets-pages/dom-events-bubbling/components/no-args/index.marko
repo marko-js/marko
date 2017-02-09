@@ -1,0 +1,26 @@
+import { expect } from 'chai';
+
+class {
+    onCreate() {
+        this.clicked = false;
+    }
+
+    onMount() {
+        var widgets = window.widgets || (window.widgets = {});
+        widgets['no-args'] = this;
+    }
+
+	handleButtonClick() {
+		this.clicked = true;
+	}
+
+    test(helpers) {
+        expect(this.clicked).to.equal(false);
+        helpers.triggerMouseEvent(this.getEl('button'), 'click');
+        expect(this.clicked).to.equal(true);
+    }
+}
+
+<div>
+    <button key="button" type="button" on-click('handleButtonClick')>Click me</button>
+</div>

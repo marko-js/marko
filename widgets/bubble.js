@@ -25,7 +25,11 @@ module.exports = [
     'change',
     'submit',
     'reset',
-    'input'
+    'input',
+
+    'attach', // Pseudo event supported by Marko
+    'detach'  // Pseudo event supported by Marko
+
     // 'focus', <-- Does not bubble
     // 'blur', <-- Does not bubble
     // 'focusin', <-- Not supported in all browsers

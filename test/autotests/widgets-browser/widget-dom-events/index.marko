@@ -2,7 +2,7 @@
     
     onMousemove("handleRootMouseMove")
     onClick("handleRootClick")>
-    <button type="button" ref="button"
+    <button type="button" key="button"
         onClick("handleButtonClick")>
         <span onMousemove("handleButtonSpanMouseMove")>
             Button
@@ -14,7 +14,7 @@
         onMouseout("handleFooLinkMouseOut")>
     </a>
 
-    <app-legacy-button ref="appButton">
-        <span ref="helloWorld" onMousedown("handleHelloWorldMouseDown")>Hello World</span>
+    <app-legacy-button key="appButton">
+        <span key="helloWorld" onMousedown("handleHelloWorldMouseDown")>Hello World</span>
     </app-legacy-button>
 </div>

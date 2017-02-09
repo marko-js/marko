@@ -24,7 +24,7 @@ describe('compiler (vdom)', function() {
             main = require(mainPath);
         }
 
-        var compilerOptions = { output: 'vdom' };
+        var compilerOptions = { output: 'vdom', writeVersionComment: false };
 
         if (main && main.checkError) {
             var e;

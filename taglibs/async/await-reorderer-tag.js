@@ -3,6 +3,12 @@
 const clientReorder = require('./client-reorder');
 
 module.exports = function(input, out) {
+    // We cannot call beginSync() when using renderSync(). In this case we will
+    // ignore the await-reorderer tag.
+    if (out.isSync()) {
+        return;
+    }
+
     var global = out.global;
 
     out.flush();
@@ -15,11 +21,7 @@ module.exports = function(input, out) {
 
     global.__awaitReordererInvoked = true;
 
-    // We cannot call beginSync() when using renderSync(). In this case we will
-    // ignore the await-reorderer tag.
-    if (out.isSync()) {
-        return;
-    }
+
 
     var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'await-reorderer' });
     out.onLast(function(next) {

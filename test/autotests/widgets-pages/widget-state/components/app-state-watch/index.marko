@@ -14,6 +14,9 @@ import { expect } from 'chai';
         },
 
         test: function() {
+            expect(this.state.nameNull).to.equal(null);
+            expect(this.state.nameUndefined).to.equal(undefined);
+
             this.state.nameNull = 'Frank';
             this.update();
             expect(this.el.innerHTML).to.contain('nameNull:Frank');

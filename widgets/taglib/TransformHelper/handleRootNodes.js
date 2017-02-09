@@ -183,8 +183,6 @@ function classToObject(cls, transformHelper) {
 }
 
 function handleClassDeclaration(classEl, transformHelper) {
-    if(!/^class\s*\{/.test(classEl.tagString)) return;
-
     let tree;
     var wrappedSrc = '('+classEl.tagString+'\n)';
 
@@ -209,6 +207,12 @@ function handleClassDeclaration(classEl, transformHelper) {
         return;
     }
     let expression = tree.body[0].expression;
+
+    if (expression.superClass && expression.superClass.name) {
+        transformHelper.context.addError(classEl, 'A component class is not allowed to use `extends`. See: https://github.com/marko-js/marko/wiki/Error:-Component-class-with-extends');
+        return;
+    }
+
     let object = classToObject(expression);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
@@ -323,14 +327,14 @@ module.exports = function handleRootNodes() {
 
     transformHelper.setHasBoundWidgetForTemplate();
 
-    var nextRef = 0;
+    var nextKey = 0;
 
     rootNodes.forEach((curNode, i) => {
         curNode.setAttributeValue('_widgetbind');
 
-        if (!curNode.hasAttribute('ref')) {
+        if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
-                curNode.setAttributeValue('ref', builder.literal('_r' + (nextRef++)));
+                curNode.setAttributeValue('key', builder.literal('_r' + (nextKey++)));
             }
         }
     });

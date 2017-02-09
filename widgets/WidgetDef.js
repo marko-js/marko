@@ -1,7 +1,10 @@
 'use strict';
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
-var nextWidgetId = require('./util').$__nextWidgetId;
+var widgetUtil = require('./util');
+var nextWidgetId = widgetUtil.$__nextWidgetId;
+var attachBubblingEvent = widgetUtil.$__attachBubblingEvent;
+
 var extend = require('raptor-util/extend');
 var registry = require('./registry');
 
@@ -22,6 +25,7 @@ function WidgetDef(widget, widgetId, out, widgetStack, widgetStackLen) {
         this.$__roots =         // IDs of root elements if there are multiple root elements
         this.$__children = // An array of nested WidgetDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
+        this.$__bubblingDomEvents = // Used to keep track of bubbling DOM events for widgets rendered on the server
         undefined;
 
     this.$__isExisting = false;
@@ -95,6 +99,10 @@ WidgetDef.prototype = {
         return this.id ?
             this.id + '-w' + (this.$__nextIdIndex++) :
             nextWidgetId(this.$__out);
+    },
+
+    d: function(handlerMethodName, extraArgs) {
+        return attachBubblingEvent(this, handlerMethodName, extraArgs);
     }
 };
 
@@ -109,11 +117,22 @@ WidgetDef.$__deserialize = function(o, types) {
 
     var widget = typeName /* legacy */ && registry.$__createWidget(typeName, id);
 
-    // Preview newly created widget from being queued for update since we are
+    if (extra.b) {
+        widget.$__bubblingDomEvents = extra.b;
+    }
+
+
+    // Preview newly created widget from being queued for update since we area
     // just building it from the server info
     widget.$__updateQueued = true;
 
     if (state) {
+        var undefinedPropNames = extra.u;
+        if (undefinedPropNames) {
+            for(var i=0; i<undefinedPropNames.length; i++) {
+                state[undefinedPropNames[i]] = undefined;
+            }
+        }
         // We go through the setter here so that we convert the state object
         // to an instance of `State`
         widget.state = state;

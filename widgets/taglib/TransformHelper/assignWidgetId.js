@@ -45,18 +45,20 @@ module.exports = function assignWidgetId(isRepeated) {
 
     var isCustomTag = el.type !== 'HtmlElement';
 
-
-
-    if (el.hasAttribute('ref')) {
+    if (el.hasAttribute('key')) {
+        widgetRef = el.getAttributeValue('key');
+        el.removeAttribute('key');
+    } else if (el.hasAttribute('ref')) {
+        context.deprecate('The "ref" attribute is deprecated. Please use "key" instead.');
         widgetRef = el.getAttributeValue('ref');
         el.removeAttribute('ref');
     }
 
     if (el.hasAttribute('w-id')) {
-        context.deprecate('The "w-id" attribute is deprecated. Please use "ref" instead.');
+        context.deprecate('The "w-id" attribute is deprecated. Please use "key" instead.');
 
         if (widgetRef) {
-            this.addError('The "w-id attribute cannot be used in conjuction with the "ref" attribute.');
+            this.addError('The "w-id" attribute cannot be used in conjuction with the "ref" or "key" attributes.');
             return;
         }
 
@@ -75,7 +77,7 @@ module.exports = function assignWidgetId(isRepeated) {
             this.getWidgetArgs().setId(nestedIdExpression);
         } else {
             if (el.hasAttribute('id')) {
-                this.addError('The "ref" and "w-id" attributes cannot be used in conjuction with the "id" attribute.');
+                this.addError('The "ref", "key", and "w-id" attributes cannot be used in conjuction with the "id" attribute.');
                 return;
             }
             el.setAttributeValue('id', idExpression);

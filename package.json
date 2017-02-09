@@ -53,7 +53,7 @@
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
     "complain": "^1.0.0",
-    "deresolve": "^1.0.0",
+    "deresolve": "^1.1.2",
     "escodegen": "^1.8.1",
     "esprima": "^3.1.1",
     "estraverse": "^4.2.0",
@@ -61,8 +61,9 @@
     "events-light": "^1.0.0",
     "he": "^1.1.0",
     "htmljs-parser": "^2.3.0",
+    "lasso-caching-fs": "^1.0.1",
     "lasso-modules-client": "^2.0.3",
-    "lasso-package-root": "^1.0.0",
+    "lasso-package-root": "^1.0.1",
     "listener-tracker": "^2.0.0",
     "minimatch": "^3.0.2",
     "morphdom": "^2.3.0",
@@ -133,7 +134,7 @@
     ]
   },
   "homepage": "http://markojs.com/",
-  "version": "4.0.0-rc.12",
+  "version": "4.0.0-rc.14",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   },
@@ -142,6 +143,7 @@
       "b",
       "c",
       "ca",
+      "d",
       "e",
       "n",
       "r",

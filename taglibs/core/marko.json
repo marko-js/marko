@@ -2,12 +2,7 @@
     "<assign>": {
         "code-generator": "./assign-tag",
         "open-tag-only": true,
-        "autocomplete": [
-            {
-                "snippet": "assign ${1:varName}=${2:value}",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
-            }
-        ]
+        "deprecated": true
     },
     "<class>": {
         "code-generator": "./class-tag"
@@ -64,9 +59,6 @@
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             }
         ]
-    },
-    "<function>": {
-        "code-generator": "./function-tag"
     },
     "<if>": {
         "node-factory": "./if-tag",
@@ -129,16 +121,7 @@
     },
     "<invoke>": {
         "code-generator": "./invoke-tag",
-        "autocomplete": [
-            {
-                "displayText": "invoke <function_call>",
-                "snippet": "invoke ${1:foo()}",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#invoke"
-            }
-        ]
+        "deprecated": true
     },
     "<macro>": {
         "node-factory": "./macro-tag",
@@ -171,31 +154,8 @@
             }
         ]
     },
-    "<pre>": {
-        "preserve-whitespace": true
-    },
-    "<script>": {
-        "preserve-whitespace": true,
-        "@marko-init": "boolean",
-        "@template-helpers": "boolean",
-        "@*": {
-            "ignore": true
-        },
-        "autocomplete": [
-            {
-                "snippet": "script template-helpers",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
-            }
-        ]
-    },
     "<static>": {
         "code-generator": "./static-tag"
-    },
-    "<style>": {
-        "preserve-whitespace": true
-    },
-    "<textarea>": {
-        "preserve-whitespace": true
     },
     "<unless>": {
         "node-factory": "./unless-tag",
@@ -211,16 +171,7 @@
     },
     "<var>": {
         "node-factory": "./var-tag",
-        "autocomplete": [
-            {
-                "snippet": "var ${1:varName}=${2:value}",
-                "openTagOnly": true,
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#variables"
-            }
-        ]
+        "deprecated": true
     },
     "<while>": {
         "code-generator": "./while-tag",

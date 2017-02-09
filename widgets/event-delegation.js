@@ -1,9 +1,9 @@
 var widgetLookup = require('./util').$__widgetLookup;
-var warp10Parse = require('warp10/parse');
+var isArray = Array.isArray;
 
 var listenersAttached;
 
-function getObjectAttribute(el, attrName) {
+function getEventAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;
 
     if (virtualAttrs) {
@@ -11,8 +11,48 @@ function getObjectAttribute(el, attrName) {
     } else {
         var attrValue = el.getAttribute(attrName);
         if (attrValue) {
-            return warp10Parse(attrValue);
+            // <method_name> <widget_id>[ <extra_args_index]
+            var parts = attrValue.split(' ');
+            if (parts.length == 3) {
+                parts[2] = parseInt(parts[2], 10);
+            }
+
+            return parts;
         }
+    }
+}
+
+function delegateEvent(node, target, event) {
+    var targetMethod = target[0];
+    var targetWidgetId = target[1];
+    var extraArgs = target[2];
+
+    var targetWidget = widgetLookup[targetWidgetId];
+
+
+    if (!targetWidget) {
+        return;
+    }
+
+    var targetFunc = targetWidget[targetMethod];
+    if (!targetFunc) {
+        throw Error('Method not found: ' + targetMethod);
+    }
+
+    if (extraArgs != null) {
+        if (typeof extraArgs === 'number') {
+            extraArgs = targetWidget.$__bubblingDomEvents[extraArgs];
+            if (!isArray(extraArgs)) {
+                extraArgs = [extraArgs];
+            }
+        }
+    }
+
+    // Invoke the widget method
+    if (extraArgs) {
+        targetFunc.apply(targetWidget, extraArgs.concat(event, node));
+    } else {
+        targetFunc.call(targetWidget, event, node);
     }
 }
 
@@ -51,33 +91,8 @@ function attachBubbleEventListeners(doc) {
             // on<event_type>("<target_method>|<widget_id>")
 
             do {
-                if ((target = getObjectAttribute(curNode, attrName))) {
-
-                    var targetMethod = target[0];
-                    var targetWidgetId = target[1];
-                    var extraArgs;
-
-                    if (target.length > 2) {
-                        extraArgs = target.slice(2);
-                    }
-
-                    var targetWidget = widgetLookup[targetWidgetId];
-
-                    if (!targetWidget) {
-                        continue;
-                    }
-
-                    var targetFunc = targetWidget[targetMethod];
-                    if (!targetFunc) {
-                        throw Error('Method not found: ' + targetMethod);
-                    }
-
-                    // Invoke the widget method
-                    if (extraArgs) {
-                        targetFunc.apply(targetWidget, extraArgs.concat(event, curNode));
-                    } else {
-                        targetFunc.call(targetWidget, event, curNode);
-                    }
+                if ((target = getEventAttribute(curNode, attrName))) {
+                    delegateEvent(curNode, target, event);
 
                     if (propagationStopped) {
                         break;
@@ -87,6 +102,13 @@ function attachBubbleEventListeners(doc) {
         });
     });
 }
+
+function noop() {}
+
+exports.$__handleNodeAttach = noop;
+exports.$__handleNodeDetach = noop;
+exports.$__delegateEvent = delegateEvent;
+exports.$__getEventAttribute = getEventAttribute;
 
 exports.$__init = function(doc) {
     if (!listenersAttached) {

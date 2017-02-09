@@ -35,11 +35,13 @@ describe('marko-widgets (compilation)', function() {
                 main = require(mainPath);
             }
 
+            var compilerOptions = { writeVersionComment: false };
+
             if (main && main.checkError) {
                 var e;
 
                 try {
-                    compiler.compileFile(templatePath);
+                    compiler.compileFile(templatePath, compilerOptions);
                 } catch(_e) {
                     e = _e;
                 }
@@ -51,7 +53,7 @@ describe('marko-widgets (compilation)', function() {
                 main.checkError(e);
                 done();
             } else {
-                var actualSrc = compiler.compileFile(templatePath, main && main.compilerOptions);
+                var actualSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
                 actualSrc = stripVarData(actualSrc);
 
                 var actualPath = path.join(testPath, './actual.js');

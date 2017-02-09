@@ -2,7 +2,6 @@
 
 var ok = require('assert').ok;
 var nodePath = require('path');
-var handleAttributes = require('./handleAttributes');
 var scanTagsDir = require('./scanTagsDir');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
@@ -121,14 +120,15 @@ class TaglibLoader {
             let tagName = name.slice(1, -1);
             this._handleTag(tagName, value, this.dependencyChain.append(name));
         } else if (name.startsWith('@')) {
-            var attrName = name.substring(1);
+            var attrKey = name.substring(1);
 
             var attr = attributeLoader.loadAttribute(
-                attrName,
+                attrKey,
                 value,
-                this.dependencyChain.append('@' + attrName));
+                this.dependencyChain.append('@' + attrKey));
 
             attr.filePath = filePath;
+            attr.key = attrKey;
 
             taglib.addAttribute(attr);
         } else {
@@ -151,9 +151,19 @@ class TaglibLoader {
         //     }
         // }
         var taglib = this.taglib;
-        var path = this.filePath;
 
-        handleAttributes(value, taglib, path);
+        Object.keys(value).forEach((attrName) => {
+            var attrDef = value[attrName];
+
+            var attr = attributeLoader.loadAttribute(
+                attrName,
+                attrDef,
+                this.dependencyChain.append('@' + attrName));
+
+            attr.key = attrName;
+
+            taglib.addAttribute(attr);
+        });
     }
     tags(tags) {
         // The value of the "tags" property will be an object
@@ -188,12 +198,16 @@ class TaglibLoader {
         var path = this.filePath;
         var dirname = this.dirname;
 
-        if (Array.isArray(dir)) {
-            for (var i = 0; i < dir.length; i++) {
-                scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
+        taglib.tagsDir = dir;
+
+        if (dir != null) {
+            if (Array.isArray(dir)) {
+                for (var i = 0; i < dir.length; i++) {
+                    scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
+                }
+            } else {
+                scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
             }
-        } else {
-            scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
         }
     }
 
@@ -314,6 +328,30 @@ class TaglibLoader {
         ok(transformer.path, '"path" is required for transformer');
 
         taglib.addTransformer(transformer);
+    }
+
+    attributeGroups(value) {
+        let taglib = this.taglib;
+        let attributeGroups = taglib.attributeGroups || (taglib.attributeGroups = {});
+        let dependencyChain = this.dependencyChain.append('attribute-groups');
+
+        Object.keys(value).forEach((attrGroupName) => {
+            let attrGroup = attributeGroups[attrGroupName] = {};
+            let attrGroupDependencyChain = dependencyChain.append(attrGroupName);
+
+            let rawAttrGroup = value[attrGroupName];
+
+            Object.keys(rawAttrGroup).forEach((attrName) => {
+                var rawAttrDef = rawAttrGroup[attrName];
+
+                let attr = attributeLoader.loadAttribute(
+                    attrName,
+                    rawAttrDef,
+                    attrGroupDependencyChain.append('@' + attrName));
+
+                attrGroup[attrName] = attr;
+            });
+        });
     }
 }
 

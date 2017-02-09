@@ -3,13 +3,13 @@
 var Node = require('./Node');
 
 class ContainerNode extends Node {
-    constructor(def) {
-        super('ContainerNode');
-        this.body = this.makeContainer(def.body);
+    constructor(type) {
+        super(type);
+        this.body = this.makeContainer([]);
     }
 
     generateCode(codegen) {
-        return codegen.genereateCode(this.body);
+        return codegen.generateCode(this.body);
     }
 
     walk(walker) {

@@ -229,6 +229,7 @@ exports.buildTaglibLookup = buildTaglibLookup;
 taglibLookup.registerTaglib(require.resolve('../taglibs/core/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/layout/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/html/marko.json'));
+taglibLookup.registerTaglib(require.resolve('../taglibs/svg/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/async/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../taglibs/cache/marko.json'));
 taglibLookup.registerTaglib(require.resolve('../widgets/taglib/marko.json'));

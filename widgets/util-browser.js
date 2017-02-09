@@ -48,14 +48,14 @@ var lifecycleEventMethods = {};
  * update        --> onUpdate
  * render        --> onRender
  */
-function emitLifecycleEvent(widget, eventType, eventArg) {
+function emitLifecycleEvent(widget, eventType, eventArg1, eventArg2) {
     var listenerMethod = widget[lifecycleEventMethods[eventType]];
 
     if (listenerMethod) {
-        listenerMethod.call(widget, eventArg);
+        listenerMethod.call(widget, eventArg1, eventArg2);
     }
 
-    widget.emit(eventType, eventArg);
+    widget.emit(eventType, eventArg1, eventArg2);
 }
 
 function destroyWidgetForEl(el) {
@@ -91,6 +91,14 @@ function getElementById(doc, id) {
     return doc.getElementById(id);
 }
 
+function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
+    if (handlerMethodName) {
+        return extraArgs ?
+            [handlerMethodName, widgetDef.id, extraArgs] :
+            [handlerMethodName, widgetDef.id];
+    }
+}
+
 exports.$__widgetLookup = widgetLookup;
 exports.$__getWidgetForEl = getWidgetForEl;
 exports.$__emitLifecycleEvent = emitLifecycleEvent;
@@ -98,3 +106,4 @@ exports.$__destroyWidgetForEl = destroyWidgetForEl;
 exports.$__destroyElRecursive = destroyElRecursive;
 exports.$__nextWidgetId = nextWidgetId;
 exports.$__getElementById = getElementById;
+exports.$__attachBubblingEvent = attachBubblingEvent;

@@ -35,7 +35,7 @@ function convertAttrValue(type, value) {
     }
 }
 
-function VVElementClone(other) {
+function VElementClone(other) {
     extend(this, other);
     this.$__parentNode = undefined;
     this.$__nextSibling = undefined;
@@ -83,7 +83,7 @@ VElement.prototype = {
     $__nsAware: true,
 
     $__cloneNode: function() {
-        return new VVElementClone(this);
+        return new VElementClone(this);
     },
 
     /**
@@ -195,7 +195,7 @@ VElement.prototype = {
 
 inherit(VElement, VNode);
 
-var proto = VVElementClone.prototype = VElement.prototype;
+var proto = VElementClone.prototype = VElement.prototype;
 
 ['checked', 'selected', 'disabled'].forEach(function(name) {
     defineProperty(proto, name, {

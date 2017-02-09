@@ -60,11 +60,11 @@ module.exports = function transform(el, context) {
         transformHelper.handleWidgetPreserve();
     }
 
-    if (el.hasAttribute('ref') || el.hasAttribute('w-id')) {
+    if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
         transformHelper.assignWidgetId();
     }
 
-    if (el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {
+    if (el.hasAttribute('for-key') || el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {
         transformHelper.handleWidgetFor();
     }
 

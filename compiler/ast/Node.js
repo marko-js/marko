@@ -160,7 +160,7 @@ class Node {
         var container = this.container;
 
         if (container) {
-            container.getPreviousSibling(this);
+            return container.getPreviousSibling(this);
         }
     }
 
@@ -168,7 +168,7 @@ class Node {
         var container = this.container;
 
         if (container) {
-            container.getNextSibling(this);
+            return container.getNextSibling(this);
         }
     }
 

@@ -18,7 +18,7 @@ var updateManager = require('./update-manager');
 var morphAttrs = require('../runtime/vdom/VElement').$__morphAttrs;
 var morphdomFactory = require('morphdom/factory');
 var morphdom = morphdomFactory(morphAttrs);
-
+var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;
 
@@ -146,6 +146,16 @@ function checkInputChanged(existingWidget, oldInput, newInput) {
     return false;
 }
 
+function handleNodeDiscarded(node) {
+    if (node.nodeType == 1) {
+        destroyWidgetForEl(node);
+    }
+}
+
+function handleBeforeNodeDiscarded(node) {
+    return eventDelegation.$__handleNodeDetach(node);
+}
+
 var widgetProto;
 
 /**
@@ -161,6 +171,7 @@ function Widget(id, doc) {
         this.$__roots =
         this.$__subscriptions =
         this.$__domEventListenerHandles =
+        this.$__bubblingDomEvents =
         this.$__customEvents =
         this.$__scope =
         this.$__renderInput =
@@ -204,7 +215,9 @@ Widget.prototype = widgetProto = {
             handleCustomEventWithMethodListener(this, targetMethodName, args, extraArgs);
         }
 
-        return emit.apply(this, arguments);
+        if (this.listenerCount(eventType)) {
+            return emit.apply(this, arguments);
+        }
     },
     getElId: function (widgetElId, index) {
         return getElIdHelper(this, widgetElId, index);
@@ -441,8 +454,8 @@ Widget.prototype = widgetProto = {
         this.rerender();
     },
 
-    $__emitLifecycleEvent: function(eventType, eventArg) {
-        emitLifecycleEvent(this, eventType, eventArg);
+    $__emitLifecycleEvent: function(eventType, eventArg1, eventArg2) {
+        emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
     },
 
     rerender: function(input) {
@@ -474,12 +487,6 @@ Widget.prototype = widgetProto = {
             var targetNode = out.$__getOutput();
 
             var widgetsContext = out.global.widgets;
-
-            function onNodeDiscarded(node) {
-                if (node.nodeType == 1) {
-                    destroyWidgetForEl(node);
-                }
-            }
 
             function onBeforeElUpdated(fromEl, toEl) {
                 var id = fromEl.id;
@@ -516,8 +523,14 @@ Widget.prototype = widgetProto = {
                 }
             }
 
+            function handleNodeAdded(node) {
+                eventDelegation.$__handleNodeAttach(node, out);
+            }
+
             var morphdomOptions = {
-                onNodeDiscarded: onNodeDiscarded,
+                onBeforeNodeDiscarded: handleBeforeNodeDiscarded,
+                onNodeDiscarded: handleNodeDiscarded,
+                onNodeAdded: handleNodeAdded,
                 onBeforeElUpdated: onBeforeElUpdated,
                 onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
             };
@@ -539,6 +552,8 @@ Widget.prototype = widgetProto = {
             }
 
             result.afterInsert(doc);
+
+            out.emit('$__widgetsInitialized');
         });
     },
 

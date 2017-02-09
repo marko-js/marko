@@ -11,6 +11,12 @@ function createVarsArray(vars) {
     });
 }
 
+function _buildVersionComment(builder, context) {
+    const version = context.compilerVersion;
+    const compilerType = context.compilerType;
+    return builder.comment(`Compiled using ${compilerType}@${version} - DO NOT EDIT`);
+}
+
 class TemplateRoot extends Node {
     constructor(def) {
         super('TemplateRoot');
@@ -85,6 +91,10 @@ class TemplateRoot extends Node {
             );
 
             let body = [];
+
+            if (context.writeVersionComment) {
+                body.push(_buildVersionComment(builder, context));
+            }
 
             let staticNodes = context.getStaticNodes([templateDeclaration]);
             if (staticNodes.length) {

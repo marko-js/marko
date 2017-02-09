@@ -17,10 +17,11 @@ describe('inline', function() {
         var indexPath = path.join(dir, 'index.js');
         var inlineCompiler = compiler.createInlineCompiler(indexPath);
 
+        var compilerOptions = { writeVersionComment: false };
         var src = fs.readFileSync(indexPath, { encoding: 'utf8' });
 
         src = src.replace(/marko`([^`]*)`/g, function(match, templateSrc) {
-            var compiled = inlineCompiler.compile(templateSrc);
+            var compiled = inlineCompiler.compile(templateSrc, compilerOptions);
             return compiled.code;
         });
 

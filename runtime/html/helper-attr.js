@@ -8,8 +8,10 @@ var stringifiedAttrTest = /[&\'\n]/;
 var stringifiedAttrReplace = /[&\'\n]/g;
 
 function attr(name, value, shouldEscape) {
+    shouldEscape = shouldEscape !== false;
+
     if (typeof value === 'string') {
-        return ' ' + name + '="' + (shouldEscape !== false ? escapeXmlAttr(value) : value) + '"';
+        return ' ' + name + '="' + (shouldEscape ? escapeXmlAttr(value) : value) + '"';
     } else if (value === true) {
         return ' ' + name;
     } else if (value == null || value === false) {

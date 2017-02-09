@@ -17,6 +17,10 @@ class DocumentType extends Node {
         ];
     }
 
+    generateVDOMCode(codegen) {
+        return null;
+    }
+
     toJSON() {
         return {
             type: this.type,

@@ -12,27 +12,33 @@ function createCustomTagNodeFactory(tagDef) {
 class Tag{
     constructor() {
         ok(arguments.length === 0);
-        this.taglibId = null;
-        this.taglibPath = null;
-        this.name = undefined;
-        this.renderer = null;
-        this.codeGeneratorModulePath = null;
-        this.nodeFactoryPath = null;
-        this.template = null;
+
         this.attributes = {};
         this.transformers = {};
-        this.nestedVariables = null;
-        this.importedVariables = null;
         this.patternAttributes = [];
-        this.bodyFunction = null;
-        this.nestedTags = null;
-        this.isRepeated = null;
-        this.isNestedTag = false;
-        this.parentTagName = null;
-        this.openTagOnly = null;
-        this.body = null;
-        this.type = null; // Only applicable for nested tags
-        this._nodeFactory = undefined;
+
+        // NOTE: We don't set this properties since
+        //       it breaks merging of tags when the same
+        //       tag is declared at multiple levels
+        
+        // this.taglibId = null;
+        // this.taglibPath = null;
+        // this.name = undefined;
+        // this.renderer = null;
+        // this.codeGeneratorModulePath = null;
+        // this.nodeFactoryPath = null;
+        // this.template = null;
+        // this.nestedVariables = null;
+        // this.importedVariables = null;
+        // this.bodyFunction = null;
+        // this.nestedTags = null;
+        // this.isRepeated = null;
+        // this.isNestedTag = false;
+        // this.parentTagName = null;
+        // this.openTagOnly = null;
+        // this.body = null;
+        // this.type = null; // Only applicable for nested tags
+        // this._nodeFactory = undefined;
     }
 
     forEachVariable(callback, thisObj) {
