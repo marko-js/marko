@@ -804,6 +804,12 @@
             "html-attributes"
         ]
     },
+    "<picture>": {
+        "html": true,
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
     "<pre>": {
         "preserve-whitespace": true,
         "html": true,
