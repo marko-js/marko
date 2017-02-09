@@ -22,11 +22,13 @@ describe('compiler', function() {
             main = require(mainPath);
         }
 
+        var compilerOptions = { writeVersionComment: false };
+
         if (main && main.checkError) {
             var e;
 
             try {
-                compiler.compileFile(templatePath);
+                compiler.compileFile(templatePath, compilerOptions);
             } catch(_e) {
                 e = _e;
             }
@@ -39,11 +41,11 @@ describe('compiler', function() {
             done();
 
         } else if(main && main.checkTemplate) {
-            var template = require('marko').load(templatePath, main.compilerOptions);
+            var template = require('marko').load(templatePath, Object.assign(compilerOptions, main.compilerOptions));
             main.checkTemplate(template);
             done();
         } else {
-            var compiledSrc = compiler.compileFile(templatePath, main && main.compilerOptions);
+            var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
             helpers.compare(compiledSrc, '.js');
             done();
         }

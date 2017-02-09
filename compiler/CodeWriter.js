@@ -6,6 +6,7 @@ const Literal = require('./ast/Literal');
 const Identifier = require('./ast/Identifier');
 const ok = require('assert').ok;
 const Container = require('./ast/Container');
+const Comment = require('./ast/Comment');
 const isValidJavaScriptVarName = require('./util/isValidJavaScriptVarName');
 
 class CodeWriter {
@@ -84,7 +85,7 @@ class CodeWriter {
                     // Do nothing
                 } else if (this._code.endsWith(';')) {
                     this._code += '\n';
-                }  else if (this._code.endsWith('\n' + this.currentIndent)) {
+                }  else if (this._code.endsWith('\n' + this.currentIndent) || node instanceof Comment) {
                     // Do nothing
                 } else {
                     this._code += ';\n';

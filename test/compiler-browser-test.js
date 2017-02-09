@@ -24,11 +24,13 @@ describe('compiler (browser target)', function() {
             main = require(mainPath);
         }
 
+        var compilerOptions = { writeVersionComment: false };
+
         if (main && main.checkError) {
             var e;
 
             try {
-                compiler.compileFileForBrowser(templatePath);
+                compiler.compileFileForBrowser(templatePath, compilerOptions);
             } catch(_e) {
                 e = _e;
             }
@@ -41,7 +43,7 @@ describe('compiler (browser target)', function() {
             done();
 
         } else {
-            var compiledTemplate = compiler.compileFileForBrowser(templatePath, main && main.compilerOptions);
+            var compiledTemplate = compiler.compileFileForBrowser(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
 
             if(main && main.checkTemplate) {
                 main.checkTemplate(compiledTemplate);
