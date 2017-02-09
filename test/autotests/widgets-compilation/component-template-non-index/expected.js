@@ -2,7 +2,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.rw,
     marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-non-index/template.component", function() {
-      return require("./template.component.js");
+      return require("./template.component");
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_attr = marko_helpers.a;
@@ -24,7 +24,7 @@ marko_template.meta = {
       "./template.style.css",
       {
           type: "require",
-          path: "./template.component.js"
+          path: "./template.component"
         },
       {
           type: "require",
