@@ -12,7 +12,7 @@ class Declaration extends Node {
 
         return [
             builder.htmlLiteral('<?'),
-            codegen.generateCode(this.declaration),
+            codegen.generateCode(builder.text(this.declaration)),
             builder.htmlLiteral('?>')
         ];
     }
