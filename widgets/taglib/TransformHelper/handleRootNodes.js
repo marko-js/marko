@@ -207,6 +207,12 @@ function handleClassDeclaration(classEl, transformHelper) {
         return;
     }
     let expression = tree.body[0].expression;
+
+    if (expression.superClass && expression.superClass.name) {
+        transformHelper.context.addError(classEl, 'A component class is not allowed to use `extends`. See: https://github.com/marko-js/marko/wiki/Error:-Component-class-with-extends');
+        return;
+    }
+
     let object = classToObject(expression);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
