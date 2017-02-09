@@ -13,6 +13,8 @@ module.exports = function(target, renderer) {
             var render = renderFunc || this._;
             var out = createOut(localData.$global);
 
+            out.global.template = this;
+
             if (callback) {
                 out.on('finish', function() {
                        callback(null, out.toString(), out);
@@ -33,6 +35,8 @@ module.exports = function(target, renderer) {
             var render = renderFunc || this._;
             var out = createOut(localData.$global);
             out.sync();
+
+            out.global.template = this;
 
             render(localData, out);
             return out.$__getResult();
