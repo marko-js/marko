@@ -12,6 +12,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
 var marko_component = {};
 
 function render(input, out, widget, state) {
+  var data = input;
+
   function macro_renderButton(color, out, renderBody) {
     out.w("<button" +
       marko_attr("data-_onclick", widget.d("handleColorClick", [
@@ -42,3 +44,16 @@ marko_template._ = marko_widgets.r(render, {
   }, marko_component);
 
 marko_template.Widget = marko_widgets.w(marko_component, marko_template._);
+
+marko_template.meta = {
+    deps: [
+      {
+          type: "require",
+          path: "./index.marko"
+        },
+      {
+          type: "require",
+          path: "marko/widgets"
+        }
+    ]
+  };

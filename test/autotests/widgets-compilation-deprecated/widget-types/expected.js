@@ -14,6 +14,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_attr = marko_helpers.a;
 
 function render(input, out, widget, state) {
+  var data = input;
+
   widget.t(marko_widgetTypes[data.isMobile ? "default" : "mobile"]);
 
   out.w("<div" +
@@ -22,3 +24,5 @@ function render(input, out, widget, state) {
 }
 
 marko_template._ = marko_widgets.r(render, {});
+
+marko_template.meta = {};

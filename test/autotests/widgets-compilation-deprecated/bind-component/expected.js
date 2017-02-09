@@ -9,6 +9,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_attr = marko_helpers.a;
 
 function render(input, out, widget, state) {
+  var data = input;
+
   out.w("<div" +
     marko_attr("id", widget.id) +
     "></div>");
@@ -17,3 +19,16 @@ function render(input, out, widget, state) {
 marko_template._ = marko_widgets.r(render, {
     type: marko_widgetType
   });
+
+marko_template.meta = {
+    deps: [
+      {
+          type: "require",
+          path: "./"
+        },
+      {
+          type: "require",
+          path: "marko/widgets"
+        }
+    ]
+  };

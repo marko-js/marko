@@ -26,3 +26,9 @@ function render(input, out) {
 }
 
 marko_template._ = render;
+
+marko_template.meta = {
+    tags: [
+      "./custom-tag-data-tag"
+    ]
+  };
