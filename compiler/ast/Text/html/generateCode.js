@@ -1,7 +1,7 @@
 'use strict';
 
 var escapeXml = require('../../../../runtime/html/helpers').x;
-var Literal = require('../..//Literal');
+var Literal = require('../../Literal');
 
 module.exports = function(node, codegen) {
     var context = codegen.context;
@@ -16,7 +16,7 @@ module.exports = function(node, codegen) {
                 return;
             }
 
-            if (context.isFlagSet('SCRIPT_BODY')) {
+            if (context.isFlagSet('SCRIPT_BODY') || context.isFlagSet('STYLE_BODY')) {
                 escape = false;
             }
 
@@ -33,6 +33,10 @@ module.exports = function(node, codegen) {
 
                 if (context.isFlagSet('SCRIPT_BODY')) {
                     escapeIdentifier = context.helper('escapeScript');
+                }
+
+                if (context.isFlagSet('STYLE_BODY')) {
+                    escapeIdentifier = context.helper('escapeStyle');
                 }
 
                 // TODO Only escape the parts that need to be escaped if it is a compound expression with static

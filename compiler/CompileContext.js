@@ -68,6 +68,7 @@ const helpers = {
     'escapeXml': 'x',
     'escapeXmlAttr': 'xa',
     'escapeScript': 'xs',
+    'escapeStyle': 'xc',
     'forEach': 'f',
     'forEachProp': { module: 'marko/runtime/helper-forEachProperty' },
     'forEachPropStatusVar': { module: 'marko/runtime/helper-forEachPropStatusVar' },

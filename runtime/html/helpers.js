@@ -3,7 +3,6 @@ var extend = require('raptor-util/extend');
 
 var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
-var escapeEndingScriptTagRegExp = /<\//g;
 
 var escape = require('./escape');
 var escapeXml = escape.escapeXml;
@@ -44,8 +43,27 @@ exports.xa = escapeXmlAttr;
  * prematurely ended and a new script tag could then be started that could then execute
  * arbitrary code.
  */
+var escapeEndingScriptTagRegExp = /<\/script/g;
 exports.xs = function escapeScriptHelper(val) {
-    return (typeof val === 'string') ? val.replace(escapeEndingScriptTagRegExp, '\\u003C/') : val;
+    return (typeof val === 'string') ? val.replace(escapeEndingScriptTagRegExp, '\\u003C/script') : val;
+};
+
+/**
+ * Escapes the '</' sequence in the body of a <style> body to avoid the `<style>` being
+ * ended prematurely.
+ *
+ * For example:
+ * var color = '</style><script>alert(1)</script>';
+ *
+ * <style>#foo { background-color:${color} }</style>
+ *
+ * Without escaping the ending '</style>' sequence the opening <style> tag would be
+ * prematurely ended and a script tag could then be started that could then execute
+ * arbitrary code.
+ */
+var escapeEndingStyleTagRegExp = /<\/style/g;
+exports.xc = function escapeScriptHelper(val) {
+    return (typeof val === 'string') ? val.replace(escapeEndingStyleTagRegExp, '\\003C/style') : val;
 };
 
 /**

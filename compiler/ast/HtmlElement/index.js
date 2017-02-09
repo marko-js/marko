@@ -11,11 +11,17 @@ function beforeGenerateCode(event) {
     if (event.node.tagName === 'script') {
         event.context.pushFlag('SCRIPT_BODY');
     }
+    if (event.node.tagName === 'style') {
+        event.context.pushFlag('STYLE_BODY');
+    }
 }
 
 function afterGenerateCode(event) {
     if (event.node.tagName === 'script') {
         event.context.popFlag('SCRIPT_BODY');
+    }
+    if (event.node.tagName === 'style') {
+        event.context.popFlag('STYLE_BODY');
     }
 }
 
