@@ -171,31 +171,8 @@
             }
         ]
     },
-    "<pre>": {
-        "preserve-whitespace": true
-    },
-    "<script>": {
-        "preserve-whitespace": true,
-        "@marko-init": "boolean",
-        "@template-helpers": "boolean",
-        "@*": {
-            "ignore": true
-        },
-        "autocomplete": [
-            {
-                "snippet": "script template-helpers",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
-            }
-        ]
-    },
     "<static>": {
         "code-generator": "./static-tag"
-    },
-    "<style>": {
-        "preserve-whitespace": true
-    },
-    "<textarea>": {
-        "preserve-whitespace": true
     },
     "<unless>": {
         "node-factory": "./unless-tag",

@@ -2,7 +2,6 @@
 
 var ok = require('assert').ok;
 var nodePath = require('path');
-var handleAttributes = require('./handleAttributes');
 var scanTagsDir = require('./scanTagsDir');
 var resolve = require('../util/resolve'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
@@ -151,9 +150,16 @@ class TaglibLoader {
         //     }
         // }
         var taglib = this.taglib;
-        var path = this.filePath;
 
-        handleAttributes(value, taglib, path);
+        Object.keys(value).forEach((attrName) => {
+            var attrDef = value[attrName];
+
+            var attr = attributeLoader.loadAttribute(
+                attrName,
+                attrDef,
+                this.dependencyChain.append('@' + attrName));
+            taglib.addAttribute(attr);
+        });
     }
     tags(tags) {
         // The value of the "tags" property will be an object
@@ -318,6 +324,30 @@ class TaglibLoader {
         ok(transformer.path, '"path" is required for transformer');
 
         taglib.addTransformer(transformer);
+    }
+
+    attributeGroups(value) {
+        let taglib = this.taglib;
+        let attributeGroups = taglib.attributeGroups || (taglib.attributeGroups = {});
+        let dependencyChain = this.dependencyChain.append('attribute-groups');
+
+        Object.keys(value).forEach((attrGroupName) => {
+            let attrGroup = attributeGroups[attrGroupName] = {};
+            let attrGroupDependencyChain = dependencyChain.append(attrGroupName);
+
+            let rawAttrGroup = value[attrGroupName];
+
+            Object.keys(rawAttrGroup).forEach((attrName) => {
+                var rawAttrDef = rawAttrGroup[attrName];
+
+                let attr = attributeLoader.loadAttribute(
+                    attrName,
+                    rawAttrDef,
+                    attrGroupDependencyChain.append('@' + attrName));
+
+                attrGroup[attrName] = attr;
+            });
+        });
     }
 }
 

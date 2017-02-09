@@ -136,6 +136,19 @@ class Compiler {
 
         // STAGE 1: Parse the template to produce the initial AST
         var ast = this.parser.parse(src, context);
+        context._parsingFinished = true;
+
+        if (context.unrecognizedTags) {
+            for(let i=0; i<context.unrecognizedTags.length; i++) {
+                let unrecognizedTag = context.unrecognizedTags[i];
+                // See if the tag is a macro
+                if (!context.isMacro(unrecognizedTag.tagName)) {
+                    context.addErrorUnrecognizedTag(unrecognizedTag.tagName, unrecognizedTag.node);
+                }
+            }
+        }
+
+        handleErrors(context);
 
         context.root = ast;
         // console.log('ROOT', JSON.stringify(ast, null, 2));

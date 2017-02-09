@@ -1,6 +1,1846 @@
 {
     "taglib-id": "marko-html",
     "<html-comment>": {
-        "renderer": "./html-comment-tag.js"
+        "renderer": "./html-comment-tag.js",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<a>": {
+        "@href": "#html-href",
+        "@hreflang": "#html-hreflang",
+        "@media": "#html-media",
+        "@rel": "#html-rel",
+        "@target": "#html-target",
+        "@type": "#html-type",
+        "autocomplete": [
+            {},
+            {
+                "displayText": "a href=\"\"",
+                "snippet": "a href=\"${1:#}\""
+            },
+            {
+                "snippet": "a name=\"${1:name}\""
+            },
+            {
+                "displayText": "a href=\"mailto:\"",
+                "snippet": "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<abbr>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "abbr title=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<address>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<area>": {
+        "@alt": "#html-alt",
+        "@coords": "#html-coords",
+        "@href": "#html-href",
+        "@hreflang": "#html-hreflang",
+        "@media": "#html-media",
+        "@rel": "#html-rel",
+        "@shape": "#html-shape",
+        "@target": "#html-target",
+        "@type": "#html-type",
+        "autocomplete": [
+            {},
+            {
+                "displayText": "area shape=\"\" coords=\"\" href=\"\"",
+                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<article>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<aside>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<audio>": {
+        "@autoplay": "#html-autoplay",
+        "@controls": "#html-controls",
+        "@loop": "#html-loop",
+        "@mediagroup": "#html-mediagroup",
+        "@muted": "#html-muted",
+        "@preload": "#html-preload",
+        "@src": "#html-src",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "audio src=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<b>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<base>": {
+        "@href": "#html-href",
+        "@target": "#html-target",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "base href=\"${1:#}\" target=\"${2:_blank}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<bdi>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "bdi dir=\"${1:auto}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<bdo>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "bdo dir=\"${1:auto}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<blockquote>": {
+        "@cite": "#html-cite",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "blockquote cite=\"${1:http://}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<body>": {
+        "@onafterprint": "#html-onafterprint",
+        "@onbeforeprint": "#html-onbeforeprint",
+        "@onbeforeunload": "#html-onbeforeunload",
+        "@onhashchange": "#html-onhashchange",
+        "@onmessage": "#html-onmessage",
+        "@onoffline": "#html-onoffline",
+        "@ononline": "#html-ononline",
+        "@onpagehide": "#html-onpagehide",
+        "@onpageshow": "#html-onpageshow",
+        "@onpopstate": "#html-onpopstate",
+        "@onredo": "#html-onredo",
+        "@onresize": "#html-onresize",
+        "@onstorage": "#html-onstorage",
+        "@onundo": "#html-onundo",
+        "@onunload": "#html-onunload",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<br>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<button>": {
+        "@autofocus": "#html-autofocus",
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@formaction": "#html-formaction",
+        "@formenctype": "#html-formenctype",
+        "@formmethod": "#html-formmethod",
+        "@formnovalidate": "#html-formnovalidate",
+        "@formtarget": "#html-formtarget",
+        "@name": "#html-name",
+        "@type": "#html-type",
+        "@value": "#html-value",
+        "autocomplete": [
+            {},
+            {
+                "displayText": "button type=\"button\"",
+                "snippet": "button type=\"${1:button}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<canvas>": {
+        "@height": "#html-height",
+        "@width": "#html-width",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<caption>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<cite>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<code>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<col>": {
+        "@span": "#html-span",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<colgroup>": {
+        "@span": "#html-span",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<command>": {
+        "@checked": "#html-checked",
+        "@disabled": "#html-disabled",
+        "@icon": "#html-icon",
+        "@label": "#html-label",
+        "@radiogroup": "#html-radiogroup",
+        "@type": "#html-type",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<datalist>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<dd>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<del>": {
+        "@cite": "#html-cite",
+        "@datetime": "#html-datetime",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<details>": {
+        "@open": "#html-open",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<dfn>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<div>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "div class=\"$2\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<dl>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<dt>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<em>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<embed>": {
+        "@height": "#html-height",
+        "@src": "#html-src",
+        "@type": "#html-type",
+        "@width": "#html-width",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<fieldset>": {
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@name": "#html-name",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<figcaption>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<figure>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<footer>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<form>": {
+        "@accept-charset": "#html-accept-charset",
+        "@action": "#html-action",
+        "@autocomplete": "#html-autocomplete",
+        "@enctype": "#html-enctype",
+        "@method": "#html-method",
+        "@name": "#html-name",
+        "@novalidate": "#html-novalidate",
+        "@target": "#html-target",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h1>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h2>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h3>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h4>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h5>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<h6>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<head>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<header>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<hgroup>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<hr>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<html>": {
+        "@manifest": "#html-manifest",
+        "@xml:lang": "#html-xml:lang",
+        "@xmlns": "#html-xmlns",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "!DOCTYPE html"
+            },
+            {
+                "displayText": "HTML page",
+                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+            },
+            {
+                "displayText": "HTML page (concise)",
+                "snippet": "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<i>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<iframe>": {
+        "@height": "#html-height",
+        "@name": "#html-name",
+        "@sandbox": "#html-sandbox",
+        "@seamless": "#html-seamless",
+        "@src": "#html-src",
+        "@srcdoc": "#html-srcdoc",
+        "@width": "#html-width",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "iframe src=\"$1\" width=\"$2\" height=\"$3\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<img>": {
+        "@alt": "#html-alt",
+        "@height": "#html-height",
+        "@ismap": "#html-ismap",
+        "@longdesc": "#html-longdesc",
+        "@src": "#html-src",
+        "@usemap": "#html-usemap",
+        "@width": "#html-width",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "img src=\"$1\" alt=\"$2\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<input>": {
+        "@accept": "#html-accept",
+        "@alt": "#html-alt",
+        "@autocomplete": "#html-autocomplete",
+        "@autofocus": "#html-autofocus",
+        "@checked": "#html-checked",
+        "@dirname": "#html-dirname",
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@formaction": "#html-formaction",
+        "@formenctype": "#html-formenctype",
+        "@formmethod": "#html-formmethod",
+        "@formnovalidate": "#html-formnovalidate",
+        "@formtarget": "#html-formtarget",
+        "@height": "#html-height",
+        "@list": "#html-list",
+        "@max": "#html-max",
+        "@maxlength": "#html-maxlength",
+        "@min": "#html-min",
+        "@multiple": "#html-multiple",
+        "@name": "#html-name",
+        "@pattern": "#html-pattern",
+        "@placeholder": "#html-placeholder",
+        "@readonly": "#html-readonly",
+        "@required": "#html-required",
+        "@size": "#html-size",
+        "@src": "#html-src",
+        "@step": "#html-step",
+        "@type": "#html-type",
+        "@value": "#html-value",
+        "@width": "#html-width",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
+                "triggerAutocompleteAfterInsert": true
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<ins>": {
+        "@cite": "#html-cite",
+        "@datetime": "#html-datetime",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<kbd>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<keygen>": {
+        "@autofocus": "#html-autofocus",
+        "@challenge": "#html-challenge",
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@keytype": "#html-keytype",
+        "@name": "#html-name",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<label>": {
+        "@for": "#html-for",
+        "@form": "#html-form",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "label${1: for=\"$2\"}"
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<legend>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<li>": {
+        "@value": "#html-value",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<link>": {
+        "@disabled": "#html-disabled",
+        "@href": "#html-href",
+        "@hreflang": "#html-hreflang",
+        "@media": "#html-media",
+        "@rel": "#html-rel",
+        "@sizes": "#html-sizes",
+        "@type": "#html-type",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
+            },
+            {
+                "snippet": "link rel=\"icon\" href=\"$1.ico\""
+            },
+            {
+                "snippet": "link rel=\"import\" href=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<map>": {
+        "@name": "#html-name",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<mark>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<menu>": {
+        "@label": "#html-label",
+        "@type": "#html-type",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<meta>": {
+        "@charset": "#html-charset",
+        "@content": "#html-content",
+        "@http-equiv": "#html-http-equiv",
+        "@name": "#html-name",
+        "autocomplete": [
+            {
+                "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<meter>": {
+        "@form": "#html-form",
+        "@high": "#html-high",
+        "@low": "#html-low",
+        "@max": "#html-max",
+        "@min": "#html-min",
+        "@optimum": "#html-optimum",
+        "@value": "#html-value",
+        "autocomplete": [
+            {},
+            {
+                "snippet": "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<nav>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<noscript>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<object>": {
+        "@archive": "#html-archive",
+        "@codebase": "#html-codebase",
+        "@codetype": "#html-codetype",
+        "@data": "#html-data",
+        "@declare": "#html-declare",
+        "@form": "#html-form",
+        "@height": "#html-height",
+        "@name": "#html-name",
+        "@standby": "#html-standby",
+        "@type": "#html-type",
+        "@usemap": "#html-usemap",
+        "@width": "#html-width",
+        "autocomplete": [
+            {
+                "snippet": "object data=\"${1:http://}\" type=\"${2:mimetype}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<ol>": {
+        "@reversed": "#html-reversed",
+        "@start": "#html-start",
+        "@type": "#html-type",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<optgroup>": {
+        "@disabled": "#html-disabled",
+        "@label": "#html-label",
+        "autocomplete": [
+            {
+                "snippet": "optgroup label=\"${1:Group 1}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<option>": {
+        "@disabled": "#html-disabled",
+        "@label": "#html-label",
+        "@selected": "#html-selected",
+        "@value": "#html-value",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<output>": {
+        "@for": "#html-for",
+        "@form": "#html-form",
+        "@name": "#html-name",
+        "autocomplete": [
+            {
+                "snippet": "output name=\"${1:result}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<p>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<param>": {
+        "@name": "#html-name",
+        "@value": "#html-value",
+        "autocomplete": [
+            {
+                "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<pre>": {
+        "preserve-whitespace": true,
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<progress>": {
+        "@form": "#html-form",
+        "@max": "#html-max",
+        "@value": "#html-value",
+        "autocomplete": [
+            {
+                "snippet": "progress value=\"${1:50}\" max=\"${2:100}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<q>": {
+        "@cite": "#html-cite",
+        "autocomplete": [
+            {
+                "snippet": "q cite=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<rp>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<rt>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<ruby>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<s>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<samp>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<script>": {
+        "preserve-whitespace": true,
+        "@marko-init": "boolean",
+        "@template-helpers": "boolean",
+        "@*": {
+            "ignore": true
+        },
+        "autocomplete": [
+            {
+                "snippet": "script template-helpers",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
+            }
+        ],
+        "@async": "#html-async",
+        "@charset": "#html-charset",
+        "@defer": "#html-defer",
+        "@src": "#html-src",
+        "@type": "#html-type",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<section>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<select>": {
+        "@autofocus": "#html-autofocus",
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@multiple": "#html-multiple",
+        "@name": "#html-name",
+        "@required": "#html-required",
+        "@size": "#html-size",
+        "autocomplete": [
+            {
+                "snippet": "select class=\"$1\" name=\"$2\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<small>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<source>": {
+        "@media": "#html-media",
+        "@src": "#html-src",
+        "@type": "#html-type",
+        "autocomplete": [
+            {
+                "snippet": "source src=\"${1:http://}\" type=\"${2:mimetype}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<span>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<strong>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<style>": {
+        "preserve-whitespace": true,
+        "@disabled": "#html-disabled",
+        "@media": "#html-media",
+        "@scoped": "#html-scoped",
+        "@type": "#html-type",
+        "autocomplete": [
+            {
+                "snippet": "style media=\"screen\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<sub>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<summary>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<sup>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<table>": {
+        "@border": "#html-border",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<tbody>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<td>": {
+        "@colspan": "#html-colspan",
+        "@headers": "#html-headers",
+        "@rowspan": "#html-rowspan",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<textarea>": {
+        "preserve-whitespace": true,
+        "@autofocus": "#html-autofocus",
+        "@cols": "#html-cols",
+        "@dirname": "#html-dirname",
+        "@disabled": "#html-disabled",
+        "@form": "#html-form",
+        "@label": "#html-label",
+        "@maxlength": "#html-maxlength",
+        "@name": "#html-name",
+        "@placeholder": "#html-placeholder",
+        "@readonly": "#html-readonly",
+        "@required": "#html-required",
+        "@rows": "#html-rows",
+        "@wrap": "#html-wrap",
+        "autocomplete": [
+            {
+                "snippet": "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<tfoot>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<th>": {
+        "@colspan": "#html-colspan",
+        "@headers": "#html-headers",
+        "@rowspan": "#html-rowspan",
+        "@scope": "#html-scope",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<thead>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<time>": {
+        "@datetime": "#html-datetime",
+        "@pubdate": "#html-pubdate",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<title>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<tr>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<track>": {
+        "@default": "#html-default",
+        "@kind": "#html-kind",
+        "@label": "#html-label",
+        "@src": "#html-src",
+        "@srclang": "#html-srclang",
+        "autocomplete": [
+            {
+                "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<u>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<ul>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<video>": {
+        "@autoplay": "#html-autoplay",
+        "@controls": "#html-controls",
+        "@height": "#html-height",
+        "@loop": "#html-loop",
+        "@mediagroup": "#html-mediagroup",
+        "@muted": "#html-muted",
+        "@poster": "#html-poster",
+        "@preload": "#html-preload",
+        "@src": "#html-src",
+        "@width": "#html-width",
+        "autocomplete": [
+            {
+                "displayText": "video src=\"\" autoplay poster=\"\"",
+                "snippet": "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<wbr>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "attribute-groups": {
+        "html-attributes": {
+            "*": {},
+            "accesskey": {},
+            "class": {
+                "type": "cssStyle"
+            },
+            "contenteditable": {
+                "type": "boolean"
+            },
+            "contextmenu": {},
+            "dir": {
+                "enum": [
+                    "ltr",
+                    "rtl"
+                ]
+            },
+            "draggable": {
+                "enum": [
+                    "auto",
+                    "false",
+                    "true"
+                ]
+            },
+            "dropzone": {
+                "enum": [
+                    "copy",
+                    "move",
+                    "link"
+                ]
+            },
+            "hidden": {
+                "enum": [
+                    "hidden"
+                ]
+            },
+            "id": {
+                "type": "cssId"
+            },
+            "lang": {
+                "enum": [
+                    "ab",
+                    "aa",
+                    "af",
+                    "sq",
+                    "am",
+                    "ar",
+                    "an",
+                    "hy",
+                    "as",
+                    "ay",
+                    "az",
+                    "ba",
+                    "eu",
+                    "bn",
+                    "dz",
+                    "bh",
+                    "bi",
+                    "br",
+                    "bg",
+                    "my",
+                    "be",
+                    "km",
+                    "ca",
+                    "zh",
+                    "co",
+                    "hr",
+                    "cs",
+                    "da",
+                    "nl",
+                    "en",
+                    "eo",
+                    "et",
+                    "fo",
+                    "fa",
+                    "fi",
+                    "fr",
+                    "fy",
+                    "gl",
+                    "gd",
+                    "gv",
+                    "ka",
+                    "de",
+                    "el",
+                    "kl",
+                    "gn",
+                    "gu",
+                    "ht",
+                    "ha",
+                    "he",
+                    "hi",
+                    "hu",
+                    "is",
+                    "io",
+                    "id",
+                    "ia",
+                    "ie",
+                    "iu",
+                    "ik",
+                    "ga",
+                    "it",
+                    "ja",
+                    "jv",
+                    "kn",
+                    "ks",
+                    "kk",
+                    "rw",
+                    "ky",
+                    "rn",
+                    "ko",
+                    "ku",
+                    "lo",
+                    "la",
+                    "lv",
+                    "li",
+                    "ln",
+                    "lt",
+                    "mk",
+                    "mg",
+                    "ms",
+                    "ml",
+                    "mt",
+                    "mi",
+                    "mr",
+                    "mo",
+                    "mn",
+                    "na",
+                    "ne",
+                    "no",
+                    "oc",
+                    "or",
+                    "om",
+                    "ps",
+                    "pl",
+                    "pt",
+                    "pa",
+                    "qu",
+                    "rm",
+                    "ro",
+                    "ru",
+                    "sz",
+                    "sm",
+                    "sg",
+                    "sa",
+                    "sr",
+                    "sh",
+                    "st",
+                    "tn",
+                    "sn",
+                    "ii",
+                    "sd",
+                    "si",
+                    "ss",
+                    "sk",
+                    "sl",
+                    "so",
+                    "es",
+                    "su",
+                    "sw",
+                    "sv",
+                    "tl",
+                    "tg",
+                    "ta",
+                    "tt",
+                    "te",
+                    "th",
+                    "bo",
+                    "ti",
+                    "to",
+                    "ts",
+                    "tr",
+                    "tk",
+                    "tw",
+                    "ug",
+                    "uk",
+                    "ur",
+                    "uz",
+                    "vi",
+                    "vo",
+                    "wa",
+                    "cy",
+                    "wo",
+                    "xh",
+                    "yi",
+                    "yo",
+                    "zu"
+                ]
+            },
+            "role": {
+                "enum": [
+                    "alert",
+                    "alertdialog",
+                    "article",
+                    "application",
+                    "banner",
+                    "button",
+                    "checkbox",
+                    "columnheader",
+                    "combobox",
+                    "complementary",
+                    "contentinfo",
+                    "definition",
+                    "directory",
+                    "dialog",
+                    "document",
+                    "form",
+                    "grid",
+                    "gridcell",
+                    "group",
+                    "heading",
+                    "img",
+                    "link",
+                    "list",
+                    "listbox",
+                    "listitem",
+                    "log",
+                    "main",
+                    "marquee",
+                    "math",
+                    "menu",
+                    "menubar",
+                    "menuitem",
+                    "menuitemcheckbox",
+                    "menuitemradio",
+                    "navigation",
+                    "note",
+                    "option",
+                    "presentation",
+                    "progressbar",
+                    "radio",
+                    "radiogroup",
+                    "region",
+                    "row",
+                    "rowgroup",
+                    "rowheader",
+                    "scrollbar",
+                    "search",
+                    "separator",
+                    "slider",
+                    "spinbutton",
+                    "status",
+                    "tab",
+                    "tablist",
+                    "tabpanel",
+                    "textbox",
+                    "timer",
+                    "toolbar",
+                    "tooltip",
+                    "tree",
+                    "treegrid",
+                    "treeitem"
+                ]
+            },
+            "spellcheck": {
+                "type": "boolean"
+            },
+            "style": {
+                "type": "style"
+            },
+            "tabindex": {},
+            "title": {},
+            "onabort": {},
+            "onblur": {},
+            "oncanplay": {},
+            "oncanplaythrough": {},
+            "onchange": {},
+            "onclick": {},
+            "oncontextmenu": {},
+            "oncuechange": {},
+            "ondblclick": {},
+            "ondrag": {},
+            "ondragend": {},
+            "ondragenter": {},
+            "ondragleave": {},
+            "ondragover": {},
+            "ondragstart": {},
+            "ondrop": {},
+            "ondurationchange": {},
+            "onemptied": {},
+            "onended": {},
+            "onerror": {},
+            "onfocus": {},
+            "oninput": {},
+            "oninvalid": {},
+            "onkeydown": {},
+            "onkeypress": {},
+            "onkeyup": {},
+            "onload": {},
+            "onloadeddata": {},
+            "onloadedmetadata": {},
+            "onloadstart": {},
+            "onmousedown": {},
+            "onmousemove": {},
+            "onmouseout": {},
+            "onmouseover": {},
+            "onmouseup": {},
+            "onmousewheel": {},
+            "onpause": {},
+            "onplay": {},
+            "onplaying": {},
+            "onprogress": {},
+            "onratechange": {},
+            "onreadystatechange": {},
+            "onreset": {},
+            "onscroll": {},
+            "onseeked": {},
+            "onseeking": {},
+            "onselect": {},
+            "onshow": {},
+            "onstalled": {},
+            "onsubmit": {},
+            "onsuspend": {},
+            "ontimeupdate": {},
+            "onvolumechange": {},
+            "onwaiting": {}
+        }
+    },
+    "attributes": {
+        "html-accept": {
+            "enum": [
+                "text/html",
+                "text/plain",
+                "application/msword",
+                "application/msexcel",
+                "application/postscript",
+                "application/x-zip-compressed",
+                "application/pdf",
+                "application/rtf",
+                "video/x-msvideo",
+                "video/quicktime",
+                "video/x-mpeg2",
+                "audio/x-pn/realaudio",
+                "audio/x-mpeg",
+                "audio/x-waw",
+                "audio/x-aiff",
+                "audio/basic",
+                "image/tiff",
+                "image/jpeg",
+                "image/gif",
+                "image/x-png",
+                "image/x-photo-cd",
+                "image/x-MS-bmp",
+                "image/x-rgb",
+                "image/x-portable-pixmap",
+                "image/x-portable-greymap",
+                "image/x-portablebitmap"
+            ]
+        },
+        "html-accept-charset": {},
+        "html-action": {},
+        "html-align": {},
+        "html-alt": {},
+        "html-archive": {},
+        "html-async": {
+            "type": "flag"
+        },
+        "html-autocomplete": {
+            "enum": [
+                "off",
+                "on"
+            ]
+        },
+        "html-autofocus": {
+            "type": "flag"
+        },
+        "html-autoplay": {
+            "type": "flag"
+        },
+        "html-behavior": {
+            "enum": [
+                "scroll",
+                "slide",
+                "alternate"
+            ]
+        },
+        "html-bgcolor": {
+            "type": "color"
+        },
+        "html-border": {},
+        "html-challenge": {},
+        "html-charset": {
+            "enum": [
+                "iso-8859-1",
+                "utf-8",
+                "shift_jis",
+                "euc-jp",
+                "big5",
+                "gb2312",
+                "euc-kr",
+                "din_66003-kr",
+                "ns_4551-1-kr",
+                "sen_850200_b",
+                "csISO2022jp",
+                "hz-gb-2312",
+                "ibm852",
+                "ibm866",
+                "irv",
+                "iso-2022-kr",
+                "iso-8859-2",
+                "iso-8859-3",
+                "iso-8859-4",
+                "iso-8859-5",
+                "iso-8859-6",
+                "iso-8859-7",
+                "iso-8859-8",
+                "iso-8859-9",
+                "koi8-r",
+                "ks_c_5601",
+                "windows-1250",
+                "windows-1251",
+                "windows-1252",
+                "windows-1253",
+                "windows-1254",
+                "windows-1255",
+                "windows-1256",
+                "windows-1257",
+                "windows-1258",
+                "windows-874",
+                "x-euc",
+                "asmo-708",
+                "dos-720",
+                "dos-862",
+                "dos-874",
+                "cp866",
+                "cp1256"
+            ]
+        },
+        "html-checked": {
+            "type": "flag"
+        },
+        "html-cite": {},
+        "html-codebase": {},
+        "html-codetype": {},
+        "html-cols": {},
+        "html-colspan": {},
+        "html-content": {},
+        "html-controls": {
+            "type": "flag"
+        },
+        "html-coords": {},
+        "html-data": {},
+        "html-datetime": {},
+        "html-declare": {
+            "type": "flag"
+        },
+        "html-default": {
+            "type": "flag"
+        },
+        "html-defer": {
+            "type": "flag"
+        },
+        "html-direction": {
+            "enum": [
+                "left",
+                "right",
+                "up",
+                "down"
+            ]
+        },
+        "html-dirname": {},
+        "html-disabled": {
+            "type": "flag"
+        },
+        "html-enctype": {
+            "enum": [
+                "application/x-www-form-urlencoded",
+                "multipart/form-data",
+                "text/plain"
+            ]
+        },
+        "html-for": {},
+        "html-form": {},
+        "html-formaction": {},
+        "html-formenctype": {
+            "enum": [
+                "application/x-www-form-urlencoded",
+                "multipart/form-data",
+                "text/plain"
+            ]
+        },
+        "html-formmethod": {
+            "enum": [
+                "get",
+                "post"
+            ]
+        },
+        "html-formnovalidate": {
+            "type": "flag"
+        },
+        "html-formtarget": {
+            "enum": [
+                "_blank",
+                "_parent",
+                "_self",
+                "_top"
+            ]
+        },
+        "html-headers": {},
+        "html-height": {},
+        "html-high": {},
+        "html-href": {},
+        "html-hreflang": {},
+        "html-hspace": {},
+        "html-http-equiv": {
+            "enum": [
+                "content-type",
+                "default-style",
+                "refresh"
+            ]
+        },
+        "html-icon": {},
+        "html-ismap": {
+            "type": "flag"
+        },
+        "html-keytype": {
+            "enum": [
+                "dsa",
+                "ec",
+                "rsa"
+            ]
+        },
+        "html-kind": {
+            "enum": [
+                "captions",
+                "chapters",
+                "descriptions",
+                "metadata",
+                "subtitles"
+            ]
+        },
+        "html-label": {},
+        "html-list": {},
+        "html-longdesc": {},
+        "html-loop": {
+            "type": "flag"
+        },
+        "html-low": {},
+        "html-manifest": {},
+        "html-max": {},
+        "html-maxlength": {},
+        "html-media": {
+            "enum": [
+                "screen",
+                "tty",
+                "tv",
+                "projection",
+                "handheld",
+                "print",
+                "aural",
+                "braille",
+                "embossed",
+                "speech",
+                "all",
+                "width",
+                "min-width",
+                "max-width",
+                "height",
+                "min-height",
+                "max-height",
+                "device-width",
+                "min-device-width",
+                "max-device-width",
+                "device-height",
+                "min-device-height",
+                "max-device-height",
+                "orientation",
+                "aspect-ratio",
+                "min-aspect-ratio",
+                "max-aspect-ratio",
+                "device-aspect-ratio",
+                "min-device-aspect-ratio",
+                "max-device-aspect-ratio",
+                "color",
+                "min-color",
+                "max-color",
+                "color-index",
+                "min-color-index",
+                "max-color-index",
+                "monochrome",
+                "min-monochrome",
+                "max-monochrome",
+                "resolution",
+                "min-resolution",
+                "max-resolution",
+                "scan",
+                "grid"
+            ]
+        },
+        "html-mediagroup": {},
+        "html-method": {
+            "enum": [
+                "get",
+                "post"
+            ]
+        },
+        "html-min": {},
+        "html-multiple": {
+            "type": "flag"
+        },
+        "html-muted": {
+            "type": "flag"
+        },
+        "html-name": {},
+        "html-novalidate": {
+            "type": "flag"
+        },
+        "html-open": {
+            "type": "flag"
+        },
+        "html-optimum": {},
+        "html-pattern": {},
+        "html-placeholder": {},
+        "html-poster": {},
+        "html-preload": {
+            "enum": [
+                "auto",
+                "metadata",
+                "none"
+            ]
+        },
+        "html-pubdate": {},
+        "html-radiogroup": {},
+        "html-rel": {
+            "enum": [
+                "alternate",
+                "author",
+                "bookmark",
+                "help",
+                "license",
+                "next",
+                "nofollow",
+                "noreferrer",
+                "prefetch",
+                "prev",
+                "search",
+                "sidebar",
+                "tag",
+                "external"
+            ]
+        },
+        "html-readonly": {
+            "type": "flag"
+        },
+        "html-required": {
+            "type": "flag"
+        },
+        "html-reversed": {
+            "type": "flag"
+        },
+        "html-rows": {},
+        "html-rowspan": {},
+        "html-sandbox": {
+            "enum": [
+                "allow-forms",
+                "allow-same-origin",
+                "allow-scripts",
+                "allow-top-navigation"
+            ]
+        },
+        "html-seamless": {
+            "type": "flag"
+        },
+        "html-selected": {
+            "type": "flag"
+        },
+        "html-scope": {
+            "enum": [
+                "col",
+                "colgroup",
+                "row",
+                "rowgroup"
+            ]
+        },
+        "html-scoped": {
+            "type": "boolean"
+        },
+        "html-scrollamount": {},
+        "html-scrolldelay": {},
+        "html-shape": {
+            "enum": [
+                "circle",
+                "default",
+                "poly",
+                "rect"
+            ]
+        },
+        "html-size": {},
+        "html-sizes": {
+            "enum": [
+                "any"
+            ]
+        },
+        "html-span": {},
+        "html-src": {},
+        "html-srcdoc": {},
+        "html-srclang": {},
+        "html-standby": {},
+        "html-start": {},
+        "html-step": {},
+        "html-target": {
+            "enum": [
+                "_blank",
+                "_parent",
+                "_self",
+                "_top"
+            ]
+        },
+        "html-truespeed": {
+            "type": "flag"
+        },
+        "html-type": {},
+        "html-usemap": {},
+        "html-value": {},
+        "html-vspace": {},
+        "html-width": {},
+        "html-wrap": {
+            "enum": [
+                "hard",
+                "soft"
+            ]
+        },
+        "html-xml:lang": {},
+        "html-xmlns": {}
+    },
+    "<big>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<dialog>": {
+        "@open": "#html-open",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<ilayer>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<main>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<marquee>": {
+        "@align": "#html-align",
+        "@behavior": "#html-behavior",
+        "@bgcolor": "#html-bgcolor",
+        "@direction": "#html-direction",
+        "@height": "#html-height",
+        "@hspace": "#html-hspace",
+        "@loop": "#html-loop",
+        "@scrollamount": "#html-scrollamount",
+        "@scrolldelay": "#html-scrolldelay",
+        "@truespeed": "#html-truespeed",
+        "@vspace": "#html-vspace",
+        "@width": "#html-width",
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<tt>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<var>": {
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<content>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "content select=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<data>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "data value=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<menuitem>": {
+        "autocomplete": [
+            {},
+            {
+                "snippet": "menuitem type=\"${1:command}\" label=\"${2:Save}\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<opt>": {
+        "autocomplete": [
+            {
+                "snippet": "option${1: value=\"${2:option}\"}"
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
+    },
+    "<template>": {
+        "autocomplete": [
+            {
+                "snippet": "template id=\"$1\""
+            }
+        ],
+        "attribute-groups": [
+            "html-attributes"
+        ]
     }
 }

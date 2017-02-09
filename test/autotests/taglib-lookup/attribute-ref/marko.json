@@ -1,0 +1,11 @@
+{
+    "<foo>": {
+        "@hello": "#shared-hello"
+    },
+    "<bar>": {
+        "@hello": "#shared-hello"
+    },
+    "@shared-hello": {
+        "type": "shared"
+    }
+}

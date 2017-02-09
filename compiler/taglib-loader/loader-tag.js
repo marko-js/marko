@@ -616,6 +616,15 @@ class TagLoader {
     parseAttributes(value) {
         this.tag.parseAttributes = value;
     }
+
+    attributeGroups(value) {
+        if (!value) {
+            return;
+        }
+
+        var attributeGroups = this.tag.attributeGroups || (this.tag.attributeGroups = []);
+        this.tag.attributeGroups = attributeGroups.concat(value);
+    }
 }
 
 function isSupportedProperty(name) {

@@ -44,7 +44,11 @@ class AttrLoader {
      */
     type(value) {
         var attr = this.attr;
-        attr.type = value;
+        if (value.charAt(0) === '#') {
+            attr.ref = value.substring(1);
+        } else {
+            attr.type = value;
+        }
     }
 
     /**

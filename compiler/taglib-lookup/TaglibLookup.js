@@ -75,7 +75,9 @@ function merge(target, source) {
  */
 class TaglibLookup {
     constructor() {
-        this.merged = {};
+        this.merged = {
+            attributeGroups: {}
+        };
         this.taglibsById = {};
         this._inputFiles = null;
 
@@ -122,6 +124,8 @@ class TaglibLookup {
             return;
         }
 
+        // console.log("TAGLIB:", taglib);
+
         this._sortedTags = undefined;
 
         this.taglibsById[taglib.id] = taglib;
@@ -131,7 +135,8 @@ class TaglibLookup {
             transformers: taglib.transformers,
             textTransformers: taglib.textTransformers,
             attributes: taglib.attributes,
-            patternAttributes: taglib.patternAttributes
+            patternAttributes: taglib.patternAttributes,
+            attributeGroups: taglib.attributeGroups || {}
         });
 
         this._mergeNestedTags(taglib);
@@ -172,10 +177,22 @@ class TaglibLookup {
             return;
         }
 
+        var globalAttributes = this.merged.attributes;
+        var taglibAttributeGroups = this.merged.attributeGroups;
+
+
+
         function findAttributesForTagName(tagName) {
             var tag = tags[tagName];
             if (!tag) {
                 return;
+            }
+
+            function handleAttr(attrDef) {
+                if (attrDef.ref) {
+                    attrDef = globalAttributes[attrDef.ref];
+                }
+                callback(attrDef, tag);
             }
 
             var attributes = tag.attributes;
@@ -185,12 +202,24 @@ class TaglibLookup {
 
             for (var attrName in attributes) {
                 if (attributes.hasOwnProperty(attrName)) {
-                    callback(attributes[attrName], tag);
+                    handleAttr(attributes[attrName], tag);
+                }
+            }
+
+            if (tag.attributeGroups) {
+                for (let i=0; i<tag.attributeGroups.length; i++) {
+                    let attributeGroupName = tag.attributeGroups[i];
+                    let attributeGroup = taglibAttributeGroups[attributeGroupName];
+                    if (attributeGroup) {
+                        for (let attrName in attributeGroup) {
+                            handleAttr(attributeGroup[attrName]);
+                        }
+                    }
                 }
             }
 
             if (tag.patternAttributes) {
-                tag.patternAttributes.forEach(callback);
+                tag.patternAttributes.forEach(handleAttr);
             }
         }
 
@@ -231,12 +260,29 @@ class TaglibLookup {
             return;
         }
 
+        var taglibAttributeGroups = this.merged.attributeGroups;
+
         var tagName = element.tagName;
         var attrName = attr.name;
 
         function findAttributeForTag(tag, attributes, attrName) {
             // try by exact match first
             var attribute = attributes[attrName];
+            if (attribute === undefined) {
+                if (tag.attributeGroups) {
+                    for (let i=0; i<tag.attributeGroups.length; i++) {
+                        let attributeGroupName = tag.attributeGroups[i];
+                        let attributeGroup = taglibAttributeGroups[attributeGroupName];
+                        if (attributeGroup) {
+                            attribute = attributeGroup[attrName];
+                            if (attribute !== undefined) {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             if (attribute === undefined && attrName !== '*') {
                 if (tag.patternAttributes) {
                     // try searching by pattern
@@ -261,13 +307,16 @@ class TaglibLookup {
                 return undefined;
             }
 
-            return findAttributeForTag(tag, tag.attributes, attrName) ||
-                   findAttributeForTag(tag, globalAttributes, attrName);
+            return findAttributeForTag(tag, tag.attributes, attrName);
         }
 
         var attrDef = tryAttribute(tagName, attrName) || // Look for an exact match at the tag level
             tryAttribute('*', attrName) || // If not there, see if there is a exact match on the attribute name for attributes that apply to all tags
             tryAttribute(tagName, '*'); // Otherwise, see if there is a splat attribute for the tag
+
+        if (attrDef && attrDef.ref) {
+            attrDef = globalAttributes[attrDef.ref];
+        }
 
         return attrDef;
     }
