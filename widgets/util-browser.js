@@ -48,14 +48,14 @@ var lifecycleEventMethods = {};
  * update        --> onUpdate
  * render        --> onRender
  */
-function emitLifecycleEvent(widget, eventType, eventArg) {
+function emitLifecycleEvent(widget, eventType, eventArg1, eventArg2) {
     var listenerMethod = widget[lifecycleEventMethods[eventType]];
 
     if (listenerMethod) {
-        listenerMethod.call(widget, eventArg);
+        listenerMethod.call(widget, eventArg1, eventArg2);
     }
 
-    widget.emit(eventType, eventArg);
+    widget.emit(eventType, eventArg1, eventArg2);
 }
 
 function destroyWidgetForEl(el) {

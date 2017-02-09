@@ -1,5 +1,5 @@
 class {
-    onCreate() {
+    onCreate(input, out) {
         if (typeof window !== 'undefined') {
             throw new Error('onCreate should not be called in the browser');
         }
@@ -9,6 +9,9 @@ class {
         this.state = {
             events: ['onCreate']
         }
+
+        this.onCreateInputName = input.name;
+        this.onCreateOutName = out.global.name;
     }
 
     onRender(out) {

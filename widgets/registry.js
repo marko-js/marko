@@ -13,7 +13,7 @@ function createServerWidgetClass(renderingLogic) {
             this.typeName = typeName;
 
             if (this.onCreate) {
-                this.onCreate();
+                this.onCreate(input, out);
             }
             if (this.onInput) {
                 var updatedInput = this.onInput(input, out) || input;

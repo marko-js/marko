@@ -454,8 +454,8 @@ Widget.prototype = widgetProto = {
         this.rerender();
     },
 
-    $__emitLifecycleEvent: function(eventType, eventArg) {
-        emitLifecycleEvent(this, eventType, eventArg);
+    $__emitLifecycleEvent: function(eventType, eventArg1, eventArg2) {
+        emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
     },
 
     rerender: function(input) {

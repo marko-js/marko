@@ -143,7 +143,7 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
                 widget.$__updateQueued = true;
 
                 if (!isExisting) {
-                    emitLifecycleEvent(widget, 'create');
+                    emitLifecycleEvent(widget, 'create', input, out);
                 }
 
                 input = widget.$__setInput(input, onInput, out);

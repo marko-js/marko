@@ -6,6 +6,10 @@ describe(path.basename(__dirname), function() {
         var widget = window.widgets['lifecycle-events'];
 
         expect(widget.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender']);
+
+
+        expect(widget.onCreateInputName).to.equal('Frank');
+        expect(widget.onCreateOutName).to.equal('FrankGlobal');
     });
 
 });
