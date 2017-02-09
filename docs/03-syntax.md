@@ -130,13 +130,20 @@ With a value of `false` for `active`, the output would be the following:
 
 ### Dynamic attributes
 You can use the `${}` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
+
+_index.js_
 ```js
 template.render({ attrs:{ class:'active', href:'https://ebay.com/' } });
 ```
+
+_link.marko_
 ```xml
 <a ${input.attrs} target="_blank">eBay</a>
 ```
+
 would output the following HTML:
+
+_output.html_
 ```html
 <a class="active" href="https://ebay.com/" target="_blank">eBay</a>
 ```
@@ -169,6 +176,7 @@ The `class` attribute also support object expressions or an array expressions (i
 
 In both cases, the output will be the same:
 
+_output.html_
 ```html
 <div class="a c"></div>
 ```
@@ -177,6 +185,7 @@ In both cases, the output will be the same:
 
 Marko provides a shorthand for declaring classes and ids on an element:
 
+_source.marko_
 ```xml
 <div.my-class/>
 <span#my-id/>
@@ -185,6 +194,7 @@ Marko provides a shorthand for declaring classes and ids on an element:
 
 Yields this HTML:
 
+_output.html_
 ```html
 <div class="my-class"></div>
 <span id="my-id"></span>

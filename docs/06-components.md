@@ -74,9 +74,8 @@ style {
     }
 }
 
-<button class="primary">
-    Click me!
-</button>
+<div>The current count is ${state.count}</div>
+<button.primary on-click('increment')>+1</button>
 ```
 
 If you use a css preprocessor, you can add the extension right on `style`:
@@ -90,9 +89,28 @@ style.less {
 
 ## Multi-file Components
 
-### Defining the class
+Depending on your preferences you might want to move your component's class and style definitions out into separate files.  Marko also makes this very easy with a simple filename based convention.  Let's take a look at how we can convert the single-file component from above into a multi-file component.
 
-Marko automatically discovers component files in the same directory as a template.  For example if you have a template named `template.marko`, it will automatically look for `template.component.js`.  If your template is named `index.marko`, it will look for `component.js` in addition to `index.component.js`.
+> **ProTip:** If your motivation to move the component's class and styles out to a separate file is that the code is getting too large, consider splitting the component into smaller, more manageable components.
+
+### Supporting files
+
+Marko automatically discovers supporting files in the same directory as a template.  For example if you have a template named `counter.marko`, Marko will automatically look for `counter.component.js` and `counter.style.css`.  
+
+```
+counter.marko
+counter.component.js
+counter.style.css
+```
+
+Marko also handles templates named `index.marko` specially, it will look for `component.js` and `style.css` in addition to `index.component.js` and `index.style.css`.  This allows easily grouping component files into a directory:
+
+```
+counter/
+    index.marko
+    component.js
+    style.css
+```
 
 In your `component.js` file, you simply export the component's class:
 
@@ -109,11 +127,23 @@ module.exports = class {
 }
 ```
 
-In your `index.marko` file, you can reference methods from the class:
+In your `index.marko` file, you can still reference methods from the class:
 ```xml
 <div>The current count is ${state.count}</div>
 <button on-click('increment')>+1</button>
 ```
+
+And in your `style.css`, put the style:
+```css
+button.primary {
+    background-color:#09c;
+}
+```
+
+> **ProTip:** In addition to looking for `[name].style.css`, Marko actually looks for `[name].style.*` so it will also pick up any css preprocessor you're using (less, stylus, scss, etc.).
+
+
+### Components with plain objects
 
 If you're targeting a browser that does not support classes, a plain object may also be exported:
 
@@ -132,15 +162,10 @@ module.exports = {
 
 > **Note**: When using a plain object, use the `onCreate` [lifecycle method]() instead of `contructor`.
 
-### Defining styles
-
-Marko automatically discovers stylesheet files in the same way it discovers component files.  For example if you have a template named `template.marko`, it will automatically look for `template.style.css`.  If your template is named `index.marko`, it will look for `style.css` in addition to `index.style.css`.
-
-In addition to looking for `name.style.css`, Marko actually looks for `name.style.*` so it will also pick up any css preprocessor you're using (`less`, `stylus`, `scss`, etc.).
 
 ### Split renderer & widget
 
 With this alternative technique to define a component, you don't have access to stateful re-rendering, but the template rendering logic will not be sent down to the browser.  
 
-Marko automatically discovers widget files in the same directory as a template.  For example if you have a template named `template.marko`, it will automatically look for `template.widget.js`.  If your template is named `index.marko`, it will look for `widget.js` in addition to `index.widget.js`.
+Marko automatically discovers widget files in the same directory as a template.  For example if you have a template named `button.marko`, it will automatically look for `button.widget.js`.  If your template is named `index.marko`, it will look for `widget.js` in addition to `index.widget.js`.
 
