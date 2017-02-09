@@ -175,6 +175,14 @@ class AttrLoader {
     deprecated(value) {
         this.attr.deprecated = value;
     }
+
+    name(value) {
+        this.attr.name = value;
+    }
+
+    html(value) {
+        this.attr.html = value === true;
+    }
 }
 
 exports.isSupportedProperty = function(name) {

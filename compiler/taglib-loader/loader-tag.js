@@ -625,6 +625,10 @@ class TagLoader {
         var attributeGroups = this.tag.attributeGroups || (this.tag.attributeGroups = []);
         this.tag.attributeGroups = attributeGroups.concat(value);
     }
+
+    html(value) {
+        this.tag.html = value === true;
+    }
 }
 
 function isSupportedProperty(name) {

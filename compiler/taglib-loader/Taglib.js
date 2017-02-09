@@ -40,15 +40,15 @@ class Taglib {
     }
 
     addAttribute(attribute) {
+        ok(attribute.key, '"key" is required for global attributes');
+
         attribute.filePath = this.filePath;
 
-        if (attribute.pattern) {
-            this.patternAttributes.push(attribute);
-        } else if (attribute.name) {
-            this.attributes[attribute.name] = attribute;
-        } else {
+        if (!attribute.pattern && !attribute.name) {
             throw new Error('Invalid attribute: ' + require('util').inspect(attribute));
         }
+
+        this.attributes[attribute.key] = attribute;
     }
     getAttribute(name) {
         var attribute = this.attributes[name];

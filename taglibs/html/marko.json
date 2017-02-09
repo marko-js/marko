@@ -13,6 +13,7 @@
         "@rel": "#html-rel",
         "@target": "#html-target",
         "@type": "#html-type",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -32,6 +33,7 @@
         ]
     },
     "<abbr>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -43,6 +45,7 @@
         ]
     },
     "<address>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -57,6 +60,7 @@
         "@shape": "#html-shape",
         "@target": "#html-target",
         "@type": "#html-type",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -69,11 +73,13 @@
         ]
     },
     "<article>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<aside>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -86,6 +92,7 @@
         "@muted": "#html-muted",
         "@preload": "#html-preload",
         "@src": "#html-src",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -97,6 +104,7 @@
         ]
     },
     "<b>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -104,6 +112,7 @@
     "<base>": {
         "@href": "#html-href",
         "@target": "#html-target",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -115,6 +124,7 @@
         ]
     },
     "<bdi>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -126,6 +136,7 @@
         ]
     },
     "<bdo>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -138,6 +149,7 @@
     },
     "<blockquote>": {
         "@cite": "#html-cite",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -164,11 +176,13 @@
         "@onstorage": "#html-onstorage",
         "@onundo": "#html-onundo",
         "@onunload": "#html-onunload",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<br>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -185,6 +199,7 @@
         "@name": "#html-name",
         "@type": "#html-type",
         "@value": "#html-value",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -199,6 +214,7 @@
     "<canvas>": {
         "@height": "#html-height",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -210,28 +226,33 @@
         ]
     },
     "<caption>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<cite>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<code>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<col>": {
         "@span": "#html-span",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<colgroup>": {
         "@span": "#html-span",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -243,16 +264,19 @@
         "@label": "#html-label",
         "@radiogroup": "#html-radiogroup",
         "@type": "#html-type",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<datalist>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<dd>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -260,22 +284,26 @@
     "<del>": {
         "@cite": "#html-cite",
         "@datetime": "#html-datetime",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<details>": {
         "@open": "#html-open",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<dfn>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<div>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -287,16 +315,19 @@
         ]
     },
     "<dl>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<dt>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<em>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -306,6 +337,7 @@
         "@src": "#html-src",
         "@type": "#html-type",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -320,21 +352,25 @@
         "@disabled": "#html-disabled",
         "@form": "#html-form",
         "@name": "#html-name",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<figcaption>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<figure>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<footer>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -348,6 +384,7 @@
         "@name": "#html-name",
         "@novalidate": "#html-novalidate",
         "@target": "#html-target",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -359,51 +396,61 @@
         ]
     },
     "<h1>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<h2>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<h3>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<h4>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<h5>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<h6>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<head>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<header>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<hgroup>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<hr>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -412,6 +459,7 @@
         "@manifest": "#html-manifest",
         "@xml:lang": "#html-xml:lang",
         "@xmlns": "#html-xmlns",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -431,6 +479,7 @@
         ]
     },
     "<i>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -443,6 +492,7 @@
         "@src": "#html-src",
         "@srcdoc": "#html-srcdoc",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -461,6 +511,7 @@
         "@src": "#html-src",
         "@usemap": "#html-usemap",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -502,6 +553,7 @@
         "@type": "#html-type",
         "@value": "#html-value",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -516,11 +568,13 @@
     "<ins>": {
         "@cite": "#html-cite",
         "@datetime": "#html-datetime",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<kbd>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -532,6 +586,7 @@
         "@form": "#html-form",
         "@keytype": "#html-keytype",
         "@name": "#html-name",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -545,6 +600,7 @@
     "<label>": {
         "@for": "#html-for",
         "@form": "#html-form",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -556,12 +612,14 @@
         ]
     },
     "<legend>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<li>": {
         "@value": "#html-value",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -574,6 +632,7 @@
         "@rel": "#html-rel",
         "@sizes": "#html-sizes",
         "@type": "#html-type",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -592,11 +651,13 @@
     },
     "<map>": {
         "@name": "#html-name",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<mark>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -604,6 +665,7 @@
     "<menu>": {
         "@label": "#html-label",
         "@type": "#html-type",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -613,6 +675,7 @@
         "@content": "#html-content",
         "@http-equiv": "#html-http-equiv",
         "@name": "#html-name",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
@@ -630,6 +693,7 @@
         "@min": "#html-min",
         "@optimum": "#html-optimum",
         "@value": "#html-value",
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -641,11 +705,13 @@
         ]
     },
     "<nav>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<noscript>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -663,6 +729,7 @@
         "@type": "#html-type",
         "@usemap": "#html-usemap",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "object data=\"${1:http://}\" type=\"${2:mimetype}\""
@@ -676,6 +743,7 @@
         "@reversed": "#html-reversed",
         "@start": "#html-start",
         "@type": "#html-type",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -683,6 +751,7 @@
     "<optgroup>": {
         "@disabled": "#html-disabled",
         "@label": "#html-label",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "optgroup label=\"${1:Group 1}\""
@@ -697,6 +766,7 @@
         "@label": "#html-label",
         "@selected": "#html-selected",
         "@value": "#html-value",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -705,6 +775,7 @@
         "@for": "#html-for",
         "@form": "#html-form",
         "@name": "#html-name",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "output name=\"${1:result}\""
@@ -715,6 +786,7 @@
         ]
     },
     "<p>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -722,6 +794,7 @@
     "<param>": {
         "@name": "#html-name",
         "@value": "#html-value",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
@@ -733,6 +806,7 @@
     },
     "<pre>": {
         "preserve-whitespace": true,
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -741,6 +815,7 @@
         "@form": "#html-form",
         "@max": "#html-max",
         "@value": "#html-value",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "progress value=\"${1:50}\" max=\"${2:100}\""
@@ -752,6 +827,7 @@
     },
     "<q>": {
         "@cite": "#html-cite",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "q cite=\"$1\""
@@ -762,16 +838,19 @@
         ]
     },
     "<rp>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<rt>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<ruby>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -782,6 +861,7 @@
         ]
     },
     "<samp>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -804,11 +884,13 @@
         "@defer": "#html-defer",
         "@src": "#html-src",
         "@type": "#html-type",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<section>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -821,6 +903,7 @@
         "@name": "#html-name",
         "@required": "#html-required",
         "@size": "#html-size",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "select class=\"$1\" name=\"$2\""
@@ -831,6 +914,7 @@
         ]
     },
     "<small>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -839,6 +923,7 @@
         "@media": "#html-media",
         "@src": "#html-src",
         "@type": "#html-type",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "source src=\"${1:http://}\" type=\"${2:mimetype}\""
@@ -849,11 +934,13 @@
         ]
     },
     "<span>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<strong>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -864,6 +951,7 @@
         "@media": "#html-media",
         "@scoped": "#html-scoped",
         "@type": "#html-type",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "style media=\"screen\""
@@ -874,27 +962,32 @@
         ]
     },
     "<sub>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<summary>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<sup>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<table>": {
         "@border": "#html-border",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<tbody>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -903,6 +996,7 @@
         "@colspan": "#html-colspan",
         "@headers": "#html-headers",
         "@rowspan": "#html-rowspan",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -922,6 +1016,7 @@
         "@required": "#html-required",
         "@rows": "#html-rows",
         "@wrap": "#html-wrap",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
@@ -932,6 +1027,7 @@
         ]
     },
     "<tfoot>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -941,11 +1037,13 @@
         "@headers": "#html-headers",
         "@rowspan": "#html-rowspan",
         "@scope": "#html-scope",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<thead>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -953,16 +1051,19 @@
     "<time>": {
         "@datetime": "#html-datetime",
         "@pubdate": "#html-pubdate",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<title>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<tr>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -973,6 +1074,7 @@
         "@label": "#html-label",
         "@src": "#html-src",
         "@srclang": "#html-srclang",
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
@@ -988,6 +1090,7 @@
         ]
     },
     "<ul>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -1003,6 +1106,7 @@
         "@preload": "#html-preload",
         "@src": "#html-src",
         "@width": "#html-width",
+        "html": true,
         "autocomplete": [
             {
                 "displayText": "video src=\"\" autoplay poster=\"\"",
@@ -1014,48 +1118,60 @@
         ]
     },
     "<wbr>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "attribute-groups": {
         "html-attributes": {
-            "*": {},
-            "accesskey": {},
+            "*": "string",
+            "accesskey": {
+                "html": true
+            },
             "class": {
-                "type": "cssStyle"
+                "type": "cssStyle",
+                "html": true
             },
             "contenteditable": {
-                "type": "boolean"
+                "type": "boolean",
+                "html": true
             },
-            "contextmenu": {},
+            "contextmenu": {
+                "html": true
+            },
             "dir": {
                 "enum": [
                     "ltr",
                     "rtl"
-                ]
+                ],
+                "html": true
             },
             "draggable": {
                 "enum": [
                     "auto",
                     "false",
                     "true"
-                ]
+                ],
+                "html": true
             },
             "dropzone": {
                 "enum": [
                     "copy",
                     "move",
                     "link"
-                ]
+                ],
+                "html": true
             },
             "hidden": {
                 "enum": [
                     "hidden"
-                ]
+                ],
+                "html": true
             },
             "id": {
-                "type": "cssId"
+                "type": "cssId",
+                "html": true
             },
             "lang": {
                 "enum": [
@@ -1204,7 +1320,8 @@
                     "yi",
                     "yo",
                     "zu"
-                ]
+                ],
+                "html": true
             },
             "role": {
                 "enum": [
@@ -1269,70 +1386,185 @@
                     "tree",
                     "treegrid",
                     "treeitem"
-                ]
+                ],
+                "html": true
             },
             "spellcheck": {
-                "type": "boolean"
+                "type": "boolean",
+                "html": true
             },
             "style": {
-                "type": "style"
+                "type": "style",
+                "html": true
             },
-            "tabindex": {},
-            "title": {},
-            "onabort": {},
-            "onblur": {},
-            "oncanplay": {},
-            "oncanplaythrough": {},
-            "onchange": {},
-            "onclick": {},
-            "oncontextmenu": {},
-            "oncuechange": {},
-            "ondblclick": {},
-            "ondrag": {},
-            "ondragend": {},
-            "ondragenter": {},
-            "ondragleave": {},
-            "ondragover": {},
-            "ondragstart": {},
-            "ondrop": {},
-            "ondurationchange": {},
-            "onemptied": {},
-            "onended": {},
-            "onerror": {},
-            "onfocus": {},
-            "oninput": {},
-            "oninvalid": {},
-            "onkeydown": {},
-            "onkeypress": {},
-            "onkeyup": {},
-            "onload": {},
-            "onloadeddata": {},
-            "onloadedmetadata": {},
-            "onloadstart": {},
-            "onmousedown": {},
-            "onmousemove": {},
-            "onmouseout": {},
-            "onmouseover": {},
-            "onmouseup": {},
-            "onmousewheel": {},
-            "onpause": {},
-            "onplay": {},
-            "onplaying": {},
-            "onprogress": {},
-            "onratechange": {},
-            "onreadystatechange": {},
-            "onreset": {},
-            "onscroll": {},
-            "onseeked": {},
-            "onseeking": {},
-            "onselect": {},
-            "onshow": {},
-            "onstalled": {},
-            "onsubmit": {},
-            "onsuspend": {},
-            "ontimeupdate": {},
-            "onvolumechange": {},
-            "onwaiting": {}
+            "tabindex": {
+                "html": true
+            },
+            "title": {
+                "html": true
+            },
+            "onabort": {
+                "html": true
+            },
+            "onblur": {
+                "html": true
+            },
+            "oncanplay": {
+                "html": true
+            },
+            "oncanplaythrough": {
+                "html": true
+            },
+            "onchange": {
+                "html": true
+            },
+            "onclick": {
+                "html": true
+            },
+            "oncontextmenu": {
+                "html": true
+            },
+            "oncuechange": {
+                "html": true
+            },
+            "ondblclick": {
+                "html": true
+            },
+            "ondrag": {
+                "html": true
+            },
+            "ondragend": {
+                "html": true
+            },
+            "ondragenter": {
+                "html": true
+            },
+            "ondragleave": {
+                "html": true
+            },
+            "ondragover": {
+                "html": true
+            },
+            "ondragstart": {
+                "html": true
+            },
+            "ondrop": {
+                "html": true
+            },
+            "ondurationchange": {
+                "html": true
+            },
+            "onemptied": {
+                "html": true
+            },
+            "onended": {
+                "html": true
+            },
+            "onerror": {
+                "html": true
+            },
+            "onfocus": {
+                "html": true
+            },
+            "oninput": {
+                "html": true
+            },
+            "oninvalid": {
+                "html": true
+            },
+            "onkeydown": {
+                "html": true
+            },
+            "onkeypress": {
+                "html": true
+            },
+            "onkeyup": {
+                "html": true
+            },
+            "onload": {
+                "html": true
+            },
+            "onloadeddata": {
+                "html": true
+            },
+            "onloadedmetadata": {
+                "html": true
+            },
+            "onloadstart": {
+                "html": true
+            },
+            "onmousedown": {
+                "html": true
+            },
+            "onmousemove": {
+                "html": true
+            },
+            "onmouseout": {
+                "html": true
+            },
+            "onmouseover": {
+                "html": true
+            },
+            "onmouseup": {
+                "html": true
+            },
+            "onmousewheel": {
+                "html": true
+            },
+            "onpause": {
+                "html": true
+            },
+            "onplay": {
+                "html": true
+            },
+            "onplaying": {
+                "html": true
+            },
+            "onprogress": {
+                "html": true
+            },
+            "onratechange": {
+                "html": true
+            },
+            "onreadystatechange": {
+                "html": true
+            },
+            "onreset": {
+                "html": true
+            },
+            "onscroll": {
+                "html": true
+            },
+            "onseeked": {
+                "html": true
+            },
+            "onseeking": {
+                "html": true
+            },
+            "onselect": {
+                "html": true
+            },
+            "onshow": {
+                "html": true
+            },
+            "onstalled": {
+                "html": true
+            },
+            "onsubmit": {
+                "html": true
+            },
+            "onsuspend": {
+                "html": true
+            },
+            "ontimeupdate": {
+                "html": true
+            },
+            "onvolumechange": {
+                "html": true
+            },
+            "onwaiting": {
+                "html": true
+            }
         }
     },
     "attributes": {
@@ -1364,40 +1596,75 @@
                 "image/x-portable-pixmap",
                 "image/x-portable-greymap",
                 "image/x-portablebitmap"
-            ]
+            ],
+            "html": true,
+            "name": "accept"
         },
-        "html-accept-charset": {},
-        "html-action": {},
-        "html-align": {},
-        "html-alt": {},
-        "html-archive": {},
+        "html-accept-charset": {
+            "html": true,
+            "name": "accept-charset"
+        },
+        "html-action": {
+            "html": true,
+            "name": "action"
+        },
+        "html-align": {
+            "html": true,
+            "name": "align"
+        },
+        "html-alt": {
+            "html": true,
+            "name": "alt"
+        },
+        "html-archive": {
+            "html": true,
+            "name": "archive"
+        },
         "html-async": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "async"
         },
         "html-autocomplete": {
             "enum": [
                 "off",
                 "on"
-            ]
+            ],
+            "html": true,
+            "name": "autocomplete"
         },
         "html-autofocus": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "autofocus"
         },
         "html-autoplay": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "autoplay"
         },
         "html-behavior": {
             "enum": [
                 "scroll",
                 "slide",
                 "alternate"
-            ]
+            ],
+            "html": true,
+            "name": "behavior"
         },
         "html-bgcolor": {
-            "type": "color"
+            "type": "color",
+            "html": true,
+            "name": "bgcolor"
         },
-        "html-border": {},
-        "html-challenge": {},
+        "html-border": {
+            "html": true,
+            "name": "border"
+        },
+        "html-challenge": {
+            "html": true,
+            "name": "challenge"
+        },
         "html-charset": {
             "enum": [
                 "iso-8859-1",
@@ -1443,31 +1710,70 @@
                 "dos-874",
                 "cp866",
                 "cp1256"
-            ]
+            ],
+            "html": true,
+            "name": "charset"
         },
         "html-checked": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "checked"
         },
-        "html-cite": {},
-        "html-codebase": {},
-        "html-codetype": {},
-        "html-cols": {},
-        "html-colspan": {},
-        "html-content": {},
+        "html-cite": {
+            "html": true,
+            "name": "cite"
+        },
+        "html-codebase": {
+            "html": true,
+            "name": "codebase"
+        },
+        "html-codetype": {
+            "html": true,
+            "name": "codetype"
+        },
+        "html-cols": {
+            "html": true,
+            "name": "cols"
+        },
+        "html-colspan": {
+            "html": true,
+            "name": "colspan"
+        },
+        "html-content": {
+            "html": true,
+            "name": "content"
+        },
         "html-controls": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "controls"
         },
-        "html-coords": {},
-        "html-data": {},
-        "html-datetime": {},
+        "html-coords": {
+            "html": true,
+            "name": "coords"
+        },
+        "html-data": {
+            "html": true,
+            "name": "data"
+        },
+        "html-datetime": {
+            "html": true,
+            "name": "datetime"
+        },
         "html-declare": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "declare"
         },
         "html-default": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "default"
         },
         "html-defer": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "defer"
         },
         "html-direction": {
             "enum": [
@@ -1475,37 +1781,61 @@
                 "right",
                 "up",
                 "down"
-            ]
+            ],
+            "html": true,
+            "name": "direction"
         },
-        "html-dirname": {},
+        "html-dirname": {
+            "html": true,
+            "name": "dirname"
+        },
         "html-disabled": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "disabled"
         },
         "html-enctype": {
             "enum": [
                 "application/x-www-form-urlencoded",
                 "multipart/form-data",
                 "text/plain"
-            ]
+            ],
+            "html": true,
+            "name": "enctype"
         },
-        "html-for": {},
-        "html-form": {},
-        "html-formaction": {},
+        "html-for": {
+            "html": true,
+            "name": "for"
+        },
+        "html-form": {
+            "html": true,
+            "name": "form"
+        },
+        "html-formaction": {
+            "html": true,
+            "name": "formaction"
+        },
         "html-formenctype": {
             "enum": [
                 "application/x-www-form-urlencoded",
                 "multipart/form-data",
                 "text/plain"
-            ]
+            ],
+            "html": true,
+            "name": "formenctype"
         },
         "html-formmethod": {
             "enum": [
                 "get",
                 "post"
-            ]
+            ],
+            "html": true,
+            "name": "formmethod"
         },
         "html-formnovalidate": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "formnovalidate"
         },
         "html-formtarget": {
             "enum": [
@@ -1513,31 +1843,60 @@
                 "_parent",
                 "_self",
                 "_top"
-            ]
+            ],
+            "html": true,
+            "name": "formtarget"
         },
-        "html-headers": {},
-        "html-height": {},
-        "html-high": {},
-        "html-href": {},
-        "html-hreflang": {},
-        "html-hspace": {},
+        "html-headers": {
+            "html": true,
+            "name": "headers"
+        },
+        "html-height": {
+            "html": true,
+            "name": "height"
+        },
+        "html-high": {
+            "html": true,
+            "name": "high"
+        },
+        "html-href": {
+            "html": true,
+            "name": "href"
+        },
+        "html-hreflang": {
+            "html": true,
+            "name": "hreflang"
+        },
+        "html-hspace": {
+            "html": true,
+            "name": "hspace"
+        },
         "html-http-equiv": {
             "enum": [
                 "content-type",
                 "default-style",
                 "refresh"
-            ]
+            ],
+            "html": true,
+            "name": "http-equiv"
         },
-        "html-icon": {},
+        "html-icon": {
+            "html": true,
+            "name": "icon"
+        },
         "html-ismap": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "ismap"
         },
         "html-keytype": {
             "enum": [
                 "dsa",
                 "ec",
                 "rsa"
-            ]
+            ],
+            "html": true,
+            "name": "keytype"
         },
         "html-kind": {
             "enum": [
@@ -1546,18 +1905,43 @@
                 "descriptions",
                 "metadata",
                 "subtitles"
-            ]
+            ],
+            "html": true,
+            "name": "kind"
         },
-        "html-label": {},
-        "html-list": {},
-        "html-longdesc": {},
+        "html-label": {
+            "html": true,
+            "name": "label"
+        },
+        "html-list": {
+            "html": true,
+            "name": "list"
+        },
+        "html-longdesc": {
+            "html": true,
+            "name": "longdesc"
+        },
         "html-loop": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "loop"
         },
-        "html-low": {},
-        "html-manifest": {},
-        "html-max": {},
-        "html-maxlength": {},
+        "html-low": {
+            "html": true,
+            "name": "low"
+        },
+        "html-manifest": {
+            "html": true,
+            "name": "manifest"
+        },
+        "html-max": {
+            "html": true,
+            "name": "max"
+        },
+        "html-maxlength": {
+            "html": true,
+            "name": "maxlength"
+        },
         "html-media": {
             "enum": [
                 "screen",
@@ -1604,42 +1988,83 @@
                 "max-resolution",
                 "scan",
                 "grid"
-            ]
+            ],
+            "html": true,
+            "name": "media"
         },
-        "html-mediagroup": {},
+        "html-mediagroup": {
+            "html": true,
+            "name": "mediagroup"
+        },
         "html-method": {
             "enum": [
                 "get",
                 "post"
-            ]
+            ],
+            "html": true,
+            "name": "method"
         },
-        "html-min": {},
+        "html-min": {
+            "html": true,
+            "name": "min"
+        },
         "html-multiple": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "multiple"
         },
         "html-muted": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "muted"
         },
-        "html-name": {},
+        "html-name": {
+            "html": true,
+            "name": "name"
+        },
         "html-novalidate": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "novalidate"
         },
         "html-open": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "open"
         },
-        "html-optimum": {},
-        "html-pattern": {},
-        "html-placeholder": {},
-        "html-poster": {},
+        "html-optimum": {
+            "html": true,
+            "name": "optimum"
+        },
+        "html-pattern": {
+            "html": true,
+            "name": "pattern"
+        },
+        "html-placeholder": {
+            "html": true,
+            "name": "placeholder"
+        },
+        "html-poster": {
+            "html": true,
+            "name": "poster"
+        },
         "html-preload": {
             "enum": [
                 "auto",
                 "metadata",
                 "none"
-            ]
+            ],
+            "html": true,
+            "name": "preload"
         },
-        "html-pubdate": {},
-        "html-radiogroup": {},
+        "html-pubdate": {
+            "html": true,
+            "name": "pubdate"
+        },
+        "html-radiogroup": {
+            "html": true,
+            "name": "radiogroup"
+        },
         "html-rel": {
             "enum": [
                 "alternate",
@@ -1656,32 +2081,52 @@
                 "sidebar",
                 "tag",
                 "external"
-            ]
+            ],
+            "html": true,
+            "name": "rel"
         },
         "html-readonly": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "readonly"
         },
         "html-required": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "required"
         },
         "html-reversed": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "reversed"
         },
-        "html-rows": {},
-        "html-rowspan": {},
+        "html-rows": {
+            "html": true,
+            "name": "rows"
+        },
+        "html-rowspan": {
+            "html": true,
+            "name": "rowspan"
+        },
         "html-sandbox": {
             "enum": [
                 "allow-forms",
                 "allow-same-origin",
                 "allow-scripts",
                 "allow-top-navigation"
-            ]
+            ],
+            "html": true,
+            "name": "sandbox"
         },
         "html-seamless": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "seamless"
         },
         "html-selected": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "selected"
         },
         "html-scope": {
             "enum": [
@@ -1689,76 +2134,145 @@
                 "colgroup",
                 "row",
                 "rowgroup"
-            ]
+            ],
+            "html": true,
+            "name": "scope"
         },
         "html-scoped": {
-            "type": "boolean"
+            "type": "boolean",
+            "html": true,
+            "name": "scoped"
         },
-        "html-scrollamount": {},
-        "html-scrolldelay": {},
+        "html-scrollamount": {
+            "html": true,
+            "name": "scrollamount"
+        },
+        "html-scrolldelay": {
+            "html": true,
+            "name": "scrolldelay"
+        },
         "html-shape": {
             "enum": [
                 "circle",
                 "default",
                 "poly",
                 "rect"
-            ]
+            ],
+            "html": true,
+            "name": "shape"
         },
-        "html-size": {},
+        "html-size": {
+            "html": true,
+            "name": "size"
+        },
         "html-sizes": {
             "enum": [
                 "any"
-            ]
+            ],
+            "html": true,
+            "name": "sizes"
         },
-        "html-span": {},
-        "html-src": {},
-        "html-srcdoc": {},
-        "html-srclang": {},
-        "html-standby": {},
-        "html-start": {},
-        "html-step": {},
+        "html-span": {
+            "html": true,
+            "name": "span"
+        },
+        "html-src": {
+            "html": true,
+            "name": "src"
+        },
+        "html-srcdoc": {
+            "html": true,
+            "name": "srcdoc"
+        },
+        "html-srclang": {
+            "html": true,
+            "name": "srclang"
+        },
+        "html-standby": {
+            "html": true,
+            "name": "standby"
+        },
+        "html-start": {
+            "html": true,
+            "name": "start"
+        },
+        "html-step": {
+            "html": true,
+            "name": "step"
+        },
         "html-target": {
             "enum": [
                 "_blank",
                 "_parent",
                 "_self",
                 "_top"
-            ]
+            ],
+            "html": true,
+            "name": "target"
         },
         "html-truespeed": {
-            "type": "flag"
+            "type": "flag",
+            "html": true,
+            "name": "truespeed"
         },
-        "html-type": {},
-        "html-usemap": {},
-        "html-value": {},
-        "html-vspace": {},
-        "html-width": {},
+        "html-type": {
+            "html": true,
+            "name": "type"
+        },
+        "html-usemap": {
+            "html": true,
+            "name": "usemap"
+        },
+        "html-value": {
+            "html": true,
+            "name": "value"
+        },
+        "html-vspace": {
+            "html": true,
+            "name": "vspace"
+        },
+        "html-width": {
+            "html": true,
+            "name": "width"
+        },
         "html-wrap": {
             "enum": [
                 "hard",
                 "soft"
-            ]
+            ],
+            "html": true,
+            "name": "wrap"
         },
-        "html-xml:lang": {},
-        "html-xmlns": {}
+        "html-xml:lang": {
+            "html": true,
+            "name": "xml:lang"
+        },
+        "html-xmlns": {
+            "html": true,
+            "name": "xmlns"
+        }
     },
     "<big>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<dialog>": {
         "@open": "#html-open",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<ilayer>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<main>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
@@ -1776,21 +2290,25 @@
         "@truespeed": "#html-truespeed",
         "@vspace": "#html-vspace",
         "@width": "#html-width",
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<tt>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<var>": {
+        "html": true,
         "attribute-groups": [
             "html-attributes"
         ]
     },
     "<content>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -1802,6 +2320,7 @@
         ]
     },
     "<data>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -1813,6 +2332,7 @@
         ]
     },
     "<menuitem>": {
+        "html": true,
         "autocomplete": [
             {},
             {
@@ -1824,6 +2344,7 @@
         ]
     },
     "<opt>": {
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "option${1: value=\"${2:option}\"}"
@@ -1834,6 +2355,7 @@
         ]
     },
     "<template>": {
+        "html": true,
         "autocomplete": [
             {
                 "snippet": "template id=\"$1\""

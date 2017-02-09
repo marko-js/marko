@@ -120,14 +120,15 @@ class TaglibLoader {
             let tagName = name.slice(1, -1);
             this._handleTag(tagName, value, this.dependencyChain.append(name));
         } else if (name.startsWith('@')) {
-            var attrName = name.substring(1);
+            var attrKey = name.substring(1);
 
             var attr = attributeLoader.loadAttribute(
-                attrName,
+                attrKey,
                 value,
-                this.dependencyChain.append('@' + attrName));
+                this.dependencyChain.append('@' + attrKey));
 
             attr.filePath = filePath;
+            attr.key = attrKey;
 
             taglib.addAttribute(attr);
         } else {
@@ -158,6 +159,9 @@ class TaglibLoader {
                 attrName,
                 attrDef,
                 this.dependencyChain.append('@' + attrName));
+
+            attr.key = attrName;
+
             taglib.addAttribute(attr);
         });
     }
