@@ -183,8 +183,6 @@ function classToObject(cls, transformHelper) {
 }
 
 function handleClassDeclaration(classEl, transformHelper) {
-    if(!/^class\s*\{/.test(classEl.tagString)) return;
-
     let tree;
     var wrappedSrc = '('+classEl.tagString+'\n)';
 
