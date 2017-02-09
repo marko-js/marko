@@ -65,11 +65,6 @@ State.prototype = {
             ensure(this, name);
         }
 
-        if (value === null) {
-            // Treat null as undefined to simplify our comparison logic
-            value = undefined;
-        }
-
         if (forceDirty) {
             var forcedDirtyState = this.$__forced || (this.$__forced = {});
             forcedDirtyState[name] = true;
@@ -90,7 +85,7 @@ State.prototype = {
 
         this.$__changes[name] = value;
 
-        if (value == null) {
+        if (value === undefined) {
             // Don't store state properties with an undefined or null value
             delete rawState[name];
         } else {

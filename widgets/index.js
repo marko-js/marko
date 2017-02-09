@@ -49,13 +49,19 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             }
         }
 
+        var undefinedPropNames;
+
         if (state) {
             // Update state properties with an `undefined` value to have a `null`
             // value so that the property name will be serialized down to the browser.
             // This ensures that we add the proper getter/setter for the state property.
             for (var k in state) {
                 if (state[k] === undefined) {
-                    state[k] = null;
+                    if (undefinedPropNames) {
+                        undefinedPropNames.push(k);
+                    } else {
+                        undefinedPropNames = [k];
+                    }
                 }
             }
         }
@@ -67,7 +73,8 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             e: widgetDef.$__customEvents,
             w: hasProps ? widget : undefined,
             s: state,
-            r: widgetDef.$__roots
+            r: widgetDef.$__roots,
+            u: undefinedPropNames
         };
 
         flattened.push([

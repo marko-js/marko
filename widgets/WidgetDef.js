@@ -127,6 +127,12 @@ WidgetDef.$__deserialize = function(o, types) {
     widget.$__updateQueued = true;
 
     if (state) {
+        var undefinedPropNames = extra.u;
+        if (undefinedPropNames) {
+            for(var i=0; i<undefinedPropNames.length; i++) {
+                state[undefinedPropNames[i]] = undefined;
+            }
+        }
         // We go through the setter here so that we convert the state object
         // to an instance of `State`
         widget.state = state;
