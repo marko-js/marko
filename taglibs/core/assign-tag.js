@@ -1,6 +1,6 @@
 module.exports = function codeGenerator(elNode, codegen) {
     var context = codegen.context;
-    context.deprecate('The "<assign>" tag is deprecated. Please use "$" for JavaScript in the template. See: https://github.com/marko-js/marko/issues/558');
+    context.deprecate('The "<assign>" tag is deprecated. Please use "$" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags');
 
     var attributes = elNode.attributes;
 
