@@ -118,6 +118,8 @@ class ArrayContainer extends Container {
         }
         var array = this.array;
 
+
+
         for (var i=0; i<array.length; i++) {
             var curNode = array[i];
             if (curNode.container !== this) {
@@ -125,7 +127,9 @@ class ArrayContainer extends Container {
             }
 
             if (curNode === node) {
-                return i-1 >= 0 ? array[i+1] : undefined;
+                console.log("ARRAY:", i-1 >= 0 ? array[i-1] : undefined);
+
+                return i-1 >= 0 ? array[i-1] : undefined;
             }
         }
     }
