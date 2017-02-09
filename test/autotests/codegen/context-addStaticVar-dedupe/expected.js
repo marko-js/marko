@@ -2,6 +2,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     foo = "Hello World";
 
 function render(input, out) {
+  var data = input;
+
   out.w("<div></div>");
 }
 

@@ -4,6 +4,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_classAttr = marko_helpers.ca;
 
 function render(input, out) {
+  var data = input;
+
   out.e("div", {
       "class": marko_classAttr(marko_classList([
         "foo",

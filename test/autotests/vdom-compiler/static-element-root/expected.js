@@ -10,6 +10,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
       .t("Hello World!");
 
 function render(input, out) {
+  var data = input;
+
   out.n(marko_node0);
 }
 

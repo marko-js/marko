@@ -6,6 +6,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_node0 = marko_createElement("div", null, 0, marko_const_nextId());
 
 function render(input, out) {
+  var data = input;
+
   out.n(marko_node0);
 }
 

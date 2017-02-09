@@ -11,6 +11,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
       .t("Body content");
 
 function render(input, out) {
+  var data = input;
+
   out.be("div");
 
   test_hello_tag({
