@@ -4,7 +4,6 @@ var HtmlElement = require('./HtmlElement');
 var removeDashes = require('../util/removeDashes');
 var safeVarName = require('../util/safeVarName');
 var ok = require('assert').ok;
-var tagLoader;
 var Node = require('./Node');
 
 var CUSTOM_TAG_KEY = Symbol('CustomTag');
@@ -307,6 +306,7 @@ class CustomTag extends HtmlElement {
             var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
             if (!attrDef) {
+                console.log('!!!!!TAG DEF:', tagDef);
                 var errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';
                 let allowedAttributesString = getAllowedAttributesString(tagName, context);
                 if (allowedAttributesString) {
@@ -360,7 +360,8 @@ class CustomTag extends HtmlElement {
                 tagDef = this.tagDef = context.getTagDef(fullyQualifiedName);
                 if (!tagDef) {
                     // This nested tag is not declared, but we will allow it to go through
-                    tagDef = this.tagDef = tagLoader.loadTag({
+                    var taglibLoader = require('../taglib-loader');
+                    tagDef = this.tagDef = taglibLoader.loadTag({
                         name: fullyQualifiedName,
                         attributes: {
                             '*': {
@@ -368,6 +369,8 @@ class CustomTag extends HtmlElement {
                             }
                         }
                     }, context.filename);
+
+                    console.log('TAG DEF:', tagDef);
 
                     tagDef.isNestedTag = true;
                     tagDef.isRepeated = false;
@@ -665,5 +668,3 @@ class CustomTag extends HtmlElement {
 }
 
 module.exports = CustomTag;
-
-tagLoader = require('../taglib-loader/loader-tag');

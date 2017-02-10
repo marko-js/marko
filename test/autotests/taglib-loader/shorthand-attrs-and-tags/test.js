@@ -1,7 +1,7 @@
 var nodePath = require('path');
 
 exports.check = function(taglibLoader, expect) {
-    var taglib = taglibLoader.load(nodePath.join(__dirname, 'marko.json'));
+    var taglib = taglibLoader.loadTaglibFromFile(nodePath.join(__dirname, 'marko.json'));
     expect(taglib != null).to.equal(true);
 
     var shorthandCheckbox = taglib.tags['shorthand-checkbox'];

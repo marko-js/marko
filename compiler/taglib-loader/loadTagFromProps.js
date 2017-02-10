@@ -4,22 +4,21 @@ var ok = require('assert').ok;
 var propertyHandlers = require('property-handlers');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
 var nodePath = require('path');
-var resolve = require('../util/resolve'); // NOTE: different implementation for browser
+var markoModules = require('../modules'); // NOTE: different implementation for browser
 var ok = require('assert').ok;
 var bodyFunctionRegExp = /^([A-Za-z_$][A-Za-z0-9_]*)(?:\(([^)]*)\))?$/;
 var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
-var handleAttributes = require('./handleAttributes');
 var propertyHandlers = require('property-handlers');
 var forEachEntry = require('raptor-util/forEachEntry');
 var markoCompiler = require('../');
 var createError = require('raptor-util/createError');
 var types = require('./types');
-var attributeLoader = require('./loader-attribute');
-var DependencyChain = require('./DependencyChain');
+var loaders = require('./loaders');
+
 
 function exists(path) {
     try {
-        require.resolve(path);
+        markoModules.resolve(path);
         return true;
     } catch(e) {
         return false;
@@ -57,23 +56,15 @@ function hasAttributes(tagProps) {
  * @param {String} path An informational path associated with this tag (used for error reporting)
  */
 class TagLoader {
-    constructor(dependencyChain) {
+    constructor(tag, dependencyChain) {
+        this.tag = tag;
         this.dependencyChain = dependencyChain;
 
-        this.filePath = null;
-        this.tag = null;
-        this.dirname = null;
+        this.filePath = tag.filePath;
+        this.dirname = tag.dir || tag.dirname;
     }
 
-    _load(tagProps, filePath) {
-        this.tag = new types.Tag();
-        this.filePath = filePath;
-        this.dirname = nodePath.dirname(filePath);
-
-        var tag = this.tag;
-        tag.filePath = filePath;
-        tag.dir = this.dirname;
-
+    load(tagProps) {
         if (!hasAttributes(tagProps)) {
             // allow any attributes if no attributes are declared
             tagProps.attributes = {
@@ -88,7 +79,6 @@ class TagLoader {
 
 
         propertyHandlers(tagProps, this, this.dependencyChain.toString());
-        return tag;
     }
 
     _handleVar(value, dependencyChain) {
@@ -180,18 +170,18 @@ class TagLoader {
                         // and attribute definition.
                         var propNameDashes = removeDashes(k);
 
-                        if (exports.isSupportedProperty(propNameDashes) &&
-                            attributeLoader.isSupportedProperty(propNameDashes)) {
+                        if (isSupportedProperty(propNameDashes) &&
+                            loaders.isSupportedAttributeProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with a tag
                             // and attribute
                             tagProps[k] = value[k];
                             attrProps[k] = value[k];
                             delete value[k];
-                        } else if (exports.isSupportedProperty(propNameDashes)) {
+                        } else if (isSupportedProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with a tag
                             tagProps[k] = value[k];
                             delete value[k];
-                        } else if (attributeLoader.isSupportedProperty(propNameDashes)) {
+                        } else if (loaders.isSupportedAttributeProperty(propNameDashes)) {
                             // Move over all of the properties that are associated with an attr
                             attrProps[k] = value[k];
                             delete value[k];
@@ -238,7 +228,7 @@ class TagLoader {
                 // This is a shorthand attribute
                 var attrName = part.substring(1);
 
-                var attr = attributeLoader.loadAttribute(
+                var attr = loaders.loadAttributeFromProps(
                     attrName,
                     attrProps,
                     dependencyChain.append(part));
@@ -247,9 +237,11 @@ class TagLoader {
             } else if (part.startsWith('<')) {
 
                 // This is a shorthand nested tag
-                var nestedTag = loadTag(
+                let nestedTag = new types.Tag(this.filePath);
+
+                loadTagFromProps(
+                    nestedTag,
                     tagProps,
-                    this.filePath,
                     dependencyChain.append(part));
 
                 // We use the '[]' suffix to indicate that a nested tag
@@ -269,7 +261,7 @@ class TagLoader {
                 tag.addNestedTag(nestedTag);
 
                 if (!nestedTag.isRepeated) {
-                    let attr = attributeLoader.loadAttribute(
+                    let attr = loaders.loadAttributeFromProps(
                         nestedTag.targetProperty,
                         { type: 'object' },
                         dependencyChain.append(part));
@@ -302,7 +294,7 @@ class TagLoader {
     renderer(value) {
         var tag = this.tag;
         var dirname = this.dirname;
-        var path = resolve(value, dirname);
+        var path = markoModules.resolveFrom(dirname, value);
         tag.renderer = path;
     }
 
@@ -336,7 +328,7 @@ class TagLoader {
     attributes(value) {
         var tag = this.tag;
 
-        handleAttributes(value, tag, this.dependencyChain.append('attributes'));
+        loaders.loadAttributes(value, tag, this.dependencyChain.append('attributes'));
     }
 
     /**
@@ -349,7 +341,7 @@ class TagLoader {
         var tag = this.tag;
         var dirname = this.dirname;
 
-        var path = resolve(value, dirname);
+        var path = markoModules.resolveFrom(dirname, value);
         tag.codeGeneratorModulePath = path;
     }
 
@@ -364,7 +356,7 @@ class TagLoader {
         var tag = this.tag;
         var dirname = this.dirname;
 
-        var path = resolve(value, dirname);
+        var path = markoModules.resolveFrom(dirname, value);
         tag.nodeFactoryPath = path;
     }
 
@@ -406,7 +398,7 @@ class TagLoader {
          */
         propertyHandlers(value, {
             path(value) {
-                var path = resolve(value, dirname);
+                var path = markoModules.resolveFrom(dirname, value);
                 transformer.path = path;
             },
 
@@ -558,15 +550,18 @@ class TagLoader {
 
         forEachEntry(value, (nestedTagName, nestedTagDef) => {
             var dependencyChain = this.dependencyChain.append(`nestedTags["${nestedTagName}]`);
-            var nestedTag = loadTag(
+            var nestedTag = new types.Tag(filePath);
+
+            loadTagFromProps(
+                nestedTag,
                 nestedTagDef,
-                filePath,
                 dependencyChain);
+
             nestedTag.name = nestedTagName;
             tag.addNestedTag(nestedTag);
 
             if (!nestedTag.isRepeated) {
-                let attr = attributeLoader.loadAttribute(
+                let attr = loaders.loadAttributeFromProps(
                     nestedTag.targetProperty,
                     { type: 'object' },
                     dependencyChain);
@@ -635,22 +630,23 @@ function isSupportedProperty(name) {
     return TagLoader.prototype.hasOwnProperty(name);
 }
 
-function loadTag(tagProps, filePath, dependencyChain) {
+function loadTagFromProps(tag, tagProps, dependencyChain) {
     ok(typeof tagProps === 'object', 'Invalid "tagProps"');
-    ok(typeof filePath === 'string');
+    ok(dependencyChain, '"dependencyChain" is required');
 
-    if (!dependencyChain) {
-        dependencyChain = new DependencyChain([filePath]);
-    }
+    var tagLoader = new TagLoader(tag, dependencyChain);
 
-    var tagLoader = new TagLoader(dependencyChain);
     try {
-        return tagLoader._load(tagProps, filePath);
+        tagLoader.load(tagProps);
     } catch(err) {
         throw createError('Unable to load tag (' + dependencyChain + '): ' + err, err);
     }
 
+    return tag;
 }
 
-exports.loadTag = loadTag;
-exports.isSupportedProperty = isSupportedProperty;
+
+
+module.exports = loadTagFromProps;
+
+loadTagFromProps.isSupportedProperty = isSupportedProperty;

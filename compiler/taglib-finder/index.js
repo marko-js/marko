@@ -1,11 +1,9 @@
 'use strict';
-
 var taglibLoader = require('../taglib-loader');
 var nodePath = require('path');
 var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
 var scanTagsDir = require('../taglib-loader/scanTagsDir');
-var Taglib = require('../taglib-loader/Taglib');
 var DependencyChain = require('../taglib-loader/DependencyChain');
 var lassoCachingFS = require('lasso-caching-fs');
 
@@ -102,7 +100,7 @@ function find(dirname, registeredTaglibs) {
             let taglib;
 
             if (existsCached(taglibPath)) {
-                taglib = taglibLoader.load(taglibPath);
+                taglib = taglibLoader.loadTaglibFromFile(taglibPath);
                 helper.addTaglib(taglib);
             }
 
@@ -110,7 +108,7 @@ function find(dirname, registeredTaglibs) {
                 let componentsPath = nodePath.join(curDirname, 'components');
 
                 if (existsCached(componentsPath) && !excludedDirs[componentsPath] && !helper.alreadyAdded(componentsPath)) {
-                    let taglib = new Taglib(componentsPath);
+                    let taglib = taglibLoader.createTaglib(componentsPath);
                     scanTagsDir(componentsPath, nodePath.dirname(componentsPath), './components', taglib, new DependencyChain([componentsPath]));
                     helper.addTaglib(taglib);
                 }
@@ -135,7 +133,7 @@ function find(dirname, registeredTaglibs) {
             if (!excludedPackages[name]) {
                 let taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
                 if (taglibPath) {
-                    var taglib = taglibLoader.load(taglibPath);
+                    var taglib = taglibLoader.loadTaglibFromFile(taglibPath);
                     helper.addTaglib(taglib);
                 }
             }

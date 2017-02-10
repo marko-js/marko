@@ -1,5 +1,6 @@
 'use strict';
 var nextTransformerId = 0;
+var markoModules = require('../modules');
 
 class Transformer {
     constructor() {
@@ -18,7 +19,7 @@ class Transformer {
         }
 
         if (!this._func) {
-            var transformer = require(this.path);
+            var transformer = markoModules.require(this.path);
 
             if (typeof transformer === 'function') {
                 if (transformer.prototype.process) {

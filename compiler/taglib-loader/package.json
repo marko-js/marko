@@ -1,6 +1,0 @@
-{
-    "browser": {
-        "./scanTagsDir.js": "./scanTagsDir-browser.js",
-        "./json-file-reader.js": "./json-file-reader-browser.js"
-    }
-}

@@ -2,16 +2,26 @@
 var forEachEntry = require('raptor-util/forEachEntry');
 var ok = require('assert').ok;
 var CustomTag;
+var path = require('path');
+var markoModules = require('../modules');
+
+function createCustomTag(el, tagDef) {
+    CustomTag = CustomTag || require('../ast/CustomTag');
+    return new CustomTag(el, tagDef);
+}
 
 function createCustomTagNodeFactory(tagDef) {
     return function nodeFactory(el) {
-        return new CustomTag(el, tagDef);
+        return createCustomTag(el, tagDef);
     };
 }
 
 class Tag{
-    constructor() {
-        ok(arguments.length === 0);
+    constructor(filePath) {
+        this.filePath = filePath;
+        if (filePath) {
+            this.dir = path.dirname(filePath);
+        }
 
         this.attributes = {};
         this.transformers = {};
@@ -20,7 +30,7 @@ class Tag{
         // NOTE: We don't set this properties since
         //       it breaks merging of tags when the same
         //       tag is declared at multiple levels
-        
+
         // this.taglibId = null;
         // this.taglibPath = null;
         // this.name = undefined;
@@ -192,14 +202,14 @@ class Tag{
         let codeGeneratorModulePath = this.codeGeneratorModulePath;
 
         if (this.codeGeneratorModulePath) {
-            var loadedCodeGenerator = require(this.codeGeneratorModulePath);
+            var loadedCodeGenerator = markoModules.require(this.codeGeneratorModulePath);
             nodeFactory = function(elNode) {
                 elNode.setType(codeGeneratorModulePath);
                 elNode.setCodeGenerator(loadedCodeGenerator);
                 return elNode;
             };
         } else if (this.nodeFactoryPath) {
-            nodeFactory = require(this.nodeFactoryPath);
+            nodeFactory = markoModules.require(this.nodeFactoryPath);
             if (typeof nodeFactory !== 'function') {
                 throw new Error('Invalid node factory exported by module at path "' + this.nodeFactoryPath + '"');
             }
@@ -223,5 +233,3 @@ class Tag{
 }
 
 module.exports = Tag;
-
-CustomTag = require('../ast/CustomTag');

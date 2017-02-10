@@ -1,7 +1,8 @@
 'use strict';
 var forEachEntry = require('raptor-util/forEachEntry');
 var ok = require('assert').ok;
-var taglibLoader;
+var path = require('path');
+var loaders = require('./loaders');
 
 function handleImport(taglib, importedTaglib) {
     var importsLookup = taglib.importsLookup || (taglib.importsLookup = {});
@@ -28,7 +29,7 @@ class Taglib {
     constructor(filePath) {
         ok(filePath, '"filePath" expected');
         this.filePath = this.path /* deprecated */ = this.id = filePath;
-        this.dirname = null;
+        this.dirname = path.dirname(this.filePath);
         this.tags = {};
         this.textTransformers = [];
         this.transformers = [];
@@ -83,7 +84,7 @@ class Taglib {
     }
 
     addImport(path) {
-        var importedTaglib = taglibLoader.load(path);
+        var importedTaglib = loaders.loadTaglibFromFile(path);
         handleImport(this, importedTaglib);
     }
 
@@ -100,5 +101,3 @@ class Taglib {
 }
 
 module.exports = Taglib;
-
-taglibLoader = require('./');

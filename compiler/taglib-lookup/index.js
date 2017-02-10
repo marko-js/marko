@@ -54,7 +54,8 @@ function buildLookup(dirname) {
 
 function registerTaglib(taglib) {
     if (typeof taglib === 'string') {
-        taglib = taglibLoader.load(taglib);
+        let taglibPath = taglib;
+        taglib = taglibLoader.loadFromFile(taglibPath);
     }
 
     exports.registeredTaglibs.push(taglib);

@@ -4,9 +4,10 @@ var nodePath = require('path');
 var fs = require('fs');
 var stripJsonComments = require('strip-json-comments');
 var tagDefFromCode = require('./tag-def-from-code');
-var tagLoader = require('./loader-tag');
+var loaders = require('./loaders');
 var fsReadOptions = { encoding: 'utf8' };
 var extend = require('raptor-util/extend');
+var types = require('./types');
 
 var tagFileTypes = [
     'template',
@@ -126,7 +127,6 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         var tagName = prefix + childFilename;
         var tagDirname = nodePath.join(dir, childFilename);
         var tagJsonPath = nodePath.join(tagDirname, 'marko-tag.json');
-        var tag = null;
         var tagDef = null;
 
         var hasTagJson = false;
@@ -171,7 +171,9 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             tagDependencyChain = dependencyChain.append(tagDirname);
         }
 
-        tag = tagLoader.loadTag(tagDef, tagJsonPath || tagDirname, tagDependencyChain);
+
+        var tag = new types.Tag(tagJsonPath || tagDirname);
+        loaders.loadTagFromProps(tag, tagDef, tagDependencyChain);
         tag.name = tag.name || tagName;
         taglib.addTag(tag);
     }

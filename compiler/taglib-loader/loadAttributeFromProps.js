@@ -7,12 +7,17 @@ var types = require('./types');
 var createError = require('raptor-util/createError');
 
 class AttrLoader {
-    constructor(dependencyChain) {
+    constructor(attr, dependencyChain) {
+        assert.ok(attr, '"attr" is required');
+        assert.ok(dependencyChain, '"dependencyChain" is required');
+
+        this.attr = attr;
         this.dependencyChain = dependencyChain;
-        this.attr = null;
     }
 
-    _load(attrName, attrProps) {
+    load(attrProps) {
+        assert.ok(arguments.length === 1);
+
         if (attrProps == null) {
             attrProps = {};
         } else if (typeof attrProps === 'string') {
@@ -23,9 +28,7 @@ class AttrLoader {
             assert.ok(typeof attrProps === 'object', 'Invalid "attrProps"');
         }
 
-        var attr = this.attr = new types.Attribute(attrName);
         propertyHandlers(attrProps, this, this.dependencyChain.toString());
-        return attr;
     }
 
     /**
@@ -185,16 +188,27 @@ class AttrLoader {
     }
 }
 
-exports.isSupportedProperty = function(name) {
-    return AttrLoader.prototype.hasOwnProperty(name);
-};
 
-exports.loadAttribute = function loadAttribute(attrName, attrProps, dependencyChain) {
-    var attrLoader = new AttrLoader(dependencyChain);
+function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
+    assert.ok(typeof attrName === 'string');
+    assert.ok(dependencyChain, '"dependencyChain" is required');
+
+    var attr = new types.Attribute(attrName);
+
+    var attrLoader = new AttrLoader(attr, dependencyChain);
 
     try {
-        return attrLoader._load(attrName, attrProps);
+        attrLoader.load(attrProps);
     } catch(err) {
         throw createError('Unable to load attribute "' + attrName + '" (' + dependencyChain + '): ' + err, err);
     }
+
+    return attr;
+}
+
+loadAttributeFromProps.isSupportedProperty = function(name) {
+    return AttrLoader.prototype.hasOwnProperty(name);
 };
+
+
+module.exports = loadAttributeFromProps;

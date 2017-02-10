@@ -1,9 +1,10 @@
 'use strict';
 
 var ok = require('assert').ok;
+var types = require('./types');
 var nodePath = require('path');
 var scanTagsDir = require('./scanTagsDir');
-var resolve = require('../util/resolve'); // NOTE: different implementation for browser
+var markoModules = require('../modules'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
 var types = require('./types');
 var jsonFileReader = require('./json-file-reader');
@@ -11,12 +12,11 @@ var tryRequire = require('try-require');
 var resolveFrom = tryRequire('resolve-from', require);
 var DependencyChain = require('./DependencyChain');
 var createError = require('raptor-util/createError');
-var tagLoader = require('./loader-tag');
-var attributeLoader = require('./loader-attribute');
+var loaders = require('./loaders');
 
 function exists(path) {
     try {
-        require.resolve(path);
+        markoModules.resolve(path);
         return true;
     } catch(e) {
         return false;
@@ -33,26 +33,19 @@ function exists(path) {
  * @param {String} path The file system path to the taglib that we are loading
  */
 class TaglibLoader {
-    constructor(dependencyChain) {
+    constructor(taglib, dependencyChain) {
         ok(dependencyChain instanceof DependencyChain, '"dependencyChain" is not valid');
 
         this.dependencyChain = dependencyChain;
 
-        this.taglib = null;
-        this.filePath = null;
-        this.dirname = null;
+        this.taglib = taglib;
+        this.filePath = taglib.filePath;
+        this.dirname = taglib.dirname;
     }
 
+    load(taglibProps) {
 
-    _load(filePath, taglib) {
-        ok(typeof filePath === 'string', '"filePath" should be a string');
-
-        this.filePath = filePath;
-        this.dirname = nodePath.dirname(filePath);
-
-        var taglibProps = jsonFileReader.readFileSync(filePath);
-
-        taglib = this.taglib = taglib || new types.Taglib(filePath);
+        var taglib = this.taglib;
 
         propertyHandlers(taglibProps, this, this.dependencyChain.toString());
 
@@ -67,7 +60,9 @@ class TaglibLoader {
             // Using the file path as the taglib ID doesn't work so well since we might find
             // the same taglib multiple times in the Node.js module search path with
             // different paths.
-            var dirname = nodePath.dirname(filePath);
+            var filePath = this.filePath;
+            var dirname = this.dirname;
+
             var packageJsonPath = nodePath.join(dirname, 'package.json');
 
 
@@ -80,28 +75,32 @@ class TaglibLoader {
                 taglib.id = filePath;
             }
         }
-
-        return taglib;
     }
 
     _handleTag(tagName, value, dependencyChain) {
-        var tagObject;
+        var tagProps;
         var tagFilePath = this.filePath;
+
+        var tag;
 
         if (typeof value === 'string') {
             tagFilePath = nodePath.resolve(this.dirname, value);
+
 
             if (!exists(tagFilePath)) {
                 throw new Error('Tag at path "' + tagFilePath + '" does not exist. (' + dependencyChain + ')');
             }
 
-            tagObject = jsonFileReader.readFileSync(tagFilePath);
+            tag = new types.Tag(tagFilePath);
+
+            tagProps = jsonFileReader.readFileSync(tagFilePath);
             dependencyChain = dependencyChain.append(tagFilePath);
         } else {
-            tagObject = value;
+            tag = new types.Tag(this.filePath);
+            tagProps = value;
         }
 
-        var tag = tagLoader.loadTag(tagObject, tagFilePath, dependencyChain);
+        loaders.loadTagFromProps(tag, tagProps, dependencyChain);
 
         if (tag.name === undefined) {
             tag.name = tagName;
@@ -122,7 +121,7 @@ class TaglibLoader {
         } else if (name.startsWith('@')) {
             var attrKey = name.substring(1);
 
-            var attr = attributeLoader.loadAttribute(
+            var attr = loaders.loadAttributeFromProps(
                 attrKey,
                 value,
                 this.dependencyChain.append('@' + attrKey));
@@ -155,7 +154,7 @@ class TaglibLoader {
         Object.keys(value).forEach((attrName) => {
             var attrDef = value[attrName];
 
-            var attr = attributeLoader.loadAttribute(
+            var attr = loaders.loadAttributeFromProps(
                 attrName,
                 attrDef,
                 this.dependencyChain.append('@' + attrName));
@@ -233,7 +232,7 @@ class TaglibLoader {
                 if (typeof curImport === 'string') {
                     var basename = nodePath.basename(curImport);
                     if (basename === 'package.json') {
-                        var packagePath = resolve(curImport, dirname);
+                        var packagePath = markoModules.resolveFrom(dirname, curImport);
                         var packageDir = nodePath.dirname(packagePath);
                         var pkg = jsonFileReader.readFileSync(packagePath);
                         var dependencies = pkg.dependencies;
@@ -278,7 +277,7 @@ class TaglibLoader {
 
         propertyHandlers(value, {
             path(value) {
-                var path = resolve(value, dirname);
+                var path = markoModules.resolveFrom(dirname, value);
                 transformer.path = path;
             }
 
@@ -319,7 +318,7 @@ class TaglibLoader {
 
         propertyHandlers(value, {
             path(value) {
-                var path = resolve(value, dirname);
+                var path = markoModules.resolveFrom(dirname, value);
                 transformer.path = path;
             }
 
@@ -344,7 +343,7 @@ class TaglibLoader {
             Object.keys(rawAttrGroup).forEach((attrName) => {
                 var rawAttrDef = rawAttrGroup[attrName];
 
-                let attr = attributeLoader.loadAttribute(
+                let attr = loaders.loadAttributeFromProps(
                     attrName,
                     rawAttrDef,
                     attrGroupDependencyChain.append('@' + attrName));
@@ -355,16 +354,25 @@ class TaglibLoader {
     }
 }
 
-exports.loadTaglib = function(filePath, taglib, dependencyChain) {
+
+function loadTaglibFromProps(taglib, taglibProps, dependencyChain) {
+    ok(taglib, '"taglib" is required');
+    ok(taglibProps, '"taglibProps" is required');
+    ok(taglib.filePath, '"taglib.filePath" is required');
+
     if (!dependencyChain) {
-        dependencyChain = new DependencyChain([filePath]);
+        dependencyChain = new DependencyChain([taglib.filePath]);
     }
 
-    var taglibLoader = new TaglibLoader(dependencyChain);
+    var taglibLoader = new TaglibLoader(taglib, dependencyChain);
 
     try {
-        return taglibLoader._load(filePath, taglib);
+        taglibLoader.load(taglibProps);
     } catch(err) {
         throw createError('Unable to load taglib (' + dependencyChain + '): ' + err, err);
     }
-};
+
+    return taglib;
+}
+
+module.exports = loadTaglibFromProps;

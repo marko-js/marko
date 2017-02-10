@@ -4,6 +4,6 @@ exports.check = function(taglibLoader, expect) {
     var taglibPath = nodePath.join(__dirname, 'marko.json');
 
     expect(function() {
-        taglibLoader.load(taglibPath);
+        taglibLoader.loadTaglibFromFile(taglibPath);
     }).to.throw(`Invalid option: INVALID ([${taglibPath} → <test-hello>])`);
 };

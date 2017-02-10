@@ -1,28 +1,33 @@
+var cache = require('./cache');
+
 var types = require('./types');
+var loaders = require('./loaders');
+var DependencyChain = require('./DependencyChain');
 
-var cache = {};
-
-function load(path) {
-    // Only load a taglib once by caching the loaded taglibs using the file
-    // system path as the key
-    if (cache[path]) {
-        return cache[path];
-    }
-
-    var taglib = cache[path] = new types.Taglib(path);
-
-    exports.taglibLoader.loadTaglib(path, taglib);
-
-    cache[path] = taglib;
-
-    return taglib;
+function loadTaglibFromProps(taglib, taglibProps) {
+    return loaders.loadTaglibFromProps(taglib, taglibProps);
 }
 
-exports.clearCache = function() {
-    cache = {};
-};
+function loadTaglibFromFile(filePath) {
+    return loaders.loadTaglibFromFile(filePath);
+}
 
-exports.load = load;
-exports.taglibLoader = require('./loader-taglib');
-exports.tagLoader = require('./loader-tag');
-exports.attributeLoader = require('./loader-attribute');
+function clearCache() {
+    cache.clear();
+}
+
+function createTaglib(filePath) {
+    return new types.Taglib(filePath);
+}
+
+function loadTag(tagProps, filePath) {
+    var tag = new types.Tag(filePath);
+    loaders.loadTagFromProps(tag, tagProps, new DependencyChain(filePath ? [filePath] : []));
+    return tag;
+}
+
+exports.clearCache = clearCache;
+exports.createTaglib = createTaglib;
+exports.loadTaglibFromProps = loadTaglibFromProps;
+exports.loadTaglibFromFile = loadTaglibFromFile;
+exports.loadTag = loadTag;
