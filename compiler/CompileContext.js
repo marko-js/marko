@@ -15,7 +15,7 @@ var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
 var Walker = require('./Walker');
 var EventEmitter = require('events').EventEmitter;
-var utilFingerprint = require('./util/fingerprint');
+var utilFingerprint = require('./util/finger-print');
 var htmlElements = require('./util/html-elements');
 var markoModules = require('./modules');
 
