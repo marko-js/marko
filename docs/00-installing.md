@@ -36,14 +36,14 @@ yarn add marko
 
 ### In the browser
 
-Let's say we have a simple template that we want to render in the browser: `hello.marko`
+Let's say we have a simple view that we want to render in the browser: `hello.marko`
 
 _hello.marko_
 ```xml
 <h1>Hello ${input.name}</h1>
 ```
 
-First, let's create a `client.js` that requires the template and renders it to the body:
+First, let's create a `client.js` that requires the view and renders it to the body:
 
 _client.js_
 ```js
@@ -65,7 +65,7 @@ Now we can build our bundle for the browser:
 lasso --main client.js --plugins "lasso-marko"
 ```
 
-This builds a `client.js` file to the newly created `static/` directory.  If we had css in the template, a `client.css` file would also have been generated.  You can now create an html file and drop the script (and stylesheet) in it:
+This builds a `client.js` file to the newly created `static/` directory.  If we had css in the view, a `client.css` file would also have been generated.  You can now create an html file and drop the script (and stylesheet) in it:
 
 _index.html_
 ```html
@@ -81,9 +81,9 @@ Load up that page in your browser and you should see `Hello Marko` staring back 
 
 ### On the server
 
-#### Require Marko templates
+#### Require Marko views
 
-Marko provides a [custom Node.js require extension]() that allows you `require` Marko templates exactly like a standard JavaScript module. Take the following example `server.js`:
+Marko provides a [custom Node.js require extension]() that allows you `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
 
 _server.js_
 ```js
@@ -92,17 +92,17 @@ _server.js_
 // of your application before requiring any `*.marko` files.
 require('marko/node-require');
 
-// Load a Marko template by requiring a .marko file:
+// Load a Marko view by requiring a .marko file:
 var hello = require('./hello.marko');
 ```
 
 #### Serving a simple page
 
-Let's update the `server.js` to serve the template from an http server:
+Let's update `server.js` to serve the view from an http server:
 
 _server.js_
 ```js
-// Allow requiring marko templates
+// Allow requiring marko views
 require('marko/node-require');
 
 var http = require('http');
