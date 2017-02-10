@@ -102,7 +102,7 @@ class CompileContext extends EventEmitter {
         this.taglibLookup = taglibLookup.buildLookup(this.dirname);
         this.data = {};
         this._dataStacks = {};
-        this.meta = null;
+        this.meta = {};
 
         this.options = options || {};
 
@@ -125,7 +125,7 @@ class CompileContext extends EventEmitter {
         this._preserveWhitespace = null;
         this._preserveComments = null;
         this.inline = this.options.inline === true;
-        this.useMeta = this.options.meta;
+        this.useMeta = this.options.meta !== false;
         this._moduleRuntimeTarget = this.outputType === 'vdom' ? 'marko/vdom' : 'marko/html';
         this.unrecognizedTags = [];
         this._parsingFinished = false;
@@ -593,10 +593,6 @@ class CompileContext extends EventEmitter {
 
     pushMeta(key, value, unique) {
         var property;
-
-        if(!this.meta) {
-            this.meta = {};
-        }
 
         property = this.meta[key];
 

@@ -14,3 +14,9 @@ function render(input, out) {
 }
 
 marko_template._ = render;
+
+marko_template.meta = {
+    tags: [
+      "./hello.marko"
+    ]
+  };

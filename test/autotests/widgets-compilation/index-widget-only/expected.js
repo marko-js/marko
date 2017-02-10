@@ -8,6 +8,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_attr = marko_helpers.a;
 
 function render(input, out, widget, state) {
+  var data = input;
+
   out.w("<div" +
     marko_attr("id", widget.id) +
     "></div>");

@@ -3,6 +3,8 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     barStatic = "Hello Bar";
 
 function render(input, out) {
+  var data = input;
+
   var foo = "Hello Foo",
       bar = "Hello Bar";
 
@@ -10,3 +12,5 @@ function render(input, out) {
 }
 
 marko_template._ = render;
+
+marko_template.meta = {};

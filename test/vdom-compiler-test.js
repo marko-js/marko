@@ -10,8 +10,6 @@ var fs = require('fs');
 
 require('marko/node-require').install();
 
-var stripVarData = require('./util/stripVarData');
-
 describe('compiler (vdom)', function() {
     var autoTestDir = path.join(__dirname, 'autotests/vdom-compiler');
 
@@ -45,7 +43,6 @@ describe('compiler (vdom)', function() {
         } else {
             var compiledTemplate = compiler.compileFileForBrowser(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
             var actualSrc = compiledTemplate.code;
-            actualSrc = stripVarData(actualSrc);
             helpers.compare(actualSrc, '.js');
             done();
         }

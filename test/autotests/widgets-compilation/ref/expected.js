@@ -17,6 +17,8 @@ var marko_component = {
 };
 
 function render(input, out, widget, state) {
+  var data = input;
+
   out.w("<div class=\"root\"" +
     marko_attr("id", widget.id) +
     ">");
@@ -38,3 +40,19 @@ marko_template._ = marko_widgets.r(render, {
   }, marko_component);
 
 marko_template.Widget = marko_widgets.w(marko_component, marko_template._);
+
+marko_template.meta = {
+    deps: [
+      {
+          type: "require",
+          path: "./index.marko"
+        },
+      {
+          type: "require",
+          path: "marko/widgets"
+        }
+    ],
+    tags: [
+      "./components/app-foo"
+    ]
+  };

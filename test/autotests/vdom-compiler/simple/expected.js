@@ -8,6 +8,8 @@ var marko_template = module.exports = require("marko/vdom").t(),
       .t("No colors!");
 
 function render(input, out) {
+  var data = input;
+
   out.e("h1", null, 3)
     .t("Hello ")
     .t(input.name)

@@ -11,7 +11,14 @@ module.exports = function(target, renderer) {
         renderToString: function(data, callback) {
             var localData = data || {};
             var render = renderFunc || this._;
-            var out = createOut(localData.$global);
+            var globalData = localData.$global;
+            var out = createOut(globalData);
+
+            out.global.template = this;
+
+            if (globalData) {
+                localData.$global = undefined;
+            }
 
             if (callback) {
                 out.on('finish', function() {
@@ -31,8 +38,15 @@ module.exports = function(target, renderer) {
         renderSync: function(data) {
             var localData = data || {};
             var render = renderFunc || this._;
-            var out = createOut(localData.$global);
+            var globalData = localData.$global;
+            var out = createOut(globalData);
             out.sync();
+
+            out.global.template = this;
+
+            if (globalData) {
+                localData.$global = undefined;
+            }
 
             render(localData, out);
             return out.$__getResult();
@@ -67,7 +81,7 @@ module.exports = function(target, renderer) {
             if (data) {
                 finalData = data;
                 if ((globalData = data.$global)) {
-                    finalData.$global = null;
+                    finalData.$global = undefined;
                 }
             } else {
                 finalData = {};

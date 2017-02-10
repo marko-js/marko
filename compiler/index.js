@@ -109,7 +109,7 @@ function compileForBrowser(src, filename, options, callback) {
         options = null;
     }
 
-    options = extend({output: 'vdom', browser: true, sourceOnly: false}, options);
+    options = extend({output: 'vdom', meta: false, browser: true, sourceOnly: false}, options);
 
     return compile(src, filename, options, callback);
 }
@@ -143,7 +143,7 @@ function compileFileForBrowser(filename, options, callback) {
         options = null;
     }
 
-    options = extend({output: 'vdom', browser: true, sourceOnly: false}, options);
+    options = extend({output: 'vdom', meta: false, browser: true, sourceOnly: false}, options);
     return compileFile(filename, options, callback);
 }
 

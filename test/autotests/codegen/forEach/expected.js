@@ -4,9 +4,13 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_escapeXml = marko_helpers.x;
 
 function render(input, out) {
+  var data = input;
+
   marko_forEach(data.colors, function(color) {
     out.w(marko_escapeXml(color));
   });
 }
 
 marko_template._ = render;
+
+marko_template.meta = {};

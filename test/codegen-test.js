@@ -10,8 +10,6 @@ var compiler = require('../compiler');
 var builder = compiler.createBuilder();
 var autotest = require('./autotest');
 
-var stripVarData = require('./util/stripVarData');
-
 var CompileContext = require('../compiler/CompileContext');
 var CodeGenerator = require('../compiler/CodeGenerator');
 var CodeWriter = require('../compiler/CodeWriter');
@@ -41,8 +39,6 @@ describe('compiler/codegen', function() {
         codeWriter.write(finalAST);
 
         var actualSrc = codeWriter.getCode();
-
-        actualSrc = stripVarData(actualSrc);
 
         helpers.compare(actualSrc, '.js');
         done();
