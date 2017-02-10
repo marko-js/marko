@@ -11,10 +11,14 @@ module.exports = function(target, renderer) {
         renderToString: function(data, callback) {
             var localData = data || {};
             var render = renderFunc || this._;
-            var out = createOut(localData.$global);
+            var globalData = localData.$global;
+            var out = createOut(globalData);
 
             out.global.template = this;
-            localData.$global = undefined;
+
+            if (globalData) {
+                localData.$global = undefined;
+            }
 
             if (callback) {
                 out.on('finish', function() {
@@ -34,11 +38,15 @@ module.exports = function(target, renderer) {
         renderSync: function(data) {
             var localData = data || {};
             var render = renderFunc || this._;
-            var out = createOut(localData.$global);
+            var globalData = localData.$global;
+            var out = createOut(globalData);
             out.sync();
 
             out.global.template = this;
-            localData.$global = undefined;
+
+            if (globalData) {
+                localData.$global = undefined;
+            }
 
             render(localData, out);
             return out.$__getResult();
