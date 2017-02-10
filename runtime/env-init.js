@@ -1,5 +1,5 @@
 require('./stream');
-require('./dependencies');
+require('./dependencies/html');
 
 if (!process.env.BUNDLE) {
     if (process.env.MARKO_HOT_RELOAD) {

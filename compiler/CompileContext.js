@@ -5,7 +5,7 @@ var path = require('path');
 var complain = require('complain');
 var taglibLookup = require('./taglib-lookup');
 var charProps = require('char-props');
-var deresolve = require('./util/deresolve');
+
 var UniqueVars = require('./util/UniqueVars');
 var PosInfo = require('./util/PosInfo');
 var CompileError = require('./CompileError');
@@ -17,16 +17,13 @@ var Walker = require('./Walker');
 var EventEmitter = require('events').EventEmitter;
 var utilFingerprint = require('./util/fingerprint');
 var htmlElements = require('./util/html-elements');
+var markoModules = require('./modules');
 
 const markoPkgVersion = require('../package.json').version;
 
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
-const deresolveOptions = {
-    shouldRemoveExt(ext) {
-        return ext === '.js' || ext === '.json' || ext === '.es6';
-    }
-};
+
 
 function getTaglibPath(taglibPath) {
     if (typeof window === 'undefined') {
@@ -280,7 +277,7 @@ class CompileContext extends EventEmitter {
     }
 
     getRequirePath(targetFilename) {
-        return deresolve(targetFilename, this.dirname, deresolveOptions);
+        return markoModules.deresolve(targetFilename, this.dirname);
     }
 
     importModule(varName, path) {

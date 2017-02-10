@@ -1,22 +1,20 @@
 var path = require('path');
-var resolveFrom = require('resolve-from');
-var Template = require('../html/Template');
+var defaultResolveFrom = require('resolve-from');
 
-exports.getDeps = getDeps;
-exports.resolveDep = resolveDep;
-
-function getDeps(template) {
+function getDeps(template, context) {
     if (!template.meta && template.template) {
         template = template.template;
     }
 
-    if (!(template instanceof Template)) {
+    if (typeof template.createOut !== 'function') {
         return [];
     }
 
-    if (false && template.deps) {
+    if (template.deps) {
         return template.deps;
     }
+
+    var deps = template.deps = [];
 
     if (!template.meta) {
         console.error('Metadata not set for template at ', template.path);
@@ -25,33 +23,34 @@ function getDeps(template) {
 
     var meta = template.meta;
     var root = path.dirname(template.path);
-    var deps = [];
+
 
     if (meta.tags) {
         meta.tags.forEach(tagPath => {
+            var resolveFrom = context.resolveFrom || defaultResolveFrom;
             var tag = resolveFrom(root, tagPath);
-            var tagDeps = getDeps(require(tag));
+            var req = context.require || require;
+            var tagDeps = getDeps(req(tag), context);
             deps.push.apply(deps, tagDeps);
         });
     }
 
     if (meta.deps) {
-        deps.push.apply(deps, meta.deps.map(d => resolveDep(d, root)));
+        deps.push.apply(deps, meta.deps.map(d => resolveDep(d, root, context)));
     }
 
-    deps = dedupeDeps(deps);
-
-    template.deps = deps;
+    template.deps = dedupeDeps(deps);
 
     return deps;
 }
 
-function resolveDep(dep, root) {
+function resolveDep(dep, root, context) {
     if (typeof dep === 'string') {
         dep = parseDependencyString(dep);
     }
 
     if (dep.path) {
+        var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
         dep.path = resolveFrom(root, dep.path);
 
         if(dep.path && !dep.type) {
@@ -78,6 +77,14 @@ function dedupeDeps(deps) {
     return deps;
 }
 
-Template.prototype.getDependencies = function() {
-    return getDeps(this);
-};
+function patch(Template) {
+    Template.prototype.getDependencies = function(context) {
+        context = context || {};
+
+        return getDeps(this, context);
+    };
+}
+
+exports.getDeps = getDeps;
+exports.resolveDep = resolveDep;
+exports.patch = patch;
