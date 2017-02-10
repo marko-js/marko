@@ -371,6 +371,7 @@ Widget.prototype = widgetProto = {
             this.$__setInput(newInput);
         }
     },
+
     $__setInput: function(newInput, onInput, out) {
         onInput = onInput || this.onInput;
         var updatedInput;
@@ -397,6 +398,11 @@ Widget.prototype = widgetProto = {
         }
 
         return newInput;
+    },
+
+    forceUpdate: function() {
+        this.$__dirty = true;
+        this.$__queueUpdate();
     },
 
     $__queueUpdate: function() {
