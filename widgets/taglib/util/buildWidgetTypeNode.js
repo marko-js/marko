@@ -1,7 +1,7 @@
 var tryRequire = require('try-require');
 var lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
 var resolveFrom = tryRequire('resolve-from', require);
-
+var nodePath = require('path');
 var ok = require('assert').ok;
 
 module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) {
@@ -24,7 +24,7 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
         }
         typeName = lassoModulesClientTransport.getClientPath(targetPath);
     } else {
-        typeName = path;
+        typeName = nodePath.resolve(from, path);
     }
 
     if (!def) {
