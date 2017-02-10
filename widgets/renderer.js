@@ -65,6 +65,12 @@ function handleBeginAsync(event) {
 
 
 function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
+    if (typeof renderingLogic == 'function') {
+        var ctor = renderingLogic;
+        renderingLogic = renderingLogic.prototype;
+        renderingLogic.onCreate = renderingLogic.onCreate || ctor;
+    }
+
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
     var typeName = widgetProps.type;

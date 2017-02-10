@@ -1,7 +1,11 @@
-import { expect } from 'chai';
+var expect = require('chai').expect;
 
-class {
-    onCreate(input, out) {
+function Component() {
+
+}
+
+Component.prototype = {
+    onCreate: function(input, out) {
         if (typeof window !== 'undefined') {
             throw new Error('onCreate should not be called in the browser');
         }
@@ -10,13 +14,13 @@ class {
         }
         this.state = {
             events: ['onCreate']
-        }
+        };
 
         this.onCreateInputName = input.name;
         this.onCreateOutName = out.global.name;
-    }
+    },
 
-    onRender(out) {
+    onRender: function(out) {
         if (typeof window !== 'undefined') {
             throw new Error('onRender should not be called in the browser');
         }
@@ -26,28 +30,26 @@ class {
         if (!out || !out.write) {
             throw new Error('"out" argument expected');
         }
-    }
+    },
 
-    onInput(input) {
+    onInput: function(input) {
         if (typeof window !== 'undefined') {
             throw new Error('onInput should not be called in the browser');
         }
 
         this.state.events.push('onInput[' + input.name + ']');
-    }
+    },
 
-    onMount() {
+    onMount: function() {
         var widgetsLookup = window.widgets || (window.widgets = {});
-        widgetsLookup['lifecycle-events'] = this;
-    }
+        widgetsLookup['lifecycle-events-component-class'] = this;
+    },
 
-    test() {
+    test: function() {
         expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender']);
         expect(this.onCreateInputName).to.equal('Frank');
         expect(this.onCreateOutName).to.equal('FrankGlobal');
     }
-}
+};
 
-<div>
-    Hello <span.name>${input.name}</span>!
-</div>
+module.exports = Component;
