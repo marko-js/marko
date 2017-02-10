@@ -14,6 +14,7 @@ module.exports = function(target, renderer) {
             var out = createOut(localData.$global);
 
             out.global.template = this;
+            localData.$global = undefined;
 
             if (callback) {
                 out.on('finish', function() {
@@ -37,6 +38,7 @@ module.exports = function(target, renderer) {
             out.sync();
 
             out.global.template = this;
+            localData.$global = undefined;
 
             render(localData, out);
             return out.$__getResult();
@@ -71,7 +73,7 @@ module.exports = function(target, renderer) {
             if (data) {
                 finalData = data;
                 if ((globalData = data.$global)) {
-                    finalData.$global = null;
+                    finalData.$global = undefined;
                 }
             } else {
                 finalData = {};
