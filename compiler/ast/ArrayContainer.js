@@ -127,8 +127,6 @@ class ArrayContainer extends Container {
             }
 
             if (curNode === node) {
-                console.log("ARRAY:", i-1 >= 0 ? array[i-1] : undefined);
-
                 return i-1 >= 0 ? array[i-1] : undefined;
             }
         }
