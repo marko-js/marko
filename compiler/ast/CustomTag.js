@@ -306,7 +306,6 @@ class CustomTag extends HtmlElement {
             var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
             if (!attrDef) {
-                console.log('!!!!!TAG DEF:', tagDef);
                 var errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';
                 let allowedAttributesString = getAllowedAttributesString(tagName, context);
                 if (allowedAttributesString) {
@@ -369,8 +368,6 @@ class CustomTag extends HtmlElement {
                             }
                         }
                     }, context.filename);
-
-                    console.log('TAG DEF:', tagDef);
 
                     tagDef.isNestedTag = true;
                     tagDef.isRepeated = false;
