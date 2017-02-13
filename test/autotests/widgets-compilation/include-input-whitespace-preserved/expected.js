@@ -1,42 +1,47 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_widgets = require("marko/widgets/legacy"),
+    marko_widgets = require("marko/widgets"),
     marko_registerWidget = marko_widgets.rw,
-    marko_defineWidget = marko_widgets.w,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/component-include-attr/index", function() {
-      return marko_defineWidget(require("./"));
+    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/include-input-whitespace-preserved/index.marko", function() {
+      return module.exports;
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/widgets/taglib/include-tag")),
     marko_attr = marko_helpers.a;
 
+var marko_component = {};
+
 function render(input, out, widget, state) {
   var data = input;
 
+  var __widgetId0 = widget.id;
+
   out.w("<div" +
-    marko_attr("id", widget.id) +
-    "><h1>Header</h1><div" +
-    marko_attr("id", widget.elId(0)) +
+    marko_attr("id", __widgetId0) +
     ">");
 
   include_tag({
-      _target: widget.b,
-      _elId: widget.elId(0)
+      _target: data.renderBody,
+      _arg: {
+          test: 1
+        },
+      _elId: __widgetId0
     }, out);
 
-  out.w("</div></div>");
+  out.w("</div>");
 }
 
 marko_template._ = marko_widgets.r(render, {
-    type: marko_widgetType,
-    body: 0
-  });
+    type: marko_widgetType
+  }, marko_component);
+
+marko_template.Widget = marko_widgets.w(marko_component, marko_template._);
 
 marko_template.meta = {
     deps: [
       {
           type: "require",
-          path: "./"
+          path: "./index.marko"
         },
       {
           type: "require",

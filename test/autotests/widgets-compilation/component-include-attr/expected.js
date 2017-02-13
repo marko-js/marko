@@ -25,8 +25,7 @@ function render(input, out, widget, state) {
 
   include_tag({
       _target: data.renderBody,
-      _elId: __widgetId1,
-      _arg: widget
+      _elId: __widgetId1
     }, out);
 
   out.w("</div></div>");

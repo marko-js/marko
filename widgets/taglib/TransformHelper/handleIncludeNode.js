@@ -3,7 +3,6 @@
 var includeTagForWidgets = require.resolve('../include-tag');
 
 module.exports = function(includeNode) {
-    var builder = this.builder;
     var context = this.context;
 
     if (!this.hasBoundWidgetForTemplate()) {
@@ -43,7 +42,6 @@ module.exports = function(includeNode) {
 
         includeNode.onBeforeGenerateCode(function() {
             includeNode.addProp('_elId', parentTransformHelper.getIdExpression());
-            includeNode.addProp('_arg', builder.identifier('widget'));
         });
     }
 
