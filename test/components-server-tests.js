@@ -1,7 +1,7 @@
 require('./util/patch-module');
 require('marko/node-require').install();
 
-describe('marko-components (server)', function() {
+describe('marko/components (server)', function() {
     require('./util/autotest').runTests(
         require('./autotests/components-server/autotests.tests'),
         function run(testFunc, done) {
