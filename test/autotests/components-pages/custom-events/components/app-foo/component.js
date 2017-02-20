@@ -1,6 +1,6 @@
 module.exports = {
 	onMount: function() {
-		window.fooWidget = this;
+		window.fooComponent = this;
 		this.pressEvent = undefined;
 	},
 

@@ -2,13 +2,13 @@ var expect = require('chai').expect;
 
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index.marko'));
+    var component = helpers.mount(require('./index.marko'));
 
-    var initialCounter = widget.getWidget('initialCounter');
+    var initialCounter = component.getComponent('initialCounter');
 
     var counter = require('./components/app-counter');
 
-    var renderTarget = widget.getEl('renderTarget');
+    var renderTarget = component.getEl('renderTarget');
     expect(renderTarget.innerHTML).to.contain('Count: 0');
 
     counter.renderSync({ value: 99 }).replaceChildrenOf(renderTarget);

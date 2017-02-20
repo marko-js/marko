@@ -1,19 +1,19 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), { name: 'Frank' });
-    expect(widget.el.querySelector('.name').innerHTML).to.equal('Frank');
-    expect(widget.onInputCalls).to.deep.equal([
+    var component = helpers.mount(require('./index'), { name: 'Frank' });
+    expect(component.el.querySelector('.name').innerHTML).to.equal('Frank');
+    expect(component.onInputCalls).to.deep.equal([
         {
             name: 'INITIAL'
         }
     ]);
-    expect(widget.name).to.equal('Frank');
+    expect(component.name).to.equal('Frank');
 
-    widget.input = { name: 'John' };
-    widget.update();
+    component.input = { name: 'John' };
+    component.update();
 
-    expect(widget.onInputCalls).to.deep.equal([
+    expect(component.onInputCalls).to.deep.equal([
         {
             name: 'INITIAL'
         },
@@ -22,6 +22,6 @@ module.exports = function(helpers) {
         }
     ]);
 
-    expect(widget.el.querySelector('.name').innerHTML).to.equal('John');
-    expect(widget.name).to.equal('John');
+    expect(component.el.querySelector('.name').innerHTML).to.equal('John');
+    expect(component.name).to.equal('John');
 };

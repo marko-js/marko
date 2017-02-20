@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
-    var label = widget.getEl('label');
+    var component = helpers.mount(require('./index'), {});
+    var label = component.getEl('label');
     var forElId = label.getAttribute('for');
     var inputEl = document.getElementById(forElId);
 

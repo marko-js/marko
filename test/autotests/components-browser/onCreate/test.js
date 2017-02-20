@@ -1,14 +1,14 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index.marko'), {
+    var component = helpers.mount(require('./index.marko'), {
         name: 'Frank',
         $global: {
             name: 'Frank'
         }
     });
 
-    var onCreateArgs = widget.onCreateArgs;
+    var onCreateArgs = component.onCreateArgs;
     var onCreateInput = onCreateArgs[0];
     var onCreateOut = onCreateArgs[1];
 

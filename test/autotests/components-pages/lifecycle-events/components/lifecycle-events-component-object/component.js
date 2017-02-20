@@ -37,8 +37,8 @@ module.exports = {
     },
 
     onMount: function() {
-        var widgetsLookup = window.widgets || (window.widgets = {});
-        widgetsLookup['lifecycle-events-component-object'] = this;
+        var componentsLookup = window.components || (window.components = {});
+        componentsLookup['lifecycle-events-component-object'] = this;
     },
 
     test: function() {

@@ -15,8 +15,8 @@ function addPreserve(transformHelper, bodyOnly, condition) {
         preserveAttrs['if'] = condition;
     }
 
-    let widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
-    let idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
+    let componentIdInfo = transformHelper.assignComponentId(true /* repeated */);
+    let idVarNode = componentIdInfo.idVarNode ? null : componentIdInfo.createIdVarNode();
 
     preserveAttrs.id = transformHelper.getIdExpression();
 
@@ -153,7 +153,7 @@ const preserveTypes = [
     }
 ];
 
-module.exports = function handleWidgetPreserve() {
+module.exports = function handleComponentPreserve() {
     let el = this.el;
 
     for (let i = 0; i < preserveTypes.length; i++) {

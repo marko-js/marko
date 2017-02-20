@@ -8,8 +8,8 @@ var expect = require('chai').expect;
 
 require('marko/node-require').install();
 
-describe('marko-widgets (compilation, deprecated)', function() {
-    var autoTestDir = path.join(__dirname, 'autotests/widgets-compilation-deprecated');
+describe('marko-components (compilation, deprecated)', function() {
+    var autoTestDir = path.join(__dirname, 'autotests/components-compilation-deprecated');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var templatePath = path.join(dir, 'index.marko');

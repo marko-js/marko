@@ -1,57 +1,57 @@
 'use strict';
 
-var WidgetDef = require('./WidgetDef');
-var initWidgets = require('./init-widgets');
+var ComponentDef = require('./ComponentDef');
+var initComponents = require('./init-components');
 var EMPTY_OBJECT = {};
 
-function WidgetsContext(out, root) {
+function ComponentsContext(out, root) {
     if (!root) {
-        root = new WidgetDef(null, null, out);
+        root = new ComponentDef(null, null, out);
     }
 
     this.$__out = out;
-    this.$__widgetStack = [root];
+    this.$__componentStack = [root];
     this.$__preserved = EMPTY_OBJECT;
-    this.$__widgetsById = {};
+    this.$__componentsById = {};
 }
 
-WidgetsContext.prototype = {
-    get $__widgets() {
-        return this.$__widgetStack[0].$__children;
+ComponentsContext.prototype = {
+    get $__components() {
+        return this.$__componentStack[0].$__children;
     },
 
-    $__beginWidget: function(widget) {
+    $__beginComponent: function(component) {
         var self = this;
-        var widgetStack = self.$__widgetStack;
-        var origLength = widgetStack.length;
-        var parent = widgetStack[origLength - 1];
+        var componentStack = self.$__componentStack;
+        var origLength = componentStack.length;
+        var parent = componentStack[origLength - 1];
 
-        var widgetId = widget.id;
+        var componentId = component.id;
 
-        if (!widgetId) {
-            widgetId = widget.id = parent.$__nextId();
+        if (!componentId) {
+            componentId = component.id = parent.$__nextId();
         }
 
-        var widgetDef = new WidgetDef(widget, widgetId, this.$__out, widgetStack, origLength);
-        this.$__widgetsById[widgetId] = widgetDef;
-        parent.$__addChild(widgetDef);
-        widgetStack.push(widgetDef);
+        var componentDef = new ComponentDef(component, componentId, this.$__out, componentStack, origLength);
+        this.$__componentsById[componentId] = componentDef;
+        parent.$__addChild(componentDef);
+        componentStack.push(componentDef);
 
-        return widgetDef;
+        return componentDef;
     },
-    $__clearWidgets: function () {
-        this.$__widgetStack = [new WidgetDef(null /* id */, this.$__out)];
+    $__clearComponents: function () {
+        this.$__componentStack = [new ComponentDef(null /* id */, this.$__out)];
     },
-    $__initWidgets: function (doc) {
-        var widgetDefs = this.$__widgets;
-        if (widgetDefs) {
-            initWidgets.$__initClientRendered(widgetDefs, doc);
-            this.$__clearWidgets();
+    $__initComponents: function (doc) {
+        var componentDefs = this.$__components;
+        if (componentDefs) {
+            initComponents.$__initClientRendered(componentDefs, doc);
+            this.$__clearComponents();
         }
     },
-    $__nextWidgetId: function() {
-        var widgetStack = this.$__widgetStack;
-        var parent = widgetStack[widgetStack.length - 1];
+    $__nextComponentId: function() {
+        var componentStack = this.$__componentStack;
+        var parent = componentStack[componentStack.length - 1];
         return parent.$__nextId();
     },
     $__preserveDOMNode: function(elId, bodyOnly) {
@@ -63,12 +63,12 @@ WidgetsContext.prototype = {
     }
 };
 
-WidgetsContext.$__getWidgetsContext = function (out) {
+ComponentsContext.$__getComponentsContext = function (out) {
     var global = out.global;
 
-    return out.data.widgets ||
-        global.widgets ||
-        (global.widgets = new WidgetsContext(out));
+    return out.data.components ||
+        global.components ||
+        (global.components = new ComponentsContext(out));
 };
 
-module.exports = WidgetsContext;
+module.exports = ComponentsContext;

@@ -51,13 +51,13 @@ You can easily `require`/`import` a single file component and interact with it u
 ```js
 var myCounter = require('./src/components/my-counter');
 
-var widget = myCounter.renderSync({
+var component = myCounter.renderSync({
         value: 10
     })
     .appendTo(document.body)
-    .getWidget();
+    .getComponent();
 
-widget.increment();
+component.increment();
 ```
 
 Of course, a single file component can also be embedded in another template as a custom tag:
@@ -131,17 +131,17 @@ The VDOM output allows optimizations that were previously not possible:
 
 Our initial benchmarks show a significant improvement in rendering time and we are consistently outperforming React. The independent [morphdom](https://github.com/patrick-steele-idem/morphdom) library has been tweaked to support diffing with both a real DOM and a Marko virtual DOM.
 
-### Merge in Marko Widgets ([#390](https://github.com/marko-js/marko/issues/390))
+### Merge in Marko Components ([#390](https://github.com/marko-js/marko/issues/390))
 
 A big part of this release is a shift in focus from Marko being merely a templating language to a complete UI library.  As such, we are providing first-class support for components.
 
-You will no longer need to install `marko-widgets` as an external library, and there is more cohesion between the templates and components/widgets.
+You will no longer need to install `marko-components` as an external library, and there is more cohesion between the templates and components/components.
 
 ### Improved component lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
 
 - `getInitialState()` ➔ `onInput(input)`
-- `getWidgetConfig()` ➔ `onInput(input)`
+- `getComponentConfig()` ➔ `onInput(input)`
 - `init(config)` ➔ `onMount()`
 - `getTemplateData(input, state)` ➔ (no longer needed)
 - `getInitialProps(input)` ➔ (no longer needed)
@@ -167,7 +167,7 @@ class {
     }
 
     onRender(out) {
-        // Called for every render. This widget
+        // Called for every render. This component
         // may or may not be mounted.
         // During render we have access to the `out`.
         console.log('The template is about to be rendered!');
@@ -204,7 +204,7 @@ class {
 }
 ```
 
-### Automatically watch widget state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
+### Automatically watch component state object for changes ([#406](https://github.com/marko-js/marko/issues/406))
 
 **Old:**
 
@@ -675,7 +675,7 @@ or, with the non-concise syntax:
 
 **New:**
 ```html
-<div widget="./widget.js">
+<div component="./component.js">
     ...
 </div>
 ```
@@ -683,13 +683,13 @@ or, with the non-concise syntax:
 Or, applied as a tag (see next: multiple top level DOM elements):
 
 ```html
-<script widget="./widget.js"/>
+<script component="./component.js"/>
 <div>
     ...
 </div>
 ```
 
-Or, since `widget.js` is automatically recognized
+Or, since `component.js` is automatically recognized
 
 ```html
 <div>
@@ -697,11 +697,11 @@ Or, since `widget.js` is automatically recognized
 </div>
 ```
 
-### Deprecate `widget-types` ([#514](https://github.com/marko-js/marko/issues/514))
+### Deprecate `component-types` ([#514](https://github.com/marko-js/marko/issues/514))
 
 **Old:**
 ```html
-<widget-types default="./widget" mobile="./widget-mobile"/>
+<component-types default="./component" mobile="./component-mobile"/>
 
 <div w-bind=(data.isMobile ? 'default' : 'mobile')>
     ...
@@ -775,7 +775,7 @@ or
 
 **New:**
 
-**Automatic widget initialization!**
+**Automatic component initialization!**
 
 ### Deprecate `w-body` and replace with `include` ([#418](https://github.com/marko-js/marko/issues/418))
 
@@ -854,7 +854,7 @@ Or, with an argument value:
 </div>
 ```
 
-### Deprecate `w-extend` and allow multiple widgets to be bound to the same HTML element ([#392](https://github.com/marko-js/marko/issues/392))
+### Deprecate `w-extend` and allow multiple components to be bound to the same HTML element ([#392](https://github.com/marko-js/marko/issues/392))
 
 > `w-extend` is now deprecated
 
@@ -874,7 +874,7 @@ or
 <some-component onEvent('handleEvent')/>
 ```
 
-NOTE: The outer most widget is what is returned when calling `getWidget()`/`getWidgetForEl()`.
+NOTE: The outer most component is what is returned when calling `getComponent()`/`getComponentForEl()`.
 
 <a name="breaking-changes"></a>
 
@@ -894,9 +894,9 @@ template.render(data); // returns `out`
 template.render(data, (err, html, out) => {});
 template.renderSync(data); // returns a String representing the HTML output
 
-widget.render(data); // returns a `RenderResult`
-widget.render(data, (err, renderResult) => {});
-widget.renderSync(data); // throws an error, not a method.
+component.render(data); // returns a `RenderResult`
+component.render(data, (err, renderResult) => {});
+component.renderSync(data); // throws an error, not a method.
 ```
 
 **New:**
@@ -909,12 +909,12 @@ template.render(data); // returns `out`
 template.render(data, (err, out) => {});
 template.renderSync(data); // returns `out`
 
-widget.render(data); // returns `out`
-widget.render(data, (err, out) => {});
-widget.renderSync(data); // returns `out`
+component.render(data); // returns `out`
+component.render(data, (err, out) => {});
+component.renderSync(data); // returns `out`
 ```
 
-Also, `out` has been updated to implement DOM manipulation methods like `appendTo` that were previously only available from the `RenderResult` returned from widget renders.
+Also, `out` has been updated to implement DOM manipulation methods like `appendTo` that were previously only available from the `RenderResult` returned from component renders.
 
 NOTE: We will implement `out.toString()` and `out.toJSON()` so in many cases the `out` can be used as a string.
 

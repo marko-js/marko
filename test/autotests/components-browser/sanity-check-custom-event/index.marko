@@ -5,8 +5,8 @@
 class {
     onMount() {
         var fooEl = document.querySelector('.foo');
-        var fooWidget = this.fooWidget = require('marko/widgets').getWidgetForEl(fooEl);
-        fooWidget.emitTestEvent();
+        var fooComponent = this.fooComponent = require('marko/components').getComponentForEl(fooEl);
+        fooComponent.emitTestEvent();
     }
     handleFooTest() {
         this.fooEvent = arguments;

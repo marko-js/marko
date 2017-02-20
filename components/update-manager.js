@@ -33,12 +33,12 @@ if (!setImmediate) {
 
 /**
  * This function is called when we schedule the update of "unbatched"
- * updates to widgets.
+ * updates to components.
  */
-function updateUnbatchedWidgets() {
+function updateUnbatchedComponents() {
     if (unbatchedQueue.length) {
         try {
-            updateWidgets(unbatchedQueue);
+            updateComponents(unbatchedQueue);
         } finally {
             // Reset the flag now that this scheduled batch update
             // is complete so that we can later schedule another
@@ -57,16 +57,16 @@ function scheduleUpdates() {
 
     updatesScheduled = true;
 
-    setImmediate(updateUnbatchedWidgets);
+    setImmediate(updateUnbatchedComponents);
 }
 
-function updateWidgets(queue) {
-    // Loop over the widgets in the queue and update them.
+function updateComponents(queue) {
+    // Loop over the components in the queue and update them.
     // NOTE: It is okay if the queue grows during the iteration
     //       since we will still get to them at the end
     for (var i=0; i<queue.length; i++) {
-        var widget = queue[i];
-        widget.update(); // Do the actual widget update
+        var component = queue[i];
+        component.update(); // Do the actual component update
     }
 
     // Clear out the queue by setting the length to zero
@@ -88,45 +88,45 @@ function batchUpdate(func) {
         func();
     } finally {
         try {
-            // Update all of the widgets that where queued up
+            // Update all of the components that where queued up
             // in this batch (if any)
             if (batch.$__queue) {
-                updateWidgets(batch.$__queue);
+                updateComponents(batch.$__queue);
             }
         } finally {
-            // Now that we have completed the update of all the widgets
+            // Now that we have completed the update of all the components
             // in this batch we need to remove it off the top of the stack
             batchStack.length--;
         }
     }
 }
 
-function queueWidgetUpdate(widget) {
+function queueComponentUpdate(component) {
     var batchStackLen = batchStack.length;
 
     if (batchStackLen) {
         // When a batch update is started we push a new batch on to a stack.
         // If the stack has a non-zero length then we know that a batch has
-        // been started so we can just queue the widget on the top batch. When
-        // the batch is ended this widget will be updated.
+        // been started so we can just queue the component on the top batch. When
+        // the batch is ended this component will be updated.
         var batch = batchStack[batchStackLen-1];
 
         // We default the batch queue to null to avoid creating an Array instance
         // unnecessarily. If it is null then we create a new Array, otherwise
         // we push it onto the existing Array queue
         if (batch.$__queue) {
-            batch.$__queue.push(widget);
+            batch.$__queue.push(component);
         } else {
-            batch.$__queue = [widget];
+            batch.$__queue = [component];
         }
     } else {
         // We are not within a batched update. We need to schedule a batch update
         // for the process.nextTick (if that hasn't been done already) and we will
-        // add the widget to the unbatched queued
+        // add the component to the unbatched queued
         scheduleUpdates();
-        unbatchedQueue.push(widget);
+        unbatchedQueue.push(component);
     }
 }
 
-exports.$__queueWidgetUpdate = queueWidgetUpdate;
+exports.$__queueComponentUpdate = queueComponentUpdate;
 exports.$__batchUpdate = batchUpdate;

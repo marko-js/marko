@@ -1,31 +1,31 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index.marko'), {
+    var component = helpers.mount(require('./index.marko'), {
         color:'red'
     });
 
-    expect(widget.el.getAttribute('style')).to.equal('color:red;');
-    expect(widget.getWidget('counter').el.getAttribute('style')).to.equal('color:red;');
-    expect(widget.getWidget('counter').el.querySelector('.count').innerHTML).to.equal('0');
+    expect(component.el.getAttribute('style')).to.equal('color:red;');
+    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:red;');
+    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('0');
 
-    widget.getWidget('counter').increment();
-    widget.getWidget('counter').update();
+    component.getComponent('counter').increment();
+    component.getComponent('counter').update();
 
-    expect(widget.el.getAttribute('style')).to.equal('color:red;');
-    expect(widget.getWidget('counter').el.getAttribute('style')).to.equal('color:red;');
-    expect(widget.getWidget('counter').el.querySelector('.count').innerHTML).to.equal('1');
+    expect(component.el.getAttribute('style')).to.equal('color:red;');
+    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:red;');
+    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('1');
 
-    widget.updateColor('green');
-    widget.update();
+    component.updateColor('green');
+    component.update();
 
-    expect(widget.el.getAttribute('style')).to.equal('color:green;');
-    expect(widget.getWidget('counter').el.getAttribute('style')).to.equal('color:green;');
-    expect(widget.getWidget('counter').el.querySelector('.count').innerHTML).to.equal('1');
+    expect(component.el.getAttribute('style')).to.equal('color:green;');
+    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:green;');
+    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('1');
 
     //
-    // expect(widget.el.style.color).to.equal('#09c;');
-    // expect(widget.getWidget('counter').el.style.color).to.equal('#09c;');
+    // expect(component.el.style.color).to.equal('#09c;');
+    // expect(component.getComponent('counter').el.style.color).to.equal('#09c;');
     //
-    // expect(widget.getEl('current').getAttribute('style')).to.equal('color:#09c;');
+    // expect(component.getEl('current').getAttribute('style')).to.equal('color:#09c;');
 };

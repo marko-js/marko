@@ -15,16 +15,16 @@ module.exports = function(helpers) {
         }
     };
 
-    var widget = helpers.mount(require('./index'), states.original);
+    var component = helpers.mount(require('./index'), states.original);
 
-    expect(widget.state.heading).to.equal(states.original.heading);
-    expect(widget.state.message).to.equal(states.original.message);
-    expect(widget.state.colors).to.deep.equal(states.original.colors);
+    expect(component.state.heading).to.equal(states.original.heading);
+    expect(component.state.message).to.equal(states.original.message);
+    expect(component.state.colors).to.deep.equal(states.original.colors);
 
-    widget.replaceState(states.new);
-    widget.update();
+    component.replaceState(states.new);
+    component.update();
 
-    expect(widget.state.heading).to.equal(states.new.heading);
-    expect(widget.state.message).to.equal(states.new.message); // undefined
-    expect(widget.state.colors).to.deep.equal(states.new.colors);
+    expect(component.state.heading).to.equal(states.new.heading);
+    expect(component.state.message).to.equal(states.new.message); // undefined
+    expect(component.state.colors).to.deep.equal(states.new.colors);
 };

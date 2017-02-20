@@ -1,19 +1,19 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         colors: ['red', 'green', 'blue']
     });
 
-    expect(widget.el.innerHTML).to.contain('red');
-    expect(widget.el.innerHTML).to.contain('green');
-    expect(widget.el.innerHTML).to.contain('blue');
+    expect(component.el.innerHTML).to.contain('red');
+    expect(component.el.innerHTML).to.contain('green');
+    expect(component.el.innerHTML).to.contain('blue');
 
-    widget.addColor('orange');
-    widget.update();
+    component.addColor('orange');
+    component.update();
 
-    expect(widget.el.innerHTML).to.contain('red');
-    expect(widget.el.innerHTML).to.contain('green');
-    expect(widget.el.innerHTML).to.contain('blue');
-    expect(widget.el.innerHTML).to.contain('orange');
+    expect(component.el.innerHTML).to.contain('red');
+    expect(component.el.innerHTML).to.contain('green');
+    expect(component.el.innerHTML).to.contain('blue');
+    expect(component.el.innerHTML).to.contain('orange');
 };

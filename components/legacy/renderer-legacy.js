@@ -1,17 +1,17 @@
-var widgetLookup = require('../util').$__widgetLookup;
-var WidgetsContext = require('../WidgetsContext');
+var componentLookup = require('../util').$__componentLookup;
+var ComponentsContext = require('../ComponentsContext');
 var registry = require('../registry');
 var modernRenderer = require('../renderer');
-var resolveWidgetRef = modernRenderer.$__resolveWidgetRef;
-var preserveWidgetEls = modernRenderer.$__preserveWidgetEls;
+var resolveComponentRef = modernRenderer.$__resolveComponentRef;
+var preserveComponentEls = modernRenderer.$__preserveComponentEls;
 var handleBeginAsync = modernRenderer.$__handleBeginAsync;
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
-function createRendererFunc(templateRenderFunc, widgetProps) {
-    var typeName = widgetProps.type;
-    var roots = widgetProps.roots;
-    var assignedId = widgetProps.id;
+function createRendererFunc(templateRenderFunc, componentProps) {
+    var typeName = componentProps.type;
+    var roots = componentProps.roots;
+    var assignedId = componentProps.id;
 
     return function renderer(input, out, renderingLogic) {
         var outGlobal = out.global;
@@ -24,105 +24,105 @@ function createRendererFunc(templateRenderFunc, widgetProps) {
         var getInitialProps;
         var getTemplateData;
         var getInitialState;
-        var getWidgetConfig;
+        var getComponentConfig;
         var getInitialBody;
 
         if (renderingLogic) {
             getInitialProps = renderingLogic.getInitialProps;
             getTemplateData = renderingLogic.getTemplateData;
             getInitialState = renderingLogic.getInitialState;
-            getWidgetConfig = renderingLogic.getWidgetConfig;
+            getComponentConfig = renderingLogic.getComponentConfig;
             getInitialBody = renderingLogic.getInitialBody;
         }
 
-        var widgetConfig;
-        var widgetBody;
-        var widgetState;
+        var componentConfig;
+        var componentBody;
+        var componentState;
 
-        var widget = outGlobal.$w;
-        var fakeWidget;
-        var isRerender = widget !== undefined;
+        var component = outGlobal.$w;
+        var fakeComponent;
+        var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
         var customEvents;
         var scope;
 
-        if (widget) {
-            id = widget.id;
+        if (component) {
+            id = component.id;
             isExisting = true;
             outGlobal.$w = null;
         } else {
-            var widgetArgs = input && input.$w || out.data.$w;
+            var componentArgs = input && input.$w || out.data.$w;
 
-            if (widgetArgs) {
-                scope = widgetArgs[0];
+            if (componentArgs) {
+                scope = componentArgs[0];
 
                 if (scope) {
                     scope = scope.id;
                 }
 
-                var ref = widgetArgs[1];
+                var ref = componentArgs[1];
                 if (ref != null) {
                     ref = ref.toString();
                 }
-                id = id || resolveWidgetRef(out, ref, scope);
-                customEvents = widgetArgs[2];
+                id = id || resolveComponentRef(out, ref, scope);
+                customEvents = componentArgs[2];
                 delete input.$w;
             }
         }
 
-        var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-        id = id || widgetsContext.$__nextWidgetId();
+        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+        id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer && typeName) {
-            widget = { id:id, typeName:typeName };
+            component = { id:id, typeName:typeName };
         } else {
-            if (!widget) {
+            if (!component) {
                 if (isRerender) {
-                    // Look in in the DOM to see if a widget with the same ID and type already exists.
-                    widget = widgetLookup[id];
-                    if (widget && widget.$__type !== typeName) {
-                        widget = undefined;
+                    // Look in in the DOM to see if a component with the same ID and type already exists.
+                    component = componentLookup[id];
+                    if (component && component.$__type !== typeName) {
+                        component = undefined;
                     }
                 }
 
-                if (widget) {
+                if (component) {
                     isExisting = true;
                 } else {
                     isExisting = false;
-                    // We need to create a new instance of the widget
+                    // We need to create a new instance of the component
                     if (typeName) {
-                        widget = registry.$__createWidget(typeName, id);
+                        component = registry.$__createComponent(typeName, id);
                     }
                 }
             }
         }
 
         if (input) {
-            if (getWidgetConfig) {
-                // If getWidgetConfig() was implemented then use that to
-                // get the widget config. The widget config will be passed
-                // to the widget constructor. If rendered on the server the
-                // widget config will be serialized to a JSON-like data
+            if (getComponentConfig) {
+                // If getComponentConfig() was implemented then use that to
+                // get the component config. The component config will be passed
+                // to the component constructor. If rendered on the server the
+                // component config will be serialized to a JSON-like data
                 // structure and stored in a "data-w-config" attribute.
-                widgetConfig = getWidgetConfig(input, out);
+                componentConfig = getComponentConfig(input, out);
             } else {
-                widgetConfig = input.widgetConfig;
+                componentConfig = input.componentConfig;
             }
 
-            if (widgetConfig) {
-                widget.$c = widgetConfig;
+            if (componentConfig) {
+                component.$c = componentConfig;
             }
 
             if (getInitialBody) {
-                // If we have widget a widget body then pass it to the template
-                // so that it is available to the widget tag and can be inserted
+                // If we have component a component body then pass it to the template
+                // so that it is available to the component tag and can be inserted
                 // at the w-body marker
-                widgetBody = getInitialBody(input, out);
+                componentBody = getInitialBody(input, out);
             }
 
             // If we do not have state then we need to go through the process
-            // of converting the input to a widget state, or simply normalizing
+            // of converting the input to a component state, or simply normalizing
             // the input using getInitialProps
 
             if (getInitialProps) {
@@ -131,59 +131,59 @@ function createRendererFunc(templateRenderFunc, widgetProps) {
             }
 
             if (getInitialState) {
-                // This optional method is used to derive the widget state
+                // This optional method is used to derive the component state
                 // from the input properties
-                widget.state = widgetState = getInitialState(input, out);
+                component.state = componentState = getInitialState(input, out);
             }
 
-            if (!widgetBody) {
-                // Default to using the nested content as the widget body
-                widgetBody = input.renderBody;
+            if (!componentBody) {
+                // Default to using the nested content as the component body
+                componentBody = input.renderBody;
             }
         }
 
-        if (widget && isExisting) {
-            if (!widget.$__isDirty || !widget.shouldUpdate(input, widget.$__state)) {
-                preserveWidgetEls(widget, out, widgetsContext);
+        if (component && isExisting) {
+            if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
+                preserveComponentEls(component, out, componentsContext);
                 return;
             }
         }
 
-        if (!widget) {
-            fakeWidget = {};
+        if (!component) {
+            fakeComponent = {};
         } else {
-            widgetState = widget.$__rawState;
+            componentState = component.$__rawState;
         }
 
         var templateInput = getTemplateData ?
-            getTemplateData(widgetState, input, out) :
-            widgetState || input || {};
+            getTemplateData(componentState, input, out) :
+            componentState || input || {};
 
-        var widgetDef = widgetsContext.$__beginWidget(widget || fakeWidget);
-        widgetDef.$__customEvents = customEvents;
-        widgetDef.$__scope = scope;
-        widgetDef.$__roots = roots;
-        widgetDef.$__widget = fakeWidget ? null : widget;
-        widgetDef.$__isExisting = isExisting;
-        widgetDef.b = widgetBody;
-        widgetDef.c = function(widgetConfig) {
-            widget.$c = widgetConfig;
+        var componentDef = componentsContext.$__beginComponent(component || fakeComponent);
+        componentDef.$__customEvents = customEvents;
+        componentDef.$__scope = scope;
+        componentDef.$__roots = roots;
+        componentDef.$__component = fakeComponent ? null : component;
+        componentDef.$__isExisting = isExisting;
+        componentDef.b = componentBody;
+        componentDef.c = function(componentConfig) {
+            component.$c = componentConfig;
         };
-        widgetDef.t = function(typeName) {
+        componentDef.t = function(typeName) {
             if (typeName) {
-                this.$__widget = widget = registry.$__createWidget(typeName, fakeWidget.id);
+                this.$__component = component = registry.$__createComponent(typeName, fakeComponent.id);
             }
         };
 
-        if (widget && isExisting) {
-            widget.$__emitLifecycleEvent('$__legacyRender');
+        if (component && isExisting) {
+            component.$__emitLifecycleEvent('$__legacyRender');
         }
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateInput, out, widgetDef);
+        templateRenderFunc(templateInput, out, componentDef);
 
-        widgetDef.$__end();
+        componentDef.$__end();
     };
 }
 

@@ -17,7 +17,7 @@ var items = [
 ];
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         items: items
     });
 
@@ -26,7 +26,7 @@ module.exports = function(helpers) {
     expect(lookup.componentsById[0].id).to.not.equal(lookup.componentsById[1].id);
 
     lookup.componentsById[0].emitPurchase();
-    expect(widget.purchaseEvents).to.deep.equal([
+    expect(component.purchaseEvents).to.deep.equal([
         {
             id: 0,
             title: 'Item 1'
@@ -34,7 +34,7 @@ module.exports = function(helpers) {
     ]);
 
     lookup.componentsById[1].emitPurchase();
-    expect(widget.purchaseEvents).to.deep.equal([
+    expect(component.purchaseEvents).to.deep.equal([
         {
             id: 0,
             title: 'Item 1'

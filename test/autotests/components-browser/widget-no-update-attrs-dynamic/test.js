@@ -1,15 +1,15 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         className: 'foo'
     });
 
-    var span = widget.el.querySelector('span');
+    var span = component.el.querySelector('span');
     expect(span.className).to.equal('foo');
 
-    widget.setState('className', 'bar');
-    widget.update();
+    component.setState('className', 'bar');
+    component.update();
 
     expect(span.className).to.equal('foo');
 };

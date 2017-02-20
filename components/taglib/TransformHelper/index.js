@@ -1,7 +1,7 @@
 'use strict';
-var WidgetArgs = require('./WidgetArgs');
+var ComponentArgs = require('./ComponentArgs');
 var getRequirePath = require('../getRequirePath');
-var buildWidgetTypeNode = require('../util/buildWidgetTypeNode');
+var buildComponentTypeNode = require('../util/buildComponentTypeNode');
 var resolveFrom = require('resolve-from');
 var INLINE_COMPONENT_KEY = Symbol('INLINE_COMPONENT');
 var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
@@ -15,82 +15,82 @@ class TransformHelper {
         this.builder = context.builder;
         this.dirname = context.dirname;
 
-        this.widgetNextElId = 0;
-        this.widgetArgs = undefined;
-        this.containingWidgetNode = undefined;
-        this._markoWidgetsVar = context.data.markoWidgetsVar;
+        this.componentNextElId = 0;
+        this.componentArgs = undefined;
+        this.containingComponentNode = undefined;
+        this._markoComponentsVar = context.data.markoComponentsVar;
         this.firstBind = false;
     }
 
-    setHasBoundWidgetForTemplate() {
+    setHasBoundComponentForTemplate() {
         this.context.data[HAS_WIDGET_KEY] = true;
     }
 
-    hasBoundWidgetForTemplate() {
+    hasBoundComponentForTemplate() {
         return this.context.data[HAS_WIDGET_KEY] || this.context.data[WIDGET_PROPS_KEY] != null;
     }
 
-    getWidgetProps() {
-        var widgetProps = this.context.data[WIDGET_PROPS_KEY];
-        if (!widgetProps) {
+    getComponentProps() {
+        var componentProps = this.context.data[WIDGET_PROPS_KEY];
+        if (!componentProps) {
             this.firstBind = true;
-            widgetProps = this.context.data[WIDGET_PROPS_KEY] = {};
+            componentProps = this.context.data[WIDGET_PROPS_KEY] = {};
         }
-        return widgetProps;
+        return componentProps;
     }
 
     addError(message, code) {
         this.context.addError(this.el, message, code);
     }
 
-    getWidgetArgs() {
-        return this.widgetArgs || (this.widgetArgs = new WidgetArgs());
+    getComponentArgs() {
+        return this.componentArgs || (this.componentArgs = new ComponentArgs());
     }
 
     nextUniqueId() {
-        var widgetNextElId = this.context.data.widgetNextElId;
-        if (widgetNextElId == null) {
-            this.context.data.widgetNextElId = 0;
+        var componentNextElId = this.context.data.componentNextElId;
+        if (componentNextElId == null) {
+            this.context.data.componentNextElId = 0;
         }
 
-        return (this.context.data.widgetNextElId++);
+        return (this.context.data.componentNextElId++);
     }
 
     getNestedIdExpression() {
-        this.assignWidgetId();
-        return this.getWidgetIdInfo().nestedIdExpression;
+        this.assignComponentId();
+        return this.getComponentIdInfo().nestedIdExpression;
     }
 
     getIdExpression() {
-        this.assignWidgetId();
-        return this.getWidgetIdInfo().idExpression;
+        this.assignComponentId();
+        return this.getComponentIdInfo().idExpression;
     }
 
-    set widgetIdInfo(value) {
-        this.el.data.widgetIdInfo = value;
+    set componentIdInfo(value) {
+        this.el.data.componentIdInfo = value;
     }
 
-    get widgetIdInfo() {
-        return this.el.data.widgetIdInfo;
+    get componentIdInfo() {
+        return this.el.data.componentIdInfo;
     }
 
-    getWidgetIdInfo() {
-        return this.widgetIdInfo;
+    getComponentIdInfo() {
+        return this.componentIdInfo;
     }
 
     getCompileContext() {
         return this.context;
     }
 
-    getDefaultWidgetModule() {
+    getDefaultComponentModule() {
         var dirname = this.dirname;
 
-        if (this.context.data.widgetModule) {
-            return this.context.data.widgetModule;
+        if (this.context.data.componentModule) {
+            return this.context.data.componentModule;
         } else if (resolveFrom(dirname, './component')) {
             return './component';
-        } else if (resolveFrom(dirname, './widget')) {
-            return './widget';
+        } else if (resolveFrom(dirname, './component')) {
+            return './component';
         } else if (resolveFrom(dirname, './')) {
             return './';
         } else {
@@ -98,37 +98,37 @@ class TransformHelper {
         }
     }
 
-    getMarkoWidgetsRequirePath(target) {
+    getMarkoComponentsRequirePath(target) {
         return getRequirePath(target, this.context);
     }
 
-    set markoWidgetsVar(value) {
+    set markoComponentsVar(value) {
         this.context.data[MARKO_WIDGETS_VAR_KEY] = value;
     }
 
-    get markoWidgetsVar() {
+    get markoComponentsVar() {
         if (!this.context.data[MARKO_WIDGETS_VAR_KEY]) {
             this.context.data[MARKO_WIDGETS_VAR_KEY] =
                 this.context.importModule(
-                    'marko_widgets',
-                    this.getMarkoWidgetsRequirePath(this.isLegacyWidget ? 'marko/widgets/legacy' : 'marko/widgets'));
+                    'marko_components',
+                    this.getMarkoComponentsRequirePath(this.isLegacyComponent ? 'marko/components/legacy' : 'marko/components'));
         }
 
         return this.context.data[MARKO_WIDGETS_VAR_KEY];
     }
 
-    buildWidgetElIdFunctionCall(id) {
+    buildComponentElIdFunctionCall(id) {
         var builder = this.builder;
 
-        var widgetElId = builder.memberExpression(
-            builder.identifier('widget'),
+        var componentElId = builder.memberExpression(
+            builder.identifier('component'),
             builder.identifier('elId'));
 
-        return builder.functionCall(widgetElId, arguments.length === 0 ? [] : [ id ]);
+        return builder.functionCall(componentElId, arguments.length === 0 ? [] : [ id ]);
     }
 
-    buildWidgetTypeNode(path, def) {
-        return buildWidgetTypeNode(path, this.dirname, def, this);
+    buildComponentTypeNode(path, def) {
+        return buildComponentTypeNode(path, this.dirname, def, this);
     }
 
     getTransformHelper(el) {
@@ -148,13 +148,13 @@ class TransformHelper {
     }
 }
 
-TransformHelper.prototype.assignWidgetId = require('./assignWidgetId');
+TransformHelper.prototype.assignComponentId = require('./assignComponentId');
 TransformHelper.prototype.handleRootNodes = require('./handleRootNodes');
 TransformHelper.prototype.handleIncludeNode = require('./handleIncludeNode');
-TransformHelper.prototype.handleWidgetEvents = require('./handleWidgetEvents');
-TransformHelper.prototype.handleWidgetPreserve = require('./handleWidgetPreserve');
-TransformHelper.prototype.handleWidgetPreserveAttrs = require('./handleWidgetPreserveAttrs');
-TransformHelper.prototype.handleWidgetBind = require('./handleWidgetBind');
-TransformHelper.prototype.handleWidgetFor = require('./handleWidgetFor');
+TransformHelper.prototype.handleComponentEvents = require('./handleComponentEvents');
+TransformHelper.prototype.handleComponentPreserve = require('./handleComponentPreserve');
+TransformHelper.prototype.handleComponentPreserveAttrs = require('./handleComponentPreserveAttrs');
+TransformHelper.prototype.handleComponentBind = require('./handleComponentBind');
+TransformHelper.prototype.handleComponentFor = require('./handleComponentFor');
 
 module.exports = TransformHelper;

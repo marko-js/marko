@@ -1,15 +1,15 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
-    expect(widget.fooClicked).to.equal(false);
-	expect(widget.barClicked).to.equal(false);
+    var component = helpers.mount(require('./index'), {});
+    expect(component.fooClicked).to.equal(false);
+	expect(component.barClicked).to.equal(false);
 
-	helpers.triggerClick(widget.getEl('foo'));
-	expect(widget.fooClicked).to.equal(true);
-	expect(widget.barClicked).to.equal(false);
+	helpers.triggerClick(component.getEl('foo'));
+	expect(component.fooClicked).to.equal(true);
+	expect(component.barClicked).to.equal(false);
 
-	helpers.triggerClick(widget.getEl('bar'));
-	expect(widget.fooClicked).to.equal(true);
-	expect(widget.barClicked).to.equal(true);
+	helpers.triggerClick(component.getEl('bar'));
+	expect(component.fooClicked).to.equal(true);
+	expect(component.barClicked).to.equal(true);
 };

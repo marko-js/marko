@@ -7,7 +7,7 @@ const nodeRequire = require('../node-require');
 var compiler;
 var marko;
 var runtime;
-var widgets;
+var components;
 
 var modifiedId = 1;
 var HOT_RELOAD_KEY = Symbol('HOT_RELOAD');
@@ -188,4 +188,4 @@ exports.handleFileModified = function(path, options) {
 compiler = require('../compiler');
 marko = require('../');
 runtime = require('../runtime/html');
-widgets = require('../widgets');
+components = require('../components');

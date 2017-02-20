@@ -1,6 +1,6 @@
 [
     "_lasso-resources-root",
-    "_widget",
+    "_component",
     "*",
     "a",
     "abbr",
@@ -134,7 +134,7 @@
     "include",
     "include-html",
     "include-text",
-    "init-widgets",
+    "init-components",
     "input",
     "ins",
     "invoke",
@@ -242,5 +242,5 @@
     "w-preserve",
     "wbr",
     "while",
-    "widget-types"
+    "component-types"
 ]

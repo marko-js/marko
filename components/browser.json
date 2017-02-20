@@ -4,13 +4,13 @@
             "type": "require",
             "path": "./boot",
             "run": true,
-            "if": "!flags.contains('marko/widgets/no-boot')"
+            "if": "!flags.contains('marko/components/no-boot')"
         }
     ],
     "requireRemap": [
         {
-            "from": "./loadWidget.js",
-            "to": "./loadWidget-dynamic.js"
+            "from": "./loadComponent.js",
+            "to": "./loadComponent-dynamic.js"
         }
     ]
 }

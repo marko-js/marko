@@ -1,10 +1,10 @@
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    var oldChildren = helpers.nodeListToArray(widget.el.childNodes);
+    var oldChildren = helpers.nodeListToArray(component.el.childNodes);
 
-    widget.rerender();
+    component.rerender();
 
-    var newChildren = widget.el.childNodes;
+    var newChildren = component.el.childNodes;
     helpers.checkChildrenMatch(oldChildren, newChildren);
 };

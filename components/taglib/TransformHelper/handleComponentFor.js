@@ -1,29 +1,29 @@
-module.exports = function handleWidgetFor() {
+module.exports = function handleComponentFor() {
     var el = this.el;
     var context = this.context;
 
-    var widgetFor;
+    var componentFor;
     if (el.hasAttribute('for-ref')) {
         context.deprecate('The "for-ref" tag is deprecated. Please use "for-key" instead.');
-        widgetFor = el.getAttributeValue('for-ref');
+        componentFor = el.getAttributeValue('for-ref');
         el.removeAttribute('for-ref');
     } else if (el.hasAttribute('for-key')) {
-        widgetFor = el.getAttributeValue('for-key');
+        componentFor = el.getAttributeValue('for-key');
         el.removeAttribute('for-key');
     }
 
     if (el.hasAttribute('w-for')) {
         context.deprecate('The "w-for" tag is deprecated. Please use "for-ref" instead.');
-        if (widgetFor) {
+        if (componentFor) {
             this.addError('The "w-for" tag cannot be used with "for-ref" or "for-key".');
             return;
         } else {
-            widgetFor = el.getAttributeValue('w-for');
+            componentFor = el.getAttributeValue('w-for');
         }
         el.removeAttribute('w-for');
     }
 
-    if (widgetFor == null) {
+    if (componentFor == null) {
         return;
     }
 
@@ -33,6 +33,6 @@ module.exports = function handleWidgetFor() {
     } else {
         el.setAttributeValue(
             'for',
-            this.buildWidgetElIdFunctionCall(widgetFor));
+            this.buildComponentElIdFunctionCall(componentFor));
     }
 };

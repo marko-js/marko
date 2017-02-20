@@ -1,10 +1,10 @@
-var widgetArgsHelper = module.exports = function widgetArgsHelper(
+var componentArgsHelper = module.exports = function componentArgsHelper(
         out,
-        widgetArgs) {
+        componentArgs) {
 
-    out.data.$w = widgetArgs;
+    out.data.$w = componentArgs;
 };
 
-widgetArgsHelper.cleanup = function(out) {
+componentArgsHelper.cleanup = function(out) {
     delete out.data.$w;
 };

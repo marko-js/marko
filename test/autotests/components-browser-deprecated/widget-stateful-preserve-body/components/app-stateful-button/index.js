@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets/legacy').defineComponent({
+module.exports = require('marko/components/legacy').defineComponent({
     template: require.resolve('./template.marko'),
     getInitialState: function(input) {
         return {
@@ -52,7 +52,7 @@ module.exports = require('marko/widgets/legacy').defineComponent({
     },
 
     handleClick: function(event) {
-        // Every Widget instance is also an EventEmitter instance.
+        // Every Component instance is also an EventEmitter instance.
         // We will emit a custom "click" event when a DOM click event
         // is triggered
         this.emit('click', {

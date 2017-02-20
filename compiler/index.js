@@ -239,7 +239,7 @@ registerTaglib(require('../taglibs/html/marko.json'), require.resolve('../taglib
 registerTaglib(require('../taglibs/svg/marko.json'), require.resolve('../taglibs/svg/marko.json'));
 registerTaglib(require('../taglibs/async/marko.json'), require.resolve('../taglibs/async/marko.json'));
 registerTaglib(require('../taglibs/cache/marko.json'), require.resolve('../taglibs/cache/marko.json'));
-registerTaglib(require('../widgets/taglib/marko.json'), require.resolve('../widgets/taglib/marko.json'));
+registerTaglib(require('../components/taglib/marko.json'), require.resolve('../components/taglib/marko.json'));
 
 exports.registerTaglib = function(filePath) {
     ok(typeof filePath === 'string', '"filePath" shouldbe a string');

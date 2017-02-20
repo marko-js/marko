@@ -8,8 +8,8 @@ var expect = require('chai').expect;
 
 require('marko/node-require').install();
 
-describe('marko-widgets (compilation)', function() {
-    var autoTestDir = path.join(__dirname, 'autotests/widgets-compilation');
+describe('marko-components (compilation)', function() {
+    var autoTestDir = path.join(__dirname, 'autotests/components-compilation');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var templatePath = path.join(dir, 'index.marko');

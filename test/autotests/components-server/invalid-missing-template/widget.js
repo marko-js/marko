@@ -1,5 +1,5 @@
-function Widget() {
+function Component() {
 
 }
 
-module.exports = Widget;
+module.exports = Component;

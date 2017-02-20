@@ -1,10 +1,10 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index.marko'));
+    var component = helpers.mount(require('./index.marko'));
 
-    var firstCheckbox = widget.getEl('first');
-    var secondCheckbox = widget.getEl('second');
+    var firstCheckbox = component.getEl('first');
+    var secondCheckbox = component.getEl('second');
 
     expect(firstCheckbox.checked).to.equal(true);
     expect(secondCheckbox.checked).to.equal(false);

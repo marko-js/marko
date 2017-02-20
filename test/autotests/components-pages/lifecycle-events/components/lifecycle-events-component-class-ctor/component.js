@@ -37,8 +37,8 @@ Component.prototype = {
     },
 
     onMount: function() {
-        var widgetsLookup = window.widgets || (window.widgets = {});
-        widgetsLookup['lifecycle-events-component-class-ctor'] = this;
+        var componentsLookup = window.components || (window.components = {});
+        componentsLookup['lifecycle-events-component-class-ctor'] = this;
     },
 
     test: function() {

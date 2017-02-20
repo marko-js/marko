@@ -9,8 +9,8 @@ module.exports = {
     },
 
     onMount: function() {
-        window.fooWidget = this;
-        this.widgetConfig = {
+        window.fooComponent = this;
+        this.componentConfig = {
             type: this.type,
             name: this.name
         };

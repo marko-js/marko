@@ -6,6 +6,6 @@ module.exports = function transform(el, context) {
     let awaitReorderer = context.createNodeForEl('await-reorderer');
     el.appendChild(awaitReorderer);
 
-    let initWidgetsNode = context.createNodeForEl('init-widgets');
-    el.appendChild(initWidgetsNode);
+    let initComponentsNode = context.createNodeForEl('init-components');
+    el.appendChild(initComponentsNode);
 };

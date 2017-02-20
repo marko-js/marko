@@ -2,22 +2,22 @@ var path = require('path');
 
 describe(path.basename(__dirname), function() {
     it('should invoke lifecycle events correctly when a UI component is rendered on the server', function() {
-        var widget = window.widgets['lifecycle-events'];
-        widget.test();
+        var component = window.components['lifecycle-events'];
+        component.test();
     });
 
     it('should invoke lifecycle events correctly when a UI component is rendered on the server - component exports class', function() {
-        var widget = window.widgets['lifecycle-events-component-class'];
-        widget.test();
+        var component = window.components['lifecycle-events-component-class'];
+        component.test();
     });
 
     it('should invoke lifecycle events correctly when a UI component is rendered on the server - component exports class ctor', function() {
-        var widget = window.widgets['lifecycle-events-component-class-ctor'];
-        widget.test();
+        var component = window.components['lifecycle-events-component-class-ctor'];
+        component.test();
     });
 
     it('should invoke lifecycle events correctly when a UI component is rendered on the server - component exports object', function() {
-        var widget = window.widgets['lifecycle-events-component-object'];
-        widget.test();
+        var component = window.components['lifecycle-events-component-object'];
+        component.test();
     });
 });

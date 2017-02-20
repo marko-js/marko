@@ -2,14 +2,14 @@ var path = require('path');
 var expect = require('chai').expect;
 
 describe(path.basename(__dirname), function() {
-    it('should allow widget to be split from renderer', function() {
-        var widget = window.appButtonSplit;
-        expect(widget.el.innerHTML).to.equal('Test Button');
-        widget.setLabel('New Label');
-        expect(widget.el.innerHTML).to.equal('New Label');
+    it('should allow component to be split from renderer', function() {
+        var component = window.appButtonSplit;
+        expect(component.el.innerHTML).to.equal('Test Button');
+        component.setLabel('New Label');
+        expect(component.el.innerHTML).to.equal('New Label');
     });
 
-    it('should allow UI component to only have a widget and an index.marko', function() {
-        expect(window.widgetOnly).to.be.an('object');
+    it('should allow UI component to only have a component and an index.marko', function() {
+        expect(window.componentOnly).to.be.an('object');
     });
 });

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
-    var childWidgets = widget.getWidgets('childWidget');
-    expect(childWidgets.length).to.equal(1);
+    var component = helpers.mount(require('./index'), {});
+    var childComponents = component.getComponents('childComponent');
+    expect(childComponents.length).to.equal(1);
 };

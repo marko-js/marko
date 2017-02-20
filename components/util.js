@@ -2,11 +2,11 @@ var KEY = Symbol();
 var isArray = Array.isArray;
 
 function UniqueId(out) {
-    this.prefix = out.global.widgetIdPrefix || 'w';
+    this.prefix = out.global.componentIdPrefix || 'w';
     this.nextId = 0;
 }
 
-function nextWidgetId(out) {
+function nextComponentId(out) {
     var global = out.global;
 
     var idProvider = global[KEY] ||
@@ -15,11 +15,11 @@ function nextWidgetId(out) {
     return idProvider.prefix + (idProvider.nextId++);
 }
 
-function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
+function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
         if (extraArgs) {
-            var bubblingDomEvents = widgetDef.$__bubblingDomEvents ||
-                ( widgetDef.$__bubblingDomEvents = [] );
+            var bubblingDomEvents = componentDef.$__bubblingDomEvents ||
+                ( componentDef.$__bubblingDomEvents = [] );
 
             var eventIndex = bubblingDomEvents.length;
             if (extraArgs.length === 1) {
@@ -33,13 +33,13 @@ function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
                 bubblingDomEvents.push(extraArgs);
             }
 
-            return handlerMethodName + ' ' + widgetDef.id + ' ' + eventIndex;
+            return handlerMethodName + ' ' + componentDef.id + ' ' + eventIndex;
         } else {
-            return handlerMethodName + ' ' + widgetDef.id;
+            return handlerMethodName + ' ' + componentDef.id;
         }
     }
 }
 
-exports.$__nextWidgetId = nextWidgetId;
+exports.$__nextComponentId = nextComponentId;
 exports.$__server = true;
 exports.$__attachBubblingEvent = attachBubblingEvent;

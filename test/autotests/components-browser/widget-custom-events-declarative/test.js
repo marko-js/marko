@@ -2,35 +2,35 @@ var expect = require('chai').expect;
 var pubsub = require('~/util/pubsub');
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
     var received1 = [];
     var received2 = [];
 
-    widget.handleTestEvent1 = function() {
+    component.handleTestEvent1 = function() {
         received1.push({
             args: arguments,
-            widget: arguments[arguments.length -1]
+            component: arguments[arguments.length -1]
         });
     };
 
-    widget.handleTestEvent2 = function() {
+    component.handleTestEvent2 = function() {
         received2.push({
             args: arguments,
-            widget: arguments[arguments.length -1]
+            component: arguments[arguments.length -1]
         });
     };
 
-    widget.getWidget('customEvents').emitTestEvent1();
+    component.getComponent('customEvents').emitTestEvent1();
     expect(received1.length).to.equal(1);
-    expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceWidget]
-    expect(received1[0].widget).to.equal(widget.getWidget('customEvents'));
+    expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceComponent]
+    expect(received1[0].component).to.equal(component.getComponent('customEvents'));
 
-    pubsub.channel('customEvents-' + widget.id).emit('emitTestEvent2');
+    pubsub.channel('customEvents-' + component.id).emit('emitTestEvent2');
 
     expect(received1.length).to.equal(1);
     expect(received2.length).to.equal(1);
 
-    expect(received2[0].args.length).to.equal(1); // [sourceWidget]
-    expect(received2[0].widget).to.be.an('object');
+    expect(received2[0].args.length).to.equal(1); // [sourceComponent]
+    expect(received2[0].component).to.be.an('object');
 };

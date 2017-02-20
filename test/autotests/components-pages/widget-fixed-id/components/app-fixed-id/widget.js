@@ -5,9 +5,9 @@ module.exports = {
         this.name = 'app-fixed-id';
         window.appFixedId = this;
     },
-    testGetWidget: function() {
-        var helloWidget = this.getWidget('hello');
-        expect(helloWidget != null).to.equal(true);
+    testGetComponent: function() {
+        var helloComponent = this.getComponent('hello');
+        expect(helloComponent != null).to.equal(true);
     },
     testGetEl: function() {
         var wrapperEl = this.getEl('wrapper');

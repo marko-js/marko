@@ -1,6 +1,6 @@
 module.exports = {
     handleClick: function(event) {
-        // Every Widget instance is also an EventEmitter instance.
+        // Every Component instance is also an EventEmitter instance.
         // We will emit a custom "click" event when a DOM click event
         // is triggered
         this.emit('click', {

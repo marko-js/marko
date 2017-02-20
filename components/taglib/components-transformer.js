@@ -19,7 +19,7 @@ module.exports = function transform(el, context) {
 
         if (!bodyValue) {
             bodyValue = builder.memberExpression(
-                builder.identifier('widget'),
+                builder.identifier('component'),
                 builder.identifier('b'));
 
             includeNode.data.bodySlot = true;
@@ -29,11 +29,11 @@ module.exports = function transform(el, context) {
         el.appendChild(includeNode);
     }
 
-    if (el.tagName === 'widget-types') {
-        context.setFlag('hasWidgetTypes');
+    if (el.tagName === 'component-types') {
+        context.setFlag('hasComponentTypes');
     } else if (el.tagName === 'include') {
         transformHelper.handleIncludeNode(el);
-        transformHelper.getWidgetArgs().compile(transformHelper);
+        transformHelper.getComponentArgs().compile(transformHelper);
         return;
     }
 
@@ -42,9 +42,9 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute('_widgetbind') || el.hasAttribute('w-bind')) {
-        el.setFlag('hasWidgetBind');
-        transformHelper.handleWidgetBind();
+    if (el.hasAttribute('_componentbind') || el.hasAttribute('w-bind')) {
+        el.setFlag('hasComponentBind');
+        transformHelper.handleComponentBind();
     }
 
     if (/* New preserve attributes */
@@ -57,32 +57,32 @@ module.exports = function transform(el, context) {
         el.hasAttribute('w-preserve-body') ||
         el.hasAttribute('w-preserve-if') ||
         el.hasAttribute('w-preserve-body-if')) {
-        transformHelper.handleWidgetPreserve();
+        transformHelper.handleComponentPreserve();
     }
 
     if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
-        transformHelper.assignWidgetId();
+        transformHelper.assignComponentId();
     }
 
     if (el.hasAttribute('for-key') || el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {
-        transformHelper.handleWidgetFor();
+        transformHelper.handleComponentFor();
     }
 
     if (el.hasAttribute('w-body')) {
-        transformHelper.handleWidgetBody();
+        transformHelper.handleComponentBody();
     }
 
     // Handle w-preserve-attrs and :no-update attributes
-    transformHelper.handleWidgetPreserveAttrs();
+    transformHelper.handleComponentPreserveAttrs();
 
     // Handle w-on* properties
-    transformHelper.handleWidgetEvents();
+    transformHelper.handleComponentEvents();
 
-    // If we need to pass any information to a nested widget then
+    // If we need to pass any information to a nested component then
     // we start that information in the "out" so that it can be picked
-    // up later by the nested widget. We call this "widget args" and
-    // we generate compiled code that stores the widget args in the out
-    // for the next widget and then we also insert cleanup code to remove
+    // up later by the nested component. We call this "component args" and
+    // we generate compiled code that stores the component args in the out
+    // for the next component and then we also insert cleanup code to remove
     // the data out of the out
-    transformHelper.getWidgetArgs().compile(transformHelper);
+    transformHelper.getComponentArgs().compile(transformHelper);
 };

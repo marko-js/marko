@@ -1,5 +1,5 @@
 module.exports = {
     onMount: function() {
-        this.name = 'app-widget-config';
+        this.name = 'app-component-config';
     }
 };

@@ -24,18 +24,18 @@ var helpers = {
 
 describe(path.basename(__dirname), function() {
     it('should allow no args', function() {
-        window.widgets['no-args'].test(helpers);
+        window.components['no-args'].test(helpers);
     });
 
     it('should allow one arg', function() {
-        window.widgets['one-arg'].test(helpers);
+        window.components['one-arg'].test(helpers);
     });
 
     it('should allow one arg as array', function() {
-        window.widgets['one-arg-array'].test(helpers);
+        window.components['one-arg-array'].test(helpers);
     });
 
     it('should allow two args', function() {
-        window.widgets['two-args'].test(helpers);
+        window.components['two-args'].test(helpers);
     });
 });

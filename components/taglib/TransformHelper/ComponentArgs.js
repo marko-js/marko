@@ -1,6 +1,6 @@
 'use strict';
 
-class WidgetArgs {
+class ComponentArgs {
 
     constructor() {
         this.id = null;
@@ -41,14 +41,14 @@ class WidgetArgs {
         var id = this.id;
         var customEvents = this.customEvents;
 
-        // Make sure the nested widget has access to the ID of the containing
-        // widget if it is needed
+        // Make sure the nested component has access to the ID of the containing
+        // component if it is needed
         var shouldProvideScope = id || customEvents;
 
         var args = [];
 
         if (shouldProvideScope) {
-            args.push(builder.identifier('widget'));
+            args.push(builder.identifier('component'));
         } else {
             args.push(builder.literalNull());
         }
@@ -66,34 +66,34 @@ class WidgetArgs {
         if (el.tagDef && el.tagDef.template) {
             el.setAttributeValue('$w', builder.literal(args));
         } else {
-            let widgetArgsVar = transformHelper.context.addStaticVar('marko_widgetArgs',
-                builder.require(builder.literal('marko/widgets/taglib/helpers/widgetArgs')));
+            let componentArgsVar = transformHelper.context.addStaticVar('marko_componentArgs',
+                builder.require(builder.literal('marko/components/taglib/helpers/componentArgs')));
 
-            let widgetArgsFunctionCall = builder.functionCall(widgetArgsVar, [
+            let componentArgsFunctionCall = builder.functionCall(componentArgsVar, [
                 builder.identifierOut(),
                 builder.literal(args)
             ]);
-            let cleanupWidgetArgsFunctionCall = this.buildCleanupWidgetArgsFunctionCall(transformHelper);
+            let cleanupComponentArgsFunctionCall = this.buildCleanupComponentArgsFunctionCall(transformHelper);
 
             el.onBeforeGenerateCode((event) => {
-                event.insertCode(widgetArgsFunctionCall);
+                event.insertCode(componentArgsFunctionCall);
             });
 
             el.onAfterGenerateCode((event) => {
-                event.insertCode(cleanupWidgetArgsFunctionCall);
+                event.insertCode(cleanupComponentArgsFunctionCall);
             });
         }
     }
 
-    buildCleanupWidgetArgsFunctionCall(transformHelper) {
+    buildCleanupComponentArgsFunctionCall(transformHelper) {
         var context = transformHelper.context;
         var builder = transformHelper.builder;
 
-        var cleanupWidgetArgsVar = context.addStaticVar('marko_cleanupWidgetArgs',
-            'marko_widgetArgs.cleanup');
+        var cleanupComponentArgsVar = context.addStaticVar('marko_cleanupComponentArgs',
+            'marko_componentArgs.cleanup');
 
-        return builder.functionCall(cleanupWidgetArgsVar, [builder.identifierOut()]);
+        return builder.functionCall(cleanupComponentArgsVar, [builder.identifierOut()]);
     }
 }
 
-module.exports = WidgetArgs;
+module.exports = ComponentArgs;

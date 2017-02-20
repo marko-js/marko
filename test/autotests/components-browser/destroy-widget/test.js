@@ -1,11 +1,11 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         showSimple: true
     });
 
-    var simple = widget.getWidget('simple');
+    var simple = component.getComponent('simple');
     var simpleDestroyed = false;
 
     simple.onDestroy = function() {
@@ -14,14 +14,14 @@ module.exports = function(helpers) {
 
     expect(simple != null).to.equal(true);
 
-    widget.input = {
+    component.input = {
         showSimple: false
     };
 
-    widget.update();
+    component.update();
 
     expect(simpleDestroyed).to.equal(true);
     expect(simple.isDestroyed()).to.equal(true);
 
-    expect(widget.getWidget('simple') == null).to.equal(true);
+    expect(component.getComponent('simple') == null).to.equal(true);
 };

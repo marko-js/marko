@@ -13,7 +13,7 @@ lasso-page dependencies=data.browserDependencies lasso=data.lasso
 html lang="en"
     head
         meta charset="UTF-8"
-        title -- Marko Widgets Tests
+        title -- Marko Components Tests
         lasso-head
     body
 
@@ -28,22 +28,22 @@ html lang="en"
         await(name from nameDataProvider) client-reorder
             app-bar
 
-        init-widgets
+        init-components
 
         script
             ---
-            // window.barWidget should not exist yet, but's store that in a variable to verify
-            window.afterInitWidgets_foo = window.fooWidget;
-            window.afterInitWidgets_bar = window.barWidget;
+            // window.barComponent should not exist yet, but's store that in a variable to verify
+            window.afterInitComponents_foo = window.fooComponent;
+            window.afterInitComponents_bar = window.barComponent;
             ---
 
         await-reorderer
 
         script
             ---
-            // window.fooWidget should not exist yet, but's store that in a variable to verify
-            window.afterReorderer_foo = window.fooWidget;
-            window.afterReorderer_bar = window.barWidget;
+            // window.fooComponent should not exist yet, but's store that in a variable to verify
+            window.afterReorderer_foo = window.fooComponent;
+            window.afterReorderer_bar = window.barComponent;
             ---
 
         lasso-slot name="mocha-run"

@@ -179,22 +179,22 @@ template.stream(templateData).pipe(process.stdout);
 
 # UI Components
 
-Marko Widgets is a minimalist library for building isomorphic/universal UI components with the help of the
-[Marko templating engine](http://markojs.com/docs/). Marko renders the HTML for UI components, while Marko Widgets adds client-side behavior. Client-side behavior includes the following:
+Marko Components is a minimalist library for building isomorphic/universal UI components with the help of the
+[Marko templating engine](http://markojs.com/docs/). Marko renders the HTML for UI components, while Marko Components adds client-side behavior. Client-side behavior includes the following:
 
 - Handling DOM events
 - Emitting custom events
-- Handling custom events emitted by other widgets
+- Handling custom events emitted by other components
 - Manipulating and updating the DOM
 
-Marko Widgets offers advanced features like DOM-diffing, batched updates, stateful widgets, declarative event binding and efficient event delegation.
+Marko Components offers advanced features like DOM-diffing, batched updates, stateful components, declarative event binding and efficient event delegation.
 
-Changing a widgets state or properties will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster (especially on the server). When updating the view for a widget, Marko Widgets uses DOM diffing to make the minimum number of changes to the DOM through the use of the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
+Changing a components state or properties will result in the DOM automatically being updated without writing extra code. Marko Components has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster (especially on the server). When updating the view for a component, Marko Components uses DOM diffing to make the minimum number of changes to the DOM through the use of the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
 
 UI components are defined using very clean JavaScript code. For example:
 
 ```javascript
-module.exports = require('marko-widgets').defineComponent({
+module.exports = require('marko-components').defineComponent({
     /**
      * The template to use as the view
      */
@@ -213,7 +213,7 @@ module.exports = require('marko-widgets').defineComponent({
 
     /**
      * Return an object that is used as the template data. The
-     * template data should be based on the current widget state
+     * template data should be based on the current component state
      * that is passed in as the first argument
      */
     getTemplateData: function(state) {
@@ -228,13 +228,13 @@ module.exports = require('marko-widgets').defineComponent({
     },
 
     /**
-     * This is the constructor for the widget. Called once when
-     * the widget is first added to the DOM.
+     * This is the constructor for the component. Called once when
+     * the component is first added to the DOM.
      */
     init: function() {
         var el = this.el;
         // "el" will be reference the raw HTML element that this
-        // widget is bound to. You can do whatever you want with it...
+        // component is bound to. You can do whatever you want with it...
         // el.style.color = 'red';
     },
 
@@ -272,9 +272,9 @@ And, here is the corresponding Marko template for the UI component:
 </div>
 ```
 
-<a href="http://markojs.com/marko-widgets/try-online/" target="_blank">Try Marko Widgets Online!</a>
+<a href="http://markojs.com/marko-components/try-online/" target="_blank">Try Marko Components Online!</a>
 
-For more details on Marko Widgets, please check out the [Marko Widgets Documentation](http://markojs.com/docs/marko-widgets/).
+For more details on Marko Components, please check out the [Marko Components Documentation](http://markojs.com/docs/marko-components/).
 
 # Common issues
 

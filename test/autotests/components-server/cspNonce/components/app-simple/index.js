@@ -1,15 +1,15 @@
-module.exports = require('marko/widgets/legacy').defineComponent({
+module.exports = require('marko/components/legacy').defineComponent({
 	template: require.resolve('./template.marko'),
 
-	getWidgetConfig: function() {
+	getComponentConfig: function() {
 		return {
-			type: 'widget config'
+			type: 'component config'
 		};
 	},
 
 	getInitialState: function() {
 		return {
-			type: 'widget state'
+			type: 'component state'
 		};
 	},
 
@@ -20,7 +20,7 @@ module.exports = require('marko/widgets/legacy').defineComponent({
 		};
 	},
 
-	init: function(widgetConfig) {
-		this.widgetConfig = widgetConfig;
+	init: function(componentConfig) {
+		this.componentConfig = componentConfig;
 	}
 });

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         fields: [
             {
                 value: 'name',
@@ -14,7 +14,7 @@ module.exports = function(helpers) {
         ]
     });
 
-    var inputs = widget.getEls('field');
+    var inputs = component.getEls('field');
     expect(inputs.length).to.equal(2);
     expect(inputs[0].value).to.equal('name');
 };

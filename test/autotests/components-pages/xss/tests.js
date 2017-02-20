@@ -10,8 +10,8 @@ describe(path.basename(__dirname), function() {
         var ready = require('marko/ready');
 
         ready(function() {
-            expect(window.fooWidget.state.evil).to.equal('</script><script>alert("hello")</script>');
-            expect(window.fooWidget.widgetConfig.evil).to.equal('</script><script>alert("hello")</script>');
+            expect(window.fooComponent.state.evil).to.equal('</script><script>alert("hello")</script>');
+            expect(window.fooComponent.componentConfig.evil).to.equal('</script><script>alert("hello")</script>');
             done();
         });
     });

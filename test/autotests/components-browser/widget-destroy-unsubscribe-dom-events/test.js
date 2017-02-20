@@ -1,23 +1,23 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    expect(Array.isArray(widget.$__domEventListenerHandles)).to.equal(true);
+    expect(Array.isArray(component.$__domEventListenerHandles)).to.equal(true);
 
-    var el = widget.el;
-    var fooLink = widget.getEl('fooLink');
+    var el = component.el;
+    var fooLink = component.getEl('fooLink');
 
-    widget.destroy();
+    component.destroy();
 
-    expect(widget.$__domEventListenerHandles).to.equal(null);
+    expect(component.$__domEventListenerHandles).to.equal(null);
 
-    // Make sure the widget is removed from the DOM tree
+    // Make sure the component is removed from the DOM tree
 
     expect(el.parentNode == null).to.equal(true);
 
     // Make sure there are no DOM event listeners
-    widget.clearLog();
+    component.clearLog();
     helpers.triggerMouseEvent(fooLink, 'mouseout');
-    expect(widget.logOutput).to.deep.equal([]);
+    expect(component.logOutput).to.deep.equal([]);
 };

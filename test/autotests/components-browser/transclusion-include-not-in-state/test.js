@@ -1,21 +1,21 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         name: 'Frank'
     });
 
-    var buttonWidget = widget.getWidget('button');
-    expect(buttonWidget.el.innerHTML).to.contain('Frank');
-    expect(buttonWidget.el.className).to.equal('app-button app-button-small');
+    var buttonComponent = component.getComponent('button');
+    expect(buttonComponent.el.innerHTML).to.contain('Frank');
+    expect(buttonComponent.el.className).to.equal('app-button app-button-small');
 
-    widget.input = { name: 'John '};
-    widget.update();
+    component.input = { name: 'John '};
+    component.update();
 
-    expect(buttonWidget.el.innerHTML).to.contain('John');
+    expect(buttonComponent.el.innerHTML).to.contain('John');
 
-    buttonWidget.setSize('large');
-    buttonWidget.update();
-    expect(buttonWidget.el.innerHTML).to.contain('John');
-    expect(buttonWidget.el.className).to.equal('app-button app-button-large');
+    buttonComponent.setSize('large');
+    buttonComponent.update();
+    expect(buttonComponent.el.innerHTML).to.contain('John');
+    expect(buttonComponent.el.className).to.equal('app-button app-button-large');
 };

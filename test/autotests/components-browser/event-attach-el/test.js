@@ -1,30 +1,30 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         colors: ['red']
     });
 
-    expect(widget.events.length).to.equal(0);
+    expect(component.events.length).to.equal(0);
 
 
-    widget.input = {
+    component.input = {
         colors: ['red', 'blue']
     };
 
-    widget.update();
+    component.update();
 
-    expect(widget.events.length).to.equal(1);
-    expect(widget.events[0].color).to.equal('blue');
-    expect(widget.events[0].node).to.equal(widget.el.querySelectorAll('li')[1]);
+    expect(component.events.length).to.equal(1);
+    expect(component.events[0].color).to.equal('blue');
+    expect(component.events[0].node).to.equal(component.el.querySelectorAll('li')[1]);
 
-    widget.input = {
+    component.input = {
         colors: ['red', 'green', 'blue']
     };
 
-    widget.update();
+    component.update();
 
-    expect(widget.events.length).to.equal(2);
-    expect(widget.events[1].color).to.equal('green');
-    expect(widget.events[1].node).to.equal(widget.el.querySelectorAll('li')[1]);
+    expect(component.events.length).to.equal(2);
+    expect(component.events[1].color).to.equal('green');
+    expect(component.events[1].node).to.equal(component.el.querySelectorAll('li')[1]);
 };

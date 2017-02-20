@@ -1,17 +1,17 @@
 module.exports = function defineWidget(def, renderer) {
-    if (def.$__isWidget) {
+    if (def.$__isComponent) {
         return def;
     }
 
     if (renderer) {
         return {
-            $__isWidget: true,
+            $__isComponent: true,
             renderer: renderer,
             render: renderer.render,
             renderSync: renderer.renderSync,
             template: renderer.template
         };
     } else {
-        return {$__isWidget: true};
+        return {$__isComponent: true};
     }
 };

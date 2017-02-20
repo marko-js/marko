@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), { });
+    var component = helpers.mount(require('./index'), { });
 
-    expect(widget.sayHello('Frank')).to.equal('Hello Frank!');
+    expect(component.sayHello('Frank')).to.equal('Hello Frank!');
 };

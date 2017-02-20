@@ -1,15 +1,15 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    widget.getWidget('ok').emitPressEvent();
+    component.getComponent('ok').emitPressEvent();
 
-    expect(widget.pressEvent[0].type).to.equal('ok');
-    expect(widget.pressEvent[1].widget).to.equal(widget.getWidget('ok'));
+    expect(component.pressEvent[0].type).to.equal('ok');
+    expect(component.pressEvent[1].component).to.equal(component.getComponent('ok'));
 
-    widget.getWidget('cancel').emitPressEvent();
+    component.getComponent('cancel').emitPressEvent();
 
-    expect(widget.pressEvent[0].type).to.equal('cancel');
-    expect(widget.pressEvent[1].widget).to.equal(widget.getWidget('cancel'));
+    expect(component.pressEvent[0].type).to.equal('cancel');
+    expect(component.pressEvent[1].component).to.equal(component.getComponent('cancel'));
 };

@@ -1,4 +1,4 @@
-var widgetLookup = require('./util').$__widgetLookup;
+var componentLookup = require('./util').$__componentLookup;
 var isArray = Array.isArray;
 
 var listenersAttached;
@@ -11,7 +11,7 @@ function getEventAttribute(el, attrName) {
     } else {
         var attrValue = el.getAttribute(attrName);
         if (attrValue) {
-            // <method_name> <widget_id>[ <extra_args_index]
+            // <method_name> <component_id>[ <extra_args_index]
             var parts = attrValue.split(' ');
             if (parts.length == 3) {
                 parts[2] = parseInt(parts[2], 10);
@@ -24,35 +24,35 @@ function getEventAttribute(el, attrName) {
 
 function delegateEvent(node, target, event) {
     var targetMethod = target[0];
-    var targetWidgetId = target[1];
+    var targetComponentId = target[1];
     var extraArgs = target[2];
 
-    var targetWidget = widgetLookup[targetWidgetId];
+    var targetComponent = componentLookup[targetComponentId];
 
 
-    if (!targetWidget) {
+    if (!targetComponent) {
         return;
     }
 
-    var targetFunc = targetWidget[targetMethod];
+    var targetFunc = targetComponent[targetMethod];
     if (!targetFunc) {
         throw Error('Method not found: ' + targetMethod);
     }
 
     if (extraArgs != null) {
         if (typeof extraArgs === 'number') {
-            extraArgs = targetWidget.$__bubblingDomEvents[extraArgs];
+            extraArgs = targetComponent.$__bubblingDomEvents[extraArgs];
             if (!isArray(extraArgs)) {
                 extraArgs = [extraArgs];
             }
         }
     }
 
-    // Invoke the widget method
+    // Invoke the component method
     if (extraArgs) {
-        targetFunc.apply(targetWidget, extraArgs.concat(event, node));
+        targetFunc.apply(targetComponent, extraArgs.concat(event, node));
     } else {
-        targetFunc.call(targetWidget, event, node);
+        targetFunc.call(targetComponent, event, node);
     }
 }
 
@@ -64,7 +64,7 @@ function attachBubbleEventListeners(doc) {
     // document.body element. When we get notified of a triggered event,
     // we again walk up the tree starting at the target associated
     // with the event to find any mappings for event. Each mapping
-    // is from a DOM event type to a method of a widget.
+    // is from a DOM event type to a method of a component.
     require('./bubble').forEach(function addBubbleHandler(eventType) {
         body.addEventListener(eventType, function(event) {
             var propagationStopped = false;
@@ -83,12 +83,12 @@ function attachBubbleEventListeners(doc) {
             }
 
             // Search up the tree looking DOM events mapped to target
-            // widget methods
+            // component methods
             var attrName = 'data-_on' + eventType;
             var target;
 
             // Attributes will have the following form:
-            // on<event_type>("<target_method>|<widget_id>")
+            // on<event_type>("<target_method>|<component_id>")
 
             do {
                 if ((target = getEventAttribute(curNode, attrName))) {

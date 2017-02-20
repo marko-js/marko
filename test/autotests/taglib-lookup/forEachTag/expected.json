@@ -238,9 +238,9 @@
     "async-fragment-timeout",
     "async-fragment-error",
     "cached-fragment",
-    "_widget",
-    "init-widgets",
+    "_component",
+    "init-components",
     "w-preserve",
     "no-update",
-    "widget-types"
+    "component-types"
 ]

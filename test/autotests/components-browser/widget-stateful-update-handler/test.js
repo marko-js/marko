@@ -1,30 +1,30 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    var oldEl = widget.el;
+    var oldEl = component.el;
 
-    var button1Widget = widget.getWidget('button1');
-    var button2Widget = widget.getWidget('button2');
+    var button1Component = component.getComponent('button1');
+    var button2Component = component.getComponent('button2');
 
-    expect(button1Widget.el.className).to.contain('small');
-    expect(button2Widget.el.className).to.contain('small');
+    expect(button1Component.el.className).to.contain('small');
+    expect(button2Component.el.className).to.contain('small');
 
-    expect(button1Widget.el.innerHTML).to.contain('Initial Label');
-    expect(button2Widget.el.innerHTML).to.contain('Initial Label');
+    expect(button1Component.el.innerHTML).to.contain('Initial Label');
+    expect(button2Component.el.innerHTML).to.contain('Initial Label');
 
-    widget.setState('buttonSize', 'large');
-    widget.update();
+    component.setState('buttonSize', 'large');
+    component.update();
 
-    expect(button1Widget).to.equal(widget.getWidget('button1'));
-    expect(button2Widget).to.equal(widget.getWidget('button2'));
+    expect(button1Component).to.equal(component.getComponent('button1'));
+    expect(button2Component).to.equal(component.getComponent('button2'));
 
-    expect(button1Widget.el.className).to.contain('large');
-    expect(button2Widget.el.className).to.contain('small');
+    expect(button1Component.el.className).to.contain('large');
+    expect(button2Component.el.className).to.contain('small');
 
-    expect(button1Widget.el.innerHTML).to.contain('Initial Label');
-    expect(button2Widget.el.innerHTML).to.contain('Initial Label');
+    expect(button1Component.el.innerHTML).to.contain('Initial Label');
+    expect(button2Component.el.innerHTML).to.contain('Initial Label');
 
-    expect(widget.el).to.equal(oldEl);
+    expect(component.el).to.equal(oldEl);
 };

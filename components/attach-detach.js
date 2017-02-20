@@ -2,9 +2,9 @@ var eventDelegation = require('./event-delegation');
 var delegateEvent = eventDelegation.$__delegateEvent;
 var getEventAttribute = eventDelegation.$__getEventAttribute;
 
-var widgetsUtil = require('./util');
-var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
-var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
+var componentsUtil = require('./util');
+var destroyElRecursive = componentsUtil.$__destroyElRecursive;
+var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
 
 function handleNodeAttach(node, out) {
     if (node.nodeType === 1) {
@@ -15,7 +15,7 @@ function handleNodeAttach(node, out) {
             var attachTargets = data.$__attachTargets;
             if (!attachTargets) {
                 attachTargets = data.$__attachTargets = [];
-                out.on('$__widgetsInitialized', function() {
+                out.on('$__componentsInitialized', function() {
                     for (var i=0; i<attachTargets.length; i+=2) {
                         var node = attachTargets[i];
                         var target = attachTargets[i+1];
@@ -39,7 +39,7 @@ function handleNodeDetach(node) {
             delegateEvent(node, target, {
                 preventDefault: function() {
                     allowDetach = false;
-                    destroyWidgetForEl(node);
+                    destroyComponentForEl(node);
                     destroyElRecursive(node);
                 },
                 detach: function() {

@@ -2,18 +2,18 @@ var expect = require('chai').expect;
 
 module.exports = function(helpers) {
 
-    var widget = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
+    var component = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
 
-    var nameEl = widget.getEl('name');
-    var ageEl = widget.getEl('age');
-    var linkEl = widget.els[2];
+    var nameEl = component.getEl('name');
+    var ageEl = component.getEl('age');
+    var linkEl = component.els[2];
 
 
     expect(nameEl.parentNode != null).to.equal(true);
     expect(ageEl.parentNode != null).to.equal(true);
     expect(linkEl.parentNode != null).to.equal(true);
 
-    widget.destroy();
+    component.destroy();
 
     expect(nameEl.parentNode == null).to.equal(true);
     expect(ageEl.parentNode == null).to.equal(true);

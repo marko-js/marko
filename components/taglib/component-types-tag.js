@@ -4,7 +4,7 @@ module.exports = function codeGenerator(el, codegen) {
     var context = codegen.context;
     var transformHelper = getTransformHelper(el, context);
 
-    transformHelper.isLegacyWidget = true;
+    transformHelper.isLegacyComponent = true;
 
     var builder = codegen.builder;
 
@@ -14,14 +14,14 @@ module.exports = function codeGenerator(el, codegen) {
 
     attrs.forEach((attr) => {
         if (!attr.isLiteralString()) {
-            codegen.addError('Widget type should be a string');
+            codegen.addError('Component type should be a string');
             return;
         }
 
-        typesObject[attr.name] = transformHelper.buildWidgetTypeNode(attr.literalValue);
+        typesObject[attr.name] = transformHelper.buildComponentTypeNode(attr.literalValue);
     });
 
-    codegen.addStaticVar('marko_widgetTypes', builder.literal(typesObject));
+    codegen.addStaticVar('marko_componentTypes', builder.literal(typesObject));
 
     return null;
 };

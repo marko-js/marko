@@ -1,34 +1,34 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_widgets = require("marko/widgets/legacy"),
-    marko_registerWidget = marko_widgets.rw,
-    marko_defineWidget = marko_widgets.w,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/component-include-attr/index", function() {
-      return marko_defineWidget(require("./"));
+    marko_components = require("marko/components/legacy"),
+    marko_registerComponent = marko_components.rw,
+    marko_defineComponent = marko_components.w,
+    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/component-include-attr/index", function() {
+      return marko_defineComponent(require("./"));
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/widgets/taglib/include-tag")),
+    include_tag = marko_loadTag(require("marko/components/taglib/include-tag")),
     marko_attr = marko_helpers.a;
 
-function render(input, out, widget, state) {
+function render(input, out, component, state) {
   var data = input;
 
   out.w("<div" +
-    marko_attr("id", widget.id) +
+    marko_attr("id", component.id) +
     "><h1>Header</h1><div" +
-    marko_attr("id", widget.elId(0)) +
+    marko_attr("id", component.elId(0)) +
     ">");
 
   include_tag({
-      _target: widget.b,
-      _elId: widget.elId(0)
+      _target: component.b,
+      _elId: component.elId(0)
     }, out);
 
   out.w("</div></div>");
 }
 
-marko_template._ = marko_widgets.r(render, {
-    type: marko_widgetType,
+marko_template._ = marko_components.r(render, {
+    type: marko_componentType,
     body: 0
   });
 
@@ -40,10 +40,10 @@ marko_template.meta = {
         },
       {
           type: "require",
-          path: "marko/widgets"
+          path: "marko/components"
         }
     ],
     tags: [
-      "marko/widgets/taglib/include-tag"
+      "marko/components/taglib/include-tag"
     ]
   };

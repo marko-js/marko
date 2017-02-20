@@ -5,7 +5,7 @@ module.exports = {
 		var frameEl = this.getFrameEl();
 		return iframeContentComponent.renderSync({})
             .appendTo(frameEl.contentWindow.document.body)
-            .getWidget();
+            .getComponent();
 	},
 
 	getFrameEl: function() {

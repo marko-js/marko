@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 module.exports = function(helpers) {
     window.rerenderInitOrder = [];
 
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         version: 0
     });
 
@@ -11,8 +11,8 @@ module.exports = function(helpers) {
 
     window.rerenderInitOrder = [];
 
-    widget.input = { 'version':  1};
-    widget.update();
+    component.input = { 'version':  1};
+    component.update();
 
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
     expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);

@@ -4,20 +4,20 @@ var eventDelegation = require('./event-delegation');
 var win = window;
 var defaultDocument = document;
 var events = require('../runtime/events');
-var widgetsUtil = require('./util');
-var widgetLookup = widgetsUtil.$__widgetLookup;
-var getElementById = widgetsUtil.$__getElementById;
-var WidgetDef = require('./WidgetDef');
+var componentsUtil = require('./util');
+var componentLookup = componentsUtil.$__componentLookup;
+var getElementById = componentsUtil.$__getElementById;
+var ComponentDef = require('./ComponentDef');
 // var extend = require('raptor-util/extend');
 // var registry = require('./registry');
 
-function invokeWidgetEventHandler(widget, targetMethodName, args) {
-    var method = widget[targetMethodName];
+function invokeComponentEventHandler(component, targetMethodName, args) {
+    var method = component[targetMethodName];
     if (!method) {
         throw Error('Method not found: ' + targetMethodName);
     }
 
-    method.apply(widget, args);
+    method.apply(component, args);
 }
 
 function addEventListenerHelper(el, eventType, listener) {
@@ -27,79 +27,79 @@ function addEventListenerHelper(el, eventType, listener) {
     };
 }
 
-function addDOMEventListeners(widget, el, eventType, targetMethodName, extraArgs, handles) {
+function addDOMEventListeners(component, el, eventType, targetMethodName, extraArgs, handles) {
     var removeListener = addEventListenerHelper(el, eventType, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
         }
 
-        invokeWidgetEventHandler(widget, targetMethodName, args);
+        invokeComponentEventHandler(component, targetMethodName, args);
     });
     handles.push(removeListener);
 }
 
-function initWidget(widgetDef, doc) {
-    var widget = widgetDef.$__widget;
+function initComponent(componentDef, doc) {
+    var component = componentDef.$__component;
 
-    if (!widget || !widget.$__isWidget) {
+    if (!component || !component.$__isComponent) {
         return; // legacy
     }
 
-    var scope = widgetDef.$__scope;
-    var domEvents = widgetDef.$__domEvents;
-    var customEvents = widgetDef.$__customEvents;
+    var scope = componentDef.$__scope;
+    var domEvents = componentDef.$__domEvents;
+    var customEvents = componentDef.$__customEvents;
 
-    widget.$__reset();
-    widget.$__document = doc;
+    component.$__reset();
+    component.$__document = doc;
 
-    var isExisting = widgetDef.$__isExisting;
+    var isExisting = componentDef.$__isExisting;
     var i;
     var len;
     var eventType;
     var targetMethodName;
     var extraArgs;
-    var id = widget.id;
+    var id = component.id;
 
-    var rootIds = widgetDef.$__roots;
+    var rootIds = componentDef.$__roots;
 
     if (rootIds) {
-        var rootWidgets;
+        var rootComponents;
 
         var els = [];
         for (i=0, len=rootIds.length; i<len; i++) {
             var rootId = rootIds[i];
             var nestedId = id + '-' + rootId;
-            var rootWidget = widgetLookup[nestedId];
-            if (rootWidget) {
-                rootWidget.$__rootFor = widget;
-                if (rootWidgets) {
-                    rootWidgets.push(rootWidget);
+            var rootComponent = componentLookup[nestedId];
+            if (rootComponent) {
+                rootComponent.$__rootFor = component;
+                if (rootComponents) {
+                    rootComponents.push(rootComponent);
                 } else {
-                    rootWidgets = widget.$__rootWidgets = [rootWidget];
+                    rootComponents = component.$__rootComponents = [rootComponent];
                 }
             } else {
                 var rootEl = getElementById(doc, nestedId);
                 if (rootEl) {
-                    rootEl._w = widget;
+                    rootEl._w = component;
                     els.push(rootEl);
                 }
             }
         }
 
-        widget.el = els[0];
-        widget.els = els;
-        widgetLookup[id] = widget;
+        component.el = els[0];
+        component.els = els;
+        componentLookup[id] = component;
     } else if (!isExisting) {
         var el = getElementById(doc, id);
-        el._w = widget;
-        widget.el = el;
-        widget.els = [el];
-        widgetLookup[id] = widget;
+        el._w = component;
+        component.el = el;
+        component.els = [el];
+        componentLookup[id] = component;
     }
 
     if (isExisting) {
-        widget.$__removeDOMEventListeners();
+        component.$__removeDOMEventListeners();
     }
 
     if (domEvents) {
@@ -112,98 +112,98 @@ function initWidget(widgetDef, doc) {
             extraArgs = domEvents[i+3];
 
             // The event mapping is for a DOM event (not a custom event)
-            addDOMEventListeners(widget, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
+            addDOMEventListeners(component, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
         }
 
         if (eventListenerHandles.length) {
-            widget.$__domEventListenerHandles = eventListenerHandles;
+            component.$__domEventListenerHandles = eventListenerHandles;
         }
     }
 
     if (customEvents) {
-        widget.$__customEvents = {};
-        widget.$__scope = scope;
+        component.$__customEvents = {};
+        component.$__scope = scope;
 
         for (i=0, len=customEvents.length; i<len; i+=3) {
             eventType = customEvents[i];
             targetMethodName = customEvents[i+1];
             extraArgs = customEvents[i+2];
 
-            widget.$__customEvents[eventType] = [targetMethodName, extraArgs];
+            component.$__customEvents[eventType] = [targetMethodName, extraArgs];
         }
     }
 
     if (isExisting) {
-        widget.$__emitLifecycleEvent('update');
+        component.$__emitLifecycleEvent('update');
     } else {
-        events.emit('mountWidget', widget);
-        widget.$__emitLifecycleEvent('mount');
+        events.emit('mountComponent', component);
+        component.$__emitLifecycleEvent('mount');
     }
 }
 
 /**
- * This method is used to initialized widgets associated with UI components
- * rendered in the browser. While rendering UI components a "widgets context"
- * is added to the rendering context to keep up with which widgets are rendered.
- * When ready, the widgets can then be initialized by walking the widget tree
- * in the widgets context (nested widgets are initialized before ancestor widgets).
- * @param  {Array<marko-widgets/lib/WidgetDef>} widgetDefs An array of WidgetDef instances
+ * This method is used to initialized components associated with UI components
+ * rendered in the browser. While rendering UI components a "components context"
+ * is added to the rendering context to keep up with which components are rendered.
+ * When ready, the components can then be initialized by walking the component tree
+ * in the components context (nested components are initialized before ancestor components).
+ * @param  {Array<marko-components/lib/ComponentDef>} componentDefs An array of ComponentDef instances
  */
-function initClientRendered(widgetDefs, doc) {
+function initClientRendered(componentDefs, doc) {
     // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any widgets
+    // always attached before initializing any components
     eventDelegation.$__init(doc);
 
     doc = doc || defaultDocument;
-    for (var i=0,len=widgetDefs.length; i<len; i++) {
-        var widgetDef = widgetDefs[i];
+    for (var i=0,len=componentDefs.length; i<len; i++) {
+        var componentDef = componentDefs[i];
 
-        if (widgetDef.$__children) {
-            initClientRendered(widgetDef.$__children, doc);
+        if (componentDef.$__children) {
+            initClientRendered(componentDef.$__children, doc);
         }
 
-        initWidget(
-            widgetDef,
+        initComponent(
+            componentDef,
             doc);
     }
 }
 
 /**
- * This method initializes all widgets that were rendered on the server by iterating over all
- * of the widget IDs.
+ * This method initializes all components that were rendered on the server by iterating over all
+ * of the component IDs.
  */
-function initServerRendered(renderedWidgets, doc) {
+function initServerRendered(renderedComponents, doc) {
     var i=0, len;
     if (!arguments.length) {
-        renderedWidgets = win.$widgets;
+        renderedComponents = win.$components;
 
-        win.$widgets = {
+        win.$components = {
             concat: initServerRendered
         };
 
-        if (renderedWidgets && (len=renderedWidgets.length)) {
+        if (renderedComponents && (len=renderedComponents.length)) {
             for (; i<len; i++) {
-                initServerRendered(renderedWidgets[i], doc);
+                initServerRendered(renderedComponents[i], doc);
             }
         }
         return;
     }
     // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any widgets
+    // always attached before initializing any components
     eventDelegation.$__init(doc || defaultDocument);
 
-    renderedWidgets = warp10Finalize(renderedWidgets);
+    renderedComponents = warp10Finalize(renderedComponents);
 
-    var widgetDefs = renderedWidgets.w;
-    var typesArray = renderedWidgets.t;
+    var componentDefs = renderedComponents.w;
+    var typesArray = renderedComponents.t;
 
     if (!doc) {
         doc = defaultDocument;
     }
 
-    for (len=widgetDefs.length; i<len; i++) {
-        var widgetDef = WidgetDef.$__deserialize(widgetDefs[i], typesArray);
-        initWidget(widgetDef, doc);
+    for (len=componentDefs.length; i<len; i++) {
+        var componentDef = ComponentDef.$__deserialize(componentDefs[i], typesArray);
+        initComponent(componentDef, doc);
     }
 }
 

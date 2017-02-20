@@ -1,14 +1,14 @@
 var expect = require('chai').expect;
 
-require('./widget');
+require('./component');
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    expect(widget.string).to.equal('world');
-    expect(widget.number).to.equal(12);
-    expect(widget.boolean).to.equal(true);
-    expect(widget.complex).to.deep.equal({
+    expect(component.string).to.equal('world');
+    expect(component.number).to.equal(12);
+    expect(component.boolean).to.equal(true);
+    expect(component.complex).to.deep.equal({
         a: '<\"hello">',
         b: 'test'
     });

@@ -1,6 +1,6 @@
 {
     "dependencies": [
-        "require: ./components/app-button-split/widget",
-        "require: ./components/widget-only/widget"
+        "require: ./components/app-button-split/component",
+        "require: ./components/component-only/component"
     ]
 }

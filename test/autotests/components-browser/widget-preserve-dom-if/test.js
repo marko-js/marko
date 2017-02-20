@@ -1,27 +1,27 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
     function getTimestamps() {
 
         return {
-            preserveId: widget.getEl('preserve').getAttribute('data-renderId'),
-            preserveIdBody: widget.getEl('preserve').innerHTML,
-            preserveBodyId: widget.getEl('preserveBody').getAttribute('data-renderId'),
-            preserveBodyIdBody: widget.getEl('preserveBody').innerHTML,
-            widgetId: widget.getWidget('widget').state.name,
-            preserveClass: widget.el.querySelector('.preserve').getAttribute('data-renderId'),
-            preserveClassBody: widget.el.querySelector('.preserve').innerHTML,
-            preserveBodyClass: widget.el.querySelector('.preserve-body').getAttribute('data-renderId'),
-            preserveBodyClassBody: widget.el.querySelector('.preserve-body').innerHTML,
-            widgetClass: require('marko/widgets').getWidgetForEl(widget.el.querySelector('.widget-no-id')).state.name
+            preserveId: component.getEl('preserve').getAttribute('data-renderId'),
+            preserveIdBody: component.getEl('preserve').innerHTML,
+            preserveBodyId: component.getEl('preserveBody').getAttribute('data-renderId'),
+            preserveBodyIdBody: component.getEl('preserveBody').innerHTML,
+            componentId: component.getComponent('component').state.name,
+            preserveClass: component.el.querySelector('.preserve').getAttribute('data-renderId'),
+            preserveClassBody: component.el.querySelector('.preserve').innerHTML,
+            preserveBodyClass: component.el.querySelector('.preserve-body').getAttribute('data-renderId'),
+            preserveBodyClassBody: component.el.querySelector('.preserve-body').innerHTML,
+            componentClass: require('marko/components').getComponentForEl(component.el.querySelector('.component-no-id')).state.name
         };
     }
 
     var renderId = 10;
 
-    widget.rerender({
+    component.rerender({
         preserveCondition: true,
         renderId: renderId
     });
@@ -31,12 +31,12 @@ module.exports = function(helpers) {
     expect(timestamps.preserveIdBody).to.equal('0');
     expect(timestamps.preserveBodyId).to.equal('10');
     expect(timestamps.preserveBodyIdBody).to.equal('0');
-    expect(timestamps.widgetId).to.equal('0');
+    expect(timestamps.componentId).to.equal('0');
     expect(timestamps.preserveClass).to.equal('0');
     expect(timestamps.preserveClassBody).to.equal('0');
     expect(timestamps.preserveBodyClass).to.equal('10');
     expect(timestamps.preserveBodyClassBody).to.equal('0');
-    expect(timestamps.widgetClass).to.equal('0');
+    expect(timestamps.componentClass).to.equal('0');
 
     // expect(newEls1.el != null).to.equal(true);
     // expect(newEls1.el).to.equal(origEls.el);
@@ -58,7 +58,7 @@ module.exports = function(helpers) {
     renderId = 100;
 
     // Do not preserve
-    widget.rerender({
+    component.rerender({
         preserveCondition: false,
         renderId: renderId
     });
@@ -68,10 +68,10 @@ module.exports = function(helpers) {
     expect(timestamps.preserveIdBody).to.equal('100');
     expect(timestamps.preserveBodyId).to.equal('100');
     expect(timestamps.preserveBodyIdBody).to.equal('100');
-    expect(timestamps.widgetId).to.equal('100');
+    expect(timestamps.componentId).to.equal('100');
     expect(timestamps.preserveClass).to.equal('100');
     expect(timestamps.preserveClassBody).to.equal('100');
     expect(timestamps.preserveBodyClass).to.equal('100');
     expect(timestamps.preserveBodyClassBody).to.equal('100');
-    expect(timestamps.widgetClass).to.equal('100');
+    expect(timestamps.componentClass).to.equal('100');
 };

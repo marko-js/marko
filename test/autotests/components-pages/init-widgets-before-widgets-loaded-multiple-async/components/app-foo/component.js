@@ -13,10 +13,10 @@ module.exports = {
         };
     },
 
-    onMount: function(widgetConfig) {
-        if (!window.fooWidgets) {
-            window.fooWidgets = [];
+    onMount: function(componentConfig) {
+        if (!window.fooComponents) {
+            window.fooComponents = [];
         }
-        window.fooWidgets.push(this);
+        window.fooComponents.push(this);
     }
 };

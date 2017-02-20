@@ -1,33 +1,33 @@
 'use strict';
 
-module.exports = function assignWidgetId(isRepeated) {
+module.exports = function assignComponentId(isRepeated) {
 
     // First check if we have already assigned an ID to thie element
-    var widgetIdInfo = this.widgetIdInfo;
+    var componentIdInfo = this.componentIdInfo;
 
-    if (widgetIdInfo) {
-        return this.widgetIdInfo;
+    if (componentIdInfo) {
+        return this.componentIdInfo;
     }
 
     var el = this.el;
     var context = this.context;
     var builder = this.builder;
 
-    let widgetRef;
+    let componentRef;
     var nestedIdExpression;
     var idExpression;
 
-    if (!this.hasBoundWidgetForTemplate()) {
-        // We are assigning a widget ID to a nested widget in a template that does not have a widget.
-        // That means we do not have access to the parent widget variable as part of a closure. We
+    if (!this.hasBoundComponentForTemplate()) {
+        // We are assigning a component ID to a nested component in a template that does not have a component.
+        // That means we do not have access to the parent component variable as part of a closure. We
         // need to look it up out of the `out.data` map
-        if (!context.isFlagSet('hasWidgetVar')) {
-            context.setFlag('hasWidgetVar');
+        if (!context.isFlagSet('hasComponentVar')) {
+            context.setFlag('hasComponentVar');
 
-            var getCurrentWidgetVar = context.importModule('marko_getCurrentWidget',
-                this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/getCurrentWidget'));
+            var getCurrentComponentVar = context.importModule('marko_getCurrentComponent',
+                this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/getCurrentComponent'));
 
-            context.addVar('widget', builder.functionCall(getCurrentWidgetVar, [builder.identifierOut()]));
+            context.addVar('component', builder.functionCall(getCurrentComponentVar, [builder.identifierOut()]));
         }
     }
 
@@ -46,35 +46,35 @@ module.exports = function assignWidgetId(isRepeated) {
     var isCustomTag = el.type !== 'HtmlElement';
 
     if (el.hasAttribute('key')) {
-        widgetRef = el.getAttributeValue('key');
+        componentRef = el.getAttributeValue('key');
         el.removeAttribute('key');
     } else if (el.hasAttribute('ref')) {
         context.deprecate('The "ref" attribute is deprecated. Please use "key" instead.');
-        widgetRef = el.getAttributeValue('ref');
+        componentRef = el.getAttributeValue('ref');
         el.removeAttribute('ref');
     }
 
     if (el.hasAttribute('w-id')) {
         context.deprecate('The "w-id" attribute is deprecated. Please use "key" instead.');
 
-        if (widgetRef) {
+        if (componentRef) {
             this.addError('The "w-id" attribute cannot be used in conjuction with the "ref" or "key" attributes.');
             return;
         }
 
-        widgetRef = el.getAttributeValue('w-id');
+        componentRef = el.getAttributeValue('w-id');
 
         el.removeAttribute('w-id');
     }
 
-    if (widgetRef) {
-        idExpression = this.buildWidgetElIdFunctionCall(widgetRef);
+    if (componentRef) {
+        idExpression = this.buildComponentElIdFunctionCall(componentRef);
 
-        nestedIdExpression = widgetRef;
+        nestedIdExpression = componentRef;
 
         if (isCustomTag) {
             // The element is a custom tag
-            this.getWidgetArgs().setId(nestedIdExpression);
+            this.getComponentArgs().setId(nestedIdExpression);
         } else {
             if (el.hasAttribute('id')) {
                 this.addError('The "ref", "key", and "w-id" attributes cannot be used in conjuction with the "id" attribute.');
@@ -85,9 +85,9 @@ module.exports = function assignWidgetId(isRepeated) {
     } else if (el.hasAttribute('id')) {
         idExpression = el.getAttributeValue('id');
 
-        if (el.isFlagSet('hasWidgetBind')) {
-            // We have to attach a listener to the root element of the widget
-            // We will use an empty string as an indicator that it is the root widget
+        if (el.isFlagSet('hasComponentBind')) {
+            // We have to attach a listener to the root element of the component
+            // We will use an empty string as an indicator that it is the root component
             // element.
             nestedIdExpression = builder.literal('');
         } else {
@@ -103,10 +103,10 @@ module.exports = function assignWidgetId(isRepeated) {
 
         nestedIdExpression = isRepeated ? builder.literal(uniqueElId + '[]') : builder.literal(uniqueElId);
 
-        idExpression = this.buildWidgetElIdFunctionCall(nestedIdExpression);
+        idExpression = this.buildComponentElIdFunctionCall(nestedIdExpression);
 
         if (isCustomTag) {
-            this.getWidgetArgs().setId(nestedIdExpression);
+            this.getComponentArgs().setId(nestedIdExpression);
         } else {
             el.setAttributeValue('id', idExpression);
         }
@@ -114,7 +114,7 @@ module.exports = function assignWidgetId(isRepeated) {
 
     var transformHelper = this;
 
-    this.widgetIdInfo = {
+    this.componentIdInfo = {
         idExpression: idExpression,
         nestedIdExpression: nestedIdExpression,
         idVarNode: null,
@@ -124,7 +124,7 @@ module.exports = function assignWidgetId(isRepeated) {
             }
 
             let uniqueElId = transformHelper.nextUniqueId();
-            let idVarName = '__widgetId' + uniqueElId;
+            let idVarName = '__componentId' + uniqueElId;
             let idVar = builder.identifier(idVarName);
 
             this.idVarNode = builder.vars([
@@ -141,7 +141,7 @@ module.exports = function assignWidgetId(isRepeated) {
                 idVar);
 
             if (isCustomTag) {
-                transformHelper.getWidgetArgs().setId(nestedIdExpression);
+                transformHelper.getComponentArgs().setId(nestedIdExpression);
             } else {
                 el.setAttributeValue('id', idExpression);
             }
@@ -150,5 +150,5 @@ module.exports = function assignWidgetId(isRepeated) {
         }
     };
 
-    return this.widgetIdInfo;
+    return this.componentIdInfo;
 };

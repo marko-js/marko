@@ -2,13 +2,13 @@ var expect = require('chai').expect;
 
 module.exports = function(helpers) {
 
-    var widget = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
+    var component = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
 
-    expect(widget.el.innerHTML).to.equal('Frank');
+    expect(component.el.innerHTML).to.equal('Frank');
 
-    widget.setName('Jane');
+    component.setName('Jane');
 
-    widget.update();
+    component.update();
 
-    expect(widget.el.innerHTML).to.equal('Jane');
+    expect(component.el.innerHTML).to.equal('Jane');
 };

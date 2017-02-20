@@ -1,14 +1,14 @@
 /**
- * Define a new UI component that includes widget and renderer.
+ * Define a new UI component that includes component and renderer.
  *
- * @param  {Object} def The definition of the UI component (widget methods, widget constructor, rendering methods, etc.)
- * @return {Widget} The resulting Widget with renderer
+ * @param  {Object} def The definition of the UI component (component methods, component constructor, rendering methods, etc.)
+ * @return {Component} The resulting Component with renderer
  */
 var defineRenderer;
-var defineWidget;
+var defineComponent;
 
 module.exports = function defineComponent(def) {
-    if (def.$__isWidget) {
+    if (def.$__isComponent) {
         return def;
     }
 
@@ -20,9 +20,9 @@ module.exports = function defineComponent(def) {
         throw new Error('Expected "template" or "renderer"');
     }
 
-    return defineWidget(def, renderer);
+    return defineComponent(def, renderer);
 };
 
 defineRenderer = require('./defineRenderer-legacy');
-defineWidget = require('./defineWidget-legacy');
+defineComponent = require('./defineComponent-legacy');
 

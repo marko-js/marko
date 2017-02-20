@@ -163,9 +163,9 @@ module.exports = {
 > **Note**: When using a plain object, use the `onCreate` [lifecycle method]() instead of `contructor`.
 
 
-### Split renderer & widget
+### Split renderer & component
 
 With this alternative technique to define a component, you don't have access to stateful re-rendering, but the template rendering logic will not be sent down to the browser.  
 
-Marko automatically discovers widget files in the same directory as a template.  For example if you have a template named `button.marko`, it will automatically look for `button.widget.js`.  If your template is named `index.marko`, it will look for `widget.js` in addition to `index.widget.js`.
+Marko automatically discovers component files in the same directory as a template.  For example if you have a template named `button.marko`, it will automatically look for `button.component.js`.  If your template is named `index.marko`, it will look for `component.js` in addition to `index.component.js`.
 

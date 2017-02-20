@@ -4,7 +4,7 @@ var resolveFrom = tryRequire('resolve-from', require);
 var nodePath = require('path');
 var ok = require('assert').ok;
 
-module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) {
+module.exports = function buildComponentTypeNode(path, from, def, transformHelper) {
     ok(typeof path === 'string', '"path" should be a string');
     ok(typeof from === 'string', '"from" should be a string');
 
@@ -12,15 +12,15 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
 
     var builder = context.builder;
 
-    var registerWidget = context.addStaticVar('marko_registerWidget',
-        builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('rw')));
+    var registerComponent = context.addStaticVar('marko_registerComponent',
+        builder.memberExpression(transformHelper.markoComponentsVar, builder.identifier('rw')));
 
     var typeName;
 
     if (lassoModulesClientTransport) {
         var targetPath = resolveFrom(from, path);
         if (!targetPath) {
-            throw new Error('Widget module not found: ' + path + ' (from ' + from + ')');
+            throw new Error('Component module not found: ' + path + ' (from ' + from + ')');
         }
         typeName = lassoModulesClientTransport.getClientPath(targetPath);
     } else {
@@ -30,11 +30,11 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
     if (!def) {
         var returnValue = builder.require(builder.literal(path));
 
-        if (transformHelper.isLegacyWidget) {
-            var defineWidget = context.addStaticVar('marko_defineWidget',
-                builder.memberExpression(transformHelper.markoWidgetsVar, builder.identifier('w')));
+        if (transformHelper.isLegacyComponent) {
+            var defineComponent = context.addStaticVar('marko_defineComponent',
+                builder.memberExpression(transformHelper.markoComponentsVar, builder.identifier('w')));
 
-            returnValue = builder.functionCall(defineWidget, [returnValue]);
+            returnValue = builder.functionCall(defineComponent, [returnValue]);
         }
 
         def = builder.functionDeclaration(null, [] /* params */, [
@@ -42,7 +42,7 @@ module.exports = function buildWidgetTypeNode(path, from, def, transformHelper) 
         ]);
     }
 
-    return builder.functionCall(registerWidget, [
+    return builder.functionCall(registerComponent, [
         builder.literal(typeName),
         def
     ]);

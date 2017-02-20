@@ -1,6 +1,6 @@
 const NO_UPDATE_ATTR_SUFFIX = ':no-update';
 
-function handleWidgetPreserveAttrs() {
+function handleComponentPreserveAttrs() {
     var el = this.el;
     var context = this.context;
     var builder = context.builder;
@@ -36,4 +36,4 @@ function handleWidgetPreserveAttrs() {
     }
 }
 
-module.exports = handleWidgetPreserveAttrs;
+module.exports = handleComponentPreserveAttrs;

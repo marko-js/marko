@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-function Widget(config) {
+function Component(config) {
     this.logOutput = [];
 
     this.name = 'app-dom-events';
@@ -18,7 +18,7 @@ function Widget(config) {
     this.logOutput = [];
 }
 
-Widget.prototype = {
+Component.prototype = {
     handleRootClick: function(event, el) {
         expect(el.getAttribute('class')).to.equal('app-dom-events');
         expect(event.target.tagName.length>0).to.equal(true);
@@ -53,4 +53,4 @@ Widget.prototype = {
     }
 };
 
-exports.Widget = Widget;
+exports.Component = Component;

@@ -5,7 +5,7 @@ module.exports = {
         };
     },
 
-    onMount: function(widgetConfig) {
-        window.fooWidget = this;
+    onMount: function(componentConfig) {
+        window.fooComponent = this;
     }
 };

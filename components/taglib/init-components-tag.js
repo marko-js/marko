@@ -1,7 +1,7 @@
 const INIT_WIDGET_KEY = Symbol();
 
-var writeInitWidgetsCode = require('../').writeInitWidgetsCode;
-var WidgetsContext = require('../WidgetsContext');
+var writeInitComponentsCode = require('../').writeInitComponentsCode;
+var ComponentsContext = require('../ComponentsContext');
 
 module.exports = function render(input, out) {
     var global = out.global;
@@ -11,27 +11,27 @@ module.exports = function render(input, out) {
         out.on('await:beforeRender', function(eventArgs) {
             if (eventArgs.clientReorder) {
                 var asyncFragmentOut = eventArgs.out;
-                asyncFragmentOut.data.widgets = new WidgetsContext(asyncFragmentOut);
+                asyncFragmentOut.data.components = new ComponentsContext(asyncFragmentOut);
             }
         });
 
         out.on('await:finish', function(eventArgs) {
             var asyncFragmentOut = eventArgs.out;
 
-            var widgetsContext = asyncFragmentOut.data.widgets || asyncFragmentOut.global.widgets;
-            if (widgetsContext) {
-                writeInitWidgetsCode(widgetsContext, asyncFragmentOut);
+            var componentsContext = asyncFragmentOut.data.components || asyncFragmentOut.global.components;
+            if (componentsContext) {
+                writeInitComponentsCode(componentsContext, asyncFragmentOut);
             }
         });
 
         if (out.isSync()) {
-            var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-            writeInitWidgetsCode(widgetsContext, out);
+            var componentsContext = ComponentsContext.$__getComponentsContext(out);
+            writeInitComponentsCode(componentsContext, out);
         } else {
             var asyncOut = out.beginAsync({ last: true, timeout: -1 });
             out.onLast(function(next) {
-                var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-                writeInitWidgetsCode(widgetsContext, asyncOut);
+                var componentsContext = ComponentsContext.$__getComponentsContext(out);
+                writeInitComponentsCode(componentsContext, asyncOut);
                 asyncOut.end();
                 next();
             });

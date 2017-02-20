@@ -32,10 +32,10 @@
                 {
                     "displayText": "key=\"<method>\"",
                     "snippet": "key=\"${1:method}\"",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
                 },
                 {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#referencing-nested-widgets"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
                 }
             ]
         },
@@ -68,12 +68,12 @@
             "type": "statement",
             "allow-expressions": true,
             "preserve-name": true,
-            "set-flag": "hasWidgetEvents",
+            "set-flag": "hasComponentEvents",
             "autocomplete": [
                 {
                     "displayText": "on<event>(\"<method>\")",
                     "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/get-started/#adding-dom-event-listeners"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#adding-dom-event-listeners"
                 }
             ]
         },
@@ -82,7 +82,7 @@
             "type": "string",
             "allow-expressions": true,
             "preserve-name": true,
-            "set-flag": "hasWidgetEvents",
+            "set-flag": "hasComponentEvents",
             "autocomplete": [],
             "deprecated": true
         },
@@ -117,7 +117,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -126,7 +126,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -135,7 +135,7 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-if(${1:condition})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -144,7 +144,7 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-body-if(${1:condition})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-widgets/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -154,14 +154,14 @@
             "autocomplete": [],
             "deprecated": true
         },
-        "transformer": "./widgets-transformer.js"
+        "transformer": "./components-transformer.js"
     },
-    "<_widget>": {
-        "code-generator": "./widget-tag.js",
+    "<_component>": {
+        "code-generator": "./component-tag.js",
         "autocomplete": []
     },
-    "<init-widgets>": {
-        "renderer": "./init-widgets-tag.js",
+    "<init-components>": {
+        "renderer": "./init-components-tag.js",
         "@immediate": "boolean"
     },
     "<w-preserve>": {
@@ -179,8 +179,8 @@
         "@body-only": "expression",
         "autocomplete": []
     },
-    "<widget-types>": {
-        "code-generator": "./widget-types-tag.js",
+    "<component-types>": {
+        "code-generator": "./component-types-tag.js",
         "@*": "string",
         "autocomplete": [],
         "deprecated": true
@@ -188,5 +188,5 @@
     "<body>": {
         "transformer": "./body-transformer.js"
     },
-    "transformer": "./widgets-transformer.js"
+    "transformer": "./components-transformer.js"
 }

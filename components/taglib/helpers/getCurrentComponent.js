@@ -1,17 +1,17 @@
 /**
- * Helper method to return the WidgetDef for the current widget being rendered.
- * This is, it returns the widget at the top of the widget stack.
- * @param  {AsyncWriter} out The current rendering context that holds info about rendered widgets.
- * @return {WidgetDef} The WidgetDef instance
+ * Helper method to return the ComponentDef for the current component being rendered.
+ * This is, it returns the component at the top of the component stack.
+ * @param  {AsyncWriter} out The current rendering context that holds info about rendered components.
+ * @return {ComponentDef} The ComponentDef instance
  */
-module.exports = function getCurrentWidget(out) {
-    var widgetsContext = out.global.widgets;
-    var widgetStack;
+module.exports = function getCurrentComponent(out) {
+    var componentsContext = out.global.components;
+    var componentStack;
     var len;
 
-    if (!widgetsContext || (len = (widgetStack = widgetsContext.$__widgetStack).length) < 2) {
-        throw Error('No widget found');
+    if (!componentsContext || (len = (componentStack = componentsContext.$__componentStack).length) < 2) {
+        throw Error('No component found');
     }
 
-    return widgetStack[len - 1];
+    return componentStack[len - 1];
 };

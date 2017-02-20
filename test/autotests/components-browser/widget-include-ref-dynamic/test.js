@@ -1,9 +1,9 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    var barWidget = widget.getWidget('myBar');
-    expect(barWidget != null).to.equal(true);
-    expect(barWidget.name).to.equal('app-bar');
+    var barComponent = component.getComponent('myBar');
+    expect(barComponent != null).to.equal(true);
+    expect(barComponent.name).to.equal('app-bar');
 };

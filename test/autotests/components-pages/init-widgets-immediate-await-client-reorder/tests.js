@@ -3,18 +3,18 @@ var expect = require('chai').expect;
 
 
 describe(path.basename(__dirname), function() {
-    it('should initialize widgets before ready', function() {
+    it('should initialize components before ready', function() {
 
-        expect(window.afterInitWidgets_foo != null).to.equal(true);
-        expect(window.afterInitWidgets_bar == null).to.equal(true);
+        expect(window.afterInitComponents_foo != null).to.equal(true);
+        expect(window.afterInitComponents_bar == null).to.equal(true);
 
         expect(window.afterReorderer_foo != null).to.equal(true);
         expect(window.afterReorderer_bar != null).to.equal(true);
 
-        expect(window.fooWidget != null).to.equal(true);
-        expect(window.barWidget != null).to.equal(true);
+        expect(window.fooComponent != null).to.equal(true);
+        expect(window.barComponent != null).to.equal(true);
 
-        expect(window.fooWidget.id).to.be.a('string');
-        expect(window.barWidget.id).to.be.a('string');
+        expect(window.fooComponent.id).to.be.a('string');
+        expect(window.barComponent.id).to.be.a('string');
     });
 });

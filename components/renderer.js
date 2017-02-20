@@ -1,14 +1,14 @@
-var widgetsUtil = require('./util');
-var widgetLookup = widgetsUtil.$__widgetLookup;
-var emitLifecycleEvent = widgetsUtil.$__emitLifecycleEvent;
+var componentsUtil = require('./util');
+var componentLookup = componentsUtil.$__componentLookup;
+var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
-var WidgetsContext = require('./WidgetsContext');
+var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
-function resolveWidgetRef(out, ref, scope) {
+function resolveComponentRef(out, ref, scope) {
     if (ref.charAt(0) === '#') {
         return ref.substring(1);
     } else {
@@ -24,8 +24,8 @@ function resolveWidgetRef(out, ref, scope) {
     }
 }
 
-function preserveWidgetEls(existingWidget, out, widgetsContext) {
-    var rootEls = existingWidget.$__getRootEls({});
+function preserveComponentEls(existingComponent, out, componentsContext) {
+    var rootEls = existingComponent.$__getRootEls({});
 
     for (var elId in rootEls) {
         var el = rootEls[elId];
@@ -34,37 +34,37 @@ function preserveWidgetEls(existingWidget, out, widgetsContext) {
         // DOM node is matched up correctly when using morphdom.
         out.element(el.tagName, { id: elId });
 
-        widgetsContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
+        componentsContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
     }
 
-    existingWidget.$__reset(); // The widget is no longer dirty so reset internal flags
+    existingComponent.$__reset(); // The component is no longer dirty so reset internal flags
     return true;
 }
 
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
-    var widgetsContext = asyncOut.global.widgets;
-    var widgetStack;
+    var componentsContext = asyncOut.global.components;
+    var componentStack;
 
-    if (widgetsContext && (widgetStack = widgetsContext.$__widgetStack)) {
-        // All of the widgets in this async block should be
-        // initialized after the widgets in the parent. Therefore,
-        // we will create a new WidgetsContext for the nested
-        // async block and will create a new widget stack where the current
-        // widget in the parent block is the only widget in the nested
-        // stack (to begin with). This will result in top-level widgets
-        // of the async block being added as children of the widget in the
+    if (componentsContext && (componentStack = componentsContext.$__componentStack)) {
+        // All of the components in this async block should be
+        // initialized after the components in the parent. Therefore,
+        // we will create a new ComponentsContext for the nested
+        // async block and will create a new component stack where the current
+        // component in the parent block is the only component in the nested
+        // stack (to begin with). This will result in top-level components
+        // of the async block being added as children of the component in the
         // parent block.
-        var nestedWidgetsContext = new WidgetsContext(asyncOut, widgetStack[widgetStack.length-1]);
-        asyncOut.data.widgets = nestedWidgetsContext;
+        var nestedComponentsContext = new ComponentsContext(asyncOut, componentStack[componentStack.length-1]);
+        asyncOut.data.components = nestedComponentsContext;
     }
     asyncOut.data.$w = parentOut.data.$w;
 }
 
 
 
-function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
+function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
     if (typeof renderingLogic == 'function') {
         var ctor = renderingLogic;
         renderingLogic = renderingLogic.prototype;
@@ -73,9 +73,9 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
 
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
-    var typeName = widgetProps.type;
-    var roots = widgetProps.roots;
-    var assignedId = widgetProps.id;
+    var typeName = componentProps.type;
+    var roots = componentProps.roots;
+    var assignedId = componentProps.id;
 
     return function renderer(input, out) {
         var outGlobal = out.global;
@@ -87,101 +87,101 @@ function createRendererFunc(templateRenderFunc, widgetProps, renderingLogic) {
             }
         }
 
-        var widget = outGlobal.$w;
-        var isRerender = widget !== undefined;
+        var component = outGlobal.$w;
+        var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
         var customEvents;
         var scope;
 
-        if (widget) {
-            id = widget.id;
+        if (component) {
+            id = component.id;
             isExisting = true;
             outGlobal.$w = null;
         } else {
-            var widgetArgs = input && input.$w || out.data.$w;
+            var componentArgs = input && input.$w || out.data.$w;
 
-            if (widgetArgs) {
-                scope = widgetArgs[0];
+            if (componentArgs) {
+                scope = componentArgs[0];
 
                 if (scope) {
                     scope = scope.id;
                 }
 
-                var ref = widgetArgs[1];
+                var ref = componentArgs[1];
                 if (ref != null) {
                     ref = ref.toString();
                 }
-                id = id || resolveWidgetRef(out, ref, scope);
-                customEvents = widgetArgs[2];
+                id = id || resolveComponentRef(out, ref, scope);
+                customEvents = componentArgs[2];
                 delete input.$w;
             }
         }
 
-        var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-        id = id || widgetsContext.$__nextWidgetId();
+        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+        id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer) {
-            widget = registry.$__createWidget(renderingLogic, id, input, out, typeName);
-            input = widget.$__updatedInput;
-            widget.$__updatedInput = undefined; // We don't want $__updatedInput to be serialized to the browser
+            component = registry.$__createComponent(renderingLogic, id, input, out, typeName);
+            input = component.$__updatedInput;
+            component.$__updatedInput = undefined; // We don't want $__updatedInput to be serialized to the browser
         } else {
-            if (!widget) {
+            if (!component) {
                 if (isRerender) {
-                    // Look in in the DOM to see if a widget with the same ID and type already exists.
-                    widget = widgetLookup[id];
-                    if (widget && widget.$__type !== typeName) {
-                        widget = undefined;
+                    // Look in in the DOM to see if a component with the same ID and type already exists.
+                    component = componentLookup[id];
+                    if (component && component.$__type !== typeName) {
+                        component = undefined;
                     }
                 }
 
-                if (widget) {
+                if (component) {
                     isExisting = true;
                 } else {
                     isExisting = false;
-                    // We need to create a new instance of the widget
-                    widget = registry.$__createWidget(typeName, id);
+                    // We need to create a new instance of the component
+                    component = registry.$__createComponent(typeName, id);
                 }
 
-                // Set this flag to prevent the widget from being queued for update
-                // based on the new input. The widget is about to be rerendered
+                // Set this flag to prevent the component from being queued for update
+                // based on the new input. The component is about to be rerendered
                 // so we don't want to queue it up as a result of calling `setInput()`
-                widget.$__updateQueued = true;
+                component.$__updateQueued = true;
 
                 if (!isExisting) {
-                    emitLifecycleEvent(widget, 'create', input, out);
+                    emitLifecycleEvent(component, 'create', input, out);
                 }
 
-                input = widget.$__setInput(input, onInput, out);
+                input = component.$__setInput(input, onInput, out);
 
                 if (isExisting) {
-                    if (!widget.$__isDirty || !widget.shouldUpdate(input, widget.$__state)) {
-                        preserveWidgetEls(widget, out, widgetsContext);
+                    if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
+                        preserveComponentEls(component, out, componentsContext);
                         return;
                     }
                 }
             }
 
-            emitLifecycleEvent(widget, 'render', out);
+            emitLifecycleEvent(component, 'render', out);
         }
 
-        var widgetDef = widgetsContext.$__beginWidget(widget);
-        widgetDef.$__customEvents = customEvents;
-        widgetDef.$__scope = scope;
-        widgetDef.$__roots = roots;
-        widgetDef.$__isExisting = isExisting;
+        var componentDef = componentsContext.$__beginComponent(component);
+        componentDef.$__customEvents = customEvents;
+        componentDef.$__scope = scope;
+        componentDef.$__roots = roots;
+        componentDef.$__isExisting = isExisting;
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(input, out, widgetDef, widget.$__rawState);
+        templateRenderFunc(input, out, componentDef, component.$__rawState);
 
-        widgetDef.$__end();
+        componentDef.$__end();
     };
 }
 
 module.exports = createRendererFunc;
 
 // exports used by the legacy renderer
-createRendererFunc.$__resolveWidgetRef = resolveWidgetRef;
-createRendererFunc.$__preserveWidgetEls = preserveWidgetEls;
+createRendererFunc.$__resolveComponentRef = resolveComponentRef;
+createRendererFunc.$__preserveComponentEls = preserveComponentEls;
 createRendererFunc.$__handleBeginAsync = handleBeginAsync;

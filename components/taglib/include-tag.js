@@ -1,5 +1,5 @@
 var normalInclude = require('../../taglibs/core/include-tag');
-var WidgetsContext = require('../WidgetsContext');
+var ComponentsContext = require('../ComponentsContext');
 var getElementById = require('../util').$__getElementById;
 
 module.exports = function include(input, out) {
@@ -14,8 +14,8 @@ module.exports = function include(input, out) {
         // the existing body content in the DOM
         var existingEl = getElementById(out.$__document, elId);
         if (existingEl) {
-            var widgetsContext = WidgetsContext.$__getWidgetsContext(out);
-            widgetsContext.$__preserveDOMNode(elId, true /* body only */);
+            var componentsContext = ComponentsContext.$__getComponentsContext(out);
+            componentsContext.$__preserveDOMNode(elId, true /* body only */);
         }
     }
 };

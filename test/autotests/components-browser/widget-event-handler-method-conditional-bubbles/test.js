@@ -1,17 +1,17 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-	helpers.triggerClick(widget.getEl('inputWithoutHandler'));
-	expect(widget.clicked).to.equal(false);
+	helpers.triggerClick(component.getEl('inputWithoutHandler'));
+	expect(component.clicked).to.equal(false);
 
-    helpers.triggerClick(widget.getEl('inputWithHandler'));
-	expect(widget.clicked).to.equal(true);
+    helpers.triggerClick(component.getEl('inputWithHandler'));
+	expect(component.clicked).to.equal(true);
 
-    // Reset widget.clicked
-    widget.clicked = false;
+    // Reset component.clicked
+    component.clicked = false;
 
-    helpers.triggerClick(widget.getEl('inputWithLiteralHandler'));
-	expect(widget.clicked).to.equal(true);
+    helpers.triggerClick(component.getEl('inputWithLiteralHandler'));
+	expect(component.clicked).to.equal(true);
 };

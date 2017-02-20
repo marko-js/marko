@@ -1,9 +1,9 @@
 var path = require('path');
 var expect = require('chai').expect;
-var markoWidgets = require('marko/widgets');
+var markoComponents = require('marko/components');
 
 describe(path.basename(__dirname), function() {
-    it('should initialize all widgets', function() {
-        expect(window.fooWidgets.length).to.equal(2);
+    it('should initialize all components', function() {
+        expect(window.fooComponents.length).to.equal(2);
     });
 });

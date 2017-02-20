@@ -1,28 +1,28 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_widgets = require("marko/widgets/legacy"),
-    marko_registerWidget = marko_widgets.rw,
-    marko_defineWidget = marko_widgets.w,
-    marko_widgetTypes = {
-        "default": marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/widget-types/widget", function() {
-          return marko_defineWidget(require("./widget"));
+    marko_components = require("marko/components/legacy"),
+    marko_registerComponent = marko_components.rw,
+    marko_defineComponent = marko_components.w,
+    marko_componentTypes = {
+        "default": marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/component-types/component", function() {
+          return marko_defineComponent(require("./component"));
         }),
-        mobile: marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation-deprecated/widget-types/widget-mobile", function() {
-          return marko_defineWidget(require("./widget-mobile"));
+        mobile: marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/component-types/component-mobile", function() {
+          return marko_defineComponent(require("./component-mobile"));
         })
       },
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_attr = marko_helpers.a;
 
-function render(input, out, widget, state) {
+function render(input, out, component, state) {
   var data = input;
 
-  widget.t(marko_widgetTypes[data.isMobile ? "default" : "mobile"]);
+  component.t(marko_componentTypes[data.isMobile ? "default" : "mobile"]);
 
   out.w("<div" +
-    marko_attr("id", widget.id) +
+    marko_attr("id", component.id) +
     "></div>");
 }
 
-marko_template._ = marko_widgets.r(render, {});
+marko_template._ = marko_components.r(render, {});
 
 marko_template.meta = {};

@@ -1,14 +1,14 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    expect(widget.$__document != null).to.equal(true);
-    expect(widget.$__document).to.equal(document);
+    expect(component.$__document != null).to.equal(true);
+    expect(component.$__document).to.equal(document);
 
-    var contentWidget = widget.renderIntoIframe();
-    expect(contentWidget.$__document).to.equal(widget.getFrameEl().contentWindow.document);
-    expect(contentWidget.getEl('input').value).to.equal('test');
+    var contentComponent = component.renderIntoIframe();
+    expect(contentComponent.$__document).to.equal(component.getFrameEl().contentWindow.document);
+    expect(contentComponent.getEl('input').value).to.equal('test');
 
-    expect(contentWidget.getWidget('more').getValue()).to.equal('hello');
+    expect(contentComponent.getComponent('more').getValue()).to.equal('hello');
 };

@@ -1,19 +1,19 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    expect(widget.mouseMoveEvent).to.equal(undefined);
+    expect(component.mouseMoveEvent).to.equal(undefined);
 
-	helpers.triggerMouseMove(widget.getEl('ok'));
+	helpers.triggerMouseMove(component.getEl('ok'));
 
-    expect(widget.mouseMoveEvent[0]).to.equal('ok');
-    expect(widget.mouseMoveEvent[1].stopPropagation).to.be.a('function');
-    expect(widget.mouseMoveEvent[2].innerHTML).to.equal('OK');
+    expect(component.mouseMoveEvent[0]).to.equal('ok');
+    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a('function');
+    expect(component.mouseMoveEvent[2].innerHTML).to.equal('OK');
 
-    helpers.triggerMouseMove(widget.getEl('cancel'));
+    helpers.triggerMouseMove(component.getEl('cancel'));
 
-    expect(widget.mouseMoveEvent[0]).to.equal('cancel');
-    expect(widget.mouseMoveEvent[1].stopPropagation).to.be.a('function');
-    expect(widget.mouseMoveEvent[2].innerHTML).to.equal('Cancel');
+    expect(component.mouseMoveEvent[0]).to.equal('cancel');
+    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a('function');
+    expect(component.mouseMoveEvent[2].innerHTML).to.equal('Cancel');
 };

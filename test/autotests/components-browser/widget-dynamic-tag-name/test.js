@@ -1,16 +1,16 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    function renderWidget(rootTagName) {
-        var widget = helpers.mount(require('./index'), {
+    function renderComponent(rootTagName) {
+        var component = helpers.mount(require('./index'), {
             rootTagName: rootTagName
         });
-        return widget;
+        return component;
     }
 
-    var widgetDiv = renderWidget('div');
-    var widgetSpan = renderWidget('span');
+    var componentDiv = renderComponent('div');
+    var componentSpan = renderComponent('span');
 
-    expect(widgetDiv.el.nodeName).to.equal('DIV');
-    expect(widgetSpan.el.nodeName).to.equal('SPAN');
+    expect(componentDiv.el.nodeName).to.equal('DIV');
+    expect(componentSpan.el.nodeName).to.equal('SPAN');
 };

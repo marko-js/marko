@@ -94,7 +94,7 @@ function handleScriptElement(scriptEl, transformHelper) {
             componentVar = builder.identifier('marko_component');
         }
 
-        transformHelper.setHasBoundWidgetForTemplate();
+        transformHelper.setHasBoundComponentForTemplate();
         transformHelper.setInlineComponent(componentVar);
         transformHelper.context.addStaticCode(escodegen.generate(updatedTree));
         scriptEl.detach();
@@ -216,7 +216,7 @@ function handleClassDeclaration(classEl, transformHelper) {
     let object = classToObject(expression);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
-    transformHelper.setHasBoundWidgetForTemplate();
+    transformHelper.setHasBoundComponentForTemplate();
     transformHelper.setInlineComponent(componentVar);
     classEl.detach();
 }
@@ -234,7 +234,7 @@ module.exports = function handleRootNodes() {
     var filematch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
     var stylematch = new RegExp('^'+filematch+'style\\.\\w+$');
     var componentmatch = new RegExp('^'+filematch+'component\\.\\w+$');
-    var widgetmatch = new RegExp('^'+filematch+'widget\\.\\w+$');
+    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+$');
 
     var templateRoot = this.el;
 
@@ -244,9 +244,9 @@ module.exports = function handleRootNodes() {
     fs.readdirSync(dirname).forEach(file => {
         if(stylematch.test(file)) {
             context.addDependency('./' + file);
-        } else if(componentmatch.test(file) || widgetmatch.test(file)) {
+        } else if(componentmatch.test(file) || componentmatch.test(file)) {
             hasBindTarget = true;
-            this.context.data.widgetModule = './'+file.slice(0, file.lastIndexOf('.'));
+            this.context.data.componentModule = './'+file.slice(0, file.lastIndexOf('.'));
         }
     });
 
@@ -265,7 +265,7 @@ module.exports = function handleRootNodes() {
                 // Don't worry about the TemplateRoot or an Container node
             } else if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
-                    transformHelper.setHasBoundWidgetForTemplate();
+                    transformHelper.setHasBoundComponentForTemplate();
                     hasExplicitBind = true;
                 } else {
                     if (node.hasAttribute('id')) {
@@ -321,17 +321,17 @@ module.exports = function handleRootNodes() {
     }
 
     if (rootNodes.length > 1 && hasIdCount > 0) {
-        // We can only bind a widget to multiple top-level elements if we can assign
+        // We can only bind a component to multiple top-level elements if we can assign
         // all of the IDs
         return;
     }
 
-    transformHelper.setHasBoundWidgetForTemplate();
+    transformHelper.setHasBoundComponentForTemplate();
 
     var nextKey = 0;
 
     rootNodes.forEach((curNode, i) => {
-        curNode.setAttributeValue('_widgetbind');
+        curNode.setAttributeValue('_componentbind');
 
         if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {

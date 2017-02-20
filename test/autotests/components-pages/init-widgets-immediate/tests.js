@@ -1,41 +1,41 @@
 var path = require('path');
 var expect = require('chai').expect;
-var markoWidgets = require('marko/widgets');
+var markoComponents = require('marko/components');
 
 describe(path.basename(__dirname), function() {
-    it('should initialize widgets before ready', function() {
+    it('should initialize components before ready', function() {
 
-        expect(window.afterInitWidgetsFooWidget != null).to.equal(true);
-        expect(window.afterInitWidgetsBarWidget != null).to.equal(true);
+        expect(window.afterInitComponentsFooComponent != null).to.equal(true);
+        expect(window.afterInitComponentsBarComponent != null).to.equal(true);
 
-        expect(window.fooWidget != null).to.equal(true);
-        expect(window.barWidget != null).to.equal(true);
+        expect(window.fooComponent != null).to.equal(true);
+        expect(window.barComponent != null).to.equal(true);
 
-        expect(window.fooWidget.id).to.be.a('string');
-        expect(window.barWidget.id).to.be.a('string');
-        expect(window.fooWidget.id).to.not.equal(window.barWidget.id);
+        expect(window.fooComponent.id).to.be.a('string');
+        expect(window.barComponent.id).to.be.a('string');
+        expect(window.fooComponent.id).to.not.equal(window.barComponent.id);
     });
 
-    it('should assign unique IDs to each widget', function() {
-        expect(window.fooWidget.id).to.be.a('string');
-        expect(window.barWidget.id).to.be.a('string');
-        expect(window.bazWidget.id).to.be.a('string');
-        expect(window.fooWidget.id).to.not.equal(window.barWidget.id);
-        expect(window.fooWidget.id).to.not.equal(window.bazWidget.id);
-        expect(window.bazWidget.id).to.contain(window.fooWidget.id);
+    it('should assign unique IDs to each component', function() {
+        expect(window.fooComponent.id).to.be.a('string');
+        expect(window.barComponent.id).to.be.a('string');
+        expect(window.bazComponent.id).to.be.a('string');
+        expect(window.fooComponent.id).to.not.equal(window.barComponent.id);
+        expect(window.fooComponent.id).to.not.equal(window.bazComponent.id);
+        expect(window.bazComponent.id).to.contain(window.fooComponent.id);
     });
 
-    it('should assign a unique ID to a nested widget based on the parent ID', function() {
-        expect(window.bazWidget.id).to.contain(window.fooWidget.id + '-');
+    it('should assign a unique ID to a nested component based on the parent ID', function() {
+        expect(window.bazComponent.id).to.contain(window.fooComponent.id + '-');
     });
 
     it('should serialize state correctly', function() {
-        expect(window.fooWidget.state.type).to.equal('state');
-        expect(window.fooWidget.state.name).to.equal('foo');
+        expect(window.fooComponent.state.type).to.equal('state');
+        expect(window.fooComponent.state.name).to.equal('foo');
     });
 
-    it('should serialize widget config correctly', function() {
-        expect(window.fooWidget.widgetConfig.type).to.equal('config');
-        expect(window.fooWidget.widgetConfig.name).to.equal('foo');
+    it('should serialize component config correctly', function() {
+        expect(window.fooComponent.componentConfig.type).to.equal('config');
+        expect(window.fooComponent.componentConfig.name).to.equal('foo');
     });
 });

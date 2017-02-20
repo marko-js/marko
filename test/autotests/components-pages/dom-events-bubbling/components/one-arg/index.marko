@@ -2,8 +2,8 @@ import { expect } from 'chai';
 
 class {
     onMount() {
-        var widgets = window.widgets || (window.widgets = {});
-        widgets['one-arg'] = this;
+        var components = window.components || (window.components = {});
+        components['one-arg'] = this;
     }
 
 	handleColorClick(color) {

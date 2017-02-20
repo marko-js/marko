@@ -1,14 +1,14 @@
-import widgetlessComponent from './components/app-widgetless';
+import componentlessComponent from './components/app-componentless';
 import simpleComponent from './components/app-simple';
 
 static var components = [
-    widgetlessComponent,
-    widgetlessComponent,
+    componentlessComponent,
+    componentlessComponent,
     simpleComponent
 ];
 
-<div class="app-repeated-id-widgetless">
+<div class="app-repeated-id-componentless">
     <for(component in components)>
-        <include(component) key="childWidget[]" />
+        <include(component) key="childComponent[]" />
     </for>
 </div>

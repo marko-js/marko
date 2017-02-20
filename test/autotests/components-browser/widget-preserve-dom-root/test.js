@@ -1,18 +1,18 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         name: 'Frank',
         messageCount: 30
     });
 
-    expect(widget.el.innerHTML).to.contain('Frank');
-    expect(widget.el.innerHTML).to.contain('30');
+    expect(component.el.innerHTML).to.contain('Frank');
+    expect(component.el.innerHTML).to.contain('30');
 
-    widget.setName('John');
-    widget.update();
+    component.setName('John');
+    component.update();
 
-    expect(widget.el.innerHTML).to.not.contain('John');
-    expect(widget.el.innerHTML).to.contain('Frank');
-    expect(widget.el.innerHTML).to.contain('30');
+    expect(component.el.innerHTML).to.not.contain('John');
+    expect(component.el.innerHTML).to.contain('Frank');
+    expect(component.el.innerHTML).to.contain('30');
 };

@@ -37,8 +37,8 @@ class {
     }
 
     onMount() {
-        var widgetsLookup = window.widgets || (window.widgets = {});
-        widgetsLookup['lifecycle-events'] = this;
+        var componentsLookup = window.components || (window.components = {});
+        componentsLookup['lifecycle-events'] = this;
     }
 
     test() {

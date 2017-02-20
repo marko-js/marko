@@ -7,25 +7,25 @@ module.exports = function codeGenerator(el, codegen) {
 
     var bodyFunc = builder.renderBodyFunction(el.body, [
             builder.identifierOut(),
-            builder.identifier('widget'),
+            builder.identifier('component'),
             builder.identifier('state')
         ]);
 
 
-    var widgetProps = el.getAttributeValue('props');
+    var componentProps = el.getAttributeValue('props');
 
-    var bindWidgetVar = context.addStaticVar('marko_bindWidget',
+    var bindComponentVar = context.addStaticVar('marko_bindComponent',
         builder.require(
-            builder.literal('marko/widgets/taglib/helpers/bindWidget')));
+            builder.literal('marko/components/taglib/helpers/bindComponent')));
 
     if (context.data[BIND_WIDGET_KEY] == null) {
         context.data[BIND_WIDGET_KEY] = 0;
     }
 
     var varName = context.addStaticVar(
-        'marko_bindWidget' + (context.data[BIND_WIDGET_KEY]++),
-        builder.functionCall(bindWidgetVar, [
-                widgetProps
+        'marko_bindComponent' + (context.data[BIND_WIDGET_KEY]++),
+        builder.functionCall(bindComponentVar, [
+                componentProps
             ]));
 
     return builder.functionCall(varName, [bodyFunc, builder.identifierOut()]);

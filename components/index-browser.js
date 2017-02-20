@@ -1,18 +1,18 @@
 var events = require('../runtime/events');
-var Widget = require('./Widget');
-var widgetsUtil = require('./util');
+var Component = require('./Component');
+var componentsUtil = require('./util');
 
-function onInitWidget(listener) {
-    events.on('initWidget', listener);
+function onInitComponent(listener) {
+    events.on('initComponent', listener);
 }
 
-exports.onInitWidget = onInitWidget;
-exports.Widget = Widget;
-exports.getWidgetForEl = widgetsUtil.$__getWidgetForEl;
-exports.initWidgets = require('./init-widgets').$__initServerRendered;
+exports.onInitComponent = onInitComponent;
+exports.Component = Component;
+exports.getComponentForEl = componentsUtil.$__getComponentForEl;
+exports.initComponents = require('./init-components').$__initServerRendered;
 
-exports.w = require('./defineWidget'); // Referenced by compiled templates
+exports.c = require('./defineComponent'); // Referenced by compiled templates
 exports.r = require('./renderer'); // Referenced by compiled templates
-exports.rw = require('./registry').$__register;  // Referenced by compiled templates
+exports.rc = require('./registry').$__register;  // Referenced by compiled templates
 
-window.$__MARKO_WIDGETS = exports; // Helpful when debugging... WARNING: DO NOT USE IN REAL CODE!
+window.$__MARKO_COMPONENTS = exports; // Helpful when debugging... WARNING: DO NOT USE IN REAL CODE!

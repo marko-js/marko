@@ -4,7 +4,7 @@ lasso-page dependencies=data.browserDependencies lasso=data.lasso
 html lang="en"
     head
         meta charset="UTF-8"
-        title -- Marko Widgets Tests
+        title -- Marko Components Tests
         lasso-head
     body
 
@@ -19,13 +19,13 @@ html lang="en"
 
         lasso-body
 
-        init-widgets immediate
+        init-components immediate
 
         script
             ---
-            // window.fooWidget should not exist yet, but's store that in a variable to verify
-            window.afterInitWidgetsFooWidget = window.fooWidget;
-            window.afterInitWidgetsBarWidget = window.barWidget;
+            // window.fooComponent should not exist yet, but's store that in a variable to verify
+            window.afterInitComponentsFooComponent = window.fooComponent;
+            window.afterInitComponentsBarComponent = window.barComponent;
             ---
 
         lasso-slot name="mocha-run"

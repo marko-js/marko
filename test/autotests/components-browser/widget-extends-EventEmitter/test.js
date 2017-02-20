@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
     var fooEvent = null;
     var fooEventThis = null;
 
@@ -10,20 +10,20 @@ module.exports = function(helpers) {
         fooEventThis = this;
     }
 
-    widget.on('foo', fooListener);
+    component.on('foo', fooListener);
 
-    widget.emit('foo', 'a', 'b');
+    component.emit('foo', 'a', 'b');
 
     expect(fooEvent[0]).to.equal('a');
 
     expect(fooEvent[1]).to.equal('b');
-    expect(fooEventThis).to.equal(widget);
+    expect(fooEventThis).to.equal(component);
 
     fooEvent = null;
 
-    widget.removeListener('foo', fooListener);
+    component.removeListener('foo', fooListener);
 
-    widget.emit('foo', 'a', 'b');
+    component.emit('foo', 'a', 'b');
 
     expect(fooEvent).to.equal(null);
 };

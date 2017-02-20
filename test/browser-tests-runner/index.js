@@ -36,7 +36,7 @@ function generate(options) {
             "require-run: " + require.resolve('./mocha-setup'),
             'require-run: ' + testsFile,
             "require: jquery",
-            "require: marko/widgets",
+            "require: marko/components",
             {
                 "require-run": require.resolve('./mocha-run'),
                 "slot": "mocha-run"

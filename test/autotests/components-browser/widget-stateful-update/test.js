@@ -1,15 +1,15 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         size: 'large',
         label: 'Initial Label'
     });
 
-    expect(widget.el.className).to.contain('large');
+    expect(component.el.className).to.contain('large');
 
-    widget.setSize('small');
-    widget.update();
+    component.setSize('small');
+    component.update();
 
-    expect(widget.el.className).to.contain('small');
+    expect(component.el.className).to.contain('small');
 };

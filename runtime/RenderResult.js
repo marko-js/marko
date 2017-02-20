@@ -1,63 +1,63 @@
 var domInsert = require('./dom-insert');
 
 function checkAddedToDOM(result, method) {
-    if (!result.$__widgets) {
+    if (!result.$__components) {
         throw Error('Not added to DOM');
     }
 }
 
-function getWidgetDefs(result) {
-    var widgetDefs = result.$__widgets;
+function getComponentDefs(result) {
+    var componentDefs = result.$__components;
 
-    if (widgetDefs.length === 0) {
-        throw Error('No widget');
+    if (componentDefs.length === 0) {
+        throw Error('No component');
     }
-    return widgetDefs;
+    return componentDefs;
 }
 
 function RenderResult(out) {
    this.out = this.$__out = out;
-   this.$__widgets = null;
+   this.$__components = null;
 }
 
 module.exports = RenderResult;
 
 var proto = RenderResult.prototype = {
-    getWidget: function() {
-        checkAddedToDOM(this, 'getWidget');
+    getComponent: function() {
+        checkAddedToDOM(this, 'getComponent');
 
-        var rerenderWidgetInfo = this.$__out.global.$w;
-        var rerenderWidget = rerenderWidgetInfo && rerenderWidgetInfo[0];
-        if (rerenderWidget) {
-            return rerenderWidget;
+        var rerenderComponentInfo = this.$__out.global.$w;
+        var rerenderComponent = rerenderComponentInfo && rerenderComponentInfo[0];
+        if (rerenderComponent) {
+            return rerenderComponent;
         }
 
-        return getWidgetDefs(this)[0].$__widget;
+        return getComponentDefs(this)[0].$__component;
     },
-    getWidgets: function(selector) {
-        checkAddedToDOM(this, 'getWidgets');
+    getComponents: function(selector) {
+        checkAddedToDOM(this, 'getComponents');
 
-        var widgetDefs = getWidgetDefs(this);
+        var componentDefs = getComponentDefs(this);
 
-        var widgets = [];
+        var components = [];
         var i;
 
-        for (i = 0; i < widgetDefs.length; i++) {
-            var widget = widgetDefs[i].$__widget;
-            if (!selector || selector(widget)) {
-                widgets.push(widget);
+        for (i = 0; i < componentDefs.length; i++) {
+            var component = componentDefs[i].$__component;
+            if (!selector || selector(component)) {
+                components.push(component);
             }
         }
 
-        return widgets;
+        return components;
     },
 
     afterInsert: function(doc) {
         var out = this.$__out;
-        var widgetsContext = out.global.widgets;
-        if (widgetsContext) {
-            this.$__widgets = widgetsContext.$__widgets;
-            widgetsContext.$__initWidgets(doc);
+        var componentsContext = out.global.components;
+        if (componentsContext) {
+            this.$__components = componentsContext.$__components;
+            componentsContext.$__initComponents(doc);
         }
 
         return this;
@@ -77,7 +77,7 @@ var proto = RenderResult.prototype = {
     document: typeof document !== 'undefined' && document
 };
 
-// Add all of the following DOM methods to Widget.prototype:
+// Add all of the following DOM methods to Component.prototype:
 // - appendTo(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)

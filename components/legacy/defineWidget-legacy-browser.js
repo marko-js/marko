@@ -2,18 +2,18 @@
 /* jshint newcap:false */
 
  var BaseState;
- var BaseWidget;
+ var BaseComponent;
  var inherit;
 
 
 module.exports = function defineWidget(def, renderer) {
-    def = def.Widget || def;
+    def = def.Component || def;
 
-    if (def.$__isWidget) {
+    if (def.$__isComponent) {
         return def;
     }
 
-    var WidgetClass = function() {};
+    var ComponentClass = function() {};
     var proto;
 
     if (typeof def === 'function') {
@@ -25,28 +25,28 @@ module.exports = function defineWidget(def, renderer) {
         throw TypeError();
     }
 
-    WidgetClass.prototype = proto;
+    ComponentClass.prototype = proto;
 
     // We don't use the constructor provided by the user
     // since we don't invoke their constructor until
     // we have had a chance to do our own initialization.
-    // Instead, we store their constructor in the "initWidget"
+    // Instead, we store their constructor in the "initComponent"
     // property and that method gets called later inside
-    // init-widgets-browser.js
-    function Widget(id, doc) {
-        BaseWidget.call(this, id, doc);
+    // init-components-browser.js
+    function Component(id, doc) {
+        BaseComponent.call(this, id, doc);
     }
 
-    if (!proto.$__isWidget) {
-        // Inherit from Widget if they didn't already
-        inherit(WidgetClass, BaseWidget);
+    if (!proto.$__isComponent) {
+        // Inherit from Component if they didn't already
+        inherit(ComponentClass, BaseComponent);
     }
 
     // The same prototype will be used by our constructor after
     // we he have set up the prototype chain using the inherit function
-    proto = Widget.prototype = WidgetClass.prototype;
+    proto = Component.prototype = ComponentClass.prototype;
 
-    proto.constructor = def.constructor = Widget;
+    proto.constructor = def.constructor = Component;
 
     // get legacy methods
     var init = proto.init;
@@ -100,8 +100,8 @@ module.exports = function defineWidget(def, renderer) {
 
 
     // Set a flag on the constructor function to make it clear this is
-    // a widget so that we can short-circuit this work later
-    Widget.$__isWidget = true;
+    // a component so that we can short-circuit this work later
+    Component.$__isComponent = true;
 
     function State() { BaseState.apply(this, arguments); }
     inherit(State, BaseState);
@@ -109,7 +109,7 @@ module.exports = function defineWidget(def, renderer) {
 
 
     if (!renderer) {
-        renderer = WidgetClass.renderer || WidgetClass.prototype.renderer;
+        renderer = ComponentClass.renderer || ComponentClass.prototype.renderer;
         if (renderer) {
             // Legacy support
             var createOut = renderer.createOut;
@@ -133,15 +133,15 @@ module.exports = function defineWidget(def, renderer) {
 
     if (renderer) {
         // Add the rendering related methods as statics on the
-        // new widget constructor function
-        Widget.renderer = proto.renderer = renderer;
-        Widget.render = renderer.render;
-        Widget.renderSync = renderer.renderSync;
+        // new component constructor function
+        Component.renderer = proto.renderer = renderer;
+        Component.render = renderer.render;
+        Component.renderSync = renderer.renderSync;
     }
 
-    return Widget;
+    return Component;
 };
 
 BaseState = require('../State');
-BaseWidget = require('../Widget');
+BaseComponent = require('../Component');
 inherit = require('raptor-util/inherit');

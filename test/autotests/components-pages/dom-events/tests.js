@@ -20,55 +20,55 @@ function triggerClick(el) {
 
 describe(path.basename(__dirname), function() {
     it('should invoke event handler method for non-bubbling events', function() {
-        window.fooWidget.mouseMoveEvent = null;
-        triggerMouseEvent(window.fooWidget.getEl('button'), 'mousemove');
-        expect(window.fooWidget.mouseMoveEvent != null).to.equal(true);
+        window.fooComponent.mouseMoveEvent = null;
+        triggerMouseEvent(window.fooComponent.getEl('button'), 'mousemove');
+        expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
 
-        expect(window.fooWidget.mouseMoveEvent[0].type).to.equal('mousemove');
-        expect(window.fooWidget.mouseMoveEvent[1]).to.equal(window.fooWidget.getEl('button'));
+        expect(window.fooComponent.mouseMoveEvent[0].type).to.equal('mousemove');
+        expect(window.fooComponent.mouseMoveEvent[1]).to.equal(window.fooComponent.getEl('button'));
     });
 
     it('should invoke event handler method for non-bubbling events with extra args', function() {
-        window.fooWidget.mouseMoveEvent = null;
+        window.fooComponent.mouseMoveEvent = null;
 
-        triggerMouseEvent(window.fooWidget.getEl('ok'), 'mousemove');
+        triggerMouseEvent(window.fooComponent.getEl('ok'), 'mousemove');
 
-        expect(window.fooWidget.mouseMoveEvent != null).to.equal(true);
-        expect(window.fooWidget.mouseMoveEvent[0].type).to.equal('ok');
-        expect(window.fooWidget.mouseMoveEvent[1].type).to.equal('mousemove');
-        expect(window.fooWidget.mouseMoveEvent[2]).to.equal(window.fooWidget.getEl('ok'));
+        expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
+        expect(window.fooComponent.mouseMoveEvent[0].type).to.equal('ok');
+        expect(window.fooComponent.mouseMoveEvent[1].type).to.equal('mousemove');
+        expect(window.fooComponent.mouseMoveEvent[2]).to.equal(window.fooComponent.getEl('ok'));
 
-        triggerMouseEvent(window.fooWidget.getEl('cancel'), 'mousemove');
+        triggerMouseEvent(window.fooComponent.getEl('cancel'), 'mousemove');
 
-        expect(window.fooWidget.mouseMoveEvent != null).to.equal(true);
-        expect(window.fooWidget.mouseMoveEvent[0].type).to.equal('cancel');
-        expect(window.fooWidget.mouseMoveEvent[1].type).to.equal('mousemove');
-        expect(window.fooWidget.mouseMoveEvent[2]).to.equal(window.fooWidget.getEl('cancel'));
+        expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
+        expect(window.fooComponent.mouseMoveEvent[0].type).to.equal('cancel');
+        expect(window.fooComponent.mouseMoveEvent[1].type).to.equal('mousemove');
+        expect(window.fooComponent.mouseMoveEvent[2]).to.equal(window.fooComponent.getEl('cancel'));
     });
 
     it('should invoke event handler method for bubbling events', function() {
-        window.fooWidget.clickEvent = null;
-        triggerMouseEvent(window.fooWidget.getEl('button'), 'click');
-        expect(window.fooWidget.clickEvent != null).to.equal(true);
-        expect(window.fooWidget.clickEvent[0].type).to.equal('click');
-        expect(window.fooWidget.clickEvent[1]).to.equal(window.fooWidget.getEl('button'));
+        window.fooComponent.clickEvent = null;
+        triggerMouseEvent(window.fooComponent.getEl('button'), 'click');
+        expect(window.fooComponent.clickEvent != null).to.equal(true);
+        expect(window.fooComponent.clickEvent[0].type).to.equal('click');
+        expect(window.fooComponent.clickEvent[1]).to.equal(window.fooComponent.getEl('button'));
     });
 
     it('should invoke event handler method for bubbling events with extra args', function() {
-        var widget = window.fooWidget;
+        var component = window.fooComponent;
 
-        window.fooWidget.clickEvent = null;
+        window.fooComponent.clickEvent = null;
 
-    	triggerClick(widget.getEl('ok'));
+    	triggerClick(component.getEl('ok'));
 
-        expect(widget.clickEvent[0].type).to.equal('ok');
-        expect(widget.clickEvent[1].stopPropagation).to.be.a('function');
-        expect(widget.clickEvent[2].innerHTML).to.equal('OK');
+        expect(component.clickEvent[0].type).to.equal('ok');
+        expect(component.clickEvent[1].stopPropagation).to.be.a('function');
+        expect(component.clickEvent[2].innerHTML).to.equal('OK');
 
-        triggerClick(widget.getEl('cancel'));
+        triggerClick(component.getEl('cancel'));
 
-        expect(widget.clickEvent[0].type).to.equal('cancel');
-        expect(widget.clickEvent[1].stopPropagation).to.be.a('function');
-        expect(widget.clickEvent[2].innerHTML).to.equal('Cancel');
+        expect(component.clickEvent[0].type).to.equal('cancel');
+        expect(component.clickEvent[1].stopPropagation).to.be.a('function');
+        expect(component.clickEvent[2].innerHTML).to.equal('Cancel');
     });
 });

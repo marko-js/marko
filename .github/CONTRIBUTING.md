@@ -103,7 +103,7 @@ Every issue should be assigned one of these.
 ![](https://img.shields.io/badge/scope-compiler-cc0077.svg)
 ![](https://img.shields.io/badge/scope-runtime-eebb00.svg)
 ![](https://img.shields.io/badge/scope-core%20taglib-00cccc.svg)
-![](https://img.shields.io/badge/scope-widgets-9900aa.svg)
+![](https://img.shields.io/badge/scope-components-9900aa.svg)
 ![](https://img.shields.io/badge/scope-tools-fef2c0.svg)
 
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
@@ -112,7 +112,7 @@ What part of the Marko stack does this issue apply to? In most cases there shoul
 - **compiler**: Relates to the compiler (server only)
 - **runtime**: Relates to the runtime (isomorphic/universal)
 - **core-taglib**: Relates to custom tags that ship with Marko
-- **widgets**: Relates to `marko-widgets`
+- **components**: Relates to `marko-components`
 - **tools**: Relates to editor plugins, commandline tools, etc.
 
 ### Difficulty

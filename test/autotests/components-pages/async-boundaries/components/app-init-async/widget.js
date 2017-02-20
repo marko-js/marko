@@ -4,11 +4,11 @@ module.exports = {
     onMount: function() {
         window.appInitAsync = this;
 
-        var helloFrank = this.getWidget('helloFrank');
-        var helloFrankAsync = this.getWidget('helloFrankAsync');
-        var helloJohn = this.getWidget('helloJohn');
-        var helloJohnAsync = this.getWidget('helloJohnAsync');
-        var helloJane = this.getWidget('helloJane');
+        var helloFrank = this.getComponent('helloFrank');
+        var helloFrankAsync = this.getComponent('helloFrankAsync');
+        var helloJohn = this.getComponent('helloJohn');
+        var helloJohnAsync = this.getComponent('helloJohnAsync');
+        var helloJane = this.getComponent('helloJane');
 
         this.test = function() {
             expect(helloFrank).to.be.an('object');

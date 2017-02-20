@@ -3,28 +3,28 @@ var expect = require('chai').expect;
 module.exports = function(helpers) {
 
 
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    var oldButton1Widget = widget.getWidget('button1');
-    var oldButton2Widget = widget.getEl('button2').__widget;
-    var oldButton1El = oldButton1Widget.el;
-    var oldButton2El = widget.getEl('button2');
+    var oldButton1Component = component.getComponent('button1');
+    var oldButton2Component = component.getEl('button2').__component;
+    var oldButton1El = oldButton1Component.el;
+    var oldButton2El = component.getEl('button2');
 
-    expect(widget.getWidget('button1').el.className).to.contain('normal');
+    expect(component.getComponent('button1').el.className).to.contain('normal');
 
-    var self = widget;
+    var self = component;
 
     self.setButtonSize('small');
     self.rerender();
 
-    var newButton1El = widget.getWidget('button1').el;
-    var newButton2El = widget.getEl('button2');
+    var newButton1El = component.getComponent('button1').el;
+    var newButton2El = component.getEl('button2');
 
-    // // Both button widgets should be reused
-    expect(widget.getWidget('button1')).to.equal(oldButton1Widget);
-    expect(widget.getEl('button2').__widget).to.equal(oldButton2Widget);
+    // // Both button components should be reused
+    expect(component.getComponent('button1')).to.equal(oldButton1Component);
+    expect(component.getEl('button2').__component).to.equal(oldButton2Component);
 
-    expect(widget.getWidget('button1').el.className).to.contain('small');
+    expect(component.getComponent('button1').el.className).to.contain('small');
 
 
     // // State changed for button1 so it should have a new el

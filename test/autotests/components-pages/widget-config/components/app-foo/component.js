@@ -3,10 +3,10 @@ module.exports = {
         this.name = 'app-foo';
     },
 
-    onMount: function(widgetConfig) {
-        this.widgetConfig = {
+    onMount: function(componentConfig) {
+        this.componentConfig = {
             name: this.name
         };
-        window.fooWidget = this;
+        window.fooComponent = this;
     }
 };

@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var hooks = require('./hooks');
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), { name: 'Frank' });
+    var component = helpers.mount(require('./index'), { name: 'Frank' });
     expect(hooks.getHookNames()).deep.equal([
         "root:create",
         "root:render",
@@ -14,8 +14,8 @@ module.exports = function(helpers) {
 
     hooks.reset();
 
-    widget.input = { name: 'John' };
-    widget.update();
+    component.input = { name: 'John' };
+    component.update();
 
     expect(hooks.getHookNames()).deep.equal([
         "root:render",

@@ -7,7 +7,7 @@ module.exports = {
     },
 
     onMount: function() {
-        window.fooWidget = this;
+        window.fooComponent = this;
         this.mouseMoveEvent = null;
         this.clickEvent = null;
     },

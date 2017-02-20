@@ -8,7 +8,7 @@ module.exports = {
     },
 
     update_buttonSize: function(newSize) {
-        var button1Widget = this.getWidget('button1');
-        button1Widget.setSize(newSize);
+        var button1Component = this.getComponent('button1');
+        button1Component.setSize(newSize);
     }
 };

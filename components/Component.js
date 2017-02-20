@@ -3,13 +3,13 @@
 
 var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
-var widgetsUtil = require('./util');
-var getWidgetForEl = widgetsUtil.$__getWidgetForEl;
-var widgetLookup = widgetsUtil.$__widgetLookup;
-var emitLifecycleEvent = widgetsUtil.$__emitLifecycleEvent;
-var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
-var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
-var getElementById = widgetsUtil.$__getElementById;
+var componentsUtil = require('./util');
+var getComponentForEl = componentsUtil.$__getComponentForEl;
+var componentLookup = componentsUtil.$__componentLookup;
+var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
+var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
+var destroyElRecursive = componentsUtil.$__destroyElRecursive;
+var getElementById = componentsUtil.$__getElementById;
 var EventEmitter = require('events-light');
 var RenderResult = require('../runtime/RenderResult');
 var SubscriptionTracker = require('listener-tracker');
@@ -35,34 +35,34 @@ function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
 }
 
-function hasCompatibleWidget(widgetsContext, existingWidget) {
-    var id = existingWidget.id;
-    var newWidgetDef = widgetsContext.$__widgetsById[id];
-    return newWidgetDef && existingWidget.$__type == newWidgetDef.$__widget.$__type;
+function hasCompatibleComponent(componentsContext, existingComponent) {
+    var id = existingComponent.id;
+    var newComponentDef = componentsContext.$__componentsById[id];
+    return newComponentDef && existingComponent.$__type == newComponentDef.$__component.$__type;
 }
 
-function handleCustomEventWithMethodListener(widget, targetMethodName, args, extraArgs) {
+function handleCustomEventWithMethodListener(component, targetMethodName, args, extraArgs) {
     // Remove the "eventType" argument
-    args.push(widget);
+    args.push(component);
 
     if (extraArgs) {
         args = extraArgs.concat(args);
     }
 
 
-    var targetWidget = widgetLookup[widget.$__scope];
-    var targetMethod = targetWidget[targetMethodName];
+    var targetComponent = componentLookup[component.$__scope];
+    var targetMethod = targetComponent[targetMethodName];
     if (!targetMethod) {
         throw Error('Method not found: ' + targetMethodName);
     }
 
-    targetMethod.apply(targetWidget, args);
+    targetMethod.apply(targetComponent, args);
 }
 
-function getElIdHelper(widget, widgetElId, index) {
-    var id = widget.id;
+function getElIdHelper(component, componentElId, index) {
+    var id = component.id;
 
-    var elId = widgetElId != null ? id + '-' + widgetElId : id;
+    var elId = componentElId != null ? id + '-' + componentElId : id;
 
     if (index != null) {
         elId += '[' + index + ']';
@@ -78,7 +78,7 @@ function getElIdHelper(widget, widgetElId, index) {
  * looping over and invoking the custom update handlers.
  * @return {boolean} Returns true if if the DOM was updated. False, otherwise.
  */
-function processUpdateHandlers(widget, stateChanges, oldState) {
+function processUpdateHandlers(component, stateChanges, oldState) {
     var handlerMethod;
     var handlers;
 
@@ -86,7 +86,7 @@ function processUpdateHandlers(widget, stateChanges, oldState) {
         if (stateChanges.hasOwnProperty(propName)) {
             var handlerMethodName = 'update_' + propName;
 
-            handlerMethod = widget[handlerMethodName];
+            handlerMethod = component[handlerMethodName];
             if (handlerMethod) {
                 (handlers || (handlers=[])).push([propName, handlerMethod]);
             } else {
@@ -111,18 +111,18 @@ function processUpdateHandlers(widget, stateChanges, oldState) {
 
             var newValue = stateChanges[propertyName];
             var oldValue = oldState[propertyName];
-            handlerMethod.call(widget, newValue, oldValue);
+            handlerMethod.call(component, newValue, oldValue);
         }
 
-        emitLifecycleEvent(widget, 'update');
+        emitLifecycleEvent(component, 'update');
 
-        widget.$__reset();
+        component.$__reset();
     }
 
     return true;
 }
 
-function checkInputChanged(existingWidget, oldInput, newInput) {
+function checkInputChanged(existingComponent, oldInput, newInput) {
     if (oldInput != newInput) {
         if (oldInput == null || newInput == null) {
             return true;
@@ -148,7 +148,7 @@ function checkInputChanged(existingWidget, oldInput, newInput) {
 
 function handleNodeDiscarded(node) {
     if (node.nodeType == 1) {
-        destroyWidgetForEl(node);
+        destroyComponentForEl(node);
     }
 }
 
@@ -156,14 +156,14 @@ function handleBeforeNodeDiscarded(node) {
     return eventDelegation.$__handleNodeDetach(node);
 }
 
-var widgetProto;
+var componentProto;
 
 /**
- * Base widget type.
+ * Base component type.
  *
  * NOTE: Any methods that are prefixed with an underscore should be considered private!
  */
-function Widget(id, doc) {
+function Component(id, doc) {
     EventEmitter.call(this);
     this.id = id;
     this.el =
@@ -186,8 +186,8 @@ function Widget(id, doc) {
     this.$__document = doc;
 }
 
-Widget.prototype = widgetProto = {
-    $__isWidget: true,
+Component.prototype = componentProto = {
+    $__isComponent: true,
 
     subscribeTo: function(target) {
         if (!target) {
@@ -196,7 +196,7 @@ Widget.prototype = widgetProto = {
 
         var subscriptions = this.$__subscriptions || (this.$__subscriptions = new SubscriptionTracker());
 
-        var subscribeToOptions = target.$__isWidget ?
+        var subscribeToOptions = target.$__isComponent ?
             WIDGET_SUBSCRIBE_TO_OPTIONS :
             NON_WIDGET_SUBSCRIBE_TO_OPTIONS;
 
@@ -219,14 +219,14 @@ Widget.prototype = widgetProto = {
             return emit.apply(this, arguments);
         }
     },
-    getElId: function (widgetElId, index) {
-        return getElIdHelper(this, widgetElId, index);
+    getElId: function (componentElId, index) {
+        return getElIdHelper(this, componentElId, index);
     },
-    getEl: function (widgetElId, index) {
+    getEl: function (componentElId, index) {
         var doc = this.$__document;
 
-        if (widgetElId != null) {
-            return getElementById(doc, getElIdHelper(this, widgetElId, index));
+        if (componentElId != null) {
+            return getElementById(doc, getElIdHelper(this, componentElId, index));
         } else {
             return this.el || getElementById(doc, getElIdHelper(this));
         }
@@ -241,18 +241,18 @@ Widget.prototype = widgetProto = {
         }
         return els;
     },
-    getWidget: function(id, index) {
-        return widgetLookup[getElIdHelper(this, id, index)];
+    getComponent: function(id, index) {
+        return componentLookup[getElIdHelper(this, id, index)];
     },
-    getWidgets: function(id) {
-        var widgets = [];
+    getComponents: function(id) {
+        var components = [];
         var i = 0;
-        var widget;
-        while((widget = widgetLookup[getElIdHelper(this, id, i)])) {
-            widgets.push(widget);
+        var component;
+        while((component = componentLookup[getElIdHelper(this, id, i)])) {
+            components.push(component);
             i++;
         }
-        return widgets;
+        return components;
     },
     destroy: function() {
         if (this.$__destroyed) {
@@ -265,10 +265,10 @@ Widget.prototype = widgetProto = {
 
         this.$__destroyShallow();
 
-        var rootWidgets = this.$__rootWidgets;
-        if (rootWidgets) {
-            for (i=0, len=rootWidgets.length; i<len; i++) {
-                rootWidgets[i].destroy();
+        var rootComponents = this.$__rootComponents;
+        if (rootComponents) {
+            for (i=0, len=rootComponents.length; i<len; i++) {
+                rootComponents[i].destroy();
             }
         }
 
@@ -302,7 +302,7 @@ Widget.prototype = widgetProto = {
             this.$__subscriptions = null;
         }
 
-        delete widgetLookup[this.id];
+        delete componentLookup[this.id];
     },
 
     isDestroyed: function() {
@@ -407,7 +407,7 @@ Widget.prototype = widgetProto = {
 
     $__queueUpdate: function() {
         if (!this.$__updateQueued) {
-            updateManager.$__queueWidgetUpdate(this);
+            updateManager.$__queueComponentUpdate(this);
         }
     },
 
@@ -492,27 +492,27 @@ Widget.prototype = widgetProto = {
             var result = new RenderResult(out);
             var targetNode = out.$__getOutput();
 
-            var widgetsContext = out.global.widgets;
+            var componentsContext = out.global.components;
 
             function onBeforeElUpdated(fromEl, toEl) {
                 var id = fromEl.id;
-                var existingWidget;
+                var existingComponent;
 
-                if (widgetsContext && id) {
-                    var preserved = widgetsContext.$__preserved[id];
+                if (componentsContext && id) {
+                    var preserved = componentsContext.$__preserved[id];
 
                     if (preserved && !preserved.$__bodyOnly) {
-                        // Don't morph elements that are associated with widgets that are being
-                        // reused or elements that are being preserved. For widgets being reused,
-                        // the morphing will take place when the reused widget updates.
+                        // Don't morph elements that are associated with components that are being
+                        // reused or elements that are being preserved. For components being reused,
+                        // the morphing will take place when the reused component updates.
                         return MORPHDOM_SKIP;
                     } else {
-                        existingWidget = getWidgetForEl(fromEl);
-                        if (existingWidget && !hasCompatibleWidget(widgetsContext, existingWidget)) {
-                            // We found a widget in an old DOM node that does not have
-                            // a compatible widget that was rendered so we need to
-                            // destroy the old widget
-                            existingWidget.$__destroyShallow();
+                        existingComponent = getComponentForEl(fromEl);
+                        if (existingComponent && !hasCompatibleComponent(componentsContext, existingComponent)) {
+                            // We found a component in an old DOM node that does not have
+                            // a compatible component that was rendered so we need to
+                            // destroy the old component
+                            existingComponent.$__destroyShallow();
                         }
                     }
                 }
@@ -520,8 +520,8 @@ Widget.prototype = widgetProto = {
 
             function onBeforeElChildrenUpdated(el) {
                 var id = el.id;
-                if (widgetsContext && id) {
-                    var preserved = widgetsContext.$__preserved[id];
+                if (componentsContext && id) {
+                    var preserved = componentsContext.$__preserved[id];
                     if (preserved && preserved.$__bodyOnly) {
                         // Don't morph the children since they are preserved
                         return MORPHDOM_SKIP;
@@ -559,25 +559,25 @@ Widget.prototype = widgetProto = {
 
             result.afterInsert(doc);
 
-            out.emit('$__widgetsInitialized');
+            out.emit('$__componentsInitialized');
         });
     },
 
     $__getRootEls: function(rootEls) {
         var i, len;
 
-        var widgetEls = this.els;
+        var componentEls = this.els;
 
-        for (i=0, len=widgetEls.length; i<len; i++) {
-            var widgetEl = widgetEls[i];
-            rootEls[widgetEl.id] = widgetEl;
+        for (i=0, len=componentEls.length; i<len; i++) {
+            var componentEl = componentEls[i];
+            rootEls[componentEl.id] = componentEl;
         }
 
-        var rootWidgets = this.$__rootWidgets;
-        if (rootWidgets) {
-            for (i=0, len=rootWidgets.length; i<len; i++) {
-                var rootWidget = rootWidgets[i];
-                rootWidget.$__getRootEls(rootEls);
+        var rootComponents = this.$__rootComponents;
+        if (rootComponents) {
+            for (i=0, len=rootComponents.length; i<len; i++) {
+                var rootComponent = rootComponents[i];
+                rootComponent.$__getRootEls(rootEls);
             }
         }
 
@@ -598,9 +598,9 @@ Widget.prototype = widgetProto = {
     }
 };
 
-widgetProto.elId = widgetProto.getElId;
+componentProto.elId = componentProto.getElId;
 
-// Add all of the following DOM methods to Widget.prototype:
+// Add all of the following DOM methods to Component.prototype:
 // - appendTo(referenceEl)
 // - replace(referenceEl)
 // - replaceChildrenOf(referenceEl)
@@ -608,12 +608,12 @@ widgetProto.elId = widgetProto.getElId;
 // - insertAfter(referenceEl)
 // - prependTo(referenceEl)
 domInsert(
-    widgetProto,
-    function getEl(widget) {
+    componentProto,
+    function getEl(component) {
         var els = this.els;
         var elCount = els.length;
         if (elCount > 1) {
-            var fragment = widget.$__document.createDocumentFragment();
+            var fragment = component.$__document.createDocumentFragment();
             for (var i=0; i<elCount; i++) {
                 fragment.appendChild(els[i]);
             }
@@ -622,10 +622,10 @@ domInsert(
             return els[0];
         }
     },
-    function afterInsert(widget) {
-        return widget;
+    function afterInsert(component) {
+        return component;
     });
 
-inherit(Widget, EventEmitter);
+inherit(Component, EventEmitter);
 
-module.exports = Widget;
+module.exports = Component;

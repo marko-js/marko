@@ -1,14 +1,14 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), { name: 'Frank' });
+    var component = helpers.mount(require('./index'), { name: 'Frank' });
 
-    var out1 = widget.renderArg;
+    var out1 = component.renderArg;
 
-    widget.input = { name: 'John' };
-    widget.update();
+    component.input = { name: 'John' };
+    component.update();
 
-    var out2 = widget.renderArg;
+    var out2 = component.renderArg;
 
     expect(out1).to.not.equal(out2);
     expect(out1.element).to.be.a('function');

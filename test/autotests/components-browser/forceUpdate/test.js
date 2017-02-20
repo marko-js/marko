@@ -1,4 +1,4 @@
 module.exports = function(helpers, done) {
-    var widget = helpers.mount(require('./index.marko'), {});
-    widget.test(done);
+    var component = helpers.mount(require('./index.marko'), {});
+    component.test(done);
 };

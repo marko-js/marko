@@ -3,8 +3,8 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require('./index'), {});
 
-    expect(widget.state.nameNull).to.equal(null);
-    expect(widget.state.nameUndefined).to.equal(undefined);
+    expect(component.state.nameNull).to.equal(null);
+    expect(component.state.nameUndefined).to.equal(undefined);
 };

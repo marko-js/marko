@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {});
-    expect(widget.el.innerHTML).to.contain('Frank');
+    var component = helpers.mount(require('./index'), {});
+    expect(component.el.innerHTML).to.contain('Frank');
 };

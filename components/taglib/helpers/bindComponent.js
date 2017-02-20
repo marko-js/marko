@@ -1,14 +1,14 @@
 var createRendererFunc = require('../../renderer');
 
-module.exports = function(widgetProps) {
+module.exports = function(componentProps) {
     var renderer = createRendererFunc(
-        function(data, out, widget, state) {
-            data.$renderBody(out, widget, state);
+        function(data, out, component, state) {
+            data.$renderBody(out, component, state);
         },
-        widgetProps,
+        componentProps,
         null);
 
-    return function bindWidget(renderBody, out) {
+    return function bindComponent(renderBody, out) {
         renderer({
             $renderBody: renderBody
         }, out);

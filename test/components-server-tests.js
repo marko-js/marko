@@ -1,9 +1,9 @@
 require('./util/patch-module');
 require('marko/node-require').install();
 
-describe('marko-widgets (server)', function() {
+describe('marko-components (server)', function() {
     require('./util/autotest').runTests(
-        require('./autotests/widgets-server/autotests.tests'),
+        require('./autotests/components-server/autotests.tests'),
         function run(testFunc, done) {
             require('marko/compiler').configure({ output: 'html' });
             var helpers = {};

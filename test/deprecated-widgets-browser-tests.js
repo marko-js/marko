@@ -3,18 +3,18 @@
 var BrowserHelpers = require('./util/BrowserHelpers');
 
 if (typeof window !== 'undefined') {
-    describe('marko-widgets deprecated (browser)', function() {
+    describe('marko-components deprecated (browser)', function() {
         require('./util/autotest').runTests(
-            require('./autotests/widgets-browser-deprecated/autotests.tests'),
+            require('./autotests/components-browser-deprecated/autotests.tests'),
             function run(testFunc, done) {
                 var helpers = new BrowserHelpers();
 
-                require('marko/jquery').patchWidget(window.$);
-                require('marko/ready').patchWidget();
+                require('marko/jquery').patchComponent(window.$);
+                require('marko/ready').patchComponent();
 
                 function cleanup() {
-                    delete require('marko/widgets/Widget').prototype.$;
-                    delete require('marko/widgets/Widget').prototype.ready;
+                    delete require('marko/components/Component').prototype.$;
+                    delete require('marko/components/Component').prototype.ready;
                 }
 
                 try {

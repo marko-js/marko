@@ -2,7 +2,7 @@ var ready = require('./ready');
 
 var idRegExp = /^\#(\S+)( .*)?/;
 
-exports.patchWidget = function(jQuery) {
+exports.patchComponent = function(jQuery) {
     /* globals window */
 
     if (!jQuery) {
@@ -12,7 +12,7 @@ exports.patchWidget = function(jQuery) {
         }
     }
 
-    require('./widgets/Widget').prototype.$ = function jqueryProxy(arg) {
+    require('./components/Component').prototype.$ = function jqueryProxy(arg) {
         var args = arguments;
         var self = this;
 
@@ -26,16 +26,16 @@ exports.patchWidget = function(jQuery) {
                 var match = idRegExp.exec(arg);
                 //Reset the search to 0 so the next call to exec will start from the beginning for the new string
                 if (match != null) {
-                    var widgetElId = match[1];
+                    var componentElId = match[1];
                     if (match[2] == null) {
-                        return jQuery(self.getEl(widgetElId));
+                        return jQuery(self.getEl(componentElId));
                     } else {
-                        return jQuery('#' + self.getElId(widgetElId) + match[2]);
+                        return jQuery('#' + self.getElId(componentElId) + match[2]);
                     }
                 } else {
                     var rootEl = self.getEl();
                     if (!rootEl) {
-                        throw new Error('Root element is not defined for widget');
+                        throw new Error('Root element is not defined for component');
                     }
                     if (rootEl) {
                         return jQuery(arg, rootEl);

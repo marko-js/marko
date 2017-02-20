@@ -1,1 +1,1 @@
-require('./init-widgets').$__initServerRendered();
+require('./init-components').$__initServerRendered();

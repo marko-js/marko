@@ -1,9 +1,9 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
-    var fooWidget = widget.getWidget('foo');
-    expect(fooWidget != null).to.equal(true);
-    expect(fooWidget.getName()).to.equal('Frank');
-    expect(fooWidget.getAge()).to.equal('30');
+    var component = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
+    var fooComponent = component.getComponent('foo');
+    expect(fooComponent != null).to.equal(true);
+    expect(fooComponent.getName()).to.equal('Frank');
+    expect(fooComponent.getAge()).to.equal('30');
 };

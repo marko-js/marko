@@ -1,13 +1,13 @@
-var loadWidget = require('./loadWidget');
-var defineWidget = require('./defineWidget');
+var loadComponent = require('./loadComponent');
+var defineComponent = require('./defineComponent');
 
 var registered = {};
 var loaded = {};
-var widgetTypes = {};
+var componentTypes = {};
 
 function register(typeName, def) {
     if (typeof def === 'function') {
-        // We do this to kick off registering of nested widgets
+        // We do this to kick off registering of nested components
         // but we don't use the return value just yet since there
         // is a good chance that it resulted in a circular dependency
         def();
@@ -15,7 +15,7 @@ function register(typeName, def) {
 
     registered[typeName] = def;
     delete loaded[typeName];
-    delete widgetTypes[typeName];
+    delete componentTypes[typeName];
     return typeName;
 }
 
@@ -28,7 +28,7 @@ function load(typeName) {
             target = target();
         }
         if (!target) {
-            target = loadWidget(typeName); // Assume the typeName has been fully resolved already
+            target = loadComponent(typeName); // Assume the typeName has been fully resolved already
         }
         loaded[typeName] = target || null;
     }
@@ -39,42 +39,42 @@ function load(typeName) {
     return target;
 }
 
-function getWidgetClass(typeName) {
-    var WidgetClass = widgetTypes[typeName];
+function getComponentClass(typeName) {
+    var ComponentClass = componentTypes[typeName];
 
-    if (WidgetClass) {
-        return WidgetClass;
+    if (ComponentClass) {
+        return ComponentClass;
     }
 
-    WidgetClass = load(typeName);
+    ComponentClass = load(typeName);
 
-    if (WidgetClass.Widget) {
-        WidgetClass = WidgetClass.Widget;
+    if (ComponentClass.Component) {
+        ComponentClass = ComponentClass.Component;
     }
 
-    if (!WidgetClass.$__isWidget) {
-        WidgetClass = defineWidget(WidgetClass, WidgetClass.renderer);
+    if (!ComponentClass.$__isComponent) {
+        ComponentClass = defineComponent(ComponentClass, ComponentClass.renderer);
     }
 
-    // Make the widget "type" accessible on each widget instance
-    WidgetClass.prototype.$__type = typeName;
+    // Make the component "type" accessible on each component instance
+    ComponentClass.prototype.$__type = typeName;
 
-    widgetTypes[typeName] = WidgetClass;
+    componentTypes[typeName] = ComponentClass;
 
-    return WidgetClass;
+    return ComponentClass;
 }
 
-function createWidget(typeName, id) {
-    var WidgetClass = getWidgetClass(typeName);
-    var widget;
-    if (typeof WidgetClass === 'function') {
-        // The widget is a constructor function that we can invoke to create a new instance of the widget
-        widget = new WidgetClass(id);
-    } else if (WidgetClass.initWidget) {
-        widget = WidgetClass;
+function createComponent(typeName, id) {
+    var ComponentClass = getComponentClass(typeName);
+    var component;
+    if (typeof ComponentClass === 'function') {
+        // The component is a constructor function that we can invoke to create a new instance of the component
+        component = new ComponentClass(id);
+    } else if (ComponentClass.initComponent) {
+        component = ComponentClass;
     }
-    return widget;
+    return component;
 }
 
 exports.$__register = register;
-exports.$__createWidget = createWidget;
+exports.$__createComponent = createComponent;

@@ -1,26 +1,26 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
     marko_component = require("./component"),
-    marko_widgets = require("marko/widgets"),
-    marko_registerWidget = marko_widgets.rw,
-    marko_widgetType = marko_registerWidget("/marko-test$1.0.0/autotests/widgets-compilation/component-template-entry/index.marko", function() {
+    marko_components = require("marko/components"),
+    marko_registerComponent = marko_components.rw,
+    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/component-template-entry/index.marko", function() {
       return module.exports;
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
     marko_attr = marko_helpers.a;
 
-function render(input, out, widget, state) {
+function render(input, out, component, state) {
   var data = input;
 
   out.w("<div" +
-    marko_attr("id", widget.id) +
+    marko_attr("id", component.id) +
     "></div>");
 }
 
-marko_template._ = marko_widgets.r(render, {
-    type: marko_widgetType
+marko_template._ = marko_components.r(render, {
+    type: marko_componentType
   }, marko_component);
 
-marko_template.Widget = marko_widgets.w(marko_component, marko_template._);
+marko_template.Component = marko_components.w(marko_component, marko_template._);
 
 marko_template.meta = {
     deps: [
@@ -30,7 +30,7 @@ marko_template.meta = {
         },
       {
           type: "require",
-          path: "marko/widgets"
+          path: "marko/components"
         }
     ]
   };

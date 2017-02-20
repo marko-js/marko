@@ -1,11 +1,11 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers, done) {
-    require('marko/jquery').patchWidget(window.$);
+    require('marko/jquery').patchComponent(window.$);
     try {
-        var widget = helpers.mount(require('./index'), {});
-        var $el = widget.$();
-        var $button = widget.$('#button');
+        var component = helpers.mount(require('./index'), {});
+        var $el = component.$();
+        var $button = component.$('#button');
 
         $el.click(function() {
             helpers.log('$el:click');
@@ -18,15 +18,15 @@ module.exports = function(helpers, done) {
 
 
         // Trigger a click event on the root element
-        helpers.triggerClick(widget.el);
-        helpers.triggerClick(widget.getEl('button'));
+        helpers.triggerClick(component.el);
+        helpers.triggerClick(component.getEl('button'));
 
         expect(helpers.logOutput).to.deep.equal([
                 '$el:click',
                 '$button:click'
             ]);
     } finally {
-        delete require('marko/widgets/Widget').prototype.$;
+        delete require('marko/components/Component').prototype.$;
     }
 
     done();

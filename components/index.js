@@ -1,26 +1,26 @@
 /**
-* Module to manage the lifecycle of widgets
+* Module to manage the lifecycle of components
 *
 */
 'use strict';
 var warp10 = require('warp10');
-var WidgetsContext = require('./WidgetsContext');
+var ComponentsContext = require('./ComponentsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function flattenHelper(widgets, flattened, typesArray, typesLookup) {
-    for (var i = 0, len = widgets.length; i < len; i++) {
-        var widgetDef = widgets[i];
-        var customEvents = widgetDef.$__customEvents;
-        var id = widgetDef.id;
-        var widget = widgetDef.$__widget;
-        var state = widget.state;
-        var input = widget.input;
-        var typeName = widget.typeName;
+function flattenHelper(components, flattened, typesArray, typesLookup) {
+    for (var i = 0, len = components.length; i < len; i++) {
+        var componentDef = components[i];
+        var customEvents = componentDef.$__customEvents;
+        var id = componentDef.id;
+        var component = componentDef.$__component;
+        var state = component.state;
+        var input = component.input;
+        var typeName = component.typeName;
 
-        widget.state = undefined; // We don't use `delete` to avoid V8 deoptimization
-        widget.input = undefined; // We don't use `delete` to avoid V8 deoptimization
-        widget.typeName = undefined;
-        widget.id = undefined;
+        component.state = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.input = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.typeName = undefined;
+        component.id = undefined;
 
         if (!typeName) {
             continue;
@@ -33,7 +33,7 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
             typesLookup[typeName] = typeIndex;
         }
 
-        var children = widgetDef.$__children;
+        var children = componentDef.$__children;
 
         if (children) {
             // Depth-first search (children should be initialized before parent)
@@ -43,8 +43,8 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
 
         var hasProps = false;
 
-        for (var key in widget) {
-            if (widget.hasOwnProperty(key) && widget[key] !== undefined) {
+        for (var key in component) {
+            if (component.hasOwnProperty(key) && component[key] !== undefined) {
                 hasProps = true;
             }
         }
@@ -67,13 +67,13 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
         }
 
         var extra = {
-            p: customEvents && widgetDef.$__scope, // Only serialize scope if we need to attach custom events
-            d: widgetDef.$__domEvents,
-            b: widgetDef.$__bubblingDomEvents,
-            e: widgetDef.$__customEvents,
-            w: hasProps ? widget : undefined,
+            p: customEvents && componentDef.$__scope, // Only serialize scope if we need to attach custom events
+            d: componentDef.$__domEvents,
+            b: componentDef.$__bubblingDomEvents,
+            e: componentDef.$__customEvents,
+            w: hasProps ? component : undefined,
             s: state,
-            r: widgetDef.$__roots,
+            r: componentDef.$__roots,
             u: undefinedPropNames
         };
 
@@ -86,9 +86,9 @@ function flattenHelper(widgets, flattened, typesArray, typesLookup) {
     }
 }
 
-function getRenderedWidgets(widgetsContext) {
-    var widgets = widgetsContext.$__widgets;
-    if (!widgets || !widgets.length) {
+function getRenderedComponents(componentsContext) {
+    var components = componentsContext.$__components;
+    if (!components || !components.length) {
         return;
     }
 
@@ -96,14 +96,14 @@ function getRenderedWidgets(widgetsContext) {
     var typesLookup = {};
     var typesArray = [];
 
-    flattenHelper(widgets, flattened, typesArray, typesLookup);
+    flattenHelper(components, flattened, typesArray, typesLookup);
     return {w: flattened, t: typesArray};
 }
 
 
-function writeInitWidgetsCode(widgetsContext, out) {
-    var renderedWidgets = getRenderedWidgets(widgetsContext);
-    if (!renderedWidgets) {
+function writeInitComponentsCode(componentsContext, out) {
+    var renderedComponents = getRenderedComponents(componentsContext);
+    if (!renderedComponents) {
         return;
     }
 
@@ -111,42 +111,42 @@ function writeInitWidgetsCode(widgetsContext, out) {
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
     out.write('<script' + nonceAttr + '>' +
-        '(function(){var w=window;w.$widgets=(w.$widgets||[]).concat(' +
-        warp10.stringify(renderedWidgets).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
-         ')||w.$widgets})()</script>');
+        '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
+        warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
+         ')||w.$components})()</script>');
 
-    widgetsContext.$__clearWidgets();
+    componentsContext.$__clearComponents();
 }
 
-exports.writeInitWidgetsCode = writeInitWidgetsCode;
+exports.writeInitComponentsCode = writeInitComponentsCode;
 
 /**
  * Returns an object that can be sent to the browser using JSON.stringify. The parsed object should be
- * passed to require('marko-widgets').initWidgets(...);
+ * passed to require('marko-components').initComponents(...);
  *
- * @param  {WidgetsContext|AsyncWriter} widgetsContext A WidgetsContext or an AsyncWriter
- * @return {Object} An object with information about the rendered widgets that can be serialized to JSON. The object should be treated as opaque
+ * @param  {ComponentsContext|AsyncWriter} componentsContext A ComponentsContext or an AsyncWriter
+ * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
-exports.getRenderedWidgets = function(widgetsContext) {
-    if (!(widgetsContext instanceof WidgetsContext)) {
-        // Assume that the provided "widgetsContext" argument is
+exports.getRenderedComponents = function(componentsContext) {
+    if (!(componentsContext instanceof ComponentsContext)) {
+        // Assume that the provided "componentsContext" argument is
         // actually an AsyncWriter
-        var out = widgetsContext;
+        var out = componentsContext;
         if (!out.global) {
-            throw new Error('Invalid argument: ' + widgetsContext);
+            throw new Error('Invalid argument: ' + componentsContext);
         }
 
-        widgetsContext = WidgetsContext.$__getWidgetsContext(out);
+        componentsContext = ComponentsContext.$__getComponentsContext(out);
     }
 
-    var renderedWidgets = getRenderedWidgets(widgetsContext);
-    return warp10.stringifyPrepare(renderedWidgets);
+    var renderedComponents = getRenderedComponents(componentsContext);
+    return warp10.stringifyPrepare(renderedComponents);
 };
 
 exports.r = require('./renderer');
 
-exports.w = function() { /* no op for defining a widget on teh server */ };
+exports.c = function() { /* no op for defining a component on teh server */ };
 
-// registerWidget is a no-op on the server.
-// Fixes https://github.com/marko-js/marko-widgets/issues/111
-exports.rw = function(typeName) { return typeName; };
+// registerComponent is a no-op on the server.
+// Fixes https://github.com/marko-js/marko-components/issues/111
+exports.rc = function(typeName) { return typeName; };

@@ -19,15 +19,15 @@ function isUpperCase(c) {
 function addBubblingEventListener(transformHelper, eventType, targetMethod, extraArgs) {
     var el = transformHelper.el;
 
-    if (transformHelper.hasBoundWidgetForTemplate() === false) {
-        transformHelper.addError('Unable to handle event ' + eventType + '. HTML element is not nested within a widget.');
+    if (transformHelper.hasBoundComponentForTemplate() === false) {
+        transformHelper.addError('Unable to handle event ' + eventType + '. HTML element is not nested within a component.');
         return;
     }
 
     var builder = transformHelper.builder;
 
     var addBubblingEventMethod = builder.memberExpression(
-        builder.identifier('widget'),
+        builder.identifier('component'),
         builder.identifier('d'));
 
     var addBubblingEventArgs = [
@@ -46,7 +46,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
         if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
             transformHelper.context.data[ATTACH_DETACH_KEY] = true;
             
-            let requireFuncCall = builder.require(builder.literal('marko/widgets/attach-detach'));
+            let requireFuncCall = builder.require(builder.literal('marko/components/attach-detach'));
             transformHelper.context.addStaticCode(requireFuncCall);
         }
 
@@ -58,16 +58,16 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
     var el = transformHelper.el;
 
     var addDomEvent = builder.memberExpression(
-        builder.identifier('widget'),
+        builder.identifier('component'),
         builder.identifier('e'));
 
-    let widgetIdInfo = transformHelper.assignWidgetId(true /* repeated */);
-    let idVarNode = widgetIdInfo.idVarNode ? null : widgetIdInfo.createIdVarNode();
+    let componentIdInfo = transformHelper.assignComponentId(true /* repeated */);
+    let idVarNode = componentIdInfo.idVarNode ? null : componentIdInfo.createIdVarNode();
 
     var helperArgs = [
         eventType,
         targetMethod,
-        widgetIdInfo.idExpression
+        componentIdInfo.idExpression
     ];
 
     if (extraArgs) {
@@ -87,17 +87,17 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
 function addCustomEventListener(transformHelper, eventType, targetMethod, extraArgs) {
     var builder = transformHelper.builder;
 
-    // Make sure the widget has an assigned scope ID so that we can bind the custom event listener
-    var widgetArgs = transformHelper.getWidgetArgs();
+    // Make sure the component has an assigned scope ID so that we can bind the custom event listener
+    var componentArgs = transformHelper.getComponentArgs();
 
     if (extraArgs) {
         extraArgs = builder.arrayExpression(extraArgs);
     }
 
-    widgetArgs.addCustomEvent(eventType, targetMethod, extraArgs);
+    componentArgs.addCustomEvent(eventType, targetMethod, extraArgs);
 }
 
-module.exports = function handleWidgetEvents() {
+module.exports = function handleComponentEvents() {
     var el = this.el;
     var builder = this.builder;
     var context = this.context;
@@ -106,9 +106,9 @@ module.exports = function handleWidgetEvents() {
     // have one or more attributes that match the "w-on*" pattern.
     // We still need to loop over the properties to find and handle
     // the properties corresponding to those attributes.
-    var hasWidgetEvents = this.el.isFlagSet('hasWidgetEvents') === true;
+    var hasComponentEvents = this.el.isFlagSet('hasComponentEvents') === true;
 
-    if (hasWidgetEvents) {
+    if (hasComponentEvents) {
         var attrs = el.getAttributes().concat([]);
 
         attrs.forEach((attr) => {
@@ -152,7 +152,7 @@ module.exports = function handleWidgetEvents() {
             el.removeAttribute(attrName);
 
             if (isCustomTag) {
-                this.assignWidgetId(true /* repeated */);
+                this.assignComponentId(true /* repeated */);
 
                 // We are adding an event listener for a custom event (not a DOM event)
                 if (eventType.startsWith('-')) {
@@ -192,7 +192,7 @@ module.exports = function handleWidgetEvents() {
                     // that can be used to handle the event. We will add
                     // a "data-w-on{eventType}" attribute to the output HTML
                     // for this element that will be used to map the event
-                    // to a method on the containing widget.
+                    // to a method on the containing component.
                     addBubblingEventListener(this, eventType, targetMethod, extraArgs);
                 } else {
                     // The event does not bubble so we must attach a DOM

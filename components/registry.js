@@ -3,8 +3,8 @@
 const extend = require('raptor-util/extend');
 const SERVER_WIDGET_KEY = Symbol();
 
-function createServerWidgetClass(renderingLogic) {
-    class ServerWidget {
+function createServerComponentClass(renderingLogic) {
+    class ServerComponent {
         constructor(id, input, out, typeName) {
             this.id = id;
             this.$__updatedInput = undefined;
@@ -53,19 +53,19 @@ function createServerWidgetClass(renderingLogic) {
         }
     }
 
-    extend(ServerWidget.prototype, renderingLogic);
+    extend(ServerComponent.prototype, renderingLogic);
 
-    return ServerWidget;
+    return ServerComponent;
 }
-function createWidget(renderingLogic, id, input, out, typeName) {
-    var ServerWidget = renderingLogic[SERVER_WIDGET_KEY];
-    if (!ServerWidget) {
-        ServerWidget = renderingLogic[SERVER_WIDGET_KEY] = createServerWidgetClass(renderingLogic);
+function createComponent(renderingLogic, id, input, out, typeName) {
+    var ServerComponent = renderingLogic[SERVER_WIDGET_KEY];
+    if (!ServerComponent) {
+        ServerComponent = renderingLogic[SERVER_WIDGET_KEY] = createServerComponentClass(renderingLogic);
     }
 
-    var widget = new ServerWidget(id, input, out, typeName);
-    return widget;
+    var component = new ServerComponent(id, input, out, typeName);
+    return component;
 }
 
 exports.$__isServer = true;
-exports.$__createWidget = createWidget;
+exports.$__createComponent = createComponent;

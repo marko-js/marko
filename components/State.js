@@ -14,8 +14,8 @@ function ensure(state, propertyName) {
     }
 }
 
-function State(widget, initialState) {
-    this.$__widget = widget;
+function State(component, initialState) {
+    this.$__component = component;
     this.$__raw = initialState || {};
 
     this.$__dirty = false;
@@ -73,14 +73,14 @@ State.prototype = {
         }
 
         if (!this.$__dirty) {
-            // This is the first time we are modifying the widget state
+            // This is the first time we are modifying the component state
             // so introduce some properties to do some tracking of
             // changes to the state
-            this.$__dirty = true; // Mark the widget state as dirty (i.e. modified)
+            this.$__dirty = true; // Mark the component state as dirty (i.e. modified)
             this.$__old = rawState;
             this.$__raw = rawState = extend({}, rawState);
             this.$__changes = {};
-            this.$__widget.$__queueUpdate();
+            this.$__component.$__queueUpdate();
         }
 
         this.$__changes[name] = value;
@@ -89,7 +89,7 @@ State.prototype = {
             // Don't store state properties with an undefined or null value
             delete rawState[name];
         } else {
-            // Otherwise, store the new value in the widget state
+            // Otherwise, store the new value in the component state
             rawState[name] = value;
         }
     },

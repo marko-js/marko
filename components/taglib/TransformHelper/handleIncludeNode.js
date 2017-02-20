@@ -1,11 +1,11 @@
 'use strict';
 
-var includeTagForWidgets = require.resolve('../include-tag');
+var includeTagForComponents = require.resolve('../include-tag');
 
 module.exports = function(includeNode) {
     var context = this.context;
 
-    if (!this.hasBoundWidgetForTemplate()) {
+    if (!this.hasBoundComponentForTemplate()) {
         return;
     }
 
@@ -19,26 +19,26 @@ module.exports = function(includeNode) {
 
     if (parentNode.childCount === 1) {
         if (includeNode.hasAttribute('key') || includeNode.hasAttribute('ref')) {
-            this.assignWidgetId();
+            this.assignComponentId();
         }
 
         let parentTransformHelper = this.getTransformHelper(parentNode);
 
         if (includeNode.data.bodySlot) {
-            parentTransformHelper.assignWidgetId(false /* not repeated */);
-            var widgetProps = this.getWidgetProps();
-            widgetProps.body = parentTransformHelper.getNestedIdExpression();
+            parentTransformHelper.assignComponentId(false /* not repeated */);
+            var componentProps = this.getComponentProps();
+            componentProps.body = parentTransformHelper.getNestedIdExpression();
         } else {
-            let widgetIdInfo = parentTransformHelper.assignWidgetId(true /* repeated */);
-            if (!widgetIdInfo.idVarNode) {
-                let idVarNode = widgetIdInfo.createIdVarNode();
+            let componentIdInfo = parentTransformHelper.assignComponentId(true /* repeated */);
+            if (!componentIdInfo.idVarNode) {
+                let idVarNode = componentIdInfo.createIdVarNode();
                 parentNode.onBeforeGenerateCode((event) => {
                     event.insertCode(idVarNode);
                 });
             }
         }
 
-        includeNode.setRendererPath(includeTagForWidgets);
+        includeNode.setRendererPath(includeTagForComponents);
 
         includeNode.onBeforeGenerateCode(function() {
             includeNode.addProp('_elId', parentTransformHelper.getIdExpression());
@@ -55,7 +55,7 @@ module.exports = function(includeNode) {
     //         data = builder.literal(null);
     //     }
     //
-    //     let includeVar = context.importModule('marko_widget_include', this.getMarkoWidgetsRequirePath('marko/widgets/taglib/helpers/include'));
+    //     let includeVar = context.importModule('marko_component_include', this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/include'));
     //
     //     let includeArgs = [
     //         target,

@@ -1,10 +1,10 @@
 var expect = require('chai').expect;
 var assert = require('assert');
-var markoWidgets = require('marko/widgets');
+var markoComponents = require('marko/components');
 
 function BrowserHelpers() {
     this.logOutput = [];
-    this.widgets = [];
+    this.components = [];
 }
 
 BrowserHelpers.prototype = {
@@ -39,24 +39,24 @@ BrowserHelpers.prototype = {
         var renderResult = component.renderSync(input)
             .appendTo(this.targetEl);
 
-        var widget;
+        var component;
         try {
-            widget = renderResult.getWidget();
+            component = renderResult.getComponent();
         } catch(e) {}
 
-        if (widget) {
-            this.widgets.push(widget);
+        if (component) {
+            this.components.push(component);
         }
 
-        return widget;
+        return component;
     },
 
     log: function(data) {
         this.logOutput.push(data);
     },
 
-    getWidgetForEl: function(el) {
-        return markoWidgets.getWidgetForEl(el);
+    getComponentForEl: function(el) {
+        return markoComponents.getComponentForEl(el);
     },
 
 
@@ -83,11 +83,11 @@ BrowserHelpers.prototype = {
     },
 
     _cleanup: function() {
-        this.widgets.forEach(function(widget) {
-            widget.destroy();
+        this.components.forEach(function(component) {
+            component.destroy();
         });
 
-        this.widgets = [];
+        this.components = [];
 
         this.targetEl.innerHTML = '';
     }

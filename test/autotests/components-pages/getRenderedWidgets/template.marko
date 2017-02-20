@@ -1,16 +1,16 @@
 script marko-init
     ---
-    var markoWidgets = require('marko/widgets');
+    var markoComponents = require('marko/components');
     var componentsTemplate = require('./components.marko');
 
     function componentsDataProvider(callback) {
         componentsTemplate.renderToString({}, function(err, html, out) {
-            var widgetIds = markoWidgets.getRenderedWidgets(out);
+            var componentIds = markoComponents.getRenderedComponents(out);
 
-            // Serialize the HTML and the widget IDs to the browser
+            // Serialize the HTML and the component IDs to the browser
             callback(null, {
                     html: html,
-                    widgetIds: widgetIds
+                    componentIds: componentIds
                 });
         });
     }
@@ -22,7 +22,7 @@ lasso-page dependencies=data.browserDependencies lasso=data.lasso
 html lang="en"
     head
         meta charset="UTF-8"
-        title -- Marko Widgets Tests
+        title -- Marko Components Tests
         lasso-head
     body
         await(components from componentsDataProvider)

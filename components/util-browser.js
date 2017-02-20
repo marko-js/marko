@@ -1,23 +1,23 @@
-var widgetLookup = {};
+var componentLookup = {};
 
 var defaultDocument = document;
 
-function getWidgetForEl(el, doc) {
+function getComponentForEl(el, doc) {
     if (el) {
         var node = typeof el === 'string' ? (doc || defaultDocument).getElementById(el) : el;
         if (node) {
-            var widget = node._w;
+            var component = node._w;
 
-            while(widget) {
-                var rootFor = widget.$__rootFor;
+            while(component) {
+                var rootFor = component.$__rootFor;
                 if (rootFor)  {
-                    widget = rootFor;
+                    component = rootFor;
                 } else {
                     break;
                 }
             }
 
-            return widget;
+            return component;
         }
     }
 }
@@ -35,7 +35,7 @@ var lifecycleEventMethods = {};
 });
 
 /**
- * This method handles invoking a widget's event handler method
+ * This method handles invoking a component's event handler method
  * (if present) while also emitting the event through
  * the standard EventEmitter.prototype.emit method.
  *
@@ -48,25 +48,25 @@ var lifecycleEventMethods = {};
  * update        --> onUpdate
  * render        --> onRender
  */
-function emitLifecycleEvent(widget, eventType, eventArg1, eventArg2) {
-    var listenerMethod = widget[lifecycleEventMethods[eventType]];
+function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
+    var listenerMethod = component[lifecycleEventMethods[eventType]];
 
     if (listenerMethod) {
-        listenerMethod.call(widget, eventArg1, eventArg2);
+        listenerMethod.call(component, eventArg1, eventArg2);
     }
 
-    widget.emit(eventType, eventArg1, eventArg2);
+    component.emit(eventType, eventArg1, eventArg2);
 }
 
-function destroyWidgetForEl(el) {
-    var widgetToDestroy = el._w;
-    if (widgetToDestroy) {
-        widgetToDestroy.$__destroyShallow();
+function destroyComponentForEl(el) {
+    var componentToDestroy = el._w;
+    if (componentToDestroy) {
+        componentToDestroy.$__destroyShallow();
         el._w = null;
 
-        while ((widgetToDestroy = widgetToDestroy.$__rootFor)) {
-            widgetToDestroy.$__rootFor = null;
-            widgetToDestroy.$__destroyShallow();
+        while ((componentToDestroy = componentToDestroy.$__rootFor)) {
+            componentToDestroy.$__rootFor = null;
+            componentToDestroy.$__destroyShallow();
         }
     }
 }
@@ -74,7 +74,7 @@ function destroyElRecursive(el) {
     var curChild = el.firstChild;
     while(curChild) {
         if (curChild.nodeType == 1) {
-            destroyWidgetForEl(curChild);
+            destroyComponentForEl(curChild);
             destroyElRecursive(curChild);
         }
         curChild = curChild.nextSibling;
@@ -83,7 +83,7 @@ function destroyElRecursive(el) {
 
 var nextUniqueId = 0;
 
-function nextWidgetId() {
+function nextComponentId() {
     return 'wc' + (nextUniqueId++);
 }
 
@@ -91,19 +91,19 @@ function getElementById(doc, id) {
     return doc.getElementById(id);
 }
 
-function attachBubblingEvent(widgetDef, handlerMethodName, extraArgs) {
+function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
         return extraArgs ?
-            [handlerMethodName, widgetDef.id, extraArgs] :
-            [handlerMethodName, widgetDef.id];
+            [handlerMethodName, componentDef.id, extraArgs] :
+            [handlerMethodName, componentDef.id];
     }
 }
 
-exports.$__widgetLookup = widgetLookup;
-exports.$__getWidgetForEl = getWidgetForEl;
+exports.$__componentLookup = componentLookup;
+exports.$__getComponentForEl = getComponentForEl;
 exports.$__emitLifecycleEvent = emitLifecycleEvent;
-exports.$__destroyWidgetForEl = destroyWidgetForEl;
+exports.$__destroyComponentForEl = destroyComponentForEl;
 exports.$__destroyElRecursive = destroyElRecursive;
-exports.$__nextWidgetId = nextWidgetId;
+exports.$__nextComponentId = nextComponentId;
 exports.$__getElementById = getElementById;
 exports.$__attachBubblingEvent = attachBubblingEvent;

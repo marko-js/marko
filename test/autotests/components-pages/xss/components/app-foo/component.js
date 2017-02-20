@@ -7,10 +7,10 @@ module.exports = {
         this.evil = '</script><script>alert("hello")</script>';
     },
 
-    onMount: function(widgetConfig) {
-        this.widgetConfig = {
+    onMount: function(componentConfig) {
+        this.componentConfig = {
             evil: this.evil
         };
-        window.fooWidget = this;
+        window.fooComponent = this;
     }
 };

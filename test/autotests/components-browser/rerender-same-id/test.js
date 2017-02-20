@@ -1,15 +1,15 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var component = helpers.mount(require('./index'), {
         label: 'Foo'
     });
 
-    var oldId = widget.id;
+    var oldId = component.id;
 
-    widget.rerender({
+    component.rerender({
         label: 'Bar'
     });
 
-    expect(widget.el.id).to.equal(oldId);
+    expect(component.el.id).to.equal(oldId);
 };

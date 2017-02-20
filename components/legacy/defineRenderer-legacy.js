@@ -17,7 +17,7 @@ module.exports = function defineRenderer(renderingLogic) {
     if (!renderer) {
         // Create a renderer function that takes care of translating
         // the input properties to a view state. Also, this renderer
-        // takes care of re-using existing widgets.
+        // takes care of re-using existing components.
         renderer = function renderer(input, out) {
             // Render the template associated with the component using the final template
             // data that we constructed

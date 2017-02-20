@@ -1,7 +1,7 @@
 var extend = require('raptor-util/extend');
-var widgetsUtil = require('../widgets/util');
-var destroyWidgetForEl = widgetsUtil.$__destroyWidgetForEl;
-var destroyElRecursive = widgetsUtil.$__destroyElRecursive;
+var componentsUtil = require('../components/util');
+var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
+var destroyElRecursive = componentsUtil.$__destroyElRecursive;
 
 function resolveEl(el) {
     if (typeof el === 'string') {
@@ -16,7 +16,7 @@ function resolveEl(el) {
 
 function beforeRemove(referenceEl) {
     destroyElRecursive(referenceEl);
-    destroyWidgetForEl(referenceEl);
+    destroyComponentForEl(referenceEl);
 }
 
 module.exports = function(target, getEl, afterInsert) {

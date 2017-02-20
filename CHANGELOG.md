@@ -124,7 +124,7 @@ require('marko/node-require').install({
 
 ### 3.7.4
 
-- Fixed [#339](https://github.com/marko-js/marko/issues/339) - Tag transformers are not being applied to tags with a dynamic tag name (fixes [#146](https://github.com/marko-js/marko-widgets/issues/146) for Marko Widgets)
+- Fixed [#339](https://github.com/marko-js/marko/issues/339) - Tag transformers are not being applied to tags with a dynamic tag name (fixes [#146](https://github.com/marko-js/marko-components/issues/146) for Marko Components)
 
 ### 3.7.3
 
