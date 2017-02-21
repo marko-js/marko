@@ -125,7 +125,6 @@ _hello.marko_
 ```
 
 Start the server (`node server.js`) and open your browser to [http://localhost:8080](http://localhost:8080) where you should see the heading `Hello Marko`.
-<<<<<<< HEAD
 
 #### Initializing server-rendered components
 
