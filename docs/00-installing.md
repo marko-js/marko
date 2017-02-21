@@ -2,18 +2,14 @@
 
 ## Trying out Marko
 
-> **Coming Soon**
-
 If you just want to play around with Marko in the browser, head on over to our [Try Online](/try-online) feature.  You'll be able to develop a Marko application right in your browser.
 
 ## Creating new apps
 
-> **Coming Soon**
-
 If you're starting from scratch, [`marko-devtools`]() provides a starter app to get you going quickly.  To get started:
 ```
 npm install marko-devtools --global
-marko create-app hello-world
+marko create hello-world
 cd hello-world
 npm start
 ```
@@ -110,10 +106,10 @@ var hello = require('./hello.marko');
 var port = 8080;
 
 http.createServer((req, res) => {
-    /* let the browser know html is coming */
+    // let the browser know html is coming
     res.setHeader('content-type', 'text/html');
 
-    /* render the output to the `res` output stream */
+    // render the output to the `res` output stream
     hello.render({ name:'Marko' }, res);
 }).listen(port);
 ```
@@ -126,3 +122,39 @@ _hello.marko_
 ```
 
 Start the server (`node server.js`) and open your browser to [http://localhost:8080](http://localhost:8080) where you should see the heading `Hello Marko`.
+
+#### Initializing server-rendered components
+
+Marko automatically injects a list of components that need to be mounted in the browser, right before the closing `</body>` tag (as such, it required that you include a `<body>` in your rendered output).  
+
+However, you still need to bundle the CSS & JavaScript for your page and include the proper `link`, `style`, and `script` tags.  Luckily, the `lasso` taglib will do all the heavy lifting for you.
+
+First install `lasso` and `lasso-marko`:
+
+```
+npm install --save lasso lasso-marko
+```
+
+Next, in your page or layout view, add the `lasso-head` and `lasso-body` tags:
+
+layout.marko_
+```xml
+<!doctype>
+<html>
+<head>
+    <title>Hello world</title>
+    <lasso-head/>
+</head>
+<body>
+    <include(input.body)/>
+    <lasso-body/>
+</body>
+</html>
+```
+
+Finally, configure your server to serve the static files that `lasso` generates:
+
+_server.js_
+```js
+app.use(require('lasso/middleware').serveStatic());
+```

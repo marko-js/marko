@@ -2,6 +2,8 @@
 
 The easiest way to get started with Marko is to use the [Try Online]() feature. You can just open it in another tab and follow along. If you'd rather develop locally, check out the [Installation]() page.
 
+## Hello world
+
 Marko makes it easy to represent your UI using a syntax that is like HTML:
 
 _hello.marko_
@@ -37,7 +39,7 @@ _button.marko_
 <button>Click me!</button>
 ```
 
-Marko makes this really easy, allowing you to define a `class` for a component right in the `.marko` template and call methods of that class with `on-` attributes:
+Marko makes this really easy, allowing you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-` attributes:
 
 _button.marko_
 ```xml
@@ -52,7 +54,7 @@ class {
 
 ### Adding state
 
-Alerting when a button is clicked is great, but what about updating your UI in response to an action?  Marko's stateful components make this easy.  All you need to do is set `this.state` from inside your component's class. This makes a new `state` variable available to your template.  When a value in `this.state` is changed, the template will automatically re-render and only update the part of the DOM that changed.
+Alerting when a button is clicked is great, but what about updating your UI in response to an action?  Marko's stateful components make this easy.  All you need to do is set `this.state` from inside your component's class. This makes a new `state` variable available to your view.  When a value in `this.state` is changed, the view will automatically re-render and only update the part of the DOM that changed.
 
 _counter.marko_
 ```xml
