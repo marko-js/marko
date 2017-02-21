@@ -1,3 +1,5 @@
+'use strict';
+
 const tryRequire = require('try-require');
 const lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
 const ok = require('assert').ok;
