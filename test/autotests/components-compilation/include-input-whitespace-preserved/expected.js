@@ -1,6 +1,7 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_component = {},
     marko_components = require("marko/components"),
-    marko_registerComponent = marko_components.rw,
+    marko_registerComponent = marko_components.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/include-input-whitespace-preserved/index.marko", function() {
       return module.exports;
     }),
@@ -9,12 +10,10 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     include_tag = marko_loadTag(require("marko/components/taglib/include-tag")),
     marko_attr = marko_helpers.a;
 
-var marko_component = {};
-
-function render(input, out, component, state) {
+function render(input, out, __component, state) {
   var data = input;
 
-  var __componentId0 = component.id;
+  var __componentId0 = __component.id;
 
   out.w("<div" +
     marko_attr("id", __componentId0) +
@@ -35,7 +34,7 @@ marko_template._ = marko_components.r(render, {
     type: marko_componentType
   }, marko_component);
 
-marko_template.Component = marko_components.w(marko_component, marko_template._);
+marko_template.Component = marko_components.c(marko_component, marko_template._);
 
 marko_template.meta = {
     deps: [

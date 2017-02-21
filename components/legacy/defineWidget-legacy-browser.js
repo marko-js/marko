@@ -7,7 +7,7 @@
 
 
 module.exports = function defineWidget(def, renderer) {
-    def = def.Component || def;
+    def = def.Widget || def;
 
     if (def.$__isComponent) {
         return def;
@@ -63,6 +63,9 @@ module.exports = function defineWidget(def, renderer) {
     delete proto.onUpdate;
     delete proto.onBeforeDestroy;
     delete proto.onDestroy;
+
+    proto.getWidget = proto.getComponent;
+    proto.getWidgets = proto.getComponents;
 
     // convert legacy to modern
 

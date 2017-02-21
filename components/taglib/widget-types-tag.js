@@ -1,4 +1,6 @@
-var getTransformHelper = require('./util/getTransformHelper');
+const getTransformHelper = require('./util/getTransformHelper');
+const generateRegisterComponentCode = require('./util/generateRegisterComponentCode');
+const resolveFrom = require('resolve-from');
 
 module.exports = function codeGenerator(el, codegen) {
     var context = codegen.context;
@@ -18,7 +20,22 @@ module.exports = function codeGenerator(el, codegen) {
             return;
         }
 
-        typesObject[attr.name] = transformHelper.buildComponentTypeNode(attr.literalValue);
+        let requirePath = attr.literalValue;
+
+        let filename = resolveFrom(transformHelper.dirname, requirePath);
+
+        if (!filename) {
+            transformHelper.addError('Target file not found: ' + requirePath + ' (from: ' + transformHelper.dirname + ')');
+            return;
+        }
+
+        let componentModule = {
+            legacy: true,
+            filename: filename,
+            requirePath: requirePath
+        };
+
+        typesObject[attr.name] = generateRegisterComponentCode(componentModule, transformHelper, false);
     });
 
     codegen.addStaticVar('marko_componentTypes', builder.literal(typesObject));

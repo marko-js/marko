@@ -1,6 +1,6 @@
 var template = require('marko').load(require.resolve('./template.marko'));
 
-module.exports = require('marko/widgets/legacy').defineComponent({
+module.exports = require('marko/components/legacy').defineComponent({
     createOut: template.createOut,
 
     renderer: function(input, out) {

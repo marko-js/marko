@@ -14,7 +14,7 @@ describe(path.basename(__dirname), function() {
         document.getElementById('testsTarget').innerHTML = html; // Add the HTML to the DOM
 
         // Initialize the components to bind behavior!
-        markoComponents.initComponents(componentIds);
+        markoComponents.init(componentIds);
 
         expect(window.simpleComponents.length).to.equal(2);
         expect(window.simpleComponents[0].state.type).to.equal('component state');

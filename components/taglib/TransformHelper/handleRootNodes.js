@@ -171,7 +171,7 @@ module.exports = function handleRootNodes() {
     var fileMatch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
     var styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
     var componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
-    var splitComponentMatch = new RegExp('^'+fileMatch+'component\\.browser\\.\\w+$');
+    var splitComponentMatch = new RegExp('^'+fileMatch+'component-browser\\.\\w+$');
 
     var templateRoot = this.el;
 

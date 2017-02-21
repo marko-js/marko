@@ -9,7 +9,7 @@ function onInitComponent(listener) {
 exports.onInitComponent = onInitComponent;
 exports.Component = Component;
 exports.getComponentForEl = componentsUtil.$__getComponentForEl;
-exports.initComponents = require('./init-components').$__initServerRendered;
+exports.init = require('./init-components').$__initServerRendered;
 
 exports.c = require('./defineComponent'); // Referenced by compiled templates
 exports.r = require('./renderer'); // Referenced by compiled templates

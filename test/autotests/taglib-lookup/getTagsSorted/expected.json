@@ -1,6 +1,6 @@
 [
-    "_lasso-resources-root",
     "_component",
+    "_lasso-resources-root",
     "*",
     "a",
     "abbr",
@@ -242,5 +242,5 @@
     "w-preserve",
     "wbr",
     "while",
-    "component-types"
+    "widget-types"
 ]

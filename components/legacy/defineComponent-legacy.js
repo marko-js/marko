@@ -5,7 +5,7 @@
  * @return {Component} The resulting Component with renderer
  */
 var defineRenderer;
-var defineComponent;
+var defineWidget;
 
 module.exports = function defineComponent(def) {
     if (def.$__isComponent) {
@@ -20,9 +20,9 @@ module.exports = function defineComponent(def) {
         throw new Error('Expected "template" or "renderer"');
     }
 
-    return defineComponent(def, renderer);
+    return defineWidget(def, renderer);
 };
 
 defineRenderer = require('./defineRenderer-legacy');
-defineComponent = require('./defineComponent-legacy');
+defineWidget = require('./defineWidget-legacy');
 

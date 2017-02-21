@@ -24,18 +24,18 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var getInitialProps;
         var getTemplateData;
         var getInitialState;
-        var getComponentConfig;
+        var getWidgetConfig;
         var getInitialBody;
 
         if (renderingLogic) {
             getInitialProps = renderingLogic.getInitialProps;
             getTemplateData = renderingLogic.getTemplateData;
             getInitialState = renderingLogic.getInitialState;
-            getComponentConfig = renderingLogic.getComponentConfig;
+            getWidgetConfig = renderingLogic.getWidgetConfig;
             getInitialBody = renderingLogic.getInitialBody;
         }
 
-        var componentConfig;
+        var widgetConfig;
         var componentBody;
         var componentState;
 
@@ -99,19 +99,19 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         if (input) {
-            if (getComponentConfig) {
-                // If getComponentConfig() was implemented then use that to
+            if (getWidgetConfig) {
+                // If getWidgetConfig() was implemented then use that to
                 // get the component config. The component config will be passed
                 // to the component constructor. If rendered on the server the
                 // component config will be serialized to a JSON-like data
                 // structure and stored in a "data-w-config" attribute.
-                componentConfig = getComponentConfig(input, out);
+                widgetConfig = getWidgetConfig(input, out);
             } else {
-                componentConfig = input.componentConfig;
+                widgetConfig = input.widgetConfig;
             }
 
-            if (componentConfig) {
-                component.$c = componentConfig;
+            if (widgetConfig) {
+                component.$c = widgetConfig;
             }
 
             if (getInitialBody) {
@@ -166,8 +166,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.$__component = fakeComponent ? null : component;
         componentDef.$__isExisting = isExisting;
         componentDef.b = componentBody;
-        componentDef.c = function(componentConfig) {
-            component.$c = componentConfig;
+        componentDef.c = function(widgetConfig) {
+            component.$c = widgetConfig;
         };
         componentDef.t = function(typeName) {
             if (typeName) {
@@ -181,7 +181,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateInput, out, componentDef);
+        templateRenderFunc(templateInput, out, componentDef, componentDef);
 
         componentDef.$__end();
     };

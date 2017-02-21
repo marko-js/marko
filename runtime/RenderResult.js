@@ -1,4 +1,5 @@
 var domInsert = require('./dom-insert');
+var EMPTY_ARRAY = [];
 
 function checkAddedToDOM(result, method) {
     if (!result.$__components) {
@@ -17,7 +18,7 @@ function getComponentDefs(result) {
 
 function RenderResult(out) {
    this.out = this.$__out = out;
-   this.$__components = null;
+   this.$__components = undefined;
 }
 
 module.exports = RenderResult;
@@ -58,6 +59,8 @@ var proto = RenderResult.prototype = {
         if (componentsContext) {
             this.$__components = componentsContext.$__components;
             componentsContext.$__initComponents(doc);
+        } else {
+            this.$__components = EMPTY_ARRAY;
         }
 
         return this;

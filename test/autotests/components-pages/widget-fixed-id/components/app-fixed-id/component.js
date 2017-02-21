@@ -1,6 +1,10 @@
 var expect = require('chai').expect;
 
 module.exports = {
+    onInput: function(input) {
+        this.label = input.label || 'app-fixed-id';
+    },
+
     onMount: function() {
         this.name = 'app-fixed-id';
         window.appFixedId = this;

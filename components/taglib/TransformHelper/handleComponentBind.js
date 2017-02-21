@@ -1,26 +1,28 @@
 'use strict';
 const resolveFrom = require('resolve-from');
-const tryRequire = require('try-require');
-const lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
-const ok = require('assert').ok;
+const generateRegisterComponentCode = require('../util/generateRegisterComponentCode');
 
 function legacyGetDefaultComponentModule(dirname) {
     var filename;
+    var legacy = true;
 
     if ((filename = resolveFrom(dirname, './widget'))) {
         return {
             filename,
-            requirePath: './widget'
+            requirePath: './widget',
+            legacy
         };
     } else if ((filename = resolveFrom(dirname, './component'))) {
         return {
             filename,
-            requirePath: './component'
+            requirePath: './component',
+            legacy
         };
     } else if ((filename = resolveFrom(dirname, './'))) {
         return {
             filename,
-            requirePath: './'
+            requirePath: './',
+            legacy
         };
     } else {
         return null;
@@ -45,57 +47,6 @@ function checkIsInnerBind(el) {
     return false;
 }
 
-function buildComponentTypeNode(componentModule, transformHelper, isSplit) {
-    ok(componentModule, '"componentModule" is required');
-    ok(transformHelper, '"transformHelper" is required');
-    ok(typeof componentModule.filename === 'string', '"componentModule.filename" should be a string');
-    ok(typeof transformHelper.dirname === 'string', '"transformHelper.dirname" should be a string');
-
-    let context = transformHelper.context;
-
-    let builder = context.builder;
-
-    let registerComponent = context.addStaticVar('marko_registerComponent',
-        builder.memberExpression(transformHelper.markoComponentsVar, builder.identifier('rc')));
-
-    let typeName;
-
-    if (lassoModulesClientTransport) {
-        typeName = lassoModulesClientTransport.getClientPath(componentModule.filename);
-    } else {
-        typeName = componentModule.filename;
-    }
-
-    let def;
-
-    if (isSplit) {
-        let returnValue = builder.require(builder.literal(componentModule.requirePath));
-
-        if (transformHelper.isLegacyComponent) {
-            let defineComponent = context.addStaticVar('marko_defineComponent',
-                builder.memberExpression(transformHelper.markoComponentsVar, builder.identifier('c')));
-
-            returnValue = builder.functionCall(defineComponent, [returnValue]);
-        }
-
-        def = builder.functionDeclaration(null, [] /* params */, [
-            builder.returnStatement(returnValue)
-        ]);
-    } else {
-        def = builder.functionDeclaration(null, [], [
-            builder.returnStatement(
-                builder.memberExpression(
-                    builder.identifier('module'),
-                    builder.identifier('exports')))
-        ]);
-    }
-
-    return builder.functionCall(registerComponent, [
-        builder.literal(typeName),
-        def
-    ]);
-}
-
 module.exports = function handleComponentBind() {
     let el = this.el;
     let context = this.context;
@@ -105,16 +56,14 @@ module.exports = function handleComponentBind() {
 
     let componentModule;
     let rendererModulePath;
-    let isComponentMain = true;
     let rendererModule = this.getRendererModule();
+    let isLegacyComponent = false;
 
     if (el.hasAttribute('w-bind')) {
-        isComponentMain = false;
-
         let bindAttr = el.getAttribute('w-bind');
 
         context.deprecate('Legacy components using w-bind and defineRenderer/defineComponent or defineComponent are deprecated. See: https://github.com/marko-js/marko/issues/421');
-        this.isLegacyComponent = true;
+        this.isLegacyComponent = isLegacyComponent = true;
 
         // Remove the w-bind attribute since we don't want it showing up in the output DOM
         el.removeAttribute('w-bind');
@@ -122,33 +71,41 @@ module.exports = function handleComponentBind() {
         // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
         let bindAttrValue = bindAttr.value;
 
-        if (bindAttrValue == null) {
-            componentModule = legacyGetDefaultComponentModule(this.dirname);
-            if (!componentModule) {
-                this.addError('No corresponding JavaScript module found in the same directory (either "component.js" or "index.js"). Actual: ' + componentModule);
-                return;
-            }
-        }
-
         const hasWidgetTypes = context.isFlagSet('hasWidgetTypes');
 
         if (hasWidgetTypes) {
-            context.deprecate('The <component-types> tag is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/514');
+            context.deprecate('The <widget-types> tag is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/514');
         }
 
-         else if (bindAttr.isLiteralValue()) {
+        if (bindAttrValue == null) {
+            componentModule = legacyGetDefaultComponentModule(this.dirname);
+            if (!componentModule) {
+                this.addError('No corresponding JavaScript module found in the same directory (either "component.js" or "index.js").');
+                return;
+            }
+        } else if (bindAttr.isLiteralValue()) {
              if (typeof bindAttr.literalValue !== 'string') {
                  this.addError('The value for the "w-bind" attribute should be a string. Actual: ' + componentModule);
                  return;
              }
 
+             let requirePath = bindAttr.literalValue;
+             let filename = resolveFrom(this.dirname, requirePath);
+
+             if (!filename) {
+                 this.addError('Target file not found: ' + requirePath + ' (from: ' + this.dirname + ')');
+                 return;
+             }
+
              componentModule = {
-                 requirePath: bindAttr.literalValue
+                 legacy: true,
+                 filename,
+                 requirePath
              };
         } else {
-            // This is a dynamic expression. The <component-types> should have been found.
+            // This is a dynamic expression. The <widget-types> should have been found.
             if (!hasWidgetTypes) {
-                this.addError('The <component-types> tag must be used to declare components when the value of the "w-bind" attribute is a dynamic expression.');
+                this.addError('The <widget-types> tag must be used to declare components when the value of the "w-bind" attribute is a dynamic expression.');
                 return;
             }
 
@@ -170,7 +127,7 @@ module.exports = function handleComponentBind() {
 
 
         if (context.isFlagSet('hasWidgetTypes')) {
-            context.addError('The <component-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514');
+            context.addError('The <widget-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514');
         }
     } else {
         return;
@@ -189,7 +146,8 @@ module.exports = function handleComponentBind() {
 
     var isSplit = false;
 
-    if (rendererModule && rendererModule !== componentModule) {
+    if ((rendererModule && rendererModule !== componentModule) ||
+        (!rendererModule && componentModule)) {
         componentProps.split = isSplit = true;
     }
 
@@ -204,7 +162,7 @@ module.exports = function handleComponentBind() {
 
         componentTypeNode = context.addStaticVar(
             'marko_componentType',
-            buildComponentTypeNode(componentModule, this, isSplit));
+            generateRegisterComponentCode(componentModule, this, isSplit));
 
         componentProps.type = componentTypeNode;
     }
@@ -253,7 +211,13 @@ module.exports = function handleComponentBind() {
     if (this.firstBind) {
         this.context.on('beforeGenerateCode:TemplateRoot', function(eventArgs) {
             eventArgs.node.addRenderFunctionParam(builder.identifier('__component'));
-            eventArgs.node.addRenderFunctionParam(builder.identifier('state'));
+
+            if (isLegacyComponent) {
+                eventArgs.node.addRenderFunctionParam(builder.identifier('widget'));
+            } else {
+                eventArgs.node.addRenderFunctionParam(builder.identifier('state'));
+            }
+
             eventArgs.node.generateAssignRenderCode = function(eventArgs) {
                 let nodes = [];
                 let templateVar = eventArgs.templateVar;
@@ -275,7 +239,7 @@ module.exports = function handleComponentBind() {
                         builder.memberExpression(transformHelper.markoComponentsVar, builder.identifier('r')),
                         createRendererArgs)));
 
-                if (!isSplit) {
+                if (!isSplit && !isLegacyComponent) {
                     nodes.push(builder.assignment(
                         builder.memberExpression(templateVar, builder.identifier('Component')),
                         builder.functionCall(

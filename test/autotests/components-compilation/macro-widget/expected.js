@@ -1,7 +1,8 @@
 var marko_template = module.exports = require("marko/html").t(__filename),
+    marko_component = {},
     marko_components = require("marko/components"),
-    marko_registerComponent = marko_components.rw,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/macro-component/index.marko", function() {
+    marko_registerComponent = marko_components.rc,
+    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/macro-widget/index.marko", function() {
       return module.exports;
     }),
     marko_helpers = require("marko/runtime/html/helpers"),
@@ -9,14 +10,12 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f;
 
-var marko_component = {};
-
-function render(input, out, component, state) {
+function render(input, out, __component, state) {
   var data = input;
 
   function macro_renderButton(color, out, renderBody) {
     out.w("<button" +
-      marko_attr("data-_onclick", component.d("handleColorClick", [
+      marko_attr("data-_onclick", __component.d("handleColorClick", [
         color
       ]), false) +
       ">" +
@@ -25,7 +24,7 @@ function render(input, out, component, state) {
   }
 
   out.w("<div" +
-    marko_attr("id", component.id) +
+    marko_attr("id", __component.id) +
     ">");
 
   marko_forEach([
@@ -43,7 +42,7 @@ marko_template._ = marko_components.r(render, {
     type: marko_componentType
   }, marko_component);
 
-marko_template.Component = marko_components.w(marko_component, marko_template._);
+marko_template.Component = marko_components.c(marko_component, marko_template._);
 
 marko_template.meta = {
     deps: [

@@ -242,5 +242,5 @@
     "init-components",
     "w-preserve",
     "no-update",
-    "component-types"
+    "widget-types"
 ]

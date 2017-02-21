@@ -1,6 +1,6 @@
 var iframeContentComponent = require('./components/app-iframe-content');
 
-module.exports = require('marko/widgets/legacy').defineComponent({
+module.exports = require('marko/components/legacy').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	renderIntoIframe: function() {
