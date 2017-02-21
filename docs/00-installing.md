@@ -162,5 +162,3 @@ _server.js_
 ```js
 app.use(require('lasso/middleware').serveStatic());
 ```
-=======
->>>>>>> 608e6e135ee341202c7cbe6ab7db7842c660604d
