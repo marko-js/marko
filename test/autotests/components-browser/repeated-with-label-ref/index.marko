@@ -6,7 +6,7 @@ class {
     <for(index, field in input.fields)>
         <div>
             <input key="field[${index}]" type="text" value=field.value/>
-            <label for-ref="field[${index}]">${field.label}</label>
+            <label for-key="field[${index}]">${field.label}</label>
         </div>
     </for>
 </div>

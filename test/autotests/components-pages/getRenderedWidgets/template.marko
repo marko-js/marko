@@ -1,5 +1,4 @@
-script marko-init
-    ---
+static {
     var markoComponents = require('marko/components');
     var componentsTemplate = require('./components.marko');
 
@@ -14,7 +13,7 @@ script marko-init
                 });
         });
     }
-    ---
+}
 
 lasso-page dependencies=data.browserDependencies lasso=data.lasso
 
