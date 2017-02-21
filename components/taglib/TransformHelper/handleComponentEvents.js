@@ -27,7 +27,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     var builder = transformHelper.builder;
 
     var addBubblingEventMethod = builder.memberExpression(
-        builder.identifier('component'),
+        builder.identifier('__component'),
         builder.identifier('d'));
 
     var addBubblingEventArgs = [
@@ -45,7 +45,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     if (eventType.value === 'attach' || eventType.value === 'detach') {
         if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
             transformHelper.context.data[ATTACH_DETACH_KEY] = true;
-            
+
             let requireFuncCall = builder.require(builder.literal('marko/components/attach-detach'));
             transformHelper.context.addStaticCode(requireFuncCall);
         }
@@ -58,7 +58,7 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
     var el = transformHelper.el;
 
     var addDomEvent = builder.memberExpression(
-        builder.identifier('component'),
+        builder.identifier('__component'),
         builder.identifier('e'));
 
     let componentIdInfo = transformHelper.assignComponentId(true /* repeated */);

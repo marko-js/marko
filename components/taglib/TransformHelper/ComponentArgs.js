@@ -48,7 +48,7 @@ class ComponentArgs {
         var args = [];
 
         if (shouldProvideScope) {
-            args.push(builder.identifier('component'));
+            args.push(builder.identifier('__component'));
         } else {
             args.push(builder.literalNull());
         }

@@ -27,7 +27,7 @@ module.exports = function assignComponentId(isRepeated) {
             var getCurrentComponentVar = context.importModule('marko_getCurrentComponent',
                 this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/getCurrentComponent'));
 
-            context.addVar('component', builder.functionCall(getCurrentComponentVar, [builder.identifierOut()]));
+            context.addVar('__component', builder.functionCall(getCurrentComponentVar, [builder.identifierOut()]));
         }
     }
 

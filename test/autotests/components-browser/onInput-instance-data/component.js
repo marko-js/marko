@@ -7,5 +7,9 @@ module.exports = {
             a: '<\"hello">',
             b: 'test'
         };
+    },
+
+    onMount: function() {
+        this.name = 'app-component-config';
     }
 };

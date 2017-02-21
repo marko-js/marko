@@ -53,4 +53,4 @@ Component.prototype = {
     }
 };
 
-exports.Component = Component;
+module.exports = Component;

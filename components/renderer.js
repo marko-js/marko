@@ -5,6 +5,7 @@ var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
+var extend = require('raptor-util/extend');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -76,6 +77,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
     var typeName = componentProps.type;
     var roots = componentProps.roots;
     var assignedId = componentProps.id;
+    var split = componentProps.split;
 
     return function renderer(input, out) {
         var outGlobal = out.global;
@@ -141,6 +143,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     isExisting = false;
                     // We need to create a new instance of the component
                     component = registry.$__createComponent(typeName, id);
+
+                    if (split) {
+                        split = false;
+                        extend(component.constructor.prototype, renderingLogic);
+                    }
                 }
 
                 // Set this flag to prevent the component from being queued for update

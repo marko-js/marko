@@ -179,8 +179,8 @@
         "@body-only": "expression",
         "autocomplete": []
     },
-    "<component-types>": {
-        "code-generator": "./component-types-tag.js",
+    "<widget-types>": {
+        "code-generator": "./widget-types-tag.js",
         "@*": "string",
         "autocomplete": [],
         "deprecated": true

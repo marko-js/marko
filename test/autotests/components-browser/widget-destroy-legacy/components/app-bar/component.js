@@ -1,4 +1,9 @@
 module.exports = {
+    onInput: function(input) {
+        var label = input.label || 'BAR';
+        this.label = label;
+    },
+
     onMount: function() {
         this.name = 'app-bar';
 
@@ -7,9 +12,5 @@ module.exports = {
         this.appendHtml = function(html) {
             el.innerHTML += html;
         };
-    },
-
-    emitTestEvent: function() {
-        this.emit('testEvent', 'a', 'b');
     }
 };

@@ -19,87 +19,7 @@ function getFileNameNoExt(context) {
 }
 
 const esprima = require('esprima');
-const estraverse = require('estraverse');
 const escodegen = require('escodegen');
-
-function isModuleExports(node) {
-    return node.type === 'AssignmentExpression' &&
-           node.operator === '=' &&
-           node.left.type === 'MemberExpression' &&
-           node.left.object.type === 'Identifier' &&
-           node.left.object.name === 'module' &&
-           node.left.property.type === 'Identifier' &&
-           node.left.property.name === 'exports';
-}
-
-function isModuleExportsStatement(node) {
-    return node.type === 'ExpressionStatement' &&
-           isModuleExports(node.expression);
-}
-
-function handleScriptElement(scriptEl, transformHelper) {
-    let builder = transformHelper.builder;
-
-    let hasExport = false;
-    let needsComponentVar;
-
-    var scriptCode = scriptEl.bodyText;
-
-    let tree = esprima.parse(scriptCode, { sourceType:'module' });
-    let updatedTree = estraverse.replace(tree, {
-        enter: function(node) {
-            if (isModuleExports(node)) {
-                hasExport = true;
-                needsComponentVar = true;
-                node.left = {
-                    type: 'Identifier',
-                    name: 'marko_component'
-                };
-                this.break();
-            } else if (isModuleExportsStatement(node)) {
-                hasExport = true;
-                return createComponentDeclaration(node.expression.right);
-            } else if (node.type === 'ExportDefaultDeclaration') {
-                hasExport = true;
-                return createComponentDeclaration(node.declaration);
-            }
-        }
-    });
-
-    function createComponentDeclaration(value) {
-        return {
-            type: 'VariableDeclaration',
-            declarations: [
-                {
-                    type: 'VariableDeclarator',
-                    id: {
-                        type: 'Identifier',
-                        name: 'marko_component'
-                    },
-                    init: value
-                }
-            ],
-            kind: 'var'
-        };
-    }
-
-    if (hasExport) {
-        transformHelper.context.deprecate('Using <script> with an export to create a single file component will be removed in the next release candidate.  Use class instead. \nSee https://github.com/marko-js/marko/issues/547');
-
-        let componentVar;
-
-        if (needsComponentVar) {
-            componentVar = transformHelper.context.addStaticVar('marko_component');
-        } else {
-            componentVar = builder.identifier('marko_component');
-        }
-
-        transformHelper.setHasBoundComponentForTemplate();
-        transformHelper.setInlineComponent(componentVar);
-        transformHelper.context.addStaticCode(escodegen.generate(updatedTree));
-        scriptEl.detach();
-    }
-}
 
 function handleStyleElement(styleEl, transformHelper) {
     if (styleEl.bodyText) {
@@ -183,6 +103,8 @@ function classToObject(cls, transformHelper) {
 }
 
 function handleClassDeclaration(classEl, transformHelper) {
+
+
     let tree;
     var wrappedSrc = '('+classEl.tagString+'\n)';
 
@@ -216,8 +138,23 @@ function handleClassDeclaration(classEl, transformHelper) {
     let object = classToObject(expression);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
-    transformHelper.setHasBoundComponentForTemplate();
-    transformHelper.setInlineComponent(componentVar);
+    if (transformHelper.getRendererModule() != null) {
+        transformHelper.context.addError(classEl, 'The component has both an inline component `class` and a separate `component.js`. This is not allowed. See: https://github.com/marko-js/marko/wiki/Error:-Component-inline-and-external');
+        return;
+    }
+
+    var moduleInfo = {
+        inlineId: componentVar,
+        filename: transformHelper.filename,
+        requirePath: './' + path.basename(transformHelper.filename)
+    };
+
+    if (transformHelper.getComponentModule() == null) {
+        transformHelper.setComponentModule(moduleInfo);
+    }
+
+    transformHelper.setRendererModule(moduleInfo);
+
     classEl.detach();
 }
 
@@ -231,27 +168,40 @@ module.exports = function handleRootNodes() {
         return; // inline component
     }
 
-    var filematch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
-    var stylematch = new RegExp('^'+filematch+'style\\.\\w+$');
-    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+$');
-    var componentmatch = new RegExp('^'+filematch+'component\\.\\w+$');
+    var fileMatch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
+    var styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
+    var componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
+    var splitComponentMatch = new RegExp('^'+fileMatch+'component\\.browser\\.\\w+$');
 
     var templateRoot = this.el;
 
     var dirname = this.dirname;
-    var hasBindTarget = false;
 
-    fs.readdirSync(dirname).forEach(file => {
-        if(stylematch.test(file)) {
+    var dirFiles = fs.readdirSync(dirname);
+    dirFiles.sort();
+
+    for (let i=dirFiles.length - 1; i>=0; i--) {
+        let file = dirFiles[i];
+        if (styleMatch.test(file)) {
             context.addDependency('./' + file);
-        } else if(componentmatch.test(file) || componentmatch.test(file)) {
-            hasBindTarget = true;
-            this.context.data.componentModule = './'+file.slice(0, file.lastIndexOf('.'));
+        } else if (splitComponentMatch.test(file)) {
+            this.setComponentModule({
+                filename: path.join(dirname, file),
+                requirePath: './'+file.slice(0, file.lastIndexOf('.'))
+            });
+        } else if (componentMatch.test(file)) {
+            var moduleInfo = {
+                filename: path.join(dirname, file),
+                requirePath: './'+file.slice(0, file.lastIndexOf('.'))
+            };
+
+            this.setComponentModule(moduleInfo);
+            this.setRendererModule(moduleInfo);
         }
-    });
+    }
 
     var rootNodes = [];
-    var hasExplicitBind = false;
+    var hasLegacyExplicitBind = false;
     var hasIdCount = 0;
     var nodeWithAssignedId;
     var assignedId;
@@ -266,7 +216,7 @@ module.exports = function handleRootNodes() {
             } else if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
                     transformHelper.setHasBoundComponentForTemplate();
-                    hasExplicitBind = true;
+                    hasLegacyExplicitBind = true;
                 } else {
                     if (node.hasAttribute('id')) {
                         hasIdCount++;
@@ -274,9 +224,7 @@ module.exports = function handleRootNodes() {
                         assignedId = node.getAttributeValue('id');
                     }
 
-                    if (isEntry && tagName === 'script') {
-                        handleScriptElement(node, transformHelper);
-                    } else if (tagName === 'style') {
+                    if (tagName === 'style') {
                         handleStyleElement(node, transformHelper);
                     } else {
                         rootNodes.push(node);
@@ -303,16 +251,12 @@ module.exports = function handleRootNodes() {
 
     walker.walk(templateRoot);
 
-    if (this.hasInlineComponent()) {
-        hasBindTarget = true;
-    }
-
-    if (hasExplicitBind) {
+    if (hasLegacyExplicitBind) {
         //There is an explicit bind so nothing to do
         return;
     }
 
-    if (!hasBindTarget) {
+    if (!this.hasBoundComponentForTemplate()) {
         return;
     }
 

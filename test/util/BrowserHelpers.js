@@ -39,16 +39,20 @@ BrowserHelpers.prototype = {
         var renderResult = component.renderSync(input)
             .appendTo(this.targetEl);
 
-        var component;
+        var instance;
         try {
-            component = renderResult.getComponent();
-        } catch(e) {}
-
-        if (component) {
-            this.components.push(component);
+            instance = renderResult.getComponent();
+        } catch(e) {
+            if (e.toString().indexOf('No component') === -1) {
+                throw e;
+            }
         }
 
-        return component;
+        if (instance) {
+            this.components.push(instance);
+        }
+
+        return instance;
     },
 
     log: function(data) {

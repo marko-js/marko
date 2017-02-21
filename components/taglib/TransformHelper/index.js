@@ -1,12 +1,10 @@
 'use strict';
 var ComponentArgs = require('./ComponentArgs');
 var getRequirePath = require('../getRequirePath');
-var buildComponentTypeNode = require('../util/buildComponentTypeNode');
-var resolveFrom = require('resolve-from');
-var INLINE_COMPONENT_KEY = Symbol('INLINE_COMPONENT');
+
 var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
 var WIDGET_PROPS_KEY;
-var HAS_WIDGET_KEY = Symbol('HAS_WIDGET');
+var HAS_COMPONENT_KEY = Symbol('HAS_WIDGET');
 
 class TransformHelper {
     constructor(el, context) {
@@ -14,20 +12,41 @@ class TransformHelper {
         this.context = context;
         this.builder = context.builder;
         this.dirname = context.dirname;
+        this.filename = context.filename;
 
         this.componentNextElId = 0;
         this.componentArgs = undefined;
         this.containingComponentNode = undefined;
         this._markoComponentsVar = context.data.markoComponentsVar;
         this.firstBind = false;
+        this.componentModule = null;
+        this.rendererModule = null;
     }
 
     setHasBoundComponentForTemplate() {
-        this.context.data[HAS_WIDGET_KEY] = true;
+        this.context.data[HAS_COMPONENT_KEY] = true;
+    }
+
+    setComponentModule(value) {
+        this.context.data.componentModule = value;
+    }
+
+    getComponentModule() {
+        return this.context.data.componentModule;
+    }
+
+    setRendererModule(value) {
+        this.context.data.rendererModule = value;
+    }
+
+    getRendererModule() {
+        return this.context.data.rendererModule;
     }
 
     hasBoundComponentForTemplate() {
-        return this.context.data[HAS_WIDGET_KEY] || this.context.data[WIDGET_PROPS_KEY] != null;
+        return this.context.data.componentModule != null ||
+            this.context.data[HAS_COMPONENT_KEY] ||
+            this.context.data[WIDGET_PROPS_KEY] != null;
     }
 
     getComponentProps() {
@@ -82,22 +101,6 @@ class TransformHelper {
         return this.context;
     }
 
-    getDefaultComponentModule() {
-        var dirname = this.dirname;
-
-        if (this.context.data.componentModule) {
-            return this.context.data.componentModule;
-        } else if (resolveFrom(dirname, './component')) {
-            return './component';
-        } else if (resolveFrom(dirname, './component')) {
-            return './component';
-        } else if (resolveFrom(dirname, './')) {
-            return './';
-        } else {
-            return null;
-        }
-    }
-
     getMarkoComponentsRequirePath(target) {
         return getRequirePath(target, this.context);
     }
@@ -121,30 +124,14 @@ class TransformHelper {
         var builder = this.builder;
 
         var componentElId = builder.memberExpression(
-            builder.identifier('component'),
+            builder.identifier('__component'),
             builder.identifier('elId'));
 
         return builder.functionCall(componentElId, arguments.length === 0 ? [] : [ id ]);
     }
 
-    buildComponentTypeNode(path, def) {
-        return buildComponentTypeNode(path, this.dirname, def, this);
-    }
-
     getTransformHelper(el) {
         return new TransformHelper(el, this.context);
-    }
-
-    setInlineComponent(inlineComponent) {
-        this.context.data[INLINE_COMPONENT_KEY] = inlineComponent;
-    }
-
-    getInlineComponent() {
-        return this.context.data[INLINE_COMPONENT_KEY];
-    }
-
-    hasInlineComponent() {
-        return this.context.data[INLINE_COMPONENT_KEY] != null;
     }
 }
 

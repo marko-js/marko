@@ -19,7 +19,7 @@ module.exports = function transform(el, context) {
 
         if (!bodyValue) {
             bodyValue = builder.memberExpression(
-                builder.identifier('component'),
+                builder.identifier('__component'),
                 builder.identifier('b'));
 
             includeNode.data.bodySlot = true;
@@ -29,8 +29,8 @@ module.exports = function transform(el, context) {
         el.appendChild(includeNode);
     }
 
-    if (el.tagName === 'component-types') {
-        context.setFlag('hasComponentTypes');
+    if (el.tagName === 'widget-types') {
+        context.setFlag('hasWidgetTypes');
     } else if (el.tagName === 'include') {
         transformHelper.handleIncludeNode(el);
         transformHelper.getComponentArgs().compile(transformHelper);
