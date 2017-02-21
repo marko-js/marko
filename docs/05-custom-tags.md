@@ -2,7 +2,7 @@
 
 Marko gives you access to the same API that is used to write the [Core Tags]() so that you can extend the language with custom tags and attributes.
 
-> **PROTIP:** We recommend that custom tags and custom attributes have at least one dash to indicate that they are not part of the standard HTML grammar.
+> **ProTip:** We recommend that custom tags and custom attributes have at least one dash to indicate that they are not part of the standard HTML grammar.
 
 ## Writing custom tags
 
