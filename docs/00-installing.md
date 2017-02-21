@@ -6,11 +6,14 @@ If you just want to play around with Marko in the browser, head on over to our [
 
 ## Creating new apps
 
-If you're starting from scratch, [`marko-devtools`]() provides a starter app to get you going quickly.  To get started:
-```
+If you're starting from scratch, [`marko-devtools`](https://www.npmjs.com/package/marko-devtools) provides a starter app to
+get you going quickly. To get started:
+
+```bash
 npm install marko-devtools --global
 marko create hello-world
 cd hello-world
+npm install # or yarn
 npm start
 ```
 
@@ -122,6 +125,7 @@ _hello.marko_
 ```
 
 Start the server (`node server.js`) and open your browser to [http://localhost:8080](http://localhost:8080) where you should see the heading `Hello Marko`.
+<<<<<<< HEAD
 
 #### Initializing server-rendered components
 
@@ -158,3 +162,5 @@ _server.js_
 ```js
 app.use(require('lasso/middleware').serveStatic());
 ```
+=======
+>>>>>>> 608e6e135ee341202c7cbe6ab7db7842c660604d
