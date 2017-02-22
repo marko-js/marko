@@ -493,8 +493,12 @@ class Builder {
         return new Return({argument});
     }
 
-    scriptlet(code) {
-        return new Scriptlet({code});
+    scriptlet(scriptlet) {
+        return new Scriptlet({
+            code: scriptlet.value,
+            tag: scriptlet.tag,
+            block: scriptlet.block
+        });
     }
 
     selfInvokingFunction(params, args, body) {

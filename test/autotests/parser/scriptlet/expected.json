@@ -3,7 +3,8 @@
   "body": [
     {
       "type": "Scriptlet",
-      "code": " if (true) { "
+      "code": " if (true) { ",
+      "tag": true
     },
     {
       "type": "Text",
@@ -14,7 +15,8 @@
     },
     {
       "type": "Scriptlet",
-      "code": " } "
+      "code": " } ",
+      "tag": true
     },
     {
       "type": "Text",
@@ -25,7 +27,8 @@
     },
     {
       "type": "Scriptlet",
-      "code": " if (false) { "
+      "code": " if (false) { ",
+      "tag": true
     },
     {
       "type": "Text",
@@ -36,7 +39,8 @@
     },
     {
       "type": "Scriptlet",
-      "code": " } "
+      "code": " } ",
+      "tag": true
     },
     {
       "type": "Text",
