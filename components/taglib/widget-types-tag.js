@@ -1,3 +1,5 @@
+'use strict';
+
 const getTransformHelper = require('./util/getTransformHelper');
 const generateRegisterComponentCode = require('./util/generateRegisterComponentCode');
 const resolveFrom = require('resolve-from');
