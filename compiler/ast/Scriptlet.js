@@ -7,6 +7,8 @@ class Scriptlet extends Node {
     constructor(def) {
         super('Scriptlet');
         this.code = def.code;
+        this.tag = def.tag;
+        this.block = def.block;
     }
 
     generateCode(codegen) {

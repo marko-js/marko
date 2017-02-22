@@ -77,8 +77,8 @@ class HtmlJsParser {
             },
 
             onScriptlet(event) {
-                // <% (code) %>
-                handlers.handleScriptlet(event.value);
+                // <% (code) %> or $ {}
+                handlers.handleScriptlet(event);
             },
 
             onError(event) {

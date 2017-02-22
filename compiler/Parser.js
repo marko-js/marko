@@ -330,10 +330,7 @@ class Parser {
         }
 
         this.prevTextNode = null;
-
         this.stack.pop();
-
-
     }
 
     handleComment(comment) {
@@ -378,10 +375,10 @@ class Parser {
         this.parentNode.appendChild(text);
     }
 
-    handleScriptlet(code) {
+    handleScriptlet(event) {
         this.prevTextNode = null;
         var builder = this.context.builder;
-        var scriptlet = builder.scriptlet(code);
+        var scriptlet = builder.scriptlet(event);
         this.parentNode.appendChild(scriptlet);
     }
 
