@@ -1,7 +1,7 @@
 var componentLookup = require('./util').$__componentLookup;
 var isArray = Array.isArray;
 
-var listenersAttached;
+var listenersAttachedKey = '$MED';
 
 function getEventAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;
@@ -111,8 +111,8 @@ exports.$__delegateEvent = delegateEvent;
 exports.$__getEventAttribute = getEventAttribute;
 
 exports.$__init = function(doc) {
-    if (!listenersAttached) {
-        listenersAttached = true;
+    if (!doc[listenersAttachedKey]) {
+        doc[listenersAttachedKey] = true;
         attachBubbleEventListeners(doc);
     }
 };
