@@ -596,18 +596,10 @@ Detaches the component's root element(s) from the DOM by removing the node from 
 
 ### `insertAfter(targetEl)`
 
-<<<<<<< HEAD
-### Split renderer & component
-=======
 ### `insertBefore(targetEl)`
->>>>>>> 46f1f00cfc3720e6a3cf409a44c6116a67d30626
 
 ### `prependTo(targetEl)`
 
-<<<<<<< HEAD
-Marko automatically discovers component files in the same directory as a template.  For example if you have a template named `button.marko`, it will automatically look for `button.component.js`.  If your template is named `index.marko`, it will look for `component.js` in addition to `index.component.js`.
-=======
 ### `replace(targetEl)`
->>>>>>> 46f1f00cfc3720e6a3cf409a44c6116a67d30626
 
 ### `replaceChildrenOf(targetEl)`
