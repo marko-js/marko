@@ -1,4 +1,4 @@
-<var tabs=input.tabs/>
+$ var tabs=input.tabs;
 
 <div class="tabs">
     <ul class="nav nav-tabs">
@@ -10,7 +10,7 @@
     </ul>
     <div class="tab-content">
         <div id=tab.id class=tab.divClass for(tab in tabs)>
-            <invoke tab.renderBody(out) />
+            $ tab.renderBody(out);
         </div>
     </div>
 </div>

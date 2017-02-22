@@ -3,7 +3,7 @@
         Hello ${input.name}! You have ${input.count} new messages.
     </h1>
     <p if(input.renderBody)>
-        <invoke input.renderBody(out)/>
+        $ input.renderBody(out);
     </p>
     <p else>
         No body!

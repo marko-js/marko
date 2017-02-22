@@ -1,7 +1,7 @@
-<script template-helpers>
-var notEmpty = require('marko/helpers/notEmpty');
-var empty = require('marko/helpers/empty');
-</script>
+static {
+    var notEmpty = require('marko/helpers/notEmpty');
+    var empty = require('marko/helpers/empty');
+}
 
 <div if(notEmpty(['a', 'b', 'c']))>
     notEmpty-YES

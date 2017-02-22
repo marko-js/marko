@@ -1,4 +1,4 @@
-<var tabs=input.tabs/>
+$ var tabs=input.tabs;
 
 <div class="tabs">
     <ul>
@@ -8,7 +8,11 @@
     </ul>
     <div class="tab-content">
         <div class="tab" for(tab in tabs)>
-            <invoke tab.renderBody(out) if(tab.renderBody)/>
+            $ {
+                if(tab.renderBody) {
+                    tab.renderBody(out) ;
+                }
+            }
         </div>
     </div>
 </div>

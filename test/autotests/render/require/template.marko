@@ -1,8 +1,7 @@
----
-<script template-helpers>
+static {
     var testHelpers = require('./test-helpers')
-</script>
-
+}
+---
 Hello ${testHelpers.upperCase("world")}!
 Hello ${testHelpers.trim("   World   ")}!
 ---
