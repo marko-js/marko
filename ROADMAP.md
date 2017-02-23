@@ -131,11 +131,11 @@ The VDOM output allows optimizations that were previously not possible:
 
 Our initial benchmarks show a significant improvement in rendering time and we are consistently outperforming React. The independent [morphdom](https://github.com/patrick-steele-idem/morphdom) library has been tweaked to support diffing with both a real DOM and a Marko virtual DOM.
 
-### Merge in Marko Components ([#390](https://github.com/marko-js/marko/issues/390))
+### Merge in Marko Widgets ([#390](https://github.com/marko-js/marko/issues/390))
 
 A big part of this release is a shift in focus from Marko being merely a templating language to a complete UI library.  As such, we are providing first-class support for components.
 
-You will no longer need to install `marko-components` as an external library, and there is more cohesion between the templates and components/components.
+You will no longer need to install `marko-widgets` as an external library, and there is more cohesion between the templates and components/components.
 
 ### Improved component lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
