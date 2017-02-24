@@ -48,11 +48,7 @@ marko_template.meta = {
     deps: [
       {
           type: "require",
-          path: "./index.marko"
-        },
-      {
-          type: "require",
-          path: "marko/components"
+          path: "./"
         }
     ]
   };

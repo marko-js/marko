@@ -153,12 +153,16 @@ module.exports = function handleComponentBind() {
 
     if (componentModule) {
         let componentTypeNode;
+        let dependencyModule = isLegacyComponent || isSplit ? componentModule : this.getTemplateModule();
 
-        if (componentModule.requirePath) {
-            context.addDependency({ type:'require', path: componentModule.requirePath });
+        if (dependencyModule.requirePath) {
+            console.log(isSplit, dependencyModule);
+            context.addDependency({ type:'require', path: dependencyModule.requirePath });
         }
 
-        context.addDependency({ type:'require', path: 'marko/components' });
+        if (isSplit) {
+            context.addDependency({ type:'require', path: 'marko/components' });
+        }
 
         componentTypeNode = context.addStaticVar(
             'marko_componentType',

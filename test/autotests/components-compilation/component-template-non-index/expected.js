@@ -27,11 +27,7 @@ marko_template.meta = {
       "./template.style.css",
       {
           type: "require",
-          path: "./template.component"
-        },
-      {
-          type: "require",
-          path: "marko/components"
+          path: "./template.marko"
         }
     ]
   };

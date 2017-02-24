@@ -43,6 +43,12 @@ class TransformHelper {
         return this.context.data.rendererModule;
     }
 
+    getTemplateModule() {
+        return {
+            requirePath:this.context.getRequirePath(this.filename)
+        };
+    }
+
     hasBoundComponentForTemplate() {
         return this.context.data.componentModule != null ||
             this.context.data[HAS_COMPONENT_KEY] ||
