@@ -46,9 +46,7 @@ function initComponent(componentDef, doc) {
         return; // legacy
     }
 
-    var scope = componentDef.$__scope;
     var domEvents = componentDef.$__domEvents;
-    var customEvents = componentDef.$__customEvents;
 
     component.$__reset();
     component.$__document = doc;
@@ -117,19 +115,6 @@ function initComponent(componentDef, doc) {
 
         if (eventListenerHandles.length) {
             component.$__domEventListenerHandles = eventListenerHandles;
-        }
-    }
-
-    if (customEvents) {
-        component.$__customEvents = {};
-        component.$__scope = scope;
-
-        for (i=0, len=customEvents.length; i<len; i+=3) {
-            eventType = customEvents[i];
-            targetMethodName = customEvents[i+1];
-            extraArgs = customEvents[i+2];
-
-            component.$__customEvents[eventType] = [targetMethodName, extraArgs];
         }
     }
 

@@ -10,17 +10,20 @@ var escapeEndingScriptTagRegExp = /<\//g;
 function flattenHelper(components, flattened, typesArray, typesLookup) {
     for (var i = 0, len = components.length; i < len; i++) {
         var componentDef = components[i];
-        var customEvents = componentDef.$__customEvents;
         var id = componentDef.id;
         var component = componentDef.$__component;
         var state = component.state;
         var input = component.input;
         var typeName = component.typeName;
+        var customEvents = component.$__customEvents;
+        var scope = component.$__scope;
 
         component.state = undefined; // We don't use `delete` to avoid V8 deoptimization
         component.input = undefined; // We don't use `delete` to avoid V8 deoptimization
         component.typeName = undefined;
         component.id = undefined;
+        component.$__customEvents = undefined;
+        component.$__scope = undefined;
 
         if (!typeName) {
             continue;
@@ -67,10 +70,10 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
         }
 
         var extra = {
-            p: customEvents && componentDef.$__scope, // Only serialize scope if we need to attach custom events
+            p: customEvents && scope, // Only serialize scope if we need to attach custom events
             d: componentDef.$__domEvents,
             b: componentDef.$__bubblingDomEvents,
-            e: componentDef.$__customEvents,
+            e: customEvents,
             w: hasProps ? component : undefined,
             s: state,
             r: componentDef.$__roots,

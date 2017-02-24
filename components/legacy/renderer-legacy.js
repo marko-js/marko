@@ -2,7 +2,7 @@ var componentLookup = require('../util').$__componentLookup;
 var ComponentsContext = require('../ComponentsContext');
 var registry = require('../registry');
 var modernRenderer = require('../renderer');
-var resolveComponentRef = modernRenderer.$__resolveComponentRef;
+var resolveComponentKey = modernRenderer.$__resolveComponentKey;
 var preserveComponentEls = modernRenderer.$__preserveComponentEls;
 var handleBeginAsync = modernRenderer.$__handleBeginAsync;
 
@@ -65,7 +65,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 if (ref != null) {
                     ref = ref.toString();
                 }
-                id = id || resolveComponentRef(out, ref, scope);
+                id = id || resolveComponentKey(out, ref, scope);
                 customEvents = componentArgs[2];
                 delete input.$w;
             }
@@ -144,6 +144,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         if (component && isExisting) {
             if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
+                component.$__setCustomEvents(customEvents, scope);
                 preserveComponentEls(component, out, componentsContext);
                 return;
             }
@@ -160,8 +161,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             componentState || input || {};
 
         var componentDef = componentsContext.$__beginComponent(component || fakeComponent);
-        componentDef.$__customEvents = customEvents;
-        componentDef.$__scope = scope;
         componentDef.$__roots = roots;
         componentDef.$__component = fakeComponent ? null : component;
         componentDef.$__isExisting = isExisting;
@@ -182,6 +181,15 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         // Render the template associated with the component using the final template
         // data that we constructed
         templateRenderFunc(templateInput, out, componentDef, componentDef);
+
+        if (customEvents && componentDef.$__component) {
+            if (registry.$__isServer) {
+                componentDef.$__customEvents = customEvents;
+                componentDef.$__scope = scope;
+            } else {
+                componentDef.$__component.$__setCustomEvents(customEvents, scope);
+            }
+        }
 
         componentDef.$__end();
     };
