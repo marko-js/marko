@@ -561,6 +561,8 @@ Component.prototype = componentProto = {
 
             out.emit('$__componentsInitialized');
         });
+
+        this.$__reset();
     },
 
     $__getRootEls: function(rootEls) {
@@ -595,6 +597,21 @@ Component.prototype = componentProto = {
     get $__rawState() {
         var state = this.$__state;
         return state && state.$__raw;
+    },
+
+    $__setCustomEvents: function(customEvents, scope) {
+        if (customEvents) {
+            var finalCustomEvents = this.$__customEvents = {};
+            this.$__scope = scope;
+
+            for (var i=0, len=customEvents.length; i<len; i+=3) {
+                var eventType = customEvents[i];
+                var targetMethodName = customEvents[i+1];
+                var extraArgs = customEvents[i+2];
+
+                finalCustomEvents[eventType] = [targetMethodName, extraArgs];
+            }
+        }
     }
 };
 

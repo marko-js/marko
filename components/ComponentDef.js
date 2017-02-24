@@ -20,9 +20,7 @@ function ComponentDef(component, componentId, out, componentStack, componentStac
     this.$__component = component;
     this.id = componentId;
 
-    this.$__scope =         // The ID of the component that this component is scoped within
-        this.$__customEvents =  // An array containing information about custom events
-        this.$__roots =         // IDs of root elements if there are multiple root elements
+    this.$__roots =         // IDs of root elements if there are multiple root elements
         this.$__children = // An array of nested ComponentDef instances
         this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
         this.$__bubblingDomEvents = // Used to keep track of bubbling DOM events for components rendered on the server
@@ -121,7 +119,6 @@ ComponentDef.$__deserialize = function(o, types) {
         component.$__bubblingDomEvents = extra.b;
     }
 
-
     // Preview newly created component from being queued for update since we area
     // just building it from the server info
     component.$__updateQueued = true;
@@ -144,12 +141,14 @@ ComponentDef.$__deserialize = function(o, types) {
         extend(component, componentProps);
     }
 
+    var scope = extra.p;
+    var customEvents = extra.e;
+    component.$__setCustomEvents(customEvents, scope);
+
     return {
         $__component: component,
         $__roots: extra.r,
-        $__scope: extra.p,
-        $__domEvents: extra.d,
-        $__customEvents: extra.e
+        $__domEvents: extra.d
     };
 };
 

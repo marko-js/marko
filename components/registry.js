@@ -5,8 +5,10 @@ const SERVER_WIDGET_KEY = Symbol();
 
 function createServerComponentClass(renderingLogic) {
     class ServerComponent {
-        constructor(id, input, out, typeName) {
+        constructor(id, input, out, typeName, customEvents, scope) {
             this.id = id;
+            this.$__customEvents = customEvents;
+            this.$__scope = scope;
             this.$__updatedInput = undefined;
             this.$__input = undefined;
             this.$__state = undefined;
@@ -57,13 +59,13 @@ function createServerComponentClass(renderingLogic) {
 
     return ServerComponent;
 }
-function createComponent(renderingLogic, id, input, out, typeName) {
+function createComponent(renderingLogic, id, input, out, typeName, customEvents, scope) {
     var ServerComponent = renderingLogic[SERVER_WIDGET_KEY];
     if (!ServerComponent) {
         ServerComponent = renderingLogic[SERVER_WIDGET_KEY] = createServerComponentClass(renderingLogic);
     }
 
-    var component = new ServerComponent(id, input, out, typeName);
+    var component = new ServerComponent(id, input, out, typeName, customEvents, scope);
     return component;
 }
 

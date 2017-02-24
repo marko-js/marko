@@ -9,16 +9,16 @@ var extend = require('raptor-util/extend');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
-function resolveComponentRef(out, ref, scope) {
-    if (ref.charAt(0) === '#') {
-        return ref.substring(1);
+function resolveComponentKey(out, key, scope) {
+    if (key.charAt(0) === '#') {
+        return key.substring(1);
     } else {
         var resolvedId;
 
-        if (repeatedRegExp.test(ref)) {
-            resolvedId = nextRepeatedId(out, scope, ref);
+        if (repeatedRegExp.test(key)) {
+            resolvedId = nextRepeatedId(out, scope, key);
         } else {
-            resolvedId = scope + '-' + ref;
+            resolvedId = scope + '-' + key;
         }
 
         return resolvedId;
@@ -110,11 +110,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     scope = scope.id;
                 }
 
-                var ref = componentArgs[1];
-                if (ref != null) {
-                    ref = ref.toString();
+                var key = componentArgs[1];
+                if (key != null) {
+                    key = key.toString();
                 }
-                id = id || resolveComponentRef(out, ref, scope);
+                id = id || resolveComponentKey(out, key, scope);
                 customEvents = componentArgs[2];
                 delete input.$w;
             }
@@ -124,7 +124,14 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer) {
-            component = registry.$__createComponent(renderingLogic, id, input, out, typeName);
+            component = registry.$__createComponent(
+                renderingLogic,
+                id,
+                input,
+                out,
+                typeName,
+                customEvents,
+                scope);
             input = component.$__updatedInput;
             component.$__updatedInput = undefined; // We don't want $__updatedInput to be serialized to the browser
         } else {
@@ -155,6 +162,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 // so we don't want to queue it up as a result of calling `setInput()`
                 component.$__updateQueued = true;
 
+                component.$__setCustomEvents(customEvents, scope);
+
                 if (!isExisting) {
                     emitLifecycleEvent(component, 'create', input, out);
                 }
@@ -173,8 +182,6 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         }
 
         var componentDef = componentsContext.$__beginComponent(component);
-        componentDef.$__customEvents = customEvents;
-        componentDef.$__scope = scope;
         componentDef.$__roots = roots;
         componentDef.$__isExisting = isExisting;
 
@@ -189,6 +196,6 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 module.exports = createRendererFunc;
 
 // exports used by the legacy renderer
-createRendererFunc.$__resolveComponentRef = resolveComponentRef;
+createRendererFunc.$__resolveComponentKey = resolveComponentKey;
 createRendererFunc.$__preserveComponentEls = preserveComponentEls;
 createRendererFunc.$__handleBeginAsync = handleBeginAsync;
