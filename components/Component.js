@@ -561,6 +561,8 @@ Component.prototype = componentProto = {
 
             out.emit('$__componentsInitialized');
         });
+
+        this.$__reset();
     },
 
     $__getRootEls: function(rootEls) {
