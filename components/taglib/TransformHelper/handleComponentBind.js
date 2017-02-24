@@ -156,7 +156,6 @@ module.exports = function handleComponentBind() {
         let dependencyModule = isLegacyComponent || isSplit ? componentModule : this.getTemplateModule();
 
         if (dependencyModule.requirePath) {
-            console.log(isSplit, dependencyModule);
             context.addDependency({ type:'require', path: dependencyModule.requirePath });
         }
 
