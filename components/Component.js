@@ -24,8 +24,8 @@ var slice = Array.prototype.slice;
 
 var MORPHDOM_SKIP = false;
 
-var WIDGET_SUBSCRIBE_TO_OPTIONS;
-var NON_WIDGET_SUBSCRIBE_TO_OPTIONS = {
+var COMPONENT_SUBSCRIBE_TO_OPTIONS;
+var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
 
@@ -196,8 +196,8 @@ Component.prototype = componentProto = {
         var subscriptions = this.$__subscriptions || (this.$__subscriptions = new SubscriptionTracker());
 
         var subscribeToOptions = target.$__isComponent ?
-            WIDGET_SUBSCRIBE_TO_OPTIONS :
-            NON_WIDGET_SUBSCRIBE_TO_OPTIONS;
+            COMPONENT_SUBSCRIBE_TO_OPTIONS :
+            NON_COMPONENT_SUBSCRIBE_TO_OPTIONS;
 
         return subscriptions.subscribeTo(target, subscribeToOptions);
     },
