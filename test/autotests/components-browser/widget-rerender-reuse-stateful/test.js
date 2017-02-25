@@ -15,7 +15,7 @@ module.exports = function(helpers) {
     var self = component;
 
     self.setButtonSize('small');
-    self.rerender();
+    self.update();
 
     var newButton1El = component.getComponent('button1').el;
     var newButton2El = component.getEl('button2');

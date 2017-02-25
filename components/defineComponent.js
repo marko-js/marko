@@ -44,7 +44,7 @@ module.exports = function defineComponent(def, renderer) {
 
     proto.onCreate = proto.onCreate || ComponentClass;
 
-    proto.constructor = def.constructor = Component;
+    // proto.constructor = def.constructor = Component;
 
     // Set a flag on the constructor function to make it clear this is
     // a component so that we can short-circuit this work later
@@ -53,7 +53,7 @@ module.exports = function defineComponent(def, renderer) {
     function State() { BaseState.apply(this, arguments); }
     inherit(State, BaseState);
     proto.$__State = State;
-    proto.renderer = renderer;
+    proto.$__renderer = renderer;
 
     return Component;
 };

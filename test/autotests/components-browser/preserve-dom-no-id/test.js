@@ -12,9 +12,10 @@ module.exports = function(helpers) {
     expect(component.el.querySelector('.preserve').getAttribute('data-counter')).to.equal('0');
     expect(component.el.querySelector('.preserved-counter').innerHTML).to.equal('0');
 
-    component.rerender({
+    component.input ={
         counter: ++counter
-    });
+    };
+    component.update();
 
     expect(component.el.querySelector('.unpreserved-counter').innerHTML).to.equal('1');
     expect(component.el.querySelector('.preserve').getAttribute('data-counter')).to.equal('0');

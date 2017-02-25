@@ -137,7 +137,7 @@ module.exports = function defineWidget(def, renderer) {
     if (renderer) {
         // Add the rendering related methods as statics on the
         // new component constructor function
-        Component.renderer = proto.renderer = renderer;
+        Component.renderer = proto.$__renderer = renderer;
         Component.render = renderer.render;
         Component.renderSync = renderer.renderSync;
     }

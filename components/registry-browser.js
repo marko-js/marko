@@ -6,12 +6,10 @@ var loaded = {};
 var componentTypes = {};
 
 function register(typeName, def) {
-    if (typeof def === 'function') {
-        // We do this to kick off registering of nested components
-        // but we don't use the return value just yet since there
-        // is a good chance that it resulted in a circular dependency
-        def();
-    }
+    // We do this to kick off registering of nested components
+    // but we don't use the return value just yet since there
+    // is a good chance that it resulted in a circular dependency
+    def();
 
     registered[typeName] = def;
     delete loaded[typeName];
@@ -21,21 +19,22 @@ function register(typeName, def) {
 
 function load(typeName) {
     var target = loaded[typeName];
-    if (target === undefined) {
+    if (!target) {
         target = registered[typeName];
 
-        if (typeof target === 'function') {
+        if (target) {
             target = target();
-        }
-        if (!target) {
+        } else {
             target = loadComponent(typeName); // Assume the typeName has been fully resolved already
         }
-        loaded[typeName] = target || null;
+
+        if (!target) {
+            throw Error('Not found: ' + typeName);
+        }
+
+        loaded[typeName] = target;
     }
 
-    if (target == null) {
-        throw new Error('Unable to load: ' + typeName);
-    }
     return target;
 }
 
@@ -48,9 +47,7 @@ function getComponentClass(typeName) {
 
     ComponentClass = load(typeName);
 
-    if (ComponentClass.Component) {
-        ComponentClass = ComponentClass.Component;
-    }
+    ComponentClass = ComponentClass.Component || ComponentClass;
 
     if (!ComponentClass.$__isComponent) {
         ComponentClass = defineComponent(ComponentClass, ComponentClass.renderer);
@@ -66,14 +63,7 @@ function getComponentClass(typeName) {
 
 function createComponent(typeName, id) {
     var ComponentClass = getComponentClass(typeName);
-    var component;
-    if (typeof ComponentClass === 'function') {
-        // The component is a constructor function that we can invoke to create a new instance of the component
-        component = new ComponentClass(id);
-    } else if (ComponentClass.initComponent) {
-        component = ComponentClass;
-    }
-    return component;
+    return new ComponentClass(id);
 }
 
 exports.$__register = register;

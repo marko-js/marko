@@ -91,7 +91,7 @@ module.exports = function(target, renderer) {
                 finalOut = out;
                 shouldEnd = false;
                 extend(out.global, globalData);
-            } else if (typeof out === 'function') {
+            } else if (typeof out == 'function') {
                 finalOut = createOut(globalData);
                 callback = out;
             } else {

@@ -58,13 +58,14 @@ ComponentDef.prototype = {
      * (e.g. "myParentId-foo[0]", "myParentId-foo[1]", etc.)
      */
     elId: function (nestedId) {
+        var id = this.id;
         if (nestedId == null) {
-            return this.id;
+            return id;
         } else {
             if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
-                return nextRepeatedId(this.$__out, this.id, nestedId);
+                return nextRepeatedId(this.$__out, id, nestedId);
             } else {
-                return this.id + '-' + nestedId;
+                return id + '-' + nestedId;
             }
         }
     },
@@ -77,25 +78,24 @@ ComponentDef.prototype = {
      * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
      */
      e: function(type, targetMethod, elId, extraArgs) {
-        if (!targetMethod) {
+        if (targetMethod) {
             // The event handler method is allowed to be conditional. At render time if the target
             // method is null then we do not attach any direct event listeners.
-            return;
+            (this.$__domEvents || (this.$__domEvents = [])).push([
+                type,
+                targetMethod,
+                elId,
+                extraArgs]);
         }
-
-        var domEvents = this.$__domEvents;
-        this.$__domEvents = (domEvents || (this.$__domEvents = [])).concat([
-            type,
-            targetMethod,
-            elId,
-            extraArgs]);
     },
     /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
      */
     $__nextId: function() {
-        return this.id ?
-            this.id + '-w' + (this.$__nextIdIndex++) :
+        var id = this.id;
+
+        return id ?
+            id + '-w' + (this.$__nextIdIndex++) :
             nextComponentId(this.$__out);
     },
 
@@ -126,9 +126,9 @@ ComponentDef.$__deserialize = function(o, types) {
     if (state) {
         var undefinedPropNames = extra.u;
         if (undefinedPropNames) {
-            for(var i=0; i<undefinedPropNames.length; i++) {
-                state[undefinedPropNames[i]] = undefined;
-            }
+            undefinedPropNames.forEach(function(undefinedPropName) {
+                state[undefinedPropName] = undefined;
+            });
         }
         // We go through the setter here so that we convert the state object
         // to an instance of `State`

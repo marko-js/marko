@@ -93,9 +93,11 @@ function getElementById(doc, id) {
 
 function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
+        var id = componentDef.id;
+
         return extraArgs ?
-            [handlerMethodName, componentDef.id, extraArgs] :
-            [handlerMethodName, componentDef.id];
+            [handlerMethodName, id, extraArgs] :
+            [handlerMethodName, id];
     }
 }
 

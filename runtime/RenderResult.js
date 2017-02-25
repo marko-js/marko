@@ -1,11 +1,6 @@
 var domInsert = require('./dom-insert');
 var EMPTY_ARRAY = [];
 
-function checkAddedToDOM(result, method) {
-    if (!result.$__components) {
-        throw Error('Not added to DOM');
-    }
-}
 
 function getComponentDefs(result) {
     var componentDefs = result.$__components;
@@ -25,30 +20,23 @@ module.exports = RenderResult;
 
 var proto = RenderResult.prototype = {
     getComponent: function() {
-        checkAddedToDOM(this, 'getComponent');
-
-        var rerenderComponentInfo = this.$__out.global.$w;
-        var rerenderComponent = rerenderComponentInfo && rerenderComponentInfo[0];
-        if (rerenderComponent) {
-            return rerenderComponent;
-        }
-
-        return getComponentDefs(this)[0].$__component;
+        return this.getComponents()[0];
     },
     getComponents: function(selector) {
-        checkAddedToDOM(this, 'getComponents');
+        if (!this.$__components) {
+            throw Error('Not added to DOM');
+        }
 
         var componentDefs = getComponentDefs(this);
 
         var components = [];
-        var i;
 
-        for (i = 0; i < componentDefs.length; i++) {
-            var component = componentDefs[i].$__component;
+        componentDefs.forEach(function(componentDef) {
+            var component = componentDef.$__component;
             if (!selector || selector(component)) {
                 components.push(component);
             }
-        }
+        });
 
         return components;
     },
@@ -73,9 +61,6 @@ var proto = RenderResult.prototype = {
     },
     toString: function() {
         return this.$__out.toString();
-    },
-    toJSON: function() {
-        return this.$__out.$__getOutput();
     },
     document: typeof document !== 'undefined' && document
 };

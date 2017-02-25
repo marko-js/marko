@@ -24,9 +24,7 @@ class ComponentArgs {
             this.customEvents = [];
         }
 
-        this.customEvents.push(eventType);
-        this.customEvents.push(targetMethod);
-        this.customEvents.push(extraArgs);
+        this.customEvents.push([eventType, targetMethod, extraArgs]);
     }
 
     compile(transformHelper) {

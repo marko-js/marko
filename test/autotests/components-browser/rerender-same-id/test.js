@@ -7,9 +7,10 @@ module.exports = function(helpers) {
 
     var oldId = component.id;
 
-    component.rerender({
+    component.input = {
         label: 'Bar'
-    });
+    };
+    component.update();
 
     expect(component.el.id).to.equal(oldId);
 };

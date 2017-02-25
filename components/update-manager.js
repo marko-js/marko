@@ -66,7 +66,7 @@ function updateComponents(queue) {
     //       since we will still get to them at the end
     for (var i=0; i<queue.length; i++) {
         var component = queue[i];
-        component.update(); // Do the actual component update
+        component.$__update(); // Do the actual component update
     }
 
     // Clear out the queue by setting the length to zero

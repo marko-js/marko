@@ -3,7 +3,8 @@ module.exports = function(helpers) {
 
     var oldChildren = helpers.nodeListToArray(component.el.childNodes);
 
-    component.rerender();
+    component.forceUpdate();
+    component.update();
 
     var newChildren = component.el.childNodes;
     helpers.checkChildrenMatch(oldChildren, newChildren);

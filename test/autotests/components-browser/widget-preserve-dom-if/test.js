@@ -21,10 +21,11 @@ module.exports = function(helpers) {
 
     var renderId = 10;
 
-    component.rerender({
+    component.input = {
         preserveCondition: true,
         renderId: renderId
-    });
+    };
+    component.update();
 
     var timestamps = getTimestamps();
     expect(timestamps.preserveId).to.equal('0');
@@ -58,10 +59,11 @@ module.exports = function(helpers) {
     renderId = 100;
 
     // Do not preserve
-    component.rerender({
+    component.input = {
         preserveCondition: false,
         renderId: renderId
-    });
+    };
+    component.update();
 
     timestamps = getTimestamps();
     expect(timestamps.preserveId).to.equal('100');

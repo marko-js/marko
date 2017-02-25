@@ -25,6 +25,14 @@ exports.initWidgets = modern.init;
 if (Widget) {
     var WidgetProto = Widget.prototype;
     WidgetProto.setProps = WidgetProto.$__setInput;
+    WidgetProto.rerender = function(newInput) {
+        if (newInput) {
+            this.input = newInput;            
+        }
+
+        this.forceUpdate();
+        this.update();
+    };
 }
 
 var RenderResult = require('../../runtime/RenderResult');

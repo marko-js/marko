@@ -12,7 +12,8 @@ module.exports = function(helpers) {
     expect(component.getEl).to.be.a('function');
     expect(component.destroy).to.be.a('function');
     expect(component.isDestroyed).to.be.a('function');
-    expect(component.rerender).to.be.a('function');
+    expect(component.update).to.be.a('function');
+    expect(component.forceUpdate).to.be.a('function');
     expect(component.appendTo).to.be.a('function');
     expect(component.replace).to.be.a('function');
     expect(component.replaceChildrenOf).to.be.a('function');

@@ -104,15 +104,14 @@ function processUpdateHandlers(component, stateChanges, oldState) {
         // Otherwise, there are handlers for all of the changed properties
         // so apply the updates using those handlers
 
-        for (var i=0, len=handlers.length; i<len; i++) {
-            var handler = handlers[i];
+        handlers.forEach(function(handler, i) {
             var propertyName = handler[0];
             handlerMethod = handler[1];
 
             var newValue = stateChanges[propertyName];
             var oldValue = oldState[propertyName];
             handlerMethod.call(component, newValue, oldValue);
-        }
+        });
 
         emitLifecycleEvent(component, 'update');
 
@@ -259,28 +258,25 @@ Component.prototype = componentProto = {
             return;
         }
 
-        var i, len;
-
         var els = this.els;
 
         this.$__destroyShallow();
 
         var rootComponents = this.$__rootComponents;
         if (rootComponents) {
-            for (i=0, len=rootComponents.length; i<len; i++) {
-                rootComponents[i].destroy();
-            }
+            rootComponents.forEach(function(rootComponent) {
+                rootComponent.$__destroy();
+            });
         }
 
-        for (i=0, len=els.length; i<len; i++) {
-            var el = els[i];
+        els.forEach(function(el) {
             destroyElRecursive(el);
 
             var parentNode = el.parentNode;
             if (parentNode) {
                 parentNode.removeChild(el);
             }
-        }
+        });
     },
 
     $__destroyShallow: function() {
@@ -430,7 +426,7 @@ Component.prototype = componentProto = {
             // then we should rerender
 
             if (this.shouldUpdate(input, state) !== false) {
-                this.doUpdate();
+                this.$__rerender();
             }
         }
 
@@ -456,21 +452,17 @@ Component.prototype = componentProto = {
         return true;
     },
 
-    doUpdate: function() {
-        this.rerender();
-    },
-
     $__emitLifecycleEvent: function(eventType, eventArg1, eventArg2) {
         emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
     },
 
-    rerender: function(input) {
+    $__rerender: function(input) {
         if (input) {
             this.input = input;
         }
 
         var self = this;
-        var renderer = self.renderer;
+        var renderer = self.$__renderer;
 
         if (!renderer) {
             throw TypeError();
@@ -604,18 +596,20 @@ Component.prototype = componentProto = {
             var finalCustomEvents = this.$__customEvents = {};
             this.$__scope = scope;
 
-            for (var i=0, len=customEvents.length; i<len; i+=3) {
-                var eventType = customEvents[i];
-                var targetMethodName = customEvents[i+1];
-                var extraArgs = customEvents[i+2];
+            customEvents.forEach(function(customEvent) {
+                var eventType = customEvent[0];
+                var targetMethodName = customEvent[1];
+                var extraArgs = customEvent[2];
 
                 finalCustomEvents[eventType] = [targetMethodName, extraArgs];
-            }
+            });
         }
     }
 };
 
 componentProto.elId = componentProto.getElId;
+componentProto.$__update = componentProto.update;
+componentProto.$__destroy = componentProto.destroy;
 
 // Add all of the following DOM methods to Component.prototype:
 // - appendTo(referenceEl)
@@ -631,9 +625,9 @@ domInsert(
         var elCount = els.length;
         if (elCount > 1) {
             var fragment = component.$__document.createDocumentFragment();
-            for (var i=0; i<elCount; i++) {
-                fragment.appendChild(els[i]);
-            }
+            els.forEach(function(el) {
+                fragment.appendChild(el);
+            });
             return fragment;
         } else {
             return els[0];

@@ -9,7 +9,8 @@ module.exports = function(helpers) {
     expect(buttonComponent.el.innerHTML).to.contain('Frank');
     expect(buttonComponent.el.className).to.equal('app-button app-button-small');
 
-    component.rerender({ name: 'John '});
+    component.input = { name: 'John '};
+    component.update();
 
     expect(buttonComponent.el.innerHTML).to.contain('John');
 
@@ -18,11 +19,12 @@ module.exports = function(helpers) {
     expect(buttonComponent.el.innerHTML).to.contain('John');
     expect(buttonComponent.el.className).to.equal('app-button app-button-large');
 
-    buttonComponent.rerender({
+    buttonComponent.input = {
         size: 'small',
         variant: 'secondary'
         // NOTE: We aren't including renderBody() but we expect that content to be preserved
-    });
+    };
+    buttonComponent.update();
 
     expect(buttonComponent.el.innerHTML).to.contain('John');
     expect(buttonComponent.el.className).to.equal('app-button app-button-secondary app-button-small');

@@ -7,7 +7,7 @@ function getEventAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;
 
     if (virtualAttrs) {
-        return el._vattrs[attrName];
+        return virtualAttrs[attrName];
     } else {
         var attrValue = el.getAttribute(attrName);
         if (attrValue) {
@@ -28,7 +28,6 @@ function delegateEvent(node, target, event) {
     var extraArgs = target[2];
 
     var targetComponent = componentLookup[targetComponentId];
-
 
     if (!targetComponent) {
         return;

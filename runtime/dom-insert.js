@@ -4,7 +4,7 @@ var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
 var destroyElRecursive = componentsUtil.$__destroyElRecursive;
 
 function resolveEl(el) {
-    if (typeof el === 'string') {
+    if (typeof el == 'string') {
         var elId = el;
         el = document.getElementById(elId);
         if (!el) {
@@ -47,7 +47,7 @@ module.exports = function(target, getEl, afterInsert) {
             var curChild = referenceEl.firstChild;
             while(curChild) {
                 var nextSibling = curChild.nextSibling; // Just in case the DOM changes while removing
-                if (curChild.nodeType === 1) {
+                if (curChild.nodeType == 1) {
                     beforeRemove(curChild);
                 }
                 curChild = nextSibling;

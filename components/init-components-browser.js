@@ -52,11 +52,6 @@ function initComponent(componentDef, doc) {
     component.$__document = doc;
 
     var isExisting = componentDef.$__isExisting;
-    var i;
-    var len;
-    var eventType;
-    var targetMethodName;
-    var extraArgs;
     var id = component.id;
 
     var rootIds = componentDef.$__roots;
@@ -65,8 +60,8 @@ function initComponent(componentDef, doc) {
         var rootComponents;
 
         var els = [];
-        for (i=0, len=rootIds.length; i<len; i++) {
-            var rootId = rootIds[i];
+
+        rootIds.forEach(function(rootId) {
             var nestedId = id + '-' + rootId;
             var rootComponent = componentLookup[nestedId];
             if (rootComponent) {
@@ -83,7 +78,7 @@ function initComponent(componentDef, doc) {
                     els.push(rootEl);
                 }
             }
-        }
+        });
 
         component.el = els[0];
         component.els = els;
@@ -103,15 +98,16 @@ function initComponent(componentDef, doc) {
     if (domEvents) {
         var eventListenerHandles = [];
 
-        for (i=0, len=domEvents.length; i<len; i+=4) {
-            eventType = domEvents[i];
-            targetMethodName = domEvents[i+1];
-            var eventEl = getElementById(doc, domEvents[i+2]);
-            extraArgs = domEvents[i+3];
+        domEvents.forEach(function(domEventArgs) {
+            // The event mapping is for a direct DOM event (not a custom event and not for bubblign dom events)
 
-            // The event mapping is for a DOM event (not a custom event)
+            var eventType = domEventArgs[0];
+            var targetMethodName = domEventArgs[1];
+            var eventEl = getElementById(doc, domEventArgs[2]);
+            var extraArgs = domEventArgs[3];
+
             addDOMEventListeners(component, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
-        }
+        });
 
         if (eventListenerHandles.length) {
             component.$__domEventListenerHandles = eventListenerHandles;
@@ -158,18 +154,17 @@ function initClientRendered(componentDefs, doc) {
  * of the component IDs.
  */
 function initServerRendered(renderedComponents, doc) {
-    var i=0, len;
-    if (!arguments.length) {
+    if (!renderedComponents) {
         renderedComponents = win.$components;
 
         win.$components = {
             concat: initServerRendered
         };
 
-        if (renderedComponents && (len=renderedComponents.length)) {
-            for (; i<len; i++) {
-                initServerRendered(renderedComponents[i], doc);
-            }
+        if (renderedComponents) {
+            renderedComponents.forEach(function(renderedComponent) {
+                initServerRendered(renderedComponent, doc);
+            });
         }
         return;
     }
@@ -182,14 +177,10 @@ function initServerRendered(renderedComponents, doc) {
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
 
-    if (!doc) {
-        doc = defaultDocument;
-    }
-
-    for (len=componentDefs.length; i<len; i++) {
-        var componentDef = ComponentDef.$__deserialize(componentDefs[i], typesArray);
-        initComponent(componentDef, doc);
-    }
+    componentDefs.forEach(function(componentDef) {
+        componentDef = ComponentDef.$__deserialize(componentDef, typesArray);
+        initComponent(componentDef, doc || defaultDocument);
+    });
 }
 
 exports.$__initClientRendered = initClientRendered;
