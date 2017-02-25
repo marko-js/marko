@@ -187,7 +187,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(input, out, componentDef, component.$__rawState);
+        templateRenderFunc(input, out, componentDef, component, component.$__rawState);
 
         componentDef.$__end();
     };

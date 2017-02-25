@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     include_tag = marko_loadTag(require("marko/components/taglib/include-tag")),
     marko_attr = marko_helpers.a;
 
-function render(input, out, __component, state) {
+function render(input, out, __component, component, state) {
   var data = input;
 
   var __componentId0 = __component.id;

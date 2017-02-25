@@ -218,6 +218,7 @@ module.exports = function handleComponentBind() {
             if (isLegacyComponent) {
                 eventArgs.node.addRenderFunctionParam(builder.identifier('widget'));
             } else {
+                eventArgs.node.addRenderFunctionParam(builder.identifier('component'));
                 eventArgs.node.addRenderFunctionParam(builder.identifier('state'));
             }
 

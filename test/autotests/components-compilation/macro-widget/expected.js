@@ -10,7 +10,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f;
 
-function render(input, out, __component, state) {
+function render(input, out, __component, component, state) {
   var data = input;
 
   function macro_renderButton(color, out, renderBody) {
