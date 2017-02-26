@@ -1,3 +1,5 @@
+"use strict";
+
 var marko_template = module.exports = require("marko/html").t(__filename),
     marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
     hello_template = marko_loadTemplate(require.resolve("./hello.marko")),

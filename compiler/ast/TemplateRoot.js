@@ -96,6 +96,8 @@ class TemplateRoot extends Node {
                 body.push(_buildVersionComment(builder, context));
             }
 
+            body.push(builder.literal('use strict'));
+
             let staticNodes = context.getStaticNodes([templateDeclaration]);
             if (staticNodes.length) {
                 body = body.concat(staticNodes);

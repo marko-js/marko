@@ -1,3 +1,5 @@
+"use strict";
+
 var marko_template = module.exports = require("marko/html").t(__filename),
     bar = require("./bar"),
     foo = bar.f;

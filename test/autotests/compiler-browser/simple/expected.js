@@ -1,3 +1,5 @@
+"use strict";
+
 var marko_template = module.exports = require("marko/vdom").t(),
     marko_helpers = require("marko/runtime/vdom/helpers"),
     marko_forEach = marko_helpers.f,

@@ -1,3 +1,5 @@
+"use strict";
+
 var marko_template = module.exports = require("marko/vdom").t();
 
 function render(input, out) {

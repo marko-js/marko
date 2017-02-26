@@ -1,3 +1,5 @@
+"use strict";
+
 var marko_template = module.exports = require("marko/html").t(__filename),
     marko_components = require("marko/components/legacy"),
     marko_registerComponent = marko_components.rc,
