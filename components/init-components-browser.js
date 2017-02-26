@@ -157,14 +157,16 @@ function initServerRendered(renderedComponents, doc) {
     if (!renderedComponents) {
         renderedComponents = win.$components;
 
-        win.$components = {
-            concat: initServerRendered
-        };
-
         if (renderedComponents) {
-            renderedComponents.forEach(function(renderedComponent) {
-                initServerRendered(renderedComponent, doc);
-            });
+            if (renderedComponents.forEach) {
+                renderedComponents.forEach(function(renderedComponent) {
+                    initServerRendered(renderedComponent, doc);
+                });
+            }
+        } else {
+            win.$components = {
+                concat: initServerRendered
+            };
         }
         return;
     }

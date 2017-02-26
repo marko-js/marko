@@ -32,7 +32,7 @@ exports.check = function(marko, hotReload, expect) {
 
     copyFiles(nodePath.join(__dirname, 'a'));
     var component = require(tempTemplatePath);
-    expect(component.renderToString({ name: 'Frank' })).to.equal('<div class="a" id="w0">Hello Frank</div>');
+    expect(component.renderToString({ name: 'Frank' })).to.equal('<div class="a" id="s0">Hello Frank</div>');
 
     try {
         fs.unlinkSync(nodePath.join(__dirname, 'temp/component.js'));

@@ -2,7 +2,7 @@ var KEY = Symbol();
 var isArray = Array.isArray;
 
 function UniqueId(out) {
-    this.prefix = out.global.componentIdPrefix || 'w';
+    this.prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "c" for the client/browser)
     this.nextId = 0;
 }
 

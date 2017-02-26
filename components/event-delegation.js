@@ -1,7 +1,11 @@
-var componentLookup = require('./util').$__componentLookup;
+var componentsUtil = require('./util');
+var runtimeId = componentsUtil.$__runtimeId;
+var componentLookup = componentsUtil.$__componentLookup;
 var isArray = Array.isArray;
 
-var listenersAttachedKey = '$MED';
+// We make our best effort to allow multiple marko runtimes to be loaded in the
+// same window. Each marko runtime will get its own unique runtime ID.
+var listenersAttachedKey = '$MED' + runtimeId;
 
 function getEventAttribute(el, attrName) {
     var virtualAttrs = el._vattrs;

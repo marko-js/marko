@@ -1,3 +1,9 @@
+var markoGlobal = window.$MG || (window.$MG = {
+    uid: 0
+});
+
+var runtimeId = markoGlobal.uid++;
+
 var componentLookup = {};
 
 var defaultDocument = document;
@@ -81,10 +87,12 @@ function destroyElRecursive(el) {
     }
 }
 
-var nextUniqueId = 0;
-
 function nextComponentId() {
-    return 'wc' + (nextUniqueId++);
+    // Each component will get an ID that is unique across all loaded
+    // marko runtimes. This allows multiple instances of marko to be
+    // loaded in the same window and they should all place nice
+    // together
+    return 'c' + ((markoGlobal.uid)++);
 }
 
 function getElementById(doc, id) {
@@ -101,6 +109,7 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     }
 }
 
+exports.$__runtimeId = runtimeId;
 exports.$__componentLookup = componentLookup;
 exports.$__getComponentForEl = getComponentForEl;
 exports.$__emitLifecycleEvent = emitLifecycleEvent;

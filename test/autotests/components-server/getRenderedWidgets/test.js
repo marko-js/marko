@@ -12,9 +12,9 @@ module.exports = function(helpers, done) {
         var componentDefs = renderedComponents.w;
         expect(componentDefs.length).to.equal(3);
 
-        expect(componentDefs[0][0]).to.equal('w0-w0');
-        expect(componentDefs[1][0]).to.equal('w0-w1');
-        expect(componentDefs[2][0]).to.equal('w0');
+        expect(componentDefs[0][0]).to.equal('s0-w0');
+        expect(componentDefs[1][0]).to.equal('s0-w1');
+        expect(componentDefs[2][0]).to.equal('s0');
         done();
 	});
 };
