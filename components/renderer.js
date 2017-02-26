@@ -7,7 +7,7 @@ var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
 var extend = require('raptor-util/extend');
 
-var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
+var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
 function resolveComponentKey(out, key, scope) {
     if (key.charAt(0) == '#') {
@@ -83,8 +83,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         var outGlobal = out.global;
 
         if (!out.isSync()) {
-            if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
-                outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
+            if (!outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY]) {
+                outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY] = true;
                 out.on('beginAsync', handleBeginAsync);
             }
         }

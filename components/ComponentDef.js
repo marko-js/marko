@@ -95,7 +95,7 @@ ComponentDef.prototype = {
         var id = this.id;
 
         return id ?
-            id + '-w' + (this.$__nextIdIndex++) :
+            id + '-c' + (this.$__nextIdIndex++) :
             nextComponentId(this.$__out);
     },
 
