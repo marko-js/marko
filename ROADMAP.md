@@ -697,11 +697,11 @@ Or, since `component.js` is automatically recognized
 </div>
 ```
 
-### Deprecate `component-types` ([#514](https://github.com/marko-js/marko/issues/514))
+### Deprecate `widget-types` ([#514](https://github.com/marko-js/marko/issues/514))
 
 **Old:**
 ```html
-<component-types default="./component" mobile="./component-mobile"/>
+<widget-types default="./component" mobile="./component-mobile"/>
 
 <div w-bind=(data.isMobile ? 'default' : 'mobile')>
     ...
