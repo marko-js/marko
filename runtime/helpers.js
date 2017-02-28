@@ -5,7 +5,7 @@ function isFunction(arg) {
     return typeof arg === 'function';
 }
 
-function classListHelper(arg, classNames) {
+function classList(arg, classNames) {
     var len;
 
     if (arg) {
@@ -15,7 +15,7 @@ function classListHelper(arg, classNames) {
             }
         } else if (typeof (len = arg.length) === 'number') {
             for (var i=0; i<len; i++) {
-                classListHelper(arg[i], classNames);
+                classList(arg[i], classNames);
             }
         } else if (typeof arg === 'object') {
             for (var name in arg) {
@@ -28,12 +28,6 @@ function classListHelper(arg, classNames) {
             }
         }
     }
-}
-
-function classList(classList) {
-    var classNames = [];
-    classListHelper(classList, classNames);
-    return classNames.join(' ');
 }
 
 function createDeferredRenderer(handler) {
@@ -117,5 +111,7 @@ exports.t = function loadTagHelper(renderer, targetProperty, isRepeated) {
  *
  */
 exports.cl = function classListHelper() {
-    return classList(arguments);
+    var classNames = [];
+    classList(arguments, classNames);
+    return classNames.join(' ');
 };
