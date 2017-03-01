@@ -1,0 +1,23 @@
+[{
+    "title": "Introduction",
+    "docs": [
+        "Installing",
+        "Getting started",
+        "Rendering",
+        "Syntax",
+        "Core tags",
+        "Custom tags",
+        "Components"
+    ]
+},{
+    "title": "Integrations",
+    "docs": [
+        "Lasso",
+        "Webpack",
+        "Browserify",
+        "Rollup",
+        "Express",
+        "Koa",
+        "Hapi"
+    ]
+}]

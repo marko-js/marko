@@ -1,6 +1,6 @@
 # Getting started
 
-The easiest way to get started with Marko is to use the [Try Online]() feature. You can just open it in another tab and follow along. If you'd rather develop locally, check out the [Installation]() page.
+The easiest way to get started with Marko is to use the [Try Online](https://markojs.com/try-online) feature. You can just open it in another tab and follow along. If you'd rather develop locally, check out the [Installation](./installing.md) page.
 
 ## Hello world
 

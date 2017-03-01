@@ -2,7 +2,7 @@
 
 ## Trying out Marko
 
-If you just want to play around with Marko in the browser, head on over to our [Try Online](/try-online) feature.  You'll be able to develop a Marko application right in your browser.
+If you just want to play around with Marko in the browser, head on over to our [Try Online](https://markojs.com/try-online) feature.  You'll be able to develop a Marko application right in your browser.
 
 ## Creating new apps
 

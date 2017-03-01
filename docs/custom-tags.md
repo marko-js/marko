@@ -1,6 +1,6 @@
 # Custom tags
 
-Marko gives you access to the same API that is used to write the [Core Tags]() so that you can extend the language with custom tags and attributes.
+Marko gives you access to the same API that is used to write the [Core Tags](./core-tags.md) so that you can extend the language with custom tags and attributes.
 
 > **ProTip:** We recommend that custom tags and custom attributes have at least one dash to indicate that they are not part of the standard HTML grammar.
 

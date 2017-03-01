@@ -7,7 +7,7 @@ _example.js_
 var button = require('button.marko');
 ```
 
-> **Note:** If you are targeting node.js, you will need to enable the [require extension]() in order to require `.marko` files.  If you are targeting the browser, you will need to use a bundler like [`lasso`](), [`webpack`](), [`browserify`]() or [`rollup`]().
+> **Note:** If you are targeting node.js, you will need to enable the [require extension]() in order to require `.marko` files.  If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
 
 Once you have a view, you can pass input data and render it:
 
