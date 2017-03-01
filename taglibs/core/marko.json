@@ -155,7 +155,10 @@
         ]
     },
     "<static>": {
-        "code-generator": "./static-tag"
+        "code-generator": "./static-tag",
+        "parse-options": {
+            "ignoreAttributes": true
+        }
     },
     "<unless>": {
         "node-factory": "./unless-tag",
