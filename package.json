@@ -141,10 +141,13 @@
   "minprops": {
     "exclude": [
       "b",
+      "be",
       "c",
       "ca",
       "d",
       "e",
+      "ee",
+      "h",
       "id",
       "n",
       "r",
