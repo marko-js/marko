@@ -46,6 +46,7 @@ To inject the required JavaScript and CSS into the page you will want to use the
 
 The `browser.json` provides a simple way for declaring _top-level_ page dependencies. For example:
 
+_browser.json_
 ```json
 {
     "dependencies": [
@@ -61,8 +62,7 @@ Lasso.js will automatically bundle up transitive dependencies by building and wa
 
 Marko templates can be imported and rendered by any JavaScript module. The code below shows how to render a top-level UI component and have it be mounted to the DOM as a child `document.body`:
 
-_client.js:_
-
+_client.js_
 ```js
 require('./components/app/index.marko')
     .renderSync({})
@@ -76,8 +76,7 @@ When Lasso.js bundles up the code above it will automatically bundle up the requ
 If you are rendering the initial UI on the server then it is necessary to make sure that all UI components are bundled and sent to the browser so that UI components can be mounted in the browser. For example:
 
 
-_about-me/index.marko:_
-
+_about-me/index.marko_
 ```xml
 <lasso-page package-path="./browser.json" />
 
@@ -102,8 +101,7 @@ _about-me/index.marko:_
 
 Typically, adding the top-level UI component as a page dependency is all that is required:
 
-_about-me/browser.json_:
-
+_about-me/browser.json_
 ```json
 {
     "dependencies": [
