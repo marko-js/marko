@@ -188,7 +188,7 @@ class {
 
 ### `key`
 
-A key is a scoped `id`.  It will generate a unique `id` attribute on the HTML element.  The ID will be a concatenation of the parent component ID with the provided value of the w-id. Keys allow the component to easily access its children.  Additionally, when updating the DOM, keyed elements are guaranteed to be matched up and reused rather than being discarded and re-created.
+A key is a scoped `id`.  It will generate a unique `id` attribute on the HTML element.  The ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. Keys allow the component to easily access its children.  Additionally, when updating the DOM, keyed elements are guaranteed to be matched up and reused rather than being discarded and re-created.
 
 _input.marko_
 ```xml
@@ -275,6 +275,41 @@ this.setStateDirty('numbers');
 ### `this.input`
 
 The current input for the component.  Setting `this.input` will result in the component being re-rendered.
+
+## Variables
+
+When a Marko component is compiled some additional variables are made available to the rendering function. These variables are described below.
+
+### `component`
+
+The `component` variable refers to the instance of the current UI component being rendered. This variable can be used to call methods on the UI component instance.
+
+```xml
+class {
+    getFullName() {
+        var person = this.input.person;
+        return person.firstName + ' ' + person.lastName;
+    }
+}
+
+<div>Hello ${component.getFullName()}</div>
+```
+
+### `input`
+
+The `input` variable refers to the input object and is equivalent to `component.input`|`this.input`.
+
+```xml
+<div>Hello ${input.name}</div>
+```
+
+### `state`
+
+The `state` variable refers to UI component's state object and is the unwatched equivalent of `component.state`|`this.state`.
+
+```xml
+<div>Hello ${state.name}</div>
+```
 
 ## Methods
 
