@@ -42,7 +42,7 @@ If necessary, you can escape `$` using a backslash to have it be treated as text
 
 ## Root level text
 
-Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md) to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 
 ```xml
 -- Root level text
