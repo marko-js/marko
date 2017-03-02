@@ -27,7 +27,6 @@
 },{
     "title": "Tooling",
     "docs": [
-        "Editor plugins",
-        "Devtools"
+        "Editor plugins"
     ]
 }]
