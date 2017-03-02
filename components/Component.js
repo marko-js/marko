@@ -4,7 +4,6 @@
 var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
 var componentsUtil = require('./util');
-var getComponentForEl = componentsUtil.$__getComponentForEl;
 var componentLookup = componentsUtil.$__componentLookup;
 var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
 var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
@@ -35,10 +34,23 @@ function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
 }
 
-function hasCompatibleComponent(componentsContext, existingComponent) {
-    var id = existingComponent.id;
-    var newComponentDef = componentsContext.$__componentsById[id];
-    return newComponentDef && existingComponent.$__type == newComponentDef.$__component.$__type;
+function checkCompatibleComponent(componentsContext, el) {
+    var component = el._w;
+    while(component) {
+        var id = component.id;
+        var newComponentDef = componentsContext.$__componentsById[id];
+        if (newComponentDef && component.$__type == newComponentDef.$__component.$__type) {
+            break;
+        }
+
+        var rootFor = component.$__rootFor;
+        if (rootFor)  {
+            component = rootFor;
+        } else {
+            component.$__destroyShallow();
+            break;
+        }
+    }
 }
 
 function handleCustomEventWithMethodListener(component, targetMethodName, args, extraArgs) {
@@ -488,7 +500,6 @@ Component.prototype = componentProto = {
 
             function onBeforeElUpdated(fromEl, toEl) {
                 var id = fromEl.id;
-                var existingComponent;
 
                 if (componentsContext && id) {
                     var preserved = componentsContext.$__preserved[id];
@@ -499,13 +510,10 @@ Component.prototype = componentProto = {
                         // the morphing will take place when the reused component updates.
                         return MORPHDOM_SKIP;
                     } else {
-                        existingComponent = getComponentForEl(fromEl);
-                        if (existingComponent && !hasCompatibleComponent(componentsContext, existingComponent)) {
-                            // We found a component in an old DOM node that does not have
-                            // a compatible component that was rendered so we need to
-                            // destroy the old component
-                            existingComponent.$__destroyShallow();
-                        }
+                        // We may need to destroy a Component associated with the current element
+                        // if a new UI component was rendered to the same element and the types
+                        // do not match
+                        checkCompatibleComponent(componentsContext, fromEl);
                     }
                 }
             }
