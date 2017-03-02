@@ -2,7 +2,7 @@
     <a href="http://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko logo" width="300" /></a><br /><br />
 </p>
 
-Marko a friendly (and fast!) UI library that makes building web apps fun.
+Marko is a friendly (and fast!) UI library that makes building web apps fun.
 Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
