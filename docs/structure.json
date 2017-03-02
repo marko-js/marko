@@ -10,14 +10,24 @@
         "Components"
     ]
 },{
-    "title": "Integrations",
+    "title": "Bundler Integrations",
     "docs": [
         "Lasso",
         "Webpack",
         "Browserify",
-        "Rollup",
+        "Rollup"
+    ]
+},{
+    "title": "Server Integrations",
+    "docs": [
         "Express",
         "Koa",
         "Hapi"
+    ]
+},{
+    "title": "Tooling",
+    "docs": [
+        "Editor plugins",
+        "Devtools"
     ]
 }]
