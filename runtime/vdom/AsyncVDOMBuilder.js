@@ -150,6 +150,20 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
+    error: function(e) {
+        try {
+            this.emit('error', e);
+        } finally {
+            // If there is no listener for the error event then it will
+            // throw a new Error here. In order to ensure that the async fragment
+            // is still properly ended we need to put the end() in a `finally`
+            // block
+            this.end();
+        }
+
+        return this;
+    },
+
     beginAsync: function(options) {
         if (this.$__sync) {
             throw Error('Not allowed');
