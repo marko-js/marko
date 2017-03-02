@@ -1,6 +1,20 @@
 var defaultCreateOut = require('./createOut');
 var extend = require('raptor-util/extend');
 
+function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
+    try {
+        renderFunc(finalData, finalOut);
+        if (shouldEnd) {
+            finalOut.end();
+        }
+    } catch(err) {
+        setTimeout(function() {
+            finalOut.error(err);
+        }, 0);
+    }
+    return finalOut;
+}
+
 module.exports = function(target, renderer) {
     var renderFunc = renderer && (renderer.renderer || renderer.render || renderer);
     var createOut = target.createOut || renderer.createOut || defaultCreateOut;
@@ -26,8 +40,7 @@ module.exports = function(target, renderer) {
                    })
                    .once('error', callback);
 
-                render(localData, out);
-                return out.end();
+                return safeRender(render, localData, out, true);
             } else {
                 out.sync();
                 render(localData, out);
@@ -115,9 +128,7 @@ module.exports = function(target, renderer) {
 
             globalData.template = globalData.template || this;
 
-            render(finalData, finalOut);
-
-            return shouldEnd ? finalOut.end() : finalOut;
+            return safeRender(render, finalData, finalOut, shouldEnd);
         }
     });
 };

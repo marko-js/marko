@@ -1,0 +1,16 @@
+class {
+    onCreate() {
+        this.state = {
+            target: 'foo'
+        };
+    }
+}
+
+<div.root>
+    <if(state.target === 'foo')>
+        <foo key="child"/>
+    </if>
+    <else>
+        <bar key="child"/>
+    </else>
+</div>

@@ -7,7 +7,7 @@ var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_XLINK_HREF = 'xlink:href';
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = Object.freeze({});
-var ATTR_MARKO_CONST = 'data-marko-const';
+var ATTR_MARKO_CONST = 'data-_mc';
 
 var specialAttrRegexp = /^data-_/;
 
@@ -184,8 +184,12 @@ VElement.prototype = {
         if (otherNode.nodeType == 1) {
             var constId = this.$__constId;
             if (constId) {
-                var otherSameId = otherNode.$__VNode ? otherNode.$__constId : otherNode.getAttribute(ATTR_MARKO_CONST);
-                return constId === otherSameId;
+                var otherVirtualAttrs;
+
+                var otherConstId = otherNode.$__VNode ?
+                    otherNode.$__constId :
+                    (otherVirtualAttrs = otherNode._vattrs) && otherVirtualAttrs[ATTR_MARKO_CONST];
+                return constId === otherConstId;
             }
         }
 
