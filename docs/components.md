@@ -188,7 +188,7 @@ class {
 
 ### `key`
 
-A key is a scoped `id`.  It will generate a unique `id` attribute on the HTML element.  The ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. Keys allow the component to easily access its children.  Additionally, when updating the DOM, keyed elements are guaranteed to be matched up and reused rather than being discarded and re-created.
+A key is a scoped `id`. The `key` attribute can be applied to both HTML elements and custom tags for UI components. If applied to an HTML element, a unique `id` attribute will be added to the HTML element. The assigned ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. If applied to a UI component , then the `key` will be used to assign a unique ID to the target component and all of its children (including nested components and nested HTML elements). Keys allow the component to easily obtain references to nested HTML elements and nested UI components.  Additionally, when updating the DOM, keyed elements and components are guaranteed to be matched up and reused rather than being discarded and re-created.
 
 _input.marko_
 ```xml
@@ -209,6 +209,33 @@ _output.html_
 The containing component can reference the nested DOM element using the following code:
 ```js
 var myButton = this.getEl('myButton');
+```
+
+The `key` attribute can also be applied to repeated elements by appending `[]`:
+
+_input.marko_
+```xml
+<ul>
+    <for(color in ['red', 'green', 'blue'])>
+        <li key="colors[]">${color}</li>
+    </for>
+</ul>
+```
+
+Will generate HTML similar to:
+
+_output.html_
+```html
+<ul>
+    <li key="colors[0]">red</li>
+    <li key="colors[1]">green</li>
+    <li key="colors[2]">blue</li>
+</ul>
+```
+
+The containing component can reference the repeated DOM elements using the following code:
+```js
+var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 ```
 
 ### `for-key`
@@ -332,6 +359,9 @@ component.destroy({
 ### `forceUpdate()`
 
 Queue the component to re-render and skip all checks to see if it actually needs it.
+
+> When using `forceUpdate()` the updating of the DOM will be queued up. If you want to immediately update the DOM
+> then call `this.update()` after calling `this.forceUpdate()`.
 
 ### `getEl([key])`
 
@@ -604,8 +634,8 @@ import scrollmonitor from 'scrollmonitor';
 class {
     onMount() {
         this.watcher = scrollmonitor.create(this.el);
-        this.watcher.enterViewport(() => console.log('I have entered the viewport'));
-        this.watcher.exitViewport(() => console.log('I have left the viewport'));
+        this.watcher.enterViewport(() => console.log('Entered the viewport'));
+        this.watcher.exitViewport(() => console.log('Left the viewport'));
     }
     onDestroy() {
         this.watcher.destroy();

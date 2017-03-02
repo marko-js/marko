@@ -186,9 +186,6 @@ view.stream({}).pipe(writeStream);
 ### `afterInsert(doc)`
 ### `getNode(doc)`
 ### `getOutput()`
-### `toString()`
-### `toJSON()`
-
 ### `appendTo(targetEl)`
 ### `insertAfter(targetEl)`
 ### `insertBefore(targetEl)`
