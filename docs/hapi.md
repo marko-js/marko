@@ -3,7 +3,7 @@ Hapi + Marko
 
 ```javascript
 'use strict';
-require('marko/node-require').install();
+require('marko/node-require');
 
 const Hapi = require('hapi');
 

@@ -20,7 +20,7 @@ By using `res.marko` you'll automatically have access to `req`, `res`, `app`, `a
 
 ```javascript
 require('marko/express'); //enable res.marko
-require('marko/node-require').install(); //allow requiring templates
+require('marko/node-require'); //allow requiring templates
 
 var express = require('express');
 var template = require('./template.marko');

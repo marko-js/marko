@@ -7,7 +7,7 @@ _example.js_
 var button = require('button.marko');
 ```
 
-> **Note:** If you are targeting node.js, you will need to enable the [require extension]() in order to require `.marko` files.  If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
+> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files.  If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
 
 Once you have a view, you can pass input data and render it:
 
@@ -61,7 +61,7 @@ result.appendTo(document.body);
 | `input` | `Object` | the input data used to render the view |
 | return value | `AsyncStream`/`AsyncVDOMBuilder` | the async `out` render target |
 
-The `render` method returns an [async `out`]() which is used to generate HTML on the server or a virtual DOM in the browser. In either case, the async `out` has a `then` method that follows the Promises/A+ spec, so it can be used as if it were a Promise.  This promise resolves to a [`RenderResult`](#renderresult).
+The `render` method returns an async `out` which is used to generate HTML on the server or a virtual DOM in the browser. In either case, the async `out` has a `then` method that follows the Promises/A+ spec, so it can be used as if it were a Promise.  This promise resolves to a [`RenderResult`](#renderresult).
 
 ```js
 var view = require('./view.marko');
@@ -117,7 +117,7 @@ http.createServer((req, res) => {
 | `out` | `AsyncStream`/`AsyncVDOMBuilder` | The async `out` to render to |
 | return value | `AsyncStream`/`AsyncVDOMBuilder` | The `out` that was passed |
 
-The `render` method also allows passing an existing [async `out`]().  If you do this, `render` will not automatically end the async `out` (this allows rendering a view in the middle of another view).  If the async `out` won't be ended by other means, you are responsible for ending it.
+The `render` method also allows passing an existing async `out`.  If you do this, `render` will not automatically end the async `out` (this allows rendering a view in the middle of another view).  If the async `out` won't be ended by other means, you are responsible for ending it.
 
 ```js
 var view = require('./view.marko');

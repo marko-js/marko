@@ -82,7 +82,7 @@ Load up that page in your browser and you should see `Hello Marko` staring back 
 
 #### Require Marko views
 
-Marko provides a [custom Node.js require extension]() that allows you `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
+Marko provides a custom Node.js require extension that allows you `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
 
 _server.js_
 ```js

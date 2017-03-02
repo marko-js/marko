@@ -11,7 +11,7 @@ npm install marko --save
 ## Usage
 
 ```javascript
-require('marko/node-require').install();
+require('marko/node-require');
 
 var koa = require('koa');
 

@@ -42,7 +42,7 @@ If necessary, you can escape `$` using a backslash to have it be treated as text
 
 ## Root level text
 
-Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`]() to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md) to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 
 ```xml
 -- Root level text
@@ -228,11 +228,11 @@ Others allow a custom syntax:
 <for(item in items)/>
 ```
 
-Directives are used by many of our [Core Tags]() for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features.  You can also use them in your own [Custom Tags]().
+Directives are used by many of our [Core Tags](./core-tags.md) for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features.  You can also use them in your own [Custom Tags](./custom-tags.md).
 
 ## Inline JavaScript
 
-> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`]() it.
+> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](./core-tags.md#codeimportcode) it.
 
 To execute JavaScript in your template you can insert a Javascript statement using the `$ <code>` syntax.
 
