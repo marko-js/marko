@@ -2,7 +2,10 @@
 
 Marko's syntax is based on HTML, so you basically already know it.  Marko extends the HTML language to add a few nice features which we'll cover here.
 
-> **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see our documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
+> **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md).
+
+<!--
+If you'd prefer to see our documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.-->
 
 ## Text replacement
 
