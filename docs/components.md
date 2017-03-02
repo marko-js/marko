@@ -188,7 +188,7 @@ class {
 
 ### `key`
 
-A key is a scoped `id`.  It will generate a unique `id` attribute on the HTML element.  The ID will be a concatenation of the parent component ID with the provided value of the w-id. Keys allow the component to easily access its children.  Additionally, when updating the DOM, keyed elements are guaranteed to be matched up and reused rather than being discarded and re-created.
+A key is a scoped `id`.  It will generate a unique `id` attribute on the HTML element.  The ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. Keys allow the component to easily access its children.  Additionally, when updating the DOM, keyed elements are guaranteed to be matched up and reused rather than being discarded and re-created.
 
 _input.marko_
 ```xml
