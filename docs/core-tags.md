@@ -347,19 +347,67 @@ If you would like for your HTML comment to show up in the final output then you 
 
 ### `<html-comment>`
 
+_input.marko_
 ```xml
 <html-comment>This is a comment that *will* be rendered</html-comment>
 <h1>Hello</h1>
 ```
 
-Output:
-
-```xml
+_output.html_
+```html
 <!--This is a comment that *will* be rendered-->
 <h1>Hello</h1>
 ```
 
+Alternatively, the `<marko-compiler-options>` tag may be used to configure comments for the entire template:
+```xml
+<marko-compiler-options preserve-comments/>
+```
+
 ## Compiler options
 
-### `preserve-whitespace`
+### `marko-preserve-whitespace`
 
+Whitespace can be preserved using the `preserve-whitespace` attribute:
+
+```xml
+<div marko-preserve-whitespace>
+    All of this
+    whitespace   will
+    be preserved.
+</div>
+```
+Alternatively, the `<marko-compiler-options>` tag may be used to configure whitespace for the entire template:
+
+```xml
+<marko-compiler-options preserve-whitespace/>
+```
+
+### `marko-body`
+
+The `marko-body` attribute can be used to control how body content is parsed. The following values are supported:
+- `html` - Body content will be parsed HTML (the default)
+- `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
+- `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
+
+_input.marko_
+```xml
+<div marko-body="static-text">
+    This is just one
+    <span if(foo)>
+            Hello ${THIS IS NOT VALID}!
+    </span>
+    big text block
+</div>
+```
+
+_output.html_
+```html
+<div>
+    This is just one
+    &lt;span if(foo)&gt;
+        Hello ${THIS IS NOT VALID}!
+    &lt;/span&gt;
+    big text block
+</div>
+```
