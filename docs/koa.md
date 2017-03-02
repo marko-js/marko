@@ -1,14 +1,14 @@
 Koa + Marko
 =====================
 
-# Installation
+## Installation
 
 ```
 npm install koa --save
 npm install marko --save
 ```
 
-# Usage
+## Usage
 
 ```javascript
 require('marko/node-require').install();

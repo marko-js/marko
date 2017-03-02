@@ -1,18 +1,18 @@
 Express + Marko
 =====================
 
-# Installation
+## Installation
 
 ```
 npm install express --save
 npm install marko --save
 ```
 
-# Skip the view engine
+## Skip the view engine
 
 The built in view engine for express may be asynchronous, but it doesn't support streaming (check out [Rediscovering Progressive HTML Rendering](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) to see why this is so important).  So instead we'll [bypass the view engine](https://strongloop.com/strongblog/bypassing-express-view-rendering-for-speed-and-modularity/).
 
-# Usage
+## Usage
 
 Marko provides a submodule (`marko/express`) to add a `res.marko` method to the express response object.  This function works much like `res.render`, but doesn't impose the restrictions of the express view engine and allows you to take full advantage of Marko's streaming and modular approach to templates.  
 
