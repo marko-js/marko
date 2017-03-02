@@ -1,5 +1,7 @@
 var path = require('path');
 var defaultResolveFrom = require('resolve-from');
+var env = process.env.NODE_ENV;
+var production = !env || env !== 'development';
 
 function getDeps(template, context) {
     if (!template.meta && template.template) {
@@ -10,7 +12,7 @@ function getDeps(template, context) {
         return [];
     }
 
-    if (template.deps) {
+    if (production && template.deps) {
         return template.deps;
     }
 
