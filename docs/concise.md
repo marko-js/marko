@@ -59,12 +59,14 @@ If there is a line break immediately following `--`, everything following the `-
 
 _multi-line-text.marko_
 ```xml
-div --
+div
+    --
     Hello world
     this text
     is multi-line
 
-div --
+div
+    --
     this is more
     text
 ```
