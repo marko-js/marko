@@ -140,7 +140,7 @@ npm install --save lasso lasso-marko
 
 Next, in your page or layout view, add the `lasso-head` and `lasso-body` tags:
 
-layout.marko
+_layout.marko_
 ```xml
 <!doctype>
 <html>
