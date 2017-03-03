@@ -103,15 +103,13 @@ function classToObject(cls, transformHelper) {
 }
 
 function handleClassDeclaration(classEl, transformHelper) {
-
-
     let tree;
     var wrappedSrc = '('+classEl.tagString+'\n)';
 
     try {
         tree = esprima.parse(wrappedSrc);
     } catch(err) {
-        var message = 'Unable to parse JavaScript for componnet class. Error: ' + err;
+        var message = 'Unable to parse JavaScript for component class. ' + err;
 
         if (err.index != null) {
             var errorIndex = err.index;
