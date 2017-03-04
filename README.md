@@ -26,6 +26,110 @@ Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](h
 npm install marko --save
 ```
 
+# Examples
+
+Marko provides an elegant and readable syntax for both single-file components
+and components broken into separate files. There are plenty of examples to play
+with on [Marko's Try-Online](http://markojs.com/try-online/). Additional
+[component documentation](http://markojs.com/docs/components/) can be found on
+the Marko.js website.
+
+## Single file
+
+The following single-file component renders a button and a counter with the
+number of times the button has been clicked. [Try this example now!](http://markojs.com/try-online/?file=%2Fcomponents%2Fcomponents%2Fclick-count%2Findex.marko)
+
+__click-count.marko__
+```jsx
+class {
+    constructor() {
+        this.state = { count:0 };
+    }
+    increment() {
+        this.state.count++;
+    }
+}
+
+style {
+    .count {
+        color:#09c;
+        font-size:3em;
+    }
+    .example-button {
+        font-size:1em;
+        padding:0.5em;
+    }
+}
+
+<div.count>
+    ${state.count}
+</div>
+<button.example-button on-click('increment')>
+    Click me!
+</button>
+```
+
+## Multi-file
+
+The same component as above split into an `index.marko` template file,
+`component.js` containing your component logic, and `style.css` containing your
+component style:
+
+__index.marko__
+```xml
+<div.count>
+    ${state.count}
+</div>
+<button.example-button on-click('increment')>
+    Click me!
+</button>
+```
+
+__component.js__
+```js
+module.exports = {
+    onCreate() {
+        this.state = { count:0 };
+    }
+    increment() {
+        this.state.count++;
+    }
+};
+```
+
+__style.css__
+```css
+.count {
+    color:#09c;
+    font-size:3em;
+}
+.example-button {
+    font-size:1em;
+    padding:0.5em;
+}
+```
+
+## Concise Syntax
+
+Marko also support a beautiful concise syntax as an alternative to the HTML
+syntax. Find out more about the [concise syntax here](http://markojs.com/docs/concise/).
+
+```html
+<!-- Marko HTML syntax -->
+<ul>
+    <li for(color in ['a', 'b', 'c'])>
+        ${color}
+    </li>
+</ul>
+```
+
+```js
+// Marko concise syntax
+ul
+    li for(color in ['a', 'b', 'c'])
+        -- ${color}
+```
+
 # Changelog
 
 See [CHANGELOG.md](CHANGELOG.md)
