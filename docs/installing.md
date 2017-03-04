@@ -51,6 +51,21 @@ var myComponent = require('./hello.marko');
 myComponent.renderSync({ name:'Marko' }).appendTo(document.body);
 ```
 
+We will also create a barebones HTML page to host our application:
+
+_index.html_
+```
+<!doctype html>
+<html>
+<head>
+    <title>Marko Example</title>
+</head>
+<body>
+
+</body>
+</html>
+```
+
 Now, we need to bundle these files for use in the browser.  We can use a tool called [`lasso`](https://github.com/lasso-js/lasso) to do that for us, so let's get it (and the marko plugin) installed:
 
 ```
@@ -61,20 +76,10 @@ npm install --save lasso-marko
 Now we can build our bundle for the browser:
 
 ```
-lasso --main client.js --plugins "lasso-marko"
+lasso --main client.js --plugins lasso-marko --inject-into index.html
 ```
 
-This builds a `client.js` file to the newly created `static/` directory.  If we had css in the view, a `client.css` file would also have been generated.  You can now create an html file and drop the script (and stylesheet) in it:
-
-_index.html_
-```html
-<!doctype html>
-<html>
-<body>
-    <script src="static/client.js"/>
-</body>
-</html>
-```
+This builds a `client.js` file to the newly created `static/` directory and injects the required `<script>` tags into our HTML page to load our application in the browser.  If we had css in the view then `<link>` tags would have also been added.
 
 Load up that page in your browser and you should see `Hello Marko` staring back at you.
 
