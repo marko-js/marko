@@ -166,15 +166,6 @@ module.exports = {
 }
 ```
 
-### Automatic client initialization
-
-When the client loads in the browser it's possible for marko to automatically detect components rendered by the server and initialize them with the correct state.
-
-```js
-require('./index.marko');
-require('marko/components').init();
-```
-
 ## Attributes
 
 ### `on-[event](methodName, ...args)`

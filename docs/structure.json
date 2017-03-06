@@ -7,7 +7,8 @@
         "Syntax",
         "Core tags",
         "Custom tags",
-        "Components"
+        "Components",
+        "Server-side rendering"
     ]
 },{
     "title": "Bundler Integrations",
