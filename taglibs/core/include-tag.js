@@ -1,24 +1,35 @@
-module.exports = function include(input, out) {
+
+function doInclude(input, out, throwError) {
     var target = input._target;
     var arg = input._arg || input;
 
     if (target) {
         if (typeof target === 'function') {
-            target(out, arg);
+            return target(out, arg), true;
         } else if (typeof target === 'string') {
-            out.text(target);
+            return (target && out.text(target)), true;
         } else if (typeof target === 'object') {
             if (target.renderBody) {
-                target.renderBody(out, arg);
+                return target.renderBody(out, arg), true;
             } else if (target.renderer) {
-                target.renderer(arg, out);
+                return target.renderer(arg, out), true;
             } else if (target.render) {
-                target.render(arg, out);
+                return target.render(arg, out), true;
             } else if (target.safeHTML) {
-                out.write(target.safeHTML);
+                return out.write(target.safeHTML), true;
+            } else {
+                if (throwError) {
+                    out.error('Invalid include target');
+                }
             }
-        } else {
-            throw new Error('Invalid include target: ' + target);
         }
     }
-};
+}
+
+function includeTag(input, out) {
+    doInclude(input, out, true);
+}
+
+includeTag.$__doInclude = doInclude;
+
+module.exports = includeTag;
