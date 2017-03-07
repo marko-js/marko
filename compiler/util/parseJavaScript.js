@@ -8,7 +8,6 @@ function parseExpression(src, builder, isExpression) {
     ok(builder, '"builder" is required');
 
     function convert(node) {
-
         if (Array.isArray(node)) {
             let nodes = node;
             for (let i=0; i<nodes.length; i++) {
@@ -203,9 +202,13 @@ function parseExpression(src, builder, isExpression) {
                 return builder.property(key, value);
             }
             case 'ReturnStatement': {
-                let argument = convert(node.argument);
-                if (!argument) {
-                    return null;
+                var argument = node.argument;
+
+                if (argument != null) {
+                    argument = convert(node.argument);
+                    if (!argument) {
+                        return null;
+                    }
                 }
 
                 return builder.returnStatement(argument);
