@@ -1,6 +1,21 @@
 Changelog
 =========
 
+# 4.x
+
+## 4.0.x
+
+### 4.0.1
+
+- Bug: Fixes [#612](https://github.com/marko-js/marko/issues/612) - Compile error when class method has empty `return`
+- Bug: Fixes [#604](https://github.com/marko-js/marko/issues/604) - `no-update` attributes error when first rendered on the server
+- Bug: Fixes [#608](https://github.com/marko-js/marko/issues/608) - Component losing `renderBody` input on a particular redraw
+- Enhancement: Fixes [#606](https://github.com/marko-js/marko/issues/606) - named single-file component doesn't work
+
+### 4.0.0
+
+- Marko v4! [Release Announcement](https://medium.com/@mlrawlings/marko-4-0-is-here-837884c5f60d)
+
 # 3.x
 
 ## 3.13.x
