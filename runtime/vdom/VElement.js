@@ -14,6 +14,10 @@ var specialAttrRegexp = /^data-_/;
 function removePreservedAttributes(attrs, clone) {
     var preservedAttrs = attrs['data-_noupdate'];
     if (preservedAttrs) {
+        if (typeof preservedAttrs === 'string') {
+            preservedAttrs = JSON.parse(preservedAttrs);
+        }
+
         if (clone) {
             attrs = extend({}, attrs);
         }
