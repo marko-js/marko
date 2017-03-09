@@ -325,7 +325,30 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 
 ### `<macro>`
 
+Parameterized macros allow for reusable fragments within an HTML template.
+A macro can be defined using the `<macro>` directive.
 
+```xml
+<macro greeting(name, count)>
+    Hello ${name}! You have ${count} new messages.
+</macro>
+```
+
+The above macro can then be invoked as part of any expression. The following
+sample template shows how to use macro functions inside expressions:
+
+```xml
+<macro greeting(name, count)>
+    Hello ${name}! You have ${count} new messages.
+</macro>
+<p>
+    <greeting("John", 10)/>
+</p>
+<p>
+    <!-- Or, using named attributes: -->
+    <greeting name="Frank" count=20/>
+</p>
+```
 
 ## Awaiting promises
 
