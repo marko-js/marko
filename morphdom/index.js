@@ -34,7 +34,6 @@ module.exports = function morphdomFactory(morphAttrs) {
 
         var onNodeAdded = options.onNodeAdded || noop;
         var onBeforeElUpdated = options.onBeforeElUpdated || noop;
-        var onElUpdated = options.onElUpdated || noop;
         var onBeforeNodeDiscarded = options.onBeforeNodeDiscarded || noop;
         var onNodeDiscarded = options.onNodeDiscarded || noop;
         var onBeforeElChildrenUpdated = options.onBeforeElChildrenUpdated || noop;
@@ -187,7 +186,6 @@ module.exports = function morphdomFactory(morphAttrs) {
                 }
 
                 morphAttrs(fromEl, toEl);
-                onElUpdated(fromEl);
 
                 if (onBeforeElChildrenUpdated(fromEl, toEl) === false) {
                     return;
