@@ -1,4 +1,3 @@
-var range; // Create a range object for efficently rendering strings to elements.
 var NS_XHTML = 'http://www.w3.org/1999/xhtml';
 
 var doc = exports.doc = typeof document === 'undefined' ? undefined : document;
@@ -26,23 +25,6 @@ if (testEl.hasAttributeNS) {
 }
 
 exports.hasAttributeNS = actualHasAttributeNS;
-
-
-exports.toElement = function toElement(str) {
-    if (!range && doc.createRange) {
-        range = doc.createRange();
-        range.selectNode(doc.body);
-    }
-
-    var fragment;
-    if (range && range.createContextualFragment) {
-        fragment = range.createContextualFragment(str);
-    } else {
-        fragment = doc.createElement('body');
-        fragment.innerHTML = str;
-    }
-    return fragment.childNodes[0];
-};
 
 /**
  * Returns true if two node's names are the same.

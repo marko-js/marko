@@ -2,12 +2,10 @@
 
 var util = require('./util');
 var compareNodeNames = util.compareNodeNames;
-var toElement = util.toElement;
 var moveChildren = util.moveChildren;
 var createElementNS = util.createElementNS;
 var doc = util.doc;
 var specialElHandlers = require('./specialElHandlers');
-
 
 var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
@@ -24,16 +22,6 @@ module.exports = function morphdomFactory(morphAttrs) {
             onNodeDiscarded,
             onBeforeElChildrenUpdated
         ) {
-
-        if (typeof toNode == 'string') {
-            if (fromNode.nodeName == '#document' || fromNode.nodeName == 'HTML') {
-                var toNodeHtml = toNode;
-                toNode = doc.createElement('html');
-                toNode.innerHTML = toNodeHtml;
-            } else {
-                toNode = toElement(toNode);
-            }
-        }
 
         // This object is used as a lookup to quickly find all keyed elements in the original DOM tree.
         var fromNodesLookup = {};
@@ -319,9 +307,7 @@ module.exports = function morphdomFactory(morphAttrs) {
                         fromEl.appendChild(matchingFromEl);
                         morphEl(matchingFromEl, curToNodeChild);
                     } else {
-                        if (curToNodeChild.actualize) {
-                            curToNodeChild = curToNodeChild.actualize(fromEl.ownerDocument || doc);
-                        }
+                        curToNodeChild = curToNodeChild.actualize(fromEl.ownerDocument || doc);
                         fromEl.appendChild(curToNodeChild);
                         handleNodeAdded(curToNodeChild);
                     }
@@ -403,9 +389,7 @@ module.exports = function morphdomFactory(morphAttrs) {
         }
 
         if (morphedNode != fromNode && fromNode.parentNode) {
-            if (morphedNode.actualize) {
-                morphedNode = morphedNode.actualize(fromNode.ownerDocument || doc);
-            }
+            morphedNode = morphedNode.actualize(fromNode.ownerDocument || doc);
             // If we had to swap out the from node with a new node because the old
             // node was not compatible with the target node then we need to
             // replace the old DOM node in the original DOM tree. This is only
