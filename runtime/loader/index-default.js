@@ -30,78 +30,81 @@ var cwd = process.cwd();
 var fsOptions = {encoding: 'utf8'};
 
 function loadSource(templatePath, compiledSrc) {
-    var templateModulePath = templatePath + '.js';
-
+    templatePath += '.js';
+    
     // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cached = require.cache[templateModulePath];
+    var cached = require.cache[templatePath];
     if (cached) {
         return cached.exports;
     }
 
-    var templateModule = new Module(templateModulePath, module);
-    templateModule.paths = Module._nodeModulePaths(nodePath.dirname(templateModulePath));
-    templateModule.filename = templateModulePath;
+    var templateModule = new Module(templatePath, module);
+    templateModule.paths = Module._nodeModulePaths(nodePath.dirname(templatePath));
+    templateModule.filename = templatePath;
 
-    Module._cache[templateModulePath] = templateModule;
+    Module._cache[templatePath] = templateModule;
 
     templateModule._compile(
         compiledSrc,
-        templateModulePath);
+        templatePath);
 
     return templateModule.exports;
 }
 
-function getLoadedTemplate(path) {
+function getCachedTemplate(path) {
     var cached = require.cache[path];
     return cached && cached.exports.render ? cached.exports : undefined;
 }
+/**
+ * This helper function will check the Node.js require cache for the previous
+ * loaded template and it will also check the disk for the compiled template
+ * if `options.assumeUpToDate` is true
 
-function loadFile(templatePath, options) {
-    options = Object.assign({}, markoCompiler.defaultOptions, options);
-
-    var targetFile = templatePath + '.js';
+ * @param  {String} templatePath The fully resolved path to the template
+ * @param  {Object} options      The options for the template
+ * @return {Template}            The loaded template or undefined
+ */
+function getPreviousTemplate(templatePath, options) {
+    /*
+    The require.cache is search in the following order:
+    1) /path/to/my-template.js
+    2) /path/to/my-template.marko.js
+    3) /path/to/my-template.marko
+     *
+    If the template is not found in require.cache and `assumeUpToDate` is true
+    then we will check the disk for the precompiled templates in the following
+    order:
+    1) /path/to/my-template.js
+    2) /path/to/my-template.marko.js
+    */
+    var ext = nodePath.extname(templatePath);
+    var targetFilePrecompiled = templatePath.slice(0 - ext.length) + '.js';
+    var targetFileDebug = templatePath + '.js';
 
     // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
+    var cachedTemplate =
+        getCachedTemplate(targetFilePrecompiled) ||
+        getCachedTemplate(targetFileDebug) ||
+        getCachedTemplate(templatePath);
+
     if (cachedTemplate) {
         return cachedTemplate;
     }
 
     // Just in case the the path wasn't a fully resolved file system path...
     templatePath = nodePath.resolve(cwd, templatePath);
-    targetFile = templatePath + '.js';
 
-    // Check the require cache again after fully resolving the path
-    cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(templatePath);
-    if (cachedTemplate) {
-        return cachedTemplate;
-    }
-
-    // If the `assumeUpToDate` option is true then we just assume that the compiled template on disk is up-to-date
-    // if it exists
     if (options.assumeUpToDate) {
-        if (fs.existsSync(targetFile)) {
-            return require(targetFile);
+        if (fs.existsSync(targetFilePrecompiled)) {
+            return require(targetFilePrecompiled);
+        }
+
+        if (fs.existsSync(targetFileDebug)) {
+            return require(targetFileDebug);
         }
     }
 
-    var isUpToDate = markoCompiler.checkUpToDate(targetFile);
-
-    if (isUpToDate) {
-        return require(targetFile);
-    }
-
-	var compiledSrc = markoCompiler.compileFile(templatePath, options);
-
-    // console.log('Compiled code for "' + templatePath + '":\n' + compiledSrc);
-
-    var filename = nodePath.basename(targetFile);
-    var targetDir = nodePath.dirname(targetFile);
-    var tempFile = nodePath.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
-    fs.writeFileSync(tempFile, compiledSrc, fsOptions);
-    fs.renameSync(tempFile, targetFile);
-
-    return require(targetFile);
+    return undefined;
 }
 
 function createRenderProxy(template) {
@@ -117,24 +120,17 @@ function doLoad(templatePath, templateSrc, options) {
     if (typeof templatePath.render === 'function') {
         template = templatePath;
     } else {
-        var writeToDisk = options.writeToDisk;
+        templatePath = nodePath.resolve(cwd, templatePath);
 
+        template = getPreviousTemplate(templatePath, options);
+        if (!template) {
+            var writeToDisk = options.writeToDisk;
 
-        // If the template source is provided then we can compile the string
-        // in memory and there is no need to read template file from disk or
-        // write compiled code to disk.
-        //
-        // If writeToDisk is false then there will be no up-to-date check
-        // since compiled source won't be written to disk.
-        if ((templateSrc != null) || (writeToDisk === false)) {
-            // Don't write the compiled template to disk. Instead, load it
-            // directly from the compiled source using the internals of the
-            // Node.js module loading system.
             if (templateSrc == null) {
                 templateSrc = fs.readFileSync(templatePath, fsOptions);
             }
 
-        	var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
+            var compiledSrc = markoCompiler.compile(templateSrc, templatePath, options);
 
             if (writeToDisk === true) {
                 var targetFile = templatePath + '.js';
@@ -142,8 +138,6 @@ function doLoad(templatePath, templateSrc, options) {
             }
 
             template = loadSource(templatePath, compiledSrc);
-        } else {
-            template = loadFile(templatePath, options);
         }
     }
 

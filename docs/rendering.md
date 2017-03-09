@@ -4,24 +4,24 @@ To render a Marko view, you need to `require` it.
 
 _example.js_
 ```js
-var button = require('button.marko');
+var fancyButton = require('./components/fancy-button');
 ```
 
-> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files.  If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
+> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko DevTools](https://github.com/marko-js/marko-devtools).  If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
 
 Once you have a view, you can pass input data and render it:
 
 _example.js_
 ```js
-var button = require('button.marko');
+var button = require('./components/fancy-button');
 var html = button.renderToString({ label:'Click me!' });
 
 console.log(html);
 ```
 
-The input data becomes available as `input` within a view, so if `button.marko` looked like this:
+The input data becomes available as `input` within a view, so if `fancy-button.marko` looked like this:
 
-_button.marko_
+_./components/fancy-button.marko_
 ```xml
 <button>${input.label}</button>
 ```
@@ -48,7 +48,7 @@ Many of these methods return a [`RenderResult`](#renderresult) which is an objec
 Using `renderSync` forces the render to complete synchronously.  If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 var result = view.renderSync({});
 
 result.appendTo(document.body);
@@ -64,7 +64,7 @@ result.appendTo(document.body);
 The `render` method returns an async `out` which is used to generate HTML on the server or a virtual DOM in the browser. In either case, the async `out` has a `then` method that follows the Promises/A+ spec, so it can be used as if it were a Promise.  This promise resolves to a [`RenderResult`](#renderresult).
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 var resultPromise = view.render({});
 
 resultPromise.then((result) => {
@@ -82,7 +82,7 @@ resultPromise.then((result) => {
 | return value | `AsyncStream`/`AsyncVDOMBuilder` | the async `out` render target |
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 
 view.render({}, (err, result) => {
     result.appendTo(document.body);
@@ -101,7 +101,7 @@ The HTML output is written to the passed `stream`.
 
 ```js
 var http = require('http');
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 
 http.createServer((req, res) => {
     res.setHeader('content-type', 'text/html');
@@ -120,7 +120,7 @@ http.createServer((req, res) => {
 The `render` method also allows passing an existing async `out`.  If you do this, `render` will not automatically end the async `out` (this allows rendering a view in the middle of another view).  If the async `out` won't be ended by other means, you are responsible for ending it.
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 var out = view.createOut();
 
 view.render({}, out);
@@ -143,7 +143,7 @@ out.end();
 Returns an HTML string and forces the render to complete synchronously.  If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 var html = view.renderToString({});
 
 document.body.innerHTML = html;
@@ -160,7 +160,7 @@ document.body.innerHTML = html;
 An HTML string is passed to the callback.
 
 ```js
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 
 view.renderToString({}, (err, html) => {
     document.body.innerHTML = html;
@@ -173,7 +173,7 @@ The `stream` method returns a node.js style stream of the output HTML.  This met
 
 ```js
 var fs = require('fs');
-var view = require('./view.marko');
+var view = require('./view'); // Import `./view.marko`
 var writeStream = fs.createWriteStream('output.html');
 
 view.stream({}).pipe(writeStream);
