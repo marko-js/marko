@@ -15,10 +15,6 @@ var COMMENT_NODE = 8;
 
 function noop() {}
 
-function defaultGetNodeKey(node) {
-    return node.id;
-}
-
 module.exports = function morphdomFactory(morphAttrs) {
 
     return function morphdom(fromNode, toNode, options) {
@@ -36,7 +32,6 @@ module.exports = function morphdomFactory(morphAttrs) {
             }
         }
 
-        var getNodeKey = options.getNodeKey || defaultGetNodeKey;
         var onBeforeNodeAdded = options.onBeforeNodeAdded || noop;
         var onNodeAdded = options.onNodeAdded || noop;
         var onBeforeElUpdated = options.onBeforeElUpdated || noop;
@@ -65,7 +60,7 @@ module.exports = function morphdomFactory(morphAttrs) {
 
                     var key = undefined;
 
-                    if (skipKeyedNodes && (key = getNodeKey(curChild))) {
+                    if (skipKeyedNodes && (key = curChild.id)) {
                         // If we are skipping keyed nodes then we add the key
                         // to a list so that it can be handled at the very end.
                         addKeyedRemoval(key);
@@ -137,7 +132,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             if (node.nodeType === ELEMENT_NODE) {
                 var curChild = node.firstChild;
                 while (curChild) {
-                    var key = getNodeKey(curChild);
+                    var key = curChild.id;
                     if (key) {
                         fromNodesLookup[key] = curChild;
                     }
@@ -159,7 +154,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             while (curChild) {
                 var nextSibling = curChild.nextSibling;
 
-                var key = getNodeKey(curChild);
+                var key = curChild.id;
                 if (key) {
                     var unmatchedFromEl = fromNodesLookup[key];
                     if (unmatchedFromEl && compareNodeNames(curChild, unmatchedFromEl)) {
@@ -174,7 +169,7 @@ module.exports = function morphdomFactory(morphAttrs) {
         }
 
         function morphEl(fromEl, toEl, childrenOnly) {
-            var toElKey = getNodeKey(toEl);
+            var toElKey = toEl.id;
             var curFromNodeKey;
 
             if (toElKey) {
@@ -211,7 +206,7 @@ module.exports = function morphdomFactory(morphAttrs) {
 
                 outer: while (curToNodeChild) {
                     toNextSibling = curToNodeChild.nextSibling;
-                    curToNodeKey = getNodeKey(curToNodeChild);
+                    curToNodeKey = curToNodeChild.id;
 
                     while (curFromNodeChild) {
                         fromNextSibling = curFromNodeChild.nextSibling;
@@ -222,7 +217,7 @@ module.exports = function morphdomFactory(morphAttrs) {
                             continue outer;
                         }
 
-                        curFromNodeKey = getNodeKey(curFromNodeChild);
+                        curFromNodeKey = curFromNodeChild.id;
 
                         var curFromNodeType = curFromNodeChild.nodeType;
 
@@ -356,7 +351,7 @@ module.exports = function morphdomFactory(morphAttrs) {
                 // to be removed
                 while (curFromNodeChild) {
                     fromNextSibling = curFromNodeChild.nextSibling;
-                    if ((curFromNodeKey = getNodeKey(curFromNodeChild))) {
+                    if ((curFromNodeKey = curFromNodeChild.id)) {
                         // Since the node is keyed it might be matched up later so we defer
                         // the actual removal to later
                         addKeyedRemoval(curFromNodeKey);
