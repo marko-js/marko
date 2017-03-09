@@ -15,7 +15,7 @@ var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphAttrs = require('../runtime/vdom/VElement').$__morphAttrs;
-var morphdomFactory = require('morphdom/factory');
+var morphdomFactory = require('../morphdom');
 var morphdom = morphdomFactory(morphAttrs);
 var eventDelegation = require('./event-delegation');
 
