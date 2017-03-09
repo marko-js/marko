@@ -157,14 +157,49 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
     return false;
 }
 
-function handleNodeDiscarded(node) {
+function onNodeDiscarded(node) {
     if (node.nodeType == 1) {
         destroyComponentForEl(node);
     }
 }
 
-function handleBeforeNodeDiscarded(node) {
+function onBeforeNodeDiscarded(node) {
     return eventDelegation.$__handleNodeDetach(node);
+}
+
+function onBeforeElUpdated(fromEl, componentsContext) {
+    var id = fromEl.id;
+
+    if (componentsContext && id) {
+        var preserved = componentsContext.$__preserved[id];
+
+        if (preserved && !preserved.$__bodyOnly) {
+            // Don't morph elements that are associated with components that are being
+            // reused or elements that are being preserved. For components being reused,
+            // the morphing will take place when the reused component updates.
+            return MORPHDOM_SKIP;
+        } else {
+            // We may need to destroy a Component associated with the current element
+            // if a new UI component was rendered to the same element and the types
+            // do not match
+            checkCompatibleComponent(componentsContext, fromEl);
+        }
+    }
+}
+
+function onBeforeElChildrenUpdated(el, componentsContext) {
+    var id = el.id;
+    if (componentsContext && id) {
+        var preserved = componentsContext.$__preserved[id];
+        if (preserved && preserved.$__bodyOnly) {
+            // Don't morph the children since they are preserved
+            return MORPHDOM_SKIP;
+        }
+    }
+}
+
+function onNodeAdded(node, componentsContext) {
+    eventDelegation.$__handleNodeAttach(node, componentsContext.$__out);
 }
 
 var componentProto;
@@ -498,49 +533,6 @@ Component.prototype = componentProto = {
 
             var componentsContext = out.global.components;
 
-            function onBeforeElUpdated(fromEl, toEl) {
-                var id = fromEl.id;
-
-                if (componentsContext && id) {
-                    var preserved = componentsContext.$__preserved[id];
-
-                    if (preserved && !preserved.$__bodyOnly) {
-                        // Don't morph elements that are associated with components that are being
-                        // reused or elements that are being preserved. For components being reused,
-                        // the morphing will take place when the reused component updates.
-                        return MORPHDOM_SKIP;
-                    } else {
-                        // We may need to destroy a Component associated with the current element
-                        // if a new UI component was rendered to the same element and the types
-                        // do not match
-                        checkCompatibleComponent(componentsContext, fromEl);
-                    }
-                }
-            }
-
-            function onBeforeElChildrenUpdated(el) {
-                var id = el.id;
-                if (componentsContext && id) {
-                    var preserved = componentsContext.$__preserved[id];
-                    if (preserved && preserved.$__bodyOnly) {
-                        // Don't morph the children since they are preserved
-                        return MORPHDOM_SKIP;
-                    }
-                }
-            }
-
-            function handleNodeAdded(node) {
-                eventDelegation.$__handleNodeAttach(node, out);
-            }
-
-            var morphdomOptions = {
-                onBeforeNodeDiscarded: handleBeforeNodeDiscarded,
-                onNodeDiscarded: handleNodeDiscarded,
-                onNodeAdded: handleNodeAdded,
-                onBeforeElUpdated: onBeforeElUpdated,
-                onBeforeElChildrenUpdated: onBeforeElChildrenUpdated
-            };
-
             var fromEl;
 
             var targetEl = targetNode.firstChild;
@@ -550,7 +542,15 @@ Component.prototype = componentProto = {
                 if (id) {
                     fromEl = fromEls[id];
                     if (fromEl) {
-                        morphdom(fromEl, targetEl, morphdomOptions);
+                        morphdom(
+                            fromEl,
+                            targetEl,
+                            componentsContext,
+                            onNodeAdded,
+                            onBeforeElUpdated,
+                            onBeforeNodeDiscarded,
+                            onNodeDiscarded,
+                            onBeforeElChildrenUpdated);
                     }
                 }
 

@@ -13,14 +13,17 @@ var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
 var COMMENT_NODE = 8;
 
-function noop() {}
-
 module.exports = function morphdomFactory(morphAttrs) {
-
-    return function morphdom(fromNode, toNode, options) {
-        if (!options) {
-            options = {};
-        }
+    return function morphdom(
+            fromNode,
+            toNode,
+            context,
+            onNodeAdded,
+            onBeforeElUpdated,
+            onBeforeNodeDiscarded,
+            onNodeDiscarded,
+            onBeforeElChildrenUpdated
+        ) {
 
         if (typeof toNode === 'string') {
             if (fromNode.nodeName === '#document' || fromNode.nodeName === 'HTML') {
@@ -31,12 +34,6 @@ module.exports = function morphdomFactory(morphAttrs) {
                 toNode = toElement(toNode);
             }
         }
-
-        var onNodeAdded = options.onNodeAdded || noop;
-        var onBeforeElUpdated = options.onBeforeElUpdated || noop;
-        var onBeforeNodeDiscarded = options.onBeforeNodeDiscarded || noop;
-        var onNodeDiscarded = options.onNodeDiscarded || noop;
-        var onBeforeElChildrenUpdated = options.onBeforeElChildrenUpdated || noop;
 
         // This object is used as a lookup to quickly find all keyed elements in the original DOM tree.
         var fromNodesLookup = {};
@@ -145,7 +142,7 @@ module.exports = function morphdomFactory(morphAttrs) {
         indexTree(fromNode);
 
         function handleNodeAdded(el) {
-            onNodeAdded(el);
+            onNodeAdded(el, context);
 
             var curChild = el.firstChild;
             while (curChild) {
@@ -179,13 +176,13 @@ module.exports = function morphdomFactory(morphAttrs) {
                 return;
             }
 
-            if (onBeforeElUpdated(fromEl, toEl) === false) {
+            if (onBeforeElUpdated(fromEl, context) === false) {
                 return;
             }
 
             morphAttrs(fromEl, toEl);
 
-            if (onBeforeElChildrenUpdated(fromEl, toEl) === false) {
+            if (onBeforeElChildrenUpdated(fromEl, context) === false) {
                 return;
             }
 
