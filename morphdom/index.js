@@ -32,7 +32,6 @@ module.exports = function morphdomFactory(morphAttrs) {
             }
         }
 
-        var onBeforeNodeAdded = options.onBeforeNodeAdded || noop;
         var onNodeAdded = options.onNodeAdded || noop;
         var onBeforeElUpdated = options.onBeforeElUpdated || noop;
         var onElUpdated = options.onElUpdated || noop;
@@ -328,18 +327,11 @@ module.exports = function morphdomFactory(morphAttrs) {
                         fromEl.appendChild(matchingFromEl);
                         morphEl(matchingFromEl, curToNodeChild);
                     } else {
-                        var onBeforeNodeAddedResult = onBeforeNodeAdded(curToNodeChild);
-                        if (onBeforeNodeAddedResult !== false) {
-                            if (onBeforeNodeAddedResult) {
-                                curToNodeChild = onBeforeNodeAddedResult;
-                            }
-
-                            if (curToNodeChild.actualize) {
-                                curToNodeChild = curToNodeChild.actualize(fromEl.ownerDocument || doc);
-                            }
-                            fromEl.appendChild(curToNodeChild);
-                            handleNodeAdded(curToNodeChild);
+                        if (curToNodeChild.actualize) {
+                            curToNodeChild = curToNodeChild.actualize(fromEl.ownerDocument || doc);
                         }
+                        fromEl.appendChild(curToNodeChild);
+                        handleNodeAdded(curToNodeChild);
                     }
 
                     curToNodeChild = toNextSibling;
