@@ -46,9 +46,10 @@ First, let's create a `client.js` that requires the view and renders it to the b
 
 _client.js_
 ```js
-var myComponent = require('./hello.marko');
+var helloComponent = require('./hello');
 
-myComponent.renderSync({ name:'Marko' }).appendTo(document.body);
+helloComponent.renderSync({ name:'Marko' })
+    .appendTo(document.body);
 ```
 
 We will also create a barebones HTML page to host our application:
@@ -87,7 +88,14 @@ Load up that page in your browser and you should see `Hello Marko` staring back 
 
 #### Require Marko views
 
-Marko provides a custom Node.js require extension that allows you `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
+Marko provides a custom Node.js require extension that allows you to `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
+
+_hello.marko_
+```xml
+<div>
+    Hello ${input.name}!
+</div>
+```
 
 _server.js_
 ```js
@@ -96,9 +104,26 @@ _server.js_
 // of your application before requiring any `*.marko` files.
 require('marko/node-require');
 
+var fs = require('fs');
+
 // Load a Marko view by requiring a .marko file:
-var hello = require('./hello.marko');
+var hello = require('./hello');
+var out = fs.createWriteStream('hello.html', { encoding: 'utf8' });
+hello.render({ name: 'Frank' }, out);
 ```
+
+Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko DevTools](https://github.com/marko-js/marko-devtools):
+
+```bash
+marko compile hello.marko
+```
+
+This will produce a `hello.js` file next to the original template. The generated `.js` file will be what gets loaded by the Node.js runtime. If is important to leave off the `.marko` extension when requiring a Marko template so that the `.js` will be resolved correctly.
+
+> **ProTip:** You can easily compile all of the Marko templates in your package while also recompiling when a file is modified using the following command:
+> ```bash
+> marko compile --watch
+> ```
 
 #### Serving a simple page
 
@@ -106,11 +131,11 @@ Let's update `server.js` to serve the view from an http server:
 
 _server.js_
 ```js
-// Allow requiring marko views
+// Allow requiring `.marko` files
 require('marko/node-require');
 
 var http = require('http');
-var hello = require('./hello.marko');
+var hello = require('./hello');
 var port = 8080;
 
 http.createServer((req, res) => {

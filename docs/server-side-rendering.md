@@ -3,7 +3,7 @@
 Marko allows any Marko template/UI component to be rendered on the server or in the browser. A page can be rendered to a `Writable` stream such as an HTTP response stream as shown below:
 
 ```js
-var template = require('./template.marko');
+var template = require('./template'); // Import ./template.marko
 
 module.exports = function(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -14,7 +14,7 @@ module.exports = function(req, res) {
 Marko can also provide you with a `Readable` stream.
 
 ```js
-var template = require('./template.marko');
+var template = require('./template'); // Import ./template.marko
 
 module.exports = function(req) {
     // Return a Readable stream for someone to do something with:
@@ -35,7 +35,7 @@ When a server-rendered page loads in the browser it's possible for marko to auto
 
 If you are using [Lasso.js](https://github.com/lasso-js/lasso) then the bootstrapping will happen automatically as long as the JavaScript bundles for your page are included via the `<lasso-body>` tag. A typical HTML page structure will be the following:
 
-_routes/index/template.marko_
+_routes/index/template_
 
 ```xml
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ For example, if `client.js` is the entry point for your client-side application:
 _routes/index/client.js_
 ```js
 // Load the top-level UI component:
-require('./components/app/index.marko');
+require('./components/app/index');
 
 // Now that all of the JavaScript modules for the UI component have been
 // loaded and registered we can tell marko  tobootstrap/initialize the app

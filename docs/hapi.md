@@ -7,7 +7,7 @@ require('marko/node-require');
 
 const Hapi = require('hapi');
 
-var template = require('./template.marko');
+var template = require('./template');
 
 const server = new Hapi.Server();
 server.connection({ port: 8000 });
