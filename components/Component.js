@@ -21,7 +21,7 @@ var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;
 
-var MORPHDOM_SKIP = false;
+var MORPHDOM_SKIP = true;
 
 var COMPONENT_SUBSCRIBE_TO_OPTIONS;
 var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
