@@ -14,8 +14,8 @@ var VDocumentFragment = vdom.$__VDocumentFragment;
 
 
 var vdomHelpers = {
-    createElement: function(tagName, attrs, childCount, constId) {
-        return new VElement(tagName, attrs, childCount, constId);
+    createElement: function(tagName, attrs, childCount, constId, flags) {
+        return new VElement(tagName, attrs, childCount, constId, flags);
     },
     createText: function(value) {
         return new VText(value);
@@ -29,7 +29,7 @@ var vdomHelpers = {
     VElement: VElement
 };
 
-describe('marko-vdom', () => {
+describe('vdom-create', () => {
     require('./autotest').scanDir(
         path.join(__dirname, 'autotests/vdom-create'),
         function(dir, helpers, done) {

@@ -1,6 +1,10 @@
 var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
+
+var FLAG_IS_SVG = 1;
+var FLAG_IS_TEXTAREA = 2;
+
 var defineProperty = Object.defineProperty;
 
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
@@ -45,23 +49,7 @@ function VElementClone(other) {
     this.$__nextSibling = undefined;
 }
 
-function VElement(tagName, attrs, childCount, constId) {
-    var namespaceURI;
-    var isTextArea;
-
-    switch(tagName) {
-        case 'svg':
-            namespaceURI = 'http://www.w3.org/2000/svg';
-            break;
-        case 'math':
-            namespaceURI = 'http://www.w3.org/1998/Math/MathML';
-            break;
-        case 'textarea':
-        case 'TEXTAREA':
-            isTextArea = true;
-            break;
-    }
-
+function VElement(tagName, attrs, childCount, constId, flags) {
     this.$__VNode(childCount);
 
     if (constId) {
@@ -71,9 +59,20 @@ function VElement(tagName, attrs, childCount, constId) {
         attrs[ATTR_MARKO_CONST] = constId;
     }
 
+    var namespaceURI;
+    var isTextArea;
+
+    if (flags) {
+        isTextArea = flags & FLAG_IS_TEXTAREA;
+
+        if (flags & FLAG_IS_SVG) {
+            namespaceURI = 'http://www.w3.org/2000/svg';
+        }
+    }
+
     this.$__attributes = attrs || EMPTY_OBJECT;
     this.$__isTextArea = isTextArea;
-    this.namespaceURI = namespaceURI;
+    this.$__namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this.$__value = undefined;
     this.$__constId = constId;
@@ -83,8 +82,6 @@ VElement.prototype = {
     $__VElement: true,
 
     nodeType: 1,
-
-    $__nsAware: true,
 
     $__cloneNode: function() {
         return new VElementClone(this);
@@ -97,8 +94,8 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, childCount, constId) {
-        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, constId));
+    e: function(tagName, attrs, childCount, constId, flags) {
+        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, constId, flags));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -122,7 +119,7 @@ VElement.prototype = {
 
     actualize: function(doc) {
         var el;
-        var namespaceURI = this.namespaceURI;
+        var namespaceURI = this.$__namespaceURI;
         var tagName = this.nodeName;
 
         if (namespaceURI) {

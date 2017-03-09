@@ -624,6 +624,10 @@ class TagLoader {
     html(value) {
         this.tag.html = value === true;
     }
+
+    htmlType(value) {
+        this.tag.htmlType = value;
+    }
 }
 
 function isSupportedProperty(name) {

@@ -8,7 +8,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
 function render(input, out) {
   var data = input;
 
-  out.e("div", marko_attrs0, 3)
+  out.e("DIV", marko_attrs0, 3)
     .t("Hello ")
     .t(name)
     .t("!");

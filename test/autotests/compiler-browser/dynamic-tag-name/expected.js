@@ -5,13 +5,7 @@ var marko_template = module.exports = require("marko/vdom").t();
 function render(input, out) {
   var data = input;
 
-  out.e("DIV", {
-      foo: "bar",
-      hello: "world"
-    }, 3)
-    .t("Hello ")
-    .t(name)
-    .t("!");
+  out.e((foo ? "foo" : "bar").toUpperCase(), null, 0);
 }
 
 marko_template._ = render;

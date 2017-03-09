@@ -5,8 +5,9 @@ var VElement = require('./VElement');
 var VText = require('./VText');
 var defaultDocument = typeof document != 'undefined' && document;
 
+var FLAG_IS_TEXTAREA = 2;
+
 var specialHtmlRegexp = /[&<]/;
-var range;
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
@@ -41,15 +42,23 @@ function virtualize(node) {
                 }
             }
 
-            var vdomEL = new VElement(node.nodeName, attrs);
+            var flags = 0;
 
-            if (vdomEL.$__isTextArea) {
-                vdomEL.$__value = node.value;
-            } else {
-                virtualizeChildNodes(node, vdomEL);
+            var tagName = node.nodeName;
+            if (tagName === 'TEXTAREA') {
+                flags |= FLAG_IS_TEXTAREA;
             }
 
-            return vdomEL;
+            var vdomEl = new VElement(tagName, attrs, null, null, flags);
+            vdomEl.$__namespaceURI = node.namespaceURI;
+
+            if (vdomEl.$__isTextArea) {
+                vdomEl.$__value = node.value;
+            } else {
+                virtualizeChildNodes(node, vdomEl);
+            }
+
+            return vdomEl;
         case 3:
             return new VText(node.nodeValue);
         case 8:
@@ -66,27 +75,14 @@ function virtualizeHTML(html, doc) {
         return new VText(html);
     }
 
-    if (!range && doc.createRange) {
-        range = doc.createRange();
-        range.selectNode(doc.body);
-    }
+    var container = doc.createElement('body');
+    container.innerHTML = html;
+    var vdomFragment = new VDocumentFragment();
 
-    var vdomFragment;
-
-    var fragment;
-    if (range && range.createContextualFragment) {
-        fragment = range.createContextualFragment(html);
-        vdomFragment = virtualize(fragment);
-    } else {
-        var container = doc.createElement('body');
-        container.innerHTML = html;
-        vdomFragment = new VDocumentFragment();
-
-        var curChild = container.firstChild;
-        while(curChild) {
-            vdomFragment.$__appendChild(virtualize(curChild));
-            curChild = curChild.nextSibling;
-        }
+    var curChild = container.firstChild;
+    while(curChild) {
+        vdomFragment.$__appendChild(virtualize(curChild));
+        curChild = curChild.nextSibling;
     }
 
     return vdomFragment;

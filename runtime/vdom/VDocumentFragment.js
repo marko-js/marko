@@ -18,8 +18,6 @@ VDocumentFragment.prototype = {
 
     $__DocumentFragment: true,
 
-    $__nsAware: true,
-
     $__cloneNode: function() {
         return new VDocumentFragmentClone(this);
     },

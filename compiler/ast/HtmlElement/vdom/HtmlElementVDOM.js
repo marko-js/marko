@@ -3,6 +3,9 @@
 const Node = require('../../Node');
 const vdomUtil = require('../../../util/vdom');
 
+var FLAG_IS_SVG = 1;
+var FLAG_IS_TEXTAREA = 2;
+
 function finalizeCreateArgs(createArgs, builder) {
     var length = createArgs.length;
     var lastArg;
@@ -24,6 +27,12 @@ function finalizeCreateArgs(createArgs, builder) {
     return createArgs;
 }
 
+const maybeSVG = {
+    'a': true,
+    'script': true,
+    'style': true
+};
+
 class HtmlElementVDOM extends Node {
     constructor(def) {
         super('HtmlElementVDOM');
@@ -34,6 +43,9 @@ class HtmlElementVDOM extends Node {
         this.attributes = def.attributes;
         this.body = def.body;
         this.dynamicAttributes = def.dynamicAttributes;
+
+        this.isSVG = false;
+        this.isTextArea = false;
 
         this.isChild = false;
         this.createElementId = undefined;
@@ -46,6 +58,39 @@ class HtmlElementVDOM extends Node {
         let builder = codegen.builder;
 
         vdomUtil.registerOptimizer(context);
+
+        let tagName = this.tagName;
+
+        if (tagName.type === 'Literal' && typeof tagName.value === 'string') {
+            let tagDef = context.getTagDef(tagName.value);
+            if (tagDef) {
+                if (tagDef.htmlType  === 'svg') {
+                    this.isSVG = true;
+                } else {
+                    if (maybeSVG[tagName.value] && context.isFlagSet('SVG')) {
+                        this.isSVG = true;
+                    } else {
+                        this.tagName = tagName = builder.literal(tagName.value.toUpperCase());
+
+                        if (tagName.value === 'TEXTAREA') {
+                            this.isTextArea = true;
+                        }
+                    }
+                }
+            }
+        } else {
+
+            if (context.isFlagSet('SVG')) {
+                this.isSVG = true;
+            } else {
+                this.tagName = builder.functionCall(
+                    builder.memberExpression(
+                        tagName,
+                        builder.identifier('toUpperCase')),
+                    []);
+            }
+
+        }
 
         let attributes = this.attributes;
         let dynamicAttributes = this.dynamicAttributes;
@@ -122,12 +167,13 @@ class HtmlElementVDOM extends Node {
         let body = this.body;
         let attributesArg = this.attributesArg;
         let nextConstId = this.nextConstId;
+        let tagName = this.tagName;
 
         let childCount = body && body.length;
 
-        let createArgs = new Array(4); // tagName, attributes, childCount, const ID
+        let createArgs = new Array(5); // tagName, attributes, childCount, const ID, flags
 
-        createArgs[0] = this.tagName;
+        createArgs[0] = tagName;
 
         if (attributesArg) {
             createArgs[1] = attributesArg;
@@ -139,6 +185,20 @@ class HtmlElementVDOM extends Node {
 
         if (nextConstId) {
             createArgs[3] = nextConstId;
+        }
+
+        var flags = 0;
+
+        if (this.isSVG) {
+            flags |= FLAG_IS_SVG;
+        }
+
+        if (this.isTextArea) {
+            flags |= FLAG_IS_TEXTAREA;
+        }
+
+        if (flags) {
+            createArgs[4] = builder.literal(flags);
         }
 
         // Remove trailing undefined arguments and convert non-trailing

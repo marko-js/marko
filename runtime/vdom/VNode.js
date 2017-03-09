@@ -1,17 +1,5 @@
 /* jshint newcap:false */
 
-function assignNamespace(node, namespaceURI) {
-    node.namespaceURI = namespaceURI;
-
-    var curChild = node.$__firstChild;
-    while(curChild) {
-        if (curChild.$__nsAware) {
-            assignNamespace(curChild, namespaceURI);
-        }
-        curChild = curChild.$__nextSibling;
-    }
-}
-
 function VNode() {}
 
 VNode.prototype = {
@@ -73,12 +61,6 @@ VNode.prototype = {
                 throw TypeError();
             }
         } else {
-            var namespaceURI;
-
-            if (child.$__nsAware && (namespaceURI = this.namespaceURI) && !child.namespaceURI) {
-                assignNamespace(child, namespaceURI);
-            }
-
             var lastChild = this.$__lastChild;
 
             child.$__parentNode = this;
