@@ -392,7 +392,20 @@ var proto = AsyncStream.prototype = {
         var stack = this._stack;
         var name = this.name;
 
-        var message = 'Async fragment failed' + (name ? ' (' + name + ')': '') + '. Exception: ' + (e.stack || e) + (stack ? ('\nCreation stack trace: ' + stack) : '');
+        var message;
+
+        if (name) {
+            message = 'Render async fragment error (' + name + ')';
+        } else {
+            message = 'Render error';
+        }
+
+        message += '. Exception: ' + (e.stack || e);
+
+        if (stack) {
+            message += '\nCreation stack trace: ' + stack;
+        }
+
         e = new Error(message);
 
         try {
