@@ -1,12 +1,12 @@
 exports.createApp = function(express, markoExpressPath) {
-    require(markoExpressPath);
-
     var app = express();
+    var markoExpress = require(markoExpressPath);
 
     app.locals.foo = 'APP';
     app.locals.bar = 'APP';
     app.locals.baz = 'APP';
 
+    app.use(markoExpress());
     app.use(function(req, res, next) {
         res.locals.foo = 'RES';
         res.locals.bar = 'RES';

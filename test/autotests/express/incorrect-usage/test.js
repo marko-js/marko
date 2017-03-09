@@ -1,7 +1,8 @@
 exports.createApp = function(express, markoExpressPath) {
-    require(markoExpressPath);
-
     var app = express();
+    var markoExpress = require(markoExpressPath);
+
+    app.use(markoExpress());
 
     return app;
 };
