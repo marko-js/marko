@@ -37,7 +37,6 @@ module.exports = function morphdomFactory(morphAttrs) {
         var onBeforeNodeDiscarded = options.onBeforeNodeDiscarded || noop;
         var onNodeDiscarded = options.onNodeDiscarded || noop;
         var onBeforeElChildrenUpdated = options.onBeforeElChildrenUpdated || noop;
-        var childrenOnly = options.childrenOnly === true;
 
         // This object is used as a lookup to quickly find all keyed elements in the original DOM tree.
         var fromNodesLookup = {};
@@ -166,7 +165,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             }
         }
 
-        function morphEl(fromEl, toEl, childrenOnly) {
+        function morphEl(fromEl, toEl) {
             var toElKey = toEl.id;
             var curFromNodeKey;
 
@@ -180,16 +179,14 @@ module.exports = function morphdomFactory(morphAttrs) {
                 return;
             }
 
-            if (!childrenOnly) {
-                if (onBeforeElUpdated(fromEl, toEl) === false) {
-                    return;
-                }
+            if (onBeforeElUpdated(fromEl, toEl) === false) {
+                return;
+            }
 
-                morphAttrs(fromEl, toEl);
+            morphAttrs(fromEl, toEl);
 
-                if (onBeforeElChildrenUpdated(fromEl, toEl) === false) {
-                    return;
-                }
+            if (onBeforeElChildrenUpdated(fromEl, toEl) === false) {
+                return;
             }
 
             if (fromEl.nodeName !== 'TEXTAREA') {
@@ -364,27 +361,25 @@ module.exports = function morphdomFactory(morphAttrs) {
         var morphedNodeType = morphedNode.nodeType;
         var toNodeType = toNode.nodeType;
 
-        if (!childrenOnly) {
-            // Handle the case where we are given two DOM nodes that are not
-            // compatible (e.g. <div> --> <span> or <div> --> TEXT)
-            if (morphedNodeType === ELEMENT_NODE) {
-                if (toNodeType === ELEMENT_NODE) {
-                    if (!compareNodeNames(fromNode, toNode)) {
-                        onNodeDiscarded(fromNode);
-                        morphedNode = moveChildren(fromNode, createElementNS(toNode.nodeName, toNode.namespaceURI));
-                    }
-                } else {
-                    // Going from an element node to a text node
-                    morphedNode = toNode;
+        // Handle the case where we are given two DOM nodes that are not
+        // compatible (e.g. <div> --> <span> or <div> --> TEXT)
+        if (morphedNodeType === ELEMENT_NODE) {
+            if (toNodeType === ELEMENT_NODE) {
+                if (!compareNodeNames(fromNode, toNode)) {
+                    onNodeDiscarded(fromNode);
+                    morphedNode = moveChildren(fromNode, createElementNS(toNode.nodeName, toNode.namespaceURI));
                 }
-            } else if (morphedNodeType === TEXT_NODE || morphedNodeType === COMMENT_NODE) { // Text or comment node
-                if (toNodeType === morphedNodeType) {
-                    morphedNode.nodeValue = toNode.nodeValue;
-                    return morphedNode;
-                } else {
-                    // Text node to something else
-                    morphedNode = toNode;
-                }
+            } else {
+                // Going from an element node to a text node
+                morphedNode = toNode;
+            }
+        } else if (morphedNodeType === TEXT_NODE || morphedNodeType === COMMENT_NODE) { // Text or comment node
+            if (toNodeType === morphedNodeType) {
+                morphedNode.nodeValue = toNode.nodeValue;
+                return morphedNode;
+            } else {
+                // Text node to something else
+                morphedNode = toNode;
             }
         }
 
@@ -393,7 +388,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             // toss out the "from node" and use the "to node"
             onNodeDiscarded(fromNode);
         } else {
-            morphEl(morphedNode, toNode, childrenOnly);
+            morphEl(morphedNode, toNode);
 
             // We now need to loop over any keyed nodes that might need to be
             // removed. We only do the removal if we know that the keyed node
@@ -410,7 +405,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             }
         }
 
-        if (!childrenOnly && morphedNode !== fromNode && fromNode.parentNode) {
+        if (morphedNode !== fromNode && fromNode.parentNode) {
             if (morphedNode.actualize) {
                 morphedNode = morphedNode.actualize(fromNode.ownerDocument || doc);
             }
