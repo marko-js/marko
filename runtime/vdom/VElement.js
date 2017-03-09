@@ -172,7 +172,7 @@ VElement.prototype = {
         return el;
     },
 
-    hasAttributeNS: function(namespaceURI, name) {
+    $__hasAttribute: function(name) {
         // We don't care about the namespaces since the there
         // is no chance that attributes with the same name will have
         // different namespaces

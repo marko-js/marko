@@ -1,5 +1,3 @@
-var hasAttributeNS = require('./util').hasAttributeNS;
-
 function syncBooleanAttrProp(fromEl, toEl, name) {
     if (fromEl[name] !== toEl[name]) {
         fromEl[name] = toEl[name];
@@ -29,25 +27,25 @@ module.exports = {
         syncBooleanAttrProp(fromEl, toEl, 'checked');
         syncBooleanAttrProp(fromEl, toEl, 'disabled');
 
-        if (fromEl.value !== toEl.value) {
+        if (fromEl.value != toEl.value) {
             fromEl.value = toEl.value;
         }
 
-        if (!hasAttributeNS(toEl, null, 'value')) {
+        if (!toEl.$__hasAttribute('value')) {
             fromEl.removeAttribute('value');
         }
     },
 
     TEXTAREA: function(fromEl, toEl) {
         var newValue = toEl.value;
-        if (fromEl.value !== newValue) {
+        if (fromEl.value != newValue) {
             fromEl.value = newValue;
         }
 
         if (fromEl.firstChild) {
             // Needed for IE. Apparently IE sets the placeholder as the
             // node value and vise versa. This ignores an empty update.
-            if (newValue === '' && fromEl.firstChild.nodeValue === fromEl.placeholder) {
+            if (!newValue && fromEl.firstChild.nodeValue == fromEl.placeholder) {
                 return;
             }
 
@@ -55,14 +53,14 @@ module.exports = {
         }
     },
     SELECT: function(fromEl, toEl) {
-        if (!hasAttributeNS(toEl, null, 'multiple')) {
+        if (!toEl.$__hasAttribute('multiple')) {
             var selectedIndex = -1;
             var i = 0;
             var curChild = toEl.firstChild;
             while(curChild) {
                 var nodeName = curChild.nodeName;
-                if (nodeName && nodeName.toUpperCase() === 'OPTION') {
-                    if (hasAttributeNS(curChild, null, 'selected')) {
+                if (nodeName && nodeName.toUpperCase() == 'OPTION') {
+                    if (curChild.$__hasAttribute('selected')) {
                         selectedIndex = i;
                         break;
                     }

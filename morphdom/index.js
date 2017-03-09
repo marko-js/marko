@@ -1,15 +1,54 @@
 'use strict';
-
-var util = require('./util');
-var compareNodeNames = util.compareNodeNames;
-var moveChildren = util.moveChildren;
-var createElementNS = util.createElementNS;
-var doc = util.doc;
+var doc = typeof document === 'undefined' ? undefined : document;
 var specialElHandlers = require('./specialElHandlers');
 
 var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
 var COMMENT_NODE = 8;
+
+/**
+ * Returns true if two node's names are the same.
+ *
+ * NOTE: We don't bother checking `namespaceURI` because you will never find two HTML elements with the same
+ *       nodeName and different namespace URIs.
+ *
+ * @param {Element} a
+ * @param {Element} b The target element
+ * @return {boolean}
+ */
+function compareNodeNames(fromEl, toEl) {
+    var fromNodeName = fromEl.nodeName;
+    var toNodeName = toEl.nodeName;
+
+    if (fromNodeName === toNodeName) {
+        return true;
+    }
+
+    if (toEl.actualize &&
+        fromNodeName.charCodeAt(0) < 91 && /* from tag name is upper case */
+        toNodeName.charCodeAt(0) > 90 /* target tag name is lower case */) {
+        // If the target element is a virtual DOM node then we may need to normalize the tag name
+        // before comparing. Normal HTML elements that are in the "http://www.w3.org/1999/xhtml"
+        // are converted to upper case
+        return fromNodeName === toNodeName.toUpperCase();
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Copies the children of one DOM element to another DOM element
+ */
+function moveChildren(fromEl, toEl) {
+    var curChild = fromEl.firstChild;
+    while (curChild) {
+        var nextChild = curChild.nextSibling;
+        toEl.appendChild(curChild);
+        curChild = nextChild;
+    }
+    return toEl;
+}
+
 
 module.exports = function morphdomFactory(morphAttrs) {
     return function morphdom(
@@ -350,7 +389,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             if (toNodeType == ELEMENT_NODE) {
                 if (!compareNodeNames(fromNode, toNode)) {
                     onNodeDiscarded(fromNode);
-                    morphedNode = moveChildren(fromNode, createElementNS(toNode.nodeName, toNode.namespaceURI));
+                    morphedNode = moveChildren(fromNode, toNode.actualize(doc));
                 }
             } else {
                 // Going from an element node to a text node
