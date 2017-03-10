@@ -3,6 +3,15 @@ Changelog
 
 # 4.x
 
+## 4.1.x
+
+### 4.1.0
+
+- Bug: Fixes [#611](https://github.com/marko-js/marko/issues/611) - Component IDs are not being assigned correctly when intermediate non-component is rendered
+- Performance: SVG namespaced elements are now resolved determined at compile-time
+- Performance: Merged in `morphdom` and optimized for Marko
+- Performance: Optimized diffing/patching of elements with only simple attributes in the following set: `class`, `id` and `style`
+
 ## 4.0.x
 
 ### 4.0.1
