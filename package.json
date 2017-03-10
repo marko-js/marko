@@ -141,6 +141,7 @@
   },
   "minprops": {
     "exclude": [
+      "$c",
       "b",
       "be",
       "c",

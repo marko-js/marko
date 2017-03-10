@@ -1,5 +1,4 @@
 'use strict';
-
 class ComponentArgs {
 
     constructor() {
@@ -61,36 +60,33 @@ class ComponentArgs {
             args.push(builder.literal(customEvents));
         }
 
-        if (el.tagDef && el.tagDef.template) {
-            el.setAttributeValue('$w', builder.literal(args));
+        if (el.type === 'CustomTag') {
+            var renderComponentHelper = transformHelper.context.helper('renderComponent');
+
+            el.generateRenderTagCode = function(codegen, tagVar, tagArgs) {
+                tagArgs = [tagVar].concat(tagArgs);
+
+                tagArgs.push(builder.literal(args));
+
+                return codegen.builder.functionCall(
+                    renderComponentHelper,
+                    tagArgs);
+            };
         } else {
-            let componentArgsVar = transformHelper.context.addStaticVar('marko_componentArgs',
-                builder.require(builder.literal('marko/components/taglib/helpers/componentArgs')));
-
-            let componentArgsFunctionCall = builder.functionCall(componentArgsVar, [
-                builder.identifierOut(),
-                builder.literal(args)
-            ]);
-            let cleanupComponentArgsFunctionCall = this.buildCleanupComponentArgsFunctionCall(transformHelper);
-
             el.onBeforeGenerateCode((event) => {
-                event.insertCode(componentArgsFunctionCall);
+                let lhs = builder.memberExpression(builder.identifierOut(), builder.identifier('$c'));
+                let rhs = builder.literal(args);
+
+                event.insertCode(builder.assignment(lhs, rhs));
             });
 
             el.onAfterGenerateCode((event) => {
-                event.insertCode(cleanupComponentArgsFunctionCall);
+                let lhs = builder.memberExpression(builder.identifierOut(), builder.identifier('$c'));
+                let rhs = builder.literalNull();
+
+                event.insertCode(builder.assignment(lhs, rhs));
             });
         }
-    }
-
-    buildCleanupComponentArgsFunctionCall(transformHelper) {
-        var context = transformHelper.context;
-        var builder = transformHelper.builder;
-
-        var cleanupComponentArgsVar = context.addStaticVar('marko_cleanupComponentArgs',
-            'marko_componentArgs.cleanup');
-
-        return builder.functionCall(cleanupComponentArgsVar, [builder.identifierOut()]);
     }
 }
 

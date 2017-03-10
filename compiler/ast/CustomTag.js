@@ -432,6 +432,10 @@ class CustomTag extends HtmlElement {
         return this._nestedTagVar;
     }
 
+    generateRenderTagCode(codegen, tagVar, tagArgs) {
+        return codegen.builder.functionCall(tagVar, tagArgs);
+    }
+
     generateCode(codegen) {
         if (this.type !== 'CustomTag') {
             throw new Error(this.type);
@@ -601,8 +605,7 @@ class CustomTag extends HtmlElement {
             let loadTag = builder.functionCall(context.helper('loadTag'), [templateVar]);
             let tagVar = codegen.addStaticVar(tagVarName, loadTag);
 
-            let tagFunctionCall = builder.functionCall(tagVar, [ inputProps, 'out' ]);
-            finalNode = tagFunctionCall;
+            finalNode = this.generateRenderTagCode(codegen, tagVar, [ inputProps, builder.identifierOut() ]);
         } else {
             if (rendererRequirePath) {
                 codegen.pushMeta('tags', builder.literal(rendererRequirePath), true);
@@ -631,8 +634,11 @@ class CustomTag extends HtmlElement {
 
             let tagVar = codegen.addStaticVar(tagVarName, loadTag);
 
-            let tagFunctionCall = builder.functionCall(tagVar, tagArgs);
-            finalNode = tagFunctionCall;
+            if (isNestedTag) {
+                finalNode = builder.functionCall(tagVar, tagArgs);
+            } else {
+                finalNode = this.generateRenderTagCode(codegen, tagVar, tagArgs);
+            }
         }
 
         if (bodyOnlyIf && renderBodyFunctionVar) {

@@ -77,6 +77,7 @@ const helpers = {
     'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
     'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
     'merge': { module: 'marko/runtime/helper-merge' },
+    'renderComponent': { module: 'marko/components/taglib/helpers/renderComponent' },
     'str': 's',
     'styleAttr': {
         vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
