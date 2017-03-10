@@ -211,8 +211,6 @@ module.exports = function handleComponentBind() {
         return;
     }
 
-    context.setMeta('isComponent', true);
-
     if (this.firstBind) {
         this.context.on('beforeGenerateCode:TemplateRoot', function(eventArgs) {
             eventArgs.node.addRenderFunctionParam(builder.identifier('__component'));
