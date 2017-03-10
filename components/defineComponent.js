@@ -1,9 +1,9 @@
 'use strict';
 /* jshint newcap:false */
 
- var BaseState;
- var BaseComponent;
- var inherit;
+var BaseState = require('./State');
+var BaseComponent = require('./Component');
+var inherit = require('raptor-util/inherit');
 
 module.exports = function defineComponent(def, renderer) {
     if (def.$__isComponent) {
@@ -13,10 +13,12 @@ module.exports = function defineComponent(def, renderer) {
     var ComponentClass;
     var proto;
 
-    if (typeof def === 'function') {
+    var type = typeof def;
+
+    if (type == 'function') {
         ComponentClass = def;
         proto = ComponentClass.prototype;
-    } else if (typeof def === 'object') {
+    } else if (type == 'object') {
         ComponentClass = function() {};
         proto = ComponentClass.prototype = def;
     } else {
@@ -57,7 +59,3 @@ module.exports = function defineComponent(def, renderer) {
 
     return Component;
 };
-
-BaseState = require('./State');
-BaseComponent = require('./Component');
-inherit = require('raptor-util/inherit');

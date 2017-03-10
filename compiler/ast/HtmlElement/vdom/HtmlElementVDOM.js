@@ -3,6 +3,10 @@
 const Node = require('../../Node');
 const vdomUtil = require('../../../util/vdom');
 
+var FLAG_IS_SVG = 1;
+var FLAG_IS_TEXTAREA = 2;
+var FLAG_SIMPLE_ATTRS = 4;
+
 function finalizeCreateArgs(createArgs, builder) {
     var length = createArgs.length;
     var lastArg;
@@ -13,7 +17,13 @@ function finalizeCreateArgs(createArgs, builder) {
             lastArg = arg;
         } else {
             if (lastArg != null) {
-                createArgs[i] = builder.literalNull();
+                if (i === 3) {
+                    // Use a literal 0 for the flags
+                    createArgs[i] = builder.literal(0);
+                } else {
+                    createArgs[i] = builder.literalNull();
+                }
+
             } else {
                 length--;
             }
@@ -23,6 +33,18 @@ function finalizeCreateArgs(createArgs, builder) {
     createArgs.length = length;
     return createArgs;
 }
+
+const MAYBE_SVG = {
+    'a': true,
+    'script': true,
+    'style': true
+};
+
+const SIMPLE_ATTRS = {
+    'class': true,
+    'style': true,
+    'id': true
+};
 
 class HtmlElementVDOM extends Node {
     constructor(def) {
@@ -34,6 +56,13 @@ class HtmlElementVDOM extends Node {
         this.attributes = def.attributes;
         this.body = def.body;
         this.dynamicAttributes = def.dynamicAttributes;
+
+        this.isSVG = false;
+        this.isTextArea = false;
+        this.hasAttributes = false;
+        this.hasSimpleAttrs = false; // This will be set to true if the HTML element
+                                     // only attributes in the following set:
+                                     // ['id', 'style', 'class']
 
         this.isChild = false;
         this.createElementId = undefined;
@@ -47,13 +76,61 @@ class HtmlElementVDOM extends Node {
 
         vdomUtil.registerOptimizer(context);
 
+        let tagName = this.tagName;
+
+        if (tagName.type === 'Literal' && typeof tagName.value === 'string') {
+            let tagDef = context.getTagDef(tagName.value);
+            if (tagDef) {
+                if (tagDef.htmlType  === 'svg') {
+                    this.isSVG = true;
+                } else {
+                    if (MAYBE_SVG[tagName.value] && context.isFlagSet('SVG')) {
+                        this.isSVG = true;
+                    } else {
+                        this.tagName = tagName = builder.literal(tagName.value.toUpperCase());
+
+                        if (tagName.value === 'TEXTAREA') {
+                            this.isTextArea = true;
+                        }
+                    }
+                }
+            }
+        } else {
+
+            if (context.isFlagSet('SVG')) {
+                this.isSVG = true;
+            } else {
+                this.tagName = builder.functionCall(
+                    builder.memberExpression(
+                        tagName,
+                        builder.identifier('toUpperCase')),
+                    []);
+            }
+
+        }
+
         let attributes = this.attributes;
         let dynamicAttributes = this.dynamicAttributes;
 
         let attributesArg = null;
 
-        if (attributes && attributes.length) {
+        var hasNamedAttributes = false;
+        var hasDynamicAttributes = dynamicAttributes != null && dynamicAttributes.length !== 0;
+
+        var hasSimpleAttrs = true;
+
+        if (attributes != null && attributes.length !== 0) {
             let addAttr = function(name, value) {
+                hasNamedAttributes = true;
+
+                if (name === 'data-_noupdate') {
+                    // Preserving attributes requires extra logic that we cannot
+                    // shortcircuit
+                    hasSimpleAttrs = false;
+                } else if (!SIMPLE_ATTRS[name] && !name.startsWith('data-_')) {
+                    hasSimpleAttrs = false;
+                }
+
                 if (!attributesArg) {
                     attributesArg = {};
                 }
@@ -91,7 +168,7 @@ class HtmlElementVDOM extends Node {
             }
         }
 
-        if (dynamicAttributes && dynamicAttributes.length) {
+        if (hasDynamicAttributes) {
             dynamicAttributes.forEach((attrs) => {
                 if (attributesArg) {
                     let mergeVar = context.helper('merge');
@@ -104,6 +181,12 @@ class HtmlElementVDOM extends Node {
                 }
             });
         }
+
+        if (!this.isAttrsStatic && hasNamedAttributes && hasSimpleAttrs && !hasDynamicAttributes) {
+            this.hasSimpleAttrs = true;
+        }
+
+        this.hasAttributes = hasNamedAttributes || hasDynamicAttributes;
 
         this.attributesArg = attributesArg;
 
@@ -122,12 +205,13 @@ class HtmlElementVDOM extends Node {
         let body = this.body;
         let attributesArg = this.attributesArg;
         let nextConstId = this.nextConstId;
+        let tagName = this.tagName;
 
         let childCount = body && body.length;
 
-        let createArgs = new Array(4); // tagName, attributes, childCount, const ID
+        let createArgs = new Array(5); // tagName, attributes, childCount, const ID, flags
 
-        createArgs[0] = this.tagName;
+        createArgs[0] = tagName;
 
         if (attributesArg) {
             createArgs[1] = attributesArg;
@@ -137,8 +221,28 @@ class HtmlElementVDOM extends Node {
             createArgs[2] = builder.literal(childCount);
         }
 
+
+
+        var flags = 0;
+
+        if (this.isSVG) {
+            flags |= FLAG_IS_SVG;
+        }
+
+        if (this.isTextArea) {
+            flags |= FLAG_IS_TEXTAREA;
+        }
+
+        if (this.hasSimpleAttrs) {
+            flags |= FLAG_SIMPLE_ATTRS;
+        }
+
+        if (flags) {
+            createArgs[3] = builder.literal(flags);
+        }
+
         if (nextConstId) {
-            createArgs[3] = nextConstId;
+            createArgs[4] = nextConstId;
         }
 
         // Remove trailing undefined arguments and convert non-trailing

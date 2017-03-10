@@ -55,8 +55,8 @@ ComponentsContext.prototype = {
         return parent.$__nextId();
     },
     $__preserveDOMNode: function(elId, bodyOnly) {
-        var preserved = this.$__preserved ;
-        if (preserved === EMPTY_OBJECT) {
+        var preserved = this.$__preserved;
+        if (preserved == EMPTY_OBJECT) {
             preserved = this.$__preserved = {};
         }
         preserved[elId] = { $__bodyOnly: bodyOnly };

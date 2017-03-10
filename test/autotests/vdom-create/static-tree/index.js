@@ -12,8 +12,8 @@ module.exports = function(helpers) {
 
 
     expect(linkClone).to.not.equal(link);
-    expect(link.$__parentNode).to.equal(undefined);
-    expect(link.nextSibling).to.equal(undefined);
+    expect(link.$__parentNode).to.equal(null);
+    expect(link.nextSibling).to.equal(null);
 
     expect(linkClone.nextSibling.nodeName).to.equal('span');
     expect(linkClone.$__parentNode.nodeName).to.equal('div');

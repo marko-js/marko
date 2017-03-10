@@ -8,20 +8,37 @@ var generateVDOMCode = require('./vdom/generateCode');
 var vdomUtil = require('../../util/vdom');
 
 function beforeGenerateCode(event) {
-    if (event.node.tagName === 'script') {
-        event.context.pushFlag('SCRIPT_BODY');
+    var tagName = event.node.tagName;
+    var context = event.context;
+
+    var tagDef = typeof tagName === 'string' ? context.getTagDef(tagName) : undefined;
+    if (tagDef && tagDef.htmlType === 'svg') {
+        context.pushFlag('SVG');
     }
-    if (event.node.tagName === 'style') {
-        event.context.pushFlag('STYLE_BODY');
+
+    if (tagName === 'script') {
+        context.pushFlag('SCRIPT_BODY');
+    }
+    if (tagName === 'style') {
+        context.pushFlag('STYLE_BODY');
     }
 }
 
 function afterGenerateCode(event) {
-    if (event.node.tagName === 'script') {
-        event.context.popFlag('SCRIPT_BODY');
+    var tagName = event.node.tagName;
+    var context = event.context;
+
+    var tagDef = typeof tagName === 'string' ? context.getTagDef(tagName) : undefined;
+    
+    if (tagDef && tagDef.htmlType === 'svg') {
+        context.popFlag('SVG');
     }
-    if (event.node.tagName === 'style') {
-        event.context.popFlag('STYLE_BODY');
+
+    if (tagName === 'script') {
+        context.popFlag('SCRIPT_BODY');
+    }
+    if (tagName === 'style') {
+        context.popFlag('STYLE_BODY');
     }
 }
 

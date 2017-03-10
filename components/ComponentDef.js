@@ -20,11 +20,10 @@ function ComponentDef(component, componentId, out, componentStack, componentStac
     this.$__component = component;
     this.id = componentId;
 
-    this.$__roots =         // IDs of root elements if there are multiple root elements
-        this.$__children = // An array of nested ComponentDef instances
-        this.$__domEvents = // An array of DOM events that need to be added (in sets of three)
-        this.$__bubblingDomEvents = // Used to keep track of bubbling DOM events for components rendered on the server
-        undefined;
+    this.$__roots =  null;            // IDs of root elements if there are multiple root elements
+    this.$__children = null;          // An array of nested ComponentDef instances
+    this.$__domEvents = null;         // An array of DOM events that need to be added (in sets of three)
+    this.$__bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
 
     this.$__isExisting = false;
 
@@ -62,7 +61,7 @@ ComponentDef.prototype = {
         if (nestedId == null) {
             return id;
         } else {
-            if (typeof nestedId === 'string' && repeatedRegExp.test(nestedId)) {
+            if (typeof nestedId == 'string' && repeatedRegExp.test(nestedId)) {
                 return nextRepeatedId(this.$__out, id, nestedId);
             } else {
                 return id + '-' + nestedId;

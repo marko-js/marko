@@ -24,9 +24,11 @@ function vdomToHTML(node, options) {
     function serializeElHelper(el, indent) {
         var tagName = el.nodeName;
 
-        if (el.namespaceURI === 'http://www.w3.org/2000/svg') {
+        var elNamespaceURI = el.namespaceURI || el.$__namespaceURI;
+
+        if (elNamespaceURI === 'http://www.w3.org/2000/svg') {
             tagName = 'svg:' + tagName;
-        } else if (el.namespaceURI === 'http://www.w3.org/1998/Math/MathML') {
+        } else if (elNamespaceURI === 'http://www.w3.org/1998/Math/MathML') {
             tagName = 'math:' + tagName;
         }
 

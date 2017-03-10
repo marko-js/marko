@@ -5,7 +5,7 @@ var EMPTY_ARRAY = [];
 function getComponentDefs(result) {
     var componentDefs = result.$__components;
 
-    if (componentDefs.length === 0) {
+    if (!componentDefs.length) {
         throw Error('No component');
     }
     return componentDefs;
@@ -62,7 +62,7 @@ var proto = RenderResult.prototype = {
     toString: function() {
         return this.$__out.toString();
     },
-    document: typeof document !== 'undefined' && document
+    document: typeof document != 'undefined' && document
 };
 
 // Add all of the following DOM methods to Component.prototype:

@@ -4,21 +4,19 @@ var extend = require('raptor-util/extend');
 
 function VDocumentFragmentClone(other) {
     extend(this, other);
-    this.$__parentNode = undefined;
-    this.$__nextSibling = undefined;
+    this.$__parentNode = null;
+    this.$__nextSibling = null;
 }
 
 function VDocumentFragment(documentFragment) {
     this.$__VNode(null /* childCount */);
-    this.namespaceURI = undefined;
+    this.namespaceURI = null;
 }
 
 VDocumentFragment.prototype = {
     nodeType: 11,
 
     $__DocumentFragment: true,
-
-    $__nsAware: true,
 
     $__cloneNode: function() {
         return new VDocumentFragmentClone(this);

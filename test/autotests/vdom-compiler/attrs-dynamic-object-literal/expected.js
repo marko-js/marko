@@ -5,7 +5,7 @@ var marko_template = module.exports = require("marko/vdom").t();
 function render(input, out) {
   var data = input;
 
-  out.e("div", {
+  out.e("DIV", {
       foo: "bar",
       hello: "world"
     }, 3)

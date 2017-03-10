@@ -19,8 +19,8 @@ module.exports = function(helpers) {
     component.updateColor('green');
     component.update();
 
-    expect(component.el.getAttribute('style')).to.equal('color:green;');
-    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:green;');
+    expect(component.el.getAttribute('style')).to.equal('color: green;');
+    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color: green;');
     expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('1');
 
     //
