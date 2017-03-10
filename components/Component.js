@@ -212,16 +212,16 @@ var componentProto;
 function Component(id, doc) {
     EventEmitter.call(this);
     this.id = id;
-    this.el =
-        this.$__state =
-        this.$__roots =
-        this.$__subscriptions =
-        this.$__domEventListenerHandles =
-        this.$__bubblingDomEvents =
-        this.$__customEvents =
-        this.$__scope =
-        this.$__renderInput =
-        null;
+    this.el = null;
+    this.$__state = null;
+    this.$__roots = null;
+    this.$__subscriptions = null;
+    this.$__domEventListenerHandles = null;
+    this.$__bubblingDomEvents = null;
+    this.$__customEvents = null;
+    this.$__scope = null;
+    this.$__renderInput = null;
+    this.$__input = undefined;
 
     this.$__destroyed =
         this.$__updateQueued =

@@ -1,5 +1,7 @@
 const NO_UPDATE_ATTR_SUFFIX = ':no-update';
 
+var PRESERVE_ATTRS_HELPER_ADDED = Symbol('PRESERVE_ATTRS_HELPER_ADDED');
+
 function handleComponentPreserveAttrs() {
     var el = this.el;
     var context = this.context;
@@ -33,6 +35,15 @@ function handleComponentPreserveAttrs() {
 
     if (noUpdateAttrs.length) {
         el.setAttributeValue('data-_noupdate', builder.literal(noUpdateAttrs));
+
+
+        if (!context.isFlagSet(PRESERVE_ATTRS_HELPER_ADDED)) {
+            context.setFlag(PRESERVE_ATTRS_HELPER_ADDED);
+            context.addStaticCode(
+                this.builder.require(
+                    this.builder.literal('marko/runtime/vdom/preserve-attrs')));
+        }
+
     }
 }
 

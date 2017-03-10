@@ -10,7 +10,7 @@ var extend = require('raptor-util/extend');
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
 function resolveComponentKey(out, key, scope) {
-    if (key.charAt(0) == '#') {
+    if (key[0] == '#') {
         return key.substring(1);
     } else {
         var resolvedId;

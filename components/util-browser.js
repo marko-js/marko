@@ -10,7 +10,7 @@ var defaultDocument = document;
 
 function getComponentForEl(el, doc) {
     if (el) {
-        var node = typeof el === 'string' ? (doc || defaultDocument).getElementById(el) : el;
+        var node = typeof el == 'string' ? (doc || defaultDocument).getElementById(el) : el;
         if (node) {
             var component = node._w;
 

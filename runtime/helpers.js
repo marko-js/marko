@@ -2,22 +2,22 @@
 var isArray = Array.isArray;
 
 function isFunction(arg) {
-    return typeof arg === 'function';
+    return typeof arg == 'function';
 }
 
 function classList(arg, classNames) {
     var len;
 
     if (arg) {
-        if (typeof arg === 'string') {
+        if (typeof arg == 'string') {
             if (arg) {
                 classNames.push(arg);
             }
-        } else if (typeof (len = arg.length) === 'number') {
+        } else if (typeof (len = arg.length) == 'number') {
             for (var i=0; i<len; i++) {
                 classList(arg[i], classNames);
             }
-        } else if (typeof arg === 'object') {
+        } else if (typeof arg == 'object') {
             for (var name in arg) {
                 if (arg.hasOwnProperty(name)) {
                     var value = arg[name];

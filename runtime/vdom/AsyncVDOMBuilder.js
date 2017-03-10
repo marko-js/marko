@@ -18,7 +18,7 @@ function State(tree) {
     this.$__remaining = 1;
     this.$__events = new EventEmitter();
     this.$__tree = tree;
-    this.$__last = undefined;
+    this.$__last = null;
     this.$__lastCount = 0;
     this.$__flags = 0;
 }
@@ -75,10 +75,10 @@ var proto = AsyncVDOMBuilder.prototype = {
     text: function(text) {
         var type = typeof text;
 
-        if (type !== 'string') {
+        if (type != 'string') {
             if (text == null) {
                 return;
-            } else if (type === 'object') {
+            } else if (type == 'object') {
                 if (text.toHTML) {
                     return this.h(text.toHTML());
                 }
@@ -213,10 +213,10 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         if (event === EVENT_FINISH && (state.$__flags & FLAG_FINISHED)) {
             callback(this.$__getResult());
-            return this;
+        } else {
+            state.$__events.on(event, callback);
         }
 
-        state.$__events.on(event, callback);
         return this;
     },
 
@@ -270,7 +270,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         if (!lastArray) {
             lastArray = state.$__last = [];
             var i = 0;
-            var next = function next() {
+            var next = function() {
                 if (i === lastArray.length) {
                     return;
                 }

@@ -2,51 +2,37 @@ var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
 var extend = require('raptor-util/extend');
 
+var NS_XLINK = 'http://www.w3.org/1999/xlink';
+var ATTR_XLINK_HREF = 'xlink:href';
+var toString = String;
+
 var FLAG_IS_SVG = 1;
 var FLAG_IS_TEXTAREA = 2;
 
 var defineProperty = Object.defineProperty;
 
-var NS_XLINK = 'http://www.w3.org/1999/xlink';
-var ATTR_XLINK_HREF = 'xlink:href';
+
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = Object.freeze({});
 var ATTR_MARKO_CONST = 'data-_mc';
 
 var specialAttrRegexp = /^data-_/;
 
-function removePreservedAttributes(attrs, clone) {
-    var preservedAttrs = attrs['data-_noupdate'];
-    if (preservedAttrs) {
-        if (typeof preservedAttrs === 'string') {
-            preservedAttrs = JSON.parse(preservedAttrs);
-        }
-
-        if (clone) {
-            attrs = extend({}, attrs);
-        }
-        preservedAttrs.forEach(function(preservedAttrName) {
-            delete attrs[preservedAttrName];
-        });
-    }
-
-    return attrs;
-}
 
 function convertAttrValue(type, value) {
     if (value === true) {
         return '';
-    } else if (type === 'object') {
+    } else if (type == 'object') {
         return JSON.stringify(value);
     } else {
-        return value.toString();
+        return toString(value);
     }
 }
 
 function VElementClone(other) {
     extend(this, other);
-    this.$__parentNode = undefined;
-    this.$__nextSibling = undefined;
+    this.$__parentNode = null;
+    this.$__nextSibling = null;
 }
 
 function VElement(tagName, attrs, childCount, constId, flags) {
@@ -74,7 +60,7 @@ function VElement(tagName, attrs, childCount, constId, flags) {
     this.$__isTextArea = isTextArea;
     this.$__namespaceURI = namespaceURI;
     this.nodeName = tagName;
-    this.$__value = undefined;
+    this.$__value = null;
     this.$__constId = constId;
 }
 
@@ -118,15 +104,13 @@ VElement.prototype = {
     },
 
     actualize: function(doc) {
-        var el;
         var namespaceURI = this.$__namespaceURI;
         var tagName = this.nodeName;
 
-        if (namespaceURI) {
-            el = doc.createElementNS(namespaceURI, tagName);
-        } else {
-            el = doc.createElement(tagName);
-        }
+        var el = namespaceURI ?
+            doc.createElementNS(namespaceURI, tagName) :
+            doc.createElement(tagName);
+
 
         var attributes = this.$__attributes;
         for (var attrName in attributes) {
@@ -139,17 +123,20 @@ VElement.prototype = {
             if (attrValue !== false && attrValue != null) {
                 var type = typeof attrValue;
 
-                if (type !== 'string') {
+                if (type != 'string') {
                     // Special attributes aren't copied to the real DOM. They are only
                     // kept in the virtual attributes map
                     attrValue = convertAttrValue(type, attrValue);
                 }
 
-                if (attrName === ATTR_XLINK_HREF) {
-                    el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
-                } else {
-                    el.setAttribute(attrName, attrValue);
+                namespaceURI = null;
+
+                if (attrName == ATTR_XLINK_HREF) {
+                    namespaceURI = NS_XLINK;
+                    attrName = ATTR_HREF;
                 }
+
+                el.setAttributeNS(namespaceURI, attrName, attrValue);
             }
         }
 
@@ -177,11 +164,7 @@ VElement.prototype = {
         return value != null && value !== false;
     },
 
-    getAttribute: function(name) {
-        return this.$__attributes[name];
-    },
-
-    isSameNode: function(otherNode) {
+    $__isSameNode: function(otherNode) {
         if (otherNode.nodeType == 1) {
             var constId = this.$__constId;
             if (constId) {
@@ -223,11 +206,21 @@ defineProperty(proto, 'value', {
         if (value == null) {
             value = this.$__attributes.value;
         }
-        return value != null ? value.toString() : '';
+        return value != null ? toString(value) : '';
     }
 });
 
+VElement.$__removePreservedAttributes = function(attrs) {
+    // By default this static method is a no-op, but if there are any
+    // compiled components that have "no-update" attributes then
+    // `preserve-attrs.js` will be imported and this method will be replaced
+    // with a method that actually does something
+    return attrs;
+};
+
 VElement.$__morphAttrs = function(fromEl, toEl) {
+    var removePreservedAttributes = VElement.$__removePreservedAttributes;
+
     var attrs = toEl.$__attributes || toEl._vattrs;
     var attrName;
     var i;
@@ -242,7 +235,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
 
     var oldAttrs = fromEl._vattrs;
     if (oldAttrs) {
-        if (oldAttrs === attrs) {
+        if (oldAttrs == attrs) {
             // For constant attributes the same object will be provided
             // every render and we can use that to our advantage to
             // not waste time diffing a constant, immutable attribute
@@ -281,37 +274,37 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // so it's as if they never existed.
     attrs = removePreservedAttributes(attrs, true);
 
+    var namespaceURI;
+
     // Loop over all of the attributes in the attribute map and compare
     // them to the value in the old map. However, if the value is
     // null/undefined/false then we want to remove the attribute
     for (attrName in attrs) {
         var attrValue = attrs[attrName];
+        namespaceURI = null;
 
         if (attrName == ATTR_XLINK_HREF) {
-            if (attrValue == null || attrValue === false) {
-                fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
-            } else if (oldAttrs[attrName] != attrValue) {
-                fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+            namespaceURI = NS_XLINK;
+            attrName = ATTR_HREF;
+        }
+
+        if (attrValue == null || attrValue === false) {
+            fromEl.removeAttributeNS(namespaceURI, attrName);
+        } else if (oldAttrs[attrName] !== attrValue) {
+
+            if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
+                // Special attributes aren't copied to the real DOM. They are only
+                // kept in the virtual attributes map
+                continue;
             }
-        } else {
-            if (attrValue == null || attrValue === false) {
-                fromEl.removeAttribute(attrName);
-            } else if (oldAttrs[attrName] !== attrValue) {
 
-                if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
-                    // Special attributes aren't copied to the real DOM. They are only
-                    // kept in the virtual attributes map
-                    continue;
-                }
+            var type = typeof attrValue;
 
-                var type = typeof attrValue;
-
-                if (type !== 'string') {
-                    attrValue = convertAttrValue(type, attrValue);
-                }
-
-                fromEl.setAttribute(attrName, attrValue);
+            if (type != 'string') {
+                attrValue = convertAttrValue(type, attrValue);
             }
+
+            fromEl.setAttributeNS(namespaceURI, attrName, attrValue);
         }
     }
 
@@ -319,11 +312,13 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // then we need to remove those attributes from the target node
     for (attrName in oldAttrs) {
         if (!(attrName in attrs)) {
+
             if (attrName == ATTR_XLINK_HREF) {
-                fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
-            } else {
-                fromEl.removeAttribute(attrName);
+                namespaceURI = ATTR_XLINK_HREF;
+                attrName = ATTR_HREF;
             }
+
+            fromEl.removeAttributeNS(namespaceURI, attrName);
         }
     }
 

@@ -11,8 +11,8 @@ module.exports = function(helpers) {
     expect(svg.$__namespaceURI).to.equal('http://www.w3.org/2000/svg');
 
     var docFragmentClone = docFragment.$__cloneNode();
-    expect(docFragmentClone.nextSibling).to.equal(undefined);
-    expect(docFragmentClone.parentNode).to.equal(undefined);
+    expect(docFragmentClone.nextSibling).to.equal(null);
+    expect(docFragmentClone.parentNode == null).to.equal(true);
 
     return svg;
 };

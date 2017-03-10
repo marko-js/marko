@@ -1,5 +1,5 @@
 'use strict';
-var doc = typeof document === 'undefined' ? undefined : document;
+var doc = typeof document == 'undefined' ? undefined : document;
 var specialElHandlers = require('./specialElHandlers');
 
 var ELEMENT_NODE = 1;
@@ -17,7 +17,7 @@ var COMMENT_NODE = 8;
  * @return {boolean}
  */
 function compareNodeNames(fromEl, toEl) {
-    return fromEl.nodeName === toEl.nodeName;
+    return fromEl.nodeName == toEl.nodeName;
 }
 
 /**
@@ -62,8 +62,7 @@ module.exports = function morphdomFactory(morphAttrs) {
             if (node.nodeType == ELEMENT_NODE) {
                 var curChild = node.firstChild;
                 while (curChild) {
-
-                    var key = undefined;
+                    var key;
 
                     if (skipKeyedNodes && (key = curChild.id)) {
                         // If we are skipping keyed nodes then we add the key
@@ -183,7 +182,7 @@ module.exports = function morphdomFactory(morphAttrs) {
                 delete fromNodesLookup[toElKey];
             }
 
-            if (toNode.isSameNode && toNode.isSameNode(fromNode)) {
+            if (toNode.$__isSameNode(fromNode)) {
                 return;
             }
 

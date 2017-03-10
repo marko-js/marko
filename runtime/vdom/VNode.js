@@ -6,16 +6,11 @@ VNode.prototype = {
     $__VNode: function(finalChildCount) {
         this.$__finalChildCount = finalChildCount;
         this.$__childCount = 0;
-        this.$__firstChild = undefined;
-        this.$__lastChild = undefined;
-        this.$__parentNode = undefined;
-        this.$__nextSibling = undefined;
+        this.$__firstChild = null;
+        this.$__lastChild = null;
+        this.$__parentNode = null;
+        this.$__nextSibling = null;
     },
-    // removeChildren: function() {
-    //     this.$__firstChild = undefined;
-    //     this.$__childCount = 0;
-    //     this.$__lastChild = undefined;
-    // },
 
     get firstChild() {
         var firstChild = this.$__firstChild;
@@ -78,7 +73,7 @@ VNode.prototype = {
     },
 
     $__finishChild: function finishChild() {
-        if (this.$__childCount === this.$__finalChildCount && this.$__parentNode) {
+        if (this.$__childCount == this.$__finalChildCount && this.$__parentNode) {
             return this.$__parentNode.$__finishChild();
         } else {
             return this;

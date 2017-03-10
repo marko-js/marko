@@ -3,6 +3,7 @@ var VComment = require('./VComment');
 var VDocumentFragment = require('./VDocumentFragment');
 var VElement = require('./VElement');
 var VText = require('./VText');
+
 var defaultDocument = typeof document != 'undefined' && document;
 
 var FLAG_IS_TEXTAREA = 2;
@@ -30,15 +31,7 @@ function virtualize(node) {
 
                 for (var i=0; i<attrCount; i++) {
                     var attr = attributes[i];
-                    var attrName;
-
-                    if (attr.namespaceURI === 'http://www.w3.org/1999/xlink' && attr.localName === 'href') {
-                        attrName = 'xlink:href';
-                    } else {
-                        attrName = attr.name;
-                    }
-
-                    attrs[attrName] = attr.value;
+                    attrs[attr.name] = attr.value;
                 }
             }
 
