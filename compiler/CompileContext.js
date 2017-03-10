@@ -600,6 +600,10 @@ class CompileContext extends EventEmitter {
         }
     }
 
+    setMeta(key, value) {
+        this.meta[key] = value;
+    }
+
     setPreserveWhitespace(preserveWhitespace) {
         this._preserveWhitespace = preserveWhitespace;
     }
