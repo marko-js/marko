@@ -8,12 +8,12 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_node0 = marko_createElement("svg", {
         viewBox: "0 0 200 200",
         xmlns: "http://www.w3.org/2000/svg"
-      }, 1, marko_const_nextId(), 1)
+      }, 1, 1, marko_const_nextId())
       .e("circle", {
           cx: "100",
           cy: "100",
           r: "100"
-        }, 0, null, 1);
+        }, 0, 1);
 
 function render(input, out) {
   var data = input;

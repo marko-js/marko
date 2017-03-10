@@ -3,6 +3,7 @@ var VComment = require('./VComment');
 var VDocumentFragment = require('./VDocumentFragment');
 var VElement = require('./VElement');
 var VText = require('./VText');
+var FLAG_IS_TEXTAREA = 2;
 
 var defaultDocument = typeof document != 'undefined' && document;
 
@@ -42,7 +43,7 @@ function virtualize(node) {
                 flags |= FLAG_IS_TEXTAREA;
             }
 
-            var vdomEl = new VElement(tagName, attrs, null, null, flags);
+            var vdomEl = new VElement(tagName, attrs, null, flags);
             vdomEl.$__namespaceURI = node.namespaceURI;
 
             if (vdomEl.$__isTextArea) {

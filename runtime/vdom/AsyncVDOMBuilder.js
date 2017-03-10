@@ -46,8 +46,8 @@ var proto = AsyncVDOMBuilder.prototype = {
     $__isOut: true,
     $__document: defaultDocument,
 
-    element: function(name, attrs, childCount, constId, flags) {
-        var element = new VElement(name, attrs, childCount);
+    element: function(name, attrs, childCount, flags, constId) {
+        var element = new VElement(name, attrs, childCount, flags, constId);
 
         var parent = this.$__parent;
 
@@ -112,8 +112,8 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    beginElement: function(name, attrs, childCount, constId, flags) {
-        var element = new VElement(name, attrs, childCount, constId, flags);
+    beginElement: function(name, attrs, childCount, flags, constId) {
+        var element = new VElement(name, attrs, childCount, flags, constId);
         var parent = this.$__parent;
         if (parent) {
             parent.$__appendChild(element);

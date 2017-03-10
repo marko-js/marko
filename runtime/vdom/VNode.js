@@ -1,5 +1,4 @@
 /* jshint newcap:false */
-
 function VNode() {}
 
 VNode.prototype = {

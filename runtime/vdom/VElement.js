@@ -8,6 +8,7 @@ var toString = String;
 
 var FLAG_IS_SVG = 1;
 var FLAG_IS_TEXTAREA = 2;
+var FLAG_SIMPLE_ATTRS = 4;
 
 var defineProperty = Object.defineProperty;
 
@@ -35,7 +36,7 @@ function VElementClone(other) {
     this.$__nextSibling = null;
 }
 
-function VElement(tagName, attrs, childCount, constId, flags) {
+function VElement(tagName, attrs, childCount, flags, constId) {
     this.$__VNode(childCount);
 
     if (constId) {
@@ -46,18 +47,14 @@ function VElement(tagName, attrs, childCount, constId, flags) {
     }
 
     var namespaceURI;
-    var isTextArea;
 
-    if (flags) {
-        isTextArea = flags & FLAG_IS_TEXTAREA;
-
+    if ((this.$__flags = flags || 0)) {
         if (flags & FLAG_IS_SVG) {
             namespaceURI = 'http://www.w3.org/2000/svg';
         }
     }
 
     this.$__attributes = attrs || EMPTY_OBJECT;
-    this.$__isTextArea = isTextArea;
     this.$__namespaceURI = namespaceURI;
     this.nodeName = tagName;
     this.$__value = null;
@@ -80,8 +77,8 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, childCount, constId, flags) {
-        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, constId, flags));
+    e: function(tagName, attrs, childCount, flags, constId) {
+        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, flags, constId));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -140,7 +137,9 @@ VElement.prototype = {
             }
         }
 
-        if (this.$__isTextArea) {
+        var flags = this.$__flags;
+
+        if (flags & FLAG_IS_TEXTAREA) {
             el.value = this.$__value;
         } else {
             var curChild = this.firstChild;
@@ -152,6 +151,7 @@ VElement.prototype = {
         }
 
         el._vattrs = attributes;
+        el._vflags = flags;
 
         return el;
     },
@@ -207,6 +207,12 @@ defineProperty(proto, 'value', {
             value = this.$__attributes.value;
         }
         return value != null ? toString(value) : '';
+    }
+});
+
+defineProperty(proto, '$__isTextArea', {
+    get: function () {
+        return this.$__flags & FLAG_IS_TEXTAREA;
     }
 });
 
@@ -268,6 +274,26 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
         removePreservedAttributes(oldAttrs, false);
     }
 
+    fromEl._vattrs = attrs;
+
+    var attrValue;
+
+    var flags = toEl.$__flags;
+    var oldFlags;
+
+    if (flags & FLAG_SIMPLE_ATTRS && ((oldFlags = fromEl._vflags) & FLAG_SIMPLE_ATTRS)) {
+        if (oldAttrs['class'] != (attrValue = attrs['class'])) {
+            fromEl.className = attrValue;
+        }
+        if (oldAttrs.id != (attrValue = attrs.id)) {
+            fromEl.id = attrValue;
+        }
+        if (oldAttrs.style != (attrValue = attrs.style)) {
+            fromEl.style.cssText = attrValue;
+        }
+        return;
+    }
+
     // In some cases we only want to set an attribute value for the first
     // render or we don't want certain attributes to be touched. To support
     // that use case we delete out all of the preserved attributes
@@ -280,7 +306,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // them to the value in the old map. However, if the value is
     // null/undefined/false then we want to remove the attribute
     for (attrName in attrs) {
-        var attrValue = attrs[attrName];
+        attrValue = attrs[attrName];
         namespaceURI = null;
 
         if (attrName == ATTR_XLINK_HREF) {
@@ -321,8 +347,6 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
             fromEl.removeAttributeNS(namespaceURI, attrName);
         }
     }
-
-    fromEl._vattrs = attrs;
 };
 
 module.exports = VElement;

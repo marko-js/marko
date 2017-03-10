@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var div = helpers.vdom.createElement('div', null, 0 /* childCount */, 'abc123' /* key */);
+    var div = helpers.vdom.createElement('div', null, 0 /* childCount */, null, 'abc123' /* key */);
     var span = helpers.vdom.createElement('span', null, 0 /* childCount */);
 
     var divClone = div.$__cloneNode();

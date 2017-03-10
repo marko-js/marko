@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 module.exports = function(helpers) {
     var SVG_FLAGS = 1; // SVG
 
-    var svg = helpers.vdom.createElement('svg', null /* attrs */, null /* child count */, null /*constid*/, SVG_FLAGS);
+    var svg = helpers.vdom.createElement('svg', null /* attrs */, null /* child count */, SVG_FLAGS);
 
     var docFragment = helpers.vdom.createDocumentFragment();
     svg.$__appendChild(docFragment);

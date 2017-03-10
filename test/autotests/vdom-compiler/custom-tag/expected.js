@@ -9,7 +9,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_const_nextId = marko_const("cee604"),
     marko_node0 = marko_createElement("A", {
         href: "foo"
-      }, 1, marko_const_nextId())
+      }, 1, 0, marko_const_nextId())
       .t("Body content");
 
 function render(input, out) {

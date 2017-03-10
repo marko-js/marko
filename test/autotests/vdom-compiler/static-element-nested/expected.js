@@ -8,7 +8,7 @@ var marko_template = module.exports = require("marko/vdom").t(),
     marko_node0 = marko_createElement("DIV", {
         "class": "hello",
         onclick: "onClick()"
-      }, 1, marko_const_nextId())
+      }, 1, 0, marko_const_nextId())
       .t("Welcome!");
 
 function render(input, out) {

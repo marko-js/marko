@@ -5,6 +5,7 @@ const vdomUtil = require('../../../util/vdom');
 
 var FLAG_IS_SVG = 1;
 var FLAG_IS_TEXTAREA = 2;
+var FLAG_SIMPLE_ATTRS = 4;
 
 function finalizeCreateArgs(createArgs, builder) {
     var length = createArgs.length;
@@ -16,7 +17,13 @@ function finalizeCreateArgs(createArgs, builder) {
             lastArg = arg;
         } else {
             if (lastArg != null) {
-                createArgs[i] = builder.literalNull();
+                if (i === 3) {
+                    // Use a literal 0 for the flags
+                    createArgs[i] = builder.literal(0);
+                } else {
+                    createArgs[i] = builder.literalNull();
+                }
+
             } else {
                 length--;
             }
@@ -27,10 +34,16 @@ function finalizeCreateArgs(createArgs, builder) {
     return createArgs;
 }
 
-const maybeSVG = {
+const MAYBE_SVG = {
     'a': true,
     'script': true,
     'style': true
+};
+
+const SIMPLE_ATTRS = {
+    'class': true,
+    'style': true,
+    'id': true
 };
 
 class HtmlElementVDOM extends Node {
@@ -46,6 +59,10 @@ class HtmlElementVDOM extends Node {
 
         this.isSVG = false;
         this.isTextArea = false;
+        this.hasAttributes = false;
+        this.hasSimpleAttrs = false; // This will be set to true if the HTML element
+                                     // only attributes in the following set:
+                                     // ['id', 'style', 'class']
 
         this.isChild = false;
         this.createElementId = undefined;
@@ -67,7 +84,7 @@ class HtmlElementVDOM extends Node {
                 if (tagDef.htmlType  === 'svg') {
                     this.isSVG = true;
                 } else {
-                    if (maybeSVG[tagName.value] && context.isFlagSet('SVG')) {
+                    if (MAYBE_SVG[tagName.value] && context.isFlagSet('SVG')) {
                         this.isSVG = true;
                     } else {
                         this.tagName = tagName = builder.literal(tagName.value.toUpperCase());
@@ -97,8 +114,23 @@ class HtmlElementVDOM extends Node {
 
         let attributesArg = null;
 
-        if (attributes && attributes.length) {
+        var hasNamedAttributes = false;
+        var hasDynamicAttributes = dynamicAttributes != null && dynamicAttributes.length !== 0;
+
+        var hasSimpleAttrs = true;
+
+        if (attributes != null && attributes.length !== 0) {
             let addAttr = function(name, value) {
+                hasNamedAttributes = true;
+
+                if (name === 'data-_noupdate') {
+                    // Preserving attributes requires extra logic that we cannot
+                    // shortcircuit
+                    hasSimpleAttrs = false;
+                } else if (!SIMPLE_ATTRS[name] && !name.startsWith('data-_')) {
+                    hasSimpleAttrs = false;
+                }
+
                 if (!attributesArg) {
                     attributesArg = {};
                 }
@@ -136,7 +168,7 @@ class HtmlElementVDOM extends Node {
             }
         }
 
-        if (dynamicAttributes && dynamicAttributes.length) {
+        if (hasDynamicAttributes) {
             dynamicAttributes.forEach((attrs) => {
                 if (attributesArg) {
                     let mergeVar = context.helper('merge');
@@ -149,6 +181,12 @@ class HtmlElementVDOM extends Node {
                 }
             });
         }
+
+        if (!this.isAttrsStatic && hasNamedAttributes && hasSimpleAttrs && !hasDynamicAttributes) {
+            this.hasSimpleAttrs = true;
+        }
+
+        this.hasAttributes = hasNamedAttributes || hasDynamicAttributes;
 
         this.attributesArg = attributesArg;
 
@@ -183,9 +221,7 @@ class HtmlElementVDOM extends Node {
             createArgs[2] = builder.literal(childCount);
         }
 
-        if (nextConstId) {
-            createArgs[3] = nextConstId;
-        }
+
 
         var flags = 0;
 
@@ -197,8 +233,16 @@ class HtmlElementVDOM extends Node {
             flags |= FLAG_IS_TEXTAREA;
         }
 
+        if (this.hasSimpleAttrs) {
+            flags |= FLAG_SIMPLE_ATTRS;
+        }
+
         if (flags) {
-            createArgs[4] = builder.literal(flags);
+            createArgs[3] = builder.literal(flags);
+        }
+
+        if (nextConstId) {
+            createArgs[4] = nextConstId;
         }
 
         // Remove trailing undefined arguments and convert non-trailing
