@@ -1,22 +1,7 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
-
-function getFileNameNoExt(context) {
-    let filename = path.basename(context.filename);
-    let ext = path.extname(filename);
-
-    if (ext === '.js') {
-        return false;
-    }
-
-    if (ext) {
-        filename = filename.slice(0, 0 - ext.length);
-    }
-
-    return filename;
-}
+var getComponentFiles = require('./getComponentFiles');
 
 const esprima = require('esprima');
 const escodegen = require('escodegen');
@@ -159,44 +144,40 @@ function handleClassDeclaration(classEl, transformHelper) {
 module.exports = function handleRootNodes() {
     var context = this.context;
     var builder = this.builder;
-    var filename = getFileNameNoExt(context);
-    var isEntry = 'index' === filename;
 
-    if(!filename) {
-        return; // inline component
+    var componentFiles = getComponentFiles(context.filename);
+    if (!componentFiles) {
+        return;
     }
 
-    var fileMatch = '('+filename.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
-    var styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
-    var componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
-    var splitComponentMatch = new RegExp('^'+fileMatch+'component-browser\\.\\w+$');
+    var dirname = context.dirname;
+
+    componentFiles.styles.forEach((styleFile) => {
+        context.addDependency('./' + styleFile);
+    });
+
+    if (componentFiles.file) {
+        let file = componentFiles.file;
+
+        let moduleInfo = {
+            filename: path.join(dirname, file),
+            requirePath: './'+file.slice(0, file.lastIndexOf('.'))
+        };
+
+        this.setComponentModule(moduleInfo);
+        this.setRendererModule(moduleInfo);
+    }
+
+    if (componentFiles.browserFile) {
+        let file = componentFiles.browserFile;
+        this.setComponentModule({
+            filename: path.join(dirname, file),
+            requirePath: './' + file.slice(
+                0, file.lastIndexOf('.'))
+        });
+    }
 
     var templateRoot = this.el;
-
-    var dirname = this.dirname;
-
-    var dirFiles = fs.readdirSync(dirname);
-    dirFiles.sort();
-
-    for (let i=dirFiles.length - 1; i>=0; i--) {
-        let file = dirFiles[i];
-        if (styleMatch.test(file)) {
-            context.addDependency('./' + file);
-        } else if (splitComponentMatch.test(file)) {
-            this.setComponentModule({
-                filename: path.join(dirname, file),
-                requirePath: './'+file.slice(0, file.lastIndexOf('.'))
-            });
-        } else if (componentMatch.test(file)) {
-            var moduleInfo = {
-                filename: path.join(dirname, file),
-                requirePath: './'+file.slice(0, file.lastIndexOf('.'))
-            };
-
-            this.setComponentModule(moduleInfo);
-            this.setRendererModule(moduleInfo);
-        }
-    }
 
     var rootNodes = [];
     var hasLegacyExplicitBind = false;
