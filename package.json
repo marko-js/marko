@@ -109,6 +109,7 @@
     "nyc": "^10.0.0",
     "open": "0.0.5",
     "phantomjs-prebuilt": "^2.1.13",
+    "promise-polyfill": "^6.0.2",
     "request": "^2.72.0",
     "require-self-ref": "^2.0.1",
     "serve-static": "^1.11.1",

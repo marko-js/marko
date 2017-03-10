@@ -2,6 +2,14 @@ var expect = require('chai').expect;
 var assert = require('assert');
 var markoComponents = require('marko/components');
 
+var Promise = require('promise-polyfill');
+
+// To add to window
+if (!window.Promise) {
+    window.Promise = Promise;
+}
+
+
 function BrowserHelpers() {
     this.logOutput = [];
     this.components = [];
