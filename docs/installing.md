@@ -114,16 +114,19 @@ hello.render({ name: 'Frank' }, out);
 
 Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko DevTools](https://github.com/marko-js/marko-devtools):
 
+
 ```bash
 marko compile hello.marko
 ```
 
-This will produce a `hello.js` file next to the original template. The generated `.js` file will be what gets loaded by the Node.js runtime. If is important to leave off the `.marko` extension when requiring a Marko template so that the `.js` will be resolved correctly.
+This will produce a `hello.js` file next to the original template. The generated `.js` file will be what gets loaded by the Node.js runtime. It is important to leave off the `.marko` extension when requiring a Marko template so that the `.js` will be resolved correctly.
 
-> **ProTip:** You can easily compile all of the Marko templates in your package while also recompiling when a file is modified using the following command:
-> ```bash
-> marko compile --watch
-> ```
+If you wish to only use the require extension in development, you can conditionally require it.
+```js
+if (!process.env.NODE_ENV) {
+    require('marko/node-require');
+}
+```
 
 #### Serving a simple page
 
