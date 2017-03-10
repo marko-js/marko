@@ -5,7 +5,7 @@ var markoComponents = require('marko/components');
 var Promise = require('promise-polyfill');
 
 // To add to window
-if (!window.Promise) {
+if (typeof window !== 'undefined' && !window.Promise) {
     window.Promise = Promise;
 }
 
