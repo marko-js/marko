@@ -373,26 +373,26 @@ $ var personPromise = new Promise((resolve, reject) => {
 
 Advanced implementation:
 + <await> tag signature
-  * Basic usage: <await(results from dataProvider)>...</await>
-  * Optional attributes
-    - client-reorder `boolean`
-    - arg `expression`
-    - arg-* `string`
-    - method `string`
-    - timeout `integer`
-    - timeout-message `string` 
-    - error-message `string`
-    - placeholder `string`
-    - renderTimeout `function`
-    - renderError `function`
-    - renderPlaceholder `function`
-    - name `string`
-    - scope `expression`
-    - show-after `string`
-  * Optional child tags
-    - <await-placeholder>Loading...</await-placeholder>
-    - <await-timeout>Request timed out</await-timeout>
-    - <await-error>Request errored</await-error>
+    * Basic usage: <await(results from dataProvider)>...</await>
+    * Optional attributes
+        - client-reorder `boolean`
+        - arg `expression`
+        - arg-* `string`
+        - method `string`
+        - timeout `integer`
+        - timeout-message `string` 
+        - error-message `string`
+        - placeholder `string`
+        - renderTimeout `function`
+        - renderError `function`
+        - renderPlaceholder `function`
+        - name `string`
+        - scope `expression`
+        - show-after `string`
+    * Optional child tags
+        - <await-placeholder>Loading...</await-placeholder>
+        - <await-timeout>Request timed out</await-timeout>
+        - <await-error>Request errored</await-error>
 
 ## Comments
 
