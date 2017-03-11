@@ -395,7 +395,7 @@ $ var personPromise = new Promise((resolve, reject) => {
 Advanced implementation:
 + <await> tag signature
   * Basic usage: <await(results from dataProvider)>...</await>
-  * Optional attributes (details below)
+  * Optional attributes
     - client-reorder `boolean`
     - arg `expression`
     - arg-* `string`
