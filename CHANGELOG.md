@@ -5,6 +5,10 @@ Changelog
 
 ## 4.1.x
 
+### 4.1.1
+
+- Added `"use strict";` to restore Node.js compatibility for Node.js v4 and v5
+
 ### 4.1.0
 
 - Bug: Fixes [#611](https://github.com/marko-js/marko/issues/611) - Component IDs are not being assigned correctly when intermediate non-component is rendered
