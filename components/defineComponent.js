@@ -44,8 +44,6 @@ module.exports = function defineComponent(def, renderer) {
     // we he have set up the prototype chain using the inherit function
     proto = Component.prototype = ComponentClass.prototype;
 
-    proto.onCreate = proto.onCreate || ComponentClass;
-
     // proto.constructor = def.constructor = Component;
 
     // Set a flag on the constructor function to make it clear this is

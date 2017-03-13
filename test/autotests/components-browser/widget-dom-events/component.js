@@ -1,24 +1,24 @@
 var expect = require('chai').expect;
 
-function Component(config) {
-    this.logOutput = [];
-
-    this.name = 'app-dom-events';
-
-    var _this = this;
-    function log(data) {
-        _this.logOutput.push(data);
-    }
-
-    this.log = log;
-    this.clearLog = function() {
+var Component = {
+    onCreate: function() {
         this.logOutput = [];
-    };
 
-    this.logOutput = [];
-}
+        this.name = 'app-dom-events';
 
-Component.prototype = {
+        var _this = this;
+        function log(data) {
+            _this.logOutput.push(data);
+        }
+
+        this.log = log;
+        this.clearLog = function() {
+            this.logOutput = [];
+        };
+
+        this.logOutput = [];
+    },
+
     handleRootClick: function(event, el) {
         expect(el.getAttribute('class')).to.equal('app-dom-events');
         expect(event.target.tagName.length>0).to.equal(true);

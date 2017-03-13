@@ -5,7 +5,7 @@ var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
-var extend = require('raptor-util/extend');
+var copyProps = require('raptor-util/copyProps');
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -64,12 +64,6 @@ function handleBeginAsync(event) {
 }
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
-    if (typeof renderingLogic == 'function') {
-        var ctor = renderingLogic;
-        renderingLogic = renderingLogic.prototype;
-        renderingLogic.onCreate = renderingLogic.onCreate || ctor;
-    }
-
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
     var typeName = componentProps.type;
@@ -103,7 +97,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
             if (componentArgs) {
                 out.$c = null;
-                
+
                 scope = componentArgs[0];
 
                 if (scope) {
@@ -152,7 +146,12 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
                     if (split) {
                         split = false;
-                        extend(component.constructor.prototype, renderingLogic);
+
+                        var renderingLogicProps = typeof renderingLogic == 'function' ?
+                            renderingLogic.prototype :
+                            renderingLogic;
+
+                        copyProps(renderingLogicProps, component.constructor.prototype);
                     }
                 }
 

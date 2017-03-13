@@ -1,9 +1,9 @@
 'use strict';
-
-const extend = require('raptor-util/extend');
+const copyProps = require('raptor-util/copyProps');
 const SERVER_WIDGET_KEY = Symbol();
 
 function createServerComponentClass(renderingLogic) {
+
     class ServerComponent {
         constructor(id, input, out, typeName, customEvents, scope) {
             this.id = id;
@@ -17,6 +17,7 @@ function createServerComponentClass(renderingLogic) {
             if (this.onCreate) {
                 this.onCreate(input, out);
             }
+
             if (this.onInput) {
                 var updatedInput = this.onInput(input, out) || input;
 
@@ -55,7 +56,12 @@ function createServerComponentClass(renderingLogic) {
         }
     }
 
-    extend(ServerComponent.prototype, renderingLogic);
+    var renderingLogicProps = typeof renderingLogic === 'function' ?
+        renderingLogic.prototype :
+        renderingLogic;
+
+
+    copyProps(renderingLogicProps, ServerComponent.prototype);
 
     return ServerComponent;
 }

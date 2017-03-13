@@ -1,21 +1,26 @@
 var expect = require('chai').expect;
 
-function Component(input, out) {
-    if (typeof window !== 'undefined') {
-        throw new Error('onCreate should not be called in the browser');
-    }
-    if (this.state !== undefined) {
-        throw new Error('this.state should be undefined');
-    }
-    this.state = {
-        events: ['onCreate']
-    };
-
-    this.onCreateInputName = input.name;
-    this.onCreateOutName = out.global.name;
+function Component() {
+    throw new Error('THIS SHOULD NOT BE CALLED');
 }
 
 Component.prototype = {
+
+    onCreate: function(input, out) {
+        if (typeof window !== 'undefined') {
+            throw new Error('onCreate should not be called in the browser');
+        }
+        if (this.state !== undefined) {
+            throw new Error('this.state should be undefined');
+        }
+        this.state = {
+            events: ['onCreate']
+        };
+
+        this.onCreateInputName = input.name;
+        this.onCreateOutName = out.global.name;
+    },
+
     onRender: function(out) {
         if (typeof window !== 'undefined') {
             throw new Error('onRender should not be called in the browser');
