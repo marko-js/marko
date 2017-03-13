@@ -85,11 +85,32 @@ The `for` directive also supports a loop status variable in case you need to kno
 </ul>
 ```
 
+##### Loop Status Methods
+
+###### `getLength()`
+
+Returns the length of the array
+
+###### `getIndex()`
+
+Returns the current loop index
+
+###### `isFirst()`
+
+Returns `true` if the current index is the first index, otherwise `false`
+
+###### `isLast()`
+
+Returns `true` if the current index is the last index, otherwise `false`
+
 #### Loop Separator
 
+Used for separating values in a loop by characters. The first element will not
+be prefixed and the last element will not be suffixed with the `separator`:
+
 ```xml
-<for(color in colors | separator=", ")>${color}</for>
 <div>
+    <!-- Output: red, green, blue -->
     <span for(color in colors | separator=", ") style="color: ${color}">
         ${color}
     </span>
@@ -364,6 +385,14 @@ Example comments:
 ```xml
 <!-- This is a comment that will not be rendered -->
 <h1>Hello</h1>
+```
+
+```js
+// You can also use standard JavaScript-style comments
+/*
+ Block comments are also supported
+ */
+-- Hello
 ```
 
 If you would like for your HTML comment to show up in the final output then you can use the custom `html-comment` tag.

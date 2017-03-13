@@ -249,6 +249,78 @@ The [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/l
 
 ### `no-update`
 
+Preserves the DOM subtree associated with the DOM element or component such that
+it won't be modified when re-rendering the UI component.
+
+```xml
+<div>
+    <!-- Don't ever re-render this table -->
+    <table no-update>
+        ...
+    </table>
+</div>
+```
+
+```xml
+<div>
+    <!-- Don't ever re-render this UI component -->
+    <app-map no-update/>
+</div>
+```
+
+### `no-update-if`
+
+Similar to [no-update](#codeno-updatecode) except that the DOM subtree is
+conditionally preserved:
+
+```xml
+<div>
+    <!-- Don't ever re-render this table if the condition is met -->
+    <table no-update-if(input.tableData == null)>
+        ...
+    </table>
+</div>
+```
+
+### `no-update-body`
+
+Similar to [no-update](#codeno-updatecode) except that only the child DOM nodes
+are preserved:
+
+```xml
+<!-- Don't ever re-render any nested DOM elements -->
+<div no-update-body>
+    ...
+</div>
+```
+
+### `no-update-body-if`
+
+Similar to [no-update-body](#codeno-update-bodycode) except that only the child
+DOM nodes are conditionally preserved:
+
+```xml
+<div>
+    <!-- Don't ever re-render any nested DOM elements if the condition is met -->
+    <table no-update-body-if(data.tableData == null)>
+        ...
+    </table>
+</div>
+```
+
+### `:no-update`
+
+Used to prevent select element attributes from being modified during a
+re-render. The attribute that should not be modified should have a `:no-update`
+suffix:
+
+```xml
+<!-- Don't ever modify the class attribute -->
+<div class:no-update=input.className>
+    ...
+</div>
+```
+
 ## Properties
 
 ### `this.el`
@@ -344,8 +416,8 @@ The `state` variable refers to UI component's state object and is the unwatched 
 
 | option  | type | default | description |
 | ------- | ---- | ------- | ----------- |
-| `removeNode` | `Boolean` | `true | `false` will keep the component in the DOM while still unsubscribing all events from it |
-| `recursive` | `Boolean` | `true | `false` will prevent child components from being destroyed |
+| `removeNode` | `Boolean` | `true` | `false` will keep the component in the DOM while still unsubscribing all events from it |
+| `recursive` | `Boolean` | `true` | `false` will prevent child components from being destroyed |
 
 Destroys the component by unsubscribing from all listeners made using the `subscribeTo` method and then detaching the component's root element from the DOM. All nested components (discovered by querying the DOM) are also destroyed.
 
@@ -363,11 +435,12 @@ Queue the component to re-render and skip all checks to see if it actually needs
 > When using `forceUpdate()` the updating of the DOM will be queued up. If you want to immediately update the DOM
 > then call `this.update()` after calling `this.forceUpdate()`.
 
-### `getEl([key])`
+### `getEl([key, index])`
 
 | params  | type | description |
 | ------- | ---- | ----------- |
 | `key` | `String` | _optional_ the scoped identifier for the element |
+| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
 | return value | `HTMLElement` | the element matching the key or `this.el` if no key is provided |
 
 Returns a nested DOM element by prefixing the provided `key` with the component's ID. For Marko, nested DOM elements should be assigned an ID using the `key` custom attribute.
@@ -381,11 +454,12 @@ Returns a nested DOM element by prefixing the provided `key` with the component'
 
 Repeated DOM elements must have a value for the `key` attribute that ends with `[]` (e.g., `key="items[]"`)
 
-### `getElId([key])`
+### `getElId([key, index])`
 
 | params  | type | description |
 | ------- | ---- | ----------- |
 | `key` | `String` | _optional_ the scoped identifier for the element |
+| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
 | return value | `String` | the element ID matching the key or `this.el.id` if `key` is undefined |
 
 Similar to `getEl`, but only returns the String ID of the nested DOM element instead of the actual DOM element.
@@ -398,7 +472,7 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 | `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
 | return value | `Component` | a reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (e.g. `key="items[]"`) then the component at the given index will be returned. |
 
-### `getComponents(key)`
+### `getComponents(key, [, index])`
 
 | params  | type | description |
 | ------- | ---- | ----------- |
@@ -409,6 +483,9 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 Repeated components must have a value for the `key` attribute that ends with `[]` (e.g., `key="items[]"`)
 
 ### `isDestroyed()`
+
+Returns `true` if a component has been destroyed using
+[`component.destroy()`](#codeondestroycode), otherwise `false`.
 
 ### `isDirty()`
 
@@ -554,7 +631,12 @@ create → input → render → mount → render   update → destroy
                                          ⤻
 ```
 
-> **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance.  A parent component, or other code that has access to the component instance, can listen for these events.
+> **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance.  A parent component, or other code that has access to the component instance, can listen for these events. For example:
+```js
+component.on('destroy', function() {
+    // The component was destroyed!
+});
+```
 
 ### `onCreate(input, out)`
 
@@ -625,7 +707,7 @@ The `update` event is emitted (and `onUpdate` is called) when the component is c
 
 The `destroy` event is emitted (and `onDestroy` is called) when the component is about to be unmounted from the DOM and cleaned up.  `onDestroy` should be used to do any additional clean up beyond what Marko handles itself.
 
-For example, cleaning up from our scrollmonitor example in `onMount`:
+For example, cleaning up from our scrollmonitor example in [`onMount`](#codeonmountcode):
 
 _example.marko_
 ```xml{9-11}
