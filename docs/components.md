@@ -8,7 +8,7 @@ Marko allows you to define a `class` for a component right in the `.marko` view 
 
 ```xml
 class {
-    constructor() {
+    onCreate() {
         this.state = {
             count:0
         };
@@ -75,7 +75,7 @@ In your `component.js` file, export the component's class:
 
 ```js
 module.exports = class {
-    constructor() {
+    onCreate() {
         this.state = {
             count:0
         };
@@ -119,9 +119,6 @@ module.exports = {
 }
 ```
 
-> **Note**: When using a plain object, use the `onCreate` [lifecycle method](#lifecycle) instead of `contructor`.
-
-
 ## Split components
 
 Split components allow you to optimize for the case where a component is rendered on the server, but doesn't need to be re-rendered in the browser.  Because the component doesn't need to be rendered in the browser, the template does not need to be sent to the browser.  This can reduce your page weight by a few hundred bytes in some cases.
@@ -143,13 +140,13 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate` (`constructor`), `onInput`, and `onRender` [lifecycle methods](#lifecycle-methods).  This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-methods).  This class can be exported from `component.js` or defined right in the template as with single-file components.
 ### Example
 
 _index.marko_
 ```xml
 class {
-    constructor() {
+    onCreate() {
         this.number = 123;
     }
 }
@@ -271,7 +268,7 @@ Only properties that exist when `this.state` is first defined will be watched fo
 
 ```xml
 class {
-    constructor() {
+    onCreate() {
         this.state = {
             data: null,
             error: null
@@ -563,14 +560,14 @@ create → input → render → mount → render   update → destroy
 | `input` | the input data used to render the component for the first time |
 | `out`   | the async `out` used to render the component for the first time |
 
-The `create` event is emitted (and `onCreate`/`constructor` is called) when the component is first created.
+The `create` event is emitted (and `onCreate` is called) when the component is first created.
 
-`onCreate` (or `constructor` if you're using the `class` syntax) is typically used to set the initial state for stateful components:
+`onCreate` is typically used to set the initial state for stateful components:
 
 _example.marko_
 ```xml
 class {
-    constructor(input) {
+    onCreate(input) {
         this.state = { count:input.initialCount };
     }
 }

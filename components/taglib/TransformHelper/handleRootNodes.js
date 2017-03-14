@@ -81,7 +81,7 @@ function methodToProperty(method) {
     };
 }
 
-function classToObject(cls, transformHelper) {
+function classToObject(cls, el, transformHelper) {
     return {
         type: 'ObjectExpression',
         properties: cls.body.body.map((method) => {
@@ -92,6 +92,7 @@ function classToObject(cls, transformHelper) {
             if (method.kind === 'method') {
                 return methodToProperty(method);
             } else if (method.kind === 'constructor') {
+                transformHelper.context.deprecate('The constructor method should not be used for a component, use onCreate instead', el);
                 let converted = methodToProperty(method);
                 converted.key.name = 'onCreate';
                 return converted;
@@ -133,7 +134,7 @@ function handleClassDeclaration(classEl, transformHelper) {
         return;
     }
 
-    let object = classToObject(expression);
+    let object = classToObject(expression, classEl, transformHelper);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
     if (transformHelper.getRendererModule() != null) {
