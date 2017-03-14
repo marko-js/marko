@@ -1,4 +1,4 @@
-# What's New in Mark v4
+# What's New in Marko v4
 
 A lot of exciting improvements were made as part of the Mark v4 release.
 
