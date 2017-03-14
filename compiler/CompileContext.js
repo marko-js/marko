@@ -77,6 +77,7 @@ const helpers = {
     'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
     'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
     'merge': { module: 'marko/runtime/helper-merge' },
+    'renderComponent': { module: 'marko/components/taglib/helpers/renderComponent' },
     'str': 's',
     'styleAttr': {
         vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
@@ -598,6 +599,10 @@ class CompileContext extends EventEmitter {
         } else if(!unique || !property.some(e => JSON.stringify(e) === JSON.stringify(value))) {
             property.push(value);
         }
+    }
+
+    setMeta(key, value) {
+        this.meta[key] = value;
     }
 
     setPreserveWhitespace(preserveWhitespace) {

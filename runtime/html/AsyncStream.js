@@ -60,6 +60,8 @@ function AsyncStream(global, writer, state, shouldBuffer) {
     this._node = undefined;
 
     this._elStack = undefined; // Array
+
+    this.$c = null; // Component args
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;

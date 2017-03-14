@@ -40,6 +40,7 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
     this.global = globalData || {};
     this.$__stack = [parentNode];
     this.$__sync = false;
+    this.$c = null; // Component args
 }
 
 var proto = AsyncVDOMBuilder.prototype = {

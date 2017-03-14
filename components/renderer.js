@@ -60,10 +60,8 @@ function handleBeginAsync(event) {
         var nestedComponentsContext = new ComponentsContext(asyncOut, componentStack[componentStack.length-1]);
         asyncOut.data.components = nestedComponentsContext;
     }
-    asyncOut.data.$w = parentOut.data.$w;
+    asyncOut.$c = parentOut.$c;
 }
-
-
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
     if (typeof renderingLogic == 'function') {
@@ -101,9 +99,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             isExisting = true;
             outGlobal.$w = null;
         } else {
-            var componentArgs = input && input.$w || out.data.$w;
+            var componentArgs = out.$c;
 
             if (componentArgs) {
+                out.$c = null;
+                
                 scope = componentArgs[0];
 
                 if (scope) {
@@ -116,7 +116,6 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 }
                 id = id || resolveComponentKey(out, key, scope);
                 customEvents = componentArgs[2];
-                delete input.$w;
             }
         }
 

@@ -77,7 +77,7 @@ _routes/index/client.js_
 require('./components/app/index');
 
 // Now that all of the JavaScript modules for the UI component have been
-// loaded and registered we can tell marko  tobootstrap/initialize the app
+// loaded and registered we can tell marko to bootstrap/initialize the app
 
 // Initialize and mount all of the server-rendered UI components:
 require('marko/components').init();

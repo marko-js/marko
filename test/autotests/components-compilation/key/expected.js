@@ -9,6 +9,7 @@ var marko_template = module.exports = require("marko/html").t(__filename),
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/key/index.marko", function() {
       return module.exports;
     }),
+    marko_renderComponent = require("marko/components/taglib/helpers/renderComponent"),
     marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
     app_foo_template = marko_loadTemplate(require.resolve("./components/app-foo")),
     marko_helpers = require("marko/runtime/html/helpers"),
@@ -23,12 +24,10 @@ function render(input, out, __component, component, state) {
     marko_attr("id", __component.id) +
     ">");
 
-  app_foo_tag({
-      $w: [
-        __component,
-        "foo"
-      ]
-    }, out);
+  marko_renderComponent(app_foo_tag, {}, out, [
+    __component,
+    "foo"
+  ]);
 
   out.w("<a href=\"ebay.com\"" +
     marko_attr("id", __component.elId("link")) +

@@ -52,9 +52,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             isExisting = true;
             outGlobal.$w = null;
         } else {
-            var componentArgs = input && input.$w || out.data.$w;
+            var componentArgs = out.$c;
 
             if (componentArgs) {
+                out.$c = null;
                 scope = componentArgs[0];
 
                 if (scope) {
