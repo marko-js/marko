@@ -22,17 +22,8 @@ VDocumentFragment.prototype = {
         return new VDocumentFragmentClone(this);
     },
 
-    actualize: function(doc) {
-        var docFragment = doc.createDocumentFragment();
-
-        var curChild = this.firstChild;
-
-        while(curChild) {
-            docFragment.appendChild(curChild.actualize(doc));
-            curChild = curChild.nextSibling;
-        }
-
-        return docFragment;
+    $__actualize: function(doc) {
+        return doc.createDocumentFragment();
     }
 };
 

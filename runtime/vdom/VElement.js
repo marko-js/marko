@@ -100,7 +100,7 @@ VElement.prototype = {
         return this.$__finishChild();
     },
 
-    actualize: function(doc) {
+    $__actualize: function(doc) {
         var namespaceURI = this.$__namespaceURI;
         var tagName = this.nodeName;
 
@@ -141,13 +141,6 @@ VElement.prototype = {
 
         if (flags & FLAG_IS_TEXTAREA) {
             el.value = this.$__value;
-        } else {
-            var curChild = this.firstChild;
-
-            while(curChild) {
-                el.appendChild(curChild.actualize(doc));
-                curChild = curChild.nextSibling;
-            }
         }
 
         el._vattrs = attributes;
@@ -225,6 +218,7 @@ VElement.$__removePreservedAttributes = function(attrs) {
 };
 
 VElement.$__morphAttrs = function(fromEl, toEl) {
+
     var removePreservedAttributes = VElement.$__removePreservedAttributes;
 
     var attrs = toEl.$__attributes || toEl._vattrs;

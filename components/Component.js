@@ -14,9 +14,7 @@ var RenderResult = require('../runtime/RenderResult');
 var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
-var morphAttrs = require('../runtime/vdom/VElement').$__morphAttrs;
-var morphdomFactory = require('../morphdom');
-var morphdom = morphdomFactory(morphAttrs);
+var morphdom = require('../morphdom');
 var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;

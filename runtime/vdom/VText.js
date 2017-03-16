@@ -11,7 +11,7 @@ VText.prototype = {
 
     nodeType: 3,
 
-    actualize: function(doc) {
+    $__actualize: function(doc) {
         return doc.createTextNode(this.nodeValue);
     },
 

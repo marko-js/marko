@@ -77,6 +77,19 @@ VNode.prototype = {
         } else {
             return this;
         }
+    },
+
+    actualize: function(doc) {
+        var actualNode = this.$__actualize(doc);
+
+        var curChild = this.firstChild;
+
+        while(curChild) {
+            actualNode.appendChild(curChild.actualize(doc));
+            curChild = curChild.nextSibling;
+        }
+
+        return actualNode;
     }
 
     // ,toJSON: function() {
