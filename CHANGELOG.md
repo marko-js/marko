@@ -5,6 +5,11 @@ Changelog
 
 ## 4.1.x
 
+### 4.1.2
+
+- Bug: Fixed [#623](https://github.com/marko-js/marko/issues/623) - Uncaught TypeError: `toEl.$__hasAttribute` is not a function
+- Bug: Fixed [#619](https://github.com/marko-js/marko/issues/619) - Deprecated `constructor()` for UI component classes
+
 ### 4.1.1
 
 - Added `"use strict";` to restore Node.js compatibility for Node.js v4 and v5
