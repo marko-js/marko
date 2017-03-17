@@ -42,7 +42,7 @@ number of times the button has been clicked. [Try this example now!](http://mark
 __click-count.marko__
 ```jsx
 class {
-    constructor() {
+    onCreate() {
         this.state = { count:0 };
     }
     increment() {
