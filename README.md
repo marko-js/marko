@@ -40,7 +40,7 @@ The following single-file component renders a button and a counter with the
 number of times the button has been clicked. [Try this example now!](http://markojs.com/try-online/?file=%2Fcomponents%2Fcomponents%2Fclick-count%2Findex.marko)
 
 __click-count.marko__
-```jsx
+```marko
 class {
     onCreate() {
         this.state = { count:0 };
@@ -76,7 +76,7 @@ The same component as above split into an `index.marko` template file,
 component style:
 
 __index.marko__
-```xml
+```marko
 <div.count>
     ${state.count}
 </div>
@@ -114,7 +114,7 @@ __style.css__
 Marko also support a beautiful concise syntax as an alternative to the HTML
 syntax. Find out more about the [concise syntax here](http://markojs.com/docs/concise/).
 
-```html
+```marko
 <!-- Marko HTML syntax -->
 <ul>
     <li for(color in ['a', 'b', 'c'])>
@@ -123,7 +123,7 @@ syntax. Find out more about the [concise syntax here](http://markojs.com/docs/co
 </ul>
 ```
 
-```js
+```marko
 // Marko concise syntax
 ul
     li for(color in ['a', 'b', 'c'])
