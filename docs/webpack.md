@@ -16,7 +16,7 @@ npm install marko-loader --save
 Let's say we have a simple view that we want to render in the browser: `hello.marko`
 
 _hello.marko_
-```xml
+```marko
 <h1>Hello ${input.name}</h1>
 ```
 
@@ -72,7 +72,7 @@ Load up that page in your browser and you should see `Hello Marko` staring back 
 If you're using inline css with pre-processors, you must configure the appropriate loader.
 
 _pretty.marko_
-```xml
+```marko
 style.less {
     .pretty {
         color:@pretty-color;

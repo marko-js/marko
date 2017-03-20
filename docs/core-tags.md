@@ -8,7 +8,7 @@ Marko provides a number of tags
 
 The `<if>`, `<else-if>`, and `<else>` tags provide conditional control-flow for templates.
 
-```xml
+```marko
 <if(arriving)>
     <div>Hey there</div>
 </if>
@@ -22,7 +22,7 @@ The `<if>`, `<else-if>`, and `<else>` tags provide conditional control-flow for 
 
 Conditionals may also be applied as attributes:
 
-```xml
+```marko
 <div if(arriving)>Hey there</div>
 <div else-if(leaving)>Bye now</div>
 <div else>What's up?</div>
@@ -30,7 +30,7 @@ Conditionals may also be applied as attributes:
 
 And support complex expressions:
 
-```xml
+```marko
 <if(Math.random() > 0.5)>
     <div>50-50 chance of seeing this</div>
 </if>
@@ -39,7 +39,7 @@ And support complex expressions:
 ### `<for>`
 
 The `<for>` tag allows iterating over an array of items:
-```xml
+```marko
 <ul>
     <for(color in colors)>
         <li>${color}</li>
@@ -48,7 +48,7 @@ The `<for>` tag allows iterating over an array of items:
 ```
 
 It may also be applied as an attribute:
-```xml
+```marko
 <ul>
     <li for(color in colors)>${color}</li>
 </ul>
@@ -74,7 +74,7 @@ The output HTML would be the following:
 
 The `for` directive also supports a loop status variable in case you need to know the current loop index. For example:
 
-```xml
+```marko
 <ul>
     <li for(color in colors | status-var=loop)>
         ${color}
@@ -108,7 +108,7 @@ Returns `true` if the current index is the last index, otherwise `false`
 Used for separating values in a loop by characters. The first element will not
 be prefixed and the last element will not be suffixed with the `separator`:
 
-```xml
+```marko
 <div>
     <!-- Output: red, green, blue -->
     <span for(color in colors | separator=", ") style="color: ${color}">
@@ -123,7 +123,7 @@ A range can be provided in the following format; `<var-name> from <from> to <to>
 
 The `from`, `to` and `step` values must be numerical expressions. If not specified, step defaults to 1.
 
-```xml
+```marko
 <ul>
     <li for(i from 0 to 10)>
         ${i}
@@ -131,7 +131,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 </ul>
 ```
 
-```xml
+```marko
 <ul>
     <li for(i from 0 to 10 step 2)>
         ${i}
@@ -139,7 +139,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 </ul>
 ```
 
-```xml
+```marko
 <ul>
     <li for(i from 0 to myArray.length-1)>
         ${myArray[i]}
@@ -149,7 +149,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 #### Property Looping
 
-```xml
+```marko
 <ul>
     <li for(name, value in settings)>
         <b>${name}</b>: ${value}
@@ -159,7 +159,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 
 #### Native JavaScript for-loop
 
-```xml
+```marko
 <for(var i=1; i<=3; i++)>
     ${i}
 </for>
@@ -168,7 +168,7 @@ The `from`, `to` and `step` values must be numerical expressions. If not specifi
 #### Custom Iterator
 
 
-```xml
+```marko
 static function reverseIterator(arrayList, callback) {
     for(var i=arrayList.length-1; i>=0; i--){
         callback(arrayList[i]);
@@ -194,7 +194,7 @@ Any element can be repeated until a condition is met by using the `while` direct
 
 _Applied as an attribute:_
 
-```xml
+```marko
 $ var n = 0;
 
 <ul>
@@ -206,7 +206,7 @@ $ var n = 0;
 
 _Applied as an element:_
 
-```xml
+```marko
 $ var n = 0;
 
 <ul>
@@ -221,7 +221,7 @@ $ var n = 0;
 
 If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute to handle this use case. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 
-```xml
+```marko
 <a href=input.linkUrl body-only-if(!input.linkUrl)>
     Some body content
 </a>
@@ -229,7 +229,7 @@ If you find that you have a wrapper element that is conditional, but whose body 
 
 Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the output would be the following:
 
-```xml
+```marko
 <a href="http://localhost/">
     Some body content
 </a>
@@ -237,7 +237,7 @@ Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the o
 
 Given a value of `undefined` for the `input.linkUrl` variable: , the output would be the following:
 
-```xml
+```marko
 Some body content
 ```
 
@@ -250,7 +250,7 @@ The following tags are always written using the [concise syntax](./concise.md), 
 
 The `import` tag is used to access data and functions from external files.  It follows the same syntax as the [JavaScript `import` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
 
-```xml
+```marko
 import sum from './utils/sum';
 <div>The sum of 2 + 3 is ${sum(2, 3)}</div>
 ```
@@ -260,7 +260,7 @@ import sum from './utils/sum';
 
 The `export` tag is used to export values from the template.  It follows the same syntax as the [JavaScript `export` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), but only named exports are supported (the default export is the template).
 
-```xml
+```marko
 export var route = '/about';
 
 <!doctype html>
@@ -279,19 +279,19 @@ The include tag is used to embed another template (or part of another template) 
 
 The include tag can take a path to a template as the first argument:
 
-```xml
+```marko
 <include('./path/to/template.marko')/>
 ```
 
 The second argument may be used to pass input to the included template:
 
-```xml
+```marko
 <include('./path/to/template.marko', { name:'Frank' })/>
 ```
 
 Attributes may also be used to pass data to the included template and can be used in combination with the input parameter:
 
-```xml
+```marko
 <include('./path/to/template.marko', data) name="Frank"/>
 ```
 
@@ -300,7 +300,7 @@ Attributes may also be used to pass data to the included template and can be use
 In addition to including external content, you can inject additional content chunks into the external content.  This is accomplished by using nested attribute tags which are denoted by the `@` symbol:
 
 _page.marko_
-```xml
+```marko
 <include('./layout.marko')>
     <@body>
         <h1>Hello Marko</h1>
@@ -311,7 +311,7 @@ _page.marko_
 Then in your layout template you can include the injected content:
 
 _layout.marko_
-```xml
+```marko
 <!doctype html>
 <html>
     <body>
@@ -330,7 +330,7 @@ _layout.marko_
 
 ### `<include-text>`
 
-```xml
+```marko
 <include-text('./foo.txt')/>
 ```
 
@@ -338,7 +338,7 @@ Special HTML characters will be escaped. If you do not want escaping then use th
 
 ### `<include-html>`
 
-```xml
+```marko
 <include-html('./foo.html')/>
 ```
 
@@ -349,7 +349,7 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 Parameterized macros allow for reusable fragments within an HTML template.
 A macro can be defined using the `<macro>` directive.
 
-```xml
+```marko
 <macro greeting(name, count)>
     Hello ${name}! You have ${count} new messages.
 </macro>
@@ -358,7 +358,7 @@ A macro can be defined using the `<macro>` directive.
 The above macro can then be invoked as part of any expression. The following
 sample template shows how to use macro functions inside expressions:
 
-```xml
+```marko
 <macro greeting(name, count)>
     Hello ${name}! You have ${count} new messages.
 </macro>
@@ -378,7 +378,7 @@ sample template shows how to use macro functions inside expressions:
 The `<await>` tag is used to dynamically load in content from a data provider. The data provider can be a `Promise` or a `callback`. Once the provider returns it's results the children are rendered.
 
 await-example.marko
-```xml
+```marko
 $ var personPromise = new Promise((resolve, reject) => {
     setTimeout(function() {
         resolve({
@@ -401,7 +401,7 @@ Advanced implementation:
         - arg-* `string`
         - method `string`
         - timeout `integer`
-        - timeout-message `string` 
+        - timeout-message `string`
         - error-message `string`
         - placeholder `string`
         - renderTimeout `function`
@@ -421,7 +421,7 @@ Standard HTML comments can be used to add comments to your template. The HTML co
 
 Example comments:
 
-```xml
+```marko
 <!-- This is a comment that will not be rendered -->
 <h1>Hello</h1>
 ```
@@ -439,7 +439,7 @@ If you would like for your HTML comment to show up in the final output then you 
 ### `<html-comment>`
 
 _input.marko_
-```xml
+```marko
 <html-comment>This is a comment that *will* be rendered</html-comment>
 <h1>Hello</h1>
 ```
@@ -451,7 +451,7 @@ _output.html_
 ```
 
 Alternatively, the `<marko-compiler-options>` tag may be used to configure comments for the entire template:
-```xml
+```marko
 <marko-compiler-options preserve-comments/>
 ```
 
@@ -461,7 +461,7 @@ Alternatively, the `<marko-compiler-options>` tag may be used to configure comme
 
 Whitespace can be preserved using the `preserve-whitespace` attribute:
 
-```xml
+```marko
 <div marko-preserve-whitespace>
     All of this
     whitespace   will
@@ -470,7 +470,7 @@ Whitespace can be preserved using the `preserve-whitespace` attribute:
 ```
 Alternatively, the `<marko-compiler-options>` tag may be used to configure whitespace for the entire template:
 
-```xml
+```marko
 <marko-compiler-options preserve-whitespace/>
 ```
 
@@ -482,7 +482,7 @@ The `marko-body` attribute can be used to control how body content is parsed. Th
 - `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
 
 _input.marko_
-```xml
+```marko
 <div marko-body="static-text">
     This is just one
     <span if(foo)>

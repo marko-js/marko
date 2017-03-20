@@ -6,7 +6,7 @@ Marko makes it easy to to co-locate your component's class and styles with the H
 
 Marko allows you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-` attributes:
 
-```xml
+```marko
 class {
     onCreate() {
         this.state = {
@@ -26,7 +26,7 @@ class {
 
 Adding styles to your view is also made easy.  These styles won't be output in a `<style>` tag as inline styles usually are, but will result in the style being externalized so it isn't duplicated should a component be used more than once on the page.
 
-```xml
+```marko
 style {
     button.primary {
         background-color:#09c;
@@ -38,7 +38,7 @@ style {
 ```
 
 If you use a css preprocessor, you can add the extension right on `style`:
-```xml
+```marko
 style.less {
     button.primary {
         background-color: @primaryColor;
@@ -87,7 +87,7 @@ module.exports = class {
 ```
 
 In your `index.marko` file, you can reference methods from the class using `on-` attributes:
-```xml
+```marko
 <div>The current count is ${state.count}</div>
 <button on-click('increment')>+1</button>
 ```
@@ -144,7 +144,7 @@ A split component might also need to do some set up as part of the initial rende
 ### Example
 
 _index.marko_
-```xml
+```marko
 class {
     onCreate() {
         this.number = 123;
@@ -173,7 +173,7 @@ module.exports = {
 | `methodName` | `String` | the name of a method on the component's class to call when the event is fired |
 | `...args` | `Any` | all subsequent parameters are prepended to the arguments that are passed to the component's method |
 
-```xml
+```marko
 class {
     sayHello(name) {
         alert('Hello ' + name + '!');
@@ -188,7 +188,7 @@ class {
 A key is a scoped `id`. The `key` attribute can be applied to both HTML elements and custom tags for UI components. If applied to an HTML element, a unique `id` attribute will be added to the HTML element. The assigned ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. If applied to a UI component , then the `key` will be used to assign a unique ID to the target component and all of its children (including nested components and nested HTML elements). Keys allow the component to easily obtain references to nested HTML elements and nested UI components.  Additionally, when updating the DOM, keyed elements and components are guaranteed to be matched up and reused rather than being discarded and re-created.
 
 _input.marko_
-```xml
+```marko
 <div.container>
     <button key="myButton" type="button">My Button</button>
 </div>
@@ -211,7 +211,7 @@ var myButton = this.getEl('myButton');
 The `key` attribute can also be applied to repeated elements by appending `[]`:
 
 _input.marko_
-```xml
+```marko
 <ul>
     <for(color in ['red', 'green', 'blue'])>
         <li key="colors[]">${color}</li>
@@ -239,7 +239,7 @@ var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 
 The [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  `for-key` allows you to reference a labelable element via its `key`:
 
-```xml
+```marko
 <label for-key="name">Name</label>
 <input key="name" value="Frank"/>
 ```
@@ -249,7 +249,7 @@ The [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/l
 Preserves the DOM subtree associated with the DOM element or component such that
 it won't be modified when re-rendering the UI component.
 
-```xml
+```marko
 <div>
     <!-- Don't ever re-render this table -->
     <table no-update>
@@ -258,7 +258,7 @@ it won't be modified when re-rendering the UI component.
 </div>
 ```
 
-```xml
+```marko
 <div>
     <!-- Don't ever re-render this UI component -->
     <app-map no-update/>
@@ -270,7 +270,7 @@ it won't be modified when re-rendering the UI component.
 Similar to [no-update](#codeno-updatecode) except that the DOM subtree is
 conditionally preserved:
 
-```xml
+```marko
 <div>
     <!-- Don't ever re-render this table if the condition is met -->
     <table no-update-if(input.tableData == null)>
@@ -284,7 +284,7 @@ conditionally preserved:
 Similar to [no-update](#codeno-updatecode) except that only the child DOM nodes
 are preserved:
 
-```xml
+```marko
 <!-- Don't ever re-render any nested DOM elements -->
 <div no-update-body>
     ...
@@ -296,7 +296,7 @@ are preserved:
 Similar to [no-update-body](#codeno-update-bodycode) except that only the child
 DOM nodes are conditionally preserved:
 
-```xml
+```marko
 <div>
     <!-- Don't ever re-render any nested DOM elements if the condition is met -->
     <table no-update-body-if(data.tableData == null)>
@@ -311,7 +311,7 @@ Used to prevent select element attributes from being modified during a
 re-render. The attribute that should not be modified should have a `:no-update`
 suffix:
 
-```xml
+```marko
 <!-- Don't ever modify the class attribute -->
 <div class:no-update=input.className>
     ...
@@ -338,7 +338,7 @@ The current state for the component.  Changing `this.state` or any of its direct
 
 Only properties that exist when `this.state` is first defined will be watched for changes.  If you don't need a property initially, you can set it to `null`.
 
-```xml
+```marko
 class {
     onCreate() {
         this.state = {
@@ -380,7 +380,7 @@ When a Marko component is compiled some additional variables are made available 
 
 The `component` variable refers to the instance of the current UI component being rendered. This variable can be used to call methods on the UI component instance.
 
-```xml
+```marko
 class {
     getFullName() {
         var person = this.input.person;
@@ -395,7 +395,7 @@ class {
 
 The `input` variable refers to the input object and is equivalent to `component.input`|`this.input`.
 
-```xml
+```marko
 <div>Hello ${input.name}</div>
 ```
 
@@ -403,7 +403,7 @@ The `input` variable refers to the input object and is equivalent to `component.
 
 The `state` variable refers to UI component's state object and is the unwatched equivalent of `component.state`|`this.state`.
 
-```xml
+```marko
 <div>Hello ${state.name}</div>
 ```
 
@@ -647,7 +647,7 @@ The `create` event is emitted (and `onCreate` is called) when the component is f
 `onCreate` is typically used to set the initial state for stateful components:
 
 _example.marko_
-```xml
+```marko
 class {
     onCreate(input) {
         this.state = { count:input.initialCount };
@@ -682,7 +682,7 @@ This is the first point at which `this.el` and `this.els` are defined.  `onMount
 For example, attaching a library that monitors whether the component is in the viewport:
 
 _example.marko_
-```xml
+```marko
 import scrollmonitor from 'scrollmonitor';
 
 class {
@@ -707,7 +707,7 @@ The `destroy` event is emitted (and `onDestroy` is called) when the component is
 For example, cleaning up from our scrollmonitor example in [`onMount`](#codeonmountcode):
 
 _example.marko_
-```xml{9-11}
+```marko{9-11}
 import scrollmonitor from 'scrollmonitor';
 
 class {

@@ -38,7 +38,7 @@ yarn add marko
 Let's say we have a simple view that we want to render in the browser: `hello.marko`
 
 _hello.marko_
-```xml
+```marko
 <h1>Hello ${input.name}</h1>
 ```
 
@@ -91,7 +91,7 @@ Load up that page in your browser and you should see `Hello Marko` staring back 
 Marko provides a custom Node.js require extension that allows you to `require` Marko views exactly like a standard JavaScript module. Take the following example `server.js`:
 
 _hello.marko_
-```xml
+```marko
 <div>
     Hello ${input.name}!
 </div>
@@ -153,7 +153,7 @@ http.createServer((req, res) => {
 And give `hello.marko` some content:
 
 _hello.marko_
-```xml
+```marko
 <h1>Hello ${input.name}</h1>
 ```
 
@@ -174,7 +174,7 @@ npm install --save lasso lasso-marko
 Next, in your page or layout view, add the `lasso-head` and `lasso-body` tags:
 
 _layout.marko_
-```xml
+```marko
 <!doctype>
 <html>
 <head>

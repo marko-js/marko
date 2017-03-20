@@ -11,7 +11,7 @@ If you'd prefer to see our documentation using this syntax, just click the `swit
 
 When you render a Marko template, you pass input data that is then available within the template as `input`.  You can then use `${}` to insert a value into the template:
 
-```xml
+```marko
 <div>
     Hello ${input.name}
 </div>
@@ -19,7 +19,7 @@ When you render a Marko template, you pass input data that is then available wit
 
 You can actually pass any JavaScript expression here and the result of the expression will be inserted into the HTML output:
 
-```xml
+```marko
 <div>
     Hello ${'world'.toUpperCase()}
 </div>
@@ -27,7 +27,7 @@ You can actually pass any JavaScript expression here and the result of the expre
 
 These values are automatically escaped so you don't accidentally insert malicious code.  If you do need to pass unescaped HTML, you can use `$!{}`:
 
-```xml
+```marko
 <div>
     Hello $!{htmlThatWillNotBeEscaped}
 </div>
@@ -37,7 +37,7 @@ These values are automatically escaped so you don't accidentally insert maliciou
 
 If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
 
-```xml
+```marko
 <div>
     Placeholder example: <code>\${input}</code>
 </div>
@@ -47,7 +47,7 @@ If necessary, you can escape `$` using a backslash to have it be treated as text
 
 Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 
-```xml
+```marko
 -- Root level text
 ```
 
@@ -55,7 +55,7 @@ Text at the root of a template (outside any tags) must be prefixed with the [con
 
 A big improvement over HTML are the typed attributes Marko provides (instead of just strings).
 
-```xml
+```marko
 <div class=input.myClassName/>
 <input type="checkbox" checked=input.isChecked/>
 
@@ -75,7 +75,7 @@ Any JavaScript expression is a valid attribute value, provided it meets the foll
 
 _It does not contain any spaces_
 
-```xml
+```marko
 <tag sum=1+2 difference=3-4/>
 ```
 ```marko
@@ -83,7 +83,7 @@ tag sum=1+2 difference=3-4
 ```
 
 _Spaces are contained within matching `()`, `[]`, or `{}`_
-```xml
+```marko
 <tag sum=(1 + 2) difference=(3 - 4)/>
 ```
 ```marko
@@ -91,7 +91,7 @@ tag sum=(1 + 2) difference=(3 - 4)
 ```
 
 _Or, commas are used to delimit attributes_
-```xml
+```marko
 <tag sum=1 + 2, difference=3 - 4/>
 ```
 ```marko
@@ -104,7 +104,7 @@ tag sum=1 + 2, difference=3 - 4
 
 Whitespace may optionally be used around the equal sign of an attribute:
 
-```xml
+```marko
 <tag value = 5/>
 ```
 ```marko
@@ -115,7 +115,7 @@ tag value = 5
 
 If an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output.
 
-```xml
+```marko
 <div class=(active && 'tab-active')>Hello</div>
 ```
 
@@ -140,7 +140,7 @@ template.render({ attrs:{ class:'active', href:'https://ebay.com/' } });
 ```
 
 _link.marko_
-```xml
+```marko
 <a ${input.attrs} target="_blank">eBay</a>
 ```
 
@@ -155,7 +155,7 @@ _output.html_
 
 You can pass a string as the value of `style` just as you would in HTML, but Marko also supports passing an object as the value of the `style` attribute:
 
-```xml
+```marko
 <div style={ color:'red', fontWeight:'bold' }/>
 ```
 
@@ -169,7 +169,7 @@ Output:
 
 The `class` attribute also support object expressions or an array expressions (in addition to a string value) as shown below:
 
-```xml
+```marko
 <!-- array: -->
 <div class=['a', null, 'c']/>
 
@@ -189,7 +189,7 @@ _output.html_
 Marko provides a shorthand for declaring classes and ids on an element:
 
 _source.marko_
-```xml
+```marko
 <div.my-class/>
 <span#my-id/>
 <button#submit.primary.large/>
@@ -208,13 +208,13 @@ _output.html_
 
 Directives are denoted by parenthesis and take an argument instead of a value.  Many directives may be used as both tags and attributes.
 
-```xml
+```marko
 <if(true)>
     <strong>Marko is awesome</strong>
 </if>
 ```
 
-```xml
+```marko
 <strong if(true)>
     Marko is awesome
 </strong>
@@ -222,12 +222,12 @@ Directives are denoted by parenthesis and take an argument instead of a value.  
 
 Most directives support JavaScript expressions, and some even support multiple arguments:
 
-```xml
+```marko
 <include(target, input)/>
 ```
 
 Others allow a custom syntax:
-```xml
+```marko
 <for(item in items)/>
 ```
 
@@ -241,7 +241,7 @@ To execute JavaScript in your template you can insert a Javascript statement usi
 
 A line that starts with a `$` followed by a space will execute the code that follows.
 
-```xml
+```marko
 $ var name = input.name;
 
 <div>
@@ -252,7 +252,7 @@ $ var name = input.name;
 
 A statement may continue onto subsequent lines if new lines are bounded by `{}`, `[]`, `()`, ``` `` ```, or `/**/`:
 
-```xml
+```marko
 $ var person = {
     name: 'Frank',
     age: 32
@@ -261,7 +261,7 @@ $ var person = {
 
 Multiple statements or an unbounded statement may be used by wrapping the statement(s) in a block:
 
-```xml
+```marko
 $ {
     var bgColor = getRandomColor();
     var textColor = isLight(bgColor)
@@ -275,7 +275,7 @@ $ {
 
 Inline JavaScript will run each time your template is rendered, if you only want to initialize some values once, use the `static` keyword:
 
-```xml
+```marko
 static var count = 0;
 static var formatter = new Formatter();
 
@@ -288,7 +288,7 @@ static function sum(a, b) {
 
 Like inline Javascript, multiple statements or an unbounded statement may be used by wrapping the statement(s) in a block:
 
-```xml
+```marko
 static {
     var base = 2;
     function sum(a, b) {
@@ -301,7 +301,7 @@ static {
 
 If you need to output a `$` at the beginning of a line, you can escape it: `\$`.
 
-```xml
+```marko
 <p>You can run JS in a Marko template like this:</p>
 <code>
     \$ var num = 123;

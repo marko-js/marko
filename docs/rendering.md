@@ -22,7 +22,7 @@ console.log(html);
 The input data becomes available as `input` within a view, so if `fancy-button.marko` looked like this:
 
 _./components/fancy-button.marko_
-```xml
+```marko
 <button>${input.label}</button>
 ```
 

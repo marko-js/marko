@@ -34,12 +34,12 @@ When compiling the template at `pages/home/index.marko`, the following tags woul
 
 So now, instead of needing to specify a path:
 
-```xml
+```marko
 <include('../../components/app-header/index.marko')/>
 ```
 
 You can just use the tag name:
-```xml
+```marko
 <app-header/>
 ```
 
@@ -53,7 +53,7 @@ npm install --save some-third-party-package
 
 And that's it.  Marko will now discover these tags when compiling your templates and you can simply use them in your templates:
 
-```xml
+```marko
 <div>
     <some-third-party-tag/>
 </div>

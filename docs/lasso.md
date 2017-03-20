@@ -77,7 +77,7 @@ If you are rendering the initial UI on the server then it is necessary to make s
 
 
 _about-me/index.marko_
-```xml
+```marko
 <lasso-page package-path="./browser.json" />
 
 <!DOCTYPE html>

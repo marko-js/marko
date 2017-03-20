@@ -10,7 +10,7 @@ Marko now supports combining HTML, rendering logic, client-side behavior and sty
 
 _src/components/click-count/index.marko_
 
-```xml
+```marko
 class {
     onCreate() {
         this.state = {
@@ -60,7 +60,7 @@ component.increment();
 
 Of course, a single file component can also be embedded in another template as a custom tag:
 
-```xml
+```marko
 <div>
     <click-count value=10 />
 </div>
@@ -293,7 +293,7 @@ Some of these things are described in more detail later in this document.
 
 **Old:**
 
-```xml
+```marko
 <var name="Frank"/>
 <assign name="John"/>
 <invoke console.log(name)/>
@@ -301,7 +301,7 @@ Some of these things are described in more detail later in this document.
 
 **New:**
 
-```xml
+```marko
 $ var name='Frank';
 $ name='John';
 $ console.log(name);
@@ -309,7 +309,7 @@ $ console.log(name);
 
 Alternatively:
 
-```xml
+```marko
 $ {
     var name='Frank';
     name='John';
@@ -320,7 +320,7 @@ $ {
 JavaScript blocks can be embedded anywhere by putting `$ ` at the start of the line (ignoring whitespace) and it works the same for both the concise syntax and the non-concise syntax:
 
 
-```xml
+```marko
 <div.hello>
     <for(name in names)>
         $ name = name.toUpperCase();
@@ -333,7 +333,7 @@ Static JavaScript blocks (for JavaScript that should only be executed once when 
 
 **Old:**
 
-```xml
+```marko
 <script marko-init>
     function formatName(person) {
         return person.firstName + ' ' + person.lastName;
@@ -350,7 +350,7 @@ Static JavaScript blocks (for JavaScript that should only be executed once when 
 
 **New:**
 
-```xml
+```marko
 static function formatName(person) {
     return person.firstName + ' ' + person.lastName;
 }
@@ -366,7 +366,7 @@ static function isTeenager(person) {
 
 Alternatively:
 
-```xml
+```marko
 static {
     function formatName(person) {
         return person.firstName + ' ' + person.lastName;
@@ -399,7 +399,7 @@ In Marko v4, only the attributes rendered by Marko are ever modified by Marko. A
 ### Allow multiple top-level DOM elements to be bound ([#393](https://github.com/marko-js/marko/issues/393))
 
 **Old:**
-```html
+```marko
 <div w-bind>
     <h1>The current count is ${data.count}</h1>
     <button onClick('incrementCount')>Increment Count</button>
@@ -407,7 +407,7 @@ In Marko v4, only the attributes rendered by Marko are ever modified by Marko. A
 ```
 
 **New:**
-```html
+```marko
 <h1>The current count is ${input.count}</h1>
 <button onClick('incrementCount')>Increment Count</button>
 ```
@@ -426,7 +426,7 @@ module.exports = require('marko-widgets').defineComponent({
 
 `template.marko`
 
-```html
+```marko
 <div w-bind>
     ...
 </div>
@@ -445,7 +445,7 @@ module.exports = {
 
 `index.marko`
 
-```xml
+```marko
 <div>
     ...
 </div>
@@ -456,7 +456,7 @@ module.exports = {
 ### Allow event handler attribute to bind additional arguments ([#401](https://github.com/marko-js/marko/issues/401))
 
 **Old:**
-```html
+```marko
 <ul for(color in colors)>
     <li w-onClick="handleColorClick" data-color=color>${color}</li>
 </ul>
@@ -469,7 +469,7 @@ handleColorClick(event, el) {
 ```
 
 **New:**
-```xml
+```marko
 class {
     handleColorClick(color, event, el) {
         console.log(color, 'was clicked');
@@ -489,7 +489,7 @@ Marko v4 introduces ES6 style imports for importing other JavaScript modules:
 
 **Old:**
 
-```xml
+```marko
 <script marko-init>
     var helpers = require('./helpers');
 </script>
@@ -497,14 +497,14 @@ Marko v4 introduces ES6 style imports for importing other JavaScript modules:
 ```
 
 **New:**
-```xml
+```marko
 import helpers from "./helpers"
 <div>Total: ${helpers.formatCurrency(data.total)}</div>
 ```
 
 The full ES6 import syntax is supported:
 
-```xml
+```marko
 import { formatCurrency } from "./helpers"
 <div>Total: ${formatCurrency(data.total)}</div>
 ```
@@ -513,16 +513,16 @@ import { formatCurrency } from "./helpers"
 ### Allow dynamic custom tags/components to be used with `<include>` ([#139](https://github.com/marko-js/marko/issues/139))
 
 **Old:**
-```html
+```marko
 <invoke data.myComponent.renderer({name: 'Frank'}, out)/>
 ```
 
 **New:**
-```html
+```marko
 <include(input.myComponent) name='Frank' />
 ```
 or
-```html
+```marko
 <include(input.myComponent, {name: 'Frank'}) />
 ```
 
@@ -602,7 +602,7 @@ components/hello/
 
 `template.marko`
 
-```html
+```marko
 <div>
     Hello ${data.name}! You are ${data.age} year(s) old.
 </div>
@@ -628,7 +628,7 @@ components/hello/
 
 `template.marko`
 
-```xml
+```marko
 $ var age = calculateAge(state.birthday);
 <div>
     Hello ${state.name}! You are ${age} year(s) old.
@@ -658,7 +658,7 @@ NOTE: callback/events still work as well
 ### Make `<await-reorderer/>` optional ([#410](https://github.com/marko-js/marko/issues/410))
 
 **Old:**
-```html
+```marko
 <html>
     ...
     <body>
@@ -669,7 +669,7 @@ NOTE: callback/events still work as well
 ```
 
 **New:**
-```html
+```marko
 <html>
     ...
     <body>
@@ -702,13 +702,13 @@ Hot reload any extensions that were registered via `require('marko/node-require'
 ### Allow spaces around attributes ([#403](https://github.com/marko-js/marko/issues/403))
 
 **Old:**
-```html
+```marko
 var className="foo"
 <div class=className/>
 ```
 
 **New:**
-```html
+```marko
 $ var className = "foo"
 <div class = className/>
 ```
@@ -736,13 +736,13 @@ module.exports = function transform(rootNode, context) {
 ### Allow regular expression for an HTML attribute value ([#386](https://github.com/marko-js/marko/issues/386))
 
 **Old:**
-```html
+```marko
 <!-- escaped backslash (\) since strings are parsed as JS values -->
 <input type="text" pattern="\\w{2,20}" />
 ```
 
 **New:**
-```html
+```marko
 <!-- just use a regex -->
 <input type="text" pattern=/\w{2,20}/ />
 ```
@@ -756,7 +756,7 @@ Additionally, [`marko-migrate`](https://github.com/marko-js/marko-migrate) will 
 ### Deprecate `<script marko-init>` and replace with `static` section ([#397](https://github.com/marko-js/marko/issues/397))
 
 **Old:**
-```html
+```marko
 <script marko-init>
     var format = require('format');
 </script>
@@ -765,7 +765,7 @@ Additionally, [`marko-migrate`](https://github.com/marko-js/marko-migrate) will 
 ```
 
 **New:**
-```html
+```marko
 static var format=require('format')
 $ var name='World'
 <div>Hello ${format(name)}</div>
@@ -778,7 +778,7 @@ Use embedded JavaScript blocks instead
 ### Deprecate `w-bind` ([#394](https://github.com/marko-js/marko/issues/394), [#395](https://github.com/marko-js/marko/issues/395))
 
 **Old:**
-```html
+```marko
 <div w-bind>
     ...
 </div>
@@ -786,7 +786,7 @@ Use embedded JavaScript blocks instead
 
 **New:**
 
-```html
+```marko
 <div>
     ...
 </div>
@@ -797,7 +797,7 @@ Use embedded JavaScript blocks instead
 ### Deprecate `widget-types` ([#514](https://github.com/marko-js/marko/issues/514))
 
 **Old:**
-```html
+```marko
 <widget-types default="./component" mobile="./component-mobile"/>
 
 <div w-bind=(data.isMobile ? 'default' : 'mobile')>
@@ -813,12 +813,12 @@ The `w-id` attribute was used to obtain references using `this.getEl(refId)`. `w
 
 **Old:**
 
-```html
+```marko
 <input type="text" w-id="nameInput" />
 ```
 
 **New:**
-```html
+```marko
 <input type="text" key="nameInput" />
 ```
 
@@ -826,13 +826,13 @@ Similarly, `w-for` has been been replaced with `for-key`:
 
 **Old:**
 
-```html
+```marko
 <label w-for="nameInput">Name</label>
 <input type="text" w-id="nameInput" />
 ```
 
 **New:**
-```html
+```marko
 <label for-key="nameInput">Name</label>
 <input type="text" key="nameInput" />
 ```
@@ -842,27 +842,27 @@ Similarly, `w-for` has been been replaced with `for-key`:
 ### Deprecate `w-on*` in favor of `on*()` ([#420](https://github.com/marko-js/marko/issues/420))
 
 **Old:**
-```html
+```marko
 <button w-on-click="handleClick">click me</button>
 ```
 or
-```html
+```marko
 <button w-onClick="handleClick">click me</button>
 ```
 
 **New:**
-```html
+```marko
 <button on-click('handleClick')>click me</button>
 ```
 or
-```html
+```marko
 <button onClick('handleClick')>click me</button>
 ```
 
 ### Deprecate `<init-widgets/>` ([#409](https://github.com/marko-js/marko/issues/409))
 
 **Old:**
-```html
+```marko
 <html>
     ...
     <body>
@@ -880,7 +880,7 @@ or
 
 **Old:**
 
-```html
+```marko
 <div>
     <h1>My Awesome Component</h1>
     <div class="body" w-body/>
@@ -890,7 +890,7 @@ or
 
 **New:**
 
-```html
+```marko
 <div>
     <h1>My Awesome Component</h1>
     <div class="body" include()/>
@@ -899,7 +899,7 @@ or
 
 Or, as a tag:
 
-```html
+```marko
 <div>
     <h1>My Awesome Component</h1>
     <div class="body">
@@ -912,7 +912,7 @@ NOTE: The parens (i.e., `()`) are optional for both the include attribute and th
 
 Or, with an argument value:
 
-```html
+```marko
 <div>
     <h1>My Awesome Component</h1>
     <div class="body">
@@ -924,14 +924,14 @@ Or, with an argument value:
 ### Deprecate `w-preserve*` and replace with `no-update*` ([#419](https://github.com/marko-js/marko/issues/419))
 
 **Old:**
-```html
+```marko
 <div w-preserve>
     ...
 </div>
 ```
 
 **New:**
-```html
+```marko
 <div no-update>
     ...
 </div>
@@ -940,14 +940,14 @@ Or, with an argument value:
 ### Deprecate `w-preserve-attrs` and replace with `:no-update` ([#422](https://github.com/marko-js/marko/issues/422))
 
 **Old:**
-```html
+```marko
 <div style="color:#09c" w-preserve-attrs="style">
     ...
 </div>
 ```
 
 **New:**
-```html
+```marko
 <div style:no-update="color:#09c">
     ...
 </div>
@@ -958,18 +958,18 @@ Or, with an argument value:
 > `w-extend` is now deprecated
 
 **Old:**
-```html
+```marko
 <div w-bind>
     <some-component w-onEvent="handleEvent"/>
 </div>
 ```
 or
-```html
+```marko
 <some-component w-extend w-onEvent="handleEvent"/>
 ```
 
 **New:**
-```html
+```marko
 <some-component onEvent('handleEvent')/>
 ```
 
@@ -1032,19 +1032,19 @@ improved modularity.
 
 Given a template like this:
 
-```xml
+```marko
 <include("./include-target.marko") first-name='Frank'/>
 ```
 
 `include-target.marko` looks like:
 
 **Old:**
-```html
+```marko
 - Hello ${data['first-name']}
 ```
 
 **New:**
-```html
+```marko
 - Hello ${data.firstName}
 ```
 
@@ -1053,14 +1053,14 @@ Given a template like this:
 > Already deprecated in v3
 
 **Old:**
-```html
+```marko
 <async-fragment var="foo" data-provider=data.provider>
     ${foo}
 </async-fragment>
 ```
 
 **New:**
-```html
+```marko
 <await(foo from data.provider)>
     ${foo}
 </await>

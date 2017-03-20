@@ -35,9 +35,9 @@ When a server-rendered page loads in the browser it's possible for marko to auto
 
 If you are using [Lasso.js](https://github.com/lasso-js/lasso) then the bootstrapping will happen automatically as long as the JavaScript bundles for your page are included via the `<lasso-body>` tag. A typical HTML page structure will be the following:
 
-_routes/index/template_
+_routes/index/template.marko_
 
-```xml
+```marko
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -7,14 +7,14 @@ The easiest way to get started with Marko is to use the [Try Online](https://mar
 Marko makes it easy to represent your UI using a syntax that is like HTML:
 
 _hello.marko_
-```xml
+```marko
 <h1>Hello World</h1>
 ```
 
 In fact, Marko is so much like HTML, that you can use it as a replacement for a templating language like handlebars, mustache, or pug:
 
 _template.marko_
-```xml
+```marko
 <!doctype html>
 <html>
 <head>
@@ -35,14 +35,14 @@ In the browser, when the data representing your UI changes, Marko will automatic
 Let's say we have a `<button>` that we want to assign some behavior to when it is clicked:
 
 _button.marko_
-```xml
+```marko
 <button>Click me!</button>
 ```
 
 Marko makes this really easy, allowing you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-` attributes:
 
 _button.marko_
-```xml
+```marko
 class {
     sayHi() {
         alert(`Hi!`);
@@ -57,7 +57,7 @@ class {
 Alerting when a button is clicked is great, but what about updating your UI in response to an action?  Marko's stateful components make this easy.  All you need to do is set `this.state` from inside your component's class. This makes a new `state` variable available to your view.  When a value in `this.state` is changed, the view will automatically re-render and only update the part of the DOM that changed.
 
 _counter.marko_
-```xml
+```marko
 class {
     constructor() {
         this.state = {
