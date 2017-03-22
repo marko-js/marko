@@ -10,6 +10,7 @@ var defaultDocument = typeof document != 'undefined' && document;
 var FLAG_IS_TEXTAREA = 2;
 
 var specialHtmlRegexp = /[&<]/;
+var xmlnsRegExp = /^xmlns(:|$)/;
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
@@ -29,10 +30,12 @@ function virtualize(node) {
 
             if (attrCount) {
                 attrs = {};
-
                 for (var i=0; i<attrCount; i++) {
                     var attr = attributes[i];
-                    attrs[attr.name] = attr.value;
+                    var attrName = attr.name;
+                    if (!xmlnsRegExp.test(attrName)) {
+                        attrs[attrName] = attr.value;
+                    }
                 }
             }
 
