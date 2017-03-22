@@ -59,7 +59,7 @@ Alerting when a button is clicked is great, but what about updating your UI in r
 _counter.marko_
 ```marko
 class {
-    constructor() {
+    onCreate() {
         this.state = {
             count:0
         };
