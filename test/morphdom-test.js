@@ -49,6 +49,10 @@ function serializeNode(node) {
             if (attr.specified !== false) {
                 var qualifiedName = attr.localName;
 
+                if (/^xmlns(:|$)/.test(attr.name)) {
+                    continue;
+                }
+
                 if (attr.namespaceURI) {
                     qualifiedName = attr.namespaceURI + ':' + qualifiedName;
                 }
