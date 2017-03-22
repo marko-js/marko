@@ -7,6 +7,7 @@ The [marko-loader](https://github.com/marko-js/marko-loader) loader for [Webpack
 ## Installation
 
 ```
+npm install marko --save
 npm install webpack --save
 npm install marko-loader --save
 ```
