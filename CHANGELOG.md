@@ -5,6 +5,11 @@ Changelog
 
 ## 4.1.x
 
+### 4.1.3
+
+- Bug: Fixed losing cursor position in Edge (see [morphdom PR #100](https://github.com/patrick-steele-idem/morphdom/pull/100) by [@zastavnitskiy](https://github.com/zastavnitskiy))
+- Bug: Ignore `xmlns` attributes when virtualizing real DOM nodes (needed when inserting an HTML string when rendering to a VDOM)
+
 ### 4.1.2
 
 - Bug: Fixed [#623](https://github.com/marko-js/marko/issues/623) - Uncaught TypeError: `toEl.$__hasAttribute` is not a function
