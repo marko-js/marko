@@ -1,5 +1,8 @@
 # Koa + Marko
 
+See the [marko-koa](https://github.com/marko-js-samples/marko-koa) sample
+project for a fully-working example.
+
 ## Installation
 
     npm install koa --save
@@ -11,16 +14,17 @@
 require('marko/node-require');
 
 const Koa = require('koa');
-
 const app = new Koa();
+
+const template = require('./index.marko');
 
 app.use((ctx, next) => {
     ctx.type = 'html';
     ctx.body = template.stream({
-            name: 'Frank',
-            count: 30,
-            colors: ['red', 'green', 'blue']
-        });
+        name: 'Frank',
+        count: 30,
+        colors: ['red', 'green', 'blue']
+    });
 });
 
 app.listen(8080);
@@ -33,21 +37,22 @@ require('marko/node-require');
 const { createGzip } = require('zlib');
 
 const Koa = require('koa');
-
 const app = new Koa();
+
+const template = require('./index.marko');
 
 app.use((ctx, next) => {
     ctx.type = 'html';
     ctx.body = template.stream({
-            name: 'Frank',
-            count: 30,
-            colors: ['red', 'green', 'blue']
-        });
-    
+        name: 'Frank',
+        count: 30,
+        colors: ['red', 'green', 'blue']
+    });
+
     ctx.vary('Accept-Encoding');
     if (ctx.acceptsEncodings('gzip')) {
-      ctx.set('Content-Encoding', 'gzip');
-      ctx.body = ctx.body.pipe(createGzip());
+        ctx.set('Content-Encoding', 'gzip');
+        ctx.body = ctx.body.pipe(createGzip());
     }
 });
 
