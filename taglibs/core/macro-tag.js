@@ -10,6 +10,12 @@ module.exports = function nodeFactory(elNode, context) {
 
     var body = elNode.body;
     var macroName = defAttr.name;
+
+    if (context.isMacro(macroName)) {
+        context.addError(elNode, `<macro> tag with duplicate name of "${macroName}" found.`);
+        return elNode;
+    }
+
     var argument = defAttr.argument;
     var params;
     if (argument) {
