@@ -1,6 +1,7 @@
 {
     "browser": {
         "./include-tag.js": "./include-tag-browser.js",
-        "./getRequirePath.js": "./getRequirePath-browser.js"
+        "./getRequirePath.js": "./getRequirePath-browser.js",
+        "./init-components-tag.js": "./init-components-tag-browser.js"
     }
 }
