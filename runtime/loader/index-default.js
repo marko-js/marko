@@ -9,9 +9,7 @@ var cwd = process.cwd();
 var fsOptions = {encoding: 'utf8'};
 
 module.exports = function load(templatePath, templateSrc, options) {
-    var ext = nodePath.extname(templatePath);
-
-    if (ext === '.js') {
+    if (typeof templatePath === 'string' && nodePath.extname(templatePath) === '.js') {
         // assume compiled template
         return require(templatePath);
     }
