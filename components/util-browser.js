@@ -57,7 +57,7 @@ var lifecycleEventMethods = {};
 function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
     var listenerMethod = component[lifecycleEventMethods[eventType]];
 
-    if (listenerMethod) {
+    if (listenerMethod !== undefined) {
         listenerMethod.call(component, eventArg1, eventArg2);
     }
 

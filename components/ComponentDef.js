@@ -142,7 +142,9 @@ ComponentDef.$__deserialize = function(o, types) {
 
     var scope = extra.p;
     var customEvents = extra.e;
-    component.$__setCustomEvents(customEvents, scope);
+    if (customEvents) {
+        component.$__setCustomEvents(customEvents, scope);
+    }
 
     return {
         $__component: component,

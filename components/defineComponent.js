@@ -31,8 +31,8 @@ module.exports = function defineComponent(def, renderer) {
     // Instead, we store their constructor in the "initComponent"
     // property and that method gets called later inside
     // init-components-browser.js
-    function Component(id, doc) {
-        BaseComponent.call(this, id, doc);
+    function Component(id) {
+        BaseComponent.call(this, id);
     }
 
     if (!proto.$__isComponent) {
@@ -50,7 +50,7 @@ module.exports = function defineComponent(def, renderer) {
     // a component so that we can short-circuit this work later
     Component.$__isComponent = true;
 
-    function State() { BaseState.apply(this, arguments); }
+    function State(component) { BaseState.call(this, component); }
     inherit(State, BaseState);
     proto.$__State = State;
     proto.$__renderer = renderer;

@@ -14,20 +14,14 @@ function ensure(state, propertyName) {
     }
 }
 
-function State(component, initialState) {
+function State(component) {
     this.$__component = component;
-    this.$__raw = initialState || {};
+    this.$__raw = {};
 
     this.$__dirty = false;
     this.$__old = null;
     this.$__changes = null;
     this.$__forced = null; // An object that we use to keep tracking of state properties that were forced to be dirty
-
-    if (initialState) {
-        for(var key in initialState) {
-            ensure(this, key);
-        }
-    }
 
     Object.seal(this);
 }

@@ -40,6 +40,7 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
     this.global = globalData || {};
     this.$__stack = [parentNode];
     this.$__sync = false;
+    this.$__vnode = undefined;
     this.$c = null; // Component args
 }
 
@@ -52,7 +53,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         var parent = this.$__parent;
 
-        if(parent) {
+        if (parent !== undefined) {
             parent.$__appendChild(element);
         }
 
@@ -67,7 +68,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     node: function(node) {
         var parent = this.$__parent;
-        if (parent) {
+        if (parent !== undefined) {
             parent.$__appendChild(node);
         }
         return this;
@@ -79,7 +80,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         if (type != 'string') {
             if (text == null) {
                 return;
-            } else if (type == 'object') {
+            } else if (type === 'object') {
                 if (text.toHTML) {
                     return this.h(text.toHTML());
                 }
@@ -89,7 +90,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         }
 
         var parent = this.$__parent;
-        if (parent) {
+        if (parent !== undefined) {
             var lastChild = parent.lastChild;
             if (lastChild && lastChild.$__Text) {
                 lastChild.nodeValue += text;
@@ -116,7 +117,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     beginElement: function(name, attrs, childCount, flags, constId) {
         var element = new VElement(name, attrs, childCount, flags, constId);
         var parent = this.$__parent;
-        if (parent) {
+        if (parent !== undefined) {
             parent.$__appendChild(element);
             this.$__stack.push(element);
             this.$__parent = element;
@@ -133,7 +134,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     end: function() {
         var state = this.$__state;
 
-        this.$__parent = null;
+        this.$__parent = undefined;
 
         var remaining = --state.$__remaining;
 
@@ -143,7 +144,7 @@ var proto = AsyncVDOMBuilder.prototype = {
             state.$__events.emit('last');
         }
 
-        if (!remaining) {
+        if (remaining === 0) {
             state.$__flags |= FLAG_FINISHED;
             state.$__events.emit(EVENT_FINISH, this.$__getResult());
         }
@@ -289,15 +290,11 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     $__getNode: function(doc) {
-        var node = this.$__VNode;
+        var node = this.$__vnode;
         if (!node) {
             var vdomTree = this.$__getOutput();
 
-            if (!doc) {
-                doc = this.$__document;
-            }
-
-            node = this.$__VNode = vdomTree.actualize(doc);
+            node = this.$__vnode = vdomTree.actualize(doc || this.$__document);
         }
         return node;
     },

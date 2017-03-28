@@ -1,6 +1,5 @@
 var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
-var extend = require('raptor-util/extend');
 
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_XLINK_HREF = 'xlink:href';
@@ -30,10 +29,33 @@ function convertAttrValue(type, value) {
     }
 }
 
+function setAttribute(el, namespaceURI, name, value) {
+    if (namespaceURI === null) {
+        el.setAttribute(name, value);
+    } else {
+        el.setAttributeNS(namespaceURI, name, value);
+    }
+}
+
+function removeAttribute(el, namespaceURI, name) {
+    if (namespaceURI === null) {
+        el.removeAttribute(name);
+    } else {
+        el.removeAttributeNS(namespaceURI, name);
+    }
+}
+
 function VElementClone(other) {
-    extend(this, other);
+    this.$__firstChild = other.$__firstChild;
     this.$__parentNode = null;
     this.$__nextSibling = null;
+
+    this.$__attributes = other.$__attributes;
+    this.$__namespaceURI = other.$__namespaceURI;
+    this.nodeName = other.nodeName;
+    this.$__flags = other.$__flags;
+    this.$__value = other.$__value;
+    this.$__constId = other.$__constId;
 }
 
 function VElement(tagName, attrs, childCount, flags, constId) {
@@ -113,14 +135,14 @@ VElement.prototype = {
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
 
-            if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
+            if (attrName[5] === '_' && specialAttrRegexp.test(attrName)) {
                 continue;
             }
 
             if (attrValue !== false && attrValue != null) {
                 var type = typeof attrValue;
 
-                if (type != 'string') {
+                if (type !== 'string') {
                     // Special attributes aren't copied to the real DOM. They are only
                     // kept in the virtual attributes map
                     attrValue = convertAttrValue(type, attrValue);
@@ -133,7 +155,7 @@ VElement.prototype = {
                     attrName = ATTR_HREF;
                 }
 
-                el.setAttributeNS(namespaceURI, attrName, attrValue);
+                setAttribute(el, namespaceURI, attrName, attrValue);
             }
         }
 
@@ -158,7 +180,7 @@ VElement.prototype = {
     },
 
     $__isSameNode: function(otherNode) {
-        if (otherNode.nodeType == 1) {
+        if (otherNode.nodeType === 1) {
             var constId = this.$__constId;
             if (constId) {
                 var otherVirtualAttrs;
@@ -309,7 +331,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
         }
 
         if (attrValue == null || attrValue === false) {
-            fromEl.removeAttributeNS(namespaceURI, attrName);
+            removeAttribute(fromEl, namespaceURI, attrName);
         } else if (oldAttrs[attrName] !== attrValue) {
 
             if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
@@ -324,7 +346,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
                 attrValue = convertAttrValue(type, attrValue);
             }
 
-            fromEl.setAttributeNS(namespaceURI, attrName, attrValue);
+            setAttribute(fromEl, namespaceURI, attrName, attrValue);
         }
     }
 
@@ -338,7 +360,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
                 attrName = ATTR_HREF;
             }
 
-            fromEl.removeAttributeNS(namespaceURI, attrName);
+            removeAttribute(fromEl, namespaceURI, attrName);
         }
     }
 };

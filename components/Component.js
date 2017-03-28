@@ -207,7 +207,7 @@ var componentProto;
  *
  * NOTE: Any methods that are prefixed with an underscore should be considered private!
  */
-function Component(id, doc) {
+function Component(id) {
     EventEmitter.call(this);
     this.id = id;
     this.el = null;
@@ -227,7 +227,7 @@ function Component(id, doc) {
         this.$__settingInput =
         false;
 
-    this.$__document = doc;
+    this.$__document = undefined;
 }
 
 Component.prototype = componentProto = {
@@ -359,7 +359,7 @@ Component.prototype = componentProto = {
         }
 
         if (!state) {
-                state = this.$__state = new this.$__State(this);
+            state = this.$__state = new this.$__State(this);
         }
 
         state.$__replace(newState || {});
@@ -453,20 +453,20 @@ Component.prototype = componentProto = {
     },
 
     update: function() {
-        if (this.$__destroyed || !this.$__isDirty) {
+        if (this.$__destroyed === true || this.$__isDirty === false) {
             return;
         }
 
         var input = this.$__input;
         var state = this.$__state;
 
-        if (!this.$__dirty && state && state.$__dirty) {
+        if (this.$__dirty === false && state !== null && state.$__dirty === true) {
             if (processUpdateHandlers(this, state.$__changes, state.$__old, state)) {
                 state.$__dirty = false;
             }
         }
 
-        if (this.$__isDirty) {
+        if (this.$__isDirty === true) {
             // The UI component is still dirty after process state handlers
             // then we should rerender
 
@@ -480,7 +480,7 @@ Component.prototype = componentProto = {
 
 
     get $__isDirty() {
-        return this.$__dirty || (this.$__state && this.$__state.$__dirty);
+        return this.$__dirty === true || (this.$__state !== null && this.$__state.$__dirty === true);
     },
 
     $__reset: function() {
@@ -524,6 +524,7 @@ Component.prototype = componentProto = {
         updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
             var out = createOut(globalData);
+            out.sync();
             out.$__document = self.$__document;
             renderer(input, out);
             var result = new RenderResult(out);
@@ -598,18 +599,16 @@ Component.prototype = componentProto = {
     },
 
     $__setCustomEvents: function(customEvents, scope) {
-        if (customEvents) {
-            var finalCustomEvents = this.$__customEvents = {};
-            this.$__scope = scope;
+        var finalCustomEvents = this.$__customEvents = {};
+        this.$__scope = scope;
 
-            customEvents.forEach(function(customEvent) {
-                var eventType = customEvent[0];
-                var targetMethodName = customEvent[1];
-                var extraArgs = customEvent[2];
+        customEvents.forEach(function(customEvent) {
+            var eventType = customEvent[0];
+            var targetMethodName = customEvent[1];
+            var extraArgs = customEvent[2];
 
-                finalCustomEvents[eventType] = [targetMethodName, extraArgs];
-            });
-        }
+            finalCustomEvents[eventType] = [targetMethodName, extraArgs];
+        });
     }
 };
 

@@ -160,16 +160,19 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 // so we don't want to queue it up as a result of calling `setInput()`
                 component.$__updateQueued = true;
 
-                component.$__setCustomEvents(customEvents, scope);
+                if (customEvents !== undefined) {
+                    component.$__setCustomEvents(customEvents, scope);
+                }
 
-                if (!isExisting) {
+
+                if (isExisting === false) {
                     emitLifecycleEvent(component, 'create', input, out);
                 }
 
                 input = component.$__setInput(input, onInput, out);
 
-                if (isExisting) {
-                    if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
+                if (isExisting === true) {
+                    if (component.$__isDirty === false || component.shouldUpdate(input, component.$__state) === false) {
                         preserveComponentEls(component, out, componentsContext);
                         return;
                     }

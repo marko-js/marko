@@ -145,7 +145,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         if (component && isExisting) {
             if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
-                component.$__setCustomEvents(customEvents, scope);
+                if (customEvents) {
+                    component.$__setCustomEvents(customEvents, scope);                    
+                }
+
                 preserveComponentEls(component, out, componentsContext);
                 return;
             }

@@ -105,7 +105,7 @@ function preserveBodyIfHandler(transformHelper, preserveType, el) {
     }
 
     addPreserve(transformHelper, true, transformHelper.builder.expression(preserveBodyIfCondition));
-    el.removeAttribute('w-preserve-body-if');
+
 }
 
 const preserveTypes = [
@@ -161,6 +161,7 @@ module.exports = function handleComponentPreserve() {
 
         if (el.hasAttribute(preserveType.attribute)) {
             preserveType.handler(this, preserveType, el);
+            el.removeAttribute(preserveType.attribute);
             return;
         }
     }
