@@ -44,7 +44,9 @@ function virtualize(node) {
             }
 
             var vdomEl = new VElement(tagName, attrs, null, flags);
-            vdomEl.$__namespaceURI = node.namespaceURI;
+            if (node.namespaceURI !== 'http://www.w3.org/1999/xhtml') {
+                vdomEl.$__namespaceURI = node.namespaceURI;
+            }
 
             if (vdomEl.$__isTextArea) {
                 vdomEl.$__value = node.value;

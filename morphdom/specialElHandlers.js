@@ -61,7 +61,7 @@ module.exports = {
             var i = 0;
             var curChild = toEl.firstChild;
             while(curChild) {
-                if (curChild.nodeName == 'OPTION') {
+                if (curChild.$__nodeName == 'OPTION') {
                     if (curChild.$__hasAttribute('selected')) {
                         selectedIndex = i;
                         break;

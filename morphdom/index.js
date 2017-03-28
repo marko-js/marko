@@ -74,6 +74,13 @@ function morphdom(
             vCurChild = vCurChild.nextSibling;
         }
 
+        if (vEl.$__nodeType === 1) {
+            var elHandler = specialElHandlers[vEl.nodeName];
+            if (elHandler !== undefined) {
+                elHandler(realEl, vEl);
+            }
+        }
+
         return realEl;
     }
 
