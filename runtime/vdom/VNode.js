@@ -1,4 +1,6 @@
 /* jshint newcap:false */
+var specialElHandlers = require('../../morphdom/specialElHandlers');
+
 function VNode() {}
 
 VNode.prototype = {
@@ -87,6 +89,13 @@ VNode.prototype = {
         while(curChild) {
             actualNode.appendChild(curChild.actualize(doc));
             curChild = curChild.nextSibling;
+        }
+
+        if (this.$__nodeType === 1) {
+            var elHandler = specialElHandlers[this.$__nodeName];
+            if (elHandler !== undefined) {
+                elHandler(actualNode, this);
+            }
         }
 
         return actualNode;
