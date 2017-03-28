@@ -8,18 +8,8 @@ var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
 var COMMENT_NODE = 8;
 
-/**
- * Returns true if two node's names are the same.
- *
- * NOTE: We don't bother checking `namespaceURI` because you will never find two HTML elements with the same
- *       nodeName and different namespace URIs.
- *
- * @param {Element} a
- * @param {Element} b The target element
- * @return {boolean}
- */
 function compareNodeNames(fromEl, toEl) {
-    return fromEl.nodeName === toEl.nodeName;
+    return fromEl.nodeName === toEl.$__nodeName;
 }
 
 
@@ -88,22 +78,25 @@ function morphdom(
     }
 
     function morphEl(fromEl, toEl, childrenOnly) {
+        var toElKey = toEl.id;
+        var nodeName = toEl.$__nodeName;
 
         if (childrenOnly === false) {
-            var toElKey = toEl.id;
-
-
             if (toElKey) {
                 // If an element with an ID is being morphed then it is will be in the final
                 // DOM so clear it out of the saved elements collection
                 foundKeys[toElKey] = true;
             }
 
-            if (toEl.$__isSameNode(fromEl)) {
-                return;
+            var constId = toEl.$__constId;
+            if (constId !== undefined) {
+                var otherProps = fromEl._vprops;
+                if (otherProps !== undefined && constId === otherProps.c) {
+                    return;
+                }
             }
 
-            if (onBeforeElUpdated(fromEl, context)) {
+            if (onBeforeElUpdated(fromEl, toElKey, context) === true) {
                 return;
             }
 
@@ -111,11 +104,11 @@ function morphdom(
         }
 
 
-        if (onBeforeElChildrenUpdated(fromEl, context)) {
+        if (onBeforeElChildrenUpdated(fromEl, toElKey, context) === true) {
             return;
         }
 
-        if (fromEl.nodeName !== 'TEXTAREA') {
+        if (nodeName !== 'TEXTAREA') {
             var curToNodeChild = toEl.firstChild;
             var curFromNodeChild = fromEl.firstChild;
             var curToNodeKey;
@@ -132,19 +125,13 @@ function morphdom(
                 while (curFromNodeChild) {
                     fromNextSibling = curFromNodeChild.nextSibling;
 
-                    if (curToNodeChild.$__isSameNode !== undefined && curToNodeChild.$__isSameNode(curFromNodeChild)) {
-                        curToNodeChild = toNextSibling;
-                        curFromNodeChild = fromNextSibling;
-                        continue outer;
-                    }
-
                     curFromNodeKey = curFromNodeChild.id;
 
                     var curFromNodeType = curFromNodeChild.nodeType;
 
                     var isCompatible = undefined;
 
-                    if (curFromNodeType === curToNodeChild.nodeType) {
+                    if (curFromNodeType === curToNodeChild.$__nodeType) {
                         if (curFromNodeType === ELEMENT_NODE) {
                             // Both nodes being compared are Element nodes
 
@@ -256,7 +243,7 @@ function morphdom(
             }
         }
 
-        var specialElHandler = specialElHandlers[fromEl.nodeName];
+        var specialElHandler = specialElHandlers[nodeName];
         if (specialElHandler) {
             specialElHandler(fromEl, toEl);
         }
@@ -264,7 +251,7 @@ function morphdom(
 
     var morphedNode = fromNode;
     var fromNodeType = morphedNode.nodeType;
-    var toNodeType = toNode.nodeType;
+    var toNodeType = toNode.$__nodeType;
     var morphChildrenOnly = false;
     var shouldMorphEl = true;
     var newNode;

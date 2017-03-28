@@ -16,15 +16,33 @@ function checkAttributesStatic(attributes) {
     return true;
 }
 
+function checkPropertiesStatic(properties, vdomUtil) {
+    if (properties) {
+        var keys = Object.keys(properties);
+        for (var i=0; i<keys.length; i++) {
+            var propName = keys[i];
+            var propValue = properties[propName];
+            var isStatic = vdomUtil.isStaticValue(propValue);
+            if (!isStatic) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 module.exports = function(node, codegen, vdomUtil) {
     var body = codegen.generateCode(node.body);
     var tagName = codegen.generateCode(node.tagNameExpression);
     var attributes = codegen.generateCode(node.getAttributes());
+    var properties = codegen.generateCode(node.getProperties());
     var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
     var builder = codegen.builder;
 
     var isAttrsStatic = checkAttributesStatic(attributes);
-    var isStatic = isAttrsStatic && node.isLiteralTagName();
+    var isPropsStatic = checkPropertiesStatic(properties, vdomUtil);
+    var isStatic = isAttrsStatic && isPropsStatic && node.isLiteralTagName();
     var isHtmlOnly = true;
 
     if (body && body.length) {
@@ -55,6 +73,7 @@ module.exports = function(node, codegen, vdomUtil) {
     var htmlElVDOM = new HtmlElementVDOM({
         tagName,
         attributes,
+        properties,
         body,
         isStatic,
         isAttrsStatic,

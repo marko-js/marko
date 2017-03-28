@@ -1,6 +1,6 @@
 var eventDelegation = require('./event-delegation');
 var delegateEvent = eventDelegation.$__delegateEvent;
-var getEventAttribute = eventDelegation.$__getEventAttribute;
+var getEventFromEl = eventDelegation.$__getEventFromEl;
 
 var componentsUtil = require('./util');
 var destroyElRecursive = componentsUtil.$__destroyElRecursive;
@@ -8,7 +8,7 @@ var destroyComponentForEl = componentsUtil.$__destroyComponentForEl;
 
 function handleNodeAttach(node, out) {
     if (node.nodeType === 1) {
-        var target = getEventAttribute(node, 'data-_onattach');
+        var target = getEventFromEl(node, 'onattach');
         if (target) {
             var data = out.data;
 
@@ -32,7 +32,7 @@ function handleNodeAttach(node, out) {
 
 function handleNodeDetach(node) {
     if (node.nodeType === 1) {
-        var target = getEventAttribute(node, 'data-_ondetach');
+        var target = getEventFromEl(node, 'ondetach');
         if (target) {
             var allowDetach;
 
@@ -57,4 +57,3 @@ function handleNodeDetach(node) {
 
 eventDelegation.$__handleNodeAttach = handleNodeAttach;
 eventDelegation.$__handleNodeDetach = handleNodeDetach;
-

@@ -8,6 +8,7 @@ class StartTag extends Node {
 
         this.tagName = def.tagName;
         this.attributes = def.attributes;
+        this.properties = def.properties;
         this.argument = def.argument;
         this.selfClosed = def.selfClosed;
         this.dynamicAttributes = def.dynamicAttributes;

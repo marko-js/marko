@@ -47,9 +47,9 @@ describe('AsyncVDOMBuilder', function() {
         out.on('finish', function(result) {
             var tree = result.getOutput();
             expect(getChildNodes(tree).length).to.equal(3);
-            expect(tree.firstChild.nodeName).to.equal('div');
-            expect(tree.firstChild.nextSibling.nodeName).to.equal('span');
-            expect(tree.firstChild.nextSibling.nextSibling.nodeName).to.equal('section');
+            expect(tree.firstChild.$__nodeName).to.equal('div');
+            expect(tree.firstChild.nextSibling.$__nodeName).to.equal('span');
+            expect(tree.firstChild.nextSibling.nextSibling.$__nodeName).to.equal('section');
             done();
         });
     });
@@ -94,10 +94,10 @@ describe('AsyncVDOMBuilder', function() {
             var header = childNodes[0];
             var list = childNodes[1];
             var paragraph = childNodes[2];
-            expect(header.nodeName).to.equal('h1');
-            expect(list.nodeName).to.equal('ul');
+            expect(header.$__nodeName).to.equal('h1');
+            expect(list.$__nodeName).to.equal('ul');
             expect(getChildNodes(list).length).to.equal(10);
-            expect(paragraph.nodeName).to.equal('p');
+            expect(paragraph.$__nodeName).to.equal('p');
             done();
         });
 
@@ -128,7 +128,7 @@ describe('AsyncVDOMBuilder', function() {
         out.once('finish', function(result) {
             var tree = result.getOutput();
             var childNodes = getChildNodes(tree);
-            expect(childNodes[0].nodeName).to.equal('div');
+            expect(childNodes[0].$__nodeName).to.equal('div');
             expect(childNodes[1].nodeValue).to.equal('Hello <em>World</em>');
             expect(childNodes[2].nodeValue).to.equal('TODO: make this work');
             done();

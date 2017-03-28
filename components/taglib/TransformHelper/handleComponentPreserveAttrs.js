@@ -34,7 +34,7 @@ function handleComponentPreserveAttrs() {
     });
 
     if (noUpdateAttrs.length) {
-        el.setAttributeValue('data-_noupdate', builder.literal(noUpdateAttrs));
+        el.setPropertyValue('noupdate', builder.literal(noUpdateAttrs));
 
 
         if (!context.isFlagSet(PRESERVE_ATTRS_HELPER_ADDED)) {

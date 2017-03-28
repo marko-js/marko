@@ -1,29 +1,25 @@
 var componentsUtil = require('./util');
 var runtimeId = componentsUtil.$__runtimeId;
 var componentLookup = componentsUtil.$__componentLookup;
+var getMarkoPropsFromEl = componentsUtil.$__getMarkoPropsFromEl;
+
 var isArray = Array.isArray;
 
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
 var listenersAttachedKey = '$MED' + runtimeId;
 
-function getEventAttribute(el, attrName) {
-    var virtualAttrs = el._vattrs;
-
-    if (virtualAttrs) {
-        return virtualAttrs[attrName];
-    } else {
-        var attrValue = el.getAttribute(attrName);
-        if (attrValue) {
-            // <method_name> <component_id>[ <extra_args_index]
-            var parts = attrValue.split(' ');
-            if (parts.length == 3) {
-                parts[2] = parseInt(parts[2], 10);
-            }
-
-            return parts;
+function getEventFromEl(el, eventName) {
+    var virtualProps = getMarkoPropsFromEl(el);
+    var eventInfo = virtualProps[eventName];
+    if (typeof eventInfo === 'string') {
+        eventInfo = eventInfo.split(' ');
+        if (eventInfo.length == 3) {
+            eventInfo[2] = parseInt(eventInfo[2], 10);
         }
     }
+
+    return eventInfo;
 }
 
 function delegateEvent(node, target, event) {
@@ -87,14 +83,14 @@ function attachBubbleEventListeners(doc) {
 
             // Search up the tree looking DOM events mapped to target
             // component methods
-            var attrName = 'data-_on' + eventType;
+            var propName = 'on' + eventType;
             var target;
 
             // Attributes will have the following form:
             // on<event_type>("<target_method>|<component_id>")
 
             do {
-                if ((target = getEventAttribute(curNode, attrName))) {
+                if ((target = getEventFromEl(curNode, propName))) {
                     delegateEvent(curNode, target, event);
 
                     if (propagationStopped) {
@@ -111,7 +107,7 @@ function noop() {}
 exports.$__handleNodeAttach = noop;
 exports.$__handleNodeDetach = noop;
 exports.$__delegateEvent = delegateEvent;
-exports.$__getEventAttribute = getEventAttribute;
+exports.$__getEventFromEl = getEventFromEl;
 
 exports.$__init = function(doc) {
     if (!doc[listenersAttachedKey]) {

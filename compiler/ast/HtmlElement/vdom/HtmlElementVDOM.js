@@ -54,6 +54,7 @@ class HtmlElementVDOM extends Node {
         this.isAttrsStatic = def.isAttrsStatic;
         this.isHtmlOnly = def.isHtmlOnly;
         this.attributes = def.attributes;
+        this.properties = def.properties;
         this.body = def.body;
         this.dynamicAttributes = def.dynamicAttributes;
 
@@ -67,6 +68,7 @@ class HtmlElementVDOM extends Node {
         this.isChild = false;
         this.createElementId = undefined;
         this.attributesArg = undefined;
+        this.propertiesArg = undefined;
         this.nextConstId = undefined;
     }
 
@@ -110,6 +112,7 @@ class HtmlElementVDOM extends Node {
         }
 
         let attributes = this.attributes;
+        let properties = this.properties;
         let dynamicAttributes = this.dynamicAttributes;
 
         let attributesArg = null;
@@ -119,15 +122,17 @@ class HtmlElementVDOM extends Node {
 
         var hasSimpleAttrs = true;
 
+        if (properties && properties.noupdate) {
+            // Preserving attributes requires extra logic that we cannot
+            // shortcircuit
+            hasSimpleAttrs = false;
+        }
+
         if (attributes != null && attributes.length !== 0) {
             let addAttr = function(name, value) {
                 hasNamedAttributes = true;
 
-                if (name === 'data-_noupdate') {
-                    // Preserving attributes requires extra logic that we cannot
-                    // shortcircuit
-                    hasSimpleAttrs = false;
-                } else if (!SIMPLE_ATTRS[name] && !name.startsWith('data-_')) {
+                if (!SIMPLE_ATTRS[name]) {
                     hasSimpleAttrs = false;
                 }
 
@@ -242,7 +247,14 @@ class HtmlElementVDOM extends Node {
         }
 
         if (nextConstId) {
-            createArgs[4] = nextConstId;
+            if (!this.properties) {
+                this.properties = {};
+            }
+            this.properties.c = nextConstId;
+        }
+
+        if (this.properties) {
+            createArgs[4] = builder.literal(this.properties);
         }
 
         // Remove trailing undefined arguments and convert non-trailing

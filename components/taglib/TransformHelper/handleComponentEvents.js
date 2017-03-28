@@ -38,9 +38,9 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
         addBubblingEventArgs.push(builder.arrayExpression(extraArgs));
     }
 
-    var attrValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
-    var attrName = 'data-_on' + eventType.value;
-    el.setAttributeValue(attrName, attrValue, false);
+    var propValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
+    var propName = 'on' + eventType.value;
+    el.setPropertyValue(propName, propValue, false);
 
     if (eventType.value === 'attach' || eventType.value === 'detach') {
         if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {

@@ -14,7 +14,7 @@ function VDocumentFragment(documentFragment) {
 }
 
 VDocumentFragment.prototype = {
-    nodeType: 11,
+    $__nodeType: 11,
 
     $__DocumentFragment: true,
 

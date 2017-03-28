@@ -1,24 +1,30 @@
+function getNodeType(node) {
+    return node.nodeType || node.$__nodeType;
+}
+
 function toHTML(node) {
 
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
     var html = '';
     function serializeHelper(node, indent) {
-        if (node.nodeType === 1) {
+        var nodeType = getNodeType(node);
+
+        if (nodeType === 1) {
             serializeElHelper(node, indent);
-        } else if (node.nodeType === 3) {
+        } else if (nodeType === 3) {
             serializeTextHelper(node, indent);
-        } else if (node.nodeType === 8) {
+        } else if (nodeType === 8) {
             serializeCommentHelper(node, indent);
         } else {
             console.log('Invalid node:', node);
-            html += indent + `INVALID NODE TYPE ${node.nodeType}\n`;
+            html += indent + `INVALID NODE TYPE ${nodeType}\n`;
             // throw new Error('Unexpected node type');
         }
     }
 
     function serializeElHelper(el, indent) {
-        var tagName = el.nodeName;
+        var tagName = el.nodeName || el.$__nodeName;
 
         var elNamespaceURI = el.namespaceURI || el.$__namespaceURI;
 
@@ -97,7 +103,7 @@ function toHTML(node) {
         html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
     }
 
-    if (node.nodeType === 11 /* DocumentFragment */) {
+    if (getNodeType(node) === 11 /* DocumentFragment */) {
         var curChild = node.firstChild;
         while(curChild) {
             serializeHelper(curChild, '');

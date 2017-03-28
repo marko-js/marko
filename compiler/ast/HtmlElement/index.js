@@ -29,7 +29,7 @@ function afterGenerateCode(event) {
     var context = event.context;
 
     var tagDef = typeof tagName === 'string' ? context.getTagDef(tagName) : undefined;
-    
+
     if (tagDef && tagDef.htmlType === 'svg') {
         context.popFlag('SVG');
     }
@@ -50,6 +50,7 @@ class HtmlElement extends Node {
         this.setTagName(def.tagName);
         this.tagString = def.tagString;
         this._attributes = def.attributes;
+        this._properties = def.properties;
         this.body = this.makeContainer(def.body);
         this.argument = def.argument;
 
@@ -124,6 +125,17 @@ class HtmlElement extends Node {
 
     setAttributeValue(name, value, escape) {
         this._attributes.setAttributeValue(name, value, escape);
+    }
+
+    setPropertyValue(name, value) {
+        if (!this._properties) {
+            this._properties = {};
+        }
+        this._properties[name] = value;
+    }
+
+    getProperties() {
+        return this._properties;
     }
 
     replaceAttributes(newAttributes) {

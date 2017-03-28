@@ -11,13 +11,8 @@ var FLAG_SIMPLE_ATTRS = 4;
 
 var defineProperty = Object.defineProperty;
 
-
 var ATTR_HREF = 'href';
 var EMPTY_OBJECT = Object.freeze({});
-var ATTR_MARKO_CONST = 'data-_mc';
-
-var specialAttrRegexp = /^data-_/;
-
 
 function convertAttrValue(type, value) {
     if (value === true) {
@@ -51,21 +46,21 @@ function VElementClone(other) {
     this.$__nextSibling = null;
 
     this.$__attributes = other.$__attributes;
+    this.$__properties = other.$__properties;
     this.$__namespaceURI = other.$__namespaceURI;
-    this.nodeName = other.nodeName;
+    this.$__nodeName = other.$__nodeName;
     this.$__flags = other.$__flags;
     this.$__value = other.$__value;
     this.$__constId = other.$__constId;
 }
 
-function VElement(tagName, attrs, childCount, flags, constId) {
+function VElement(tagName, attrs, childCount, flags, props) {
     this.$__VNode(childCount);
 
-    if (constId) {
-        if (!attrs) {
-            attrs = {};
-        }
-        attrs[ATTR_MARKO_CONST] = constId;
+    var constId;
+
+    if (props) {
+        constId = props.c;
     }
 
     var namespaceURI;
@@ -77,8 +72,9 @@ function VElement(tagName, attrs, childCount, flags, constId) {
     }
 
     this.$__attributes = attrs || EMPTY_OBJECT;
+    this.$__properties = props || EMPTY_OBJECT;
     this.$__namespaceURI = namespaceURI;
-    this.nodeName = tagName;
+    this.$__nodeName = tagName;
     this.$__value = null;
     this.$__constId = constId;
 }
@@ -86,7 +82,7 @@ function VElement(tagName, attrs, childCount, flags, constId) {
 VElement.prototype = {
     $__VElement: true,
 
-    nodeType: 1,
+    $__nodeType: 1,
 
     $__cloneNode: function() {
         return new VElementClone(this);
@@ -99,8 +95,8 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, childCount, flags, constId) {
-        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, flags, constId));
+    e: function(tagName, attrs, childCount, flags, props) {
+        var child = this.$__appendChild(new VElement(tagName, attrs, childCount, flags, props));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -108,8 +104,6 @@ VElement.prototype = {
             return child;
         }
     },
-
-
 
     /**
      * Shorthand method for creating and appending a static node. The provided node is automatically cloned
@@ -124,20 +118,17 @@ VElement.prototype = {
 
     $__actualize: function(doc) {
         var namespaceURI = this.$__namespaceURI;
-        var tagName = this.nodeName;
+        var tagName = this.$__nodeName;
 
-        var el = namespaceURI ?
+        var attributes = this.$__attributes;
+        var flags = this.$__flags;
+
+        var el = namespaceURI !== undefined ?
             doc.createElementNS(namespaceURI, tagName) :
             doc.createElement(tagName);
 
-
-        var attributes = this.$__attributes;
         for (var attrName in attributes) {
             var attrValue = attributes[attrName];
-
-            if (attrName[5] === '_' && specialAttrRegexp.test(attrName)) {
-                continue;
-            }
 
             if (attrValue !== false && attrValue != null) {
                 var type = typeof attrValue;
@@ -148,24 +139,20 @@ VElement.prototype = {
                     attrValue = convertAttrValue(type, attrValue);
                 }
 
-                namespaceURI = null;
-
                 if (attrName == ATTR_XLINK_HREF) {
-                    namespaceURI = NS_XLINK;
-                    attrName = ATTR_HREF;
+                    setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
+                } else {
+                    el.setAttribute(attrName, attrValue);
                 }
-
-                setAttribute(el, namespaceURI, attrName, attrValue);
             }
         }
-
-        var flags = this.$__flags;
 
         if (flags & FLAG_IS_TEXTAREA) {
             el.value = this.$__value;
         }
 
         el._vattrs = attributes;
+        el._vprops = this.$__properties;
         el._vflags = flags;
 
         return el;
@@ -178,22 +165,6 @@ VElement.prototype = {
         var value = this.$__attributes[name];
         return value != null && value !== false;
     },
-
-    $__isSameNode: function(otherNode) {
-        if (otherNode.nodeType === 1) {
-            var constId = this.$__constId;
-            if (constId) {
-                var otherVirtualAttrs;
-
-                var otherConstId = otherNode.$__VNode ?
-                    otherNode.$__constId :
-                    (otherVirtualAttrs = otherNode._vattrs) && otherVirtualAttrs[ATTR_MARKO_CONST];
-                return constId === otherConstId;
-            }
-        }
-
-        return false;
-    }
 };
 
 inherit(VElement, VNode);
@@ -243,7 +214,9 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
 
     var removePreservedAttributes = VElement.$__removePreservedAttributes;
 
-    var attrs = toEl.$__attributes || toEl._vattrs;
+    var attrs = toEl.$__attributes;
+    var props = toEl.$__properties;
+
     var attrName;
     var i;
 
@@ -256,6 +229,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // so we build the attribute map from the expando property
 
     var oldAttrs = fromEl._vattrs;
+
     if (oldAttrs) {
         if (oldAttrs == attrs) {
             // For constant attributes the same object will be provided
@@ -264,7 +238,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
             // map.
             return;
         } else {
-            oldAttrs = removePreservedAttributes(oldAttrs, true);
+            oldAttrs = removePreservedAttributes(oldAttrs, props, true);
         }
     } else {
         // We need to build the attribute map from the real attributes
@@ -276,21 +250,24 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
 
             if (attr.specified !== false) {
                 attrName = attr.name;
-                var attrNamespaceURI = attr.namespaceURI;
-                if (attrNamespaceURI === NS_XLINK) {
-                    oldAttrs[ATTR_XLINK_HREF] = attr.value;
-                } else {
-                    oldAttrs[attrName] = attr.value;
+                if (attrName !== 'data-marko') {
+                    var attrNamespaceURI = attr.namespaceURI;
+                    if (attrNamespaceURI === NS_XLINK) {
+                        oldAttrs[ATTR_XLINK_HREF] = attr.value;
+                    } else {
+                        oldAttrs[attrName] = attr.value;
+                    }
                 }
             }
         }
 
         // We don't want preserved attributes to show up in either the old
         // or new attribute map.
-        removePreservedAttributes(oldAttrs, false);
+        removePreservedAttributes(oldAttrs, props, false);
     }
 
     fromEl._vattrs = attrs;
+    fromEl._vprops = props;
 
     var attrValue;
 
@@ -298,13 +275,13 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     var oldFlags;
 
     if (flags & FLAG_SIMPLE_ATTRS && ((oldFlags = fromEl._vflags) & FLAG_SIMPLE_ATTRS)) {
-        if (oldAttrs['class'] != (attrValue = attrs['class'])) {
+        if (oldAttrs['class'] !== (attrValue = attrs['class'])) {
             fromEl.className = attrValue;
         }
-        if (oldAttrs.id != (attrValue = attrs.id)) {
+        if (oldAttrs.id !== (attrValue = attrs.id)) {
             fromEl.id = attrValue;
         }
-        if (oldAttrs.style != (attrValue = attrs.style)) {
+        if (oldAttrs.style !== (attrValue = attrs.style)) {
             fromEl.style.cssText = attrValue;
         }
         return;
@@ -314,7 +291,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // render or we don't want certain attributes to be touched. To support
     // that use case we delete out all of the preserved attributes
     // so it's as if they never existed.
-    attrs = removePreservedAttributes(attrs, true);
+    attrs = removePreservedAttributes(attrs, props, true);
 
     var namespaceURI;
 
@@ -325,7 +302,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
         attrValue = attrs[attrName];
         namespaceURI = null;
 
-        if (attrName == ATTR_XLINK_HREF) {
+        if (attrName === ATTR_XLINK_HREF) {
             namespaceURI = NS_XLINK;
             attrName = ATTR_HREF;
         }
@@ -333,16 +310,9 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
         if (attrValue == null || attrValue === false) {
             removeAttribute(fromEl, namespaceURI, attrName);
         } else if (oldAttrs[attrName] !== attrValue) {
-
-            if (attrName[5] == '_' && specialAttrRegexp.test(attrName)) {
-                // Special attributes aren't copied to the real DOM. They are only
-                // kept in the virtual attributes map
-                continue;
-            }
-
             var type = typeof attrValue;
 
-            if (type != 'string') {
+            if (type !== 'string') {
                 attrValue = convertAttrValue(type, attrValue);
             }
 
@@ -354,13 +324,11 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     // then we need to remove those attributes from the target node
     for (attrName in oldAttrs) {
         if (!(attrName in attrs)) {
-
-            if (attrName == ATTR_XLINK_HREF) {
-                namespaceURI = ATTR_XLINK_HREF;
-                attrName = ATTR_HREF;
+            if (attrName === ATTR_XLINK_HREF) {
+                fromEl.removeAttributeNS(ATTR_XLINK_HREF, ATTR_HREF);
+            } else {
+                fromEl.removeAttribute(attrName);
             }
-
-            removeAttribute(fromEl, namespaceURI, attrName);
         }
     }
 };

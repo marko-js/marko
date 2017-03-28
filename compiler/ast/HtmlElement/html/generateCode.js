@@ -4,6 +4,7 @@ var StartTag = require('./StartTag');
 var EndTag = require('./EndTag');
 
 module.exports = function generateCode(node, codegen) {
+    var builder = codegen.builder;
     var tagName = node.tagName;
 
     // Convert the tag name into a Node so that we generate the code correctly
@@ -13,7 +14,21 @@ module.exports = function generateCode(node, codegen) {
         tagName = node.tagNameExpression;
     }
 
+    var properties = node.getProperties();
+
+    if (properties) {
+        var objectProps = Object.keys(properties).map((propName) => {
+            return builder.property(
+                builder.identifier(propName),
+                properties[propName]);
+        });
+
+        node.setAttributeValue('data-marko',
+            builder.objectExpression(objectProps));
+    }
+
     var attributes = node._attributes && node._attributes.all;
+
     var body = node.body;
     var argument = node.argument;
     var hasBody = body && body.length;
@@ -22,7 +37,7 @@ module.exports = function generateCode(node, codegen) {
     var dynamicAttributes = node.dynamicAttributes;
     var selfClosed = node.selfClosed === true;
 
-    var builder = codegen.builder;
+
 
     if (hasBody) {
         body = codegen.generateCode(body);
@@ -38,6 +53,7 @@ module.exports = function generateCode(node, codegen) {
     var startTag = new StartTag({
         tagName: tagName,
         attributes: attributes,
+        properties: properties,
         argument: argument,
         selfClosed: selfClosed,
         dynamicAttributes: dynamicAttributes

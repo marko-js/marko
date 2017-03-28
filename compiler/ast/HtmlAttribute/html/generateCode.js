@@ -103,6 +103,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
             if (escape === false) {
                 attrArgs.push(codegen.builder.literal(false));
             }
+
             addHtml(codegen.builder.functionCall(context.helper('attr'), attrArgs));
         }
     }

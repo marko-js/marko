@@ -9,7 +9,7 @@ function VText(value) {
 VText.prototype = {
     $__Text: true,
 
-    nodeType: 3,
+    $__nodeType: 3,
 
     $__actualize: function(doc) {
         return doc.createTextNode(this.nodeValue);

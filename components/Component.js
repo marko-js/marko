@@ -156,7 +156,7 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
 }
 
 function onNodeDiscarded(node) {
-    if (node.nodeType == 1) {
+    if (node.nodeType === 1) {
         destroyComponentForEl(node);
     }
 }
@@ -165,11 +165,9 @@ function onBeforeNodeDiscarded(node) {
     return eventDelegation.$__handleNodeDetach(node);
 }
 
-function onBeforeElUpdated(fromEl, componentsContext) {
-    var id = fromEl.id;
-
-    if (componentsContext && id) {
-        var preserved = componentsContext.$__preserved[id];
+function onBeforeElUpdated(fromEl, key, componentsContext) {
+    if (componentsContext && key) {
+        var preserved = componentsContext.$__preserved[key];
 
         if (preserved === true) {
             // Don't morph elements that are associated with components that are being
@@ -185,10 +183,9 @@ function onBeforeElUpdated(fromEl, componentsContext) {
     }
 }
 
-function onBeforeElChildrenUpdated(el, componentsContext) {
-    var id = el.id;
-    if (componentsContext && id) {
-        var preserved = componentsContext.$__preservedBodies[id];
+function onBeforeElChildrenUpdated(el, key, componentsContext) {
+    if (componentsContext && key) {
+        var preserved = componentsContext.$__preservedBodies[key];
         if (preserved === true) {
             // Don't morph the children since they are preserved
             return MORPHDOM_SKIP;
@@ -221,11 +218,10 @@ function Component(id) {
     this.$__renderInput = null;
     this.$__input = undefined;
 
-    this.$__destroyed =
-        this.$__updateQueued =
-        this.$__dirty =
-        this.$__settingInput =
-        false;
+    this.$__destroyed = false;
+    this.$__updateQueued = false;
+    this.$__dirty = false;
+    this.$__settingInput = false;
 
     this.$__document = undefined;
 }

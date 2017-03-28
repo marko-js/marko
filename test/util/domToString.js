@@ -2,21 +2,27 @@ function ltrim(s) {
     return s ? s.replace(/^\s\s*/,'') : '';
 }
 
+function getNodeType(node) {
+    return node.nodeType || node.$__nodeType;
+}
+
 function vdomToHTML(node, options) {
 
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
     var html = '';
     function serializeHelper(node, indent) {
-        if (node.nodeType === 1) {
+        var nodeType = getNodeType(node);
+
+        if (nodeType === 1) {
             serializeElHelper(node, indent);
-        } else if (node.nodeType === 3) {
+        } else if (nodeType === 3) {
             serializeTextHelper(node, indent);
-        } else if (node.nodeType === 8) {
+        } else if (nodeType === 8) {
             serializeCommentHelper(node, indent);
         } else {
             console.log('Invalid node:', node);
-            html += indent + `INVALID NODE TYPE ${node.nodeType}\n`;
+            html += indent + `INVALID NODE TYPE ${nodeType}\n`;
             // throw new Error('Unexpected node type');
         }
     }
@@ -84,7 +90,7 @@ function vdomToHTML(node, options) {
             html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value)) + '\n';
         } else {
 
-            if (tagName.toUpperCase() === 'PRE' && el.firstChild && el.firstChild.nodeType === 3) {
+            if (tagName.toUpperCase() === 'PRE' && el.firstChild && getNodeType(el.firstChild) === 3) {
                 el.firstChild.nodeValue = ltrim(el.firstChild.nodeValue);
             }
             var curChild = el.firstChild;
@@ -103,7 +109,7 @@ function vdomToHTML(node, options) {
         html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
     }
 
-    if (node.nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
+    if (getNodeType(node) === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
         var curChild = node.firstChild;
         while(curChild) {
             serializeHelper(curChild, '');

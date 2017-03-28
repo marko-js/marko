@@ -1,12 +1,8 @@
 var extend = require('raptor-util/extend');
 
-function removePreservedAttributes(attrs, clone) {
-    var preservedAttrs = attrs['data-_noupdate'];
+function removePreservedAttributes(attrs, props, clone) {
+    var preservedAttrs = props && props.noupdate;
     if (preservedAttrs) {
-        if (typeof preservedAttrs == 'string') {
-            preservedAttrs = JSON.parse(preservedAttrs);
-        }
-
         if (clone) {
             attrs = extend({}, attrs);
         }

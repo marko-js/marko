@@ -7,7 +7,7 @@ function VComment(value) {
 }
 
 VComment.prototype = {
-    nodeType: 8,
+    $__nodeType: 8,
 
     $__actualize: function(doc) {
         return doc.createComment(this.nodeValue);

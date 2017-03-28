@@ -33,15 +33,17 @@ function vdomToHTML(node, options) {
     // BAD: return (new XMLSerializer()).serializeToString(node);
     var html = '';
     function serializeHelper(node) {
-        if (node.nodeType === 1) {
+        var nodeType = node.nodeType || node.$__nodeType;
+
+        if (nodeType === 1) {
             serializeElHelper(node);
-        } else if (node.nodeType === 3) {
+        } else if (nodeType === 3) {
             serializeTextHelper(node);
-        } else if (node.nodeType === 8) {
+        } else if (nodeType === 8) {
             serializeCommentHelper(node);
         } else {
             console.log('Invalid node:', node);
-            html += `INVALID NODE TYPE ${node.nodeType}\n`;
+            html += `INVALID NODE TYPE ${nodeType}\n`;
         }
     }
 
@@ -99,7 +101,8 @@ function vdomToHTML(node, options) {
             var curChild = el.firstChild;
             if (curChild) {
                 while(curChild) {
-                    if (curChild.nodeType === 3) {
+                    let nodeType = curChild.nodeType || curChild.$__nodeType;
+                    if (nodeType === 3) {
                         let escapeText = tagName.toUpperCase() !== 'SCRIPT';
                         serializeTextHelper(curChild, escapeText);
                     } else {
@@ -126,7 +129,10 @@ function vdomToHTML(node, options) {
         html += '<!--' + node.nodeValue + '-->';
     }
 
-    if (node.nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
+    let nodeType = node.nodeType || node.$__nodeType;
+
+
+    if (nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
         var curChild = node.firstChild;
         while(curChild) {
             serializeHelper(curChild);

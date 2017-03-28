@@ -7,6 +7,7 @@ var runtimeId = markoGlobal.uid++;
 var componentLookup = {};
 
 var defaultDocument = document;
+var EMPTY_OBJECT = {};
 
 function getComponentForEl(el, doc) {
     if (el) {
@@ -79,7 +80,7 @@ function destroyComponentForEl(el) {
 function destroyElRecursive(el) {
     var curChild = el.firstChild;
     while(curChild) {
-        if (curChild.nodeType == 1) {
+        if (curChild.nodeType === 1) {
             destroyComponentForEl(curChild);
             destroyElRecursive(curChild);
         }
@@ -109,6 +110,19 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     }
 }
 
+function getMarkoPropsFromEl(el) {
+    var virtualProps = el._vprops;
+    if (virtualProps === undefined) {
+        virtualProps = el.getAttribute('data-marko');
+        if (virtualProps) {
+            virtualProps = JSON.parse(virtualProps);
+        }
+        el._vprops = virtualProps = virtualProps || EMPTY_OBJECT;
+    }
+
+    return virtualProps;
+}
+
 exports.$__runtimeId = runtimeId;
 exports.$__componentLookup = componentLookup;
 exports.$__getComponentForEl = getComponentForEl;
@@ -118,3 +132,4 @@ exports.$__destroyElRecursive = destroyElRecursive;
 exports.$__nextComponentId = nextComponentId;
 exports.$__getElementById = getElementById;
 exports.$__attachBubblingEvent = attachBubblingEvent;
+exports.$__getMarkoPropsFromEl = getMarkoPropsFromEl;

@@ -4,11 +4,16 @@ var extend = require('raptor-util/extend');
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
     try {
         renderFunc(finalData, finalOut);
+
         if (shouldEnd) {
             finalOut.end();
         }
     } catch(err) {
+        var actualEnd = finalOut.end;
+        finalOut.end = function() {};
+
         setTimeout(function() {
+            finalOut.end = actualEnd;
             finalOut.error(err);
         }, 0);
     }

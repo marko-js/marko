@@ -17,9 +17,11 @@ function render(input, out, __component, component, state) {
 
   function macro_renderButton(color, out, renderBody) {
     out.w("<button" +
-      marko_attr("data-_onclick", __component.d("handleColorClick", [
-        color
-      ]), false) +
+      marko_attr("data-marko", {
+        onclick: __component.d("handleColorClick", [
+            color
+          ])
+      }) +
       ">" +
       marko_escapeXml(color) +
       "</button>");

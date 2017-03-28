@@ -9,8 +9,8 @@ var extend = require('raptor-util/extend');
 
 var classList = commonHelpers.cl;
 
-exports.e = function(tagName, attrs, childCount, constId) {
-    return new VElement(tagName, attrs, childCount, constId);
+exports.e = function(tagName, attrs, childCount, flags, props) {
+    return new VElement(tagName, attrs, childCount, flags, props);
 };
 
 exports.t = function(value) {

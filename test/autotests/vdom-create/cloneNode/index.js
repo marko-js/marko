@@ -23,7 +23,7 @@ module.exports = function(helpers) {
 
     var clone = el.$__cloneNode();
     expect(clone).to.not.equal(el);
-    expect(clone.nodeName).to.equal('div');
+    expect(clone.$__nodeName).to.equal('div');
     expect(clone.$__hasAttribute('class')).to.equal(true);
     expect(clone.firstChild).to.equal(el.firstChild);
 
