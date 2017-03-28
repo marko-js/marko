@@ -209,6 +209,9 @@ describe('morphdom', function() {
                 if (afterEl) {
                     var beforeEl = elLookupBefore[elId];
                     if (afterEl.tagName === beforeEl.tagName) {
+                        if (afterEl !== beforeEl) {
+                            throw new Error('Element mismatch. Expected keyed element to be the same in the before and after.\nBEFORE:\n' + serializeNode(beforeEl) + '\n\nAFTER:\n' + serializeNode(afterEl));
+                        }
                         expect(afterEl).to.equal(beforeEl);
                     }
                 }
