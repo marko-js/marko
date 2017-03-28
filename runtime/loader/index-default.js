@@ -1,5 +1,13 @@
 'use strict';
 
+var nodePath = require('path');
+var fs = require('fs');
+var Module = require('module').Module;
+var compilerPath = nodePath.join(__dirname, '../../compiler');
+var markoCompiler = require(compilerPath);
+var cwd = process.cwd();
+var fsOptions = {encoding: 'utf8'};
+
 module.exports = function load(templatePath, templateSrc, options) {
     var ext = nodePath.extname(templatePath);
 
@@ -27,14 +35,6 @@ module.exports = function load(templatePath, templateSrc, options) {
         throw new Error('Illegal arguments');
     }
 };
-
-var nodePath = require('path');
-var fs = require('fs');
-var Module = require('module').Module;
-var compilerPath = nodePath.join(__dirname, '../../compiler');
-var markoCompiler = require(compilerPath);
-var cwd = process.cwd();
-var fsOptions = {encoding: 'utf8'};
 
 function loadSource(templatePath, compiledSrc) {
     templatePath += '.js';
