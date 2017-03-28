@@ -31,7 +31,13 @@ function getDeps(template, context) {
         meta.tags.forEach(tagPath => {
             var resolveFrom = context.resolveFrom || defaultResolveFrom;
             var tag = resolveFrom(root, tagPath);
+            var ext = path.extname(tag);
             var req = context.require || require;
+
+            try {
+                tag = req.resolve(tag.slice(0, 0 - ext.length) + '.js');
+            } catch(e) {}
+
             var tagDeps = getDeps(req(tag), context);
             deps.push.apply(deps, tagDeps);
         });

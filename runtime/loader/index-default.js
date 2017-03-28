@@ -1,6 +1,13 @@
 'use strict';
 
 module.exports = function load(templatePath, templateSrc, options) {
+    var ext = nodePath.extname(templatePath);
+
+    if (ext === '.js') {
+        // assume compiled template
+        return require(templatePath);
+    }
+
     if (arguments.length === 1) {
         return doLoad(templatePath);
     } else if (arguments.length === 2) {
@@ -31,7 +38,7 @@ var fsOptions = {encoding: 'utf8'};
 
 function loadSource(templatePath, compiledSrc) {
     templatePath += '.js';
-    
+
     // Short-circuit loading if the template has already been cached in the Node.js require cache
     var cached = require.cache[templatePath];
     if (cached) {
@@ -55,6 +62,7 @@ function getCachedTemplate(path) {
     var cached = require.cache[path];
     return cached && cached.exports.render ? cached.exports : undefined;
 }
+
 /**
  * This helper function will check the Node.js require cache for the previous
  * loaded template and it will also check the disk for the compiled template
@@ -78,7 +86,7 @@ function getPreviousTemplate(templatePath, options) {
     2) /path/to/my-template.marko.js
     */
     var ext = nodePath.extname(templatePath);
-    var targetFilePrecompiled = templatePath.slice(0 - ext.length) + '.js';
+    var targetFilePrecompiled = templatePath.slice(0, 0 - ext.length) + '.js';
     var targetFileDebug = templatePath + '.js';
 
     // Short-circuit loading if the template has already been cached in the Node.js require cache
