@@ -171,7 +171,7 @@ function onBeforeElUpdated(fromEl, componentsContext) {
     if (componentsContext && id) {
         var preserved = componentsContext.$__preserved[id];
 
-        if (preserved && !preserved.$__bodyOnly) {
+        if (preserved === true) {
             // Don't morph elements that are associated with components that are being
             // reused or elements that are being preserved. For components being reused,
             // the morphing will take place when the reused component updates.
@@ -188,8 +188,8 @@ function onBeforeElUpdated(fromEl, componentsContext) {
 function onBeforeElChildrenUpdated(el, componentsContext) {
     var id = el.id;
     if (componentsContext && id) {
-        var preserved = componentsContext.$__preserved[id];
-        if (preserved && preserved.$__bodyOnly) {
+        var preserved = componentsContext.$__preservedBodies[id];
+        if (preserved === true) {
             // Don't morph the children since they are preserved
             return MORPHDOM_SKIP;
         }

@@ -12,6 +12,7 @@ function ComponentsContext(out, root) {
     this.$__out = out;
     this.$__componentStack = [root];
     this.$__preserved = EMPTY_OBJECT;
+    this.$__preservedBodies = EMPTY_OBJECT;
     this.$__componentsById = {};
 }
 
@@ -55,11 +56,15 @@ ComponentsContext.prototype = {
         return parent.$__nextId();
     },
     $__preserveDOMNode: function(elId, bodyOnly) {
-        var preserved = this.$__preserved;
-        if (preserved == EMPTY_OBJECT) {
-            preserved = this.$__preserved = {};
+        var preserved = bodyOnly === true ? this.$__preservedBodies : this.$__preserved;
+        if (preserved === EMPTY_OBJECT) {
+            if (bodyOnly === true) {
+                preserved = this.$__preservedBodies = {};
+            } else {
+                preserved = this.$__preserved = {};
+            }
         }
-        preserved[elId] = { $__bodyOnly: bodyOnly };
+        preserved[elId] = true;
     }
 };
 
