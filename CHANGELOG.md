@@ -3,6 +3,17 @@ Changelog
 
 # 4.x
 
+## 4.2.x
+
+### 4.2.0
+
+- Bug: Fixed [#629](https://github.com/marko-js/marko/issues/629) - VDOM: Rendering unescaped HTML produces non-functioning HTML input controls
+- Bug: Fixed [#634](https://github.com/marko-js/marko/issues/634) - writeInitComponentsCode is not a function
+- Enhancement: Added support to allow improved precompiling of templates
+- Enhancement: Fixed [#636](https://github.com/marko-js/marko/issues/636) - Add error when macro with duplicate name is found
+- Performance: Optimized diffing/patching to avoid indexing entire tree to find keyed elements
+- Performance: Optimized how event handlers are attached to VDOM nodes (separated from attributes)
+
 ## 4.1.x
 
 ### 4.1.3
