@@ -5,6 +5,11 @@ Changelog
 
 ## 4.2.x
 
+### 4.2.1
+
+- Bug: Fixed [#644](https://github.com/marko-js/marko/issues/644) - Attribute not rendered by Marko is not preserved if component first rendered on the server
+- [Performance] Escaping is not needed for the `data-marko` attribute
+
 ### 4.2.0
 
 - Bug: Fixed [#629](https://github.com/marko-js/marko/issues/629) - VDOM: Rendering unescaped HTML produces non-functioning HTML input controls
