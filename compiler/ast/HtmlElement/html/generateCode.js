@@ -24,7 +24,8 @@ module.exports = function generateCode(node, codegen) {
         });
 
         node.setAttributeValue('data-marko',
-            builder.objectExpression(objectProps));
+            builder.objectExpression(objectProps),
+            false);
     }
 
     var attributes = node._attributes && node._attributes.all;

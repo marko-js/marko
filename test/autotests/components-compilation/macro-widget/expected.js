@@ -21,7 +21,7 @@ function render(input, out, __component, component, state) {
         onclick: __component.d("handleColorClick", [
             color
           ])
-      }) +
+      }, false) +
       ">" +
       marko_escapeXml(color) +
       "</button>");
