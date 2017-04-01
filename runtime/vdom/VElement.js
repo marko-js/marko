@@ -330,7 +330,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     //       was not a virtualized node (i.e., a node that was not rendered by a
     //       Marko template, but rather a node that was created from an HTML
     //       string or a real DOM node).
-    if (!attrs.id || props.$__virtualized) {
+    if (!attrs.id || props.$__virtualized === true) {
         for (attrName in oldAttrs) {
             if (!(attrName in attrs)) {
                 if (attrName === ATTR_XLINK_HREF) {
