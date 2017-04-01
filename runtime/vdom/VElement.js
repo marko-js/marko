@@ -322,12 +322,22 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
 
     // If there are any old attributes that are not in the new set of attributes
     // then we need to remove those attributes from the target node
-    for (attrName in oldAttrs) {
-        if (!(attrName in attrs)) {
-            if (attrName === ATTR_XLINK_HREF) {
-                fromEl.removeAttributeNS(ATTR_XLINK_HREF, ATTR_HREF);
-            } else {
-                fromEl.removeAttribute(attrName);
+    //
+    // NOTE: We can skip this if the the element is keyed because if the element
+    //       is keyed then we know we already processed all of the attributes for
+    //       both the target and original element since target VElement nodes will
+    //       have all attributes declared. However, we can only skip if the node
+    //       was not a virtualized node (i.e., a node that was not rendered by a
+    //       Marko template, but rather a node that was created from an HTML
+    //       string or a real DOM node).
+    if (!attrs.id || props.$__virtualized) {
+        for (attrName in oldAttrs) {
+            if (!(attrName in attrs)) {
+                if (attrName === ATTR_XLINK_HREF) {
+                    fromEl.removeAttributeNS(ATTR_XLINK_HREF, ATTR_HREF);
+                } else {
+                    fromEl.removeAttribute(attrName);
+                }
             }
         }
     }

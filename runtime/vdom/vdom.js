@@ -8,6 +8,7 @@ var FLAG_IS_TEXTAREA = 2;
 var defaultDocument = typeof document != 'undefined' && document;
 var specialHtmlRegexp = /[&<]/;
 var xmlnsRegExp = /^xmlns(:|$)/;
+var virtualizedProps = { $__virtualized: true };
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
@@ -43,7 +44,7 @@ function virtualize(node) {
                 flags |= FLAG_IS_TEXTAREA;
             }
 
-            var vdomEl = new VElement(tagName, attrs, null, flags);
+            var vdomEl = new VElement(tagName, attrs, null, flags, virtualizedProps);
             if (node.namespaceURI !== 'http://www.w3.org/1999/xhtml') {
                 vdomEl.$__namespaceURI = node.namespaceURI;
             }
