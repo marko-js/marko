@@ -93,13 +93,18 @@ exports.sa = function(style) {
         return '';
     }
 
-    if (typeof style === 'string') {
+    var type = typeof style;
+
+    if (type === 'string') {
         return attrHelper(STYLE_ATTR, style, false);
-    } else if (typeof style === 'object') {
+    } else if (type === 'object') {
         var styles = '';
         for (var name in style) {
             var value = style[name];
             if (value != null) {
+                if (typeof value === 'number' && value) {
+                    value += 'px';
+                }
                 var nameDashed = dashedNames[name];
                 if (!nameDashed) {
                     nameDashed = dashedNames[name] = name.replace(/([A-Z])/g, '-$1').toLowerCase();
