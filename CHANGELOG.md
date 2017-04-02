@@ -5,6 +5,10 @@ Changelog
 
 ## 4.2.x
 
+### 4.2.2
+
+- Fixes [#648](https://github.com/marko-js/marko/issues/648) - Style attribute object and lengths not handled properly
+
 ### 4.2.1
 
 - Bug: Fixed [#644](https://github.com/marko-js/marko/issues/644) - Attribute not rendered by Marko is not preserved if component first rendered on the server
