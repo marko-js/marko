@@ -5,6 +5,10 @@ Changelog
 
 ## 4.2.x
 
+### 4.2.3
+
+- Fixes [#649](https://github.com/marko-js/marko/issues/649) - New line always added to `textarea` and other elements for single line/delimited HTML blocks
+
 ### 4.2.2
 
 - Fixes [#648](https://github.com/marko-js/marko/issues/648) - Style attribute object and lengths not handled properly
