@@ -358,11 +358,11 @@ class Node {
                 var lastTextNode = literalTextNodes[literalTextNodes.length - 1];
 
                 if (firstTextNode.isFirst) {
-                    firstTextNode.argument.value = firstTextNode.argument.value.replace(/^\s*/, '');
+                    firstTextNode.argument.value = firstTextNode.argument.value.toString().replace(/^\s*/, '');
                 }
 
                 if (lastTextNode.isLast) {
-                    lastTextNode.argument.value = lastTextNode.argument.value.replace(/\s*$/, '');
+                    lastTextNode.argument.value = lastTextNode.argument.value.toString().replace(/\s*$/, '');
                 }
             }
         }

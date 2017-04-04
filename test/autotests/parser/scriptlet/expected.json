@@ -37,13 +37,6 @@
     {
       "type": "Scriptlet",
       "code": " } "
-    },
-    {
-      "type": "Text",
-      "argument": {
-        "type": "Literal",
-        "value": "\n"
-      }
     }
   ]
 }
