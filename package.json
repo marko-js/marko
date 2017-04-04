@@ -48,7 +48,7 @@
     "raptor-regexp": "^1.0.0",
     "raptor-renderer": "^1.4.4",
     "raptor-strings": "^1.0.0",
-    "raptor-util": "^2.0.0",
+    "raptor-util": "^2.0.1",
     "resolve-from": "^1.0.0",
     "strip-json-comments": "^2.0.1",
     "try-require": "^1.2.1"
