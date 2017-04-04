@@ -42,7 +42,7 @@
     "raptor-promises": "^1.0.1",
     "raptor-regexp": "^1.0.0",
     "raptor-strings": "^1.0.0",
-    "raptor-util": "^1.0.0",
+    "raptor-util": "^1.1.2",
     "resolve-from": "^1.0.0",
     "sax": "^0.6.0",
     "try-require": "^1.2.1"
