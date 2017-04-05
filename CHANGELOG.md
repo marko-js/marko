@@ -5,6 +5,11 @@ Changelog
 
 ## 4.2.x
 
+### 4.2.5
+
+- Improved support for UI components implemented using native JavaScript class in a separate file
+- Improved how legacy layout tags are handled by Marko v4
+
 ### 4.2.4
 
 - Bug: Fixes [#653](https://github.com/marko-js/marko/issues/653) - Event handlers are no longer bound in edge case
