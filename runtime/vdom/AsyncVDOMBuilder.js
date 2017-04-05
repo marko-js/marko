@@ -48,8 +48,8 @@ var proto = AsyncVDOMBuilder.prototype = {
     $__isOut: true,
     $__document: defaultDocument,
 
-    element: function(name, attrs, childCount, flags, constId) {
-        var element = new VElement(name, attrs, childCount, flags, constId);
+    element: function(tagName, attrs, childCount, flags, props) {
+        var element = new VElement(tagName, attrs, childCount, flags, props);
 
         var parent = this.$__parent;
 
