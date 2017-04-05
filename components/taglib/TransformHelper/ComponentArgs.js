@@ -74,17 +74,17 @@ class ComponentArgs {
             };
         } else {
             el.onBeforeGenerateCode((event) => {
-                let lhs = builder.memberExpression(builder.identifierOut(), builder.identifier('$c'));
-                let rhs = builder.literal(args);
+                let funcTarget = builder.memberExpression(builder.identifierOut(), builder.identifier('c'));
+                let funcArgs = [builder.literal(args)];
 
-                event.insertCode(builder.assignment(lhs, rhs));
+                event.insertCode(builder.functionCall(funcTarget, funcArgs));
             });
 
             el.onAfterGenerateCode((event) => {
-                let lhs = builder.memberExpression(builder.identifierOut(), builder.identifier('$c'));
-                let rhs = builder.literalNull();
+                let funcTarget = builder.memberExpression(builder.identifierOut(), builder.identifier('c'));
+                let funcArgs = [builder.literalNull()];
 
-                event.insertCode(builder.assignment(lhs, rhs));
+                event.insertCode(builder.functionCall(funcTarget, funcArgs));
             });
         }
     }

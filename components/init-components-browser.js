@@ -8,8 +8,7 @@ var componentsUtil = require('./util');
 var componentLookup = componentsUtil.$__componentLookup;
 var getElementById = componentsUtil.$__getElementById;
 var ComponentDef = require('./ComponentDef');
-// var extend = require('raptor-util/extend');
-// var registry = require('./registry');
+var registry = require('./registry');
 
 function invokeComponentEventHandler(component, targetMethodName, args) {
     var method = component[targetMethodName];
@@ -45,8 +44,6 @@ function initComponent(componentDef, doc) {
     if (!component || !component.$__isComponent) {
         return; // legacy
     }
-
-    var domEvents = componentDef.$__domEvents;
 
     component.$__reset();
     component.$__document = doc;
@@ -91,10 +88,16 @@ function initComponent(componentDef, doc) {
         componentLookup[id] = component;
     }
 
+    if (componentDef.$__willRerenderInBrowser) {
+        component.$__rerender(true);
+        return;
+    }
+
     if (isExisting) {
         component.$__removeDOMEventListeners();
     }
 
+    var domEvents = componentDef.$__domEvents;
     if (domEvents) {
         var eventListenerHandles = [];
 
@@ -114,9 +117,10 @@ function initComponent(componentDef, doc) {
         }
     }
 
-    if (isExisting) {
+    if (component.$__mounted) {
         component.$__emitLifecycleEvent('update');
     } else {
+        component.$__mounted = true;
         events.emit('mountComponent', component);
         component.$__emitLifecycleEvent('mount');
     }
@@ -180,7 +184,7 @@ function initServerRendered(renderedComponents, doc) {
     var typesArray = renderedComponents.t;
 
     componentDefs.forEach(function(componentDef) {
-        componentDef = ComponentDef.$__deserialize(componentDef, typesArray);
+        componentDef = ComponentDef.$__deserialize(componentDef, typesArray, registry);
         initComponent(componentDef, doc || defaultDocument);
     });
 }

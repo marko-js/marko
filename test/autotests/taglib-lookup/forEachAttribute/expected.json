@@ -10,7 +10,6 @@
     "for",
     "include",
     "while",
-    "$w",
     "w-bind",
     "w-scope",
     "w-config",

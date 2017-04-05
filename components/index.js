@@ -12,18 +12,22 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
         var componentDef = components[i];
         var id = componentDef.id;
         var component = componentDef.$__component;
+        var rerenderInBrowser = componentDef.$__willRerenderInBrowser;
         var state = component.state;
         var input = component.input;
         var typeName = component.typeName;
         var customEvents = component.$__customEvents;
         var scope = component.$__scope;
+        var bubblingDomEvents = component.$__bubblingDomEvents;
 
-        component.state = undefined; // We don't use `delete` to avoid V8 deoptimization
-        component.input = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.$__state = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.$__input = undefined; // We don't use `delete` to avoid V8 deoptimization
         component.typeName = undefined;
         component.id = undefined;
         component.$__customEvents = undefined;
         component.$__scope = undefined;
+        component.$__bubblingDomEvents = undefined;
+        component.$__bubblingDomEventsExtraArgsCount = undefined;
 
         if (!typeName) {
             continue;
@@ -38,7 +42,7 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
 
         var children = componentDef.$__children;
 
-        if (children) {
+        if (children !== null) {
             // Depth-first search (children should be initialized before parent)
             flattenHelper(children, flattened, typesArray, typesLookup);
         }
@@ -46,9 +50,13 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
 
         var hasProps = false;
 
-        for (var key in component) {
-            if (component.hasOwnProperty(key) && component[key] !== undefined) {
+        let componentKeys = Object.keys(component);
+        for (let i=0, len=componentKeys.length; i<len; i++) {
+            let key = componentKeys[i];
+
+            if (component[key] !== undefined) {
                 hasProps = true;
+                break;
             }
         }
 
@@ -58,26 +66,31 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
             // Update state properties with an `undefined` value to have a `null`
             // value so that the property name will be serialized down to the browser.
             // This ensures that we add the proper getter/setter for the state property.
-            for (var k in state) {
-                if (state[k] === undefined) {
+
+            let stateKeys = Object.keys(state);
+            for (let i=0, len=stateKeys.length; i<len; i++) {
+                let key = stateKeys[i];
+
+                if (state[key] === undefined) {
                     if (undefinedPropNames) {
-                        undefinedPropNames.push(k);
+                        undefinedPropNames.push(key);
                     } else {
-                        undefinedPropNames = [k];
+                        undefinedPropNames = [key];
                     }
                 }
             }
         }
 
         var extra = {
-            p: customEvents && scope, // Only serialize scope if we need to attach custom events
+            b: bubblingDomEvents,
             d: componentDef.$__domEvents,
-            b: componentDef.$__bubblingDomEvents,
             e: customEvents,
-            w: hasProps ? component : undefined,
-            s: state,
+            p: customEvents && scope, // Only serialize scope if we need to attach custom events
             r: componentDef.$__roots,
-            u: undefinedPropNames
+            s: state,
+            u: undefinedPropNames,
+            w: hasProps ? component : undefined,
+            _: rerenderInBrowser ? 1 : undefined
         };
 
         flattened.push([

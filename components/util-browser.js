@@ -36,7 +36,7 @@ var lifecycleEventMethods = {};
     'render',
     'update',
     'mount',
-    'destroy',
+    'destroy'
 ].forEach(function(eventName) {
     lifecycleEventMethods[eventName] = 'on' + eventName[0].toUpperCase() + eventName.substring(1);
 });
@@ -103,10 +103,27 @@ function getElementById(doc, id) {
 function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
         var id = componentDef.id;
+        if (extraArgs) {
+            var isRerenderInBrowser = componentDef.$__out.global.components.$__isRerenderInBrowser;
 
-        return extraArgs ?
-            [handlerMethodName, id, extraArgs] :
-            [handlerMethodName, id];
+            if (isRerenderInBrowser) {
+                // If we are bootstrapping a page rendered on the server
+                // we need to put the actual event args on the UI component
+                // since we will not actually be updating the DOM
+                var component = componentDef.$__component;
+
+                var bubblingDomEvents = component.$__bubblingDomEvents ||
+                    ( component.$__bubblingDomEvents = [] );
+
+                bubblingDomEvents.push(extraArgs);
+
+                return;
+            } else {
+                return [handlerMethodName, id, extraArgs];
+            }
+        } else {
+            return [handlerMethodName, id];
+        }
     }
 }
 

@@ -39,7 +39,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var componentBody;
         var componentState;
 
-        var component = outGlobal.$w;
+        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+
+        var component = componentsContext.$__rerenderComponent;
         var fakeComponent;
         var isRerender = component !== undefined;
         var id = assignedId;
@@ -50,12 +52,12 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (component) {
             id = component.id;
             isExisting = true;
-            outGlobal.$w = null;
+            componentsContext.$__rerenderComponent = null;
         } else {
-            var componentArgs = out.$c;
+            var componentArgs = out.$__componentArgs;
 
             if (componentArgs) {
-                out.$c = null;
+                out.$__componentArgs = null;
                 scope = componentArgs[0];
 
                 if (scope) {
@@ -68,11 +70,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 }
                 id = id || resolveComponentKey(out, ref, scope);
                 customEvents = componentArgs[2];
-                delete input.$w;
             }
         }
 
-        var componentsContext = ComponentsContext.$__getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer && typeName) {
@@ -146,7 +146,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (component && isExisting) {
             if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
                 if (customEvents) {
-                    component.$__setCustomEvents(customEvents, scope);                    
+                    component.$__setCustomEvents(customEvents, scope);
                 }
 
                 preserveComponentEls(component, out, componentsContext);

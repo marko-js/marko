@@ -23,6 +23,7 @@
     "invoke",
     "macro",
     "macro-body",
+    "marko",
     "marko-preserve-whitespace",
     "static",
     "unless",

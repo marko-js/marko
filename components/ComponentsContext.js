@@ -2,6 +2,8 @@
 
 var ComponentDef = require('./ComponentDef');
 var initComponents = require('./init-components');
+var isServer = require('./util').$__isServer === true;
+
 var EMPTY_OBJECT = {};
 
 function ComponentsContext(out, root) {
@@ -14,6 +16,7 @@ function ComponentsContext(out, root) {
     this.$__preserved = EMPTY_OBJECT;
     this.$__preservedBodies = EMPTY_OBJECT;
     this.$__componentsById = {};
+    this.$__rerenderComponent = undefined;
 }
 
 ComponentsContext.prototype = {
@@ -21,7 +24,7 @@ ComponentsContext.prototype = {
         return this.$__componentStack[0].$__children;
     },
 
-    $__beginComponent: function(component) {
+    $__beginComponent: function(component, isSplitComponent) {
         var self = this;
         var componentStack = self.$__componentStack;
         var origLength = componentStack.length;
@@ -33,9 +36,24 @@ ComponentsContext.prototype = {
             componentId = component.id = parent.$__nextId();
         }
 
-        var componentDef = new ComponentDef(component, componentId, this.$__out, componentStack, origLength);
-        this.$__componentsById[componentId] = componentDef;
-        parent.$__addChild(componentDef);
+        var out = this.$__out;
+
+        var componentDef = new ComponentDef(component, componentId, out, componentStack, origLength);
+        if (isServer) {
+            // On the server
+            if (parent.$__willRerenderInBrowser === true) {
+                componentDef.$__willRerenderInBrowser = true;
+            } else {
+                parent.$__addChild(componentDef);
+                if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
+                    componentDef.$__willRerenderInBrowser = true;
+                }
+            }
+        } else {
+            parent.$__addChild(componentDef);
+            this.$__componentsById[componentId] = componentDef;
+        }
+
         componentStack.push(componentDef);
 
         return componentDef;

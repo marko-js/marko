@@ -4,9 +4,7 @@ var repeatedRegExp = /\[\]$/;
 var componentUtil = require('./util');
 var nextComponentId = componentUtil.$__nextComponentId;
 var attachBubblingEvent = componentUtil.$__attachBubblingEvent;
-
 var extend = require('raptor-util/extend');
-var registry = require('./registry');
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
@@ -23,9 +21,10 @@ function ComponentDef(component, componentId, out, componentStack, componentStac
     this.$__roots =  null;            // IDs of root elements if there are multiple root elements
     this.$__children = null;          // An array of nested ComponentDef instances
     this.$__domEvents = null;         // An array of DOM events that need to be added (in sets of three)
-    this.$__bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
 
     this.$__isExisting = false;
+
+    this.$__willRerenderInBrowser = false;
 
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
 }
@@ -103,7 +102,7 @@ ComponentDef.prototype = {
     }
 };
 
-ComponentDef.$__deserialize = function(o, types) {
+ComponentDef.$__deserialize = function(o, types, registry) {
     var id        = o[0];
     var typeName  = types[o[1]];
     var input     = o[2];
@@ -149,7 +148,8 @@ ComponentDef.$__deserialize = function(o, types) {
     return {
         $__component: component,
         $__roots: extra.r,
-        $__domEvents: extra.d
+        $__domEvents: extra.d,
+        $__willRerenderInBrowser: extra._ === 1
     };
 };
 

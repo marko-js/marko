@@ -1,5 +1,7 @@
 lasso-page dependencies=data.browserDependencies lasso=data.lasso
 
+<marko no-browser-rerender />
+
 <!DOCTYPE html>
 html lang="en"
     head
@@ -12,12 +14,11 @@ html lang="en"
         div id="mocha"
         div id="testsTarget"
 
-        $ out.global.name = 'FrankGlobal';
-
-        <lifecycle-events name="Frank" />
-        <lifecycle-events-component-class name="Frank" />
-        <lifecycle-events-component-class-ctor name="Frank" />
-        <lifecycle-events-component-object name="Frank" />
+        <onInput-return name="Frank" />
+        <onInput-assign-null name="John" />
+        <onInput-assign-null-and-return name="Jane" />
+        <onInput-assign-object name="Frank" />
+        <onInput-assign-object-and-return name="Heather" />
 
         lasso-body
 

@@ -61,7 +61,7 @@ function AsyncStream(global, writer, state, shouldBuffer) {
 
     this._elStack = undefined; // Array
 
-    this.$c = null; // Component args
+    this.$__componentArgs = null; // Component args
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -526,6 +526,10 @@ var proto = AsyncStream.prototype = {
 
     catch: function(fnErr) {
         return this.then(undefined, fnErr);
+    },
+
+    c: function(componentArgs) {
+        this.$__componentArgs = componentArgs;
     }
 };
 

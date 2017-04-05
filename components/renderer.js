@@ -6,6 +6,7 @@ var repeatedRegExp = /\[\]$/;
 var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
 var copyProps = require('raptor-util/copyProps');
+var isServer = componentsUtil.$__isServer === true;
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -45,10 +46,11 @@ function preserveComponentEls(existingComponent, out, componentsContext) {
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
-    var componentsContext = asyncOut.global.components;
-    var componentStack;
+    var componentsContext = ComponentsContext.$__getComponentsContext(asyncOut);
 
-    if (componentsContext && (componentStack = componentsContext.$__componentStack)) {
+    var componentStack = componentsContext.$__componentStack;
+
+    if (componentStack) {
         // All of the components in this async block should be
         // initialized after the components in the parent. Therefore,
         // we will create a new ComponentsContext for the nested
@@ -60,7 +62,7 @@ function handleBeginAsync(event) {
         var nestedComponentsContext = new ComponentsContext(asyncOut, componentStack[componentStack.length-1]);
         asyncOut.data.components = nestedComponentsContext;
     }
-    asyncOut.$c = parentOut.$c;
+    asyncOut.$__componentArgs = parentOut.$__componentArgs;
 }
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
@@ -69,7 +71,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
     var typeName = componentProps.type;
     var roots = componentProps.roots;
     var assignedId = componentProps.id;
-    var split = componentProps.split;
+    var isSplit = componentProps.split === true;
+    var shouldApplySplitMixins = isSplit;
 
     return function renderer(input, out) {
         var outGlobal = out.global;
@@ -81,7 +84,9 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             }
         }
 
-        var component = outGlobal.$w;
+        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+
+        var component = componentsContext.$__rerenderComponent;
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
@@ -91,12 +96,12 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         if (component) {
             id = component.id;
             isExisting = true;
-            outGlobal.$w = null;
+            componentsContext.$__rerenderComponent = null;
         } else {
-            var componentArgs = out.$c;
+            var componentArgs = out.$__componentArgs;
 
             if (componentArgs) {
-                out.$c = null;
+                out.$__componentArgs = null;
 
                 scope = componentArgs[0];
 
@@ -113,10 +118,9 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             }
         }
 
-        var componentsContext = ComponentsContext.$__getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
-        if (registry.$__isServer) {
+        if (isServer) {
             component = registry.$__createComponent(
                 renderingLogic,
                 id,
@@ -144,8 +148,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     // We need to create a new instance of the component
                     component = registry.$__createComponent(typeName, id);
 
-                    if (split) {
-                        split = false;
+                    if (shouldApplySplitMixins === true) {
+                        shouldApplySplitMixins = false;
 
                         var renderingLogicProps = typeof renderingLogic == 'function' ?
                             renderingLogic.prototype :
@@ -182,7 +186,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             emitLifecycleEvent(component, 'render', out);
         }
 
-        var componentDef = componentsContext.$__beginComponent(component);
+        var componentDef = componentsContext.$__beginComponent(component, isSplit);
         componentDef.$__roots = roots;
         componentDef.$__isExisting = isExisting;
 

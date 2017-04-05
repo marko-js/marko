@@ -16,6 +16,7 @@ var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('../morphdom');
 var eventDelegation = require('./event-delegation');
+var ComponentsContext = require('./ComponentsContext');
 
 var slice = Array.prototype.slice;
 
@@ -212,11 +213,12 @@ function Component(id) {
     this.$__roots = null;
     this.$__subscriptions = null;
     this.$__domEventListenerHandles = null;
-    this.$__bubblingDomEvents = null;
+    this.$__bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
     this.$__customEvents = null;
     this.$__scope = null;
     this.$__renderInput = null;
     this.$__input = undefined;
+    this.$__mounted = false;
 
     this.$__destroyed = false;
     this.$__updateQueued = false;
@@ -467,7 +469,7 @@ Component.prototype = componentProto = {
             // then we should rerender
 
             if (this.shouldUpdate(input, state) !== false) {
-                this.$__rerender();
+                this.$__rerender(false);
             }
         }
 
@@ -497,59 +499,57 @@ Component.prototype = componentProto = {
         emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
     },
 
-    $__rerender: function(input) {
-        if (input) {
-            this.input = input;
-        }
-
+    $__rerender: function(isRerenderInBrowser) {
         var self = this;
         var renderer = self.$__renderer;
 
         if (!renderer) {
             throw TypeError();
         }
-
-        var globalData = {
-            $w: self
-        };
-
         var fromEls = self.$__getRootEls({});
         var doc = self.$__document;
-        input = this.$__renderInput || this.$__input;
+        var input = this.$__renderInput || this.$__input;
 
         updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
-            var out = createOut(globalData);
+            var out = createOut();
             out.sync();
             out.$__document = self.$__document;
+
+            var componentsContext = ComponentsContext.$__getComponentsContext(out);
+            componentsContext.$__rerenderComponent = self;
+            componentsContext.$__isRerenderInBrowser = isRerenderInBrowser;
+
             renderer(input, out);
+
             var result = new RenderResult(out);
-            var targetNode = out.$__getOutput();
 
-            var componentsContext = out.global.components;
+            if (isRerenderInBrowser !== true) {
+                var targetNode = out.$__getOutput();
 
-            var fromEl;
+                var fromEl;
 
-            var targetEl = targetNode.firstChild;
-            while(targetEl) {
-                var id = targetEl.id;
+                var targetEl = targetNode.firstChild;
+                while(targetEl) {
+                    var id = targetEl.id;
 
-                if (id) {
-                    fromEl = fromEls[id];
-                    if (fromEl) {
-                        morphdom(
-                            fromEl,
-                            targetEl,
-                            componentsContext,
-                            onNodeAdded,
-                            onBeforeElUpdated,
-                            onBeforeNodeDiscarded,
-                            onNodeDiscarded,
-                            onBeforeElChildrenUpdated);
+                    if (id) {
+                        fromEl = fromEls[id];
+                        if (fromEl) {
+                            morphdom(
+                                fromEl,
+                                targetEl,
+                                componentsContext,
+                                onNodeAdded,
+                                onBeforeElUpdated,
+                                onBeforeNodeDiscarded,
+                                onNodeDiscarded,
+                                onBeforeElChildrenUpdated);
+                        }
                     }
-                }
 
-                targetEl = targetEl.nextSibling;
+                    targetEl = targetEl.nextSibling;
+                }
             }
 
             result.afterInsert(doc);
