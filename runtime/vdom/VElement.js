@@ -215,7 +215,7 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     var removePreservedAttributes = VElement.$__removePreservedAttributes;
 
     var attrs = toEl.$__attributes;
-    var props = toEl.$__properties;
+    var props = fromEl._vprops = toEl.$__properties;
 
     var attrName;
     var i;
@@ -267,7 +267,6 @@ VElement.$__morphAttrs = function(fromEl, toEl) {
     }
 
     fromEl._vattrs = attrs;
-    fromEl._vprops = props;
 
     var attrValue;
 
