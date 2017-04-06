@@ -27,6 +27,8 @@ var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
 
+function outNoop() { /* jshint -W040 */ return this; }
+
 var emit = EventEmitter.prototype.emit;
 
 function removeListener(removeEventListenerHandle) {
@@ -519,6 +521,18 @@ Component.prototype = componentProto = {
             var componentsContext = ComponentsContext.$__getComponentsContext(out);
             componentsContext.$__rerenderComponent = self;
             componentsContext.$__isRerenderInBrowser = isRerenderInBrowser;
+
+            if (isRerenderInBrowser === true) {
+                out.e =
+                    out.be =
+                    out.ee =
+                    out.t =
+                    out.h =
+                    out.w =
+                    out.write =
+                    out.html =
+                    outNoop;
+            }
 
             renderer(input, out);
 
