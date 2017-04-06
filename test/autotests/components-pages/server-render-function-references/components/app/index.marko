@@ -1,0 +1,36 @@
+import { expect } from 'chai';
+
+class {
+    onCreate() {
+        this.state = {
+            person: {firstName: 'John', lastName: 'Doe'}
+        }
+    }
+
+    onMount() {
+        window.app = this;
+    }
+
+    test() {
+        var hello = this.getComponent('hello');
+        expect(hello.el.innerHTML).to.equal('John Doe');
+
+        // Rerender just the nested component
+        hello.forceUpdate();
+        hello.update();
+        expect(hello.el.innerHTML).to.equal('John Doe');
+
+        this.state.person = {firstName: 'Jane', lastName: 'Doe'};
+        this.update();
+
+        expect(hello.el.innerHTML).to.equal('Jane Doe');
+    }
+}
+
+static function formatName(person) {
+    return person.firstName + ' ' + person.lastName;
+}
+
+<div>
+    <app-hello key="hello" person=state.person format-name=formatName/>
+</div>
