@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function codeGenerator(elNode, codegen) {
     var builder = codegen.builder;
 
