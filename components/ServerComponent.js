@@ -1,3 +1,5 @@
+'use strict';
+
 class ServerComponent {
     constructor(id, input, out, typeName, customEvents, scope) {
         this.id = id;
