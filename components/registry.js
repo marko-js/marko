@@ -1,13 +1,15 @@
 'use strict';
 const copyProps = require('raptor-util/copyProps');
 const SERVER_WIDGET_KEY = Symbol();
-const ServerComponent = require('./ServerComponent');
+const BaseServerComponent = require('./ServerComponent');
 
 function createServerComponentClass(renderingLogic) {
     var renderingLogicProps = typeof renderingLogic === 'function' ?
         renderingLogic.prototype :
         renderingLogic;
 
+    class ServerComponent extends BaseServerComponent {
+    }
 
     copyProps(renderingLogicProps, ServerComponent.prototype);
 
