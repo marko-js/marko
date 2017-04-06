@@ -157,7 +157,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (!component) {
             fakeComponent = {};
         } else {
-            component.$__rawState = componentState;
+            componentState = component.$__rawState || componentState;
         }
 
         var templateInput = getTemplateData ?
