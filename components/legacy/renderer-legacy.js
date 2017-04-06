@@ -146,7 +146,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (component && isExisting) {
             if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
                 if (customEvents) {
-                    component.$__setCustomEvents(customEvents, scope);                    
+                    component.$__setCustomEvents(customEvents, scope);
                 }
 
                 preserveComponentEls(component, out, componentsContext);
@@ -157,7 +157,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (!component) {
             fakeComponent = {};
         } else {
-            componentState = component.$__rawState;
+            component.$__rawState = componentState;
         }
 
         var templateInput = getTemplateData ?
