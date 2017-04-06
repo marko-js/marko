@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function assignComponentId(isRepeated) {
-
     // First check if we have already assigned an ID to thie element
     var componentIdInfo = this.componentIdInfo;
 
