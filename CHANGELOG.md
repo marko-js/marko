@@ -5,6 +5,11 @@ Changelog
 
 ## 4.2.x
 
+### 4.2.6
+
+- Bug: Fixes [#654](https://github.com/marko-js/marko/issues/654) - Bug: components implementing a `key` attribute break in Marko v4
+- Improvements to legacy compatibility layer
+
 ### 4.2.5
 
 - Improved support for UI components implemented using native JavaScript class in a separate file
