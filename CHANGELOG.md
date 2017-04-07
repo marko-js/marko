@@ -5,6 +5,12 @@ Changelog
 
 ## 4.2.x
 
+
+### 4.2.7
+
+- Bug: Fixes [#65](https://github.com/marko-js/marko/issues/650) - The tag "await" does not support attribute "unless"
+- Improvements to legacy state
+
 ### 4.2.6
 
 - Bug: Fixes [#654](https://github.com/marko-js/marko/issues/654) - Bug: components implementing a `key` attribute break in Marko v4
