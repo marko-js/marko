@@ -8,8 +8,6 @@ var componentsUtil = require('./util');
 var componentLookup = componentsUtil.$__componentLookup;
 var getElementById = componentsUtil.$__getElementById;
 var ComponentDef = require('./ComponentDef');
-// var extend = require('raptor-util/extend');
-// var registry = require('./registry');
 
 function invokeComponentEventHandler(component, targetMethodName, args) {
     var method = component[targetMethodName];

@@ -1,11 +1,9 @@
 var domInsert = require('./dom-insert');
-var EMPTY_ARRAY = [];
-
 
 function getComponentDefs(result) {
     var componentDefs = result.$__components;
 
-    if (!componentDefs.length) {
+    if (!componentDefs) {
         throw Error('No component');
     }
     return componentDefs;
@@ -23,7 +21,7 @@ var proto = RenderResult.prototype = {
         return this.getComponents()[0];
     },
     getComponents: function(selector) {
-        if (!this.$__components) {
+        if (this.$__components === undefined) {
             throw Error('Not added to DOM');
         }
 
@@ -43,12 +41,11 @@ var proto = RenderResult.prototype = {
 
     afterInsert: function(doc) {
         var out = this.$__out;
-        var componentsContext = out.global.components;
-        if (componentsContext) {
-            this.$__components = componentsContext.$__components;
-            componentsContext.$__initComponents(doc);
+        var globalComponentsContext = out.global.components;
+        if (globalComponentsContext) {
+            this.$__components = globalComponentsContext.$__initComponents(doc);
         } else {
-            this.$__components = EMPTY_ARRAY;
+            this.$__components = null;
         }
 
         return this;

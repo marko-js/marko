@@ -1,5 +1,6 @@
-var componentLookup = require('../util').$__componentLookup;
-var ComponentsContext = require('../ComponentsContext');
+var getComponentsContext = require('../ComponentsContext').$__getComponentsContext;
+var componentsUtil = require('../util');
+var componentLookup = componentsUtil.$__componentLookup;
 var registry = require('../registry');
 var modernRenderer = require('../renderer');
 var resolveComponentKey = modernRenderer.$__resolveComponentKey;
@@ -72,7 +73,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         }
 
-        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+        var componentsContext = getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer && typeName) {

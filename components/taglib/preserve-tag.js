@@ -1,5 +1,7 @@
-var ComponentsContext = require('../ComponentsContext');
-var getElementById = require('../util').$__getElementById;
+var componentsUtil = require('../util');
+var getElementById = componentsUtil.$__getElementById;
+
+var getComponentsContext = require('../ComponentsContext').$__getComponentsContext;
 
 module.exports = function render(input, out) {
 
@@ -16,7 +18,7 @@ module.exports = function render(input, out) {
         if (condition !== false) {
             var existingEl = getElementById(out.$__document, id);
             if (existingEl) {
-                var componentsContext = ComponentsContext.$__getComponentsContext(out);
+                var componentsContext = getComponentsContext(out);
                 var bodyOnly = input.bodyOnly === true;
                 // Don't actually render anything since the element is already in the DOM,
                 // but keep track that the node is being preserved so that we can ignore
@@ -31,7 +33,7 @@ module.exports = function render(input, out) {
                     out.element(tagName, { id: id });
                 }
 
-                componentsContext.$__preserveDOMNode(id, bodyOnly);
+                componentsContext.$__globalContext.$__preserveDOMNode(id, bodyOnly);
                 return;
             }
         }

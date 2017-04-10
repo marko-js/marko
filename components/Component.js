@@ -32,11 +32,11 @@ function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
 }
 
-function checkCompatibleComponent(componentsContext, el) {
+function checkCompatibleComponent(globalComponentsContext, el) {
     var component = el._w;
     while(component) {
         var id = component.id;
-        var newComponentDef = componentsContext.$__componentsById[id];
+        var newComponentDef = globalComponentsContext.$__componentsById[id];
         if (newComponentDef && component.$__type == newComponentDef.$__component.$__type) {
             break;
         }
@@ -165,9 +165,9 @@ function onBeforeNodeDiscarded(node) {
     return eventDelegation.$__handleNodeDetach(node);
 }
 
-function onBeforeElUpdated(fromEl, key, componentsContext) {
-    if (componentsContext && key) {
-        var preserved = componentsContext.$__preserved[key];
+function onBeforeElUpdated(fromEl, key, globalComponentsContext) {
+    if (key) {
+        var preserved = globalComponentsContext.$__preserved[key];
 
         if (preserved === true) {
             // Don't morph elements that are associated with components that are being
@@ -178,14 +178,14 @@ function onBeforeElUpdated(fromEl, key, componentsContext) {
             // We may need to destroy a Component associated with the current element
             // if a new UI component was rendered to the same element and the types
             // do not match
-            checkCompatibleComponent(componentsContext, fromEl);
+            checkCompatibleComponent(globalComponentsContext, fromEl);
         }
     }
 }
 
-function onBeforeElChildrenUpdated(el, key, componentsContext) {
-    if (componentsContext && key) {
-        var preserved = componentsContext.$__preservedBodies[key];
+function onBeforeElChildrenUpdated(el, key, globalComponentsContext) {
+    if (key) {
+        var preserved = globalComponentsContext.$__preservedBodies[key];
         if (preserved === true) {
             // Don't morph the children since they are preserved
             return MORPHDOM_SKIP;
@@ -193,8 +193,8 @@ function onBeforeElChildrenUpdated(el, key, componentsContext) {
     }
 }
 
-function onNodeAdded(node, componentsContext) {
-    eventDelegation.$__handleNodeAttach(node, componentsContext.$__out);
+function onNodeAdded(node, globalComponentsContext) {
+    eventDelegation.$__handleNodeAttach(node, globalComponentsContext.$__out);
 }
 
 var componentProto;
@@ -526,7 +526,7 @@ Component.prototype = componentProto = {
             var result = new RenderResult(out);
             var targetNode = out.$__getOutput();
 
-            var componentsContext = out.global.components;
+            var globalComponentsContext = out.global.components;
 
             var fromEl;
 
@@ -540,7 +540,7 @@ Component.prototype = componentProto = {
                         morphdom(
                             fromEl,
                             targetEl,
-                            componentsContext,
+                            globalComponentsContext,
                             onNodeAdded,
                             onBeforeElUpdated,
                             onBeforeNodeDiscarded,

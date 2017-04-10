@@ -1,6 +1,6 @@
+var componentsUtil = require('./util');
 var events = require('../runtime/events');
 var Component = require('./Component');
-var componentsUtil = require('./util');
 
 function onInitComponent(listener) {
     events.on('initComponent', listener);

@@ -1,0 +1,16 @@
+$ var userPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve({ name: 'Frank' });
+    }, 1);
+});
+
+<include("./layout.marko")>
+    <@title>
+        <await(user from userPromise)>
+            Welcome ${user.name}
+        </await>
+    </@title>
+    <@body>
+        <hello/>
+    </@body>
+</include>
