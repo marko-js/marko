@@ -52,8 +52,6 @@ module.exports = function handleComponentBind() {
     let context = this.context;
     let builder = this.builder;
 
-    let internalBindAttr = el.getAttribute('_componentbind');
-
     let componentModule;
     let rendererModulePath;
     let rendererModule = this.getRendererModule();
@@ -119,9 +117,7 @@ module.exports = function handleComponentBind() {
                             true /* computed */)
                     ]));
         }
-    } else if (internalBindAttr != null) {
-        el.removeAttribute('_componentbind');
-
+    } else if (el.isFlagSet('hasComponentBind')) {
         componentModule = this.getComponentModule();
         rendererModulePath = this.getRendererModule();
 

@@ -45,6 +45,7 @@ module.exports = function transform(el, context) {
     if (el.tagName === 'widget-types') {
         context.setFlag('hasWidgetTypes');
     } else if (el.tagName === 'include') {
+        transformHelper.handleComponentEvents();
         transformHelper.handleIncludeNode(el);
         transformHelper.getComponentArgs().compile(transformHelper);
         return;
@@ -55,8 +56,7 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute('_componentbind') || el.hasAttribute('w-bind')) {
-        el.setFlag('hasComponentBind');
+    if (el.isFlagSet('hasComponentBind') || el.hasAttribute('w-bind')) {
         transformHelper.handleComponentBind();
     }
 
