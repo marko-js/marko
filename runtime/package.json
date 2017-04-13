@@ -1,6 +1,7 @@
 {
     "browser": {
         "./loader/index.js": "./loader/index-browser.js",
+        "./nextTick": "./nextTick-browser.js",
         "./env-init.js": false
     }
 }
