@@ -1,2 +1,2 @@
 // This tag is a noop in the browser
-module.exports = function nopop() {};
+module.exports = function noop() {};
