@@ -6,9 +6,14 @@ Changelog
 ## 4.2.x
 
 
+### 4.2.8
+
+- Bug: Fixes [#661](https://github.com/marko-js/marko/issues/661) - Component initialization code may end up in the wrong place
+- Bug: Fixes [#668](https://github.com/marko-js/marko/issues/668) - Declarative event listeners are now allowed on the `<include>` tag
+
 ### 4.2.7
 
-- Bug: Fixes [#65](https://github.com/marko-js/marko/issues/650) - The tag "await" does not support attribute "unless"
+- Bug: Fixes [#650](https://github.com/marko-js/marko/issues/650) - The tag "await" does not support attribute "unless"
 - Improvements to legacy state
 
 ### 4.2.6
