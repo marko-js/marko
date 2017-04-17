@@ -145,6 +145,8 @@ module.exports = function defineWidget(def, renderer) {
     return Component;
 };
 
-BaseState = require('../State');
+BaseState = require('./State-legacy');
 BaseComponent = require('../Component');
 inherit = require('raptor-util/inherit');
+
+require('../../jquery').patchComponent();

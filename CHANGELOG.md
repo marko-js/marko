@@ -5,6 +5,27 @@ Changelog
 
 ## 4.2.x
 
+
+### 4.2.8
+
+- Bug: Fixes [#661](https://github.com/marko-js/marko/issues/661) - Component initialization code may end up in the wrong place
+- Bug: Fixes [#668](https://github.com/marko-js/marko/issues/668) - Declarative event listeners are now allowed on the `<include>` tag
+
+### 4.2.7
+
+- Bug: Fixes [#650](https://github.com/marko-js/marko/issues/650) - The tag "await" does not support attribute "unless"
+- Improvements to legacy state
+
+### 4.2.6
+
+- Bug: Fixes [#654](https://github.com/marko-js/marko/issues/654) - Bug: components implementing a `key` attribute break in Marko v4
+- Improvements to legacy compatibility layer
+
+### 4.2.5
+
+- Improved support for UI components implemented using native JavaScript class in a separate file
+- Improved how legacy layout tags are handled by Marko v4
+
 ### 4.2.4
 
 - Bug: Fixes [#653](https://github.com/marko-js/marko/issues/653) - Event handlers are no longer bound in edge case

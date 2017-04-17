@@ -4,32 +4,7 @@ var updatesScheduled = false;
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
 
-var win = window;
-var setImmediate = win.setImmediate;
-
-if (!setImmediate) {
-    if (win.postMessage) {
-        var queue = [];
-        var messageName = 'si';
-        win.addEventListener('message', function (event) {
-            var source = event.source;
-            if (source == win || !source && event.data === messageName) {
-                event.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        setImmediate = function(fn) {
-            queue.push(fn);
-            win.postMessage(messageName, '*');
-        };
-    } else {
-        setImmediate = setTimeout;
-    }
-}
+var nextTick = require('../runtime/nextTick');
 
 /**
  * This function is called when we schedule the update of "unbatched"
@@ -57,7 +32,7 @@ function scheduleUpdates() {
 
     updatesScheduled = true;
 
-    setImmediate(updateUnbatchedComponents);
+    nextTick(updateUnbatchedComponents);
 }
 
 function updateComponents(queue) {

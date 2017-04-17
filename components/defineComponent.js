@@ -10,20 +10,20 @@ module.exports = function defineComponent(def, renderer) {
         return def;
     }
 
-    var ComponentClass;
+    var ComponentClass = function() {};
     var proto;
 
     var type = typeof def;
 
     if (type == 'function') {
-        ComponentClass = def;
-        proto = ComponentClass.prototype;
+        proto = def.prototype;
     } else if (type == 'object') {
-        ComponentClass = function() {};
-        proto = ComponentClass.prototype = def;
+        proto = def;
     } else {
         throw TypeError();
     }
+
+    ComponentClass.prototype = proto;
 
     // We don't use the constructor provided by the user
     // since we don't invoke their constructor until

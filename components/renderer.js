@@ -1,9 +1,12 @@
 var componentsUtil = require('./util');
 var componentLookup = componentsUtil.$__componentLookup;
 var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
+
+var ComponentsContext = require('./ComponentsContext');
+var getComponentsContext = ComponentsContext.$__getComponentsContext;
+
 var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
-var ComponentsContext = require('./ComponentsContext');
 var registry = require('./registry');
 var copyProps = require('raptor-util/copyProps');
 var isServer = componentsUtil.$__isServer === true;
@@ -36,7 +39,7 @@ function preserveComponentEls(existingComponent, out, componentsContext) {
         // DOM node is matched up correctly when using morphdom.
         out.element(el.tagName, { id: elId });
 
-        componentsContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
+        componentsContext.$__globalContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
     }
 
     existingComponent.$__reset(); // The component is no longer dirty so reset internal flags
@@ -46,11 +49,9 @@ function preserveComponentEls(existingComponent, out, componentsContext) {
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
-    var componentsContext = ComponentsContext.$__getComponentsContext(asyncOut);
+    var componentsContext = parentOut.data.components;
 
-    var componentStack = componentsContext.$__componentStack;
-
-    if (componentStack) {
+    if (componentsContext !== undefined) {
         // All of the components in this async block should be
         // initialized after the components in the parent. Therefore,
         // we will create a new ComponentsContext for the nested
@@ -59,9 +60,10 @@ function handleBeginAsync(event) {
         // stack (to begin with). This will result in top-level components
         // of the async block being added as children of the component in the
         // parent block.
-        var nestedComponentsContext = new ComponentsContext(asyncOut, componentStack[componentStack.length-1]);
+        var nestedComponentsContext = componentsContext.$__createNestedComponentsContext(asyncOut);
         asyncOut.data.components = nestedComponentsContext;
     }
+    // Carry along the component arguments
     asyncOut.$__componentArgs = parentOut.$__componentArgs;
 }
 
@@ -77,7 +79,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
     return function renderer(input, out) {
         var outGlobal = out.global;
 
-        if (!out.isSync()) {
+        if (out.isSync() === false) {
             if (!outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY]) {
                 outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY] = true;
                 out.on('beginAsync', handleBeginAsync);
@@ -118,6 +120,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             }
         }
 
+        var componentsContext = getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
         if (isServer) {

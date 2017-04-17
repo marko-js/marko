@@ -1,6 +1,19 @@
 'use strict';
 var getTransformHelper = require('./util/getTransformHelper');
 
+
+function tagDefinitionHasOverridingKeyAttribute(el, context) {
+    if (!el.hasAttribute('key')) {
+        return false;
+    }
+
+    var tagDef = el.tagDef;
+    if (tagDef && tagDef.hasAttribute('key')) {
+        return true;
+    }
+
+    return false;
+}
 module.exports = function transform(el, context) {
     var transformHelper = getTransformHelper(el, context);
 
@@ -32,6 +45,7 @@ module.exports = function transform(el, context) {
     if (el.tagName === 'widget-types') {
         context.setFlag('hasWidgetTypes');
     } else if (el.tagName === 'include') {
+        transformHelper.handleComponentEvents();
         transformHelper.handleIncludeNode(el);
         transformHelper.getComponentArgs().compile(transformHelper);
         return;
@@ -42,7 +56,7 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute('_componentbind') || el.hasAttribute('w-bind')) {
+    if (el.isFlagSet('hasComponentBind') || el.hasAttribute('w-bind')) {
         el.setFlag('hasComponentBind');
         transformHelper.handleComponentBind();
     }
@@ -61,7 +75,9 @@ module.exports = function transform(el, context) {
     }
 
     if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
-        transformHelper.assignComponentId();
+        if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
+            transformHelper.assignComponentId();
+        }
     }
 
     if (el.hasAttribute('for-key') || el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {

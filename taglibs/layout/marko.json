@@ -6,9 +6,7 @@
             "remove-dashes": true,
             "type": "string"
         },
-        "renderer": "./use-tag",
-        "body-function": "getContent(__layoutHelper)",
-        "transformer": "./use-tag-transformer.js",
+        "transformer": "./use-tag.js",
         "autocomplete": [
             {
                 "snippet": "layout-use(\"${1:./path/to/template.marko}\")",
@@ -22,10 +20,7 @@
     "<layout-put>": {
         "@into": "string",
         "@value": "string",
-        "renderer": "./put-tag",
-        "import-var": {
-            "layout": "__layoutHelper"
-        },
+        "transformer": "./put-tag",
         "autocomplete": [
             {
                 "snippet": "layout-put into=\"${1:name}\"",
@@ -38,10 +33,7 @@
     },
     "<layout-placeholder>": {
         "@name": "string",
-        "renderer": "./placeholder-tag",
-        "import-var": {
-            "content": "data.layoutContent"
-        },
+        "transformer": "./placeholder-tag",
         "autocomplete": [
             {
                 "snippet": "layout-placeholder name=\"${1:name}\"",

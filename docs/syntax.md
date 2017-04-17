@@ -211,6 +211,8 @@ Directives are denoted by parenthesis and take an argument instead of a value.  
 </if>
 ```
 
+Below is the same `if()` directive used as an attribute:
+
 ```marko
 <strong if(true)>
     Marko is awesome

@@ -276,6 +276,14 @@
                 }
             ]
         },
+        "@unless": {
+            "type": "statement",
+            "autocomplete": [
+                {
+                    "snippet": "unless(${1:condition})"
+                }
+            ]
+        },
         "@while": {
             "type": "statement",
             "autocomplete": [

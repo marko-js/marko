@@ -3,31 +3,29 @@
 var logger = require('raptor-logging').logger(module);
 var AsyncValue = require('raptor-async/AsyncValue');
 var isClientReorderSupported = require('./client-reorder').isSupported;
+var nextTick = require('../../runtime/nextTick');
 
 function isPromise(o) {
     return o && typeof o.then === 'function';
+}
+
+function safeRenderBody(renderBody, targetOut, data) {
+    try {
+        renderBody(targetOut, data);
+    } catch(err) {
+        return err;
+    }
 }
 
 function promiseToCallback(promise, callback, thisObj) {
     if (callback) {
         var finalPromise = promise
             .then(function(data) {
-                callback(null, data);
+                nextTick(callback.bind(this, null, data));
+            })
+            .then(null, function(err) {
+                nextTick(callback.bind(this, err));
             });
-
-        if (typeof promise.catch === 'function') {
-            finalPromise = finalPromise.catch(function(err) {
-                callback(err);
-            });
-        } else if (typeof promise.fail === 'function') {
-            finalPromise = finalPromise.fail(function(err) {
-                callback(err);
-            });
-        } else {
-            finalPromise = finalPromise.then(null, function(err) {
-                callback(err);
-            });
-        }
 
         if (finalPromise.done) {
             finalPromise.done();
@@ -116,8 +114,12 @@ module.exports = function awaitTag(input, out) {
         } else if (renderTimeout) {
             renderTimeout(targetOut);
         } else {
-            if (input.renderBody) {
-                input.renderBody(targetOut, data);
+            var renderBodyFunc = input.renderBody;
+            if (renderBodyFunc) {
+                var renderBodyErr = safeRenderBody(renderBodyFunc, targetOut, data);
+                if (renderBodyErr) {
+                    return renderBody(renderBodyErr);
+                }
             }
         }
 

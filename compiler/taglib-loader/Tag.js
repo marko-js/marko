@@ -134,6 +134,11 @@ class Tag{
 
         return attribute;
     }
+
+    hasAttribute(attrName) {
+        return this.attributes.hasOwnProperty(attrName);
+    }
+
     addNestedVariable(nestedVariable) {
         if (!this.nestedVariables) {
             this.nestedVariables = {

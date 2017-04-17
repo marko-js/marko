@@ -6,27 +6,81 @@ var isServer = require('./util').$__isServer === true;
 
 var EMPTY_OBJECT = {};
 
-function ComponentsContext(out, root) {
-    if (!root) {
-        root = new ComponentDef(null, null, out);
-    }
-
-    this.$__out = out;
-    this.$__componentStack = [root];
+function GlobalComponentsContext(out) {
+    this.$__roots = [];
     this.$__preserved = EMPTY_OBJECT;
     this.$__preservedBodies = EMPTY_OBJECT;
     this.$__componentsById = {};
+    this.$__out = out;
+}
+
+GlobalComponentsContext.prototype = {
+    $__initComponents: function (doc) {
+        var topLevelComponentDefs = null;
+
+        this.$__roots.forEach(function(root) {
+            var children = root.$__children;
+            if (children) {
+                initComponents.$__initClientRendered(children, doc);
+                if (topLevelComponentDefs === null) {
+                    topLevelComponentDefs = children;
+                } else {
+                    topLevelComponentDefs = topLevelComponentDefs.concat(children);
+                }
+            }
+        });
+
+        this.$__roots = null;
+
+        return topLevelComponentDefs;
+    },
+    $__preserveDOMNode: function(elId, bodyOnly) {
+        var preserved = bodyOnly === true ? this.$__preservedBodies : this.$__preserved;
+        if (preserved === EMPTY_OBJECT) {
+            if (bodyOnly === true) {
+                preserved = this.$__preservedBodies = {};
+            } else {
+                preserved = this.$__preserved = {};
+            }
+        }
+        preserved[elId] = true;
+    }
+};
+
+function ComponentsContext(out, parentComponentsContext, shouldAddGlobalRoot) {
+    var root;
+
+    var globalComponentsContext;
+
+    if (parentComponentsContext === undefined) {
+        root = new ComponentDef(null, null, out);
+
+        globalComponentsContext = out.global.components;
+        if (globalComponentsContext === undefined) {
+            out.global.components = globalComponentsContext = new GlobalComponentsContext(out);
+        }
+
+        if (shouldAddGlobalRoot !== false) {
+            globalComponentsContext.$__roots.push(root);
+        }
+    } else {
+        globalComponentsContext = parentComponentsContext.$__globalContext;
+        var parentComponentStack = parentComponentsContext.$__componentStack;
+        root = parentComponentStack[parentComponentStack.length-1];
+    }
+
+    this.$__globalContext = globalComponentsContext;
+    this.$__out = out;
+    this.$__componentStack = [root];
     this.$__rerenderComponent = undefined;
 }
 
 ComponentsContext.prototype = {
-    get $__components() {
-        return this.$__componentStack[0].$__children;
+    $__createNestedComponentsContext: function(nestedOut) {
+        return new ComponentsContext(nestedOut, this);
     },
-
     $__beginComponent: function(component, isSplitComponent) {
-        var self = this;
-        var componentStack = self.$__componentStack;
+        var componentStack = this.$__componentStack;
         var origLength = componentStack.length;
         var parent = componentStack[origLength - 1];
 
@@ -51,47 +105,25 @@ ComponentsContext.prototype = {
             }
         } else {
             parent.$__addChild(componentDef);
-            this.$__componentsById[componentId] = componentDef;
+            this.$__globalContext.$__componentsById[componentId] = componentDef;
         }
 
         componentStack.push(componentDef);
 
         return componentDef;
     },
-    $__clearComponents: function () {
-        this.$__componentStack = [new ComponentDef(null /* id */, this.$__out)];
-    },
-    $__initComponents: function (doc) {
-        var componentDefs = this.$__components;
-        if (componentDefs) {
-            initComponents.$__initClientRendered(componentDefs, doc);
-            this.$__clearComponents();
-        }
-    },
+
     $__nextComponentId: function() {
         var componentStack = this.$__componentStack;
         var parent = componentStack[componentStack.length - 1];
         return parent.$__nextId();
-    },
-    $__preserveDOMNode: function(elId, bodyOnly) {
-        var preserved = bodyOnly === true ? this.$__preservedBodies : this.$__preserved;
-        if (preserved === EMPTY_OBJECT) {
-            if (bodyOnly === true) {
-                preserved = this.$__preservedBodies = {};
-            } else {
-                preserved = this.$__preserved = {};
-            }
-        }
-        preserved[elId] = true;
     }
 };
 
-ComponentsContext.$__getComponentsContext = function (out) {
-    var global = out.global;
+function getComponentsContext(out) {
+    return out.data.components || (out.data.components = new ComponentsContext(out));
+}
 
-    return out.data.components ||
-        global.components ||
-        (global.components = new ComponentsContext(out));
-};
+module.exports = exports = ComponentsContext;
 
-module.exports = ComponentsContext;
+exports.$__getComponentsContext = getComponentsContext;

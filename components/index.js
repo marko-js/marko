@@ -1,10 +1,6 @@
-/**
-* Module to manage the lifecycle of components
-*
-*/
 'use strict';
+
 var warp10 = require('warp10');
-var ComponentsContext = require('./ComponentsContext');
 var escapeEndingScriptTagRegExp = /<\//g;
 
 function flattenHelper(components, flattened, typesArray, typesLookup) {
@@ -45,8 +41,8 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
         if (children !== null) {
             // Depth-first search (children should be initialized before parent)
             flattenHelper(children, flattened, typesArray, typesLookup);
+            componentDef.$__children = null;
         }
-
 
         var hasProps = false;
 
@@ -102,24 +98,58 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
     }
 }
 
-function getRenderedComponents(componentsContext) {
-    var components = componentsContext.$__components;
-    if (!components || !components.length) {
-        return;
+function getRenderedComponents(out, shouldIncludeAll) {
+    var componentDefs;
+    var globalComponentsContext;
+
+    if (shouldIncludeAll === true) {
+        globalComponentsContext = out.global.components;
+
+        if (globalComponentsContext === undefined) {
+            return undefined;
+        }
+    } else {
+        let componentsContext = out.data.components;
+        if (componentsContext === undefined) {
+            return undefined;
+        }
+        let rootComponentDef = componentsContext.$__componentStack[0];
+        componentDefs = rootComponentDef.$__children;
+
+        if (componentDefs === null) {
+            return undefined;
+        }
+
+        rootComponentDef.$__children = null;
     }
 
     var flattened = [];
     var typesLookup = {};
     var typesArray = [];
 
-    flattenHelper(components, flattened, typesArray, typesLookup);
+    if (shouldIncludeAll === true) {
+        let roots = globalComponentsContext.$__roots;
+        for (let i=0, len=roots.length; i<len; i++) {
+            let root = roots[i];
+            let children = root.$__children;
+            if (children !== null) {
+                flattenHelper(children, flattened, typesArray, typesLookup);
+            }
+        }
+    } else {
+        flattenHelper(componentDefs, flattened, typesArray, typesLookup);
+    }
+
+    if (flattened.length === 0) {
+        return undefined;
+    }
+
     return {w: flattened, t: typesArray};
 }
 
-
-function writeInitComponentsCode(componentsContext, out) {
-    var renderedComponents = getRenderedComponents(componentsContext);
-    if (!renderedComponents) {
+function writeInitComponentsCode(out, shouldIncludeAll) {
+    var renderedComponents = getRenderedComponents(out, shouldIncludeAll);
+    if (renderedComponents === undefined) {
         return;
     }
 
@@ -130,8 +160,6 @@ function writeInitComponentsCode(componentsContext, out) {
         '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
         warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
          ')||w.$components})()</script>');
-
-    componentsContext.$__clearComponents();
 }
 
 exports.writeInitComponentsCode = writeInitComponentsCode;
@@ -143,19 +171,8 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
  * @param  {ComponentsContext|AsyncWriter} componentsContext A ComponentsContext or an AsyncWriter
  * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
-exports.getRenderedComponents = function(componentsContext) {
-    if (!(componentsContext instanceof ComponentsContext)) {
-        // Assume that the provided "componentsContext" argument is
-        // actually an AsyncWriter
-        var out = componentsContext;
-        if (!out.global) {
-            throw new Error('Invalid argument: ' + componentsContext);
-        }
-
-        componentsContext = ComponentsContext.$__getComponentsContext(out);
-    }
-
-    var renderedComponents = getRenderedComponents(componentsContext);
+exports.getRenderedComponents = function(out) {
+    var renderedComponents = getRenderedComponents(out, true);
     return warp10.stringifyPrepare(renderedComponents);
 };
 

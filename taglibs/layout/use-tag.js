@@ -1,24 +1,16 @@
-module.exports = function render(input, out) {
-    var content = {};
+'use strict';
 
-    if (input.getContent) {
-        input.getContent({
-            handlePutTag: function (putTag) {
-                content[putTag.into] = putTag;
-            }
-        });
+module.exports = function transform(oldNode, context) {
+    var argument = oldNode.argument;
+    if (!argument) {
+        context.addError('Invalid <layout-use> tag. Expected: <layout-use(template[, data]) ...>');
+        return;
     }
 
-    var dataArg = input.__data;
-    var templateData = input['*'] || {};
+    context.deprecate('The <layout-use> tag is deprecated. Please use <include> instead. See: https://github.com/marko-js/marko/issues/452');
 
-    if (dataArg) {
-        for (var k in dataArg) {
-            if (dataArg.hasOwnProperty(k) && !templateData.hasOwnProperty(k)) {
-                templateData[k] = dataArg[k];
-            }
-        }
-    }
-    templateData.layoutContent = content;
-    input.__template.render(templateData, out);
+    var newNode = context.createNodeForEl('include', oldNode.getAttributes(), argument);
+    oldNode.moveChildrenTo(newNode);
+
+    oldNode.replaceWith(newNode);
 };

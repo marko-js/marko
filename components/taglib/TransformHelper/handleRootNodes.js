@@ -255,7 +255,7 @@ module.exports = function handleRootNodes() {
     var nextKey = 0;
 
     rootNodes.forEach((curNode, i) => {
-        curNode.setAttributeValue('_componentbind');
+        curNode.setFlag('hasComponentBind');
 
         if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
             if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
