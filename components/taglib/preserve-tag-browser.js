@@ -1,10 +1,9 @@
-var ComponentsContext = require('../ComponentsContext');
 var getElementById = require('../util').$__getElementById;
 
 module.exports = function render(input, out) {
-    var componentsContext = ComponentsContext.$__getComponentsContext(out);
+    var globalComponentsContext = out.global.components;
 
-    if (componentsContext.$__isRerenderInBrowser !== true && componentsContext.$__rerenderComponent !== undefined) {
+    if (globalComponentsContext && globalComponentsContext.$__isRerenderInBrowser !== true && globalComponentsContext.$__rerenderComponent !== undefined) {
         var id = input.id;
 
         // See if the DOM node with the given ID already exists.
@@ -29,7 +28,7 @@ module.exports = function render(input, out) {
                     out.element(tagName, { id: id });
                 }
 
-                componentsContext.$__preserveDOMNode(id, bodyOnly);
+                globalComponentsContext.$__preserveDOMNode(id, bodyOnly);
                 return;
             }
         }

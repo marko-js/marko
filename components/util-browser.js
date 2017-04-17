@@ -96,6 +96,10 @@ function nextComponentId() {
     return 'b' + ((markoGlobal.uid)++);
 }
 
+function nextComponentIdProvider(out) {
+    return nextComponentId;
+}
+
 function getElementById(doc, id) {
     return doc.getElementById(id);
 }
@@ -104,9 +108,9 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
         var id = componentDef.id;
         if (extraArgs) {
-            var isRerenderInBrowser = componentDef.$__out.global.components.$__isRerenderInBrowser;
+            var isRerenderInBrowser = componentDef.$__globalComponentsContext.$__isRerenderInBrowser;
 
-            if (isRerenderInBrowser) {
+            if (isRerenderInBrowser === true) {
                 // If we are bootstrapping a page rendered on the server
                 // we need to put the actual event args on the UI component
                 // since we will not actually be updating the DOM
@@ -146,7 +150,7 @@ exports.$__getComponentForEl = getComponentForEl;
 exports.$__emitLifecycleEvent = emitLifecycleEvent;
 exports.$__destroyComponentForEl = destroyComponentForEl;
 exports.$__destroyElRecursive = destroyElRecursive;
-exports.$__nextComponentId = nextComponentId;
+exports.$__nextComponentIdProvider = nextComponentIdProvider;
 exports.$__getElementById = getElementById;
 exports.$__attachBubblingEvent = attachBubblingEvent;
 exports.$__getMarkoPropsFromEl = getMarkoPropsFromEl;

@@ -1,17 +1,10 @@
-var KEY = Symbol();
+function nextComponentIdProvider(out) {
+    var prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
+    var nextId = 0;
 
-function UniqueId(out) {
-    this.prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
-    this.nextId = 0;
-}
-
-function nextComponentId(out) {
-    var global = out.global;
-
-    var idProvider = global[KEY] ||
-        (global[KEY] = new UniqueId(out));
-
-    return idProvider.prefix + (idProvider.nextId++);
+    return function nextComponentId() {
+        return prefix + (nextId++);
+    };
 }
 
 function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
@@ -44,6 +37,6 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     }
 }
 
-exports.$__nextComponentId = nextComponentId;
+exports.$__nextComponentIdProvider = nextComponentIdProvider;
 exports.$__isServer = true;
 exports.$__attachBubblingEvent = attachBubblingEvent;

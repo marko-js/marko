@@ -2,7 +2,8 @@
 
 var ComponentDef = require('./ComponentDef');
 var initComponents = require('./init-components');
-var isServer = require('./util').$__isServer === true;
+var componentsUtil = require('./util');
+var isServer = componentsUtil.$__isServer === true;
 
 var EMPTY_OBJECT = {};
 
@@ -12,6 +13,9 @@ function GlobalComponentsContext(out) {
     this.$__preservedBodies = EMPTY_OBJECT;
     this.$__componentsById = {};
     this.$__out = out;
+    this.$__rerenderComponent = undefined;
+    this.$__nextIdLookup = null;
+    this.$__nextComponentId = componentsUtil.$__nextComponentIdProvider(out);
 }
 
 GlobalComponentsContext.prototype = {
@@ -32,6 +36,10 @@ GlobalComponentsContext.prototype = {
 
         this.$__roots = null;
 
+        // Reset things stored in global since global is retained for
+        // future renders
+        this.$__out.global.components = undefined;
+
         return topLevelComponentDefs;
     },
     $__preserveDOMNode: function(elId, bodyOnly) {
@@ -44,6 +52,19 @@ GlobalComponentsContext.prototype = {
             }
         }
         preserved[elId] = true;
+    },
+    $__nextRepeatedId: function(parentId, id) {
+        var nextIdLookup = this.$__nextIdLookup || (this.$__nextIdLookup = {});
+
+        var indexLookupKey = parentId + '-' + id;
+        var currentIndex = nextIdLookup[indexLookupKey];
+        if (currentIndex == null) {
+            currentIndex = nextIdLookup[indexLookupKey] = 0;
+        } else {
+            currentIndex = ++nextIdLookup[indexLookupKey];
+        }
+
+        return indexLookupKey.slice(0, -2) + '[' + currentIndex + ']';
     }
 };
 
@@ -53,12 +74,12 @@ function ComponentsContext(out, parentComponentsContext, shouldAddGlobalRoot) {
     var globalComponentsContext;
 
     if (parentComponentsContext === undefined) {
-        root = new ComponentDef(null, null, out);
-
         globalComponentsContext = out.global.components;
         if (globalComponentsContext === undefined) {
             out.global.components = globalComponentsContext = new GlobalComponentsContext(out);
         }
+
+        root = new ComponentDef(null, null, globalComponentsContext);
 
         if (shouldAddGlobalRoot !== false) {
             globalComponentsContext.$__roots.push(root);
@@ -72,7 +93,6 @@ function ComponentsContext(out, parentComponentsContext, shouldAddGlobalRoot) {
     this.$__globalContext = globalComponentsContext;
     this.$__out = out;
     this.$__componentStack = [root];
-    this.$__rerenderComponent = undefined;
 }
 
 ComponentsContext.prototype = {
@@ -82,29 +102,23 @@ ComponentsContext.prototype = {
     $__beginComponent: function(component, isSplitComponent) {
         var componentStack = this.$__componentStack;
         var origLength = componentStack.length;
-        var parent = componentStack[origLength - 1];
+        var parentComponentDef = componentStack[origLength - 1];
 
         var componentId = component.id;
 
-        if (!componentId) {
-            componentId = component.id = parent.$__nextId();
-        }
-
-        var out = this.$__out;
-
-        var componentDef = new ComponentDef(component, componentId, out, componentStack, origLength);
+        var componentDef = new ComponentDef(component, componentId, this.$__globalContext, componentStack, origLength);
         if (isServer) {
             // On the server
-            if (parent.$__willRerenderInBrowser === true) {
+            if (parentComponentDef.$__willRerenderInBrowser === true) {
                 componentDef.$__willRerenderInBrowser = true;
             } else {
-                parent.$__addChild(componentDef);
-                if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
+                parentComponentDef.$__addChild(componentDef);
+                if (isSplitComponent === false && this.$__out.global.noBrowserRerender !== true) {
                     componentDef.$__willRerenderInBrowser = true;
                 }
             }
         } else {
-            parent.$__addChild(componentDef);
+            parentComponentDef.$__addChild(componentDef);
             this.$__globalContext.$__componentsById[componentId] = componentDef;
         }
 
@@ -115,8 +129,8 @@ ComponentsContext.prototype = {
 
     $__nextComponentId: function() {
         var componentStack = this.$__componentStack;
-        var parent = componentStack[componentStack.length - 1];
-        return parent.$__nextId();
+        var parentComponentDef = componentStack[componentStack.length - 1];
+        return parentComponentDef.$__nextComponentId();
     }
 };
 

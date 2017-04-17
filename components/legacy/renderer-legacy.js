@@ -40,9 +40,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var componentBody;
         var componentState;
 
-        var componentsContext = ComponentsContext.$__getComponentsContext(out);
+        var componentsContext = getComponentsContext(out);
+        var globalComponentsContext = componentsContext.$__globalContext;
 
-        var component = componentsContext.$__rerenderComponent;
+        var component = globalComponentsContext.$__rerenderComponent;
         var fakeComponent;
         var isRerender = component !== undefined;
         var id = assignedId;
@@ -53,7 +54,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (component) {
             id = component.id;
             isExisting = true;
-            componentsContext.$__rerenderComponent = null;
+            globalComponentsContext.$__rerenderComponent = null;
         } else {
             var componentArgs = out.$__componentArgs;
 
@@ -69,12 +70,11 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 if (ref != null) {
                     ref = ref.toString();
                 }
-                id = id || resolveComponentKey(out, ref, scope);
+                id = id || resolveComponentKey(globalComponentsContext, ref, scope);
                 customEvents = componentArgs[2];
             }
         }
 
-        var componentsContext = getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
         if (registry.$__isServer && typeName) {
@@ -145,19 +145,21 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         }
 
-        if (component && isExisting) {
+        if (isExisting === true) {
             if (!component.$__isDirty || !component.shouldUpdate(input, component.$__state)) {
                 if (customEvents) {
                     component.$__setCustomEvents(customEvents, scope);
                 }
 
-                preserveComponentEls(component, out, componentsContext);
+                preserveComponentEls(component, out, globalComponentsContext);
                 return;
             }
         }
 
         if (!component) {
-            fakeComponent = {};
+            fakeComponent = {
+                id: id
+            };
         } else {
             componentState = component.$__rawState || componentState;
         }

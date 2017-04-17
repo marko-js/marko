@@ -182,9 +182,10 @@ function initServerRendered(renderedComponents, doc) {
 
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
+    var globals = renderedComponents.g || {};
 
     componentDefs.forEach(function(componentDef) {
-        componentDef = ComponentDef.$__deserialize(componentDef, typesArray, registry);
+        componentDef = ComponentDef.$__deserialize(componentDef, typesArray, globals, registry);
         initComponent(componentDef, doc || defaultDocument);
     });
 }

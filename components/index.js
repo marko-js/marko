@@ -101,9 +101,10 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
 function getRenderedComponents(out, shouldIncludeAll) {
     var componentDefs;
     var globalComponentsContext;
+    var outGlobal = out.global;
 
     if (shouldIncludeAll === true) {
-        globalComponentsContext = out.global.components;
+        globalComponentsContext = outGlobal.components;
 
         if (globalComponentsContext === undefined) {
             return undefined;
@@ -126,6 +127,7 @@ function getRenderedComponents(out, shouldIncludeAll) {
     var flattened = [];
     var typesLookup = {};
     var typesArray = [];
+    var serializedGlobals;
 
     if (shouldIncludeAll === true) {
         let roots = globalComponentsContext.$__roots;
@@ -136,6 +138,18 @@ function getRenderedComponents(out, shouldIncludeAll) {
                 flattenHelper(children, flattened, typesArray, typesLookup);
             }
         }
+
+        var serializedGlobalsLookup = outGlobal.serializedGlobals;
+        if (serializedGlobalsLookup) {
+            serializedGlobals = {};
+            var keys = Object.keys(serializedGlobalsLookup);
+            for (let i=0, len=keys.length; i<len; i++) {
+                let key = keys[i];
+                if (serializedGlobalsLookup[key] === true) {
+                    serializedGlobals[key] = outGlobal[key];
+                }
+            }
+        }
     } else {
         flattenHelper(componentDefs, flattened, typesArray, typesLookup);
     }
@@ -144,7 +158,7 @@ function getRenderedComponents(out, shouldIncludeAll) {
         return undefined;
     }
 
-    return {w: flattened, t: typesArray};
+    return {w: flattened, t: typesArray, g: serializedGlobals};
 }
 
 function writeInitComponentsCode(out, shouldIncludeAll) {

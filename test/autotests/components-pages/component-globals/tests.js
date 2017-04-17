@@ -4,67 +4,23 @@ var expect = require('chai').expect;
 describe(path.basename(__dirname), function() {
     it('should allow attributes to not be updated', function() {
         var app = window.app;
-        var noUpdateComponent = app.getComponent('no-update-attr');
-        var foo = noUpdateComponent.el.getAttribute('data-foo');
-        expect(foo).to.equal('server');
+        var helloComponent = app.getComponent('hello');
 
-        noUpdateComponent.input = {
-            name: 'browser'
-        };
 
-        noUpdateComponent.update();
+        expect(helloComponent.el.querySelector('.name').innerHTML).to.equal('Frank');
+        expect(helloComponent.el.querySelector('.count').innerHTML).to.equal('1');
 
-        expect(foo).to.equal('server');
-    });
+        helloComponent.state.count++;
+        helloComponent.update();
 
-    it('should allow a root element to not be updated', function() {
-        var app = window.app;
-        var noUpdateComponent = app.getComponent('no-update-el');
+        expect(helloComponent.el.querySelector('.name').innerHTML).to.equal('Frank');
+        expect(helloComponent.el.querySelector('.count').innerHTML).to.equal('2');
 
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('server');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
+        app.forceUpdate();
+        app.update();
 
-        noUpdateComponent.input = {
-            name: 'browser'
-        };
-
-        noUpdateComponent.update();
-
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('server');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
-    });
-
-    it('should allow a nested element to not be updated', function() {
-        var app = window.app;
-        var noUpdateComponent = app.getComponent('no-update-el-nested');
-
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('server');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
-
-        noUpdateComponent.input = {
-            name: 'browser'
-        };
-
-        noUpdateComponent.update();
-
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('server');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
-    });
-
-    it('should allow a body element to not be updated', function() {
-        var app = window.app;
-        var noUpdateComponent = app.getComponent('no-update-body-el');
-
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('server');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
-
-        noUpdateComponent.input = {
-            name: 'browser'
-        };
-
-        noUpdateComponent.update();
-
-        expect(noUpdateComponent.getNoUpdateEl().getAttribute('data-foo')).to.equal('browser');
-        expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal('server');
+        helloComponent = app.getComponent('hello');
+        expect(helloComponent.el.querySelector('.name').innerHTML).to.equal('Frank');
+        expect(helloComponent.el.querySelector('.count').innerHTML).to.equal('2');
     });
 });

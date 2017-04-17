@@ -3,6 +3,7 @@
 
 var domInsert = require('../runtime/dom-insert');
 var marko = require('../');
+var getComponentsContext = require('./ComponentsContext').$__getComponentsContext;
 var componentsUtil = require('./util');
 var componentLookup = componentsUtil.$__componentLookup;
 var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
@@ -16,7 +17,6 @@ var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('../morphdom');
 var eventDelegation = require('./event-delegation');
-var ComponentsContext = require('./ComponentsContext');
 
 var slice = Array.prototype.slice;
 
@@ -520,10 +520,6 @@ Component.prototype = componentProto = {
             out.sync();
             out.$__document = self.$__document;
 
-            var componentsContext = ComponentsContext.$__getComponentsContext(out);
-            componentsContext.$__rerenderComponent = self;
-            componentsContext.$__isRerenderInBrowser = isRerenderInBrowser;
-
             if (isRerenderInBrowser === true) {
                 out.e =
                     out.be =
@@ -535,6 +531,11 @@ Component.prototype = componentProto = {
                     out.html =
                     outNoop;
             }
+
+            var componentsContext = getComponentsContext(out);
+            var globalComponentsContext = componentsContext.$__globalContext;
+            globalComponentsContext.$__rerenderComponent = self;
+            globalComponentsContext.$__isRerenderInBrowser = isRerenderInBrowser;
 
             renderer(input, out);
 
@@ -549,29 +550,28 @@ Component.prototype = componentProto = {
                 while(targetEl) {
                     var id = targetEl.id;
 
-                if (id) {
-                    fromEl = fromEls[id];
-                    if (fromEl) {
-                        morphdom(
-                            fromEl,
-                            targetEl,
-                            globalComponentsContext,
-                            onNodeAdded,
-                            onBeforeElUpdated,
-                            onBeforeNodeDiscarded,
-                            onNodeDiscarded,
-                            onBeforeElChildrenUpdated);
-                    }
+                    if (id) {
+                        fromEl = fromEls[id];
+                        if (fromEl) {
+                            morphdom(
+                                fromEl,
+                                targetEl,
+                                globalComponentsContext,
+                                onNodeAdded,
+                                onBeforeElUpdated,
+                                onBeforeNodeDiscarded,
+                                onNodeDiscarded,
+                                onBeforeElChildrenUpdated);
+                        }
 
-                    targetEl = targetEl.nextSibling;
+                        targetEl = targetEl.nextSibling;
+                    }
                 }
             }
 
             result.afterInsert(doc);
 
             out.emit('$__componentsInitialized');
-
-            out.data.components = null;
         });
 
         this.$__reset();
