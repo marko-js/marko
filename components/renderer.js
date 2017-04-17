@@ -183,6 +183,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 }
             }
 
+            component.$__global = outGlobal;
+
             emitLifecycleEvent(component, 'render', out);
         }
 

@@ -221,6 +221,7 @@ function Component(id) {
     this.$__renderInput = null;
     this.$__input = undefined;
     this.$__mounted = false;
+    this.$__global = undefined;
 
     this.$__destroyed = false;
     this.$__updateQueued = false;
@@ -511,10 +512,11 @@ Component.prototype = componentProto = {
         var fromEls = self.$__getRootEls({});
         var doc = self.$__document;
         var input = this.$__renderInput || this.$__input;
+        var globalData = this.$__global;
 
         updateManager.$__batchUpdate(function() {
             var createOut = renderer.createOut || marko.createOut;
-            var out = createOut();
+            var out = createOut(globalData);
             out.sync();
             out.$__document = self.$__document;
 
@@ -569,6 +571,8 @@ Component.prototype = componentProto = {
             result.afterInsert(doc);
 
             out.emit('$__componentsInitialized');
+
+            out.data.components = null;
         });
 
         this.$__reset();
