@@ -9,6 +9,7 @@ var componentLookup = componentsUtil.$__componentLookup;
 var getElementById = componentsUtil.$__getElementById;
 var ComponentDef = require('./ComponentDef');
 var registry = require('./registry');
+var serverRenderedGlobals = {};
 
 function invokeComponentEventHandler(component, targetMethodName, args) {
     var method = component[targetMethodName];
@@ -161,17 +162,16 @@ function initServerRendered(renderedComponents, doc) {
     if (!renderedComponents) {
         renderedComponents = win.$components;
 
-        if (renderedComponents) {
-            if (renderedComponents.forEach) {
-                renderedComponents.forEach(function(renderedComponent) {
-                    initServerRendered(renderedComponent, doc);
-                });
-            }
-        } else {
-            win.$components = {
-                concat: initServerRendered
-            };
+        if (renderedComponents && renderedComponents.forEach) {
+            renderedComponents.forEach(function(renderedComponent) {
+                initServerRendered(renderedComponent, doc);
+            });
         }
+
+        win.$components = {
+            concat: initServerRendered
+        };
+
         return;
     }
     // Ensure that event handlers to handle delegating events are
@@ -182,10 +182,14 @@ function initServerRendered(renderedComponents, doc) {
 
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
-    var globals = renderedComponents.g || {};
+    var globals = window.$MG;
+    if (globals) {
+        serverRenderedGlobals = warp10Finalize(globals);
+        delete window.$MG;
+    }
 
     componentDefs.forEach(function(componentDef) {
-        componentDef = ComponentDef.$__deserialize(componentDef, typesArray, globals, registry);
+        componentDef = ComponentDef.$__deserialize(componentDef, typesArray, serverRenderedGlobals, registry);
         initComponent(componentDef, doc || defaultDocument);
     });
 }

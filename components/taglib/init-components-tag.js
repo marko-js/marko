@@ -17,9 +17,9 @@ function handleAwaitFinish(eventArgs) {
 }
 
 module.exports = function render(input, out) {
-    var global = out.global;
-    if (global[INIT_COMPONENTS_KEY] === undefined) {
-        global[INIT_COMPONENTS_KEY] = true;
+    var outGlobal = out.global;
+    if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
+        outGlobal[INIT_COMPONENTS_KEY] = true;
 
         out.on('await:beforeRender', handleAwaitBeforeRender);
         out.on('await:finish', handleAwaitFinish);
