@@ -27,6 +27,12 @@ module.exports = function(req) {
 > - [hapi](/docs/hapi)
 > - [koa](/docs/koa)
 
+## UI Bootstrapping
+
+When a page is rendered on the server, additional code is added to the output HTML to allow the UI to instantly boot in the browser. This additional code allows UI components rendered on the server to be mounted in the browser automatically. For each _top-level_ UI component, Marko will serialize the component's data (including `input` and `state` and any properties added to the UI component instance) so that each top-level UI component can be re-rendered and mounted when the page loads in the browser. Only a "partial" re-render is done for each top-level UI component. That is, when doing the partial re-render in the browser, the DOM is not updated and no virtual DOM is actually produced.
+
+Marko encodes required information into attributes of rendered HTML elements and it also generates `<script>` tags that will cause UI components to be mounted. The code inside the `<script>` simply registers UI components and when the Marko runtime finally loads, all of the registered UI components will then be mounted. This allows the Marko runtime to be loaded at anytime without causing JavaScript errors.
+
 ## Bootstrapping Components
 
 When a server-rendered page loads in the browser it's possible for marko to automatically detect UI components rendered on the server and create and mount them with the correct `state` and `input` in the browser.
@@ -87,3 +93,48 @@ require('marko/components').init();
 > - [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
 > - [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
 > - [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
+
+# Serialization
+
+For each _top-level_ UI component, Marko will serialize the component's data (including `input` and `state` and any properties added to the UI component instance) down to the browser. You can control which data gets serialized by implementing [`toJSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) or by reassigning `this.input` in the UI component's `onInput(input, out)` lifecycle method as shown below:
+
+```javascript
+class {
+    onInput() {
+        // Do not serialize any input:
+        this.input = null;
+
+        // Serialize a new object instead of the provided input:
+        this.input = {
+            foo: 'bar'
+        };
+    }
+}
+```
+
+> NOTE: Marko does allow cycles in serialized objects and Duplicate objects will only be serialized once
+
+# Caveats
+
+There are some caveats associated with rendering a page on the server:
+
+- The UI component data for top-level UI components must be serializable:
+    - Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
+    - Functions are not serializable
+- Care should be taken to avoid having Marko serialize too much data
+- None of the data in `out.global` is serialized by default, but this can be changed as shown below
+
+## Serializing globals
+
+If there are specific properties on the `out.global` object that need to be serialized then they must be whitelisted when the top-level page is rendered on the server. For example, to have the `out.global.apiKey` and the `out.global.locale` properties serialized you would do the following:
+
+```js
+template.render({
+        $global: {
+            serializedGlobals: {
+                apiKey: true,
+                locale: true
+            }
+        }
+    }, res);
+```

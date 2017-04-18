@@ -2,9 +2,9 @@ import { expect } from 'chai';
 
 class {
     onCreate(input, out) {
-        if (typeof window !== 'undefined') {
-            throw new Error('onCreate should not be called in the browser');
-        }
+        // if (typeof window !== 'undefined') {
+        //     throw new Error('onCreate should not be called in the browser');
+        // }
         if (this.state !== undefined) {
             throw new Error('this.state should be undefined');
         }
@@ -17,9 +17,9 @@ class {
     }
 
     onRender(out) {
-        if (typeof window !== 'undefined') {
-            throw new Error('onRender should not be called in the browser');
-        }
+        // if (typeof window !== 'undefined') {
+        //     throw new Error('onRender should not be called in the browser');
+        // }
 
         this.state.events.push('onRender');
 
@@ -29,9 +29,9 @@ class {
     }
 
     onInput(input) {
-        if (typeof window !== 'undefined') {
-            throw new Error('onInput should not be called in the browser');
-        }
+        // if (typeof window !== 'undefined') {
+        //     throw new Error('onInput should not be called in the browser');
+        // }
 
         this.state.events.push('onInput[' + input.name + ']');
     }
@@ -42,7 +42,7 @@ class {
     }
 
     test() {
-        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender']);
+        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender', 'onRender']);
         expect(this.onCreateInputName).to.equal('Frank');
         expect(this.onCreateOutName).to.equal('FrankGlobal');
     }

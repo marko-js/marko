@@ -1,9 +1,5 @@
 {
     "<*>": {
-        "@$w": {
-            "target-property": null,
-            "autocomplete": []
-        },
         "@w-bind": {
             "type": "string",
             "preserve-name": true,
@@ -160,8 +156,14 @@
         "code-generator": "./component-tag.js",
         "autocomplete": []
     },
+    "<component-globals>": {
+        "renderer": "./component-globals-tag.js",
+        "no-output": true,
+        "autocomplete": []
+    },
     "<init-components>": {
         "renderer": "./init-components-tag.js",
+        "no-output": true,
         "@immediate": "boolean"
     },
     "<w-preserve>": {

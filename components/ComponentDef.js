@@ -1,20 +1,16 @@
 'use strict';
-var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var componentUtil = require('./util');
-var nextComponentId = componentUtil.$__nextComponentId;
 var attachBubblingEvent = componentUtil.$__attachBubblingEvent;
-
 var extend = require('raptor-util/extend');
-var registry = require('./registry');
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
  * a single component and this information is used to instantiate the component
  * later (after the rendered HTML has been added to the DOM)
  */
-function ComponentDef(component, componentId, out, componentStack, componentStackLen) {
-    this.$__out = out; // The AsyncWriter that this component is associated with
+function ComponentDef(component, componentId, globalComponentsContext, componentStack, componentStackLen) {
+    this.$__globalComponentsContext = globalComponentsContext; // The AsyncWriter that this component is associated with
     this.$__componentStack = componentStack;
     this.$__componentStackLen = componentStackLen;
     this.$__component = component;
@@ -22,10 +18,11 @@ function ComponentDef(component, componentId, out, componentStack, componentStac
 
     this.$__roots =  null;            // IDs of root elements if there are multiple root elements
     this.$__children = null;          // An array of nested ComponentDef instances
-    this.$__domEvents = null;         // An array of DOM events that need to be added (in sets of three)
-    this.$__bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
+    this.$__domEvents = undefined;         // An array of DOM events that need to be added (in sets of three)
 
     this.$__isExisting = false;
+
+    this.$__willRerenderInBrowser = false;
 
     this.$__nextIdIndex = 0; // The unique integer to use for the next scoped ID
 }
@@ -62,7 +59,7 @@ ComponentDef.prototype = {
             return id;
         } else {
             if (typeof nestedId == 'string' && repeatedRegExp.test(nestedId)) {
-                return nextRepeatedId(this.$__out, id, nestedId);
+                return this.$__globalComponentsContext.$__nextRepeatedId(id, nestedId);
             } else {
                 return id + '-' + nestedId;
             }
@@ -90,12 +87,12 @@ ComponentDef.prototype = {
     /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
      */
-    $__nextId: function() {
+    $__nextComponentId: function() {
         var id = this.id;
 
-        return id ?
-            id + '-c' + (this.$__nextIdIndex++) :
-            nextComponentId(this.$__out);
+        return id === null ?
+            this.$__globalComponentsContext.$__nextComponentId(this.$__out) :
+            id + '-c' + (this.$__nextIdIndex++);
     },
 
     d: function(handlerMethodName, extraArgs) {
@@ -103,7 +100,7 @@ ComponentDef.prototype = {
     }
 };
 
-ComponentDef.$__deserialize = function(o, types) {
+ComponentDef.$__deserialize = function(o, types, globals, registry) {
     var id        = o[0];
     var typeName  = types[o[1]];
     var input     = o[2];
@@ -146,10 +143,13 @@ ComponentDef.$__deserialize = function(o, types) {
         component.$__setCustomEvents(customEvents, scope);
     }
 
+    component.$__global = globals;
+
     return {
         $__component: component,
         $__roots: extra.r,
-        $__domEvents: extra.d
+        $__domEvents: extra.d,
+        $__willRerenderInBrowser: extra._ === 1
     };
 };
 

@@ -4,22 +4,21 @@ var emitLifecycleEvent = componentsUtil.$__emitLifecycleEvent;
 
 var ComponentsContext = require('./ComponentsContext');
 var getComponentsContext = ComponentsContext.$__getComponentsContext;
-
-var nextRepeatedId = require('./nextRepeatedId');
 var repeatedRegExp = /\[\]$/;
 var registry = require('./registry');
 var copyProps = require('raptor-util/copyProps');
+var isServer = componentsUtil.$__isServer === true;
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
-function resolveComponentKey(out, key, scope) {
+function resolveComponentKey(globalComponentsContext, key, scope) {
     if (key[0] == '#') {
         return key.substring(1);
     } else {
         var resolvedId;
 
         if (repeatedRegExp.test(key)) {
-            resolvedId = nextRepeatedId(out, scope, key);
+            resolvedId = globalComponentsContext.$__nextRepeatedId(scope, key);
         } else {
             resolvedId = scope + '-' + key;
         }
@@ -28,7 +27,7 @@ function resolveComponentKey(out, key, scope) {
     }
 }
 
-function preserveComponentEls(existingComponent, out, componentsContext) {
+function preserveComponentEls(existingComponent, out, globalComponentsContext) {
     var rootEls = existingComponent.$__getRootEls({});
 
     for (var elId in rootEls) {
@@ -38,7 +37,7 @@ function preserveComponentEls(existingComponent, out, componentsContext) {
         // DOM node is matched up correctly when using morphdom.
         out.element(el.tagName, { id: elId });
 
-        componentsContext.$__globalContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
+        globalComponentsContext.$__preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
     }
 
     existingComponent.$__reset(); // The component is no longer dirty so reset internal flags
@@ -62,9 +61,8 @@ function handleBeginAsync(event) {
         var nestedComponentsContext = componentsContext.$__createNestedComponentsContext(asyncOut);
         asyncOut.data.components = nestedComponentsContext;
     }
-
     // Carry along the component arguments
-    asyncOut.$c = parentOut.$c;
+    asyncOut.$__componentArgs = parentOut.$__componentArgs;
 }
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
@@ -73,7 +71,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
     var typeName = componentProps.type;
     var roots = componentProps.roots;
     var assignedId = componentProps.id;
-    var split = componentProps.split;
+    var isSplit = componentProps.split === true;
+    var shouldApplySplitMixins = isSplit;
 
     return function renderer(input, out) {
         var outGlobal = out.global;
@@ -85,7 +84,10 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             }
         }
 
-        var component = outGlobal.$w;
+        var componentsContext = getComponentsContext(out);
+        var globalComponentsContext = componentsContext.$__globalContext;
+
+        var component = globalComponentsContext.$__rerenderComponent;
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
@@ -95,12 +97,12 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         if (component) {
             id = component.id;
             isExisting = true;
-            outGlobal.$w = null;
+            globalComponentsContext.$__rerenderComponent = null;
         } else {
-            var componentArgs = out.$c;
+            var componentArgs = out.$__componentArgs;
 
             if (componentArgs) {
-                out.$c = null;
+                out.$__componentArgs = null;
 
                 scope = componentArgs[0];
 
@@ -112,15 +114,14 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 if (key != null) {
                     key = key.toString();
                 }
-                id = id || resolveComponentKey(out, key, scope);
+                id = id || resolveComponentKey(globalComponentsContext, key, scope);
                 customEvents = componentArgs[2];
             }
         }
 
-        var componentsContext = getComponentsContext(out);
         id = id || componentsContext.$__nextComponentId();
 
-        if (registry.$__isServer) {
+        if (isServer) {
             component = registry.$__createComponent(
                 renderingLogic,
                 id,
@@ -148,8 +149,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     // We need to create a new instance of the component
                     component = registry.$__createComponent(typeName, id);
 
-                    if (split) {
-                        split = false;
+                    if (shouldApplySplitMixins === true) {
+                        shouldApplySplitMixins = false;
 
                         var renderingLogicProps = typeof renderingLogic == 'function' ?
                             renderingLogic.prototype :
@@ -177,16 +178,18 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
                 if (isExisting === true) {
                     if (component.$__isDirty === false || component.shouldUpdate(input, component.$__state) === false) {
-                        preserveComponentEls(component, out, componentsContext);
+                        preserveComponentEls(component, out, globalComponentsContext);
                         return;
                     }
                 }
             }
 
+            component.$__global = outGlobal;
+
             emitLifecycleEvent(component, 'render', out);
         }
 
-        var componentDef = componentsContext.$__beginComponent(component);
+        var componentDef = componentsContext.$__beginComponent(component, isSplit);
         componentDef.$__roots = roots;
         componentDef.$__isExisting = isExisting;
 

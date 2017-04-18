@@ -11,7 +11,6 @@
     "include",
     "unless",
     "while",
-    "$w",
     "w-bind",
     "w-scope",
     "w-config",

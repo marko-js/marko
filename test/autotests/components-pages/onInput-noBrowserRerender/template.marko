@@ -1,0 +1,29 @@
+lasso-page dependencies=data.browserDependencies lasso=data.lasso
+
+<marko no-browser-rerender />
+
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title -- Marko Components Tests
+        lasso-head
+    body
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        <onInput-return name="Frank" />
+        <onInput-assign-null name="John" />
+        <onInput-assign-null-and-return name="Jane" />
+        <onInput-assign-object name="Frank" />
+        <onInput-assign-object-and-return name="Heather" />
+
+        lasso-body
+
+        init-components immediate
+
+        lasso-slot name="mocha-run"
+
+        browser-refresh

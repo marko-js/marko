@@ -1,0 +1,16 @@
+class {
+    onInput(input) {
+        return {
+            name: input.name.toUpperCase()
+        }
+    }
+
+    onMount() {
+        var componentsLookup = window.components || (window.components = {});
+        componentsLookup['onInput-return'] = this;
+    }
+}
+
+<div>
+    Hello <span.name>${input.name}</span>!
+</div>

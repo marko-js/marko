@@ -3,8 +3,6 @@ var runtimeId = componentsUtil.$__runtimeId;
 var componentLookup = componentsUtil.$__componentLookup;
 var getMarkoPropsFromEl = componentsUtil.$__getMarkoPropsFromEl;
 
-var isArray = Array.isArray;
-
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
 var listenersAttachedKey = '$MED' + runtimeId;
@@ -41,9 +39,6 @@ function delegateEvent(node, target, event) {
     if (extraArgs != null) {
         if (typeof extraArgs === 'number') {
             extraArgs = targetComponent.$__bubblingDomEvents[extraArgs];
-            if (!isArray(extraArgs)) {
-                extraArgs = [extraArgs];
-            }
         }
     }
 

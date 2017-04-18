@@ -1,45 +1,42 @@
-var KEY = Symbol();
-var isArray = Array.isArray;
+function nextComponentIdProvider(out) {
+    var prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
+    var nextId = 0;
 
-function UniqueId(out) {
-    this.prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
-    this.nextId = 0;
-}
-
-function nextComponentId(out) {
-    var global = out.global;
-
-    var idProvider = global[KEY] ||
-        (global[KEY] = new UniqueId(out));
-
-    return idProvider.prefix + (idProvider.nextId++);
+    return function nextComponentId() {
+        return prefix + (nextId++);
+    };
 }
 
 function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
         if (extraArgs) {
-            var bubblingDomEvents = componentDef.$__bubblingDomEvents ||
-                ( componentDef.$__bubblingDomEvents = [] );
+            var component = componentDef.$__component;
+            var eventIndex = component.$__bubblingDomEventsExtraArgsCount++;
 
-            var eventIndex = bubblingDomEvents.length;
-            if (extraArgs.length === 1) {
-                var firstArg = extraArgs[0];
-                if (isArray(firstArg)) {
-                    bubblingDomEvents.push(extraArgs);
+            // If we are not going to be doing a rerender in the browser
+            // then we need to actually store the extra args with the UI component
+            // so that they will be serialized down to the browser.
+            // If we are rerendering in the browser then we just need to
+            // increment $__bubblingDomEventsExtraArgsCount to keep track of
+            // where the extra args will be found when the UI component is
+            // rerendered in the browser
+
+            if (componentDef.$__willRerenderInBrowser === false) {
+                if (eventIndex === 0) {
+                    component.$__bubblingDomEvents = [extraArgs];
                 } else {
-                    bubblingDomEvents.push(firstArg);
+                    component.$__bubblingDomEvents.push(extraArgs);
                 }
-            } else {
-                bubblingDomEvents.push(extraArgs);
             }
 
             return handlerMethodName + ' ' + componentDef.id + ' ' + eventIndex;
+
         } else {
             return handlerMethodName + ' ' + componentDef.id;
         }
     }
 }
 
-exports.$__nextComponentId = nextComponentId;
-exports.$__server = true;
+exports.$__nextComponentIdProvider = nextComponentIdProvider;
+exports.$__isServer = true;
 exports.$__attachBubblingEvent = attachBubblingEvent;

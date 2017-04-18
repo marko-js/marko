@@ -145,6 +145,11 @@
             }
         ]
     },
+    "<marko>": {
+        "code-generator": "./marko-tag",
+        "open-tag-only": true,
+        "@no-browser-rerender": "boolean"
+    },
     "<marko-preserve-whitespace>": {
         "code-generator": "./marko-preserve-whitespace-tag",
         "preserve-whitespace": true,

@@ -1,0 +1,59 @@
+import { expect } from 'chai';
+
+static function triggerMouseEvent(el, type) {
+    var ev = document.createEvent("MouseEvent");
+    ev.initMouseEvent(
+        type,
+        true /* bubble */, true /* cancelable */,
+        window, null,
+        0, 0, 0, 0, /* coordinates */
+        false, false, false, false, /* modifier keys */
+        0 /*left*/, null
+    );
+    el.dispatchEvent(ev);
+}
+
+static function triggerClick(el) {
+    triggerMouseEvent(el, 'click');
+}
+
+class {
+    onCreate() {
+        this.buttonClicked = false;
+    }
+
+    onMount() {
+        window.app = this;
+    }
+
+    handleCounterChange(value) {
+        this.counterValue = value;
+    }
+
+    handleButtonClick() {
+        this.buttonClicked = true;
+    }
+
+    test() {
+        // Test a DOM event
+        expect(this.buttonClicked).to.equal(false);
+        triggerClick(this.el.querySelector('.click-me'));
+        expect(this.buttonClicked).to.equal(true);
+
+        // Test a custom event (and a DOM event)
+        expect(this.counterValue).to.equal(undefined);
+        triggerClick(this.el.querySelector('.counter button'));
+        expect(this.counterValue).to.equal(1);
+    }
+}
+
+static function formatName(person) {
+    return person.firstName + ' ' + person.lastName;
+}
+
+<div>
+    <counter on-change('handleCounterChange')/>
+    <button.click-me type="button" on-click('handleButtonClick')>
+        Click me!
+    </button>
+</div>

@@ -41,7 +41,7 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
     this.$__stack = [parentNode];
     this.$__sync = false;
     this.$__vnode = undefined;
-    this.$c = null; // Component args
+    this.$__componentArgs = null; // Component args
 }
 
 var proto = AsyncVDOMBuilder.prototype = {
@@ -319,7 +319,11 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this.then(undefined, fnErr);
     },
 
-    isVDOM: true
+    isVDOM: true,
+
+    c: function(componentArgs) {
+        this.$__componentArgs = componentArgs;
+    }
 };
 
 proto.e = proto.element;
