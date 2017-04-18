@@ -1,7 +1,6 @@
 'use strict';
 
 var ComponentDef = require('./ComponentDef');
-var initComponents = require('./init-components');
 var componentsUtil = require('./util');
 var isServer = componentsUtil.$__isServer === true;
 
@@ -19,13 +18,15 @@ function GlobalComponentsContext(out) {
 }
 
 GlobalComponentsContext.prototype = {
-    $__initComponents: function (doc) {
+    $__initComponents: function(doc) {
         var topLevelComponentDefs = null;
 
         this.$__roots.forEach(function(root) {
             var children = root.$__children;
             if (children) {
-                initComponents.$__initClientRendered(children, doc);
+                // NOTE: ComponentsContext.$__initClientRendered is provided by
+                //       index-browser.js to avoid a circular dependency
+                ComponentsContext.$__initClientRendered(children, doc);
                 if (topLevelComponentDefs === null) {
                     topLevelComponentDefs = children;
                 } else {

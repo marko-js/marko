@@ -1,6 +1,9 @@
 var componentsUtil = require('./util');
 var events = require('../runtime/events');
 var Component = require('./Component');
+var initComponents = require('./init-components');
+
+require('./ComponentsContext').$__initClientRendered = initComponents.$__initClientRendered;
 
 function onInitComponent(listener) {
     events.on('initComponent', listener);
@@ -9,7 +12,7 @@ function onInitComponent(listener) {
 exports.onInitComponent = onInitComponent;
 exports.Component = Component;
 exports.getComponentForEl = componentsUtil.$__getComponentForEl;
-exports.init = require('./init-components').$__initServerRendered;
+exports.init = initComponents.$__initServerRendered;
 
 exports.c = require('./defineComponent'); // Referenced by compiled templates
 exports.r = require('./renderer'); // Referenced by compiled templates
