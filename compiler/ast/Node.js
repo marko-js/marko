@@ -143,6 +143,10 @@ class Node {
         this.body.moveChildrenTo(targetNode);
     }
 
+    removeChildren() {
+        this.body.removeChildren();
+    }
+
     forEachNextSibling(callback, thisObj) {
         var container = this.container;
 

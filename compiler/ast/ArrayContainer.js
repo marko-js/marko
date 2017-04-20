@@ -49,6 +49,10 @@ class ArrayContainer extends Container {
         }
     }
 
+    removeChildren() {
+        this.array.length = 0;
+    }
+
     prependChild(newChild) {
         ok(newChild, '"newChild" is required"');
         this.array.unshift(newChild);
