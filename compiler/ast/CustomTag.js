@@ -259,6 +259,17 @@ class CustomTag extends HtmlElement {
                 // to a property name.
                 if (attrDef.targetProperty) {
                     propName = attrDef.targetProperty;
+                    if (Array.isArray(propName)) {
+                        let propChain = propName;
+                        if (propChain.length === 1) {
+                            propName = propChain[0];
+                        } else if (propChain.length === 2) {
+                            parentPropName = propChain[0];
+                            propName = propChain[1];
+                        } else {
+                            throw new Error('Invalid "target-property". Expected array with two elements in the following form: ["PARENT_PROPERTY_NAME", "CHILD_PROPERTY_NAME"]');
+                        }
+                    }
                 } else if (attrDef.preserveName === true) {
                     propName = attrName;
                 } else {
