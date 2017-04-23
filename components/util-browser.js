@@ -1,6 +1,10 @@
-var markoGlobal = window.$MG || (window.$MG = {
-    uid: 0
+var extend = require('raptor-util/extend');
+
+var markoGlobal = extend(window.$MG, {
+  uid: 0
 });
+
+window.$MG = markoGlobal;
 
 var runtimeId = markoGlobal.uid++;
 
