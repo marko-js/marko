@@ -71,7 +71,14 @@ function VElement(tagName, attrs, childCount, flags, props) {
         }
     }
 
-    this.$__attributes = attrs || EMPTY_OBJECT;
+    attrs = attrs || EMPTY_OBJECT;
+
+    if (attrs.xmlns) {
+        tagName = tagName.toLowerCase();
+        namespaceURI = attrs.xmlns;
+    }
+
+    this.$__attributes = attrs;
     this.$__properties = props || EMPTY_OBJECT;
     this.$__namespaceURI = namespaceURI;
     this.$__nodeName = tagName;
