@@ -97,18 +97,9 @@ class HtmlElementVDOM extends Node {
                     }
                 }
             }
-        } else {
-
-            if (context.isFlagSet('SVG')) {
-                this.isSVG = true;
-            } else {
-                this.tagName = builder.functionCall(
-                    builder.memberExpression(
-                        tagName,
-                        builder.identifier('toUpperCase')),
-                    []);
-            }
-
+            this.isLiteralTag = true;
+        } else if (context.isFlagSet('SVG')) {
+            this.isSVG = true;
         }
 
         let attributes = this.attributes;
@@ -267,7 +258,7 @@ class HtmlElementVDOM extends Node {
             writer.write('.');
 
             funcCall = builder.functionCall(
-                builder.identifier('e'),
+                builder.identifier(this.isLiteralTag || this.isSVG ? 'e' : 'ed'),
                 createArgs);
         } else if (this.isStatic && this.createElementId) {
             funcCall = builder.functionCall(
@@ -276,12 +267,12 @@ class HtmlElementVDOM extends Node {
         } else if (this.isHtmlOnly) {
             writer.write('out.');
             funcCall = builder.functionCall(
-                builder.identifier('e'),
+                builder.identifier(this.isLiteralTag || this.isSVG ? 'e' : 'ed'),
                 createArgs);
         } else {
             writer.write('out.');
             funcCall = builder.functionCall(
-                builder.identifier('be'),
+                builder.identifier(this.isLiteralTag || this.isSVG ? 'be' : 'bed'),
                 createArgs);
         }
 

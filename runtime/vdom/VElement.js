@@ -57,13 +57,11 @@ function VElementClone(other) {
 function VElement(tagName, attrs, childCount, flags, props) {
     this.$__VNode(childCount);
 
-    var constId;
+    var constId, namespaceURI;
 
     if (props) {
         constId = props.c;
     }
-
-    var namespaceURI;
 
     if ((this.$__flags = flags || 0)) {
         if (flags & FLAG_IS_SVG) {
@@ -71,14 +69,7 @@ function VElement(tagName, attrs, childCount, flags, props) {
         }
     }
 
-    attrs = attrs || EMPTY_OBJECT;
-
-    if (attrs.xmlns) {
-        tagName = tagName.toLowerCase();
-        namespaceURI = attrs.xmlns;
-    }
-
-    this.$__attributes = attrs;
+    this.$__attributes = attrs || EMPTY_OBJECT;
     this.$__properties = props || EMPTY_OBJECT;
     this.$__namespaceURI = namespaceURI;
     this.$__nodeName = tagName;
@@ -104,6 +95,23 @@ VElement.prototype = {
      */
     e: function(tagName, attrs, childCount, flags, props) {
         var child = this.$__appendChild(new VElement(tagName, attrs, childCount, flags, props));
+
+        if (childCount === 0) {
+            return this.$__finishChild();
+        } else {
+            return child;
+        }
+    },
+
+    /**
+     * Shorthand method for creating and appending an HTML element with a dynamic namespace
+     *
+     * @param  {String} tagName    The tag name (e.g. "div")
+     * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
+     * @param  {int|null} childCount The number of child nodes (or `null` if not known)
+     */
+    ed: function(tagName, attrs, childCount, flags, props) {
+        var child = this.$__appendChild(VElement.$__createElementDynamicTag(tagName, attrs, childCount, flags, props));
 
         if (childCount === 0) {
             return this.$__finishChild();
@@ -208,6 +216,14 @@ defineProperty(proto, '$__isTextArea', {
         return this.$__flags & FLAG_IS_TEXTAREA;
     }
 });
+
+VElement.$__createElementDynamicTag = function(tagName, attrs, childCount, flags, props) {
+    var namespace = attrs && attrs.xmlns;
+    tagName = namespace ? tagName : tagName.toUpperCase();
+    var element = new VElement(tagName, attrs, childCount, flags, props);
+    element.$__namespaceURI = namespace;
+    return element;
+};
 
 VElement.$__removePreservedAttributes = function(attrs) {
     // By default this static method is a no-op, but if there are any

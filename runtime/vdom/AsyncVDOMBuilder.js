@@ -48,16 +48,26 @@ var proto = AsyncVDOMBuilder.prototype = {
     $__isOut: true,
     $__document: defaultDocument,
 
-    element: function(tagName, attrs, childCount, flags, props) {
-        var element = new VElement(tagName, attrs, childCount, flags, props);
-
+    $__elementNode: function(element, childCount, pushToStack) {
         var parent = this.$__parent;
-
         if (parent !== undefined) {
             parent.$__appendChild(element);
+            if (pushToStack === true) {
+                this.$__stack.push(element);
+                this.$__parent = element;
+            }
         }
-
         return childCount === 0 ? this : element;
+    },
+
+    element: function(tagName, attrs, childCount, flags, props) {
+        var element = new VElement(tagName, attrs, childCount, flags, props);
+        return this.$__elementNode(element, childCount);
+    },
+
+    $__elementDynamicTag: function(tagName, attrs, childCount, flags, props) {
+        var element = VElement.$__createElementDynamicTag(tagName, attrs, childCount, flags, props);
+        return this.$__elementNode(element, childCount);
     },
 
     n: function(node) {
@@ -114,14 +124,15 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    beginElement: function(name, attrs, childCount, flags, constId) {
-        var element = new VElement(name, attrs, childCount, flags, constId);
-        var parent = this.$__parent;
-        if (parent !== undefined) {
-            parent.$__appendChild(element);
-            this.$__stack.push(element);
-            this.$__parent = element;
-        }
+    beginElement: function(tagName, attrs, childCount, flags, props) {
+        var element = new VElement(tagName, attrs, childCount, flags, props);
+        this.$__elementNode(element, childCount, true);
+        return this;
+    },
+
+    $__beginElementDynamicTag: function(tagName, attrs, childCount, flags, props) {
+        var element = VElement.$__createElementDynamicTag(tagName, attrs, childCount, flags, props);
+        this.$__elementNode(element, childCount, true);
         return this;
     },
 
@@ -327,7 +338,9 @@ var proto = AsyncVDOMBuilder.prototype = {
 };
 
 proto.e = proto.element;
+proto.ed = proto.$__elementDynamicTag;
 proto.be = proto.beginElement;
+proto.bed = proto.$__beginElementDynamicTag;
 proto.ee = proto.endElement;
 proto.t = proto.text;
 proto.h = proto.w = proto.write = proto.html;
