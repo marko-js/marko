@@ -4,6 +4,7 @@ var logger = require('raptor-logging').logger(module);
 var AsyncValue = require('raptor-async/AsyncValue');
 var isClientReorderSupported = require('./client-reorder').isSupported;
 var nextTick = require('../../runtime/nextTick');
+var awaitTimeout = require('../../compiler/config').awaitTimeout;
 
 function isPromise(o) {
     return o && typeof o.then === 'function';
@@ -12,7 +13,7 @@ function isPromise(o) {
 function safeRenderBody(renderBody, targetOut, data) {
     try {
         renderBody(targetOut, data);
-    } catch(err) {
+    } catch (err) {
         return err;
     }
 }
@@ -52,8 +53,7 @@ function requestData(provider, args, callback, thisObj) {
         if (data !== undefined) {
             if (isPromise(data)) {
                 promiseToCallback(data, callback);
-            }
-            else {
+            } else {
                 callback(null, data);
             }
         }
@@ -148,7 +148,7 @@ module.exports = function awaitTag(input, out) {
         var renderPlaceholder = input.renderPlaceholder;
 
         if (timeout == null) {
-            timeout = 10000;
+            timeout = awaitTimeout;
         } else if (timeout <= 0) {
             timeout = null;
         }
