@@ -214,7 +214,11 @@ module.exports = function handleRootNodes() {
 
                 return;
             } else if (node.type === 'CustomTag') {
-                rootNodes.push(node);
+                let tag = context.taglibLookup.getTag(node.tagName);
+
+                if (!tag.noOutput) {
+                    rootNodes.push(node);
+                }
 
                 walker.skip();
                 return;
