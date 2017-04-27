@@ -15,3 +15,4 @@ coverage
 /test/generated/
 .nyc_output
 yarn.lock
+*.swp
