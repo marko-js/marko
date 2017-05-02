@@ -30,4 +30,9 @@
     "docs": [
         "Editor plugins"
     ]
+},{
+    "title": "Tutorials",
+    "docs": [
+        "Color Picker"
+    ]
 }]
