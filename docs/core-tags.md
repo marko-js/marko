@@ -393,8 +393,8 @@ $ var personPromise = new Promise((resolve, reject) => {
 ```
 
 Advanced implementation:
-+ <await> tag signature
-    * Basic usage: <await(results from dataProvider)>...</await>
++ `<await>` tag signature
+    * Basic usage: `<await(results from dataProvider)>...</await>`
     * Optional attributes
         - client-reorder `boolean`
         - arg `expression`
@@ -411,9 +411,9 @@ Advanced implementation:
         - scope `expression`
         - show-after `string`
     * Optional child tags
-        - <await-placeholder>Loading...</await-placeholder>
-        - <await-timeout>Request timed out</await-timeout>
-        - <await-error>Request errored</await-error>
+        - `<await-placeholder>Loading...</await-placeholder>`
+        - `<await-timeout>Request timed out</await-timeout>`
+        - `<await-error>Request errored</await-error>`
 
 ## Comments
 
