@@ -26,6 +26,7 @@ module.exports = function(req) {
 > - [express](/docs/express)
 > - [hapi](/docs/hapi)
 > - [koa](/docs/koa)
+> - [huncwot](/docs/huncwot)
 
 ## UI Bootstrapping
 
