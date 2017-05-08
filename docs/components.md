@@ -54,7 +54,7 @@ You might prefer to keep your component's class and style definitions in separat
 
 ### Supporting files
 
-Marko automatically discovers supporting files in the same directory as a Marko view.  For example if you have a view named `counter.marko`, Marko will automatically look for `counter.component.js` and `counter.style.css`.  
+Marko automatically discovers supporting files in the same directory as a Marko view.  For example if you have a view named `counter.marko`, Marko will automatically look for `counter.component.js` and `counter.style.css`.
 
 ```
 counter.marko
@@ -234,7 +234,9 @@ The syntax for handling events is simple in Marko. In the case of accepting addi
 
 Nothing happens with the events on the server. They're only applied after they mount in the browser.
 
-The basic use is to accept DOM events like `click`, `input`, `submit`. Alternatively a child component can "bubble" up information to a parent component using the event system. See [an example of parent-child communication](/try-online?file=%2Flanguage-guide%2Fattributes%2Fevents.marko)  with the "try online" live editor.
+The basic use is to accept DOM events like `click`, `input`, `submit`.
+Alternatively a child component can "bubble" up information to a parent
+component using the event system. See [an example of parent-child communication](http://markojs.com/try-online?file=%2Flanguage-guide%2Fattributes%2Fevents.marko&gist=) with the "try online" live editor.
 
 ### `key`
 
@@ -618,7 +620,7 @@ this.setStateDirty('colors');
 | `emitter` | a node.js [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter) or a DOM object that emits events (`window`, `document`, etc.) |
 | return value | a tracked subscription |
 
-When a component is destroyed, it is necessary to remove any listeners that were attached by the component in order to prevent a memory leak.  By using `subscribeTo`, Marko will automatically track and remove any listeners you attach when the component is destroyed.  
+When a component is destroyed, it is necessary to remove any listeners that were attached by the component in order to prevent a memory leak.  By using `subscribeTo`, Marko will automatically track and remove any listeners you attach when the component is destroyed.
 
 Marko uses [`listener-tracker`](https://github.com/patrick-steele-idem/listener-tracker) to provide this feature.
 
@@ -724,7 +726,7 @@ The `input` event is emitted (and `onInput` is called) when the component receiv
 | ------- | ----------- |
 | `out`   | the async `out` for the current render |
 
-The `render` event is emitted (and `onRender` is called) when the component is about to be rendered (or re-rendered).  
+The `render` event is emitted (and `onRender` is called) when the component is about to be rendered (or re-rendered).
 
 ### `onMount()`
 
