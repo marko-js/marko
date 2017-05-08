@@ -4,7 +4,7 @@ Marko makes it easy to to co-locate your component's class and styles with the H
 
 ## Single-file components
 
-Marko allows you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-` attributes:
+Marko allows you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-*` attributes:
 
 ```marko
 class {
@@ -86,7 +86,7 @@ module.exports = class {
 }
 ```
 
-In your `index.marko` file, you can reference methods from the class using `on-` attributes:
+In your `index.marko` file, you can reference methods from the class using `on-*` attributes:
 ```marko
 <div>The current count is ${state.count}</div>
 <button on-click('increment')>+1</button>
@@ -167,6 +167,8 @@ module.exports = {
 
 ### `on-[event](methodName, ...args)`
 
+The `on-*` attribute sets an event listener on the component. When triggered by user interactions or other components the method supplied is called on that component. Marko knows to check for changes and update the UI accordingly.
+
 | params  | type | description |
 | ------- | ---- | ----------- |
 | `event` | `String` | the name of the event to listen to |
@@ -182,6 +184,57 @@ class {
 
 <button on-click('sayHello', 'Frank')>Say Hello to Frank</button>
 ```
+
+The component above would also recieve the following arguments after `name`:
++ `evt` for the DOM event
++ `el` for the DOM element
+
+Emitting an event to a parent it will receive `component` instead of `evt, el` for the child component that triggered it.
+
+Lets compare how we might approach events using just the DOM, jQuery, and then Marko.
+
+JavaScript/DOM:
+
+```html
+<input id="txt" type="text">
+
+<script>
+window.addEventListener('load', function() {
+    var txt = document.getElementById('txt');
+    txt.addEventListener('input', function (evt) { /* evt.target */ });
+    txt.addEventListener('blur', function (evt) { /* evt.target */ });
+});
+</script>
+```
+
+jQuery:
+
+```html
+<input id="txt" type="text">
+
+<script>
+$(function () {
+    $('#txt').on('input', function (evt) { /* evt.target */ })
+        .on('blur', function (evt) { /* evt.target */ });
+});
+</script>
+```
+
+Marko:
+
+```marko
+class {
+    input(evt, el) { ... }
+    blur(evt, el) { ... }
+}
+<input type="text" on-input('input') on-blur('blur')>
+```
+
+The syntax for handling events is simple in Marko. In the case of accepting additional arguments it's much simpler.
+
+Nothing happens with the events on the server. They're only applied after they mount in the browser.
+
+The basic use is to accept DOM events like `click`, `input`, `submit`. Alternatively a child component can "bubble" up information to a parent component using the event system. See [an example of parent-child communication](/try-online?file=%2Flanguage-guide%2Fattributes%2Fevents.marko)  with the "try online" live editor.
 
 ### `key`
 
