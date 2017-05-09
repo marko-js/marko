@@ -25,7 +25,12 @@
         "Koa",
         "Hapi",
         "HTTP",
-        "Huncwot"
+        {
+            "title": "Other",
+            "docs": [
+                "Huncwot"
+            ]
+        }
     ]
 },{
     "title": "Tooling",
