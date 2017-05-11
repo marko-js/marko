@@ -1,7 +1,7 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_forEachProp = require("marko/runtime/helper-forEachProperty");
+var marko_template = module.exports = require("marko/src/html").t(__filename),
+    marko_forEachProp = require("marko/src/runtime/helper-forEachProperty");
 
 function render(input, out) {
   var data = input;

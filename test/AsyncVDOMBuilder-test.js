@@ -1,5 +1,6 @@
-var AsyncVDOMBuilder = require('../runtime/vdom/AsyncVDOMBuilder');
-var VElement = require('../runtime/vdom/VElement');
+require('./util/test-init');
+var AsyncVDOMBuilder = require('marko/runtime/vdom/AsyncVDOMBuilder');
+var VElement = require('marko/runtime/vdom/VElement');
 var expect = require('chai').expect;
 
 function getChildNodes(parentNode) {
@@ -17,7 +18,7 @@ describe('AsyncVDOMBuilder', function() {
     it('sync', function() {
         var out = new AsyncVDOMBuilder();
         out.element('div', {}, 0);
-        var tree = out.$__getOutput();
+        var tree = out.___getOutput();
         expect(getChildNodes(tree).length).to.equal(1);
     });
 
@@ -47,9 +48,9 @@ describe('AsyncVDOMBuilder', function() {
         out.on('finish', function(result) {
             var tree = result.getOutput();
             expect(getChildNodes(tree).length).to.equal(3);
-            expect(tree.firstChild.$__nodeName).to.equal('div');
-            expect(tree.firstChild.nextSibling.$__nodeName).to.equal('span');
-            expect(tree.firstChild.nextSibling.nextSibling.$__nodeName).to.equal('section');
+            expect(tree.firstChild.___nodeName).to.equal('div');
+            expect(tree.firstChild.nextSibling.___nodeName).to.equal('span');
+            expect(tree.firstChild.nextSibling.nextSibling.___nodeName).to.equal('section');
             done();
         });
     });
@@ -94,10 +95,10 @@ describe('AsyncVDOMBuilder', function() {
             var header = childNodes[0];
             var list = childNodes[1];
             var paragraph = childNodes[2];
-            expect(header.$__nodeName).to.equal('h1');
-            expect(list.$__nodeName).to.equal('ul');
+            expect(header.___nodeName).to.equal('h1');
+            expect(list.___nodeName).to.equal('ul');
             expect(getChildNodes(list).length).to.equal(10);
-            expect(paragraph.$__nodeName).to.equal('p');
+            expect(paragraph.___nodeName).to.equal('p');
             done();
         });
 
@@ -128,9 +129,9 @@ describe('AsyncVDOMBuilder', function() {
         out.once('finish', function(result) {
             var tree = result.getOutput();
             var childNodes = getChildNodes(tree);
-            expect(childNodes[0].$__nodeName).to.equal('div');
-            expect(childNodes[1].nodeValue).to.equal('Hello <em>World</em>');
-            expect(childNodes[2].nodeValue).to.equal('TODO: make this work');
+            expect(childNodes[0].___nodeName).to.equal('div');
+            expect(childNodes[1].___nodeValue).to.equal('Hello <em>World</em>');
+            expect(childNodes[2].___nodeValue).to.equal('TODO: make this work');
             done();
         });
     });

@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 require('marko/node-require').install();
 
 var chai = require('chai');

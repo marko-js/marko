@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -9,7 +9,7 @@ var path = require('path');
 var autotest = require('./autotest');
 const fs = require('fs');
 const jsdom = require("jsdom").jsdom;
-const morphdom = require('../morphdom');
+const morphdom = require('marko/morphdom');
 const expect = require('chai').expect;
 function serializeNode(node) {
 
@@ -160,7 +160,7 @@ describe('morphdom', function() {
             var allFromNodes = collectNodes(fromNode);
             var elLookupBefore = buildElLookup(fromNode);
 
-            var targetVEl = require('marko/runtime/vdom/vdom').$__virtualize(toNode);
+            var targetVEl = require('marko/runtime/vdom/vdom').___virtualize(toNode);
             var expectedHTML = serializeNode(toNode);
             fs.writeFileSync(path.join(dir, 'expected.html'), expectedHTML, { encoding: 'utf8' });
 

@@ -1,4 +1,5 @@
 'use strict';
+require('./util/test-init');
 
 var BrowserHelpers = require('./util/BrowserHelpers');
 

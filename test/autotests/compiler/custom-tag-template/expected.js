@@ -1,9 +1,9 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_loadTemplate = require("marko/runtime/helper-loadTemplate"),
+var marko_template = module.exports = require("marko/src/html").t(__filename),
+    marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     hello_template = marko_loadTemplate(require.resolve("./hello.marko")),
-    marko_helpers = require("marko/runtime/html/helpers"),
+    marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     hello_tag = marko_loadTag(hello_template);
 

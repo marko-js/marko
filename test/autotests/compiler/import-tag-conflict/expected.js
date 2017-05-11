@@ -1,6 +1,6 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/html").t(__filename),
+var marko_template = module.exports = require("marko/src/html").t(__filename),
     asset_module = require("./test1/asset"),
     test = asset_module.asset,
     asset_module2 = require("./test2/asset"),

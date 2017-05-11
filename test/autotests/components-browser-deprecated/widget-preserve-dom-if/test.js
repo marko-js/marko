@@ -18,7 +18,7 @@ module.exports = function(helpers) {
             preserveClassBody: widget.el.querySelector('.preserve').innerHTML,
             preserveBodyClass: widget.el.querySelector('.preserve-body').getAttribute('data-renderId'),
             preserveBodyClassBody: widget.el.querySelector('.preserve-body').innerHTML,
-            widgetClass: require('marko/components/legacy').getWidgetForEl(widget.el.querySelector('.widget-no-id')).state.name
+            widgetClass: require('marko/legacy-components').getWidgetForEl(widget.el.querySelector('.widget-no-id')).state.name
         };
     }
 

@@ -6,11 +6,11 @@ module.exports = function(helpers) {
     var svg = helpers.vdom.createElement('svg', null /* attrs */, null /* child count */, SVG_FLAGS);
 
     var docFragment = helpers.vdom.createDocumentFragment();
-    svg.$__appendChild(docFragment);
+    svg.___appendChild(docFragment);
 
-    expect(svg.$__namespaceURI).to.equal('http://www.w3.org/2000/svg');
+    expect(svg.___namespaceURI).to.equal('http://www.w3.org/2000/svg');
 
-    var docFragmentClone = docFragment.$__cloneNode();
+    var docFragmentClone = docFragment.___cloneNode();
     expect(docFragmentClone.nextSibling).to.equal(null);
     expect(docFragmentClone.parentNode == null).to.equal(true);
 

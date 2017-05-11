@@ -4,18 +4,18 @@ module.exports = function(helpers) {
     var docFragmentA = helpers.vdom.createDocumentFragment();
 
     var docFragmentAA = helpers.vdom.createDocumentFragment();
-    docFragmentA.$__appendChild(docFragmentAA);
+    docFragmentA.___appendChild(docFragmentAA);
 
     var docFragmentB = helpers.vdom.createDocumentFragment();
 
     var docFragmentBB = helpers.vdom.createDocumentFragment();
-    docFragmentB.$__appendChild(docFragmentBB);
+    docFragmentB.___appendChild(docFragmentBB);
 
-    docFragmentBB.$__appendChild(helpers.vdom.createText('bb1'));
-    docFragmentBB.$__appendChild(helpers.vdom.createText('bb2'));
+    docFragmentBB.___appendChild(helpers.vdom.createText('bb1'));
+    docFragmentBB.___appendChild(helpers.vdom.createText('bb2'));
 
-    root.$__appendChild(docFragmentA);
-    root.$__appendChild(docFragmentB);
+    root.___appendChild(docFragmentA);
+    root.___appendChild(docFragmentB);
 
     return root.actualize(helpers.document);
 };

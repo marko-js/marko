@@ -1,7 +1,7 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/vdom").t(),
-    marko_helpers = require("marko/runtime/vdom/helpers"),
+var marko_template = module.exports = require("marko/src/vdom").t(),
+    marko_helpers = require("marko/src/runtime/vdom/helpers"),
     marko_loadTag = marko_helpers.t,
     test_hello_tag = marko_loadTag(require("./tags/test-hello/renderer"));
 

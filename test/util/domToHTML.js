@@ -1,6 +1,6 @@
 'use strict';
 
-var runtimeHtmlHelpers = require('../../runtime/html/helpers');
+var runtimeHtmlHelpers = require('marko/runtime/html/helpers');
 var escapeXml = runtimeHtmlHelpers.x;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
 
@@ -25,6 +25,9 @@ var openTagOnly = {};
     openTagOnly[tagName] = true;
 });
 
+function nodeValue(node) {
+    return node.___nodeValue || node.nodeValue;
+}
 
 function vdomToHTML(node, options) {
 
@@ -33,7 +36,7 @@ function vdomToHTML(node, options) {
     // BAD: return (new XMLSerializer()).serializeToString(node);
     var html = '';
     function serializeHelper(node) {
-        var nodeType = node.nodeType || node.$__nodeType;
+        var nodeType = node.nodeType || node.___nodeType;
 
         if (nodeType === 1) {
             serializeElHelper(node);
@@ -101,7 +104,7 @@ function vdomToHTML(node, options) {
             var curChild = el.firstChild;
             if (curChild) {
                 while(curChild) {
-                    let nodeType = curChild.nodeType || curChild.$__nodeType;
+                    let nodeType = curChild.nodeType || curChild.___nodeType;
                     if (nodeType === 3) {
                         let escapeText = tagName.toUpperCase() !== 'SCRIPT';
                         serializeTextHelper(curChild, escapeText);
@@ -122,14 +125,14 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, escape) {
-        html += escape !== false ? escapeXml(node.nodeValue) : node.nodeValue;
+        html += escape !== false ? escapeXml(nodeValue(node)) : nodeValue(node);
     }
 
     function serializeCommentHelper(node) {
-        html += '<!--' + node.nodeValue + '-->';
+        html += '<!--' + nodeValue(node) + '-->';
     }
 
-    let nodeType = node.nodeType || node.$__nodeType;
+    let nodeType = node.nodeType || node.___nodeType;
 
 
     if (nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {

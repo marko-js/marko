@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -10,7 +10,7 @@ require('../node-require').install();
 
 var runRenderTest = require('./util/runRenderTest');
 
-describe('render (vdom)', function() {
+describe('vdom-render', function() {
     var autoTestDir = path.join(__dirname, 'autotests/render');
 
     autotest.scanDir(

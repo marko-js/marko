@@ -1,6 +1,6 @@
 exports.check = function(marko, markoCompiler, expect, done) {
 
-    var defineRenderer = require('../../../../defineRenderer');
+    var defineRenderer = require('marko/defineRenderer');
     var renderer = defineRenderer({
         template: require('./template.marko'),
         getTemplateData: function(input) {

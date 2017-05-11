@@ -10,11 +10,11 @@ module.exports = function(helpers) {
 
     var div2 = helpers.vdom.createElement('div', { class: 'foo2' });
 
-    docFragment.$__appendChild(div1);
-    docFragment.$__appendChild(div2);
+    docFragment.___appendChild(div1);
+    docFragment.___appendChild(div2);
 
-    root.$__appendChild(docFragment);
-    root.$__appendChild(helpers.vdom.createElement('div', { class: 'sibling' }));
+    root.___appendChild(docFragment);
+    root.___appendChild(helpers.vdom.createElement('div', { class: 'sibling' }));
 
     return root;
 };

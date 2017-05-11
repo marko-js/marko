@@ -12,11 +12,11 @@ module.exports = function(helpers) {
 
 
     expect(linkClone).to.not.equal(link);
-    expect(link.$__parentNode).to.equal(null);
+    expect(link.___parentNode).to.equal(null);
     expect(link.nextSibling).to.equal(null);
 
-    expect(linkClone.nextSibling.$__nodeName).to.equal('span');
-    expect(linkClone.$__parentNode.$__nodeName).to.equal('div');
+    expect(linkClone.nextSibling.___nodeName).to.equal('span');
+    expect(linkClone.___parentNode.___nodeName).to.equal('div');
 
 
     return el;

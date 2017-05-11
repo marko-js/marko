@@ -3,7 +3,11 @@ function ltrim(s) {
 }
 
 function getNodeType(node) {
-    return node.nodeType || node.$__nodeType;
+    return node.nodeType || node.___nodeType;
+}
+
+function nodeValue(node) {
+    return node.___nodeValue || node.nodeValue;
 }
 
 function vdomToHTML(node, options) {
@@ -30,7 +34,7 @@ function vdomToHTML(node, options) {
     function serializeElHelper(el, indent) {
         var tagName = el.nodeName;
 
-        var elNamespaceURI = el.namespaceURI || el.$__namespaceURI;
+        var elNamespaceURI = el.namespaceURI || el.___namespaceURI;
 
         if (elNamespaceURI === 'http://www.w3.org/2000/svg') {
             tagName = 'svg:' + tagName;
@@ -90,9 +94,9 @@ function vdomToHTML(node, options) {
             html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value)) + '\n';
         } else {
 
-            if (tagName.toUpperCase() === 'PRE' && el.firstChild && getNodeType(el.firstChild) === 3) {
-                el.firstChild.nodeValue = ltrim(el.firstChild.nodeValue);
-            }
+            // if (tagName.toUpperCase() === 'PRE' && el.firstChild && getNodeType(el.firstChild) === 3) {
+            //     nodeValue(el.firstChild) = ltrim(nodeValue(el.firstChild));
+            // }
             var curChild = el.firstChild;
             while(curChild) {
                 serializeHelper(curChild, indent + '  ');
@@ -102,11 +106,11 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(node.nodeValue) + '\n';
+        html += indent + JSON.stringify(nodeValue(node)) + '\n';
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
+        html += indent + '<!--' + JSON.stringify(nodeValue(node)) + '-->\n';
     }
 
     if (getNodeType(node) === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {

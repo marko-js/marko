@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -10,9 +10,9 @@ var compiler = require('../compiler');
 var builder = compiler.createBuilder();
 var autotest = require('./autotest');
 
-var CompileContext = require('../compiler/CompileContext');
-var CodeGenerator = require('../compiler/CodeGenerator');
-var CodeWriter = require('../compiler/CodeWriter');
+var CompileContext = require('marko/compiler/CompileContext');
+var CodeGenerator = require('marko/compiler/CodeGenerator');
+var CodeWriter = require('marko/compiler/CodeWriter');
 
 function createCodeGenerator(context) {
     return new CodeGenerator(context);
@@ -39,6 +39,7 @@ describe('compiler/codegen', function() {
         codeWriter.write(finalAST);
 
         var actualSrc = codeWriter.getCode();
+        actualSrc = actualSrc.replace(/marko\/dist\//g, 'marko/src/');
 
         helpers.compare(actualSrc, '.js');
         done();

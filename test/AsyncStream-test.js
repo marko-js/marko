@@ -1,4 +1,5 @@
 'use strict';
+require('./util/test-init');
 var chai = require('chai');
 chai.Assertion.includeStack = true;
 require('chai').should();
@@ -6,7 +7,7 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 var fsReadOptions = { encoding: 'utf8' };
-var AsyncStream = require('../runtime/html/AsyncStream');
+var AsyncStream = require('marko/runtime/html/AsyncStream');
 
 /* DEBUG INFO:
    ===========
@@ -292,7 +293,7 @@ describe('AsyncStream', function() {
 
         out.catch((err) => {
             expect(err).to.be.an('error');
-            expect(out.$__getOutput()).to.equal('1');
+            expect(out.getOutput()).to.equal('1');
             done();
         }).then((data) => {
             throw new Error('Should not get here!');

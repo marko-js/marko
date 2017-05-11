@@ -1,15 +1,15 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
 require('chai').should();
 
 var nodePath = require('path');
-require('../compiler');
+require('marko/compiler');
 var autotest = require('./autotest');
 
-var taglibFinder = require('../compiler/taglib-finder');
+var taglibFinder = require('marko/compiler/taglib-finder');
 
 
 describe('taglib-finder' , function() {

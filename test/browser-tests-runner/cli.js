@@ -1,7 +1,14 @@
-require('../util/patch-module');
+const path = require('path');
+const rootDir = path.join(__dirname, '../../');
+const env = require(path.join(rootDir, 'env'));
+
+var testDir = path.join(rootDir, env.isDebug ? 'test' : 'test-dist');
+process.env.TEST_DIR = testDir;
+
+require(path.join(testDir, 'util/patch-module'));
 
 require('marko/node-require').install();
-var path = require('path');
+
 var fs = require('fs');
 var runner = require('./');
 
@@ -15,15 +22,18 @@ var options = require('argly').createParser({
     })
     .parse();
 
+
 if (options.testsFile) {
-    options.testsFile = path.resolve(process.cwd(), options.testsFile);
+    options.testsFile = path.resolve(testDir, options.testsFile);
 }
 
+var generatedDir = options.generatedDir = path.join(testDir, 'generated');
+
 function populatePageOptions(pageName) {
-    var pageDir = path.join(__dirname, '../autotests/components-pages', pageName);
+    var pageDir = path.join(testDir, 'autotests/components-pages', pageName);
     var pageTemplate = path.join(pageDir, 'template.marko');
     options.pageTemplate = require(pageTemplate);
-    options.generatedDir = './page-' + pageName;
+    options.generatedDir = path.join(generatedDir, 'page-' + pageName);
     options.testsFile = path.join(pageDir, 'tests.js');
 }
 
@@ -40,7 +50,7 @@ function go() {
 }
 
 if (options.pages || options.pagesDeprecated) {
-    var pagesPath = options.pages ? path.resolve(__dirname, '../autotests/components-pages') : path.resolve(__dirname, '../autotests/components-pages-deprecated');
+    var pagesPath = options.pages ? path.resolve(testDir, 'autotests/components-pages') : path.resolve(testDir, 'autotests/components-pages-deprecated');
     var pageNames = fs.readdirSync(pagesPath);
     var promise = pageNames.reduce(function(previousValue, pageName) {
         return previousValue
@@ -77,5 +87,3 @@ if (options.pages || options.pagesDeprecated) {
             process.exit(1);
         });
 }
-
-

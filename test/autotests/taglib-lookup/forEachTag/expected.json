@@ -25,6 +25,7 @@
     "macro-body",
     "marko",
     "marko-preserve-whitespace",
+    "module-code",
     "static",
     "unless",
     "var",

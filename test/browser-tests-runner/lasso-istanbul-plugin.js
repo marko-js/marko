@@ -1,4 +1,3 @@
-var fs = require('fs');
 var istanbul = require('istanbul-lib-instrument');
 var resolve = require('lasso-resolve-from');
 
@@ -9,16 +8,19 @@ module.exports = function(lasso, pluginConfig) {
         stream: false,
         contentType: 'js',
         transform: function(code, context) {
-            var file = context.dependency.file
+            var file = context.dependency.file;
 
-            if(!file || file.includes('node_modules/')
-                     || file.includes('test/')
-                     || file.includes('coverage/')
-                     || file.includes('benchmark/')
+            if(!file ||
+                file.includes('node_modules/') ||
+                file.includes('test/') ||
+                file.includes('coverage/') ||
+                file.includes('benchmark/')
             ) return code;
 
+            var unwrappedCode;
+
             if(context.dependency.type === 'commonjs-def') {
-                var unwrappedCode = code.replace(/^\$\_mod[^\n]+?\{ /, '').replace(/\n\}\);$/, '');
+                unwrappedCode = code.replace(/^\$\_mod[^\n]+?\{ /, '').replace(/\n\}\);$/, '');
             }
 
             var actualFile = resolve(__dirname, file).path;
@@ -27,4 +29,4 @@ module.exports = function(lasso, pluginConfig) {
             return unwrappedCode ? code.replace(unwrappedCode, instrumentedCode) : instrumentedCode;
         }
     });
-}
+};

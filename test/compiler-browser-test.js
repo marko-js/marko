@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -10,7 +10,7 @@ var fs = require('fs');
 
 require('marko/node-require').install();
 
-describe('compiler (browser target)', function() {
+describe('compiler-browser', function() {
     var autoTestDir = path.join(__dirname, 'autotests/compiler-browser');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
@@ -47,7 +47,7 @@ describe('compiler (browser target)', function() {
                 main.checkTemplate(compiledTemplate);
             } else {
                 var actualSrc = compiledTemplate.code;
-
+                actualSrc = actualSrc.replace(/marko\/dist\//g, 'marko/src/');
                 helpers.compare(actualSrc, '.js');
             }
 

@@ -4,8 +4,7 @@ var markoComponents = require('marko/components');
 
 describe(path.basename(__dirname), function() {
     it('should serialize component config down to the browser', function() {
-
-        expect(window.simpleComponents).to.equal(undefined);
+        expect(window.simpleComponents).to.deep.equal([]);
 
         var components = window.components;
         var html = components.html;

@@ -1,11 +1,11 @@
-require('./util/patch-module');
+require('./util/test-init');
 require('marko/node-require').install();
 
-describe('marko/components (server)', function() {
+describe('components-server', function() {
     require('./util/autotest').runTests(
         require('./autotests/components-server/autotests.tests'),
         function run(testFunc, done) {
-            require('marko/compiler').configure({ output: 'html' });
+            require('marko/compiler').configure({ output: 'html', assumeUpToDate: false });
             var helpers = {};
 
             if (testFunc.length === 1) {

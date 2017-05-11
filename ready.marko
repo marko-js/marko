@@ -1,0 +1,4 @@
+module-code(function(require) {
+    var isDebug = require('./env').isDebug;
+    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/components/ready");\n`;
+});

@@ -1,6 +1,6 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/vdom").t(),
+var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_attrs0 = {
         width: "140",
         height: "30"

@@ -25,7 +25,7 @@ export default {
             extensions: [ '.js', '.vue' ]
         }),
         commonjsPlugin({
-            include: [ 'node_modules/**', '**/*.vue', '**/*.js'],
+            include: [],
             extensions: [ '.js', '.vue' ]
         })
     ],

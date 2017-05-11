@@ -1,16 +1,16 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
 var path = require('path');
-var compiler = require('../compiler');
+var compiler = require('marko/compiler');
 var builder = compiler.createBuilder();
 var autotest = require('./autotest');
 var fs = require('fs');
-var CompileContext = require('../compiler/CompileContext');
-var HtmlJsParser = require('../compiler/HtmlJsParser');
-var Parser = require('../compiler/Parser');
+var CompileContext = require('marko/compiler/CompileContext');
+var HtmlJsParser = require('marko/compiler/HtmlJsParser');
+var Parser = require('marko/compiler/Parser');
 var parser = new Parser(new HtmlJsParser());
 
 describe('compiler/parser', function() {

@@ -1,4 +1,4 @@
-require('./util/patch-module');
+require('./util/test-init');
 
 var fs = require('fs');
 var path = require('path');
@@ -8,7 +8,7 @@ var expect = require('chai').expect;
 
 require('marko/node-require').install();
 
-describe('marko/components (compilation)', function() {
+describe('components-compilation', function() {
     var autoTestDir = path.join(__dirname, 'autotests/components-compilation');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
@@ -51,6 +51,7 @@ describe('marko/components (compilation)', function() {
             done();
         } else {
             var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
+            compiledSrc = compiledSrc.replace(/marko\/dist\//g, 'marko/src/');
             helpers.compare(compiledSrc, '.js');
             done();
         }
