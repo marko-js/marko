@@ -44,6 +44,6 @@ function patchResponse(response) {
 
         res.set({ 'content-type': 'text/html; charset=utf-8' });
 
-        template.render(data, res);
+        return template.render(data, res);
     };
 }
