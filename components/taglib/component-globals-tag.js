@@ -17,7 +17,6 @@ function getSerializedGlobals(outGlobal) {
                         serializedGlobals = {};
                     }
                     serializedGlobals[key] = value;
-                    serializedGlobalsLookup[key] = false;
                 }
             }
         }
