@@ -3,6 +3,7 @@ require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
+const expect = chai.expect;
 var path = require('path');
 var marko = require('marko');
 var autotest = require('./autotest');
@@ -25,12 +26,12 @@ describe('express', function() {
 
             require(markoExpressPath);
 
-            chai.expect(express.response.marko).to.equal(fn);
+            expect(express.response.marko).to.equal(fn);
         });
         it('should be able to register for multiple express instances', function() {
             // test res.marko is added to the real express response
             require(markoExpressPath);
-            chai.expect(express.response.marko).to.be.a('function');
+            expect(express.response.marko).to.be.a('function');
 
             // set up an express mock object and hijack require
             var expressMock = { response:{} };
@@ -43,7 +44,7 @@ describe('express', function() {
 
             // check that res.marko is added to the mocked express response
             require(markoExpressPath);
-            chai.expect(expressMock.response.marko).to.be.a('function');
+            expect(expressMock.response.marko).to.be.a('function');
 
             // return require to its original state
             module.require = _require;
@@ -102,7 +103,7 @@ describe('express', function() {
                             if(main.checkResponse) {
                                 response.body = body;
                                 response.error = error;
-                                main.checkResponse(response, chai.expect, helpers);
+                                main.checkResponse(response, expect, helpers);
                             } else {
                                 if(error) {
                                     return done(error);
