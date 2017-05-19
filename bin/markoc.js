@@ -46,6 +46,10 @@ function relPath(path) {
     }
 }
 
+function shouldIgnoreUnrecognizedTags(path) {
+    return path.endsWith('.xml') || path.endsWith('.xml.marko');
+}
+
 var args = require('argly').createParser({
         '--help': {
             type: 'boolean',
@@ -293,8 +297,6 @@ if (args.clean) {
                         console.log('Deleted: ' + file);
                         context.endAsync();
                     });
-
-
                 }
             }
         },
@@ -318,11 +320,18 @@ if (args.clean) {
             return;
         }
 
-        found[path] = true;
+        if (shouldIgnoreUnrecognizedTags(path)) {
+            compileOptions = compileOptions || {};
+            compileOptions.ignoreUnrecognizedTags = true;
+        }
 
+        found[path] = true;
         var outPath = path + '.js';
+
         console.log('Compiling:\n  Input:  ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
+
         context.beginAsync();
+
         markoCompiler.compileFile(path, compileOptions, function(err, src) {
             if (err) {
                 failed.push('Failed to compile "' + relPath(path) + '". Error: ' + (err.stack || err));

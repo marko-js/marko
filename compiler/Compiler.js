@@ -138,7 +138,7 @@ class Compiler {
         var ast = this.parser.parse(src, context);
         context._parsingFinished = true;
 
-        if (context.unrecognizedTags) {
+        if (!context.ignoreUnrecognizedTags && context.unrecognizedTags) {
             for(let i=0; i<context.unrecognizedTags.length; i++) {
                 let unrecognizedTag = context.unrecognizedTags[i];
                 // See if the tag is a macro
