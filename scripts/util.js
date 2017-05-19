@@ -77,16 +77,6 @@ exports.buildDir = function buildDir(sourceName, targetName, options) {
 
     rm('-rf', distDir);
 
-    // console.log();
-    // console.log('Running babel...');
-    //
-    //
-    // console.log('babel completed successfully');
-    // console.log();
-    var matcher = mm.matcher('**/actual*.*', { matchBase: true });
-
-    console.log('isBabelExcluded', matcher('/autotests/codegen/functionDeclaration-anonymous/actual.js'));
-
     findFiles(sourceDir, function(sourceFile, relativePath, stat) {
         var targetFile = path.join(distDir, relativePath);
         var targetDir = path.dirname(targetFile);
