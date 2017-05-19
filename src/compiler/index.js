@@ -60,6 +60,8 @@ function createWalker(options) {
 }
 
 function _compile(src, filename, userOptions, callback) {
+    registerCoreTaglibs();
+    
     ok(filename, '"filename" argument is required');
     ok(typeof filename === 'string', '"filename" argument should be a string');
 
@@ -154,6 +156,8 @@ function compileFileForBrowser(filename, options, callback) {
 
 
 function createInlineCompiler(filename, userOptions) {
+    registerCoreTaglibs();
+
     var options = {};
 
     extend(options, globalConfig);
@@ -187,6 +191,7 @@ function clearCaches() {
 }
 
 function parseRaw(templateSrc, filename) {
+    registerCoreTaglibs();
     var context = new CompileContext(templateSrc, filename, Builder.DEFAULT_BUILDER);
     var parsed = rawParser.parse(templateSrc, context);
 
@@ -226,27 +231,38 @@ exports.taglibLookup = taglibLookup;
 exports.taglibLoader = taglibLoader;
 exports.taglibFinder = require('./taglib-finder');
 
-function buildTaglibLookup(dirname) {
-    return taglibLookup.buildLookup(dirname);
-}
-
-exports.buildTaglibLookup = buildTaglibLookup;
-
 function registerTaglib(taglibProps, taglibPath) {
     var taglib = taglibLoader.createTaglib(taglibPath);
     taglibLoader.loadTaglibFromProps(taglib, taglibProps);
     taglibLookup.registerTaglib(taglib);
 }
 
-registerTaglib(require('../taglibs/core/marko.json'), require.resolve('../taglibs/core/marko.json'));
-registerTaglib(require('../taglibs/layout/marko.json'), require.resolve('../taglibs/layout/marko.json'));
-registerTaglib(require('../taglibs/html/marko.json'), require.resolve('../taglibs/html/marko.json'));
-registerTaglib(require('../taglibs/svg/marko.json'), require.resolve('../taglibs/svg/marko.json'));
-registerTaglib(require('../taglibs/async/marko.json'), require.resolve('../taglibs/async/marko.json'));
-registerTaglib(require('../taglibs/cache/marko.json'), require.resolve('../taglibs/cache/marko.json'));
-registerTaglib(require('../components/taglib/marko.json'), require.resolve('../components/taglib/marko.json'));
+var coreTaglibsRegistered = false;
+
+function registerCoreTaglibs() {
+    if (!coreTaglibsRegistered) {
+        coreTaglibsRegistered = true;
+        registerTaglib(require('../taglibs/core/marko.json'), require.resolve('../taglibs/core/marko.json'));
+        registerTaglib(require('../taglibs/layout/marko.json'), require.resolve('../taglibs/layout/marko.json'));
+        registerTaglib(require('../taglibs/html/marko.json'), require.resolve('../taglibs/html/marko.json'));
+        registerTaglib(require('../taglibs/svg/marko.json'), require.resolve('../taglibs/svg/marko.json'));
+        registerTaglib(require('../taglibs/async/marko.json'), require.resolve('../taglibs/async/marko.json'));
+        registerTaglib(require('../taglibs/cache/marko.json'), require.resolve('../taglibs/cache/marko.json'));
+        registerTaglib(require('../components/taglib/marko.json'), require.resolve('../components/taglib/marko.json'));
+    }
+
+}
+
+function buildTaglibLookup(dirname) {
+    registerCoreTaglibs();
+    return taglibLookup.buildLookup(dirname);
+}
+
+exports.buildTaglibLookup = buildTaglibLookup;
 
 exports.registerTaglib = function(filePath) {
+    registerCoreTaglibs();
+
     ok(typeof filePath === 'string', '"filePath" shouldbe a string');
     var taglib = taglibLoader.loadTaglibFromFile(filePath);
     taglibLookup.registerTaglib(taglib);
@@ -254,3 +270,4 @@ exports.registerTaglib = function(filePath) {
 };
 
 exports.isVDOMSupported = true;
+exports.modules = require('./modules');
