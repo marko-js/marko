@@ -104,13 +104,13 @@ function getRenderedComponents(out, shouldIncludeAll) {
     var outGlobal = out.global;
 
     if (shouldIncludeAll === true) {
-        globalComponentsContext = outGlobal.components;
+        globalComponentsContext = outGlobal.___components;
 
         if (globalComponentsContext === undefined) {
             return undefined;
         }
     } else {
-        let componentsContext = out.data.components;
+        let componentsContext = out.data.___components;
         if (componentsContext === undefined) {
             return undefined;
         }

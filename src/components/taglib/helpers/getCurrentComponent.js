@@ -5,7 +5,7 @@
  * @return {ComponentDef} The ComponentDef instance
  */
 module.exports = function getCurrentComponent(out) {
-    var componentsContext = out.data.components;
+    var componentsContext = out.data.___components;
     var componentStack;
     var len;
 

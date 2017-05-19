@@ -19,7 +19,7 @@ module.exports = {
 
                     if (input.renderBody) {
                         input.renderBody(nestedOut);
-                    }                    
+                    }
 
                     nestedOut
                         .on('error', callback)
@@ -35,10 +35,10 @@ module.exports = {
                 }
 
                 if (result.___cloneNode) {
-                    var curChild = result.firstChild;
+                    var curChild = result.___firstChild;
                     while(curChild) {
                         asyncOut.node(curChild.___cloneNode());
-                        curChild = curChild.nextSibling;
+                        curChild = curChild.___nextSibling;
                     }
                     asyncOut.end();
                 } else {

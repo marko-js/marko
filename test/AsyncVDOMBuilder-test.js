@@ -6,10 +6,10 @@ var expect = require('chai').expect;
 function getChildNodes(parentNode) {
     var childNodes = [];
 
-    var curChild = parentNode.firstChild;
+    var curChild = parentNode.___firstChild;
     while(curChild) {
         childNodes.push(curChild);
-        curChild = curChild.nextSibling;
+        curChild = curChild.___nextSibling;
     }
 
     return childNodes;
@@ -48,9 +48,9 @@ describe('AsyncVDOMBuilder', function() {
         out.on('finish', function(result) {
             var tree = result.getOutput();
             expect(getChildNodes(tree).length).to.equal(3);
-            expect(tree.firstChild.___nodeName).to.equal('div');
-            expect(tree.firstChild.nextSibling.___nodeName).to.equal('span');
-            expect(tree.firstChild.nextSibling.nextSibling.___nodeName).to.equal('section');
+            expect(tree.___firstChild.___nodeName).to.equal('div');
+            expect(tree.___firstChild.___nextSibling.___nodeName).to.equal('span');
+            expect(tree.___firstChild.___nextSibling.___nextSibling.___nodeName).to.equal('section');
             done();
         });
     });

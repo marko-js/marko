@@ -54,7 +54,7 @@ function morphdom(
 
         onNodeAdded(realEl, context);
 
-        var vCurChild = vEl.firstChild;
+        var vCurChild = vEl.___firstChild;
         while (vCurChild) {
             var realCurChild = null;
 
@@ -71,7 +71,7 @@ function morphdom(
                 addVirtualNode(vCurChild, realEl);
             }
 
-            vCurChild = vCurChild.nextSibling;
+            vCurChild = vCurChild.___nextSibling;
         }
 
         if (vEl.___nodeType === 1) {
@@ -116,7 +116,7 @@ function morphdom(
         }
 
         if (nodeName !== 'TEXTAREA') {
-            var curToNodeChild = toEl.firstChild;
+            var curToNodeChild = toEl.___firstChild;
             var curFromNodeChild = fromEl.firstChild;
             var curToNodeKey;
             var curFromNodeKey;
@@ -126,7 +126,7 @@ function morphdom(
             var matchingFromEl;
 
             outer: while (curToNodeChild) {
-                toNextSibling = curToNodeChild.nextSibling;
+                toNextSibling = curToNodeChild.___nextSibling;
                 curToNodeKey = curToNodeChild.id;
 
                 while (curFromNodeChild) {
@@ -169,7 +169,7 @@ function morphdom(
 
                                             fromEl.insertBefore(matchingFromEl, curFromNodeChild);
 
-                                            var curToNodeChildNextSibling = curToNodeChild.nextSibling;
+                                            var curToNodeChildNextSibling = curToNodeChild.___nextSibling;
                                             if (curToNodeChildNextSibling && curToNodeChildNextSibling.id === curFromNodeKey) {
                                                 fromNextSibling = curFromNodeChild;
                                             } else {

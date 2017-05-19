@@ -25,8 +25,16 @@ var openTagOnly = {};
     openTagOnly[tagName] = true;
 });
 
-function nodeValue(node) {
+function getNodeValue(node) {
     return node.___nodeValue || node.nodeValue;
+}
+
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
 }
 
 function vdomToHTML(node, options) {
@@ -101,7 +109,7 @@ function vdomToHTML(node, options) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += el.value;
         } else {
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             if (curChild) {
                 while(curChild) {
                     let nodeType = curChild.nodeType || curChild.___nodeType;
@@ -112,7 +120,7 @@ function vdomToHTML(node, options) {
                         serializeHelper(curChild);
                     }
 
-                    curChild = curChild.nextSibling;
+                    curChild = getNextSibling(curChild);
                 }
             } else if (openTagOnly[tagName.toLowerCase()]) {
                 hasEndTag = false;
@@ -125,21 +133,21 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, escape) {
-        html += escape !== false ? escapeXml(nodeValue(node)) : nodeValue(node);
+        html += escape !== false ? escapeXml(getNodeValue(node)) : getNodeValue(node);
     }
 
     function serializeCommentHelper(node) {
-        html += '<!--' + nodeValue(node) + '-->';
+        html += '<!--' + getNodeValue(node) + '-->';
     }
 
     let nodeType = node.nodeType || node.___nodeType;
 
 
     if (nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
         while(curChild) {
             serializeHelper(curChild);
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
         serializeHelper(node);

@@ -9,7 +9,7 @@
     "build-marko": "npm run bundle-marko --silent && node minify.js marko",
     "build-inferno": "npm run bundle-inferno --silent && node minify.js inferno",
     "bundle": "mkdir -p build/bundles && npm run bundle-marko && npm run bundle-react && npm run bundle-vue && npm run bundle-preact && npm run bundle-inferno",
-    "bundle-marko": "NODE_ENV=production rollup -c marko/rollup.config.js",
+    "bundle-marko": "node ../../scripts/build && NODE_ENV=production rollup -c marko/rollup.config.js",
     "bundle-react": "NODE_ENV=production rollup -c react/rollup.config.js",
     "bundle-preact": "NODE_ENV=production rollup -c preact/rollup.config.js",
     "bundle-vue": "NODE_ENV=production rollup -c vue/rollup.config.js",

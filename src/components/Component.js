@@ -546,7 +546,7 @@ Component.prototype = componentProto = {
 
                 var fromEl;
 
-                var targetEl = targetNode.firstChild;
+                var targetEl = targetNode.___firstChild;
                 while(targetEl) {
                     var id = targetEl.id;
 
@@ -564,7 +564,7 @@ Component.prototype = componentProto = {
                                 onBeforeElChildrenUpdated);
                         }
 
-                        targetEl = targetEl.nextSibling;
+                        targetEl = targetEl.___nextSibling;
                     }
                 }
             }

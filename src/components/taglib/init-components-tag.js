@@ -7,7 +7,7 @@ var ComponentsContext = require('../ComponentsContext');
 function handleAwaitBeforeRender(eventArgs) {
     if (eventArgs.clientReorder) {
         var asyncFragmentOut = eventArgs.out;
-        asyncFragmentOut.data.components = new ComponentsContext(asyncFragmentOut, undefined, false);
+        asyncFragmentOut.data.___components = new ComponentsContext(asyncFragmentOut, undefined, false);
     }
 }
 

@@ -12,7 +12,7 @@ module.exports = function(helpers) {
                 .t('eBay')
         .e('footer', null, 0);
 
-    expect(el.firstChild.firstChild.id).to.equal('link');
+    expect(el.___firstChild.___firstChild.id).to.equal('link');
 
     return el;
 };

@@ -5,7 +5,7 @@ var extend = require('raptor-util/extend');
 function VDocumentFragmentClone(other) {
     extend(this, other);
     this.___parentNode = null;
-    this.___nextSibling = null;
+    this.___nextSiblingInternal = null;
 }
 
 function VDocumentFragment(documentFragment) {

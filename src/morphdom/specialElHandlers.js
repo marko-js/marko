@@ -59,7 +59,7 @@ module.exports = {
         if (!toEl.___hasAttribute('multiple')) {
             var selectedIndex = -1;
             var i = 0;
-            var curChild = toEl.firstChild;
+            var curChild = toEl.___firstChild;
             while(curChild) {
                 if (curChild.___nodeName == 'OPTION') {
                     if (curChild.___hasAttribute('selected')) {
@@ -68,7 +68,7 @@ module.exports = {
                     }
                     i++;
                 }
-                curChild = curChild.nextSibling;
+                curChild = curChild.___nextSibling;
             }
 
             fromEl.selectedIndex = i;

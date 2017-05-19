@@ -47,7 +47,7 @@ function preserveComponentEls(existingComponent, out, globalComponentsContext) {
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
-    var componentsContext = parentOut.data.components;
+    var componentsContext = parentOut.data.___components;
 
     if (componentsContext !== undefined) {
         // All of the components in this async block should be
@@ -59,7 +59,7 @@ function handleBeginAsync(event) {
         // of the async block being added as children of the component in the
         // parent block.
         var nestedComponentsContext = componentsContext.___createNestedComponentsContext(asyncOut);
-        asyncOut.data.components = nestedComponentsContext;
+        asyncOut.data.___components = nestedComponentsContext;
     }
     // Carry along the component arguments
     asyncOut.___componentArgs = parentOut.___componentArgs;

@@ -6,6 +6,14 @@ function getNodeValue(node) {
     return node.___nodeValue || node.nodeValue;
 }
 
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
+}
+
 function toHTML(node) {
 
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
@@ -81,10 +89,10 @@ function toHTML(node) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += indent + '  VALUE: ' + JSON.stringify(el.value) + '\n';
         } else {
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             while(curChild) {
                 serializeHelper(curChild, indent + '  ');
-                curChild = curChild.nextSibling;
+                curChild = getNextSibling(curChild);
             }
         }
 
@@ -108,10 +116,10 @@ function toHTML(node) {
     }
 
     if (getNodeType(node) === 11 /* DocumentFragment */) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
         while(curChild) {
             serializeHelper(curChild, '');
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
         serializeHelper(node, '');

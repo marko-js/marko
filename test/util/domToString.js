@@ -6,8 +6,16 @@ function getNodeType(node) {
     return node.nodeType || node.___nodeType;
 }
 
-function nodeValue(node) {
+function getNodeValue(node) {
     return node.___nodeValue || node.nodeValue;
+}
+
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
 }
 
 function vdomToHTML(node, options) {
@@ -93,33 +101,32 @@ function vdomToHTML(node, options) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value)) + '\n';
         } else {
-
-            // if (tagName.toUpperCase() === 'PRE' && el.firstChild && getNodeType(el.firstChild) === 3) {
-            //     nodeValue(el.firstChild) = ltrim(nodeValue(el.firstChild));
-            // }
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             while(curChild) {
                 serializeHelper(curChild, indent + '  ');
-                curChild = curChild.nextSibling;
+                curChild = getNextSibling(curChild);
             }
         }
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(nodeValue(node)) + '\n';
+        html += indent + JSON.stringify(getNodeValue(node)) + '\n';
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + '<!--' + JSON.stringify(nodeValue(node)) + '-->\n';
+        html += indent + '<!--' + JSON.stringify(getNodeValue(node)) + '-->\n';
     }
 
     if (getNodeType(node) === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
+
         while(curChild) {
             serializeHelper(curChild, '');
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
+
+
         serializeHelper(node, '');
     }
 

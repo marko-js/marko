@@ -7,6 +7,8 @@ const testDir = path.join(rootDir, isDebug ? 'test' : 'test-dist');
 const { spawnSync } = require('child_process');
 const mochaPath = path.join(rootDir, 'node_modules/.bin/mocha');
 
-spawnSync(mochaPath, ['--ui', 'bdd', '--reporter', 'spec', testDir], {
+var result = spawnSync(mochaPath, ['--ui', 'bdd', '--reporter', 'spec', testDir], {
     stdio: 'inherit'
 });
+
+process.exit(result.status);

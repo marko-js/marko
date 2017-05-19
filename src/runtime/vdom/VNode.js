@@ -7,39 +7,39 @@ VNode.prototype = {
     ___VNode: function(finalChildCount) {
         this.___finalChildCount = finalChildCount;
         this.___childCount = 0;
-        this.___firstChild = null;
+        this.___firstChildInternal = null;
         this.___lastChild = null;
         this.___parentNode = null;
-        this.___nextSibling = null;
+        this.___nextSiblingInternal = null;
     },
 
-    get firstChild() {
-        var firstChild = this.___firstChild;
+    get ___firstChild() {
+        var firstChild = this.___firstChildInternal;
 
         if (firstChild && firstChild.___DocumentFragment) {
-            var nestedFirstChild = firstChild.firstChild;
+            var nestedFirstChild = firstChild.___firstChild;
             // The first child is a DocumentFragment node.
             // If the DocumentFragment node has a first child then we will return that.
             // Otherwise, the DocumentFragment node is not *really* the first child and
             // we need to skip to its next sibling
-            return nestedFirstChild || firstChild.nextSibling;
+            return nestedFirstChild || firstChild.___nextSibling;
         }
 
         return firstChild;
     },
 
-    get nextSibling() {
-        var nextSibling = this.___nextSibling;
+    get ___nextSibling() {
+        var nextSibling = this.___nextSiblingInternal;
 
         if (nextSibling) {
             if (nextSibling.___DocumentFragment) {
-                var firstChild = nextSibling.firstChild;
-                return firstChild || nextSibling.nextSibling;
+                var firstChild = nextSibling.___firstChild;
+                return firstChild || nextSibling.___nextSibling;
             }
         } else {
             var parentNode = this.___parentNode;
             if (parentNode && parentNode.___DocumentFragment) {
-                return parentNode.nextSibling;
+                return parentNode.___nextSibling;
             }
         }
 
@@ -62,9 +62,9 @@ VNode.prototype = {
             child.___parentNode = this;
 
             if (lastChild) {
-                lastChild.___nextSibling = child;
+                lastChild.___nextSiblingInternal = child;
             } else {
-                this.___firstChild = child;
+                this.___firstChildInternal = child;
             }
 
             this.___lastChild = child;
@@ -84,11 +84,11 @@ VNode.prototype = {
     actualize: function(doc) {
         var actualNode = this.___actualize(doc);
 
-        var curChild = this.firstChild;
+        var curChild = this.___firstChild;
 
         while(curChild) {
             actualNode.appendChild(curChild.actualize(doc));
-            curChild = curChild.nextSibling;
+            curChild = curChild.___nextSibling;
         }
 
         if (this.___nodeType === 1) {

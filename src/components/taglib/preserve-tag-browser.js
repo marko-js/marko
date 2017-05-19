@@ -1,7 +1,7 @@
 var getElementById = require('../util').___getElementById;
 
 module.exports = function render(input, out) {
-    var globalComponentsContext = out.global.components;
+    var globalComponentsContext = out.global.___components;
 
     if (globalComponentsContext && globalComponentsContext.___isRerenderInBrowser !== true && globalComponentsContext.___rerenderComponent !== undefined) {
         var id = input.id;

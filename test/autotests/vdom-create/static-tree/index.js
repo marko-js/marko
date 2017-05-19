@@ -8,14 +8,14 @@ module.exports = function(helpers) {
         .n(link)
         .e('span', null, 0);
 
-    var linkClone = el.firstChild;
+    var linkClone = el.___firstChild;
 
 
     expect(linkClone).to.not.equal(link);
     expect(link.___parentNode).to.equal(null);
-    expect(link.nextSibling).to.equal(null);
+    expect(link.___nextSibling).to.equal(null);
 
-    expect(linkClone.nextSibling.___nodeName).to.equal('span');
+    expect(linkClone.___nextSibling.___nodeName).to.equal('span');
     expect(linkClone.___parentNode.___nodeName).to.equal('div');
 
 

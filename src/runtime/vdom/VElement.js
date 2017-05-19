@@ -41,9 +41,9 @@ function removeAttribute(el, namespaceURI, name) {
 }
 
 function VElementClone(other) {
-    this.___firstChild = other.___firstChild;
+    this.___firstChildInternal = other.___firstChildInternal;
     this.___parentNode = null;
-    this.___nextSibling = null;
+    this.___nextSiblingInternal = null;
 
     this.___attributes = other.___attributes;
     this.___properties = other.___properties;

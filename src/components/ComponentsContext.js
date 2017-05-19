@@ -39,7 +39,7 @@ GlobalComponentsContext.prototype = {
 
         // Reset things stored in global since global is retained for
         // future renders
-        this.___out.global.components = undefined;
+        this.___out.global.___components = undefined;
 
         return topLevelComponentDefs;
     },
@@ -75,9 +75,9 @@ function ComponentsContext(out, parentComponentsContext, shouldAddGlobalRoot) {
     var globalComponentsContext;
 
     if (parentComponentsContext === undefined) {
-        globalComponentsContext = out.global.components;
+        globalComponentsContext = out.global.___components;
         if (globalComponentsContext === undefined) {
-            out.global.components = globalComponentsContext = new GlobalComponentsContext(out);
+            out.global.___components = globalComponentsContext = new GlobalComponentsContext(out);
         }
 
         root = new ComponentDef(null, null, globalComponentsContext);
@@ -136,7 +136,7 @@ ComponentsContext.prototype = {
 };
 
 function getComponentsContext(out) {
-    return out.data.components || (out.data.components = new ComponentsContext(out));
+    return out.data.___components || (out.data.___components = new ComponentsContext(out));
 }
 
 module.exports = exports = ComponentsContext;

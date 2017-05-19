@@ -182,6 +182,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
 
                     getExpectedHtml(function(err, expectedHtml) {
+                        if (err) {
+                            return done(err);
+                        }
+
                         fs.writeFileSync(path.join(dir, 'vdom-expected.generated.html'), expectedHtml, { encoding: 'utf8' });
 
                         let actualizedDom = vdomTree.actualize(defaultDocument);
