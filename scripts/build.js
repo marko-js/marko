@@ -1,5 +1,5 @@
 'use strict';
-const { buildDir } = require('./util');
+const buildDir = require('./util').buildDir;
 const babelOptions = {
     "plugins": [
         [
