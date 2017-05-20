@@ -1,3 +1,5 @@
+'use strict';
+
 const NO_UPDATE_ATTR_SUFFIX = ':no-update';
 
 var PRESERVE_ATTRS_HELPER_ADDED = Symbol('PRESERVE_ATTRS_HELPER_ADDED');

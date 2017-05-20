@@ -1,4 +1,4 @@
-var { isDebug } = require('./env');
+var isDebug = require('./env').isDebug;
 
 if (isDebug) {
     module.exports = require('./src/');

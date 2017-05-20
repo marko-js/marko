@@ -1,3 +1,5 @@
+'use strict';
+
 var nativeRequire = require;
 var resolveFrom = require('resolve-from');
 var deresolve = require('./util/deresolve');

@@ -1,3 +1,5 @@
+'use strict';
+
 const INIT_COMPONENTS_KEY = Symbol();
 
 var writeInitComponentsCode = require('../').writeInitComponentsCode;

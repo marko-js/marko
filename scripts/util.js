@@ -1,4 +1,7 @@
-const { mkdir, ls, rm, cp } = require('shelljs');
+const shelljs = require('shelljs');
+const mkdir = shelljs.mkdir;
+const rm = shelljs.rm;
+const cp = shelljs.cp;
 const path = require('path');
 const fs = require('fs');
 const babel = require("babel-core");

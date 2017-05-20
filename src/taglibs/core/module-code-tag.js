@@ -1,3 +1,5 @@
+'use strict';
+
 let resolveFrom = require('resolve-from');
 
 module.exports = function codeGenerator(elNode, codegen) {
