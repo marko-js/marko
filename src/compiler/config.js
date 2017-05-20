@@ -1,8 +1,19 @@
-var NODE_ENV = process.env.NODE_ENV;
 var config;
 
 /* globals window */
 var g = typeof window === 'undefined' ? global : window;
+
+function shouldAssumeUpToDate() {
+    if (process.env.MARKO_CLEAN != null) {
+        return false;
+    }
+
+    if (process.env.MARKO_ASSUME_UP_TO_DATE != null) {
+        return true;
+    }
+
+    return false;
+}
 
 if (g.__MARKO_CONFIG) {
     config = g.__MARKO_CONFIG;
@@ -28,7 +39,7 @@ if (g.__MARKO_CONFIG) {
         /**
          * If true, then the compiled template on disk will assumed to be up-to-date if it exists.
          */
-        assumeUpToDate: process.env.MARKO_CLEAN != null || process.env.hasOwnProperty('MARKO_HOT_RELOAD') ? false : ( NODE_ENV == null ? false : (NODE_ENV !== 'development' && NODE_ENV !== 'dev')),
+        assumeUpToDate: shouldAssumeUpToDate(),
 
         /**
          * If true, whitespace will be preserved in templates. Defaults to false.
@@ -45,6 +56,10 @@ if (g.__MARKO_CONFIG) {
          */
         writeVersionComment: true
     };
+
+    if (process.env.MARKO_CONFIG) {
+        Object.assign(config, JSON.parse(process.env.MARKO_CONFIG));
+    }
 }
 
 module.exports = config;
