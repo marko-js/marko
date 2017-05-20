@@ -88,7 +88,7 @@
     "async": "^2.1.4",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
-    "babel-plugin-minprops": "^2.0.0",
+    "babel-plugin-minprops": "^2.0.1",
     "benchmark": "^2.1.1",
     "bluebird": "^3.4.7",
     "browser-refresh": "^1.6.0",
