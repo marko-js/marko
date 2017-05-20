@@ -1,14 +1,14 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
 var path = require('path');
-var adjustIndent = require('../compiler/util/adjustIndent');
+var adjustIndent = require('marko/compiler/util/adjustIndent');
 var autotest = require('./autotest');
 var fs = require('fs');
 
-describe('compiler/util/adjustIndent', function() {
+describe('adjustIndent', function() {
     var autoTestDir = path.join(__dirname, 'autotests/adjustIndent');
 
     autotest.scanDir(

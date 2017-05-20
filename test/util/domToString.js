@@ -3,7 +3,19 @@ function ltrim(s) {
 }
 
 function getNodeType(node) {
-    return node.nodeType || node.$__nodeType;
+    return node.nodeType || node.___nodeType;
+}
+
+function getNodeValue(node) {
+    return node.___nodeValue || node.nodeValue;
+}
+
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
 }
 
 function vdomToHTML(node, options) {
@@ -30,7 +42,7 @@ function vdomToHTML(node, options) {
     function serializeElHelper(el, indent) {
         var tagName = el.nodeName;
 
-        var elNamespaceURI = el.namespaceURI || el.$__namespaceURI;
+        var elNamespaceURI = el.namespaceURI || el.___namespaceURI;
 
         if (elNamespaceURI === 'http://www.w3.org/2000/svg') {
             tagName = 'svg:' + tagName;
@@ -89,33 +101,32 @@ function vdomToHTML(node, options) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value)) + '\n';
         } else {
-
-            if (tagName.toUpperCase() === 'PRE' && el.firstChild && getNodeType(el.firstChild) === 3) {
-                el.firstChild.nodeValue = ltrim(el.firstChild.nodeValue);
-            }
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             while(curChild) {
                 serializeHelper(curChild, indent + '  ');
-                curChild = curChild.nextSibling;
+                curChild = getNextSibling(curChild);
             }
         }
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(node.nodeValue) + '\n';
+        html += indent + JSON.stringify(getNodeValue(node)) + '\n';
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
+        html += indent + '<!--' + JSON.stringify(getNodeValue(node)) + '-->\n';
     }
 
     if (getNodeType(node) === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
+
         while(curChild) {
             serializeHelper(curChild, '');
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
+
+
         serializeHelper(node, '');
     }
 

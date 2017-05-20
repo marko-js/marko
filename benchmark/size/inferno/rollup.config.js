@@ -16,7 +16,7 @@ export default {
     moduleName: 'app',
     plugins: [
         babelPlugin({
-            include: ['node_modules/**', '**/*.js', '**/*.jsx'],
+            include: [],
             babelrc: false,
             "presets": [
                 ["es2015", { "loose": true, "modules": false }],

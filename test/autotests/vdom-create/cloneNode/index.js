@@ -21,18 +21,18 @@ module.exports = function(helpers) {
                 'xlink:href': 'http://ebay.com/'
             }, 0, SVG_FLAGS, null);
 
-    var clone = el.$__cloneNode();
+    var clone = el.___cloneNode();
     expect(clone).to.not.equal(el);
-    expect(clone.$__nodeName).to.equal('div');
-    expect(clone.$__hasAttribute('class')).to.equal(true);
+    expect(clone.___nodeName).to.equal('div');
+    expect(clone.___hasAttribute('class')).to.equal(true);
     expect(clone.firstChild).to.equal(el.firstChild);
 
     var root = helpers.vdom.createElement('div', { class: 'root' });
 
-    root.$__appendChild(clone);
+    root.___appendChild(clone);
 
-    expect(el.$__parentNode).to.equal(null);
-    expect(clone.$__parentNode).to.equal(root);
+    expect(el.___parentNode).to.equal(null);
+    expect(clone.___parentNode).to.equal(root);
 
     return root;
 };

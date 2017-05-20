@@ -1,12 +1,15 @@
-require('../util/patch-module');
+var path = require('path');
+
 require('require-self-ref');
-require('marko/node-require').install();
-require('marko/express');
+require('../../node-require').install();
+require('../../express');
+
+require('../../compiler').configure({
+    assumeUpToDate: false
+});
 
 var express = require('express');
 var lasso = require('lasso');
-var path = require('path');
-var defaultGeneratedDir = path.join(__dirname, '../generated');
 var defaultPageTemplate = require('./page-template.marko');
 var spawn = require('child-process-promise').spawn;
 var fs = require('fs');
@@ -15,6 +18,7 @@ var md5Hex = require('md5-hex');
 var mochaPhantomJSCommand = require.resolve('mocha-phantomjs-core');
 var phantomjsBinPath = require('phantomjs-prebuilt').path;
 var shouldCover = !!process.env.NYC_CONFIG;
+var ok = require('assert').ok;
 
 function generate(options) {
     return new Promise((resolve, reject) => {
@@ -22,11 +26,7 @@ function generate(options) {
         var startServer = options.server === true;
         var pageTemplate = options.pageTemplate || defaultPageTemplate;
         var generatedDir = options.generatedDir;
-        if (generatedDir) {
-            generatedDir = path.resolve(defaultGeneratedDir, options.generatedDir);
-        } else {
-            generatedDir = defaultGeneratedDir;
-        }
+        ok(generatedDir, '"options.generatedDir" is required');
 
         var outputFile = path.join(generatedDir, 'test.html');
 
@@ -36,7 +36,6 @@ function generate(options) {
             "require-run: " + require.resolve('./mocha-setup'),
             'require-run: ' + testsFile,
             "require: jquery",
-            "require: marko/components",
             {
                 "require-run": require.resolve('./mocha-run'),
                 "slot": "mocha-run"
@@ -148,5 +147,3 @@ function getCoverageFile(testsFile) {
 
 exports.generate = generate;
 exports.runTests = runTests;
-
-

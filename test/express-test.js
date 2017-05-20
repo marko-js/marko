@@ -1,19 +1,19 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
 const expect = chai.expect;
 var path = require('path');
-var marko = require('../');
+var marko = require('marko');
 var autotest = require('./autotest');
 var express = require('express');
 var request = require('request');
 var fs = require('fs');
 
-var markoExpressPath = require.resolve('../express');
+var markoExpressPath = require.resolve('marko/express');
 
-require('../node-require').install();
+require('marko/node-require').install();
 
 describe('express', function() {
     var autoTestDir = path.join(__dirname, 'autotests/express');
@@ -64,7 +64,7 @@ describe('express', function() {
                 var e;
 
                 try {
-                    main.createApp(express, markoExpress);
+                    main.createApp(express);
                 } catch(_e) {
                     e = _e;
                 }
@@ -80,6 +80,15 @@ describe('express', function() {
                 var template = marko.load(templatePath, loadOptions);
 
                 app.get('/test', main.createController(template));
+
+                app.use(function errorHandler (err, req, res, next) {
+                    if (res.headersSent) {
+                        return next(err);
+                    }
+
+                    res.status(500);
+                    res.end(err.toString());
+                });
 
                 var server = app.listen(0, function(err) {
                     if(err) {

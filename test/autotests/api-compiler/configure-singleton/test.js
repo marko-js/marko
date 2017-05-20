@@ -1,5 +1,6 @@
 exports.check = function(marko, markoCompiler, expect, helpers, done) {
-    var configModulePath = require.resolve('../../../../compiler/config');
+
+    var configModulePath = require.resolve('marko/compiler/config');
     var config = require(configModulePath);
 
     var globalConfig = global.__MARKO_CONFIG;

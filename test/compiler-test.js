@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -46,6 +46,7 @@ describe('compiler', function() {
             done();
         } else {
             var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
+            compiledSrc = compiledSrc.replace(/marko\/dist\//g, 'marko/src/');
             helpers.compare(compiledSrc, '.js');
             done();
         }

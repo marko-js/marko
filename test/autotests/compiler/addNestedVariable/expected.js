@@ -1,7 +1,7 @@
 "use strict";
 
-var marko_template = module.exports = require("marko/html").t(__filename),
-    marko_helpers = require("marko/runtime/html/helpers"),
+var marko_template = module.exports = require("marko/src/html").t(__filename),
+    marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
     marko_loadTag = marko_helpers.t,
     test_addNestedVariable_tag = marko_loadTag(require("./tags/test-addNestedVariable/renderer"));

@@ -1,9 +1,10 @@
 'use strict';
+require('./util/test-init');
 
 var BrowserHelpers = require('./util/BrowserHelpers');
 
 if (typeof window !== 'undefined') {
-    describe('marko-components deprecated (browser)', function() {
+    describe('deprecated-components-browser', function() {
         require('./util/autotest').runTests(
             require('./autotests/components-browser-deprecated/autotests.tests'),
             function run(testFunc, done) {

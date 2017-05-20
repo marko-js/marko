@@ -1,6 +1,8 @@
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
-var testFilter = require('../util/autotest').testFilter;
+var testFilter = require(`${process.env.TEST_DIR}/util/autotest`).testFilter;
 
 module.exports = function(lasso, pluginConfig) {
     lasso.dependencies.registerRequireType(

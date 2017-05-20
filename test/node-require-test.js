@@ -1,4 +1,5 @@
 'use strict';
+require('./util/test-init');
 
 const chai = require('chai');
 chai.Assertion.includeStack = true;

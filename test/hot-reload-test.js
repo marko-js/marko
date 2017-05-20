@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 require('../node-require').install();
 
 var chai = require('chai');
@@ -7,15 +7,20 @@ chai.config.includeStack = true;
 
 var expect = require('chai').expect;
 var nodePath = require('path');
-require('../compiler');
+
 var autotest = require('./autotest');
-var marko = require('../');
-var hotReload = require('../hot-reload');
+var marko = require('marko');
+
+var hotReload = require('marko/hot-reload');
 hotReload.enable();
 describe('hot-reload' , function() {
     var autoTestDir = nodePath.join(__dirname, 'autotests/hot-reload');
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
+        require('marko/compiler').configure({
+            assumeUpToDate: false
+        });
+
         var test = require(nodePath.join(dir, 'test.js'));
         test.check(marko, hotReload, expect);
         done();

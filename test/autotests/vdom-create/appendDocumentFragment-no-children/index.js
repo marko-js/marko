@@ -3,7 +3,7 @@ module.exports = function(helpers) {
 
     root.e('div', { class: 'first-child' });
 
-    root.$__appendDocumentFragment();
+    root.___appendDocumentFragment();
 
     root.e('div', { class: 'last-child' });
 

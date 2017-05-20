@@ -9,7 +9,9 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
         writeVersionComment: false
     });
 
-    helpers.compare(compiledTemplate.code, '.js');
+    var code = compiledTemplate.code;
+    code = code.replace(/marko\/dist\//g, 'marko/src/');
+    helpers.compare(code, '.js');
 
     done();
 };

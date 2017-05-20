@@ -1,10 +1,11 @@
+require('./util/test-init');
 var path = require('path');
-var virtualize = require('../runtime/vdom/vdom').$__virtualize;
+var virtualize = require('marko/runtime/vdom/vdom').___virtualize;
 var fs = require('fs');
 var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;
 
-describe('vdom/virtualize', () => {
+describe('vdom-virtualize', () => {
     require('./autotest').scanDir(
         path.join(__dirname, 'autotests/vdom-virtualize'),
         function(dir, helpers, done) {

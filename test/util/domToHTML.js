@@ -1,6 +1,6 @@
 'use strict';
 
-var runtimeHtmlHelpers = require('../../runtime/html/helpers');
+var runtimeHtmlHelpers = require('marko/runtime/html/helpers');
 var escapeXml = runtimeHtmlHelpers.x;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
 
@@ -25,6 +25,17 @@ var openTagOnly = {};
     openTagOnly[tagName] = true;
 });
 
+function getNodeValue(node) {
+    return node.___nodeValue || node.nodeValue;
+}
+
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
+}
 
 function vdomToHTML(node, options) {
 
@@ -33,7 +44,7 @@ function vdomToHTML(node, options) {
     // BAD: return (new XMLSerializer()).serializeToString(node);
     var html = '';
     function serializeHelper(node) {
-        var nodeType = node.nodeType || node.$__nodeType;
+        var nodeType = node.nodeType || node.___nodeType;
 
         if (nodeType === 1) {
             serializeElHelper(node);
@@ -98,10 +109,10 @@ function vdomToHTML(node, options) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += el.value;
         } else {
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             if (curChild) {
                 while(curChild) {
-                    let nodeType = curChild.nodeType || curChild.$__nodeType;
+                    let nodeType = curChild.nodeType || curChild.___nodeType;
                     if (nodeType === 3) {
                         let escapeText = tagName.toUpperCase() !== 'SCRIPT';
                         serializeTextHelper(curChild, escapeText);
@@ -109,7 +120,7 @@ function vdomToHTML(node, options) {
                         serializeHelper(curChild);
                     }
 
-                    curChild = curChild.nextSibling;
+                    curChild = getNextSibling(curChild);
                 }
             } else if (openTagOnly[tagName.toLowerCase()]) {
                 hasEndTag = false;
@@ -122,21 +133,21 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, escape) {
-        html += escape !== false ? escapeXml(node.nodeValue) : node.nodeValue;
+        html += escape !== false ? escapeXml(getNodeValue(node)) : getNodeValue(node);
     }
 
     function serializeCommentHelper(node) {
-        html += '<!--' + node.nodeValue + '-->';
+        html += '<!--' + getNodeValue(node) + '-->';
     }
 
-    let nodeType = node.nodeType || node.$__nodeType;
+    let nodeType = node.nodeType || node.___nodeType;
 
 
     if (nodeType === 11 /* DocumentFragment */ || (options && options.childrenOnly)) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
         while(curChild) {
             serializeHelper(curChild);
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
         serializeHelper(node);

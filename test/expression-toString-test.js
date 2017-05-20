@@ -1,5 +1,5 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;

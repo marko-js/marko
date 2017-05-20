@@ -1,5 +1,17 @@
 function getNodeType(node) {
-    return node.nodeType || node.$__nodeType;
+    return node.nodeType || node.___nodeType;
+}
+
+function getNodeValue(node) {
+    return node.___nodeValue || node.nodeValue;
+}
+
+function getFirstChild(node) {
+    return node.___firstChild || node.firstChild;
+}
+
+function getNextSibling(node) {
+    return node.___nextSibling || node.nextSibling;
 }
 
 function toHTML(node) {
@@ -24,9 +36,9 @@ function toHTML(node) {
     }
 
     function serializeElHelper(el, indent) {
-        var tagName = el.nodeName || el.$__nodeName;
+        var tagName = el.nodeName || el.___nodeName;
 
-        var elNamespaceURI = el.namespaceURI || el.$__namespaceURI;
+        var elNamespaceURI = el.namespaceURI || el.___namespaceURI;
 
         if (elNamespaceURI === 'http://www.w3.org/2000/svg') {
             tagName = 'svg:' + tagName;
@@ -36,7 +48,7 @@ function toHTML(node) {
 
         html += indent + '<' + tagName;
 
-        var attributes = el.attributes || el.$__attributes;
+        var attributes = el.attributes || el.___attributes;
         var attributesArray = [];
         var attrName;
 
@@ -77,10 +89,10 @@ function toHTML(node) {
         if (tagName.toUpperCase() === 'TEXTAREA') {
             html += indent + '  VALUE: ' + JSON.stringify(el.value) + '\n';
         } else {
-            var curChild = el.firstChild;
+            var curChild = getFirstChild(el);
             while(curChild) {
                 serializeHelper(curChild, indent + '  ');
-                curChild = curChild.nextSibling;
+                curChild = getNextSibling(curChild);
             }
         }
 
@@ -96,18 +108,18 @@ function toHTML(node) {
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(node.nodeValue) + '\n';
+        html += indent + JSON.stringify(getNodeValue(node)) + '\n';
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
+        html += indent + '<!--' + JSON.stringify(getNodeValue(node)) + '-->\n';
     }
 
     if (getNodeType(node) === 11 /* DocumentFragment */) {
-        var curChild = node.firstChild;
+        var curChild = getFirstChild(node);
         while(curChild) {
             serializeHelper(curChild, '');
-            curChild = curChild.nextSibling;
+            curChild = getNextSibling(curChild);
         }
     } else {
         serializeHelper(node, '');

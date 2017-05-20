@@ -1,0 +1,10 @@
+{
+    "browser": {
+        "./helpers.js": "./helpers-browser.js",
+        "./index.js": "./index-browser.js",
+        "./init-components.js": "./init-components-browser.js",
+        "./legacy/defineWidget-legacy.js": "./legacy/defineWidget-legacy-browser.js",
+        "./registry.js": "./registry-browser.js",
+        "./util.js": "./util-browser.js"
+    }
+}

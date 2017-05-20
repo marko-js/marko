@@ -8,7 +8,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
         output += data;
     });
 
-    var runtimeHtml = require('marko/html');
+    var runtimeHtml = require('marko/src/html');
 
     var out = runtimeHtml.createWriter(stream);
     out

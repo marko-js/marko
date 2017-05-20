@@ -1,0 +1,7 @@
+{
+    "dependencies": [
+        "require: ./*.js",
+        "require: ./vdom/*.js",
+        "require-run: ./dependencies/vdom"
+    ]
+}

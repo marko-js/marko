@@ -1,0 +1,6 @@
+{
+    "browser": {
+        "./nextTick": "./nextTick-browser.js",
+        "./index.js": "./index-browser.js"
+    }
+}

@@ -116,12 +116,17 @@ var args = require('argly').createParser({
 
 var output = 'html';
 
+var isForBrowser = false;
+
 if (args.vdom) {
     output = 'vdom';
+    isForBrowser = true;
 }
+
 
 var compileOptions = {
     output: output,
+    browser: isForBrowser,
     compilerType: 'markoc',
     compilerVersion: markoPkgVersion || markocPkgVersion
 };

@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "require: ./*.js",
-        "require: ./vdom/*.js"
-    ]
-}

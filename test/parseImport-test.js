@@ -1,9 +1,9 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
-var parseFor = require('../taglibs/core/util/parseImport.js');
+var parseFor = require('marko/taglibs/core/util/parseImport.js');
 var autotest = require('./autotest');
 var fs = require('fs');
 var path = require('path');

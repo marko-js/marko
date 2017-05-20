@@ -1,4 +1,4 @@
-module.exports = require('marko/components/legacy').defineComponent({
+module.exports = require('marko/legacy-components').defineComponent({
     template: require('./template.marko'),
     getInitialState: function(input) {
         return {

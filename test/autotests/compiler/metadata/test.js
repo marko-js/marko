@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var config = require('../../../../compiler/config');
+var config = require('marko/compiler/config');
 var oldMeta = config.meta;
 
 config.meta = true;

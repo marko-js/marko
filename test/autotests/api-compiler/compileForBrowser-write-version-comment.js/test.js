@@ -19,6 +19,9 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
     compiledTemplate.code = _appendMarkoVersionComment(compiledTemplate.code);
     expected = _appendMarkoVersionComment(expected);
 
-    expect(compiledTemplate.code).to.deep.equal(expected);
+    var code = compiledTemplate.code;
+    code = code.replace(/marko\/dist\//g, 'marko/src/');
+
+    expect(code).to.deep.equal(expected);
     done();
 };

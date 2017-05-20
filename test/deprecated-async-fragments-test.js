@@ -1,16 +1,16 @@
 'use strict';
-require('./util/patch-module');
+require('./util/test-init');
 
 var chai = require('chai');
 chai.config.includeStack = true;
 var expect = require('chai').expect;
 var path = require('path');
 var marko = require('../');
-var markoRuntimeHtml = require('../runtime/html');
+var markoRuntimeHtml = require('marko/runtime/html');
 var autotest = require('./autotest');
 var fs = require('fs');
 
-require('../node-require').install();
+require('marko/node-require').install();
 
 describe('async-fragments (deprecated)', function() {
     var autoTestDir = path.join(__dirname, 'autotests/async-fragments-deprecated');

@@ -1,3 +1,5 @@
+require('./util/test-init');
+
 var path = require('path');
 
 var fs = require('fs');
@@ -6,11 +8,11 @@ var toHTML = require('./util/toHTML');
 var jsdom = require("jsdom").jsdom;
 var document = jsdom('<html><body></body></html>');
 
-var vdom = require('../runtime/vdom/vdom');
-var VElement = vdom.$__VElement;
-var VText = vdom.$__VText;
-var VComment = vdom.$__VComment;
-var VDocumentFragment = vdom.$__VDocumentFragment;
+var vdom = require('marko/runtime/vdom/vdom');
+var VElement = vdom.___VElement;
+var VText = vdom.___VText;
+var VComment = vdom.___VComment;
+var VDocumentFragment = vdom.___VDocumentFragment;
 
 
 var vdomHelpers = {

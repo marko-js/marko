@@ -62,6 +62,8 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
     require('marko/compiler').configure({output: output});
 
+    global.document = defaultDocument;
+
     let isVDOM = output === 'vdom';
     let checkAsyncEvents = options.checkAsyncEvents === true;
 
@@ -159,7 +161,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         }
 
                         require('marko/compiler').configure({ output: 'html' });
-                        require('marko/runtime/vdom/AsyncVDOMBuilder').prototype.$__document = defaultDocument;
+                        require('marko/runtime/vdom/AsyncVDOMBuilder').prototype.___document = defaultDocument;
                         global.document = defaultDocument;
 
                         let htmlTemplatePath = path.join(dir, 'template.marko');
@@ -180,6 +182,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
 
                     getExpectedHtml(function(err, expectedHtml) {
+                        if (err) {
+                            return done(err);
+                        }
+
                         fs.writeFileSync(path.join(dir, 'vdom-expected.generated.html'), expectedHtml, { encoding: 'utf8' });
 
                         let actualizedDom = vdomTree.actualize(defaultDocument);

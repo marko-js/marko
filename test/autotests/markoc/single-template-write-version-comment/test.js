@@ -10,6 +10,6 @@ exports.test = function(helpers) {
 
     var compiledFile = helpers.readSync('template.marko.js').toString();
     var expectedFile = _appendMarkoVersionComment(helpers.readSync('expected.js'));
-
+    compiledFile = compiledFile.replace(/marko\/dist\//g, 'marko/src/');
     expect(compiledFile).to.deep.equal(expectedFile);
 };

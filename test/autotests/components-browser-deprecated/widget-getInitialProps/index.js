@@ -1,4 +1,4 @@
-module.exports = require('marko/components/legacy').defineComponent({
+module.exports = require('marko/legacy-components').defineComponent({
     template: require.resolve('./template.marko'),
     getInitialProps: function(input, out) {
         var name = input.name;
