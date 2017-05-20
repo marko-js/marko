@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 const buildDir = require('./util').buildDir;
 const babelOptions = {
     "plugins": [
@@ -20,6 +22,15 @@ buildDir('src', 'dist', {
     ],
     babelOptions
 });
+
+var buildConstants = {
+    isDebug: false
+};
+
+fs.writeFileSync(
+    path.join(__dirname, '../dist/build.json'),
+    JSON.stringify({ isDebug: false }, null, 4),
+    { encoding: 'utf8' });
 
 buildDir('test', 'test-dist', {
     babelExclude: [

@@ -21,7 +21,7 @@ var markoModules = require('./modules');
 
 const markoPkgVersion = require('../../package.json').version;
 const rootDir = path.join(__dirname, '../');
-const markoEnv = require('../../env');
+const isDebug = require('../build.json').isDebug;
 
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
@@ -151,7 +151,7 @@ class CompileContext extends EventEmitter {
         this._preserveComments = null;
         this.inline = this.options.inline === true;
         this.useMeta = this.options.meta !== false;
-        this.markoModulePrefix = markoEnv.isDebug ? 'marko/src/' : 'marko/dist/';
+        this.markoModulePrefix = isDebug ? 'marko/src/' : 'marko/dist/';
 
         this._moduleRuntimeTarget = this.markoModulePrefix + (this.outputType === 'vdom' ? 'vdom' : 'html');
         this.unrecognizedTags = [];

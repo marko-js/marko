@@ -130,7 +130,7 @@
   },
   "main": "index.js",
   "browser": {
-    "./compiler.js": "../compiler-browser.marko",
+    "./compiler.js": "./compiler-browser.marko",
     "./components.js": "./components-browser.marko",
     "./index.js": "./index-browser.marko",
     "./legacy-components.js": "./legacy-components-browser.marko"
