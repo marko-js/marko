@@ -10,8 +10,7 @@ module.exports = function render(input, out) {
         // If so, then reuse the existing DOM node instead of re-rendering
         // the children. We have to put a placeholder node that will get
         // replaced out if we find that the DOM node has already been rendered
-        var condition = input['if'];
-        if (condition !== false) {
+        if (!('if' in input) || input['if']) {
             var existingEl = getElementById(out.___document, id);
             if (existingEl) {
                 var bodyOnly = input.bodyOnly === true;
