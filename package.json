@@ -40,7 +40,7 @@
     "test-components-browser-dev": "browser-refresh test/browser-tests-runner/cli.js components-browser-tests.js --server",
     "test-page": "node test/browser-tests-runner/cli.js components-browser-tests.js --automated --page",
     "test-pages": "npm run test-components-pages",
-    "jshint": "jshint src/",
+    "jshint": "jshint src/ *.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",

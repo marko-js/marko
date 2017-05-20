@@ -4,7 +4,7 @@ const NO_UPDATE_ATTR_SUFFIX = ':no-update';
 
 var PRESERVE_ATTRS_HELPER_ADDED = Symbol('PRESERVE_ATTRS_HELPER_ADDED');
 
-function handleComponentPreserveAttrs() {
+module.exports = function handleComponentPreserveAttrs() {
     var el = this.el;
     var context = this.context;
     var builder = context.builder;
@@ -47,6 +47,4 @@ function handleComponentPreserveAttrs() {
         }
 
     }
-}
-
-module.exports = handleComponentPreserveAttrs;
+};
