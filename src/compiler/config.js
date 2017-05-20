@@ -54,7 +54,13 @@ if (g.__MARKO_CONFIG) {
          * Whether the version should be written to the template as a comment e.g.
          * // Compiled using marko@4.0.0 - DO NOT EDIT
          */
-        writeVersionComment: true
+        writeVersionComment: true,
+
+        /**
+         * Whether unrecognized tags should be ignored or not. This flag will
+         * be enabled by default when compiling XML.
+         */
+        ignoreUnrecognizedTags: false
     };
 
     if (process.env.MARKO_CONFIG) {

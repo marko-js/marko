@@ -12,6 +12,7 @@ coverage
 ~*
 /.cache
 *.marko.js
+*.marko.xml.js
 /test/generated/
 .nyc_output
 yarn.lock

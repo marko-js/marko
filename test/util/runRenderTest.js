@@ -103,6 +103,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
         require('marko/compiler').defaultOptions.preserveWhitespace = true;
     }
 
+    if (main.ignoreUnrecognizedTags) {
+        require('marko/compiler').defaultOptions.ignoreUnrecognizedTags = true;
+    }
+
     var oldDone = done;
     done = function(err) {
         require('marko/compiler').configure();

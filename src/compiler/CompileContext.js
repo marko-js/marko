@@ -136,7 +136,8 @@ class CompileContext extends EventEmitter {
         this.compilerType = this.options.compilerType || 'marko';
         this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
         this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
-        this.markoModulePrefix =
+        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags || false;
+
         this._vars = {};
         this._uniqueVars = new UniqueVars();
         this._staticVars = {};
@@ -476,9 +477,10 @@ class CompileContext extends EventEmitter {
             if (typeof tagName === 'string') {
                 tagDef = taglibLookup.getTag(tagName);
                 if (!tagDef &&
-                        !this.isMacro(tagName) &&
-                        tagName.indexOf(':') === -1 &&
-                        !htmlElements.isRegisteredElement(tagName, this.dirname)) {
+                    !this.isMacro(tagName) &&
+                    tagName.indexOf(':') === -1 &&
+                    !htmlElements.isRegisteredElement(tagName, this.dirname) &&
+                    !this.ignoreUnrecognizedTags) {
 
                     if (this._parsingFinished) {
                         this.addErrorUnrecognizedTag(tagName, elNode);
