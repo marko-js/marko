@@ -119,7 +119,7 @@ Using the Node.js require extension is completely optional. If you prefer to not
 marko compile hello.marko
 ```
 
-This will produce a `hello.js` file next to the original template. The generated `.js` file will be what gets loaded by the Node.js runtime. It is important to leave off the `.marko` extension when requiring a Marko template so that the `.js` will be resolved correctly.
+This will produce a `hello.marko.js` file next to the original template. The generated `.js` file will be what gets loaded by the Node.js runtime. It is important to leave off the `.marko` extension when requiring a Marko template so that the `.js` will be resolved correctly.
 
 If you wish to only use the require extension in development, you can conditionally require it.
 ```js
