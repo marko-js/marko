@@ -24,7 +24,6 @@
     "test": "npm run jshint -s && npm run mocha -s && npm run test-components -s && npm run test-components-deprecated -s",
     "test-ci": "npm run test-generate-coverage && npm run build && NODE_ENV=production npm run test",
     "mocha": "node test/server-tests-runner/cli.js",
-    "prepublishOnly": "npm run build",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
     "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
