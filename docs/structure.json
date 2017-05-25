@@ -42,4 +42,10 @@
     "docs": [
         "Color Picker"
     ]
+}, {
+    "title": "Articles",
+    "docs": [
+        "Marko vs React",
+        "Why is Marko Fast"
+    ]
 }]
