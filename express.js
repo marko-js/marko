@@ -1,7 +1,8 @@
 var isDebug = require('./env').isDebug;
+var parentModule = module.parent;
 
 if (isDebug) {
-    module.exports = require('./src/express');
+    module.exports = parentModule.require('marko/src/express');
 } else {
-    module.exports = require('./dist/express');
+    module.exports = parentModule.require('marko/dist/express');
 }
