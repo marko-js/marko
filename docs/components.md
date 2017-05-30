@@ -185,7 +185,7 @@ class {
 <button on-click('sayHello', 'Frank')>Say Hello to Frank</button>
 ```
 
-The component above would also recieve the following arguments after `name`:
+The component above would also receive the following arguments after `name`:
 + `evt` for the DOM event
 + `el` for the DOM element
 
@@ -411,7 +411,7 @@ class {
 
 Be aware, that setting a `state` property only nominates the component for a possible rerender and properties are only watched one level deep. Thus, the component is only rerendered, if at least one of the component state properties changed (`oldValue !== newValue`).
 
-If none of the properties changed (because identical or not detected by a shallow comparision), the assignment is considered a no operation (great for performance).
+If none of the properties changed (because identical or not detected by a shallow comparison), the assignment is considered a no operation (great for performance).
 
 We recommend using [immutable](https://wecodetheweb.com/2016/02/12/immutable-javascript-using-es6-and-beyond/) data structures, but if you want to mutate a state property (perhaps push a new item into an array) you can mark it as dirty using `setStateDirty`.
 
@@ -599,7 +599,7 @@ Force a state property to be changed even if the value is equal to the old value
 #### More details
 
 The first parameter `name` is used to allow update handlers (e.g. `update_foo(newValue)`) to handle the state transition for the specific state property that was marked as dirty. The second parameter `value` is used as the new value that is given to update handlers. Because `setStateDirty()` always bypasses all property equality checks, this parameter is optional. If not given or equal to the old value, the old value will be used for the update handler.
-It is important to know, that the given parameters do not affect how or if `setStateDirty()` rerenderes a component; they are only considered as additional information to update handlers.
+It is important to know, that the given parameters do not affect how or if `setStateDirty()` rerenders a component; they are only considered as additional information to update handlers.
 
 _example.js_
 
