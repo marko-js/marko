@@ -61,7 +61,7 @@ _index.html_
 <!doctype html>
 <html>
 <body>
-    <script src="static/bundle.js"/>
+    <script src="static/bundle.js"></script>
 </body>
 </html>
 ```
