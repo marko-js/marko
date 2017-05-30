@@ -10,7 +10,6 @@ class ObjectExpression extends Node {
 
     generateCode(codegen) {
         this.properties = codegen.generateCode(this.properties);
-
         return this;
     }
 
@@ -41,6 +40,52 @@ class ObjectExpression extends Node {
         writer.writeLineIndent();
         writer.write('}');
         writer.decIndent();
+    }
+
+    getProperty(name) {
+        var properties = this.properties;
+
+        for (var i=0; i<properties.length; i++)             {
+            var curProperty = properties[i];
+            if (curProperty.literalKeyValue === name) {
+                return curProperty;
+            }
+        }
+        return undefined;
+    }
+
+    addProperties(props) {
+        if (props instanceof ObjectExpression){
+            props = props.properties;
+        }
+
+        if (Array.isArray(props)) {
+            props.forEach((prop) => {
+                this.addProperty(prop);
+            });
+        }
+    }
+
+    addProperty(property) {
+        var literalKeyValue = property.literalKeyValue;
+        var properties = this.properties;
+
+        if (literalKeyValue) {
+            for (var i=0; i<properties.length; i++)             {
+                var curProperty = properties[i];
+
+                if (curProperty.literalKeyValue === literalKeyValue) {
+                    properties[i] = property;
+                    return;
+                }
+            }
+        }
+
+        properties.push(property);
+    }
+
+    hasProperties() {
+        return this.properties != null && this.properties.length > 0;
     }
 
     toJSON() {

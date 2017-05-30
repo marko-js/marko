@@ -7,6 +7,7 @@ var ok = require('assert').ok;
 var Node = require('./Node');
 
 var CUSTOM_TAG_KEY = Symbol('CustomTag');
+var HAS_RENDER_BODY_PROP_ADDED = Symbol();
 
 function getNestedVariables(elNode, tagDef, codegen) {
     var variableNames = [];
@@ -157,47 +158,52 @@ function processDirectlyNestedTags(node, codegen) {
 }
 
 function merge(props1, props2, context) {
-    if (!props2) {
+    if (props1 && !(props1 instanceof Node)) {
+        props1 = context.builder.objectExpression(props1);
+    }
+
+    if (props2) {
+        if (!(props2 instanceof Node)) {
+            props2 = context.builder.objectExpression(props2);
+        }
+    } else {
         return props1;
     }
 
-    if (!(props2 instanceof Node)) {
-        if (Object.keys(props2).length === 0) {
-            return props1;
-        }
+    if (props2.type === 'ObjectExpression' && !props2.hasProperties()) {
+        return props1;
     }
 
-    if (props1 instanceof Node) {
-        let mergeVar = context.helper('merge');
-        if (!(props2 instanceof Node)) {
-            props2 = context.builder.literal(props2);
+    if (props1.type === 'ObjectExpression') {
+        var argProp = props1.getProperty('_arg');
+
+        if (argProp) {
+            let mergeVar = context.helper('merge');
+            argProp.value = context.builder.functionCall(mergeVar, [
+                props2, // Input props from the attributes take precedence
+                argProp.value
+            ]);
+
+            return props1;
         }
 
-        return context.builder.functionCall(mergeVar, [
-            props2, // Input props from the attributes take precedence
-            props1
-        ]);
-    } else {
-        if (props2 instanceof Node) {
+        if (props2.type === 'ObjectExpression') {
+            props1.addProperties(props2.properties);
+            return props1;
+        } else {
             let mergeVar = context.helper('merge');
 
             return context.builder.functionCall(mergeVar, [
                 props2, // Input props from the attributes take precedence
                 props1
-
             ]);
-        } else {
-            if (props1._arg) {
-                let mergeVar = context.helper('merge');
-                props1._arg = context.builder.functionCall(mergeVar, [
-                    context.builder.literal(props2), // Input props from the attributes take precedence
-                    props1._arg
-                ]);
-                return props1;
-            } else {
-                return Object.assign(props1, props2);
-            }
         }
+    } else {
+        let mergeVar = context.helper('merge');
+        return context.builder.functionCall(mergeVar, [
+            props2, // Input props from the attributes take precedence
+            props1
+        ]);
     }
 }
 
@@ -314,6 +320,13 @@ class CustomTag extends HtmlElement {
                 return; // Skip attributes with no names
             }
 
+            if (typeof attrName !== 'string') {
+                // Skip over attributes that don't have string attribute names
+                // since those will be computed properties that we need to
+                // add at the end
+                return;
+            }
+
             var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
             if (!attrDef) {
@@ -383,6 +396,7 @@ class CustomTag extends HtmlElement {
                     tagDef.isNestedTag = true;
                     tagDef.isRepeated = false;
                     tagDef.targetProperty = nestedTagName;
+                    tagDef.parentCustomTag = parentCustomTag;
                 }
             } else {
                 throw new Error('"tagDef" is required for CustomTag');
@@ -469,6 +483,8 @@ class CustomTag extends HtmlElement {
         var body = codegen.generateCode(this.body);
         context.popData(CUSTOM_TAG_KEY);
 
+        var hasBody = body && body.length;
+
         var isNestedTag = tagDef.isNestedTag === true;
         if (isNestedTag) {
             parentCustomTag = context.getData(CUSTOM_TAG_KEY);
@@ -484,10 +500,33 @@ class CustomTag extends HtmlElement {
 
             parentCustomTag.addNestedTag(this);
 
+            if (hasBody && context.isServerTarget() && !parentCustomTag.isFlagSet(HAS_RENDER_BODY_PROP_ADDED)) {
+                parentCustomTag.setFlag(HAS_RENDER_BODY_PROP_ADDED);
+
+                var hasRenderBodyKey = context.addStaticVar(
+                    'hasRenderBodyKey',
+                    builder.functionCall(
+                        builder.memberExpression(
+                            builder.identifier('Symbol'),
+                            builder.identifier('for')
+                        ),
+                        [
+                            builder.literal('hasRenderBody')
+                        ]));
+
+                // We flag tags that have a `renderBody` function on the input
+                // since those tags must be handled differently if it happens to
+                // be a top-level UI component since the `input` would not
+                // be serializable (functions are not serializable). If know
+                // that a top-level UI component has non-serializable input
+                // then we won't use it as the browser-side re-render root
+                parentCustomTag.setAttributeValue(hasRenderBodyKey, codegen.builder.literal(true));
+            }
+
             if (checkIfNestedTagCanBeAddedDirectlyToInput(this, parentCustomTag)) {
                 let inputProps = this.buildInputProps(codegen);
 
-                if (body && body.length) {
+                if (hasBody) {
                     inputProps.renderBody = codegen.builder.renderBodyFunction(body);
                 }
 
@@ -501,7 +540,7 @@ class CustomTag extends HtmlElement {
                         ]));
                     }
                 } else {
-                    let nestedTagValue = builder.literal(inputProps);
+                    let nestedTagValue = builder.objectExpression(inputProps);
                     if (this._condition) {
                         nestedTagValue = builder.binaryExpression(this._condition, '&&', nestedTagValue);
                     }
@@ -526,7 +565,7 @@ class CustomTag extends HtmlElement {
 
         var renderBodyFunction;
 
-        if (body && body.length) {
+        if (hasBody) {
             if (tagDef.bodyFunction) {
                 let bodyFunction = tagDef.bodyFunction;
                 let bodyFunctionName = bodyFunction.name;
@@ -564,6 +603,20 @@ class CustomTag extends HtmlElement {
             bodyOnlyIf = null;
         }
 
+        // Convert the input properties object into an ObjectExpression AST node
+        inputProps = builder.objectExpression(inputProps);
+
+        // Loop over the attributes found on the HTML element and add the corresponding properties
+        // to the input object for the custom tag
+        this.forEachAttribute((attr) => {
+            var attrName = attr.name;
+            if (attrName && typeof attrName !== 'string') {
+                // Add a computed property since the attribute name is not
+                // a literal string.
+                inputProps.properties.push(builder.property(attrName, attr.value, true /* computed */));
+            }
+        });
+
         var argExpression;
 
         if (this.argument) {
@@ -584,10 +637,6 @@ class CustomTag extends HtmlElement {
             this.dynamicAttributes.forEach((dynamicAttributesExpression) => {
                 inputProps = merge(dynamicAttributesExpression, inputProps, context);
             });
-        }
-
-        if (!(inputProps instanceof Node)) {
-            inputProps = builder.literal(inputProps);
         }
 
         if (hasDynamicNestedTags) {

@@ -830,6 +830,14 @@ class CompileContext extends EventEmitter {
     getModuleRuntimeTarget() {
         return this._moduleRuntimeTarget;
     }
+
+    isBrowserTarget() {
+        return this.target === 'browser';
+    }
+
+    isServerTarget() {
+        return this.target === 'server';
+    }
 }
 
 CompileContext.prototype.util = {

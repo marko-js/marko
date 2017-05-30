@@ -2,7 +2,8 @@
 
 var ComponentDef = require('./ComponentDef');
 var componentsUtil = require('./util');
-var isServer = componentsUtil.___isServer === true;
+
+var beginComponent = require('./beginComponent');
 
 var EMPTY_OBJECT = {};
 
@@ -100,33 +101,7 @@ ComponentsContext.prototype = {
     ___createNestedComponentsContext: function(nestedOut) {
         return new ComponentsContext(nestedOut, this);
     },
-    ___beginComponent: function(component, isSplitComponent) {
-        var componentStack = this.___componentStack;
-        var origLength = componentStack.length;
-        var parentComponentDef = componentStack[origLength - 1];
-
-        var componentId = component.id;
-
-        var componentDef = new ComponentDef(component, componentId, this.___globalContext, componentStack, origLength);
-        if (isServer) {
-            // On the server
-            if (parentComponentDef.___willRerenderInBrowser === true) {
-                componentDef.___willRerenderInBrowser = true;
-            } else {
-                parentComponentDef.___addChild(componentDef);
-                if (isSplitComponent === false && this.___out.global.noBrowserRerender !== true) {
-                    componentDef.___willRerenderInBrowser = true;
-                }
-            }
-        } else {
-            parentComponentDef.___addChild(componentDef);
-            this.___globalContext.___componentsById[componentId] = componentDef;
-        }
-
-        componentStack.push(componentDef);
-
-        return componentDef;
-    },
+    ___beginComponent: beginComponent,
 
     ___nextComponentId: function() {
         var componentStack = this.___componentStack;

@@ -191,15 +191,25 @@ function parseExpression(src, builder, isExpression) {
                 return builder.objectExpression(properties);
             }
             case 'Property': {
+                let computed = node.computed === true;
+
                 let key = convert(node.key);
                 if (!key) {
                     return null;
                 }
+
+                if (!computed && key.type === 'Identifier') {
+                    // Favor using a Literal AST node to represent
+                    // the key instead of an Identifier
+                    key = builder.literal(key.name);
+                }
+
                 let value = convert(node.value);
                 if (!value) {
                     return null;
                 }
-                return builder.property(key, value);
+
+                return builder.property(key, value, computed);
             }
             case 'ReturnStatement': {
                 var argument = node.argument;

@@ -412,13 +412,24 @@ class Builder {
 
     objectExpression(properties) {
         if (properties) {
-            if (!isArray(properties)) {
-                properties = [properties];
-            }
+            if (isArray(properties)) {
+                for (var i=0; i<properties.length; i++) {
+                    let prop = properties[i];
+                    prop.value = makeNode(prop.value);
+                }
+            } else {
+                let propertiesObject = properties;
+                properties = Object.keys(propertiesObject).map((key) => {
+                    let value = propertiesObject[key];
+                    if (!(value instanceof Node)) {
+                        value = value = new Literal({value});
+                    }
 
-            for (var i=0; i<properties.length; i++) {
-                let prop = properties[i];
-                prop.value = makeNode(prop.value);
+                    key = new Literal({value: key});
+
+                    let property = new Property({key, value});
+                    return property;
+                });
             }
         } else {
             properties = [];
@@ -452,11 +463,12 @@ class Builder {
         return new Program({body});
     }
 
-    property(key, value) {
+    property(key, value, computed) {
         key = makeNode(key);
         value = makeNode(value);
+        computed = computed === true;
 
-        return new Property({key, value});
+        return new Property({key, value, computed});
     }
 
     renderBodyFunction(body, params) {

@@ -7,18 +7,12 @@ class Property extends Node {
         super('Property');
         this.key = def.key;
         this.value = def.value;
+        this.computed = def.computed === true;
     }
 
     generateCode(codegen) {
         var key = this.key;
         var value = this.value;
-
-        if (key.type === 'Literal') {
-            var propName = key.value;
-            if (isValidJavaScriptIdentifier(propName)) {
-                key = codegen.builder.identifier(propName);
-            }
-        }
 
         this.key = codegen.generateCode(key);
         this.value = codegen.generateCode(value);
@@ -29,7 +23,22 @@ class Property extends Node {
     writeCode(writer) {
         var key = this.key;
         var value = this.value;
-        writer.write(key);
+        var computed = this.computed === true;
+
+        if (computed) {
+            writer.write('[');
+        }
+
+        if (key.type === 'Literal' && typeof key.value === 'string' && isValidJavaScriptIdentifier(key.value)) {
+            writer.write(key.value);
+        } else {
+            writer.write(key);
+        }
+
+        if (computed) {
+            writer.write(']');
+        }
+
         writer.write(': ');
         writer.write(value);
     }
@@ -45,6 +54,18 @@ class Property extends Node {
     walk(walker) {
         this.key = walker.walk(this.key);
         this.value = walker.walk(this.value);
+    }
+
+    get literalKeyValue() {
+        if (!this.computed && this.key) {
+            if (this.key.type === 'Literal') {
+                return this.key.value;
+            } else if (this.key.type === 'Identifier') {
+                return this.key.name;
+            }
+        }
+
+        return undefined;
     }
 
     toString() {

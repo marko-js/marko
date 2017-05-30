@@ -21,17 +21,18 @@ class HtmlAttributeCollection {
 
         var name = newAttr.name;
 
-        if (this.lookup.hasOwnProperty(name)) {
-            for (var i=0; i<this.all.length; i++) {
-                var curAttr = this.all[i];
-                if (curAttr.name === name) {
-                    this.all.splice(i, 1);
-                    break;
+        if (typeof name === 'string') {
+            if (this.lookup.hasOwnProperty(name)) {
+                for (var i=0; i<this.all.length; i++) {
+                    var curAttr = this.all[i];
+                    if (curAttr.name === name) {
+                        this.all.splice(i, 1);
+                        this.lookup[name] = newAttr;
+                        return;
+                    }
                 }
             }
-        }
 
-        if (name) {
             this.lookup[name] = newAttr;
         }
 
