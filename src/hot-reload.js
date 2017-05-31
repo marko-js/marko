@@ -35,11 +35,14 @@ function tryReloadTemplate(path) {
     }
 }
 
-exports.enable = function() {
+exports.enable = function(options) {
     if (runtime.__hotReloadEnabled) {
         // Marko has already been monkey-patched. Nothing to do!
         return;
     }
+
+    options = options || {};
+    var silent = options.silent || false;
 
     runtime.__hotReloadEnabled = true;
 
@@ -68,7 +71,7 @@ exports.enable = function() {
 
                 if (hotReloadData.latest !== template) {
                     template.meta = hotReloadData.latest.meta;
-                    console.log('[marko/hot-reload] Template successfully reloaded: ' + templatePath);
+                    if (!silent) { console.log('[marko/hot-reload] Template successfully reloaded: ' + templatePath); }
                 }
             }
 
@@ -131,6 +134,7 @@ exports.handleFileModified = function(path, options) {
     }
 
     options = options || {};
+    var silent = options.silent || false;
 
     // Default hot-reloaded extensions
     var requireExtensions = ['.marko', '.marko.html', '.marko.xml'];
@@ -155,7 +159,7 @@ exports.handleFileModified = function(path, options) {
     var basename = nodePath.basename(path);
 
     function handleFileModified() {
-        console.log('[marko/hot-reload] File modified: ' + path);
+        if (!silent) { console.log('[marko/hot-reload] File modified: ' + path); }
         runtime.cache = {};
         compiler.clearCaches();
         cleaResolvePathCache();
