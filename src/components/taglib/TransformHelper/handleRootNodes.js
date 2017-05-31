@@ -199,9 +199,16 @@ module.exports = function handleRootNodes() {
                     hasLegacyExplicitBind = true;
                 } else {
                     if (node.hasAttribute('id')) {
+                        let id = node.getAttributeValue('id');
+
+                        if (id && id.name) {
+                            context.addError('Root HTML element should not have a dynamic `id` attribute');
+                            return;
+                        }
+
                         hasIdCount++;
                         nodeWithAssignedId = node;
-                        assignedId = node.getAttributeValue('id');
+                        assignedId = id;
                     }
 
                     if (tagName === 'style') {
