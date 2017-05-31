@@ -201,8 +201,8 @@ module.exports = function handleRootNodes() {
                     if (node.hasAttribute('id')) {
                         let id = node.getAttributeValue('id');
 
-                        if (id && id.name) {
-                            context.addError('Root HTML element should not have a dynamic `id` attribute');
+                        if (id && id.type !== 'Literal') {
+                            context.addError('Root HTML element should not have a dynamic `id` attribute. See: https://github.com/marko-js/marko/wiki/Error:-Dynamic-root-HTML-element-id-attribute');
                             return;
                         }
 
