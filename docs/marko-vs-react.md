@@ -695,8 +695,15 @@ For example given the following directory structure:
     └── index.marko
 ```
 
-The `<hello>` tag and` the <good-bye>`` tag nested below the  `components/`
+The `<hello>` tag and the `<good-bye>` tag nested below the  `components/`
 directory will automatically be made available to the `index.marko` at the root:
+
+```marko
+<div>
+  <hello name=input.name />
+  <good-bye name=input.name />
+</div>
+```
 
 This approach also allows editors and IDEs to offer autocompletion for custom
 tags.
