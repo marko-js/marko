@@ -24,7 +24,7 @@ function handleStyleElement(styleEl, transformHelper) {
         if (name.startsWith('{')) {
             hasStyleBlock = true;
 
-            styleCode = name.slice(1, -1);
+            styleCode = name.slice(1, -1).trim();
         } else if (name === 'class') {
             if (attr.value.type !== 'Literal' || typeof attr.value.value !== 'string') {
                 return;
@@ -39,14 +39,17 @@ function handleStyleElement(styleEl, transformHelper) {
         }
     }
 
-    if (styleCode == null) {
+    if (!styleCode) {
+        if (hasStyleBlock) {
+            styleEl.detach();
+        }
         return;
     }
 
     var context = transformHelper.context;
     context.addDependency({
         type: lang,
-        code: styleCode.trim(),
+        code: styleCode,
         virtualPath: './'+path.basename(context.filename)+'.'+lang,
         path: './'+path.basename(context.filename)
     });
