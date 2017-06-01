@@ -4,7 +4,7 @@
   <img src="https://cdn-images-1.medium.com/max/2000/1*QR3HJxrZnSPxhc33re7vew.png" alt="Marko logo" width="800" />
 </a><br />
 
-You can find the original ["Why is Marko Fast?"" article here](https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3)!
+You can find the original ["Why is Marko Fast?" article here](https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3)!
 
 At eBay we are using [Marko](http://markojs.com/) to render over a billion
 requests every day and this has required us to finely tune Marko, our open
