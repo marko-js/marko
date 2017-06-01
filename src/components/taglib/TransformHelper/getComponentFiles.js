@@ -17,13 +17,15 @@ function getComponentFiles(filename) {
     var styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
     var componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
     var splitComponentMatch = new RegExp('^'+fileMatch+'component-browser\\.\\w+$');
+    var packageMatch = new RegExp('^'+fileMatch+'browser\\.\\json$');
 
     var dirname = path.dirname(filename);
 
     var foundFiles = {
         styles: [],
         file: null,
-        browserFile: null
+        browserFile: null,
+        package: null
     };
 
     var dirFiles = fs.readdirSync(dirname);
@@ -38,6 +40,8 @@ function getComponentFiles(filename) {
             foundFiles.browserFile = file;
         } else if (componentMatch.test(file)) {
             foundFiles.file = file;
+        } else if (packageMatch.test(file)) {
+            foundFiles.package = file;
         }
     }
 
