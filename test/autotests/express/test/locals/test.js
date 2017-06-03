@@ -17,4 +17,4 @@ exports.createController = function(template) {
     return function(req, res) {
         res.marko(template);
     };
-}
+};

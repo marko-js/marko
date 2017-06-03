@@ -1,0 +1,7 @@
+{
+  "name": "marko-test-express-4",
+  "version": "1.0.0",
+  "devDependencies": {
+    "express": "^4.13.4"
+  }
+}

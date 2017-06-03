@@ -2,14 +2,11 @@ exports.createApp = function(express, markoExpressPath) {
     var app = express();
     var markoExpress = require(markoExpressPath);
 
-    app.locals.foo = 'APP';
-    app.locals.bar = 'APP';
-    app.locals.baz = 'APP';
+    app.locals.foo = 'FOO';
 
     app.use(markoExpress());
     app.use(function(req, res, next) {
-        res.locals.foo = 'RES';
-        res.locals.bar = 'RES';
+        res.locals.bar = 'BAR';
         next();
     });
 
@@ -18,6 +15,11 @@ exports.createApp = function(express, markoExpressPath) {
 
 exports.createController = function(template) {
     return function(req, res) {
-        res.marko(template, { $global:{ foo:'DATA' }, test:'HELLO' });
+        res.marko(template);
     };
-}
+};
+
+exports.checkResponse = function(response, expect, helpers) {
+    expect(response.headers['content-type']).to.equal('text/html; charset=utf-8');
+    expect(response.body).to.equal('<div></div>');
+};

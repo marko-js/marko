@@ -13,7 +13,13 @@ module.exports = function markoAppMiddleware() {
         patchResponse(parent.response);
 
         // Remove sacrificial express app
-        parent._router.stack.pop();
+        if (parent._router) {
+            // Support Express <= 4.x
+            parent._router.stack.pop();
+        } else {
+            // Support express 5.x
+            parent.router.stack.pop();
+        }
     });
 
     return sacrificialApp;
