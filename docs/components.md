@@ -140,7 +140,7 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-methods).  This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle).  This class can be exported from `component.js` or defined right in the template as with single-file components.
 ### Example
 
 _index.marko_
