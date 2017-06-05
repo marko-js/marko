@@ -2,7 +2,7 @@
 
 require('./util/test-init');
 
-const registerTests = require('./autotests/express/express');
+const expressTests = require('./autotests/express/express');
 const expressTestUtil = require('./util/express-test');
 
 describe('express-4', function() {
@@ -13,5 +13,5 @@ describe('express-4', function() {
         expressTestUtil.installExpressVersion();
     });
 
-    registerTests();
+    expressTests.test();
 });

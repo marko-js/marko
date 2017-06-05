@@ -4,7 +4,7 @@ require('./util/test-init');
 
 const fs = require('fs');
 const path = require('path');
-const registerTests = require('./autotests/express/express');
+const expressTests = require('./autotests/express/express');
 const expressTestUtil = require('./util/express-test');
 
 const testsPath = path.resolve(__dirname, './autotests/express');
@@ -22,6 +22,8 @@ describe('express-5', function() {
     let originalVersion;
 
     before(function() {
+        expressTests.purgeExpressCache();
+
         const file = expressTestUtil.getExpressPackageFile();
         const expressVersion = file.devDependencies.express;
 
@@ -38,5 +40,5 @@ describe('express-5', function() {
         rewriteExpressPackage(originalVersion);
     });
 
-    registerTests();
+    expressTests.test();
 });
