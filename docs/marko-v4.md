@@ -884,7 +884,6 @@ or
 <div>
     <h1>My Awesome Component</h1>
     <div class="body" w-body/>
-    </div>
 </div>
 ```
 
@@ -1040,12 +1039,12 @@ Given a template like this:
 
 **Old:**
 ```marko
-- Hello ${data['first-name']}
+-- Hello ${data['first-name']}
 ```
 
 **New:**
 ```marko
-- Hello ${data.firstName}
+-- Hello ${input.firstName}
 ```
 
 ### Remove support for deprecated `<async-fragment>` and related tags ([#312](https://github.com/marko-js/marko/pull/312))
