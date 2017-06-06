@@ -496,9 +496,9 @@ _output.html_
 ```html
 <div>
     This is just one
-    &lt;span if(foo)&gt;
+    <span if(foo)>
         Hello ${THIS IS NOT VALID}!
-    &lt;/span&gt;
+    </span>
     big text block
 </div>
 ```
