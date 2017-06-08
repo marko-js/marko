@@ -1,59 +1,28 @@
 'use strict';
-require('./util/test-init');
+require('../../util/test-init');
 
-var chai = require('chai');
+const chai = require('chai');
 chai.config.includeStack = true;
 const expect = chai.expect;
-var path = require('path');
-var marko = require('marko');
-var autotest = require('./autotest');
-var express = require('express');
-var request = require('request');
-var fs = require('fs');
-
-var markoExpressPath = require.resolve('marko/express');
+const path = require('path');
+const autotest = require('../../autotest');
+const request = require('request');
+const fs = require('fs');
+const marko = require('marko');
+const markoExpressPath = require.resolve('marko/express');
 
 require('marko/node-require').install();
 
-describe('express', function() {
-    var autoTestDir = path.join(__dirname, 'autotests/express');
+const autoTestDir = path.join(__dirname, './test');
 
-    describe('registration', function() {
-        it('should not register the res.marko function multiple times', function() {
-            require(markoExpressPath);
-
-            var fn = express.response.marko;
-
-            require(markoExpressPath);
-
-            expect(express.response.marko).to.equal(fn);
-        });
-        it('should be able to register for multiple express instances', function() {
-            // test res.marko is added to the real express response
-            require(markoExpressPath);
-            expect(express.response.marko).to.be.a('function');
-
-            // set up an express mock object and hijack require
-            var expressMock = { response:{} };
-            var _require = module.require;
-
-            module.require = function() {
-                if(arguments[0] === 'express') return expressMock;
-                return _require.apply(module, arguments);
-            };
-
-            // check that res.marko is added to the mocked express response
-            require(markoExpressPath);
-            expect(expressMock.response.marko).to.be.a('function');
-
-            // return require to its original state
-            module.require = _require;
-        });
-    })
+exports.test = function () {
+    let express;
 
     autotest.scanDir(
         autoTestDir,
         function run(dir, helpers, done) {
+            express = require('express');
+
             var mainPath = path.join(dir, 'test.js');
             var templatePath = path.join(dir, 'template.marko');
 
@@ -122,4 +91,54 @@ describe('express', function() {
                 });
             }
         });
-});
+
+        describe('registration', function() {
+            it('should not register the res.marko function multiple times', function() {
+                require(markoExpressPath);
+
+                var fn = express.response.marko;
+
+                require(markoExpressPath);
+
+                expect(express.response.marko).to.equal(fn);
+            });
+            it('should be able to register for multiple express instances', function() {
+                // test res.marko is added to the real express response
+                require(markoExpressPath);
+                expect(express.response.marko).to.be.a('function');
+
+                // set up an express mock object and hijack require
+                var expressMock = { response:{} };
+                var _require = module.require;
+
+                module.require = function() {
+                    if(arguments[0] === 'express') return expressMock;
+                    return _require.apply(module, arguments);
+                };
+
+                // check that res.marko is added to the mocked expressß response
+                require(markoExpressPath);
+                expect(expressMock.response.marko).to.be.a('function');
+
+                // return require to its original state
+                module.require = _require;
+            });
+        });
+};
+
+let purgeExpressCache = exports.purgeExpressCache = function (moduleName) {
+    moduleName = moduleName || require.resolve('express');
+
+    var solvedName = require.resolve(moduleName);
+    var nodeModule = require.cache[solvedName];
+
+    if (nodeModule) {
+        nodeModule.children.forEach((child) => {
+            purgeExpressCache(child.filename);
+        });
+
+        if (solvedName.indexOf('/node_modules/express') !== -1) {
+            delete require.cache[solvedName];
+        }
+    }
+};
