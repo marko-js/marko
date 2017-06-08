@@ -1,7 +1,7 @@
 # Marko vs React: An In-depth Look
 
 <a href="https://hackernoon.com/marko-vs-react-an-in-depth-look-767de0a5f9a6">
-  <img src="https://cdn-images-1.medium.com/max/2000/1*4BP6tPQtwImj6_QseeybwQ.png" alt="Marko logo" width="800" />
+  <img src="https://cdn-images-1.medium.com/max/2000/1*4BP6tPQtwImj6_QseeybwQ.png" alt="Marko logo" width="100%" />
 </a><br />
 
 You can find the original ["Marko vs React: An In-depth Look" article here](https://hackernoon.com/marko-vs-react-an-in-depth-look-767de0a5f9a6)!
@@ -22,7 +22,7 @@ readability and allowing the same expressiveness as JSX. In addition, Marko is
 highly optimized for use on the server and in the browser and has a much smaller
 weight:
 
-<img src="https://cdn-images-1.medium.com/max/1600/1*a9hL_pfNrRq1UU3Mxkf3Jg.png" alt="Marko logo" width="800" /><br />
+<img src="https://cdn-images-1.medium.com/max/1600/1*a9hL_pfNrRq1UU3Mxkf3Jg.png" alt="Marko logo" width="100%" /><br />
 
 Because the Marko JavaScript library is much smaller than React, it will require
 less time to load and parse and this will drastically improve page load times on

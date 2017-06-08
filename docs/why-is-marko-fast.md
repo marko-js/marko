@@ -1,7 +1,7 @@
 # Why is Marko Fast?
 
 <a href="https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3">
-  <img src="https://cdn-images-1.medium.com/max/2000/1*QR3HJxrZnSPxhc33re7vew.png" alt="Marko logo" width="800" />
+  <img src="https://cdn-images-1.medium.com/max/2000/1*QR3HJxrZnSPxhc33re7vew.png" alt="Marko logo" width="100%" />
 </a><br />
 
 You can find the original ["Why is Marko Fast?" article here](https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3)!
