@@ -73,7 +73,6 @@
     "property-handlers": "^1.0.0",
     "raptor-async": "^1.1.2",
     "raptor-json": "^1.0.1",
-    "raptor-logging": "^1.0.1",
     "raptor-polyfill": "^1.0.0",
     "raptor-promises": "^1.0.1",
     "raptor-regexp": "^1.0.0",

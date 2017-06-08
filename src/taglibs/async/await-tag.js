@@ -1,6 +1,5 @@
 'use strict';
 
-var logger = require('raptor-logging').logger(module);
 var AsyncValue = require('raptor-async/AsyncValue');
 var isClientReorderSupported = require('./client-reorder').isSupported;
 var nextTick = require('../../runtime/nextTick');
@@ -160,7 +159,7 @@ module.exports = function awaitTag(input, out) {
                 awaitInfo.timedout = true;
 
                 if (renderTimeout) {
-                    logger.error(message);
+                    console.error(message);
                     renderBody(null, null, renderTimeout);
                 } else {
                     renderBody(new Error(message));
