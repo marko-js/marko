@@ -160,6 +160,10 @@ module.exports = function handleRootNodes() {
         context.addDependency('./' + styleFile);
     });
 
+    if (componentFiles.package) {
+        context.addDependency('package: ./' + componentFiles.package);
+    }
+
     if (componentFiles.file) {
         let file = componentFiles.file;
 
