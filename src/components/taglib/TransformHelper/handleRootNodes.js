@@ -266,6 +266,13 @@ module.exports = function handleRootNodes() {
     var nextKey = 0;
 
     rootNodes.forEach((curNode, i) => {
+        let id = curNode.getAttributeValue('id');
+
+        if (id && id.type !== 'Literal') {
+            context.addError('Root HTML element should not have a dynamic `id` attribute. See: https://github.com/marko-js/marko/wiki/Error:-Dynamic-root-HTML-element-id-attribute');
+            return;
+        }
+
         curNode.setFlag('hasComponentBind');
 
         if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
