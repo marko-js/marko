@@ -24,6 +24,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
     expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
     compileAndCheck('./a.marko', true /* should write to disk */);
+    compileAndCheck('./e.xml.marko', true /* should write to disk */);
 
     require('marko/node-require').install({
         compilerOptions: {
