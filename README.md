@@ -142,7 +142,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 * [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
 
-## Code of Conduct
+# Code of Conduct
 
 This project adheres to the [eBay Code of Conduct](http://ebay.github.io/codeofconduct).
 By participating in this project you agree to abide by its terms.
