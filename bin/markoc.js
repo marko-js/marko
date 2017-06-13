@@ -46,10 +46,6 @@ function relPath(path) {
     }
 }
 
-function shouldIgnoreUnrecognizedTags(path) {
-    return path.endsWith('.xml') || path.endsWith('.xml.marko');
-}
-
 var args = require('argly').createParser({
         '--help': {
             type: 'boolean',
@@ -323,11 +319,6 @@ if (args.clean) {
     var compile = function(path, context) {
         if (found[path]) {
             return;
-        }
-
-        if (shouldIgnoreUnrecognizedTags(path)) {
-            compileOptions = compileOptions || {};
-            compileOptions.ignoreUnrecognizedTags = true;
         }
 
         found[path] = true;

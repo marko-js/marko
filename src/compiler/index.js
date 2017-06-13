@@ -59,9 +59,13 @@ function createWalker(options) {
     return new Walker(options);
 }
 
+function shouldIgnoreUnrecognizedTags(path) {
+    return path.endsWith('.xml') || path.endsWith('.xml.marko');
+}
+
 function _compile(src, filename, userOptions, callback) {
     registerCoreTaglibs();
-    
+
     ok(filename, '"filename" argument is required');
     ok(typeof filename === 'string', '"filename" argument should be a string');
 
@@ -74,6 +78,10 @@ function _compile(src, filename, userOptions, callback) {
     }
 
     var compiler = defaultCompiler;
+
+    if (shouldIgnoreUnrecognizedTags(filename)) {
+        options.ignoreUnrecognizedTags = true;
+    }
 
     var context = new CompileContext(src, filename, compiler.builder, options);
 
