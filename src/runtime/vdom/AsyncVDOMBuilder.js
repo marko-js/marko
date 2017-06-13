@@ -311,7 +311,17 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     toString: function() {
-        return this.___getNode().outerHTML;
+        var docFragment = this.___getNode();
+        var html = '';
+
+        if (docFragment.hasChildNodes()) {
+            var children = docFragment.childNodes;
+            for (var i = 0; i < children.length; i++) {
+                html += children[i].outerHTML;
+            }
+        }
+
+        return html;
     },
 
     then: function(fn, fnErr) {
