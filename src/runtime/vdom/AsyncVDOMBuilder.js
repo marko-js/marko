@@ -317,7 +317,9 @@ var proto = AsyncVDOMBuilder.prototype = {
         if (docFragment.hasChildNodes()) {
             var children = docFragment.childNodes;
             for (var i = 0; i < children.length; i++) {
-                html += children[i].outerHTML;
+                var child = children[i];
+                // get outerHTML if exists, otherwise default to nodeValue
+                html += child.outerHTML || child.nodeValue;
             }
         }
 
