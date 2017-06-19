@@ -13,7 +13,7 @@ module.exports = function forEachPropertyHelper(o, func) {
         for (var i=0; i<o.length; i++) {
             func(i, o[i]);
         }
-    } else if (typeof Map && o instanceof Map) {
+    } else if (typeof Map !== 'undefined' && o instanceof Map) {
         o.forEach(function(v, k) {
             func(k, v);
         });
