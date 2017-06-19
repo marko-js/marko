@@ -7,6 +7,8 @@
     "setup": "npm install --silent && npm link ../../",
     "build": "npm run bundle --silent && npm run minify --silent",
     "build-marko": "npm run bundle-marko --silent && node minify.js marko",
+    "build-vue": "npm run bundle-vue --silent && node minify.js vue",
+    "build-react": "npm run bundle-react --silent && node minify.js react",
     "build-inferno": "npm run bundle-inferno --silent && node minify.js inferno",
     "bundle": "mkdir -p build/bundles && npm run bundle-marko && npm run bundle-react && npm run bundle-vue && npm run bundle-preact && npm run bundle-inferno",
     "bundle-marko": "node ../../scripts/build && NODE_ENV=production rollup -c marko/rollup.config.js",
