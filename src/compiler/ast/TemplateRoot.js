@@ -45,8 +45,6 @@ class TemplateRoot extends Node {
 
         context.optimize(this);
 
-        var body = this.body;
-
         var builder = codegen.builder;
 
         let renderStatements = [
@@ -57,7 +55,7 @@ class TemplateRoot extends Node {
             renderStatements.push(builder.vars(vars));
         }
 
-        renderStatements = renderStatements.concat(body);
+        renderStatements = renderStatements.concat(this.body);
 
         if (context.inline) {
             var createInlineMarkoTemplateVar = context.helper('createInlineTemplate');
