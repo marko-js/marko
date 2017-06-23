@@ -33,6 +33,11 @@
         }
     ]
 },{
+    "title": "Framework Integrations",
+    "docs": [
+        "Redux"
+    ]
+},{
     "title": "Tooling",
     "docs": [
         "Editor plugins"
