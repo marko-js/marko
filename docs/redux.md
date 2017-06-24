@@ -12,8 +12,8 @@ npm install marko --save
 
 ## Usage
 
-The partial code snippet below shows how a a Marko UI component can be connected 
-to a Redux store using the `store.subscribe()` method and the Marko `forceUpdate()` 
+The partial code snippet below shows how a Marko UI component can be connected 
+to a Redux store using the `store.subscribe()` method and the Marko `forceUpdate()`
 method:
 
 **counter.marko**
