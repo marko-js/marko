@@ -563,9 +563,8 @@ Component.prototype = componentProto = {
                                 onNodeDiscarded,
                                 onBeforeElChildrenUpdated);
                         }
-
-                        targetEl = targetEl.___nextSibling;
                     }
+                    targetEl = targetEl.___nextSibling;
                 }
             }
 

@@ -5,6 +5,7 @@ var getComponentFiles = require('./getComponentFiles');
 
 const esprima = require('esprima');
 const escodegen = require('escodegen');
+const FLAG_COMPONENT_STYLE = Symbol('COMPONENT_STYLE');
 
 function handleStyleElement(styleEl, transformHelper) {
     if (styleEl.bodyText) {
@@ -39,20 +40,21 @@ function handleStyleElement(styleEl, transformHelper) {
         }
     }
 
-    if (!styleCode) {
-        if (hasStyleBlock) {
-            styleEl.detach();
-        }
+    if (!hasStyleBlock) {
         return;
     }
 
-    var context = transformHelper.context;
-    context.addDependency({
-        type: lang,
-        code: styleCode,
-        virtualPath: './'+path.basename(context.filename)+'.'+lang,
-        path: './'+path.basename(context.filename)
-    });
+    styleEl.setFlag(FLAG_COMPONENT_STYLE);
+
+    if (styleCode) {
+        var context = transformHelper.context;
+        context.addDependency({
+            type: lang,
+            code: styleCode,
+            virtualPath: './'+path.basename(context.filename)+'.'+lang,
+            path: './'+path.basename(context.filename)
+        });
+    }
 
     styleEl.detach();
 }
@@ -213,7 +215,9 @@ module.exports = function handleRootNodes() {
 
                     if (tagName === 'style') {
                         handleStyleElement(node, transformHelper);
-                    } else {
+                    }
+
+                    if (!node.isFlagSet(FLAG_COMPONENT_STYLE)) {
                         rootNodes.push(node);
                     }
                 }
