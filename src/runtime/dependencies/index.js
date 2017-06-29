@@ -26,6 +26,9 @@ function getDeps(template, context) {
     var meta = template.meta;
     var root = path.dirname(template.path);
 
+    if (meta.deps) {
+        deps.push.apply(deps, meta.deps.map(d => resolveDep(d, root, context)));
+    }
 
     if (meta.tags) {
         meta.tags.forEach(tagPath => {
@@ -41,10 +44,6 @@ function getDeps(template, context) {
             var tagDeps = getDeps(req(tag), context);
             deps.push.apply(deps, tagDeps);
         });
-    }
-
-    if (meta.deps) {
-        deps.push.apply(deps, meta.deps.map(d => resolveDep(d, root, context)));
     }
 
     template.deps = dedupeDeps(deps);

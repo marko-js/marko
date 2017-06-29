@@ -156,13 +156,13 @@ module.exports = function handleRootNodes() {
 
     var dirname = context.dirname;
 
-    componentFiles.styles.forEach((styleFile) => {
-        context.addDependency('./' + styleFile);
-    });
-
     if (componentFiles.package) {
         context.addDependency('package: ./' + componentFiles.package);
     }
+
+    componentFiles.styles.forEach((styleFile) => {
+        context.addDependency('./' + styleFile);
+    });
 
     if (componentFiles.file) {
         let file = componentFiles.file;
