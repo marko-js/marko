@@ -4,7 +4,7 @@ Marko makes it easy to create UI component that can be used as building blocks f
 
 ## UI component diagram
 
-![Component diagram](./component-diagram.svg)
+![Component diagram](https://raw.githubusercontent.com/marko-js/marko/master/docs/component-diagram.svg)
 
 With Marko, the DOM output of a UI component is based on input properties and a UI component may also maintain internal state that is used to control the view. If Marko detects a change to either input or to the internal state then the view (i.e., the DOM) will automatically be updated based on the new input and state. Internally, Marko uses virtual DOM diffing/patching to update the view, but this is an implementation detail that could change at any time.
 
@@ -231,7 +231,7 @@ When using the `on-*` attribute to attach event listeners, Marko will use event 
 
 The code below illustrates how to attach an event listener for a UI component custom event:
 
-```
+```marko
 class {
   onCounterChange(newValue, el) {
     alert(`New value: ${newValue}!`);
@@ -239,7 +239,7 @@ class {
 }
 
 <div>
-  <counter on-change('onCounterChange'/>
+  <counter on-change('onCounterChange')/>
 </div>
 ```
 
@@ -253,7 +253,7 @@ The following code illustrates how the UI component for `<counter>` might emit t
 
 
 _counter/index.marko_
-```
+```marko
 class {
   onCreate() {
     this.state = { count: 0 };
