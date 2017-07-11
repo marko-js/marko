@@ -188,17 +188,15 @@ module.exports = {
 }
 ```
 
-## Attributes
+## Event handling
 
-### `on-[event](methodName, ...args)`
+The `on-[event](methodName, ...args)` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
 
-The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
-
-#### Attaching DOM event listeners
+### Attaching DOM event listeners
 
 The code below illustrates how to attach an event listener for a native DOM event:
 
-```
+```marko
 class {
   onButtonClick(name, event, el) {
     alert(`Hello ${name}!`);
@@ -277,6 +275,12 @@ class {
 ```js
 this.emit('foo', 'bar', 'baz');
 ```
+
+## Attributes
+
+### `on-[event](methodName, ...args)`
+
+The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName, ...args)` attribute.
 
 ### `key`
 
