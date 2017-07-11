@@ -1,34 +1,34 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 function getComponentFiles(filename) {
-    var ext = path.extname(filename);
+    let ext = path.extname(filename);
     if (ext === '.js') {
         return null;
     }
 
-    var nameNoExt = path.basename(filename, ext);
+    let nameNoExt = path.basename(filename, ext);
 
-    var isEntry = 'index' === nameNoExt;
+    let isEntry = 'index' === nameNoExt;
 
-    var fileMatch = '('+nameNoExt.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
-    var styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
-    var componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
-    var splitComponentMatch = new RegExp('^'+fileMatch+'component-browser\\.\\w+$');
-    var packageMatch = new RegExp('^'+fileMatch+'browser\\.\\json$');
+    let fileMatch = '('+nameNoExt.replace(/\./g, '\\.') + '\\.' + (isEntry ? '|' : '') + ')';
+    let styleMatch = new RegExp('^'+fileMatch+'style\\.\\w+$');
+    let componentMatch = new RegExp('^'+fileMatch+'component\\.\\w+$');
+    let splitComponentMatch = new RegExp('^'+fileMatch+'component-browser\\.\\w+$');
+    let packageMatch = new RegExp('^'+fileMatch+'browser\\.\\json$');
 
-    var dirname = path.dirname(filename);
+    let dirname = path.dirname(filename);
 
-    var foundFiles = {
+    let foundFiles = {
         styles: [],
         file: null,
         browserFile: null,
         package: null
     };
 
-    var dirFiles = fs.readdirSync(dirname);
+    let dirFiles = fs.readdirSync(dirname);
     dirFiles.sort();
 
     for (let i=dirFiles.length - 1; i>=0; i--) {

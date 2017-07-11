@@ -1,24 +1,24 @@
 'use strict';
 
-var HtmlElement = require('./HtmlElement');
-var removeDashes = require('../util/removeDashes');
-var safeVarName = require('../util/safeVarName');
-var ok = require('assert').ok;
-var Node = require('./Node');
+const HtmlElement = require('./HtmlElement');
+const removeDashes = require('../util/removeDashes');
+const safeVarName = require('../util/safeVarName');
+const ok = require('assert').ok;
+const Node = require('./Node');
 
-var CUSTOM_TAG_KEY = Symbol('CustomTag');
-var HAS_RENDER_BODY_PROP_ADDED = Symbol();
+const CUSTOM_TAG_KEY = Symbol('CustomTag');
+const HAS_RENDER_BODY_PROP_ADDED = Symbol();
 
 function getNestedVariables(elNode, tagDef, codegen) {
-    var variableNames = [];
+    let variableNames = [];
     if (tagDef.forEachVariable) {
         tagDef.forEachVariable((nestedVar) => {
-            var varName;
+            let varName;
             if (nestedVar.nameFromAttribute) {
-                var possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
-                for (var i = 0, len = possibleNameAttributes.length; i < len; i++) {
-                    var attrName = possibleNameAttributes[i];
-                    var keep = false;
+                let possibleNameAttributes = nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
+                for (let i = 0, len = possibleNameAttributes.length; i < len; i++) {
+                    let attrName = possibleNameAttributes[i];
+                    let keep = false;
                     if (attrName.endsWith('|keep')) {
                         keep = true;
                         attrName = attrName.slice(0, 0 - '|keep'.length);
@@ -65,9 +65,9 @@ function getNestedVariables(elNode, tagDef, codegen) {
 }
 
 function getAllowedAttributesString(tagName, context) {
-    var attrNames = [];
+    let attrNames = [];
 
-    var tagDef = context.taglibLookup.getTag(tagName);
+    let tagDef = context.taglibLookup.getTag(tagName);
     if (tagDef) {
         tagDef.forEachAttribute((attrDef) => {
             attrNames.push(attrDef.name);
@@ -84,7 +84,7 @@ function checkIfNestedTagCanBeAddedDirectlyToInput(nestedTag, parentCustomTag) {
         return false;
     }
 
-    var isRepeated = nestedTag.tagDef.isRepeated;
+    let isRepeated = nestedTag.tagDef.isRepeated;
     if (!isRepeated) {
         return true;
     }
@@ -106,9 +106,9 @@ function checkIfNestedTagCanBeAddedDirectlyToInput(nestedTag, parentCustomTag) {
 }
 
 function getNextNestedTagVarName(tagDef, context) {
-    var key = 'customTag' + tagDef.name;
+    let key = 'customTag' + tagDef.name;
 
-    var nestedTagVarInfo = context.data[key] || (context.data[key] = {
+    let nestedTagVarInfo = context.data[key] || (context.data[key] = {
         next: 0
     });
 
@@ -117,8 +117,8 @@ function getNextNestedTagVarName(tagDef, context) {
 }
 
 function getNextRenderBodyVar(context) {
-    var key = 'CustomTag_renderBodyVar';
-    var nextVarInfo = context.data[key] || (context.data[key] = {
+    let key = 'CustomTag_renderBodyVar';
+    let nextVarInfo = context.data[key] || (context.data[key] = {
         next: 0
     });
 
@@ -130,7 +130,7 @@ function processDirectlyNestedTags(node, codegen) {
         if (child.type === 'CustomTag') {
             let customTag = child;
 
-            var tagDef = customTag.resolveTagDef(codegen);
+            let tagDef = customTag.resolveTagDef(codegen);
             if (tagDef.isNestedTag) {
                 customTag._isDirectlyNestedTag = true;
             }
@@ -175,7 +175,7 @@ function merge(props1, props2, context) {
     }
 
     if (props1.type === 'ObjectExpression') {
-        var argProp = props1.getProperty('_arg');
+        let argProp = props1.getProperty('_arg');
 
         if (argProp) {
             let mergeVar = context.helper('merge');
@@ -225,13 +225,13 @@ class CustomTag extends HtmlElement {
     }
 
     buildInputProps(codegen) {
-        var inputProps = this._inputProps;
+        let inputProps = this._inputProps;
         if (inputProps) {
             return inputProps;
         }
 
-        var context = codegen.context;
-        var tagDef = this.resolveTagDef(codegen);
+        let context = codegen.context;
+        let tagDef = this.resolveTagDef(codegen);
         inputProps = {};
 
         function handleAttr(attrName, attrValue, attrDef) {
@@ -243,8 +243,8 @@ class CustomTag extends HtmlElement {
                 attrValue = context.builder.literalTrue();
             }
 
-            var propName;
-            var parentPropName;
+            let propName;
+            let parentPropName;
 
             if (attrDef.dynamicAttribute) {
                 // Dynamic attributes are allowed attributes
@@ -315,7 +315,7 @@ class CustomTag extends HtmlElement {
         // Loop over the attributes found on the HTML element and add the corresponding properties
         // to the input object for the custom tag
         this.forEachAttribute((attr) => {
-            var attrName = attr.name;
+            let attrName = attr.name;
             if (!attrName) {
                 return; // Skip attributes with no names
             }
@@ -327,10 +327,10 @@ class CustomTag extends HtmlElement {
                 return;
             }
 
-            var attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
+            let attrDef = attr.def || context.taglibLookup.getAttribute(tagName, attrName) || tagDef.getAttribute(attr.name);
 
             if (!attrDef) {
-                var errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';
+                let errorMessage = 'Unsupported attribute of "' + attrName + '" found on the <' + this.tagName + '> custom tag.';
                 let allowedAttributesString = getAllowedAttributesString(tagName, context);
                 if (allowedAttributesString) {
                     errorMessage += ' Allowed attributes: ' + allowedAttributesString;
@@ -361,29 +361,29 @@ class CustomTag extends HtmlElement {
     }
 
     resolveTagDef(codegen) {
-        var context = codegen.context;
-        var tagDef = this.tagDef;
+        let context = codegen.context;
+        let tagDef = this.tagDef;
         if (!tagDef) {
             if (this.tagName && this.tagName.startsWith('@')) {
-                var parentCustomTag = context.getData(CUSTOM_TAG_KEY);
+                let parentCustomTag = context.getData(CUSTOM_TAG_KEY);
 
                 if (!parentCustomTag) {
                     codegen.addError('Invalid usage of the <' + this.tagName + '> nested tag. Tag not nested within a custom tag.');
                     return null;
                 }
 
-                var parentTagDef = parentCustomTag.tagDef;
+                let parentTagDef = parentCustomTag.tagDef;
                 if (!parentTagDef) {
                     throw new Error('"tagDef" is expected for CustomTag: ' + parentCustomTag.tagName);
                 }
 
-                var nestedTagName = this.tagName.substring(1);
+                let nestedTagName = this.tagName.substring(1);
 
-                var fullyQualifiedName = parentCustomTag.tagDef.name + ':' + nestedTagName;
+                let fullyQualifiedName = parentCustomTag.tagDef.name + ':' + nestedTagName;
                 tagDef = this.tagDef = context.getTagDef(fullyQualifiedName);
                 if (!tagDef) {
                     // This nested tag is not declared, but we will allow it to go through
-                    var taglibLoader = require('../taglib-loader');
+                    let taglibLoader = require('../taglib-loader');
                     tagDef = this.tagDef = taglibLoader.loadTag({
                         name: fullyQualifiedName,
                         attributes: {
@@ -412,9 +412,9 @@ class CustomTag extends HtmlElement {
     }
 
     addNestedTag(nestedTag) {
-        var tagName = nestedTag.tagDef.name;
+        let tagName = nestedTag.tagDef.name;
 
-        var byNameArray = this._foundNestedTagsByName[tagName] ||
+        let byNameArray = this._foundNestedTagsByName[tagName] ||
             (this._foundNestedTagsByName[tagName] = []);
 
         byNameArray.push(nestedTag);
@@ -446,10 +446,10 @@ class CustomTag extends HtmlElement {
 
     getNestedTagVar(context) {
         if (!this._nestedTagVar) {
-            var tagDef = this.tagDef;
-            var builder = context.builder;
+            let tagDef = this.tagDef;
+            let builder = context.builder;
 
-            var nextNestedTagVarName = getNextNestedTagVarName(tagDef, context);
+            let nextNestedTagVarName = getNextNestedTagVarName(tagDef, context);
 
             this._nestedTagVar = builder.identifier(nextNestedTagVarName);
         }
@@ -465,10 +465,10 @@ class CustomTag extends HtmlElement {
         if (this.type !== 'CustomTag') {
             throw new Error(this.type);
         }
-        var builder = codegen.builder;
-        var context = codegen.context;
+        let builder = codegen.builder;
+        let context = codegen.context;
 
-        var tagDef = this.resolveTagDef(codegen);
+        let tagDef = this.resolveTagDef(codegen);
 
         if (!tagDef) {
             // The tag def was not able to be resolved and an error should have already
@@ -476,16 +476,16 @@ class CustomTag extends HtmlElement {
             return null;
         }
 
-        var parentCustomTag;
+        let parentCustomTag;
 
         context.pushData(CUSTOM_TAG_KEY, this);
         processDirectlyNestedTags(this, codegen);
-        var body = codegen.generateCode(this.body);
+        let body = codegen.generateCode(this.body);
         context.popData(CUSTOM_TAG_KEY);
 
-        var hasBody = body && body.length;
+        let hasBody = body && body.length;
 
-        var isNestedTag = tagDef.isNestedTag === true;
+        let isNestedTag = tagDef.isNestedTag === true;
         if (isNestedTag) {
             parentCustomTag = context.getData(CUSTOM_TAG_KEY);
             if (!parentCustomTag) {
@@ -503,7 +503,7 @@ class CustomTag extends HtmlElement {
             if (hasBody && context.isServerTarget() && !parentCustomTag.isFlagSet(HAS_RENDER_BODY_PROP_ADDED)) {
                 parentCustomTag.setFlag(HAS_RENDER_BODY_PROP_ADDED);
 
-                var hasRenderBodyKey = context.addStaticVar(
+                let hasRenderBodyKey = context.addStaticVar(
                     'hasRenderBodyKey',
                     builder.functionCall(
                         builder.memberExpression(
@@ -531,7 +531,7 @@ class CustomTag extends HtmlElement {
                 }
 
                 if (tagDef.isRepeated) {
-                    var currentValue = parentCustomTag.getAttributeValue(tagDef.targetProperty);
+                    let currentValue = parentCustomTag.getAttributeValue(tagDef.targetProperty);
                     if (currentValue) {
                         currentValue.value.push(inputProps);
                     } else {
@@ -554,16 +554,16 @@ class CustomTag extends HtmlElement {
             }
         }
 
-        var hasDynamicNestedTags = this._hasDynamicNestedTags;
+        let hasDynamicNestedTags = this._hasDynamicNestedTags;
 
-        var bodyOnlyIf = this.bodyOnlyIf;
+        let bodyOnlyIf = this.bodyOnlyIf;
         // let parentTagVar;
 
-        var nestedVariableNames = getNestedVariables(this, tagDef, codegen);
+        let nestedVariableNames = getNestedVariables(this, tagDef, codegen);
 
-        var inputProps = this.buildInputProps(codegen);
+        let inputProps = this.buildInputProps(codegen);
 
-        var renderBodyFunction;
+        let renderBodyFunction;
 
         if (hasBody) {
             if (tagDef.bodyFunction) {
@@ -586,8 +586,8 @@ class CustomTag extends HtmlElement {
             }
         }
 
-        var renderBodyFunctionVarIdentifier;
-        var renderBodyFunctionVar;
+        let renderBodyFunctionVarIdentifier;
+        let renderBodyFunctionVar;
         // Store the renderBody function with the input, but only if the body does not have
         // nested tags
         if (renderBodyFunction) {
@@ -609,7 +609,7 @@ class CustomTag extends HtmlElement {
         // Loop over the attributes found on the HTML element and add the corresponding properties
         // to the input object for the custom tag
         this.forEachAttribute((attr) => {
-            var attrName = attr.name;
+            let attrName = attr.name;
             if (attrName && typeof attrName !== 'string') {
                 // Add a computed property since the attribute name is not
                 // a literal string.
@@ -617,13 +617,13 @@ class CustomTag extends HtmlElement {
             }
         });
 
-        var argExpression;
+        let argExpression;
 
         if (this.argument) {
             argExpression = builder.parseExpression(this.argument);
         }
 
-        var additionalProps = this._additionalProps;
+        let additionalProps = this._additionalProps;
 
         if (additionalProps) {
             inputProps = merge(additionalProps, inputProps, context);
@@ -643,9 +643,9 @@ class CustomTag extends HtmlElement {
             inputProps = builder.functionCall(context.helper('mergeNestedTagsHelper'), [ inputProps ]);
         }
 
-        var rendererPath = this._rendererPath || tagDef.renderer;
-        var rendererRequirePath;
-        var requireRendererFunctionCall;
+        let rendererPath = this._rendererPath || tagDef.renderer;
+        let rendererRequirePath;
+        let requireRendererFunctionCall;
 
         if (rendererPath) {
             rendererRequirePath = context.getRequirePath(rendererPath);
@@ -654,13 +654,13 @@ class CustomTag extends HtmlElement {
             requireRendererFunctionCall = builder.literal(null);
         }
 
-        var finalNode;
+        let finalNode;
 
-        var tagVarName = tagDef.name + (tagDef.isNestedTag ? '_nested_tag' : '_tag');
+        let tagVarName = tagDef.name + (tagDef.isNestedTag ? '_nested_tag' : '_tag');
 
         if (tagDef.template) {
-            var templateRequirePath = context.getRequirePath(tagDef.template);
-            var templateVar = context.importTemplate(templateRequirePath, tagDef.name + '_template');
+            let templateRequirePath = context.getRequirePath(tagDef.template);
+            let templateVar = context.importTemplate(templateRequirePath, tagDef.name + '_template');
 
             let loadTag = builder.functionCall(context.helper('loadTag'), [templateVar]);
             let tagVar = codegen.addStaticVar(tagVarName, loadTag);
@@ -702,7 +702,7 @@ class CustomTag extends HtmlElement {
         }
 
         if (bodyOnlyIf && renderBodyFunctionVar) {
-            var ifStatement = builder.ifStatement(
+            let ifStatement = builder.ifStatement(
                 bodyOnlyIf,
                 [
 
