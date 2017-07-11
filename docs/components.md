@@ -1,6 +1,25 @@
 # Components
 
-Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to.
+Marko makes it easy to create UI component that can be used as building blocks for constructing web pages and web applications of any complexity. Marko promotes creating self-contained UI components that are independently testable and that encapsulate the view, client-side behavior (e.g., event handling) and styling. UI components can easily be combined to create composite UI components. Marko UI components compile into small and efficient JavaScript modules that hide implementation details from outside users. Lastly, a Marko UI component can also be published to [npm](https://www.npmjs.com) so that it can be reused across applications.
+
+## UI component diagram
+
+![Component diagram](./component-diagram.svg)
+
+With Marko, the DOM output of a UI component is based on input properties and a UI component may also maintain internal state that is used to control the view. If Marko detects a change to either input or to the internal state then the view (i.e., the DOM) will automatically be updated based on the new input and state. Internally, Marko uses virtual DOM diffing/patching to update the view, but this is an implementation detail that could change at any time.
+
+## Component structure
+
+Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
+
+- __View__ - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
+- __Client-side behavior__ - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
+- __Styling__ - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
+
+## Server-side rendering
+
+A UI component can be rendered on the server or in the browser, but in either case, the UI component instance will be mounted to a DOM node in the browser automatically. If a UI component tree is rendered on the server then Marko will automatically recreate the UI component tree in the browser with no extra code required. For more details, please see [Server-side rendering](/docs/server-side-rendering/).
+
 
 ## Single-file components
 
@@ -18,8 +37,10 @@ class {
     }
 }
 
-<div>The current count is ${state.count}</div>
-<button on-click('increment')>+1</button>
+<div>
+  <h2>The current count is ${state.count}</h2>
+  <button on-click('increment')>+1</button>
+</div>
 ```
 
 ### Styles
@@ -33,8 +54,10 @@ style {
     }
 }
 
-<div>The current count is ${state.count}</div>
-<button.primary on-click('increment')>+1</button>
+<div>
+  <h2>The current count is ${state.count}</h2>
+  <button on-click('increment')>+1</button>
+</div>
 ```
 
 If you use a css preprocessor, you can add the extension right on `style`:
@@ -88,8 +111,10 @@ module.exports = class {
 
 In your `index.marko` file, you can reference methods from the class using `on-*` attributes:
 ```marko
-<div>The current count is ${state.count}</div>
-<button on-click('increment')>+1</button>
+<div>
+  <h2>The current count is ${state.count}</h2>
+  <button on-click('increment')>+1</button>
+</div>
 ```
 
 And in your `style.css`, define the style:
@@ -167,76 +192,91 @@ module.exports = {
 
 ### `on-[event](methodName, ...args)`
 
-The `on-*` attribute sets an event listener on the component. When triggered by user interactions or other components the method supplied is called on that component. Marko knows to check for changes and update the UI accordingly.
+The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `event` | `String` | the name of the event to listen to |
-| `methodName` | `String` | the name of a method on the component's class to call when the event is fired |
-| `...args` | `Any` | all subsequent parameters are prepended to the arguments that are passed to the component's method |
+#### Attaching DOM event listeners
 
-```marko
+The code below illustrates how to attach an event listener for a native DOM event:
+
+```
 class {
-    sayHello(name) {
-        alert('Hello ' + name + '!');
-    }
+  onButtonClick(name, event, el) {
+    alert(`Hello ${name}!`);
+  }
 }
 
-<button on-click('sayHello', 'Frank')>Say Hello to Frank</button>
+<div>
+  <button on-click('onButtonClick', 'Frank')>
+    Say Hello to Frank
+  </button>
+
+  <button on-click('onButtonClick', 'John')>
+    Say Hello to John
+  </button>
+</div>
 ```
 
-The component above would also receive the following arguments after `name`:
-+ `evt` for the DOM event
-+ `el` for the DOM element
+Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
-Emitting an event to a parent it will receive `component` instead of `evt, el` for the child component that triggered it.
+1. `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
+    - For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
+2. `event` - The native DOM event
+3. `el` - The DOM element that the event listener was attached to
 
-Lets compare how we might approach events using just the DOM, jQuery, and then Marko.
+When using the `on-*` attribute to attach event listeners, Marko will use event delegation that is more efficient than using `el.addEventListener()` directly. Please see [Why is Marko Fast? » Event delegation](/docs/why-is-marko-fast/#event-delegation) for more details.
 
-JavaScript/DOM:
+<a name="declarative-custom-events"></a>
 
-```html
-<input id="txt" type="text">
+### Attaching custom event listeners
 
-<script>
-window.addEventListener('load', function() {
-    var txt = document.getElementById('txt');
-    txt.addEventListener('input', function (evt) { /* evt.target */ });
-    txt.addEventListener('blur', function (evt) { /* evt.target */ });
-});
-</script>
+The code below illustrates how to attach an event listener for a UI component custom event:
+
 ```
-
-jQuery:
-
-```html
-<input id="txt" type="text">
-
-<script>
-$(function () {
-    $('#txt').on('input', function (evt) { /* evt.target */ })
-        .on('blur', function (evt) { /* evt.target */ });
-});
-</script>
-```
-
-Marko:
-
-```marko
 class {
-    input(evt, el) { ... }
-    blur(evt, el) { ... }
+  onCounterChange(newValue, el) {
+    alert(`New value: ${newValue}!`);
+  }
 }
-<input type="text" on-input('input') on-blur('blur')>
+
+<div>
+  <counter on-change('onCounterChange'/>
+</div>
 ```
 
-The syntax for handling events is simple in Marko. In the case of accepting additional arguments it's much simpler.
+Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
-Nothing happens with the events on the server. They're only applied after they mount in the browser.
+1. `...args` - Any extra bind arguments are _prepended_ to the arguments passed to the component's handler method
+2. `...eventArgs` - The arguments passed to `this.emit()` by the target UI component
+3. `component` - The component instance that the event listener was attached to
 
-The basic use is to accept DOM events like `click`, `input`, `submit`.
-Alternatively a child component can "bubble" up information to a parent
-component using the event system. See [an example of parent-child communication](http://markojs.com/try-online?file=%2Flanguage-guide%2Fattributes%2Fevents.marko&gist=) with the "try online" live editor.
+The following code illustrates how the UI component for `<counter>` might emit the `change` event:
+
+
+_counter/index.marko_
+```
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.emit('change', ++this.state.count);
+  }
+}
+
+<div>
+  <button.example-button on-click('increment')>
+    Increment
+  </button>
+</div>
+```
+
+
+
+> **ProTip:** Unlike native DOM events, UI component custom events may be emitted with multiple arguments. For example:
+
+```js
+this.emit('foo', 'bar', 'baz');
+```
 
 ### `key`
 
@@ -642,7 +682,7 @@ this.setState('hello', 'world');
 this.update(); // Force the DOM to update
 ```
 
-## Events
+## Event methods
 
 A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter).  Below are a few commonly used methods, view the node docs for the full list.
 
@@ -650,10 +690,10 @@ A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.h
 
 | params  | type | description |
 | ------- | ---- | ----------- |
-| `eventName` | `String` | the name of the event which can be listened for |
+| `eventName` | `String` | the name of the event |
 | `...args` | `Any` | all subsequent parameters are passed to the listeners |
 
-Synchronously calls each of the listeners registered for the event named eventName, in the order they were registered, passing the supplied arguments to each.
+Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName, ...args)` attribute](#declarative-custom-events) attribute or `targetComponent.on()`.
 
 ### `on(eventName, handler)`
 
@@ -673,19 +713,61 @@ Adds the listener function to the end of the listeners array for the event named
 
 Adds a one time listener function for the event named eventName. The next time eventName is triggered, this listener is removed and then invoked.
 
-## Lifecycle
+## Lifecycle events
 
-Marko defines six distinct lifecycle methods.  These methods are called at specific points over the lifecycle of a component.
+Marko defines six distinct lifecycle events:
 
+- `create`
+- `input`
+- `render`
+- `mount`
+- `update`
+- `destroy`
+
+These events are emitted at specific points over the lifecycle of a component as shown below:
+
+**First render**
+
+```js
+emit('create') → emit('input') → emit('render') → emit('mount')
 ```
-                                         ⤺
-create → input → render → mount → render   update → destroy
-                                         ⤻
+
+**New input**
+
+```js
+emit('input') → emit('render') → emit('update')
+```
+
+**Internal state change**
+
+```js
+emit('render') → emit('update')
+```
+
+**Destroy**
+
+```js
+emit('destroy')
+```
+
+### Lifecycle event methods
+
+Each lifecycle event has a corresponding component lifecycle method that can be used to listen for the event:
+
+```js
+class {
+  onCreate(input, out) { }
+  onInput(input, out) { }
+  onRender(out) { }
+  onMount() { }
+  onUpdate() { }
+  onDestroy() { }
+}
 ```
 
 > **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance.  A parent component, or other code that has access to the component instance, can listen for these events. For example:
 ```js
-component.on('destroy', function() {
+component.on('input', function(input, out) {
     // The component was destroyed!
 });
 ```
@@ -705,14 +787,14 @@ _example.marko_
 ```marko
 class {
     onCreate(input) {
-        this.state = { count:input.initialCount };
+        this.state = { count: input.initialCount };
     }
 }
 
 // ...
 ```
 
-### `onInput(input)`
+### `onInput(input, out)`
 
 | params  | description |
 | ------- | ----------- |
@@ -759,10 +841,11 @@ The `update` event is emitted (and `onUpdate` is called) when the component is c
 
 The `destroy` event is emitted (and `onDestroy` is called) when the component is about to be unmounted from the DOM and cleaned up.  `onDestroy` should be used to do any additional clean up beyond what Marko handles itself.
 
-For example, cleaning up from our scrollmonitor example in [`onMount`](#codeonmountcode):
+For example, cleaning up from our `scrollmonitor` example in [`onMount`](#codeonmountcode):
 
 _example.marko_
-```marko{9-11}
+
+```marko
 import scrollmonitor from 'scrollmonitor';
 
 class {
@@ -779,11 +862,13 @@ class {
 // ...
 ```
 
-## DOM Manipulation
+## DOM manipulation methods
 
 The following methods move the component's root DOM node(s) from the current parent element to a new parent element (or out of the DOM in the case of `detach`).
 
 ### `appendTo(targetEl)`
+
+Moves the UI component's DOM elements into the position after the target element's last child.
 
 ```js
 this.appendTo(document.body);
@@ -791,14 +876,24 @@ this.appendTo(document.body);
 
 ### `detach()`
 
-Detaches the component's root element(s) from the DOM by removing the node from its parent node.
+Detaches the component's root element(s) from the DOM by removing the UI component's DOM elements from its parent node.
 
 ### `insertAfter(targetEl)`
 
+Moves the UI component's DOM elements into the position after the target DOM element.
+
 ### `insertBefore(targetEl)`
+
+Moves the UI component's DOM elements into the position before the target DOM element.
 
 ### `prependTo(targetEl)`
 
+Moves the UI component's DOM elements into the position before the target element's first child.
+
 ### `replace(targetEl)`
 
+Replaces the target element with the UI component's DOM elements.
+
 ### `replaceChildrenOf(targetEl)`
+
+Replaces the target elements children with the UI component's DOM elements.
