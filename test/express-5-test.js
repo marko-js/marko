@@ -31,7 +31,7 @@ describe('express-5', function() {
         originalVersion = expressVersion.substr(1, expressVersion.length - 1);
 
         // Install express 5
-        expressTestUtil.installExpressVersion('5.0.0-alpha.2');
+        expressTestUtil.installExpressVersion('5.0.0-alpha.5');
     });
 
     after(function() {
