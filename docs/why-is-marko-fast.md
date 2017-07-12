@@ -1,7 +1,7 @@
 # Why is Marko Fast?
 
 <a href="https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3">
-  <img src="https://cdn-images-1.medium.com/max/2000/1*QR3HJxrZnSPxhc33re7vew.png" alt="Marko logo" width="100%" />
+  <img src="https://user-images.githubusercontent.com/1958812/28104838-d0182f48-6691-11e7-808d-d1ae2d0fed6d.png" alt="Marko logo" width="100%" />
 </a><br />
 
 You can find the original ["Why is Marko Fast?" article here](https://medium.com/@psteeleidem/why-is-marko-fast-a20796cb8ae3)!
@@ -229,4 +229,4 @@ root, but this approach uses much less memory and reduces the amount of work
 that is done during initialization. The extra overhead of delegating events to
 components will not be noticeable so it is a very beneficial optimization.
 
-*Cover image credit: [Superhero by Zech Nelson from the Noun Project](https://thenounproject.com/search/?q=superhero&i=990792)*
+*Cover image credit: [Superhero by Gan Khoon Lay from the Noun Project](https://thenounproject.com/search/?q=superhero&i=690775)*
