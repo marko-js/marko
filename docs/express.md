@@ -1,6 +1,9 @@
 Express + Marko
 =====================
 
+See the [marko-express](https://github.com/marko-js-samples/marko-express) sample
+project for a working example.
+
 ## Installation
 
 ```
