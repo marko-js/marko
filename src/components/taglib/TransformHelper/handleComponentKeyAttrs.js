@@ -1,3 +1,5 @@
+"use strict";
+
 const keyPostfix = /:key$/;
 
 module.exports = function handleComponentKeyAttrs() {
