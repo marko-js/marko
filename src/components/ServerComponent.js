@@ -52,6 +52,20 @@ class ServerComponent {
     get ___rawState() {
         return this.___state;
     }
+
+    elId(scopedId, index) {
+        var id = this.id;
+
+        var elId = scopedId != null ? id + "-" + scopedId : id;
+
+        if (index != null) {
+            elId += "[" + index + "]";
+        }
+
+        return elId;
+    }
 }
+
+ServerComponent.prototype.getElId = ServerComponent.prototype.elId;
 
 module.exports = ServerComponent;
