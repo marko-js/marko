@@ -1,0 +1,35 @@
+lasso-page dependencies=input.browserDependencies lasso=input.lasso
+
+class {
+    onCreate () {
+        this.state = {
+            count: 0
+        }
+    }
+    onMount () {
+        window.app = this;
+    }
+    increment () {
+        this.state.count++;
+    }
+}
+
+<!DOCTYPE html>
+html lang="en" count=state.count
+    head
+        meta charset="UTF-8"
+        title -- Marko Test
+        lasso-head
+    body
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        lasso-body
+
+        init-components immediate
+
+        lasso-slot name="mocha-run"
+
+        browser-refresh

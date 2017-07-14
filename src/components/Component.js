@@ -547,23 +547,31 @@ Component.prototype = componentProto = {
                 var fromEl;
 
                 var targetEl = targetNode.___firstChild;
-                while(targetEl) {
-                    var id = targetEl.id;
+                while (targetEl) {
+                    var nodeName = targetEl.___nodeName;
 
-                    if (id) {
-                        fromEl = fromEls[id];
-                        if (fromEl) {
-                            morphdom(
-                                fromEl,
-                                targetEl,
-                                globalComponentsContext,
-                                onNodeAdded,
-                                onBeforeElUpdated,
-                                onBeforeNodeDiscarded,
-                                onNodeDiscarded,
-                                onBeforeElChildrenUpdated);
-                        }
+                    if (nodeName === 'HTML') {
+                        fromEl = document.documentElement;
+                    } else if (nodeName === 'BODY') {
+                        fromEl = document.body;
+                    } else if (nodeName === 'HEAD') {
+                        fromEl = document.head;
+                    } else {
+                        fromEl = fromEls[targetEl.id];
                     }
+
+                    if (fromEl) {
+                        morphdom(
+                            fromEl,
+                            targetEl,
+                            globalComponentsContext,
+                            onNodeAdded,
+                            onBeforeElUpdated,
+                            onBeforeNodeDiscarded,
+                            onNodeDiscarded,
+                            onBeforeElChildrenUpdated);
+                    }
+
                     targetEl = targetEl.___nextSibling;
                 }
             }

@@ -71,7 +71,6 @@
     "<symbol>": { "html": true, "htmlType": "svg" },
     "<text>": { "html": true, "htmlType": "svg" },
     "<textPath>": { "html": true, "htmlType": "svg" },
-    "<title>": { "html": true, "htmlType": "svg" },
     "<tref>": { "html": true, "htmlType": "svg" },
     "<tspan>": { "html": true, "htmlType": "svg" },
     "<use>": { "html": true, "htmlType": "svg" },
