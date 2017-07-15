@@ -171,7 +171,7 @@ function morphdom(
 
                                             var curToNodeChildNextSibling = curToNodeChild.___nextSibling;
                                             if (curToNodeChildNextSibling && curToNodeChildNextSibling.id === curFromNodeKey) {
-                                                fromNextSibling = curFromNodeChild;
+                                                fromNextSibling = curFromNodeChild.nextSibling;
                                             } else {
                                                 fromNextSibling = curFromNodeChild.nextSibling;
                                                 removalList.push(curFromNodeChild);
