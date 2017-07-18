@@ -309,16 +309,18 @@ function morphdom(
         var node = removalList[i];
         var key = node.id;
         if (!key || foundKeys[key] === undefined) {
-            if (onBeforeNodeDiscarded(node) == false) {
-                continue;
-            }
-
             var parentNode = node.parentNode;
-            if (parentNode) {
-                parentNode.removeChild(node);
-            }
+            if (parentNode !== null || node === fromNode) {
+                if (onBeforeNodeDiscarded(node) == false) {
+                    continue;
+                }
 
-            walkDiscardedChildNodes(node);
+                if (parentNode !== null) {
+                    parentNode.removeChild(node);
+                }
+
+                walkDiscardedChildNodes(node);
+            }
         }
     }
 
