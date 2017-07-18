@@ -1,10 +1,12 @@
-"use strict";
+'use strict';
 
-const keyPostfix = /:key$/;
+const keySuffix = ':key';
 
 module.exports = function handleComponentKeyAttrs() {
-    var el = this.el;
-    var context = this.context;
+    let el = this.el;
+    let context = this.context;
+
+    const filePosition = el.pos ? context.getPosInfo(el.pos) : context.filename;
 
     // BEGIN support for deprecated for attributes
 
@@ -14,9 +16,12 @@ module.exports = function handleComponentKeyAttrs() {
         if (el.hasAttribute(attributeName)) {
             context.deprecate(`The "${attributeName}" tag is deprecated. Please use "for:key" instead.`);
 
-            let incompatibleAttributes = ['for', 'for:key'].concat(deprecatedForAttributes.filter(a => a != attributeName)).filter(a => el.hasAttribute(a));
+            let incompatibleAttributes = ['for', 'for:key']
+                .concat(deprecatedForAttributes.filter(a => a != attributeName))
+                .filter(a => el.hasAttribute(a));
+
             if (incompatibleAttributes.length) {
-                this.addError(`The "${attributeName}" tag cannot be used with "${incompatibleAttributes.join('" or "')}".`);
+                this.addError(`The "${attributeName}" tag cannot be used with "${incompatibleAttributes.join('" or "')}". (${filePosition})`);
             } else {
                 el.setAttributeValue('for:key', el.getAttributeValue(attributeName));
             }
@@ -28,11 +33,14 @@ module.exports = function handleComponentKeyAttrs() {
     // END support for deprecated for attributes
 
     el.attributes.forEach(attribute => {
-        if (keyPostfix.test(attribute.name)) {
-            let unfixedName = attribute.name.replace(keyPostfix, '');
-            el.removeAttribute(attribute.name);
+        const attributeName = attribute.name;
+
+        if (attributeName && attributeName !== keySuffix && attributeName.endsWith(keySuffix)) {
+            const unfixedName = attributeName.replace(keySuffix, '');
+
+            el.removeAttribute(attributeName);
             if (el.hasAttribute(unfixedName)) {
-                this.addError(`The "${attribute.name}" attribute cannot be used in conjuction with the "${unfixedName}" attribute. (` + (el.pos ? context.getPosInfo(el.pos) : context.filename) + ')');
+                this.addError(`The "${attributeName}" attribute cannot be used in conjuction with the "${unfixedName}" attribute. (${filePosition})`);
             } else {
                 el.setAttributeValue(
                     unfixedName,

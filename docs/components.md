@@ -338,7 +338,7 @@ var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 
 Certain HTML attributes reference the `id` of other elements on the page.  For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
 
-The `:key` postfix on an attribute allows you to reference another element via its `key`:
+The `:key` suffix on an attribute allows you to reference another element via its `key`:
 
 **`for:key`**
 ```marko
