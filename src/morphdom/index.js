@@ -169,13 +169,8 @@ function morphdom(
 
                                             fromEl.insertBefore(matchingFromEl, curFromNodeChild);
 
-                                            var curToNodeChildNextSibling = curToNodeChild.___nextSibling;
-                                            if (curToNodeChildNextSibling && curToNodeChildNextSibling.id === curFromNodeKey) {
-                                                fromNextSibling = curFromNodeChild.nextSibling;
-                                            } else {
-                                                fromNextSibling = curFromNodeChild.nextSibling;
-                                                removalList.push(curFromNodeChild);
-                                            }
+                                            fromNextSibling = curFromNodeChild.nextSibling;
+                                            removalList.push(curFromNodeChild);
 
                                             curFromNodeChild = matchingFromEl;
                                         }
