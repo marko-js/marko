@@ -178,7 +178,7 @@ describe('morphdom', function() {
                 },
                 function onBeforeNodeDiscarded(node) {
                     if (node.$onBeforeNodeDiscarded) {
-                        throw new Error('Duplicate oonBeforeNodeDiscarded for: ' + serializeNode(node));
+                        throw new Error('Duplicate onBeforeNodeDiscarded for: ' + serializeNode(node));
                     }
 
                     node.$onBeforeNodeDiscarded = true;
@@ -197,6 +197,7 @@ describe('morphdom', function() {
 
                     node.$onBeforeElChildrenUpdated = true;
                 });
+
 
 
             var actualHTML = serializeNode(morphedNode);
