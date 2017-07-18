@@ -9,17 +9,14 @@ const filePath = testsPath + '/package.json';
 
 exports.installExpressVersion = (version) => {
     let currentPath = process.cwd();
+    process.chdir(testsPath);
+
     let command = 'npm install';
 
     if (version) {
         command += (' express@' + version);
     }
 
-    try {
-        fs.unlinkSync(path.join(testsPath, 'node_modules'));
-    } catch(e) {}
-    
-    process.chdir(testsPath);
     childProcess.execSync(command);
     process.cwd(currentPath);
 };
