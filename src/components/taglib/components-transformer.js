@@ -80,10 +80,6 @@ module.exports = function transform(el, context) {
         }
     }
 
-    if (el.hasAttribute('for-key') || el.hasAttribute('for-ref') || el.hasAttribute('w-for')) {
-        transformHelper.handleComponentFor();
-    }
-
     if (el.hasAttribute('w-body')) {
         transformHelper.handleComponentBody();
     }
@@ -93,6 +89,9 @@ module.exports = function transform(el, context) {
 
     // Handle w-on* properties
     transformHelper.handleComponentEvents();
+
+    // Handle *:key properties (and deprecated w-for/for-key/for-ref)
+    transformHelper.handleComponentKeyAttrs();
 
     // If we need to pass any information to a nested component then
     // we start that information in the "out" so that it can be picked

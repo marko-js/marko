@@ -148,6 +148,6 @@ TransformHelper.prototype.handleComponentEvents = require('./handleComponentEven
 TransformHelper.prototype.handleComponentPreserve = require('./handleComponentPreserve');
 TransformHelper.prototype.handleComponentPreserveAttrs = require('./handleComponentPreserveAttrs');
 TransformHelper.prototype.handleComponentBind = require('./handleComponentBind');
-TransformHelper.prototype.handleComponentFor = require('./handleComponentFor');
+TransformHelper.prototype.handleComponentKeyAttrs = require('./handleComponentKeyAttrs');
 
 module.exports = TransformHelper;

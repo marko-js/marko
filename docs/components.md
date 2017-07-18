@@ -334,13 +334,27 @@ The containing component can reference the repeated DOM elements using the follo
 var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 ```
 
-### `for-key`
+#### `*:key`
 
-The [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  `for-key` allows you to reference a labelable element via its `key`:
+Certain HTML attributes reference the `id` of other elements on the page.  For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
 
+The `:key` suffix on an attribute allows you to reference another element via its `key`:
+
+**`for:key`**
 ```marko
-<label for-key="name">Name</label>
+<label for:key="name">Name</label>
 <input key="name" value="Frank"/>
+```
+
+**`aria-describedby:key`**
+```marko
+<button
+   aria-label="Close"
+   aria-describedby:key="descriptionClose"
+   on-click('closeDialog')>X</button>
+<div key="descriptionClose">
+   Closing this window will discard any information entered and return you back to the main page
+</div>
 ```
 
 ### `no-update`
