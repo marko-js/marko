@@ -197,7 +197,7 @@ module.exports = function handleRootNodes() {
     let walker = context.createWalker({
         enter(node) {
             let tagName = node.tagName && node.tagName.toLowerCase();
-            let tag = context.taglibLookup.getTag(node.tagName);
+            let tag = node.tagName && context.taglibLookup.getTag(node.tagName);
 
             if (node.type === 'TemplateRoot' || !node.type) {
                 // Don't worry about the TemplateRoot or a Container node
@@ -221,7 +221,7 @@ module.exports = function handleRootNodes() {
                         rootNodes.push(node);
                     }
                 }
-                
+
                 walker.skip();
                 return;
             } else if (node.type === 'CustomTag') {
