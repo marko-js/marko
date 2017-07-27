@@ -1,13 +1,12 @@
 {
   "name": "marko",
-  "description": "Marko is an extensible, streaming, asynchronous, high performance, HTML-based templating language that can be used in Node.js or in the browser.",
+  "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
     "front-end",
     "templating",
     "template",
     "async",
     "streaming",
-    "components",
     "components",
     "ui",
     "vdom",
