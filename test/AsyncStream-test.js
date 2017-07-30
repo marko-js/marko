@@ -143,7 +143,7 @@ describe('AsyncStream', function() {
 
         out.write('1');
 
-        var asyncOut = out.beginAsync({timeout: 100, name: 'test'});
+        var asyncOut = out.beginAsync({timeout: 500, name: 'test'});
         setTimeout(function() {
             asyncOut.write('2');
             asyncOut.end();
