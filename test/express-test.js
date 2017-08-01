@@ -10,7 +10,18 @@ describe('express-4', function() {
 
     before(function() {
         // install express 4
-        expressTestUtil.installExpressVersion();
+        expressTestUtil.installExpressVersion('^4');
+    });
+
+    expressTests.test();
+});
+
+describe('express-5', function() {
+    this.timeout(10000);
+
+    before(function() {
+        // Install express 5
+        expressTestUtil.installExpressVersion('5.0.0-alpha.5');
     });
 
     expressTests.test();

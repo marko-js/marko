@@ -125,20 +125,3 @@ exports.test = function () {
             });
         });
 };
-
-let purgeExpressCache = exports.purgeExpressCache = function (moduleName) {
-    moduleName = moduleName || require.resolve('express');
-
-    var solvedName = require.resolve(moduleName);
-    var nodeModule = require.cache[solvedName];
-
-    if (nodeModule) {
-        nodeModule.children.forEach((child) => {
-            purgeExpressCache(child.filename);
-        });
-
-        if (solvedName.indexOf('/node_modules/express') !== -1) {
-            delete require.cache[solvedName];
-        }
-    }
-};
