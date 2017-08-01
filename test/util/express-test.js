@@ -17,8 +17,9 @@ exports.installExpressVersion = (version) => {
 
     try {
         fs.unlinkSync(path.join(testsPath, 'node_modules'));
+        fs.unlinkSync(path.join(testsPath, 'package-lock.json'));
     } catch(e) {}
-    
+
     process.chdir(testsPath);
     childProcess.execSync(command);
     process.cwd(currentPath);
