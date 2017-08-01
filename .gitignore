@@ -16,6 +16,7 @@ coverage
 /test/generated/
 .nyc_output
 yarn.lock
+package-lock.json
 *.swp
 /dist/
 /test-dist/
