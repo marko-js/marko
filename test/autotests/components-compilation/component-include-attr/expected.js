@@ -9,28 +9,19 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = require("./component"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/src/components/taglib/include-tag")),
-    marko_attr = marko_helpers.a;
+    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag"));
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div" +
-    marko_attr("id", __component.id) +
-    "><h1>Header</h1>");
+  out.w("<div><h1>Header</h1><div>");
 
-  var __componentId1 = __component.elId("0[]");
-
-  out.w("<div" +
-    marko_attr("id", __componentId1) +
-    ">");
-
-  include_tag({
-      _target: data.renderBody,
-      _elId: __componentId1
-    }, out);
+  marko_renderComponent(include_tag, {
+      _target: data.renderBody
+    }, out, "3");
 
   out.w("</div></div>");
 }
@@ -49,6 +40,6 @@ marko_template.meta = {
         }
     ],
     tags: [
-      "marko/src/components/taglib/include-tag"
+      "marko/src/taglibs/core/include-tag"
     ]
   };

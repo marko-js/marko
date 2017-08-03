@@ -136,8 +136,8 @@ class CompileContext extends EventEmitter {
         this.compilerType = this.options.compilerType || 'marko';
         this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
         this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
-        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags || false;
-        this.escapeAtTags = this.options.escapeAtTags || false;
+        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags === true;
+        this.escapeAtTags = this.options.escapeAtTags === true;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -168,6 +168,7 @@ class CompileContext extends EventEmitter {
         this._imports = {};
         this._fingerprint = undefined;
         this._optimizers = undefined;
+        this.isComponent = false;
     }
 
     setInline(isInline) {

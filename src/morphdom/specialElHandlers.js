@@ -9,7 +9,9 @@ function syncBooleanAttrProp(fromEl, toEl, name) {
     }
 }
 
-module.exports = {
+// We use a JavaScript class to benefit from fast property lookup
+function SpecialElHandlers() {}
+SpecialElHandlers.prototype = {
     /**
      * Needed for IE. Apparently IE doesn't think that "selected" is an
      * attribute when reading over the attributes using selectEl.attributes
@@ -27,8 +29,8 @@ module.exports = {
         syncBooleanAttrProp(fromEl, toEl, 'checked');
         syncBooleanAttrProp(fromEl, toEl, 'disabled');
 
-        if (fromEl.value != toEl.value) {
-            fromEl.value = toEl.value;
+        if (fromEl.value != toEl.___value) {
+            fromEl.value = toEl.___value;
         }
 
         if (!toEl.___hasAttribute('value')) {
@@ -37,7 +39,7 @@ module.exports = {
     },
 
     TEXTAREA: function(fromEl, toEl) {
-        var newValue = toEl.value;
+        var newValue = toEl.___value;
         if (fromEl.value != newValue) {
             fromEl.value = newValue;
         }
@@ -75,3 +77,5 @@ module.exports = {
         }
     }
 };
+
+module.exports = new SpecialElHandlers();

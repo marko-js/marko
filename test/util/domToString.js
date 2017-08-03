@@ -40,7 +40,7 @@ function vdomToHTML(node, options) {
     }
 
     function serializeElHelper(el, indent) {
-        var tagName = el.nodeName;
+        var tagName = el.nodeName || el.___nodeName;
 
         var elNamespaceURI = el.namespaceURI || el.___namespaceURI;
 
@@ -52,7 +52,7 @@ function vdomToHTML(node, options) {
 
         html += indent + '<' + tagName;
 
-        var attributes = el.attributes;
+        var attributes = el.attributes || el.___attributes;
         var attributesArray = [];
         var attrName;
 
@@ -80,7 +80,7 @@ function vdomToHTML(node, options) {
                 if (typeof attrValue !== 'string') {
                     if (attrValue === true) {
                         attrValue = '';
-                    } else if (!attrValue) {
+                    } else if (attrValue == null || attrValue === false) {
                         continue;
                     }
                 }
@@ -99,7 +99,7 @@ function vdomToHTML(node, options) {
         html += '>\n';
 
         if (tagName.toUpperCase() === 'TEXTAREA') {
-            html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value)) + '\n';
+            html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value || el.___value)) + '\n';
         } else {
             var curChild = getFirstChild(el);
             while(curChild) {

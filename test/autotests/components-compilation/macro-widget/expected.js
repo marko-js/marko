@@ -29,9 +29,7 @@ function render(input, out, __component, component, state) {
       "</button>");
   }
 
-  out.w("<div" +
-    marko_attr("id", __component.id) +
-    ">");
+  out.w("<div>");
 
   marko_forEach([
       "red",

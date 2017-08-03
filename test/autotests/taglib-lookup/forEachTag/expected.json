@@ -243,7 +243,7 @@
     "_component",
     "component-globals",
     "init-components",
-    "w-preserve",
+    "_preserve",
     "no-update",
     "widget-types"
 ]

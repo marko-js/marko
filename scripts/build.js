@@ -16,34 +16,44 @@ const babelOptions = {
     ]
 };
 
-buildDir('src', 'dist', {
-    babelExclude: [
-        '/taglibs/async/client-reorder-runtime.min.js'
-    ],
-    babelOptions
-});
 
-var buildConstants = {
-    isDebug: false
-};
+var target = process.argv[2];
+
+var shouldBuildSrc = true;
+var shouldBuildTest = true;
+
+if (target === 'src') {
+    shouldBuildTest = false;
+}
+
+if (shouldBuildSrc) {
+    buildDir('src', 'dist', {
+        babelExclude: [
+            '/taglibs/async/client-reorder-runtime.min.js'
+        ],
+        babelOptions
+    });
+}
 
 fs.writeFileSync(
     path.join(__dirname, '../dist/build.json'),
     JSON.stringify({ isDebug: false }, null, 4),
     { encoding: 'utf8' });
 
-buildDir('test', 'test-dist', {
-    babelExclude: [
-        '*expected*.*',
-        'input.js*'
-    ],
-    exclude: [
-        '/generated',
-        '*.marko.js',
-        '*.skip',
-        '*.generated.*',
-        '*actual*.*',
-        'actualized-expected.html*'
-    ],
-    babelOptions
-});
+if (shouldBuildTest) {
+    buildDir('test', 'test-dist', {
+        babelExclude: [
+            '*expected*.*',
+            'input.js*'
+        ],
+        exclude: [
+            '/generated',
+            '*.marko.js',
+            '*.skip',
+            '*.generated.*',
+            '*actual*.*',
+            'actualized-expected.html*'
+        ],
+        babelOptions
+    });
+}

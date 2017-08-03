@@ -38,11 +38,16 @@ module.exports = function(node, codegen, vdomUtil) {
     var attributes = codegen.generateCode(node.getAttributes());
     var properties = codegen.generateCode(node.getProperties());
     var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
+    var key = node.key;
+    var runtimeFlags = node.runtimeFlags;
+    var nextConstId = node.nextConstId;
+
     var builder = codegen.builder;
 
+    var isKeyStatic = vdomUtil.isStaticValue(key);
     var isAttrsStatic = checkAttributesStatic(attributes);
     var isPropsStatic = checkPropertiesStatic(properties, vdomUtil);
-    var isStatic = isAttrsStatic && isPropsStatic && node.isLiteralTagName();
+    var isStatic = isKeyStatic && isAttrsStatic && isPropsStatic && node.isLiteralTagName();
     var isHtmlOnly = true;
 
     if (body && body.length) {
@@ -71,6 +76,7 @@ module.exports = function(node, codegen, vdomUtil) {
     }
 
     var htmlElVDOM = new HtmlElementVDOM({
+        key,
         tagName,
         attributes,
         properties,
@@ -78,7 +84,9 @@ module.exports = function(node, codegen, vdomUtil) {
         isStatic,
         isAttrsStatic,
         isHtmlOnly,
-        dynamicAttributes
+        dynamicAttributes,
+        nextConstId,
+        runtimeFlags
     });
 
 

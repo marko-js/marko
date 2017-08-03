@@ -6,15 +6,15 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("9e11e1"),
-    marko_node0 = marko_createElement("DIV", null, 1, 0, {
-        c: marko_const_nextId()
+    marko_node0 = marko_createElement("DIV", null, null, null, 1, 0, {
+        i: marko_const_nextId()
       })
       .t("No colors!");
 
 function render(input, out) {
   var data = input;
 
-  out.e("H1", null, 3)
+  out.e("H1", null, null, null, 3)
     .t("Hello ")
     .t(input.name)
     .t("!");
@@ -23,7 +23,7 @@ function render(input, out) {
     out.be("UL");
 
     marko_forEach(input.colors, function(color) {
-      out.e("LI", null, 1)
+      out.e("LI", null, null, null, 1)
         .t(color);
     });
 

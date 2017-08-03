@@ -10,7 +10,7 @@ function render(input, out) {
           hello: "world"
         };
 
-  out.e("DIV", attrs, 3)
+  out.e("DIV", attrs, null, null, 3)
     .t("Hello ")
     .t(name)
     .t("!");

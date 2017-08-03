@@ -10,7 +10,8 @@ VComment.prototype = {
     ___nodeType: 8,
 
     ___actualize: function(doc) {
-        return doc.createComment(this.___nodeValue);
+        var nodeValue = this.___nodeValue;
+        return doc.createComment(nodeValue);
     },
 
     ___cloneNode: function() {

@@ -130,15 +130,22 @@ class Builder {
         return new MemberExpression({object, property, computed});
     }
 
+    /**
+     * Generates code that joins all of the arguments using `+` (BinaryExpression)
+     *
+     * @param  {Array} args If the args object is not an array then `arguments` is used
+     * @return {Node} The resulting Node
+     */
     concat(args) {
         var prev;
         let operator = '+';
+        args = Array.isArray(args) ? args : Array.prototype.slice.call(arguments, 0);
 
-        for (var i=1; i<arguments.length; i++) {
+        for (var i=1; i<args.length; i++) {
             var left;
-            var right = makeNode(arguments[i]);
+            var right = makeNode(args[i]);
             if (i === 1) {
-                left = makeNode(arguments[i-1]);
+                left = makeNode(args[i-1]);
             } else {
                 left = prev;
             }
@@ -153,15 +160,15 @@ class Builder {
         return new ConditionalExpression({test, consequent, alternate});
     }
 
-    containerNode(type, generateCode) {
+    containerNode(type, codeGenerator) {
         if (typeof type === 'function') {
-            generateCode = arguments[0];
+            codeGenerator = arguments[0];
             type = 'ContainerNode';
         }
 
         var node = new ContainerNode(type);
-        if (generateCode) {
-            node.setCodeGenerator(generateCode);
+        if (codeGenerator) {
+            node.setCodeGenerator(codeGenerator);
         }
         return node;
     }

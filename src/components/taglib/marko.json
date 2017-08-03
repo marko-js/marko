@@ -166,13 +166,13 @@
         "no-output": true,
         "@immediate": "boolean"
     },
-    "<w-preserve>": {
+    "<_preserve>": {
         "renderer": "./preserve-tag.js",
-        "@id": "string",
-        "@if": "expression",
-        "@body-only": "expression",
-        "autocomplete": [],
-        "deprecated": true
+        "@key": "string",
+        "@cid": "string",
+        "@if": "boolean",
+        "@body-only": "boolean",
+        "autocomplete": []
     },
     "<no-update>": {
         "renderer": "./preserve-tag.js",

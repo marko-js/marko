@@ -1,0 +1,19 @@
+class  {
+    onCreate() {
+        this.state = {
+            count: 0
+        }
+    }
+}
+
+<div.root key="root">
+    <if(state.count === 0)>
+        <foo key="a" name="foo-a" count=state.count/>
+        <bar key="b" name="bar-b" count=state.count/>
+    </if>
+    <else>
+        <foo key="a" name="foo-a" count=state.count/>
+        <foo key="b" name="foo-b" count=state.count/>
+        <bar key="c" name="bar-c" count=state.count/>
+    </else>
+</div>

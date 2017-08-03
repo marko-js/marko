@@ -1,0 +1,12 @@
+class {
+
+}
+
+<div key="root">
+    <for(index, field in input.fields)>
+        <div>
+            <input id:scoped="field_${index}" type="text" value=field.value/>
+            <label key="foo" for:scoped="field_${index}">${field.label}</label>
+        </div>
+    </for>
+</div>

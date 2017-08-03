@@ -257,6 +257,14 @@ class Parser {
                     attrDef.argument = attr.argument.value;
                 }
 
+                var attrName = attr.name;
+
+                if (attrName) {
+                    if (attrName === 'for-key' || attrName === 'for-ref' || attrName === 'w-for' || attrName.endsWith(':key')) {
+                        context.data.hasLegacyForKey = true;
+                    }
+                }
+
                 parsedAttributes.push(attrDef);
             });
         }

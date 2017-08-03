@@ -3,7 +3,7 @@ require('./util/test-init');
 var path = require('path');
 
 var fs = require('fs');
-var toHTML = require('./util/toHTML');
+var domToString = require('./util/domToString');
 
 var jsdom = require("jsdom").jsdom;
 var document = jsdom('<html><body></body></html>');
@@ -16,8 +16,8 @@ var VDocumentFragment = vdom.___VDocumentFragment;
 
 
 var vdomHelpers = {
-    createElement: function(tagName, attrs, childCount, constId, flags) {
-        return new VElement(tagName, attrs, childCount, constId, flags);
+    createElement: function(tagName, attrs, key, component, childCount, flags, props) {
+        return new VElement(tagName, attrs, key, component, childCount, flags, props);
     },
     createText: function(value) {
         return new VText(value);
@@ -28,7 +28,8 @@ var vdomHelpers = {
     createDocumentFragment: function() {
         return new VDocumentFragment();
     },
-    VElement: VElement
+    VElement: VElement,
+    virtualizeElement: VElement.___virtualize
 };
 
 describe('vdom-create', () => {
@@ -43,7 +44,7 @@ describe('vdom-create', () => {
                 var main = require(mainPath);
                 var rootNode = main(helpers);
 
-                var rootNodeHTML = rootNode != null ? toHTML(rootNode) : '(null)';
+                var rootNodeHTML = rootNode != null ? domToString(rootNode) : '(null)';
                 helpers.compare(rootNodeHTML, '.html');
             }
             done();

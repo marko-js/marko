@@ -7,51 +7,25 @@ var getComponentsContext = require('./ComponentsContext').___getComponentsContex
 var componentsUtil = require('./util');
 var componentLookup = componentsUtil.___componentLookup;
 var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
-var destroyComponentForEl = componentsUtil.___destroyComponentForEl;
-var destroyElRecursive = componentsUtil.___destroyElRecursive;
-var getElementById = componentsUtil.___getElementById;
+var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var EventEmitter = require('events-light');
 var RenderResult = require('../runtime/RenderResult');
 var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('../morphdom');
-var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;
-
-var MORPHDOM_SKIP = true;
 
 var COMPONENT_SUBSCRIBE_TO_OPTIONS;
 var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
     addDestroyListener: false
 };
 
-function outNoop() { /* jshint -W040 */ return this; }
-
 var emit = EventEmitter.prototype.emit;
 
 function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
-}
-
-function checkCompatibleComponent(globalComponentsContext, el) {
-    var component = el._w;
-    while(component) {
-        var id = component.id;
-        var newComponentDef = globalComponentsContext.___componentsById[id];
-        if (newComponentDef && component.___type == newComponentDef.___component.___type) {
-            break;
-        }
-
-        var rootFor = component.___rootFor;
-        if (rootFor)  {
-            component = rootFor;
-        } else {
-            component.___destroyShallow();
-            break;
-        }
-    }
 }
 
 function handleCustomEventWithMethodListener(component, targetMethodName, args, extraArgs) {
@@ -72,16 +46,12 @@ function handleCustomEventWithMethodListener(component, targetMethodName, args, 
     targetMethod.apply(targetComponent, args);
 }
 
-function getElIdHelper(component, componentElId, index) {
-    var id = component.id;
+function resolveKeyHelper(key, index) {
+    return index ? key + '_' + index : key;
+}
 
-    var elId = componentElId != null ? id + '-' + componentElId : id;
-
-    if (index != null) {
-        elId += '[' + index + ']';
-    }
-
-    return elId;
+function resolveComponentIdHelper(component, key, index) {
+    return component.id + '-' + resolveKeyHelper(key, index);
 }
 
 /**
@@ -158,46 +128,10 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
     return false;
 }
 
-function onNodeDiscarded(node) {
-    if (node.nodeType === 1) {
-        destroyComponentForEl(node);
-    }
-}
-
-function onBeforeNodeDiscarded(node) {
-    return eventDelegation.___handleNodeDetach(node);
-}
-
-function onBeforeElUpdated(fromEl, key, globalComponentsContext) {
-    if (key) {
-        var preserved = globalComponentsContext.___preserved[key];
-
-        if (preserved === true) {
-            // Don't morph elements that are associated with components that are being
-            // reused or elements that are being preserved. For components being reused,
-            // the morphing will take place when the reused component updates.
-            return MORPHDOM_SKIP;
-        } else {
-            // We may need to destroy a Component associated with the current element
-            // if a new UI component was rendered to the same element and the types
-            // do not match
-            checkCompatibleComponent(globalComponentsContext, fromEl);
-        }
-    }
-}
-
-function onBeforeElChildrenUpdated(el, key, globalComponentsContext) {
-    if (key) {
-        var preserved = globalComponentsContext.___preservedBodies[key];
-        if (preserved === true) {
-            // Don't morph the children since they are preserved
-            return MORPHDOM_SKIP;
-        }
-    }
-}
-
-function onNodeAdded(node, globalComponentsContext) {
-    eventDelegation.___handleNodeAttach(node, globalComponentsContext.___out);
+function getNodes(component) {
+    var nodes = [];
+    component.___forEachNode(nodes.push.bind(nodes));
+    return nodes;
 }
 
 var componentProto;
@@ -210,9 +144,9 @@ var componentProto;
 function Component(id) {
     EventEmitter.call(this);
     this.id = id;
-    this.el = null;
     this.___state = null;
-    this.___roots = null;
+    this.___startNode = null;
+    this.___endNode = null;
     this.___subscriptions = null;
     this.___domEventListenerHandles = null;
     this.___bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
@@ -229,6 +163,8 @@ function Component(id) {
     this.___settingInput = false;
 
     this.___document = undefined;
+
+    this.___keyedElements = {};
 }
 
 Component.prototype = componentProto = {
@@ -264,63 +200,57 @@ Component.prototype = componentProto = {
             return emit.apply(this, arguments);
         }
     },
-    getElId: function (componentElId, index) {
-        return getElIdHelper(this, componentElId, index);
+    getElId: function (key, index) {
+        return resolveComponentIdHelper(this, key, index);
     },
-    getEl: function (componentElId, index) {
-        var doc = this.___document;
-
-        if (componentElId != null) {
-            return getElementById(doc, getElIdHelper(this, componentElId, index));
+    getEl: function (key, index) {
+        if (key) {
+            return this.___keyedElements[resolveKeyHelper(key, index)];
         } else {
-            return this.el || getElementById(doc, getElIdHelper(this));
+            return this.___startNode;
         }
     },
-    getEls: function(id) {
+    getEls: function(key) {
+        key = key + '[]';
+
         var els = [];
         var i = 0;
         var el;
-        while((el = this.getEl(id, i))) {
+        while((el = this.getEl(key, i))) {
             els.push(el);
             i++;
         }
         return els;
     },
-    getComponent: function(id, index) {
-        return componentLookup[getElIdHelper(this, id, index)];
+    getComponent: function(key, index) {
+        return componentLookup[resolveComponentIdHelper(this, key, index)];
     },
-    getComponents: function(id) {
+    getComponents: function(key) {
+        key = key + '[]';
+
         var components = [];
         var i = 0;
         var component;
-        while((component = componentLookup[getElIdHelper(this, id, i)])) {
+        while((component = componentLookup[resolveComponentIdHelper(this, key, i)])) {
             components.push(component);
             i++;
         }
         return components;
     },
-    destroy: function() {
+    destroy: function(onBeforeNodeDiscarded) {
         if (this.___destroyed) {
             return;
         }
 
-        var els = this.els;
+        var nodes = getNodes(this);
 
         this.___destroyShallow();
 
-        var rootComponents = this.___rootComponents;
-        if (rootComponents) {
-            rootComponents.forEach(function(rootComponent) {
-                rootComponent.___destroy();
-            });
-        }
+        nodes.forEach(function(node) {
+            destroyNodeRecursive(node);
 
-        els.forEach(function(el) {
-            destroyElRecursive(el);
-
-            var parentNode = el.parentNode;
-            if (parentNode) {
-                parentNode.removeChild(el);
+            if (!onBeforeNodeDiscarded || onBeforeNodeDiscarded(node) != false) {
+                 node.parentNode.removeChild(node);
             }
         });
     },
@@ -333,7 +263,9 @@ Component.prototype = componentProto = {
         emitLifecycleEvent(this, 'destroy');
         this.___destroyed = true;
 
-        this.el = null;
+        this.___startNode.___markoComponent = undefined;
+
+        this.___startNode = this.___endNode = null;
 
         // Unsubscribe from all DOM events
         this.___removeDOMEventListeners();
@@ -452,6 +384,7 @@ Component.prototype = componentProto = {
 
     ___queueUpdate: function() {
         if (!this.___updateQueued) {
+            this.___updateQueued = true;
             updateManager.___queueComponentUpdate(this);
         }
     },
@@ -512,7 +445,10 @@ Component.prototype = componentProto = {
         if (!renderer) {
             throw TypeError();
         }
-        var fromEls = self.___getRootEls({});
+
+        var startNode = this.___startNode;
+        var endNodeNextSibling = this.___endNode.nextSibling;
+
         var doc = self.___document;
         var input = this.___renderInput || this.___input;
         var globalData = this.___global;
@@ -523,18 +459,6 @@ Component.prototype = componentProto = {
             out.sync();
             out.___document = self.___document;
 
-            if (isRerenderInBrowser === true) {
-                out.e =
-                    out.be =
-                    out.ee =
-                    out.t =
-                    out.h =
-                    out.w =
-                    out.write =
-                    out.html =
-                    outNoop;
-            }
-
             var componentsContext = getComponentsContext(out);
             var globalComponentsContext = componentsContext.___globalContext;
             globalComponentsContext.___rerenderComponent = self;
@@ -544,68 +468,40 @@ Component.prototype = componentProto = {
 
             var result = new RenderResult(out);
 
-            if (isRerenderInBrowser !== true) {
-                var targetNode = out.___getOutput();
+            var targetNode = out.___getOutput();
 
-                var fromEl;
-
-                var targetEl = targetNode.___firstChild;
-                while (targetEl) {
-                    var nodeName = targetEl.___nodeName;
-
-                    if (nodeName === 'HTML') {
-                        fromEl = document.documentElement;
-                    } else if (nodeName === 'BODY') {
-                        fromEl = document.body;
-                    } else if (nodeName === 'HEAD') {
-                        fromEl = document.head;
-                    } else {
-                        fromEl = fromEls[targetEl.id];
-                    }
-
-                    if (fromEl) {
-                        morphdom(
-                            fromEl,
-                            targetEl,
-                            globalComponentsContext,
-                            onNodeAdded,
-                            onBeforeElUpdated,
-                            onBeforeNodeDiscarded,
-                            onNodeDiscarded,
-                            onBeforeElChildrenUpdated);
-                    }
-
-                    targetEl = targetEl.___nextSibling;
-                }
-            }
+            morphdom(
+                startNode.parentNode,
+                startNode,
+                endNodeNextSibling,
+                targetNode,
+                doc,
+                componentsContext);
 
             result.afterInsert(doc);
-
-            out.emit('___componentsInitialized');
         });
 
         this.___reset();
     },
 
-    ___getRootEls: function(rootEls) {
-        var i, len;
+    ___detach: function() {
+        var fragment = this.___document.createDocumentFragment();
+        this.___forEachNode(fragment.appendChild.bind(fragment));
+        return fragment;
+    },
 
-        var componentEls = this.els;
+    ___forEachNode: function(callback) {
+        var currentNode = this.___startNode;
+        var endNode = this.___endNode;
 
-        for (i=0, len=componentEls.length; i<len; i++) {
-            var componentEl = componentEls[i];
-            rootEls[componentEl.id] = componentEl;
-        }
-
-        var rootComponents = this.___rootComponents;
-        if (rootComponents) {
-            for (i=0, len=rootComponents.length; i<len; i++) {
-                var rootComponent = rootComponents[i];
-                rootComponent.___getRootEls(rootEls);
+        for(;;) {
+            var nextSibling = currentNode.nextSibling;
+            callback(currentNode);
+            if (currentNode == endNode) {
+                break;
             }
+            currentNode = nextSibling;
         }
-
-        return rootEls;
     },
 
     ___removeDOMEventListeners: function() {
@@ -632,6 +528,14 @@ Component.prototype = componentProto = {
 
             finalCustomEvents[eventType] = [targetMethodName, extraArgs];
         });
+    },
+
+    get el() {
+        return this.___startNode;
+    },
+
+    get els() {
+        return getNodes(this);
     }
 };
 
@@ -649,17 +553,7 @@ componentProto.___destroy = componentProto.destroy;
 domInsert(
     componentProto,
     function getEl(component) {
-        var els = this.els;
-        var elCount = els.length;
-        if (elCount > 1) {
-            var fragment = component.___document.createDocumentFragment();
-            els.forEach(function(el) {
-                fragment.appendChild(el);
-            });
-            return fragment;
-        } else {
-            return els[0];
-        }
+        return component.___detach();
     },
     function afterInsert(component) {
         return component;

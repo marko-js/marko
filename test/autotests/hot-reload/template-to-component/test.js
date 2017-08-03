@@ -37,5 +37,5 @@ exports.check = function(marko, hotReload, expect) {
     hotReload.handleFileModified(tempTemplatePath);
 
     copyFiles(nodePath.join(__dirname, 'b'));
-    expect(component.renderSync({ name: 'Jane' }).toString()).to.equal('<div class="b" id="s0">Hello Jane</div>');
+    expect(component.renderSync({ name: 'Jane' }).toString()).to.contain('<div class="b">Hello Jane</div>');
 };

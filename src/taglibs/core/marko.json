@@ -76,6 +76,7 @@
     },
     "<import>": {
         "code-generator": "./import-tag",
+        "no-output": true,
         "parse-options": {
             "relaxRequireCommas": true
         }
@@ -135,7 +136,8 @@
             {
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             }
-        ]
+        ],
+        "no-output": true
     },
     "<macro-body>": {
         "code-generator": "./macro-body-tag",
@@ -167,6 +169,7 @@
     },
     "<static>": {
         "code-generator": "./static-tag",
+        "no-output": true,
         "parse-options": {
             "ignoreAttributes": true
         }

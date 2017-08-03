@@ -23,17 +23,28 @@ class HtmlComment extends Node {
         var comment = this.comment;
         var builder = codegen.builder;
 
+        if (Array.isArray(comment)) {
+            comment = builder.concat(comment);
+        }
+
+        const commentArgs = [comment];
+
         return builder.functionCall(
             builder.memberExpression(
                 builder.identifierOut(),
                 builder.identifier('comment')),
-            [
-                comment
-            ]);
+            commentArgs);
     }
 
     walk(walker) {
         this.comment = walker.walk(this.comment);
+    }
+
+    setPropertyValue(name, value) {
+        if (!this._properties) {
+            this._properties = {};
+        }
+        this._properties[name] = value;
     }
 }
 

@@ -4,8 +4,9 @@ var componentLookup = componentsUtil.___componentLookup;
 var registry = require('../registry');
 var modernRenderer = require('../renderer');
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
-var preserveComponentEls = modernRenderer.___preserveComponentEls;
 var handleBeginAsync = modernRenderer.___handleBeginAsync;
+var beginComponent = require('../beginComponent');
+var endComponent = require('../endComponent');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -13,6 +14,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
     var typeName = componentProps.type;
     var roots = componentProps.roots;
     var assignedId = componentProps.id;
+    var isSplit = componentProps.split === true;
 
     return function renderer(input, out, renderingLogic) {
         var outGlobal = out.global;
@@ -44,38 +46,45 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var globalComponentsContext = componentsContext.___globalContext;
 
         var component = globalComponentsContext.___rerenderComponent;
-        var fakeComponent;
+
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
         var customEvents;
         var scope;
+        var parentComponentDef;
 
         if (component) {
             id = component.id;
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
+            parentComponentDef = componentsContext.___componentDef;
             var componentArgs = out.___componentArgs;
 
             if (componentArgs) {
+                scope = parentComponentDef.id;
                 out.___componentArgs = null;
-                scope = componentArgs[0];
 
-                if (scope) {
-                    scope = scope.id;
+                var key;
+
+                if (typeof componentArgs === 'string') {
+                  key = componentArgs;
+                } else {
+                  key = componentArgs[0];
+                  customEvents = componentArgs[1];
                 }
 
-                var ref = componentArgs[1];
-                if (ref != null) {
-                    ref = ref.toString();
+                if (key != null) {
+                    key = key.toString();
                 }
-                id = id || resolveComponentKey(globalComponentsContext, ref, scope);
-                customEvents = componentArgs[2];
+                id = id || resolveComponentKey(globalComponentsContext, key, parentComponentDef);
+            } else if (parentComponentDef) {
+                id = parentComponentDef.___nextComponentId();
+            } else {
+                id = globalComponentsContext.___nextComponentId();
             }
         }
-
-        id = id || componentsContext.___nextComponentId();
 
         if (registry.___isServer && typeName) {
             component = { id:id, typeName:typeName };
@@ -99,6 +108,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                     }
                 }
             }
+        }
+
+        if (component) {
+            component.___updateQueued = true;
         }
 
         if (input) {
@@ -151,14 +164,23 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                     component.___setCustomEvents(customEvents, scope);
                 }
 
-                preserveComponentEls(component, out, globalComponentsContext);
+                // We put a placeholder element in the output stream to ensure that the existing
+                // DOM node is matched up correctly when using morphdom. We flag the VElement
+                // node to track that it is a preserve marker
+                out.___preserveComponent(component);
+                globalComponentsContext.___renderedComponentsById[id] = true;
+                component.___reset(); // The component is no longer dirty so reset internal flags
                 return;
             }
         }
 
+        var isFakeComponent = false;
+
         if (!component) {
-            fakeComponent = {
-                id: id
+            isFakeComponent = true;
+            component = {
+                id: id,
+                ___keyedElements: {}
             };
         } else {
             componentState = component.___rawState || componentState;
@@ -168,17 +190,22 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             getTemplateData(componentState, input, out) :
             componentState || input || {};
 
-        var componentDef = componentsContext.___beginComponent(component || fakeComponent);
+        var componentDef = beginComponent(componentsContext, component, isSplit, parentComponentDef);
+
+        // This is a hack, but we have to swap out the component instance stored with this node
+        var vComponentNode = out.___parent;
+
         componentDef.___roots = roots;
-        componentDef.___component = fakeComponent ? null : component;
+        componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.b = componentBody;
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;
         };
+
         componentDef.t = function(typeName) {
             if (typeName) {
-                this.___component = component = registry.___createComponent(typeName, fakeComponent.id);
+                vComponentNode.___component = this.___component = component = registry.___createComponent(typeName, component.id);
             }
         };
 
@@ -188,7 +215,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateInput, out, componentDef, componentDef);
+        templateRenderFunc(templateInput, out, componentDef, componentDef, component);
 
         if (customEvents && componentDef.___component) {
             if (registry.___isServer) {
@@ -199,7 +226,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         }
 
-        componentDef.___end();
+        endComponent(out, componentDef);
+        componentsContext.___componentDef = parentComponentDef;
     };
 }
 

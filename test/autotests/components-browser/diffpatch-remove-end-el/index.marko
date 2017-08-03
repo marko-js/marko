@@ -1,0 +1,12 @@
+class {
+    onCreate() {
+        this.state = {
+            showFooter: true
+        };
+    }
+}
+
+<div>Body</div>
+<footer if(state.showFooter)>
+    Footer
+</footer>

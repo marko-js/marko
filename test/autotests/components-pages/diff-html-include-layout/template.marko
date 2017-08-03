@@ -1,0 +1,21 @@
+class {
+    onCreate () {
+        this.state = {
+            count: 0
+        }
+    }
+    onMount () {
+        window.app = this;
+    }
+    increment () {
+        this.state.count++;
+    }
+}
+
+<lasso-page dependencies=input.browserDependencies lasso=input.lasso/>
+
+<include('./layout.marko')>
+    <@body>
+        <span.count>${state.count}</span>
+    </@body>
+</include>
