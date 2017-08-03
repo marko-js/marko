@@ -25,7 +25,7 @@ First, let's create a `client.js` that requires the view and renders it to the b
 
 _client.js_
 ```js
-var myComponent = require('my-component');
+var myComponent = require('hello');
 
 myComponent.renderSync({ name:'Marko' }).appendTo(document.body);
 ```
