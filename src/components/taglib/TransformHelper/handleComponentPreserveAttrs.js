@@ -38,13 +38,9 @@ module.exports = function handleComponentPreserveAttrs() {
     if (noUpdateAttrs.length) {
         el.setPropertyValue('noupdate', builder.literal(noUpdateAttrs));
 
-
         if (!context.isFlagSet(PRESERVE_ATTRS_HELPER_ADDED)) {
             context.setFlag(PRESERVE_ATTRS_HELPER_ADDED);
-            context.addStaticCode(
-                this.builder.require(
-                    this.builder.literal('marko/runtime/vdom/preserve-attrs')));
+            context.importModule(null, 'marko/runtime/vdom/preserve-attrs');
         }
-
     }
 };
