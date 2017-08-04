@@ -28,6 +28,7 @@
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
     "test-fast": "mocha --ui bdd --reporter spec ./test/render-test",
+    "test-compiler": "mocha --ui bdd --reporter spec ./test/compiler-test",
     "test-async": "mocha --ui bdd --reporter spec ./test/async-render-test",
     "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader-test",
     "test-express": "mocha --ui bdd --reporter spec ./test/express-test",
