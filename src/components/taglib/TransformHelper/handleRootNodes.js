@@ -198,10 +198,14 @@ module.exports = function handleRootNodes() {
 
     let walker = context.createWalker({
         enter(node) {
-            var tagName = node.tagName && node.tagName.toLowerCase();
+            let tagName = node.tagName && node.tagName.toLowerCase();
+            let tag = node.tagName && context.taglibLookup.getTag(node.tagName);
 
             if (node.type === 'TemplateRoot' || !node.type) {
-                // Don't worry about the TemplateRoot or an Container node
+                // Don't worry about the TemplateRoot or a Container node
+                // But continue into the node to look at its children for root elements
+            } else if (tag && tag.noOutput) {
+                walker.skip();
             } else if (node.type === 'HtmlElement') {
                 if (node.hasAttribute('w-bind')) {
                     transformHelper.setHasBoundComponentForTemplate();
@@ -221,16 +225,11 @@ module.exports = function handleRootNodes() {
                         rootNodes.push(node);
                     }
                 }
-                walker.skip();
 
+                walker.skip();
                 return;
             } else if (node.type === 'CustomTag') {
-                let tag = context.taglibLookup.getTag(node.tagName);
-
-                if (!tag.noOutput) {
-                    rootNodes.push(node);
-                }
-
+                rootNodes.push(node);
                 walker.skip();
                 return;
             } else {
