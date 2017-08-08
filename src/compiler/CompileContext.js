@@ -461,7 +461,7 @@ class CompileContext extends EventEmitter {
 
         var isAtTag = typeof tagName === 'string' && tagName.startsWith('@');
 
-        if (isAtTag && this.options.escapeAtTags) {
+        if (isAtTag && this.escapeAtTags) {
             tagName = tagName.replace(/^@/, 'at_');
             elDef.tagName = tagName;
         }
@@ -476,7 +476,7 @@ class CompileContext extends EventEmitter {
 
         var taglibLookup = this.taglibLookup;
 
-        if (isAtTag && !this.options.escapeAtTags) {
+        if (isAtTag && !this.escapeAtTags) {
             // NOTE: The tag definition can't be determined now since it will be
             //       determined by the parent custom tag.
             node = builder.customTag(elNode);
