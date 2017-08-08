@@ -271,7 +271,7 @@ exports.buildTaglibLookup = buildTaglibLookup;
 exports.registerTaglib = function(filePath) {
     registerCoreTaglibs();
 
-    ok(typeof filePath === 'string', '"filePath" shouldbe a string');
+    ok(typeof filePath === 'string', '"filePath" should be a string');
     var taglib = taglibLoader.loadTaglibFromFile(filePath);
     taglibLookup.registerTaglib(taglib);
     clearCaches();
