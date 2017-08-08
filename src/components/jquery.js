@@ -5,11 +5,8 @@ var idRegExp = /^\#(\S+)( .*)?/;
 exports.patchComponent = function(jQuery) {
     /* globals window */
 
-    if (!jQuery) {
-        jQuery = window.$;
-        if (!jQuery) {
-            throw new Error('jQuery not found');
-        }
+    if (!(jQuery || (jQuery = window.$))) {
+        throw new Error('jQuery not found');
     }
 
     require('./Component').prototype.$ = function jqueryProxy(arg) {
