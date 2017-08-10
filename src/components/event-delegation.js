@@ -76,6 +76,11 @@ function attachBubbleEventListeners(doc) {
                 return;
             }
 
+            // event.target of an SVGElementInstance does not have a
+            // `getAttribute` function in IE 11.
+            // See https://github.com/marko-js/marko/issues/796
+            curNode = curNode.correspondingUseElement || curNode;
+
             // Search up the tree looking DOM events mapped to target
             // component methods
             var propName = 'on' + eventType;
