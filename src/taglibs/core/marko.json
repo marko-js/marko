@@ -5,7 +5,8 @@
         "deprecated": true
     },
     "<class>": {
-        "code-generator": "./class-tag"
+        "code-generator": "./class-tag",
+        "open-tag-only": true
     },
     "<else>": {
         "node-factory": "./else-tag",
