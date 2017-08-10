@@ -137,6 +137,7 @@ class CompileContext extends EventEmitter {
         this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
         this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
         this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags || false;
+        this.escapeAtTags = this.options.escapeAtTags || false;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -458,6 +459,13 @@ class CompileContext extends EventEmitter {
             throw new Error('Invalid attributes');
         }
 
+        var isAtTag = typeof tagName === 'string' && tagName.startsWith('@');
+
+        if (isAtTag && this.escapeAtTags) {
+            tagName = tagName.replace(/^@/, 'at_');
+            elDef.tagName = tagName;
+        }
+
         var node;
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
@@ -468,7 +476,7 @@ class CompileContext extends EventEmitter {
 
         var taglibLookup = this.taglibLookup;
 
-        if (typeof tagName === 'string' && tagName.startsWith('@')) {
+        if (isAtTag && !this.escapeAtTags) {
             // NOTE: The tag definition can't be determined now since it will be
             //       determined by the parent custom tag.
             node = builder.customTag(elNode);

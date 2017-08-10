@@ -60,7 +60,12 @@ if (g.__MARKO_CONFIG) {
          * Whether unrecognized tags should be ignored or not. This flag will
          * be enabled by default when compiling XML.
          */
-        ignoreUnrecognizedTags: false
+        ignoreUnrecognizedTags: false,
+
+        /**
+         * Whether <@tags> should error when are used outside a custom component.
+         */
+        escapeAtTags: false
     };
 
     if (process.env.MARKO_CONFIG) {

@@ -107,6 +107,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
         require('marko/compiler').defaultOptions.ignoreUnrecognizedTags = true;
     }
 
+    if (main.escapeAtTags) {
+        require('marko/compiler').defaultOptions.escapeAtTags = true;
+    }
+
     var oldDone = done;
     done = function(err) {
         require('marko/compiler').configure();
