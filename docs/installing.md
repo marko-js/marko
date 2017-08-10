@@ -6,11 +6,11 @@ If you just want to play around with Marko in the browser, head on over to our [
 
 ## Creating new apps
 
-If you're starting from scratch, [`marko-devtools`](https://www.npmjs.com/package/marko-devtools) provides a starter app to
+If you're starting from scratch, [`marko-cli`](https://www.npmjs.com/package/marko-cli) provides a starter app to
 get you going quickly. To get started:
 
 ```bash
-npm install marko-devtools --global
+npm install marko-cli --global
 marko create hello-world
 cd hello-world
 npm install # or yarn
@@ -112,7 +112,7 @@ var out = fs.createWriteStream('hello.html', { encoding: 'utf8' });
 hello.render({ name: 'Frank' }, out);
 ```
 
-Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko DevTools](https://github.com/marko-js/marko-devtools):
+Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko CLI](https://github.com/marko-js/marko-cli):
 
 
 ```bash
