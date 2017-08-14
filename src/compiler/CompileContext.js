@@ -313,7 +313,7 @@ class CompileContext extends EventEmitter {
             if (ext === '.js') {
                 deresolved = deresolved.slice(0, 0 - ext.length);
             }
-            return deresolved;
+            return deresolved.replace(/\\/g, '/');
         }
 
         return markoModules.deresolve(targetFilename, this.dirname);
