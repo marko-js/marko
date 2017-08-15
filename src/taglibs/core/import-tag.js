@@ -15,14 +15,21 @@ module.exports = function codeGenerator(el, codegen) {
         }
 
         if (arg.module) {
-            // needs to be require()'d
-            var result = builder.require(builder.literal(arg.value));
+            var requireExpression = builder.require(builder.literal(arg.value));
+            var moduleName = 'module_' + varName;
 
             if (varName) {
-                // saves identifier
-                vars[varName] = codegen.addStaticVar(varName, result);
+                // saves identifier under a module alias.
+                vars[varName] = codegen.addStaticVar(moduleName, requireExpression);
+                // extracts out the default export.
+                codegen.addStaticVar(varName, builder.logicalExpression(
+                    builder.memberExpression(moduleName, builder.identifier('default')),
+                    '||',
+                    moduleName
+                ));
             } else {
-                codegen.addStaticCode(result);
+                // require without saving var.
+                codegen.addStaticCode(requireExpression);
             }
         } else {
             // ie: { bar } from "./bar"
