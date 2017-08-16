@@ -5,15 +5,10 @@ const hasRenderBodyKey = Symbol.for("hasRenderBody");
 
 function isInputSerializable(component) {
     var input = component.___input;
-    if (!input) {
-        return true;
-    }
-
-    if (input[hasRenderBodyKey] === true || input.renderBody !== undefined) {
+    if (input && (input[hasRenderBodyKey] === true || input.renderBody !== undefined)) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 module.exports = function beginComponent(component, isSplitComponent) {

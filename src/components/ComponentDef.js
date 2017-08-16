@@ -37,13 +37,7 @@ ComponentDef.prototype = {
      * so that we can instantiate nested components before their parents.
      */
     ___addChild: function (componentDef) {
-        var children = this.___children;
-
-        if (children) {
-            children.push(componentDef);
-        } else {
-            this.___children = [componentDef];
-        }
+        (this.___children || (this.___children = [])).push(componentDef);
     },
     /**
      * This helper method generates a unique and fully qualified DOM element ID
