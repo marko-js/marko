@@ -13,7 +13,6 @@ get you going quickly. To get started:
 npm install marko-cli --global
 marko create hello-world
 cd hello-world
-npm install # or yarn
 npm start
 ```
 
