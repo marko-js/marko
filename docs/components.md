@@ -334,6 +334,46 @@ The containing component can reference the repeated DOM elements using the follo
 var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 ```
 
+#### `key in components`
+Inorder to reference a child component from parent component you can use the `key` attribute on the component.
+You can use the `getComponent()` method to access the child component, after the component is mounted to the DOM.
+
+```marko
+// custom-button.marko
+
+class {
+   onCreate() {
+      this.state = {
+         color: 'blue'
+      };
+   }
+   
+   changeColor(color) {
+      this.state.color = color;
+   }
+}
+
+<button style={color: state.color}>
+  Some Text
+</button>
+
+
+// button-container.marko
+class {
+   onMount() {
+      this.btnChild = this.getComponent('btn-child');
+      
+   }
+   
+   changeChildButtonColor() {
+   	this.btnChild.changeColor('red');
+   }
+}
+
+<div.btnContainer on-click=('changeChildButtonColor')>
+   <custom-button key='btn-child' />
+</div>
+
 #### `*:key`
 
 Certain HTML attributes reference the `id` of other elements on the page.  For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
