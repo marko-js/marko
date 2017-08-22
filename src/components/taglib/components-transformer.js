@@ -2,7 +2,7 @@
 var getTransformHelper = require('./util/getTransformHelper');
 
 
-function tagDefinitionHasOverridingKeyAttribute(el, context) {
+function tagDefinitionHasOverridingKeyAttribute(el) {
     if (!el.hasAttribute('key')) {
         return false;
     }
@@ -74,9 +74,11 @@ module.exports = function transform(el, context) {
         transformHelper.handleComponentPreserve();
     }
 
-    if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
-        if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
+    if (!tagDefinitionHasOverridingKeyAttribute(el)) {
+        if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
             transformHelper.assignComponentId();
+        } else if (el.type === 'CustomTag' && el.tagName[0] !== '@' && !el.tagDef.attributes.noOutput) {
+            transformHelper.assignComponentId(true /*repeated*/);
         }
     }
 

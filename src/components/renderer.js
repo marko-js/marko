@@ -107,7 +107,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 scope = componentArgs[0];
 
                 if (scope) {
-                    scope = scope.id;
+                    scope = scope.id || scope;
                 }
 
                 var key = componentArgs[1];
