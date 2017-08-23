@@ -338,9 +338,8 @@ var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
 Inorder to reference a child component from parent component you can use the `key` attribute on the component.
 You can use the `getComponent()` method to access the child component, after the component is mounted to the DOM.
 
+##### custom-button.marko
 ```marko
-// custom-button.marko
-
 class {
    onCreate() {
       this.state = {
@@ -356,9 +355,10 @@ class {
 <button style={color: state.color}>
   Some Text
 </button>
+```
 
-
-// button-container.marko
+##### button-container.marko
+```marko
 class {
    onMount() {
       this.btnChild = this.getComponent('btn-child');
@@ -373,6 +373,7 @@ class {
 <div.btnContainer on-click=('changeChildButtonColor')>
    <custom-button key='btn-child' />
 </div>
+```
 
 #### `*:key`
 
