@@ -1,6 +1,6 @@
-var isDebug = require('./env').isDebug;
+require('./env');
 
-if (isDebug) {
+if (MARKO_DEBUG) {
     module.exports = require('./src/');
 } else {
     module.exports = require('./dist/');
