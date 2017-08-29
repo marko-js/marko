@@ -51,7 +51,7 @@ function delegateEvent(node, target, event) {
 }
 
 function attachBubbleEventListeners(doc) {
-    var body = doc.body;
+    var body = doc.body || doc;
     // Here's where we handle event delegation using our own mechanism
     // for delegating events. For each event that we have white-listed
     // as supporting bubble, we will attach a listener to the root
