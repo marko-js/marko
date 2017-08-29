@@ -1,7 +1,7 @@
 'use strict';
 
-const tryRequire = require('try-require');
-const lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
+const lassoModulesClientTransport = require('lasso-modules-client/transport');
+const shorthash = require('shorthash');
 const ok = require('assert').ok;
 
 function generateRegisterComponentCode(componentModule, transformHelper, isSplit) {
@@ -16,17 +16,15 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
 
     let registerComponent = context.helper('registerComponent');
 
-    let typeName = componentModule.filename;
+    let fileName = componentModule.filename;
 
-    var isLegacy = componentModule.legacy;
+    let isLegacy = componentModule.legacy;
 
     if (!isLegacy && !isSplit) {
-        typeName = transformHelper.filename;
+        fileName = transformHelper.filename;
     }
 
-    if (lassoModulesClientTransport) {
-        typeName = lassoModulesClientTransport.getClientPath(typeName);
-    }
+    let componentId = getComponentId(fileName);
 
     let def;
 
@@ -56,10 +54,21 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
         ]);
     }
 
+    context.setMeta('id', componentId);
+
     return builder.functionCall(registerComponent, [
-        builder.literal(typeName),
+        builder.literal(componentId),
         def
     ]);
+}
+
+function getComponentId(filename) {
+    let componentId = lassoModulesClientTransport.getClientPath(filename);
+    // TODO: turn on for production
+    if (false) {
+        componentId = shorthash.unique(packageRelativePath);
+    }
+    return componentId;
 }
 
 module.exports = generateRegisterComponentCode;

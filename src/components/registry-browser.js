@@ -1,20 +1,19 @@
-var loadComponent = require('./loadComponent');
 var defineComponent = require('./defineComponent');
 
 var registered = {};
 var loaded = {};
 var componentTypes = {};
 
-function register(typeName, def) {
+function register(componentId, def) {
     // We do this to kick off registering of nested components
     // but we don't use the return value just yet since there
     // is a good chance that it resulted in a circular dependency
     def();
 
-    registered[typeName] = def;
-    delete loaded[typeName];
-    delete componentTypes[typeName];
-    return typeName;
+    registered[componentId] = def;
+    delete loaded[componentId];
+    delete componentTypes[componentId];
+    return componentId;
 }
 
 function load(typeName) {
@@ -24,12 +23,10 @@ function load(typeName) {
 
         if (target) {
             target = target();
-        } else {
-            target = loadComponent(typeName); // Assume the typeName has been fully resolved already
         }
 
         if (!target) {
-            throw Error('Not found: ' + typeName);
+            throw Error('Component not found: ' + typeName);
         }
 
         loaded[typeName] = target;
