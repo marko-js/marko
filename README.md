@@ -6,7 +6,7 @@ Marko is a friendly (and fast!) UI library that makes building web apps fun.
 Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
-[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master&cache-bust=4)](https://coveralls.io/github/marko-js/marko?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master&cache-bust=5)](https://coveralls.io/github/marko-js/marko?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
