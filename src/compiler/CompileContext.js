@@ -484,23 +484,25 @@ class CompileContext extends EventEmitter {
         } else {
             if (typeof tagName === 'string') {
                 tagDef = taglibLookup.getTag(tagName);
-                if (!tagDef &&
-                    !this.isMacro(tagName) &&
-                    tagName.indexOf(':') === -1 &&
-                    !htmlElements.isRegisteredElement(tagName, this.dirname) &&
-                    !this.ignoreUnrecognizedTags) {
-
-                    if (this._parsingFinished) {
-                        this.addErrorUnrecognizedTag(tagName, elNode);
-                    } else {
-                        // We don't throw an error right away since the tag
-                        // may be a macro that gets registered later
-                        this.unrecognizedTags.push({
-                            node: elNode,
-                            tagName: tagName
-                        });
+                if (!tagDef && !this.isMacro(tagName) && tagName.indexOf(':') === -1) {
+                    var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
+                    if (customElement) {
+                        elNode.customElement = customElement;
+                        if (customElement.import) {
+                            this.addDependency(this.getRequirePath(customElement.import));
+                        }
+                    } else if (!this.ignoreUnrecognizedTags) {
+                        if (this._parsingFinished) {
+                            this.addErrorUnrecognizedTag(tagName, elNode);
+                        } else {
+                            // We don't throw an error right away since the tag
+                            // may be a macro that gets registered later
+                            this.unrecognizedTags.push({
+                                node: elNode,
+                                tagName: tagName
+                            });
+                        }
                     }
-
                 }
             }
 
