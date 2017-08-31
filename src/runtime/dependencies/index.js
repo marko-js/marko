@@ -3,31 +3,54 @@ var defaultResolveFrom = require('resolve-from');
 var env = process.env.NODE_ENV;
 var production = !env || env !== 'development';
 
-function getDeps(template, context) {
-    if (!template.meta && template.template) {
-        template = template.template;
+function getRootDeps(template, context) {
+    if (production && template.___depsArray) {
+        return template.___depsArray;
     }
 
-    if (typeof template.createOut !== 'function') {
-        return [];
+    attachDepsAndComponentsToTemplate(template, context);
+
+    var deps = template.___depsArray = Object.values(template.___deps);
+    var initModule = getInitModule(template.path, template.___components);
+
+    if (initModule) deps.push(initModule);
+
+    return deps;
+}
+
+function attachDepsAndComponentsToTemplate(target, context) {
+    var template;
+
+    if (!target.meta && target.template) {
+        template = target.template;
+    } else {
+        template = target;
     }
 
-    if (production && template.deps) {
-        return template.deps;
-    }
+    if (typeof template.createOut !== 'function') return;
+    if (production && target.___deps) return;
 
-    var deps = template.deps = [];
+    var deps = target.___deps = {};
+    var components = target.___components = {};
 
     if (!template.meta) {
         console.error('Metadata not set for template at ', template.path);
-        return [];
+        return;
     }
 
     var meta = template.meta;
     var root = path.dirname(template.path);
 
     if (meta.deps) {
-        deps.push.apply(deps, meta.deps.map(d => resolveDep(d, root, context)));
+        meta.deps.forEach(dep => {
+            dep = resolveDep(dep, root, context);
+            deps[dep.virtualPath || dep.path] = dep;
+        });
+    }
+
+    if (meta.id && meta.component) {
+        var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
+        components[meta.id] = resolveFrom(root, meta.component);
     }
 
     if (meta.tags) {
@@ -41,14 +64,51 @@ function getDeps(template, context) {
                 tag = req.resolve(tag.slice(0, 0 - ext.length) + '.js');
             } catch(e) {}
 
-            var tagDeps = getDeps(req(tag), context);
-            deps.push.apply(deps, tagDeps);
+            tag = req(tag);
+
+            attachDepsAndComponentsToTemplate(tag, context);
+
+            if (tag.___deps) Object.assign(deps, tag.___deps);
+            if (tag.___components) Object.assign(components, tag.___components);
         });
     }
+}
 
-    template.deps = dedupeDeps(deps);
+function getInitModule(path, components) {
+    let module = null;
 
-    return deps;
+    if (components) {
+        let open = `require('marko/components').init({\n`;
+        let close = `\n});`;
+        let defs;
+
+        let componentIds = Object.keys(components);
+
+        defs = componentIds.map(function(componentId) {
+            return `  "${componentId}": function() { return require("${components[componentId]}"); },`;
+        }).join('\n');
+
+        if (defs) {
+            let code = open + defs + close;
+            let virtualPath = path + '.init.js';
+            module = {
+                type: 'require',
+                run: true,
+                virtualModule: {
+                    path: virtualPath,
+                    clientPath: virtualPath,
+                    read: function(_, callback) {
+                        callback(null, code);
+                    },
+                    getDefaultBundleName: function(_, __) {
+                        return virtualPath;
+                    }
+                }
+            };
+        }
+    }
+
+    return module;
 }
 
 function resolveDep(dep, root, context) {
@@ -80,18 +140,14 @@ function parseDependencyString(string) {
     };
 }
 
-function dedupeDeps(deps) {
-    return deps;
-}
-
 function patch(Template) {
     Template.prototype.getDependencies = function(context) {
         context = context || {};
 
-        return getDeps(this, context);
+        return getRootDeps(this, context);
     };
 }
 
-exports.getDeps = getDeps;
+exports.getDeps = getRootDeps;
 exports.resolveDep = resolveDep;
 exports.patch = patch;

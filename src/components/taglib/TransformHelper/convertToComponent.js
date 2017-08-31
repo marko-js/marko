@@ -42,11 +42,13 @@ module.exports = function handleComponentBind(options) {
 
         componentProps.___type = componentTypeNode;
 
+        context.setMeta('id', componentTypeNode);
+
         let dependencyModule = isLegacyComponent || isSplit ? componentModule : this.getTemplateModule();
 
         if (!isImplicitComponent) {
             if (dependencyModule.requirePath) {
-                context.addDependency({ type:'require', path: dependencyModule.requirePath });
+                context.setMeta('component', dependencyModule.requirePath);
             }
         }
 

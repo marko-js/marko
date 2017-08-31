@@ -5,5 +5,9 @@ var registry = require('./registry');
 require('./ComponentsContext').___initClientRendered = initComponents.___initClientRendered;
 
 exports.getComponentForEl = componentsUtil.___getComponentForEl;
-exports.init = initComponents.___initServerRendered;
-exports.register = registry.___register;
+exports.init = function(components) {
+    if (components) Object.keys(components).forEach(function(componentId) {
+        registry.___register(componentId, components[componentId]);
+    });
+    initComponents.___initServerRendered();
+};
