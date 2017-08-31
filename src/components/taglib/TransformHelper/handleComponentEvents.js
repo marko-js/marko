@@ -171,12 +171,13 @@ module.exports = function handleComponentEvents() {
                 //
                 if (eventType.startsWith('-')) {
                     // Remove the leading dash.
-                    // Example: w-on-before-show → before-show
+                    // Example: on-before-show → before-show
                     eventType = eventType.substring(1);
+                } else {
+                    // Lowercase the first character
+                    // Example: onClick → click
+                    eventType = eventType[0].toLowerCase() + eventType.substring(1);
                 }
-
-                // Normalize DOM event types to be all lower case
-                eventType = eventType.toLowerCase();
 
                 // Node is for an HTML element so treat the event as a DOM event
                 var willBubble = isBubbleEvent(eventType);
