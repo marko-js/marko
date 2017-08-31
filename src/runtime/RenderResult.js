@@ -75,6 +75,6 @@ domInsert(
         return renderResult.getNode(referenceEl.ownerDocument);
     },
     function afterInsert(renderResult, referenceEl) {
-        let isShadow = typeof ShadowRoot === 'function' && referenceEl instanceof ShadowRoot;
+        var isShadow = typeof ShadowRoot === 'function' && referenceEl instanceof ShadowRoot;
         return renderResult.afterInsert(isShadow ? referenceEl : referenceEl.ownerDocument);
     });
