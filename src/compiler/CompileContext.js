@@ -89,6 +89,7 @@ const helpers = {
     'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
     'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
     'merge': { module: 'marko/runtime/helper-merge' },
+    'propsForPreviousNode': 'p',
     'renderer': {
         module: 'marko/components/helpers',
         method: 'r'
