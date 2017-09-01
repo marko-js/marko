@@ -11,6 +11,7 @@ var FLAG_IS_SVG = 1;
 var FLAG_IS_TEXTAREA = 2;
 var FLAG_SIMPLE_ATTRS = 4;
 // var FLAG_PRESERVE = 8;
+var FLAG_CUSTOM_ELEMENT = 16;
 
 var defineProperty = Object.defineProperty;
 
@@ -155,28 +156,32 @@ VElement.prototype = {
             doc.createElementNS(namespaceURI, tagName) :
             doc.createElement(tagName);
 
-        for (var attrName in attributes) {
-            var attrValue = attributes[attrName];
+        if (flags & FLAG_CUSTOM_ELEMENT) {
+            Object.assign(el, attributes);
+        } else {
+            for (var attrName in attributes) {
+                var attrValue = attributes[attrName];
 
-            if (attrValue !== false && attrValue != null) {
-                var type = typeof attrValue;
+                if (attrValue !== false && attrValue != null) {
+                    var type = typeof attrValue;
 
-                if (type !== 'string') {
-                    // Special attributes aren't copied to the real DOM. They are only
-                    // kept in the virtual attributes map
-                    attrValue = convertAttrValue(type, attrValue);
-                }
+                    if (type !== 'string') {
+                        // Special attributes aren't copied to the real DOM. They are only
+                        // kept in the virtual attributes map
+                        attrValue = convertAttrValue(type, attrValue);
+                    }
 
-                if (attrName == ATTR_XLINK_HREF) {
-                    setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
-                } else {
-                    el.setAttribute(attrName, attrValue);
+                    if (attrName == ATTR_XLINK_HREF) {
+                        setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
+                    } else {
+                        el.setAttribute(attrName, attrValue);
+                    }
                 }
             }
-        }
 
-        if (flags & FLAG_IS_TEXTAREA) {
-            el.value = this.___valueInternal;
+            if (flags & FLAG_IS_TEXTAREA) {
+                el.value = this.___value;
+            }
         }
 
         el.___markoVElement = this;
@@ -283,11 +288,16 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var removePreservedAttributes = VElement.___removePreservedAttributes;
 
     var fromFlags = vFromEl.___flags;
+    var toFlags = toEl.___flags;
 
     fromEl.___markoVElement = toEl;
 
     var attrs = toEl.___attributes;
     var props = toEl.___properties;
+
+    if (toFlags & FLAG_CUSTOM_ELEMENT) {
+        return Object.assign(fromEl, attrs);
+    }
 
     var attrName;
 
@@ -314,9 +324,6 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     }
 
     var attrValue;
-
-    var toFlags = toEl.___flags;
-
 
     if (toFlags & FLAG_SIMPLE_ATTRS && fromFlags & FLAG_SIMPLE_ATTRS) {
         if (oldAttrs['class'] !== (attrValue = attrs['class'])) {
