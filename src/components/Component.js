@@ -437,7 +437,7 @@ Component.prototype = componentProto = {
 
         if (this.___input === undefined) {
             this.___input = newInput;
-            if (newInput.$global) {
+            if (newInput && newInput.$global) {
                 this.___global = newInput.$global;
             }
         }
