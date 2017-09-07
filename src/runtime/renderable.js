@@ -17,7 +17,6 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
             finalOut.error(err);
         }, 0);
     }
-    return finalOut;
 }
 
 module.exports = function(target, renderer) {
@@ -45,7 +44,13 @@ module.exports = function(target, renderer) {
                    })
                    .once('error', callback);
 
-                return safeRender(render, localData, out, true);
+                safeRender(render, localData, out, true);
+
+                if (this.afterRender) {
+                    this.afterRender(localData, out);
+                }
+
+                return out;
             } else {
                 out.sync();
                 render(localData, out);
@@ -67,6 +72,11 @@ module.exports = function(target, renderer) {
             }
 
             render(localData, out);
+
+            if (this.afterRender) {
+                this.afterRender(localData, out);
+            }
+
             return out.___getResult();
         },
 
@@ -133,7 +143,13 @@ module.exports = function(target, renderer) {
 
             globalData.template = globalData.template || this;
 
-            return safeRender(render, finalData, finalOut, shouldEnd);
+            safeRender(render, finalData, finalOut, shouldEnd);
+
+            if (this.afterRender) {
+                this.afterRender(finalData, finalOut);
+            }
+
+            return finalOut;
         }
     });
 };

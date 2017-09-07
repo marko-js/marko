@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function transform(el, context) {
+    context.setMeta('hasBody', true);
+
     let componentGlobalsNode = context.createNodeForEl('component-globals');
     el.prependChild(componentGlobalsNode);
 

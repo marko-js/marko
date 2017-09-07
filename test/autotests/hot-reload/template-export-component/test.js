@@ -20,10 +20,14 @@ exports.check = function(marko, hotReload, expect) {
 
     copyFiles(nodePath.join(__dirname, 'a'));
     var component = require(tempTemplatePath);
-    expect(component.renderSync().toString()).to.equal('<div class="a" id="s0">Hello Frank</div>');
+    expect(component.renderSync().toString())
+        .to.have.string('Hello Frank')
+        .and.to.have.string('class="a"');
 
     hotReload.handleFileModified(tempTemplatePath);
 
     copyFiles(nodePath.join(__dirname, 'b'));
-    expect(component.renderSync().toString()).to.equal('<div class="b" id="s0">Hello Frank</div>');
+    expect(component.renderSync().toString())
+        .to.have.string('Hello Frank')
+        .and.to.have.string('class="b"');
 };
