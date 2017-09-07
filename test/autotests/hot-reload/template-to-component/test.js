@@ -32,10 +32,14 @@ exports.check = function(marko, hotReload, expect) {
 
     copyFiles(nodePath.join(__dirname, 'a'));
     var component = require(tempTemplatePath);
-    expect(component.renderSync({ name: 'Frank' }).toString()).to.equal('<div class="a">Hello Frank</div>');
+    expect(component.renderSync({ name: 'Frank' }).toString())
+        .to.have.string('Hello Frank')
+        .and.to.have.string('class="a"');
 
     hotReload.handleFileModified(tempTemplatePath);
 
     copyFiles(nodePath.join(__dirname, 'b'));
-    expect(component.renderSync({ name: 'Jane' }).toString()).to.equal('<div class="b" id="s0">Hello Jane</div>');
+    expect(component.renderSync({ name: 'Jane' }).toString())
+        .to.have.string('Hello Jane')
+        .and.to.have.string('class="b"');
 };

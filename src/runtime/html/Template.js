@@ -2,6 +2,9 @@
 var AsyncStream = require('./AsyncStream');
 var makeRenderable = require('../renderable');
 var stream = require('stream');
+var componentGlobals = require('../../components/taglib/component-globals-tag');
+var initComponents = require('../../components/taglib/init-components-tag');
+var awaitReorderer = require('../../taglibs/async/await-reorderer-tag');
 
 class Readable extends stream.Readable {
     constructor(template, data, options) {
@@ -52,6 +55,14 @@ function createOut(globalData, parent, state, buffer) {
 
 Template.prototype = {
     createOut: createOut,
+    afterRender: function(data, out) {
+        // Add components for browser init if there was no body element.
+        if (!this.meta || !this.meta.hasBody) {
+            componentGlobals(null, out);
+            initComponents(null, out);
+            awaitReorderer(null, out);
+        }
+    },
     stream: function(data) {
         return new Readable(this, data, this._options);
     }
