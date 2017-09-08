@@ -3,7 +3,7 @@ Changelog
 
 # 4.x
 
-## 4.4.x
+## 4.5.x
 
 ### 4.5.0-beta.0
 
@@ -15,6 +15,8 @@ Changelog
 - DOM diffing/patching changes:
     - Significant performance improvements
     - morphdom is now UI component-aware
+
+## 4.4.x
 
 ### 4.4.28
 
