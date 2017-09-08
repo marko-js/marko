@@ -7,7 +7,7 @@ Changelog
 
 ### 4.5.0-beta.0
 
-- Fixes #817 - Support dynamic root elements
+- Fixes [#817](https://github.com/marko-js/marko/issues/817) - Support dynamic root elements
 - Marko no longer attaches `id` attributes to elements for purposes of keyed matching
     - Keyed elements are maintained in an internal, per-component lookup
 - Keys are now assigned to all custom tags and HTML elements at compile-time to improve reliability and performance of DOM diffing
