@@ -62,6 +62,7 @@ function AsyncStream(global, writer, state, shouldBuffer) {
     this._elStack = undefined; // Array
 
     this.___componentArgs = null; // Component args
+    this.___components = null; // ComponentsContext
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;

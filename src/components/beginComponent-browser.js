@@ -1,17 +1,14 @@
 var ComponentDef = require('./ComponentDef');
 
-module.exports = function(component, isSplitComponent) {
-    var componentStack = this.___componentStack;
-    var origLength = componentStack.length;
-    var parentComponentDef = componentStack[origLength - 1];
-
+module.exports = function beginComponent(componentsContext, component, isSplitComponen, parentComponentDeft) {
     var componentId = component.id;
 
-    var componentDef = new ComponentDef(component, componentId, this.___globalContext, componentStack, origLength);
-    parentComponentDef.___addChild(componentDef);
-    this.___globalContext.___componentsById[componentId] = componentDef;
+    var globalContext = componentsContext.___globalContext;
+    var componentDef = componentsContext.___componentDef = new ComponentDef(component, componentId, globalContext);
+    globalContext.___renderedComponentsById[componentId] = true;
+    componentsContext.___components.push(componentDef);
 
-    componentStack.push(componentDef);
-
+    var out = componentsContext.___out;
+    out.bc(component);
     return componentDef;
 };

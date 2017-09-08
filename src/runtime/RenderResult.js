@@ -41,9 +41,9 @@ var proto = RenderResult.prototype = {
 
     afterInsert: function(doc) {
         var out = this.___out;
-        var globalComponentsContext = out.global.___components;
-        if (globalComponentsContext) {
-            this.___components = globalComponentsContext.___initComponents(doc);
+        var componentsContext = out.___components;
+        if (componentsContext) {
+            this.___components = componentsContext.___initComponents(doc);
         } else {
             this.___components = null;
         }

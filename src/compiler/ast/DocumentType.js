@@ -24,7 +24,7 @@ class DocumentType extends Node {
     toJSON() {
         return {
             type: this.type,
-            value: this.value
+            value: this.documentType
         };
     }
 }

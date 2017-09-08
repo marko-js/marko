@@ -3,7 +3,6 @@ var expect = require('chai').expect;
 module.exports = function(helpers, done) {
     var widget = helpers.mount(require('./index'), {});
 
-    expect(widget.$().attr('id')).to.equal(widget.id);
     expect(widget.$().attr('class')).to.equal('app-jquery-proxy');
     expect(widget.$('#foo').html()).to.equal('foo');
     expect(widget.$('#fooText').html()).to.equal('fooText');

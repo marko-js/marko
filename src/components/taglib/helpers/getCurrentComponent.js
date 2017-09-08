@@ -5,13 +5,11 @@
  * @return {ComponentDef} The ComponentDef instance
  */
 module.exports = function getCurrentComponent(out) {
-    var componentsContext = out.data.___components;
-    var componentStack;
-    var len;
+    var componentsContext = out.___components;
 
-    if (!componentsContext || (len = (componentStack = componentsContext.___componentStack).length) < 2) {
+    if (!componentsContext) {
         throw Error('No component found');
     }
 
-    return componentStack[len - 1];
+    return componentsContext.___componentDef;
 };

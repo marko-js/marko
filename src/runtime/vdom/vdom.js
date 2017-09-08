@@ -3,12 +3,11 @@ var VComment = require('./VComment');
 var VDocumentFragment = require('./VDocumentFragment');
 var VElement = require('./VElement');
 var VText = require('./VText');
+var VComponent = require('./VComponent');
 
-var FLAG_IS_TEXTAREA = 2;
 var defaultDocument = typeof document != 'undefined' && document;
 var specialHtmlRegexp = /[&<]/;
-var xmlnsRegExp = /^xmlns(:|$)/;
-var virtualizedProps = { ___virtualized: true };
+
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
@@ -18,44 +17,10 @@ function virtualizeChildNodes(node, vdomParent) {
     }
 }
 
-function virtualize(node) {
+function virtualize(node, shallow) {
     switch(node.nodeType) {
         case 1:
-            var attributes = node.attributes;
-            var attrCount = attributes.length;
-
-            var attrs;
-
-            if (attrCount) {
-                attrs = {};
-                for (var i=0; i<attrCount; i++) {
-                    var attr = attributes[i];
-                    var attrName = attr.name;
-                    if (!xmlnsRegExp.test(attrName)) {
-                        attrs[attrName] = attr.value;
-                    }
-                }
-            }
-
-            var flags = 0;
-
-            var tagName = node.nodeName;
-            if (tagName === 'TEXTAREA') {
-                flags |= FLAG_IS_TEXTAREA;
-            }
-
-            var vdomEl = new VElement(tagName, attrs, null, flags, virtualizedProps);
-            if (node.namespaceURI !== 'http://www.w3.org/1999/xhtml') {
-                vdomEl.___namespaceURI = node.namespaceURI;
-            }
-
-            if (vdomEl.___isTextArea) {
-                vdomEl.___value = node.value;
-            } else {
-                virtualizeChildNodes(node, vdomEl);
-            }
-
-            return vdomEl;
+            return VElement.___virtualize(node, virtualizeChildNodes);
         case 3:
             return new VText(node.nodeValue);
         case 8:
@@ -126,6 +91,7 @@ exports.___VComment = VComment;
 exports.___VDocumentFragment = VDocumentFragment;
 exports.___VElement = VElement;
 exports.___VText = VText;
+exports.___VComponent = VComponent;
 exports.___virtualize = virtualize;
 exports.___virtualizeHTML = virtualizeHTML;
 exports.___defaultDocument = defaultDocument;

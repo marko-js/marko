@@ -10,8 +10,8 @@ var extend = require('raptor-util/extend');
 var classList = commonHelpers.cl;
 
 var helpers = extend({
-    e: function(tagName, attrs, childCount, flags, props) {
-        return new VElement(tagName, attrs, childCount, flags, props);
+    e: function(tagName, attrs, key, component, childCount, flags, props) {
+        return new VElement(tagName, attrs, key, component, childCount, flags, props);
     },
 
     t: function(value) {

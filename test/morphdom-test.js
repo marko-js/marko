@@ -108,40 +108,6 @@ function buildElLookup(node) {
     return map;
 }
 
-function collectNodes(rootNode) {
-    var allNodes = [];
-
-    function buildArrayHelper(node) {
-        allNodes.push(node);
-        var curNode = node.firstChild;
-        while(curNode) {
-            buildArrayHelper(curNode);
-            curNode = curNode.nextSibling;
-        }
-    }
-
-    buildArrayHelper(rootNode);
-    return allNodes;
-}
-
-function isNodeInTree(node, rootNode) {
-    if (node == null) {
-        throw new Error('Invalid arguments');
-    }
-    var currentNode = node;
-
-    while (true) {
-        if (currentNode == null) {
-            return false;
-        } else if (currentNode == rootNode) {
-            return true;
-        }
-
-        currentNode = currentNode.parentNode;
-    }
-
-    return false;
-}
 
 describe('morphdom', function() {
     var autoTestDir = path.join(__dirname, 'autotests/morphdom');
@@ -154,91 +120,36 @@ describe('morphdom', function() {
             let fromDocument = jsdom('<html><body>' + fromHTML + '</body></html>');
             let toDocument = jsdom('<html><body>' + toHTML + '</body></html>');
 
-            let fromNode = fromDocument.body.firstChild;
-            let toNode = toDocument.body.firstChild;
+            let fromNode = fromDocument.body;
+            let realToNode = toDocument.body;
 
-            var allFromNodes = collectNodes(fromNode);
-            var elLookupBefore = buildElLookup(fromNode);
-
-            var targetVEl = require('marko/runtime/vdom/vdom').___virtualize(toNode);
-            var expectedHTML = serializeNode(toNode);
+            var targetVEl = require('marko/runtime/vdom/vdom').___virtualize(realToNode);
+            var expectedHTML = serializeNode(realToNode);
             fs.writeFileSync(path.join(dir, 'expected.html'), expectedHTML, { encoding: 'utf8' });
 
-            var morphedNode = morphdom(
-                fromNode,
-                targetVEl,
-                {},
-                function onNodeAdded() {},
-                function onBeforeElUpdated(node) {
-                    if (node.$onBeforeElUpdated) {
-                        throw new Error('Duplicate onBeforeElUpdated for: ' + serializeNode(node));
-                    }
+            var parentNode = fromNode;
+            var startNode = fromNode.firstChild;
+            var endNode = null;
+            var toNode = targetVEl;
+            var doc = fromDocument;
+            var componentsContext = {
+                ___preserved: {},
+                ___preservedBodies: {},
+                ___globalContext: {
+                    ___isRerenderInBrowser: true
+                }
+            };
 
-                    node.$onBeforeElUpdated = true;
-                },
-                function onBeforeNodeDiscarded(node) {
-                    if (node.$onBeforeNodeDiscarded) {
-                        throw new Error('Duplicate onBeforeNodeDiscarded for: ' + serializeNode(node));
-                    }
+            morphdom(
+                parentNode,
+                startNode,
+                endNode,
+                toNode,
+                doc,
+                componentsContext);
 
-                    node.$onBeforeNodeDiscarded = true;
-                },
-                function onNodeDiscarded(node) {
-                    if (node.$onNodeDiscarded) {
-                        throw new Error('Duplicate onNodeDiscarded for: ' + serializeNode(node));
-                    }
-
-                    node.$onNodeDiscarded = true;
-                },
-                function onBeforeElChildrenUpdated(node) {
-                    if (node.$onBeforeElChildrenUpdated) {
-                        throw new Error('Duplicate onBeforeElChildrenUpdated for: ' + serializeNode(node));
-                    }
-
-                    node.$onBeforeElChildrenUpdated = true;
-                });
-
-
-
-            var actualHTML = serializeNode(morphedNode);
+            var actualHTML = serializeNode(fromNode);
             helpers.compare(actualHTML, '.html');
-
-            var elLookupAfter = buildElLookup(morphedNode);
-
-            Object.keys(elLookupBefore).forEach(function(elId) {
-                var afterEl =  elLookupAfter[elId];
-                if (afterEl) {
-                    var beforeEl = elLookupBefore[elId];
-                    if (afterEl.tagName === beforeEl.tagName) {
-                        if (afterEl !== beforeEl) {
-                            throw new Error('Element mismatch. Expected keyed element to be the same in the before and after.\nBEFORE:\n' + serializeNode(beforeEl) + '\n\nAFTER:\n' + serializeNode(afterEl));
-                        }
-                        expect(afterEl).to.equal(beforeEl);
-                    }
-                }
-            });
-
-            allFromNodes.forEach(function(node) {
-                if (node.$onNodeDiscarded && isNodeInTree(node, morphedNode)) {
-                    throw new Error('"from" node was reported as being discarded, but it still in the final DOM tree. Node: ' + serializeNode(node));
-                }
-
-                if (node.nodeType === 1 && node.$onNodeDiscarded !== true) {
-                    if (!node.$onBeforeElUpdated) {
-                        throw new Error('"from" element was not reported as being discarded, but it was not morphed. Node: ' + serializeNode(node));
-                    }
-                }
-
-                // if (isNodeInTree(node, morphedNode)) {
-                //     if (node.$testOnFromNodeRemovedFlag) {
-                //         throw new Error('onFromNodeRemoved(node) called for node that is in the final DOM tree: ' + node);
-                //     }
-                // } else {
-                //     if (!node.$testOnFromNodeRemovedFlag) {
-                //         throw new Error('"from" node was removed but onFromNodeRemoved(node) was not called: ' + node);
-                //     }
-                // }
-            });
 
             return done();
         });

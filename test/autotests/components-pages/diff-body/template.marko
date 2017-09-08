@@ -6,6 +6,9 @@ class {
             count: 0
         }
     }
+    onInput() {
+        this.input = {};
+    }
     onMount () {
         window.app = this;
     }
@@ -15,7 +18,7 @@ class {
 }
 
 <!DOCTYPE html>
-html lang="en" 
+html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Test
@@ -25,7 +28,7 @@ html lang="en"
         div id="test"
         div id="mocha"
         div id="testsTarget"
-        div key="count" -- ${state.count}
+        div.count key="count" -- ${state.count}
 
         lasso-body
 

@@ -62,9 +62,19 @@ class HtmlElement extends Node {
         this.selfClosed = def.selfClosed;
         this.dynamicAttributes = undefined;
         this.bodyOnlyIf = undefined;
+        this.runtimeFlags = 0; // Runtime flags are used to flag VDOM nodes with important information (flags are OR'd together)
+        this.key = undefined;
 
         this.on('beforeGenerateCode', beforeGenerateCode);
         this.on('afterGenerateCode', afterGenerateCode);
+    }
+
+    addRuntimeFlag(value) {
+        this.runtimeFlags |= value;
+    }
+
+    setKey(key) {
+        this.key = key;
     }
 
     generateHTMLCode(codegen) {

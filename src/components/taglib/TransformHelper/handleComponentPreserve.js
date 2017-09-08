@@ -15,12 +15,17 @@ function addPreserve(transformHelper, bodyOnly, condition) {
         preserveAttrs['if'] = condition;
     }
 
-    let componentIdInfo = transformHelper.assignComponentId(true /* repeated */);
+    let componentIdInfo = transformHelper.assignComponentId();
     let idVarNode = componentIdInfo.idVarNode ? null : componentIdInfo.createIdVarNode();
 
-    preserveAttrs.id = transformHelper.getIdExpression();
+    if (el.type === 'HtmlElement') {
+        preserveAttrs.key = transformHelper.getIdExpression();
+    } else {
+        preserveAttrs.cid = transformHelper.getIdExpression();
+    }
 
-    let preserveNode = context.createNodeForEl('w-preserve', preserveAttrs);
+
+    let preserveNode = context.createNodeForEl('_preserve', preserveAttrs);
     let idVarNodeTarget;
 
     if (bodyOnly) {

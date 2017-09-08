@@ -3,48 +3,50 @@ var repeatedRegExp = /\[\]$/;
 var componentUtil = require('./util');
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var extend = require('raptor-util/extend');
+var KeySequence = require('./KeySequence');
+
+/*
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_HAS_BODY_EL = 2;
+var FLAG_HAS_HEAD_EL = 4;
+*/
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
  * a single component and this information is used to instantiate the component
  * later (after the rendered HTML has been added to the DOM)
  */
-function ComponentDef(component, componentId, globalComponentsContext, componentStack, componentStackLen) {
+function ComponentDef(component, componentId, globalComponentsContext) {
     this.___globalComponentsContext = globalComponentsContext; // The AsyncWriter that this component is associated with
-    this.___componentStack = componentStack;
-    this.___componentStackLen = componentStackLen;
     this.___component = component;
     this.id = componentId;
 
-    this.___roots =  null;            // IDs of root elements if there are multiple root elements
-    this.___children = null;          // An array of nested ComponentDef instances
     this.___domEvents = undefined;         // An array of DOM events that need to be added (in sets of three)
 
     this.___isExisting = false;
 
-    this.___willRerenderInBrowser = false;
+    this.___renderBoundary = false;
+    this.___flags = 0;
 
     this.___nextIdIndex = 0; // The unique integer to use for the next scoped ID
+
+    this.___keySequence = null;
+
+    this.___preservedDOMNodes = null;
 }
 
 ComponentDef.prototype = {
-    ___end: function() {
-        this.___componentStack.length = this.___componentStackLen;
+
+    ___nextKey: function(key) {
+        var keySequence = this.___keySequence || (this.___keySequence = new KeySequence());
+        return keySequence.___nextKey(key);
     },
 
-    /**
-     * Register a nested component for this component. We maintain a tree of components
-     * so that we can instantiate nested components before their parents.
-     */
-    ___addChild: function (componentDef) {
-        var children = this.___children;
-
-        if (children) {
-            children.push(componentDef);
-        } else {
-            this.___children = [componentDef];
-        }
+    ___preserveDOMNode: function(key, bodyOnly) {
+        var lookup = this.___preservedDOMNodes || (this.___preservedDOMNodes = {});
+        lookup[key] = bodyOnly ? 2 : 1;
     },
+
     /**
      * This helper method generates a unique and fully qualified DOM element ID
      * that is unique within the scope of the current component. This method prefixes
@@ -88,15 +90,15 @@ ComponentDef.prototype = {
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
      */
     ___nextComponentId: function() {
-        var id = this.id;
-
-        return id === null ?
-            this.___globalComponentsContext.___nextComponentId(this.___out) :
-            id + '-c' + (this.___nextIdIndex++);
+        return this.id + '-c' + (this.___nextIdIndex++);
     },
 
     d: function(handlerMethodName, extraArgs) {
         return attachBubblingEvent(this, handlerMethodName, extraArgs);
+    },
+
+    get ___type() {
+        return this.___component.___type;
     }
 };
 
@@ -146,10 +148,11 @@ ComponentDef.___deserialize = function(o, types, globals, registry) {
     component.___global = globals;
 
     return {
+        id: id,
         ___component: component,
-        ___roots: extra.r,
+        ___boundary: extra.r,
         ___domEvents: extra.d,
-        ___willRerenderInBrowser: extra._ === 1
+        ___flags: extra.f || 0
     };
 };
 

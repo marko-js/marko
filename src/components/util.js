@@ -1,3 +1,7 @@
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+// var FLAG_HAS_BODY_EL = 2;
+// var FLAG_HAS_HEAD_EL = 4;
+
 function nextComponentIdProvider(out) {
     var prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
     var nextId = 0;
@@ -21,7 +25,7 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
             // where the extra args will be found when the UI component is
             // rerendered in the browser
 
-            if (componentDef.___willRerenderInBrowser === false) {
+            if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
                 if (eventIndex === 0) {
                     component.___bubblingDomEvents = [extraArgs];
                 } else {
@@ -40,3 +44,5 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
 exports.___nextComponentIdProvider = nextComponentIdProvider;
 exports.___isServer = true;
 exports.___attachBubblingEvent = attachBubblingEvent;
+exports.___destroyComponentForNode = function noop() {};
+exports.___destroyNodeRecursive = function noop() {};

@@ -16,7 +16,7 @@ function render(input, out) {
             baz: false
           }
       ]))
-    }, 3, 4)
+    }, null, null, 3, 4)
     .t("Hello ")
     .t(name)
     .t("!");

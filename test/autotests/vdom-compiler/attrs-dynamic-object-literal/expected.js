@@ -8,7 +8,7 @@ function render(input, out) {
   out.e("DIV", {
       foo: "bar",
       hello: "world"
-    }, 3)
+    }, null, null, 3)
     .t("Hello ")
     .t(name)
     .t("!");

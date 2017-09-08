@@ -7,7 +7,7 @@ module.exports = function(helpers) {
         version: 0
     });
 
-    expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);
+    expect(window.rerenderInitOrder).to.deep.equal(['childB', 'childA', 'parent']);
 
     window.rerenderInitOrder = [];
 
@@ -15,7 +15,7 @@ module.exports = function(helpers) {
     component.update();
 
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
-    expect(window.rerenderInitOrder).to.deep.equal(['childA', 'childB', 'parent']);
+    expect(window.rerenderInitOrder).to.deep.equal(['childB', 'childA', 'parent']);
 
     delete window.rerenderInitOrder;
 };

@@ -1,0 +1,15 @@
+class {
+    onCreate() {
+        this.state = {
+            count: 0,
+            renderHello: true
+        };
+    }
+}
+
+<div.root>
+    [ROOT]
+    <span>
+        <hello key="hello" count=state.count if(state.renderHello)/>
+    </span>
+</div>

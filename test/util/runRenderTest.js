@@ -60,14 +60,14 @@ function createAsyncVerifier(main, helpers, out) {
 module.exports = function runRenderTest(dir, helpers, done, options) {
     let output = options.output || 'html';
 
-    require('marko/compiler').configure({output: output});
-
     global.document = defaultDocument;
 
     let isVDOM = output === 'vdom';
     let checkAsyncEvents = options.checkAsyncEvents === true;
 
     let actualDir;
+
+    require('marko/compiler').configure({ output });
 
     if (isVDOM) {
         actualDir = path.join(dir, '../~vdom.skip/' + path.basename(dir));
@@ -95,21 +95,15 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
         return done();
     }
 
-    if (main.writeToDisk === false) {
-        require('marko/compiler').defaultOptions.writeToDisk = false;
-    }
+    var compilerOptions = {
+        output: output,
+        writeToDisk: main.writeToDisk !== false,
+        preserveWhitespace: main.preserveWhitespaceGlobal === true,
+        ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true,
+        escapeAtTags: main.escapeAtTags === true
+    };
 
-    if (main.preserveWhitespaceGlobal === true) {
-        require('marko/compiler').defaultOptions.preserveWhitespace = true;
-    }
-
-    if (main.ignoreUnrecognizedTags) {
-        require('marko/compiler').defaultOptions.ignoreUnrecognizedTags = true;
-    }
-
-    if (main.escapeAtTags) {
-        require('marko/compiler').defaultOptions.escapeAtTags = true;
-    }
+    require('marko/compiler').configure(compilerOptions);
 
     var oldDone = done;
     done = function(err) {
@@ -156,8 +150,6 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                 var renderOutput = result.getOutput();
 
                 if (isVDOM) {
-                    let vdomTree = renderOutput;
-
                     var getExpectedHtml = function(callback) {
                         var expectedHtml;
                         try {
@@ -168,9 +160,12 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                             return callback(null, expectedHtml);
                         }
 
-                        require('marko/compiler').configure({ output: 'html' });
+                        require('marko/compiler').configure(Object.assign({}, compilerOptions, { output: 'html' }));
+
                         require('marko/runtime/vdom/AsyncVDOMBuilder').prototype.___document = defaultDocument;
                         global.document = defaultDocument;
+
+
 
                         let htmlTemplatePath = path.join(dir, 'template.marko');
                         let htmlTemplate = marko.load(htmlTemplatePath);
@@ -184,6 +179,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
                             let document = jsdom('<html><body>' + html + '</body></html>');
                             let expectedHtml = domToString(document.body, { childrenOnly: true });
+
                             callback(null, expectedHtml);
                         });
                     };
@@ -196,11 +192,16 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
                         fs.writeFileSync(path.join(dir, 'vdom-expected.generated.html'), expectedHtml, { encoding: 'utf8' });
 
-                        let actualizedDom = vdomTree.actualize(defaultDocument);
+
+                        // let actualizedDom = vdomTree.actualize(defaultDocument);
 
                         // NOTE: We serialie the virtual DOM tree into an HTML string and reparse so that we can
                         //       normalize the text
-                        let vdomHtml = domToHTML(actualizedDom);
+                        let actualNode = result.getNode();
+
+
+                        let vdomHtml = domToHTML(actualNode);
+
                         let vdomRealDocument = jsdom('<html><body>' + vdomHtml + '</body></html>');
                         let vdomString = domToString(vdomRealDocument.body, { childrenOnly: true });
                         helpers.compare(vdomString, 'vdom-', '.generated.html');
@@ -231,12 +232,6 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
             template.render(templateData, out).end();
         }
     } finally {
-        if (main.writeToDisk === false) {
-            delete require('marko/compiler').defaultOptions.writeToDisk;
-        }
-
-        if (main.preserveWhitespaceGlobal === true) {
-            delete require('marko/compiler').defaultOptions.preserveWhitespace;
-        }
+        require('marko/compiler').configure();
     }
 };

@@ -125,6 +125,13 @@ class Node {
         this.body.appendChild(node);
     }
 
+    appendChildren(nodes) {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        nodes.forEach((node) => {
+            this.body.appendChild(node);
+        });
+    }
+
     insertBefore(newNode, referenceNode) {
         ok(this.body, 'Node does not support child nodes: ' + this);
         this.body.insertBefore(newNode, referenceNode);

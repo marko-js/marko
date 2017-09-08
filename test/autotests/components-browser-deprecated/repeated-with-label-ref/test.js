@@ -14,7 +14,12 @@ module.exports = function(helpers) {
         ]
     });
 
-    var inputs = widget.getEls('field');
+    var inputs = [];
+
+    for (var i=0; i<2; i++) {
+        inputs.push(widget.getEl('field[' + i + ']'));
+    }
+
     expect(inputs.length).to.equal(2);
     expect(inputs[0].value).to.equal('name');
 };

@@ -1,6 +1,7 @@
 {
     "browser": {
         "./beginComponent.js": "./beginComponent-browser.js",
+        "./endComponent.js": "./endComponent-browser.js",
         "./helpers.js": "./helpers-browser.js",
         "./index.js": "./index-browser.js",
         "./init-components.js": "./init-components-browser.js",

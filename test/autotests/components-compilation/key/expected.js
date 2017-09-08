@@ -12,6 +12,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
+    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     app_foo_template = marko_loadTemplate(require.resolve("./components/app-foo")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
@@ -22,17 +23,12 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div class=\"root\"" +
-    marko_attr("id", __component.id) +
-    ">");
+  out.w("<div class=\"root\">");
 
-  marko_renderComponent(app_foo_tag, {}, out, [
-    __component,
-    "foo"
-  ]);
+  marko_renderComponent(app_foo_tag, {}, out, "foo");
 
   out.w("<a href=\"ebay.com\"" +
-    marko_attr("id", __component.elId("link")) +
+    marko_attr("data-marko-key", marko_keyAttr("link", __component)) +
     ">eBay</a></div>");
 }
 

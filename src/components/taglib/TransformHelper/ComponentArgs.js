@@ -2,23 +2,15 @@
 class ComponentArgs {
 
     constructor() {
-        this.id = null;
+        this.key = null;
         this.customEvents = null;
-        this.empty = true;
     }
 
-    setId(id) {
-        this.empty = false;
-        this.id = id;
-    }
-
-    getId() {
-        return this.id;
+    setKey(key) {
+        this.key = key;
     }
 
     addCustomEvent(eventType, targetMethod, extraArgs) {
-        this.empty = false;
-
         if (!this.customEvents) {
             this.customEvents = [];
         }
@@ -27,7 +19,7 @@ class ComponentArgs {
     }
 
     compile(transformHelper) {
-        if (this.empty) {
+        if (!this.key && !this.customEvents) {
             return;
         }
 
@@ -35,29 +27,14 @@ class ComponentArgs {
 
         var builder = transformHelper.builder;
 
-        var id = this.id;
-        var customEvents = this.customEvents;
+        var args;
 
-        // Make sure the nested component has access to the ID of the containing
-        // component if it is needed
-        var shouldProvideScope = id || customEvents;
-
-        var args = [];
-
-        if (shouldProvideScope) {
-            args.push(builder.identifier('__component'));
+        if (this.key && this.customEvents) {
+            args = builder.literal([ this.key, builder.literal(this.customEvents) ]);
+        } else if (this.customEvents) {
+            args = builder.literal([ builder.literalNull(), builder.literal(this.customEvents) ]);
         } else {
-            args.push(builder.literalNull());
-        }
-
-        if (id != null) {
-            args.push(id);
-        } else {
-            args.push(builder.literalNull());
-        }
-
-        if (customEvents) {
-            args.push(builder.literal(customEvents));
+            args = this.key;
         }
 
         if (el.type === 'CustomTag') {
@@ -66,7 +43,7 @@ class ComponentArgs {
             el.generateRenderTagCode = function(codegen, tagVar, tagArgs) {
                 tagArgs = [tagVar].concat(tagArgs);
 
-                tagArgs.push(builder.literal(args));
+                tagArgs.push(args);
 
                 return codegen.builder.functionCall(
                     renderComponentHelper,
@@ -75,7 +52,7 @@ class ComponentArgs {
         } else {
             el.onBeforeGenerateCode((event) => {
                 let funcTarget = builder.memberExpression(builder.identifierOut(), builder.identifier('c'));
-                let funcArgs = [builder.literal(args)];
+                let funcArgs = [args];
 
                 event.insertCode(builder.functionCall(funcTarget, funcArgs));
             });

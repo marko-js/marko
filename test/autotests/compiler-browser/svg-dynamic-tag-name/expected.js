@@ -15,8 +15,8 @@ function render(input, out) {
 
   var isCircle = true;
 
-  out.e("svg", marko_attrs0, 1, 1)
-    .e(isCircle ? "circle" : "square", marko_attrs1, 0, 1);
+  out.e("svg", marko_attrs0, null, null, 1, 1)
+    .e(isCircle ? "circle" : "square", marko_attrs1, null, null, 0, 1);
 }
 
 marko_template._ = render;

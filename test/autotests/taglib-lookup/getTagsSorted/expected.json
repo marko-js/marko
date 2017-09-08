@@ -1,6 +1,7 @@
 [
     "_component",
     "_lasso-resources-root",
+    "_preserve",
     "*",
     "a",
     "abbr",
@@ -242,7 +243,6 @@
     "video",
     "view",
     "vkern",
-    "w-preserve",
     "wbr",
     "while",
     "widget-types"

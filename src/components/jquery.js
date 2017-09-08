@@ -23,11 +23,11 @@ exports.patchComponent = function(jQuery) {
                 var match = idRegExp.exec(arg);
                 //Reset the search to 0 so the next call to exec will start from the beginning for the new string
                 if (match != null) {
-                    var componentElId = match[1];
+                    var key = match[1];
                     if (match[2] == null) {
-                        return jQuery(self.getEl(componentElId));
+                        return jQuery(self.getEl(key));
                     } else {
-                        return jQuery('#' + self.getElId(componentElId) + match[2]);
+                        return jQuery(match[2].trim(), self.getEl(key));
                     }
                 } else {
                     var rootEl = self.getEl();
