@@ -24,7 +24,7 @@
     "build-src": "node scripts/build.js src",
     "prepublish": "npm run build",
     "test": "npm run jshint -s && npm run mocha -s && npm run test-components -s && npm run test-components-deprecated -s",
-    "test-ci": "npm run test-generate-coverage && npm run build && NODE_ENV=development npm run test",
+    "test-ci": "npm run test-generate-coverage",
     "mocha": "node test/server-tests-runner/cli.js",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
