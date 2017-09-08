@@ -143,6 +143,7 @@
   "nyc": {
     "exclude": [
       "**/benchmark/**",
+      "**/scripts/**",
       "**/coverage/**",
       "**/test/**",
       "**/test-dist/**",
