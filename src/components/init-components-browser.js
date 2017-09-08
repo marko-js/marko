@@ -25,18 +25,18 @@ function indexServerComponentBoundaries(node) {
             var commentValue = node.nodeValue;
             if (commentValue[0] === 'M') {
                 componentId = commentValue.substring(2);
-                switch(commentValue[1]) {
-                    case '$':
-                        serverComponentEndNodes[componentId] = node;
-                        break;
-                    case '#': // This component will rerender in the browser, no need to index children
-                        serverComponentStartNodes[componentId] = node;
-                        var endValue = 'M$' + componentId;
-                        while((node = node.nextSibling) && node.nodeValue !== endValue) {}
-                        continue;
-                    case '^':
-                        serverComponentStartNodes[componentId] = node;
-                        break;
+
+                var firstChar = commentValue[1];
+
+                if (firstChar === '/') {
+                    serverComponentEndNodes[componentId] = node;
+                } else if (firstChar === '#') {
+                    serverComponentStartNodes[componentId] = node;
+                    var endValue = 'M/' + componentId;
+                    while((node = node.nextSibling) && node.nodeValue !== endValue) {}
+                    continue;
+                } else if (firstChar === '^'){
+                    serverComponentStartNodes[componentId] = node;
                 }
             }
         } else if (node.nodeType === 1) { // HTML element node
