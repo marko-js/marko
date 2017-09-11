@@ -1,5 +1,7 @@
 'use strict';
 
+const removeDashes = require('../../../compiler/util/removeDashes');
+
 const deprecatedKeySuffix = ':key';
 const scopedSuffix = ':scoped';
 const deprecatedAttrs = {
@@ -55,8 +57,7 @@ module.exports = function handleComponentKeyAttrs() {
             }
 
             let uniqueElId = this.nextUniqueId();
-            let idVarName = 'marko_' + finalAttributeName + '_key' + uniqueElId;
-
+            let idVarName = 'marko_' + removeDashes(finalAttributeName) + '_key' + uniqueElId;
 
             let varNode = builder.var(idVarName, attribute.value);
 
