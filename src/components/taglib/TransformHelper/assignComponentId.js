@@ -100,7 +100,7 @@ module.exports = function assignComponentId(isRepeated) {
             }
 
             if (context.data.imperativeComponentIds &&  el.data.userAssignedKey !== false) {
-                if (context.data.imperativeComponentIds.includes(assignedKey.value)) {
+                if (context.data.imperativeComponentIds.indexOf(assignedKey.value) !== -1) {
                     el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
                 }
             }
