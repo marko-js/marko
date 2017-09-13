@@ -99,6 +99,12 @@ module.exports = function assignComponentId(isRepeated) {
                 el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
             }
 
+            if (context.data.imperativeComponentIds &&  el.data.userAssignedKey !== false) {
+                if (context.data.imperativeComponentIds.includes(assignedKey.value)) {
+                    el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
+                }
+            }
+
             if (context.isServerTarget()) {
                 var markoKeyAttrVar = context.importModule('marko_keyAttr',
                     this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/markoKeyAttr'));

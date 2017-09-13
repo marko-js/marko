@@ -265,6 +265,14 @@ class Parser {
                     }
                 }
 
+                if (attrDef.rawValue) {
+                    let match = /^component\.(?:getE|e)lId\((?:"|')(.*)(?:"|')\)$/.exec(attrDef.rawValue);
+                    if (match) {
+                        context.data.imperativeComponentIds = context.data.imperativeComponentIds || [];
+                        context.data.imperativeComponentIds.push(match[1]);
+                    }
+                }
+
                 parsedAttributes.push(attrDef);
             });
         }
