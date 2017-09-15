@@ -266,10 +266,9 @@ class Parser {
                 }
 
                 if (attrDef.rawValue) {
-                    let match = /^component\.(?:getE|e)lId\((?:"|')(.*)(?:"|')\)$/.exec(attrDef.rawValue);
-                    if (match) {
-                        context.data.imperativeComponentIds = context.data.imperativeComponentIds || [];
-                        context.data.imperativeComponentIds.push(match[1]);
+                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrDef.rawValue)) {
+                        // TODO: add complain call here
+                        context.data.hasImperativeComponentIds = true;
                     }
                 }
 
