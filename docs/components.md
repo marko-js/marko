@@ -412,7 +412,7 @@ DOM nodes are conditionally preserved:
 ```marko
 <div>
     <!-- Don't ever re-render any nested DOM elements if the condition is met -->
-    <table no-update-body-if(data.tableData == null)>
+    <table no-update-body-if(input.tableData == null)>
         ...
     </table>
 </div>
