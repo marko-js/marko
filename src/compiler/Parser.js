@@ -265,6 +265,13 @@ class Parser {
                     }
                 }
 
+                if (attrDef.rawValue) {
+                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrDef.rawValue)) {
+                        // TODO: add complain call here
+                        context.data.hasImperativeComponentIds = true;
+                    }
+                }
+
                 parsedAttributes.push(attrDef);
             });
         }

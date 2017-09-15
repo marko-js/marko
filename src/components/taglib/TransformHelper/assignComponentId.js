@@ -95,8 +95,10 @@ module.exports = function assignComponentId(isRepeated) {
             this.getComponentArgs().setKey(nestedIdExpression);
         } else {
             idExpression = assignedKey;
-            if (context.data.hasLegacyForKey && el.data.userAssignedKey !== false) {
-                el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
+            if (el.data.userAssignedKey !== false) {
+                if (context.data.hasLegacyForKey || context.data.hasImperativeComponentIds) {
+                    el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
+                }
             }
 
             if (context.isServerTarget()) {
