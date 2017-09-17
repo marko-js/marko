@@ -1,8 +1,4 @@
 'use strict';
-require('../../');
-
-var AsyncStream = require('./AsyncStream');
-var Template = require('./Template');
 
 /**
  * Method is for internal usage only. This method
@@ -13,6 +9,13 @@ var Template = require('./Template');
 exports.t = function createTemplate(path) {
      return new Template(path);
 };
+
+require('../../');
+
+var AsyncStream = require('./AsyncStream');
+var Template = require('./Template');
+
+
 
 function createOut(globalData, parent, state, buffer) {
     return new AsyncStream(globalData, parent, state, buffer);
