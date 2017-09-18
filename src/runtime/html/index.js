@@ -1,5 +1,7 @@
 'use strict';
 
+var Template;
+
 /**
  * Method is for internal usage only. This method
  * is invoked by code in a compiled Marko template and
@@ -13,9 +15,7 @@ exports.t = function createTemplate(path) {
 require('../../');
 
 var AsyncStream = require('./AsyncStream');
-var Template = require('./Template');
-
-
+Template = require('./Template');
 
 function createOut(globalData, parent, state, buffer) {
     return new AsyncStream(globalData, parent, state, buffer);
