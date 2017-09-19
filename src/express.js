@@ -2,10 +2,7 @@ require('./');
 
 var assign = require('object-assign');
 
-var parentModule = module.parent;
-var parentRequire = parentModule && parentModule.require || require;
-
-var express = parentRequire('express');
+var express = module.parent ? module.parent.require('express') : require('express');
 
 patchResponse(express.response);
 delete require.cache[__filename];
