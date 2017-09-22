@@ -245,6 +245,8 @@ function initServerRendered(renderedComponents, doc) {
         component.___startNode = startNode;
         component.___endNode = endNode;
 
+        startNode.___markoComponent = component;
+
         delete keyedElementsByComponentId[componentId];
 
         // Mark the start node so that we know we need to skip past this
