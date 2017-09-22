@@ -101,7 +101,11 @@ var helpers = {
             renderer = resolveRenderer(renderer);
         }
 
-        return renderer;
+        return function wrappedRenderer(input, out, componentDef, key, customEvents) {
+            out.c(componentDef, key, customEvents);
+            renderer(input, out);
+            out.___assignedComponentDef = null;
+        };
     },
 
     /**

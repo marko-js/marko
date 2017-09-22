@@ -319,14 +319,14 @@ class Node {
         this._trimStartEnd = trimStartEnd;
     }
 
-    _normalizeChildTextNodes(context, forceTrim) {
+    _normalizeChildTextNodes(context, forceTrim, forceTrimStartEnd) {
         if (this._childTextNormalized) {
             return;
         }
 
         this._childTextNormalized = true;
 
-        var trimStartEnd = this._trimStartEnd === true;
+        var trimStartEnd = forceTrimStartEnd === true || this._trimStartEnd === true;
 
         var isPreserveWhitespace = false;
 

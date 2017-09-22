@@ -1,0 +1,10 @@
+[
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/test/autotests/compiler/metadata/foo.js"
+    },
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/test/autotests/compiler/metadata/tags/test-hello/bar.js"
+    }
+]

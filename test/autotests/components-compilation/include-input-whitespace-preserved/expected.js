@@ -9,7 +9,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag"));
@@ -19,18 +18,18 @@ function render(input, out, __component, component, state) {
 
   out.w("<div>\n    ");
 
-  marko_renderComponent(include_tag, {
+  include_tag({
       _target: data.renderBody,
       _arg: {
           test: 1
         }
-    }, out, "1");
+    }, out, __component, "1");
 
   out.w("\n</div>");
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

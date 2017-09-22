@@ -1,9 +1,9 @@
-var template = require('./template.marko');
+var AppHello = require('../app-hello');
 
 module.exports = function(input, out) {
     var asyncOut = out.beginAsync();
     setTimeout(function() {
-        template.render({
+        AppHello.render({
             name: input.name
         }, asyncOut);
         asyncOut.end();

@@ -1,19 +1,19 @@
 var nodePath = require('path');
 var fs = require('fs');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var template;
     var templatePath;
 
     // Make sure calling load with templatePath:String, templateSrc:String arguments works
     templatePath = nodePath.join(__dirname, 'dummy.marko');
     template = marko.load(templatePath, '-- Hello $!{data.name}!');
-    expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
+    helpers.compare(template.renderSync({name: 'Frank'}).toString());
 
     // Make sure calling load with templatePath:String, templateSrc:String, options:Object arguments works
     templatePath = nodePath.join(__dirname, 'dummy.marko');
     template = marko.load(templatePath, '-- Hello $!{data.name}!', {});
-    expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
+    helpers.compare(template.renderSync({name: 'Frank'}).toString());
 
     // Make sure calling load with templatePath:String, options:Object arguments works
     delete markoCompiler.defaultOptions.writeToDisk;
@@ -30,6 +30,6 @@ exports.check = function(marko, markoCompiler, expect, done) {
     template = marko.load(templatePath, {writeToDisk: false});
     expect(fs.existsSync(compiledPath)).to.equal(false);
     expect(template.render).to.be.a('function');
-    expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
+    helpers.compare(template.renderSync({name: 'Frank'}).toString());
     done();
 };

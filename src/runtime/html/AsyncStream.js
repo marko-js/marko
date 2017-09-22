@@ -61,8 +61,11 @@ function AsyncStream(global, writer, state, shouldBuffer) {
 
     this._elStack = undefined; // Array
 
-    this.___componentArgs = null; // Component args
     this.___components = null; // ComponentsContext
+
+    this.___assignedComponentDef = null;
+    this.___assignedKey = null;
+    this.___assignedCustomEvents = null;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -529,8 +532,10 @@ var proto = AsyncStream.prototype = {
         return this.then(undefined, fnErr);
     },
 
-    c: function(componentArgs) {
-        this.___componentArgs = componentArgs;
+    c: function(componentDef, key, customEvents) {
+        this.___assignedComponentDef = componentDef;
+        this.___assignedKey = key;
+        this.___assignedCustomEvents = customEvents;
     }
 };
 

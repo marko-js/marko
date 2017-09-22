@@ -4,7 +4,8 @@
             "type": "string",
             "preserve-name": true,
             "autocomplete": [],
-            "deprecated": true
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetBind"
         },
         "@w-scope": {
             "type": "expression",

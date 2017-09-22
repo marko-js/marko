@@ -4,11 +4,9 @@ var oldMeta = config.meta;
 
 config.meta = true;
 
-exports.checkTemplate = function(template) {
+exports.checkTemplate = function(template, helpers) {
     var dependencies = template.getDependencies();
     config.meta = oldMeta;
-    expect(dependencies).to.eql([
-        { type:'require', path:require.resolve('./foo.js') },
-        { type:'require', path:require.resolve('./tags/test-hello/bar.js') }
-    ]);
+
+    helpers.compare(JSON.stringify(dependencies, null, 4), '.json');
 };

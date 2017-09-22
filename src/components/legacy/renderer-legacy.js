@@ -11,10 +11,9 @@ var endComponent = require('../endComponent');
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
 function createRendererFunc(templateRenderFunc, componentProps) {
-    var typeName = componentProps.type;
-    var roots = componentProps.roots;
+    var typeName = componentProps.___type;
     var assignedId = componentProps.id;
-    var isSplit = componentProps.split === true;
+    var isSplit = componentProps.___split === true;
 
     return function renderer(input, out, renderingLogic) {
         var outGlobal = out.global;
@@ -60,25 +59,18 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             globalComponentsContext.___rerenderComponent = null;
         } else {
             parentComponentDef = componentsContext.___componentDef;
-            var componentArgs = out.___componentArgs;
+            var componentDefFromArgs;
+            if ((componentDefFromArgs = out.___assignedComponentDef)) {
+                scope = componentDefFromArgs.id;
+                out.___assignedComponentDef = null;
 
-            if (componentArgs) {
-                scope = parentComponentDef.id;
-                out.___componentArgs = null;
-
-                var key;
-
-                if (typeof componentArgs === 'string') {
-                  key = componentArgs;
-                } else {
-                  key = componentArgs[0];
-                  customEvents = componentArgs[1];
-                }
+                customEvents = out.___assignedCustomEvents;
+                var key = out.___assignedKey;
 
                 if (key != null) {
                     key = key.toString();
                 }
-                id = id || resolveComponentKey(globalComponentsContext, key, parentComponentDef);
+                id = id || resolveComponentKey(globalComponentsContext, key, componentDefFromArgs);
             } else if (parentComponentDef) {
                 id = parentComponentDef.___nextComponentId();
             } else {
@@ -195,7 +187,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         // This is a hack, but we have to swap out the component instance stored with this node
         var vComponentNode = out.___parent;
 
-        componentDef.___roots = roots;
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.b = componentBody;

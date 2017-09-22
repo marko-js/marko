@@ -101,7 +101,6 @@ const helpers = {
         module: 'marko/components/helpers',
         method: 'rc'
     },
-    'renderComponent': { module: 'marko/components/taglib/helpers/renderComponent' },
     'str': 's',
     'styleAttr': {
         vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
@@ -563,6 +562,10 @@ class CompileContext extends EventEmitter {
 
             if (attrDef.setFlag) {
                 node.setFlag(attrDef.setFlag);
+            }
+
+            if (attrDef.setContextFlag) {
+                this.setFlag(attrDef.setContextFlag);
             }
 
             attr.def = attrDef;

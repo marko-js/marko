@@ -16,8 +16,8 @@ function render(input, out, __component, component, state) {
 }
 
 marko_template._ = marko_renderer(render, {
-    split: true,
-    type: marko_componentType
+    ___split: true,
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.meta = {

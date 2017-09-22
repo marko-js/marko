@@ -37,14 +37,19 @@ function handleBeginAsync(event) {
         asyncOut.___components = new ComponentsContext(asyncOut, componentsContext);
     }
     // Carry along the component arguments
-    asyncOut.___componentArgs = parentOut.___componentArgs;
+    asyncOut.c(
+        parentOut.___assignedComponentDef,
+        parentOut.___assignedKey,
+        parentOut.___assignedCustomEvents);
 }
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
-    var typeName = componentProps.type;
-    var isSplit = componentProps.split === true;
+    var typeName = componentProps.___type;
+    var isSplit = componentProps.___split === true;
+    var isImplicitComponent = componentProps.___implicit === true;
+
     var shouldApplySplitMixins = isSplit;
 
     return function renderer(input, out) {
@@ -69,40 +74,42 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         var parentComponentDef;
 
         if (component) {
-            id = component.id;
-            isExisting = true;
+            // If component is provided then we are currently rendering
+            // the top-level UI component as part of a re-render
+            id = component.id; // We will use the ID of the component being re-rendered
+            isExisting = true; // This is a re-render so we know the component is already in the DOM
             globalComponentsContext.___rerenderComponent = null;
         } else {
+            // Otherwise, we are rendering a nested UI component. We will need
+            // to match up the UI component with the component already in the
+            // DOM (if any) so we will need to resolve the component ID from
+            // the assigned key. We also need to handle any custom event bindings
+            // that were provided.
             parentComponentDef = componentsContext.___componentDef;
-            var componentArgs = out.___componentArgs;
-            if (componentArgs) {
+            var componentDefFromArgs;
+            if ((componentDefFromArgs = out.___assignedComponentDef)) {
                 // console.log('componentArgs:', componentArgs);
-                scope = parentComponentDef.id;
-                out.___componentArgs = null;
+                scope = componentDefFromArgs.id;
+                out.___assignedComponentDef = null;
 
-                var key;
-
-                if (typeof componentArgs === 'string') {
-                  key = componentArgs;
-                } else {
-                  key = componentArgs[0];
-                  customEvents = componentArgs[1];
-                }
+                customEvents = out.___assignedCustomEvents;
+                var key = out.___assignedKey;
 
                 if (key != null) {
-                    key = key.toString();
-                    id = resolveComponentKey(globalComponentsContext, key, parentComponentDef);
+                    id = resolveComponentKey(globalComponentsContext, key.toString(), componentDefFromArgs);
                 } else {
-                    id = parentComponentDef.___nextComponentId();
+                    id = componentDefFromArgs.___nextComponentId();
                 }
-            } else if (parentComponentDef) {
-                id = parentComponentDef.___nextComponentId();
             } else {
                 id = globalComponentsContext.___nextComponentId();
             }
         }
 
         if (isServer) {
+            // If we are rendering on the server then things are simplier since
+            // we don't need to match up the UI component with a previously
+            // rendered component already mounted to the DOM. We also create
+            // a lightweight ServerComponent
             component = registry.___createComponent(
                 renderingLogic,
                 id,
@@ -111,7 +118,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 typeName,
                 customEvents,
                 scope);
+
+            // This is the final input after running the lifecycle methods.
+            // We will be passing the input to the template for the `input` param
             input = component.___updatedInput;
+            
             component.___updatedInput = undefined; // We don't want ___updatedInput to be serialized to the browser
         } else {
             if (!component) {
@@ -148,7 +159,6 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     component.___setCustomEvents(customEvents, scope);
                 }
 
-
                 if (isExisting === false) {
                     emitLifecycleEvent(component, 'create', input, out);
                 }
@@ -174,7 +184,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         }
 
         var componentDef =
-          beginComponent(componentsContext, component, isSplit, parentComponentDef);
+          beginComponent(componentsContext, component, isSplit, parentComponentDef, isImplicitComponent);
 
         componentDef.___isExisting = isExisting;
 

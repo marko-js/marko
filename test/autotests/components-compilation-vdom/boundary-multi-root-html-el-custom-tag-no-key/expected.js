@@ -10,7 +10,6 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
-    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     my_component_template = marko_loadTemplate(require.resolve("./components/my-component")),
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
@@ -24,11 +23,11 @@ function render(input, out, __component, component, state) {
       "data-marko-key": marko_keyAttr(input.myStartKey, __component)
     }, input.myStartKey, component, 0);
 
-  marko_renderComponent(my_component_tag, {}, out, "0");
+  my_component_tag({}, out, __component, "0");
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

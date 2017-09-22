@@ -156,6 +156,28 @@ class AttrLoader {
         var attr = this.attr;
         attr.setFlag = value;
     }
+
+    /**
+     * The "set-context-flag" property allows a "flag" to be added to the CompilerContext instance
+     * at compile time if the attribute is found on the node. This is helpful
+     * if an attribute uses a pattern and a transformer wants to have a simple
+     * check to see if any Node in the template has an attribute that matched the pattern.
+     *
+     * Example:
+     *
+     * "set-context-flag": "myCustomFlag"
+     *
+     * A Node instance can be checked if it has a flag set as shown below:
+     *
+     * if (context.isFlagSet('myCustomFlag')) { ... }
+     *
+     *
+     */
+    setContextFlag(value) {
+        var attr = this.attr;
+        attr.setContextFlag = value;
+    }
+
     /**
      * An attribute can be marked for ignore. Ignored attributes
      * will be ignored during compilation.

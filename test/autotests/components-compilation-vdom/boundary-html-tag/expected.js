@@ -9,7 +9,6 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
     marko_loadTag = marko_helpers.t,
     component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
@@ -43,7 +42,7 @@ function render(input, out, __component, component, state) {
 
   init_components_tag({}, out);
 
-  marko_renderComponent(await_reorderer_tag, {}, out, "5");
+  await_reorderer_tag({}, out, __component, "5");
 
   out.ee();
 
@@ -51,7 +50,7 @@ function render(input, out, __component, component, state) {
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

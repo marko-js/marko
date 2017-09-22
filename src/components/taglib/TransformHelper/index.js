@@ -1,5 +1,5 @@
 'use strict';
-var ComponentArgs = require('./ComponentArgs');
+var ComponentArgsCompiler = require('./ComponentArgsCompiler');
 var getRequirePath = require('../getRequirePath');
 
 var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
@@ -46,7 +46,7 @@ class TransformHelper {
     }
 
     getComponentArgs() {
-        return this.componentArgs || (this.componentArgs = new ComponentArgs());
+        return this.componentArgs || (this.componentArgs = new ComponentArgsCompiler());
     }
 
     nextUniqueId() {

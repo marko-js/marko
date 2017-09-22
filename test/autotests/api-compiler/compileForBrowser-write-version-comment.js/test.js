@@ -22,6 +22,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var code = compiledTemplate.code;
     code = code.replace(/marko\/dist\//g, 'marko/src/');
 
-    expect(code).to.deep.equal(expected);
+    helpers.compare(code, '.js');
+
     done();
 };

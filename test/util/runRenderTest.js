@@ -67,7 +67,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
     let actualDir;
 
-    require('marko/compiler').configure({ output });
+    require('marko/compiler').configure({
+        output,
+        autoKeyEnabled: false
+    });
 
     if (isVDOM) {
         actualDir = path.join(dir, '../~vdom.skip/' + path.basename(dir));
@@ -100,7 +103,8 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
         writeToDisk: main.writeToDisk !== false,
         preserveWhitespace: main.preserveWhitespaceGlobal === true,
         ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true,
-        escapeAtTags: main.escapeAtTags === true
+        escapeAtTags: main.escapeAtTags === true,
+        autoKeyEnabled: false
     };
 
     require('marko/compiler').configure(compilerOptions);
@@ -160,7 +164,11 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                             return callback(null, expectedHtml);
                         }
 
-                        require('marko/compiler').configure(Object.assign({}, compilerOptions, { output: 'html' }));
+                        require('marko/compiler').configure(
+                            Object.assign(
+                                {},
+                                compilerOptions,
+                                { output: 'html'}));
 
                         require('marko/runtime/vdom/AsyncVDOMBuilder').prototype.___document = defaultDocument;
                         global.document = defaultDocument;

@@ -19,24 +19,7 @@ module.exports = function assignComponentId(isRepeated) {
     let assignedKey;
     var nestedIdExpression;
     var idExpression;
-
-    if (!this.hasBoundComponentForTemplate()) {
-        // We are assigning a component ID to a nested component in a template that does not have a component.
-        // That means we do not have access to the parent component variable as part of a closure. We
-        // need to look it up out of the `out.data` map
-        if (!context.isFlagSet('hasComponentVar')) {
-            context.setFlag('hasComponentVar');
-
-            var getCurrentComponentVar = context.importModule('marko_getCurrentComponent',
-                this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/getCurrentComponent'));
-
-            context.addVar('__component', builder.functionCall(getCurrentComponentVar, [builder.identifierOut()]));
-            context.addVar('component', builder.memberExpression(
-                    builder.identifier('__component'),
-                    builder.identifier('___component')));
-        }
-    }
-
+    
     // In order to attach a DOM event listener directly we need to make sure
     // the target HTML element has an ID that we can use to get a reference
     // to the element during initialization. We generate this unique ID
@@ -92,7 +75,7 @@ module.exports = function assignComponentId(isRepeated) {
         if (isCustomTag) {
             idExpression = this.buildComponentElIdFunctionCall(assignedKey);
             // The element is a custom tag
-            this.getComponentArgs().setKey(nestedIdExpression);
+            this.getComponentArgs().setKey(nestedIdExpression, true /* user assigned key */);
         } else {
             idExpression = assignedKey;
             if (el.data.userAssignedKey !== false) {
@@ -114,12 +97,12 @@ module.exports = function assignComponentId(isRepeated) {
             el.setKey(assignedKey);
         }
     } else {
-        // Case 3 - We need to add a unique "id" attribute
-        let uniqueElId = this.nextUniqueId();
+        // Case 3 - We need to add a unique auto key
+        let uniqueKey = this.nextUniqueId();
 
-        nestedIdExpression = isRepeated ? builder.literal(uniqueElId + '[]') : builder.literal(uniqueElId.toString());
+        nestedIdExpression = isRepeated ? builder.literal(uniqueKey + '[]') : builder.literal(uniqueKey.toString());
 
-        idExpression = builder.literal(uniqueElId.toString());
+        idExpression = builder.literal(uniqueKey.toString());
 
         if (isCustomTag) {
             this.getComponentArgs().setKey(nestedIdExpression);
