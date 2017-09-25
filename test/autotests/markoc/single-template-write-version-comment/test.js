@@ -1,11 +1,8 @@
-function removeMarkoVersionComment(str) {
-    return str.replace(/^.*\n/, '');
-}
+var expect = require('chai').expect;
+var markoVersion = require('../../../../package.json').version;
 
 exports.test = function(helpers) {
     helpers.spawnSync(['template.marko']);
-
     var compiledFile = helpers.readSync('template.marko.js').toString();
-    compiledFile = compiledFile.replace(/marko\/dist\//g, 'marko/src/');
-    helpers.compare(removeMarkoVersionComment(compiledFile), '.js');
+    expect(compiledFile).to.contain('// Compiled using markoc@' + markoVersion + ' - DO NOT EDIT\n');
 };
