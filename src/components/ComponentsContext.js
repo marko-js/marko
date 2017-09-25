@@ -4,24 +4,29 @@ var GlobalComponentsContext = require('./GlobalComponentsContext');
 function ComponentsContext(out, parentComponentsContext) {
     var globalComponentsContext;
     var componentDef;
-    var components;
 
     if (parentComponentsContext) {
-        components = parentComponentsContext.___components;
         globalComponentsContext = parentComponentsContext.___globalContext;
         componentDef = parentComponentsContext.___componentDef;
+
+        var nestedContextsForParent;
+        if (!(nestedContextsForParent = parentComponentsContext.___nestedContexts)) {
+            nestedContextsForParent = parentComponentsContext.___nestedContexts = [];
+        }
+
+        nestedContextsForParent.push(this);
     } else {
         globalComponentsContext = out.global.___components;
         if (globalComponentsContext === undefined) {
             out.global.___components = globalComponentsContext = new GlobalComponentsContext(out);
         }
-        components = [];
     }
 
     this.___globalContext = globalComponentsContext;
-    this.___components = components;
+    this.___components = [];
     this.___out = out;
     this.___componentDef = componentDef;
+    this.___nestedContexts = undefined;
 }
 
 ComponentsContext.prototype = {

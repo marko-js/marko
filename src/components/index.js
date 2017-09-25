@@ -3,13 +3,16 @@
 var warp10 = require('warp10');
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function getRenderedComponents(out, shouldIncludeAll) {
-    var componentsContext = out.___components;
-    if (componentsContext === null) {
-        return;
-    }
 
-    // console.log('componentsContext:', componentsContext);
+function addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray) {
+    var nestedContexts = componentsContext.___nestedContexts;
+    if (nestedContexts !== undefined) {
+        // We want to initialize any UI components nested inside an async
+        // fragment first so we will add components from nested contexts first
+        nestedContexts.forEach(function(nestedContext) {
+            addComponentsFromContext(nestedContext, componentsFinal, typesLookup, typesArray);
+        });
+    }
 
     var components = componentsContext.___components;
     var len;
@@ -20,10 +23,6 @@ function getRenderedComponents(out, shouldIncludeAll) {
     // console.log('components:', components.map((componentDef) => {
     //     return { id: componentDef.id, type: componentDef.type};
     // }));
-
-    var componentsFinal = [];
-    var typesLookup = {};
-    var typesArray = [];
 
     for (var i = len - 1; i >= 0; i--) {
         var componentDef = components[i];
@@ -111,21 +110,36 @@ function getRenderedComponents(out, shouldIncludeAll) {
         ]);
     }
 
+    components.length = 0;
+}
+
+function getRenderedComponents(out) {
+    var componentsContext = out.___components;
+    if (componentsContext === null) {
+        return;
+    }
+
+    var componentsFinal = [];
+    var typesLookup = {};
+    var typesArray = [];
+
+    addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray);
+
     if (componentsFinal.length !== 0) {
         return {w: componentsFinal, t: typesArray};
     }
 }
 
-function writeInitComponentsCode(out, shouldIncludeAll) {
-    var renderedComponents = getRenderedComponents(out, shouldIncludeAll);
+function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
+    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
     if (renderedComponents === undefined) {
         return;
     }
 
-    var cspNonce = out.global.cspNonce;
+    var cspNonce = targetOut.global.cspNonce;
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
-    out.write('<script' + nonceAttr + '>' +
+    targetOut.write('<script' + nonceAttr + '>' +
         '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
         warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
          ')||w.$components})()</script>');
