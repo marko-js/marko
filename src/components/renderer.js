@@ -26,14 +26,7 @@ function handleBeginAsync(event) {
     var componentsContext = parentOut.___components;
 
     if (componentsContext !== undefined) {
-        // All of the components in this async block should be
-        // initialized after the components in the parent. Therefore,
-        // we will create a new ComponentsContext for the nested
-        // async block and will create a new component stack where the current
-        // component in the parent block is the only component in the nested
-        // stack (to begin with). This will result in top-level components
-        // of the async block being added as children of the component in the
-        // parent block.
+        // We are going to start a nested ComponentsContext
         asyncOut.___components = new ComponentsContext(asyncOut, componentsContext);
     }
     // Carry along the component arguments
@@ -122,7 +115,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             // This is the final input after running the lifecycle methods.
             // We will be passing the input to the template for the `input` param
             input = component.___updatedInput;
-            
+
             component.___updatedInput = undefined; // We don't want ___updatedInput to be serialized to the browser
         } else {
             if (!component) {
