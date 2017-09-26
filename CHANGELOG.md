@@ -5,6 +5,22 @@ Changelog
 
 ## 4.5.x
 
+### 4.5.0-beta.3
+
+- Fixes [#854](https://github.com/marko-js/marko/issues/854) - Make every .marko file a UI component ([PR #855](https://github.com/marko-js/marko/pull/855))
+
+### 4.5.0-beta.2
+
+- Add ids for any key when component.elId/getElId is used as an attribute value
+- Use indexOf instead of includes to support Node 4
+- [docs] Fixes [#841](https://github.com/marko-js/marko/issues/841) - `docs/components.md` refers to deprecated "data" variable (#842)
+
+### 4.5.0-beta.1
+
+- Add back (legacy) support for component.elId + key in template
+- Fixes [#837](https://github.com/marko-js/marko/issues/837) - Update esprima to the latest to support async/await and ES2017 inside of components. ([PR #839](https://github.com/marko-js/marko/pull/839))
+- Fixes key/scope for attributes that have dashes in the name
+
 ### 4.5.0-beta.0
 
 - Fixes [#817](https://github.com/marko-js/marko/issues/817) - Support dynamic root elements
