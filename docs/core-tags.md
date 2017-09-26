@@ -295,6 +295,17 @@ Attributes may also be used to pass data to the included template and can be use
 <include('./path/to/template.marko', data) name="Frank"/>
 ```
 
+You can also include imported UI compoments (or a reference to a load UI component):
+
+```marko
+import Hello from './components/hello/index.marko';
+
+<include(Hello) name='Frank' />
+
+// Include a reference to a UI component:
+<include(input.myDynamicComponent) name='Frank' />
+```
+
 #### Layouts with nested attributes
 
 In addition to including external content, you can inject additional content chunks into the external content.  This is accomplished by using nested attribute tags which are denoted by the `@` symbol:
