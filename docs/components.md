@@ -69,6 +69,9 @@ style.less {
 }
 ```
 
+> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
+
+
 ## Multi-file components
 
 You might prefer to keep your component's class and style definitions in separate files from the view definition - the classical separation of HTML, CSS and JavaScript.  Marko makes this possible with a simple filename based convention.
