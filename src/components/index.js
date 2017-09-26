@@ -4,17 +4,19 @@ var warp10 = require('warp10');
 var escapeEndingScriptTagRegExp = /<\//g;
 
 
-
-function getRenderedComponents(out, shouldIncludeAll) {
-    var componentsContext = out.___components;
-    if (componentsContext === null) {
-        return;
+function addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray) {
+    var nestedContexts = componentsContext.___nestedContexts;
+    if (nestedContexts !== undefined) {
+        // We want to initialize any UI components nested inside an async
+        // fragment first so we will add components from nested contexts first
+        nestedContexts.forEach(function(nestedContext) {
+            addComponentsFromContext(nestedContext, componentsFinal, typesLookup, typesArray);
+        });
     }
 
-    // console.log('componentsContext:', componentsContext);
-
     var components = componentsContext.___components;
-    if (components.length === 0) {
+    var len;
+    if ((len = components.length) === 0) {
         return;
     }
 
@@ -22,15 +24,12 @@ function getRenderedComponents(out, shouldIncludeAll) {
     //     return { id: componentDef.id, type: componentDef.type};
     // }));
 
-    var componentsFinal = [];
-    var typesLookup = {};
-    var typesArray = [];
-
-    for (var i = components.length - 1; i >= 0; i--) {
+    for (var i = len - 1; i >= 0; i--) {
         var componentDef = components[i];
         var id = componentDef.id;
         var component = componentDef.___component;
         var flags = componentDef.___flags;
+
         var state = component.state;
         var input = component.input;
         var typeName = component.typeName;
@@ -111,19 +110,36 @@ function getRenderedComponents(out, shouldIncludeAll) {
         ]);
     }
 
-    return {w: componentsFinal, t: typesArray};
+    components.length = 0;
 }
 
-function writeInitComponentsCode(out, shouldIncludeAll) {
-    var renderedComponents = getRenderedComponents(out, shouldIncludeAll);
+function getRenderedComponents(out) {
+    var componentsContext = out.___components;
+    if (componentsContext === null) {
+        return;
+    }
+
+    var componentsFinal = [];
+    var typesLookup = {};
+    var typesArray = [];
+
+    addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray);
+
+    if (componentsFinal.length !== 0) {
+        return {w: componentsFinal, t: typesArray};
+    }
+}
+
+function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
+    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
     if (renderedComponents === undefined) {
         return;
     }
 
-    var cspNonce = out.global.cspNonce;
+    var cspNonce = targetOut.global.cspNonce;
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
-    out.write('<script' + nonceAttr + '>' +
+    targetOut.write('<script' + nonceAttr + '>' +
         '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
         warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
          ')||w.$components})()</script>');

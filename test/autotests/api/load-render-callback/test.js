@@ -1,6 +1,6 @@
 var nodePath = require('path');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var template = marko.load(nodePath.join(__dirname, 'template.marko'));
     template.renderToString({
             name: 'John'
@@ -10,8 +10,8 @@ exports.check = function(marko, markoCompiler, expect, done) {
                 return done(err);
             }
 
-            expect(html).to.equal(out.getOutput());
-            expect(html).to.equal('Hello John!');
+            helpers.compare(html);
+            helpers.compare(html);
             done();
         });
 };

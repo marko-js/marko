@@ -21,31 +21,38 @@ module.exports = function handleComponentBind(options) {
     let componentProps = options.componentProps || {};
     let rootNodes = options.rootNodes;
     let isLegacyInnerBind = options.isLegacyInnerBind;
+    var isImplicitComponent = options.isImplicitComponent === true;
 
     var isSplit = false;
 
     if ((rendererModule && rendererModule !== componentModule) ||
         (!rendererModule && componentModule)) {
-        componentProps.split = isSplit = true;
+        componentProps.___split = isSplit = true;
+    }
+
+    if (isImplicitComponent) {
+        componentProps.___implicit = true;
     }
 
     if (componentModule) {
-        let componentTypeNode;
+
+        let componentTypeNode = context.addStaticVar(
+            'marko_componentType',
+            generateRegisterComponentCode(componentModule, this, isSplit));
+
+        componentProps.___type = componentTypeNode;
+
         let dependencyModule = isLegacyComponent || isSplit ? componentModule : this.getTemplateModule();
 
-        if (dependencyModule.requirePath) {
-            context.addDependency({ type:'require', path: dependencyModule.requirePath });
+        if (!isImplicitComponent) {
+            if (dependencyModule.requirePath) {
+                context.addDependency({ type:'require', path: dependencyModule.requirePath });
+            }
         }
 
         if (isSplit) {
             context.addDependency({ type:'require', path: context.markoModulePrefix + 'components' });
         }
-
-        componentTypeNode = context.addStaticVar(
-            'marko_componentType',
-            generateRegisterComponentCode(componentModule, this, isSplit));
-
-        componentProps.type = componentTypeNode;
     }
 
     if (isLegacyInnerBind) {
@@ -92,7 +99,7 @@ module.exports = function handleComponentBind(options) {
     if (rendererModule) {
         if (rendererModule.inlineId) {
             markoComponentVar = rendererModule.inlineId;
-        } else {
+        } else if (!isImplicitComponent) {
             markoComponentVar = context.addStaticVar('marko_component', builder.require(builder.literal(rendererModule.requirePath)));
         }
     }
@@ -147,7 +154,7 @@ module.exports = function handleComponentBind(options) {
                     builder.functionCall(
                         defineComponentHelper,
                         [
-                            markoComponentVar,
+                            markoComponentVar || builder.literal({}),
                             templateRendererMember
                         ])));
             }

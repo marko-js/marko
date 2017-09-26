@@ -12,7 +12,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     foo_template = marko_loadTemplate(require.resolve("./foo.marko")),
-    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
@@ -52,13 +51,13 @@ function render(input, out, __component, component, state) {
 
   out.w("</p></div><span>B</span>");
 
-  marko_renderComponent(include_tag, {
+  include_tag({
       _target: foo_template
-    }, out, "5");
+    }, out, __component, "5");
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

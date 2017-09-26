@@ -1,7 +1,7 @@
 var nodePath = require('path');
 var fs = require('fs');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     markoCompiler.defaultOptions.writeToDisk = false;
     try {
         var templatePath = nodePath.join(__dirname, 'template.marko');
@@ -9,7 +9,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
         var template = require(templatePath);
         expect(fs.existsSync(compiledPath)).to.equal(false);
         expect(template.render).to.be.a('function');
-        expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
+        helpers.compare(template.renderSync({name: 'Frank'}).toString());
     } finally {
         markoCompiler.defaultOptions.writeToDisk = true;
     }

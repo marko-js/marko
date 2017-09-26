@@ -46,7 +46,7 @@ function runTestForExtension (dir, helpers, extension, done) {
 
     } else if(main && main.checkTemplate) {
         var template = require('marko').load(templatePath, Object.assign(compilerOptions, main.compilerOptions));
-        main.checkTemplate(template);
+        main.checkTemplate(template, helpers);
         done();
     } else {
         var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));

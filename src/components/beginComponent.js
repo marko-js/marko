@@ -9,7 +9,7 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 
 function isInputSerializable(component) {
     var input = component.___input;
-    
+
     if (!input) {
         return true;
     }
@@ -21,7 +21,7 @@ function isInputSerializable(component) {
     }
 }
 
-module.exports = function beginComponent(componentsContext, component, isSplitComponent, parentComponentDef) {
+module.exports = function beginComponent(componentsContext, component, isSplitComponent, parentComponentDef, isImplicitComponent) {
     var globalContext = componentsContext.___globalContext;
 
     var componentId = component.id;
@@ -31,6 +31,13 @@ module.exports = function beginComponent(componentsContext, component, isSplitCo
     // On the server
     if (parentComponentDef && (parentComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER)) {
         componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
+        return componentDef;
+    }
+
+    if (isImplicitComponent === true) {
+        // We don't mount implicit components rendered on the server
+        // unless the implicit component is nested within a UI component
+        // that will re-render in the browser
         return componentDef;
     }
 

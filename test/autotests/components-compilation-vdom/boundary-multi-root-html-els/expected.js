@@ -29,7 +29,7 @@ function render(input, out, __component, component, state) {
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

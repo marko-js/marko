@@ -141,6 +141,10 @@ function handleClassDeclaration(classEl, transformHelper) {
 module.exports = function handleRootNodes() {
     let context = this.context;
 
+    if (context.isFlagSet('hasLegacyWidgetBind')) {
+        return;
+    }
+
     let componentFiles = getComponentFiles(context.filename);
     if (!componentFiles) {
         return;
@@ -248,15 +252,13 @@ module.exports = function handleRootNodes() {
 
     walker.walk(templateRoot);
 
-    if (!componentModule) {
-        return;
-    }
+    // if (!componentModule) {
+    //     return;
+    // }
 
     if (context.isFlagSet('hasWidgetTypes')) {
         context.addError('The <widget-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514');
     }
-
-    templateRoot._normalizeChildTextNodes(context, true);
 
     // After normalizing the text nodes to remove whitespace we may have detached
     // some of the root text nodes so remove those from our list
@@ -268,9 +270,23 @@ module.exports = function handleRootNodes() {
         return;
     }
 
+    var isImplicitComponent = false;
+
+    if (!componentModule) {
+        isImplicitComponent = true;
+
+        componentModule = rendererModule = {
+            filename: this.filename,
+            requirePath: './' + path.basename(this.filename)
+        };
+    }
+
+    // templateRoot._normalizeChildTextNodes(context, false, true);
+
     this.convertToComponent({
-      rootNodes,
-      componentModule,
-      rendererModule
+        isImplicitComponent,
+        rootNodes,
+        componentModule,
+        rendererModule
     });
 };

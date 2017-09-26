@@ -76,8 +76,14 @@ module.exports = function transform(el, context) {
     // Handle *:key properties (and deprecated w-for/for-key/for-ref)
     transformHelper.handleScopedAttrs();
 
-    if ((el.hasAttribute('w-id') || el.hasAttribute('ref') || el.hasAttribute('key') || transformHelper.hasBoundComponentForTemplate()) && !tagDefinitionHasOverridingKeyAttribute(el, context)) {
-        transformHelper.assignComponentId();
+    if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
+        if (el.hasAttribute('w-id') || el.hasAttribute('ref') || el.hasAttribute('key')) {
+            transformHelper.assignComponentId();
+        }
+
+        if (context.options.autoKeyEnabled !== false && context.inline !== true) {
+            transformHelper.assignComponentId();
+        }
     }
 
     if (el.hasAttribute('w-body')) {

@@ -1,4 +1,4 @@
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
 
     var defineRenderer = require('marko/defineRenderer');
     var renderer = defineRenderer({
@@ -11,6 +11,6 @@ exports.check = function(marko, markoCompiler, expect, done) {
     });
 
     var renderResult = renderer.render({ firstName: 'John', lastName: 'Doe' });
-    expect(renderResult.getOutput()).to.equal('<div>Hello John Doe!</div>');
+    helpers.compare(renderResult.getOutput());
     done();
 };

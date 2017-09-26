@@ -18,6 +18,6 @@ describe('api' , function() {
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         var test = require(nodePath.join(dir, 'test.js'));
-        test.check(marko, markoCompiler, expect, done);
+        test.check(marko, markoCompiler, expect, helpers, done);
     });
 });

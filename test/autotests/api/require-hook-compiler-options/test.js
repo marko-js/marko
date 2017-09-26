@@ -14,7 +14,7 @@ function compileAndCheck(path, shouldWriteToDisk) {
     expect(fs.existsSync(compiledFile)).to.equal(shouldWriteToDisk);
 }
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     markoCompiler.configure({
         writeToDisk: true,
         preserveWhitespace: true

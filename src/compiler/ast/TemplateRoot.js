@@ -57,6 +57,11 @@ class TemplateRoot extends Node {
 
         renderStatements = renderStatements.concat(this.body);
 
+        var renderParams = [builder.identifier('input'), builder.identifierOut()];
+        if (this.extraRenderParams) {
+            renderParams = renderParams.concat(this.extraRenderParams);
+        }
+
         if (context.inline) {
             var createInlineMarkoTemplateVar = context.helper('createInlineTemplate');
 
@@ -66,10 +71,7 @@ class TemplateRoot extends Node {
                     builder.identifier('__filename'),
                     builder.functionDeclaration(
                         null,
-                        [
-                            builder.identifier('input'),
-                            builder.identifierOut()
-                        ],
+                        renderParams,
                         renderStatements)
                 ]);
         } else {
@@ -104,11 +106,6 @@ class TemplateRoot extends Node {
             let staticNodes = context.getStaticNodes([templateDeclaration]);
             if (staticNodes.length) {
                 body = body.concat(staticNodes);
-            }
-
-            var renderParams = [builder.identifier('input'), builder.identifierOut()];
-            if (this.extraRenderParams) {
-                renderParams = renderParams.concat(this.extraRenderParams);
             }
 
             let renderFunction = builder.functionDeclaration(

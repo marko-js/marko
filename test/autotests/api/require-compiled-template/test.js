@@ -1,6 +1,6 @@
 var nodePath = require('path');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     // Load the JS file to ensure the hello.marko.js file is created
     marko.load(nodePath.join(__dirname, 'template.marko'));
 
@@ -15,7 +15,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
                 return done(err);
             }
 
-            expect(result.toString()).to.equal('Hello John!');
+            helpers.compare(result.toString());
             done();
         });
 };

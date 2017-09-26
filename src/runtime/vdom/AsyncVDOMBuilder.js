@@ -43,7 +43,10 @@ function AsyncVDOMBuilder(globalData, parentNode, state) {
     this.___sync = false;
     this.___vnode = undefined;
     this.___components = null;
-    this.___componentArgs = null; // Component args
+
+    this.___assignedComponentDef = null;
+    this.___assignedKey = null;
+    this.___assignedCustomEvents = null;
 }
 
 var proto = AsyncVDOMBuilder.prototype = {
@@ -82,11 +85,11 @@ var proto = AsyncVDOMBuilder.prototype = {
     n: function(node, component) {
         // NOTE: We do a shallow clone since we assume the node is being reused
         //       and a node can only have one parent node.
+        var clone = node.___cloneNode();
+        this.node(clone);
+        clone.___component = component;
 
-        node = this.node(node.___cloneNode());
-        node.___component = component;
-
-        return node;
+        return this;
     },
 
     node: function(node) {
@@ -353,8 +356,10 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     isVDOM: true,
 
-    c: function(componentArgs) {
-        this.___componentArgs = componentArgs;
+    c: function(componentDef, key, customEvents) {
+        this.___assignedComponentDef = componentDef;
+        this.___assignedKey = key;
+        this.___assignedCustomEvents = customEvents;
     }
 };
 

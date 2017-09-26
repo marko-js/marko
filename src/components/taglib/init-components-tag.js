@@ -15,7 +15,7 @@ function handleAwaitBeforeRender(eventArgs) {
 
 function handleAwaitFinish(eventArgs) {
     var asyncFragmentOut = eventArgs.out;
-    writeInitComponentsCode(asyncFragmentOut, false);
+    writeInitComponentsCode(asyncFragmentOut, asyncFragmentOut, false);
 }
 
 module.exports = function render(input, out) {
@@ -29,14 +29,16 @@ module.exports = function render(input, out) {
         if (out.isSync() === true) {
             // Generate initialization code for any of the UI components that were
             // rendered synchronously
-            writeInitComponentsCode(out, true);
+            writeInitComponentsCode(out, out, true);
         } else {
             // Generate initialization code for any of the UI components that were
             // rendered asynchronously, but were outside an `<await>` tag
             // (each `<await>` tag will have its own component initialization block)
             var asyncOut = out.beginAsync({ last: true, timeout: -1 });
             out.onLast(function(next) {
-                writeInitComponentsCode(asyncOut, true);
+                // Write out all of the component init code from the main out
+                writeInitComponentsCode(out, asyncOut, true);
+                
                 asyncOut.end();
                 next();
             });

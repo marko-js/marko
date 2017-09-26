@@ -9,7 +9,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
       return marko_defineWidget_legacy(require("./"));
     }),
     marko_rendererLegacy = legacy_helpers.r,
-    marko_renderComponent = require("marko/src/components/taglib/helpers/renderComponent"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag")),
@@ -29,9 +28,9 @@ function render(input, out, __component, widget, component) {
       if: !__component.b,
       key: __key3,
       renderBody: function renderBody(out) {
-        marko_renderComponent(include_tag, {
+        include_tag({
             _target: __component.b
-          }, out, "4");
+          }, out, __component, "4");
       }
     }, out);
 
@@ -39,8 +38,8 @@ function render(input, out, __component, widget, component) {
 }
 
 marko_template._ = marko_rendererLegacy(render, {
-    split: true,
-    type: marko_componentType
+    ___split: true,
+    ___type: marko_componentType
   });
 
 marko_template.meta = {
