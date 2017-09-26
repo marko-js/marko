@@ -23,6 +23,12 @@ const markoPkgVersion = require('../../package.json').version;
 const rootDir = path.join(__dirname, '../');
 const isDebug = require('../build.json').isDebug;
 
+// const FLAG_IS_SVG = 1;
+// const FLAG_IS_TEXTAREA = 2;
+// const FLAG_SIMPLE_ATTRS = 4;
+// const FLAG_PRESERVE = 8;
+const FLAG_CUSTOM_ELEMENT = 16;
+
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
 function getTaglibPath(taglibPath) {
@@ -489,6 +495,8 @@ class CompileContext extends EventEmitter {
                     var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
                     if (customElement) {
                         elNode.customElement = customElement;
+                        elNode.addRuntimeFlag(FLAG_CUSTOM_ELEMENT);
+
                         if (customElement.import) {
                             this.addDependency(this.getRequirePath(customElement.import));
                         }
