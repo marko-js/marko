@@ -5,4 +5,4 @@ node_js:
 - "8"
 language: node_js
 script: "npm run test-ci"
-after_success: "npm run coveralls"
+after_success: "npm run coveralls && npm run codecov"

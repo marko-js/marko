@@ -44,7 +44,8 @@
     "test-page": "node test/browser-tests-runner/cli.js components-browser-tests.js --automated --page",
     "test-pages": "npm run test-components-pages",
     "jshint": "jshint src/ *.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "codecov": "codecov"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
@@ -97,6 +98,7 @@
     "browser-refresh-taglib": "^1.1.0",
     "chai": "^3.3.0",
     "child-process-promise": "^2.2.1",
+    "codecov": "^2.3.0",
     "coveralls": "^2.13.1",
     "express": "^4.13.4",
     "fs-extra": "^2.0.0",
