@@ -45,7 +45,7 @@
     "test-pages": "npm run test-components-pages",
     "jshint": "jshint src/ *.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "codecov": "codecov"
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
   "maintainers": [
