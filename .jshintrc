@@ -1,6 +1,7 @@
 {
     "predef": [
-        "document"
+        "document",
+        "ShadowRoot"
     ],
     "node" : true,
     "esnext": true,

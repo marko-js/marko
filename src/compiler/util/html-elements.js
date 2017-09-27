@@ -5,6 +5,7 @@ var lassoCachingFS = require('lasso-caching-fs');
 var fs = require('fs');
 var stripJsonComments = require('strip-json-comments');
 var fsReadOptions = { encoding: 'utf8' };
+var modules = require('../modules');
 
 function parseJSONFile(path) {
     var json = fs.readFileSync(path, fsReadOptions);
@@ -27,7 +28,10 @@ function loadTags(file) {
         if (raw.hasOwnProperty(k)) {
             if (k.charAt(0) === '<' && k.charAt(k.length - 1) === '>') {
                 var tagName = k.substring(1, k.length - 1);
-                tags[tagName] = true;
+                var tag = tags[tagName] = raw[k];
+                if (tag.import && tag.import[0] === '.') {
+                    tag.import = modules.resolveFrom(path.dirname(file), tag.import);
+                }
             }
         }
     }
@@ -46,7 +50,7 @@ function getPackageRootDir(dirname) {
     }
 }
 
-function isRegisteredElement(tagName, dir) {
+function getRegisteredElement(tagName, dir) {
     var packageRootDir = getPackageRootDir(dir);
 
     var currentDir = dir;
@@ -60,10 +64,9 @@ function isRegisteredElement(tagName, dir) {
             }
 
             if (tags[tagName]) {
-                return true;
+                return tags[tagName];
             }
         }
-
 
         var parentDir = path.dirname(currentDir);
         if (!parentDir || parentDir === currentDir || parentDir === packageRootDir) {
@@ -71,8 +74,6 @@ function isRegisteredElement(tagName, dir) {
         }
         currentDir = parentDir;
     }
-
-    return false;
 }
 
-exports.isRegisteredElement = isRegisteredElement;
+exports.getRegisteredElement = getRegisteredElement;

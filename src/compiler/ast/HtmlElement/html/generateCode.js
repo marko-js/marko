@@ -37,8 +37,7 @@ module.exports = function generateCode(node, codegen) {
     var bodyOnlyIf = node.bodyOnlyIf;
     var dynamicAttributes = node.dynamicAttributes;
     var selfClosed = node.selfClosed === true;
-
-
+    var isCustomElement = node.customElement;
 
     if (hasBody) {
         body = codegen.generateCode(body);
@@ -53,19 +52,32 @@ module.exports = function generateCode(node, codegen) {
 
     var startTag = new StartTag({
         tagName: tagName,
-        attributes: attributes,
+        attributes: isCustomElement ? null : attributes,
         properties: properties,
         argument: argument,
         selfClosed: selfClosed,
-        dynamicAttributes: dynamicAttributes
+        dynamicAttributes: isCustomElement ? null : dynamicAttributes
     });
 
     var endTag;
+    var propertiesScript = [];
 
     if (!openTagOnly) {
         endTag = new EndTag({
             tagName: tagName
         });
+    }
+
+    if (isCustomElement && attributes && attributes.length) {
+        propertiesScript = builder.functionCall(
+            codegen.context.helper('propsForPreviousNode'),
+            [
+                builder.objectExpression(attributes.map((attr) =>
+                    builder.property(builder.identifier(attr.name), attr.value)
+                )),
+                builder.identifier('out')
+            ]
+        );
     }
 
     if (bodyOnlyIf) {
@@ -74,9 +86,9 @@ module.exports = function generateCode(node, codegen) {
         ]);
 
         var endIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
-            endTag
+            endTag,
+            propertiesScript
         ]);
-
         return [
             startIf,
             body,
@@ -84,12 +96,16 @@ module.exports = function generateCode(node, codegen) {
         ];
     } else {
         if (openTagOnly) {
-            return codegen.generateCode(startTag);
+            return [
+                codegen.generateCode(startTag),
+                propertiesScript
+            ];
         } else {
             return [
                 startTag,
                 body,
-                endTag
+                endTag,
+                propertiesScript
             ];
         }
     }

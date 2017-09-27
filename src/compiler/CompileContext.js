@@ -23,6 +23,12 @@ const markoPkgVersion = require('../../package.json').version;
 const rootDir = path.join(__dirname, '../');
 const isDebug = require('../build.json').isDebug;
 
+// const FLAG_IS_SVG = 1;
+// const FLAG_IS_TEXTAREA = 2;
+// const FLAG_SIMPLE_ATTRS = 4;
+// const FLAG_PRESERVE = 8;
+const FLAG_CUSTOM_ELEMENT = 16;
+
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
 function getTaglibPath(taglibPath) {
@@ -89,6 +95,7 @@ const helpers = {
     'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
     'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
     'merge': { module: 'marko/runtime/helper-merge' },
+    'propsForPreviousNode': 'p',
     'renderer': {
         module: 'marko/components/helpers',
         method: 'r'
@@ -484,23 +491,27 @@ class CompileContext extends EventEmitter {
         } else {
             if (typeof tagName === 'string') {
                 tagDef = taglibLookup.getTag(tagName);
-                if (!tagDef &&
-                    !this.isMacro(tagName) &&
-                    tagName.indexOf(':') === -1 &&
-                    !htmlElements.isRegisteredElement(tagName, this.dirname) &&
-                    !this.ignoreUnrecognizedTags) {
+                if (!tagDef && !this.isMacro(tagName) && tagName.indexOf(':') === -1) {
+                    var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
+                    if (customElement) {
+                        elNode.customElement = customElement;
+                        elNode.addRuntimeFlag(FLAG_CUSTOM_ELEMENT);
 
-                    if (this._parsingFinished) {
-                        this.addErrorUnrecognizedTag(tagName, elNode);
-                    } else {
-                        // We don't throw an error right away since the tag
-                        // may be a macro that gets registered later
-                        this.unrecognizedTags.push({
-                            node: elNode,
-                            tagName: tagName
-                        });
+                        if (customElement.import) {
+                            this.addDependency(this.getRequirePath(customElement.import));
+                        }
+                    } else if (!this.ignoreUnrecognizedTags) {
+                        if (this._parsingFinished) {
+                            this.addErrorUnrecognizedTag(tagName, elNode);
+                        } else {
+                            // We don't throw an error right away since the tag
+                            // may be a macro that gets registered later
+                            this.unrecognizedTags.push({
+                                node: elNode,
+                                tagName: tagName
+                            });
+                        }
                     }
-
                 }
             }
 

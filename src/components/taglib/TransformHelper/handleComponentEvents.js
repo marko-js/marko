@@ -168,15 +168,16 @@ module.exports = function handleComponentEvents() {
                 addCustomEventListener(this, eventType, targetMethod, extraArgs);
             } else {
                 // We are adding an event listener for a DOM event (not a custom event)
-                //
                 if (eventType.startsWith('-')) {
-                    // Remove the leading dash.
-                    // Example: w-on-before-show → before-show
+                    // Remove the leading dash. Preserve casing.
+                    // Example: on-before-show → before-show
+                    // Example: on-CAPS-event → CAPS-event
                     eventType = eventType.substring(1);
+                } else {
+                    // Lowercase the string
+                    // Example: onMouseOver → mouseover
+                    eventType = eventType.toLowerCase();
                 }
-
-                // Normalize DOM event types to be all lower case
-                eventType = eventType.toLowerCase();
 
                 // Node is for an HTML element so treat the event as a DOM event
                 var willBubble = isBubbleEvent(eventType);

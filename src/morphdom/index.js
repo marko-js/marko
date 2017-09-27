@@ -18,6 +18,7 @@ var COMPONENT_NODE = 2;
 // var FLAG_IS_TEXTAREA = 2;
 // var FLAG_SIMPLE_ATTRS = 4;
 var FLAG_PRESERVE = 8;
+// var FLAG_CUSTOM_ELEMENT = 16;
 
 function compareNodeNames(fromEl, toEl) {
     return fromEl.___nodeName === toEl.___nodeName;

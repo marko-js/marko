@@ -170,3 +170,33 @@ function classList(arg) {
 var commonHelpers = require('../helpers');
 extend(exports, commonHelpers);
 exports.cl = classList;
+
+
+/**
+ * Internal helper method to insert a script tag that assigns properties
+ * to the dom node the precede it.
+ */
+var escapeScript = exports.xs;
+var assignPropsFunction = `
+    function ap_(p) {
+        var s = document.currentScript;
+        Object.assign(s.previousSibling, p);
+        s.parentNode.removeChild(s);
+    }
+`.replace(/\s+/g, ' ')
+ .replace(/([\W]) (.)/g, '$1$2')
+ .replace(/(.) ([\W])/g, '$1$2')
+ .trim();
+exports.p = function propsForPreviousNode(props, out) {
+    var cspNonce = out.global.cspNonce;
+    var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
+
+    out.w('<script' + nonceAttr + '>');
+
+    if (!out.global.assignPropsFunction) {
+        out.w(assignPropsFunction);
+        out.global.assignPropsFunction = true;
+    }
+
+    out.w('ap_(' + escapeScript(JSON.stringify(props)) + ');</script>');
+};
