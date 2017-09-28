@@ -14,6 +14,7 @@ var SubscriptionTracker = require('listener-tracker');
 var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('../morphdom');
+var eventDelegation = require('./event-delegation');
 
 var slice = Array.prototype.slice;
 
@@ -237,7 +238,7 @@ Component.prototype = componentProto = {
         }
         return components;
     },
-    destroy: function(onBeforeNodeDiscarded) {
+    destroy: function() {
         if (this.___destroyed) {
             return;
         }
@@ -249,10 +250,12 @@ Component.prototype = componentProto = {
         nodes.forEach(function(node) {
             destroyNodeRecursive(node);
 
-            if (!onBeforeNodeDiscarded || onBeforeNodeDiscarded(node) != false) {
+            if (eventDelegation.___handleNodeDetach(node) != false) {
                  node.parentNode.removeChild(node);
             }
         });
+
+        delete componentLookup[this.id];
     },
 
     ___destroyShallow: function() {
@@ -275,8 +278,6 @@ Component.prototype = componentProto = {
             subscriptions.removeAllListeners();
             this.___subscriptions = null;
         }
-
-        delete componentLookup[this.id];
     },
 
     isDestroyed: function() {

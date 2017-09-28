@@ -2,7 +2,6 @@
 var specialElHandlers = require('./specialElHandlers');
 var componentsUtil = require('../components/util');
 var existingComponentLookup = componentsUtil.___componentLookup;
-var destroyComponentForNode = componentsUtil.___destroyComponentForNode;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var VElement = require('../runtime/vdom/vdom').___VElement;
 var virtualizeElement =  VElement.___virtualize;
@@ -22,10 +21,6 @@ var FLAG_PRESERVE = 8;
 
 function compareNodeNames(fromEl, toEl) {
     return fromEl.___nodeName === toEl.___nodeName;
-}
-
-function onBeforeNodeDiscarded(node) {
-    return eventDelegation.___handleNodeDetach(node);
 }
 
 function onNodeAdded(node, componentsContext) {
@@ -183,7 +178,7 @@ function morphdom(
     }
 
     function destroyComponent(component) {
-        component.destroy(onBeforeNodeDiscarded);
+        component.destroy();
     }
 
     function morphChildren(parentFromNode, startNode, endNode, toNode, component, keySequence) {
@@ -526,11 +521,15 @@ function morphdom(
         if (detachedFromComponent !== undefined) {
             node.___markoDetached = undefined;
 
-            destroyComponentForNode(node);
-            destroyNodeRecursive(node, detachedFromComponent !== true && detachedFromComponent);
+            var componentToDestroy = node.___markoComponent;
+            if (componentToDestroy) {
+                componentToDestroy.destroy();
+            } else {
+                destroyNodeRecursive(node, detachedFromComponent !== true && detachedFromComponent);
 
-            if (onBeforeNodeDiscarded(node) != false) {
-                 node.parentNode.removeChild(node);
+                if (eventDelegation.___handleNodeDetach(node) != false) {
+                     node.parentNode.removeChild(node);
+                }
             }
         }
 

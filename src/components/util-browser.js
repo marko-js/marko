@@ -56,6 +56,7 @@ function destroyComponentForNode(node) {
     var componentToDestroy = node.___markoComponent;
     if (componentToDestroy) {
         componentToDestroy.___destroyShallow();
+        delete componentLookup[componentToDestroy.id];
     }
 }
 function destroyNodeRecursive(node, component) {
