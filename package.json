@@ -100,7 +100,6 @@
     "child-process-promise": "^2.2.1",
     "codecov": "^2.3.0",
     "coveralls": "^2.13.1",
-    "express": "^4.13.4",
     "fs-extra": "^2.0.0",
     "ignoring-watcher": "^1.0.2",
     "istanbul-lib-instrument": "^1.8.0",

@@ -10,19 +10,28 @@ const request = require('request');
 const fs = require('fs');
 const marko = require('marko');
 const markoExpressPath = require.resolve('marko/express');
+const shell = require('shelljs');
+const execSync = require('child_process').execSync;
+const resolveFrom = require('resolve-from');
 
 require('marko/node-require').install();
 
-const autoTestDir = path.join(__dirname, './test');
+const autoTestDirSrc = path.join(__dirname, './autotests');
 
-exports.test = function () {
-    let express;
+module.exports = function loadExpressTests(expressVersion) {
+    const projectDir = path.join(__dirname, expressVersion);
+    // Run `npm install` to install express
+    execSync('npm install', { cwd: projectDir });
+
+    // Load the installed express
+    let express = require(resolveFrom(projectDir, 'express'));
+
+    // Copy the autotests directory into the target project
+    shell.cp('-R', autoTestDirSrc, projectDir);
 
     autotest.scanDir(
-        autoTestDir,
+        path.join(projectDir, 'autotests'),
         function run(dir, helpers, done) {
-            express = require('express');
-
             var mainPath = path.join(dir, 'test.js');
             var templatePath = path.join(dir, 'template.marko');
 
@@ -44,7 +53,7 @@ exports.test = function () {
 
                 main.checkError(e);
                 return done();
-            } else {
+            } else if (main.createApp) {
                 var app = main.createApp(express, markoExpressPath);
                 var template = marko.load(templatePath, loadOptions);
 
@@ -89,39 +98,8 @@ exports.test = function () {
                         done();
                     });
                 });
+            } else {
+                main.test(done);
             }
-        });
-
-        describe('registration', function() {
-            it('should not register the res.marko function multiple times', function() {
-                require(markoExpressPath);
-
-                var fn = express.response.marko;
-
-                require(markoExpressPath);
-
-                expect(express.response.marko).to.equal(fn);
-            });
-            it('should be able to register for multiple express instances', function() {
-                // test res.marko is added to the real express response
-                require(markoExpressPath);
-                expect(express.response.marko).to.be.a('function');
-
-                // set up an express mock object and hijack require
-                var expressMock = { response:{} };
-                var _require = module.require;
-
-                module.require = function() {
-                    if(arguments[0] === 'express') return expressMock;
-                    return _require.apply(module, arguments);
-                };
-
-                // check that res.marko is added to the mocked expressß response
-                require(markoExpressPath);
-                expect(expressMock.response.marko).to.be.a('function');
-
-                // return require to its original state
-                module.require = _require;
-            });
         });
 };
