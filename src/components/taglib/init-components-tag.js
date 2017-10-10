@@ -2,24 +2,24 @@
 
 const INIT_COMPONENTS_KEY = Symbol();
 
-var writeInitComponentsCode = require('../').writeInitComponentsCode;
+const writeInitComponentsCode = require('../').writeInitComponentsCode;
 
-var ComponentsContext = require('../ComponentsContext');
+const ComponentsContext = require('../ComponentsContext');
 
 function handleAwaitBeforeRender(eventArgs) {
     if (eventArgs.clientReorder) {
-        var asyncFragmentOut = eventArgs.out;
+        const asyncFragmentOut = eventArgs.out;
         asyncFragmentOut.___components = new ComponentsContext(asyncFragmentOut);
     }
 }
 
 function handleAwaitFinish(eventArgs) {
-    var asyncFragmentOut = eventArgs.out;
+    const asyncFragmentOut = eventArgs.out;
     writeInitComponentsCode(asyncFragmentOut, asyncFragmentOut, false);
 }
 
 module.exports = function render(input, out) {
-    var outGlobal = out.global;
+    const outGlobal = out.global;
     if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
         outGlobal[INIT_COMPONENTS_KEY] = true;
 
@@ -34,11 +34,10 @@ module.exports = function render(input, out) {
             // Generate initialization code for any of the UI components that were
             // rendered asynchronously, but were outside an `<await>` tag
             // (each `<await>` tag will have its own component initialization block)
-            var asyncOut = out.beginAsync({ last: true, timeout: -1 });
+            const asyncOut = out.beginAsync({ last: true, timeout: -1 });
             out.onLast(function(next) {
                 // Write out all of the component init code from the main out
                 writeInitComponentsCode(out, asyncOut, true);
-                
                 asyncOut.end();
                 next();
             });
