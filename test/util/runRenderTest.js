@@ -8,10 +8,7 @@ const marko = require('marko');
 const fsExtra = require('fs-extra');
 const domToHTML = require('./domToHTML');
 const domToString = require('./domToString');
-
 const expect = require('chai').expect;
-const clone = require('clone');
-
 
 function createAsyncVerifier(main, helpers, out) {
     var events = [];
@@ -29,7 +26,7 @@ function createAsyncVerifier(main, helpers, out) {
 
             events.push({
                 event: event,
-                arg: clone(arg)
+                arg: Object.assign({}, arg)
             });
         });
     };
