@@ -1,8 +1,8 @@
 'use strict';
 require('./util/test-init');
 var chai = require('chai');
-chai.Assertion.includeStack = true;
-require('chai').should();
+chai.config.includeStack = true;
+
 var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
