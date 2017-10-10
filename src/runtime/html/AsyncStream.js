@@ -69,7 +69,16 @@ function AsyncStream(global, writer, state, shouldBuffer) {
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
-AsyncStream.INCLUDE_STACK = typeof process !== 'undefined' && process.env.NODE_ENV === 'development';
+
+/**
+* If set to `true`, AsyncStream errors will include the full stack trace
+*/
+AsyncStream.INCLUDE_STACK =
+    typeof process !== 'undefined' &&
+    (!process.env.NODE_ENV ||
+        process.env.NODE_ENV === 'development' ||
+        process.env.NODE_ENV === 'dev');
+
 AsyncStream.enableAsyncStackTrace = function() {
     AsyncStream.INCLUDE_STACK = true;
 };
@@ -169,7 +178,7 @@ var proto = AsyncStream.prototype = {
            timeout = AsyncStream.DEFAULT_TIMEOUT;
        }
 
-       newStream.stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
+       newStream._stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
        newStream.name = name;
 
        if (timeout > 0) {
