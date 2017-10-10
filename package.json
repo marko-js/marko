@@ -98,6 +98,7 @@
     "browser-refresh-taglib": "^1.1.0",
     "chai": "^3.3.0",
     "child-process-promise": "^2.2.1",
+    "clone": "^2.1.1",
     "codecov": "^2.3.0",
     "coveralls": "^2.13.1",
     "express": "^4.16.1",

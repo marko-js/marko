@@ -10,7 +10,7 @@ const domToHTML = require('./domToHTML');
 const domToString = require('./domToString');
 
 const expect = require('chai').expect;
-
+const clone = require('clone');
 
 
 function createAsyncVerifier(main, helpers, out) {
@@ -29,7 +29,7 @@ function createAsyncVerifier(main, helpers, out) {
 
             events.push({
                 event: event,
-                arg: arg
+                arg: clone(arg)
             });
         });
     };
@@ -149,8 +149,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                 asyncEventsVerifier = createAsyncVerifier(main, helpers, out);
             }
 
-            out.on('error', done);
-            out.on('finish', function(result) {
+            function verifyOutput(result) {
                 var renderOutput = result.getOutput();
 
                 if (isVDOM) {
@@ -235,7 +234,19 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
                     done();
                 }
-            });
+            }
+
+            out.then(
+                function onFulfilled(result) {
+                    process.nextTick(function() {
+                        verifyOutput(result);
+                    });
+                },
+                function onRejected(err) {
+                    process.nextTick(function() {
+                        done(err);
+                    });
+                });
 
             template.render(templateData, out).end();
         }
