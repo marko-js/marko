@@ -498,7 +498,15 @@ class CompileContext extends EventEmitter {
                         elNode.addRuntimeFlag(FLAG_CUSTOM_ELEMENT);
 
                         if (customElement.import) {
-                            this.addDependency(this.getRequirePath(customElement.import));
+                            let path = customElement.import;
+                            if (/https?\:/.test(path) === false) {
+                                this.addDependency({
+                                    type: 'require',
+                                    path: this.getRequirePath(path)
+                                });
+                            } else {
+                                this.addDependency({ type:'js', url:path });
+                            }
                         }
                     } else if (!this.ignoreUnrecognizedTags) {
                         if (this._parsingFinished) {

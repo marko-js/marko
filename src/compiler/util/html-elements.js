@@ -29,9 +29,10 @@ function loadTags(file) {
             if (k.charAt(0) === '<' && k.charAt(k.length - 1) === '>') {
                 var tagName = k.substring(1, k.length - 1);
                 var tag = tags[tagName] = raw[k];
-                if (tag.import && tag.import[0] === '.') {
+                if (/https?\:/.test(tag.import) === false) {
                     tag.import = modules.resolveFrom(path.dirname(file), tag.import);
                 }
+                console.log(tag.import)
             }
         }
     }
@@ -69,7 +70,7 @@ function getRegisteredElement(tagName, dir) {
         }
 
         var parentDir = path.dirname(currentDir);
-        if (!parentDir || parentDir === currentDir || parentDir === packageRootDir) {
+        if (!parentDir || parentDir === currentDir || currentDir === packageRootDir) {
             break;
         }
         currentDir = parentDir;
