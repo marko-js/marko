@@ -10,30 +10,34 @@ var RenderResult = require('../RenderResult');
 var defaultDocument = vdom.___defaultDocument;
 var morphdom = require('../../morphdom');
 
-var FLAG_FINISHED = 1;
-var FLAG_LAST_FIRED = 2;
 var EVENT_UPDATE = 'update';
 var EVENT_FINISH = 'finish';
 
 function State(tree) {
-    this.___remaining = 1;
+
     this.___events = new EventEmitter();
     this.___tree = tree;
-    this.___last = null;
-    this.___lastCount = 0;
-    this.___flags = 0;
+    this.___finished = false;
 }
 
-function AsyncVDOMBuilder(globalData, parentNode, state) {
+function AsyncVDOMBuilder(globalData, parentNode, parentOut) {
     if (!parentNode) {
         parentNode = new VDocumentFragment();
     }
 
-    if (state) {
-        state.___remaining++;
+    var state;
+
+    if (parentOut) {
+        state = parentOut.___state;
     } else {
         state = new State(parentNode);
     }
+
+    this.___remaining = 1;
+    this.___lastCount = 0;
+    this.___last = null;
+    this.___parentOut = parentOut;
+
 
     this.data = {};
     this.___state = state;
@@ -148,24 +152,63 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     end: function() {
-        var state = this.___state;
-
         this.___parent = undefined;
 
-        var remaining = --state.___remaining;
-
-        if (!(state.___flags & FLAG_LAST_FIRED) && (remaining - state.___lastCount === 0)) {
-            state.___flags |= FLAG_LAST_FIRED;
-            state.___lastCount = 0;
-            state.___events.emit('last');
-        }
+        var remaining = --this.___remaining;
+        var parentOut = this.___parentOut;
 
         if (remaining === 0) {
-            state.___flags |= FLAG_FINISHED;
-            state.___events.emit(EVENT_FINISH, this.___getResult());
+            if (parentOut) {
+                parentOut.___handleChildDone();
+            } else {
+                this.___doFinish();
+            }
+        } else if (remaining - this.___lastCount === 0) {
+            this.___emitLast();
         }
 
         return this;
+    },
+
+    ___handleChildDone: function() {
+        var remaining = --this.___remaining;
+
+        if (remaining === 0) {
+            var parentOut = this.___parentOut;
+            if (parentOut) {
+                parentOut.___handleChildDone();
+            } else {
+                this.___doFinish();
+            }
+        } else if (remaining - this.___lastCount === 0) {
+            this.___emitLast();
+        }
+    },
+
+    ___doFinish: function() {
+        var state = this.___state;
+        state.___finished = true;
+        state.___events.emit(EVENT_FINISH, this.___getResult());
+    },
+
+    ___emitLast: function() {
+        var lastArray = this._last;
+
+        var i = 0;
+
+        function next() {
+            if (i === lastArray.length) {
+                return;
+            }
+            var lastCallback = lastArray[i++];
+            lastCallback(next);
+
+            if (!lastCallback.length) {
+                next();
+            }
+        }
+
+        next();
     },
 
     error: function(e) {
@@ -191,12 +234,14 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         if (options) {
             if (options.last) {
-                state.___lastCount++;
+                this.___lastCount++;
             }
         }
 
+        this.___remaining++;
+
         var documentFragment = this.___parent.___appendDocumentFragment();
-        var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, state);
+        var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, this);
 
         state.___events.emit('beginAsync', {
            out: asyncOut,
@@ -206,7 +251,7 @@ var proto = AsyncVDOMBuilder.prototype = {
        return asyncOut;
     },
 
-    createOut: function(callback) {
+    createOut: function() {
         return new AsyncVDOMBuilder(this.global);
     },
 
@@ -229,8 +274,10 @@ var proto = AsyncVDOMBuilder.prototype = {
     on: function(event, callback) {
         var state = this.___state;
 
-        if (event === EVENT_FINISH && (state.___flags & FLAG_FINISHED)) {
+        if (event === EVENT_FINISH && state.___finished) {
             callback(this.___getResult());
+        } else if (event === 'last') {
+            this.onLast(callback);
         } else {
             state.___events.on(event, callback);
         }
@@ -241,12 +288,14 @@ var proto = AsyncVDOMBuilder.prototype = {
     once: function(event, callback) {
         var state = this.___state;
 
-        if (event === EVENT_FINISH && (state.___flags & FLAG_FINISHED)) {
+        if (event === EVENT_FINISH && (state.___finished)) {
             callback(this.___getResult());
-            return this;
+        } else if (event === 'last') {
+            this.onLast(callback);
+        } else {
+            state.___events.once(event, callback);
         }
 
-        state.___events.once(event, callback);
         return this;
     },
 
@@ -281,27 +330,14 @@ var proto = AsyncVDOMBuilder.prototype = {
     },
 
     onLast: function(callback) {
-        var state = this.___state;
+        var lastArray = this._last;
 
-        var lastArray = state.___last;
-
-        if (!lastArray) {
-            lastArray = state.___last = [];
-            var i = 0;
-            var next = function() {
-                if (i === lastArray.length) {
-                    return;
-                }
-                var _next = lastArray[i++];
-                _next(next);
-            };
-
-            this.once('last', function() {
-                next();
-            });
+        if (lastArray === undefined) {
+            this._last = [callback];
+        } else {
+            lastArray.push(callback);
         }
 
-        lastArray.push(callback);
         return this;
     },
 

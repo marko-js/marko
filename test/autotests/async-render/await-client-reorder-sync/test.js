@@ -22,5 +22,5 @@ exports.checkEvents = function(events, helpers, out) {
         };
     });
 
-    helpers.compare(events, out.isVDOM ? '-events-vdom.json' : '-events.json');
+    helpers.compare(events, '-events.json');
 };

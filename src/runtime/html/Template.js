@@ -33,7 +33,7 @@ class Readable extends stream.Readable {
         var data = this._d;
         var globalData = data && data.$global;
         var shouldBuffer = this._shouldBuffer;
-        var out = new AsyncStream(globalData, this, null, shouldBuffer);
+        var out = new AsyncStream(globalData, this, undefined, shouldBuffer);
         template.render(data, out);
         out.end();
     }
@@ -46,8 +46,8 @@ function Template(path, renderFunc, options) {
     this.meta = undefined;
 }
 
-function createOut(globalData, parent, state, buffer) {
-    return new AsyncStream(globalData, parent, state, buffer);
+function createOut(globalData, writer, parentOut, buffer) {
+    return new AsyncStream(globalData, writer, parentOut, buffer);
 }
 
 Template.prototype = {

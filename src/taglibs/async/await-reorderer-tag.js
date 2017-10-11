@@ -21,58 +21,50 @@ module.exports = function(input, out) {
 
     global.__awaitReordererInvoked = true;
 
-
-
     var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'await-reorderer' });
+
     out.onLast(function(next) {
-        var awaitContext = global.__awaitContext;
+        var awaitContext = global.___clientReorderContext;
         var remaining;
 
         // Validate that we have remaining <await> instances that need handled
-        if (!awaitContext || !awaitContext.instances || !(remaining = awaitContext.instances.length)) {
+        if (!awaitContext ||
+            !awaitContext.instances ||
+            !(remaining = awaitContext.instances.length)) {
             asyncOut.end();
             next();
             return;
         }
 
-        var done = false;
-
         function handleAwait(awaitInfo) {
-            awaitInfo.asyncValue.done(function(err, html) {
-                if (done) {
-                    return;
-                }
+            awaitInfo.out.on('finish', function(result) {
+                    if (!global._afRuntime) {
+                        asyncOut.write(clientReorder.getCode());
+                        global._afRuntime = true;
+                    }
 
-                if (err) {
-                    done = true;
-                    return asyncOut.error(err);
-                }
+                    asyncOut.write('<div id="af' + awaitInfo.id + '" style="display:none">' +
+                        result.toString() +
+                        '</div>' +
+                        '<script type="text/javascript">$af(' +
+                            (typeof awaitInfo.id === 'number' ? awaitInfo.id : '"' + awaitInfo.id + '"') +
+                            (awaitInfo.after ? (',"' + awaitInfo.after + '"') : '' ) +
+                        ')</script>');
 
-                if (!global._afRuntime) {
-                    asyncOut.write(clientReorder.getCode());
-                    global._afRuntime = true;
-                }
+                    awaitInfo.out.writer = asyncOut.writer;
 
-                asyncOut.write('<div id="af' + awaitInfo.id + '" style="display:none">' +
-                    html +
-                    '</div>' +
-                    '<script type="text/javascript">$af(' +
-                        (typeof awaitInfo.id === 'number' ? awaitInfo.id : '"' + awaitInfo.id + '"') +
-                        (awaitInfo.after ? (',"' + awaitInfo.after + '"') : '' ) +
-                    ')</script>');
+                    out.emit('await:finish', awaitInfo);
 
-                awaitInfo.out.writer = asyncOut.writer;
+                    out.flush();
 
-                out.emit('await:finish', awaitInfo);
-
-                out.flush();
-
-                if (--remaining === 0) {
-                    done = true;
-                    asyncOut.end();
-                    next();
-                }
-            });
+                    if (--remaining === 0) {
+                        asyncOut.end();
+                        next();
+                    }
+                })
+                .on('error', function(err) {
+                    asyncOut.error(err);
+                });
         }
 
         awaitContext.instances.forEach(handleAwait);

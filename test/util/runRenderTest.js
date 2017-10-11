@@ -146,7 +146,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                 asyncEventsVerifier = createAsyncVerifier(main, helpers, out);
             }
 
-            function verifyOutput(result) {
+            var verifyOutput = function(result) {
                 var renderOutput = result.getOutput();
 
                 if (isVDOM) {
@@ -184,7 +184,9 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                             let document = jsdom('<html><body>' + html + '</body></html>');
                             let expectedHtml = domToString(document.body, { childrenOnly: true });
 
-                            callback(null, expectedHtml);
+                            process.nextTick(function() {
+                                callback(null, expectedHtml);
+                            });
                         });
                     };
 
@@ -231,7 +233,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
                     done();
                 }
-            }
+            };
 
             out.then(
                 function onFulfilled(result) {

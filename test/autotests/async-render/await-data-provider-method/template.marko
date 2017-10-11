@@ -1,0 +1,20 @@
+static var dataProvider = {
+    user: {
+        name: 'Frank'
+    },
+
+    getUserInfo() {
+        var user = this.user;
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve(user);
+            }, 20);
+        });
+    }
+}
+
+
+
+<await(user from dataProvider) method='getUserInfo'>
+    Hello ${user.name}!
+</await>

@@ -3,20 +3,39 @@
         "event": "await:begin",
         "arg": {
             "name": "data.outer",
-            "clientReorder": false,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:beforeRender",
         "arg": {
             "name": "data.outer",
-            "clientReorder": false,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:begin",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.inner2",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:finish",
         "arg": {
             "name": "data.inner1",
             "clientReorder": false,
@@ -24,7 +43,14 @@
         }
     },
     {
-        "event": "await:begin",
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.inner2",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:finish",
         "arg": {
             "name": "data.inner2",
             "clientReorder": false,
@@ -35,38 +61,6 @@
         "event": "await:finish",
         "arg": {
             "name": "data.outer",
-            "clientReorder": false,
-            "finished": true
-        }
-    },
-    {
-        "event": "await:beforeRender",
-        "arg": {
-            "name": "data.inner1",
-            "clientReorder": false,
-            "finished": true
-        }
-    },
-    {
-        "event": "await:finish",
-        "arg": {
-            "name": "data.inner1",
-            "clientReorder": false,
-            "finished": true
-        }
-    },
-    {
-        "event": "await:beforeRender",
-        "arg": {
-            "name": "data.inner2",
-            "clientReorder": false,
-            "finished": true
-        }
-    },
-    {
-        "event": "await:finish",
-        "arg": {
-            "name": "data.inner2",
             "clientReorder": false,
             "finished": true
         }
