@@ -166,6 +166,7 @@ function Component(id) {
     this.___document = undefined;
 
     this.___keyedElements = {};
+    this.___keySequence = undefined;
 }
 
 Component.prototype = componentProto = {
