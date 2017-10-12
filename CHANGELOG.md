@@ -5,6 +5,28 @@ Changelog
 
 ## 4.5.x
 
+### 4.5.0
+
+Summary of changes across all beta releases for the `4.5.0` release:
+
+- Fixes [#886](https://github.com/marko-js/marko/issues/886) - Write component initialization code when async out and all of its nested async outs finish
+- Fixes [#854](https://github.com/marko-js/marko/issues/854) - Make every .marko file a UI component ([PR #855](https://github.com/marko-js/marko/pull/855))
+- Added support for the `:scoped` modifier on attributes and deprecated `:key`:
+
+```marko
+<label for:scoped="name">Name</label>
+<input id:scoped="name" value="Frank"/>
+```
+
+- Fixes [#817](https://github.com/marko-js/marko/issues/817) - Support dynamic root elements
+- Marko no longer attaches `id` attributes to elements for purposes of keyed matching
+    - Keyed elements are maintained in an internal, per-component lookup
+- Keys are now assigned to all custom tags and HTML elements at compile-time to improve reliability and performance of DOM diffing
+- Optimized internal bookkeeping required during rendering a UI component tree (no more UI component stack)
+- DOM diffing/patching changes:
+    - Significant performance improvements
+    - morphdom is now UI component-aware
+
 ### 4.5.0-beta.3
 
 - Fixes [#854](https://github.com/marko-js/marko/issues/854) - Make every .marko file a UI component ([PR #855](https://github.com/marko-js/marko/pull/855))
