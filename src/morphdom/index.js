@@ -64,7 +64,7 @@ function morphdom(
         if (vNode.___nodeType === ELEMENT_NODE) {
             if (key) {
                 realNode.___markoKey = key;
-                (component = vNode.___component || component).___keyedElements[key] = realNode;
+                component.___keyedElements[key] = realNode;
             }
 
             morphChildren(realNode, null, null, vNode, component);
