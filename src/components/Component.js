@@ -499,7 +499,7 @@ Component.prototype = componentProto = {
         for(;;) {
             var nextSibling = currentNode.nextSibling;
             callback(currentNode);
-            if (currentNode == endNode) {
+            if (currentNode == endNode || !nextSibling) {
                 break;
             }
             currentNode = nextSibling;
