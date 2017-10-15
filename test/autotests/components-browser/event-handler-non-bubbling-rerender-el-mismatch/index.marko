@@ -1,0 +1,21 @@
+class {
+    onCreate() {
+        this.state = {
+            div: true
+        };
+    }
+	onMount() {
+		this.mouseMoveEvent = undefined;
+	}
+
+	handleMouseMove() {
+		this.mouseMoveEvent = true;
+	}
+}
+
+<if(state.div)>
+    <div on-mousemove("handleMouseMove") key="root"/>
+</if>
+<else>
+    <span on-mousemove("handleMouseMove") key="root"/>
+</else>
