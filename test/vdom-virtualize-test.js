@@ -19,12 +19,6 @@ describe('vdom-virtualize', () => {
                 var vdomNode = virtualize(domNode);
                 var vdomHTML = toHTML(vdomNode);
                 helpers.compare(vdomHTML, { suffix: '.html', prefix: 'virtualized-' });
-
-                var actualDOM = vdomNode.actualize(document);
-
-                fs.writeFileSync(path.join(dir, 'actualized-expected.html'), vdomHTML, { encoding: 'utf8' });
-                var actualDOMHTML = toHTML(actualDOM);
-                helpers.compare(actualDOMHTML, { suffix: '.html', prefix: 'actualized-' });
             }
             done();
         }

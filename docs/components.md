@@ -69,6 +69,9 @@ style.less {
 }
 ```
 
+> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
+
+
 ## Multi-file components
 
 You might prefer to keep your component's class and style definitions in separate files from the view definition - the classical separation of HTML, CSS and JavaScript.  Marko makes this possible with a simple filename based convention.
@@ -165,7 +168,7 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](##lifecycle-events).  This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events).  This class can be exported from `component.js` or defined right in the template as with single-file components.
 ### Example
 
 _index.marko_
@@ -284,75 +287,94 @@ The `on-*` attribute allows an event listener to be attached for either a native
 
 ### `key`
 
-A key is a scoped `id`. The `key` attribute can be applied to both HTML elements and custom tags for UI components. If applied to an HTML element, a unique `id` attribute will be added to the HTML element. The assigned ID will be a concatenation of the parent component ID with the provided value of the `key` attribute. If applied to a UI component , then the `key` will be used to assign a unique ID to the target component and all of its children (including nested components and nested HTML elements). Keys allow the component to easily obtain references to nested HTML elements and nested UI components.  Additionally, when updating the DOM, keyed elements and components are guaranteed to be matched up and reused rather than being discarded and re-created.
+The `key` attribute can be used to obtain references to nested HTML elements and nested UI components. The `key` attribute is also used for matching corresponding elements together during DOM diffing/patching after a re-render. Internally, Marko assigns a unique key to all HTML elements and UI components in a `.marko` file based on the order that they appear in the file. If you have repeated elements or elements that move to different locations then you likely want to assign a custom `key`. The `key` attribute can be applied to both HTML elements and custom tags for UI components. Additionally, when updating the DOM, keyed elements and components are guaranteed to be matched up and reused rather than being discarded and re-created.
 
-_input.marko_
+#### Referencing nested HTML elements and components
+
 ```marko
-<div.container>
-    <button key="myButton" type="button">My Button</button>
-</div>
-```
-
-Will generate HTML similar to:
-
-_output.html_
-```html
-<div.container>
-    <button id="w0-myButton" type="button">My Button</button>
-</div>
-```
-
-The containing component can reference the nested DOM element using the following code:
-```js
-var myButton = this.getEl('myButton');
-```
-
-The `key` attribute can also be applied to repeated elements by appending `[]`:
-
-_input.marko_
-```marko
-<ul>
+class {
+  onMount() {
+    var headerEl = this.getEl('header');
+    var colorLIs = this.getEls('colors');
+    var myFancyButton = this.getComponent('myFancyButton');
+    // ...
+  }
+}
+<div>
+  <h1 key="header">Hello</h1>
+  <ul>
     <for(color in ['red', 'green', 'blue'])>
         <li key="colors[]">${color}</li>
     </for>
-</ul>
+  </ul>
+  <fancy-button key="myFancyButton"/>
+</div>
 ```
 
-Will generate HTML similar to:
+> **Note:** The `[]` suffix (e.g. `key="colors[]"`) is used let Marko know that the element will be repeated multiple times with the same key.
 
-_output.html_
-```html
+#### Keyed matching
+
+The `key` attribute can be used to pair an HTML element or a UI component that moves to a new location in the DOM. For example:
+
+```marko
+class {
+  onCreate() {
+    this.state = {
+      swapped: false
+    }
+  }
+}
+
+<if(state.swapped)>
+  <div key="b">B</div>
+  <div key="a">A</div>
+</if>
+<else>
+  <div key="b">B</div>
+  <div key="a">A</div>
+</else>
+```
+
+The `key` attribute can be used to pair HTML elements or UI components that are repeated:
+
+```marko
 <ul>
-    <li key="colors[0]">red</li>
-    <li key="colors[1]">green</li>
-    <li key="colors[2]">blue</li>
+  <for(users in input.users)>
+      <li key=user.id>${user.name}</li>
+  </for>
 </ul>
 ```
 
-The containing component can reference the repeated DOM elements using the following code:
-```js
-var colorLIs = this.getEls('colors'); // Returns an Array of HTMLElement nodes
-```
+#### `*:scoped`
 
-#### `*:key`
+Putting the `:scoped` modifier on an attribute will result in the attribute value being prefixed with a unique ID associated with the current UI component. Thus, `:scoped` attribute modifiers can be used to assign a globally unique attribute value from a value that only needs to be unique to the current UI component.
 
 Certain HTML attributes reference the `id` of other elements on the page.  For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
 
-The `:key` suffix on an attribute allows you to reference another element via its `key`:
+The `:scoped` modifier on an attribute allows you to reference another element as shown in the following examples:
 
-**`for:key`**
+**`for:scoped`**
 ```marko
-<label for:key="name">Name</label>
-<input key="name" value="Frank"/>
+<label for:scoped="name">Name</label>
+<input id:scoped="name" value="Frank"/>
+```
+
+The above code will produce output HTML similar to the following:
+
+```html
+<label for="c0-name">Name</label>
+<input id="c0-name" value="Frank">
 ```
 
 **`aria-describedby:key`**
+
 ```marko
 <button
    aria-label="Close"
-   aria-describedby:key="descriptionClose"
+   aria-describedby:scoped="descriptionClose"
    on-click('closeDialog')>X</button>
-<div key="descriptionClose">
+<div id:scoped="descriptionClose">
    Closing this window will discard any information entered and return you back to the main page
 </div>
 ```
@@ -412,7 +434,7 @@ DOM nodes are conditionally preserved:
 ```marko
 <div>
     <!-- Don't ever re-render any nested DOM elements if the condition is met -->
-    <table no-update-body-if(data.tableData == null)>
+    <table no-update-body-if(input.tableData == null)>
         ...
     </table>
 </div>

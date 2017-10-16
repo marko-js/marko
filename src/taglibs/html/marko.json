@@ -1127,7 +1127,8 @@
         "html": true,
         "attribute-groups": [
             "html-attributes"
-        ]
+        ],
+        "openTagOnly": true
     },
     "attribute-groups": {
         "html-attributes": {

@@ -41,9 +41,9 @@ var proto = RenderResult.prototype = {
 
     afterInsert: function(doc) {
         var out = this.___out;
-        var globalComponentsContext = out.global.___components;
-        if (globalComponentsContext) {
-            this.___components = globalComponentsContext.___initComponents(doc);
+        var componentsContext = out.___components;
+        if (componentsContext) {
+            this.___components = componentsContext.___initComponents(doc);
         } else {
             this.___components = null;
         }
@@ -75,5 +75,6 @@ domInsert(
         return renderResult.getNode(referenceEl.ownerDocument);
     },
     function afterInsert(renderResult, referenceEl) {
-        return renderResult.afterInsert(referenceEl.ownerDocument);
+        var isShadow = typeof ShadowRoot === 'function' && referenceEl instanceof ShadowRoot;
+        return renderResult.afterInsert(isShadow ? referenceEl : referenceEl.ownerDocument);
     });

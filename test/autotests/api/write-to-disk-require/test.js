@@ -1,7 +1,7 @@
 var nodePath = require('path');
 var fs = require('fs');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var compiledPath;
 
     require('marko/compiler').configure({
@@ -14,7 +14,7 @@ exports.check = function(marko, markoCompiler, expect, done) {
         var template = require(templatePath);
         delete require.cache[templatePath];
         expect(fs.existsSync(compiledPath)).to.equal(true);
-        expect(template.renderSync({name: 'Frank'}).toString()).to.equal('Hello Frank!');
+        helpers.compare(template.renderSync({name: 'Frank'}).toString());
     } finally {
         fs.unlinkSync(compiledPath);
     }

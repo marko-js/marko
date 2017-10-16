@@ -22,7 +22,8 @@ describe('hot-reload' , function() {
         });
 
         var test = require(nodePath.join(dir, 'test.js'));
-        test.check(marko, hotReload, expect);
+
+        test.check(marko, hotReload, expect, helpers);
         done();
     });
 });

@@ -6,7 +6,6 @@ module.exports = function(helpers, done) {
     try {
         var component = helpers.mount(require('./index'), {});
 
-        expect(component.$().attr('id')).to.equal(component.id);
         expect(component.$().attr('class')).to.equal('app-jquery-proxy');
         expect(component.$('#foo').html()).to.equal('foo');
         expect(component.$('#fooText').html()).to.equal('fooText');

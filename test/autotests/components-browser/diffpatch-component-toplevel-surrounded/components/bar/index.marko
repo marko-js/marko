@@ -1,0 +1,16 @@
+class  {
+    onCreate() {
+        this.state = {
+            count: 1
+        }
+    }
+
+    increment() {
+        this.state.count++;
+    }
+}
+
+
+<for(var i=0; i<state.count; i++)>
+    <div>${i}</div>
+</for>

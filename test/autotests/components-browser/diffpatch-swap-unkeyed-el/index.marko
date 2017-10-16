@@ -1,0 +1,18 @@
+class  {
+    onCreate() {
+        this.state = {
+            swapped: false
+        }
+    }
+}
+
+<div.root key="root">
+    <if(state.swapped)>
+        <div data-bar="true">bar</div>
+        <div data-foo="true">foo</div>
+    </if>
+    <else>
+        <div data-foo="true">foo</div>
+        <div data-bar="true">bar</div>
+    </else>
+</div>

@@ -42,7 +42,7 @@ function configure(newConfig) {
         newConfig = {};
     }
 
-    extend(globalConfig, defaults);
+    globalConfig = extend({}, defaults);
     extend(globalConfig, newConfig);
 }
 

@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = {
+            swapped: false,
+            count: 0
+        };
+    }
+}
+
+<div.root>
+    <if(state.swapped)>
+        <world count=state.count/>
+        <hello count=state.count/>
+    </if>
+    <else>
+        <hello count=state.count/>
+        <world count=state.count/>
+    </else>
+</div>

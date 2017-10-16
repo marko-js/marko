@@ -3,7 +3,6 @@
         "event": "await:begin",
         "arg": {
             "name": "data.outer",
-            "finished":true,
             "clientReorder": true,
             "id": 0
         }
@@ -12,7 +11,6 @@
         "event": "await:beforeRender",
         "arg": {
             "name": "data.outer",
-            "finished":true,
             "clientReorder": true,
             "id": 0
         }
@@ -21,7 +19,6 @@
         "event": "await:begin",
         "arg": {
             "name": "data.inner1",
-            "finished":true,
             "clientReorder": false
         }
     },
@@ -29,7 +26,6 @@
         "event": "await:beforeRender",
         "arg": {
             "name": "data.inner1",
-            "finished":true,
             "clientReorder": false
         }
     },
@@ -37,17 +33,17 @@
         "event": "await:finish",
         "arg": {
             "name": "data.inner1",
-            "finished":true,
-            "clientReorder": false
+            "clientReorder": false,
+            "finished": true
         }
     },
     {
         "event": "await:finish",
         "arg": {
             "name": "data.outer",
-            "finished":true,
             "clientReorder": true,
-            "id": 0
+            "id": 0,
+            "finished": true
         }
     }
 ]

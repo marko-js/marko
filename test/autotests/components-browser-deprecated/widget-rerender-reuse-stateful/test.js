@@ -6,7 +6,7 @@ module.exports = function(helpers) {
     var widget = helpers.mount(require('./index'), {});
 
     var oldButton1Widget = widget.getWidget('button1');
-    var oldButton2Widget = widget.getEl('button2').__widget;
+    var oldButton2Widget = widget.getWidget('button2');
     var oldButton1El = oldButton1Widget.el;
     var oldButton2El = widget.getEl('button2');
 
@@ -22,7 +22,7 @@ module.exports = function(helpers) {
 
     // // Both button widgets should be reused
     expect(widget.getWidget('button1')).to.equal(oldButton1Widget);
-    expect(widget.getEl('button2').__widget).to.equal(oldButton2Widget);
+    expect(widget.getWidget('button2')).to.equal(oldButton2Widget);
 
     expect(widget.getWidget('button1').el.innerHTML).to.equal('small');
 

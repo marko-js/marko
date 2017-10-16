@@ -8,8 +8,9 @@ function VDocumentFragmentClone(other) {
     this.___nextSiblingInternal = null;
 }
 
-function VDocumentFragment(documentFragment) {
+function VDocumentFragment(out) {
     this.___VNode(null /* childCount */);
+    this.___out = out;
 }
 
 VDocumentFragment.prototype = {

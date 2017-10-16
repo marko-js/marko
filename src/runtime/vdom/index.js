@@ -22,8 +22,8 @@ function Template(path, func) {
     this.meta = undefined;
 }
 
-function createOut(globalData, parent, state) {
-    return new AsyncVDOMBuilder(globalData, parent, state);
+function createOut(globalData, parent, parentOut) {
+    return new AsyncVDOMBuilder(globalData, parent, parentOut);
 }
 
 var Template_prototype = Template.prototype = {

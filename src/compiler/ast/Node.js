@@ -125,6 +125,13 @@ class Node {
         this.body.appendChild(node);
     }
 
+    appendChildren(nodes) {
+        ok(this.body, 'Node does not support child nodes: ' + this);
+        nodes.forEach((node) => {
+            this.body.appendChild(node);
+        });
+    }
+
     insertBefore(newNode, referenceNode) {
         ok(this.body, 'Node does not support child nodes: ' + this);
         this.body.insertBefore(newNode, referenceNode);
@@ -312,14 +319,14 @@ class Node {
         this._trimStartEnd = trimStartEnd;
     }
 
-    _normalizeChildTextNodes(context, forceTrim) {
+    _normalizeChildTextNodes(context, forceTrim, forceTrimStartEnd) {
         if (this._childTextNormalized) {
             return;
         }
 
         this._childTextNormalized = true;
 
-        var trimStartEnd = this._trimStartEnd === true;
+        var trimStartEnd = forceTrimStartEnd === true || this._trimStartEnd === true;
 
         var isPreserveWhitespace = false;
 

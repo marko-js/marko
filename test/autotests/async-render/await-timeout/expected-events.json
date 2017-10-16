@@ -3,36 +3,28 @@
         "event": "await:begin",
         "arg": {
             "name": "userInfo1",
-            "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:begin",
         "arg": {
             "name": "userInfo2",
-            "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:begin",
         "arg": {
             "name": "userInfo3",
-            "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:begin",
         "arg": {
             "name": "userInfo4",
-            "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
@@ -40,8 +32,9 @@
         "arg": {
             "name": "userInfo1",
             "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
         }
     },
     {
@@ -49,7 +42,9 @@
         "arg": {
             "name": "userInfo1",
             "clientReorder": false,
-            "timedout": true,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
             "finished": true
         }
     },
@@ -58,8 +53,9 @@
         "arg": {
             "name": "userInfo2",
             "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
         }
     },
     {
@@ -67,7 +63,9 @@
         "arg": {
             "name": "userInfo2",
             "clientReorder": false,
-            "timedout": true,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
             "finished": true
         }
     },
@@ -76,8 +74,9 @@
         "arg": {
             "name": "userInfo3",
             "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
         }
     },
     {
@@ -85,7 +84,9 @@
         "arg": {
             "name": "userInfo3",
             "clientReorder": false,
-            "timedout": true,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
             "finished": true
         }
     },
@@ -94,8 +95,9 @@
         "arg": {
             "name": "userInfo4",
             "clientReorder": false,
-            "timedout": true,
-            "finished": true
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
         }
     },
     {
@@ -103,7 +105,9 @@
         "arg": {
             "name": "userInfo4",
             "clientReorder": false,
-            "timedout": true,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
             "finished": true
         }
     }

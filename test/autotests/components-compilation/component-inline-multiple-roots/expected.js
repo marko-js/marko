@@ -8,26 +8,16 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
       return module.exports;
     }),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c,
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a;
+    marko_defineComponent = components_helpers.c;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div" +
-    marko_attr("id", __component.elId("_r0")) +
-    ">A</div><span" +
-    marko_attr("id", __component.elId("_r1")) +
-    ">B</span>");
+  out.w("<div>A</div><span>B</span>");
 }
 
 marko_template._ = marko_renderer(render, {
-    type: marko_componentType,
-    roots: [
-      "_r0",
-      "_r1"
-    ]
+    ___type: marko_componentType
   }, marko_component);
 
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);

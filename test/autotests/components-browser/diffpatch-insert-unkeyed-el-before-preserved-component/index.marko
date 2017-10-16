@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = {
+            insertEl: false,
+            count: 0
+        };
+    }
+}
+
+<div.root key="root">
+    <if(state.insertEl === false)>
+        <hello key="hello"/>
+    </if>
+    <else>
+        $!{'<p></p>'}
+        <hello key="hello"/>
+    </else>
+
+</div>

@@ -1,17 +1,15 @@
 var expect = require('chai').expect;
-var markoComponents = require('marko/components');
 
 module.exports = function(helpers) {
-    var checkboxComponent = helpers.mount(require('./components/app-checkbox'), {
+    helpers.mount(require('./components/app-checkbox'), {
         checked: true,
         'class': 'my-checkbox',
         data: 123
     });
 
+    expect(helpers.targetEl.children.length).to.equal(1);
+    expect(helpers.targetEl.children[0].nodeName).to.equal('BUTTON');
+
     var el = helpers.targetEl.querySelector('.my-checkbox');
     expect(el != null).to.equal(true);
-
-    var componentForEl = markoComponents.getComponentForEl(el);
-
-    expect(componentForEl).to.equal(checkboxComponent);
 };

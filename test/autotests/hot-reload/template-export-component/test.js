@@ -11,7 +11,7 @@ function copyFiles(dir) {
     });
 }
 
-exports.check = function(marko, hotReload, expect) {
+exports.check = function(marko, hotReload, expect, helpers) {
     try {
         fs.mkdirSync(nodePath.join(__dirname, 'temp'));
     } catch(e) {}
@@ -20,10 +20,10 @@ exports.check = function(marko, hotReload, expect) {
 
     copyFiles(nodePath.join(__dirname, 'a'));
     var component = require(tempTemplatePath);
-    expect(component.renderSync().toString()).to.equal('<div class="a" id="s0">Hello Frank</div>');
+    helpers.compareSequence(component.renderSync().toString());
 
     hotReload.handleFileModified(tempTemplatePath);
 
     copyFiles(nodePath.join(__dirname, 'b'));
-    expect(component.renderSync().toString()).to.equal('<div class="b" id="s0">Hello Frank</div>');
+    helpers.compareSequence(component.renderSync().toString());
 };

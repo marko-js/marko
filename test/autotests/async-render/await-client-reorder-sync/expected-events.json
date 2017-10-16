@@ -3,23 +3,21 @@
         "event": "await:begin",
         "arg": {
             "name": "data.userDataProvider",
-            "clientReorder": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:beforeRender",
         "arg": {
             "name": "data.userDataProvider",
-            "clientReorder": true,
-            "finished": true
+            "clientReorder": false
         }
     },
     {
         "event": "await:finish",
         "arg": {
             "name": "data.userDataProvider",
-            "clientReorder": true,
+            "clientReorder": false,
             "finished": true
         }
     }

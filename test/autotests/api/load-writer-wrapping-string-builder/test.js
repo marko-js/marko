@@ -1,12 +1,12 @@
 var nodePath = require('path');
 
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var runtimeHtml = require('marko/html');
 
     var out = runtimeHtml.createWriter();
     out
         .on('finish', function(result) {
-            expect(result.getOutput()).to.equal('Hello John!');
+            helpers.compare(result.getOutput());
             done();
         })
         .on('error', function(e) {

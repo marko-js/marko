@@ -20,5 +20,5 @@ module.exports = function(helpers) {
     root.___appendChild(docFragmentA);
     root.___appendChild(docFragmentB);
 
-    return root.actualize(helpers.document);
+    return root;
 };

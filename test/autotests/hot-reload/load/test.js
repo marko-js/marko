@@ -1,7 +1,7 @@
 var fs = require('fs');
 var nodePath = require('path');
 
-exports.check = function(marko, hotReload, expect) {
+exports.check = function(marko, hotReload, expect, helpers) {
     var srcTemplatePath = nodePath.join(__dirname, 'template.marko');
     var templateSrc = fs.readFileSync(srcTemplatePath, { encoding: 'utf8' });
 
@@ -10,13 +10,13 @@ exports.check = function(marko, hotReload, expect) {
 
     var template = marko.load(tempTemplatePath);
 
-    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!');
+    helpers.compareSequence(template.renderSync({ name: 'John' }).toString());
 
     fs.writeFileSync(tempTemplatePath, templateSrc + '!', { encoding: 'utf8' });
 
-    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!');
+    helpers.compareSequence(template.renderSync({ name: 'John' }).toString());
 
     hotReload.handleFileModified(tempTemplatePath);
 
-    expect(template.renderSync({ name: 'John' }).toString()).to.equal('Hello John!!');
+    helpers.compareSequence(template.renderSync({ name: 'John' }).toString());
 };

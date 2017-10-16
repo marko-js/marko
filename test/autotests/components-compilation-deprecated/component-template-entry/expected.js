@@ -8,23 +8,18 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/component-template-entry/component", function() {
       return marko_defineWidget_legacy(require("./component"));
     }),
-    marko_component = require("./component"),
-    marko_rendererLegacy = legacy_helpers.r,
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a;
+    marko_rendererLegacy = legacy_helpers.r;
 
-function render(input, out, __component, widget) {
+function render(input, out, __component, widget, component) {
   var data = input;
 
-  out.w("<div" +
-    marko_attr("id", __component.id) +
-    "></div>");
+  out.w("<div></div>");
 }
 
 marko_template._ = marko_rendererLegacy(render, {
-    split: true,
-    type: marko_componentType
-  }, marko_component);
+    ___split: true,
+    ___type: marko_componentType
+  });
 
 marko_template.meta = {
     deps: [

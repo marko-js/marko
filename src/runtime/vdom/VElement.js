@@ -1,13 +1,17 @@
+/* jshint newcap:false */
 var VNode = require('./VNode');
 var inherit = require('raptor-util/inherit');
-
 var NS_XLINK = 'http://www.w3.org/1999/xlink';
 var ATTR_XLINK_HREF = 'xlink:href';
+var xmlnsRegExp = /^xmlns(:|$)/;
+
 var toString = String;
 
 var FLAG_IS_SVG = 1;
 var FLAG_IS_TEXTAREA = 2;
 var FLAG_SIMPLE_ATTRS = 4;
+// var FLAG_PRESERVE = 8;
+var FLAG_CUSTOM_ELEMENT = 16;
 
 var defineProperty = Object.defineProperty;
 
@@ -45,41 +49,49 @@ function VElementClone(other) {
     this.___parentNode = null;
     this.___nextSiblingInternal = null;
 
+    this.___key = other.___key;
     this.___attributes = other.___attributes;
     this.___properties = other.___properties;
     this.___namespaceURI = other.___namespaceURI;
     this.___nodeName = other.___nodeName;
     this.___flags = other.___flags;
-    this.___value = other.___value;
+    this.___valueInternal = other.___valueInternal;
     this.___constId = other.___constId;
+    this.___isTextArea = other.___isTextArea;
 }
 
-function VElement(tagName, attrs, childCount, flags, props) {
+function VElement(tagName, attrs, key, component, childCount, flags, props) {
     this.___VNode(childCount);
 
-    var constId, namespaceURI;
+    var constId;
+    var namespaceURI;
+    var isTextArea;
 
     if (props) {
-        constId = props.c;
+        constId = props.i;
     }
 
     if ((this.___flags = flags || 0)) {
         if (flags & FLAG_IS_SVG) {
             namespaceURI = 'http://www.w3.org/2000/svg';
         }
+        if (flags & FLAG_IS_TEXTAREA) {
+            isTextArea = true;
+        }
     }
 
+    this.___key = key;
+    this.___component = component;
     this.___attributes = attrs || EMPTY_OBJECT;
     this.___properties = props || EMPTY_OBJECT;
     this.___namespaceURI = namespaceURI;
     this.___nodeName = tagName;
-    this.___value = null;
+    this.___valueInternal = null;
     this.___constId = constId;
+    this.___isTextArea = isTextArea;
 }
 
 VElement.prototype = {
-    ___VElement: true,
-
     ___nodeType: 1,
 
     ___cloneNode: function() {
@@ -93,8 +105,8 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, childCount, flags, props) {
-        var child = this.___appendChild(new VElement(tagName, attrs, childCount, flags, props));
+    e: function(tagName, attrs, key, component, childCount, flags, props) {
+        var child = this.___appendChild(new VElement(tagName, attrs, key, component, childCount, flags, props));
 
         if (childCount === 0) {
             return this.___finishChild();
@@ -110,8 +122,8 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    ed: function(tagName, attrs, childCount, flags, props) {
-        var child = this.___appendChild(VElement.___createElementDynamicTag(tagName, attrs, childCount, flags, props));
+    ed: function(tagName, attrs, key, component, childCount, flags, props) {
+        var child = this.___appendChild(VElement.___createElementDynamicTag(tagName, attrs, key, component, childCount, flags, props));
 
         if (childCount === 0) {
             return this.___finishChild();
@@ -126,8 +138,10 @@ VElement.prototype = {
      *
      * @param  {String} value The value for the new Comment node
      */
-    n: function(node) {
-        this.___appendChild(node.___cloneNode());
+    n: function(node, component) {
+        node = node.___cloneNode();
+        node.___component = component;
+        this.___appendChild(node);
         return this.___finishChild();
     },
 
@@ -142,33 +156,35 @@ VElement.prototype = {
             doc.createElementNS(namespaceURI, tagName) :
             doc.createElement(tagName);
 
-        for (var attrName in attributes) {
-            var attrValue = attributes[attrName];
+        if (flags & FLAG_CUSTOM_ELEMENT) {
+            Object.assign(el, attributes);
+        } else {
+            for (var attrName in attributes) {
+                var attrValue = attributes[attrName];
 
-            if (attrValue !== false && attrValue != null) {
-                var type = typeof attrValue;
+                if (attrValue !== false && attrValue != null) {
+                    var type = typeof attrValue;
 
-                if (type !== 'string') {
-                    // Special attributes aren't copied to the real DOM. They are only
-                    // kept in the virtual attributes map
-                    attrValue = convertAttrValue(type, attrValue);
+                    if (type !== 'string') {
+                        // Special attributes aren't copied to the real DOM. They are only
+                        // kept in the virtual attributes map
+                        attrValue = convertAttrValue(type, attrValue);
+                    }
+
+                    if (attrName == ATTR_XLINK_HREF) {
+                        setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
+                    } else {
+                        el.setAttribute(attrName, attrValue);
+                    }
                 }
+            }
 
-                if (attrName == ATTR_XLINK_HREF) {
-                    setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
-                } else {
-                    el.setAttribute(attrName, attrValue);
-                }
+            if (flags & FLAG_IS_TEXTAREA) {
+                el.value = this.___value;
             }
         }
 
-        if (flags & FLAG_IS_TEXTAREA) {
-            el.value = this.___value;
-        }
-
-        el._vattrs = attributes;
-        el._vprops = this.___properties;
-        el._vflags = flags;
+        el.___markoVElement = this;
 
         return el;
     },
@@ -179,7 +195,7 @@ VElement.prototype = {
         // different namespaces
         var value = this.___attributes[name];
         return value != null && value !== false;
-    },
+    }
 };
 
 inherit(VElement, VNode);
@@ -195,15 +211,9 @@ var proto = VElementClone.prototype = VElement.prototype;
     });
 });
 
-defineProperty(proto, 'id', {
+defineProperty(proto, '___value', {
     get: function () {
-        return this.___attributes.id;
-    }
-});
-
-defineProperty(proto, 'value', {
-    get: function () {
-        var value = this.___value;
+        var value = this.___valueInternal;
         if (value == null) {
             value = this.___attributes.value;
         }
@@ -211,16 +221,10 @@ defineProperty(proto, 'value', {
     }
 });
 
-defineProperty(proto, '___isTextArea', {
-    get: function () {
-        return this.___flags & FLAG_IS_TEXTAREA;
-    }
-});
-
-VElement.___createElementDynamicTag = function(tagName, attrs, childCount, flags, props) {
+VElement.___createElementDynamicTag = function(tagName, attrs, key, component, childCount, flags, props) {
     var namespace = attrs && attrs.xmlns;
     tagName = namespace ? tagName : tagName.toUpperCase();
-    var element = new VElement(tagName, attrs, childCount, flags, props);
+    var element = new VElement(tagName, attrs, key, component, childCount, flags, props);
     element.___namespaceURI = namespace;
     return element;
 };
@@ -233,15 +237,69 @@ VElement.___removePreservedAttributes = function(attrs) {
     return attrs;
 };
 
-VElement.___morphAttrs = function(fromEl, toEl) {
+function virtualizeElement(node, virtualizeChildNodes) {
+    var attributes = node.attributes;
+    var attrCount = attributes.length;
 
+    var attrs;
+
+    if (attrCount) {
+        attrs = {};
+        for (var i=0; i<attrCount; i++) {
+            var attr = attributes[i];
+            var attrName = attr.name;
+            if (!xmlnsRegExp.test(attrName) && attrName !== 'data-marko') {
+                var attrNamespaceURI = attr.namespaceURI;
+                if (attrNamespaceURI === NS_XLINK) {
+                    attrs[ATTR_XLINK_HREF] = attr.value;
+                } else {
+                    attrs[attrName] = attr.value;
+                }
+            }
+        }
+    }
+
+    var flags = 0;
+
+    var tagName = node.nodeName;
+    if (tagName === 'TEXTAREA') {
+        flags |= FLAG_IS_TEXTAREA;
+    }
+
+    var vdomEl = new VElement(tagName, attrs, null /*key*/, null /*component*/, 0 /*child count*/, flags, null /*props*/);
+    if (node.namespaceURI !== 'http://www.w3.org/1999/xhtml') {
+        vdomEl.___namespaceURI = node.namespaceURI;
+    }
+
+    if (vdomEl.___isTextArea) {
+        vdomEl.___valueInternal = node.value;
+    } else {
+        if (virtualizeChildNodes) {
+            virtualizeChildNodes(node, vdomEl);
+        }
+    }
+
+    return vdomEl;
+}
+
+VElement.___virtualize = virtualizeElement;
+
+VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var removePreservedAttributes = VElement.___removePreservedAttributes;
 
+    var fromFlags = vFromEl.___flags;
+    var toFlags = toEl.___flags;
+
+    fromEl.___markoVElement = toEl;
+
     var attrs = toEl.___attributes;
-    var props = fromEl._vprops = toEl.___properties;
+    var props = toEl.___properties;
+
+    if (toFlags & FLAG_CUSTOM_ELEMENT) {
+        return Object.assign(fromEl, attrs);
+    }
 
     var attrName;
-    var i;
 
     // We use expando properties to associate the previous HTML
     // attributes provided as part of the VDOM node with the
@@ -251,52 +309,23 @@ VElement.___morphAttrs = function(fromEl, toEl) {
     // real VElement node will not have the expando property
     // so we build the attribute map from the expando property
 
-    var oldAttrs = fromEl._vattrs;
+    var oldAttrs = vFromEl.___attributes;
 
     if (oldAttrs) {
-        if (oldAttrs == attrs) {
+        if (oldAttrs === attrs) {
             // For constant attributes the same object will be provided
             // every render and we can use that to our advantage to
             // not waste time diffing a constant, immutable attribute
             // map.
             return;
         } else {
-            oldAttrs = removePreservedAttributes(oldAttrs, props, true);
+            oldAttrs = removePreservedAttributes(oldAttrs, props);
         }
-    } else {
-        // We need to build the attribute map from the real attributes
-        oldAttrs = {};
-
-        var oldAttributesList = fromEl.attributes;
-        for (i = oldAttributesList.length - 1; i >= 0; --i) {
-            var attr = oldAttributesList[i];
-
-            if (attr.specified !== false) {
-                attrName = attr.name;
-                if (attrName !== 'data-marko') {
-                    var attrNamespaceURI = attr.namespaceURI;
-                    if (attrNamespaceURI === NS_XLINK) {
-                        oldAttrs[ATTR_XLINK_HREF] = attr.value;
-                    } else {
-                        oldAttrs[attrName] = attr.value;
-                    }
-                }
-            }
-        }
-
-        // We don't want preserved attributes to show up in either the old
-        // or new attribute map.
-        removePreservedAttributes(oldAttrs, props, false);
     }
-
-    fromEl._vattrs = attrs;
 
     var attrValue;
 
-    var flags = toEl.___flags;
-    var oldFlags;
-
-    if (flags & FLAG_SIMPLE_ATTRS && ((oldFlags = fromEl._vflags) & FLAG_SIMPLE_ATTRS)) {
+    if (toFlags & FLAG_SIMPLE_ATTRS && fromFlags & FLAG_SIMPLE_ATTRS) {
         if (oldAttrs['class'] !== (attrValue = attrs['class'])) {
             fromEl.className = attrValue;
         }
@@ -308,6 +337,7 @@ VElement.___morphAttrs = function(fromEl, toEl) {
         }
         return;
     }
+
 
     // In some cases we only want to set an attribute value for the first
     // render or we don't want certain attributes to be touched. To support
@@ -352,7 +382,7 @@ VElement.___morphAttrs = function(fromEl, toEl) {
     //       was not a virtualized node (i.e., a node that was not rendered by a
     //       Marko template, but rather a node that was created from an HTML
     //       string or a real DOM node).
-    if (!attrs.id || props.___virtualized === true) {
+    if (toEl.___key === null) {
         for (attrName in oldAttrs) {
             if (!(attrName in attrs)) {
                 if (attrName === ATTR_XLINK_HREF) {

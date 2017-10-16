@@ -4,74 +4,45 @@ var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 
 var ComponentsContext = require('./ComponentsContext');
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var repeatedRegExp = /\[\]$/;
 var registry = require('./registry');
 var copyProps = require('raptor-util/copyProps');
 var isServer = componentsUtil.___isServer === true;
+var beginComponent = require('./beginComponent');
+var endComponent = require('./endComponent');
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
-function resolveComponentKey(globalComponentsContext, key, scope) {
-    if (key[0] == '#') {
+function resolveComponentKey(globalComponentsContext, key, parentComponentDef) {
+    if (key[0] === '#') {
         return key.substring(1);
     } else {
-        var resolvedId;
-
-        if (repeatedRegExp.test(key)) {
-            resolvedId = globalComponentsContext.___nextRepeatedId(scope, key);
-        } else {
-            resolvedId = scope + '-' + key;
-        }
-
-        return resolvedId;
+        return parentComponentDef.id + '-' + parentComponentDef.___nextKey(key);
     }
-}
-
-function preserveComponentEls(existingComponent, out, globalComponentsContext) {
-    var rootEls = existingComponent.___getRootEls({});
-
-    for (var elId in rootEls) {
-        var el = rootEls[elId];
-
-        // We put a placeholder element in the output stream to ensure that the existing
-        // DOM node is matched up correctly when using morphdom.
-        out.element(el.tagName, { id: elId });
-
-        globalComponentsContext.___preserveDOMNode(elId); // Mark the element as being preserved (for morphdom)
-    }
-
-    existingComponent.___reset(); // The component is no longer dirty so reset internal flags
-    return true;
 }
 
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
-    var componentsContext = parentOut.data.___components;
+    var componentsContext = parentOut.___components;
 
     if (componentsContext !== undefined) {
-        // All of the components in this async block should be
-        // initialized after the components in the parent. Therefore,
-        // we will create a new ComponentsContext for the nested
-        // async block and will create a new component stack where the current
-        // component in the parent block is the only component in the nested
-        // stack (to begin with). This will result in top-level components
-        // of the async block being added as children of the component in the
-        // parent block.
-        var nestedComponentsContext = componentsContext.___createNestedComponentsContext(asyncOut);
-        asyncOut.data.___components = nestedComponentsContext;
+        // We are going to start a nested ComponentsContext
+        asyncOut.___components = new ComponentsContext(asyncOut, componentsContext);
     }
     // Carry along the component arguments
-    asyncOut.___componentArgs = parentOut.___componentArgs;
+    asyncOut.c(
+        parentOut.___assignedComponentDef,
+        parentOut.___assignedKey,
+        parentOut.___assignedCustomEvents);
 }
 
 function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
-    var typeName = componentProps.type;
-    var roots = componentProps.roots;
-    var assignedId = componentProps.id;
-    var isSplit = componentProps.split === true;
+    var typeName = componentProps.___type;
+    var isSplit = componentProps.___split === true;
+    var isImplicitComponent = componentProps.___implicit === true;
+
     var shouldApplySplitMixins = isSplit;
 
     return function renderer(input, out) {
@@ -89,39 +60,49 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
         var component = globalComponentsContext.___rerenderComponent;
         var isRerender = component !== undefined;
-        var id = assignedId;
+        var id;
         var isExisting;
         var customEvents;
         var scope;
+        var parentComponentDef;
 
         if (component) {
-            id = component.id;
-            isExisting = true;
+            // If component is provided then we are currently rendering
+            // the top-level UI component as part of a re-render
+            id = component.id; // We will use the ID of the component being re-rendered
+            isExisting = true; // This is a re-render so we know the component is already in the DOM
             globalComponentsContext.___rerenderComponent = null;
         } else {
-            var componentArgs = out.___componentArgs;
+            // Otherwise, we are rendering a nested UI component. We will need
+            // to match up the UI component with the component already in the
+            // DOM (if any) so we will need to resolve the component ID from
+            // the assigned key. We also need to handle any custom event bindings
+            // that were provided.
+            parentComponentDef = componentsContext.___componentDef;
+            var componentDefFromArgs;
+            if ((componentDefFromArgs = out.___assignedComponentDef)) {
+                // console.log('componentArgs:', componentArgs);
+                scope = componentDefFromArgs.id;
+                out.___assignedComponentDef = null;
 
-            if (componentArgs) {
-                out.___componentArgs = null;
+                customEvents = out.___assignedCustomEvents;
+                var key = out.___assignedKey;
 
-                scope = componentArgs[0];
-
-                if (scope) {
-                    scope = scope.id;
-                }
-
-                var key = componentArgs[1];
                 if (key != null) {
-                    key = key.toString();
+                    id = resolveComponentKey(globalComponentsContext, key.toString(), componentDefFromArgs);
+                } else {
+                    id = componentDefFromArgs.___nextComponentId();
                 }
-                id = id || resolveComponentKey(globalComponentsContext, key, scope);
-                customEvents = componentArgs[2];
+            } else {
+                id = globalComponentsContext.___nextComponentId();
             }
         }
 
-        id = id || componentsContext.___nextComponentId();
-
         if (isServer) {
+            // If we are rendering on the server then things are simplier since
+            // we don't need to match up the UI component with a previously
+            // rendered component already mounted to the DOM. We also create
+            // a lightweight ServerComponent
             component = registry.___createComponent(
                 renderingLogic,
                 id,
@@ -130,16 +111,18 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 typeName,
                 customEvents,
                 scope);
+
+            // This is the final input after running the lifecycle methods.
+            // We will be passing the input to the template for the `input` param
             input = component.___updatedInput;
+
             component.___updatedInput = undefined; // We don't want ___updatedInput to be serialized to the browser
         } else {
             if (!component) {
-                if (isRerender) {
-                    // Look in in the DOM to see if a component with the same ID and type already exists.
-                    component = componentLookup[id];
-                    if (component && component.___type !== typeName) {
-                        component = undefined;
-                    }
+                if (isRerender && (component = componentLookup[id]) && component.___type !== typeName) {
+                    // Destroy the existing component since
+                    component.destroy();
+                    component = undefined;
                 }
 
                 if (component) {
@@ -169,7 +152,6 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     component.___setCustomEvents(customEvents, scope);
                 }
 
-
                 if (isExisting === false) {
                     emitLifecycleEvent(component, 'create', input, out);
                 }
@@ -178,7 +160,12 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
                 if (isExisting === true) {
                     if (component.___isDirty === false || component.shouldUpdate(input, component.___state) === false) {
-                        preserveComponentEls(component, out, globalComponentsContext);
+                        // We put a placeholder element in the output stream to ensure that the existing
+                        // DOM node is matched up correctly when using morphdom. We flag the VElement
+                        // node to track that it is a preserve marker
+                        out.___preserveComponent(component);
+                        globalComponentsContext.___renderedComponentsById[id] = true;
+                        component.___reset(); // The component is no longer dirty so reset internal flags
                         return;
                     }
                 }
@@ -189,15 +176,17 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             emitLifecycleEvent(component, 'render', out);
         }
 
-        var componentDef = componentsContext.___beginComponent(component, isSplit);
-        componentDef.___roots = roots;
+        var componentDef =
+          beginComponent(componentsContext, component, isSplit, parentComponentDef, isImplicitComponent);
+
         componentDef.___isExisting = isExisting;
 
         // Render the template associated with the component using the final template
         // data that we constructed
         templateRenderFunc(input, out, componentDef, component, component.___rawState);
 
-        componentDef.___end();
+        endComponent(out, componentDef);
+        componentsContext.___componentDef = parentComponentDef;
     };
 }
 
@@ -205,5 +194,4 @@ module.exports = createRendererFunc;
 
 // exports used by the legacy renderer
 createRendererFunc.___resolveComponentKey = resolveComponentKey;
-createRendererFunc.___preserveComponentEls = preserveComponentEls;
 createRendererFunc.___handleBeginAsync = handleBeginAsync;

@@ -53,19 +53,23 @@ class OptimizerContext {
 }
 
 class NodeVDOM extends Node {
-    constructor(variableIdentifier) {
+    constructor(variableIdentifier, isComponent) {
         super('NodeVDOM');
         this.variableIdentifier = variableIdentifier;
+        this.isComponent = isComponent;
     }
 
     writeCode(writer) {
         var builder = writer.builder;
+        var funcCallArgs = [ this.variableIdentifier ];
+
+        if (this.isComponent) {
+            funcCallArgs.push(builder.identifier('component'));
+        }
 
         let funcCall = builder.functionCall(
             builder.identifier('n'),
-            [
-                this.variableIdentifier
-            ]);
+            funcCallArgs);
 
         if (this.isChild) {
             writer.write('.');
@@ -89,16 +93,16 @@ function generateNodesForArray(nodes, context, options) {
     function generateStaticNode(node) {
         if (node.type === 'HtmlElementVDOM') {
             node.createElementId = context.helper('createElement');
+
+            node.setConstId(builder.functionCall(optimizerContext.nextConstIdFunc, []));
         }/* else {
             node.createTextId = context.importModule('marko_createText', 'marko/vdom/createText');
         }*/
 
-        node.nextConstId = builder.functionCall(optimizerContext.nextConstIdFunc, []);
-
         node.isStaticRoot = true;
         let staticNodeId = context.addStaticVar('marko_node' + (optimizerContext.nextNodeId++), node);
 
-        return new NodeVDOM(staticNodeId);
+        return new NodeVDOM(staticNodeId, context.isComponent);
     }
 
     function handleStaticAttributes(node) {
@@ -131,6 +135,7 @@ function generateNodesForArray(nodes, context, options) {
                 finalNodes.push(node);
             }
 
+            node.finalizeProperties(context);
         } else {
             finalNodes.push(node);
         }

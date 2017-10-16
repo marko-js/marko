@@ -6,21 +6,17 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/index-widget-only/component-browser", function() {
       return require("./component-browser");
     }),
-    marko_renderer = components_helpers.r,
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a;
+    marko_renderer = components_helpers.r;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div" +
-    marko_attr("id", __component.id) +
-    "></div>");
+  out.w("<div></div>");
 }
 
 marko_template._ = marko_renderer(render, {
-    split: true,
-    type: marko_componentType
+    ___split: true,
+    ___type: marko_componentType
   });
 
 marko_template.meta = {

@@ -116,7 +116,7 @@ module.exports = function(target, renderer) {
                 finalOut = createOut(
                     globalData, // global
                     out, // writer(AsyncStream) or parentNode(AsyncVDOMBuilder)
-                    null, // state
+                    undefined, // parentOut
                     shouldBuffer // ignored by AsyncVDOMBuilder
                 );
             }

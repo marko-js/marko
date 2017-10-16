@@ -3,9 +3,20 @@
 const Node = require('../../Node');
 const vdomUtil = require('../../../util/vdom');
 
-var FLAG_IS_SVG = 1;
-var FLAG_IS_TEXTAREA = 2;
-var FLAG_SIMPLE_ATTRS = 4;
+const FLAG_IS_SVG = 1;
+const FLAG_IS_TEXTAREA = 2;
+const FLAG_SIMPLE_ATTRS = 4;
+// const FLAG_PRESERVE = 8;
+// const FLAG_CUSTOM_ELEMENT = 16;
+
+let CREATE_ARGS_COUNT = 0;
+const INDEX_TAG_NAME = CREATE_ARGS_COUNT++;
+const INDEX_ATTRS = CREATE_ARGS_COUNT++;
+const INDEX_KEY = CREATE_ARGS_COUNT++;
+const INDEX_COMPONENT = CREATE_ARGS_COUNT++;
+const INDEX_CHILD_COUNT = CREATE_ARGS_COUNT++;
+const INDEX_FLAGS = CREATE_ARGS_COUNT++;
+const INDEX_PROPS = CREATE_ARGS_COUNT++;
 
 function finalizeCreateArgs(createArgs, builder) {
     var length = createArgs.length;
@@ -17,7 +28,7 @@ function finalizeCreateArgs(createArgs, builder) {
             lastArg = arg;
         } else {
             if (lastArg != null) {
-                if (i === 3) {
+                if (i === INDEX_FLAGS) {
                     // Use a literal 0 for the flags
                     createArgs[i] = builder.literal(0);
                 } else {
@@ -46,6 +57,21 @@ const SIMPLE_ATTRS = {
     'id': true
 };
 
+function isStaticProperties(properties) {
+    for (var k in properties) {
+        var v = properties[k];
+        if (v.type !== 'Literal') {
+            return false;
+        }
+
+        if (typeof v.value === 'object') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 class HtmlElementVDOM extends Node {
     constructor(def) {
         super('HtmlElementVDOM');
@@ -57,6 +83,8 @@ class HtmlElementVDOM extends Node {
         this.properties = def.properties;
         this.body = def.body;
         this.dynamicAttributes = def.dynamicAttributes;
+        this.key = def.key;
+        this.runtimeFlags = def.runtimeFlags;
 
         this.isSVG = false;
         this.isTextArea = false;
@@ -69,7 +97,6 @@ class HtmlElementVDOM extends Node {
         this.createElementId = undefined;
         this.attributesArg = undefined;
         this.propertiesArg = undefined;
-        this.nextConstId = undefined;
     }
 
     generateCode(codegen) {
@@ -186,6 +213,8 @@ class HtmlElementVDOM extends Node {
 
         this.attributesArg = attributesArg;
 
+        this.properties = builder.literal(this.properties || {});
+
         return this;
     }
 
@@ -200,24 +229,33 @@ class HtmlElementVDOM extends Node {
 
         let body = this.body;
         let attributesArg = this.attributesArg;
-        let nextConstId = this.nextConstId;
+
         let tagName = this.tagName;
+
+        let key = this.key;
 
         let childCount = body && body.length;
 
-        let createArgs = new Array(5); // tagName, attributes, childCount, const ID, flags
+        let createArgs = new Array(CREATE_ARGS_COUNT);
 
-        createArgs[0] = tagName;
+        createArgs[INDEX_TAG_NAME] = tagName;
 
         if (attributesArg) {
-            createArgs[1] = attributesArg;
+            createArgs[INDEX_ATTRS] = attributesArg;
         }
+
+        if (key) {
+            createArgs[INDEX_KEY] = key;
+
+            if (!this.isStatic) {
+                createArgs[INDEX_COMPONENT] = builder.identifier('component');
+            }
+        }
+
 
         if (childCount != null) {
-            createArgs[2] = builder.literal(childCount);
+            createArgs[INDEX_CHILD_COUNT] = builder.literal(childCount);
         }
-
-
 
         var flags = 0;
 
@@ -233,19 +271,21 @@ class HtmlElementVDOM extends Node {
             flags |= FLAG_SIMPLE_ATTRS;
         }
 
+        if (this.runtimeFlags) {
+            flags |= this.runtimeFlags;
+        }
+
         if (flags) {
-            createArgs[3] = builder.literal(flags);
+            createArgs[INDEX_FLAGS] = builder.literal(flags);
         }
 
-        if (nextConstId) {
-            if (!this.properties) {
-                this.properties = {};
-            }
-            this.properties.c = nextConstId;
-        }
+        let properties = this.properties;
 
-        if (this.properties) {
-            createArgs[4] = builder.literal(this.properties);
+        if (this.properties && properties.type === 'Literal' && Object.keys(properties.value).length === 0) {
+            properties = null;
+        }
+        if (properties) {
+            createArgs[INDEX_PROPS] = properties;
         }
 
         // Remove trailing undefined arguments and convert non-trailing
@@ -288,6 +328,21 @@ class HtmlElementVDOM extends Node {
                 writer.write(child);
             }
             writer.decIndent();
+        }
+    }
+
+    setConstId(value) {
+        this.properties.value.i = value;
+    }
+
+    finalizeProperties(context) {
+        if (this.properties.type === 'Literal' && isStaticProperties(this.properties.value)) {
+            if (Object.keys(this.properties.value).length === 0) {
+                this.properties = null;
+            } else {
+                this.properties = context.addStaticVar('props', this.properties);
+            }
+
         }
     }
 }

@@ -5,10 +5,56 @@ var win = window;
 var defaultDocument = document;
 var componentsUtil = require('./util');
 var componentLookup = componentsUtil.___componentLookup;
-var getElementById = componentsUtil.___getElementById;
 var ComponentDef = require('./ComponentDef');
 var registry = require('./registry');
 var serverRenderedGlobals = {};
+var serverComponentStartNodes = {};
+var serverComponentEndNodes = {};
+var keyedElementsByComponentId = {};
+
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_HAS_BODY_EL = 2;
+var FLAG_HAS_HEAD_EL = 4;
+
+function indexServerComponentBoundaries(node) {
+    var componentId;
+
+    node = node.firstChild;
+    while(node) {
+        if (node.nodeType === 8) { // Comment node
+            var commentValue = node.nodeValue;
+            if (commentValue[0] === 'M') {
+                componentId = commentValue.substring(2);
+
+                var firstChar = commentValue[1];
+
+                if (firstChar === '/') {
+                    serverComponentEndNodes[componentId] = node;
+                } else if (firstChar === '#') {
+                    serverComponentStartNodes[componentId] = node;
+                    var endValue = 'M/' + componentId;
+                    while((node = node.nextSibling) && node.nodeValue !== endValue) {}
+                    continue;
+                } else if (firstChar === '^'){
+                    serverComponentStartNodes[componentId] = node;
+                }
+            }
+        } else if (node.nodeType === 1) { // HTML element node
+            var markoKey = node.getAttribute('data-marko-key');
+            if (markoKey) {
+                var separatorIndex = markoKey.indexOf(' ');
+                componentId = markoKey.substring(separatorIndex+1);
+                markoKey = markoKey.substring(0, separatorIndex);
+                var keyedElements = keyedElementsByComponentId[componentId] || (keyedElementsByComponentId[componentId] = {});
+                keyedElements[markoKey] = node;
+            }
+            indexServerComponentBoundaries(node);
+        }
+
+        node = node.nextSibling;
+    }
+
+}
 
 function invokeComponentEventHandler(component, targetMethodName, args) {
     var method = component[targetMethodName];
@@ -51,44 +97,9 @@ function initComponent(componentDef, doc) {
     var isExisting = componentDef.___isExisting;
     var id = component.id;
 
-    var rootIds = componentDef.___roots;
+    componentLookup[id] = component;
 
-    if (rootIds) {
-        var rootComponents;
-
-        var els = [];
-
-        rootIds.forEach(function(rootId) {
-            var nestedId = id + '-' + rootId;
-            var rootComponent = componentLookup[nestedId];
-            if (rootComponent) {
-                rootComponent.___rootFor = component;
-                if (rootComponents) {
-                    rootComponents.push(rootComponent);
-                } else {
-                    rootComponents = component.___rootComponents = [rootComponent];
-                }
-            } else {
-                var rootEl = getElementById(doc, nestedId);
-                if (rootEl) {
-                    rootEl._w = component;
-                    els.push(rootEl);
-                }
-            }
-        });
-
-        component.el = els[0];
-        component.els = els;
-        componentLookup[id] = component;
-    } else if (!isExisting) {
-        var el = getElementById(doc, id);
-        el._w = component;
-        component.el = el;
-        component.els = [el];
-        componentLookup[id] = component;
-    }
-
-    if (componentDef.___willRerenderInBrowser) {
+    if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
         component.___rerender(true);
         return;
     }
@@ -106,7 +117,7 @@ function initComponent(componentDef, doc) {
 
             var eventType = domEventArgs[0];
             var targetMethodName = domEventArgs[1];
-            var eventEl = getElementById(doc, domEventArgs[2]);
+            var eventEl = component.___keyedElements[domEventArgs[2]];
             var extraArgs = domEventArgs[3];
 
             addDOMEventListeners(component, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
@@ -139,13 +150,8 @@ function initClientRendered(componentDefs, doc) {
     eventDelegation.___init(doc);
 
     doc = doc || defaultDocument;
-    for (var i=0,len=componentDefs.length; i<len; i++) {
+    for (var i=componentDefs.length-1; i>=0; i--) {
         var componentDef = componentDefs[i];
-
-        if (componentDef.___children) {
-            initClientRendered(componentDef.___children, doc);
-        }
-
         initComponent(
             componentDef,
             doc);
@@ -172,9 +178,12 @@ function initServerRendered(renderedComponents, doc) {
 
         return;
     }
+
+    doc = doc || defaultDocument;
+
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any components
-    eventDelegation.___init(doc || defaultDocument);
+    eventDelegation.___init(doc);
 
     renderedComponents = warp10Finalize(renderedComponents);
 
@@ -188,6 +197,67 @@ function initServerRendered(renderedComponents, doc) {
 
     componentDefs.forEach(function(componentDef) {
         componentDef = ComponentDef.___deserialize(componentDef, typesArray, serverRenderedGlobals, registry);
+        var componentId = componentDef.id;
+        var component = componentDef.___component;
+
+        var startNode;
+        var endNode;
+        var flags = componentDef.___flags;
+        if ((flags & 6) === 6) {
+            startNode = document.head;
+            endNode = document.body;
+        } else if (flags & FLAG_HAS_BODY_EL) {
+            startNode = endNode = document.body;
+        } else if (flags & FLAG_HAS_HEAD_EL) {
+            startNode = endNode = document.head;
+        } else {
+            var startNodeComment = serverComponentStartNodes[componentId];
+            if (!startNodeComment) {
+                indexServerComponentBoundaries(doc);
+                startNodeComment = serverComponentStartNodes[componentId];
+            }
+            var endNodeComment = serverComponentEndNodes[componentId];
+
+            startNode = startNodeComment.nextSibling;
+
+            if (startNode === endNodeComment) {
+                // Component has no output nodes so just mount to the start comment node
+                // and we will remove the end comment node
+                startNode = endNode = startNodeComment;
+            } else {
+                startNodeComment.parentNode.removeChild(startNodeComment);
+
+                if (startNode.parentNode === document) {
+                    endNode = startNode = document.documentElement;
+                } else {
+                    // Remove the start and end comment nodes and use the inner nodes
+                    // as the boundary
+                    endNode = endNodeComment.previousSibling;
+                }
+            }
+
+            if (endNodeComment) {
+                endNodeComment.parentNode.removeChild(endNodeComment);
+            }
+        }
+
+        component.___keyedElements = keyedElementsByComponentId[componentId] || {};
+        component.___startNode = startNode;
+        component.___endNode = endNode;
+
+        startNode.___markoComponent = component;
+
+        delete keyedElementsByComponentId[componentId];
+
+        // Mark the start node so that we know we need to skip past this
+        // node when matching up children
+        startNode.___startNode = true;
+
+        // Mark the end node so that when we attempt to find boundaries
+        // for nested UI components we don't accidentally go outside the boundary
+        // of the parent component
+        endNode.___endNode = true;
+
         initComponent(componentDef, doc || defaultDocument);
     });
 }

@@ -1,0 +1,11 @@
+class {
+	onMount() {
+		this.mouseMoveEvent = undefined;
+	}
+
+	handleMouseMove() {
+		this.mouseMoveEvent = true;
+	}
+}
+
+<div on-mousemove("handleMouseMove")/>

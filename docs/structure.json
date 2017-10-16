@@ -28,6 +28,7 @@
         {
             "title": "Other",
             "docs": [
+                "Fastify",
                 "Huncwot"
             ]
         }

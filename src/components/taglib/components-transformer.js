@@ -23,10 +23,15 @@ module.exports = function transform(el, context) {
     }
 
     if (el.hasAttribute('w-body')) {
+        // This is a legacy code block and should be removed in Marko v5
         context.deprecate('The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492');
         let builder = context.builder;
         let bodyValue = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
+        el.addAttribute({ // The old behavior is that the body content would be preserved if no new body content was provided
+            name: 'no-update-body-if',
+            argument: '!__component.b'//builder.negate(builder.memberExpression(builder.identifier('__component'), builder.identifier('b')))
+        });
 
         let includeNode = context.createNodeForEl('include');
 
@@ -44,11 +49,6 @@ module.exports = function transform(el, context) {
 
     if (el.tagName === 'widget-types') {
         context.setFlag('hasWidgetTypes');
-    } else if (el.tagName === 'include') {
-        transformHelper.handleComponentEvents();
-        transformHelper.handleIncludeNode(el);
-        transformHelper.getComponentArgs().compile(transformHelper);
-        return;
     }
 
     if (el.hasAttribute('w-el-id')) {
@@ -56,9 +56,8 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.isFlagSet('hasComponentBind') || el.hasAttribute('w-bind')) {
-        el.setFlag('hasComponentBind');
-        transformHelper.handleComponentBind();
+    if (el.hasAttribute('w-bind')) {
+        transformHelper.handleLegacyBind();
     }
 
     if (/* New preserve attributes */
@@ -74,8 +73,15 @@ module.exports = function transform(el, context) {
         transformHelper.handleComponentPreserve();
     }
 
-    if (el.hasAttribute('key') || el.hasAttribute('ref') || el.hasAttribute('w-id')) {
-        if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
+    // Handle *:key properties (and deprecated w-for/for-key/for-ref)
+    transformHelper.handleScopedAttrs();
+
+    if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
+        if (el.hasAttribute('w-id') || el.hasAttribute('ref') || el.hasAttribute('key')) {
+            transformHelper.assignComponentId();
+        }
+
+        if (context.options.autoKeyEnabled !== false && context.inline !== true) {
             transformHelper.assignComponentId();
         }
     }
@@ -89,9 +95,6 @@ module.exports = function transform(el, context) {
 
     // Handle w-on* properties
     transformHelper.handleComponentEvents();
-
-    // Handle *:key properties (and deprecated w-for/for-key/for-ref)
-    transformHelper.handleComponentKeyAttrs();
 
     // If we need to pass any information to a nested component then
     // we start that information in the "out" so that it can be picked

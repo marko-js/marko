@@ -67,10 +67,21 @@ function generate(options) {
 
         var myLasso = lasso.create(lassoConfig);
 
-        var templateData = {
-            lasso: myLasso,
-            browserDependencies: browserDependencies
-        };
+        var templateData = {};
+
+        Object.defineProperty(templateData, 'lasso', {
+            value: myLasso,
+            writable: false,
+            configurable: false,
+            enumerable: false
+        });
+
+        Object.defineProperty(templateData, 'browserDependencies', {
+            value: browserDependencies,
+            writable: false,
+            configurable: false,
+            enumerable: false
+        });
 
         if (startServer) {
             var app = express();

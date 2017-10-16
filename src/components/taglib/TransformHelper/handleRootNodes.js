@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
-var getComponentFiles = require('./getComponentFiles');
+let path = require('path');
+let getComponentFiles = require('./getComponentFiles');
 
 const esprima = require('esprima');
 const escodegen = require('escodegen');
@@ -12,16 +12,16 @@ function handleStyleElement(styleEl, transformHelper) {
         return;
     }
 
-    var attrs = styleEl.attributes;
+    let attrs = styleEl.attributes;
 
-    var styleCode;
-    var lang = 'css';
+    let styleCode;
+    let lang = 'css';
 
-    var hasStyleBlock = false;
+    let hasStyleBlock = false;
 
-    for (var i=attrs.length-1; i>=0; i--) {
-        var attr = attrs[i];
-        var name = attr.name;
+    for (let i=attrs.length-1; i>=0; i--) {
+        let attr = attrs[i];
+        let name = attr.name;
         if (name.startsWith('{')) {
             hasStyleBlock = true;
 
@@ -47,7 +47,7 @@ function handleStyleElement(styleEl, transformHelper) {
     styleEl.setFlag(FLAG_COMPONENT_STYLE);
 
     if (styleCode) {
-        var context = transformHelper.context;
+        let context = transformHelper.context;
         context.addDependency({
             type: lang,
             code: styleCode,
@@ -95,15 +95,15 @@ function classToObject(cls, el, transformHelper) {
 
 function handleClassDeclaration(classEl, transformHelper) {
     let tree;
-    var wrappedSrc = '('+classEl.tagString+'\n)';
+    let wrappedSrc = '('+classEl.tagString+'\n)';
 
     try {
-        tree = esprima.parse(wrappedSrc);
+        tree = esprima.parseScript(wrappedSrc);
     } catch(err) {
-        var message = 'Unable to parse JavaScript for component class. ' + err;
+        let message = 'Unable to parse JavaScript for component class. ' + err;
 
         if (err.index != null) {
-            var errorIndex = err.index;
+            let errorIndex = err.index;
             // message += '\n' + err.description;
             if (errorIndex != null && errorIndex >= 0) {
                 transformHelper.context.addError({
@@ -127,36 +127,32 @@ function handleClassDeclaration(classEl, transformHelper) {
     let object = classToObject(expression, classEl, transformHelper);
     let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
 
-    if (transformHelper.getRendererModule() != null) {
-        transformHelper.context.addError(classEl, 'The component has both an inline component `class` and a separate `component.js`. This is not allowed. See: https://github.com/marko-js/marko/wiki/Error:-Component-inline-and-external');
-        return;
-    }
-
-    var moduleInfo = {
+    let moduleInfo = {
         inlineId: componentVar,
         filename: transformHelper.filename,
         requirePath: './' + path.basename(transformHelper.filename)
     };
 
-    if (transformHelper.getComponentModule() == null) {
-        transformHelper.setComponentModule(moduleInfo);
-    }
-
-    transformHelper.setRendererModule(moduleInfo);
-
     classEl.detach();
+
+    return moduleInfo;
 }
 
 module.exports = function handleRootNodes() {
-    var context = this.context;
-    var builder = this.builder;
+    let context = this.context;
 
-    var componentFiles = getComponentFiles(context.filename);
+    if (context.isFlagSet('hasLegacyWidgetBind')) {
+        return;
+    }
+
+    let componentFiles = getComponentFiles(context.filename);
     if (!componentFiles) {
         return;
     }
 
-    var dirname = context.dirname;
+    let componentModule;
+    let rendererModule;
+    let dirname = context.dirname;
 
     if (componentFiles.package) {
         context.addDependency('package: ./' + componentFiles.package);
@@ -174,67 +170,78 @@ module.exports = function handleRootNodes() {
             requirePath: './'+file.slice(0, file.lastIndexOf('.'))
         };
 
-        this.setComponentModule(moduleInfo);
-        this.setRendererModule(moduleInfo);
+        componentModule = rendererModule = moduleInfo;
     }
 
     if (componentFiles.browserFile) {
         let file = componentFiles.browserFile;
-        this.setComponentModule({
+
+        componentModule = {
             filename: path.join(dirname, file),
             requirePath: './' + file.slice(
                 0, file.lastIndexOf('.'))
-        });
+        };
     }
 
-    var templateRoot = this.el;
+    let templateRoot = this.el;
 
-    var rootNodes = [];
-    var hasLegacyExplicitBind = false;
-    var hasIdCount = 0;
-    var nodeWithAssignedId;
-    var assignedId;
-    var transformHelper = this;
+    let rootNodes = [];
+    let hasIdCount = 0;
+    let nodeWithAssignedId;
+    let assignedId;
+    let transformHelper = this;
 
     let walker = context.createWalker({
         enter(node) {
             let tagName = node.tagName && node.tagName.toLowerCase();
-            let tag = node.tagName && context.taglibLookup.getTag(node.tagName);
 
             if (node.type === 'TemplateRoot' || !node.type) {
-                // Don't worry about the TemplateRoot or a Container node
-                // But continue into the node to look at its children for root elements
-            } else if (tag && tag.noOutput) {
-                walker.skip();
+                // Don't worry about the TemplateRoot or an Container node
             } else if (node.type === 'HtmlElement') {
-                if (node.hasAttribute('w-bind')) {
-                    transformHelper.setHasBoundComponentForTemplate();
-                    hasLegacyExplicitBind = true;
-                } else {
-                    if (node.hasAttribute('id')) {
-                        hasIdCount++;
-                        nodeWithAssignedId = node;
-                        assignedId = node.getAttributeValue('id');
-                    }
+                if (node.hasAttribute('id')) {
+                    hasIdCount++;
+                    nodeWithAssignedId = node;
+                    assignedId = node.getAttributeValue('id');
+                }
 
-                    if (tagName === 'style') {
-                        handleStyleElement(node, transformHelper);
-                    }
+                if (tagName === 'style') {
+                    handleStyleElement(node, transformHelper);
+                }
 
-                    if (!node.isFlagSet(FLAG_COMPONENT_STYLE)) {
-                        rootNodes.push(node);
-                    }
+                if (!node.isFlagSet(FLAG_COMPONENT_STYLE)) {
+                    rootNodes.push(node);
+                }
+                walker.skip();
+
+                return;
+            } else if (node.type === 'CustomTag') {
+                let tag = context.taglibLookup.getTag(node.tagName);
+
+                if (!tag.noOutput) {
+                    rootNodes.push(node);
                 }
 
                 walker.skip();
                 return;
-            } else if (node.type === 'CustomTag') {
-                rootNodes.push(node);
+            } else if (node.type === 'Scriptlet') {
                 walker.skip();
                 return;
             } else {
                 if (tagName === 'class') {
-                    handleClassDeclaration(node, transformHelper);
+                    let classComponentModule = handleClassDeclaration(node, transformHelper);
+
+                    if (rendererModule != null) {
+                        transformHelper.context.addError(node, 'The component has both an inline component `class` and a separate `component.js`. This is not allowed. See: https://github.com/marko-js/marko/wiki/Error:-Component-inline-and-external');
+                        return;
+                    }
+
+                    if (componentModule == null) {
+                        componentModule = classComponentModule;
+                    }
+
+                    rendererModule = classComponentModule;
+                } else if (!node.noOutput) {
+                    rootNodes.push(node);
                 }
 
                 walker.skip();
@@ -245,43 +252,41 @@ module.exports = function handleRootNodes() {
 
     walker.walk(templateRoot);
 
-    if (hasLegacyExplicitBind) {
-        //There is an explicit bind so nothing to do
-        return;
+    // if (!componentModule) {
+    //     return;
+    // }
+
+    if (context.isFlagSet('hasWidgetTypes')) {
+        context.addError('The <widget-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514');
     }
 
-    if (!this.hasBoundComponentForTemplate()) {
-        return;
-    }
+    // After normalizing the text nodes to remove whitespace we may have detached
+    // some of the root text nodes so remove those from our list
+    rootNodes = rootNodes.filter((rootNode) => {
+        return rootNode.isDetached() !== true;
+    });
 
     if (rootNodes.length === 0) {
         return;
     }
 
-    if (rootNodes.length > 1 && hasIdCount > 0) {
-        // We can only bind a component to multiple top-level elements if we can assign
-        // all of the IDs
-        return;
+    var isImplicitComponent = false;
+
+    if (!componentModule) {
+        isImplicitComponent = true;
+
+        componentModule = rendererModule = {
+            filename: this.filename,
+            requirePath: './' + path.basename(this.filename)
+        };
     }
 
-    transformHelper.setHasBoundComponentForTemplate();
+    // templateRoot._normalizeChildTextNodes(context, false, true);
 
-    var nextKey = 0;
-
-    rootNodes.forEach((curNode, i) => {
-        let id = curNode.getAttributeValue('id');
-
-        if (id && id.type !== 'Literal') {
-            context.addError('Root HTML element should not have a dynamic `id` attribute. See: https://github.com/marko-js/marko/wiki/Error:-Dynamic-root-HTML-element-id-attribute');
-            return;
-        }
-
-        curNode.setFlag('hasComponentBind');
-
-        if (!curNode.hasAttribute('key') && !curNode.hasAttribute('ref')) {
-            if (curNode.type === 'CustomTag' || rootNodes.length > 1) {
-                curNode.setAttributeValue('key', builder.literal('_r' + (nextKey++)));
-            }
-        }
+    this.convertToComponent({
+        isImplicitComponent,
+        rootNodes,
+        componentModule,
+        rendererModule
     });
 };

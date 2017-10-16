@@ -257,6 +257,21 @@ class Parser {
                     attrDef.argument = attr.argument.value;
                 }
 
+                var attrName = attr.name;
+
+                if (attrName) {
+                    if (attrName === 'for-key' || attrName === 'for-ref' || attrName === 'w-for' || attrName.endsWith(':key')) {
+                        context.data.hasLegacyForKey = true;
+                    }
+                }
+
+                if (attrDef.rawValue) {
+                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrDef.rawValue)) {
+                        // TODO: add complain call here
+                        context.data.hasImperativeComponentIds = true;
+                    }
+                }
+
                 parsedAttributes.push(attrDef);
             });
         }

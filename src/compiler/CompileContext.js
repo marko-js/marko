@@ -23,6 +23,12 @@ const markoPkgVersion = require('../../package.json').version;
 const rootDir = path.join(__dirname, '../');
 const isDebug = require('../build.json').isDebug;
 
+// const FLAG_IS_SVG = 1;
+// const FLAG_IS_TEXTAREA = 2;
+// const FLAG_SIMPLE_ATTRS = 4;
+// const FLAG_PRESERVE = 8;
+const FLAG_CUSTOM_ELEMENT = 16;
+
 const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
 
 function getTaglibPath(taglibPath) {
@@ -89,6 +95,7 @@ const helpers = {
     'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
     'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
     'merge': { module: 'marko/runtime/helper-merge' },
+    'propsForPreviousNode': 'p',
     'renderer': {
         module: 'marko/components/helpers',
         method: 'r'
@@ -101,7 +108,6 @@ const helpers = {
         module: 'marko/components/helpers',
         method: 'rc'
     },
-    'renderComponent': { module: 'marko/components/taglib/helpers/renderComponent' },
     'str': 's',
     'styleAttr': {
         vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
@@ -136,8 +142,8 @@ class CompileContext extends EventEmitter {
         this.compilerType = this.options.compilerType || 'marko';
         this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
         this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
-        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags || false;
-        this.escapeAtTags = this.options.escapeAtTags || false;
+        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags === true;
+        this.escapeAtTags = this.options.escapeAtTags === true;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -168,6 +174,7 @@ class CompileContext extends EventEmitter {
         this._imports = {};
         this._fingerprint = undefined;
         this._optimizers = undefined;
+        this.isComponent = false;
     }
 
     setInline(isInline) {
@@ -484,23 +491,27 @@ class CompileContext extends EventEmitter {
         } else {
             if (typeof tagName === 'string') {
                 tagDef = taglibLookup.getTag(tagName);
-                if (!tagDef &&
-                    !this.isMacro(tagName) &&
-                    tagName.indexOf(':') === -1 &&
-                    !htmlElements.isRegisteredElement(tagName, this.dirname) &&
-                    !this.ignoreUnrecognizedTags) {
+                if (!tagDef && !this.isMacro(tagName) && tagName.indexOf(':') === -1) {
+                    var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
+                    if (customElement) {
+                        elNode.customElement = customElement;
+                        elNode.addRuntimeFlag(FLAG_CUSTOM_ELEMENT);
 
-                    if (this._parsingFinished) {
-                        this.addErrorUnrecognizedTag(tagName, elNode);
-                    } else {
-                        // We don't throw an error right away since the tag
-                        // may be a macro that gets registered later
-                        this.unrecognizedTags.push({
-                            node: elNode,
-                            tagName: tagName
-                        });
+                        if (customElement.import) {
+                            this.addDependency(this.getRequirePath(customElement.import));
+                        }
+                    } else if (!this.ignoreUnrecognizedTags) {
+                        if (this._parsingFinished) {
+                            this.addErrorUnrecognizedTag(tagName, elNode);
+                        } else {
+                            // We don't throw an error right away since the tag
+                            // may be a macro that gets registered later
+                            this.unrecognizedTags.push({
+                                node: elNode,
+                                tagName: tagName
+                            });
+                        }
                     }
-
                 }
             }
 
@@ -562,6 +573,10 @@ class CompileContext extends EventEmitter {
 
             if (attrDef.setFlag) {
                 node.setFlag(attrDef.setFlag);
+            }
+
+            if (attrDef.setContextFlag) {
+                this.setFlag(attrDef.setContextFlag);
             }
 
             attr.def = attrDef;

@@ -1,12 +1,6 @@
-var extend = require('raptor-util/extend');
 
-var markoGlobal = extend(window.$MG, {
-  uid: 0
-});
-
-window.$MG = markoGlobal;
-
-var runtimeId = markoGlobal.uid++;
+var markoUID = window.$MUID || (window.$MUID = { i: 0 });
+var runtimeId = markoUID.i++;
 
 var componentLookup = {};
 
@@ -17,18 +11,7 @@ function getComponentForEl(el, doc) {
     if (el) {
         var node = typeof el == 'string' ? (doc || defaultDocument).getElementById(el) : el;
         if (node) {
-            var component = node._w;
-
-            while(component) {
-                var rootFor = component.___rootFor;
-                if (rootFor)  {
-                    component = rootFor;
-                } else {
-                    break;
-                }
-            }
-
-            return component;
+            return node.___markoComponent;
         }
     }
 }
@@ -69,26 +52,29 @@ function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
     component.emit(eventType, eventArg1, eventArg2);
 }
 
-function destroyComponentForEl(el) {
-    var componentToDestroy = el._w;
+function destroyComponentForNode(node) {
+    var componentToDestroy = node.___markoComponent;
     if (componentToDestroy) {
         componentToDestroy.___destroyShallow();
-        el._w = null;
-
-        while ((componentToDestroy = componentToDestroy.___rootFor)) {
-            componentToDestroy.___rootFor = null;
-            componentToDestroy.___destroyShallow();
-        }
+        delete componentLookup[componentToDestroy.id];
     }
 }
-function destroyElRecursive(el) {
-    var curChild = el.firstChild;
-    while(curChild) {
-        if (curChild.nodeType === 1) {
-            destroyComponentForEl(curChild);
-            destroyElRecursive(curChild);
+function destroyNodeRecursive(node, component) {
+    if (node.nodeType === 1) {
+        var key;
+
+        if (component && (key = node.___markoKey)) {
+            if (node === component.___keyedElements[key]) {
+                delete component.___keyedElements[key];
+            }
         }
-        curChild = curChild.nextSibling;
+
+        var curChild = node.firstChild;
+        while(curChild) {
+            destroyComponentForNode(curChild);
+            destroyNodeRecursive(curChild, component);
+            curChild = curChild.nextSibling;
+        }
     }
 }
 
@@ -97,52 +83,36 @@ function nextComponentId() {
     // marko runtimes. This allows multiple instances of marko to be
     // loaded in the same window and they should all place nice
     // together
-    return 'b' + ((markoGlobal.uid)++);
+    return 'b' + (markoUID.i++);
 }
 
-function nextComponentIdProvider(out) {
+function nextComponentIdProvider() {
     return nextComponentId;
-}
-
-function getElementById(doc, id) {
-    return doc.getElementById(id);
 }
 
 function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
     if (handlerMethodName) {
-        var id = componentDef.id;
+        var componentId = componentDef.id;
         if (extraArgs) {
-            var isRerenderInBrowser = componentDef.___globalComponentsContext.___isRerenderInBrowser;
-
-            if (isRerenderInBrowser === true) {
-                // If we are bootstrapping a page rendered on the server
-                // we need to put the actual event args on the UI component
-                // since we will not actually be updating the DOM
-                var component = componentDef.___component;
-
-                var bubblingDomEvents = component.___bubblingDomEvents ||
-                    ( component.___bubblingDomEvents = [] );
-
-                bubblingDomEvents.push(extraArgs);
-
-                return;
-            } else {
-                return [handlerMethodName, id, extraArgs];
-            }
+            return [handlerMethodName, componentId, extraArgs];
         } else {
-            return [handlerMethodName, id];
+            return [handlerMethodName, componentId];
         }
     }
 }
 
 function getMarkoPropsFromEl(el) {
-    var virtualProps = el._vprops;
-    if (virtualProps === undefined) {
-        virtualProps = el.getAttribute('data-marko');
-        if (virtualProps) {
-            virtualProps = JSON.parse(virtualProps);
+    var vElement = el.___markoVElement;
+    var virtualProps;
+
+    if (vElement) {
+        virtualProps = vElement.___properties;
+    } else {
+        virtualProps = el.___markoVProps;
+        if (!virtualProps) {
+            virtualProps = el.getAttribute('data-marko');
+            el.___markoVProps = virtualProps = virtualProps ? JSON.parse(virtualProps) : EMPTY_OBJECT;
         }
-        el._vprops = virtualProps = virtualProps || EMPTY_OBJECT;
     }
 
     return virtualProps;
@@ -152,9 +122,8 @@ exports.___runtimeId = runtimeId;
 exports.___componentLookup = componentLookup;
 exports.___getComponentForEl = getComponentForEl;
 exports.___emitLifecycleEvent = emitLifecycleEvent;
-exports.___destroyComponentForEl = destroyComponentForEl;
-exports.___destroyElRecursive = destroyElRecursive;
+exports.___destroyComponentForNode = destroyComponentForNode;
+exports.___destroyNodeRecursive = destroyNodeRecursive;
 exports.___nextComponentIdProvider = nextComponentIdProvider;
-exports.___getElementById = getElementById;
 exports.___attachBubblingEvent = attachBubblingEvent;
 exports.___getMarkoPropsFromEl = getMarkoPropsFromEl;

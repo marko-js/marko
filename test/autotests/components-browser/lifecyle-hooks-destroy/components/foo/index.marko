@@ -3,11 +3,13 @@ import { expect } from 'chai';
 
 class {
     onDestroy(){
-        expect(document.getElementById(this.id)).to.equal(this.el);
+        // The nodes should still be attached
+        var rootNode = this.getEl('root');
+        expect(rootNode.parentNode != null).to.equal(true);
         hooks.record('foo:destroy');
     }
 }
 
-<div.foo>
+<div.foo key="root">
 	Hello <span.name>${input.name}</span>!
 </div>

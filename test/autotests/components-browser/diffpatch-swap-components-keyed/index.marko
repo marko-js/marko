@@ -1,0 +1,18 @@
+class {
+    onCreate() {
+        this.state = {
+            swapped: false
+        };
+    }
+}
+
+<div.root>
+    <if(state.swapped)>
+        <world key="world"/>
+        <hello key="hello"/>
+    </if>
+    <else>
+        <hello key="hello"/>
+        <world key="world"/>
+    </else>
+</div>

@@ -1,6 +1,4 @@
 /* jshint newcap:false */
-var specialElHandlers = require('../../morphdom/specialElHandlers');
-
 function VNode() {}
 
 VNode.prototype = {
@@ -12,6 +10,8 @@ VNode.prototype = {
         this.___parentNode = null;
         this.___nextSiblingInternal = null;
     },
+
+    ___component: null,
 
     get ___firstChild() {
         var firstChild = this.___firstChildInternal;
@@ -49,10 +49,10 @@ VNode.prototype = {
     ___appendChild: function(child) {
         this.___childCount++;
 
-        if (this.___isTextArea) {
+        if (this.___isTextArea === true) {
             if (child.___Text) {
                 var childValue = child.___nodeValue;
-                this.___value = (this.___value || '') + childValue;
+                this.___valueInternal = (this.___valueInternal || '') + childValue;
             } else {
                 throw TypeError();
             }
@@ -74,32 +74,13 @@ VNode.prototype = {
     },
 
     ___finishChild: function finishChild() {
-        if (this.___childCount == this.___finalChildCount && this.___parentNode) {
+        if (this.___childCount === this.___finalChildCount && this.___parentNode) {
             return this.___parentNode.___finishChild();
         } else {
             return this;
         }
     },
 
-    actualize: function(doc) {
-        var actualNode = this.___actualize(doc);
-
-        var curChild = this.___firstChild;
-
-        while(curChild) {
-            actualNode.appendChild(curChild.actualize(doc));
-            curChild = curChild.___nextSibling;
-        }
-
-        if (this.___nodeType === 1) {
-            var elHandler = specialElHandlers[this.___nodeName];
-            if (elHandler !== undefined) {
-                elHandler(actualNode, this);
-            }
-        }
-
-        return actualNode;
-    }
 
     // ,toJSON: function() {
     //     var clone = Object.assign({

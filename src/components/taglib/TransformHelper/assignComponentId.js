@@ -12,24 +12,14 @@ module.exports = function assignComponentId(isRepeated) {
     var context = this.context;
     var builder = this.builder;
 
-    let componentRef;
-    var nestedIdExpression;
-    var idExpression;
-
-    if (!this.hasBoundComponentForTemplate()) {
-        // We are assigning a component ID to a nested component in a template that does not have a component.
-        // That means we do not have access to the parent component variable as part of a closure. We
-        // need to look it up out of the `out.data` map
-        if (!context.isFlagSet('hasComponentVar')) {
-            context.setFlag('hasComponentVar');
-
-            var getCurrentComponentVar = context.importModule('marko_getCurrentComponent',
-                this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/getCurrentComponent'));
-
-            context.addVar('__component', builder.functionCall(getCurrentComponentVar, [builder.identifierOut()]));
-        }
+    if (el.noOutput || (el.tagDef && el.tagDef.noOutput)) {
+        return;
     }
 
+    let assignedKey;
+    var nestedIdExpression;
+    var idExpression;
+    
     // In order to attach a DOM event listener directly we need to make sure
     // the target HTML element has an ID that we can use to get a reference
     // to the element during initialization. We generate this unique ID
@@ -42,72 +32,82 @@ module.exports = function assignComponentId(isRepeated) {
     // 3) The HTML does not have an "id" or "ref" attribute. We must add
     //    an "id" attribute with a unique ID.
 
-    var isCustomTag = el.type !== 'HtmlElement';
+    var isHtmlElement = el.type === 'HtmlElement';
+    var isCustomTag = el.type === 'CustomTag';
 
-    if (el.hasAttribute('key')) {
-        componentRef = el.getAttributeValue('key');
-        el.removeAttribute('key');
-    } else if (el.hasAttribute('ref')) {
-        context.deprecate('The "ref" attribute is deprecated. Please use "key" instead.');
-        componentRef = el.getAttributeValue('ref');
-        el.removeAttribute('ref');
+    // LEGACY -- Remove in Marko 5.0
+    if (!isCustomTag && el.tagName === 'invoke') {
+        isCustomTag = true;
+    }
+
+    if (!isCustomTag && !isHtmlElement) {
+        return;
     }
 
     if (el.hasAttribute('w-id')) {
         context.deprecate('The "w-id" attribute is deprecated. Please use "key" instead.');
 
-        if (componentRef) {
-            this.addError('The "w-id" attribute cannot be used in conjuction with the "ref" or "key" attributes.');
+        if (el.hasAttribute('key')) {
+            this.addError('The "w-id" attribute cannot be used in conjunction with the "key" attributes.');
             return;
         }
 
-        componentRef = el.getAttributeValue('w-id');
+        if (el.hasAttribute('ref')) {
+            this.addError('The "w-id" attribute cannot be used in conjunction with the "ref" attributes.');
+            return;
+        }
+
+        assignedKey = el.getAttributeValue('w-id');
 
         el.removeAttribute('w-id');
+    } else if (el.hasAttribute('key')) {
+        assignedKey = el.getAttributeValue('key');
+        el.removeAttribute('key');
+    } else if (el.hasAttribute('ref')) {
+        context.deprecate('The "ref" attribute is deprecated. Please use "key" instead.');
+        assignedKey = el.getAttributeValue('ref');
+        el.removeAttribute('ref');
     }
 
-    if (componentRef) {
-        idExpression = this.buildComponentElIdFunctionCall(componentRef);
-
-        nestedIdExpression = componentRef;
+    if (assignedKey) {
+        nestedIdExpression = assignedKey;
 
         if (isCustomTag) {
+            idExpression = this.buildComponentElIdFunctionCall(assignedKey);
             // The element is a custom tag
-            this.getComponentArgs().setId(nestedIdExpression);
+            this.getComponentArgs().setKey(nestedIdExpression, true /* user assigned key */);
         } else {
-            if (el.hasAttribute('id')) {
-                this.addError('The "ref", "key", and "w-id" attributes cannot be used in conjuction with the "id" attribute.');
-                return;
+            idExpression = assignedKey;
+            if (el.data.userAssignedKey !== false) {
+                if (context.data.hasLegacyForKey || context.data.hasImperativeComponentIds) {
+                    el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
+                }
             }
-            el.setAttributeValue('id', idExpression);
-        }
-    } else if (el.hasAttribute('id')) {
-        idExpression = el.getAttributeValue('id');
 
-        if (el.isFlagSet('hasComponentBind')) {
-            // We have to attach a listener to the root element of the component
-            // We will use an empty string as an indicator that it is the root component
-            // element.
-            nestedIdExpression = builder.literal('');
-        } else {
-            // Convert the raw String to a JavaScript expression. we need to prefix
-            // with '#' to make it clear this is a fully resolved element ID
-            nestedIdExpression = builder.concat(
-                builder.literal('#'),
-                idExpression);
+            if (context.isServerTarget()) {
+                var markoKeyAttrVar = context.importModule('marko_keyAttr',
+                    this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/markoKeyAttr'));
+
+                el.setAttributeValue('data-marko-key', builder.functionCall(markoKeyAttrVar, [
+                        idExpression,
+                        builder.identifier('__component')
+                    ]));
+            }
+
+            el.setKey(assignedKey);
         }
     } else {
-        // Case 3 - We need to add a unique "id" attribute
-        let uniqueElId = this.nextUniqueId();
+        // Case 3 - We need to add a unique auto key
+        let uniqueKey = this.nextUniqueId();
 
-        nestedIdExpression = isRepeated ? builder.literal(uniqueElId + '[]') : builder.literal(uniqueElId);
+        nestedIdExpression = isRepeated ? builder.literal(uniqueKey + '[]') : builder.literal(uniqueKey.toString());
 
-        idExpression = this.buildComponentElIdFunctionCall(nestedIdExpression);
+        idExpression = builder.literal(uniqueKey.toString());
 
         if (isCustomTag) {
-            this.getComponentArgs().setId(nestedIdExpression);
+            this.getComponentArgs().setKey(nestedIdExpression);
         } else {
-            el.setAttributeValue('id', idExpression);
+            el.setKey(idExpression);
         }
     }
 
@@ -123,13 +123,17 @@ module.exports = function assignComponentId(isRepeated) {
             }
 
             let uniqueElId = transformHelper.nextUniqueId();
-            let idVarName = '__componentId' + uniqueElId;
+            let idVarName = '__key' + uniqueElId;
             let idVar = builder.identifier(idVarName);
 
             this.idVarNode = builder.vars([
                 {
                     id: idVarName,
-                    init: idExpression
+                    init: builder.functionCall(
+                        builder.memberExpression(
+                            builder.identifier('__component'),
+                            builder.identifier('___nextKey')),
+                        [ idExpression ])
                 }
             ]);
 
@@ -140,9 +144,9 @@ module.exports = function assignComponentId(isRepeated) {
                 idVar);
 
             if (isCustomTag) {
-                transformHelper.getComponentArgs().setId(nestedIdExpression);
+                transformHelper.getComponentArgs().setKey(nestedIdExpression);
             } else {
-                el.setAttributeValue('id', idExpression);
+                el.setKey(idExpression);
             }
 
             return this.idVarNode;

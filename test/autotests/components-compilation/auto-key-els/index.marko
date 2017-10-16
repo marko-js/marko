@@ -1,0 +1,11 @@
+<div>
+    <span key="spanA">A</span>
+    <ul>
+        <for(color in colors)>
+            <li>${color}</li>
+        </for>
+    </ul>
+    <p key="preservedP" no-update-body>${Date.now()}</p>
+</div>
+<span>B</span>
+<include('./foo.marko')/>

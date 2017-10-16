@@ -1,12 +1,12 @@
 var expect = require('chai').expect;
 
 module.exports = function(helpers) {
-    var link = helpers.vdom.createElement('a', { 'href': 'http://ebay.com' }, 1 /* childCount */)
+    var link = helpers.vdom.createElement('a', { 'href': 'http://ebay.com' }, null /* key */, null /* component */, 1 /* childCount */)
         .t('eBay');
 
-    var el = helpers.vdom.createElement('div', { 'class': 'foo', 'onclick': 'doSomething()' }, 2 /* childCount */)
+    var el = helpers.vdom.createElement('div', { 'class': 'foo', 'onclick': 'doSomething()' }, null /* key */, null /* component */, 2 /* childCount */)
         .n(link)
-        .e('span', null, 0);
+        .e('span', null, null /* key */, null /* component */, 0);
 
     var linkClone = el.___firstChild;
 

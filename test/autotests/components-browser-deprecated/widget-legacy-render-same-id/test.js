@@ -11,5 +11,5 @@ module.exports = function(helpers) {
         label: 'Bar'
     });
 
-    expect(widget.el.id).to.equal(oldId);
+    expect(widget.id).to.equal(oldId);
 };

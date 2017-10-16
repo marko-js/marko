@@ -15,19 +15,20 @@ function State(root, stream, writer, events) {
     this.writer = writer;
     this.events = events;
 
-    this.remaining = 0;
-    this.lastCount = 0;
-    this.last = undefined; // Array
-    this.ended = false;
     this.finished = false;
-    this.ids = 0;
 }
 
-function AsyncStream(global, writer, state, shouldBuffer) {
+function AsyncStream(global, writer, parentOut, shouldBuffer) {
+
+    if (parentOut === null) {
+        throw new Error('illegal state');
+    }
     var finalGlobal = this.attributes = global || {};
     var originalStream;
+    var state;
 
-    if (state) {
+    if (parentOut) {
+        state = parentOut._state;
         originalStream = state.stream;
     } else {
         var events = finalGlobal.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
@@ -48,6 +49,12 @@ function AsyncStream(global, writer, state, shouldBuffer) {
     this.stream = originalStream;
     this._state = state;
 
+    this._ended = false;
+    this._remaining = 1;
+    this._lastCount = 0;
+    this._last = undefined; // Array
+    this._parentOut = parentOut;
+
     this.data = {};
     this.writer = writer;
     writer.stream = this;
@@ -61,11 +68,24 @@ function AsyncStream(global, writer, state, shouldBuffer) {
 
     this._elStack = undefined; // Array
 
-    this.___componentArgs = null; // Component args
+    this.___components = null; // ComponentsContext
+
+    this.___assignedComponentDef = null;
+    this.___assignedKey = null;
+    this.___assignedCustomEvents = null;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
-AsyncStream.INCLUDE_STACK = typeof process !== 'undefined' && process.env.NODE_ENV === 'development';
+
+/**
+* If set to `true`, AsyncStream errors will include the full stack trace
+*/
+AsyncStream.INCLUDE_STACK =
+    typeof process !== 'undefined' &&
+    (!process.env.NODE_ENV ||
+        process.env.NODE_ENV === 'development' ||
+        process.env.NODE_ENV === 'dev');
+
 AsyncStream.enableAsyncStackTrace = function() {
     AsyncStream.INCLUDE_STACK = true;
 };
@@ -124,7 +144,7 @@ var proto = AsyncStream.prototype = {
            ┗━━━━━┛  prevWriter → currentWriter → nextWriter  */
 
         var newWriter = new StringWriter();
-        var newStream = new AsyncStream(this.global, currentWriter, state);
+        var newStream = new AsyncStream(this.global, currentWriter, this);
 
         this.writer = newWriter;
         newWriter.stream = this;
@@ -139,7 +159,7 @@ var proto = AsyncStream.prototype = {
        var timeout;
        var name;
 
-       state.remaining++;
+       this._remaining++;
 
        if (options != null) {
            if (typeof options === 'number') {
@@ -154,7 +174,7 @@ var proto = AsyncStream.prototype = {
                        timeout = 0;
                    }
 
-                   state.lastCount++;
+                   this._lastCount++;
                }
 
                name = options.name;
@@ -165,7 +185,7 @@ var proto = AsyncStream.prototype = {
            timeout = AsyncStream.DEFAULT_TIMEOUT;
        }
 
-       newStream.stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
+       newStream._stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
        newStream.name = name;
 
        if (timeout > 0) {
@@ -181,11 +201,31 @@ var proto = AsyncStream.prototype = {
            parentOut: this
        });
 
-        return newStream;
+       return newStream;
+    },
+
+    _doFinish: function() {
+        var state = this._state;
+
+        state.finished = true;
+
+        if (state.writer.end) {
+            state.writer.end();
+        } else {
+            state.events.emit('finish', this.___getResult());
+        }
     },
 
     end: function(data) {
-        if (data) {
+        if (this._ended === true) {
+            return;
+        }
+
+        this._ended = true;
+
+        var remaining = --this._remaining;
+
+        if (data != null) {
             this.write(data);
         }
 
@@ -200,7 +240,7 @@ var proto = AsyncStream.prototype = {
         currentWriter.stream = null;
 
         // Flush the contents of nextWriter to the currentWriter
-        this.flushNext(currentWriter);
+        this._flushNext(currentWriter);
 
         /* ┏━━━━━┓    this        ╵  nextStream
            ┃     ┃    ↓           ╵  ↓↑
@@ -208,18 +248,14 @@ var proto = AsyncStream.prototype = {
            ┃     ┃  ──────────────┴────────────────────────────────
            ┗━━━━━┛    Flushed & garbage collected: nextWriter  */
 
+       var parentOut = this._parentOut;
 
-       var state = this._state;
-
-       if (state.finished) {
-           return;
-       }
-
-       var remaining;
-
-       if (this === state.root) {
-           remaining = state.remaining;
-           state.ended = true;
+       if (parentOut === undefined) {
+           if (remaining === 0) {
+               this._doFinish();
+           } else if (remaining - this._lastCount === 0) {
+               this._emitLast();
+           }
        } else {
            var timeoutId = this._timeoutId;
 
@@ -227,61 +263,32 @@ var proto = AsyncStream.prototype = {
                clearTimeout(timeoutId);
            }
 
-           remaining = --state.remaining;
-       }
-
-       if (state.ended) {
-           if (!state.lastFired && (state.remaining - state.lastCount === 0)) {
-               state.lastFired = true;
-               state.lastCount = 0;
-               state.events.emit('last');
-           }
-
            if (remaining === 0) {
-               state.finished = true;
-
-               if (state.writer.end) {
-                   state.writer.end();
-               } else {
-                   state.events.emit('finish', this.___getResult());
-               }
+               parentOut._handleChildDone();
+           } else if (remaining - this._lastCount === 0) {
+               this._emitLast();
            }
        }
 
        return this;
     },
 
-    // flushNextOld: function(currentWriter) {
-    //     if (currentWriter === this._state.writer) {
-    //         var nextStream;
-    //         var nextWriter = currentWriter.next;
-    //
-    //         // flush until there is no nextWriter
-    //         // or the nextWriter is still attached
-    //         // to a branch.
-    //         while(nextWriter) {
-    //             currentWriter.write(nextWriter.toString());
-    //             nextStream = nextWriter.stream;
-    //
-    //             if(nextStream) break;
-    //             else nextWriter = nextWriter.next;
-    //         }
-    //
-    //         // Orphan the nextWriter and everything that
-    //         // came before it. They have been flushed.
-    //         currentWriter.next = nextWriter && nextWriter.next;
-    //
-    //         // If there is a nextStream,
-    //         // set its writer to currentWriter
-    //         // (which is the state.writer)
-    //         if(nextStream) {
-    //             nextStream.writer = currentWriter;
-    //             currentWriter.stream = nextStream;
-    //         }
-    //     }
-    // },
+    _handleChildDone: function() {
+        var remaining = --this._remaining;
 
-    flushNext: function(currentWriter) {
+        if (remaining === 0) {
+            var parentOut = this._parentOut;
+            if (parentOut === undefined) {
+                this._doFinish();
+            } else {
+                parentOut._handleChildDone();
+            }
+        } else if (remaining - this._lastCount === 0) {
+            this._emitLast();
+        }
+    },
+
+    _flushNext: function(currentWriter) {
         // It is possible that currentWriter is the
         // last writer in the chain, so let's make
         // sure there is a nextWriter to flush.
@@ -311,50 +318,61 @@ var proto = AsyncStream.prototype = {
     on: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.finished) {
+        if (event === 'finish' && state.finished === true) {
             callback(this.___getResult());
-            return this;
+        } else if (event === 'last') {
+            this.onLast(callback);
+        } else {
+            state.events.on(event, callback);
         }
 
-        state.events.on(event, callback);
         return this;
     },
 
     once: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.finished) {
+        if (event === 'finish' && state.finished === true) {
             callback(this.___getResult());
-            return this;
+        } else if (event === 'last') {
+            this.onLast(callback);
+        } else {
+            state.events.once(event, callback);
         }
 
-        state.events.once(event, callback);
         return this;
     },
 
     onLast: function(callback) {
-        var state = this._state;
+        var lastArray = this._last;
 
-        var lastArray = state.last;
-
-        if (!lastArray) {
-            lastArray = state.last = [];
-            var i = 0;
-            var next = function next() {
-                if (i === lastArray.length) {
-                    return;
-                }
-                var _next = lastArray[i++];
-                _next(next);
-            };
-
-            this.once('last', function() {
-                next();
-            });
+        if (lastArray === undefined) {
+            this._last = [callback];
+        } else {
+            lastArray.push(callback);
         }
 
-        lastArray.push(callback);
         return this;
+    },
+
+    _emitLast: function() {
+        var lastArray = this._last;
+
+        var i = 0;
+
+        function next() {
+            if (i === lastArray.length) {
+                return;
+            }
+            var lastCallback = lastArray[i++];
+            lastCallback(next);
+
+            if (lastCallback.length === 0) {
+                next();
+            }
+        }
+
+        next();
     },
 
     emit: function(type, arg) {
@@ -528,8 +546,10 @@ var proto = AsyncStream.prototype = {
         return this.then(undefined, fnErr);
     },
 
-    c: function(componentArgs) {
-        this.___componentArgs = componentArgs;
+    c: function(componentDef, key, customEvents) {
+        this.___assignedComponentDef = componentDef;
+        this.___assignedKey = key;
+        this.___assignedCustomEvents = customEvents;
     }
 };
 

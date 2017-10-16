@@ -3,12 +3,33 @@
 var warp10 = require('warp10');
 var escapeEndingScriptTagRegExp = /<\//g;
 
-function flattenHelper(components, flattened, typesArray, typesLookup) {
-    for (var i = 0, len = components.length; i < len; i++) {
+
+function addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray) {
+    var nestedContexts = componentsContext.___nestedContexts;
+    if (nestedContexts !== undefined) {
+        // We want to initialize any UI components nested inside an async
+        // fragment first so we will add components from nested contexts first
+        nestedContexts.forEach(function(nestedContext) {
+            addComponentsFromContext(nestedContext, componentsFinal, typesLookup, typesArray);
+        });
+    }
+
+    var components = componentsContext.___components;
+    var len;
+    if ((len = components.length) === 0) {
+        return;
+    }
+
+    // console.log('components:', components.map((componentDef) => {
+    //     return { id: componentDef.id, type: componentDef.type};
+    // }));
+
+    for (var i = len - 1; i >= 0; i--) {
         var componentDef = components[i];
         var id = componentDef.id;
         var component = componentDef.___component;
-        var rerenderInBrowser = componentDef.___willRerenderInBrowser;
+        var flags = componentDef.___flags;
+
         var state = component.state;
         var input = component.input;
         var typeName = component.typeName;
@@ -34,14 +55,6 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
             typeIndex = typesArray.length;
             typesArray.push(typeName);
             typesLookup[typeName] = typeIndex;
-        }
-
-        var children = componentDef.___children;
-
-        if (children !== null) {
-            // Depth-first search (children should be initialized before parent)
-            flattenHelper(children, flattened, typesArray, typesLookup);
-            componentDef.___children = null;
         }
 
         var hasProps = false;
@@ -81,83 +94,52 @@ function flattenHelper(components, flattened, typesArray, typesLookup) {
             b: bubblingDomEvents,
             d: componentDef.___domEvents,
             e: customEvents,
+            f: flags ? flags : undefined,
             p: customEvents && scope, // Only serialize scope if we need to attach custom events
-            r: componentDef.___roots,
+            r: componentDef.___boundary,
             s: state,
             u: undefinedPropNames,
-            w: hasProps ? component : undefined,
-            _: rerenderInBrowser ? 1 : undefined
+            w: hasProps ? component : undefined
         };
 
-        flattened.push([
+        componentsFinal.push([
             id,                  // 0 = id
             typeIndex,           // 1 = type
             input,               // 2 = input
             extra                // 3
         ]);
     }
+
+    components.length = 0;
 }
 
-function getRenderedComponents(out, shouldIncludeAll) {
-    var componentDefs;
-    var globalComponentsContext;
-    var outGlobal = out.global;
-
-    if (shouldIncludeAll === true) {
-        globalComponentsContext = outGlobal.___components;
-
-        if (globalComponentsContext === undefined) {
-            return undefined;
-        }
-    } else {
-        let componentsContext = out.data.___components;
-        if (componentsContext === undefined) {
-            return undefined;
-        }
-        let rootComponentDef = componentsContext.___componentStack[0];
-        componentDefs = rootComponentDef.___children;
-
-        if (componentDefs === null) {
-            return undefined;
-        }
-
-        rootComponentDef.___children = null;
+function getRenderedComponents(out) {
+    var componentsContext = out.___components;
+    if (componentsContext === null) {
+        return;
     }
 
-    var flattened = [];
+    var componentsFinal = [];
     var typesLookup = {};
     var typesArray = [];
 
-    if (shouldIncludeAll === true) {
-        let roots = globalComponentsContext.___roots;
-        for (let i=0, len=roots.length; i<len; i++) {
-            let root = roots[i];
-            let children = root.___children;
-            if (children !== null) {
-                flattenHelper(children, flattened, typesArray, typesLookup);
-            }
-        }
-    } else {
-        flattenHelper(componentDefs, flattened, typesArray, typesLookup);
-    }
+    addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray);
 
-    if (flattened.length === 0) {
-        return undefined;
+    if (componentsFinal.length !== 0) {
+        return {w: componentsFinal, t: typesArray};
     }
-
-    return {w: flattened, t: typesArray};
 }
 
-function writeInitComponentsCode(out, shouldIncludeAll) {
-    var renderedComponents = getRenderedComponents(out, shouldIncludeAll);
+function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
+    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
     if (renderedComponents === undefined) {
         return;
     }
 
-    var cspNonce = out.global.cspNonce;
+    var cspNonce = targetOut.global.cspNonce;
     var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
 
-    out.write('<script' + nonceAttr + '>' +
+    targetOut.write('<script' + nonceAttr + '>' +
         '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
         warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
          ')||w.$components})()</script>');

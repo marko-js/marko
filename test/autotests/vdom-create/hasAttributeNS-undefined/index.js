@@ -5,5 +5,5 @@ module.exports = function(helpers) {
 
     expect(virtualEl.___hasAttribute('selected')).to.equal(false);
 
-    return virtualEl.actualize(helpers.document);
+    return virtualEl;
 };
