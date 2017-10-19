@@ -1,11 +1,8 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
+    marko_componentType = "/marko-test$1.0.0/autotests/components-compilation/style-inline-less/index.marko",
     components_helpers = require("marko/src/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/style-inline-less/index.marko", function() {
-      return module.exports;
-    }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c;
 
@@ -30,5 +27,6 @@ marko_template.meta = {
           virtualPath: "./index.marko.less",
           path: "./index.marko"
         }
-    ]
+    ],
+    id: "/marko-test$1.0.0/autotests/components-compilation/style-inline-less/index.marko"
   };

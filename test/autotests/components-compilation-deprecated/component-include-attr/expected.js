@@ -1,13 +1,8 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    components_helpers = require("marko/src/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
+    marko_componentType = "/marko-test$1.0.0/autotests/components-compilation-deprecated/component-include-attr/index",
     legacy_helpers = require("marko/src/components/legacy/helpers"),
-    marko_defineWidget_legacy = legacy_helpers.w,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/component-include-attr/index", function() {
-      return marko_defineWidget_legacy(require("./"));
-    }),
     marko_rendererLegacy = legacy_helpers.r,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
@@ -43,15 +38,10 @@ marko_template._ = marko_rendererLegacy(render, {
   });
 
 marko_template.meta = {
+    id: "/marko-test$1.0.0/autotests/components-compilation-deprecated/component-include-attr/index",
+    component: "./",
     deps: [
-      {
-          type: "require",
-          path: "./"
-        },
-      {
-          type: "require",
-          path: "marko/src/components"
-        }
+      "marko/src/components"
     ],
     tags: [
       "marko/src/taglibs/core/include-tag",

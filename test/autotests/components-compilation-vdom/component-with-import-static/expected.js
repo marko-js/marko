@@ -29,10 +29,6 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);
 
 marko_template.meta = {
-    deps: [
-      {
-          type: "require",
-          path: "./"
-        }
-    ]
+    id: "/marko-test$1.0.0/autotests/components-compilation-vdom/component-with-import-static/index.marko",
+    component: "./"
   };

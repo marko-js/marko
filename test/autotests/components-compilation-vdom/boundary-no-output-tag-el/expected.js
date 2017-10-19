@@ -34,12 +34,8 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent(marko_component, marko_template._);
 
 marko_template.meta = {
-    deps: [
-      {
-          type: "require",
-          path: "./"
-        }
-    ],
+    id: "/marko-test$1.0.0/autotests/components-compilation-vdom/boundary-no-output-tag-el/index.marko",
+    component: "./",
     tags: [
       "./components/test-no-output/renderer"
     ]

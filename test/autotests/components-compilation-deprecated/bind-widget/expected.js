@@ -1,13 +1,8 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    components_helpers = require("marko/src/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
+    marko_componentType = "/marko-test$1.0.0/autotests/components-compilation-deprecated/bind-widget/widget",
     legacy_helpers = require("marko/src/components/legacy/helpers"),
-    marko_defineWidget_legacy = legacy_helpers.w,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation-deprecated/bind-widget/widget", function() {
-      return marko_defineWidget_legacy(require("./widget"));
-    }),
     marko_rendererLegacy = legacy_helpers.r;
 
 function render(input, out, __component, widget, component) {
@@ -22,14 +17,9 @@ marko_template._ = marko_rendererLegacy(render, {
   });
 
 marko_template.meta = {
+    id: "/marko-test$1.0.0/autotests/components-compilation-deprecated/bind-widget/widget",
+    component: "./widget",
     deps: [
-      {
-          type: "require",
-          path: "./widget"
-        },
-      {
-          type: "require",
-          path: "marko/src/components"
-        }
+      "marko/src/components"
     ]
   };
