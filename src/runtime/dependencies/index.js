@@ -78,19 +78,18 @@ function getInitModule(path, components) {
     let module = null;
 
     if (components) {
-        let open = `require('marko/components').init({\n`;
-        let close = `\n});`;
-        let defs;
-
         let componentIds = Object.keys(components);
 
-        defs = componentIds.map(function(componentId) {
-            return `  "${componentId}": function() { return require("${components[componentId]}"); },`;
-        }).join('\n');
-
-        if (defs) {
-            let code = open + defs + close;
+        if (componentIds.length) {
             let virtualPath = path + '.init.js';
+            let code = `
+                var components = require('marko/components');
+                ${componentIds.map(id => `
+                    components.register('${id}', require('${components[id]}'));
+                `).join('\n')}
+                components.init();
+            `;
+
             module = {
                 type: 'require',
                 run: true,
