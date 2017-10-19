@@ -98,7 +98,12 @@ function getInitModule(path, components) {
                     path: virtualPath,
                     clientPath: virtualPath,
                     read: function(_, callback) {
-                        callback(null, code);
+                        // TODO: Check if read can just return string in lasso 2
+                        if (callback) {
+                            callback(null, code);
+                        } else {
+                            return code;
+                        }
                     },
                     getDefaultBundleName: function(_, __) {
                         return virtualPath;

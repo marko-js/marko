@@ -36,13 +36,13 @@ module.exports = function handleComponentBind(options) {
 
     if (componentModule) {
 
-        let componentTypeNode = context.addStaticVar(
-            'marko_componentType',
-            generateRegisterComponentCode(componentModule, this, isSplit));
+        let componentType = generateRegisterComponentCode(componentModule, this, isSplit);
+
+        let componentTypeNode = context.addStaticVar('marko_componentType', componentType.node);
 
         componentProps.___type = componentTypeNode;
 
-        context.setMeta('id', componentTypeNode);
+        context.setMeta('id', componentType.id);
 
         let dependencyModule = isLegacyComponent || isSplit ? componentModule : this.getTemplateModule();
 
@@ -53,7 +53,7 @@ module.exports = function handleComponentBind(options) {
         }
 
         if (isSplit) {
-            context.addDependency({ type:'require', path: context.markoModulePrefix + 'components' });
+            context.addDependency(context.markoModulePrefix + 'components');
         }
     }
 

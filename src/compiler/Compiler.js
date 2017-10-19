@@ -92,6 +92,10 @@ class CompiledTemplate {
         this.filename = context.filename;
     }
 
+    get meta() {
+        return this.context.meta;
+    }
+
     get dependencies() {
         var meta = this.context.meta;
         if (meta) {

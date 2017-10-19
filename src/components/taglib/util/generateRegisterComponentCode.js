@@ -23,6 +23,7 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
     }
 
     let componentId = getComponentId(fileName);
+    let registerNode;
 
     if (context.outputType === 'vdom') {
         let def;
@@ -54,13 +55,15 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
             ]);
         }
 
-        return builder.functionCall(registerComponent, [
+        registerNode = builder.functionCall(registerComponent, [
             builder.literal(componentId),
             def
         ]);
     } else {
-        return builder.literal(componentId);
+        registerNode = builder.literal(componentId);
     }
+
+    return { id:componentId, node:registerNode };
 }
 
 function getComponentId(filename) {
