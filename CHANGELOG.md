@@ -5,6 +5,10 @@ Changelog
 
 ## 4.5.x
 
+### 4.5.2
+
+- Fixes [#899](https://github.com/marko-js/marko/issues/899) - Keyed element could be incorrectly removed after DOM diffing/patching in case of HTML element mismatch for elements with the same key. [PR #900](https://github.com/marko-js/marko/pull/900)
+
 ### 4.5.1
 
 - Fixes [#893](https://github.com/marko-js/marko/issues/893) - Keyed element could be incorrectly removed after DOM diffing/patching in case of HTML element mismatch for elements with the same key. [PR #894](https://github.com/marko-js/marko/pull/894) by [@westtrade](https://github.com/westtrade)
