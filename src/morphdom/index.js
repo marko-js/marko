@@ -278,7 +278,7 @@ function morphdom(
 
 
                         if (compareNodeNames(curToNodeChild, curVFromNodeChild)) {
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode);
+                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey);
                         } else {
                             // Remove the old node
                             detachNode(curFromNodeChild, parentFromNode, componentForNode);
@@ -294,7 +294,7 @@ function morphdom(
                                 curFromNodeChild.nodeName === curToNodeChild.___nodeName) {
                             curVFromNodeChild = virtualizeElement(curFromNodeChild);
                             curFromNodeChild.___markoKey = curToNodeKey;
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode);
+                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey);
                             curToNodeChild = toNextSibling;
                             curFromNodeChild = fromNextSibling;
                             continue;
@@ -358,7 +358,7 @@ function morphdom(
                             }
 
                             if ((curToNodeChild.___flags & FLAG_PRESERVE) === 0) {
-                                morphEl(matchingFromEl, curVFromNodeChild, curToNodeChild, componentForNode);
+                                morphEl(matchingFromEl, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey, curToNodeKey);
                             }
 
 
@@ -424,7 +424,7 @@ function morphdom(
                             // We found compatible DOM elements so transform
                             // the current "from" node to match the current
                             // target DOM node.
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, component);
+                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, component, curToNodeKey);
                         }
 
                     } else if (curFromNodeType === TEXT_NODE || curFromNodeType === COMMENT_NODE) {
@@ -485,8 +485,7 @@ function morphdom(
         }
     }
 
-    function morphEl(fromEl, vFromEl, toEl, component) {
-        var toElKey = toEl.___key;
+    function morphEl(fromEl, vFromEl, toEl, component, toElKey) {
         var nodeName = toEl.___nodeName;
 
         if (isRerenderInBrowser === true && toElKey) {
