@@ -8,7 +8,7 @@ exports.getComponentForEl = componentsUtil.___getComponentForEl;
 
 exports.register = function(id, component) {
     registry.___register(id, function() { return component; });
-}
+};
 
 exports.init = function(components) {
     if (components) Object.keys(components).forEach(function(componentId) {
