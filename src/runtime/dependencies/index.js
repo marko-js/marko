@@ -10,7 +10,7 @@ function getRootDeps(template, context) {
 
     attachDepsAndComponentsToTemplate(template, context);
 
-    var deps = template.___depsArray = Object.values(template.___deps);
+    var deps = template.___depsArray = Object.keys(template.___deps).map(key => template.___deps[key]);
     var initModule = getInitModule(template.path, template.___components);
 
     if (initModule) deps.push(initModule);
