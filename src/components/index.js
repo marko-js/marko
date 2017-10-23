@@ -1,8 +1,20 @@
 'use strict';
 
 var warp10 = require('warp10');
-var escapeEndingScriptTagRegExp = /<\//g;
+var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 
+
+function safeJSONReplacer(match) {
+    if (match === '<\/') {
+        return '\\u003C/';
+    } else {
+        return '\\u' + match.charCodeAt(0).toString(16);
+    }
+}
+
+function safeJSON(json) {
+    return json.replace(safeJSONRegExp, safeJSONReplacer);
+}
 
 function addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray) {
     var nestedContexts = componentsContext.___nestedContexts;
@@ -141,8 +153,8 @@ function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
 
     targetOut.write('<script' + nonceAttr + '>' +
         '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
-        warp10.stringify(renderedComponents).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
-         ')||w.$components})()</script>');
+        safeJSON(warp10.stringify(renderedComponents)) +
+        ')||w.$components})()</script>');
 }
 
 exports.writeInitComponentsCode = writeInitComponentsCode;
