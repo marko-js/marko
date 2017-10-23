@@ -5,6 +5,10 @@ Changelog
 
 ## 4.5.x
 
+### 4.5.3
+
+- Fixes [#903](https://github.com/marko-js/marko/issues/903) - Special unicode chars (\u2028 and \u2029) need to be escaped if within script tag
+
 ### 4.5.2
 
 - Fixes [#899](https://github.com/marko-js/marko/issues/899) - Keyed element could be incorrectly removed after DOM diffing/patching in case of HTML element mismatch for elements with the same key. [PR #900](https://github.com/marko-js/marko/pull/900)
