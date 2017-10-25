@@ -36,15 +36,15 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     },
     {
         name: 'separator',
-        pattern: /separator=/
+        pattern: /separator\s?=\s?/
     },
     {
         name: 'status-var',
-        pattern: /status\-var=/
+        pattern: /status\-var\s?=\s?/
     },
     {
         name: 'iterator',
-        pattern: /iterator=/
+        pattern: /iterator\s?=\s?/
     },
     {
         name: 'pipe',
