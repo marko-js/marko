@@ -214,16 +214,29 @@ class Parser {
 
         if (shouldParsedAttributes) {
             attributes.forEach((attr) => {
+                var attrName = attr.name;
+                var attrRawValue = attr.value;
+                var attrSpread;
                 var attrValue;
+
                 if (attr.hasOwnProperty('literalValue')) {
                     attrValue = builder.literal(attr.literalValue);
+                } else if (/^\.\.\./.test(attrName)) {
+                    attrRawValue = attrName;
+                    attrValue = attrRawValue.slice(3);
+                    attrName = undefined;
+                    attrSpread = true;
                 } else if (attr.value == null) {
                     attrValue = undefined;
                 } else {
+                    attrValue = attrRawValue;
+                }
+
+                if (typeof attrValue === 'string') {
                     let parsedExpression;
                     let valid = true;
                     try {
-                        parsedExpression = builder.parseExpression(attr.value);
+                        parsedExpression = builder.parseExpression(attrValue);
                     } catch(e) {
                         if (shouldParsedAttributes) {
                             valid = false;
@@ -247,9 +260,9 @@ class Parser {
                 }
 
                 var attrDef = {
-                    name: attr.name,
+                    name: attrName,
                     value: attrValue,
-                    rawValue: attr.value
+                    rawValue: attrRawValue
                 };
 
                 if (attr.argument) {
@@ -257,7 +270,9 @@ class Parser {
                     attrDef.argument = attr.argument.value;
                 }
 
-                var attrName = attr.name;
+                if (attrSpread) {
+                    attrDef.spread = true;
+                }
 
                 if (attrName) {
                     if (attrName === 'for-key' || attrName === 'for-ref' || attrName === 'w-for' || attrName.endsWith(':key')) {
@@ -265,8 +280,8 @@ class Parser {
                     }
                 }
 
-                if (attrDef.rawValue) {
-                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrDef.rawValue)) {
+                if (attrRawValue) {
+                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrRawValue)) {
                         // TODO: add complain call here
                         context.data.hasImperativeComponentIds = true;
                     }
