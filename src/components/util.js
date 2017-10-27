@@ -25,7 +25,7 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
             // where the extra args will be found when the UI component is
             // rerendered in the browser
 
-            if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+            if (!(componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER)) {
                 if (eventIndex === 0) {
                     component.___bubblingDomEvents = [extraArgs];
                 } else {
