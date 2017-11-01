@@ -13,18 +13,7 @@ const babelOptions = {
                 "context": "marko"
             }
         ],
-        [
-            "transform-define", {
-                "MARKO_DEBUG": false
-            }
-        ],
-        [
-            "minify-dead-code-elimination", {
-                "keepFnName": true,
-                "keepFnArgs": true,
-                "keepClassName": true
-            }
-        ]
+        require.resolve('./babel-plugin-marko-debug')
     ]
 };
 

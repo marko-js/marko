@@ -1,5 +1,4 @@
 var isDebug = false;
-var global = require('global');
 
 var env = process.env || {};
 

@@ -1,6 +1,8 @@
 'use strict';
 /* jshint newcap:false */
 
+var complain = 'MARKO_DEBUG' && require('complain');
+
 var domInsert = require('../runtime/dom-insert');
 var defaultCreateOut = require('../runtime/createOut');
 var getComponentsContext = require('./ComponentsContext').___getComponentsContext;
@@ -533,10 +535,16 @@ Component.prototype = componentProto = {
     },
 
     get el() {
+        if ('MARKO_DEBUG') {
+            complain('The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.');
+        }
         return this.___startNode;
     },
 
     get els() {
+        if ('MARKO_DEBUG') {
+            complain('The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.');
+        }
         return getNodes(this);
     }
 };
