@@ -111,7 +111,7 @@ class Walker {
             let newArray = this._walkArray(array);
             this._stack.pop();
             return newArray;
-        } else if (node instanceof Container) {
+        } else if (node.Container === true) {
             let container = node;
             this._walkContainer(container);
             this._stack.pop();
@@ -149,4 +149,3 @@ class Walker {
 }
 
 module.exports = Walker;
-
