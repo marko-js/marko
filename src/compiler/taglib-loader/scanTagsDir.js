@@ -134,7 +134,6 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             tagName = childFilename.slice(0, 0 - ext.length);
             tagDirname = dir;
             tagDef = createDefaultTagDef();
-            debugger;
             tagDef.template = tagFilePath = nodePath.join(dir, childFilename);
         } else {
             tagName = prefix + childFilename;

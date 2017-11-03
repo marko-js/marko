@@ -1,6 +1,5 @@
 'use strict';
 var isArray = Array.isArray;
-var Container = require('./ast/Container');
 
 function noop() {}
 

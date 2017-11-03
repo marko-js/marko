@@ -491,6 +491,7 @@ class CompileContext extends EventEmitter {
         } else {
             if (typeof tagName === 'string') {
                 tagDef = taglibLookup.getTag(tagName);
+
                 if (!tagDef && !this.isMacro(tagName) && tagName.indexOf(':') === -1) {
                     var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
                     if (customElement) {
@@ -553,7 +554,7 @@ class CompileContext extends EventEmitter {
                 // Attribute will be name for placeholder attributes. For example: <div ${data.myAttrs}>
                 return;
             }
-            let attrDef = taglibLookup.getAttribute(tagName, attrName);
+            let attrDef = taglibLookup.getAttribute(tagDef ? tagDef.name : tagName, attrName);
             if (!attrDef) {
                 if (tagDef) {
                     if (node.removeAttribute) {
