@@ -513,8 +513,13 @@ class Builder {
     }
 
     scriptlet(scriptlet) {
+        if (typeof scriptlet === 'string') {
+            scriptlet = {
+                code: scriptlet
+            };
+        }
         return new Scriptlet({
-            code: scriptlet.value,
+            code: scriptlet.value || scriptlet.code,
             tag: scriptlet.tag,
             block: scriptlet.block
         });
