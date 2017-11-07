@@ -12,7 +12,8 @@ const babelOptions = {
                 "hello": "world",
                 "context": "marko"
             }
-        ]
+        ],
+        require.resolve('./babel-plugin-marko-debug')
     ]
 };
 
