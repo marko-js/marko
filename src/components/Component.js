@@ -17,6 +17,7 @@ var inherit = require('raptor-util/inherit');
 var updateManager = require('./update-manager');
 var morphdom = require('../morphdom');
 var eventDelegation = require('./event-delegation');
+var pairComponentNodes = require('./pairComponentNodes');
 
 var slice = Array.prototype.slice;
 
@@ -451,7 +452,7 @@ Component.prototype = componentProto = {
         }
 
         var startNode = this.___startNode;
-        var endNodeNextSibling = this.___endNode.nextSibling;
+        var endNode = this.___endNode;
 
         var doc = self.___document;
         var input = this.___renderInput || this.___input;
@@ -466,6 +467,7 @@ Component.prototype = componentProto = {
             var componentsContext = getComponentsContext(out);
             var globalComponentsContext = componentsContext.___globalContext;
             globalComponentsContext.___rerenderComponent = self;
+
             globalComponentsContext.___isRerenderInBrowser = isRerenderInBrowser;
 
             renderer(input, out);
@@ -474,10 +476,14 @@ Component.prototype = componentProto = {
 
             var targetNode = out.___getOutput();
 
+            if (isRerenderInBrowser) {
+                pairComponentNodes(startNode, endNode, targetNode);
+            }
+
             morphdom(
                 startNode.parentNode,
                 startNode,
-                endNodeNextSibling,
+                endNode.nextSibling,
                 targetNode,
                 doc,
                 componentsContext);
