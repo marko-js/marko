@@ -92,17 +92,17 @@ function attachDepsAndComponentsToTemplate(target, context) {
 }
 
 function getInitModule(path, components) {
-    let module = null;
+    var module = null;
 
     if (components) {
-        components = Object.values(components);
+        components = Object.keys(components).map(key => components[key]);
 
         if (components.length) {
-            let virtualPath = path + '.init.js';
-            let registrations = components.map(component =>
+            var virtualPath = path + '.init.js';
+            var registrations = components.map(component =>
                 `components.register('${component.id}', require('${component.path}'));`
             );
-            let code = `
+            var code = `
                 var components = require('marko/components');
                 ${registrations.join('\n')}
             `;
