@@ -28,18 +28,9 @@ class ArrayContainer extends Container {
         for (var i=0; i<len; i++) {
             var curChild = array[i];
             if (curChild === oldChild) {
-                if (Array.isArray(newChild)) {
-                    let newChildren = newChild;
-                    array.splice.apply(array, [i, 1].concat(newChildren));
-                    newChildren.forEach((newChild) => {
-                        newChild.container = this;
-                    });
-                    oldChild.detach();
-                } else {
-                    array[i] = newChild;
-                    newChild.container = this;
-                    oldChild.detach();
-                }
+                array[i] = newChild;
+                oldChild.detach();
+                newChild.container = this;
                 return true;
             }
         }

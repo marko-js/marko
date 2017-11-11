@@ -10,6 +10,4 @@ class Container {
     }
 }
 
-Container.prototype.Container = true;
-
 module.exports = Container;

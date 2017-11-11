@@ -1,5 +1,6 @@
 'use strict';
 var isArray = Array.isArray;
+var Container = require('./ast/Container');
 
 function noop() {}
 
@@ -110,7 +111,7 @@ class Walker {
             let newArray = this._walkArray(array);
             this._stack.pop();
             return newArray;
-        } else if (node.Container === true) {
+        } else if (node instanceof Container) {
             let container = node;
             this._walkContainer(container);
             this._stack.pop();
@@ -148,3 +149,4 @@ class Walker {
 }
 
 module.exports = Walker;
+

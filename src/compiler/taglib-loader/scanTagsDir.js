@@ -81,7 +81,7 @@ function findAndSetFile(tagDef, tagDirname) {
 
         if(path) {
             tagDef[type] = path;
-            return path;
+            return true;
         }
     }
 }
@@ -127,41 +127,39 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         let tagName;
         let tagDef = null;
         let tagDirname;
-        let tagFilePath;
+        let tagJsonPath;
 
         let ext = nodePath.extname(childFilename);
         if (ext === '.marko') {
             tagName = childFilename.slice(0, 0 - ext.length);
             tagDirname = dir;
             tagDef = createDefaultTagDef();
-            tagDef.template = tagFilePath = nodePath.join(dir, childFilename);
+            tagDef.template = nodePath.join(dir, childFilename);
         } else {
             tagName = prefix + childFilename;
 
             tagDirname = nodePath.join(dir, childFilename);
-            tagFilePath = nodePath.join(tagDirname, 'marko-tag.json');
+            tagJsonPath = nodePath.join(tagDirname, 'marko-tag.json');
 
             let hasTagJson = false;
-            if (fs.existsSync(tagFilePath)) {
+            if (fs.existsSync(tagJsonPath)) {
                 hasTagJson = true;
                 // marko-tag.json exists in the directory, use that as the tag definition
                 try {
-                    tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagFilePath, fsReadOptions)));
+                    tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagJsonPath, fsReadOptions)));
                 } catch(e) {
-                    throw new Error('Unable to parse JSON file at path "' + tagFilePath + '". Error: ' + e);
+                    throw new Error('Unable to parse JSON file at path "' + tagJsonPath + '". Error: ' + e);
                 }
             } else {
-                tagFilePath = null;
+                tagJsonPath = null;
                 tagDef = createDefaultTagDef();
             }
 
             if (!hasFile(tagDef)) {
-                let setFile = findAndSetFile(tagDef, tagDirname);
-                if(setFile) {
-                    tagFilePath = tagFilePath || setFile;
-                } else {
+                let fileWasSet = findAndSetFile(tagDef, tagDirname);
+                if(!fileWasSet) {
                     if (hasTagJson) {
-                        throw new Error('Invalid tag file: ' + tagFilePath + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
+                        throw new Error('Invalid tag file: ' + tagJsonPath + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
                     } else {
                         // Skip this directory... there doesn't appear to be anything in it
                         continue;
@@ -180,13 +178,13 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
         let tagDependencyChain;
 
-        if (tagFilePath) {
-            tagDependencyChain = dependencyChain.append(tagFilePath);
+        if (tagJsonPath) {
+            tagDependencyChain = dependencyChain.append(tagJsonPath);
         } else {
             tagDependencyChain = dependencyChain.append(tagDirname);
         }
 
-        let tag = new types.Tag(tagFilePath || tagDirname);
+        let tag = new types.Tag(tagJsonPath || tagDirname);
         loaders.loadTagFromProps(tag, tagDef, tagDependencyChain);
         tag.name = tag.name || tagName;
         taglib.addTag(tag);

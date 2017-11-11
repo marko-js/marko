@@ -26,18 +26,6 @@ function TAG_COMPARATOR(a, b) {
     return a.localeCompare(b);
 }
 
-function toLowerCase(tagName) {
-  return tagName.replace(/(^[A-Z])|([a-z][A-Z])/g, function(match, startMatch, nonStartMatch) {
-     if (startMatch) {
-         return startMatch.toLowerCase();
-     } else if (nonStartMatch) {
-         return nonStartMatch[0] + '-' + nonStartMatch[1];
-     } else {
-         return match;
-     }
-  });
-}
-
 function merge(target, source) {
     for (var k in source) {
         if (source.hasOwnProperty(k)) {
@@ -251,13 +239,7 @@ class TaglibLookup {
         }
 
         var tagName = element.tagName;
-
-        let tagDef = tags[tagName];
-        if (!tagDef && /[A-Z]/.test(tagName.charAt(0))) {
-            tagDef = tags[toLowerCase(tagName)];
-        }
-
-        return tagDef;
+        return tags[tagName];
     }
 
     getAttribute(element, attr) {

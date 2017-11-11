@@ -211,12 +211,34 @@ function initServerRendered(renderedComponents, doc) {
         } else if (flags & FLAG_HAS_HEAD_EL) {
             startNode = endNode = document.head;
         } else {
-            startNode = serverComponentStartNodes[componentId];
-            if (!startNode) {
+            var startNodeComment = serverComponentStartNodes[componentId];
+            if (!startNodeComment) {
                 indexServerComponentBoundaries(doc);
-                startNode = serverComponentStartNodes[componentId];
+                startNodeComment = serverComponentStartNodes[componentId];
             }
-            endNode = serverComponentEndNodes[componentId];
+            var endNodeComment = serverComponentEndNodes[componentId];
+
+            startNode = startNodeComment.nextSibling;
+
+            if (startNode === endNodeComment) {
+                // Component has no output nodes so just mount to the start comment node
+                // and we will remove the end comment node
+                startNode = endNode = startNodeComment;
+            } else {
+                startNodeComment.parentNode.removeChild(startNodeComment);
+
+                if (startNode.parentNode === document) {
+                    endNode = startNode = document.documentElement;
+                } else {
+                    // Remove the start and end comment nodes and use the inner nodes
+                    // as the boundary
+                    endNode = endNodeComment.previousSibling;
+                }
+            }
+
+            if (endNodeComment) {
+                endNodeComment.parentNode.removeChild(endNodeComment);
+            }
         }
 
         component.___keyedElements = keyedElementsByComponentId[componentId] || {};
