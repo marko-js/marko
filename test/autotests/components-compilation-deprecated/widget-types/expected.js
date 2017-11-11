@@ -18,4 +18,6 @@ function render(input, out, __component, widget, component) {
 
 marko_template._ = marko_rendererLegacy(render, {});
 
-marko_template.meta = {};
+marko_template.meta = {
+    legacy: true
+  };

@@ -16,13 +16,15 @@ function register(componentId, def) {
     return componentId;
 }
 
-function load(typeName) {
+function load(typeName, isLegacy) {
     var target = loaded[typeName];
     if (!target) {
         target = registered[typeName];
 
         if (target) {
             target = target();
+        } else if(isLegacy) {
+            target = window.$markoLegacy.load(typeName);
         }
 
         if (!target) {
@@ -35,14 +37,14 @@ function load(typeName) {
     return target;
 }
 
-function getComponentClass(typeName) {
+function getComponentClass(typeName, isLegacy) {
     var ComponentClass = componentTypes[typeName];
 
     if (ComponentClass) {
         return ComponentClass;
     }
 
-    ComponentClass = load(typeName);
+    ComponentClass = load(typeName, isLegacy);
 
     ComponentClass = ComponentClass.Component || ComponentClass;
 
@@ -58,8 +60,8 @@ function getComponentClass(typeName) {
     return ComponentClass;
 }
 
-function createComponent(typeName, id) {
-    var ComponentClass = getComponentClass(typeName);
+function createComponent(typeName, id, isLegacy) {
+    var ComponentClass = getComponentClass(typeName, isLegacy);
     return new ComponentClass(id);
 }
 

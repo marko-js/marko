@@ -137,6 +137,7 @@
     "include-html",
     "include-text",
     "init-components",
+    "init-widgets",
     "input",
     "ins",
     "invoke",

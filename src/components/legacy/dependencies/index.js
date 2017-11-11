@@ -15,6 +15,20 @@ function getRootDeps(template, context) {
 
     if (initModule) deps.push(initModule);
 
+    deps.push({
+        type: 'require',
+        path: require.resolve('../../boot'),
+        run: true
+    });
+
+    // these dependencies should be last
+    deps.concat = function() {
+        var result = [];
+        result = result.concat.apply(result, arguments);
+        result.push.apply(result, this);
+        return result;
+    };
+
     return deps;
 }
 
@@ -50,7 +64,10 @@ function attachDepsAndComponentsToTemplate(target, context) {
 
     if (meta.id && meta.component) {
         var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
-        components[meta.id] = resolveFrom(root, meta.component);
+        components[meta.id] = {
+            id: meta.id,
+            path: resolveFrom(root, meta.component)
+        };
     }
 
     if (meta.tags) {
@@ -78,16 +95,16 @@ function getInitModule(path, components) {
     let module = null;
 
     if (components) {
-        let componentIds = Object.keys(components);
+        components = Object.values(components);
 
-        if (componentIds.length) {
+        if (components.length) {
             let virtualPath = path + '.init.js';
+            let registrations = components.map(component =>
+                `components.register('${component.id}', require('${component.path}'));`
+            );
             let code = `
                 var components = require('marko/components');
-                ${componentIds.map(id => `
-                    components.register('${id}', require('${components[id]}'));
-                `).join('\n')}
-                components.init();
+                ${registrations.join('\n')}
             `;
 
             module = {
@@ -131,6 +148,11 @@ function resolveDep(dep, root, context) {
 
     if (dep.virtualPath) {
         dep.virtualPath = path.resolve(root, dep.virtualPath);
+    }
+
+    if (dep.type === 'js') {
+        dep.type = 'require';
+        dep.run = true;
     }
 
     return dep;

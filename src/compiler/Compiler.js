@@ -4,7 +4,7 @@ var path = require('path');
 var CodeGenerator = require('./CodeGenerator');
 var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
-var resolveDep = require('../runtime/dependencies').resolveDep;
+var resolveDep = require('../components/legacy/dependencies').resolveDep;
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 

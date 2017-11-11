@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineRenderer({
+module.exports = require('marko-widgets').defineRenderer({
     template: require.resolve('./template.marko'),
     getInitialBody: function(input) {
         return input.label || input.renderBody;

@@ -38,6 +38,7 @@ marko_template._ = marko_rendererLegacy(render, {
   });
 
 marko_template.meta = {
+    legacy: true,
     id: "/marko-test$1.0.0/autotests/components-compilation-deprecated/component-include-attr/index",
     component: "./",
     deps: [

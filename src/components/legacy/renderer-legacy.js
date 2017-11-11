@@ -189,6 +189,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
+        componentDef.___isLegacy = true;
         componentDef.b = componentBody;
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;

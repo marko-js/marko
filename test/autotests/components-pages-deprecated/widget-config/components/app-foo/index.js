@@ -1,4 +1,4 @@
-module.exports = require('marko/widgets').defineComponent({
+module.exports = require('marko-widgets').defineComponent({
     template: require('./template.marko'),
 
     getWidgetConfig: function() {

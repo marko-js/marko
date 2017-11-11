@@ -1,6 +1,12 @@
 var modernMarko = require('../');
 var Component = require('../Component');
 
+// expose legacy
+window.$markoLegacy = exports;
+exports.load = function(typeName) {
+    return exports.defineWidget(require(typeName));
+};
+
 // legacy api
 exports.defineComponent = require('./defineComponent-legacy');
 exports.defineWidget = require('./defineWidget-legacy');
