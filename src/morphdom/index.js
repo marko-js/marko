@@ -105,6 +105,10 @@ function morphdom(
             isPrevText = isText;
         }
 
+        if (endNode === startNode) {
+            return insertAfter(createMarkerComment(), startNode, parentNode);
+        }
+
         return endNode;
     }
 
