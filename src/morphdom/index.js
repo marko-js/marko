@@ -124,21 +124,23 @@ function morphdom(
 
         var beforeChild = startNode.previousSibling;
         var afterChild = endNode.nextSibling;
+        var tempChild;
+
+        if (!beforeChild) {
+            tempChild = beforeChild = insertBefore(createMarkerComment(), startNode, parentFromNode);
+        }
 
         morphChildren(parentFromNode, startNode, afterChild, vComponent, component);
 
         endNode = undefined;
 
-        if (beforeChild) {
-            startNode = beforeChild.nextSibling;
-            if (!startNode || startNode === afterChild) {
-                startNode = endNode = insertAfter(createMarkerComment(), beforeChild, parentFromNode);
-            }
-        } else {
-            startNode = parentFromNode.firstChild;
-            if (!startNode) {
-                startNode = endNode = insertAfter(createMarkerComment(), beforeChild, parentFromNode);
-            }
+        startNode = beforeChild.nextSibling;
+        if (!startNode || startNode === afterChild) {
+            startNode = endNode = insertAfter(createMarkerComment(), beforeChild, parentFromNode);
+        }
+
+        if (tempChild) {
+            parentFromNode.removeChild(tempChild);
         }
 
         if (!endNode) {
@@ -158,6 +160,7 @@ function morphdom(
         if (endNode.___markoDetached !== undefined || endNode.___endNode) {
             endNode = insertAfter(createMarkerComment(), endNode, parentFromNode);
         }
+
 
         startNode.___markoComponent = component;
         endNode.___endNode = true;
