@@ -2,7 +2,7 @@ var path = require('path');
 var expect = require('chai').expect;
 
 describe(path.basename(__dirname), function() {
-    it.skip('should invoke event handler method for custom events with extra args', function() {
+    it('should invoke event handler method for custom events with extra args', function() {
         var widget = window.fooWidget;
 
         widget.pressEvent = null;

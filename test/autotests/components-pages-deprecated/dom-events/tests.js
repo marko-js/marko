@@ -28,7 +28,7 @@ describe(path.basename(__dirname), function() {
         expect(window.fooWidget.mouseMoveEvent[1]).to.equal(window.fooWidget.getEl('button'));
     });
 
-    it.skip('should invoke event handler method for non-bubbling events with extra args', function() {
+    it('should invoke event handler method for non-bubbling events with extra args', function() {
         window.fooWidget.mouseMoveEvent = null;
 
         triggerMouseEvent(window.fooWidget.getEl('ok'), 'mousemove');
@@ -54,7 +54,7 @@ describe(path.basename(__dirname), function() {
         expect(window.fooWidget.clickEvent[1]).to.equal(window.fooWidget.getEl('button'));
     });
 
-    it.skip('should invoke event handler method for bubbling events with extra args', function() {
+    it('should invoke event handler method for bubbling events with extra args', function() {
         var widget = window.fooWidget;
 
         window.fooWidget.clickEvent = null;
