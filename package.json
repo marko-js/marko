@@ -59,7 +59,7 @@
     "argly": "^1.0.0",
     "browser-refresh-client": "^1.0.0",
     "char-props": "~0.1.5",
-    "complain": "^1.0.0",
+    "complain": "^1.2.0",
     "deresolve": "^1.1.2",
     "escodegen": "^1.8.1",
     "esprima": "^4.0.0",
@@ -113,7 +113,7 @@
     "lasso-resolve-from": "^1.2.0",
     "marko-widgets": "^7.0.1",
     "md5-hex": "^2.0.0",
-    "micromatch": "^2.3.11",
+    "micromatch": "^3.0.4",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "mocha-phantomjs-core": "^2.1.1",
@@ -155,7 +155,7 @@
     ]
   },
   "homepage": "http://markojs.com/",
-  "version": "4.5.2",
+  "version": "4.5.6",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }

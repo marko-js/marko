@@ -1,0 +1,15 @@
+{
+  "loopType": "ForEach",
+  "varName": {
+    "type": "Identifier",
+    "name": "color"
+  },
+  "in": {
+    "type": "Identifier",
+    "name": "colors"
+  },
+  "iterator": {
+    "type": "Identifier",
+    "name": "myIterator"
+  }
+}
