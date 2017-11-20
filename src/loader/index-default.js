@@ -9,9 +9,26 @@ var cwd = process.cwd();
 var fsOptions = {encoding: 'utf8'};
 
 module.exports = function load(templatePath, templateSrc, options) {
-    if (typeof templatePath === 'string' && nodePath.extname(templatePath) === '.js') {
-        // assume compiled template
-        return require(templatePath);
+    if (typeof templatePath === 'string') {
+        const parsed = nodePath.parse(templatePath);
+
+        if (parsed.ext === '.js') {
+            // assume compiled template
+            return require(templatePath);
+        } else if (parsed.ext === '.marko') {
+            // Check if precompiled js file already exists.
+            const jsFilePath = nodePath.join(parsed.dir, parsed.name + '.js');
+            let foundPrecompiled = false;
+
+            try {
+                fs.accessSync(jsFilePath);
+                foundPrecompiled = true;
+            } catch(e) {}
+
+            if (foundPrecompiled) {
+                return require(jsFilePath);
+            }
+        }
     }
 
     if (arguments.length === 1) {
