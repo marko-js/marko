@@ -1,6 +1,6 @@
 script marko-init
     ---
-    var markoWidgets = require('marko/widgets');
+    var markoWidgets = require('marko-widgets');
     var componentsTemplate = require('./components.marko');
 
     function componentsDataProvider(callback) {
@@ -22,7 +22,7 @@ lasso-page dependencies=data.browserDependencies lasso=data.lasso
 html lang="en"
     head
         meta charset="UTF-8"
-        title - Marko Widgets Tests
+        title -- Marko Widgets Tests
         lasso-head
     body
         await(components from componentsDataProvider)

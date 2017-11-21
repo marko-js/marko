@@ -1,7 +1,7 @@
 'use strict';
 
-const tryRequire = require('try-require');
-const lassoModulesClientTransport = tryRequire('lasso-modules-client/transport', require);
+const lassoModulesClientTransport = require('lasso-modules-client/transport');
+const shorthash = require('shorthash');
 const ok = require('assert').ok;
 
 function generateRegisterComponentCode(componentModule, transformHelper, isSplit) {
@@ -14,52 +14,65 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
 
     let builder = context.builder;
 
-    let registerComponent = context.helper('registerComponent');
+    let fileName = componentModule.filename;
 
-    let typeName = componentModule.filename;
-
-    var isLegacy = componentModule.legacy;
+    let isLegacy = componentModule.legacy;
 
     if (!isLegacy && !isSplit) {
-        typeName = transformHelper.filename;
+        fileName = transformHelper.filename;
     }
 
-    if (lassoModulesClientTransport) {
-        typeName = lassoModulesClientTransport.getClientPath(typeName);
-    }
+    let componentId = getComponentId(fileName);
+    let registerNode;
 
-    let def;
+    if (context.outputType === 'vdom') {
+        let def;
+        let registerComponent = context.helper('registerComponent');
 
-    if (componentModule.legacy) {
-        // This if condition block should be deleted in Marko v5
-        let returnValue = builder.require(builder.literal(componentModule.requirePath));
+        if (componentModule.legacy) {
+            // This if condition block should be deleted in Marko v5
+            let returnValue = builder.require(builder.literal(componentModule.requirePath));
 
-        let defineWidget = context.helper('defineWidget-legacy');
+            let defineWidget = context.helper('defineWidget-legacy');
 
-        returnValue = builder.functionCall(defineWidget, [returnValue]);
+            returnValue = builder.functionCall(defineWidget, [returnValue]);
 
-        def = builder.functionDeclaration(null, [] /* params */, [
-            builder.returnStatement(returnValue)
-        ]);
-    } else if (isSplit) {
-        let returnValue = builder.require(builder.literal(componentModule.requirePath));
+            def = builder.functionDeclaration(null, [] /* params */, [
+                builder.returnStatement(returnValue)
+            ]);
+        } else if (isSplit) {
+            let returnValue = builder.require(builder.literal(componentModule.requirePath));
 
-        def = builder.functionDeclaration(null, [] /* params */, [
-            builder.returnStatement(returnValue)
+            def = builder.functionDeclaration(null, [] /* params */, [
+                builder.returnStatement(returnValue)
+            ]);
+        } else {
+            def = builder.functionDeclaration(null, [], [
+                builder.returnStatement(
+                    builder.memberExpression(
+                        builder.identifier('module'),
+                        builder.identifier('exports')))
+            ]);
+        }
+
+        registerNode = builder.functionCall(registerComponent, [
+            builder.literal(componentId),
+            def
         ]);
     } else {
-        def = builder.functionDeclaration(null, [], [
-            builder.returnStatement(
-                builder.memberExpression(
-                    builder.identifier('module'),
-                    builder.identifier('exports')))
-        ]);
+        registerNode = builder.literal(componentId);
     }
 
-    return builder.functionCall(registerComponent, [
-        builder.literal(typeName),
-        def
-    ]);
+    return { id:componentId, node:registerNode };
+}
+
+function getComponentId(filename) {
+    let componentId = lassoModulesClientTransport.getClientPath(filename);
+    // TODO: turn on for production
+    if (false) {
+        componentId = shorthash.unique(componentId);
+    }
+    return componentId;
 }
 
 module.exports = generateRegisterComponentCode;

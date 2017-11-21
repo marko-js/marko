@@ -61,6 +61,7 @@ module.exports = function handleLegacyBind() {
 
         context.deprecate('Legacy components using w-bind and defineRenderer/defineComponent or defineComponent are deprecated. See: https://github.com/marko-js/marko/issues/421');
         this.isLegacyComponent = isLegacyComponent = true;
+        context.setMeta('legacy', true);
 
         // Remove the w-bind attribute since we don't want it showing up in the output DOM
         el.removeAttribute('w-bind');

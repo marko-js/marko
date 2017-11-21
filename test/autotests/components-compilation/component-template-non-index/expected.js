@@ -1,12 +1,9 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    components_helpers = require("marko/src/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/autotests/components-compilation/component-template-non-index/template.marko", function() {
-      return module.exports;
-    }),
+    marko_componentType = "/marko-test$1.0.0/autotests/components-compilation/component-template-non-index/template.marko",
     marko_component = require("./template.component"),
+    components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c;
 
@@ -24,10 +21,8 @@ marko_template.Component = marko_defineComponent(marko_component, marko_template
 
 marko_template.meta = {
     deps: [
-      "./template.style.css",
-      {
-          type: "require",
-          path: "./template.marko"
-        }
-    ]
+      "./template.style.css"
+    ],
+    id: "/marko-test$1.0.0/autotests/components-compilation/component-template-non-index/template.marko",
+    component: "./template.marko"
   };

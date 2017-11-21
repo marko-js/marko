@@ -654,17 +654,17 @@ class CompileContext extends EventEmitter {
             templateVar = this.addStaticVar(varName, loadFunctionCall);
         }
 
-        this.pushMeta('tags', builder.literal(relativePath), true);
+        this.pushMeta('tags', relativePath, true);
 
         return templateVar;
     }
 
     addDependency(path, type, options) {
         var dependency;
-        if(typeof path === 'object') {
-            dependency = path;
+        if (type) {
+            dependency = { type, path };
         } else {
-            dependency = (type ? type+':' : '') + path;
+            dependency = path;
         }
         this.pushMeta('deps', dependency, true);
     }

@@ -2,7 +2,8 @@ var expect = require('chai').expect;
 
 exports.checkTemplate = function(compiledTemplate) {
     expect(compiledTemplate.dependencies).to.eql([{
-        type: 'js',
+        type: 'require',
+        run: true,
         path: __filename
     }]);
 }

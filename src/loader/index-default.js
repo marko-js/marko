@@ -157,7 +157,12 @@ function doLoad(templatePath, templateSrc, options) {
 
             if (writeToDisk === true) {
                 var targetFile = templatePath + '.js';
-                fs.writeFileSync(targetFile, compiledSrc, fsOptions);
+                try {
+                    fs.writeFileSync(targetFile, compiledSrc, fsOptions);
+                } catch(e) {
+                    // if this fails, that's okay.
+                    // writing to file is nice for debugging and not much else
+                }
             }
 
             template = loadSource(templatePath, compiledSrc);

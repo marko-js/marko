@@ -2,7 +2,7 @@ if (typeof window !== 'undefined') {
 	window.simpleWidgets = [];
 }
 
-module.exports = require('marko/widgets').defineComponent({
+module.exports = require('marko-widgets').defineComponent({
 	template: require.resolve('./template.marko'),
 
 	getWidgetConfig: function(input) {

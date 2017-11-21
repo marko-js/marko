@@ -108,10 +108,11 @@ ComponentDef.___deserialize = function(o, types, globals, registry) {
     var input     = o[2];
     var extra     = o[3];
 
+    var isLegacy = extra.l;
     var state = extra.s;
     var componentProps = extra.w;
 
-    var component = typeName /* legacy */ && registry.___createComponent(typeName, id);
+    var component = typeName /* legacy */ && registry.___createComponent(typeName, id, isLegacy);
 
     if (extra.b) {
         component.___bubblingDomEvents = extra.b;

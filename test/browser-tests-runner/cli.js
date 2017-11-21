@@ -18,7 +18,7 @@ var options = require('argly').createParser({
         '--tests-file *': 'string',
         '--page': 'string',
         '--pages': 'boolean',
-        '--pagesDeprecated': 'boolean'
+        '--deprecated': 'boolean'
     })
     .parse();
 
@@ -30,7 +30,8 @@ if (options.testsFile) {
 var generatedDir = options.generatedDir = path.join(testDir, 'generated');
 
 function populatePageOptions(pageName) {
-    var pageDir = path.join(testDir, 'autotests/components-pages', pageName);
+    var pagesPath =  path.join(testDir, 'autotests', options.deprecated ? 'components-pages-deprecated' : 'components-pages');
+    var pageDir = path.join(pagesPath, pageName);
     var pageTemplate = path.join(pageDir, 'template.marko');
     options.pageTemplate = require(pageTemplate);
     options.generatedDir = path.join(generatedDir, 'page-' + pageName);
@@ -49,8 +50,8 @@ function go() {
     }
 }
 
-if (options.pages || options.pagesDeprecated) {
-    var pagesPath = options.pages ? path.resolve(testDir, 'autotests/components-pages') : path.resolve(testDir, 'autotests/components-pages-deprecated');
+if (options.pages) {
+    var pagesPath = path.join(testDir, 'autotests', options.deprecated ? 'components-pages-deprecated' : 'components-pages');
     var pageNames = fs.readdirSync(pagesPath);
     var promise = pageNames.reduce(function(previousValue, pageName) {
         return previousValue

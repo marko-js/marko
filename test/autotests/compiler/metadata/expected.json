@@ -6,5 +6,10 @@
     {
         "type": "require",
         "path": "PROJECT_ROOT/test/autotests/compiler/metadata/tags/test-hello/bar.js"
+    },
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/src/components/boot.js",
+        "run": true
     }
 ]

@@ -37,7 +37,7 @@ module.exports = function codeGenerator(el, codegen) {
             requirePath: requirePath
         };
 
-        typesObject[attr.name] = generateRegisterComponentCode(componentModule, transformHelper, false);
+        typesObject[attr.name] = generateRegisterComponentCode(componentModule, transformHelper, false).node;
     });
 
     codegen.addStaticVar('marko_componentTypes', builder.literal(typesObject));

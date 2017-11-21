@@ -7,6 +7,7 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var handleBeginAsync = modernRenderer.___handleBeginAsync;
 var beginComponent = require('../beginComponent');
 var endComponent = require('../endComponent');
+var registry = require('../registry');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 
@@ -79,7 +80,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         if (registry.___isServer && typeName) {
-            component = { id:id, typeName:typeName };
+            component = registry.___createComponent(renderingLogic || {}, id, input, out, typeName, customEvents, scope);
         } else {
             if (!component) {
                 if (isRerender) {
@@ -189,6 +190,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
+        componentDef.___isLegacy = true;
         componentDef.b = componentBody;
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;

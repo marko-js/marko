@@ -668,7 +668,7 @@ class CustomTag extends HtmlElement {
             finalNode = this.generateRenderTagCode(codegen, tagVar, [ inputProps, builder.identifierOut() ]);
         } else {
             if (rendererRequirePath) {
-                codegen.pushMeta('tags', builder.literal(rendererRequirePath), true);
+                codegen.pushMeta('tags', rendererRequirePath, true);
             }
 
             let loadTag;

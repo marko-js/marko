@@ -1,5 +1,5 @@
 'use strict';
-require('./runtime/dependencies/html');
+require('./components/legacy/dependencies/html');
 
 if (!process.env.BUNDLE) {
     if (process.env.MARKO_HOT_RELOAD) {

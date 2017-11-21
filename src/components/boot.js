@@ -1,1 +1,1 @@
-require('./init-components').___initServerRendered();
+if (window.$initComponents) window.$initComponents();

@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "dependencies": {
         "lasso": "*",
-        "browser-refresh-taglib": "*"
+        "browser-refresh-taglib": "*",
+        "marko-widgets": "*"
     }
 }

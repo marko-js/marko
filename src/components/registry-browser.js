@@ -1,35 +1,34 @@
-var loadComponent = require('./loadComponent');
 var defineComponent = require('./defineComponent');
 
 var registered = {};
 var loaded = {};
 var componentTypes = {};
 
-function register(typeName, def) {
+function register(componentId, def) {
     // We do this to kick off registering of nested components
     // but we don't use the return value just yet since there
     // is a good chance that it resulted in a circular dependency
     def();
 
-    registered[typeName] = def;
-    delete loaded[typeName];
-    delete componentTypes[typeName];
-    return typeName;
+    registered[componentId] = def;
+    delete loaded[componentId];
+    delete componentTypes[componentId];
+    return componentId;
 }
 
-function load(typeName) {
+function load(typeName, isLegacy) {
     var target = loaded[typeName];
     if (!target) {
         target = registered[typeName];
 
         if (target) {
             target = target();
-        } else {
-            target = loadComponent(typeName); // Assume the typeName has been fully resolved already
+        } else if(isLegacy) {
+            target = window.$markoLegacy.load(typeName);
         }
 
         if (!target) {
-            throw Error('Not found: ' + typeName);
+            throw Error('Component not found: ' + typeName);
         }
 
         loaded[typeName] = target;
@@ -38,14 +37,14 @@ function load(typeName) {
     return target;
 }
 
-function getComponentClass(typeName) {
+function getComponentClass(typeName, isLegacy) {
     var ComponentClass = componentTypes[typeName];
 
     if (ComponentClass) {
         return ComponentClass;
     }
 
-    ComponentClass = load(typeName);
+    ComponentClass = load(typeName, isLegacy);
 
     ComponentClass = ComponentClass.Component || ComponentClass;
 
@@ -61,8 +60,8 @@ function getComponentClass(typeName) {
     return ComponentClass;
 }
 
-function createComponent(typeName, id) {
-    var ComponentClass = getComponentClass(typeName);
+function createComponent(typeName, id, isLegacy) {
+    var ComponentClass = getComponentClass(typeName, isLegacy);
     return new ComponentClass(id);
 }
 

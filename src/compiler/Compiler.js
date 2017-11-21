@@ -4,7 +4,7 @@ var path = require('path');
 var CodeGenerator = require('./CodeGenerator');
 var CodeWriter = require('./CodeWriter');
 var createError = require('raptor-util/createError');
-var resolveDep = require('../runtime/dependencies').resolveDep;
+var resolveDep = require('../components/legacy/dependencies').resolveDep;
 
 const FLAG_TRANSFORMER_APPLIED = 'transformerApply';
 
@@ -90,6 +90,10 @@ class CompiledTemplate {
         this.ast = ast;
         this.context = context;
         this.filename = context.filename;
+    }
+
+    get meta() {
+        return this.context.meta;
     }
 
     get dependencies() {
