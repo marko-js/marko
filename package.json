@@ -23,12 +23,35 @@
     "build": "node scripts/build.js",
     "build-src": "node scripts/build.js src",
     "prepublish": "npm run build-src",
+<<<<<<< HEAD
     "test": "npm run jshint -s && npm run mocha -s",
+=======
+    "test": "npm run lint -s && npm run mocha -s && npm run test-components -s && npm run test-components-deprecated -s",
+>>>>>>> switch to eslint and fix errors
     "test-ci": "npm run test-generate-coverage",
     "mocha": "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
+<<<<<<< HEAD
     "jshint": "jshint src/ *.js",
+=======
+    "test-fast": "mocha --ui bdd --reporter spec ./test/render/*.test.js",
+    "test-compiler": "mocha --ui bdd --reporter spec ./test/compiler/*.test.js",
+    "test-components-compilation": "mocha --ui bdd --reporter spec ./test/components-compilation/*.test.js",
+    "test-async": "mocha --ui bdd --reporter spec ./test/async-render/*.test.js",
+    "test-taglib-loader": "mocha --ui bdd --reporter spec ./test/taglib-loader/*.test.js",
+    "test-express": "mocha --ui bdd --reporter spec ./test/express/*.test.js",
+    "test-components": "npm run test-components-browser -s && npm run test-components-pages -s",
+    "test-components-deprecated": "npm run test-components-browser-deprecated -s && npm run test-components-pages-deprecated -s",
+    "test-components-browser": "node test/__runner__/browser/cli.js components-browser/index.test.js --automated",
+    "test-components-browser-deprecated": "node test/__runner__/browser/cli.js deprecated-components-browser/index.test.js --automated && npm run test-components-pages-deprecated -s",
+    "test-components-pages": "node test/__runner__/browser/cli.js --pages --automated",
+    "test-components-pages-deprecated": "node test/__runner__/browser/cli.js --pages --deprecated --automated",
+    "test-components-browser-dev": "browser-refresh test/__runner__/browser/cli.js components-browser/index.js --server",
+    "test-page": "node test/__runner__/browser/cli.js components-browser/index.js --automated --page",
+    "test-pages": "npm run test-components-pages",
+    "lint": "eslint .",
+>>>>>>> switch to eslint and fix errors
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
@@ -84,15 +107,27 @@
     "chai": "^3.3.0",
     "codecov": "^2.3.0",
     "coveralls": "^2.13.1",
+<<<<<<< HEAD
     "diffable-html": "^2.1.0",
+=======
+    "eslint": "^4.11.0",
+    "eslint-config-unobtrusive": "^1.1.0",
+>>>>>>> switch to eslint and fix errors
     "express": "^4.16.1",
     "fs-extra": "^2.0.0",
     "ignoring-watcher": "^1.0.2",
     "istanbul-lib-instrument": "^1.8.0",
     "it-fails": "^1.0.0",
     "jquery": "^3.1.1",
+<<<<<<< HEAD
     "jsdom": "^9.12.0",
     "jshint": "^2.5.0",
+=======
+    "jsdom": "^9.6.0",
+    "lasso": "^2.4.1",
+    "lasso-babel-transform": "^1.0.0",
+    "lasso-marko": "^2.1.0",
+>>>>>>> switch to eslint and fix errors
     "lasso-resolve-from": "^1.2.0",
     "marko-widgets": "^7.0.1",
     "micromatch": "^3.0.4",

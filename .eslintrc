@@ -1,0 +1,11 @@
+{
+  "extends": "unobtrusive",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "document": true,
+    "ShadowRoot": true
+  }
+}

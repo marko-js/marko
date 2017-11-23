@@ -1,18 +1,15 @@
 module.exports = function forRangeHelper(from, to, step, callback) {
-    if (step == null) {
-        step = from <= to ? 1 : -1;
-    }
-
     var i;
+    
+    step = step == null ? 1 : Math.abs(step);
 
-    if (step > 0) {
+    if (from < to) {
         for (i=from; i<=to; i += step) {
             callback(i);
         }
     } else {
-        for (i=from; i>=to; i += step) {
+        for (i=from; i>=to; i -= step) {
             callback(i);
         }
     }
-
 };
