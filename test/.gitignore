@@ -10,3 +10,5 @@ actual.*
 actualized-expected.html
 
 *.generated.*
+
+error.txt
