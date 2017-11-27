@@ -5,8 +5,8 @@ var path = require('path');
 var fs = require('fs');
 var domToString = require('../__util__/domToString');
 
-var jsdom = require("jsdom").jsdom;
-var document = jsdom('<html><body></body></html>');
+var JSDOM = require('jsdom').JSDOM;
+var document = (new JSDOM()).window.document;
 
 var vdom = require('marko/runtime/vdom/vdom');
 var VElement = vdom.___VElement;

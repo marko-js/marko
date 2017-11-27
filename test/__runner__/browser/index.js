@@ -8,17 +8,14 @@ require('../../../compiler').configure({
     assumeUpToDate: false
 });
 
+var JSDOM = require('jsdom-global');
 var express = require('express');
 var lasso = require('lasso');
 var defaultPageTemplate = require('./page-template.marko');
-var spawn = require('child-process-promise').spawn;
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var md5Hex = require('md5-hex');
-var mochaPhantomJSCommand = require.resolve('mocha-phantomjs-core');
-var phantomjsBinPath = require('phantomjs-prebuilt').path;
-var shouldCover = !!process.env.NYC_CONFIG;
 var ok = require('assert').ok;
+var shouldCover = !!process.env.NYC_CONFIG;
 
 function generate(options) {
     return new Promise((resolve, reject) => {
@@ -103,16 +100,12 @@ function generate(options) {
                 mkdirp.sync(generatedDir);
             } catch (e) {}
 
-            console.log(`Generating test HTML for ${path.relative(process.cwd(), testsFile)}...`);
-
             pageTemplate.render(templateData, function (err, html) {
                 if (err) {
                     return reject(err);
                 }
 
                 fs.writeFileSync(outputFile, html, { encoding: 'utf8' });
-
-                console.log(`Saved test HTML page to ${path.relative(process.cwd(), outputFile)}`);
 
                 resolve({
                     url: outputFile
@@ -124,23 +117,25 @@ function generate(options) {
 
 function runTests(options) {
     return generate(options).then(generated => {
-        console.log(`Running ${generated.url} using mocha-phantomjs...`);
-        var mochaPhantomJSOptions = { useColors: true };
-
-        if (shouldCover) {
-            mochaPhantomJSOptions.hooks = 'mocha-phantomjs-istanbul';
-            console.log(options.testsFile)
-            mochaPhantomJSOptions.coverageFile = getCoverageFile(options.testsFile);
-        }
-
-        return spawn(phantomjsBinPath, [mochaPhantomJSCommand, generated.url, 'spec', JSON.stringify(mochaPhantomJSOptions)], {
-            stdio: 'inherit'
+        var cleanup = JSDOM(fs.readFileSync(generated.url, 'utf-8'), {
+            url: 'file://' + generated.url,
+            runScripts: 'dangerously',
+            pretendToBeVisual: true,
+            resources: 'usable'
         });
-    });
-}
 
-function getCoverageFile(testsFile) {
-    return './.nyc_output/' + md5Hex(testsFile) + '.json';
+        return new Promise(function (resolve, reject) {
+            window.addEventListener('load', function () {
+                var runner = window.MOCHA_RUNNER;
+                runner.on('end', function () {
+                    cleanup();
+                    runner.stats.failures.length
+                        ? reject(new Error(''))
+                        : resolve();
+                });
+            })
+        })
+    });
 }
 
 exports.generate = generate;

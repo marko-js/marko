@@ -1,7 +1,7 @@
 'use strict';
 
-const jsdom = require("jsdom").jsdom;
-const defaultDocument = jsdom('<html><body></body></html>');
+const JSDOM = require('jsdom').JSDOM;
+const defaultDocument = (new JSDOM()).window.document;
 
 const path = require('path');
 const fs = require('fs');
@@ -172,7 +172,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                                 return callback(err);
                             }
 
-                            let document = jsdom('<html><body>' + html + '</body></html>');
+                            let document = (new JSDOM('<html><body>' + html + '</body></html>', { runScripts: 'dangerously' })).window.document;
                             let expectedHtml = domToString(document.body, { childrenOnly: true });
 
                             process.nextTick(function () {
@@ -195,9 +195,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         let actualNode = result.getNode();
 
                         let vdomHtml = domToHTML(actualNode);
-
-                        let vdomRealDocument = jsdom('<html><body>' + vdomHtml + '</body></html>');
-                        let vdomString = domToString(vdomRealDocument.body, { childrenOnly: true });
+                        let vdomString = domToString(JSDOM.fragment(vdomHtml));
                         helpers.compare(vdomString, 'vdom-', '.generated.html');
 
                         if (checkAsyncEvents) {

@@ -1,8 +1,8 @@
 sudo: false
 node_js:
-- "4"
 - "6"
 - "8"
+- "9"
 language: node_js
 script: "npm run test-ci"
 after_success: "npm run coveralls && npm run codecov"

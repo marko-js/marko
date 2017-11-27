@@ -1,8 +1,6 @@
-if (window.initMochaPhantomJS === 'function') {
-    window.initMochaPhantomJS();
-}
-
-window.mocha.ui('bdd');
-window.mocha.reporter('html');
-
-require('chai').config.includeStack = true;
+window.mocha.setup({
+    ui: 'bdd',
+    useColors: true,
+    fullTrace: true,
+    reporter: navigator.userAgent.includes('jsdom') ? 'spec' : 'html'
+});
