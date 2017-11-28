@@ -14,6 +14,7 @@ var lasso = require('lasso');
 var defaultPageTemplate = require('./page-template.marko');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var md5Hex = require('md5-hex');
 var ok = require('assert').ok;
 var shouldCover = !!process.env.NYC_CONFIG;
 
@@ -128,7 +129,13 @@ function runTests(options) {
             window.addEventListener('load', function () {
                 var runner = window.MOCHA_RUNNER;
                 runner.on('end', function () {
+                    if (shouldCover) {
+                        var coverageFile = getCoverageFile(options.testsFile);
+                        fs.writeFileSync(coverageFile, JSON.stringify(window.__coverage__));
+                    }
+
                     cleanup();
+
                     runner.stats.failures.length
                         ? reject(new Error(''))
                         : resolve();
@@ -136,6 +143,10 @@ function runTests(options) {
             })
         })
     });
+}
+
+function getCoverageFile(testsFile) {
+    return './.nyc_output/'+md5Hex(testsFile)+'.json';
 }
 
 exports.generate = generate;

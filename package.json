@@ -113,6 +113,7 @@
     "lasso-marko": "^2.1.0",
     "lasso-resolve-from": "^1.2.0",
     "marko-widgets": "^7.0.1",
+    "md5-hex": "^2.0.0",
     "micromatch": "^3.0.4",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
