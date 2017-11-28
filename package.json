@@ -148,6 +148,7 @@
       "**/coverage/**",
       "**/test/**",
       "**/test-dist/**",
+      "**/test-generated/**",
       "**/dist/**"
     ]
   },
