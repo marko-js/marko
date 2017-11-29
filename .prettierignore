@@ -1,0 +1,13 @@
+# minfied
+*.min.js
+
+# tests
+*actual*
+*expected*
+input.*
+
+# generated
+/dist/
+/test-dist/
+/test-generated/
+*.marko.js
