@@ -23,10 +23,10 @@ module.exports = function(req) {
 ```
 
 > **ProTip:** Marko also provides server-side framework integrations:
-> - [express](/docs/express)
-> - [hapi](/docs/hapi)
-> - [koa](/docs/koa)
-> - [huncwot](/docs/huncwot)
+> - [express](/docs/express.md)
+> - [hapi](/docs/hapi.md)
+> - [koa](/docs/koa.md)
+> - [huncwot](/docs/huncwot.md)
 
 ## UI Bootstrapping
 
