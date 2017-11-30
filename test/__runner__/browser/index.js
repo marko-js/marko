@@ -138,11 +138,7 @@ function runTests(options) {
                     runner.on('end', function () {
                         if (shouldCover) {
                             var coverageFile = getCoverageFile(options.testsFile);
-                            fs.writeFile(coverageFile, JSON.stringify(window.__coverage__), function (err) {
-                                if (err) {
-                                    console.error('Failed writing coverage file for "' + generated.url + '".');
-                                }
-                            });
+                            fs.writeFileSync(coverageFile, JSON.stringify(window.__coverage__));
                         }
     
                         cleanup();
