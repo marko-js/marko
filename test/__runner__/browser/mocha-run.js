@@ -1,5 +1,1 @@
-if (window.mochaPhantomJS) {
-    window.mochaPhantomJS.run();
-} else {
-    window.mocha.run();
-}
+window.MOCHA_RUNNER = window.mocha.run()
