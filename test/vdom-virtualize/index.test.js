@@ -3,7 +3,7 @@ var path = require('path');
 var virtualize = require('marko/runtime/vdom/vdom').___virtualize;
 var fs = require('fs');
 var toHTML = require('../__util__/toHTML');
-var JSDOM = require('jsdom').JSDOM;
+var jsdom = require("jsdom").jsdom;
 
 describe('vdom-virtualize', () => {
     require('../autotest').scanDir(path.join(__dirname, './fixtures'), function (dir, helpers, done) {
@@ -12,7 +12,7 @@ describe('vdom-virtualize', () => {
         var inputPath = path.join(dir, 'input.html');
         if (fs.existsSync(inputPath)) {
             var inputHtml = fs.readFileSync(inputPath, { encoding: 'utf8' });
-            var document = (new JSDOM('<html><body>' + inputHtml + '</body></html>')).window.document;
+            var document = jsdom('<html><body>' + inputHtml + '</body></html>');
             var domNode = document.body.firstChild;
             var vdomNode = virtualize(domNode);
             var vdomHTML = toHTML(vdomNode);

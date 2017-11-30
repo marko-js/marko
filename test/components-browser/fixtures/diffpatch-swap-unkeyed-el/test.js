@@ -5,11 +5,11 @@ module.exports = function (helpers) {
     var children = component.getEl('root').children;
     expect(children.length).to.equal(2);
 
-    expect(children[0].dataset.foo).to.equal('true');
-    expect(children[0].dataset.bar).to.equal(undefined);
+    expect(children[0].getAttribute('data-foo')).to.equal('true');
+    expect(children[0].getAttribute('data-bar')).to.equal(null);
 
-    expect(children[1].dataset.foo).to.equal(undefined);
-    expect(children[1].dataset.bar).to.equal('true');
+    expect(children[1].getAttribute('data-foo')).to.equal(null);
+    expect(children[1].getAttribute('data-bar')).to.equal('true');
 
     component.state.swapped = true;
     component.update();
@@ -18,9 +18,9 @@ module.exports = function (helpers) {
 
     expect(children.length).to.equal(2);
 
-    expect(children[0].dataset.foo).to.equal(undefined);
-    expect(children[0].dataset.bar).to.equal('true');
+    expect(children[0].getAttribute('data-foo')).to.equal(null);
+    expect(children[0].getAttribute('data-bar')).to.equal('true');
 
-    expect(children[1].dataset.foo).to.equal('true');
-    expect(children[1].dataset.bar).to.equal(undefined);
+    expect(children[1].getAttribute('data-foo')).to.equal('true');
+    expect(children[1].getAttribute('data-bar')).to.equal(null);
 };

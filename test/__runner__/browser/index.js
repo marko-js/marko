@@ -118,27 +118,42 @@ function generate(options) {
 
 function runTests(options) {
     return generate(options).then(generated => {
-        var cleanup = JSDOM(fs.readFileSync(generated.url, 'utf-8'), {
-            url: 'file://' + generated.url,
-            runScripts: 'dangerously',
-            pretendToBeVisual: true,
-            resources: 'usable'
-        });
-
         return new Promise(function (resolve, reject) {
-            window.addEventListener('load', function () {
-                var runner = window.MOCHA_RUNNER;
-                runner.on('end', function () {
-                    if (shouldCover) {
-                        var coverageFile = getCoverageFile(options.testsFile);
-                        fs.writeFileSync(coverageFile, JSON.stringify(window.__coverage__));
+            fs.readFile(generated.url, 'utf-8', function (err, html) {
+                if (err) {
+                    return reject(err)
+                }
+
+                var cleanup = JSDOM(html, {
+                    url: 'file://' + generated.url,
+                    resourceLoader: function (resource, callback) {
+                        if (path.extname(resource.url.pathname) === '.js') {
+                            return resource.defaultFetch(callback);
+                        }
+
+                        callback(new Error('Unsupported resource loaded.'));
                     }
+                });
+                window.addEventListener('error', reject);
+                window.addEventListener('load', function () {
+                    console.log('loaded');
+                    var runner = window.MOCHA_RUNNER;
+                    runner.on('end', function () {
+                        if (shouldCover) {
+                            var coverageFile = getCoverageFile(options.testsFile);
+                            fs.writeFile(coverageFile, JSON.stringify(window.__coverage__), function (err) {
+                                if (err) {
+                                    console.error('Failed writing coverage file for "' + generated.url + '".');
+                                }
+                            });
+                        }
+    
+                        cleanup();
 
-                    cleanup();
-
-                    runner.stats.failures.length
-                        ? reject(new Error(''))
-                        : resolve();
+                        runner.stats.failures.length
+                            ? reject(new Error(runner.stats.failures.join(', ')))
+                            : resolve();
+                    });
                 });
             })
         })
