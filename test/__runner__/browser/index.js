@@ -126,17 +126,14 @@ function runTests(options) {
 
                 var cleanup = JSDOM(html, {
                     url: 'file://' + generated.url,
-                    resourceLoader: function (resource, callback) {
-                        if (path.extname(resource.url.pathname) === '.js') {
-                            return resource.defaultFetch(callback);
-                        }
-
-                        callback(new Error('Unsupported resource loaded.'));
+                    features: {
+                        FetchExternalResources: ["script", "iframe", "link"]
                     }
                 });
-                window.addEventListener('error', reject);
+                window.addEventListener('error', function (ev) {
+                    reject(ev.error);
+                });
                 window.addEventListener('load', function () {
-                    console.log('loaded');
                     var runner = window.MOCHA_RUNNER;
                     runner.on('end', function () {
                         if (shouldCover) {

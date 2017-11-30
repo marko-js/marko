@@ -16,12 +16,12 @@ module.exports = function (helpers, done) {
     }, 25);
 
     setTimeout(function () {
-        component.setState('count', 50);
+        component.setState('count', 100);
         component.update();
-        expect(component.state.count).to.equal(50);
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 50 new messages.');
+        expect(component.state.count).to.equal(100);
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 100 new messages.');
         done();
-    }, 50);
+    }, 100);
 
     setTimeout(function () {
         component.setState('count', 0);
