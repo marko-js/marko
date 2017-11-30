@@ -9,24 +9,24 @@ module.exports = function (helpers, done) {
     var targetEl = component.el;
 
     setTimeout(function () {
-        component.setState('count', 25);
-        component.update();
-        expect(component.state.count).to.equal(25);
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 25 new messages.');
-    }, 25);
-
-    setTimeout(function () {
         component.setState('count', 100);
         component.update();
         expect(component.state.count).to.equal(100);
         expect(targetEl.innerHTML).to.contain('Hello Frank! You have 100 new messages.');
-        done();
     }, 100);
 
     setTimeout(function () {
-        component.setState('count', 0);
+        component.setState('count', 200);
         component.update();
-        expect(component.state.count).to.equal(0);
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 0 new messages.');
-    }, 0);
+        expect(component.state.count).to.equal(200);
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 200 new messages.');
+        done();
+    }, 200);
+
+    setTimeout(function () {
+        component.setState('count', 1);
+        component.update();
+        expect(component.state.count).to.equal(1);
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 1 new messages.');
+    }, 1);
 };

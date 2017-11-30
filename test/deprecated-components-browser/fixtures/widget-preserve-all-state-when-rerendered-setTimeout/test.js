@@ -9,19 +9,19 @@ module.exports = function (helpers, done) {
     var targetEl = widget.el;
 
     setTimeout(function () {
-        widget.setState('count', 25);
+        widget.setState('count', 100);
         widget.update();
-        expect(widget.state.count).to.equal(25);
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 25 new messages.');
-    }, 25);
+        expect(widget.state.count).to.equal(100);
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 100 new messages.');
+    }, 100);
 
     setTimeout(function () {
-        widget.setState('count', 50);
+        widget.setState('count', 200);
         widget.update();
-        expect(widget.state.count).to.equal(50);
-        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 50 new messages.');
+        expect(widget.state.count).to.equal(200);
+        expect(targetEl.innerHTML).to.contain('Hello Frank! You have 200 new messages.');
         done();
-    }, 50);
+    }, 200);
 
     setTimeout(function () {
         widget.setState('count', 0);
