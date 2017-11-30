@@ -134,8 +134,8 @@ function ready(callback, thisObj, doc) {
 
 module.exports = ready;
 
-module.exports.patchComponent = function() {
-    require('./Component').prototype.ready = function (callback) {
+module.exports.patchComponent = function(proto) {
+    (proto || require('./Component').prototype).ready = function (callback) {
         var document = this.el.ownerDocument;
         ready(callback, this, document);
     };

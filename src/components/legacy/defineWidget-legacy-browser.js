@@ -4,7 +4,8 @@
  var BaseState;
  var BaseComponent;
  var inherit;
-
+ var jQuery = require('../jquery');
+ var ready = require('../ready');
 
 module.exports = function defineWidget(def, renderer) {
     def = def.Widget || def;
@@ -110,6 +111,13 @@ module.exports = function defineWidget(def, renderer) {
     inherit(State, BaseState);
     proto.___State = State;
 
+    jQuery.patchComponent(
+        window.$, 
+        proto, 
+        true /* don't throw error until used if `$` is missing*/
+    );
+
+    ready.patchComponent(proto);
 
     if (!renderer) {
         renderer = ComponentClass.renderer || ComponentClass.prototype.renderer;

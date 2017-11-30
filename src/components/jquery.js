@@ -2,16 +2,20 @@ var ready = require('./ready');
 
 var idRegExp = /^\#(\S+)( .*)?/;
 
-exports.patchComponent = function(jQuery) {
+exports.patchComponent = function(jQuery, proto, delayThrow) {
     /* globals window */
 
-    if (!(jQuery || (jQuery = window.$))) {
+    if (!(jQuery || (jQuery = window.$)) && !delayThrow) {
         throw new Error('jQuery not found');
     }
 
-    require('./Component').prototype.$ = function jqueryProxy(arg) {
+    (proto || require('./Component').prototype).$ = function jqueryProxy(arg) {
         var args = arguments;
         var self = this;
+
+        if (!jQuery) {
+            throw new Error('jQuery not found');
+        }
 
         if (args.length === 1) {
             //Handle an "ondomready" callback function
