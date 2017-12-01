@@ -151,30 +151,29 @@ exports.scanDir = function(autoTestDir, run, options) {
         }
         fs.readdirSync(autoTestDir)
             .forEach(function(name) {
-                if (name.charAt(0) === '.') {
+                if (/^(\.|\~)/.test(name)) {
                     return;
-                }
-
-                if (name.endsWith('.skip')) {
-                    return;
-                }
+                }                
 
                 if (enabledTests && !enabledTests[name] && !enabledTests[testGroup] && !enabledTests[testGroup+'/'+name]) {
                     return;
                 }
 
-                var itFunc = it;
+                var testFunc = it;
 
                 if (enabledTest && (name === enabledTest || testGroup+'/'+name === enabledTest)) {
-                    itFunc = it.only;
+                    testFunc = it.only;
+                }
+
+                if (name.endsWith('.skip')) {
+                    testFunc = it.skip;
                 }
 
                 var dir = path.join(autoTestDir, name);
 
-                itFunc(`[${name}] `, function(done) {
+                testFunc(`[${name}] `, function(done) {
                     autoTest(name, dir, run, options, done);
                 });
-
             });
     });
 };

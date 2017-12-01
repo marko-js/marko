@@ -7,9 +7,10 @@ chai.config.includeStack = true;
 
 var expect = require('chai').expect;
 var nodePath = require('path');
-require('../../compiler');
 var autotest = require('../autotest');
 var markoCompiler = require('../../compiler');
+
+markoCompiler.buildTaglibLookup(__dirname);
 
 describe('taglib-lookup', function () {
     var autoTestDir = nodePath.join(__dirname, './fixtures');

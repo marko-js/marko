@@ -9,10 +9,13 @@ var compiler = require('marko/compiler');
 var builder = compiler.createBuilder();
 var autotest = require('../autotest');
 var fs = require('fs');
+var compiler = require('marko/compiler');
 var CompileContext = require('marko/compiler/CompileContext');
 var HtmlJsParser = require('marko/compiler/HtmlJsParser');
 var Parser = require('marko/compiler/Parser');
 var parser = new Parser(new HtmlJsParser());
+
+compiler.buildTaglibLookup(__dirname);
 
 describe('compiler/parser', function () {
     var autoTestDir = path.join(__dirname, './fixtures');
