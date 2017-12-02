@@ -44,8 +44,9 @@ describe(TEST_NAME, function () {
     });
 
     before(function () {
-        // Takes a time to build all tests into one page.
-        this.timeout(10000);
+        // Test init can take a while.
+        // Also I just just like using Infinity.
+        this.timeout(Infinity);
         return pageTemplate.render(templateData).then(function (html) {
             return runJSDOM({
                 html: html,
