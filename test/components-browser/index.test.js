@@ -54,10 +54,10 @@ describe(TEST_NAME, function () {
                     memFs.readFile(resource.url.path, cb);
                 }
             });
-        }).then(function (fn) { cleanup = fn });
+        });
     });
 
-    after(function () { cleanup(); });
+    after(function () { runJSDOM.cleanup(); });
 
     FIXTURES.forEach(function (dir) {
         var fixturesDir = path.basename(path.dirname(dir));

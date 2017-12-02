@@ -1,7 +1,7 @@
 var JSDOM = require('jsdom-global');
 
-module.exports = function (options) {
-  var cleanup = JSDOM(options.html, {
+module.exports = exports = function (options) {
+  exports.cleanup = JSDOM(options.html, {
     url: options.url,
     resourceLoader: options.resolve,
     features: { FetchExternalResources: ["script", "iframe", "link"] }
@@ -24,7 +24,7 @@ module.exports = function (options) {
     });
 
     window.addEventListener('load', function () {
-      resolve(cleanup);
+      resolve();
     });
   });
 }
