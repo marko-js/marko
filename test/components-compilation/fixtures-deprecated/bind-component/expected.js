@@ -1,7 +1,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/marko-test$1.0.0/components-compilation-deprecated/fixtures/bind-widget/widget",
+    marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-deprecated/bind-component/index",
     legacy_helpers = require("marko/src/components/legacy/helpers"),
     marko_rendererLegacy = legacy_helpers.r;
 
@@ -18,8 +18,8 @@ marko_template._ = marko_rendererLegacy(render, {
 
 marko_template.meta = {
     legacy: true,
-    id: "/marko-test$1.0.0/components-compilation-deprecated/fixtures/bind-widget/widget",
-    component: "./widget",
+    id: "/marko-test$1.0.0/components-compilation/fixtures-deprecated/bind-component/index",
+    component: "./",
     deps: [
       "marko/src/components"
     ]
