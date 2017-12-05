@@ -532,7 +532,7 @@ function morphdom(
             var componentToDestroy = node.___markoComponent;
             if (componentToDestroy) {
                 componentToDestroy.destroy();
-            } else {
+            } else if (node.parentNode) {
                 destroyNodeRecursive(node, detachedFromComponent !== true && detachedFromComponent);
 
                 if (eventDelegation.___handleNodeDetach(node) != false) {
