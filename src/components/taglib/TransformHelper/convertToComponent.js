@@ -6,14 +6,14 @@ var FLAG_HAS_BODY_EL = 2;
 var FLAG_HAS_HEAD_EL = 4;
 
 module.exports = function handleComponentBind(options) {
-    if (this.firstBind) {
+    let context = this.context;
+    let builder = this.builder;
+    
+    if (this.context.firstBind) {
         return;
     }
 
-    this.firstBind = true;
-
-    let context = this.context;
-    let builder = this.builder;
+    context.firstBind = true;
 
     let isLegacyComponent = this.isLegacyComponent = options.isLegacyComponent === true;
     let componentModule = options.componentModule;
