@@ -140,11 +140,11 @@ function runTests(options) {
                             var coverageFile = getCoverageFile(options.testsFile);
                             fs.writeFileSync(coverageFile, JSON.stringify(window.__coverage__));
                         }
-    
+
                         cleanup();
 
-                        runner.stats.failures.length
-                            ? reject(new Error(runner.stats.failures.join(', ')))
+                        runner.stats.failures
+                            ? reject({ code: 1 })
                             : resolve();
                     });
                 });

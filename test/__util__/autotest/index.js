@@ -13,6 +13,10 @@ exports.runTests = function (tests, run, options) {
                 itFunc = it.only;
             }
 
+            if (testObject.name.endsWith(".skip")) {
+                itFunc = it.skip;
+            }
+
             itFunc('[' + testObject.name + '] ', function (done) {
                 run(testObject.test, done);
             });

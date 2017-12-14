@@ -37,7 +37,7 @@
     "test-components": "npm run test-components-browser -s && npm run test-components-pages -s",
     "test-components-deprecated": "npm run test-components-browser-deprecated -s && npm run test-components-pages-deprecated -s",
     "test-components-browser": "node test/__runner__/browser/cli.js components-browser/index.test.js --automated",
-    "test-components-browser-deprecated": "node test/__runner__/browser/cli.js deprecated-components-browser/index.test.js --automated && npm run test-components-pages-deprecated -s",
+    "test-components-browser-deprecated": "node test/__runner__/browser/cli.js deprecated-components-browser/index.test.js --automated",
     "test-components-pages": "node test/__runner__/browser/cli.js --pages --automated",
     "test-components-pages-deprecated": "node test/__runner__/browser/cli.js --pages --deprecated --automated",
     "test-components-browser-dev": "browser-refresh test/__runner__/browser/cli.js components-browser/index.js --server",
