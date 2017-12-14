@@ -80,6 +80,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         if (registry.___isServer && typeName) {
+            if (renderingLogic) delete renderingLogic.onRender;
             component = registry.___createComponent(renderingLogic || {}, id, input, out, typeName, customEvents, scope);
         } else {
             if (!component) {
