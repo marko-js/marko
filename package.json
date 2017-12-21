@@ -72,7 +72,7 @@
     "lasso-modules-client": "^2.0.4",
     "lasso-package-root": "^1.0.1",
     "listener-tracker": "^2.0.0",
-    "micromatch": "^3.0.4",
+    "micromatch": "^3.1.4",
     "object-assign": "^4.1.0",
     "property-handlers": "^1.0.0",
     "raptor-json": "^1.0.1",
