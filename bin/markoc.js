@@ -25,7 +25,7 @@ if (markoCompilerPath) {
     markoCompiler = require('../compiler');
 }
 
-var Minimatch = require('minimatch').Minimatch;
+var micromatch = require('micromatch');
 
 var appModulePath = require('app-module-path');
 
@@ -156,7 +156,7 @@ ignoreRules = ignoreRules.filter(function (s) {
 
 ignoreRules = ignoreRules.map(function (pattern) {
 
-    return new Minimatch(pattern, mmOptions);
+    return micromatch.matcher(pattern, mmOptions);
 });
 
 
@@ -170,9 +170,9 @@ function isIgnored(path, dir, stat) {
     var ignore = false;
     var ignoreRulesLength = ignoreRules.length;
     for (var i=0; i<ignoreRulesLength; i++) {
-        var rule = ignoreRules[i];
+        var isMatch = ignoreRules[i];
 
-        var match = rule.match(path);
+        var match = isMatch(path);
 
         if (!match && stat && stat.isDirectory()) {
             try {
@@ -180,7 +180,7 @@ function isIgnored(path, dir, stat) {
             } catch(e) {}
 
             if (stat && stat.isDirectory()) {
-                match = rule.match(path + '/');
+                match = isMatch(path + '/');
             }
         }
 
