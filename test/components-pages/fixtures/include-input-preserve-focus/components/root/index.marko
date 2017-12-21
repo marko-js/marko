@@ -1,0 +1,14 @@
+class {
+    onMount() {
+        window.component = this;
+    }
+    onCreate () {
+        this.state = {
+            text: ""
+        };
+    }
+}
+
+<include("../container/index.marko")>
+    <input key="input" value=state.text/>
+</include>
