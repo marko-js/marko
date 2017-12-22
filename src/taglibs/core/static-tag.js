@@ -1,5 +1,11 @@
 module.exports = function functionCodeGenerator(el, codegen) {
-    if(el.parentNode.type !== 'TemplateRoot') {
+    var parent = el.parentNode;
+    var isTopLevel = (
+        parent.type === 'TemplateRoot' ||
+        (parent.type === 'CustomTag' && parent.parentNode == null)
+    );
+
+    if(!isTopLevel) {
         codegen.addError('static is a static tag and can only be declared at the template root');
     }
 
