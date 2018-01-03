@@ -1,22 +1,19 @@
-module.exports = function functionCodeGenerator(el, codegen) {
+module.exports = function functionCodeGenerator(el, context) {
     var parent = el.parentNode;
-    var isTopLevel = (
-        parent.type === 'TemplateRoot' ||
-        (parent.type === 'CustomTag' && parent.parentNode == null)
-    );
+    var isTopLevel = parent.type === 'TemplateRoot';
 
     if(!isTopLevel) {
-        codegen.addError('static is a static tag and can only be declared at the template root');
+        context.addError('static is a static tag and can only be declared at the template root');
     }
 
     var code = el.tagString.replace(/^static\s*/, '').trim();
 
     if(code[0] === '{') {
         var statements = code.slice(1, -1);
-        codegen.addStaticCode(codegen.builder.code(statements));
+        context.addStaticCode(context.builder.code(statements));
     } else {
-        codegen.addStaticCode(codegen.builder.expression(code));
+        context.addStaticCode(context.builder.expression(code));
     }
 
-    return null;
+    el.detach();
 };
