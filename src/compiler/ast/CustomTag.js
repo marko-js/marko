@@ -391,9 +391,31 @@ class CustomTag extends HtmlElement {
             addAttrs(attrProps);
         }
 
-        this._inputProps = inputProps || builder.objectExpression();
+        inputProps = inputProps || builder.objectExpression();
 
-        return this._inputProps;
+        if (this._additionalProps) {
+            inputProps = merge(this._additionalProps, inputProps, context);
+        }
+
+        if (this.argument) {
+            let argExpression = builder.parseExpression(this.argument);
+            inputProps = merge(argExpression, inputProps, context);
+            context.deprecate('Using <tag(attrs)> to pass dynamic attributes is deprecated. use ...attrs instead.');
+        }
+
+        if (this.dynamicAttributes) {
+            this.dynamicAttributes.forEach((dynamicAttributesExpression) => {
+                inputProps = merge(dynamicAttributesExpression, inputProps, context);
+            });
+        }
+
+        if (this._hasDynamicNestedTags) {
+            inputProps = builder.functionCall(context.helper('mergeNestedTagsHelper'), [ inputProps ]);
+        }
+
+        this._inputProps = inputProps;
+
+        return inputProps;
     }
 
     resolveTagDef(codegen) {
@@ -711,27 +733,6 @@ class CustomTag extends HtmlElement {
         }
 
         let inputProps = this.buildInputProps(codegen, additionalAttrs);
-
-        if (this._additionalProps) {
-            inputProps = merge(this._additionalProps, inputProps, context);
-        }
-
-        if (this.argument) {
-            let argExpression = builder.parseExpression(this.argument);
-            inputProps = merge(argExpression, inputProps, context);
-            context.deprecate('Using <tag(attrs)> to pass dynamic attributes is deprecated. use ...attrs instead.');
-        }
-
-        if (this.dynamicAttributes) {
-            this.dynamicAttributes.forEach((dynamicAttributesExpression) => {
-                inputProps = merge(dynamicAttributesExpression, inputProps, context);
-            });
-        }
-
-        if (this._hasDynamicNestedTags) {
-            inputProps = builder.functionCall(context.helper('mergeNestedTagsHelper'), [ inputProps ]);
-        }
-
         let renderTagNode = this.generateRenderNode(codegen, tagDef, inputProps, parentCustomTag);
 
         if (bodyOnlyIf && renderBodyFunctionVar) {
