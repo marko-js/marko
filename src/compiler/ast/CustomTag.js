@@ -233,6 +233,7 @@ class CustomTag extends HtmlElement {
         let builder = context.builder;
         let tagDef = this.resolveTagDef(codegen);
         let explicitAttrs = null;
+        let computedAttrs = null;
         let inputProps = null;
 
         function addAttrs(expr) {
@@ -333,10 +334,11 @@ class CustomTag extends HtmlElement {
                 return; // Skip attributes with no names
             }
 
-            if (typeof attrName !== 'string' && !attr.spread) {
-                // Skip over attributes that don't have string attribute names
-                // since those will be computed properties that we need to
-                // add at the end
+            if (attrName && typeof attrName !== 'string') {
+                // Add a computed property since the attribute name is not
+                // a literal string.
+                computedAttrs = computedAttrs || [];
+                computedAttrs.push(builder.property(attrName, attr.value, true /* computed */));
                 return;
             }
 
@@ -376,12 +378,17 @@ class CustomTag extends HtmlElement {
             });
         }
 
-        if (explicitAttrs || additionalAttrs) {
+        if (explicitAttrs || additionalAttrs || computedAttrs) {
+            let attrProps;
             explicitAttrs = explicitAttrs || {};
             if (additionalAttrs) {
                 Object.assign(explicitAttrs, additionalAttrs);
             }
-            addAttrs(builder.objectExpression(explicitAttrs));
+            attrProps = builder.objectExpression(explicitAttrs);
+            if (computedAttrs) {
+                computedAttrs.forEach(prop => attrProps.properties.push(prop));
+            }
+            addAttrs(attrProps);
         }
 
         this._inputProps = inputProps || builder.objectExpression();
@@ -704,17 +711,6 @@ class CustomTag extends HtmlElement {
         }
 
         let inputProps = this.buildInputProps(codegen, additionalAttrs);
-
-        // Loop over the attributes found on the HTML element and add the corresponding properties
-        // to the input object for the custom tag
-        this.forEachAttribute((attr) => {
-            let attrName = attr.name;
-            if (attrName && typeof attrName !== 'string') {
-                // Add a computed property since the attribute name is not
-                // a literal string.
-                inputProps.properties.push(builder.property(attrName, attr.value, true /* computed */));
-            }
-        });
 
         if (this._additionalProps) {
             inputProps = merge(this._additionalProps, inputProps, context);
