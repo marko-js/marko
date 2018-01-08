@@ -1,0 +1,12 @@
+class {
+    onCreate() {
+        this.state = {
+            showHeader: true
+        };
+    }
+}
+
+<h1 if(state.showHeader)>
+    Header
+</h1>
+<div>Body</div>

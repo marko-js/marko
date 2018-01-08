@@ -1,0 +1,14 @@
+class {
+    onInput(input) {
+        this.state = {
+            color: input.color
+        };
+    }
+    updateColor(color) {
+        this.state.color = color;
+    }
+}
+
+<div style={ color: state.color }>
+    <app-counter key="counter" color=state.color/>
+</div>

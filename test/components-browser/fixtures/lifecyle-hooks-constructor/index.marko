@@ -1,0 +1,18 @@
+class {
+    onCreate() {
+        this.name = 'INITIAL';
+        this.onInputCalls = [];
+    }
+
+    onInput(newInput) {
+        this.onInputCalls.push({
+            name: this.name
+        })
+
+        this.name = newInput.name;
+    }
+}
+
+<div>
+	Hello <span.name>${input.name}</span>!
+</div>

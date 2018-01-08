@@ -1,0 +1,19 @@
+class {
+    onCreate(input) {
+        this.state = { mode: 'sign-in' };
+    }
+    setType(value) {
+        this.state.mode = value;
+    }
+}
+
+<div>
+    <if(state.mode === 'sign-in')>
+        <h1>Sign in</h1>
+        Create a new account? <a on-click('setType', 'sign-up')>Sign up</a>
+    </if>
+    <else>
+        <h1>Sign up</h1>
+        Already have an account? <a on-click('setType', 'sign-in')>Sign in</a>
+    </else>
+</div>

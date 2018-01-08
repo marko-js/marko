@@ -1,0 +1,5 @@
+{
+    "dependencies": [
+        "require: ./components/app-foo"
+    ]
+}

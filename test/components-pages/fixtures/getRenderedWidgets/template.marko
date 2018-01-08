@@ -1,0 +1,41 @@
+static {
+    var markoComponents = require('marko/components');
+    var componentsTemplate = require('./components.marko');
+
+    function componentsDataProvider(callback) {
+        componentsTemplate.renderToString({}, function(err, html, out) {
+            var componentIds = markoComponents.getRenderedComponents(out);
+
+            // Serialize the HTML and the component IDs to the browser
+            callback(null, {
+                    html: html,
+                    componentIds: componentIds
+                });
+        });
+    }
+}
+
+lasso-page dependencies=data.browserDependencies lasso=data.lasso
+
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title -- Marko Components Tests
+        lasso-head
+    body
+        await(components from componentsDataProvider)
+            script
+                ---
+                window.components = ${JSON.stringify(components)};
+                ---
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        lasso-body
+
+        lasso-slot name="mocha-run"
+
+        browser-refresh

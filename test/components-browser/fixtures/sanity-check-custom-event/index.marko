@@ -1,0 +1,14 @@
+<div>
+    <app-foo onTest('handleFooTest')/>
+</div>
+
+class {
+    onMount() {
+        var fooEl = document.querySelector('.foo');
+        var fooComponent = this.fooComponent = require('marko/components').getComponentForEl(fooEl);
+        fooComponent.emitTestEvent();
+    }
+    handleFooTest() {
+        this.fooEvent = arguments;
+    }
+}

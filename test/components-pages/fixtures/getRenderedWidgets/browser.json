@@ -1,0 +1,5 @@
+{
+    "dependencies": [
+        "require-run: ./components/app-simple"
+    ]
+}

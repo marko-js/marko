@@ -1,0 +1,45 @@
+class {
+    onCreate() {
+        this.record('create', arguments, this);
+    }
+
+    onRender(){
+        this.record('render', arguments, this);
+    }
+
+    onMount(){
+        this.record('mount', arguments, this);
+    }
+
+    onUpdate(){
+        this.record('update', arguments, this);
+    }
+
+    record(name, args, thisObj) {
+        this.hooks = this.hooks || (this.hooks = []);
+
+        this.hooks.push({
+            name: name,
+            args: args,
+            thisObject: thisObj
+        });
+    }
+
+    reset() {
+        this.hooks = null;
+    }
+
+    get hookNames() {
+        if (!this.hooks) {
+            return [];
+        }
+
+        return this.hooks.map(function(hook) {
+            return hook.name;
+        });
+    }
+}
+
+<div>
+	Hello <span.name>${input.name}</span>!
+</div>

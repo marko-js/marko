@@ -1,0 +1,12 @@
+class {
+    onMount() {
+        this.detachEvent = undefined;
+    }
+
+    handleDetach(event, node) {
+        event.preventDefault();
+        this.detachEvent = event;
+    }
+}
+
+<li.color key="root" on-detach('handleDetach')>${input.color}</li>

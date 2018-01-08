@@ -1,0 +1,22 @@
+class {
+    onInput(input) {
+        this.state = {
+            counter: 1
+        }
+    }
+
+    increment() {
+        this.state.counter++;
+    }
+}
+
+<div>
+    <input type='text'
+        placeholder="What are you looking for?"
+        tabindex=1
+        class='input'
+        autocomplete='off'
+        key='searchInput'>
+
+    <button type='button' class='btn btn-search'></button>
+</div>

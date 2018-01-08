@@ -79,6 +79,7 @@ Security reports are greatly appreciated and we will publicly thank you for it. 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
 * [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
+* [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
 
 # Labels
@@ -103,7 +104,7 @@ Every issue should be assigned one of these.
 ![](https://img.shields.io/badge/scope-compiler-cc0077.svg)
 ![](https://img.shields.io/badge/scope-runtime-eebb00.svg)
 ![](https://img.shields.io/badge/scope-core%20taglib-00cccc.svg)
-![](https://img.shields.io/badge/scope-widgets-9900aa.svg)
+![](https://img.shields.io/badge/scope-components-9900aa.svg)
 ![](https://img.shields.io/badge/scope-tools-fef2c0.svg)
 
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
@@ -112,7 +113,7 @@ What part of the Marko stack does this issue apply to? In most cases there shoul
 - **compiler**: Relates to the compiler (server only)
 - **runtime**: Relates to the runtime (isomorphic/universal)
 - **core-taglib**: Relates to custom tags that ship with Marko
-- **widgets**: Relates to `marko-widgets`
+- **components**: Relates to `marko-components`
 - **tools**: Relates to editor plugins, commandline tools, etc.
 
 ### Difficulty

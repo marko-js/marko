@@ -1,0 +1,16 @@
+div w-bind
+    button key="button" onMouseMove('handleButtonMouseMove') onClick("handleButtonClick")
+    button [
+            key="ok"
+            type="button"
+            onClick('handleButtonClick', {type: 'ok'})
+            onMouseMove('handleButtonMouseMove', {type: 'ok'})
+        ]
+        -- OK
+    button [
+            key="cancel"
+            type="button"
+            onClick('handleButtonClick', {type: 'cancel'})
+            onMouseMove('handleButtonMouseMove', {type: 'cancel'})
+        ]
+        -- Cancel

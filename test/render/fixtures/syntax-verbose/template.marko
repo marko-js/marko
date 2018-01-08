@@ -1,0 +1,61 @@
+$ var pageTitle="Marko Templating Engine";
+$ var currentPage='home';
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${pageTitle}</title>
+    </head>
+    <body>
+        <h1>${pageTitle}</h1>
+
+        <p>
+            Marko is a <i>fast</i> and lightweight templating engine that
+            compiles templates to CommonJS modules and supports streaming,
+            async rendering and custom tags. It supports both a familiar
+            HTML syntax and a concise, indentation-based syntax.
+        </p>
+
+        <ul.features>
+            <li for(feature in ['async', 'streaming', 'custom-tags', 'readable', 'modules'])>
+                ${feature}
+            </li>
+        </>
+
+        <ul if(input.colors && input.colors.length)>
+            <li for(color in input.colors)>${color}</li>
+        </ul>
+        <div else>
+            No colors!
+        </div>
+
+        <tabs>
+            <tabs:tab title="Tab 1">
+                Body content for Tab 1
+            </tabs:tab>
+            <tabs:tab title="Tab 2">
+                Body content for Tab 2
+            </tabs:tab>
+        </tabs>
+
+        <script type='text/javascript'>
+        if (foo) {
+            alert('Marko is awesome!');
+        }
+        </script>
+
+        <macro navLink(id, href, title)>
+            <li>
+                <a.nav-link class=(id === currentPage && 'active') href=href>
+                    ${title}
+                </a>
+            </li>
+        </macro>
+
+        <ul>
+            <navLink('home', '/', 'Home')/>
+            <navLink('docs', '/docs', 'Docs')/>
+            <navLink('blog', '/blog', 'Blog')/>
+        </ul>
+    </body>
+</html>

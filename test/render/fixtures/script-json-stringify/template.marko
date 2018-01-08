@@ -1,0 +1,11 @@
+$ var basePath='/abc';
+
+<script type="application/json">
+${JSON.stringify({
+        "requests": {
+            "base": basePath,
+            "pageview": "\${base}=\${ping}",
+            "event": "\${base}=\${track}"
+        }
+})}
+</script>

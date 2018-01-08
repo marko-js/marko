@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "require: ./components/app-hello/index.marko",
+        "require: ./components/app-init-async/index.marko"
+    ]
+}

@@ -25,7 +25,7 @@ if (markoCompilerPath) {
     markoCompiler = require('../compiler');
 }
 
-var Minimatch = require('minimatch').Minimatch;
+var micromatch = require('micromatch');
 
 var appModulePath = require('app-module-path');
 
@@ -116,12 +116,19 @@ var args = require('argly').createParser({
 
 var output = 'html';
 
+var isForBrowser = false;
+
 if (args.vdom) {
     output = 'vdom';
+    isForBrowser = true;
 }
 
+
 var compileOptions = {
-    output: output
+    output: output,
+    browser: isForBrowser,
+    compilerType: 'markoc',
+    compilerVersion: markoPkgVersion || markocPkgVersion
 };
 
 var force = args.force;
@@ -149,7 +156,7 @@ ignoreRules = ignoreRules.filter(function (s) {
 
 ignoreRules = ignoreRules.map(function (pattern) {
 
-    return new Minimatch(pattern, mmOptions);
+    return micromatch.matcher(pattern, mmOptions);
 });
 
 
@@ -163,9 +170,9 @@ function isIgnored(path, dir, stat) {
     var ignore = false;
     var ignoreRulesLength = ignoreRules.length;
     for (var i=0; i<ignoreRulesLength; i++) {
-        var rule = ignoreRules[i];
+        var isMatch = ignoreRules[i];
 
-        var match = rule.match(path);
+        var match = isMatch(path);
 
         if (!match && stat && stat.isDirectory()) {
             try {
@@ -173,7 +180,7 @@ function isIgnored(path, dir, stat) {
             } catch(e) {}
 
             if (stat && stat.isDirectory()) {
-                match = rule.match(path + '/');
+                match = isMatch(path + '/');
             }
         }
 
@@ -291,8 +298,6 @@ if (args.clean) {
                         console.log('Deleted: ' + file);
                         context.endAsync();
                     });
-
-
                 }
             }
         },
@@ -317,10 +322,12 @@ if (args.clean) {
         }
 
         found[path] = true;
-
         var outPath = path + '.js';
+
         console.log('Compiling:\n  Input:  ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
+
         context.beginAsync();
+
         markoCompiler.compileFile(path, compileOptions, function(err, src) {
             if (err) {
                 failed.push('Failed to compile "' + relPath(path) + '". Error: ' + (err.stack || err));

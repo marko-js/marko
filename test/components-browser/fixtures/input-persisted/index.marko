@@ -1,0 +1,13 @@
+class {
+    onInput() {
+        this.state = { count:0 };
+    }
+    increment() {
+        this.state.count++;
+    }
+}
+
+<div key="current" style={ color:data.color }>
+    The current count is ${state.count}
+</div>
+<button on-click('increment')>+1</button>

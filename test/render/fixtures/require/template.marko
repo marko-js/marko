@@ -1,0 +1,7 @@
+static {
+    var testHelpers = require('./test-helpers')
+}
+---
+Hello ${testHelpers.upperCase("world")}!
+Hello ${testHelpers.trim("   World   ")}!
+---

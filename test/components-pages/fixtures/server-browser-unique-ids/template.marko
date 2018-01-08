@@ -1,0 +1,23 @@
+lasso-page dependencies=data.browserDependencies lasso=data.lasso
+
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title -- Marko Components Tests
+        lasso-head
+    body
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        app-foo
+
+        lasso-body
+
+        init-components immediate
+
+        lasso-slot name="mocha-run"
+
+        browser-refresh

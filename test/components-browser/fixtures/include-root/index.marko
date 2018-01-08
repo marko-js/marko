@@ -1,0 +1,13 @@
+class {
+    onClick() {
+    	this.clicked = true;
+    }
+}
+
+<include('./modal.marko')>
+    <@body>
+    	<li>
+    	    <button type="button" key="button" on-click('onClick')>Test link</button>
+    	</li>
+    </@body>
+</include>

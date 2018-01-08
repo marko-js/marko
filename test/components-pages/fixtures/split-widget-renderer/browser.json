@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "require: ./components/app-button-split/component-browser",
+        "require: ./components/component-only/component-browser"
+    ]
+}

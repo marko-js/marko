@@ -1,23 +1,20 @@
-<script>
-    module.exports = {
-        onInput: function(input) {
-            this.state = {
-                name: input.name,
-                colors: input.colors,
-                clickCount: 0
-            };
-        },
+class {
+    onInput() {
+        this.state = {
+            clickCount: 0
+        };
+    }
 
-        handleButtonClick: function() {
-            this.state.clickCount++;
-        }
-    };
-</script>
+    handleButtonClick() {
+        this.state.clickCount++;
+    }
+}
+
 div
-    h1 -- Hello ${state.name}!
+    h1 -- Hello ${input.name}!
     div.colors
-        ul if(state.colors.length)
-            for(color in state.colors)
+        ul if(input.colors.length)
+            for(color in input.colors)
                 li.color style="background-color: ${color}"
                     -- ${color}
         div else

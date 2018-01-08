@@ -1,0 +1,18 @@
+class {
+    onInput(input) {
+        this.input = null;
+
+        return {
+            name: input.name.toUpperCase()
+        }
+    }
+
+    onMount() {
+        var componentsLookup = window.components || (window.components = {});
+        componentsLookup['onInput-assign-null-and-return'] = this;
+    }
+}
+
+<div>
+    Hello <span.name>${input ? input.name : '(no input)'}</span>!
+</div>

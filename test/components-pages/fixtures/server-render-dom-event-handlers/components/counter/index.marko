@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = {
+            value: 0
+        }
+    }
+
+    increment() {
+        this.state.value++;
+        this.emit('change', this.state.value);
+    }
+}
+
+<div.counter>
+    <span.value>${state.value}</span>
+    <button type="button" on-click('increment')>
+        Increment
+    </button>
+</div>

@@ -1,6 +1,0 @@
-{
-    "browser": {
-        "./resolve.js": "./resolve-browser.js",
-        "./deresolve.js": "./deresolve-browser.js"
-    }
-}

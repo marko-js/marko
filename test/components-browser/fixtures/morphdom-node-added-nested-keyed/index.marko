@@ -1,0 +1,20 @@
+class  {
+    onCreate() {
+        this.state = {
+            renderCount: 0
+        }
+    }
+}
+
+<div.root>
+    <if(state.renderCount === 0)>
+        <div>
+            <input type="text" key="nameInput" value="1"/>
+        </div>
+    </if>
+    <else>
+        <p>
+            <input type="text" key="nameInput" value="2"/>
+        </p>
+    </else>
+</div>

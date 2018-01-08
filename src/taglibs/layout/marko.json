@@ -1,0 +1,47 @@
+{
+    "<layout-use>": {
+        "@__template": "template",
+        "@__data": "template",
+        "@*": {
+            "remove-dashes": true,
+            "type": "string"
+        },
+        "transformer": "./use-tag.js",
+        "autocomplete": [
+            {
+                "snippet": "layout-use(\"${1:./path/to/template.marko}\")",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-use><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-use><code>"
+            }
+        ]
+    },
+    "<layout-put>": {
+        "@into": "string",
+        "@value": "string",
+        "transformer": "./put-tag",
+        "autocomplete": [
+            {
+                "snippet": "layout-put into=\"${1:name}\"",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-put><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-put><code>"
+            }
+        ]
+    },
+    "<layout-placeholder>": {
+        "@name": "string",
+        "transformer": "./placeholder-tag",
+        "autocomplete": [
+            {
+                "snippet": "layout-placeholder name=\"${1:name}\"",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-placeholder><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-placeholder><code>"
+            }
+        ]
+    }
+}

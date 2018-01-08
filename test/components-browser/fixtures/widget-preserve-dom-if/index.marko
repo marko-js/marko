@@ -1,0 +1,18 @@
+<div>
+    <h1>Preserve Begin</h1>
+    <span key="preserve" no-update-if(input.preserveCondition) data-renderId=input.renderId>${input.renderId}</span>
+
+    <span key="preserveBody" no-update-body-if(input.preserveCondition) data-renderId=input.renderId>${input.renderId}</span>
+
+    <app-stateful-rerender key="component" name=(input.renderId.toString()) no-update-if(input.preserveCondition) />
+
+    <!-- Test without an ID -->
+
+    <span class="preserve" no-update-if(input.preserveCondition) data-renderId=input.renderId>${input.renderId}</span>
+
+    <span class="preserve-body" no-update-body-if(input.preserveCondition) data-renderId=input.renderId>${input.renderId}</span>
+
+    <app-stateful-rerender class="component-no-id" name=(input.renderId.toString()) no-update-if(input.preserveCondition) data-renderId=input.renderId/>
+
+    <h1>Preserve End</h1>
+</div>

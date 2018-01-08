@@ -1,0 +1,17 @@
+class {
+  onCreate () {
+    this.state = { display: true };
+  }
+
+  onMount () {
+    window.testComponent = this;
+  }
+
+  toggle () {
+    this.state.display = !this.state.display;
+  }
+}
+
+<div key="root">
+    <include('../child') if(state.display)/>
+</div>

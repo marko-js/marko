@@ -1,0 +1,17 @@
+class {
+    onInput(attrs) {
+        this.state = { code: '// Your code here', errorText: '' }
+    }
+    submit() {
+        this.state.errorText = 'Placeholder error'
+    }
+}
+
+<div class="code-editor">
+    <h3>Code Editor</h3>
+    <div>
+        <textarea>${state.code}</textarea>
+    </div>
+    <button on-click('submit')>Run Code</button>
+    <pre class="error-message">${state.errorText}</pre>
+</div>

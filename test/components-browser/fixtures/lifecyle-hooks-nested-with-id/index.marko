@@ -1,0 +1,23 @@
+import hooks from './hooks';
+
+class {
+    onCreate() {
+        hooks.record('root', 'create', arguments, this);
+    }
+
+    onRender(){
+        hooks.record('root', 'render', arguments, this);
+    }
+
+    onMount(){
+        hooks.record('root', 'mount', arguments, this);
+    }
+
+    onUpdate(){
+        hooks.record('root', 'update', arguments, this);
+    }
+}
+
+<div>
+	<foo name=input.name key="foo"/>
+</div>

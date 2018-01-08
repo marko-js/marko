@@ -1,0 +1,32 @@
+import { expect } from 'chai';
+
+class {
+    onInput(input) {
+        this.state = {
+            nameNull: null,
+            nameUndefined: undefined
+        }
+    }
+
+    onMount() {
+        window.appStateWatch = this;
+    }
+
+    test() {
+        expect(this.state.nameNull).to.equal(null);
+        expect(this.state.nameUndefined).to.equal(undefined);
+
+        this.state.nameNull = 'Frank';
+        this.update();
+        expect(this.el.innerHTML).to.contain('nameNull:Frank');
+
+        this.state.nameUndefined = 'Frank';
+        this.update();
+        expect(this.el.innerHTML).to.contain('nameUndefined:Frank');
+    }
+}
+
+<div>
+    nameNull:${state.nameNull || ''}!
+    nameUndefined:${state.nameUndefined || ''}!
+</div>

@@ -2,12 +2,11 @@
     <a href="http://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko logo" width="300" /></a><br /><br />
 </p>
 
-Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) and lightweight UI component building library from eBay. Marko runs on Node.js and in the browser and it supports streaming, async rendering and custom tags. UI components compiled to readable CommonJS modules. Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
-
-> :rocket: The upcoming Marko v4 release with a lot of exciting improvements is almost ready! Please see the [ROADMAP](./ROADMAP.md) to find out what's changing.
+Marko is a friendly (and fast!) UI library that makes building web apps fun.
+Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
-[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master)](https://coveralls.io/github/marko-js/marko?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/marko-js/marko/badge.svg?branch=master&cache-bust=5)](https://coveralls.io/github/marko-js/marko?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marko-js/marko)
 [![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
 [![Downloads](https://img.shields.io/npm/dm/marko.svg)](http://npm-stat.com/charts.html?package=marko)
@@ -27,267 +26,109 @@ Marko is a [_really_ fast](https://github.com/marko-js/templating-benchmarks) an
 npm install marko --save
 ```
 
-# Syntax
+# Examples
 
-Marko supports _both_ a familiar HTML syntax, as well as a more concise indentation-based syntax. Both syntaxes are equally supported. Regardless of which syntax you choose, the compiled code will be exactly the same.
+Marko provides an elegant and readable syntax for both single-file components
+and components broken into separate files. There are plenty of examples to play
+with on [Marko's Try-Online](http://markojs.com/try-online/). Additional
+[component documentation](http://markojs.com/docs/components/) can be found on
+the Marko.js website.
 
-## HTML syntax
+## Single file
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Marko Templating Engine</title>
-    </head>
-    <body>
-        <h1>
-            Hello ${data.name}!
-        </h1>
+The following single-file component renders a button and a counter with the
+number of times the button has been clicked. [Try this example now!](http://markojs.com/try-online/?file=%2Fcomponents%2Fcomponents%2Fclick-count%2Findex.marko)
 
-        <if(data.colors.length)>
-            <ul>
-                <for(color in data.colors)>
-                    <li>
-                        ${color}
-                    </li>
-                </for>
-            </ul>
-        </if>
-        <else>
-            <div>
-                No colors!
-            </div>
-        </else>
-    </body>
-</html>
-```
-
-Alternatively, you can choose to apply rendering logic as "attributes":
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Marko Templating Engine</title>
-    </head>
-    <body>
-        <h1>
-            Hello ${data.name}!
-        </h1>
-
-        <ul if(data.colors.length)>
-            <li for(color in data.colors)>
-                ${color}
-            </li>
-        </ul>
-        <div else>
-            No colors!
-        </div>
-    </body>
-</html>
-```
-
-## Concise syntax
-
-The following concise template is equivalent to the previous template:
-
-```html
-<!DOCTYPE html>
-html lang="en"
-    head
-        title - Marko Templating Engine
-    body
-        h1 - Hello ${data.name}!
-        ul if(data.colors.length)
-            li for(color in data.colors)
-                ${color}
-        div else
-            - No colors!
-```
-
-Alternatively, you can choose to apply rendering logic as separate "tags":
-
-```html
-<!DOCTYPE html>
-html lang="en"
-    head
-        title - Marko Templating Engine
-    body
-        h1 - Hello ${data.name}!
-        if(data.colors.length)
-            ul
-                for(color in data.colors)
-                    li - ${color}
-        else
-            div - No colors!
-```
-
-## Mixed syntax
-
-You can even mix and match the concise syntax with the HTML syntax within the same document.
-The following template is equivalent to the previous templates:
-
-```html
-<!DOCTYPE html>
-html lang="en"
-    head
-        title - Marko Templating Engine
-    body
-        <h1>
-            Hello ${data.name}!
-        </h1>
-        ul if(data.colors.length)
-            li for(color in data.colors)
-                ${color}
-        div else
-            - No colors!
-```
-
-# Basic Usage
-
-## Loading a template
-
-```javascript
-var template = require('./template.marko');
-```
-
-NOTE: On the server, you will need to install the Node.js require extension for Marko:
-
-```javascript
-require('marko/node-require').install();
-```
-
-## Rendering a template
-
-```javascript
-var templateData = { name: 'Frank' };
-
-// Render to an existing Writable stream:
-template.render(templateData, process.stdout);
-
-// Render to a callback function:
-template.render(templateData, function(err, html) {
-        console.log(html);
-    });
-
-// Render a template synchronously
-console.log(template.renderSync(templateData));
-
-// Render a template and return a new Readable stream:
-template.stream(templateData).pipe(process.stdout);
-```
-
-# UI Components
-
-Marko Widgets is a minimalist library for building isomorphic/universal UI components with the help of the
-[Marko templating engine](http://markojs.com/docs/). Marko renders the HTML for UI components, while Marko Widgets adds client-side behavior. Client-side behavior includes the following:
-
-- Handling DOM events
-- Emitting custom events
-- Handling custom events emitted by other widgets
-- Manipulating and updating the DOM
-
-Marko Widgets offers advanced features like DOM-diffing, batched updates, stateful widgets, declarative event binding and efficient event delegation.
-
-Changing a widgets state or properties will result in the DOM automatically being updated without writing extra code. Marko Widgets has adopted many of the good design principles promoted by the [React](https://facebook.github.io/react/index.html) team, but aims to be much lighter and often faster (especially on the server). When updating the view for a widget, Marko Widgets uses DOM diffing to make the minimum number of changes to the DOM through the use of the [morphdom](https://github.com/patrick-steele-idem/morphdom) module.
-
-UI components are defined using very clean JavaScript code. For example:
-
-```javascript
-module.exports = require('marko-widgets').defineComponent({
-    /**
-     * The template to use as the view
-     */
-    template: require('./template.marko'),
-
-    /**
-     * Return the initial state for the UI component based on
-     * the input properties that were provided.
-     */
-    getInitialState: function(input) {
-        return {
-            greetingName: input.greetingName,
-            clickCount: 0
-        };
-    },
-
-    /**
-     * Return an object that is used as the template data. The
-     * template data should be based on the current widget state
-     * that is passed in as the first argument
-     */
-    getTemplateData: function(state) {
-        var clickCount = state.clickCount;
-        var timesMessage = clickCount === 1 ? 'time' : 'times';
-
-        return {
-            greetingName: state.greetingName,
-            clickCount: clickCount,
-            timesMessage: timesMessage
-        };
-    },
-
-    /**
-     * This is the constructor for the widget. Called once when
-     * the widget is first added to the DOM.
-     */
-    init: function() {
-        var el = this.el;
-        // "el" will be reference the raw HTML element that this
-        // widget is bound to. You can do whatever you want with it...
-        // el.style.color = 'red';
-    },
-
-    /**
-     * Handler method for the button "click" event. This method name
-     * matches the name of the `w-onClick` attribute in the template.
-     */
-    handleButtonClick: function(event, el) {
-        this.setState('clickCount', this.state.clickCount + 1);
-    },
-
-    /**
-     * Expose a method to let other code change the "greeting name".
-     * If the value of the "greetingName" state property changes
-     * then the UI component will automatically rerender and the
-     * DOM will be updated.
-     */
-    setGreetingName: function(newName) {
-        this.setState('greetingName', newName);
+__click-count.marko__
+```marko
+class {
+    onCreate() {
+        this.state = { count:0 };
     }
-});
-```
+    increment() {
+        this.state.count++;
+    }
+}
 
-And, here is the corresponding Marko template for the UI component:
+style {
+    .count {
+        color:#09c;
+        font-size:3em;
+    }
+    .example-button {
+        font-size:1em;
+        padding:0.5em;
+    }
+}
 
-```xml
-<div class="click-count">
-    Hello ${data.greetingName}!
-    <div>
-        You clicked the button ${data.clickCount} ${data.timesMessage}.
-    </div>
-    <button type="button" onClick("handleButtonClick")>
-        Click Me
-    </button>
+<div.count>
+    ${state.count}
 </div>
+<button.example-button on-click('increment')>
+    Click me!
+</button>
 ```
 
-<a href="http://markojs.com/marko-widgets/try-online/" target="_blank">Try Marko Widgets Online!</a>
+## Multi-file
 
-For more details on Marko Widgets, please check out the [Marko Widgets Documentation](http://markojs.com/docs/marko-widgets/).
+The same component as above split into an `index.marko` template file,
+`component.js` containing your component logic, and `style.css` containing your
+component style:
 
-# Common issues
+__index.marko__
+```marko
+<div.count>
+    ${state.count}
+</div>
+<button.example-button on-click('increment')>
+    Click me!
+</button>
+```
 
-## nodemon
+__component.js__
+```js
+module.exports = {
+    onCreate() {
+        this.state = { count:0 };
+    },
+    increment() {
+        this.state.count++;
+    }
+};
+```
 
-When `marko` compiles your server-side templates, a `.marko.js` file is created next to the original `.marko` file.
-Subsequently, `nodemon` will see the new `.marko.js` file and trigger a restart of your app and this can
-repeat indefinitely unless you configure `nodemon` to ignore `*.marko.js` files.
-To avoid this, simply add `"ignore": ["*.marko.js"]` to the `nodemon.json` file at the root of your project.
+__style.css__
+```css
+.count {
+    color:#09c;
+    font-size:3em;
+}
+.example-button {
+    font-size:1em;
+    padding:0.5em;
+}
+```
 
-As a better drop-in replacement with more features, you can install [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh).
-Be sure to add `*.marko.js` pattern to your `.gitignore` file and `browser-refresh`
-will automatically ignore the compiled marko templates when they are written to disk.
+## Concise Syntax
+
+Marko also support a beautiful concise syntax as an alternative to the HTML
+syntax. Find out more about the [concise syntax here](http://markojs.com/docs/concise/).
+
+```marko
+<!-- Marko HTML syntax -->
+<ul>
+    <li for(color in ['a', 'b', 'c'])>
+        ${color}
+    </li>
+</ul>
+```
+
+```marko
+// Marko concise syntax
+ul
+    li for(color in ['a', 'b', 'c'])
+        -- ${color}
+```
 
 # Changelog
 
@@ -296,9 +137,15 @@ See [CHANGELOG.md](CHANGELOG.md)
 # Maintainers
 
 * [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
-* [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
 * [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
+* [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
+* [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
+
+# Code of Conduct
+
+This project adheres to the [eBay Code of Conduct](http://ebay.github.io/codeofconduct).
+By participating in this project you agree to abide by its terms.
 
 # License
 

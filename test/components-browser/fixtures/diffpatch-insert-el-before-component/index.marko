@@ -1,0 +1,21 @@
+class {
+    onCreate() {
+        this.state = {
+            insertEl: false,
+            count: 0
+        };
+    }
+}
+
+<div.root key="root">
+    <if(state.insertEl === false)>
+        <hello key="hello" count=state.count/>
+    </if>
+    <else>
+        <p.after key="after">New element</p>
+        <div key="afterDiv">
+            <hello key="hello" count=state.count/>
+        </div>
+    </else>
+
+</div>

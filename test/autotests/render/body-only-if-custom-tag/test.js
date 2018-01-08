@@ -1,3 +1,0 @@
-exports.templateData = {
-    "url": "/foo"
-};

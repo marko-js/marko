@@ -1,7 +1,0 @@
-{
-    "dependencies": [
-        "require: ./components/app-async/widget",
-        "require: ./components/app-hello/widget",
-        "require: ./components/app-init-async/widget"
-    ]
-}

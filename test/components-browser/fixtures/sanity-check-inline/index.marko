@@ -1,0 +1,14 @@
+<div>
+    Hello ${state.name}!
+</div>
+
+class {
+    onInput(input) {
+        this.state = {
+            name: input.name
+        };
+    }
+    setName(newName) {
+        this.setState('name', newName);
+    }
+}

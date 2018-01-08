@@ -1,0 +1,44 @@
+{
+    "loopType": "ForEach",
+    "varName": {
+        "type": "Identifier",
+        "name": "color"
+    },
+    "in": {
+        "type": "ArrayExpression",
+        "elements": [
+            {
+                "type": "BinaryExpression",
+                "left": {
+                    "type": "BinaryExpression",
+                    "left": {
+                        "type": "ObjectExpression",
+                        "properties": [
+                            {
+                                "type": "Property",
+                                "key": {
+                                    "type": "Literal",
+                                    "value": "a"
+                                },
+                                "value": {
+                                    "type": "Identifier",
+                                    "name": "a"
+                                }
+                            }
+                        ]
+                    },
+                    "operator": "in",
+                    "right": {
+                        "type": "Identifier",
+                        "name": "test"
+                    }
+                },
+                "operator": "|",
+                "right": {
+                    "type": "Literal",
+                    "value": 0
+                }
+            }
+        ]
+    }
+}

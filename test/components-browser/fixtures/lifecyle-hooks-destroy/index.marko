@@ -1,0 +1,15 @@
+import hooks from './hooks';
+import { expect } from 'chai';
+
+class {
+    onDestroy(){
+        // The nodes should still be attached
+        var rootNode = this.getEl('root');
+        expect(rootNode.parentNode != null).to.equal(true);
+        hooks.record('root:destroy');
+    }
+}
+
+<div key="root">
+	<foo name=input.name key="foo"/>
+</div>

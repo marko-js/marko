@@ -1,0 +1,18 @@
+class {
+    onInput(input) {
+        this.state = { first: true, second: false }
+    }
+    toggleValue(e) {
+        this.state[ e.target.value ] = e.target.checked
+    }
+}
+
+<div id="the-component">
+    <input type="checkbox" name="opts[]" value="first" checked=state.first
+        on-change('toggleValue') key="first"/>
+    First Checkbox
+    <br/>
+    <input type="checkbox" name="opts[]" value="second" checked=state.second
+        on-change('toggleValue') key="second"/>
+    Second Checkbox
+</div>

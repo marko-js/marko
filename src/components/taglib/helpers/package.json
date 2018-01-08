@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./getDynamicClientComponentPath.js": "./getDynamicClientComponentPath-browser.js"
+    }
+}

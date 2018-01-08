@@ -1,0 +1,7 @@
+module.exports = require('marko/components').defineComponent({
+    template: require('./template.marko'),
+
+    init: function() {
+
+    }
+});

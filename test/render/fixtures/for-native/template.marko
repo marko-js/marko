@@ -1,0 +1,18 @@
+static {
+    var array1 = ['a', 'b', 'c'];
+    var array2 = ['red', 'green', 'blue'];
+}
+
+<var i item>
+    <for(i=0; i<array1.length; i++)>
+        <assign item=array1[i]/>
+        ${item}
+    </for>
+</var>
+
+<var i item>
+    <div for(i=0; i<array2.length; i++)>
+        <assign item=array2[i]/>
+        ${item}
+    </div>
+</var>

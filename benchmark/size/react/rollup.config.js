@@ -27,7 +27,7 @@ export default {
             extensions: [ '.js', '.jsx' ]
         }),
         commonjsPlugin({
-            include: [ 'node_modules/**', '**/*.js', '**/*.jsx'],
+            include: [],
             extensions: [ '.js', '.jsx' ]
         })
     ],

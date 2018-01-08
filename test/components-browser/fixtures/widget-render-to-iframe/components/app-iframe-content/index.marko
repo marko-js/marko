@@ -1,0 +1,11 @@
+class {
+    handleButtonClick() {
+        this.emit('buttonClick');
+    }
+}
+
+<div>
+    <input key="input" type="text" value="test" />
+    <button key="button" on-click('handleButtonClick') />
+    <app-iframe-more-content key="more" />
+</div>

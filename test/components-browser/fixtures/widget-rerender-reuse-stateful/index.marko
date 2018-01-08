@@ -1,0 +1,12 @@
+class {
+    onCreate() {
+        this.state = {
+            count: 0
+        };
+    }
+}
+
+<div key="root">
+    <hello name="Jane" key="hello1"/>
+    <hello name="John${state.count}" key="hello2"/>
+</div>

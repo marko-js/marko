@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "require: ./components/app-fixed-id",
-        "require: ./components/app-hello/widget"
-    ]
-}

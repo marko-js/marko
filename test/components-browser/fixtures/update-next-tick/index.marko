@@ -1,0 +1,12 @@
+class {
+    onInput(input) {
+        this.state = { size: input.size || 'normal' };
+    }
+    setSize(size) {
+        this.state.size = size;
+    }
+}
+
+<button class=state.size>
+    ${input.label}
+</button>

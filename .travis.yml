@@ -1,10 +1,9 @@
 sudo: false
 node_js:
 - "4"
-- "5"
 - "6"
-- "7"
+- "8"
+- "9"
 language: node_js
-before_script: "npm i npm@latest -g"
-script: "npm run test-generate-coverage"
-after_success: "npm run coveralls"
+script: "npm run test-ci"
+after_success: "npm run coveralls && npm run codecov"

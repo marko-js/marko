@@ -1,0 +1,24 @@
+import hooks from './hooks';
+import { expect } from 'chai';
+
+class {
+    onCreate() {
+        hooks.record('root:create');
+    }
+
+    onRender(){
+        hooks.record('root:render');
+    }
+
+    onMount(){
+        hooks.record('root:mount');
+    }
+
+    onUpdate(){
+        hooks.record('root:update');
+    }
+}
+
+<div>
+	<foo name=input.name key="foo"/>
+</div>

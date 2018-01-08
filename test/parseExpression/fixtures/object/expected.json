@@ -1,0 +1,27 @@
+{
+    "type": "ObjectExpression",
+    "properties": [
+        {
+            "type": "Property",
+            "key": {
+                "type": "Literal",
+                "value": "hello"
+            },
+            "value": {
+                "type": "Literal",
+                "value": "world"
+            }
+        },
+        {
+            "type": "Property",
+            "key": {
+                "type": "Literal",
+                "value": "class"
+            },
+            "value": {
+                "type": "Literal",
+                "value": "foo"
+            }
+        }
+    ]
+}
