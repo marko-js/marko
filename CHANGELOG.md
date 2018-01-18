@@ -5,6 +5,12 @@ Changelog
 
 ## 4.7.x
 
+### 4.7.5
+
+- Update docs for advanced attribute definition [#968](https://github.com/marko-js/marko/pull/968)
+
+- Improve error message for async rendering [#958](https://github.com/marko-js/marko/pull/958)
+
 ### 4.7.4
 
 - Make jQuery optional for legacy components [#951](https://github.com/marko-js/marko/pull/951)
