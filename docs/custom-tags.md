@@ -164,6 +164,25 @@ _Multiple attributes:_
 }
 ```
 
+#### Advanced defining attributes
+
+If you provide an object as your attribute definition, you can more fine-tune its definition:
+
+```javascript
+{
+    "@data-*": {
+        "type": "string",
+        "preserve-name": true,
+        "pattern": true,
+        "enum": [
+            "foo",
+            "bar"
+        ]
+    }
+}
+```
+
+Above, we tell Marko this attribute name contains a pattern so that it will allow any attribute matching `data-*`. We also tell it to preserve the attribute's name for the template or component, so that it will not be camel-cased (which is the default behavior). Lastly, we tell it that this attribute only has two possible values: `foo` and `bar`. Marko does not enforce the enum attribute, but instead uses it for autocompletion with any eligible plugins such as https://atom.io/packages/language-marko for Atom.
 
 ### Custom directory scanning
 

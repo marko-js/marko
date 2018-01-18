@@ -140,6 +140,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 * [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
 * [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
 * [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
+* [Dylan Piercey](https://github.com/dylanpiercey) (Twitter: [@dylan_piercey](https://twitter.com/dylan_piercey))
 * [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
 
 # Code of Conduct
