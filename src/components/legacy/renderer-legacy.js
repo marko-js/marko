@@ -153,7 +153,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         if (isExisting === true) {
-            if (!component.___isDirty || !component.shouldUpdate(input, component.___state)) {
+            if ((!component.___isDirty || !component.shouldUpdate(input, component.___state)) && !input.renderBody) {
                 if (customEvents) {
                     component.___setCustomEvents(customEvents, scope);
                 }

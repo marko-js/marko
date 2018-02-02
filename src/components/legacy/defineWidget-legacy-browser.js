@@ -51,7 +51,12 @@ module.exports = function defineWidget(def, renderer) {
 
     // get legacy methods
     var init = proto.init;
-    var onRender = proto.onRender;
+    var onRender = (function(onRender) {
+        return function() {
+            this.___input = null;
+            if (onRender) onRender.apply(this, arguments);
+        };
+    }(proto.onRender));
     var onBeforeUpdate = proto.onBeforeUpdate;
     var onUpdate = proto.onUpdate;
     var onBeforeDestroy = proto.onBeforeDestroy;
