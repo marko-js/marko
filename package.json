@@ -25,7 +25,7 @@
     "prepublish": "npm run build-src",
     "test": "npm run jshint -s && npm run mocha -s",
     "test-ci": "npm run test-generate-coverage",
-    "mocha": "mocha ./test/*/*.test.js",
+    "mocha": "mocha --timeout 10000 ./test/*/*.test.js",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
     "jshint": "jshint src/ *.js",
