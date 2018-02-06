@@ -61,7 +61,7 @@ module.exports = function (template, options) {
         Object.keys(caches).forEach(function (key) {
           caches[key].free();
         });
-      })
+      });
     };
 
     // Expose current instance of mocha to jsdom.
