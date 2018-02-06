@@ -4,9 +4,8 @@ module.exports = function addAsyncTestSuites(fn) {
   var originalDescribe = global.describe;
 
   before(function () {
-    // Test init can take a while.
-    // Also I just just like using Infinity.
-    this.timeout(Infinity);
+    // Test init can take a while. (This does not change the timeout of the actual tests, just the lasso compile time).
+    this.timeout(20000);
 
     // Remove empty test inserted above.
     runner.tests.splice(0, 1);

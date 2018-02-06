@@ -9,13 +9,13 @@ const path = require('path');
 const autotest = require('../../autotest');
 const request = require('request');
 const fs = require('fs');
-const marko = require('marko');
-const markoExpressPath = require.resolve('marko/express');
+const marko = require('../../../');
+const markoExpressPath = require.resolve('../../../express');
 const shell = require('shelljs');
 const execSync = require('child_process').execSync;
 const resolveFrom = require('resolve-from');
 
-require('marko/node-require').install();
+require('../../../node-require').install();
 
 const autoTestDirSrc = path.join(__dirname, './autotests');
 

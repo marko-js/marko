@@ -1,7 +1,11 @@
+var fs = require('fs');
 var path = require('path');
 var lasso = require('lasso');
 var MemoryFs = require('memory-fs');
+var toMD5 = require('md5-hex');
 var JSDOM = require('jsdom-global');
+var NYC_DIR = path.join(__dirname, "../../.nyc_output");
+var isNYC = process.env.NYC_CONFIG;
 var memFs = new MemoryFs();
 var bundler = lasso.create({
   outputDir: "/static",
@@ -14,7 +18,7 @@ var bundler = lasso.create({
   }, {
     plugin: 'lasso-marko',
     config: { output: 'vdom' }
-  }].concat(process.env.NYC_CONFIG ? require('./lasso-istanbul-plugin') : [])
+  }].concat(isNYC ? require('./lasso-istanbul-plugin') : [])
 });
 
 module.exports = function (template, options) {
@@ -30,7 +34,21 @@ module.exports = function (template, options) {
         memFs.readFile(resource.url.path, cb);
       }
     });
-    window.cleanup = cleanup;
+
+    if (isNYC) {
+      // Provide window with coverage object for nyc.
+      window.__coverage__ = {};
+      // Save coverage details after tests are done.
+      window.cleanup = function () {
+        fs.writeFileSync(
+          path.join(NYC_DIR, toMD5(options.name) + '.json'),
+          JSON.stringify(window.__coverage__)
+        );
+        cleanup();
+      }
+    } else {
+      window.cleanup = cleanup;
+    }
 
     // Expose current instance of mocha to jsdom.
     [
@@ -39,8 +57,7 @@ module.exports = function (template, options) {
       'after',
       'beforeEach',
       'afterEach',
-      'it',
-      '__coverage__'
+      'it'
     ].forEach(function (k) { window[k] = global[k]; });
 
     return new Promise(function (resolve, reject) {

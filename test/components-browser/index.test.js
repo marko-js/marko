@@ -17,7 +17,7 @@ describe(path.basename(__dirname), function () {
     describe('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
-            run.bind({ dependencies: ['require: jquery'] })
+            run
         );
     });
 });
@@ -33,7 +33,8 @@ function run(dir, helpers, done) {
     }
 
     renderJSDOM(pageTemplate, {
-        browserDependencies: ((this && this.dependencies) || []).concat({
+        name: dir,
+        browserDependencies: ['require: jquery', {
             run: true,
             type: "require",
             virtualModule: {
@@ -45,7 +46,7 @@ function run(dir, helpers, done) {
                     `;
                 }
             }
-        })
+        }]
     }).then(() => {
         var helpers = new window.BrowserHelpers();
         var testFunc = window.TEST;

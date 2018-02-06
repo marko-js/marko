@@ -31,6 +31,7 @@ function run(dir) {
 
   addAsyncTestSuites(function () {
     return renderRunJSDOM(pageTemplate, {
+      name: dir,
       browserDependencies: ((this && this.dependencies) || []).concat('require-run:' + testFile)
     });
   });
