@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var lasso = require('lasso');
 var MemoryFs = require('memory-fs');
-var raptorCache = require('raptor-cache');
 var cachingFS = require('lasso/lib/caching-fs');
 
 var toMD5 = require('md5-hex');
@@ -25,13 +24,14 @@ module.exports = function (template, options) {
       config: { output: 'vdom' }
     }].concat(isNYC ? require('./lasso-istanbul-plugin') : [])
   });
+  var lassoCacheLookup = bundler.lassoCacheLookup;
 
   return template.render({
     components: options.components || [],
     browserDependencies: options.browserDependencies,
     lasso: bundler
   }).then(function (html) {
-    var cleanup = JSDOM(html, {
+    JSDOM(html, {
       url: 'http://localhost',
       features: { FetchExternalResources: ["script", "iframe"] },
       resourceLoader: function (resource, cb) {
@@ -42,19 +42,27 @@ module.exports = function (template, options) {
     if (isNYC) {
       // Provide window with coverage object for nyc.
       window.__coverage__ = {};
-      // Save coverage details after tests are done.
-      window.cleanup = function () {
-        fs.writeFileSync(
-          path.join(NYC_DIR, toMD5(options.name) + '.json'),
-          JSON.stringify(window.__coverage__)
-        );
-        cleanup();  
-        raptorCache.freeAll();
-        cachingFS.clearCaches();
-      }
-    } else {
-      window.cleanup = cleanup;
     }
+
+    window.cleanup = function () {
+      // Save coverage details after tests are done.
+      isNYC && fs.writeFileSync(
+        path.join(NYC_DIR, toMD5(options.name) + '.json'),
+        JSON.stringify(window.__coverage__)
+      );
+
+      window.close();
+      document.destroy();
+      cachingFS.clearCaches();
+      memFs.data = Object.create(null);
+      Object.keys(lassoCacheLookup).forEach(function (key) {
+        var cache = lassoCacheLookup[key];
+        var caches = cache.cacheManager.caches;
+        Object.keys(caches).forEach(function (key) {
+          caches[key].free();
+        });
+      })
+    };
 
     // Expose current instance of mocha to jsdom.
     [
