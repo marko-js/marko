@@ -6,22 +6,23 @@ var toMD5 = require('md5-hex');
 var JSDOM = require('jsdom-global');
 var NYC_DIR = path.join(__dirname, "../../.nyc_output");
 var isNYC = process.env.NYC_CONFIG;
-var memFs = new MemoryFs();
-var bundler = lasso.create({
-  outputDir: "/static",
-  minify: false,
-  bundlingEnabled: false,
-  fingerprintsEnabled: false,
-  plugins: [{
-    plugin: 'lasso-fs-writer',
-    config: { fileSystem: memFs }
-  }, {
-    plugin: 'lasso-marko',
-    config: { output: 'vdom' }
-  }].concat(isNYC ? require('./lasso-istanbul-plugin') : [])
-});
 
 module.exports = function (template, options) {
+  var memFs = new MemoryFs();
+  var bundler = lasso.create({
+    outputDir: "/static",
+    minify: false,
+    bundlingEnabled: false,
+    fingerprintsEnabled: false,
+    plugins: [{
+      plugin: 'lasso-fs-writer',
+      config: { fileSystem: memFs }
+    }, {
+      plugin: 'lasso-marko',
+      config: { output: 'vdom' }
+    }].concat(isNYC ? require('./lasso-istanbul-plugin') : [])
+  });
+
   return template.render({
     components: options.components || [],
     browserDependencies: options.browserDependencies,
