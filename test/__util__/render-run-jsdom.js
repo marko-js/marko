@@ -2,6 +2,9 @@ var fs = require('fs');
 var path = require('path');
 var lasso = require('lasso');
 var MemoryFs = require('memory-fs');
+var raptorCache = require('raptor-cache');
+var cachingFS = require('lasso/lib/caching-fs');
+
 var toMD5 = require('md5-hex');
 var JSDOM = require('jsdom-global');
 var NYC_DIR = path.join(__dirname, "../../.nyc_output");
@@ -30,7 +33,7 @@ module.exports = function (template, options) {
   }).then(function (html) {
     var cleanup = JSDOM(html, {
       url: 'http://localhost',
-      features: { FetchExternalResources: ["script", "iframe", "link"] },
+      features: { FetchExternalResources: ["script", "iframe"] },
       resourceLoader: function (resource, cb) {
         memFs.readFile(resource.url.path, cb);
       }
@@ -45,7 +48,9 @@ module.exports = function (template, options) {
           path.join(NYC_DIR, toMD5(options.name) + '.json'),
           JSON.stringify(window.__coverage__)
         );
-        cleanup();
+        cleanup();  
+        raptorCache.freeAll();
+        cachingFS.clearCaches();
       }
     } else {
       window.cleanup = cleanup;
