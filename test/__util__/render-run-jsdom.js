@@ -28,7 +28,16 @@ module.exports = function (template, options) {
 
   return template.render({
     components: options.components || [],
-    browserDependencies: options.browserDependencies,
+    browserDependencies: [{
+      run: true,
+      type: "require",
+      virtualModule: {
+          path: path.resolve(template.path, './complain-disable.js'),
+          read() {
+              return `require('complain').log = function () {};`;
+          }
+      }
+  }].concat(options.browserDependencies),
     lasso: bundler
   }).then(function (html) {
     JSDOM(html, {
