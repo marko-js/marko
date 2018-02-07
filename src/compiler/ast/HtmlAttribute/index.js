@@ -26,6 +26,7 @@ class HtmlAttribute extends Node {
         this.value = def.value;
         this.rawValue = def.rawValue;
         this.escape = def.escape;
+        this.spread = def.spread;
 
         if (typeof this.value === 'string') {
             this.value = compiler.builder.parseExpression(this.value);

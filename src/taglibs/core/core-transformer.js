@@ -210,10 +210,11 @@ module.exports = function transform(el, context) {
 
     el.forEachAttribute((attr) => {
         let attrName = attr.name;
-        if (!attrName) {
+        if (!attrName && !attr.spread) {
             if (!node.addDynamicAttributes) {
                 context.addError(el, 'Node does not support the "attrs" attribute');
             } else {
+                context.deprecate('${attrs} is deprecated, use ...attrs instead');
                 node.addDynamicAttributes(attr.value);
             }
             return;
