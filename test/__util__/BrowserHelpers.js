@@ -51,7 +51,7 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            this.components.push(instance);
+            this.components.push(component);
         }
 
         return instance;
@@ -86,16 +86,6 @@ BrowserHelpers.prototype = {
             assert.ok(child1 === child2, 'Children at index ' + i + ' do not match. child 1: ' + child1 + ' child 2: ' + child2);
         }
     },
-
-    _cleanup: function () {
-        this.components.forEach(function (component) {
-            component.destroy();
-        });
-
-        this.components = [];
-
-        this.targetEl.innerHTML = '';
-    }
 };
 
 module.exports = BrowserHelpers;

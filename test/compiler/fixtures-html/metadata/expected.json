@@ -1,0 +1,15 @@
+[
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/test/compiler/fixtures-html/metadata/foo.js"
+    },
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/test/compiler/fixtures-html/metadata/tags/test-hello/bar.js"
+    },
+    {
+        "type": "require",
+        "path": "PROJECT_ROOT/src/components/boot.js",
+        "run": true
+    }
+]

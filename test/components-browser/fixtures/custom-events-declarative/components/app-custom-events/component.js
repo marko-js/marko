@@ -1,4 +1,4 @@
-var pubsub = require('~/__util__/pubsub');
+var pubsub = require('../../../../../__util__/pubsub');
 
 module.exports = {
     onInput: function (input) {

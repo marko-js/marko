@@ -88,6 +88,17 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
     let main = fs.existsSync(mainPath) ? require(mainPath) : {};
     let loadOptions = main && main.loadOptions;
 
+    var oldDone = done;
+    done = function (err) {
+        require('marko/compiler').configure();
+
+        if (err) {
+            return oldDone(err);
+        }
+
+        return oldDone();
+    };
+
     if (isVDOM && main.vdomSkip) {
         return done();
     }
@@ -102,17 +113,6 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
     };
 
     require('marko/compiler').configure(compilerOptions);
-
-    var oldDone = done;
-    done = function (err) {
-        require('marko/compiler').configure();
-
-        if (err) {
-            return oldDone(err);
-        }
-
-        return oldDone();
-    };
 
     try {
         if (main.checkError) {
