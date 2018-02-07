@@ -79,7 +79,6 @@
     "babel-core": "^6.24.1",
     "babel-plugin-minprops": "^2.0.1",
     "benchmark": "^2.1.1",
-    "bluebird": "^3.4.7",
     "browser-refresh": "^1.6.0",
     "browser-refresh-taglib": "^1.1.0",
     "chai": "^3.3.0",
