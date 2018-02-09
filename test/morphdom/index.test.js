@@ -9,8 +9,8 @@ var path = require('path');
 
 var autotest = require('../autotest');
 const fs = require('fs');
-const jsdom = require("jsdom").jsdom;
 const morphdom = require('marko/morphdom');
+const createJSDOMModule = require('../__util__/create-jsdom-module');
 const expect = require('chai').expect;
 function serializeNode(node) {
 
@@ -117,8 +117,8 @@ describe('morphdom', function () {
         var fromHTML = fs.readFileSync(path.join(dir, 'from.html'), { encoding: 'utf8' });
         var toHTML = fs.readFileSync(path.join(dir, 'to.html'), { encoding: 'utf8' });
 
-        let fromDocument = jsdom('<html><body>' + fromHTML + '</body></html>');
-        let toDocument = jsdom('<html><body>' + toHTML + '</body></html>');
+        let fromDocument = createJSDOMModule({ dir: __dirname, html: '<html><body>' + fromHTML + '</body></html>' }).window.document;
+        let toDocument = createJSDOMModule({ dir: __dirname, html: '<html><body>' + toHTML + '</body></html>' }).window.document;
 
         let fromNode = fromDocument.body;
         let realToNode = toDocument.body;

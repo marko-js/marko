@@ -5,7 +5,7 @@ var markoWidgets = require('marko-widgets');
 describe(path.basename(__dirname), function() {
     it('should serialize widget config down to the browser', function() {
 
-        expect(window.simpleWidgets).to.equal(undefined);
+        expect(window.simpleWidgets).to.eql([]);
 
         var components = window.components;
         var html = components.html;

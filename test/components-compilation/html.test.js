@@ -6,8 +6,6 @@ var autotest = require('../autotest');
 var compiler = require('marko/compiler');
 var expect = require('chai').expect;
 
-require('marko/node-require').install();
-
 describe('components-compilation (html)', function () {
     autotest.scanDir(path.join(__dirname, './fixtures-html'), run);
 

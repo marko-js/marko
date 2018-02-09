@@ -1,11 +1,8 @@
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 <!DOCTYPE html>
 html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Widgets Tests
-        lasso-head
     body
 
         div id="test"
@@ -15,8 +12,6 @@ html lang="en"
         app-foo
         app-bar
 
-        lasso-body
-
         init-widgets immediate
 
         script
@@ -25,7 +20,3 @@ html lang="en"
             window.afterInitWidgetsFooWidget = window.fooWidget;
             window.afterInitWidgetsBarWidget = window.barWidget;
             ---
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh

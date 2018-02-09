@@ -1,15 +1,11 @@
-<lasso-page dependencies=input.browserDependencies lasso=input.lasso cache-key=""+Date.now()/>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8"/>
-        <lasso-head/>
     </head>
     <body>
         <div#testsTarget>
-            <include(component) for(component in input.components)/>
+            <include(component.template, component.input) for(component in input.components)/>
         </div>
-        <lasso-body/>
     </body>
 </html>

@@ -9,8 +9,6 @@ var compiler = require('../../compiler');
 var autotest = require('../autotest');
 var fs = require('fs');
 
-require('marko/node-require').install();
-
 const EXTENSIONS = ['.marko', '.xml.marko'];
 
 function runTestForExtension(dir, helpers, extension, done) {

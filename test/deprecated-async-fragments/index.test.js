@@ -11,8 +11,6 @@ var markoRuntimeHtml = require('marko/runtime/html');
 var autotest = require('../autotest');
 var fs = require('fs');
 
-require('marko/node-require').install();
-
 describe('async-fragments (deprecated)', function () {
     var autoTestDir = path.join(__dirname, './fixtures');
 

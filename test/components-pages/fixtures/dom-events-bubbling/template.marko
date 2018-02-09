@@ -1,11 +1,8 @@
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 <!DOCTYPE html>
 html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Components Tests
-        lasso-head
     body
 
         div id="test"
@@ -17,8 +14,6 @@ html lang="en"
         <one-arg-array colors=['red', 'green', 'blue']/>
         <two-args colors=['red', 'green', 'blue']/>
 
-        lasso-body
-
         init-components immediate
 
         script
@@ -27,7 +22,3 @@ html lang="en"
             window.afterInitComponentsFooComponent = window.fooComponent;
             window.afterInitComponentsBarComponent = window.barComponent;
             ---
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh

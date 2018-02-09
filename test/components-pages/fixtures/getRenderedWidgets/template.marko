@@ -15,14 +15,11 @@ static {
     }
 }
 
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 <!DOCTYPE html>
 html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Components Tests
-        lasso-head
     body
         await(components from componentsDataProvider)
             script
@@ -33,9 +30,3 @@ html lang="en"
         div id="test"
         div id="mocha"
         div id="testsTarget"
-
-        lasso-body
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh

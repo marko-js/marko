@@ -15,8 +15,6 @@ const shell = require('shelljs');
 const execSync = require('child_process').execSync;
 const resolveFrom = require('resolve-from');
 
-require('../../../node-require').install();
-
 const autoTestDirSrc = path.join(__dirname, './autotests');
 
 module.exports = function loadExpressTests(expressVersion) {

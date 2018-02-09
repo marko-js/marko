@@ -1,11 +1,8 @@
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 <!DOCTYPE html>
 html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Components Tests
-        lasso-head
     body
 
         div id="test"
@@ -15,8 +12,6 @@ html lang="en"
         app-foo
         app-bar
 
-        lasso-body
-
         script
             ---
             // window.fooComponent should not exist yet, but's store that in a variable to verify
@@ -25,7 +20,3 @@ html lang="en"
             ---
 
         init-components
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh

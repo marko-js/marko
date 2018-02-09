@@ -1,11 +1,14 @@
 var nodePath = require('path');
 var fs = require('fs');
+var requireHook = require('../../../../node-require');
 
 exports.check = function (marko, markoCompiler, expect, helpers, done) {
     var compiledPath;
 
-    require('marko/compiler').configure({
-        writeToDisk: true
+    requireHook.install({
+        compilerOptions: {
+            writeToDisk: true
+        }
     });
 
     try {
@@ -17,6 +20,11 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
         helpers.compare(template.renderSync({ name: 'Frank' }).toString());
     } finally {
         fs.unlinkSync(compiledPath);
+        requireHook.install({
+            compilerOptions: {
+                writeToDisk: false
+            }
+        });
     }
 
     done();
