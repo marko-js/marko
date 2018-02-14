@@ -66,16 +66,18 @@ function invokeComponentEventHandler(component, targetMethodName, args) {
 }
 
 function addEventListenerHelper(el, eventType, isOnce, listener) {
+    var eventListener = listener
     if (isOnce) {
-        return el.addEventListener(eventType, function onceListener() {
+        eventListener = function() {
             listener();
-            el.removeListener(eventType, onceListener);
-        }, false);
+            el.removeEventListener(eventType, eventListener);
+        };
     }
 
-    el.addEventListener(eventType, listener, false);
+    el.addEventListener(eventType, eventListener, false);
+
     return function remove() {
-        el.removeEventListener(eventType, listener);
+        el.removeEventListener(eventType, eventListener);
     };
 }
 
@@ -88,7 +90,7 @@ function addDOMEventListeners(component, el, eventType, targetMethodName, isOnce
 
         invokeComponentEventHandler(component, targetMethodName, args);
     });
-    if (!isOnce) handles.push(removeListener);
+    handles.push(removeListener);
 }
 
 function initComponent(componentDef, doc) {
