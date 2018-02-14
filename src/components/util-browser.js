@@ -90,13 +90,13 @@ function nextComponentIdProvider() {
     return nextComponentId;
 }
 
-function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
+function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs) {
     if (handlerMethodName) {
         var componentId = componentDef.id;
         if (extraArgs) {
-            return [handlerMethodName, componentId, extraArgs];
+            return [handlerMethodName, componentId, isOnce, extraArgs];
         } else {
-            return [handlerMethodName, componentId];
+            return [handlerMethodName, componentId, isOnce];
         }
     }
 }

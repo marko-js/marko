@@ -93,8 +93,8 @@ ComponentDef.prototype = {
         return this.id + '-c' + (this.___nextIdIndex++);
     },
 
-    d: function(handlerMethodName, extraArgs) {
-        return attachBubblingEvent(this, handlerMethodName, extraArgs);
+    d: function(handlerMethodName, isOnce, extraArgs) {
+        return attachBubblingEvent(this, handlerMethodName, isOnce, extraArgs);
     },
 
     get ___type() {

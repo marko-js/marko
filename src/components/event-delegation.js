@@ -7,23 +7,29 @@ var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;
 // same window. Each marko runtime will get its own unique runtime ID.
 var listenersAttachedKey = '$MED' + runtimeId;
 
-function getEventFromEl(el, eventName) {
+function getEventFromEl(el, eventName, debug) {
     var virtualProps = getMarkoPropsFromEl(el);
     var eventInfo = virtualProps[eventName];
     if (typeof eventInfo === 'string') {
         eventInfo = eventInfo.split(' ');
-        if (eventInfo.length == 3) {
-            eventInfo[2] = parseInt(eventInfo[2], 10);
+        if (eventInfo.length == 4) {
+            eventInfo[3] = parseInt(eventInfo[3], 10);
         }
     }
 
     return eventInfo;
 }
 
-function delegateEvent(node, target, event) {
+function delegateEvent(node, eventName, target, event) {
     var targetMethod = target[0];
     var targetComponentId = target[1];
-    var extraArgs = target[2];
+    var isOnce = target[2];
+    var extraArgs = target[3];
+
+    if (isOnce) {
+        var virtualProps = getMarkoPropsFromEl(node);
+        delete virtualProps[eventName];
+    }
 
     var targetComponent = componentLookup[targetComponentId];
 
@@ -90,8 +96,8 @@ function attachBubbleEventListeners(doc) {
             // on<event_type>("<target_method>|<component_id>")
 
             do {
-                if ((target = getEventFromEl(curNode, propName))) {
-                    delegateEvent(curNode, target, event);
+                if ((target = getEventFromEl(curNode, propName, true))) {
+                    delegateEvent(curNode, propName, target, event);
 
                     if (propagationStopped) {
                         break;
