@@ -26,7 +26,7 @@ require('lasso').configure({
 
 ## Lasso custom tags
 
-To inject the required JavaScript and CSS into the page you will want to use the `<lasso-page>`, `<lasso-head>` and `<lasso-body>` tag.
+To inject the required JavaScript and CSS into the page you will want to use the `<lasso-page>`, `<lasso-head>` and `<lasso-body>` tags.
 
 If you are using lasso@^3 (latest), make sure to install the [lasso-marko-taglib](https://github.com/lasso-js/lasso-marko-taglib), so that you can use the lasso custom tags.
 
@@ -34,7 +34,8 @@ If you are using lasso@^3 (latest), make sure to install the [lasso-marko-taglib
 npm install lasso-marko
 npm install @lasso/marko-taglib
 ```
-Marko is so much like HTML, that you can use lasso custom tag inside your templating engine like this.
+
+After installing, the lasso custom tags can be used in your templates:
 
 ```html
 <lasso-page package-path="./browser.json" />
