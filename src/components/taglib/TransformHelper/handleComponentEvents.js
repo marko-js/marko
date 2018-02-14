@@ -66,10 +66,9 @@ function addDirectEventListener(transformHelper, options) {
     var helperArgs = [
         options.eventType,
         options.targetMethod,
-        componentIdInfo.idExpression
+        componentIdInfo.idExpression,
+        builder.literal(options.isOnce)
     ];
-
-    helperArgs.push(builder.literal(options.isOnce));
 
     if (options.extraArgs) {
         helperArgs.push(builder.arrayExpression(options.extraArgs));
@@ -127,7 +126,7 @@ module.exports = function handleComponentEvents() {
 
             // handles on-* and once-*
             if (attrName.startsWith('on') && argument) {
-                isOnce = attrName.startsWith('once') && argument);
+                isOnce = attrName.startsWith('once') && argument;
 
                 if (isOnce) {
                     eventType = attrName.substring(4); // Chop off "once"

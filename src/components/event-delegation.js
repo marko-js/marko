@@ -26,6 +26,8 @@ function delegateEvent(node, eventName, target, event) {
     var isOnce = target[2];
     var extraArgs = target[3];
 
+    console.log("TARGET", target);
+
     if (isOnce) {
         var virtualProps = getMarkoPropsFromEl(node);
         delete virtualProps[eventName];

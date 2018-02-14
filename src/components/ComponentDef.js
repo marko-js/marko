@@ -75,7 +75,7 @@ ComponentDef.prototype = {
      * @param  {String} targetMethod The name of the method to invoke on the scoped component
      * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
      */
-     e: function(type, targetMethod, elId, extraArgs) {
+     e: function(type, targetMethod, elId, isOnce, extraArgs) {
         if (targetMethod) {
             // The event handler method is allowed to be conditional. At render time if the target
             // method is null then we do not attach any direct event listeners.
@@ -83,6 +83,7 @@ ComponentDef.prototype = {
                 type,
                 targetMethod,
                 elId,
+                isOnce,
                 extraArgs]);
         }
     },

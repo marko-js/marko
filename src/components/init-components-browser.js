@@ -65,15 +65,22 @@ function invokeComponentEventHandler(component, targetMethodName, args) {
     method.apply(component, args);
 }
 
-function addEventListenerHelper(el, eventType, listener) {
+function addEventListenerHelper(el, eventType, isOnce, listener) {
+    if (isOnce) {
+        return el.addEventListener(eventType, function onceListener() {
+            listener();
+            el.removeListener(eventType, onceListener);
+        }, false);
+    }
+
     el.addEventListener(eventType, listener, false);
     return function remove() {
         el.removeEventListener(eventType, listener);
     };
 }
 
-function addDOMEventListeners(component, el, eventType, targetMethodName, extraArgs, handles) {
-    var removeListener = addEventListenerHelper(el, eventType, function(event) {
+function addDOMEventListeners(component, el, eventType, targetMethodName, isOnce, extraArgs, handles) {
+    var removeListener = addEventListenerHelper(el, eventType, isOnce, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -81,7 +88,7 @@ function addDOMEventListeners(component, el, eventType, targetMethodName, extraA
 
         invokeComponentEventHandler(component, targetMethodName, args);
     });
-    handles.push(removeListener);
+    if (!isOnce) handles.push(removeListener);
 }
 
 function initComponent(componentDef, doc) {
@@ -118,9 +125,10 @@ function initComponent(componentDef, doc) {
             var eventType = domEventArgs[0];
             var targetMethodName = domEventArgs[1];
             var eventEl = component.___keyedElements[domEventArgs[2]];
-            var extraArgs = domEventArgs[3];
+            var isOnce = domEventArgs[3];
+            var extraArgs = domEventArgs[4];
 
-            addDOMEventListeners(component, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
+            addDOMEventListeners(component, eventEl, eventType, targetMethodName, isOnce, extraArgs, eventListenerHandles);
         });
 
         if (eventListenerHandles.length) {
