@@ -168,7 +168,10 @@
         "autocomplete": []
     },
     "<static>": {
-        "code-generator": "./static-tag",
+        "transformer": {
+            "path": "./static-tag",
+            "priority": -1
+        },
         "no-output": true,
         "parse-options": {
             "ignoreAttributes": true

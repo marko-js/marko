@@ -1,6 +1,6 @@
 # Fastify + Marko
 
-See the [marko-fastify](https://github.com/marko-js-samplesmarko-fastify) sample
+See the [marko-fastify](https://github.com/marko-js-samples/marko-fastify) sample
 project for a fully-working example.
 
 ## Installation

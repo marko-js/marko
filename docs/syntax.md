@@ -129,7 +129,7 @@ With a value of `false` for `active`, the output would be the following:
 ```
 
 ### Dynamic attributes
-You can use the `${}` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
+You can use the `...attrs` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
 
 _index.js_
 ```js
@@ -138,7 +138,7 @@ template.render({ attrs:{ class:'active', href:'https://ebay.com/' } });
 
 _link.marko_
 ```marko
-<a ${input.attrs} target="_blank">eBay</a>
+<a ...input.attrs target="_blank">eBay</a>
 ```
 
 would output the following HTML:

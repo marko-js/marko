@@ -137,6 +137,7 @@ class HtmlElementVDOM extends Node {
 
         var hasNamedAttributes = false;
         var hasDynamicAttributes = dynamicAttributes != null && dynamicAttributes.length !== 0;
+        var hasSpreadAttributes = false;
 
         var hasSimpleAttrs = true;
 
@@ -147,6 +148,14 @@ class HtmlElementVDOM extends Node {
         }
 
         if (attributes != null && attributes.length !== 0) {
+            let explicitAttrs = null;
+            let addAttrs = (expr) => {
+                if (!attributesArg) {
+                    attributesArg = expr;
+                } else {
+                    attributesArg = builder.functionCall(context.helper('merge'), [expr, attributesArg]);
+                }
+            };
             let addAttr = function(name, value) {
                 hasNamedAttributes = true;
 
@@ -154,8 +163,8 @@ class HtmlElementVDOM extends Node {
                     hasSimpleAttrs = false;
                 }
 
-                if (!attributesArg) {
-                    attributesArg = {};
+                if (!explicitAttrs) {
+                    explicitAttrs = {};
                 }
 
                 if (value.type === 'Literal') {
@@ -169,28 +178,39 @@ class HtmlElementVDOM extends Node {
                     value = codegen.builder.functionCall(context.helper('str'), [value]);
                 }
 
-                attributesArg[name] = value;
+                explicitAttrs[name] = value;
             };
 
             attributes.forEach((attr) => {
-                let value = attr.value;
-
-                if (value == null) {
-                    value = builder.literal(true);
-                }
-
-                if (!attr.name) {
+                // deprecated
+                if (!attr.name && !attr.spread) {
                     return;
                 }
 
-                addAttr(attr.name, value);
+                if (attr.spread) {
+                    if (explicitAttrs) {
+                        addAttrs(builder.literal(explicitAttrs));
+                    }
+                    addAttrs(attr.value);
+                    explicitAttrs = null;
+                    hasSpreadAttributes = true;
+                } else {
+                    let value = attr.value;
+
+                    if (value == null) {
+                        value = builder.literal(true);
+                    }
+
+                    addAttr(attr.name, value);
+                }
             });
 
-            if (attributesArg) {
-                attributesArg = builder.literal(attributesArg);
+            if (explicitAttrs) {
+                addAttrs(builder.literal(explicitAttrs));
             }
         }
 
+        // deprecated
         if (hasDynamicAttributes) {
             dynamicAttributes.forEach((attrs) => {
                 if (attributesArg) {
@@ -205,7 +225,7 @@ class HtmlElementVDOM extends Node {
             });
         }
 
-        if (!this.isAttrsStatic && hasNamedAttributes && hasSimpleAttrs && !hasDynamicAttributes) {
+        if (!this.isAttrsStatic && hasNamedAttributes && hasSimpleAttrs && !hasDynamicAttributes && !hasSpreadAttributes) {
             this.hasSimpleAttrs = true;
         }
 

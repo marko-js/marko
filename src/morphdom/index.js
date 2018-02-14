@@ -245,8 +245,13 @@ function morphdom(
                         }
 
                         // We need to move the existing component into
-                        // the correct location
+                        // the correct location and preserve focus.
+                        var activeElement = doc.activeElement;
                         insertBefore(matchingFromComponent.___detach(), curFromNodeChild, parentFromNode);
+                        // This focus patch should be a temporary fix.
+                        if (activeElement !== doc.activeElement && activeElement.focus) {
+                            activeElement.focus();
+                        }
                     }
 
                     if (curToNodeChild.___preserve) {

@@ -11,11 +11,15 @@ var runRenderTest = require('../__util__/runRenderTest');
 require('../../node-require').install();
 
 describe('render', function () {
-    var autoTestDir = path.join(__dirname, './fixtures');
+    autotest.scanDir(path.join(__dirname, './fixtures'), run);
 
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        runRenderTest(dir, helpers, done, {
-            output: 'html'
-        });
-    });
+    describe('deprecated', function () {
+        autotest.scanDir(path.join(__dirname, './fixtures-deprecated'), run);
+    })
 });
+
+function run(dir, helpers, done) {
+    runRenderTest(dir, helpers, done, {
+        output: 'html'
+    });
+}

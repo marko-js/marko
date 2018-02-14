@@ -3,7 +3,71 @@ Changelog
 
 # 4.x
 
+## 4.7.x
+
+### 4.7.5
+
+- Update docs for advanced attribute definition [#968](https://github.com/marko-js/marko/pull/968)
+
+- Improve error message for async rendering [#958](https://github.com/marko-js/marko/pull/958)
+
+### 4.7.4
+
+- Make jQuery optional for legacy components [#951](https://github.com/marko-js/marko/pull/951)
+
+### 4.7.3
+
+- Prevent onRender running on the server for legacy widgets
+
+### 4.7.2
+
+- Fixes [#946](https://github.com/marko-js/marko/issues/946) - don't put legacy init code in a separate lasso bundle
+
+- Fixes allowing conditionally binding to different roots in a legacy widget [#944](https://github.com/marko-js/marko/pull/944)
+
+### 4.7.1
+
+- Fix issue with multiple top level elements being removed twice. [#940](https://github.com/marko-js/marko/pull/940)
+
+### 4.7.0
+
+- Add jQuery legacy compatibility layer support [#937](https://github.com/marko-js/marko/pull/937)
+
+- Reorganize Marko tests [#934](https://github.com/marko-js/marko/pull/934)
+
+- Switch to using jsdom in test suite [#935](https://github.com/marko-js/marko/pull/935)
+
+- Decouple component hydration from Lasso [#929](https://github.com/marko-js/marko/pull/929)
+
+## 4.6.x
+
+### 4.6.0
+
+- Fixes [#914](https://github.com/marko-js/marko/issues/914) and [#920](https://github.com/marko-js/marko/issues/920) -
+Resolves top-level component bugs
+
+- Setup `marko.load()` to prefer precompiled templates from [marko-cli](https://github.com/marko-js/marko-cli)
+
+- Various compiler changes to improve [marko-migrate](https://github.com/marko-js/marko-migrate)
+
+- Fixes [#916](https://github.com/marko-js/marko/pull/916) - Add Marko debug mode.
+Adds babel plugin to remove and statically evaluate 'MARKO_DEBUG' literals for
+adding deprecation warnings and hints for the runtime without a performance
+penalty for production builds.
+
 ## 4.5.x
+
+### 4.5.6
+
+- Fixes [#909](https://github.com/marko-js/marko/issues/909) - Fix condition preventing bubbling DOM events from properly being attached to a component.
+
+### 4.5.5
+
+- Add 10 Awesome Marko Features article to documentation
+
+### 4.5.4
+
+- Fixes [#904](https://github.com/marko-js/marko/issues/904) - The loop status variable is not compiling when the equal sign is padded in spacing
 
 ### 4.5.3
 
