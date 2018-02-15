@@ -1,6 +1,6 @@
 module.exports = {
 	onMount: function () {
-		this.numOfInvocations = [];
+		this.buttonClickCalls = [];
 	},
 
 	handleButtonClick: function () {
