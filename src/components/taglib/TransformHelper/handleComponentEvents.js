@@ -126,7 +126,7 @@ module.exports = function handleComponentEvents() {
 
             // handles on-* and once-*
             if (attrName.startsWith('on') && argument) {
-                isOnce = attrName.startsWith('once') && argument;
+                isOnce = !!(attrName.startsWith('once') && argument);
 
                 if (isOnce) {
                     eventType = attrName.substring(4); // Chop off "once"
