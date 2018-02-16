@@ -70,7 +70,7 @@ function loadRemaps (dir) {
   const remapFile = path.join(dir, "browser.json");
 
   if (fs.existsSync(remapFile)) {
-    const remaps = JSON.parse(fs.readFileSync(path.join(dir, "browser.json"), "utf-8")).requireRemap;
+    const remaps = require(remapFile).requireRemap;
 
     if (remaps) {
       return remaps.reduce(function (result, cur) {
