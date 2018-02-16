@@ -267,14 +267,15 @@ _counter/index.marko_
 ```marko
 class {
   onCreate() {
+    this.max = 50;
     this.state = { count: 0 };
   }
   increment() {
-    // max is 50
-    if (this.state.count === 50) {
-        this.emit('max', this.state.count);
-    } else {
+    if (this.state.count < this.max) {
         this.emit('change', ++this.state.count);
+    }
+    if (this.state.count === this.max) {
+        this.emit('max', this.state.count);
     }
   }
 }
