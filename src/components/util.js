@@ -33,10 +33,10 @@ function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs)
                 }
             }
 
-            return handlerMethodName + ' ' + componentDef.id + isOnce + ' ' + eventIndex;
+            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce + ' ' + eventIndex;
 
         } else {
-            return handlerMethodName + ' ' + componentDef.id + isOnce;
+            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce;
         }
     }
 }
