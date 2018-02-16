@@ -7,6 +7,7 @@ const jsdom = require('jsdom');
 // const JSDOM = require('jsdom').JSDOM; // JSDOM 10+
 const browserResolve = require('lasso-resolve-from');
 const createContextModule = require('./create-context-module').createModule;
+const remapCache = Object.create(null);
 
 module.exports = function (options) {
   const html = options.html;
@@ -67,16 +68,22 @@ function unique (item, i, list) {
  * @param {string} dir 
  */
 function loadRemaps (dir) {
-  const remapFile = path.join(dir, "browser.json");
+  const file = path.join(dir, "browser.json");
 
-  if (fs.existsSync(remapFile)) {
-    const remaps = require(remapFile).requireRemap;
+  if (file in remapCache) {
+    return remapCache[file];
+  } 
 
-    if (remaps) {
-      return remaps.reduce(function (result, cur) {
-        result[path.join(dir, cur.from)] = path.join(dir, cur.to);
-        return result;
-      }, {});
+  let result;
+  const remaps = fs.existsSync(file) && require(file).requireRemap;
+
+  if (remaps) {
+    result = {};
+    for (const remap of remaps) {
+      result[path.join(dir, remap.from)] = path.join(dir, remap.to);
     }
   }
+
+  remapCache[file] = result;
+  return result;
 }

@@ -6,6 +6,7 @@ const compiler = require('../../compiler');
 const noop = function () {};
 const globals = [
   '__coverage__',
+  'Error',
   'describe',
   'before',
   'after',
@@ -13,6 +14,7 @@ const globals = [
   'afterEach',
   'it'
 ];
+
 const browserExtensions = {
     '.marko': function (module, filename) {
         return module._compile(compiler.compileFileForBrowser(filename).code, filename, {
@@ -33,12 +35,6 @@ module.exports = function (dir, html, options) {
       jQuery(window);
       browser.require('complain').log = noop;
       globals.forEach(function (k) { window[k] = global[k]; });
-      window.onerror = function (msg, a, b, c, err) {
-        err = err || new Error(msg);
-        setImmediate(function () { throw err });
-        return true;
-      }
-
       if (options.beforeParse) {
         options.beforeParse(window, browser);
       }
