@@ -94,7 +94,7 @@ function addCustomEventListener(transformHelper, options) {
         options.extraArgs = builder.arrayExpression(options.extraArgs);
     }
 
-    componentArgs.addCustomEvent(options.eventType, options.targetMethod, builder.literal(options.isOnce), options.extraArgs);
+    componentArgs.addCustomEvent(options);
 }
 
 module.exports = function handleComponentEvents() {
@@ -174,12 +174,13 @@ module.exports = function handleComponentEvents() {
                 }
 
                 eventType = builder.literal(eventType);
+                isOnce = builder.literal(isOnce);
 
                 // Node is for a custom tag
-                addCustomEventListener(this, { eventType: eventType,
-                                               targetMethod: targetMethod,
-                                               extraArgs: extraArgs,
-                                               isOnce: isOnce });
+                addCustomEventListener(this, { eventType,
+                                               targetMethod,
+                                               extraArgs,
+                                               isOnce });
             } else {
                 // We are adding an event listener for a DOM event (not a custom event)
                 if (eventType.startsWith('-')) {
@@ -205,17 +206,17 @@ module.exports = function handleComponentEvents() {
                     // a "data-w-on{eventType}" attribute to the output HTML
                     // for this element that will be used to map the event
                     // to a method on the containing component.
-                    addBubblingEventListener(this, { eventType: eventType,
-                                                     targetMethod: targetMethod,
-                                                     extraArgs: extraArgs,
-                                                     isOnce: isOnce });
+                    addBubblingEventListener(this, { eventType,
+                                                     targetMethod,
+                                                     extraArgs,
+                                                     isOnce });
                 } else {
                     // The event does not bubble so we must attach a DOM
                     // event listener directly to the target element.
-                    addDirectEventListener(this, { eventType: eventType,
-                                                   targetMethod: targetMethod,
-                                                   extraArgs: extraArgs,
-                                                   isOnce: isOnce });
+                    addDirectEventListener(this, { eventType,
+                                                   targetMethod,
+                                                   extraArgs,
+                                                   isOnce });
                 }
             }
         });
