@@ -34,7 +34,7 @@ function addBubblingEventListener(transformHelper, options) {
             options.targetMethod
         ];
 
-    addBubblingEventArgs.push(builder.literal(options.isOnce));
+    addBubblingEventArgs.push(options.isOnce);
 
     if (options.extraArgs) {
         addBubblingEventArgs.push(builder.arrayExpression(options.extraArgs));
@@ -67,7 +67,7 @@ function addDirectEventListener(transformHelper, options) {
         options.eventType,
         options.targetMethod,
         componentIdInfo.idExpression,
-        builder.literal(options.isOnce)
+        options.isOnce
     ];
 
     if (options.extraArgs) {
@@ -158,6 +158,7 @@ module.exports = function handleComponentEvents() {
             }
 
             el.removeAttribute(attrName);
+            isOnce = builder.literal(isOnce);
 
             if (isCustomTag) {
                 this.assignComponentId(true /* repeated */);
@@ -174,7 +175,6 @@ module.exports = function handleComponentEvents() {
                 }
 
                 eventType = builder.literal(eventType);
-                isOnce = builder.literal(isOnce);
 
                 // Node is for a custom tag
                 addCustomEventListener(this, { eventType,
