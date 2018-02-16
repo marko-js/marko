@@ -30,12 +30,12 @@ class ComponentArgs {
         this.isUserAssignedKey = isUserAssignedKey === true;
     }
 
-    addCustomEvent(eventType, targetMethod, extraArgs) {
+    addCustomEvent(eventType, targetMethod, isOnce, extraArgs) {
         if (!this.customEvents) {
             this.customEvents = [];
         }
 
-        this.customEvents.push([eventType, targetMethod, extraArgs]);
+        this.customEvents.push([eventType, targetMethod, isOnce, extraArgs]);
     }
 
     compile(transformHelper) {

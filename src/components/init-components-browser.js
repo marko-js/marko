@@ -66,7 +66,7 @@ function invokeComponentEventHandler(component, targetMethodName, args) {
 }
 
 function addEventListenerHelper(el, eventType, isOnce, listener) {
-    var eventListener = listener
+    var eventListener = listener;
     if (isOnce) {
         eventListener = function(event) {
             listener(event);
