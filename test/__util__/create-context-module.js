@@ -20,29 +20,24 @@ class ContextModule extends Module {
    * resolver, require hooks, and context. 
    */
   constructor(options) {
-    const dir = options.dir;
     const postfix = "." + (moduleId++) + EXT_NAME;
-    const filename = path.join(dir, "index" + postfix);
+    const filename = path.join(options.dir, "index" + postfix);
     super(filename);
 
+    this.filename = filename;
     this[S_POSTFIX] = postfix;
     this[S_CONTEXT] = options.context;
     this[S_RESOLVE] = options.resolve;
     this[S_HOOKS] = options.extensions;
-
-    this.loaded = true;
-    this.paths = Module._nodeModulePaths(dir);
-    this.filename = filename;
   }
 }
 
-// Register a require-hook for in-window overrides.
+/**
+ * Patch nodejs module system to support context,
+ * compilation and module resolution overrides.
+ */
 require.extensions[EXT_NAME] = requireHook;
-
-// Patch resolving paths to uses the browser field when running in the window.
 Module._resolveFilename = resolveFileHook;
-
-// Patch compiling to provide the right vm context.
 Module.prototype._compile = compileHook;
 
 // Expose main util.
@@ -50,18 +45,20 @@ exports.createModule = createContextModule;
 
 /**
  * Creates a custom Module object which runs all required scripts in a provided vm context.
+ *
  * @param {object} config Config for the module.
  * @param {string} config.dir The directory from which to resolve requires for this module.
  * @param {*|JSDOM} config.context A vm context which will be used as the context for any required modules.
  * @param {function} [config.resolve] A function to which will override the native module resolution.
  * @param {Object.<string,function>} [config.extensions] An object containing any context specific require hooks to be used in this module.
+ * @return {ContextModule}
  */
 function createContextModule (options) {
   return new ContextModule(options);
 }
 
 /**
- * Hijack native file resolution using the provided resolver.
+ * Hijack native file resolution using closest custom resolver.
  *
  * @param {string} request The file to resolve.
  * @param {Module} parentModule The module requiring this file.
@@ -145,7 +142,7 @@ function compileHook (content, filename) {
  * Walks up a module tree to find the nearest context module.
  *
  * @param {Module} cur The starting module.
- * @return {Module}
+ * @return {Module?}
  */
 function findNearestContextModule (cur) {
   do {
@@ -153,7 +150,6 @@ function findNearestContextModule (cur) {
       return cur;
     }
   } while (cur = cur.parent);
-  return false;
 }
 
 /**
@@ -170,6 +166,13 @@ function runScript (context, script) {
     : script.runInContext(context);
 }
 
+/**
+ * Creates a require function bound to a module
+ * and adds a `resolve` function the same as nodejs.
+ *
+ * @param {Module} module The module to create a require function for.
+ * @return {function}
+ */
 function createRequire (module) {
   const require = module.require.bind(module);
   require.resolve = function (request) {

@@ -9,15 +9,23 @@ const browserResolve = require('lasso-resolve-from');
 const createContextModule = require('./create-context-module').createModule;
 const remapCache = Object.create(null);
 
+/**
+ * Creates a custom Module object which runs all required scripts
+ * in a new jsdom instance.
+ *
+ * @param {object} config Config for the module.
+ * @param {string} config.dir The directory from which to resolve requires for this module.
+ * @param {string} config.html The initial html to parse with jsdom.
+ * @param {function} config.beforeParse A function called with the window, and the module, before parsing html.
+ * @param {Object.<string,function>} [config.extensions] An object containing any browser specific require hooks to be used in this module.
+ * @return {JSDOM}
+ */
 module.exports = function (options) {
   const html = options.html;
   const dir = options.dir;
   const extensions = options.extensions;
   const beforeParse = options.beforeParse;
-  delete options.html;
-  delete options.dir;
-  delete options.extensions;
-  delete options.beforeParse;
+  options.html = options.dir = options.extensions = options.beforeParse = undefined;
   const window = jsdom.jsdom('', options).defaultView;
   const context = {
     window: window,
@@ -50,6 +58,13 @@ module.exports = function (options) {
 
   return context;
 
+  /**
+   * A function to resolve modules in the browser using the provided config.
+   *
+   * @param {string} from The file being resolved from.
+   * @param {string} request The requested path to resolve.
+   * @return {string}
+   */
   function resolve (from, request) {
     return browserResolve(from, request, resolveConfig).path;
   }
@@ -65,7 +80,8 @@ function unique (item, i, list) {
 /**
  * Loads browser.json remaps.
  *
- * @param {string} dir 
+ * @param {string} dir
+ * @return {object|void}
  */
 function loadRemaps (dir) {
   const file = path.join(dir, "browser.json");
