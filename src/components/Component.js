@@ -253,7 +253,7 @@ Component.prototype = componentProto = {
         nodes.forEach(function(node) {
             destroyNodeRecursive(node);
 
-            if (eventDelegation.___handleNodeDetach(node) != false) {
+            if (eventDelegation.___handleNodeDetach(node) != false && node.parentNode) {
                  node.parentNode.removeChild(node);
             }
         });
