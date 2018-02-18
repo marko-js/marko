@@ -253,7 +253,7 @@ class TaglibLoader {
                         if (importPath) {
                             taglib.addImport(importPath);
                         } else {
-                            throw new Error('Import not fount: ' + curImport + ' (from ' + dirname + ')');
+                            throw new Error('Import not found: ' + curImport + ' (from ' + dirname + ')');
                         }
                     }
                 }
