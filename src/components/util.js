@@ -11,7 +11,7 @@ function nextComponentIdProvider(out) {
     };
 }
 
-function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
+function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs) {
     if (handlerMethodName) {
         if (extraArgs) {
             var component = componentDef.___component;
@@ -33,10 +33,10 @@ function attachBubblingEvent(componentDef, handlerMethodName, extraArgs) {
                 }
             }
 
-            return handlerMethodName + ' ' + componentDef.id + ' ' + eventIndex;
+            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce + ' ' + eventIndex;
 
         } else {
-            return handlerMethodName + ' ' + componentDef.id;
+            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce;
         }
     }
 }

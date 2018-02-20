@@ -16,11 +16,11 @@ function isUpperCase(c) {
     return c == c.toUpperCase();
 }
 
-function addBubblingEventListener(transformHelper, eventType, targetMethod, extraArgs) {
+function addBubblingEventListener(transformHelper, options) {
     var el = transformHelper.el;
 
     if (transformHelper.hasBoundComponentForTemplate() === false) {
-        transformHelper.addError('Unable to handle event ' + eventType + '. HTML element is not nested within a component.');
+        transformHelper.addError('Unable to handle event ' + options.eventType + '. HTML element is not nested within a component.');
         return;
     }
 
@@ -31,18 +31,20 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
         builder.identifier('d'));
 
     var addBubblingEventArgs = [
-            targetMethod
+            options.targetMethod
         ];
 
-    if (extraArgs) {
-        addBubblingEventArgs.push(builder.arrayExpression(extraArgs));
+    addBubblingEventArgs.push(options.isOnce);
+
+    if (options.extraArgs) {
+        addBubblingEventArgs.push(builder.arrayExpression(options.extraArgs));
     }
 
     var propValue = builder.functionCall(addBubblingEventMethod, addBubblingEventArgs);
-    var propName = 'on' + eventType.value;
+    var propName = 'on' + options.eventType.value;
     el.setPropertyValue(propName, propValue, false);
 
-    if (eventType.value === 'attach' || eventType.value === 'detach') {
+    if (options.eventType.value === 'attach' || options.eventType.value === 'detach') {
         if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
             transformHelper.context.data[ATTACH_DETACH_KEY] = true;
             transformHelper.context.importModule(null, 'marko/components/attach-detach');
@@ -50,7 +52,7 @@ function addBubblingEventListener(transformHelper, eventType, targetMethod, extr
     }
 }
 
-function addDirectEventListener(transformHelper, eventType, targetMethod, extraArgs) {
+function addDirectEventListener(transformHelper, options) {
     var builder = transformHelper.builder;
     var el = transformHelper.el;
 
@@ -62,13 +64,14 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
     let idVarNode = componentIdInfo.idVarNode ? null : componentIdInfo.createIdVarNode();
 
     var helperArgs = [
-        eventType,
-        targetMethod,
-        componentIdInfo.idExpression
+        options.eventType,
+        options.targetMethod,
+        componentIdInfo.idExpression,
+        options.isOnce
     ];
 
-    if (extraArgs) {
-        helperArgs.push(builder.arrayExpression(extraArgs));
+    if (options.extraArgs) {
+        helperArgs.push(builder.arrayExpression(options.extraArgs));
     }
 
     var addDomEventFunctionCall = builder.functionCall(addDomEvent, helperArgs);
@@ -81,17 +84,17 @@ function addDirectEventListener(transformHelper, eventType, targetMethod, extraA
     });
 }
 
-function addCustomEventListener(transformHelper, eventType, targetMethod, extraArgs) {
+function addCustomEventListener(transformHelper, options) {
     var builder = transformHelper.builder;
 
     // Make sure the component has an assigned scope ID so that we can bind the custom event listener
     var componentArgs = transformHelper.getComponentArgs();
 
-    if (extraArgs) {
-        extraArgs = builder.arrayExpression(extraArgs);
+    if (options.extraArgs) {
+        options.extraArgs = builder.arrayExpression(options.extraArgs);
     }
 
-    componentArgs.addCustomEvent(eventType, targetMethod, extraArgs);
+    componentArgs.addCustomEvent(options);
 }
 
 module.exports = function handleComponentEvents() {
@@ -115,13 +118,21 @@ module.exports = function handleComponentEvents() {
             var argument = attr.argument;
             var parsedArgs;
             var extraArgs;
+            var isOnce = false;
 
             if (!attrName) {
                 return;
             }
 
+            // handles on-* and once-*
             if (attrName.startsWith('on') && argument) {
-                eventType = attrName.substring(2); // Chop off "on"
+                isOnce = attrName.startsWith('once');
+
+                if (isOnce) {
+                    eventType = attrName.substring(4); // Chop off "once"
+                } else {
+                    eventType = attrName.substring(2); // Chop off "on"
+                }
                 try {
                     parsedArgs = builder.parseJavaScriptArgs(argument);
                 } catch (err) {
@@ -147,6 +158,7 @@ module.exports = function handleComponentEvents() {
             }
 
             el.removeAttribute(attrName);
+            isOnce = builder.literal(isOnce);
 
             if (isCustomTag) {
                 this.assignComponentId(true /* repeated */);
@@ -165,7 +177,10 @@ module.exports = function handleComponentEvents() {
                 eventType = builder.literal(eventType);
 
                 // Node is for a custom tag
-                addCustomEventListener(this, eventType, targetMethod, extraArgs);
+                addCustomEventListener(this, { eventType,
+                                               targetMethod,
+                                               extraArgs,
+                                               isOnce });
             } else {
                 // We are adding an event listener for a DOM event (not a custom event)
                 if (eventType.startsWith('-')) {
@@ -191,11 +206,17 @@ module.exports = function handleComponentEvents() {
                     // a "data-w-on{eventType}" attribute to the output HTML
                     // for this element that will be used to map the event
                     // to a method on the containing component.
-                    addBubblingEventListener(this, eventType, targetMethod, extraArgs);
+                    addBubblingEventListener(this, { eventType,
+                                                     targetMethod,
+                                                     extraArgs,
+                                                     isOnce });
                 } else {
                     // The event does not bubble so we must attach a DOM
                     // event listener directly to the target element.
-                    addDirectEventListener(this, eventType, targetMethod, extraArgs);
+                    addDirectEventListener(this, { eventType,
+                                                   targetMethod,
+                                                   extraArgs,
+                                                   isOnce });
                 }
             }
         });

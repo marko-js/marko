@@ -194,10 +194,15 @@ Component.prototype = componentProto = {
 
         if (customEvents && (target = customEvents[eventType])) {
             var targetMethodName = target[0];
-            var extraArgs = target[1];
+            var isOnce = target[1];
+            var extraArgs = target[2];
             var args = slice.call(arguments, 1);
 
             handleCustomEventWithMethodListener(this, targetMethodName, args, extraArgs);
+
+            if (isOnce) {
+                delete customEvents[eventType];
+            }
         }
 
         if (this.listenerCount(eventType)) {
@@ -253,7 +258,7 @@ Component.prototype = componentProto = {
         nodes.forEach(function(node) {
             destroyNodeRecursive(node);
 
-            if (eventDelegation.___handleNodeDetach(node) != false) {
+            if (eventDelegation.___handleNodeDetach(node) !== false) {
                  node.parentNode.removeChild(node);
             }
         });
@@ -528,9 +533,10 @@ Component.prototype = componentProto = {
         customEvents.forEach(function(customEvent) {
             var eventType = customEvent[0];
             var targetMethodName = customEvent[1];
-            var extraArgs = customEvent[2];
+            var isOnce = customEvent[2];
+            var extraArgs = customEvent[3];
 
-            finalCustomEvents[eventType] = [targetMethodName, extraArgs];
+            finalCustomEvents[eventType] = [targetMethodName, isOnce, extraArgs];
         });
     },
 

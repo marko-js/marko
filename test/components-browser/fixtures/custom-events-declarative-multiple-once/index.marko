@@ -1,0 +1,24 @@
+import { expect } from 'chai';
+
+class {
+    onCreate() {
+        this.testEvent1Fired = 0;
+        this.testEvent2Fired = 0;
+
+    }
+    handleTestEvent1(arg1, arg2) {
+        expect(arg1).to.equal('a');
+        expect(arg2).to.equal('b');
+        this.testEvent1Fired++;
+    }
+
+    handleTestEvent2(arg1, arg2) {
+        expect(arg1).to.equal('c');
+        expect(arg2).to.equal('d');
+        this.testEvent2Fired++;
+    }
+}
+
+<div>
+    <app-bar key="bar" once-testEvent1('handleTestEvent1', 'a', 'b') once-testEvent2('handleTestEvent2', 'c', 'd')/>
+</div>

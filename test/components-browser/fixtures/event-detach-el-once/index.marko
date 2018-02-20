@@ -1,0 +1,19 @@
+class {
+    onMount() {
+        this.numberOfInvocations = 0;
+    }
+
+    handleDetach(color, event, node) {
+        this.numberOfInvocations++;
+    }
+}
+
+<div>
+    <ul>
+        <for(color in input.colors)>
+            <li key=color once-detach('handleDetach', color)>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</div>

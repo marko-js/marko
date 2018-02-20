@@ -70,9 +70,21 @@
                 {
                     "displayText": "on<event>(\"<method>\")",
                     "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#adding-dom-event-listeners"
+                    "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
                 }
             ]
+        },
+        "@once*": {
+            "pattern": true,
+            "type": "statement",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasComponentEvents",
+            "autocomplete": {
+                "displayText": "once<event>(\"<method>\")",
+                "snippet": "once${1:Click}(\"handle${2:Button}${1:Click}\")",
+                "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
+            }
         },
         "@w-on*": {
             "pattern": true,

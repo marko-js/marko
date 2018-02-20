@@ -65,15 +65,24 @@ function invokeComponentEventHandler(component, targetMethodName, args) {
     method.apply(component, args);
 }
 
-function addEventListenerHelper(el, eventType, listener) {
-    el.addEventListener(eventType, listener, false);
+function addEventListenerHelper(el, eventType, isOnce, listener) {
+    var eventListener = listener;
+    if (isOnce) {
+        eventListener = function(event) {
+            listener(event);
+            el.removeEventListener(eventType, eventListener);
+        };
+    }
+
+    el.addEventListener(eventType, eventListener, false);
+
     return function remove() {
-        el.removeEventListener(eventType, listener);
+        el.removeEventListener(eventType, eventListener);
     };
 }
 
-function addDOMEventListeners(component, el, eventType, targetMethodName, extraArgs, handles) {
-    var removeListener = addEventListenerHelper(el, eventType, function(event) {
+function addDOMEventListeners(component, el, eventType, targetMethodName, isOnce, extraArgs, handles) {
+    var removeListener = addEventListenerHelper(el, eventType, isOnce, function(event) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -118,9 +127,10 @@ function initComponent(componentDef, doc) {
             var eventType = domEventArgs[0];
             var targetMethodName = domEventArgs[1];
             var eventEl = component.___keyedElements[domEventArgs[2]];
-            var extraArgs = domEventArgs[3];
+            var isOnce = domEventArgs[3];
+            var extraArgs = domEventArgs[4];
 
-            addDOMEventListeners(component, eventEl, eventType, targetMethodName, extraArgs, eventListenerHandles);
+            addDOMEventListeners(component, eventEl, eventType, targetMethodName, isOnce, extraArgs, eventListenerHandles);
         });
 
         if (eventListenerHandles.length) {

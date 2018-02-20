@@ -193,7 +193,9 @@ module.exports = {
 
 ## Event handling
 
-The `on-[event](methodName, ...args)` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
+The `on-[event](methodName, ...args)` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
+
+You may also use the `once-[event](methodName, ...args)` attribute, which will listen for only the first event, and then remove the listener for any subsequent events.
 
 ### Attaching DOM event listeners
 
@@ -203,6 +205,9 @@ The code below illustrates how to attach an event listener for a native DOM even
 class {
   onButtonClick(name, event, el) {
     alert(`Hello ${name}!`);
+  }
+  fadeIn(event, el) {
+      // ... fade the image in
   }
 }
 
@@ -214,6 +219,8 @@ class {
   <button on-click('onButtonClick', 'John')>
     Say Hello to John
   </button>
+
+  <img src='foo.jpg' once-load('fadeIn') />
 </div>
 ```
 
@@ -224,7 +231,7 @@ Any string that represents a valid JavaScript identifier is allowed for the even
 2. `event` - The native DOM event
 3. `el` - The DOM element that the event listener was attached to
 
-When using the `on-*` attribute to attach event listeners, Marko will use event delegation that is more efficient than using `el.addEventListener()` directly. Please see [Why is Marko Fast? » Event delegation](/docs/why-is-marko-fast/#event-delegation) for more details.
+When using the `on-*` or `once-*` attributes to attach event listeners, Marko will use event delegation that is more efficient than using `el.addEventListener()` directly. Please see [Why is Marko Fast? » Event delegation](/docs/why-is-marko-fast/#event-delegation) for more details.
 
 <a name="declarative-custom-events"></a>
 
@@ -237,10 +244,13 @@ class {
   onCounterChange(newValue, el) {
     alert(`New value: ${newValue}!`);
   }
+  onCounterMax(max) {
+      alert(`It reached the max: ${max}!`);
+  }
 }
 
 <div>
-  <counter on-change('onCounterChange')/>
+  <counter on-change('onCounterChange') once-max('onCounterMax') />
 </div>
 ```
 
@@ -257,10 +267,16 @@ _counter/index.marko_
 ```marko
 class {
   onCreate() {
+    this.max = 50;
     this.state = { count: 0 };
   }
   increment() {
-    this.emit('change', ++this.state.count);
+    if (this.state.count < this.max) {
+        this.emit('change', ++this.state.count);
+    }
+    if (this.state.count === this.max) {
+        this.emit('max', this.state.count);
+    }
   }
 }
 
@@ -284,6 +300,10 @@ this.emit('foo', 'bar', 'baz');
 ### `on-[event](methodName, ...args)`
 
 The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName, ...args)` attribute.
+
+### `once-[event](methodName, ...args)`
+
+This is the same as the `on-*` attribute except that its listener will only be invoked for the first event, and then removed from memory after that. Please see the [Event handling](#event-handling) section above for more details on how to use the the `once-[event](methodName, ...args)` attribute.
 
 ### `key`
 

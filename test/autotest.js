@@ -10,7 +10,7 @@ const projectRoot = path.join(__dirname, '..');
 var enabledTestNames = enabledTest && enabledTest.split(/[\s*,\s*/]/);
 var enabledTests = null;
 
-if (enabledTestNames && enabledTestNames.length > 1) {
+if (enabledTestNames && enabledTestNames.length > 0) {
     enabledTests = {};
     enabledTest = null;
     enabledTestNames.forEach((testName) => {
@@ -154,7 +154,7 @@ exports.scanDir = function(autoTestDir, run, options) {
             .forEach(function(name) {
                 if (/^(\.|\~)/.test(name)) {
                     return;
-                }                
+                }
 
                 if (enabledTests && !enabledTests[name] && !enabledTests[testGroup] && !enabledTests[testGroup+'/'+name]) {
                     return;

@@ -30,5 +30,6 @@
     "no-update-body-if",
     "w-preserve-attrs",
     "on*",
+    "once*",
     "w-on*"
 ]
