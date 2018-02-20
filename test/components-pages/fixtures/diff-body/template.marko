@@ -1,5 +1,3 @@
-lasso-page dependencies=input.browserDependencies lasso=input.lasso
-
 class {
     onCreate () {
         this.state = {
@@ -22,7 +20,6 @@ html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Test
-        lasso-head
     body
 
         div id="test"
@@ -30,10 +27,4 @@ html lang="en"
         div id="testsTarget"
         div.count key="count" -- ${state.count}
 
-        lasso-body
-
         init-components immediate
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh

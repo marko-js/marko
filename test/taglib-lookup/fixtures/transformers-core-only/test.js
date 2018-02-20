@@ -7,5 +7,5 @@ exports.check = function (markoCompiler, expect) {
         transformers.push(transformer);
     });
 
-    expect(transformers.length).to.equal(3);
+    expect(transformers.length).to.equal(2);
 };

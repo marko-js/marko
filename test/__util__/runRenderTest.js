@@ -1,7 +1,7 @@
 'use strict';
 
-const jsdom = require("jsdom").jsdom;
-const defaultDocument = jsdom('<html><body></body></html>');
+const createJSDOMModule = require('../__util__/create-jsdom-module');
+const defaultDocument = createJSDOMModule({ dir: __dirname, html: '<html><body></body></html>' }).window.document;
 
 const path = require('path');
 const fs = require('fs');
@@ -172,8 +172,8 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                                 return callback(err);
                             }
 
-                            let document = jsdom('<html><body>' + html + '</body></html>');
-                            let expectedHtml = domToString(document.body, { childrenOnly: true });
+                            let browser = createJSDOMModule({ dir: __dirname, html: '<html><body>' + html + '</body></html>' });
+                            let expectedHtml = domToString(browser.window.document.body, { childrenOnly: true });
 
                             process.nextTick(function () {
                                 callback(null, expectedHtml);
@@ -196,8 +196,8 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
                         let vdomHtml = domToHTML(actualNode);
 
-                        let vdomRealDocument = jsdom('<html><body>' + vdomHtml + '</body></html>');
-                        let vdomString = domToString(vdomRealDocument.body, { childrenOnly: true });
+                        let browser = createJSDOMModule({ dir: __dirname, html: '<html><body>' + vdomHtml + '</body></html>' });
+                        let vdomString = domToString(browser.window.document.body, { childrenOnly: true });
                         helpers.compare(vdomString, 'vdom-', '.generated.html');
 
                         if (checkAsyncEvents) {

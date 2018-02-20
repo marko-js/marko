@@ -1,7 +1,6 @@
 'use strict';
 
 require('../__util__/test-init');
-require('require-self-ref');
 
 var nodePath = require('path');
 var chai = require('chai');

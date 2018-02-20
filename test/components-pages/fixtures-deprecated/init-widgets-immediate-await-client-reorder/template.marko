@@ -7,21 +7,16 @@ script marko-init
     }
     ---
 
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 <!DOCTYPE html>
 html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Widgets Tests
-        lasso-head
     body
 
         div id="test"
         div id="mocha"
         div id="testsTarget"
-
-        lasso-body
 
         app-foo
 
@@ -45,9 +40,3 @@ html lang="en"
             window.afterReorderer_foo = window.fooWidget;
             window.afterReorderer_bar = window.barWidget;
             ---
-
-        lasso-slot name="mocha-run"
-
-
-
-        browser-refresh

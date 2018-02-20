@@ -1,7 +1,6 @@
 'use strict';
 
 require('../__util__/test-init');
-require('marko/node-require').install();
 
 var chai = require('chai');
 chai.config.includeStack = true;

@@ -9,8 +9,6 @@ var compiler = require('../../compiler');
 var autotest = require('../autotest');
 var fs = require('fs');
 
-require('marko/node-require').install();
-
 describe('vdom-compiler', function () {
     var autoTestDir = path.join(__dirname, './fixtures');
 

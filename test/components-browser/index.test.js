@@ -1,68 +1,125 @@
 'use strict';
-
 require('../__util__/test-init');
-require('../../node-require').install();
 
 var path = require('path');
 var autotest = require('../autotest');
-var renderJSDOM = require('../__util__/render-run-jsdom');
-var pageTemplate = require('./template.marko');
+var createJSDOMModule = require('../__util__/create-marko-jsdom-module');
+var ssrTemplate = require('./template.marko');
+var TEST_NAME = path.basename(__dirname);
+// var renderedCache = {};
 
-describe(path.basename(__dirname), function () {
+describe(TEST_NAME, function () {
+    var browser = createJSDOMModule(__dirname, '<div id="testsTarget"></div><div></div>');
+    var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
+    var helpers;
+
+    beforeEach(function () {
+        helpers = new BrowserHelpers();
+    })
+
+    afterEach(function () {
+        helpers.components.forEach(function (component) {
+            component.instance.destroy();
+        });
+
+        helpers.targetEl.innerHTML = '';
+    });
+
+    after(function () {
+        browser.window.close();
+    });
+
     autotest.scanDir(
         path.join(__dirname, './fixtures'),
-        run
-      );
+        runBrowserRender
+    );
 
     describe('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
-            run
+            runBrowserRender
         );
     });
+
+    function runBrowserRender(dir, _, done) {
+        var testFile = path.join(dir, 'test.js');
+        var testFunc = browser.require(testFile);
+        var isAsync = testFunc.length > 1;
+    
+        if (isAsync) {
+            testFunc(helpers, cleanupAndFinish);
+        } else {
+            testFunc(helpers);
+            cleanupAndFinish();
+        }
+    
+        function cleanupAndFinish (err) {
+            // Cache components for use in hydrate run.
+            // renderedCache[dir] = helpers.components.map(function (component) {
+            //     var file = component.type.replace(/^.*\/components-browser/, __dirname);
+            //     return {
+            //         file: file,
+            //         template: require(file),
+            //         input: component.input
+            //     };
+            // });
+    
+            if (err) {
+                done(err);
+            } else {
+                done();
+            }
+        }
+    }
 });
 
-/**
- * Builds a page with marko & lasso and then pipes it through jsdom, loading co-located tests.
- */
-function run(dir, helpers, done) {
-    var testFile = path.join(dir, 'test.js');
-    var cleanup = function (err) {
-        global.window && global.window.cleanup();
-        done(err);
-    }
+// describe.skip(TEST_NAME + ' (hydrated)', function () {
+//     autotest.scanDir(
+//         path.join(__dirname, './fixtures'),
+//         runServerRender
+//     );
 
-    renderJSDOM(pageTemplate, {
-        name: dir,
-        browserDependencies: ['require: jquery', {
-            run: true,
-            type: "require",
-            virtualModule: {
-                path: path.join(dir, 'test.init.js'),
-                read() {
-                    return `
-                    window.TEST = require(${JSON.stringify(testFile)});
-                    window.BrowserHelpers = require(${JSON.stringify(require.resolve('../__util__/BrowserHelpers'))});
-                    `;
-                }
-            }
-        }]
-    }).then(() => {
-        var helpers = new window.BrowserHelpers();
-        var testFunc = window.TEST;
+//     describe('deprecated', function () {
+//         autotest.scanDir(
+//             path.join(__dirname, './fixtures-deprecated'),
+//             runServerRender
+//         );
+//     });
 
-        if (testFunc.length === 1) {
-            testFunc(helpers);
-        } else {
-            return new Promise(function (resolve, reject) {
-                testFunc(helpers, function (err) {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve();
-                    }
-                });
-            })
-        }
-    }).then(cleanup, cleanup);
-  }
+//     function runServerRender(dir, _, done) {
+//         var components = renderedCache[dir];
+//         ssrTemplate
+//             .render({ components: components })
+//             .then(function (html) {
+//                 var browser = createJSDOMModule(__dirname, String(html), {
+//                     beforeParse(window, browser) {
+//                         components.forEach(function (component) {
+//                             browser.require(component.file);
+//                         });
+//                     }
+//                 });
+//                 var testFile = path.join(dir, 'test.js');
+//                 var testFunc = browser.require(testFile);
+//                 var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
+//                 var helpers = new BrowserHelpers();
+//                 var isAsync = testFunc.length > 1;
+//                 browser.require('./render-target.marko');
+//                 browser.window.$initComponents();
+
+//                 var targetComponent = helpers.getComponentForEl(helpers.targetEl);
+//                 debugger;
+
+//                 helpers.mount = function () {
+//                     return existingInstances[curInstance++];
+//                 }
+    
+//                 if (isAsync) {
+//                     testFunc(helpers, done);
+//                 } else {
+//                     testFunc(helpers);
+//                     done();
+//                 }
+//             })
+//             .catch(done);
+//     }
+// });

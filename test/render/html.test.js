@@ -8,15 +8,14 @@ var path = require('path');
 var autotest = require('../autotest');
 var runRenderTest = require('../__util__/runRenderTest');
 
-require('../../node-require').install();
-
-describe('render', function () {
+describe('render-html', function () {
     autotest.scanDir(path.join(__dirname, './fixtures'), run);
 
-    describe('deprecated', function () {
-        autotest.scanDir(path.join(__dirname, './fixtures-deprecated'), run);
-    })
 });
+
+describe('render-html (deprecated)', function () {
+    autotest.scanDir(path.join(__dirname, './fixtures-deprecated'), run);
+})
 
 function run(dir, helpers, done) {
     runRenderTest(dir, helpers, done, {

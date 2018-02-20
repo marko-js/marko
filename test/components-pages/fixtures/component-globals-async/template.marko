@@ -1,13 +1,9 @@
-lasso-page dependencies=data.browserDependencies lasso=data.lasso
-
 $ {
     out.global.name = 'Frank';
     out.global.serializedGlobals = {
         name: true
     };
 }
-
-import Promise from 'promise-polyfill';
 
 $ var userPromise = new Promise(function(resolve, reject) {
     setTimeout(function() {
@@ -20,11 +16,7 @@ html lang="en"
     head
         meta charset="UTF-8"
         title -- Marko Components Tests
-        lasso-head
     body
-
-        div id="test"
-        div id="mocha"
         div id="testsTarget"
 
         <await(user from userPromise)>
@@ -36,10 +28,4 @@ html lang="en"
 
         <app-hello name="hello3"/>
 
-        lasso-body
-
         init-components immediate
-
-        lasso-slot name="mocha-run"
-
-        browser-refresh
