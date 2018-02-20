@@ -3,6 +3,14 @@ Changelog
 
 # 4.x
 
+## 4.8.x
+
+### 4.8.0
+
+- Add `once-[event]` directive [#990](https://github.com/marko-js/marko/pull/990)
+
+- Improve testing setup [#989](https://github.com/marko-js/marko/pull/989)
+
 ## 4.7.x
 
 ### 4.7.5
