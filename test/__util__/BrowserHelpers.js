@@ -32,8 +32,8 @@ BrowserHelpers.prototype = {
     },
 
     mount: function (component, input) {
+        var $global = input && input.$global;
         var renderResult = component.renderSync(input).appendTo(this.targetEl);
-
         var instance;
         try {
             instance = renderResult.getComponent();
@@ -47,7 +47,8 @@ BrowserHelpers.prototype = {
             this.components.push({
                 instance: instance,
                 type: instance.___type,
-                input: input
+                input: input,
+                $global: $global
             });
         }
 

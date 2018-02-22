@@ -60,7 +60,8 @@ describe(TEST_NAME, function () {
                 return {
                     file: file,
                     template: require(file),
-                    input: component.input
+                    input: component.input,
+                    $global: component.$global
                 };
             });
     
@@ -88,8 +89,9 @@ describe(TEST_NAME + ' (hydrated)', function () {
 
     function runServerRender(dir, _, done) {
         var components = renderedCache[dir];
+        var $global = components.reduce(($g, c) => Object.assign($g, c.$global), {});
         ssrTemplate
-            .render({ components: components })
+            .render({ components: components, $global: $global })
             .then(function (html) {
                 var browser = createJSDOMModule(__dirname, String(html), {
                     beforeParse(window, browser) {
