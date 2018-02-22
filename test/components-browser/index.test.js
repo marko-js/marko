@@ -108,6 +108,7 @@ describe(TEST_NAME + ' (hydrated)', function () {
                 var curInstance = 0;
 
                 browser.window.$initComponents();
+                helpers.isHydrate = true;
 
                 helpers.mount = function () {
                     return browser.window.components[curInstance++];
