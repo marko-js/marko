@@ -6,7 +6,7 @@ var autotest = require('../autotest');
 var createJSDOMModule = require('../__util__/create-marko-jsdom-module');
 var ssrTemplate = require('./template.marko');
 var TEST_NAME = path.basename(__dirname);
-// var renderedCache = {};
+var renderedCache = {};
 
 describe(TEST_NAME, function () {
     var browser = createJSDOMModule(__dirname, '<div id="testsTarget"></div><div></div>');
@@ -55,14 +55,14 @@ describe(TEST_NAME, function () {
     
         function cleanupAndFinish (err) {
             // Cache components for use in hydrate run.
-            // renderedCache[dir] = helpers.components.map(function (component) {
-            //     var file = component.type.replace(/^.*\/components-browser/, __dirname);
-            //     return {
-            //         file: file,
-            //         template: require(file),
-            //         input: component.input
-            //     };
-            // });
+            renderedCache[dir] = helpers.components.map(function (component) {
+                var file = component.type.replace(/^.*\/components-browser/, __dirname);
+                return {
+                    file: file,
+                    template: require(file),
+                    input: component.input
+                };
+            });
     
             if (err) {
                 done(err);
@@ -73,53 +73,53 @@ describe(TEST_NAME, function () {
     }
 });
 
-// describe.skip(TEST_NAME + ' (hydrated)', function () {
-//     autotest.scanDir(
-//         path.join(__dirname, './fixtures'),
-//         runServerRender
-//     );
+describe(TEST_NAME + ' (hydrated)', function () {
+    autotest.scanDir(
+        path.join(__dirname, './fixtures'),
+        runServerRender
+    );
 
-//     describe('deprecated', function () {
-//         autotest.scanDir(
-//             path.join(__dirname, './fixtures-deprecated'),
-//             runServerRender
-//         );
-//     });
+    describe('deprecated', function () {
+        autotest.scanDir(
+            path.join(__dirname, './fixtures-deprecated'),
+            runServerRender
+        );
+    });
 
-//     function runServerRender(dir, _, done) {
-//         var components = renderedCache[dir];
-//         ssrTemplate
-//             .render({ components: components })
-//             .then(function (html) {
-//                 var browser = createJSDOMModule(__dirname, String(html), {
-//                     beforeParse(window, browser) {
-//                         components.forEach(function (component) {
-//                             browser.require(component.file);
-//                         });
-//                     }
-//                 });
-//                 var testFile = path.join(dir, 'test.js');
-//                 var testFunc = browser.require(testFile);
-//                 var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
-//                 var helpers = new BrowserHelpers();
-//                 var isAsync = testFunc.length > 1;
-//                 browser.require('./render-target.marko');
-//                 browser.window.$initComponents();
+    function runServerRender(dir, _, done) {
+        var components = renderedCache[dir];
+        ssrTemplate
+            .render({ components: components })
+            .then(function (html) {
+                var browser = createJSDOMModule(__dirname, String(html), {
+                    beforeParse(window, browser) {
+                        var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
+                        browser.require('marko/components').register(ssrTemplate.meta.id, rootComponent);
+                        components.forEach(function (component) {
+                            browser.require(component.file);
+                        });
+                    }
+                });
+                var testFile = path.join(dir, 'test.js');
+                var testFunc = browser.require(testFile);
+                var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
+                var helpers = new BrowserHelpers();
+                var isAsync = testFunc.length > 1;
+                var curInstance = 0;
 
-//                 var targetComponent = helpers.getComponentForEl(helpers.targetEl);
-//                 debugger;
+                browser.window.$initComponents();
 
-//                 helpers.mount = function () {
-//                     return existingInstances[curInstance++];
-//                 }
+                helpers.mount = function () {
+                    return browser.window.components[curInstance++];
+                }
     
-//                 if (isAsync) {
-//                     testFunc(helpers, done);
-//                 } else {
-//                     testFunc(helpers);
-//                     done();
-//                 }
-//             })
-//             .catch(done);
-//     }
-// });
+                if (isAsync) {
+                    testFunc(helpers, done);
+                } else {
+                    testFunc(helpers);
+                    done();
+                }
+            })
+            .catch(done);
+    }
+});

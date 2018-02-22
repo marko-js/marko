@@ -5,7 +5,9 @@
     </head>
     <body>
         <div#testsTarget>
-            <include(component.template, component.input) for(component in input.components)/>
+            <for(component in input.components)>
+                <include(component.template, component.input) key="components[]"/>
+            </for>
         </div>
     </body>
 </html>
