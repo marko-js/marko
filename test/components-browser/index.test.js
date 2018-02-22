@@ -75,15 +75,21 @@ describe(TEST_NAME, function () {
 });
 
 describe(TEST_NAME + ' (hydrated)', function () {
+    var hydrateOptions = { 
+        skip: (_, dir) => require(path.join(dir, 'test.js')).skipHydrate
+    };
+
     autotest.scanDir(
         path.join(__dirname, './fixtures'),
-        runServerRender
+        runServerRender,
+        hydrateOptions
     );
 
     describe('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
-            runServerRender
+            runServerRender,
+            hydrateOptions
         );
     });
 
