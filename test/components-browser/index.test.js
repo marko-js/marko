@@ -83,7 +83,7 @@ describe(TEST_NAME + ' (hydrated)', function () {
         hydrateOptions
     );
 
-    describe('deprecated', function () {
+    describe.skip('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
             runServerRender,
