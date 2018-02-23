@@ -45,7 +45,7 @@ function addBubblingEventListener(transformHelper, options) {
     el.setPropertyValue(propName, propValue, false);
 
     if (options.eventType.value === 'attach' || options.eventType.value === 'detach') {
-        if (!transformHelper.context.data[ATTACH_DETACH_KEY]) {
+        if (!transformHelper.context.data[ATTACH_DETACH_KEY] && transformHelper.context.outputType === 'vdom') {
             transformHelper.context.data[ATTACH_DETACH_KEY] = true;
             transformHelper.context.importModule(null, 'marko/components/attach-detach');
         }
