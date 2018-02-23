@@ -1,8 +1,6 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    window.rerenderInitOrder = [];
-
     var component = helpers.mount(require('./index'), {
         version: 0
     });
