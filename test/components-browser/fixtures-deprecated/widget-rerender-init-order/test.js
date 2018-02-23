@@ -15,5 +15,5 @@ module.exports = function (helpers) {
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
     expect(window.rerenderInitOrder).to.deep.equal(['childB', 'childA', 'parent']);
 
-    delete window.rerenderInitOrder;
+    window.rerenderInitOrder = null;
 };
