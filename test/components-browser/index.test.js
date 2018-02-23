@@ -55,15 +55,13 @@ describe(TEST_NAME, function () {
     
         function cleanupAndFinish (err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.components.map(function (component) {
-                var file = component.type.replace(/^.*\/components-browser/, __dirname);
-                return {
-                    file: file,
-                    template: require(file),
-                    input: component.input,
-                    $global: component.$global
-                };
-            });
+            renderedCache[dir] = helpers.components.map(component => ({
+                type: component.type,
+                logic: component.logic,
+                template: component.template && require(component.template),
+                input: component.input,
+                $global: component.$global
+            }));
     
             if (err) {
                 done(err);
@@ -101,10 +99,11 @@ describe(TEST_NAME + ' (hydrated)', function () {
             .then(function (html) {
                 var browser = createJSDOMModule(__dirname, String(html), {
                     beforeParse(window, browser) {
+                        var marko = browser.require('marko/components');
                         var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
-                        browser.require('marko/components').register(ssrTemplate.meta.id, rootComponent);
+                        marko.register(ssrTemplate.meta.id, rootComponent);
                         components.forEach(function (component) {
-                            browser.require(component.file);
+                            marko.register(component.type, browser.require(component.logic));
                         });
                     }
                 });

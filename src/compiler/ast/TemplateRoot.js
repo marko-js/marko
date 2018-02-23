@@ -75,10 +75,9 @@ class TemplateRoot extends Node {
                         renderStatements)
                 ]);
         } else {
-            var isBrowser = context.options.browser;
-            var createArgs = isBrowser ?
-                [] :
-                [ builder.identifier('__filename') ];
+            var createArgs = context.useMeta ?
+                [ builder.identifier('__filename') ] :
+                [];
 
             let templateDeclaration = builder.variableDeclarator('marko_template',
                 builder.assignment(

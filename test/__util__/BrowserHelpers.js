@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var path = require('path');
 var assert = require('assert');
 var markoComponents = require('marko/components');
 
@@ -44,9 +45,13 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
+            var template = (component.renderer && component.renderer.template) || component;
+            var meta = template.meta;
             this.components.push({
                 instance: instance,
-                type: instance.___type,
+                type: meta && meta.id,
+                logic: meta && meta.component && path.resolve(path.dirname(template.path), meta.component),
+                template: template.path,
                 input: input,
                 $global: $global
             });
