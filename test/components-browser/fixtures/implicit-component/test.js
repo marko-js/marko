@@ -6,3 +6,5 @@ module.exports = function (helpers) {
     component.destroy();
     expect(helpers.targetEl.querySelector('.hello') == null).to.equal(true);
 };
+
+module.exports.skipHydrate = true;

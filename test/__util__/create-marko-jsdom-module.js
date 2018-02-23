@@ -5,6 +5,7 @@ const createJSDOMModule = require('./create-jsdom-module');
 const compiler = require('../../compiler');
 const noop = function () {};
 const globals = [
+  'console',
   '__coverage__',
   'Error',
   'describe',
@@ -17,10 +18,12 @@ const globals = [
 
 const browserExtensions = {
     '.marko': function (module, filename) {
-        return module._compile(compiler.compileFileForBrowser(filename).code, filename, {
+        return module._compile(compiler.compileFile(filename, {
             writeToDisk: false,
-            output: 'vdom'
-        });
+            output: 'vdom',
+            browser: true,
+            meta: true
+        }), filename);
     }
 };
 

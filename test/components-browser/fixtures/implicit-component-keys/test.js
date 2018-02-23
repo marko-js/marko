@@ -18,3 +18,5 @@ module.exports = function (helpers) {
     expect(els[0]).to.equal(elsAfter[1]);
     expect(els[1]).to.equal(elsAfter[0]);
 };
+
+module.exports.skipHydrate = true;

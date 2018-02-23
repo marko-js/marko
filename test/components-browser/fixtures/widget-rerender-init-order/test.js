@@ -1,8 +1,6 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    window.rerenderInitOrder = [];
-
     var component = helpers.mount(require('./index'), {
         version: 0
     });
@@ -17,5 +15,5 @@ module.exports = function (helpers) {
     // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
     expect(window.rerenderInitOrder).to.deep.equal(['childB', 'childA', 'parent']);
 
-    delete window.rerenderInitOrder;
+    window.rerenderInitOrder = null;
 };

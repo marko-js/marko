@@ -161,16 +161,16 @@ exports.scanDir = function(autoTestDir, run, options) {
                 }
 
                 var testFunc = options.type === 'describe' ? describe : it;
+                var dir = path.join(autoTestDir, name);
 
                 if (enabledTest && (name === enabledTest || testGroup+'/'+name === enabledTest)) {
                     testFunc = testFunc.only;
                 }
 
-                if (name.endsWith('.skip')) {
+                if (name.endsWith('.skip') || options.skip && options.skip(name, dir)) {
                     testFunc = testFunc.skip;
                 }
 
-                var dir = path.join(autoTestDir, name);
                 testFunc(options.name !== false ? name : '', function(done) {
                     autoTest(name, dir, run, options, done);
                 });

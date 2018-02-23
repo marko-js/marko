@@ -1,5 +1,6 @@
 class {
-    onCreate() {
+    onMount() {
+        window.helloInstances = window.helloInstances || [];
         window.helloInstances.push(this);
     }
 

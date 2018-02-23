@@ -18,3 +18,5 @@ module.exports = function (helpers) {
 
     expect(component.getEl('current').innerHTML).to.equal('Pathname: /test');
 };
+
+module.exports.skipHydrate = true;

@@ -11,6 +11,7 @@ module.exports = require('marko/legacy-components').defineComponent({
         };
     },
     init: function () {
+        window.rerenderInitOrder = window.rerenderInitOrder || [];
         window.rerenderInitOrder.push('parent');
     },
     onUpdate: function () {
