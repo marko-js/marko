@@ -1,5 +1,5 @@
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
 
     var oldChildren = helpers.nodeListToArray(widget.el.childNodes);
 

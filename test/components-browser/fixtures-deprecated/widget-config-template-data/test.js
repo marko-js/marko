@@ -1,7 +1,10 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mountLegacy({ 
+        component: require.resolve('./index'),
+        widget: require.resolve('./widget')
+    }, {});
 
     expect(widget.config).to.deep.equal({
         string: 'world',

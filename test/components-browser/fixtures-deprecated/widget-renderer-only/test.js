@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    helpers.mount(require('./index'), {
+    helpers.mountLegacy({ component:require.resolve('./index') }, {
         name: 'Frank'
     });
     var targetEl = helpers.targetEl;

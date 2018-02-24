@@ -1,7 +1,10 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers, done) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mountLegacy({ 
+        component: require.resolve('./index'),
+        widget: require.resolve('./widget')
+    }, {});
     var $el = widget.$();
     var $button = widget.$('#button');
 

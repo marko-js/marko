@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var path = require('path');
+var caller = require('caller');
 var assert = require('assert');
 var markoComponents = require('marko/components');
 
@@ -45,13 +46,39 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            var template = (component.renderer && component.renderer.template) || component;
-            var meta = template.meta;
+            var meta = component.meta;
             this.components.push({
                 instance: instance,
                 type: meta && meta.id,
-                logic: meta && meta.component && path.resolve(path.dirname(template.path), meta.component),
-                template: template.path,
+                logic: meta && meta.component && path.resolve(path.dirname(component.path), meta.component),
+                template: component.path,
+                input: input,
+                $global: $global
+            });
+        }
+
+        return instance;
+    },
+
+    mountLegacy: function (def, input) {
+        var $global = input && input.$global;
+        var renderer = require(def.renderer || def.component || def.template);
+        var renderResult = renderer.renderSync(input).appendTo(this.targetEl);
+        var instance;
+        try {
+            instance = renderResult.getComponent();
+        } catch (e) {
+            if (e.toString().indexOf('No component') === -1) {
+                throw e;
+            }
+        }
+
+        if (instance) {
+            this.components.push({
+                instance: instance,
+                type: instance.___type,
+                logic: this.cleanPath(def.widget || def.component),
+                template: this.cleanPath(def.renderer || def.component || def.template),
                 input: input,
                 $global: $global
             });
@@ -89,6 +116,10 @@ BrowserHelpers.prototype = {
             assert.ok(child1 === child2, 'Children at index ' + i + ' do not match. child 1: ' + child1 + ' child 2: ' + child2);
         }
     },
+
+    cleanPath: function (path) {
+        return path.replace(/\.\d+\.in-module-context$/, '');
+    }
 };
 
 module.exports = BrowserHelpers;

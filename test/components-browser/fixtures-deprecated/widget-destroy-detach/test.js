@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
     var el = widget.el;
 
     expect(widget.el.parentNode).to.equal(helpers.targetEl);

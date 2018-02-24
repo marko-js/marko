@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {
+    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {
         includeWidget: false
     });
 
@@ -9,9 +9,10 @@ module.exports = function (helpers) {
 
     expect(helpers.targetEl.innerHTML).contain('[app-conditional-widget]');
 
-    widget = helpers.mount(require('./index'), {
+    widget = helpers.mountLegacy({ component:require.resolve('./index') }, {
         includeWidget: true
     });
 
     expect(widget != null).to.equal(true);
 };
+

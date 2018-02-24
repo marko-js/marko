@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
     function renderWidget(rootTagName) {
-        var widget = helpers.mount(require('./index'), {
+        var widget = helpers.mountLegacy({ component: require.resolve('./index') }, {
             rootTagName: rootTagName
         });
         return widget;

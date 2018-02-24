@@ -83,7 +83,7 @@ describe(TEST_NAME + ' (hydrated)', function () {
         hydrateOptions
     );
 
-    describe.skip('deprecated', function () {
+    describe('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
             runServerRender,
@@ -100,6 +100,8 @@ describe(TEST_NAME + ' (hydrated)', function () {
                 var browser = createJSDOMModule(__dirname, String(html), {
                     beforeParse(window, browser) {
                         var marko = browser.require('marko/components');
+                        var legacy = browser.require('marko/legacy-components');
+                        legacy.load = (type) => legacy.defineWidget(browser.require(type.replace(/^.*\/components-browser/, __dirname)));
                         var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
                         marko.register(ssrTemplate.meta.id, rootComponent);
                         components.forEach(function (component) {

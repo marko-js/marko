@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-   var widget = helpers.mount(require('./index'), {});
+   var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
 
    helpers.triggerClick(widget.getEl('inputWithoutHandler'));
    expect(widget.clicked).to.equal(false);
