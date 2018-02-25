@@ -29,11 +29,12 @@ function normalize(str) {
     return str;
 }
 
-function compareHelper(dir, actual, prefix, suffix) {
+function compareHelper(dir, actual, prefix, suffix, format) {
     var actualPath = path.join(dir, prefix + 'actual' + suffix);
     var expectedPath = path.join(dir, prefix + 'expected' + suffix);
 
     actual = normalize(actual);
+    format = format || (contents => contents);
 
     var isObject = typeof actual === 'string' ? false : true;
     var actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
@@ -55,9 +56,10 @@ function compareHelper(dir, actual, prefix, suffix) {
     }
 
     var expected = isObject ? JSON.parse(expectedString) : expectedString.replace(/\r?\n$/, '');
-
+    var formattedActual = format(actual);
+    var formattedExpected = format(expected);
     try {
-        assert.deepEqual(actual, expected);
+        assert.deepEqual(formattedActual, formattedExpected);
     } catch(e) {
         if (updateExpectations) {
             fs.writeFileSync(expectedPath, actualString, { encoding: 'utf8' });
@@ -104,7 +106,7 @@ function autoTest(name, dir, run, options, done) {
             compareHelper(dir, actual, prefix, suffix);
         },
 
-        compare(actual, prefix, suffix) {
+        compare(actual, prefix, suffix, format) {
             if (typeof prefix === 'object') {
                 var options = prefix;
                 prefix = options.prefix;
@@ -130,7 +132,7 @@ function autoTest(name, dir, run, options, done) {
                 compareSequenceLookup[sequenceKey]++;
             }
 
-            compareHelper(dir, actual, prefix, suffix);
+            compareHelper(dir, actual, prefix, suffix, format);
         }
     };
 

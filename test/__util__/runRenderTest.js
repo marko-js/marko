@@ -10,6 +10,7 @@ const fsExtra = require('fs-extra');
 const domToHTML = require('./domToHTML');
 const domToString = require('./domToString');
 const expect = require('chai').expect;
+const toDiffableHtml = require('diffable-html');
 
 function createAsyncVerifier(main, helpers, out) {
     var events = [];
@@ -63,7 +64,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
 
     require('marko/compiler').configure({
         output,
-        autoKeyEnabled: false
+        autoKeyEnabled: !isVDOM
     });
 
     if (isVDOM) {
@@ -109,7 +110,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
         preserveWhitespace: main.preserveWhitespaceGlobal === true,
         ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true,
         escapeAtTags: main.escapeAtTags === true,
-        autoKeyEnabled: false
+        autoKeyEnabled: !isVDOM
     };
 
     require('marko/compiler').configure(compilerOptions);
@@ -212,7 +213,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         fs.writeFileSync(path.join(dir, 'actual.html'), html, { encoding: 'utf8' });
                         main.checkHtml(html);
                     } else {
-                        helpers.compare(html, '.html');
+                        helpers.compare(html, '', '.html', toDiffableHtml);
                     }
 
                     if (checkAsyncEvents) {
