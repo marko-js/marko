@@ -6,7 +6,8 @@ var getComponentsFromMeta = require('./components-from-meta');
 
 function BrowserHelpers() {
     this.logOutput = [];
-    this.mounted = [];
+    this.rendered = [];
+    this.instances = [];
 }
 
 BrowserHelpers.prototype = {
@@ -38,6 +39,7 @@ BrowserHelpers.prototype = {
         var template = require(templatePath);
         var renderResult = template.renderSync(input).appendTo(this.targetEl);
         var instance;
+        
         try {
             instance = renderResult.getComponent();
         } catch (e) {
@@ -47,18 +49,19 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            this.mounted.push({
-                instance: instance,
-                template: this.cleanPath(templatePath),
-                components: getComponentsFromMeta(template),
-                input: input,
-                $global: $global
-            });
+            this.instances.push(instance);
         }
+
+        this.rendered.push({
+            template: this.cleanPath(templatePath),
+            components: getComponentsFromMeta(template),
+            input: input,
+            $global: $global
+        });
 
         return instance;
     },
-    
+
     log: function (data) {
         this.logOutput.push(data);
     },

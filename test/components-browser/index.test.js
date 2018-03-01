@@ -18,8 +18,8 @@ describe(TEST_NAME, function () {
     })
 
     afterEach(function () {
-        helpers.mounted.forEach(function (mounted) {
-            mounted.instance.destroy();
+        helpers.instances.forEach(function (instance) {
+            instance.destroy();
         });
 
         helpers.targetEl.innerHTML = '';
@@ -55,12 +55,7 @@ describe(TEST_NAME, function () {
     
         function cleanupAndFinish (err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.mounted.map(def => ({
-                components: def.components,
-                template: def.template && require(def.template),
-                input: def.input,
-                $global: def.$global
-            }));
+            renderedCache[dir] = helpers.rendered;
     
             if (err) {
                 done(err);
