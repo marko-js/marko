@@ -1,3 +1,5 @@
+var lifecycle = require('../../lifecycle-recorder');
+
 module.exports = require('marko/legacy-components').defineComponent({
 	template: require.resolve('./template.marko'),
 
@@ -19,7 +21,7 @@ module.exports = require('marko/legacy-components').defineComponent({
 			throw new Error('Doublie init()');
 		}
 		this.INIT_CALLED = true;
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'init');
+		lifecycle.record(this.state.name || this.id, 'init');
 	},
 
 	setMessageCount: function (messageCount) {
@@ -27,22 +29,22 @@ module.exports = require('marko/legacy-components').defineComponent({
 	},
 
 	onRender: function (eventArg) {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
+		lifecycle.record(this.state.name || this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
 	},
 
 	onBeforeDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onBeforeDestroy');
+		lifecycle.record(this.state.name || this.id, 'onBeforeDestroy');
 	},
 
 	onDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onDestroy');
+		lifecycle.record(this.state.name || this.id, 'onDestroy');
 	},
 
 	onBeforeUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onBeforeUpdate');
+		lifecycle.record(this.state.name || this.id, 'onBeforeUpdate');
 	},
 
 	onUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onUpdate');
+		lifecycle.record(this.state.name || this.id, 'onUpdate');
 	}
 });
