@@ -1,5 +1,5 @@
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
 
     var oldChildren = helpers.nodeListToArray(component.el.childNodes);
 

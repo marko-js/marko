@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
     function renderComponent(rootTagName) {
-        var component = helpers.mount(require('./index'), {
+        var component = helpers.mount(require.resolve('./index'), {
             rootTagName: rootTagName
         });
         return component;

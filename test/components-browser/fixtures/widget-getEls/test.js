@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
     var els = component.getEls('colorListItems');
     expect(els.length).to.equal(3);
     expect(els[0].innerHTML).to.equal('red');

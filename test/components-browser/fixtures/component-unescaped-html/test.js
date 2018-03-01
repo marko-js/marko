@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
 
     expect(component.el.childNodes.length).to.equal(1);
     expect(component.el.firstChild.nodeName).to.equal('INPUT');

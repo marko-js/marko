@@ -14,7 +14,7 @@ module.exports = function (helpers) {
         }
     };
 
-    var component = helpers.mount(require('./index'), states.original);
+    var component = helpers.mount(require.resolve('./index'), states.original);
 
     expect(component.state.heading).to.equal(states.original.heading);
     expect(component.state.message).to.equal(states.original.message);

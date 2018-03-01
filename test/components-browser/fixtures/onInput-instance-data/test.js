@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 require('./component');
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
 
     expect(component.string).to.equal('world');
     expect(component.number).to.equal(12);

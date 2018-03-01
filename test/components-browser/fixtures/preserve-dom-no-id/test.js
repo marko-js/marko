@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 module.exports = function (helpers) {
     var counter = 0;
 
-    var component = helpers.mount(require('./index'), {
+    var component = helpers.mount(require.resolve('./index'), {
         counter: counter
     });
 

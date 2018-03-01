@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers, done) {
 
-    var component = helpers.mount(require('./index'), { name: 'Frank' });
+    var component = helpers.mount(require.resolve('./index'), { name: 'Frank' });
 
     expect(component.el.innerHTML).to.contain('Hello Frank!');
 

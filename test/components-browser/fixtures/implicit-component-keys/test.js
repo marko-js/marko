@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), { swapped: false });
+    var component = helpers.mount(require.resolve('./index'), { swapped: false });
 
     var els = helpers.targetEl.querySelectorAll('div');
     expect(els[0].className).to.equal('a');

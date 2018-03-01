@@ -2,10 +2,11 @@ var expect = require('chai').expect;
 var path = require('path');
 var assert = require('assert');
 var markoComponents = require('marko/components');
+var getComponentsFromMeta = require('./components-from-meta');
 
 function BrowserHelpers() {
     this.logOutput = [];
-    this.components = [];
+    this.mounted = [];
 }
 
 BrowserHelpers.prototype = {
@@ -32,9 +33,10 @@ BrowserHelpers.prototype = {
         this.triggerMouseEvent(el, 'mousemove');
     },
 
-    mount: function (component, input) {
+    mount: function (templatePath, input) {
         var $global = input && input.$global;
-        var renderResult = component.renderSync(input).appendTo(this.targetEl);
+        var template = require(templatePath);
+        var renderResult = template.renderSync(input).appendTo(this.targetEl);
         var instance;
         try {
             instance = renderResult.getComponent();
@@ -45,12 +47,12 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            var meta = component.meta;
-            this.components.push({
+            var meta = template.meta;
+            var tags = meta.tags;
+            this.mounted.push({
                 instance: instance,
-                type: meta && meta.id,
-                logic: meta && meta.component && path.resolve(path.dirname(component.path), meta.component),
-                template: component.path,
+                template: this.cleanPath(templatePath),
+                components: getComponentsFromMeta(template),
                 input: input,
                 $global: $global
             });
@@ -73,11 +75,10 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            this.components.push({
+            this.mounted.push({
                 instance: instance,
-                type: instance.___type,
-                logic: this.cleanPath(def.widget || def.component),
                 template: this.cleanPath(def.renderer || def.component || def.template),
+                components: {},
                 input: input,
                 $global: $global
             });

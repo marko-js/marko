@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
 
-    var component = helpers.mount(require('./index'), { name: 'Frank', age: 30, url: 'http://ebay.com/' });
+    var component = helpers.mount(require.resolve('./index'), { name: 'Frank', age: 30, url: 'http://ebay.com/' });
 
     expect(component.getEl('name').innerHTML).to.equal('Frank');
     expect(component.getEl('age').innerHTML).to.equal('30');

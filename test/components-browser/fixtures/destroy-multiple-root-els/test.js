@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
 
-    var component = helpers.mount(require('./index'), { name: 'Frank', age: 30 });
+    var component = helpers.mount(require.resolve('./index'), { name: 'Frank', age: 30 });
 
     var nameEl = component.getEl('name');
     var ageEl = component.getEl('age');

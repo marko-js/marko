@@ -18,8 +18,8 @@ describe(TEST_NAME, function () {
     })
 
     afterEach(function () {
-        helpers.components.forEach(function (component) {
-            component.instance.destroy();
+        helpers.mounted.forEach(function (mounted) {
+            mounted.instance.destroy();
         });
 
         helpers.targetEl.innerHTML = '';
@@ -55,12 +55,11 @@ describe(TEST_NAME, function () {
     
         function cleanupAndFinish (err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.components.map(component => ({
-                type: component.type,
-                logic: component.logic,
-                template: component.template && require(component.template),
-                input: component.input,
-                $global: component.$global
+            renderedCache[dir] = helpers.mounted.map(def => ({
+                components: def.components,
+                template: def.template && require(def.template),
+                input: def.input,
+                $global: def.$global
             }));
     
             if (err) {
@@ -104,8 +103,10 @@ describe(TEST_NAME + ' (hydrated)', function () {
                         legacy.load = (type) => legacy.defineWidget(browser.require(type.replace(/^.*\/components-browser/, __dirname)));
                         var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
                         marko.register(ssrTemplate.meta.id, rootComponent);
-                        components.forEach(function (component) {
-                            marko.register(component.type, browser.require(component.logic));
+                        components.forEach(function (def) {
+                            Object.keys(def.components).forEach(type => {
+                                marko.register(type, browser.require(def.components[type]));
+                            })
                         });
                     }
                 });
