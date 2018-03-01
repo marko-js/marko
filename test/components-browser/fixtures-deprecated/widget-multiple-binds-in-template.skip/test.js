@@ -7,7 +7,7 @@ module.exports = function (helpers) {
         widgets.push(widget);
     };
 
-    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
+    var widget = helpers.mount(require.resolve('./index'), {});
 
     expect(widgetsLookup['app-nested-widget-bind/foo'].length).to.equal(1);
     expect(widgetsLookup['app-nested-widget-bind/bar'].length).to.equal(1);

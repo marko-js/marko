@@ -9,7 +9,7 @@ module.exports = function (helpers) {
         label: 'Age'
     }];
 
-    var component = helpers.mountLegacy({ component:require.resolve('./index') }, {
+    var component = helpers.mount(require.resolve('./index'), {
         fields: fields
     });
 

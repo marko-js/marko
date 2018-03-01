@@ -4,10 +4,7 @@ module.exports = function (helpers) {
     var previousSibling = document.createElement('div');
     helpers.targetEl.appendChild(previousSibling);
 
-    var widget = helpers.mountLegacy({ 
-        component: require.resolve('./index'),
-        widget: require.resolve('./widget')
-    }, {
+    var widget = helpers.mount(require.resolve('./index'), {
         label: 'Foo'
     });
 

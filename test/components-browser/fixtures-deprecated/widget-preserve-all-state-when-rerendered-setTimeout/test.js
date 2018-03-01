@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers, done) {
-    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {
+    var widget = helpers.mount(require.resolve('./index'), {
         name: 'Frank',
         count: 30
     });

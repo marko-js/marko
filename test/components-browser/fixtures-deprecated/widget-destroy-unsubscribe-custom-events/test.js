@@ -1,11 +1,8 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
-    var customEventsWidget = helpers.mountLegacy({
-        component: require.resolve('./components/app-custom-events'),
-        widget: require.resolve('./components/app-custom-events/widget')
-    }, {});
+    var widget = helpers.mount(require.resolve('./index'), {});
+    var customEventsWidget = helpers.mount(require.resolve('./components/app-custom-events'), {});
 
     var receivedEvents = [];
 

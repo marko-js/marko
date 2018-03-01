@@ -2,7 +2,7 @@ var path = require('path');
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mountLegacy({ component: require.resolve('./index') }, {
+    var widget = helpers.mount(require.resolve('./index'), {
         colors: ['red', 'green', 'blue']
     });
 

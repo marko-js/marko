@@ -8,7 +8,7 @@ module.exports = function (helpers) {
         events.push(eventType);
     };
 
-    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {
+    var widget = helpers.mount(require.resolve('./index'), {
         name: 'Frank',
         messageCount: 10
     });

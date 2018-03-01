@@ -14,7 +14,7 @@ module.exports = function (helpers) {
         }
     };
 
-    var widget = helpers.mountLegacy({ component:require.resolve('./index') }, states.original);
+    var widget = helpers.mount(require.resolve('./index'), states.original);
 
     expect(widget.state.heading).to.equal(states.original.heading);
     expect(widget.state.message).to.equal(states.original.message);

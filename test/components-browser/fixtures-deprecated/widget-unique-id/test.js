@@ -4,7 +4,7 @@ module.exports = function (helpers) {
     var widgets = [];
 
     function renderWidget() {
-        var widget = helpers.mountLegacy({ component:require.resolve('./index') }, {});
+        var widget = helpers.mount(require.resolve('./index'), {});
         widgets.push(widget);
     }
 

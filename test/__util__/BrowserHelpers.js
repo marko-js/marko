@@ -47,8 +47,6 @@ BrowserHelpers.prototype = {
         }
 
         if (instance) {
-            var meta = template.meta;
-            var tags = meta.tags;
             this.mounted.push({
                 instance: instance,
                 template: this.cleanPath(templatePath),
@@ -60,33 +58,7 @@ BrowserHelpers.prototype = {
 
         return instance;
     },
-
-    mountLegacy: function (def, input) {
-        var $global = input && input.$global;
-        var renderer = require(def.renderer || def.component || def.template);
-        var renderResult = renderer.renderSync(input).appendTo(this.targetEl);
-        var instance;
-        try {
-            instance = renderResult.getComponent();
-        } catch (e) {
-            if (e.toString().indexOf('No component') === -1) {
-                throw e;
-            }
-        }
-
-        if (instance) {
-            this.mounted.push({
-                instance: instance,
-                template: this.cleanPath(def.renderer || def.component || def.template),
-                components: {},
-                input: input,
-                $global: $global
-            });
-        }
-
-        return instance;
-    },
-
+    
     log: function (data) {
         this.logOutput.push(data);
     },
