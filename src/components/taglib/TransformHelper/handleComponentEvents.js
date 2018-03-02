@@ -82,6 +82,8 @@ function addDirectEventListener(transformHelper, options) {
             addDomEventFunctionCall
         ]);
     });
+
+    transformHelper.serializeKey();
 }
 
 function addCustomEventListener(transformHelper, options) {

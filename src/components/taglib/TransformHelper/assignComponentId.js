@@ -84,17 +84,8 @@ module.exports = function assignComponentId(isRepeated) {
                 }
             }
 
-            if (context.isServerTarget()) {
-                var markoKeyAttrVar = context.importModule('marko_keyAttr',
-                    this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/markoKeyAttr'));
-
-                el.setAttributeValue('data-marko-key', builder.functionCall(markoKeyAttrVar, [
-                        idExpression,
-                        builder.identifier('__component')
-                    ]));
-            }
-
             el.setKey(assignedKey);
+            this.serializeKey();
         }
     } else {
         // Case 3 - We need to add a unique auto key

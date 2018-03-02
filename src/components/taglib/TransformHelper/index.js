@@ -58,6 +58,25 @@ class TransformHelper {
         return (this.context.data.componentNextElId++);
     }
 
+    serializeKey() {
+        var el = this.el;
+        var key = el.key;
+        var context = this.context;
+        var builder = this.builder;
+        
+        if (!this.__keySerialized && context.isServerTarget() && context.isSplitComponent) {
+            var markoKeyAttrVar = context.importModule('marko_keyAttr',
+                this.getMarkoComponentsRequirePath('marko/components/taglib/helpers/markoKeyAttr'));
+
+            el.setAttributeValue('data-marko-key', builder.functionCall(markoKeyAttrVar, [
+                key,
+                builder.identifier('__component')
+            ]));
+            
+            this.__keySerialized = true;
+        }
+    }
+
     getIdExpression() {
         this.assignComponentId();
         return this.getComponentIdInfo().idExpression;

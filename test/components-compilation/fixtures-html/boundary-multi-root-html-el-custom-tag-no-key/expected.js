@@ -6,20 +6,16 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a,
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     my_component_template = marko_loadTemplate(require.resolve("./components/my-component")),
+    marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     my_component_tag = marko_loadTag(my_component_template);
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<h1" +
-    marko_attr("data-marko-key", marko_keyAttr(input.myStartKey, __component)) +
-    "></h1>");
+  out.w("<h1></h1>");
 
   my_component_tag({}, out, __component, "0");
 }

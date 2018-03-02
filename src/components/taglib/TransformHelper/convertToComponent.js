@@ -107,6 +107,9 @@ module.exports = function handleComponentBind(options) {
     }
 
     this.setHasBoundComponentForTemplate();
+    this.context.isImplicitComponent = isImplicitComponent;
+    this.context.isSplitComponent = isSplit;
+    this.context.isStatefulComponent = !isSplit && !isImplicitComponent;
 
     var rendererHelper = isLegacyComponent ?
         this.context.helper('rendererLegacy') :
