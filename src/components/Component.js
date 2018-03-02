@@ -26,6 +26,7 @@ var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
 };
 
 var emit = EventEmitter.prototype.emit;
+var ELEMENT_NODE = 1;
 
 function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
@@ -546,7 +547,7 @@ Component.prototype = componentProto = {
         }
         var el = this.___startNode;
         while (el) {
-            if (el.querySelector) return el;
+            if (el.nodeType === ELEMENT_NODE) return el;
             if (el === this.___endNode) return;
             el = el.nextSibling;
         }
@@ -556,7 +557,9 @@ Component.prototype = componentProto = {
         if ('MARKO_DEBUG') {
             complain('The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.');
         }
-        return getNodes(this).filter(el => el.querySelector);
+        return getNodes(this).filter(function(el) { 
+            return el.nodeType === ELEMENT_NODE; 
+        });
     }
 };
 
