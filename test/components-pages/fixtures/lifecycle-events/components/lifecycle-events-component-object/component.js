@@ -5,7 +5,7 @@ module.exports = {
         // if (typeof window !== 'undefined') {
         //     throw new Error('onCreate should not be called in the browser');
         // }
-        if (this.state !== undefined) {
+        if (this.state != null) {
             throw new Error('this.state should be undefined');
         }
         this.state = {
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     test: function() {
-        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender', 'onRender']);
+        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender']);
         expect(this.onCreateInputName).to.equal('Frank');
         expect(this.onCreateOutName).to.equal('FrankGlobal');
     }

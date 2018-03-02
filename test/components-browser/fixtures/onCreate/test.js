@@ -4,7 +4,8 @@ module.exports = function (helpers) {
     var component = helpers.mount(require.resolve('./index.marko'), {
         name: 'Frank',
         $global: {
-            name: 'Frank'
+            name: 'Frank',
+            serializedGlobals: { name:true }
         }
     });
 
