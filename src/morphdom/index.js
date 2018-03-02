@@ -298,6 +298,9 @@ function morphdom(
                             // Incompatible nodes. Just move the target VNode into the DOM at this position
                             insertVirtualNodeBefore(curToNodeChild, curToNodeKey, curFromNodeChild, parentFromNode, componentForNode);
                         }
+                    } else {
+                        // this should be preserved.
+
                     }
                 } else {
                     if ((matchingFromEl = componentForNode.___keyedElements[curToNodeKey]) === undefined) {
@@ -444,7 +447,28 @@ function morphdom(
                         isCompatible = true;
                         // Simply update nodeValue on the original node to
                         // change the text value
-                        curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
+
+                        var content = curFromNodeChild.nodeValue;
+                        if (content == curToNodeChild.___nodeValue) {
+                            if (/^F\^/.test(content)) {
+                                var closingContent = content.replace(/^F\^/, 'F/');
+                                while((curFromNodeChild = curFromNodeChild.nextSibling)) {
+                                    if (curFromNodeChild.nodeValue === closingContent) {
+                                        break;
+                                    }
+                                }
+                                while((curToNodeChild = curToNodeChild.___nextSibling)) {
+                                    if (curToNodeChild.___nodeValue === closingContent) {
+                                        break;
+                                    }
+                                }
+                                curToNodeChild = curToNodeChild.___nextSibling;
+                                curFromNodeChild = curFromNodeChild === endNode ? null : curFromNodeChild.nextSibling;
+                                continue outer;
+                            }
+                        } else {
+                            curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
+                        }
                     }
                 }
 

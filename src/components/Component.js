@@ -544,14 +544,19 @@ Component.prototype = componentProto = {
         if ('MARKO_DEBUG') {
             complain('The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.');
         }
-        return this.___startNode;
+        var el = this.___startNode;
+        while (el) {
+            if (el.querySelector) return el;
+            if (el === this.___endNode) return;
+            el = el.nextSibling;
+        }
     },
 
     get els() {
         if ('MARKO_DEBUG') {
             complain('The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.');
         }
-        return getNodes(this);
+        return getNodes(this).filter(el => el.querySelector);
     }
 };
 
