@@ -28,10 +28,6 @@ module.exports = function transform(el, context) {
         let builder = context.builder;
         let bodyValue = el.getAttributeValue('w-body');
         el.removeAttribute('w-body');
-        el.addAttribute({ // The old behavior is that the body content would be preserved if no new body content was provided
-            name: 'no-update-body-if',
-            argument: '!__component.b'//builder.negate(builder.memberExpression(builder.identifier('__component'), builder.identifier('b')))
-        });
 
         let includeNode = context.createNodeForEl('include');
 

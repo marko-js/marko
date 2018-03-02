@@ -48,6 +48,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var component = globalComponentsContext.___rerenderComponent;
 
         var isRerender = component !== undefined;
+        var isHydrate = component && !component.___mounted; // globalComponentsContext.___isRerenderInBrowser
         var id = assignedId;
         var isExisting;
         var customEvents;
@@ -152,8 +153,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         }
 
-        if (isExisting === true) {
-            if ((!component.___isDirty || !component.shouldUpdate(input, component.___state)) && !input.renderBody) {
+        if (isExisting === true && !isHydrate && !componentBody) {
+            if (!component.___isDirty || !component.shouldUpdate(input, component.___state)) {
                 if (customEvents) {
                     component.___setCustomEvents(customEvents, scope);
                 }
@@ -192,7 +193,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.___isLegacy = true;
-        componentDef.b = componentBody;
+        componentDef.b = component.___legacyBody = componentBody || component.___legacyBody || '%FN';
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;
         };
