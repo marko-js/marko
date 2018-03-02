@@ -30,12 +30,7 @@ function indexServerComponentBoundaries(node) {
 
                 if (firstChar === '/') {
                     serverComponentEndNodes[componentId] = node;
-                } else if (firstChar === '#') {
-                    serverComponentStartNodes[componentId] = node;
-                    var endValue = 'M/' + componentId;
-                    while((node = node.nextSibling) && node.nodeValue !== endValue) {}
-                    continue;
-                } else if (firstChar === '^'){
+                } else if (firstChar === '^' || firstChar === '#'){
                     serverComponentStartNodes[componentId] = node;
                 }
             }
