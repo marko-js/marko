@@ -10,8 +10,12 @@ var listenersAttachedKey = '$MED' + runtimeId;
 function getEventFromEl(el, eventName) {
     var virtualProps = getMarkoPropsFromEl(el);
     var eventInfo = virtualProps[eventName];
+
     if (typeof eventInfo === 'string') {
         eventInfo = eventInfo.split(' ');
+        if (eventInfo[2]) {
+            eventInfo[2] = eventInfo[2] === 'true';
+        }
         if (eventInfo.length == 4) {
             eventInfo[3] = parseInt(eventInfo[3], 10);
         }
