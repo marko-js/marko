@@ -5,8 +5,8 @@ var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var extend = require('raptor-util/extend');
 var KeySequence = require('./KeySequence');
 
-/*
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+/*
 var FLAG_HAS_BODY_EL = 2;
 var FLAG_HAS_HEAD_EL = 4;
 */
@@ -103,7 +103,7 @@ ComponentDef.prototype = {
     }
 };
 
-ComponentDef.___deserialize = function(o, types, globals, registry) {
+ComponentDef.___deserialize = function(o, types, global, registry) {
     var id        = o[0];
     var typeName  = types[o[1]];
     var input     = o[2];
@@ -112,33 +112,43 @@ ComponentDef.___deserialize = function(o, types, globals, registry) {
     var isLegacy = extra.l;
     var state = extra.s;
     var componentProps = extra.w;
+    var flags = extra.f;
 
     var component = typeName /* legacy */ && registry.___createComponent(typeName, id, isLegacy);
 
-    if (extra.b) {
-        component.___bubblingDomEvents = extra.b;
-    }
-
-    // Preview newly created component from being queued for update since we area
+    // Prevent newly created component from being queued for update since we area
     // just building it from the server info
     component.___updateQueued = true;
 
-    if (state) {
-        var undefinedPropNames = extra.u;
-        if (undefinedPropNames) {
-            undefinedPropNames.forEach(function(undefinedPropName) {
-                state[undefinedPropName] = undefined;
-            });
+    if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+        if (component.onCreate) {
+            component.onCreate(input, { global });
         }
-        // We go through the setter here so that we convert the state object
-        // to an instance of `State`
-        component.state = state;
+        if (component.onInput) {
+            input = component.onInput(input, { global }) || input;
+        }
+    } else {
+        if (state) {
+            var undefinedPropNames = extra.u;
+            if (undefinedPropNames) {
+                undefinedPropNames.forEach(function(undefinedPropName) {
+                    state[undefinedPropName] = undefined;
+                });
+            }
+            // We go through the setter here so that we convert the state object
+            // to an instance of `State`
+            component.state = state;
+        }
+
+        if (componentProps) {
+            extend(component, componentProps);
+        }
     }
 
     component.___input = input;
 
-    if (componentProps) {
-        extend(component, componentProps);
+    if (extra.b) {
+        component.___bubblingDomEvents = extra.b;
     }
 
     var scope = extra.p;
@@ -147,7 +157,7 @@ ComponentDef.___deserialize = function(o, types, globals, registry) {
         component.___setCustomEvents(customEvents, scope);
     }
 
-    component.___global = globals;
+    component.___global = global;
 
     return {
         id: id,

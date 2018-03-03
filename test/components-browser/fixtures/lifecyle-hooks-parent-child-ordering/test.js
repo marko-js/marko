@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var hooks = require('./hooks');
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), { name: 'Frank' });
+    var component = helpers.mount(require.resolve('./index'), { name: 'Frank' });
     expect(hooks.getHookNames()).deep.equal(["root:create", "root:render", "foo:create", "foo:render", "foo:mount", "root:mount"]);
 
     hooks.reset();
@@ -12,7 +12,3 @@ module.exports = function (helpers) {
 
     expect(hooks.getHookNames()).deep.equal(["root:render", "foo:render", "foo:update", "root:update"]);
 };
-
-// Temporarily skip failing hydrate test
-// TODO: enable this test
-module.exports.skipHydrate = true;

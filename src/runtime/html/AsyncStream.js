@@ -493,6 +493,10 @@ var proto = AsyncStream.prototype = {
         this.write('</' + tagName + '>');
     },
 
+    comment: function(str) {
+        this.write('<!--' + escapeXml(str) + '-->');
+    },
+
     text: function(str) {
         this.write(escapeXml(str));
     },

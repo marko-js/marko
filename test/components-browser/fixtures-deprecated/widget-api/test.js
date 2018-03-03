@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mount(require.resolve('./index'), {});
     expect(widget.id).to.be.a('string');
     expect(widget.emit).to.be.a('function');
     expect(widget.on).to.be.a('function');

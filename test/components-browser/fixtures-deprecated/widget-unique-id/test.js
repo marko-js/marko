@@ -4,7 +4,7 @@ module.exports = function (helpers) {
     var widgets = [];
 
     function renderWidget() {
-        var widget = helpers.mount(require('./index'), {});
+        var widget = helpers.mount(require.resolve('./index'), {});
         widgets.push(widget);
     }
 

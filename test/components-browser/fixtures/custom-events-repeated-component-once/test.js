@@ -13,7 +13,7 @@ var items = [{
 }];
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {
+    var component = helpers.mount(require.resolve('./index'), {
         items: items
     });
 

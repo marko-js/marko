@@ -1,3 +1,5 @@
+var lifecycle = require('./lifecycle-recorder');
+
 module.exports = require('marko/legacy-components').defineComponent({
 	template: require.resolve('./template.marko'),
 
@@ -17,11 +19,11 @@ module.exports = require('marko/legacy-components').defineComponent({
 
 	init: function () {
 		this.lifecycleEvents = [];
-		window.recordWidgetLifecycleEvent(this.id, 'init');
+		lifecycle.record(this.id, 'init');
 	},
 
 	onRender: function (eventArg) {
-		window.recordWidgetLifecycleEvent(this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
+		lifecycle.record(this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
 	},
 
 	update_messageCount: function (newMessageCount) {
@@ -38,18 +40,18 @@ module.exports = require('marko/legacy-components').defineComponent({
 	},
 
 	onBeforeDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onBeforeDestroy');
+		lifecycle.record(this.id, 'onBeforeDestroy');
 	},
 
 	onDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onDestroy');
+		lifecycle.record(this.id, 'onDestroy');
 	},
 
 	onBeforeUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onBeforeUpdate');
+		lifecycle.record(this.id, 'onBeforeUpdate');
 	},
 
 	onUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onUpdate');
+		lifecycle.record(this.id, 'onUpdate');
 	}
 });

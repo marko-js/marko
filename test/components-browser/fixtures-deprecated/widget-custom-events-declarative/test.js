@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var pubsub = require('../../../__util__/pubsub');
 
 module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mount(require.resolve('./index'), {});
 
     var received1 = [];
     var received2 = [];

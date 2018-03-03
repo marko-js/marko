@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
 
-    var component = helpers.mount(require('./index.marko'), {});
+    var component = helpers.mount(require.resolve('./index.marko'), {});
 
     var foo = component.getComponent('foo');
     expect(foo.el.innerHTML).to.contain('count:0');

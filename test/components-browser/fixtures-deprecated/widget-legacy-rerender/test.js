@@ -4,7 +4,7 @@ module.exports = function (helpers) {
     var previousSibling = document.createElement('div');
     helpers.targetEl.appendChild(previousSibling);
 
-    var widget = helpers.mount(require('./index'), {
+    var widget = helpers.mount(require.resolve('./index'), {
         label: 'Foo'
     });
 
@@ -35,3 +35,6 @@ module.exports = function (helpers) {
     expect(helpers.targetEl.childNodes[1]).to.equal(widget.el);
     expect(helpers.targetEl.childNodes[2]).to.equal(nextSibling);
 };
+
+// a split widget cannot re-render when hydrated
+module.exports.skipHydrate = true;

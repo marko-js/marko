@@ -8,7 +8,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_attr = marko_helpers.a;
 
@@ -17,7 +16,6 @@ function render(input, out, __component, component, state) {
 
   out.w("<div class=\"root\"><label :key=\"name\">Name</label><input" +
     marko_attr("id", __component.elId("name")) +
-    marko_attr("data-marko-key", marko_keyAttr("name", __component)) +
     "></div>");
 }
 

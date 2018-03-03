@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
     var innerComponent = component.getComponent('inner');
 
     expect(innerComponent.___startNode.className).to.equal('inner');

@@ -64,7 +64,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         var isExisting;
         var customEvents;
         var scope;
-        var parentComponentDef;
+        var parentComponentDef = componentsContext.___componentDef;
+        var componentDefFromArgs = out.___assignedComponentDef;
 
         if (component) {
             // If component is provided then we are currently rendering
@@ -78,9 +79,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             // DOM (if any) so we will need to resolve the component ID from
             // the assigned key. We also need to handle any custom event bindings
             // that were provided.
-            parentComponentDef = componentsContext.___componentDef;
-            var componentDefFromArgs;
-            if ((componentDefFromArgs = out.___assignedComponentDef)) {
+            if (componentDefFromArgs) {
                 // console.log('componentArgs:', componentArgs);
                 scope = componentDefFromArgs.id;
                 out.___assignedComponentDef = null;
@@ -177,7 +176,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         }
 
         var componentDef =
-          beginComponent(componentsContext, component, isSplit, parentComponentDef, isImplicitComponent);
+          beginComponent(componentsContext, component, isSplit, componentDefFromArgs, isImplicitComponent);
 
         componentDef.___isExisting = isExisting;
 

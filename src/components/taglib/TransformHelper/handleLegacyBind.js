@@ -81,6 +81,9 @@ module.exports = function handleLegacyBind() {
                 this.addError('No corresponding JavaScript module found in the same directory (either "component.js" or "index.js").');
                 return;
             }
+            if (componentModule.requirePath === './') {
+                rendererModule = componentModule;
+            }
         } else if (bindAttr.isLiteralValue()) {
              if (typeof bindAttr.literalValue !== 'string') {
                  this.addError('The value for the "w-bind" attribute should be a string. Actual: ' + componentModule);

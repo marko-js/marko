@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 module.exports = function (helpers) {
 
-    var widget = helpers.mount(require('./index'), {});
+    var widget = helpers.mount(require.resolve('./index'), {});
 
     var oldButton1Widget = widget.getWidget('button1');
     var oldButton2Widget = widget.getWidget('button2');

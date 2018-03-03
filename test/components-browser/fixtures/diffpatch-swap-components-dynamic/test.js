@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
     var rootEl = component.el;
 
     var nestedDivs = rootEl.querySelectorAll('div');

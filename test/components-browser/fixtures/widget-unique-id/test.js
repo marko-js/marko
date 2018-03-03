@@ -4,7 +4,7 @@ module.exports = function (helpers) {
     var components = [];
 
     function renderComponent() {
-        var component = helpers.mount(require('./index'), {});
+        var component = helpers.mount(require.resolve('./index'), {});
         components.push(component);
     }
 

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers, done) {
-    var widget = helpers.mount(require('./index'), {
+    var widget = helpers.mount(require.resolve('./index'), {
         size: 'large',
         label: 'Initial Label'
     });

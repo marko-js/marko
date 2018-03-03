@@ -2,7 +2,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers, done) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
 
     expect(component.el.innerHTML).to.not.contain('FATAL ERROR');
 

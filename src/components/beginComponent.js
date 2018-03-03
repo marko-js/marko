@@ -1,25 +1,10 @@
 'use strict';
 
 const ComponentDef = require('./ComponentDef');
-const hasRenderBodyKey = Symbol.for("hasRenderBody");
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_BODY_EL = 2;
 // var FLAG_HAS_HEAD_EL = 4;
-
-function isInputSerializable(component) {
-    var input = component.___input;
-
-    if (!input) {
-        return true;
-    }
-
-    if (input[hasRenderBodyKey] === true || input.renderBody !== undefined) {
-        return false;
-    } else {
-        return true;
-    }
-}
 
 module.exports = function beginComponent(componentsContext, component, isSplitComponent, parentComponentDef, isImplicitComponent) {
     var globalContext = componentsContext.___globalContext;
@@ -47,9 +32,7 @@ module.exports = function beginComponent(componentsContext, component, isSplitCo
 
     componentDef.___renderBoundary = true;
 
-    if (isSplitComponent === false &&
-        out.global.noBrowserRerender !== true &&
-        isInputSerializable(component)) {
+    if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
         componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
         out.w('<!--M#' + componentId + '-->');
     } else {

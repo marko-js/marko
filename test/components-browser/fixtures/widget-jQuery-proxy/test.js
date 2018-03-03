@@ -4,7 +4,7 @@ module.exports = function (helpers, done) {
     require('marko/jquery').patchComponent(window.$);
 
     try {
-        var component = helpers.mount(require('./index'), {});
+        var component = helpers.mount(require.resolve('./index'), {});
 
         expect(component.$().attr('class')).to.equal('app-jquery-proxy');
         expect(component.$('#foo').html()).to.equal('foo');

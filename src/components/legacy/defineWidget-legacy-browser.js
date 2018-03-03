@@ -51,12 +51,7 @@ module.exports = function defineWidget(def, renderer) {
 
     // get legacy methods
     var init = proto.init;
-    var onRender = (function(onRender) {
-        return function() {
-            this.___input = null;
-            if (onRender) onRender.apply(this, arguments);
-        };
-    }(proto.onRender));
+    var onRender = proto.onRender;
     var onBeforeUpdate = proto.onBeforeUpdate;
     var onUpdate = proto.onUpdate;
     var onBeforeDestroy = proto.onBeforeDestroy;
@@ -75,30 +70,28 @@ module.exports = function defineWidget(def, renderer) {
 
     // convert legacy to modern
 
-    if (init || onRender) {
-        proto.onMount = function() {
-            var self = this;
-            var config = this.$c;
-            if (init) init.call(this, config);
-            if (onRender) {
-                onRender.call(this, { firstRender:true });
-                this.on('___legacyRender', function() {
-                    self.___didUpdate = true;
-                });
-            }
-        };
-    }
+    proto.onMount = function() {
+        var self = this;
+        var config = this.$c;
+        if (init) init.call(this, config);
+        if (onRender) {
+            onRender.call(this, { firstRender:true });
+            this.on('___legacyRender', function() {
+                self.___didUpdate = true;
+            });
+        }
+        this.___input = null;
+    };
 
-    if (onBeforeUpdate || onUpdate) {
-        proto.onUpdate = function() {
-            if (onBeforeUpdate) onBeforeUpdate.call(this);
-            if (onUpdate) onUpdate.call(this);
-            if (onRender && this.___didUpdate) {
-                this.___didUpdate = false;
-                onRender.call(this, {});
-            }
-        };
-    }
+    proto.onUpdate = function() {
+        if (onBeforeUpdate) onBeforeUpdate.call(this);
+        if (onUpdate) onUpdate.call(this);
+        if (onRender && this.___didUpdate) {
+            this.___didUpdate = false;
+            onRender.call(this, {});
+        }
+        this.___input = null;
+    };
 
     if (onBeforeDestroy || onDestroy) {
         proto.onDestroy = function() {
@@ -106,7 +99,6 @@ module.exports = function defineWidget(def, renderer) {
             if (onDestroy) onDestroy.call(this);
         };
     }
-
 
     // Set a flag on the constructor function to make it clear this is
     // a component so that we can short-circuit this work later

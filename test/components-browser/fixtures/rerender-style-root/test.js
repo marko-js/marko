@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 // cause an infinite loop on rerender. This code does not perform any assertions
 // but it will get caught in an infinite loop without the changes in PR #751
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
     component.state.count = 1;
     component.update();
 };

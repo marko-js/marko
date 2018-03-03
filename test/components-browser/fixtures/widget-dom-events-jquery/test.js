@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 module.exports = function (helpers, done) {
     require('marko/jquery').patchComponent(window.$);
     try {
-        var component = helpers.mount(require('./index'), {});
+        var component = helpers.mount(require.resolve('./index'), {});
         var $el = component.$();
         var $button = component.$('#button');
 

@@ -6,11 +6,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     foo_template = marko_loadTemplate(require.resolve("./foo.marko")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
     marko_loadTag = marko_helpers.t,
@@ -20,9 +18,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div><span" +
-    marko_attr("data-marko-key", marko_keyAttr("spanA", __component)) +
-    ">A</span><ul>");
+  out.w("<div><span>A</span><ul>");
 
   marko_forEach(colors, function(color) {
     out.w("<li>" +
@@ -34,9 +30,7 @@ function render(input, out, __component, component, state) {
 
   var __key3 = __component.___nextKey("preservedP");
 
-  out.w("<p" +
-    marko_attr("data-marko-key", marko_keyAttr("preservedP", __component)) +
-    ">");
+  out.w("<p>");
 
   _preserve_tag({
       bodyOnly: true,

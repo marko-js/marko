@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var widget1 = helpers.mount(require('./index'), {});
-    var widget2 = helpers.mount(require('./index'), {});
+    var widget1 = helpers.mount(require.resolve('./index'), {});
+    var widget2 = helpers.mount(require.resolve('./index'), {});
 
     var fooEvent = null;
     var fooEventThis = null;

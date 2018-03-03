@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-				var component = helpers.mount(require('./index'), {});
+				var component = helpers.mount(require.resolve('./index'), {});
 				expect(component.fooClicked).to.equal(false);
 				expect(component.barClicked).to.equal(false);
 

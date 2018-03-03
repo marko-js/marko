@@ -18,8 +18,8 @@ describe(TEST_NAME, function () {
     })
 
     afterEach(function () {
-        helpers.components.forEach(function (component) {
-            component.instance.destroy();
+        helpers.instances.forEach(function (instance) {
+            instance.destroy();
         });
 
         helpers.targetEl.innerHTML = '';
@@ -55,13 +55,7 @@ describe(TEST_NAME, function () {
     
         function cleanupAndFinish (err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.components.map(component => ({
-                type: component.type,
-                logic: component.logic,
-                template: component.template && require(component.template),
-                input: component.input,
-                $global: component.$global
-            }));
+            renderedCache[dir] = helpers.rendered;
     
             if (err) {
                 done(err);
@@ -83,7 +77,7 @@ describe(TEST_NAME + ' (hydrated)', function () {
         hydrateOptions
     );
 
-    describe.skip('deprecated', function () {
+    describe('deprecated', function () {
         autotest.scanDir(
             path.join(__dirname, './fixtures-deprecated'),
             runServerRender,
@@ -100,10 +94,14 @@ describe(TEST_NAME + ' (hydrated)', function () {
                 var browser = createJSDOMModule(__dirname, String(html), {
                     beforeParse(window, browser) {
                         var marko = browser.require('marko/components');
+                        var legacy = browser.require('marko/legacy-components');
+                        legacy.load = (type) => legacy.defineWidget(browser.require(type.replace(/^.*\/components-browser/, __dirname)));
                         var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
                         marko.register(ssrTemplate.meta.id, rootComponent);
-                        components.forEach(function (component) {
-                            marko.register(component.type, browser.require(component.logic));
+                        components.forEach(function (def) {
+                            Object.keys(def.components).forEach(type => {
+                                marko.register(type, browser.require(def.components[type]));
+                            })
                         });
                     }
                 });

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+    var component = helpers.mount(require.resolve('./index'), {});
 
     component.clearLog();
 
@@ -39,7 +39,3 @@ module.exports = function (helpers) {
     expect(component.logOutput).to.deep.equal(['#helloWorld:mousedown']);
     expect(component.getComponent('appButton').clicked).to.equal(true);
 };
-
-// Temporarily skip failing hydrate test
-// TODO: enable this test
-module.exports.skipHydrate = true;
