@@ -3,6 +3,14 @@ Changelog
 
 # 4.x
 
+## 4.9.x
+
+### 4.9.0
+
+- Fixes related to hydration, split components, and the legacy compatibility layer [#1010](https://github.com/marko-js/marko/pull/1010)
+
+- Fix paths for vdom dependencies [#1011](https://github.com/marko-js/marko/pull/1011)
+
 ## 4.8.x
 
 ### 4.8.0
