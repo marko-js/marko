@@ -1,0 +1,22 @@
+class {
+    onMount() {
+        this.events = [];
+    }
+
+    handleAttach(color, event, node){
+        this.events.push({
+            color: color,
+            event: event,
+            node: node
+        });
+    }
+
+}
+
+<ul>
+    <color-include>
+        <li.color if(input.color==="blue") on-attach('handleAttach', input.color)>blue</li>
+        <li.color else-if(input.color==="green") on-attach('handleAttach', input.color)>green</li>
+        <li.color else on-attach('handleAttach', input.color)>${input.color}</li>
+    </color-include>
+</ul>

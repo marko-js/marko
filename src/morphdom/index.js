@@ -515,7 +515,13 @@ function morphdom(
                 }
             }
 
-            detachNode(curFromNodeChild, parentFromNode, component);
+            curVFromNodeChild = curFromNodeChild.___markoVElement;
+
+            // For transcluded content, we need to check if the element belongs to a different component
+            // context than the current component and ensure it gets removed from its key index.
+            fromComponent = curVFromNodeChild && curVFromNodeChild.___component || component;
+
+            detachNode(curFromNodeChild, parentFromNode, fromComponent);
 
             curFromNodeChild = fromNextSibling;
         }
