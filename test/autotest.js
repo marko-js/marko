@@ -177,7 +177,6 @@ exports.scanDir = function(autoTestDir, run, options) {
                 }
 
                 if (name.endsWith('.fails') || options.fails && options.fails(name, dir)) {
-                    require('it-fails');
                     testFunc = testFunc.fails;
                 }
 
