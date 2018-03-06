@@ -148,7 +148,7 @@ exports.scanDir = function(autoTestDir, run, options) {
         describeFunc = describe.only;
     }
 
-    describeFunc('autotest', function() {
+    describeFunc('', function() {
         if(options.timeout) {
             this.timeout(options.timeout);
         }
@@ -164,18 +164,31 @@ exports.scanDir = function(autoTestDir, run, options) {
 
                 var testFunc = options.type === 'describe' ? describe : it;
                 var dir = path.join(autoTestDir, name);
+                var meta = {};
 
                 if (enabledTest && (name === enabledTest || testGroup+'/'+name === enabledTest)) {
                     testFunc = testFunc.only;
                 }
 
-                if (name.endsWith('.skip') || options.skip && options.skip(name, dir)) {
+                var skipReason = options.skip && options.skip(name, dir);
+                if (name.endsWith('.skip') || skipReason) {
                     testFunc = testFunc.skip;
+                    meta.details = typeof skipReason === 'string' ? skipReason : 'Pending';
                 }
 
-                testFunc(options.name !== false ? name : '', function(done) {
+                if (name.endsWith('.fails') || options.fails && options.fails(name, dir)) {
+                    testFunc = testFunc.fails;
+                }
+
+                if (options.file) {
+                    meta.file = options.file(name, dir);
+                }
+
+                var test = testFunc(options.name !== false ? name : '', function(done) {
                     autoTest(name, dir, run, options, done);
                 });
+
+                Object.assign(test, meta);
             });
     });
 };

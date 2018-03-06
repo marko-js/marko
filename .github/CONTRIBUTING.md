@@ -2,11 +2,26 @@
 
 :+1::tada: We're excited you want to contribute! Read on! :tada::+1:
 
+[Questions](#i-just-have-a-question) &bull;
 [Pull requests](#pull-requests-are-always-welcome) &bull;
 [Tackling issues](#tackling-an-existing-issue) &bull;
 [Reporting bugs](#reporting-bugs-and-other-issues) &bull;
-[Maintainers](#maintainers) &bull;
 [Labels](#labels)
+
+## I just have a question
+
+Before you ask, check our [existing questions](https://github.com/marko-js/marko/issues?page=2&q=is%3Aissue+label%3Atype%3Aquestion&utf8=%E2%9C%93) to see if your question has already been answered.  If not, go ahead an open an issue or join us in [gitter](https://gitter.im/marko-js/marko) to ask a question.
+
+Please be sure to use [markdown code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks/) when posting code on GitHub or Gitter:
+````
+```marko
+<div>some marko ${code}</div>
+```
+
+```js
+const some = js.code;
+```
+````
 
 ## Pull requests are always welcome
 
@@ -14,9 +29,9 @@ Not sure if that typo is worth a pull request? Found a bug and know how to fix i
 
 We are always thrilled to receive pull requests. We do our best to process them quickly. If your pull request is not accepted on the first try, don't get discouraged! We'll work with you to come to an acceptable solution.
 
-If you're new to GitHub or open source you can check out this [free course](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) on how to contribute to an open source project.
+Prior to merging your PR, you will need to sign the [JS Foundation CLA](https://cla.js.foundation/marko-js/marko).  It's pretty straight-forward and only takes a minute.  You can even sign it now if you're thinking about contributing.
 
-_Disclaimer: Contributions via GitHub pull requests are gladly accepted from their original author. Along with any pull requests, please state that the contribution is your original work and that you license the work to the project under the project's open source license. Whether or not you state this explicitly, by submitting any copyrighted material via pull request, email, or other means you agree to license the material under the project's open source license and warrant that you have the legal authority to do so._
+> **TIP:** If you're new to GitHub or open source you can check out this [free course](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) on how to contribute to an open source project.
 
 ### Running tests
 
@@ -25,42 +40,88 @@ Before submitting your PR, make sure that all new and previous tests pass and th
 npm run test-coverage
 ```
 
+While developing you can run a single test group and use [grep](https://mochajs.org/#-g---grep-pattern) to filter the tests:
+```
+npm run mocha -- --grep=lifecycle
+```
+
 ### Adding tests
 
-Marko makes use of a directory based test structure.  A simplified view is below:
+Marko makes use of directory based test suites.  Take a look at the `render` test suite:
 
 <pre>
 <a href="../test/">test/</a>
- ⤷ <a href="../test/autotests/">autotests/</a>
-    ⤷ <a href="../test/autotests/render/">render/</a>
+ ⤷ <a href="../test/render/">render/</a>
+    ⤷ <a href="../test/render/fixtures/">fixtures/</a>
       ⤷ attrs/
-      ⤷ <a href="../test/autotests/render/for-tag/">for-tag/</a>
-        ⤷ <a href="../test/autotests/render/for-tag/expected.html">expected.html</a>
-        ⤷ <a href="../test/autotests/render/for-tag/template.marko">template.marko</a>
-        ⤷ <a href="../test/autotests/render/for-tag/test.js">test.js</a>
+      ⤷ <a href="../test/render/fixtures/for-tag/">for-tag/</a>
+        ⤷ <a href="../test/render/fixtures/for-tag/expected.html">expected.html</a>
+        ⤷ <a href="../test/render/fixtures/for-tag/template.marko">template.marko</a>
+        ⤷ <a href="../test/render/fixtures/for-tag/test.js">test.js</a>
       ⤷ nested-tags/
       ⤷ while-tag/
- ⤷ <a href="../test/render-test.js">render-test.js</a>
+    ⤷ <a href="../test/render/html.test.js">html.test.js</a>
 </pre>
-The `render-test.js` file will run and read all the directories under `autotests/render` and for each directory (`attrs`, `for-tag`, etc.) it will run `test.js`, render `template.marko` and assert that it is equivalent to the content of `expected.html`.
 
-In most cases you'll simply copy a directory and modify it to add a new test.  And we're here to help if you have any questions or need to do something fancy.
+The `html.test.js` file will run and read all the directories under `render/fixtures` and for each directory (`attrs`, `for-tag`, etc.) it will run `test.js`, render `template.marko` and assert that it is equivalent to the content of `expected.html`.
+
+To add a new test, you'll find the appropriate test suite, copy a fixture, and modify it to add the new test.
+#### Skipping a test
+
+A few of the tests suites use the same fixtures for multiple test scenarios.  For example, the `component-browser` tests run once rendering the component in a browser environment and a second time rendering in a server environment, then hydrating in the browser.
+
+For some tests, it might be necessary to skip the test in one of these scenarios.  This is done by exporting a `skipHydrate`  (or similiarly named) property from the fixture.  The value of the property should be a string explaining why the test is skipped.
+
+#### Adding a failing test case
+
+If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case.  You can mark a fixture as expected to fail by appending `.fails` to the directory name:
+
+```
+⤷ fixtures/
+      ⤷ my-test-scenario.fails/
+```
+
+In the case that a fixture is used in multiple test scenarios, you can mark the test as failing in a specific scenario by exporting a `failsHydrate` (or similarly named) property from the fixture.
+
+Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) to report a error, but document that there is an issue and give others a starting point for fixing the problem.
+
+### Debugging tests
+
+If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon <img height="22" src="./assets/devtools_nodejs_icon.png"/> to start debugging.  Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
+```
+npm run mocha -- --grep=test-name --inspect-brk
+```
+
+In addition to [setting breakpoints](https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints), you can also add [`debugger;`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statements in both your JavaScript files and Marko templates:
+
+```marko
+$ debugger;
+<div>Hello ${input.name}!</div>
+```
+
+### Updating snapshots
+
+A number of the test suites make use snapshot comparisons.  For example, the `render` tests compare the rendered html against a stored snapshot.  Similarly, the `compiler` tests compare the generated JavaScript module againt a stored snapshot.  Any changes compared to the snapshot should be looked at closely, but there are some cases where it is fine that the output has changed and the snapshot needs to be updated.
+
+To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory.  You can also use the `UPDATE_EXPECTATIONS` env variable to cause the test runner to update the `expected` file for all currently failing tests in a suite:
+
+```
+UPDATE_EXPECTATIONS=1 npm run mocha
+```
 
 ## Tackling an existing issue
 
-Comment on the issue and let us know you'd like to tackle it. We'll assign you to the issue so that we don't duplicate effort.  
-
-If for some reason you aren't going to be able to complete the work, let us know as soon as you can so we can open it up for another developer to work on.
+Comment on the issue and let us know you'd like to tackle it. If for some reason you aren't going to be able to complete the work, let us know as soon as you can so we can open it up for another developer to work on.
 
 Here's some to get started with:
 
-- [bite-sized](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Adifficulty%3Abite-sized%20no%3Aassignee) issues: great for new contributors
-- [help-wanted](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3Astatus%3Ahelp-wanted%20no%3Aassignee) issues: won't be tackled in the near future by the maintainers... we need your help!
-- [un-assigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
+- [good first issue](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22): great for new contributors
+- [help wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) issues: won't be tackled in the near future by the maintainers... we need your help!
+- [unassigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
 
 ## Reporting bugs and other issues
 
-A great way to contribute to the project is to send a detailed report when you encounter an issue.
+A great way to contribute to the project is to send a detailed report when you encounter an issue.  Even better: submit a PR with a failing test case ([see how](#adding-a-failing-test-case)).
 
 Check that [our issue database](https://github.com/marko-js/marko/issues) doesn't already include that problem or suggestion before submitting an issue. If you find a match, you can use the "subscribe" button to get notified on updates. Rather than leaving a "+1" or "I have this too" comment, you can add a  [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments)  to let us know that this is also affecting you without cluttering the conversation. However, if you have ways to reproduce the issue or have additional information that may help resolving the issue, please leave a comment.
 
@@ -70,17 +131,9 @@ Please provide as much detail as possible.
 
 ### Reporting security issues
 
-If you discover a security issue, please **DO NOT** file a public issue, instead send your report [privately](https://gitter.im/patrick-steele-idem).
+If you discover a security issue, please **DO NOT** file a public issue, instead send your report [privately](https://gitter.im/mlrawlings).
 
 Security reports are greatly appreciated and we will publicly thank you for it. We currently do not offer a paid security bounty program.
-
-# Maintainers
-
-* [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
-* [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
-* [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
-* [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
-* [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
 
 # Labels
 
@@ -88,16 +141,22 @@ Once you post an issue, a maintainer will add one or more labels to it. Below is
 
 ### Type
 ![](https://img.shields.io/badge/type-bug-dd0000.svg)
-![](https://img.shields.io/badge/type-enhancement-0099dd.svg)
+![](https://img.shields.io/badge/type-unverified%20bug-aa3300.svg)
+![](https://img.shields.io/badge/type-feature-0099dd.svg)
 ![](https://img.shields.io/badge/type-question-99cc00.svg)
-![](https://img.shields.io/badge/type-docs-999999.svg)
+![](https://img.shields.io/badge/type-community-ff8800.svg)
+![](https://img.shields.io/badge/type-tech%20debt-bfdadc.svg)
+![](https://img.shields.io/badge/type-docs-bbbbbb.svg)
 
 Every issue should be assigned one of these.
 
 - **bug**: A bug report
-- **enhancement**: A feature request
-- **question**: A question about how to use Marko
-- **docs**: An issue about documentation
+- **unverified-bug**: A bug report that has not been verified
+- **feature**: A feature request
+- **question**: A question about how to do something in Marko
+- **community**: Related to community building, improving the contribution process, etc.
+- **tech debt**: Related to refactoring code, test structure, etc.
+- **docs**: Related to documentation/website
 
 ### Scope
 ![](https://img.shields.io/badge/scope-parser-5500cc.svg)
@@ -109,39 +168,47 @@ Every issue should be assigned one of these.
 
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
 
-- **parser**: Relates to `htmljs-parser`
-- **compiler**: Relates to the compiler (server only)
-- **runtime**: Relates to the runtime (isomorphic/universal)
-- **core-taglib**: Relates to custom tags that ship with Marko
-- **components**: Relates to `marko-components`
+- **parser**: Relates to [`htmljs-parser`](https://github.com/marko-js/htmljs-parser)
+- **compiler**: Relates to the [compiler](../src/compiler) (server only)
+- **runtime**: Relates to the [runtime](../src/runtime) (isomorphic/universal)
+- **core-taglib**: Relates to [custom tags](../src/taglib) that ship with Marko
+- **components**: Relates to [components](../src/components)
 - **tools**: Relates to editor plugins, commandline tools, etc.
 
-### Difficulty
-![](https://img.shields.io/badge/difficulty-bite%20sized-aabbcc.svg)
-![](https://img.shields.io/badge/difficulty-epic-cc4400.svg)
-
-Indicates a very large or very small issue.  Not required.
-
-- **bite-sized**: An issue that would be great for new contributors to tackle
-- **epic**: A large change that will take some time and likely have sub-issues
-
 ### Status
-![](https://img.shields.io/badge/status-resolved-99cc99.svg)
-![](https://img.shields.io/badge/status-confirmed-5599cc.svg)
-![](https://img.shields.io/badge/status-help%20wanted-33cc88.svg)
-![](https://img.shields.io/badge/status-invalid-997744.svg)
-![](https://img.shields.io/badge/status-duplicate-cc99cc.svg)
-![](https://img.shields.io/badge/status-wontfix-bb6666.svg)
-![](https://img.shields.io/badge/status-needs%20clarifying-dd9944.svg)
-![](https://img.shields.io/badge/status-see%20other-456263.svg)
+![](https://img.shields.io/badge/status-backlog-223344.svg)
+![](https://img.shields.io/badge/status-in%20progress-006b75.svg)
+![](https://img.shields.io/badge/status-needs%20review-0e8a16.svg)
 
 In many cases, additional *actions* should be taken when applying one of these.
 
-- **resolved**: The question was answered, the bug was fixed, or the feature was implemented. *Close the issue.*
-- **confirmed**: This is indeed a bug, or the feature has been fleshed out and should be implemented.  
-- **help-wanted**: This is not something on the main roadmap, but we'd love for someone in the community to tackle it
-- **invalid**: This was user error, not a bug. *Close the issue.*
-- **duplicate**: Someone has already posted the same or a very similar issue.  *Reference the original issue and close this issue.*
-- **wontfix**: This is not a bug, but intended behavior, or this feature will not be implemented.  *Close the issue.*
-- **needs-clarifying**: More information is needed to reproduce the bug. *Ask for more information.  If no reply is received within a week, the issue should be closed.*
-- **see-other**: This bug is actually due to an issue with another library. *If there is an existing issue for that library link to it, if not create one and link to it.  Close the issue.*
+- **backlog**: Tasks planned to be worked on
+- **in progress**: This is currently being worked on.
+- **needs review**: This issue needs to be followed up on.
+
+### Reason closed
+![](https://img.shields.io/badge/reason%20closed-resolved-99cc99.svg)
+![](https://img.shields.io/badge/reason%20closed-duplicate-cc99cc.svg)
+![](https://img.shields.io/badge/reason%20closed-declined-bb6666.svg)
+![](https://img.shields.io/badge/reason%20closed-not%20a%20bug-997744.svg)
+![](https://img.shields.io/badge/reason%20closed-inactivity-bfd4f2.svg)
+![](https://img.shields.io/badge/reason%20closed-no%20issue-c5def5.svg)
+- **resolved**: The question was answered, the bug was fixed, or the feature was implemented. 
+- **duplicate**: Someone has already posted the same or a very similar issue.  A comment should be added that references the original issue.
+- **declined**: This feature will not be implemented.  
+- **not a bug**: This is not a bug, but either user error or intended behavior.
+- **inactivity**: There was not enough info to reproduce the bug or not enough interest in the feature to hash out an implementation plan and the conversation has stalled.
+- **no issue**: This wasn't so much an issue as a comment
+
+### Other
+![](https://img.shields.io/badge/-good%20first%20issue-00cccc.svg)
+![](https://img.shields.io/badge/-help%20wanted-33cc88.svg)
+![](https://img.shields.io/badge/-blocked-6b0c0c.svg)
+![](https://img.shields.io/badge/-needs%20more%20info-dd9944.svg)
+![](https://img.shields.io/badge/-user%20land-e8c9c9.svg)
+
+- **good first issue**: Small tasks that would be good for first time contributors.
+- **help wanted**: Not on the roadmap, but we'd love for someone in the community to tackle it.
+- **blocked**: Cannot be completed until something else happens first.  This should be described in a comment with a link to the blocking issue.
+- **needs more info**: The original poster needs to provide more information before action can be taken.
+- **user land**: Something that probably won't be added to core, but could be implemented/proved out as a separate module.

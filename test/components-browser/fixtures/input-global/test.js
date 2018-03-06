@@ -19,4 +19,4 @@ module.exports = function (helpers) {
     expect(component.getEl('current').innerHTML).to.equal('Pathname: /test');
 };
 
-module.exports.skipHydrate = true;
+module.exports.skipHydrate = 'When hydrating, only one $global value can be passed.  This test uses 2.';

@@ -7,4 +7,4 @@ module.exports = function (helpers) {
     expect(helpers.targetEl.querySelector('.hello') == null).to.equal(true);
 };
 
-module.exports.skipHydrate = true;
+module.exports.skipHydrate = 'Implicit components do not get hydrated';
