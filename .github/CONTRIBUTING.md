@@ -87,7 +87,7 @@ Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) 
 
 ### Debugging tests
 
-If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon <img height="22" src="./assets/devtools_nodejs_icon.png"/> to start debugging.  Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
+If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon (<img height="16" src="https://user-images.githubusercontent.com/1958812/37050480-d53e4276-2128-11e8-8c7a-f5d842956c98.png"/>) to start debugging.  Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
 ```
 npm run mocha -- --grep=test-name --inspect-brk
 ```
