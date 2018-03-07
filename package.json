@@ -86,7 +86,7 @@
     "coveralls": "^2.13.1",
     "diffable-html": "^2.1.0",
     "eslint": "^4.11.0",
-    "eslint-config-unobtrusive": "^1.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "express": "^4.16.1",
     "fs-extra": "^2.0.0",
     "ignoring-watcher": "^1.0.2",
