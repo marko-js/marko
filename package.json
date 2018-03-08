@@ -2,8 +2,7 @@
     "name": "marko",
     "version": "4.9.1",
     "license": "MIT",
-    "description":
-        "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
+    "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
         "build": "node scripts/build.js",
         "build-src": "node scripts/build.js src",
@@ -11,10 +10,8 @@
         "precommit": "lint-staged",
         "test": "npm run lint -s && npm run mocha -s",
         "test-ci": "npm run check-format && npm run test-generate-coverage",
-        "mocha":
-            "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js",
-        "test-coverage":
-            "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
+        "mocha": "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js",
+        "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
         "test-generate-coverage": "nyc -asc npm test",
         "lint": "eslint .",
         "format": "prettier \"**/*.{js,json,css,md}\" --write",
@@ -23,8 +20,13 @@
         "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
     },
     "lint-staged": {
-        "*.js": ["eslint"],
-        "*.{js,json,css,md}": ["prettier --write", "git add"]
+        "*.js": [
+            "eslint"
+        ],
+        "*.{js,json,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
     },
     "dependencies": {
         "app-module-path": "^2.2.0",
@@ -118,8 +120,7 @@
     },
     "homepage": "http://markojs.com/",
     "logo": {
-        "url":
-            "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
+        "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
     },
     "repository": {
         "type": "git",
