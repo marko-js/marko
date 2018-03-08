@@ -1,5 +1,5 @@
 module.exports = {
-    onMount: function () {
-        this.name = 'app-bar';
+    onMount: function() {
+        this.name = "app-bar";
     }
 };

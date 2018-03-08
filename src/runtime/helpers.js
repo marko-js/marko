@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 var isArray = Array.isArray;
 
 function isFunction(arg) {
-    return typeof arg == 'function';
+    return typeof arg == "function";
 }
 
 function classList(arg, classNames) {
     var len;
 
     if (arg) {
-        if (typeof arg == 'string') {
+        if (typeof arg == "string") {
             if (arg) {
                 classNames.push(arg);
             }
-        } else if (typeof (len = arg.length) == 'number') {
-            for (var i=0; i<len; i++) {
+        } else if (typeof (len = arg.length) == "number") {
+            for (var i = 0; i < len; i++) {
                 classList(arg[i], classNames);
             }
-        } else if (typeof arg == 'object') {
+        } else if (typeof arg == "object") {
             for (var name in arg) {
                 if (arg.hasOwnProperty(name)) {
                     var value = arg[name];
@@ -40,7 +40,7 @@ function createDeferredRenderer(handler) {
     deferredRenderer.renderer = function(input, out) {
         var rendererFunc = handler.renderer || handler._ || handler.render;
         if (!isFunction(rendererFunc)) {
-            throw Error('Invalid renderer');
+            throw Error("Invalid renderer");
         }
         // Use the actual renderer from now on
         deferredRenderer.renderer = rendererFunc;
@@ -75,7 +75,7 @@ var helpers = {
      * @private
      */
     s: function strHelper(str) {
-        return (str == null) ? '' : str.toString();
+        return str == null ? "" : str.toString();
     },
 
     /**
@@ -84,7 +84,7 @@ var helpers = {
      */
     f: function forEachHelper(array, callback) {
         if (isArray(array)) {
-            for (var i=0; i<array.length; i++) {
+            for (var i = 0; i < array.length; i++) {
                 callback(array[i]);
             }
         } else if (isFunction(array)) {
@@ -101,7 +101,13 @@ var helpers = {
             renderer = resolveRenderer(renderer);
         }
 
-        return function wrappedRenderer(input, out, componentDef, key, customEvents) {
+        return function wrappedRenderer(
+            input,
+            out,
+            componentDef,
+            key,
+            customEvents
+        ) {
             out.c(componentDef, key, customEvents);
             renderer(input, out);
             out.___assignedComponentDef = null;
@@ -118,7 +124,7 @@ var helpers = {
     cl: function classListHelper() {
         var classNames = [];
         classList(arguments, classNames);
-        return classNames.join(' ');
+        return classNames.join(" ");
     }
 };
 

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var Literal = require('./Literal');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var Literal = require("./Literal");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 class Html extends Node {
     constructor(def) {
-        super('Html');
+        super("Html");
         this.argument = def.argument;
     }
 
@@ -15,7 +15,7 @@ class Html extends Node {
 
         if (Array.isArray(argument)) {
             var len = argument.length;
-            var last = argument[len-1];
+            var last = argument[len - 1];
 
             if (last instanceof Literal && appendArgument instanceof Literal) {
                 last.value += appendArgument.value;
@@ -23,10 +23,13 @@ class Html extends Node {
                 this.argument.push(appendArgument);
             }
         } else {
-            if (argument instanceof Literal && appendArgument instanceof Literal) {
+            if (
+                argument instanceof Literal &&
+                appendArgument instanceof Literal
+            ) {
                 argument.value += appendArgument.value;
             } else {
-                this.argument = [ this.argument, appendArgument ];
+                this.argument = [this.argument, appendArgument];
             }
         }
     }
@@ -54,29 +57,29 @@ class Html extends Node {
         if (Array.isArray(argument)) {
             let args = argument;
 
-            for (let i=0, len=args.length; i<len; i++) {
+            for (let i = 0, len = args.length; i < len; i++) {
                 let arg = args[i];
 
                 if (i === 0) {
-                    writer.write('out.w(');
+                    writer.write("out.w(");
                 } else {
-                    writer.write(' +\n');
+                    writer.write(" +\n");
                     writer.writeLineIndent();
                     writer.writeIndent();
                 }
 
                 if (isCompoundExpression(arg)) {
-                    writer.write(['(', arg, ')']);
+                    writer.write(["(", arg, ")"]);
                 } else {
                     writer.write(arg);
                 }
             }
 
-            writer.write(')');
+            writer.write(")");
         } else {
-            writer.write('out.w(');
+            writer.write("out.w(");
             writer.write(argument);
-            writer.write(')');
+            writer.write(")");
         }
     }
 

@@ -1,14 +1,14 @@
-var extend = require('raptor-util/extend');
-var expect = require('chai').expect;
+var extend = require("raptor-util/extend");
+var expect = require("chai").expect;
 
 exports.templateData = {
-    userDataProvider: function (callback) {
-        callback(null, { name: 'Frank' });
+    userDataProvider: function(callback) {
+        callback(null, { name: "Frank" });
     }
 };
 
-exports.checkEvents = function (events, helpers) {
-    events = events.map(function (eventInfo) {
+exports.checkEvents = function(events, helpers) {
+    events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
 
@@ -21,5 +21,5 @@ exports.checkEvents = function (events, helpers) {
         };
     });
 
-    helpers.compare(events, '-events.json');
+    helpers.compare(events, "-events.json");
 };

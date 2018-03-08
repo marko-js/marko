@@ -1,5 +1,5 @@
 module.exports = {
-    handleClick: function () {
+    handleClick: function() {
         this.state.clicked = true;
     }
 };

@@ -27,7 +27,7 @@ has switched to [a new methodology to measure and understand real-world
 JavaScript
 performance](https://v8project.blogspot.com/2016/12/how-v8-measures-real-world-performance.html).
 
-Similarly, we’ve taken a look at how our developers are *actually* writing their
+Similarly, we’ve taken a look at how our developers are _actually_ writing their
 Marko components and have found patterns that could be further optimized.
 Instead of focusing on benchmarks in this article, I want to focus on the
 details of optimizations that we have applied to Marko.
@@ -58,13 +58,11 @@ The compiled output is optimized for streaming HTML output on the server:
 
 ```js
 var marko_template = require("marko/html").t(__filename),
-    marko_helpers = require("marko/runtime/html/helpers"),
-    marko_escapeXml = marko_helpers.x;
+  marko_helpers = require("marko/runtime/html/helpers"),
+  marko_escapeXml = marko_helpers.x;
 
 function render(input, out) {
-  out.w("<div>Hello " +
-    marko_escapeXml(input.name) +
-    "!</div>");
+  out.w("<div>Hello " + marko_escapeXml(input.name) + "!</div>");
 }
 ```
 
@@ -74,7 +72,8 @@ function render(input, out) {
 var marko_template = require("marko/vdom").t(__filename);
 
 function render(input, out) {
-  out.e("DIV", null, 3)
+  out
+    .e("DIV", null, 3)
     .t("Hello ")
     .t(input.name)
     .t("!");
@@ -104,12 +103,17 @@ the `styleAttr` helper is shown below:
 var marko_styleAttr = require("marko/runtime/vdom/helper-styleAttr");
 
 function render(input, out) {
-  var color = 'red';
-  out.e("DIV", {
+  var color = "red";
+  out.e(
+    "DIV",
+    {
       style: marko_styleAttr({
-          backgroundColor: color
-        })
-    }, 0, 4);
+        backgroundColor: color
+      })
+    },
+    0,
+    4
+  );
 }
 ```
 
@@ -121,7 +125,7 @@ virtual DOM tree on the server it’s a two-step process to render HTML:
 
 * First pass to produce an entire virtual DOM tree in memory
 * Second pass to serialize the virtual DOM tree to an HTML string that can then be
-sent over the wire (this requires traversing the entire tree structure)
+  sent over the wire (this requires traversing the entire tree structure)
 
 In contrast, Marko renders directly to an HTML stream in a single pass. There is
 no intermediate tree data structure.
@@ -176,11 +180,12 @@ Marko will produce the following compiled output:
 
 ```js
 var marko_attrs0 = {
-        "class": "hello"
-      };
+  class: "hello"
+};
 
 function render(input, out) {
-  out.e("DIV", marko_attrs0, 3)
+  out
+    .e("DIV", marko_attrs0, 3)
     .t("Hello ")
     .t(input.name)
     .t("!");
@@ -229,4 +234,4 @@ root, but this approach uses much less memory and reduces the amount of work
 that is done during initialization. The extra overhead of delegating events to
 components will not be noticeable so it is a very beneficial optimization.
 
-*Cover image credit: [Superhero by Gan Khoon Lay from the Noun Project](https://thenounproject.com/search/?q=superhero&i=690775)*
+_Cover image credit: [Superhero by Gan Khoon Lay from the Noun Project](https://thenounproject.com/search/?q=superhero&i=690775)_

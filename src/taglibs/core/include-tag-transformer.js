@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = function(el, context) {
     let builder = context.builder;
@@ -10,7 +10,7 @@ module.exports = function(el, context) {
         let target = args[0];
         let arg = args[1];
 
-        if (target.type === 'Literal') {
+        if (target.type === "Literal") {
             target = context.importTemplate(target.value);
         }
 
@@ -23,7 +23,10 @@ module.exports = function(el, context) {
         }
 
         el.addProps(includeProps);
-    } else if (!el.hasProp('_target')) {
-        context.addError(el, 'The <include(...)> tag must have an argument: <include("./target.marko")/> or <include(data.renderBody)/>');
+    } else if (!el.hasProp("_target")) {
+        context.addError(
+            el,
+            'The <include(...)> tag must have an argument: <include("./target.marko")/> or <include(data.renderBody)/>'
+        );
     }
 };

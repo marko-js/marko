@@ -1,22 +1,22 @@
-'use strict';
+"use strict";
 
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var chai = require('chai');
+var chai = require("chai");
 chai.config.includeStack = true;
-var expect = require('chai').expect;
-var path = require('path');
-var marko = require('../../');
-var markoRuntimeHtml = require('marko/runtime/html');
-var autotest = require('../autotest');
-var fs = require('fs');
+var expect = require("chai").expect;
+var path = require("path");
+var marko = require("../../");
+var markoRuntimeHtml = require("marko/runtime/html");
+var autotest = require("../autotest");
+var fs = require("fs");
 
-describe('async-fragments (deprecated)', function () {
-    var autoTestDir = path.join(__dirname, './fixtures');
+describe("async-fragments (deprecated)", function() {
+    var autoTestDir = path.join(__dirname, "./fixtures");
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var templatePath = path.join(dir, 'template.marko');
-        var mainPath = path.join(dir, 'test.js');
+        var templatePath = path.join(dir, "template.marko");
+        var mainPath = path.join(dir, "test.js");
 
         var main = fs.existsSync(mainPath) ? require(mainPath) : {};
         var loadOptions = main && main.loadOptions;
@@ -31,7 +31,7 @@ describe('async-fragments (deprecated)', function () {
             }
 
             if (!e) {
-                throw new Error('Error expected');
+                throw new Error("Error expected");
             }
 
             main.checkError(e);
@@ -43,8 +43,8 @@ describe('async-fragments (deprecated)', function () {
             var events = [];
             var eventsByFragmentName = {};
 
-            var addEventListener = function (event) {
-                out.on(event, function (arg) {
+            var addEventListener = function(event) {
+                out.on(event, function(arg) {
                     var name = arg.name;
 
                     if (!eventsByFragmentName[name]) {
@@ -60,21 +60,21 @@ describe('async-fragments (deprecated)', function () {
                 });
             };
 
-            addEventListener('asyncFragmentBegin');
-            addEventListener('asyncFragmentBeforeRender');
-            addEventListener('asyncFragmentFinish');
+            addEventListener("asyncFragmentBegin");
+            addEventListener("asyncFragmentBeforeRender");
+            addEventListener("asyncFragmentFinish");
 
             template.render(templateData, out);
 
-            out.on('error', done);
+            out.on("error", done);
 
-            out.on('finish', function () {
+            out.on("finish", function() {
                 var html = out.toString();
 
                 if (main.checkHtml) {
                     main.checkHtml(html);
                 } else {
-                    helpers.compare(html, '.html');
+                    helpers.compare(html, ".html");
                 }
 
                 if (main.checkEvents) {
@@ -82,9 +82,15 @@ describe('async-fragments (deprecated)', function () {
                 }
 
                 // Make sure all of the async fragments were correctly ended
-                Object.keys(eventsByFragmentName).forEach(function (fragmentName) {
+                Object.keys(eventsByFragmentName).forEach(function(
+                    fragmentName
+                ) {
                     var events = eventsByFragmentName[fragmentName];
-                    expect(events).to.deep.equal(['asyncFragmentBegin', 'asyncFragmentBeforeRender', 'asyncFragmentFinish']);
+                    expect(events).to.deep.equal([
+                        "asyncFragmentBegin",
+                        "asyncFragmentBeforeRender",
+                        "asyncFragmentFinish"
+                    ]);
                 });
 
                 done();

@@ -1,10 +1,10 @@
-'use strict';
-var HtmlElementVDOM = require('./HtmlElementVDOM');
-var EndElementVDOM = require('./EndElementVDOM');
+"use strict";
+var HtmlElementVDOM = require("./HtmlElementVDOM");
+var EndElementVDOM = require("./EndElementVDOM");
 
 function checkAttributesStatic(attributes) {
     if (attributes) {
-        for (let i=0; i<attributes.length; i++) {
+        for (let i = 0; i < attributes.length; i++) {
             let attr = attributes[i];
 
             if (!attr.isStatic) {
@@ -19,7 +19,7 @@ function checkAttributesStatic(attributes) {
 function checkPropertiesStatic(properties, vdomUtil) {
     if (properties) {
         var keys = Object.keys(properties);
-        for (var i=0; i<keys.length; i++) {
+        for (var i = 0; i < keys.length; i++) {
             var propName = keys[i];
             var propValue = properties[propName];
             var isStatic = vdomUtil.isStaticValue(propValue);
@@ -47,20 +47,25 @@ module.exports = function(node, codegen, vdomUtil) {
     var isKeyStatic = vdomUtil.isStaticValue(key);
     var isAttrsStatic = checkAttributesStatic(attributes);
     var isPropsStatic = checkPropertiesStatic(properties, vdomUtil);
-    var isStatic = isKeyStatic && isAttrsStatic && isPropsStatic && node.isLiteralTagName();
+    var isStatic =
+        isKeyStatic &&
+        isAttrsStatic &&
+        isPropsStatic &&
+        node.isLiteralTagName();
     var isHtmlOnly = true;
 
     if (body && body.length) {
-        for (var i=0; i<body.length; i++) {
+        for (var i = 0; i < body.length; i++) {
             let child = body[i];
-            if (child.type === 'HtmlElementVDOM' || child.type === 'TextVDOM') {
-                if (child.type === 'TextVDOM' && child.escape === false) {
+            if (child.type === "HtmlElementVDOM" || child.type === "TextVDOM") {
+                if (child.type === "TextVDOM" && child.escape === false) {
                     isHtmlOnly = false;
                 }
                 if (!child.isHtmlOnly) {
                     isStatic = false;
                     isHtmlOnly = false;
-                } if (!child.isStatic) {
+                }
+                if (!child.isStatic) {
                     isStatic = false;
                 }
             } else {
@@ -89,7 +94,6 @@ module.exports = function(node, codegen, vdomUtil) {
         runtimeFlags
     });
 
-
     if (bodyOnlyIf) {
         htmlElVDOM.body = null;
 
@@ -101,11 +105,7 @@ module.exports = function(node, codegen, vdomUtil) {
             new EndElementVDOM()
         ]);
 
-        return [
-            startIf,
-            body,
-            endIf
-        ];
+        return [startIf, body, endIf];
     } else if (isHtmlOnly) {
         return htmlElVDOM;
     } else {

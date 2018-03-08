@@ -1,24 +1,24 @@
 module.exports = function(app) {
     var Suite = window.Benchmark.Suite;
 
-    var names = [
-        'dom',
-        'dom-innerHTML',
-        'marko-vdom',
-        'react'
-    ];
+    var names = ["dom", "dom-innerHTML", "marko-vdom", "react"];
 
-    var htmlFiles = ['todomvc', 'marko-docs', 'tabs'];
+    var htmlFiles = ["todomvc", "marko-docs", "tabs"];
 
     function loadScripts() {
-
         window.createBenchmarks = {};
 
         var scripts = [];
 
         names.forEach(function(name) {
             htmlFiles.forEach(function(htmlFile) {
-                scripts.push('./codegen-create/benchmark-' + htmlFile + '-' + name + '.js');
+                scripts.push(
+                    "./codegen-create/benchmark-" +
+                        htmlFile +
+                        "-" +
+                        name +
+                        ".js"
+                );
             });
         });
 
@@ -26,18 +26,17 @@ module.exports = function(app) {
     }
 
     function runForHtmlFile(htmlFile) {
-        return loadScripts(htmlFile)
-            .then(function() {
-                var suite = new Suite('create-' + htmlFile);
+        return loadScripts(htmlFile).then(function() {
+            var suite = new Suite("create-" + htmlFile);
 
-                names.forEach(function(name) {
-                    suite.add(name, function() {
-                        return window.createBenchmarks[htmlFile + '-' + name]();
-                    });
+            names.forEach(function(name) {
+                suite.add(name, function() {
+                    return window.createBenchmarks[htmlFile + "-" + name]();
                 });
-
-                return app.runSuite(suite);
             });
+
+            return app.runSuite(suite);
+        });
     }
 
     var loadScriptsPromise = loadScripts();

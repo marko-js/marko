@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var chai = require('chai');
+var chai = require("chai");
 chai.config.includeStack = true;
-var path = require('path');
-var compiler = require('../../compiler');
-var autotest = require('../autotest');
-var fs = require('fs');
+var path = require("path");
+var compiler = require("../../compiler");
+var autotest = require("../autotest");
+var fs = require("fs");
 
-const EXTENSIONS = ['.marko', '.xml.marko'];
+const EXTENSIONS = [".marko", ".xml.marko"];
 
 function runTestForExtension(dir, helpers, extension, done) {
     var templatePath = path.join(dir, `template${extension}`);
@@ -18,14 +18,18 @@ function runTestForExtension(dir, helpers, extension, done) {
         return false;
     }
 
-    var mainPath = path.join(dir, 'test.js');
+    var mainPath = path.join(dir, "test.js");
     var main;
 
     if (fs.existsSync(mainPath)) {
         main = require(mainPath);
     }
 
-    var compilerOptions = { output: 'html', writeVersionComment: false, autoKeyEnabled: true };
+    var compilerOptions = {
+        output: "html",
+        writeVersionComment: false,
+        autoKeyEnabled: true
+    };
 
     if (main && main.checkError) {
         var e;
@@ -37,27 +41,33 @@ function runTestForExtension(dir, helpers, extension, done) {
         }
 
         if (!e) {
-            throw new Error('Error expected');
+            throw new Error("Error expected");
         }
 
         main.checkError(e);
         done();
     } else if (main && main.checkTemplate) {
-        var template = require('marko').load(templatePath, Object.assign(compilerOptions, main.compilerOptions));
+        var template = require("marko").load(
+            templatePath,
+            Object.assign(compilerOptions, main.compilerOptions)
+        );
         main.checkTemplate(template, helpers);
         done();
     } else {
-        var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
-        compiledSrc = compiledSrc.replace(/marko\/dist\//g, 'marko/src/');
-        helpers.compare(compiledSrc, '.js');
+        var compiledSrc = compiler.compileFile(
+            templatePath,
+            Object.assign(compilerOptions, main && main.compilerOptions)
+        );
+        compiledSrc = compiledSrc.replace(/marko\/dist\//g, "marko/src/");
+        helpers.compare(compiledSrc, ".js");
         done();
     }
 
     return true;
 }
 
-describe('compiler (html)', function () {
-    var autoTestDir = path.join(__dirname, './fixtures-html');
+describe("compiler (html)", function() {
+    var autoTestDir = path.join(__dirname, "./fixtures-html");
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
         for (let i = 0; i < EXTENSIONS.length; i++) {

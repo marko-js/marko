@@ -1,15 +1,17 @@
-'use strict';
+"use strict";
 
 const INIT_COMPONENTS_KEY = Symbol();
 
-const writeInitComponentsCode = require('../').writeInitComponentsCode;
+const writeInitComponentsCode = require("../").writeInitComponentsCode;
 
-const ComponentsContext = require('../ComponentsContext');
+const ComponentsContext = require("../ComponentsContext");
 
 function handleAwaitBeforeRender(eventArgs) {
     if (eventArgs.clientReorder) {
         const asyncFragmentOut = eventArgs.out;
-        asyncFragmentOut.___components = new ComponentsContext(asyncFragmentOut);
+        asyncFragmentOut.___components = new ComponentsContext(
+            asyncFragmentOut
+        );
     }
 }
 
@@ -23,8 +25,8 @@ module.exports = function render(input, out) {
     if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
         outGlobal[INIT_COMPONENTS_KEY] = true;
 
-        out.on('await:beforeRender', handleAwaitBeforeRender);
-        out.on('await:finish', handleAwaitFinish);
+        out.on("await:beforeRender", handleAwaitBeforeRender);
+        out.on("await:finish", handleAwaitFinish);
 
         if (out.isSync() === true) {
             // Generate initialization code for any of the UI components that were

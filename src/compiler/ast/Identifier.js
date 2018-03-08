@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class Identifier extends Node {
     constructor(def) {
-        super('Identifier');
+        super("Identifier");
         this.name = def ? def.name : undefined;
     }
 

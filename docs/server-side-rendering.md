@@ -3,30 +3,31 @@
 Marko allows any Marko template/UI component to be rendered on the server or in the browser. A page can be rendered to a `Writable` stream such as an HTTP response stream as shown below:
 
 ```js
-var template = require('./template'); // Import ./template.marko
+var template = require("./template"); // Import ./template.marko
 
 module.exports = function(req, res) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    template.render({ name: 'Frank' }, res);
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  template.render({ name: "Frank" }, res);
 };
 ```
 
 Marko can also provide you with a `Readable` stream.
 
 ```js
-var template = require('./template'); // Import ./template.marko
+var template = require("./template"); // Import ./template.marko
 
 module.exports = function(req) {
-    // Return a Readable stream for someone to do something with:
-    return template.stream({ name: 'Frank' });
+  // Return a Readable stream for someone to do something with:
+  return template.stream({ name: "Frank" });
 };
 ```
 
 > **ProTip:** Marko also provides server-side framework integrations:
-> - [express](/docs/express.md)
-> - [hapi](/docs/hapi.md)
-> - [koa](/docs/koa.md)
-> - [huncwot](/docs/huncwot.md)
+>
+> * [express](/docs/express.md)
+> * [hapi](/docs/hapi.md)
+> * [koa](/docs/koa.md)
+> * [huncwot](/docs/huncwot.md)
 
 ## UI Bootstrapping
 
@@ -65,35 +66,37 @@ _routes/index/template.marko_
 ```
 
 > **ProTip:** We have provided some sample apps to help you get started with Marko + Lasso
-> - [marko-lasso](https://github.com/marko-js-samples/marko-lasso)
-> - [ui-components-playground](https://github.com/marko-js-samples/ui-components-playground)
-
+>
+> * [marko-lasso](https://github.com/marko-js-samples/marko-lasso)
+> * [ui-components-playground](https://github.com/marko-js-samples/ui-components-playground)
 
 ### Bootstrapping: Non-Lasso
 
- If a JavaScript module bundler other than Lasso is being used then you will need to add some client-side code to bootstrap your application in the browser by doing the following:
+If a JavaScript module bundler other than Lasso is being used then you will need to add some client-side code to bootstrap your application in the browser by doing the following:
 
-1. Load/import/require all of the UI components that were rendered on the server (loading the top-level UI component is typically sufficient)
-2. Call `require('marko/components').init()`
+1.  Load/import/require all of the UI components that were rendered on the server (loading the top-level UI component is typically sufficient)
+2.  Call `require('marko/components').init()`
 
 For example, if `client.js` is the entry point for your client-side application:
 
 _routes/index/client.js_
+
 ```js
 // Load the top-level UI component:
-require('./components/app/index');
+require("./components/app/index");
 
 // Now that all of the JavaScript modules for the UI component have been
 // loaded and registered we can tell marko to bootstrap/initialize the app
 
 // Initialize and mount all of the server-rendered UI components:
-require('marko/components').init();
+require("marko/components").init();
 ```
 
 > **ProTip:** We have provided some sample apps to help you get started:
-> - [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
-> - [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
-> - [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
+>
+> * [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
+> * [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
+> * [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
 
 # Serialization
 
@@ -119,23 +122,26 @@ class {
 
 There are some caveats associated with rendering a page on the server:
 
-- The UI component data for top-level UI components must be serializable:
-    - Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
-    - Functions are not serializable
-- Care should be taken to avoid having Marko serialize too much data
-- None of the data in `out.global` is serialized by default, but this can be changed as shown below
+* The UI component data for top-level UI components must be serializable:
+  * Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
+  * Functions are not serializable
+* Care should be taken to avoid having Marko serialize too much data
+* None of the data in `out.global` is serialized by default, but this can be changed as shown below
 
 ## Serializing globals
 
 If there are specific properties on the `out.global` object that need to be serialized then they must be whitelisted when the top-level page is rendered on the server. For example, to have the `out.global.apiKey` and the `out.global.locale` properties serialized you would do the following:
 
 ```js
-template.render({
-        $global: {
-            serializedGlobals: {
-                apiKey: true,
-                locale: true
-            }
-        }
-    }, res);
+template.render(
+  {
+    $global: {
+      serializedGlobals: {
+        apiKey: true,
+        locale: true
+      }
+    }
+  },
+  res
+);
 ```

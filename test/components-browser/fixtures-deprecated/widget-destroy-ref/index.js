@@ -1,17 +1,17 @@
-module.exports = require('marko/legacy-components').defineComponent({
-    template: require.resolve('./template.marko'),
-    getInitialState: function () {
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require.resolve("./template.marko"),
+    getInitialState: function() {
         return {};
     },
-    getTemplateData: function () {
+    getTemplateData: function() {
         return {};
     },
 
-    destroyButton1: function () {
-        this.getWidget('button1').destroy();
+    destroyButton1: function() {
+        this.getWidget("button1").destroy();
     },
 
-    getButton1: function () {
-        return this.getWidget('button1');
+    getButton1: function() {
+        return this.getWidget("button1");
     }
 });

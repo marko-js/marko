@@ -1,12 +1,12 @@
 # Syntax
 
-Marko's syntax is based on HTML, so you basically already know it.  Marko extends the HTML language to add a few nice features which we'll cover here.
+Marko's syntax is based on HTML, so you basically already know it. Marko extends the HTML language to add a few nice features which we'll cover here.
 
 > **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see our documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
 
 ## Text replacement
 
-When you render a Marko template, you pass input data that is then available within the template as `input`.  You can then use `${}` to insert a value into the template:
+When you render a Marko template, you pass input data that is then available within the template as `input`. You can then use `${}` to insert a value into the template:
 
 ```marko
 <div>
@@ -22,7 +22,7 @@ You can actually pass any JavaScript expression here and the result of the expre
 </div>
 ```
 
-These values are automatically escaped so you don't accidentally insert malicious code.  If you do need to pass unescaped HTML, you can use `$!{}`:
+These values are automatically escaped so you don't accidentally insert malicious code. If you do need to pass unescaped HTML, you can use `$!{}`:
 
 ```marko
 <div>
@@ -42,7 +42,7 @@ If necessary, you can escape `$` using a backslash to have it be treated as text
 
 ## Root level text
 
-Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text.  The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text. The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 
 ```marko
 -- Root level text
@@ -75,22 +75,27 @@ _It does not contain any spaces_
 ```marko
 <tag sum=1+2 difference=3-4/>
 ```
+
 ```marko
 tag sum=1+2 difference=3-4
 ```
 
 _Spaces are contained within matching `()`, `[]`, or `{}`_
+
 ```marko
 <tag sum=(1 + 2) difference=(3 - 4)/>
 ```
+
 ```marko
 tag sum=(1 + 2) difference=(3 - 4)
 ```
 
 _Or, commas are used to delimit attributes_
+
 ```marko
 <tag sum=1 + 2, difference=3 - 4/>
 ```
+
 ```marko
 tag sum=1 + 2, difference=3 - 4
 ```
@@ -104,6 +109,7 @@ Whitespace may optionally be used around the equal sign of an attribute:
 ```marko
 <tag value = 5/>
 ```
+
 ```marko
 tag value = 5
 ```
@@ -129,14 +135,17 @@ With a value of `false` for `active`, the output would be the following:
 ```
 
 ### Dynamic attributes
+
 You can use the `...attrs` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
 
 _index.js_
+
 ```js
-template.render({ attrs:{ class:'active', href:'https://ebay.com/' } });
+template.render({ attrs: { class: "active", href: "https://ebay.com/" } });
 ```
 
 _link.marko_
+
 ```marko
 <a ...input.attrs target="_blank">eBay</a>
 ```
@@ -144,6 +153,7 @@ _link.marko_
 would output the following HTML:
 
 _output.html_
+
 ```html
 <a class="active" href="https://ebay.com/" target="_blank">eBay</a>
 ```
@@ -177,6 +187,7 @@ The `class` attribute also support object expressions or an array expressions (i
 In both cases, the output will be the same:
 
 _output.html_
+
 ```html
 <div class="a c"></div>
 ```
@@ -186,6 +197,7 @@ _output.html_
 Marko provides a shorthand for declaring classes and ids on an element:
 
 _source.marko_
+
 ```marko
 <div.my-class/>
 <span#my-id/>
@@ -195,6 +207,7 @@ _source.marko_
 Yields this HTML:
 
 _output.html_
+
 ```html
 <div class="my-class"></div>
 <span id="my-id"></span>
@@ -203,7 +216,7 @@ _output.html_
 
 ## Directives
 
-Directives are denoted by parenthesis and take an argument instead of a value.  Many directives may be used as both tags and attributes.
+Directives are denoted by parenthesis and take an argument instead of a value. Many directives may be used as both tags and attributes.
 
 ```marko
 <if(true)>
@@ -226,11 +239,12 @@ Most directives support JavaScript expressions, and some even support multiple a
 ```
 
 Others allow a custom syntax:
+
 ```marko
 <for(item in items)/>
 ```
 
-Directives are used by many of our [Core Tags](./core-tags.md) for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features.  You can also use them in your own [Custom Tags](./custom-tags.md).
+Directives are used by many of our [Core Tags](./core-tags.md) for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features. You can also use them in your own [Custom Tags](./custom-tags.md).
 
 ## Inline JavaScript
 
@@ -249,7 +263,7 @@ $ var name = input.name;
 </div>
 ```
 
-A statement may continue onto subsequent lines if new lines are bounded by `{}`, `[]`, `()`, ``` `` ```, or `/**/`:
+A statement may continue onto subsequent lines if new lines are bounded by `{}`, `[]`, `()`, ` `` `, or `/**/`:
 
 ```marko
 $ var person = {
@@ -270,6 +284,7 @@ $ {
 ```
 
 ### Static JavaScript
+
 > **Static:** The JavaScript code that follows `static` will run once when the template is loaded and be shared by all calls to render. It must be declared at the top level and does not have access to values passed in at render.
 
 Inline JavaScript will run each time your template is rendered, if you only want to initialize some values once, use the `static` keyword:

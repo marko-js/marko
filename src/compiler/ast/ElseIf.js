@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ElseIf extends Node {
     constructor(def) {
-        super('ElseIf');
+        super("ElseIf");
         this.test = def.test;
         this.body = this.makeContainer(def.body);
         this.else = def.else;
@@ -13,7 +13,7 @@ class ElseIf extends Node {
 
     generateCode(codegen) {
         if (!this.matched) {
-            codegen.addError('Unmatched else statement');
+            codegen.addError("Unmatched else statement");
             return;
         }
 

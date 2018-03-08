@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function() {
     var template1 = marko`
         test-foo
         test-foo`;
@@ -7,5 +7,9 @@ module.exports = function () {
         test-bar
         test-bar`;
 
-    return template1.renderSync().toString() + '\n' + template2.renderSync().toString();
+    return (
+        template1.renderSync().toString() +
+        "\n" +
+        template2.renderSync().toString()
+    );
 };

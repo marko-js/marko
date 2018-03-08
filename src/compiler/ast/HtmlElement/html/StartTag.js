@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('../../Node');
+var Node = require("../../Node");
 
 class StartTag extends Node {
     constructor(def) {
-        super('StartTag');
+        super("StartTag");
 
         this.tagName = def.tagName;
         this.attributes = def.attributes;
@@ -22,32 +22,32 @@ class StartTag extends Node {
         var dynamicAttributes = this.dynamicAttributes;
         var context = codegen.context;
 
-        var nodes = [
-            builder.htmlLiteral('<'),
-            builder.html(tagName),
-        ];
+        var nodes = [builder.htmlLiteral("<"), builder.html(tagName)];
 
         var attributes = this.attributes;
 
         if (attributes) {
             var hasSpread = attributes.find(attr => attr.spread);
             if (!hasSpread) {
-                for (let i=0; i<attributes.length; i++) {
+                for (let i = 0; i < attributes.length; i++) {
                     let attr = attributes[i];
                     nodes.push(codegen.generateCode(attr));
                 }
             } else {
                 let explicitAttrs = null;
                 let attrsExpression = null;
-                let addAttrs = (expr) => {
+                let addAttrs = expr => {
                     if (!attrsExpression) {
                         attrsExpression = expr;
                     } else {
-                        attrsExpression = builder.functionCall(context.helper('merge'), [expr, attrsExpression]);
+                        attrsExpression = builder.functionCall(
+                            context.helper("merge"),
+                            [expr, attrsExpression]
+                        );
                     }
                 };
 
-                for (let i=0; i<attributes.length; i++) {
+                for (let i = 0; i < attributes.length; i++) {
                     let attr = attributes[i];
                     if (attr.spread) {
                         if (explicitAttrs) {
@@ -65,7 +65,10 @@ class StartTag extends Node {
                     addAttrs(builder.objectExpression(explicitAttrs));
                 }
 
-                let attrsFunctionCall = builder.functionCall(context.helper('attrs'), [attrsExpression]);
+                let attrsFunctionCall = builder.functionCall(
+                    context.helper("attrs"),
+                    [attrsExpression]
+                );
                 nodes.push(builder.html(attrsFunctionCall));
             }
         }
@@ -73,15 +76,18 @@ class StartTag extends Node {
         // deprecated
         if (dynamicAttributes) {
             dynamicAttributes.forEach(function(attrsExpression) {
-                let attrsFunctionCall = builder.functionCall(context.helper('attrs'), [attrsExpression]);
+                let attrsFunctionCall = builder.functionCall(
+                    context.helper("attrs"),
+                    [attrsExpression]
+                );
                 nodes.push(builder.html(attrsFunctionCall));
             });
         }
 
         if (selfClosed) {
-            nodes.push(builder.htmlLiteral('/>'));
+            nodes.push(builder.htmlLiteral("/>"));
         } else {
-            nodes.push(builder.htmlLiteral('>'));
+            nodes.push(builder.htmlLiteral(">"));
         }
 
         return nodes;

@@ -1,22 +1,23 @@
-'use strict';
+"use strict";
 /* jshint newcap:false */
 
-var complain = 'MARKO_DEBUG' && require('complain');
+var complain = "MARKO_DEBUG" && require("complain");
 
-var domInsert = require('../runtime/dom-insert');
-var defaultCreateOut = require('../runtime/createOut');
-var getComponentsContext = require('./ComponentsContext').___getComponentsContext;
-var componentsUtil = require('./util');
+var domInsert = require("../runtime/dom-insert");
+var defaultCreateOut = require("../runtime/createOut");
+var getComponentsContext = require("./ComponentsContext")
+    .___getComponentsContext;
+var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
-var EventEmitter = require('events-light');
-var RenderResult = require('../runtime/RenderResult');
-var SubscriptionTracker = require('listener-tracker');
-var inherit = require('raptor-util/inherit');
-var updateManager = require('./update-manager');
-var morphdom = require('../morphdom');
-var eventDelegation = require('./event-delegation');
+var EventEmitter = require("events-light");
+var RenderResult = require("../runtime/RenderResult");
+var SubscriptionTracker = require("listener-tracker");
+var inherit = require("raptor-util/inherit");
+var updateManager = require("./update-manager");
+var morphdom = require("../morphdom");
+var eventDelegation = require("./event-delegation");
 
 var slice = Array.prototype.slice;
 
@@ -32,7 +33,12 @@ function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
 }
 
-function handleCustomEventWithMethodListener(component, targetMethodName, args, extraArgs) {
+function handleCustomEventWithMethodListener(
+    component,
+    targetMethodName,
+    args,
+    extraArgs
+) {
     // Remove the "eventType" argument
     args.push(component);
 
@@ -40,22 +46,21 @@ function handleCustomEventWithMethodListener(component, targetMethodName, args, 
         args = extraArgs.concat(args);
     }
 
-
     var targetComponent = componentLookup[component.___scope];
     var targetMethod = targetComponent[targetMethodName];
     if (!targetMethod) {
-        throw Error('Method not found: ' + targetMethodName);
+        throw Error("Method not found: " + targetMethodName);
     }
 
     targetMethod.apply(targetComponent, args);
 }
 
 function resolveKeyHelper(key, index) {
-    return index ? key + '_' + index : key;
+    return index ? key + "_" + index : key;
 }
 
 function resolveComponentIdHelper(component, key, index) {
-    return component.id + '-' + resolveKeyHelper(key, index);
+    return component.id + "-" + resolveKeyHelper(key, index);
 }
 
 /**
@@ -71,11 +76,11 @@ function processUpdateHandlers(component, stateChanges, oldState) {
 
     for (var propName in stateChanges) {
         if (stateChanges.hasOwnProperty(propName)) {
-            var handlerMethodName = 'update_' + propName;
+            var handlerMethodName = "update_" + propName;
 
             handlerMethod = component[handlerMethodName];
             if (handlerMethod) {
-                (handlers || (handlers=[])).push([propName, handlerMethod]);
+                (handlers || (handlers = [])).push([propName, handlerMethod]);
             } else {
                 // This state change does not have a state handler so return false
                 // to force a rerender
@@ -100,7 +105,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
             handlerMethod.call(component, newValue, oldValue);
         });
 
-        emitLifecycleEvent(component, 'update');
+        emitLifecycleEvent(component, "update");
 
         component.___reset();
     }
@@ -121,7 +126,7 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
             return true;
         }
 
-        for (var i=0; i<len; i++) {
+        for (var i = 0; i < len; i++) {
             var key = oldKeys[i];
             if (oldInput[key] !== newInput[key]) {
                 return true;
@@ -180,11 +185,13 @@ Component.prototype = componentProto = {
             throw TypeError();
         }
 
-        var subscriptions = this.___subscriptions || (this.___subscriptions = new SubscriptionTracker());
+        var subscriptions =
+            this.___subscriptions ||
+            (this.___subscriptions = new SubscriptionTracker());
 
-        var subscribeToOptions = target.___isComponent ?
-            COMPONENT_SUBSCRIBE_TO_OPTIONS :
-            NON_COMPONENT_SUBSCRIBE_TO_OPTIONS;
+        var subscribeToOptions = target.___isComponent
+            ? COMPONENT_SUBSCRIBE_TO_OPTIONS
+            : NON_COMPONENT_SUBSCRIBE_TO_OPTIONS;
 
         return subscriptions.subscribeTo(target, subscribeToOptions);
     },
@@ -199,7 +206,12 @@ Component.prototype = componentProto = {
             var extraArgs = target[2];
             var args = slice.call(arguments, 1);
 
-            handleCustomEventWithMethodListener(this, targetMethodName, args, extraArgs);
+            handleCustomEventWithMethodListener(
+                this,
+                targetMethodName,
+                args,
+                extraArgs
+            );
 
             if (isOnce) {
                 delete customEvents[eventType];
@@ -210,10 +222,10 @@ Component.prototype = componentProto = {
             return emit.apply(this, arguments);
         }
     },
-    getElId: function (key, index) {
+    getElId: function(key, index) {
         return resolveComponentIdHelper(this, key, index);
     },
-    getEl: function (key, index) {
+    getEl: function(key, index) {
         if (key) {
             return this.___keyedElements[resolveKeyHelper(key, index)];
         } else {
@@ -221,12 +233,12 @@ Component.prototype = componentProto = {
         }
     },
     getEls: function(key) {
-        key = key + '[]';
+        key = key + "[]";
 
         var els = [];
         var i = 0;
         var el;
-        while((el = this.getEl(key, i))) {
+        while ((el = this.getEl(key, i))) {
             els.push(el);
             i++;
         }
@@ -236,12 +248,15 @@ Component.prototype = componentProto = {
         return componentLookup[resolveComponentIdHelper(this, key, index)];
     },
     getComponents: function(key) {
-        key = key + '[]';
+        key = key + "[]";
 
         var components = [];
         var i = 0;
         var component;
-        while((component = componentLookup[resolveComponentIdHelper(this, key, i)])) {
+        while (
+            (component =
+                componentLookup[resolveComponentIdHelper(this, key, i)])
+        ) {
             components.push(component);
             i++;
         }
@@ -260,7 +275,7 @@ Component.prototype = componentProto = {
             destroyNodeRecursive(node);
 
             if (eventDelegation.___handleNodeDetach(node) !== false) {
-                 node.parentNode.removeChild(node);
+                node.parentNode.removeChild(node);
             }
         });
 
@@ -272,7 +287,7 @@ Component.prototype = componentProto = {
             return;
         }
 
-        emitLifecycleEvent(this, 'destroy');
+        emitLifecycleEvent(this, "destroy");
         this.___destroyed = true;
 
         this.___startNode.___markoComponent = undefined;
@@ -318,7 +333,7 @@ Component.prototype = componentProto = {
     setState: function(name, value) {
         var state = this.___state;
 
-        if (typeof name == 'object') {
+        if (typeof name == "object") {
             // Merge in the new state with the old state
             var newState = name;
             for (var k in newState) {
@@ -338,7 +353,12 @@ Component.prototype = componentProto = {
             value = state[name];
         }
 
-        state.___set(name, value, true /* ensure:true */, true /* forceDirty:true */);
+        state.___set(
+            name,
+            value,
+            true /* ensure:true */,
+            true /* forceDirty:true */
+        );
     },
 
     replaceState: function(newState) {
@@ -407,8 +427,19 @@ Component.prototype = componentProto = {
         var input = this.___input;
         var state = this.___state;
 
-        if (this.___dirty === false && state !== null && state.___dirty === true) {
-            if (processUpdateHandlers(this, state.___changes, state.___old, state)) {
+        if (
+            this.___dirty === false &&
+            state !== null &&
+            state.___dirty === true
+        ) {
+            if (
+                processUpdateHandlers(
+                    this,
+                    state.___changes,
+                    state.___old,
+                    state
+                )
+            ) {
                 state.___dirty = false;
             }
         }
@@ -425,9 +456,11 @@ Component.prototype = componentProto = {
         this.___reset();
     },
 
-
     get ___isDirty() {
-        return this.___dirty === true || (this.___state !== null && this.___state.___dirty === true);
+        return (
+            this.___dirty === true ||
+            (this.___state !== null && this.___state.___dirty === true)
+        );
     },
 
     ___reset: function() {
@@ -486,7 +519,8 @@ Component.prototype = componentProto = {
                 endNodeNextSibling,
                 targetNode,
                 doc,
-                componentsContext);
+                componentsContext
+            );
 
             result.afterInsert(doc);
         });
@@ -504,7 +538,7 @@ Component.prototype = componentProto = {
         var currentNode = this.___startNode;
         var endNode = this.___endNode;
 
-        for(;;) {
+        for (;;) {
             var nextSibling = currentNode.nextSibling;
             callback(currentNode);
             if (currentNode == endNode) {
@@ -528,7 +562,7 @@ Component.prototype = componentProto = {
     },
 
     ___setCustomEvents: function(customEvents, scope) {
-        var finalCustomEvents = this.___customEvents = {};
+        var finalCustomEvents = (this.___customEvents = {});
         this.___scope = scope;
 
         customEvents.forEach(function(customEvent) {
@@ -537,14 +571,20 @@ Component.prototype = componentProto = {
             var isOnce = customEvent[2];
             var extraArgs = customEvent[3];
 
-            finalCustomEvents[eventType] = [targetMethodName, isOnce, extraArgs];
+            finalCustomEvents[eventType] = [
+                targetMethodName,
+                isOnce,
+                extraArgs
+            ];
         });
     },
 
     get el() {
         // eslint-disable-next-line no-constant-condition
-        if ('MARKO_DEBUG') {
-            complain('The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.');
+        if ("MARKO_DEBUG") {
+            complain(
+                'The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.'
+            );
         }
         var el = this.___startNode;
         while (el) {
@@ -556,11 +596,13 @@ Component.prototype = componentProto = {
 
     get els() {
         // eslint-disable-next-line no-constant-condition
-        if ('MARKO_DEBUG') {
-            complain('The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.');
+        if ("MARKO_DEBUG") {
+            complain(
+                'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.'
+            );
         }
-        return getNodes(this).filter(function(el) { 
-            return el.nodeType === ELEMENT_NODE; 
+        return getNodes(this).filter(function(el) {
+            return el.nodeType === ELEMENT_NODE;
         });
     }
 };
@@ -583,7 +625,8 @@ domInsert(
     },
     function afterInsert(component) {
         return component;
-    });
+    }
+);
 
 inherit(Component, EventEmitter);
 

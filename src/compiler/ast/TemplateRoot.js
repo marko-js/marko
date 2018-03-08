@@ -1,5 +1,5 @@
-'use strict';
-var Node = require('./Node');
+"use strict";
+var Node = require("./Node");
 
 function createVarsArray(vars) {
     return Object.keys(vars).map(function(varName) {
@@ -14,12 +14,14 @@ function createVarsArray(vars) {
 function _buildVersionComment(builder, context) {
     const version = context.compilerVersion;
     const compilerType = context.compilerType;
-    return builder.comment(`Compiled using ${compilerType}@${version} - DO NOT EDIT`);
+    return builder.comment(
+        `Compiled using ${compilerType}@${version} - DO NOT EDIT`
+    );
 }
 
 class TemplateRoot extends Node {
     constructor(def) {
-        super('TemplateRoot');
+        super("TemplateRoot");
         this.body = this.makeContainer(def.body);
         this.extraRenderParams = null;
         this.generateAssignRenderCode = null;
@@ -48,7 +50,7 @@ class TemplateRoot extends Node {
         var builder = codegen.builder;
 
         let renderStatements = [
-            builder.var('data', builder.identifier('input'))
+            builder.var("data", builder.identifier("input"))
         ];
         var vars = createVarsArray(context.getVars());
         if (vars.length) {
@@ -57,37 +59,44 @@ class TemplateRoot extends Node {
 
         renderStatements = renderStatements.concat(this.body);
 
-        var renderParams = [builder.identifier('input'), builder.identifierOut()];
+        var renderParams = [
+            builder.identifier("input"),
+            builder.identifierOut()
+        ];
         if (this.extraRenderParams) {
             renderParams = renderParams.concat(this.extraRenderParams);
         }
 
         if (context.inline) {
-            var createInlineMarkoTemplateVar = context.helper('createInlineTemplate');
+            var createInlineMarkoTemplateVar = context.helper(
+                "createInlineTemplate"
+            );
 
-            return builder.functionCall(
-                createInlineMarkoTemplateVar,
-                [
-                    builder.identifier('__filename'),
-                    builder.functionDeclaration(
-                        null,
-                        renderParams,
-                        renderStatements)
-                ]);
+            return builder.functionCall(createInlineMarkoTemplateVar, [
+                builder.identifier("__filename"),
+                builder.functionDeclaration(
+                    null,
+                    renderParams,
+                    renderStatements
+                )
+            ]);
         } else {
-            var createArgs = context.useMeta ?
-                [ builder.identifier('__filename') ] :
-                [];
+            var createArgs = context.useMeta
+                ? [builder.identifier("__filename")]
+                : [];
 
-            let templateDeclaration = builder.variableDeclarator('marko_template',
+            let templateDeclaration = builder.variableDeclarator(
+                "marko_template",
                 builder.assignment(
                     builder.moduleExports(),
                     builder.functionCall(
                         builder.memberExpression(
                             builder.require(
-                                builder.literal(context.getModuleRuntimeTarget())
+                                builder.literal(
+                                    context.getModuleRuntimeTarget()
+                                )
                             ),
-                            builder.identifier('t')
+                            builder.identifier("t")
                         ),
                         createArgs
                     )
@@ -100,7 +109,7 @@ class TemplateRoot extends Node {
                 body.push(_buildVersionComment(builder, context));
             }
 
-            body.push(builder.literal('use strict'));
+            body.push(builder.literal("use strict"));
 
             let staticNodes = context.getStaticNodes([templateDeclaration]);
             if (staticNodes.length) {
@@ -108,21 +117,21 @@ class TemplateRoot extends Node {
             }
 
             let renderFunction = builder.functionDeclaration(
-                'render',
+                "render",
                 renderParams,
-                renderStatements);
+                renderStatements
+            );
 
-            body = body.concat([
-                renderFunction,
-            ]);
+            body = body.concat([renderFunction]);
 
             var assignRenderCode;
 
-            let templateVar = builder.identifier('marko_template');
-            let renderFunctionVar = builder.identifier('render');
+            let templateVar = builder.identifier("marko_template");
+            let renderFunctionVar = builder.identifier("render");
             let templateRendererMember = builder.memberExpression(
-                builder.identifier('marko_template'),
-                builder.identifier('_'));
+                builder.identifier("marko_template"),
+                builder.identifier("_")
+            );
 
             if (this.generateAssignRenderCode) {
                 var eventArgs = {
@@ -134,10 +143,10 @@ class TemplateRoot extends Node {
 
                 assignRenderCode = this.generateAssignRenderCode(eventArgs);
             } else {
-
                 assignRenderCode = builder.assignment(
                     templateRendererMember,
-                    renderFunctionVar);
+                    renderFunctionVar
+                );
             }
 
             if (assignRenderCode) {
@@ -145,9 +154,15 @@ class TemplateRoot extends Node {
             }
 
             if (context.useMeta && context.meta) {
-                body.push(builder.assignment(
-                    builder.memberExpression(builder.identifier('marko_template'), builder.identifier('meta')),
-                    builder.literal(context.meta)));
+                body.push(
+                    builder.assignment(
+                        builder.memberExpression(
+                            builder.identifier("marko_template"),
+                            builder.identifier("meta")
+                        ),
+                        builder.literal(context.meta)
+                    )
+                );
             }
 
             return builder.program(body);

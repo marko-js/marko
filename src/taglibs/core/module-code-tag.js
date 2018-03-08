@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-let resolveFrom = require('resolve-from');
+let resolveFrom = require("resolve-from");
 
 module.exports = function codeGenerator(elNode, codegen) {
-    let func = eval('(' + elNode.argument + ')');
+    let func = eval("(" + elNode.argument + ")");
     let dirname = codegen.context.dirname;
 
     function req(target) {

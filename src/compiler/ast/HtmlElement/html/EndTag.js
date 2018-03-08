@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('../../Node');
+var Node = require("../../Node");
 
 class EndTag extends Node {
     constructor(def) {
-        super('EndTag');
+        super("EndTag");
         this.tagName = def.tagName;
     }
 
@@ -13,9 +13,9 @@ class EndTag extends Node {
         var builder = codegen.builder;
 
         return [
-            builder.htmlLiteral('</'),
+            builder.htmlLiteral("</"),
             builder.html(tagName),
-            builder.htmlLiteral('>')
+            builder.htmlLiteral(">")
         ];
     }
 }

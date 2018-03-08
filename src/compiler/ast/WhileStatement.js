@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class WhileStatement extends Node {
     constructor(def) {
-        super('WhileStatement');
+        super("WhileStatement");
         this.test = def.test;
         this.body = this.makeContainer(def.body);
     }
@@ -19,13 +19,13 @@ class WhileStatement extends Node {
         var test = this.test;
         var body = this.body;
 
-        writer.write('while (');
+        writer.write("while (");
         writer.write(test);
-        writer.write(') ');
+        writer.write(") ");
 
         writer.write(body);
 
-        writer.write('\n');
+        writer.write("\n");
     }
 
     walk(walker) {

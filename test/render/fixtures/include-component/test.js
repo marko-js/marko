@@ -1,4 +1,4 @@
-var myComponent = require('./components/my-component');
+var myComponent = require("./components/my-component");
 
 exports.templateData = {
     component: myComponent

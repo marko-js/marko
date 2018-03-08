@@ -1,19 +1,19 @@
-module.exports = require('marko/legacy-components').defineComponent({
-    template: require('./template.marko'),
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require("./template.marko"),
 
-    getWidgetConfig: function (input) {
+    getWidgetConfig: function(input) {
         return {
             string: input.name,
             number: 12,
             boolean: true,
             complex: {
                 a: '<"hello">',
-                b: 'test'
+                b: "test"
             }
         };
     },
 
-    init: function (config) {
+    init: function(config) {
         this.config = config;
     }
 });

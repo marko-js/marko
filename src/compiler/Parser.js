@@ -1,13 +1,13 @@
-'use strict';
-var ok = require('assert').ok;
-var replacePlaceholderEscapeFuncs = require('./util/replacePlaceholderEscapeFuncs');
-var extend = require('raptor-util/extend');
+"use strict";
+var ok = require("assert").ok;
+var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
+var extend = require("raptor-util/extend");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
-    'preserve-whitespace': function(attr, context) {
+    "preserve-whitespace": function(attr, context) {
         context.setPreserveWhitespace(true);
     },
-    'preserve-comments': function(attr, context) {
+    "preserve-comments": function(attr, context) {
         context.setPreserveComments(true);
     }
 };
@@ -20,11 +20,11 @@ function isIEConditionalComment(comment) {
 
 function mergeShorthandClassNames(el, shorthandClassNames, context) {
     var builder = context.builder;
-    let classNames = shorthandClassNames.map((className) => {
+    let classNames = shorthandClassNames.map(className => {
         return builder.parseExpression(className.value);
     });
 
-    var classAttr = el.getAttributeValue('class');
+    var classAttr = el.getAttributeValue("class");
     if (classAttr) {
         classNames.push(classAttr);
     }
@@ -33,10 +33,14 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
 
     var finalClassNames = [];
 
-    for (var i=0; i<classNames.length; i++) {
+    for (var i = 0; i < classNames.length; i++) {
         let className = classNames[i];
-        if (prevClassName && className.type === 'Literal' && prevClassName.type === 'Literal') {
-            prevClassName.value += ' ' + className.value;
+        if (
+            prevClassName &&
+            className.type === "Literal" &&
+            prevClassName.type === "Literal"
+        ) {
+            prevClassName.value += " " + className.value;
         } else {
             finalClassNames.push(className);
             prevClassName = className;
@@ -44,47 +48,48 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
     }
 
     if (finalClassNames.length === 1) {
-        el.setAttributeValue('class', finalClassNames[0]);
+        el.setAttributeValue("class", finalClassNames[0]);
     } else {
-
         el.setAttributeValue(
-            'class',
-            builder.functionCall(
-                context.helper('classList'),
-                [
-                    builder.literal(finalClassNames)
-                ]));
+            "class",
+            builder.functionCall(context.helper("classList"), [
+                builder.literal(finalClassNames)
+            ])
+        );
     }
 }
 
 function getParserStateForTag(parser, el, tagDef) {
     var attributes = el.attributes;
     if (attributes) {
-        for (var i=0; i<attributes.length; i++) {
+        for (var i = 0; i < attributes.length; i++) {
             var attr = attributes[i];
             var attrName = attr.name;
-            if (attrName === 'marko-body') {
+            if (attrName === "marko-body") {
                 var parseMode;
 
                 if (attr.literalValue) {
                     parseMode = attr.literalValue;
                 }
 
-                if (parseMode === 'static-text' ||
-                    parseMode === 'parsed-text' ||
-                    parseMode === 'html') {
+                if (
+                    parseMode === "static-text" ||
+                    parseMode === "parsed-text" ||
+                    parseMode === "html"
+                ) {
                     return parseMode;
                 } else {
                     parser.context.addError({
-                        message: 'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
-                        code: 'ERR_INVALID_ATTR'
+                        message:
+                            'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
+                        code: "ERR_INVALID_ATTR"
                     });
                     return;
                 }
-            } else if (attrName === 'template-helpers') {
-                return 'static-text';
-            } else if (attrName === 'marko-init') {
-                return 'static-text';
+            } else if (attrName === "template-helpers") {
+                return "static-text";
+            } else if (attrName === "marko-init") {
+                return "static-text";
             }
         }
     }
@@ -122,7 +127,7 @@ class Parser {
     }
 
     parse(src, context) {
-        ok(typeof src === 'string', '"src" should be a string');
+        ok(typeof src === "string", '"src" should be a string');
         ok(context, '"context" is required');
 
         this._reset();
@@ -144,12 +149,16 @@ class Parser {
     handleCharacters(text, parseMode) {
         var builder = this.context.builder;
 
-        var escape = parseMode !== 'html';
+        var escape = parseMode !== "html";
         // NOTE: If parseMode is 'static-text' or 'parsed-text' then that means that special
         //       HTML characters may not have been escaped on the way in so we need to escape
         //       them on the way out
 
-        if (this.prevTextNode && this.prevTextNode.isLiteral() && this.prevTextNode.escape === escape) {
+        if (
+            this.prevTextNode &&
+            this.prevTextNode.isLiteral() &&
+            this.prevTextNode.escape === escape
+        ) {
             this.prevTextNode.argument.value += text;
         } else {
             this.prevTextNode = builder.text(builder.literal(text), escape);
@@ -175,17 +184,23 @@ class Parser {
         if (!raw) {
             if (tagNameExpression) {
                 tagName = builder.parseExpression(tagNameExpression);
-            } else if (tagName === 'marko-compiler-options') {
+            } else if (tagName === "marko-compiler-options") {
                 this.parentNode.setTrimStartEnd(true);
 
-                attributes.forEach(function (attr) {
+                attributes.forEach(function(attr) {
                     let attrName = attr.name;
                     let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 
                     if (!handler) {
                         context.addError({
-                            code: 'ERR_INVALID_COMPILER_OPTION',
-                            message: 'Invalid Marko compiler option of "' + attrName + '". Allowed: ' + Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(', '),
+                            code: "ERR_INVALID_COMPILER_OPTION",
+                            message:
+                                'Invalid Marko compiler option of "' +
+                                attrName +
+                                '". Allowed: ' +
+                                Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(
+                                    ", "
+                                ),
                             pos: el.pos,
                             node: el
                         });
@@ -205,21 +220,24 @@ class Parser {
 
         var attributeParseErrors = [];
         // <div class="foo"> -> "div class=foo"
-        var tagString = parser.substring(el.pos, el.endPos)
-                              .replace(/^<|\/>$|>$/g, "").trim();
+        var tagString = parser
+            .substring(el.pos, el.endPos)
+            .replace(/^<|\/>$|>$/g, "")
+            .trim();
 
-        var shouldParsedAttributes = !tagDef || tagDef.parseAttributes !== false;
+        var shouldParsedAttributes =
+            !tagDef || tagDef.parseAttributes !== false;
 
         var parsedAttributes = [];
 
         if (shouldParsedAttributes) {
-            attributes.forEach((attr) => {
+            attributes.forEach(attr => {
                 var attrName = attr.name;
                 var attrRawValue = attr.value;
                 var attrSpread;
                 var attrValue;
 
-                if (attr.hasOwnProperty('literalValue')) {
+                if (attr.hasOwnProperty("literalValue")) {
                     attrValue = builder.literal(attr.literalValue);
                 } else if (/^\.\.\./.test(attrName)) {
                     attrRawValue = attrName;
@@ -232,27 +250,34 @@ class Parser {
                     attrValue = attrRawValue;
                 }
 
-                if (typeof attrValue === 'string') {
+                if (typeof attrValue === "string") {
                     let parsedExpression;
                     let valid = true;
                     try {
                         parsedExpression = builder.parseExpression(attrValue);
-                    } catch(e) {
+                    } catch (e) {
                         if (shouldParsedAttributes) {
                             valid = false;
-                            attributeParseErrors.push('Invalid JavaScript expression for attribute "' + attr.name + '": ' + e);
+                            attributeParseErrors.push(
+                                'Invalid JavaScript expression for attribute "' +
+                                    attr.name +
+                                    '": ' +
+                                    e
+                            );
                         } else {
                             // Attribute failed to parse. Skip it...
                             return;
                         }
-
                     }
 
                     if (valid) {
                         if (raw) {
                             attrValue = parsedExpression;
                         } else {
-                            attrValue = replacePlaceholderEscapeFuncs(parsedExpression, context);
+                            attrValue = replacePlaceholderEscapeFuncs(
+                                parsedExpression,
+                                context
+                            );
                         }
                     } else {
                         attrValue = null;
@@ -275,7 +300,12 @@ class Parser {
                 }
 
                 if (attrName) {
-                    if (attrName === 'for-key' || attrName === 'for-ref' || attrName === 'w-for' || attrName.endsWith(':key')) {
+                    if (
+                        attrName === "for-key" ||
+                        attrName === "for-ref" ||
+                        attrName === "w-for" ||
+                        attrName.endsWith(":key")
+                    ) {
                         context.data.hasLegacyForKey = true;
                     }
                 }
@@ -312,8 +342,7 @@ class Parser {
         }
 
         if (attributeParseErrors.length) {
-
-            attributeParseErrors.forEach((e) => {
+            attributeParseErrors.forEach(e => {
                 context.addError(node, e);
             });
         }
@@ -325,10 +354,12 @@ class Parser {
             }
 
             if (el.shorthandClassNames) {
-                node.rawShorthandClassNames = el.shorthandClassNames.map((className) => {
-                    let parsed = builder.parseExpression(className.value);
-                    return parsed.value;
-                });
+                node.rawShorthandClassNames = el.shorthandClassNames.map(
+                    className => {
+                        let parsed = builder.parseExpression(className.value);
+                        return parsed.value;
+                    }
+                );
             }
         } else {
             if (el.shorthandClassNames) {
@@ -336,10 +367,16 @@ class Parser {
             }
 
             if (el.shorthandId) {
-                if (node.hasAttribute('id')) {
-                    context.addError(node, 'A shorthand ID cannot be used in conjunction with the "id" attribute');
+                if (node.hasAttribute("id")) {
+                    context.addError(
+                        node,
+                        'A shorthand ID cannot be used in conjunction with the "id" attribute'
+                    );
                 } else {
-                    node.setAttributeValue('id', builder.parseExpression(el.shorthandId.value));
+                    node.setAttributeValue(
+                        "id",
+                        builder.parseExpression(el.shorthandId.value)
+                    );
                 }
             }
         }
@@ -354,7 +391,7 @@ class Parser {
 
     handleEndElement(elementName) {
         if (this.raw !== true) {
-            if (elementName === 'marko-compiler-options') {
+            if (elementName === "marko-compiler-options") {
                 return;
             }
         }
@@ -368,7 +405,8 @@ class Parser {
 
         var builder = this.context.builder;
 
-        var preserveComment = this.context.isPreserveComments() ||
+        var preserveComment =
+            this.context.isPreserveComments() ||
             isIEConditionalComment(comment);
 
         if (this.raw || preserveComment) {
@@ -422,7 +460,7 @@ class Parser {
     }
 
     get parentNode() {
-        var last = this.stack[this.stack.length-1];
+        var last = this.stack[this.stack.length - 1];
         return last.node;
     }
 

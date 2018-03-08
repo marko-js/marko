@@ -1,13 +1,13 @@
-module.exports = require('marko/legacy-components').defineComponent({
-    template: require.resolve('./template.marko'),
-    getInitialState: function (input) {
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require.resolve("./template.marko"),
+    getInitialState: function(input) {
         return {
-            heading: input.heading || '',
-            message: input.message || '',
+            heading: input.heading || "",
+            message: input.message || "",
             colors: input.colors || []
         };
     },
-    getTemplateData: function (state) {
+    getTemplateData: function(state) {
         return {
             heading: state.heading,
             message: state.message,

@@ -1,9 +1,9 @@
-var jsonFileReader = require('./json-file-reader');
-var types = require('./types');
-var cache = require('./cache');
-var loaders = require('./loaders');
+var jsonFileReader = require("./json-file-reader");
+var types = require("./types");
+var cache = require("./cache");
+var loaders = require("./loaders");
 
-var ok = require('assert').ok;
+var ok = require("assert").ok;
 
 function loadFromFile(filePath) {
     ok(filePath, '"filePath" is required');

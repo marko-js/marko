@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const Node = require('./Node');
+const Node = require("./Node");
 
 function _isMultilineComment(comment) {
-    return comment && comment.indexOf('\n') !== -1;
+    return comment && comment.indexOf("\n") !== -1;
 }
 
 class Comment extends Node {
     constructor(def) {
-        super('Comment');
+        super("Comment");
 
         const comment = def.comment;
 

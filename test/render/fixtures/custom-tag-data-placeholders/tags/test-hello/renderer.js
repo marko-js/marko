@@ -1,24 +1,23 @@
-exports.render = function (input, out) {
+exports.render = function(input, out) {
+    var text = "Hello " + input.name + "!";
 
-	var text = 'Hello ' + input.name + '!';
+    if (input.adult === true) {
+        text += " (adult)";
+    } else if (input.adult === false) {
+        text += " (child)";
+    }
 
-	if (input.adult === true) {
-		text += ' (adult)';
-	} else if (input.adult === false) {
-		text += ' (child)';
-	}
+    if (input.renderBody) {
+        text += " BODY: ";
+    }
 
-	if (input.renderBody) {
-		text += ' BODY: ';
-	}
+    if (out.write) {
+        out.write(text);
+    } else {
+        out.text(text);
+    }
 
-	if (out.write) {
-		out.write(text);
-	} else {
-		out.text(text);
-	}
-
-	if (input.renderBody) {
-		input.renderBody(out);
-	}
+    if (input.renderBody) {
+        input.renderBody(out);
+    }
 };

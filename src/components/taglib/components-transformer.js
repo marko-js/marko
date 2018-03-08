@@ -1,14 +1,13 @@
-'use strict';
-var getTransformHelper = require('./util/getTransformHelper');
-
+"use strict";
+var getTransformHelper = require("./util/getTransformHelper");
 
 function tagDefinitionHasOverridingKeyAttribute(el) {
-    if (!el.hasAttribute('key')) {
+    if (!el.hasAttribute("key")) {
         return false;
     }
 
     var tagDef = el.tagDef;
-    if (tagDef && tagDef.hasAttribute('key')) {
+    if (tagDef && tagDef.hasAttribute("key")) {
         return true;
     }
 
@@ -17,55 +16,62 @@ function tagDefinitionHasOverridingKeyAttribute(el) {
 module.exports = function transform(el, context) {
     var transformHelper = getTransformHelper(el, context);
 
-    if (el.type === 'TemplateRoot') {
+    if (el.type === "TemplateRoot") {
         transformHelper.handleRootNodes();
         return;
     }
 
-    if (el.hasAttribute('w-body')) {
+    if (el.hasAttribute("w-body")) {
         // This is a legacy code block and should be removed in Marko v5
-        context.deprecate('The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492');
+        context.deprecate(
+            'The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492'
+        );
         let builder = context.builder;
-        let bodyValue = el.getAttributeValue('w-body');
-        el.removeAttribute('w-body');
+        let bodyValue = el.getAttributeValue("w-body");
+        el.removeAttribute("w-body");
 
-        let includeNode = context.createNodeForEl('include');
+        let includeNode = context.createNodeForEl("include");
 
         if (!bodyValue) {
             bodyValue = builder.memberExpression(
-                builder.identifier('__component'),
-                builder.identifier('b'));
+                builder.identifier("__component"),
+                builder.identifier("b")
+            );
 
             includeNode.data.bodySlot = true;
         }
 
-        includeNode.addProp('_target', bodyValue);
+        includeNode.addProp("_target", bodyValue);
         el.appendChild(includeNode);
     }
 
-    if (el.tagName === 'widget-types') {
-        context.setFlag('hasWidgetTypes');
+    if (el.tagName === "widget-types") {
+        context.setFlag("hasWidgetTypes");
     }
 
-    if (el.hasAttribute('w-el-id')) {
-        transformHelper.addError('"w-el-id" attribute is no longer allowed. Use "w-id" instead.');
+    if (el.hasAttribute("w-el-id")) {
+        transformHelper.addError(
+            '"w-el-id" attribute is no longer allowed. Use "w-id" instead.'
+        );
         return;
     }
 
-    if (el.hasAttribute('w-bind')) {
+    if (el.hasAttribute("w-bind")) {
         transformHelper.handleLegacyBind();
     }
 
-    if (/* New preserve attributes */
-        el.hasAttribute('no-update') ||
-        el.hasAttribute('no-update-body') ||
-        el.hasAttribute('no-update-if') ||
-        el.hasAttribute('no-update-body-if') ||
+    if (
+        /* New preserve attributes */
+        el.hasAttribute("no-update") ||
+        el.hasAttribute("no-update-body") ||
+        el.hasAttribute("no-update-if") ||
+        el.hasAttribute("no-update-body-if") ||
         /* Old preserve attributes */
-        el.hasAttribute('w-preserve') ||
-        el.hasAttribute('w-preserve-body') ||
-        el.hasAttribute('w-preserve-if') ||
-        el.hasAttribute('w-preserve-body-if')) {
+        el.hasAttribute("w-preserve") ||
+        el.hasAttribute("w-preserve-body") ||
+        el.hasAttribute("w-preserve-if") ||
+        el.hasAttribute("w-preserve-body-if")
+    ) {
         transformHelper.handleComponentPreserve();
     }
 
@@ -73,16 +79,23 @@ module.exports = function transform(el, context) {
     transformHelper.handleScopedAttrs();
 
     if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
-        if (el.hasAttribute('w-id') || el.hasAttribute('ref') || el.hasAttribute('key')) {
+        if (
+            el.hasAttribute("w-id") ||
+            el.hasAttribute("ref") ||
+            el.hasAttribute("key")
+        ) {
             transformHelper.assignComponentId();
         }
 
-        if (context.options.autoKeyEnabled !== false && context.inline !== true) {
+        if (
+            context.options.autoKeyEnabled !== false &&
+            context.inline !== true
+        ) {
             transformHelper.assignComponentId();
         }
     }
 
-    if (el.hasAttribute('w-body')) {
+    if (el.hasAttribute("w-body")) {
         transformHelper.handleComponentBody();
     }
 

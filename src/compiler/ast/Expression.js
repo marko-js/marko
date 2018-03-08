@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var ok = require('assert').ok;
+var Node = require("./Node");
+var ok = require("assert").ok;
 
 class Expression extends Node {
     constructor(def) {
-        super('Expression');
+        super("Expression");
         this.value = def.value;
-        ok(this.value != null, 'Invalid expression');
+        ok(this.value != null, "Invalid expression");
     }
 
     generateCode() {

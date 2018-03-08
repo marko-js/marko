@@ -1,12 +1,12 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function () {
-    var defineComponent = require('marko/components/legacy').defineComponent;
-    expect(function () {
+module.exports = function() {
+    var defineComponent = require("marko/components/legacy").defineComponent;
+    expect(function() {
         defineComponent({
             // template: require.resolve('./template.marko'),
 
-            getTemplateData: function (state, input) {
+            getTemplateData: function(state, input) {
                 return {
                     name: input.name,
                     messageCount: input.messageCount

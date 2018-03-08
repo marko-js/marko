@@ -1,8 +1,7 @@
 module.exports = {
-
     onInput: function() {
         this.state = {
-            name: 'app-foo'
+            name: "app-foo"
         };
     },
 

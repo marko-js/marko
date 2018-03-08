@@ -1,7 +1,7 @@
 exports.templateData = {
-    userInfo: function (arg, done) {
+    userInfo: function(arg, done) {
         done(null, {
-            name: 'John'
+            name: "John"
         });
     }
 };

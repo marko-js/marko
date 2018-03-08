@@ -1,18 +1,21 @@
-'use strict';
+"use strict";
 module.exports = {
-    render: function (input, out) {
+    render: function(input, out) {
         var cacheKey = input.cacheKey;
         if (!cacheKey) {
-            throw new Error('cache-key is required for <cached-fragment>');
+            throw new Error("cache-key is required for <cached-fragment>");
         }
 
         var cacheManager = input.cacheManager;
 
-        var cache = cacheManager.getCache(input.cacheName || 'marko/cached-fragment');
+        var cache = cacheManager.getCache(
+            input.cacheName || "marko/cached-fragment"
+        );
 
         var asyncOut = out.beginAsync();
 
-        cache.get(cacheKey,
+        cache.get(
+            cacheKey,
             {
                 builder: function(callback) {
                     var nestedOut = out.createOut();
@@ -22,21 +25,22 @@ module.exports = {
                     }
 
                     nestedOut
-                        .on('error', callback)
-                        .on('finish', function(result) {
+                        .on("error", callback)
+                        .on("finish", function(result) {
                             callback(null, result.getOutput());
                         });
 
                     nestedOut.end();
                 }
-            }, function(err, result) {
+            },
+            function(err, result) {
                 if (err) {
                     return asyncOut.error(err);
                 }
 
                 if (result.___cloneNode) {
                     var curChild = result.___firstChild;
-                    while(curChild) {
+                    while (curChild) {
                         asyncOut.node(curChild.___cloneNode());
                         curChild = curChild.___nextSibling;
                     }
@@ -44,8 +48,7 @@ module.exports = {
                 } else {
                     asyncOut.end(result);
                 }
-
-
-            });
+            }
+        );
     }
 };

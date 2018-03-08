@@ -1,14 +1,13 @@
 module.exports = {
     onInput: function() {
         var parent = {
-            child: {
-            }
+            child: {}
         };
 
         parent.child.parent = parent;
 
         this.state = {
-            name: 'app-foo',
+            name: "app-foo",
             parent: parent
         };
     },

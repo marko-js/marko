@@ -1,3 +1,3 @@
-module.exports = require('marko/legacy-components').defineWidget({
+module.exports = require("marko/legacy-components").defineWidget({
     init: function() {}
 });

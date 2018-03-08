@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
-var Node = require('../Node');
-var Literal = require('../Literal');
+var ok = require("assert").ok;
+var Node = require("../Node");
+var Literal = require("../Literal");
 
-var generateHTMLCode = require('./html/generateCode');
-var generateVDOMCode = require('./vdom/generateCode');
-var vdomUtil = require('../../util/vdom');
+var generateHTMLCode = require("./html/generateCode");
+var generateVDOMCode = require("./vdom/generateCode");
+var vdomUtil = require("../../util/vdom");
 
 class Text extends Node {
     constructor(def) {
-        super('Text');
+        super("Text");
         this.argument = def.argument;
         this.escape = def.escape !== false;
         this.normalized = false;
@@ -18,7 +18,7 @@ class Text extends Node {
         this.isLast = false;
         this.preserveWhitespace = def.preserveWhitespace === true;
 
-        ok(this.argument, 'Invalid argument');
+        ok(this.argument, "Invalid argument");
     }
 
     generateHTMLCode(codegen) {
@@ -30,14 +30,18 @@ class Text extends Node {
     }
 
     isLiteral() {
-        return this.argument instanceof Node && this.argument.type === 'Literal';
+        return (
+            this.argument instanceof Node && this.argument.type === "Literal"
+        );
     }
 
     isWhitespace() {
         var argument = this.argument;
-        return (argument instanceof Literal) &&
-            (typeof argument.value === 'string') &&
-            (argument.value.trim() === '');
+        return (
+            argument instanceof Literal &&
+            typeof argument.value === "string" &&
+            argument.value.trim() === ""
+        );
     }
 
     toJSON() {

@@ -1,4 +1,4 @@
-module.exports = function (helpers) {
+module.exports = function(helpers) {
     var root = helpers.vdom.createDocumentFragment();
 
     var docFragmentA = helpers.vdom.createDocumentFragment();
@@ -11,8 +11,8 @@ module.exports = function (helpers) {
     var docFragmentBB = helpers.vdom.createDocumentFragment();
     docFragmentB.___appendChild(docFragmentBB);
 
-    docFragmentBB.___appendChild(helpers.vdom.createText('bb1'));
-    docFragmentBB.___appendChild(helpers.vdom.createText('bb2'));
+    docFragmentBB.___appendChild(helpers.vdom.createText("bb1"));
+    docFragmentBB.___appendChild(helpers.vdom.createText("bb2"));
 
     root.___appendChild(docFragmentA);
     root.___appendChild(docFragmentB);

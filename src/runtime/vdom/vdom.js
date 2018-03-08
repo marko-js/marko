@@ -1,24 +1,23 @@
-var VNode = require('./VNode');
-var VComment = require('./VComment');
-var VDocumentFragment = require('./VDocumentFragment');
-var VElement = require('./VElement');
-var VText = require('./VText');
-var VComponent = require('./VComponent');
+var VNode = require("./VNode");
+var VComment = require("./VComment");
+var VDocumentFragment = require("./VDocumentFragment");
+var VElement = require("./VElement");
+var VText = require("./VText");
+var VComponent = require("./VComponent");
 
-var defaultDocument = typeof document != 'undefined' && document;
+var defaultDocument = typeof document != "undefined" && document;
 var specialHtmlRegexp = /[&<]/;
-
 
 function virtualizeChildNodes(node, vdomParent) {
     var curChild = node.firstChild;
-    while(curChild) {
+    while (curChild) {
         vdomParent.___appendChild(virtualize(curChild));
         curChild = curChild.nextSibling;
     }
 }
 
 function virtualize(node) {
-    switch(node.nodeType) {
+    switch (node.nodeType) {
         case 1:
             return VElement.___virtualize(node, virtualizeChildNodes);
         case 3:
@@ -37,12 +36,12 @@ function virtualizeHTML(html, doc) {
         return new VText(html);
     }
 
-    var container = doc.createElement('body');
+    var container = doc.createElement("body");
     container.innerHTML = html;
     var vdomFragment = new VDocumentFragment();
 
     var curChild = container.firstChild;
-    while(curChild) {
+    while (curChild) {
         vdomFragment.___appendChild(virtualize(curChild));
         curChild = curChild.nextSibling;
     }
@@ -60,10 +59,10 @@ Node_prototype.t = function(value) {
     var type = typeof value;
     var vdomNode;
 
-    if (type !== 'string') {
+    if (type !== "string") {
         if (value == null) {
-            value = '';
-        } else if (type === 'object') {
+            value = "";
+        } else if (type === "object") {
             if (value.toHTML) {
                 vdomNode = virtualizeHTML(value.toHTML(), document);
             }

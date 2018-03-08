@@ -1,4 +1,4 @@
- function KeySequence() {
+function KeySequence() {
     this.___lookup = {};
 }
 
@@ -17,10 +17,8 @@ KeySequence.prototype = {
             currentIndex = 0;
             return key;
         } else {
-            return key + '_' + currentIndex;
+            return key + "_" + currentIndex;
         }
-
-
     }
 };
 

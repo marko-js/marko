@@ -1,4 +1,4 @@
-var createRendererFunc = require('../../renderer');
+var createRendererFunc = require("../../renderer");
 
 module.exports = function(componentProps) {
     var renderer = createRendererFunc(
@@ -6,11 +6,15 @@ module.exports = function(componentProps) {
             data.$renderBody(out, component, state);
         },
         componentProps,
-        null);
+        null
+    );
 
     return function bindComponent(renderBody, out) {
-        renderer({
-            $renderBody: renderBody
-        }, out);
+        renderer(
+            {
+                $renderBody: renderBody
+            },
+            out
+        );
     };
 };

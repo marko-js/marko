@@ -1,34 +1,36 @@
 function indentStr(level) {
-    var str = '';
-    for (var i=0; i<level; i++) {
-        str += '  ';
+    var str = "";
+    for (var i = 0; i < level; i++) {
+        str += "  ";
     }
 
     return str;
 }
 module.exports = function(node) {
-    var code = '';
+    var code = "";
 
     function codegenEl(node, level) {
         if (level === 0) {
-            code += 'createElement';
+            code += "createElement";
         } else {
-            code += '.e';
+            code += ".e";
         }
 
         var attrsMap = {};
 
         var attributes = node.attributes;
-        for (var i=0; i<attributes.length; i++) {
+        for (var i = 0; i < attributes.length; i++) {
             var attr = attributes[i];
             attrsMap[attr.name] = attr.value;
         }
 
-        code += `(${JSON.stringify(node.nodeName)}, ${JSON.stringify(attrsMap)}, ${node.childNodes.length})\n`;
+        code += `(${JSON.stringify(node.nodeName)}, ${JSON.stringify(
+            attrsMap
+        )}, ${node.childNodes.length})\n`;
         // codegenAttrs(node.attributes, level + 1);
 
         var curChild = node.firstChild;
-        while(curChild) {
+        while (curChild) {
             codegen(curChild, level + 1);
             curChild = curChild.nextSibling;
         }
@@ -50,7 +52,7 @@ module.exports = function(node) {
 
     codegen(node, 0);
 
-    return 'return ' + code + '\n';
+    return "return " + code + "\n";
 };
 
 module.exports.generateInitCode = function() {
@@ -58,6 +60,4 @@ module.exports.generateInitCode = function() {
     var MarkoVDOM = window.MarkoVDOM;
     var createElement = MarkoVDOM.createElement;
 `;
-
 };
-

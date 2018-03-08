@@ -1,14 +1,15 @@
-var getComponentsContext = require('../ComponentsContext').___getComponentsContext;
-var componentsUtil = require('../util');
+var getComponentsContext = require("../ComponentsContext")
+    .___getComponentsContext;
+var componentsUtil = require("../util");
 var componentLookup = componentsUtil.___componentLookup;
-var registry = require('../registry');
-var modernRenderer = require('../renderer');
+var registry = require("../registry");
+var modernRenderer = require("../renderer");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var handleBeginAsync = modernRenderer.___handleBeginAsync;
-var beginComponent = require('../beginComponent');
-var endComponent = require('../endComponent');
+var beginComponent = require("../beginComponent");
+var endComponent = require("../endComponent");
 
-var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
+var WIDGETS_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
 function createRendererFunc(templateRenderFunc, componentProps) {
     var typeName = componentProps.___type;
@@ -20,7 +21,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
             outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
-            out.on('beginAsync', handleBeginAsync);
+            out.on("beginAsync", handleBeginAsync);
         }
 
         var getInitialProps;
@@ -71,7 +72,13 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 if (key != null) {
                     key = key.toString();
                 }
-                id = id || resolveComponentKey(globalComponentsContext, key, componentDefFromArgs);
+                id =
+                    id ||
+                    resolveComponentKey(
+                        globalComponentsContext,
+                        key,
+                        componentDefFromArgs
+                    );
             } else if (parentComponentDef) {
                 id = parentComponentDef.___nextComponentId();
             } else {
@@ -81,7 +88,15 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         if (registry.___isServer && typeName) {
             if (renderingLogic) delete renderingLogic.onRender;
-            component = registry.___createComponent(renderingLogic || {}, id, input, out, typeName, customEvents, scope);
+            component = registry.___createComponent(
+                renderingLogic || {},
+                id,
+                input,
+                out,
+                typeName,
+                customEvents,
+                scope
+            );
         } else {
             if (!component) {
                 if (isRerender) {
@@ -153,7 +168,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         if (isExisting === true && !isHydrate && !componentBody) {
-            if (!component.___isDirty || !component.shouldUpdate(input, component.___state)) {
+            if (
+                !component.___isDirty ||
+                !component.shouldUpdate(input, component.___state)
+            ) {
                 if (customEvents) {
                     component.___setCustomEvents(customEvents, scope);
                 }
@@ -180,11 +198,16 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             componentState = component.___rawState || componentState;
         }
 
-        var templateInput = getTemplateData ?
-            getTemplateData(componentState, input, out) :
-            componentState || input || {};
+        var templateInput = getTemplateData
+            ? getTemplateData(componentState, input, out)
+            : componentState || input || {};
 
-        var componentDef = beginComponent(componentsContext, component, isSplit, parentComponentDef);
+        var componentDef = beginComponent(
+            componentsContext,
+            component,
+            isSplit,
+            parentComponentDef
+        );
 
         // This is a hack, but we have to swap out the component instance stored with this node
         var vComponentNode = out.___parent;
@@ -192,31 +215,44 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.___isLegacy = true;
-        componentDef.b = component.___legacyBody = componentBody || component.___legacyBody || '%FN';
+        componentDef.b = component.___legacyBody =
+            componentBody || component.___legacyBody || "%FN";
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;
         };
 
         componentDef.t = function(typeName) {
             if (typeName) {
-                vComponentNode.___component = this.___component = component = registry.___createComponent(typeName, component.id);
+                vComponentNode.___component = this.___component = component = registry.___createComponent(
+                    typeName,
+                    component.id
+                );
             }
         };
 
         if (component && isExisting) {
-            component.___emitLifecycleEvent('___legacyRender');
+            component.___emitLifecycleEvent("___legacyRender");
         }
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(templateInput, out, componentDef, componentDef, component);
+        templateRenderFunc(
+            templateInput,
+            out,
+            componentDef,
+            componentDef,
+            component
+        );
 
         if (customEvents && componentDef.___component) {
             if (registry.___isServer) {
                 componentDef.___customEvents = customEvents;
                 componentDef.___scope = scope;
             } else {
-                componentDef.___component.___setCustomEvents(customEvents, scope);
+                componentDef.___component.___setCustomEvents(
+                    customEvents,
+                    scope
+                );
             }
         }
 

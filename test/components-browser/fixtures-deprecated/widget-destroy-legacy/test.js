@@ -1,11 +1,11 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var widget = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var widget = helpers.mount(require.resolve("./index"), {});
 
-    expect(widget.getWidget('bar') == null).to.equal(false);
+    expect(widget.getWidget("bar") == null).to.equal(false);
 
-    widget.getWidget('bar').destroy();
+    widget.getWidget("bar").destroy();
 
-    expect(widget.getWidget('bar') == null).to.equal(true);
+    expect(widget.getWidget("bar") == null).to.equal(true);
 };

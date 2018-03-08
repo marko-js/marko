@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ThisExpression extends Node {
     constructor() {
-        super('ThisExpression');
+        super("ThisExpression");
     }
 
     generateCode() {
@@ -12,11 +12,11 @@ class ThisExpression extends Node {
     }
 
     writeCode(writer) {
-        writer.write('this');
+        writer.write("this");
     }
 
     toString() {
-        return 'this';
+        return "this";
     }
 }
 

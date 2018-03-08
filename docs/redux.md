@@ -12,11 +12,12 @@ npm install marko --save
 
 ## Usage
 
-The partial code snippet below shows how a Marko UI component can be connected 
+The partial code snippet below shows how a Marko UI component can be connected
 to a Redux store using the `store.subscribe()` method and the Marko `forceUpdate()`
 method:
 
 **counter.marko**
+
 ```javascript
 import store from './store';
 
@@ -41,25 +42,27 @@ class {
 ```
 
 **reducer.js**
+
 ```js
-module.exports = function (state, action) {
-    state = state || {
-        value: 0
-    };
-    
-    // Additional reducer logic here...
-    
-    return state;
+module.exports = function(state, action) {
+  state = state || {
+    value: 0
+  };
+
+  // Additional reducer logic here...
+
+  return state;
 };
 ```
 
-In `counter.marko`, the imported store module exports a Redux store created 
+In `counter.marko`, the imported store module exports a Redux store created
 using the following code:
 
 **store.js**
+
 ```javascript
-var redux = require('redux');
-var counter = require('./reducer');
+var redux = require("redux");
+var counter = require("./reducer");
 
 module.exports = redux.createStore(counter);
 ```

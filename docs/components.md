@@ -12,14 +12,13 @@ With Marko, the DOM output of a UI component is based on input properties and a 
 
 Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
 
-- __View__ - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
-- __Client-side behavior__ - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
-- __Styling__ - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
+* **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
+* **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
+* **Styling** - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
 
 ## Server-side rendering
 
 A UI component can be rendered on the server or in the browser, but in either case, the UI component instance will be mounted to a DOM node in the browser automatically. If a UI component tree is rendered on the server then Marko will automatically recreate the UI component tree in the browser with no extra code required. For more details, please see [Server-side rendering](/docs/server-side-rendering/).
-
 
 ## Single-file components
 
@@ -45,7 +44,7 @@ class {
 
 ### Styles
 
-Adding styles to your view is also made easy.  These styles won't be output in a `<style>` tag as inline styles usually are, but will result in the style being externalized so it isn't duplicated should a component be used more than once on the page.
+Adding styles to your view is also made easy. These styles won't be output in a `<style>` tag as inline styles usually are, but will result in the style being externalized so it isn't duplicated should a component be used more than once on the page.
 
 ```marko
 style {
@@ -61,6 +60,7 @@ style {
 ```
 
 If you use a css preprocessor, you can add the extension right on `style`:
+
 ```marko
 style.less {
     button.primary {
@@ -71,16 +71,15 @@ style.less {
 
 > **Note:** The code in the style section is processed in a context that is separate from the rest of the template so so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
 
-
 ## Multi-file components
 
-You might prefer to keep your component's class and style definitions in separate files from the view definition - the classical separation of HTML, CSS and JavaScript.  Marko makes this possible with a simple filename based convention.
+You might prefer to keep your component's class and style definitions in separate files from the view definition - the classical separation of HTML, CSS and JavaScript. Marko makes this possible with a simple filename based convention.
 
 > **ProTip:** If your motivation to move the component's class and styles out to a separate file is that the code is getting too large, consider splitting the component into smaller, more manageable components.
 
 ### Supporting files
 
-Marko automatically discovers supporting files in the same directory as a Marko view.  For example if you have a view named `counter.marko`, Marko will automatically look for `counter.component.js` and `counter.style.css`.
+Marko automatically discovers supporting files in the same directory as a Marko view. For example if you have a view named `counter.marko`, Marko will automatically look for `counter.component.js` and `counter.style.css`.
 
 ```
 counter.marko
@@ -88,7 +87,7 @@ counter.component.js
 counter.style.css
 ```
 
-Marko also handles views named `index.marko` specially, it will look for `component.js` and `style.css` in addition to `index.component.js` and `index.style.css`.  This allows easily grouping component files into a directory:
+Marko also handles views named `index.marko` specially, it will look for `component.js` and `style.css` in addition to `index.component.js` and `index.style.css`. This allows easily grouping component files into a directory:
 
 ```
 counter/
@@ -101,18 +100,19 @@ In your `component.js` file, export the component's class:
 
 ```js
 module.exports = class {
-    onCreate() {
-        this.state = {
-            count:0
-        };
-    }
-    increment() {
-        this.state.count++;
-    }
-}
+  onCreate() {
+    this.state = {
+      count: 0
+    };
+  }
+  increment() {
+    this.state.count++;
+  }
+};
 ```
 
 In your `index.marko` file, you can reference methods from the class using `on-*` attributes:
+
 ```marko
 <div>
   <h2>The current count is ${state.count}</h2>
@@ -121,14 +121,14 @@ In your `index.marko` file, you can reference methods from the class using `on-*
 ```
 
 And in your `style.css`, define the style:
+
 ```css
 button.primary {
-    background-color:#09c;
+  background-color: #09c;
 }
 ```
 
 > **ProTip:** In addition to looking for `[name].style.css`, Marko actually looks for `[name].style.*` so it will also pick up any css preprocessor you're using (less, stylus, scss, etc.).
-
 
 ### Components with plain objects
 
@@ -136,31 +136,31 @@ If you're targeting a browser that does not support classes, a plain object may 
 
 ```js
 module.exports = {
-    onCreate: function() {
-        this.state = {
-            count:0
-        };
-    },
-    increment: function() {
-        this.state.count++;
-    }
-}
+  onCreate: function() {
+    this.state = {
+      count: 0
+    };
+  },
+  increment: function() {
+    this.state.count++;
+  }
+};
 ```
 
 ## Split components
 
-Split components allow you to optimize for the case where a component is rendered on the server, but doesn't need to be re-rendered in the browser.  Because the component doesn't need to be rendered in the browser, the template does not need to be sent to the browser.  This can reduce your page weight by a few hundred bytes in some cases.
+Split components allow you to optimize for the case where a component is rendered on the server, but doesn't need to be re-rendered in the browser. Because the component doesn't need to be rendered in the browser, the template does not need to be sent to the browser. This can reduce your page weight by a few hundred bytes in some cases.
 
 > **Note:** If a split component is the child of a stateful component, the full rendering logic will still be sent down because the parent component may pass new input to the split component, requiring it to re-render.
 
 Additionally if _all_ components rendered on a page are split components, Marko's VDOM and rendering runtime is not necessary and therefore not sent to the browser, which can further reduce page weight by a few kilobytes.
 
-> **ProTip:** Don't over-optimize.  If your component really doesn't need re-rendering, go ahead and split, but don't forgo stateful re-rendering when it would make your code more maintainable.
+> **ProTip:** Don't over-optimize. If your component really doesn't need re-rendering, go ahead and split, but don't forgo stateful re-rendering when it would make your code more maintainable.
 
 ### Usage
 
 Marko discovers split components in a similar way to how it discovers an external component class:
-for example if you have a view named `button.marko`, it will automatically look for `button.component-browser.js`.  If your view is named `index.marko`, it will look for `component-browser.js` in addition to `index.component-browser.js`.
+for example if you have a view named `button.marko`, it will automatically look for `button.component-browser.js`. If your view is named `index.marko`, it will look for `component-browser.js` in addition to `index.component-browser.js`.
 
 ```
 counter/
@@ -168,10 +168,12 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render.  In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events).  This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render. In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events). This class can be exported from `component.js` or defined right in the template as with single-file components.
+
 ### Example
 
 _index.marko_
+
 ```marko
 class {
     onCreate() {
@@ -183,12 +185,13 @@ class {
 ```
 
 _component-browser.js_
+
 ```js
 module.exports = {
-    shout() {
-        alert('My favorite number is ' + this.number + '!');
-    }
-}
+  shout() {
+    alert("My favorite number is " + this.number + "!");
+  }
+};
 ```
 
 ## Event handling
@@ -226,10 +229,10 @@ class {
 
 Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
-1. `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
-    - For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
-2. `event` - The native DOM event
-3. `el` - The DOM element that the event listener was attached to
+1.  `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
+    * For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
+2.  `event` - The native DOM event
+3.  `el` - The DOM element that the event listener was attached to
 
 When using the `on-*` or `once-*` attributes to attach event listeners, Marko will use event delegation that is more efficient than using `el.addEventListener()` directly. Please see [Why is Marko Fast? » Event delegation](/docs/why-is-marko-fast/#event-delegation) for more details.
 
@@ -256,14 +259,14 @@ class {
 
 Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
-1. `...args` - Any extra bind arguments are _prepended_ to the arguments passed to the component's handler method
-2. `...eventArgs` - The arguments passed to `this.emit()` by the target UI component
-3. `component` - The component instance that the event listener was attached to
+1.  `...args` - Any extra bind arguments are _prepended_ to the arguments passed to the component's handler method
+2.  `...eventArgs` - The arguments passed to `this.emit()` by the target UI component
+3.  `component` - The component instance that the event listener was attached to
 
 The following code illustrates how the UI component for `<counter>` might emit the `change` event:
 
-
 _counter/index.marko_
+
 ```marko
 class {
   onCreate() {
@@ -287,12 +290,10 @@ class {
 </div>
 ```
 
-
-
 > **ProTip:** Unlike native DOM events, UI component custom events may be emitted with multiple arguments. For example:
 
 ```js
-this.emit('foo', 'bar', 'baz');
+this.emit("foo", "bar", "baz");
 ```
 
 ## Attributes
@@ -370,11 +371,12 @@ The `key` attribute can be used to pair HTML elements or UI components that are 
 
 Putting the `:scoped` modifier on an attribute will result in the attribute value being prefixed with a unique ID associated with the current UI component. Thus, `:scoped` attribute modifiers can be used to assign a globally unique attribute value from a value that only needs to be unique to the current UI component.
 
-Certain HTML attributes reference the `id` of other elements on the page.  For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value.  Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
+Certain HTML attributes reference the `id` of other elements on the page. For example, the [HTML `<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) `for` attribute takes an `id` as its value. Many `ARIA` attributes ([`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute), etc.) also take an `id` as their value.
 
 The `:scoped` modifier on an attribute allows you to reference another element as shown in the following examples:
 
 **`for:scoped`**
+
 ```marko
 <label for:scoped="name">Name</label>
 <input id:scoped="name" value="Frank"/>
@@ -477,7 +479,7 @@ suffix:
 
 ### `this.el`
 
-The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.  If there are multiple roots, this is the first.
+The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to. If there are multiple roots, this is the first.
 
 ### `this.els`
 
@@ -489,9 +491,9 @@ The String ID of the root [HTML element](https://developer.mozilla.org/en-US/doc
 
 ### `this.state`
 
-The current state for the component.  Changing `this.state` or any of its direct properties will result in the component being re-rendered.
+The current state for the component. Changing `this.state` or any of its direct properties will result in the component being re-rendered.
 
-Only properties that exist when `this.state` is first defined will be watched for changes.  If you don't need a property initially, you can set it to `null`.
+Only properties that exist when `this.state` is first defined will be watched for changes. If you don't need a property initially, you can set it to `null`.
 
 ```marko
 class {
@@ -520,7 +522,7 @@ this.state.numbers.push(num);
 
 // mark numbers as dirty, because a `push`
 // won't be automatically detected by Marko
-this.setStateDirty('numbers');
+this.setStateDirty("numbers");
 ```
 
 ### `this.input`
@@ -566,18 +568,18 @@ The `state` variable refers to UI component's state object and is the unwatched 
 
 ### `destroy([options])`
 
-| option  | type | default | description |
-| ------- | ---- | ------- | ----------- |
-| `removeNode` | `Boolean` | `true` | `false` will keep the component in the DOM while still unsubscribing all events from it |
-| `recursive` | `Boolean` | `true` | `false` will prevent child components from being destroyed |
+| option       | type      | default | description                                                                             |
+| ------------ | --------- | ------- | --------------------------------------------------------------------------------------- |
+| `removeNode` | `Boolean` | `true`  | `false` will keep the component in the DOM while still unsubscribing all events from it |
+| `recursive`  | `Boolean` | `true`  | `false` will prevent child components from being destroyed                              |
 
 Destroys the component by unsubscribing from all listeners made using the `subscribeTo` method and then detaching the component's root element from the DOM. All nested components (discovered by querying the DOM) are also destroyed.
 
 ```javascript
 component.destroy({
-	removeNode: true, //true by default
-	recursive: true //true by default
-})
+  removeNode: true, //true by default
+  recursive: true //true by default
+});
 ```
 
 ### `forceUpdate()`
@@ -589,48 +591,48 @@ Queue the component to re-render and skip all checks to see if it actually needs
 
 ### `getEl([key, index])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `key` | `String` | _optional_ the scoped identifier for the element |
-| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
-| return value | `HTMLElement` | the element matching the key or `this.el` if no key is provided |
+| params       | type          | description                                                                     |
+| ------------ | ------------- | ------------------------------------------------------------------------------- |
+| `key`        | `String`      | _optional_ the scoped identifier for the element                                |
+| `index`      | `Number`      | _optional_ the index of the component, if `key` references a repeated component |
+| return value | `HTMLElement` | the element matching the key or `this.el` if no key is provided                 |
 
 Returns a nested DOM element by prefixing the provided `key` with the component's ID. For Marko, nested DOM elements should be assigned an ID using the `key` custom attribute.
 
 ### `getEls(key)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `key` | `String` | the scoped identifier for the element |
+| params       | type                 | description                                           |
+| ------------ | -------------------- | ----------------------------------------------------- |
+| `key`        | `String`             | the scoped identifier for the element                 |
 | return value | `Array<HTMLElement>` | an array of _repeated_ DOM elements for the given key |
 
 Repeated DOM elements must have a value for the `key` attribute that ends with `[]` (e.g., `key="items[]"`)
 
 ### `getElId([key, index])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `key` | `String` | _optional_ the scoped identifier for the element |
-| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
-| return value | `String` | the element ID matching the key or `this.el.id` if `key` is undefined |
+| params       | type     | description                                                                     |
+| ------------ | -------- | ------------------------------------------------------------------------------- |
+| `key`        | `String` | _optional_ the scoped identifier for the element                                |
+| `index`      | `Number` | _optional_ the index of the component, if `key` references a repeated component |
+| return value | `String` | the element ID matching the key or `this.el.id` if `key` is undefined           |
 
 Similar to `getEl`, but only returns the String ID of the nested DOM element instead of the actual DOM element.
 
 ### `getComponent(key[, index])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `key` | `String` | the scoped identifier for the element |
-| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
+| params       | type        | description                                                                                                                                                                                                      |
+| ------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`        | `String`    | the scoped identifier for the element                                                                                                                                                                            |
+| `index`      | `Number`    | _optional_ the index of the component, if `key` references a repeated component                                                                                                                                  |
 | return value | `Component` | a reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (e.g. `key="items[]"`) then the component at the given index will be returned. |
 
 ### `getComponents(key, [, index])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `key` | `String` | the scoped identifier for the element |
-| `index` | `Number` | _optional_ the index of the component, if `key` references a repeated component |
-| return value | `Array<Component>` | an array of _repeated_ `Component` instances for the given key |
+| params       | type               | description                                                                     |
+| ------------ | ------------------ | ------------------------------------------------------------------------------- |
+| `key`        | `String`           | the scoped identifier for the element                                           |
+| `index`      | `Number`           | _optional_ the index of the component, if `key` references a repeated component |
+| return value | `Array<Component>` | an array of _repeated_ `Component` instances for the given key                  |
 
 Repeated components must have a value for the `key` attribute that ends with `[]` (e.g., `key="items[]"`)
 
@@ -643,8 +645,8 @@ Returns `true` if a component has been destroyed using
 
 ### `replaceState(newState)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
+| params     | type     | description                                      |
+| ---------- | -------- | ------------------------------------------------ |
 | `newState` | `Object` | a new state object to replace the previous state |
 
 Replaces the state with an entirely new state. Equivalent to `this.state = newState`.
@@ -653,46 +655,46 @@ Replaces the state with an entirely new state. Equivalent to `this.state = newSt
 
 ### `rerender([input])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
+| params  | type     | description                                        |
+| ------- | -------- | -------------------------------------------------- |
 | `input` | `Object` | _optional_ new input data to use when re-rendering |
 
 Rerenders the component using its `renderer` and either supplied `input` or internal `input` and `state`.
 
 ### `setState(name, value)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `name` | `String` | the name of the state property to update |
-| `value` | `Any` | the new value for the state property |
+| params  | type     | description                              |
+| ------- | -------- | ---------------------------------------- |
+| `name`  | `String` | the name of the state property to update |
+| `value` | `Any`    | the new value for the state property     |
 
-Used to change the value of a single state property.  Equivalent to setting `this.state[name] = value` except it will also work for adding new properties to the component state.
+Used to change the value of a single state property. Equivalent to setting `this.state[name] = value` except it will also work for adding new properties to the component state.
 
 ```javascript
-this.setState('disabled', true);
+this.setState("disabled", true);
 ```
 
 ### `setState(newState)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
+| params     | type     | description                                         |
+| ---------- | -------- | --------------------------------------------------- |
 | `newState` | `Object` | a new state object to merge into the previous state |
 
 Used to change the value of multiple state properties.
 
 ```js
 this.setState({
-	disabled: true,
-	size: 'large'
+  disabled: true,
+  size: "large"
 });
 ```
 
 ### `setStateDirty(name[, value])`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `name` | `String` | the name of the state property to mark as dirty |
-| `value` | `Any` | _optional_ a new value for the state property |
+| params  | type     | description                                     |
+| ------- | -------- | ----------------------------------------------- |
+| `name`  | `String` | the name of the state property to mark as dirty |
+| `value` | `Any`    | _optional_ a new value for the state property   |
 
 Force a state property to be changed even if the value is equal to the old value. This is helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare. Invoking this function completely circumvents all property equality checks (shallow compares) and always rerenders the component.
 
@@ -706,28 +708,29 @@ _example.js_
 ```javascript
 // Because this does not create a new array, the change
 // would not be detected by a shallow property comparison
-this.state.colors.push('red');
+this.state.colors.push("red");
 
 // Force that particular state property to be considered dirty so
 // that it will trigger the component's view to be updated
-this.setStateDirty('colors');
+this.setStateDirty("colors");
 ```
 
 ### `subscribeTo(emitter)`
 
-| params  | description |
-| ------- | ----------- |
-| `emitter` | a node.js [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter) or a DOM object that emits events (`window`, `document`, etc.) |
-| return value | a tracked subscription |
+| params       | description                                                                                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `emitter`    | a node.js [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter) or a DOM object that emits events (`window`, `document`, etc.) |
+| return value | a tracked subscription                                                                                                                                  |
 
-When a component is destroyed, it is necessary to remove any listeners that were attached by the component in order to prevent a memory leak.  By using `subscribeTo`, Marko will automatically track and remove any listeners you attach when the component is destroyed.
+When a component is destroyed, it is necessary to remove any listeners that were attached by the component in order to prevent a memory leak. By using `subscribeTo`, Marko will automatically track and remove any listeners you attach when the component is destroyed.
 
 Marko uses [`listener-tracker`](https://github.com/patrick-steele-idem/listener-tracker) to provide this feature.
 
 _example.js_
+
 ```js
-this.subscribeTo(window).on('scroll', () => {
-    console.log('The user scrolled the window!');
+this.subscribeTo(window).on("scroll", () => {
+  console.log("The user scrolled the window!");
 });
 ```
 
@@ -736,40 +739,40 @@ this.subscribeTo(window).on('scroll', () => {
 Immediately, executes any pending updates to the DOM rather than following the normal queued update mechanism for rendering.
 
 ```js
-this.setState('foo', 'bar');
+this.setState("foo", "bar");
 this.update(); // Force the DOM to update
-this.setState('hello', 'world');
+this.setState("hello", "world");
 this.update(); // Force the DOM to update
 ```
 
 ## Event methods
 
-A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter).  Below are a few commonly used methods, view the node docs for the full list.
+A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter). Below are a few commonly used methods, view the node docs for the full list.
 
 ### `emit(eventName, ...args)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `eventName` | `String` | the name of the event |
-| `...args` | `Any` | all subsequent parameters are passed to the listeners |
+| params      | type     | description                                           |
+| ----------- | -------- | ----------------------------------------------------- |
+| `eventName` | `String` | the name of the event                                 |
+| `...args`   | `Any`    | all subsequent parameters are passed to the listeners |
 
 Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName, ...args)` attribute](#declarative-custom-events) attribute or `targetComponent.on()`.
 
 ### `on(eventName, handler)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `eventName` | `String` | the name of the event to listen for |
-| `handler` | `Function` | the function to call when the event is fired |
+| params      | type       | description                                  |
+| ----------- | ---------- | -------------------------------------------- |
+| `eventName` | `String`   | the name of the event to listen for          |
+| `handler`   | `Function` | the function to call when the event is fired |
 
 Adds the listener function to the end of the listeners array for the event named eventName. No checks are made to see if the listener has already been added. Multiple calls passing the same combination of eventName and listener will result in the listener being added, and called, multiple times.
 
 ### `once(eventName, handler)`
 
-| params  | type | description |
-| ------- | ---- | ----------- |
-| `eventName` | `String` | the name of the event to listen for |
-| `handler` | `Function` | the function to call when the event is fired |
+| params      | type       | description                                  |
+| ----------- | ---------- | -------------------------------------------- |
+| `eventName` | `String`   | the name of the event to listen for          |
+| `handler`   | `Function` | the function to call when the event is fired |
 
 Adds a one time listener function for the event named eventName. The next time eventName is triggered, this listener is removed and then invoked.
 
@@ -777,12 +780,12 @@ Adds a one time listener function for the event named eventName. The next time e
 
 Marko defines six distinct lifecycle events:
 
-- `create`
-- `input`
-- `render`
-- `mount`
-- `update`
-- `destroy`
+* `create`
+* `input`
+* `render`
+* `mount`
+* `update`
+* `destroy`
 
 These events are emitted at specific points over the lifecycle of a component as shown below:
 
@@ -807,7 +810,7 @@ emit('render') → emit('update')
 **Destroy**
 
 ```js
-emit('destroy')
+emit("destroy");
 ```
 
 ### Lifecycle event methods
@@ -825,18 +828,19 @@ class {
 }
 ```
 
-> **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance.  A parent component, or other code that has access to the component instance, can listen for these events. For example:
+> **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance. A parent component, or other code that has access to the component instance, can listen for these events. For example:
+
 ```js
-component.on('input', function(input, out) {
-    // The component was destroyed!
+component.on("input", function(input, out) {
+  // The component was destroyed!
 });
 ```
 
 ### `onCreate(input, out)`
 
-| params  | description |
-| ------- | ----------- |
-| `input` | the input data used to render the component for the first time |
+| params  | description                                                     |
+| ------- | --------------------------------------------------------------- |
+| `input` | the input data used to render the component for the first time  |
 | `out`   | the async `out` used to render the component for the first time |
 
 The `create` event is emitted (and `onCreate` is called) when the component is first created.
@@ -844,6 +848,7 @@ The `create` event is emitted (and `onCreate` is called) when the component is f
 `onCreate` is typically used to set the initial state for stateful components:
 
 _example.marko_
+
 ```marko
 class {
     onCreate(input) {
@@ -856,29 +861,30 @@ class {
 
 ### `onInput(input, out)`
 
-| params  | description |
-| ------- | ----------- |
+| params  | description        |
+| ------- | ------------------ |
 | `input` | the new input data |
 
 The `input` event is emitted (and `onInput` is called) when the component receives input: both the initial input and for any subsequent updates to its input.
 
 ### `onRender(out)`
 
-| params  | description |
-| ------- | ----------- |
-| `out`   | the async `out` for the current render |
+| params | description                            |
+| ------ | -------------------------------------- |
+| `out`  | the async `out` for the current render |
 
 The `render` event is emitted (and `onRender` is called) when the component is about to be rendered (or re-rendered).
 
 ### `onMount()`
 
-The `mount` event is emitted (and `onMount` is called) when the component is first mounted to the DOM.  For a server-rendered component, this is the first event that is emitted in the browser.
+The `mount` event is emitted (and `onMount` is called) when the component is first mounted to the DOM. For a server-rendered component, this is the first event that is emitted in the browser.
 
-This is the first point at which `this.el` and `this.els` are defined.  `onMount` is commonly used to attach third-party javascript (or `jQuery` if you're still doing that) plugins to the newly-mounted DOM element(s).
+This is the first point at which `this.el` and `this.els` are defined. `onMount` is commonly used to attach third-party javascript (or `jQuery` if you're still doing that) plugins to the newly-mounted DOM element(s).
 
 For example, attaching a library that monitors whether the component is in the viewport:
 
 _example.marko_
+
 ```marko
 import scrollmonitor from 'scrollmonitor';
 
@@ -895,11 +901,11 @@ class {
 
 ### `onUpdate()`
 
-The `update` event is emitted (and `onUpdate` is called) when the component is called after a component has re-rendered and the DOM has been updated.  If a re-render does not cause the DOM to be updated (nothing changed), this event will not be fired.
+The `update` event is emitted (and `onUpdate` is called) when the component is called after a component has re-rendered and the DOM has been updated. If a re-render does not cause the DOM to be updated (nothing changed), this event will not be fired.
 
 ### `onDestroy()`
 
-The `destroy` event is emitted (and `onDestroy` is called) when the component is about to be unmounted from the DOM and cleaned up.  `onDestroy` should be used to do any additional clean up beyond what Marko handles itself.
+The `destroy` event is emitted (and `onDestroy` is called) when the component is about to be unmounted from the DOM and cleaned up. `onDestroy` should be used to do any additional clean up beyond what Marko handles itself.
 
 For example, cleaning up from our `scrollmonitor` example in [`onMount`](#codeonmountcode):
 

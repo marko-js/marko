@@ -1,4 +1,4 @@
 exports.templateData = {
-    "name": "World"
+    name: "World"
 };
 exports.vdomSkip = true;

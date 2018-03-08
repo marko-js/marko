@@ -1,20 +1,19 @@
-var EventEmitter = require('events-light');
-var vdom = require('./vdom');
+var EventEmitter = require("events-light");
+var vdom = require("./vdom");
 var VElement = vdom.___VElement;
 var VDocumentFragment = vdom.___VDocumentFragment;
 var VComment = vdom.___VComment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
 var virtualizeHTML = vdom.___virtualizeHTML;
-var RenderResult = require('../RenderResult');
+var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
-var morphdom = require('../../morphdom');
+var morphdom = require("../../morphdom");
 
-var EVENT_UPDATE = 'update';
-var EVENT_FINISH = 'finish';
+var EVENT_UPDATE = "update";
+var EVENT_FINISH = "finish";
 
 function State(tree) {
-
     this.___events = new EventEmitter();
     this.___tree = tree;
     this.___finished = false;
@@ -38,7 +37,6 @@ function AsyncVDOMBuilder(globalData, parentNode, parentOut) {
     this.___last = null;
     this.___parentOut = parentOut;
 
-
     this.data = {};
     this.___state = state;
     this.___parent = parentNode;
@@ -53,7 +51,7 @@ function AsyncVDOMBuilder(globalData, parentNode, parentOut) {
     this.___assignedCustomEvents = null;
 }
 
-var proto = AsyncVDOMBuilder.prototype = {
+var proto = (AsyncVDOMBuilder.prototype = {
     ___isOut: true,
     ___document: defaultDocument,
 
@@ -76,13 +74,45 @@ var proto = AsyncVDOMBuilder.prototype = {
         return childCount === 0 ? this : child;
     },
 
-    element: function(tagName, attrs, key, component, childCount, flags, props) {
-        var element = new VElement(tagName, attrs, key, component, childCount, flags, props);
+    element: function(
+        tagName,
+        attrs,
+        key,
+        component,
+        childCount,
+        flags,
+        props
+    ) {
+        var element = new VElement(
+            tagName,
+            attrs,
+            key,
+            component,
+            childCount,
+            flags,
+            props
+        );
         return this.___beginNode(element, childCount);
     },
 
-    ___elementDynamicTag: function(tagName, attrs, key, component, childCount, flags, props) {
-        var element = VElement.___createElementDynamicTag(tagName, attrs, key, component, childCount, flags, props);
+    ___elementDynamicTag: function(
+        tagName,
+        attrs,
+        key,
+        component,
+        childCount,
+        flags,
+        props
+    ) {
+        var element = VElement.___createElementDynamicTag(
+            tagName,
+            attrs,
+            key,
+            component,
+            childCount,
+            flags,
+            props
+        );
         return this.___beginNode(element, childCount);
     },
 
@@ -104,10 +134,10 @@ var proto = AsyncVDOMBuilder.prototype = {
     text: function(text) {
         var type = typeof text;
 
-        if (type != 'string') {
+        if (type != "string") {
             if (text == null) {
                 return;
-            } else if (type === 'object') {
+            } else if (type === "object") {
                 if (text.toHTML) {
                     return this.h(text.toHTML());
                 }
@@ -133,14 +163,46 @@ var proto = AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    beginElement: function(tagName, attrs, key, component, childCount, flags, props) {
-        var element = new VElement(tagName, attrs, key, component, childCount, flags, props);
+    beginElement: function(
+        tagName,
+        attrs,
+        key,
+        component,
+        childCount,
+        flags,
+        props
+    ) {
+        var element = new VElement(
+            tagName,
+            attrs,
+            key,
+            component,
+            childCount,
+            flags,
+            props
+        );
         this.___beginNode(element, childCount, true);
         return this;
     },
 
-    ___beginElementDynamicTag: function(tagName, attrs, key, component, childCount, flags, props) {
-        var element = VElement.___createElementDynamicTag(tagName, attrs, key, component, childCount, flags, props);
+    ___beginElementDynamicTag: function(
+        tagName,
+        attrs,
+        key,
+        component,
+        childCount,
+        flags,
+        props
+    ) {
+        var element = VElement.___createElementDynamicTag(
+            tagName,
+            attrs,
+            key,
+            component,
+            childCount,
+            flags,
+            props
+        );
         this.___beginNode(element, childCount, true);
         return this;
     },
@@ -148,7 +210,7 @@ var proto = AsyncVDOMBuilder.prototype = {
     endElement: function() {
         var stack = this.___stack;
         stack.pop();
-        this.___parent = stack[stack.length-1];
+        this.___parent = stack[stack.length - 1];
     },
 
     end: function() {
@@ -213,7 +275,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     error: function(e) {
         try {
-            this.emit('error', e);
+            this.emit("error", e);
         } finally {
             // If there is no listener for the error event then it will
             // throw a new Error here. In order to ensure that the async fragment
@@ -227,7 +289,9 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     beginAsync: function(options) {
         if (this.___sync) {
-            throw Error('Tried to render async while in sync mode. Note: Client side await is not currently supported in re-renders (Issue: #942).');
+            throw Error(
+                "Tried to render async while in sync mode. Note: Client side await is not currently supported in re-renders (Issue: #942)."
+            );
         }
 
         var state = this.___state;
@@ -241,14 +305,18 @@ var proto = AsyncVDOMBuilder.prototype = {
         this.___remaining++;
 
         var documentFragment = this.___parent.___appendDocumentFragment();
-        var asyncOut = new AsyncVDOMBuilder(this.global, documentFragment, this);
+        var asyncOut = new AsyncVDOMBuilder(
+            this.global,
+            documentFragment,
+            this
+        );
 
-        state.___events.emit('beginAsync', {
-           out: asyncOut,
-           parentOut: this
-       });
+        state.___events.emit("beginAsync", {
+            out: asyncOut,
+            parentOut: this
+        });
 
-       return asyncOut;
+        return asyncOut;
     },
 
     createOut: function() {
@@ -276,7 +344,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
         if (event === EVENT_FINISH && state.___finished) {
             callback(this.___getResult());
-        } else if (event === 'last') {
+        } else if (event === "last") {
             this.onLast(callback);
         } else {
             state.___events.on(event, callback);
@@ -288,9 +356,9 @@ var proto = AsyncVDOMBuilder.prototype = {
     once: function(event, callback) {
         var state = this.___state;
 
-        if (event === EVENT_FINISH && (state.___finished)) {
+        if (event === EVENT_FINISH && state.___finished) {
             callback(this.___getResult());
-        } else if (event === 'last') {
+        } else if (event === "last") {
             this.onLast(callback);
         } else {
             state.___events.once(event, callback);
@@ -301,7 +369,7 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     emit: function(type, arg) {
         var events = this.___state.___events;
-        switch(arguments.length) {
+        switch (arguments.length) {
             case 1:
                 events.emit(type);
                 break;
@@ -355,13 +423,13 @@ var proto = AsyncVDOMBuilder.prototype = {
 
     toString: function(doc) {
         var docFragment = this.___getNode(doc);
-        var html = '';
+        var html = "";
 
         var child = docFragment.firstChild;
-        while(child) {
+        while (child) {
             var nextSibling = child.nextSibling;
             if (child.nodeType != 1) {
-                var container = docFragment.ownerDocument.createElement('div');
+                var container = docFragment.ownerDocument.createElement("div");
                 container.appendChild(child.cloneNode());
                 html += container.innerHTML;
             } else {
@@ -377,10 +445,9 @@ var proto = AsyncVDOMBuilder.prototype = {
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
-            out.on('error', reject)
-                .on(EVENT_FINISH, function(result) {
-                    resolve(result);
-                });
+            out.on("error", reject).on(EVENT_FINISH, function(result) {
+                resolve(result);
+            });
         });
 
         return Promise.resolve(promise).then(fn, fnErr);
@@ -397,7 +464,7 @@ var proto = AsyncVDOMBuilder.prototype = {
         this.___assignedKey = key;
         this.___assignedCustomEvents = customEvents;
     }
-};
+});
 
 proto.e = proto.element;
 proto.ed = proto.___elementDynamicTag;

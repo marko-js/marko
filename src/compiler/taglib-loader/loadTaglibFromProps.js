@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
-var types = require('./types');
-var nodePath = require('path');
-var scanTagsDir = require('./scanTagsDir');
-var markoModules = require('../modules'); // NOTE: different implementation for browser
-var propertyHandlers = require('property-handlers');
-var jsonFileReader = require('./json-file-reader');
-var tryRequire = require('try-require');
-var resolveFrom = tryRequire('resolve-from', require);
-var DependencyChain = require('./DependencyChain');
-var createError = require('raptor-util/createError');
-var loaders = require('./loaders');
+var ok = require("assert").ok;
+var types = require("./types");
+var nodePath = require("path");
+var scanTagsDir = require("./scanTagsDir");
+var markoModules = require("../modules"); // NOTE: different implementation for browser
+var propertyHandlers = require("property-handlers");
+var jsonFileReader = require("./json-file-reader");
+var tryRequire = require("try-require");
+var resolveFrom = tryRequire("resolve-from", require);
+var DependencyChain = require("./DependencyChain");
+var createError = require("raptor-util/createError");
+var loaders = require("./loaders");
 
 function exists(path) {
     try {
         markoModules.resolve(path);
         return true;
-    } catch(e) {
+    } catch (e) {
         return false;
     }
 }
@@ -33,7 +33,10 @@ function exists(path) {
  */
 class TaglibLoader {
     constructor(taglib, dependencyChain) {
-        ok(dependencyChain instanceof DependencyChain, '"dependencyChain" is not valid');
+        ok(
+            dependencyChain instanceof DependencyChain,
+            '"dependencyChain" is not valid'
+        );
 
         this.dependencyChain = dependencyChain;
 
@@ -43,7 +46,6 @@ class TaglibLoader {
     }
 
     load(taglibProps) {
-
         var taglib = this.taglib;
 
         propertyHandlers(taglibProps, this, this.dependencyChain.toString());
@@ -62,13 +64,14 @@ class TaglibLoader {
             var filePath = this.filePath;
             var dirname = this.dirname;
 
-            var packageJsonPath = nodePath.join(dirname, 'package.json');
-
+            var packageJsonPath = nodePath.join(dirname, "package.json");
 
             try {
                 var pkg = jsonFileReader.readFileSync(packageJsonPath);
                 taglib.id = pkg.name;
-            } catch(e) { /* ignore error */ }
+            } catch (e) {
+                /* ignore error */
+            }
 
             if (!taglib.id) {
                 taglib.id = filePath;
@@ -82,12 +85,17 @@ class TaglibLoader {
 
         var tag;
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             tagFilePath = nodePath.resolve(this.dirname, value);
 
-
             if (!exists(tagFilePath)) {
-                throw new Error('Tag at path "' + tagFilePath + '" does not exist. (' + dependencyChain + ')');
+                throw new Error(
+                    'Tag at path "' +
+                        tagFilePath +
+                        '" does not exist. (' +
+                        dependencyChain +
+                        ")"
+                );
             }
 
             tag = new types.Tag(tagFilePath);
@@ -110,20 +118,21 @@ class TaglibLoader {
 
     // We register a wildcard handler to handle "@my-attr" and "<my-tag>"
     // properties (shorthand syntax)
-    '*'(name, value) {
+    "*"(name, value) {
         var taglib = this.taglib;
         var filePath = this.filePath;
 
-        if (name.startsWith('<')) {
+        if (name.startsWith("<")) {
             let tagName = name.slice(1, -1);
             this._handleTag(tagName, value, this.dependencyChain.append(name));
-        } else if (name.startsWith('@')) {
+        } else if (name.startsWith("@")) {
             var attrKey = name.substring(1);
 
             var attr = loaders.loadAttributeFromProps(
                 attrKey,
                 value,
-                this.dependencyChain.append('@' + attrKey));
+                this.dependencyChain.append("@" + attrKey)
+            );
 
             attr.filePath = filePath;
             attr.key = attrKey;
@@ -150,13 +159,14 @@ class TaglibLoader {
         // }
         var taglib = this.taglib;
 
-        Object.keys(value).forEach((attrName) => {
+        Object.keys(value).forEach(attrName => {
             var attrDef = value[attrName];
 
             var attr = loaders.loadAttributeFromProps(
                 attrName,
                 attrDef,
-                this.dependencyChain.append('@' + attrName));
+                this.dependencyChain.append("@" + attrName)
+            );
 
             attr.key = attrName;
 
@@ -181,7 +191,11 @@ class TaglibLoader {
 
         for (var tagName in tags) {
             if (tags.hasOwnProperty(tagName)) {
-                this._handleTag(tagName, tags[tagName], this.dependencyChain.append('tags.' + tagName));
+                this._handleTag(
+                    tagName,
+                    tags[tagName],
+                    this.dependencyChain.append("tags." + tagName)
+                );
             }
         }
     }
@@ -201,10 +215,22 @@ class TaglibLoader {
         if (dir != null) {
             if (Array.isArray(dir)) {
                 for (var i = 0; i < dir.length; i++) {
-                    scanTagsDir(path, dirname, dir[i], taglib, this.dependencyChain.append(`tags-dir[${i}]`));
+                    scanTagsDir(
+                        path,
+                        dirname,
+                        dir[i],
+                        taglib,
+                        this.dependencyChain.append(`tags-dir[${i}]`)
+                    );
                 }
             } else {
-                scanTagsDir(path, dirname, dir, taglib, this.dependencyChain.append(`tags-dir`));
+                scanTagsDir(
+                    path,
+                    dirname,
+                    dir,
+                    taglib,
+                    this.dependencyChain.append(`tags-dir`)
+                );
             }
         }
     }
@@ -226,21 +252,27 @@ class TaglibLoader {
         var importPath;
 
         if (imports && Array.isArray(imports)) {
-            for (var i=0; i<imports.length; i++) {
+            for (var i = 0; i < imports.length; i++) {
                 var curImport = imports[i];
-                if (typeof curImport === 'string') {
+                if (typeof curImport === "string") {
                     var basename = nodePath.basename(curImport);
-                    if (basename === 'package.json') {
-                        var packagePath = markoModules.resolveFrom(dirname, curImport);
+                    if (basename === "package.json") {
+                        var packagePath = markoModules.resolveFrom(
+                            dirname,
+                            curImport
+                        );
                         var packageDir = nodePath.dirname(packagePath);
                         var pkg = jsonFileReader.readFileSync(packagePath);
                         var dependencies = pkg.dependencies;
                         if (dependencies) {
                             var dependencyNames = Object.keys(dependencies);
-                            for (var j=0; j<dependencyNames.length; j++) {
+                            for (var j = 0; j < dependencyNames.length; j++) {
                                 var dependencyName = dependencyNames[j];
 
-                                importPath = resolveFrom(packageDir, dependencyName + '/marko.json');
+                                importPath = resolveFrom(
+                                    packageDir,
+                                    dependencyName + "/marko.json"
+                                );
 
                                 if (importPath) {
                                     taglib.addImport(importPath);
@@ -252,7 +284,13 @@ class TaglibLoader {
                         if (importPath) {
                             taglib.addImport(importPath);
                         } else {
-                            throw new Error('Import not found: ' + curImport + ' (from ' + dirname + ')');
+                            throw new Error(
+                                "Import not found: " +
+                                    curImport +
+                                    " (from " +
+                                    dirname +
+                                    ")"
+                            );
                         }
                     }
                 }
@@ -268,19 +306,22 @@ class TaglibLoader {
 
         var transformer = new types.Transformer();
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             value = {
                 path: value
             };
         }
 
-        propertyHandlers(value, {
-            path(value) {
-                var path = markoModules.resolveFrom(dirname, value);
-                transformer.path = path;
-            }
-
-        }, this.dependencyChain.append('textTransformer').toString());
+        propertyHandlers(
+            value,
+            {
+                path(value) {
+                    var path = markoModules.resolveFrom(dirname, value);
+                    transformer.path = path;
+                }
+            },
+            this.dependencyChain.append("textTransformer").toString()
+        );
 
         ok(transformer.path, '"path" is required for transformer');
 
@@ -309,19 +350,22 @@ class TaglibLoader {
 
         var transformer = new types.Transformer();
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             value = {
                 path: value
             };
         }
 
-        propertyHandlers(value, {
-            path(value) {
-                var path = markoModules.resolveFrom(dirname, value);
-                transformer.path = path;
-            }
-
-        }, this.dependencyChain.append('transformer').toString());
+        propertyHandlers(
+            value,
+            {
+                path(value) {
+                    var path = markoModules.resolveFrom(dirname, value);
+                    transformer.path = path;
+                }
+            },
+            this.dependencyChain.append("transformer").toString()
+        );
 
         ok(transformer.path, '"path" is required for transformer');
 
@@ -330,29 +374,32 @@ class TaglibLoader {
 
     attributeGroups(value) {
         let taglib = this.taglib;
-        let attributeGroups = taglib.attributeGroups || (taglib.attributeGroups = {});
-        let dependencyChain = this.dependencyChain.append('attribute-groups');
+        let attributeGroups =
+            taglib.attributeGroups || (taglib.attributeGroups = {});
+        let dependencyChain = this.dependencyChain.append("attribute-groups");
 
-        Object.keys(value).forEach((attrGroupName) => {
-            let attrGroup = attributeGroups[attrGroupName] = {};
-            let attrGroupDependencyChain = dependencyChain.append(attrGroupName);
+        Object.keys(value).forEach(attrGroupName => {
+            let attrGroup = (attributeGroups[attrGroupName] = {});
+            let attrGroupDependencyChain = dependencyChain.append(
+                attrGroupName
+            );
 
             let rawAttrGroup = value[attrGroupName];
 
-            Object.keys(rawAttrGroup).forEach((attrName) => {
+            Object.keys(rawAttrGroup).forEach(attrName => {
                 var rawAttrDef = rawAttrGroup[attrName];
 
                 let attr = loaders.loadAttributeFromProps(
                     attrName,
                     rawAttrDef,
-                    attrGroupDependencyChain.append('@' + attrName));
+                    attrGroupDependencyChain.append("@" + attrName)
+                );
 
                 attrGroup[attrName] = attr;
             });
         });
     }
 }
-
 
 function loadTaglibFromProps(taglib, taglibProps, dependencyChain) {
     ok(taglib, '"taglib" is required');
@@ -367,8 +414,11 @@ function loadTaglibFromProps(taglib, taglibProps, dependencyChain) {
 
     try {
         taglibLoader.load(taglibProps);
-    } catch(err) {
-        throw createError('Unable to load taglib (' + dependencyChain + '): ' + err, err);
+    } catch (err) {
+        throw createError(
+            "Unable to load taglib (" + dependencyChain + "): " + err,
+            err
+        );
     }
 
     return taglib;

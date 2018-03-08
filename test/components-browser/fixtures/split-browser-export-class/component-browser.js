@@ -1,7 +1,7 @@
 function Component() {}
 
 Component.prototype = {
-    handleClick: function () {
+    handleClick: function() {
         this.state.clicked = true;
     }
 };

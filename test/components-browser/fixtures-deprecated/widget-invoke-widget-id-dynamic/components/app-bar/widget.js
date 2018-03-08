@@ -1,5 +1,5 @@
 function Widget() {
-    this.name = 'app-bar';
+    this.name = "app-bar";
 }
 
 Widget.prototype = {};

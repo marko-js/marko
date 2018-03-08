@@ -1,5 +1,5 @@
-var nextComponentIdProvider = require('./util').___nextComponentIdProvider;
-var KeySequence = require('./KeySequence');
+var nextComponentIdProvider = require("./util").___nextComponentIdProvider;
+var KeySequence = require("./KeySequence");
 
 function GlobalComponentsContext(out) {
     this.___preservedEls = {};

@@ -1,31 +1,31 @@
-module.exports = require('marko-widgets').defineRenderer({
-    template: require.resolve('./template.marko'),
+module.exports = require("marko-widgets").defineRenderer({
+    template: require.resolve("./template.marko"),
     getInitialBody: function(input) {
         return input.label || input.renderBody;
     },
     getTemplateData: function(state, input) {
         var rootAttrs = {};
 
-        var classParts = ['app-button'];
+        var classParts = ["app-button"];
 
-        var type = 'button';
+        var type = "button";
 
-        var variant = input.variant || 'primary';
-        if (variant !== 'primary') {
-            classParts.push('app-button-' + variant);
+        var variant = input.variant || "primary";
+        if (variant !== "primary") {
+            classParts.push("app-button-" + variant);
         }
 
-        var size = input.size || 'normal';
-        if (size !== 'normal') {
-            classParts.push('app-button-' + size);
+        var size = input.size || "normal";
+        if (size !== "normal") {
+            classParts.push("app-button-" + size);
         }
 
-        var className = input['class'];
+        var className = input["class"];
         if (className) {
             classParts.push(className);
         }
 
-        var splatAttrs = input['*'];
+        var splatAttrs = input["*"];
         if (splatAttrs) {
             for (var splatAttr in splatAttrs) {
                 if (splatAttrs.hasOwnProperty(splatAttr)) {
@@ -34,7 +34,7 @@ module.exports = require('marko-widgets').defineRenderer({
             }
         }
 
-        rootAttrs['class'] = classParts.join(' ');
+        rootAttrs["class"] = classParts.join(" ");
 
         return {
             type: type,

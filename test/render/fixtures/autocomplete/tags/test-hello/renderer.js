@@ -1,3 +1,3 @@
-exports.render = function (input, out) {
-	out.write('Hello ' + input.name + '!');
+exports.render = function(input, out) {
+    out.write("Hello " + input.name + "!");
 };

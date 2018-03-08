@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class HtmlComment extends Node {
     constructor(def) {
-        super('HtmlComment');
+        super("HtmlComment");
         this.comment = def.comment;
     }
 
@@ -13,9 +13,9 @@ class HtmlComment extends Node {
         var builder = codegen.builder;
 
         return [
-            builder.htmlLiteral('<!--'),
+            builder.htmlLiteral("<!--"),
             builder.html(comment),
-            builder.htmlLiteral('-->')
+            builder.htmlLiteral("-->")
         ];
     }
 
@@ -32,8 +32,10 @@ class HtmlComment extends Node {
         return builder.functionCall(
             builder.memberExpression(
                 builder.identifierOut(),
-                builder.identifier('comment')),
-            commentArgs);
+                builder.identifier("comment")
+            ),
+            commentArgs
+        );
     }
 
     walk(walker) {

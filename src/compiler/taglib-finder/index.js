@@ -1,11 +1,11 @@
-'use strict';
-var taglibLoader = require('../taglib-loader');
-var nodePath = require('path');
-var lassoPackageRoot = require('lasso-package-root');
-var resolveFrom = require('resolve-from');
-var scanTagsDir = require('../taglib-loader/scanTagsDir');
-var DependencyChain = require('../taglib-loader/DependencyChain');
-var lassoCachingFS = require('lasso-caching-fs');
+"use strict";
+var taglibLoader = require("../taglib-loader");
+var nodePath = require("path");
+var lassoPackageRoot = require("lasso-package-root");
+var resolveFrom = require("resolve-from");
+var scanTagsDir = require("../taglib-loader/scanTagsDir");
+var DependencyChain = require("../taglib-loader/DependencyChain");
+var lassoCachingFS = require("lasso-caching-fs");
 
 var findCache = {};
 var excludedDirs = {};
@@ -29,7 +29,7 @@ function existsCached(path) {
 function getModuleRootPackage(dirname) {
     try {
         return lassoPackageRoot.getRootPackage(dirname);
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 }
@@ -38,19 +38,19 @@ function getAllDependencyNames(pkg) {
     var map = {};
 
     if (pkg.dependencies) {
-        Object.keys(pkg.dependencies).forEach((name) => {
+        Object.keys(pkg.dependencies).forEach(name => {
             map[name] = true;
         });
     }
 
     if (pkg.peerDependencies) {
-        Object.keys(pkg.peerDependencies).forEach((name) => {
+        Object.keys(pkg.peerDependencies).forEach(name => {
             map[name] = true;
         });
     }
 
     if (pkg.devDependencies) {
-        Object.keys(pkg.devDependencies).forEach((name) => {
+        Object.keys(pkg.devDependencies).forEach(name => {
             map[name] = true;
         });
     }
@@ -89,13 +89,12 @@ function find(dirname, registeredTaglibs) {
         rootDirname = rootPkg.__dirname; // Use the package's root directory as the top-level directory
     }
 
-
     // First walk up the directory tree looking for marko.json files or components/ directories
     let curDirname = dirname;
     // eslint-disable-next-line no-constant-condition
-    while(true) {
-        if(!excludedDirs[curDirname]) {
-            let taglibPath = nodePath.join(curDirname, 'marko.json');
+    while (true) {
+        if (!excludedDirs[curDirname]) {
+            let taglibPath = nodePath.join(curDirname, "marko.json");
             let taglib;
 
             if (existsCached(taglibPath)) {
@@ -104,11 +103,21 @@ function find(dirname, registeredTaglibs) {
             }
 
             if (!taglib || taglib.tagsDir === undefined) {
-                let componentsPath = nodePath.join(curDirname, 'components');
+                let componentsPath = nodePath.join(curDirname, "components");
 
-                if (existsCached(componentsPath) && !excludedDirs[componentsPath] && !helper.alreadyAdded(componentsPath)) {
+                if (
+                    existsCached(componentsPath) &&
+                    !excludedDirs[componentsPath] &&
+                    !helper.alreadyAdded(componentsPath)
+                ) {
                     let taglib = taglibLoader.createTaglib(componentsPath);
-                    scanTagsDir(componentsPath, nodePath.dirname(componentsPath), './components', taglib, new DependencyChain([componentsPath]));
+                    scanTagsDir(
+                        componentsPath,
+                        nodePath.dirname(componentsPath),
+                        "./components",
+                        taglib,
+                        new DependencyChain([componentsPath])
+                    );
                     helper.addTaglib(taglib);
                 }
             }
@@ -127,9 +136,12 @@ function find(dirname, registeredTaglibs) {
 
     if (rootPkg) {
         // Now look for `marko.json` from installed packages
-        getAllDependencyNames(rootPkg).forEach((name) => {
+        getAllDependencyNames(rootPkg).forEach(name => {
             if (!excludedPackages[name]) {
-                let taglibPath = resolveFrom(rootPkg.__dirname, name + '/marko.json');
+                let taglibPath = resolveFrom(
+                    rootPkg.__dirname,
+                    name + "/marko.json"
+                );
                 if (taglibPath) {
                     var taglib = taglibLoader.loadTaglibFromFile(taglibPath);
                     helper.addTaglib(taglib);

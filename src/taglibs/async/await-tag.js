@@ -1,11 +1,11 @@
-'use strict';
-var isClientReorderSupported = require('./client-reorder').isSupported;
-var AsyncValue = require('./AsyncValue');
+"use strict";
+var isClientReorderSupported = require("./client-reorder").isSupported;
+var AsyncValue = require("./AsyncValue");
 
 function safeRenderBody(renderBody, targetOut, data) {
     try {
         renderBody(targetOut, data);
-    } catch(err) {
+    } catch (err) {
         return err;
     }
 }
@@ -13,7 +13,7 @@ function safeRenderBody(renderBody, targetOut, data) {
 function requestData(provider, args, thisObj, timeout) {
     var asyncValue = new AsyncValue();
 
-    if (typeof provider === 'function') {
+    if (typeof provider === "function") {
         var callback = function(err, data) {
             if (err) {
                 asyncValue.___reject(err);
@@ -22,11 +22,12 @@ function requestData(provider, args, thisObj, timeout) {
             }
         };
 
-        var value = (provider.length === 1) ?
-            // one argument so only provide callback to function call
-            provider.call(thisObj, callback) :
-            // two arguments so provide args and callback to function call
-            provider.call(thisObj, args, callback);
+        var value =
+            provider.length === 1
+                ? // one argument so only provide callback to function call
+                  provider.call(thisObj, callback)
+                : // two arguments so provide args and callback to function call
+                  provider.call(thisObj, args, callback);
 
         if (value !== undefined) {
             asyncValue.___resolve(value);
@@ -43,8 +44,8 @@ function requestData(provider, args, thisObj, timeout) {
     if (timeout > 0) {
         let timeoutId = setTimeout(function() {
             timeoutId = null;
-            var error = new Error('Timed out after ' + timeout + 'ms');
-            error.code = 'ERR_AWAIT_TIMEDOUT';
+            var error = new Error("Timed out after " + timeout + "ms");
+            error.code = "ERR_AWAIT_TIMEDOUT";
             asyncValue.___reject(error);
         }, timeout);
 
@@ -58,14 +59,14 @@ function requestData(provider, args, thisObj, timeout) {
     return asyncValue;
 }
 
-const LAST_OPTIONS = { last: true, name: 'await:finish' };
+const LAST_OPTIONS = { last: true, name: "await:finish" };
 
 module.exports = function awaitTag(input, out) {
-
     var arg = input.arg || {};
     arg.out = out;
 
-    var clientReorder = isClientReorderSupported && input.clientReorder === true && !out.isVDOM;
+    var clientReorder =
+        isClientReorderSupported && input.clientReorder === true && !out.isVDOM;
 
     var name = input.name || input._name;
     var scope = input.scope || this;
@@ -96,21 +97,24 @@ module.exports = function awaitTag(input, out) {
     if (clientReorder) {
         awaitInfo.after = input.showAfter;
 
-        clientReorderContext = out.global.___clientReorderContext ||
+        clientReorderContext =
+            out.global.___clientReorderContext ||
             (out.global.___clientReorderContext = {
                 instances: [],
                 nextId: 0
             });
 
-        var id = awaitInfo.id = input.name || (clientReorderContext.nextId++);
-        var placeholderIdAttrValue = 'afph' + id;
+        var id = (awaitInfo.id = input.name || clientReorderContext.nextId++);
+        var placeholderIdAttrValue = "afph" + id;
 
         if (input.renderPlaceholder) {
             out.write('<span id="' + placeholderIdAttrValue + '">');
             input.renderPlaceholder(out);
-            out.write('</span>');
+            out.write("</span>");
         } else {
-            out.write('<noscript id="' + placeholderIdAttrValue + '"></noscript>');
+            out.write(
+                '<noscript id="' + placeholderIdAttrValue + '"></noscript>'
+            );
         }
 
         // If `client-reorder` is enabled then we asynchronously render the await instance to a new
@@ -128,7 +132,7 @@ module.exports = function awaitTag(input, out) {
         // - await:finish
         //
         asyncOut.emit = function(event) {
-            if (event !== 'finish' && event !== 'error') {
+            if (event !== "finish" && event !== "error") {
                 // We don't want to proxy the finish and error events since those are
                 // very specific to the AsyncWriter associated with the await instance
                 out.emit.apply(out, arguments);
@@ -141,9 +145,9 @@ module.exports = function awaitTag(input, out) {
             clientReorderContext.instances.push(awaitInfo);
         }
 
-        out.emit('await:clientReorder', awaitInfo);
+        out.emit("await:clientReorder", awaitInfo);
     } else {
-        asyncOut = awaitInfo.out =  out.beginAsync({
+        asyncOut = awaitInfo.out = out.beginAsync({
             timeout: 0, // We will use our code for controlling timeout
             name: name
         });
@@ -151,7 +155,7 @@ module.exports = function awaitTag(input, out) {
 
     var beforeRenderEmitted = false;
 
-    out.emit('await:begin', awaitInfo);
+    out.emit("await:begin", awaitInfo);
 
     function renderBody(err, data) {
         if (awaitInfo.finished) {
@@ -164,15 +168,18 @@ module.exports = function awaitTag(input, out) {
 
         if (!beforeRenderEmitted) {
             beforeRenderEmitted = true;
-            out.emit('await:beforeRender', awaitInfo);
+            out.emit("await:beforeRender", awaitInfo);
         }
 
         if (err) {
-            if (err.code === 'ERR_AWAIT_TIMEDOUT' && input.renderTimeout) {
+            if (err.code === "ERR_AWAIT_TIMEDOUT" && input.renderTimeout) {
                 input.renderTimeout(asyncOut);
             } else if (input.renderError) {
                 // eslint-disable-next-line no-console
-                console.error('Await (' + name + ') failed. Error:', (err.stack || err));
+                console.error(
+                    "Await (" + name + ") failed. Error:",
+                    err.stack || err
+                );
                 input.renderError(asyncOut);
             } else {
                 asyncOut.error(err);
@@ -180,7 +187,11 @@ module.exports = function awaitTag(input, out) {
         } else {
             var renderBodyFunc = input.renderBody;
             if (renderBodyFunc) {
-                var renderBodyErr = safeRenderBody(renderBodyFunc, asyncOut, data);
+                var renderBodyErr = safeRenderBody(
+                    renderBodyFunc,
+                    asyncOut,
+                    data
+                );
                 if (renderBodyErr) {
                     return renderBody(renderBodyErr);
                 }
@@ -204,7 +215,7 @@ module.exports = function awaitTag(input, out) {
                 // to pass along the original `asyncOut` because that has contextual
                 // information (such as the rendered UI components)
                 asyncOut.writer = asyncLastOut.writer;
-                out.emit('await:finish', awaitInfo);
+                out.emit("await:finish", awaitInfo);
                 asyncOut.writer = oldWriter;
                 asyncLastOut.end();
                 out.flush();
@@ -213,7 +224,6 @@ module.exports = function awaitTag(input, out) {
             asyncOut.end();
         }
     }
-
 
     asyncValue.___done(renderBody);
 };

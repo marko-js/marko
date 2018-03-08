@@ -1,8 +1,10 @@
 module.exports = {
-    record: function (component, name, args, thisObj) {
-        var hooksByComponent = this.hooksByComponent || (this.hooksByComponent = {});
+    record: function(component, name, args, thisObj) {
+        var hooksByComponent =
+            this.hooksByComponent || (this.hooksByComponent = {});
 
-        var hooksArray = hooksByComponent[component] || (hooksByComponent[component] = []);
+        var hooksArray =
+            hooksByComponent[component] || (hooksByComponent[component] = []);
 
         hooksArray.push({
             name: name,
@@ -11,14 +13,14 @@ module.exports = {
         });
     },
 
-    reset: function () {
+    reset: function() {
         this.hooksByComponent = {};
     },
 
-    getHookNames: function (component) {
+    getHookNames: function(component) {
         var hooksArray = this.hooksByComponent[component];
 
-        return hooksArray.map(function (hook) {
+        return hooksArray.map(function(hook) {
             return hook.name;
         });
     }

@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var adjustIndent = require('../util/adjustIndent');
+var Node = require("./Node");
+var adjustIndent = require("../util/adjustIndent");
 
 class Code extends Node {
     constructor(def) {
-        super('Code');
+        super("Code");
         this.value = def.value;
     }
 

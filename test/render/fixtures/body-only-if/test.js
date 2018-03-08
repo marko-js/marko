@@ -1,3 +1,3 @@
 exports.templateData = {
-    "url": "/foo"
+    url: "/foo"
 };

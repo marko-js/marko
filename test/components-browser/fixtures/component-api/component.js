@@ -1,3 +1,3 @@
 module.exports = {
-    onMount: function () {}
+    onMount: function() {}
 };

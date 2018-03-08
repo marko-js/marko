@@ -1,7 +1,7 @@
 function Widget() {}
 
 Widget.prototype = {
-    renderer: require('./renderer')
+    renderer: require("./renderer")
 };
 
 exports.Widget = Widget;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class CompileError {
     constructor(errorInfo, context) {
@@ -33,13 +33,13 @@ class CompileError {
     toString() {
         var pos = this.pos;
         if (pos) {
-            pos = '[' + pos + '] ';
+            pos = "[" + pos + "] ";
         } else {
-            pos = '';
+            pos = "";
         }
         var str = pos + this.message;
         if (pos == null && this.node) {
-            str += ' (' + this.node.toString() + ')';
+            str += " (" + this.node.toString() + ")";
         }
         return str;
     }

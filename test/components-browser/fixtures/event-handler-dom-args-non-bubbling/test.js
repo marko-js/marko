@@ -1,19 +1,19 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
     expect(component.mouseMoveEvent).to.equal(undefined);
 
-    helpers.triggerMouseMove(component.getEl('ok'));
+    helpers.triggerMouseMove(component.getEl("ok"));
 
-    expect(component.mouseMoveEvent[0]).to.equal('ok');
-    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a('function');
-    expect(component.mouseMoveEvent[2].innerHTML).to.equal('OK');
+    expect(component.mouseMoveEvent[0]).to.equal("ok");
+    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a("function");
+    expect(component.mouseMoveEvent[2].innerHTML).to.equal("OK");
 
-    helpers.triggerMouseMove(component.getEl('cancel'));
+    helpers.triggerMouseMove(component.getEl("cancel"));
 
-    expect(component.mouseMoveEvent[0]).to.equal('cancel');
-    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a('function');
-    expect(component.mouseMoveEvent[2].innerHTML).to.equal('Cancel');
+    expect(component.mouseMoveEvent[0]).to.equal("cancel");
+    expect(component.mouseMoveEvent[1].stopPropagation).to.be.a("function");
+    expect(component.mouseMoveEvent[2].innerHTML).to.equal("Cancel");
 };

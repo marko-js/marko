@@ -3,18 +3,11 @@
     "@href": "string",
     "@variant": {
         "type": "string",
-        "enum": [
-            "primary",
-            "secondary"
-        ]
+        "enum": ["primary", "secondary"]
     },
     "@size": {
         "type": "string",
-        "enum": [
-            "small",
-            "normal",
-            "large"
-        ]
+        "enum": ["small", "normal", "large"]
     },
     "@class": {
         "type": "string",

@@ -1,12 +1,27 @@
-'use strict';
+"use strict";
 
-var runtimeHtmlHelpers = require('marko/runtime/html/helpers');
+var runtimeHtmlHelpers = require("marko/runtime/html/helpers");
 var escapeXml = runtimeHtmlHelpers.x;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
 
 var openTagOnly = {};
 
-['base', 'br', 'col', 'hr', 'embed', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'].forEach(function (tagName) {
+[
+    "base",
+    "br",
+    "col",
+    "hr",
+    "embed",
+    "img",
+    "input",
+    "keygen",
+    "link",
+    "meta",
+    "param",
+    "source",
+    "track",
+    "wbr"
+].forEach(function(tagName) {
     openTagOnly[tagName] = true;
 });
 
@@ -23,10 +38,9 @@ function getNextSibling(node) {
 }
 
 function vdomToHTML(node, options) {
-
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
-    var html = '';
+    var html = "";
     function serializeHelper(node) {
         var nodeType = node.nodeType || node.___nodeType;
 
@@ -44,52 +58,56 @@ function vdomToHTML(node, options) {
     function serializeElHelper(el) {
         var tagName = el.nodeName;
 
-        html += '<' + tagName;
+        html += "<" + tagName;
 
         var attributes = el.attributes;
         var attributesArray = [];
         var attrName;
 
-        if (typeof attributes.length === 'number') {
+        if (typeof attributes.length === "number") {
             for (var i = 0; i < attributes.length; i++) {
                 var attr = attributes[i];
                 attrName = attr.name;
 
-                if (attrName === 'data-marko-const') {
+                if (attrName === "data-marko-const") {
                     continue;
                 }
-                attributesArray.push(' ' + attrName + '="' + escapeXmlAttr(attr.value) + '"');
+                attributesArray.push(
+                    " " + attrName + '="' + escapeXmlAttr(attr.value) + '"'
+                );
             }
         } else {
             for (attrName in attributes) {
-                if (attrName === 'data-marko-const') {
+                if (attrName === "data-marko-const") {
                     continue;
                 }
 
                 var attrValue = attributes[attrName];
-                if (typeof attrValue !== 'string') {
+                if (typeof attrValue !== "string") {
                     if (attrValue === true) {
-                        attrValue = '';
+                        attrValue = "";
                     } else if (!attrValue) {
                         continue;
                     }
                 }
 
-                if (attrName === 'xlink:href') {
-                    attrName = 'http://www.w3.org/1999/xlink:href';
+                if (attrName === "xlink:href") {
+                    attrName = "http://www.w3.org/1999/xlink:href";
                 }
-                attributesArray.push(' ' + attrName + '="' + escapeXmlAttr(attrValue) + '"');
+                attributesArray.push(
+                    " " + attrName + '="' + escapeXmlAttr(attrValue) + '"'
+                );
             }
         }
 
         attributesArray.sort();
 
-        html += attributesArray.join('');
+        html += attributesArray.join("");
 
-        html += '>';
+        html += ">";
 
         var hasEndTag = true;
-        if (tagName.toUpperCase() === 'TEXTAREA') {
+        if (tagName.toUpperCase() === "TEXTAREA") {
             html += el.value;
         } else {
             var curChild = getFirstChild(el);
@@ -97,7 +115,7 @@ function vdomToHTML(node, options) {
                 while (curChild) {
                     let nodeType = curChild.nodeType || curChild.___nodeType;
                     if (nodeType === 3) {
-                        let escapeText = tagName.toUpperCase() !== 'SCRIPT';
+                        let escapeText = tagName.toUpperCase() !== "SCRIPT";
                         serializeTextHelper(curChild, escapeText);
                     } else {
                         serializeHelper(curChild);
@@ -111,21 +129,27 @@ function vdomToHTML(node, options) {
         }
 
         if (hasEndTag) {
-            html += '</' + tagName + '>';
+            html += "</" + tagName + ">";
         }
     }
 
     function serializeTextHelper(node, escape) {
-        html += escape !== false ? escapeXml(getNodeValue(node)) : getNodeValue(node);
+        html +=
+            escape !== false
+                ? escapeXml(getNodeValue(node))
+                : getNodeValue(node);
     }
 
     function serializeCommentHelper(node) {
-        html += '<!--' + getNodeValue(node) + '-->';
+        html += "<!--" + getNodeValue(node) + "-->";
     }
 
     let nodeType = node.nodeType || node.___nodeType;
 
-    if (nodeType === 11 /* DocumentFragment */ || options && options.childrenOnly) {
+    if (
+        nodeType === 11 /* DocumentFragment */ ||
+        (options && options.childrenOnly)
+    ) {
         var curChild = getFirstChild(node);
         while (curChild) {
             serializeHelper(curChild);

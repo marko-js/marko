@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 class UnaryExpression extends Node {
     constructor(def) {
-        super('UnaryExpression');
+        super("UnaryExpression");
         this.argument = def.argument;
         this.operator = def.operator;
         this.prefix = def.prefix === true;
@@ -24,21 +24,21 @@ class UnaryExpression extends Node {
         if (prefix) {
             writer.write(operator);
 
-            if (operator === 'typeof' || operator === 'delete') {
-                writer.write(' ');
+            if (operator === "typeof" || operator === "delete") {
+                writer.write(" ");
             }
         }
 
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(argument);
 
         if (wrap) {
-            writer.write(')');
+            writer.write(")");
         }
 
         if (!prefix) {
@@ -52,7 +52,7 @@ class UnaryExpression extends Node {
 
     toJSON() {
         return {
-            type: 'UnaryExpression',
+            type: "UnaryExpression",
             argument: this.argument,
             operator: this.operator,
             prefix: this.prefix
@@ -68,26 +68,26 @@ class UnaryExpression extends Node {
         var operator = this.operator;
         var prefix = this.prefix;
 
-        let result = '';
+        let result = "";
 
         if (prefix) {
             result += operator;
 
-            if (operator === 'typeof' || operator === 'delete') {
-                result += ' ';
+            if (operator === "typeof" || operator === "delete") {
+                result += " ";
             }
         }
 
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            result += '(';
+            result += "(";
         }
 
         result += argument;
 
         if (wrap) {
-            result += ')';
+            result += ")";
         }
 
         if (!prefix) {

@@ -1,1 +1,1 @@
-exports.transform = function () {};
+exports.transform = function() {};

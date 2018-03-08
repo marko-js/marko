@@ -1,9 +1,9 @@
-'use strict';
-var Literal = require('../../ast/Literal');
-var Node = require('../../ast/Node');
+"use strict";
+var Literal = require("../../ast/Literal");
+var Node = require("../../ast/Node");
 
 function isStaticArray(array) {
-    for (let i=0; i<array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         if (!isStaticValue(array[i])) {
             return false;
         }
@@ -29,13 +29,13 @@ function isStaticValue(value) {
     }
 
     if (value instanceof Node) {
-         if (value instanceof Literal) {
-             return isStaticValue(value.value);
-         } else {
-             return false;
-         }
+        if (value instanceof Literal) {
+            return isStaticValue(value.value);
+        } else {
+            return false;
+        }
     } else {
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
             if (Array.isArray(value)) {
                 return isStaticArray(value);
             } else {

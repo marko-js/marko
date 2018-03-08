@@ -1,7 +1,7 @@
 module.exports = {
     onInput: function() {
         this.state = {
-            'evil': '</script><script>alert("hello")</script>'
+            evil: '</script><script>alert("hello")</script>'
         };
 
         this.evil = '</script><script>alert("hello")</script>';

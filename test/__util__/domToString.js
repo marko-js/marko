@@ -1,5 +1,5 @@
 function ltrim(s) {
-    return s ? s.replace(/^\s\s*/, '') : '';
+    return s ? s.replace(/^\s\s*/, "") : "";
 }
 
 function getNodeType(node) {
@@ -19,10 +19,9 @@ function getNextSibling(node) {
 }
 
 function vdomToHTML(node, options) {
-
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
-    var html = '';
+    var html = "";
     function serializeHelper(node, indent) {
         var nodeType = getNodeType(node);
 
@@ -43,89 +42,95 @@ function vdomToHTML(node, options) {
 
         var elNamespaceURI = el.namespaceURI || el.___namespaceURI;
 
-        if (elNamespaceURI === 'http://www.w3.org/2000/svg') {
-            tagName = 'svg:' + tagName;
-        } else if (elNamespaceURI === 'http://www.w3.org/1998/Math/MathML') {
-            tagName = 'math:' + tagName;
+        if (elNamespaceURI === "http://www.w3.org/2000/svg") {
+            tagName = "svg:" + tagName;
+        } else if (elNamespaceURI === "http://www.w3.org/1998/Math/MathML") {
+            tagName = "math:" + tagName;
         }
 
-        html += indent + '<' + tagName;
+        html += indent + "<" + tagName;
 
         var attributes = el.attributes || el.___attributes;
         var attributesArray = [];
         var attrName;
 
-        if (typeof attributes.length === 'number') {
+        if (typeof attributes.length === "number") {
             for (var i = 0; i < attributes.length; i++) {
                 var attr = attributes[i];
                 if (attr.namespaceURI) {
-                    attrName = attr.namespaceURI + ':' + attr.localName;
+                    attrName = attr.namespaceURI + ":" + attr.localName;
                 } else {
                     attrName = attr.name;
                 }
 
-                if (attrName === 'data-marko-const') {
+                if (attrName === "data-marko-const") {
                     continue;
                 }
-                attributesArray.push(' ' + attrName + '="' + attr.value + '"');
+                attributesArray.push(" " + attrName + '="' + attr.value + '"');
             }
         } else {
             for (attrName in attributes) {
-                if (attrName === 'data-marko-const') {
+                if (attrName === "data-marko-const") {
                     continue;
                 }
 
                 var attrValue = attributes[attrName];
-                if (typeof attrValue !== 'string') {
+                if (typeof attrValue !== "string") {
                     if (attrValue === true) {
-                        attrValue = '';
+                        attrValue = "";
                     } else if (attrValue == null || attrValue === false) {
                         continue;
                     }
                 }
 
-                if (attrName === 'xlink:href') {
-                    attrName = 'http://www.w3.org/1999/xlink:href';
+                if (attrName === "xlink:href") {
+                    attrName = "http://www.w3.org/1999/xlink:href";
                 }
-                attributesArray.push(' ' + attrName + '="' + attrValue + '"');
+                attributesArray.push(" " + attrName + '="' + attrValue + '"');
             }
         }
 
         attributesArray.sort();
 
-        html += attributesArray.join('');
+        html += attributesArray.join("");
 
-        html += '>\n';
+        html += ">\n";
 
-        if (tagName.toUpperCase() === 'TEXTAREA') {
-            html += indent + '  VALUE: ' + JSON.stringify(ltrim(el.value || el.___value)) + '\n';
+        if (tagName.toUpperCase() === "TEXTAREA") {
+            html +=
+                indent +
+                "  VALUE: " +
+                JSON.stringify(ltrim(el.value || el.___value)) +
+                "\n";
         } else {
             var curChild = getFirstChild(el);
             while (curChild) {
-                serializeHelper(curChild, indent + '  ');
+                serializeHelper(curChild, indent + "  ");
                 curChild = getNextSibling(curChild);
             }
         }
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(getNodeValue(node)) + '\n';
+        html += indent + JSON.stringify(getNodeValue(node)) + "\n";
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + '<!--' + JSON.stringify(getNodeValue(node)) + '-->\n';
+        html += indent + "<!--" + JSON.stringify(getNodeValue(node)) + "-->\n";
     }
 
-    if (getNodeType(node) === 11 /* DocumentFragment */ || options && options.childrenOnly) {
+    if (
+        getNodeType(node) === 11 /* DocumentFragment */ ||
+        (options && options.childrenOnly)
+    ) {
         var curChild = getFirstChild(node);
 
         while (curChild) {
-            serializeHelper(curChild, '');
+            serializeHelper(curChild, "");
             curChild = getNextSibling(curChild);
         }
     } else {
-
-        serializeHelper(node, '');
+        serializeHelper(node, "");
     }
 
     return html;

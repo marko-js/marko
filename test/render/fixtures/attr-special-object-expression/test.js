@@ -1,6 +1,6 @@
 exports.templateData = {
     specialData: {
-        foo: 'bar'
+        foo: "bar"
     }
 };
 exports.vdomSkip = true;

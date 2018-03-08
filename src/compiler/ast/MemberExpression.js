@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
-var ok = require('assert').ok;
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
+var ok = require("assert").ok;
 
 class MemberExpression extends Node {
     constructor(def) {
-        super('MemberExpression');
+        super("MemberExpression");
         this.object = def.object;
         this.property = def.property;
         this.computed = def.computed;
@@ -29,28 +29,28 @@ class MemberExpression extends Node {
         var wrapWithParens = isCompoundExpression(object);
 
         if (wrapWithParens) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(object);
 
         if (wrapWithParens) {
-            writer.write(')');
+            writer.write(")");
         }
 
         if (computed) {
-            writer.write('[');
+            writer.write("[");
             writer.write(property);
-            writer.write(']');
+            writer.write("]");
         } else {
-            writer.write('.');
+            writer.write(".");
             writer.write(property);
         }
     }
 
     toJSON() {
         return {
-            type: 'MemberExpression',
+            type: "MemberExpression",
             object: this.object,
             property: this.property,
             computed: this.computed
@@ -70,9 +70,9 @@ class MemberExpression extends Node {
         var result = object.toString();
 
         if (computed) {
-            result += '[' + property + ']';
+            result += "[" + property + "]";
         } else {
-            result += '.' + property;
+            result += "." + property;
         }
 
         return result;

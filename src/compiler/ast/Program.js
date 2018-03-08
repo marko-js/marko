@@ -1,9 +1,9 @@
-'use strict';
-var Node = require('./Node');
+"use strict";
+var Node = require("./Node");
 
 class Program extends Node {
     constructor(def) {
-        super('Program');
+        super("Program");
         this.body = def.body;
     }
 

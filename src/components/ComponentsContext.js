@@ -1,5 +1,5 @@
-'use strict';
-var GlobalComponentsContext = require('./GlobalComponentsContext');
+"use strict";
+var GlobalComponentsContext = require("./GlobalComponentsContext");
 
 function ComponentsContext(out, parentComponentsContext) {
     var globalComponentsContext;
@@ -10,7 +10,10 @@ function ComponentsContext(out, parentComponentsContext) {
         componentDef = parentComponentsContext.___componentDef;
 
         var nestedContextsForParent;
-        if (!(nestedContextsForParent = parentComponentsContext.___nestedContexts)) {
+        if (
+            !(nestedContextsForParent =
+                parentComponentsContext.___nestedContexts)
+        ) {
             nestedContextsForParent = parentComponentsContext.___nestedContexts = [];
         }
 
@@ -18,7 +21,9 @@ function ComponentsContext(out, parentComponentsContext) {
     } else {
         globalComponentsContext = out.global.___components;
         if (globalComponentsContext === undefined) {
-            out.global.___components = globalComponentsContext = new GlobalComponentsContext(out);
+            out.global.___components = globalComponentsContext = new GlobalComponentsContext(
+                out
+            );
         }
     }
 
@@ -35,18 +40,20 @@ ComponentsContext.prototype = {
 
         ComponentsContext.___initClientRendered(componentDefs, doc);
 
-        this.___out.emit('___componentsInitialized');
+        this.___out.emit("___componentsInitialized");
 
         // Reset things stored in global since global is retained for
         // future renders
         this.___out.global.___components = undefined;
 
         return componentDefs;
-    },
+    }
 };
 
 function getComponentsContext(out) {
-    return out.___components || (out.___components = new ComponentsContext(out));
+    return (
+        out.___components || (out.___components = new ComponentsContext(out))
+    );
 }
 
 module.exports = exports = ComponentsContext;

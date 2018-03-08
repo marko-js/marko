@@ -1,4 +1,4 @@
-var nextTick = require('../../runtime/nextTick');
+var nextTick = require("../../runtime/nextTick");
 
 function AsyncValue() {
     /**
@@ -47,7 +47,6 @@ AsyncValue.prototype = {
      * available.
      */
     ___done: function(callback) {
-
         // Do we already have data or error?
         if (this.___settled) {
             // invoke the callback immediately
@@ -85,22 +84,22 @@ AsyncValue.prototype = {
     /**
      * This method will trigger any callbacks to be notified of data.
      */
-    ___resolve: function (value) {
+    ___resolve: function(value) {
         if (this.___settled) {
             return;
         }
 
-        if (value && typeof value.then === 'function') {
+        if (value && typeof value.then === "function") {
             var asyncValue = this;
 
-            var finalPromise = value
-                .then(
-                    function onFulfilled(value) {
-                        nextTick(asyncValue.___resolve.bind(asyncValue, value));
-                    },
-                    function onRejected(err) {
-                        nextTick(asyncValue.___reject.bind(asyncValue, err));
-                    });
+            var finalPromise = value.then(
+                function onFulfilled(value) {
+                    nextTick(asyncValue.___resolve.bind(asyncValue, value));
+                },
+                function onRejected(err) {
+                    nextTick(asyncValue.___reject.bind(asyncValue, err));
+                }
+            );
 
             if (finalPromise.done) {
                 finalPromise.done();

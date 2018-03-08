@@ -1,28 +1,27 @@
-'use strict';
+"use strict";
 
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var chai = require('chai');
+var chai = require("chai");
 chai.config.includeStack = true;
 
-var path = require('path');
+var path = require("path");
 
-var autotest = require('../autotest');
-const fs = require('fs');
-const morphdom = require('marko/morphdom');
-const createJSDOMModule = require('../__util__/create-jsdom-module');
+var autotest = require("../autotest");
+const fs = require("fs");
+const morphdom = require("marko/morphdom");
+const createJSDOMModule = require("../__util__/create-jsdom-module");
 function serializeNode(node) {
-
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
-    var html = '';
+    var html = "";
     function serializeHelper(node, indent) {
         if (node.nodeType === 1) {
             serializeElHelper(node, indent);
         } else if (node.nodeType === 3) {
             serializeTextHelper(node, indent);
         } else {
-            throw new Error('Unexpected node type');
+            throw new Error("Unexpected node type");
         }
     }
 
@@ -31,15 +30,15 @@ function serializeNode(node) {
 
         var namespaceURI = el.namespaceURI;
 
-        if (namespaceURI === 'http://www.w3.org/2000/svg') {
-            nodeName = 'svg:' + nodeName;
-        } else if (namespaceURI === 'http://www.w3.org/1998/Math/MathML') {
-            nodeName = 'math:' + nodeName;
-        } else if (namespaceURI !== 'http://www.w3.org/1999/xhtml') {
-            nodeName = namespaceURI + ':' + nodeName;
+        if (namespaceURI === "http://www.w3.org/2000/svg") {
+            nodeName = "svg:" + nodeName;
+        } else if (namespaceURI === "http://www.w3.org/1998/Math/MathML") {
+            nodeName = "math:" + nodeName;
+        } else if (namespaceURI !== "http://www.w3.org/1999/xhtml") {
+            nodeName = namespaceURI + ":" + nodeName;
         }
 
-        html += indent + '<' + nodeName;
+        html += indent + "<" + nodeName;
 
         var attributes = el.attributes;
         var attributesArray = [];
@@ -54,53 +53,68 @@ function serializeNode(node) {
                 }
 
                 if (attr.namespaceURI) {
-                    qualifiedName = attr.namespaceURI + ':' + qualifiedName;
+                    qualifiedName = attr.namespaceURI + ":" + qualifiedName;
                 }
-                attributesArray.push(' ' + qualifiedName + '="' + attr.value + '"');
+                attributesArray.push(
+                    " " + qualifiedName + '="' + attr.value + '"'
+                );
             }
         }
 
         attributesArray.sort();
 
-        html += attributesArray.join('');
+        html += attributesArray.join("");
 
-        html += '>\n';
+        html += ">\n";
 
         var childNodes = el.childNodes;
 
         if (childNodes && childNodes.length) {
             for (i = 0; i < childNodes.length; i++) {
-                serializeHelper(childNodes[i], indent + '  ');
+                serializeHelper(childNodes[i], indent + "  ");
             }
         }
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(node.nodeValue) + '\n';
+        html += indent + JSON.stringify(node.nodeValue) + "\n";
     }
 
-    serializeHelper(node, '');
+    serializeHelper(node, "");
 
     return html;
 }
 
-describe('morphdom', function () {
-    var autoTestDir = path.join(__dirname, './fixtures');
+describe("morphdom", function() {
+    var autoTestDir = path.join(__dirname, "./fixtures");
 
     autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
+        var fromHTML = fs.readFileSync(path.join(dir, "from.html"), {
+            encoding: "utf8"
+        });
+        var toHTML = fs.readFileSync(path.join(dir, "to.html"), {
+            encoding: "utf8"
+        });
 
-        var fromHTML = fs.readFileSync(path.join(dir, 'from.html'), { encoding: 'utf8' });
-        var toHTML = fs.readFileSync(path.join(dir, 'to.html'), { encoding: 'utf8' });
-
-        let fromDocument = createJSDOMModule({ dir: __dirname, html: '<html><body>' + fromHTML + '</body></html>' }).window.document;
-        let toDocument = createJSDOMModule({ dir: __dirname, html: '<html><body>' + toHTML + '</body></html>' }).window.document;
+        let fromDocument = createJSDOMModule({
+            dir: __dirname,
+            html: "<html><body>" + fromHTML + "</body></html>"
+        }).window.document;
+        let toDocument = createJSDOMModule({
+            dir: __dirname,
+            html: "<html><body>" + toHTML + "</body></html>"
+        }).window.document;
 
         let fromNode = fromDocument.body;
         let realToNode = toDocument.body;
 
-        var targetVEl = require('marko/runtime/vdom/vdom').___virtualize(realToNode);
+        var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
+            realToNode
+        );
         var expectedHTML = serializeNode(realToNode);
-        fs.writeFileSync(path.join(dir, 'expected.html'), expectedHTML, { encoding: 'utf8' });
+        fs.writeFileSync(path.join(dir, "expected.html"), expectedHTML, {
+            encoding: "utf8"
+        });
 
         var parentNode = fromNode;
         var startNode = fromNode.firstChild;
@@ -115,10 +129,17 @@ describe('morphdom', function () {
             }
         };
 
-        morphdom(parentNode, startNode, endNode, toNode, doc, componentsContext);
+        morphdom(
+            parentNode,
+            startNode,
+            endNode,
+            toNode,
+            doc,
+            componentsContext
+        );
 
         var actualHTML = serializeNode(fromNode);
-        helpers.compare(actualHTML, '.html');
+        helpers.compare(actualHTML, ".html");
 
         return done();
     });

@@ -1,35 +1,35 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 function writeCodeForOperand(node, writer) {
     var wrap = isCompoundExpression(node);
 
     if (wrap) {
-        writer.write('(');
+        writer.write("(");
     }
 
     writer.write(node);
 
     if (wrap) {
-        writer.write(')');
+        writer.write(")");
     }
 }
 
 function operandToString(node) {
     var wrap = isCompoundExpression(node);
 
-    var result = '';
+    var result = "";
 
     if (wrap) {
-        result += '(';
+        result += "(";
     }
 
     result += node.toString();
 
     if (wrap) {
-        result += ')';
+        result += ")";
     }
 
     return result;
@@ -37,7 +37,7 @@ function operandToString(node) {
 
 class BinaryExpression extends Node {
     constructor(def) {
-        super('BinaryExpression');
+        super("BinaryExpression");
         this.left = def.left;
         this.operator = def.operator;
         this.right = def.right;
@@ -52,19 +52,19 @@ class BinaryExpression extends Node {
         var operator = this.operator;
 
         if (!left || !right) {
-            throw new Error('Invalid BinaryExpression: ' + this);
+            throw new Error("Invalid BinaryExpression: " + this);
         }
 
         var builder = codegen.builder;
 
-        if (left.type === 'Literal' && right.type === 'Literal') {
-            if (operator === '+') {
+        if (left.type === "Literal" && right.type === "Literal") {
+            if (operator === "+") {
                 return builder.literal(left.value + right.value);
-            } else if (operator === '-') {
+            } else if (operator === "-") {
                 return builder.literal(left.value - right.value);
-            } else if (operator === '*') {
+            } else if (operator === "*") {
                 return builder.literal(left.value * right.value);
-            } else if (operator === '/') {
+            } else if (operator === "/") {
                 return builder.literal(left.value / right.value);
             }
         }
@@ -78,13 +78,13 @@ class BinaryExpression extends Node {
         var right = this.right;
 
         if (!left || !right) {
-            throw new Error('Invalid BinaryExpression: ' + this);
+            throw new Error("Invalid BinaryExpression: " + this);
         }
 
         writeCodeForOperand(left, writer);
-        writer.write(' ');
+        writer.write(" ");
         writer.write(operator);
-        writer.write(' ');
+        writer.write(" ");
         writeCodeForOperand(right, writer);
     }
 
@@ -94,7 +94,7 @@ class BinaryExpression extends Node {
 
     toJSON() {
         return {
-            type: 'BinaryExpression',
+            type: "BinaryExpression",
             left: this.left,
             operator: this.operator,
             right: this.right
@@ -112,10 +112,16 @@ class BinaryExpression extends Node {
         var right = this.right;
 
         if (!left || !right) {
-            throw new Error('Invalid BinaryExpression: ' + this);
+            throw new Error("Invalid BinaryExpression: " + this);
         }
 
-        return operandToString(left) + ' ' + operator + ' ' + operandToString(right);
+        return (
+            operandToString(left) +
+            " " +
+            operator +
+            " " +
+            operandToString(right)
+        );
     }
 }
 

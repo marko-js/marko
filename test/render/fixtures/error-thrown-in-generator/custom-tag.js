@@ -1,3 +1,3 @@
 module.exports = function generator() {
-    throw new Error('Something Happened!');
+    throw new Error("Something Happened!");
 };

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 var nextTransformerId = 0;
-var markoModules = require('../modules');
+var markoModules = require("../modules");
 
 class Transformer {
     constructor() {
@@ -15,13 +15,17 @@ class Transformer {
 
     getFunc() {
         if (!this.path) {
-            throw new Error('Transformer path not defined for tag transformer (tag=' + this.tag + ')');
+            throw new Error(
+                "Transformer path not defined for tag transformer (tag=" +
+                    this.tag +
+                    ")"
+            );
         }
 
         if (!this._func) {
             var transformer = markoModules.require(this.path);
 
-            if (typeof transformer === 'function') {
+            if (typeof transformer === "function") {
                 if (transformer.prototype.process) {
                     var Clazz = transformer;
                     var instance = new Clazz();
@@ -37,7 +41,7 @@ class Transformer {
         return this._func;
     }
     toString() {
-        return '[Taglib.Transformer: ' + this.path + ']';
+        return "[Taglib.Transformer: " + this.path + "]";
     }
 }
 

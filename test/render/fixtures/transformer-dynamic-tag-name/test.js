@@ -1,3 +1,3 @@
 exports.templateData = {
-    tagName: 'p'
+    tagName: "p"
 };

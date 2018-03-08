@@ -1,10 +1,10 @@
-'use strict';
-const isValidJavaScriptIdentifier = require('../util/isValidJavaScriptIdentifier');
-const Node = require('./Node');
+"use strict";
+const isValidJavaScriptIdentifier = require("../util/isValidJavaScriptIdentifier");
+const Node = require("./Node");
 
 class Property extends Node {
     constructor(def) {
-        super('Property');
+        super("Property");
         this.key = def.key;
         this.value = def.value;
         this.computed = def.computed === true;
@@ -26,26 +26,30 @@ class Property extends Node {
         var computed = this.computed === true;
 
         if (computed) {
-            writer.write('[');
+            writer.write("[");
         }
 
-        if (key.type === 'Literal' && typeof key.value === 'string' && isValidJavaScriptIdentifier(key.value)) {
+        if (
+            key.type === "Literal" &&
+            typeof key.value === "string" &&
+            isValidJavaScriptIdentifier(key.value)
+        ) {
             writer.write(key.value);
         } else {
             writer.write(key);
         }
 
         if (computed) {
-            writer.write(']');
+            writer.write("]");
         }
 
-        writer.write(': ');
+        writer.write(": ");
         writer.write(value);
     }
 
     toJSON() {
         return {
-            type: 'Property',
+            type: "Property",
             key: this.key,
             value: this.value
         };
@@ -58,9 +62,9 @@ class Property extends Node {
 
     get literalKeyValue() {
         if (!this.computed && this.key) {
-            if (this.key.type === 'Literal') {
+            if (this.key.type === "Literal") {
                 return this.key.value;
-            } else if (this.key.type === 'Identifier') {
+            } else if (this.key.type === "Identifier") {
                 return this.key.name;
             }
         }
@@ -72,14 +76,14 @@ class Property extends Node {
         var key = this.key;
         var value = this.value;
 
-        if (key.type === 'Literal') {
+        if (key.type === "Literal") {
             var propName = key.value;
             if (isValidJavaScriptIdentifier(propName)) {
                 key = propName;
             }
         }
 
-        return key + ': ' + value;
+        return key + ": " + value;
     }
 }
 

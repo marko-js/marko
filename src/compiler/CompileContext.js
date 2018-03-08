@@ -1,26 +1,26 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
-var path = require('path');
-var complain = require('complain');
-var taglibLookup = require('./taglib-lookup');
-var charProps = require('char-props');
+var ok = require("assert").ok;
+var path = require("path");
+var complain = require("complain");
+var taglibLookup = require("./taglib-lookup");
+var charProps = require("char-props");
 
-var UniqueVars = require('./util/UniqueVars');
-var PosInfo = require('./util/PosInfo');
-var CompileError = require('./CompileError');
-var Node = require('./ast/Node');
-var macros = require('./util/macros');
-var extend = require('raptor-util/extend');
-var Walker = require('./Walker');
-var EventEmitter = require('events').EventEmitter;
-var utilFingerprint = require('./util/finger-print');
-var htmlElements = require('./util/html-elements');
-var markoModules = require('./modules');
+var UniqueVars = require("./util/UniqueVars");
+var PosInfo = require("./util/PosInfo");
+var CompileError = require("./CompileError");
+var Node = require("./ast/Node");
+var macros = require("./util/macros");
+var extend = require("raptor-util/extend");
+var Walker = require("./Walker");
+var EventEmitter = require("events").EventEmitter;
+var utilFingerprint = require("./util/finger-print");
+var htmlElements = require("./util/html-elements");
+var markoModules = require("./modules");
 
-const markoPkgVersion = require('../../package.json').version;
-const rootDir = path.join(__dirname, '../');
-const isDebug = require('../build.json').isDebug;
+const markoPkgVersion = require("../../package.json").version;
+const rootDir = path.join(__dirname, "../");
+const isDebug = require("../build.json").isDebug;
 
 // const FLAG_IS_SVG = 1;
 // const FLAG_IS_TEXTAREA = 2;
@@ -28,10 +28,10 @@ const isDebug = require('../build.json').isDebug;
 // const FLAG_PRESERVE = 8;
 const FLAG_CUSTOM_ELEMENT = 16;
 
-const FLAG_PRESERVE_WHITESPACE = 'PRESERVE_WHITESPACE';
+const FLAG_PRESERVE_WHITESPACE = "PRESERVE_WHITESPACE";
 
 function getTaglibPath(taglibPath) {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
         return path.relative(process.cwd(), taglibPath);
     } else {
         return taglibPath;
@@ -49,76 +49,80 @@ function removeExt(filename) {
 
 function requireResolve(builder, path) {
     var requireResolveNode = builder.memberExpression(
-        builder.identifier('require'),
-        builder.identifier('resolve'));
+        builder.identifier("require"),
+        builder.identifier("resolve")
+    );
 
-
-    return builder.functionCall(requireResolveNode, [ path ]);
+    return builder.functionCall(requireResolveNode, [path]);
 }
 
 const helpers = {
-    'attr': 'a',
-    'attrs': 'as',
-    'classAttr': 'ca',
-    'classList': 'cl',
-    'const': 'const',
-    'createElement': 'e',
-    'createInlineTemplate': {
-        vdom: { module: 'marko/runtime/vdom/helper-createInlineTemplate'},
-        html: { module: 'marko/runtime/html/helper-createInlineTemplate'}
+    attr: "a",
+    attrs: "as",
+    classAttr: "ca",
+    classList: "cl",
+    const: "const",
+    createElement: "e",
+    createInlineTemplate: {
+        vdom: { module: "marko/runtime/vdom/helper-createInlineTemplate" },
+        html: { module: "marko/runtime/html/helper-createInlineTemplate" }
     },
-    'defineComponent': {
-        module: 'marko/components/helpers',
-        method: 'c'
+    defineComponent: {
+        module: "marko/components/helpers",
+        method: "c"
     },
-    'defineComponent-legacy': {
-        module: 'marko/components/legacy/helpers',
-        method: 'c'
+    "defineComponent-legacy": {
+        module: "marko/components/legacy/helpers",
+        method: "c"
     },
-    'defineWidget-legacy': {
-        module: 'marko/components/legacy/helpers',
-        method: 'w'
+    "defineWidget-legacy": {
+        module: "marko/components/legacy/helpers",
+        method: "w"
     },
-    'escapeXml': 'x',
-    'escapeXmlAttr': 'xa',
-    'escapeScript': 'xs',
-    'escapeStyle': 'xc',
-    'forEach': 'f',
-    'forEachProp': { module: 'marko/runtime/helper-forEachProperty' },
-    'forEachPropStatusVar': { module: 'marko/runtime/helper-forEachPropStatusVar' },
-    'forEachWithStatusVar': { module: 'marko/runtime/helper-forEachWithStatusVar' },
-    'forRange': { module: 'marko/runtime/helper-forRange' },
-    'include': 'i',
-    'loadNestedTag': { module: 'marko/runtime/helper-loadNestedTag' },
-    'loadTag': 't',
-    'loadTemplate': { module: 'marko/runtime/helper-loadTemplate' },
-    'mergeNestedTagsHelper': { module: 'marko/runtime/helper-mergeNestedTags' },
-    'merge': { module: 'marko/runtime/helper-merge' },
-    'propsForPreviousNode': 'p',
-    'renderer': {
-        module: 'marko/components/helpers',
-        method: 'r'
+    escapeXml: "x",
+    escapeXmlAttr: "xa",
+    escapeScript: "xs",
+    escapeStyle: "xc",
+    forEach: "f",
+    forEachProp: { module: "marko/runtime/helper-forEachProperty" },
+    forEachPropStatusVar: {
+        module: "marko/runtime/helper-forEachPropStatusVar"
     },
-    'rendererLegacy': {
-        module: 'marko/components/legacy/helpers',
-        method: 'r'
+    forEachWithStatusVar: {
+        module: "marko/runtime/helper-forEachWithStatusVar"
     },
-    'registerComponent': {
-        module: 'marko/components/helpers',
-        method: 'rc'
+    forRange: { module: "marko/runtime/helper-forRange" },
+    include: "i",
+    loadNestedTag: { module: "marko/runtime/helper-loadNestedTag" },
+    loadTag: "t",
+    loadTemplate: { module: "marko/runtime/helper-loadTemplate" },
+    mergeNestedTagsHelper: { module: "marko/runtime/helper-mergeNestedTags" },
+    merge: { module: "marko/runtime/helper-merge" },
+    propsForPreviousNode: "p",
+    renderer: {
+        module: "marko/components/helpers",
+        method: "r"
     },
-    'str': 's',
-    'styleAttr': {
-        vdom: { module: 'marko/runtime/vdom/helper-styleAttr'},
-        html: 'sa'
+    rendererLegacy: {
+        module: "marko/components/legacy/helpers",
+        method: "r"
     },
-    'createText': 't'
+    registerComponent: {
+        module: "marko/components/helpers",
+        method: "rc"
+    },
+    str: "s",
+    styleAttr: {
+        vdom: { module: "marko/runtime/vdom/helper-styleAttr" },
+        html: "sa"
+    },
+    createText: "t"
 };
 
 class CompileContext extends EventEmitter {
     constructor(src, filename, builder, options) {
         super();
-        ok(typeof src === 'string', '"src" string is required');
+        ok(typeof src === "string", '"src" string is required');
         ok(filename, '"filename" is required');
 
         this.src = src;
@@ -136,12 +140,14 @@ class CompileContext extends EventEmitter {
         const writeVersionComment = this.options.writeVersionComment;
 
         this.root = undefined; // root will be set by the Compiler
-        this.target = this.options.browser ? 'browser' : 'server';
-        this.outputType = this.options.output || 'html';
-        this.compilerType = this.options.compilerType || 'marko';
+        this.target = this.options.browser ? "browser" : "server";
+        this.outputType = this.options.output || "html";
+        this.compilerType = this.options.compilerType || "marko";
         this.compilerVersion = this.options.compilerVersion || markoPkgVersion;
-        this.writeVersionComment = writeVersionComment !== 'undefined' ? writeVersionComment : true;
-        this.ignoreUnrecognizedTags = this.options.ignoreUnrecognizedTags === true;
+        this.writeVersionComment =
+            writeVersionComment !== "undefined" ? writeVersionComment : true;
+        this.ignoreUnrecognizedTags =
+            this.options.ignoreUnrecognizedTags === true;
         this.escapeAtTags = this.options.escapeAtTags === true;
 
         this._vars = {};
@@ -157,9 +163,11 @@ class CompileContext extends EventEmitter {
         this._preserveComments = null;
         this.inline = this.options.inline === true;
         this.useMeta = this.options.meta !== false;
-        this.markoModulePrefix = isDebug ? 'marko/src/' : 'marko/dist/';
+        this.markoModulePrefix = isDebug ? "marko/src/" : "marko/dist/";
 
-        this._moduleRuntimeTarget = this.markoModulePrefix + (this.outputType === 'vdom' ? 'vdom' : 'html');
+        this._moduleRuntimeTarget =
+            this.markoModulePrefix +
+            (this.outputType === "vdom" ? "vdom" : "html");
         this.unrecognizedTags = [];
         this._parsingFinished = false;
 
@@ -181,8 +189,9 @@ class CompileContext extends EventEmitter {
     }
 
     getPosInfo(pos) {
-        var srcCharProps = this._srcCharProps || (this._srcCharProps = charProps(this.src));
-        let line = srcCharProps.lineAt(pos)+1;
+        var srcCharProps =
+            this._srcCharProps || (this._srcCharProps = charProps(this.src));
+        let line = srcCharProps.lineAt(pos) + 1;
         let column = srcCharProps.columnAt(pos);
         return new PosInfo(this.filename, line, column);
     }
@@ -217,7 +226,9 @@ class CompileContext extends EventEmitter {
 
     popFlag(name) {
         if (!this._flags.hasOwnProperty(name)) {
-            throw new Error('popFlag() called for "' + name + '" when flag was not set');
+            throw new Error(
+                'popFlag() called for "' + name + '" when flag was not set'
+            );
         }
 
         if (--this._flags[name] === 0) {
@@ -244,7 +255,8 @@ class CompileContext extends EventEmitter {
         var dataStack = this._dataStacks[key];
 
         if (!dataStack || dataStack.length === 0) {
-            throw new Error('No data pushed for "' + key + '"'); }
+            throw new Error('No data pushed for "' + key + '"');
+        }
 
         dataStack.pop();
 
@@ -285,7 +297,7 @@ class CompileContext extends EventEmitter {
                 code,
                 pos
             };
-        } else if (typeof errorInfo === 'string') {
+        } else if (typeof errorInfo === "string") {
             let message = arguments[0];
             let code = arguments[1];
             let pos = arguments[2];
@@ -297,7 +309,7 @@ class CompileContext extends EventEmitter {
             };
         }
 
-        if(errorInfo && !errorInfo.node) {
+        if (errorInfo && !errorInfo.node) {
             errorInfo.node = this._currentNode;
         }
 
@@ -314,31 +326,36 @@ class CompileContext extends EventEmitter {
 
     getRequirePath(targetFilename) {
         if (targetFilename.startsWith(rootDir)) {
-            var deresolved = this.markoModulePrefix + targetFilename.substring(rootDir.length);
+            var deresolved =
+                this.markoModulePrefix +
+                targetFilename.substring(rootDir.length);
             var ext = path.extname(deresolved);
-            if (ext === '.js') {
+            if (ext === ".js") {
                 deresolved = deresolved.slice(0, 0 - ext.length);
             }
-            return deresolved.replace(/\\/g, '/');
+            return deresolved.replace(/\\/g, "/");
         }
 
         return markoModules.deresolve(targetFilename, this.dirname);
     }
 
     importModule(varName, path) {
-        if (typeof path !== 'string') {
+        if (typeof path !== "string") {
             throw new Error('"path" should be a string');
         }
 
-        if (path === 'marko') {
+        if (path === "marko") {
             path = this.markoModulePrefix;
-        } else if (path.startsWith('marko/')) {
-            if (!path.startsWith('marko/src/') && !path.startsWith('marko/dist/')) {
-                path = this.markoModulePrefix + path.substring('marko/'.length);
+        } else if (path.startsWith("marko/")) {
+            if (
+                !path.startsWith("marko/src/") &&
+                !path.startsWith("marko/dist/")
+            ) {
+                path = this.markoModulePrefix + path.substring("marko/".length);
             }
         }
 
-        var key = path + ':' + (varName != null);
+        var key = path + ":" + (varName != null);
 
         var varId = this._imports[key];
         if (varId === undefined) {
@@ -347,8 +364,10 @@ class CompileContext extends EventEmitter {
             var requireFuncCall = builder.require(builder.literal(path));
 
             if (varName) {
-                this._imports[key] = varId = this.addStaticVar(varName, requireFuncCall);
-
+                this._imports[key] = varId = this.addStaticVar(
+                    varName,
+                    requireFuncCall
+                );
             } else {
                 this.addStaticCode(requireFuncCall);
                 this._imports[key] = null;
@@ -383,7 +402,7 @@ class CompileContext extends EventEmitter {
             return;
         }
 
-        if (typeof code === 'string') {
+        if (typeof code === "string") {
             // Wrap the String code in a Code AST node so that
             // the code will be indented properly
             code = this.builder.code(code);
@@ -403,7 +422,7 @@ class CompileContext extends EventEmitter {
     getTagDef(tagName) {
         var taglibLookup = this.taglibLookup;
 
-        if (typeof tagName === 'string') {
+        if (typeof tagName === "string") {
             return taglibLookup.getTag(tagName);
         } else {
             let elNode = tagName;
@@ -418,7 +437,10 @@ class CompileContext extends EventEmitter {
     addErrorUnrecognizedTag(tagName, elNode) {
         this.addError({
             node: elNode,
-            message: 'Unrecognized tag: ' + tagName + ' - More details: https://github.com/marko-js/marko/wiki/Error:-Unrecognized-Tag'
+            message:
+                "Unrecognized tag: " +
+                tagName +
+                " - More details: https://github.com/marko-js/marko/wiki/Error:-Unrecognized-Tag"
         });
     }
 
@@ -426,7 +448,7 @@ class CompileContext extends EventEmitter {
         var elDef;
         var builder = this.builder;
 
-        if (typeof tagName === 'object') {
+        if (typeof tagName === "object") {
             elDef = tagName;
             tagName = elDef.tagName;
             attributes = elDef.attributes;
@@ -434,39 +456,41 @@ class CompileContext extends EventEmitter {
             elDef = { tagName, argument, attributes, openTagOnly, selfClosed };
         }
 
-        if (elDef.tagName === '') {
-            elDef.tagName = tagName = 'assign';
+        if (elDef.tagName === "") {
+            elDef.tagName = tagName = "assign";
         }
 
         if (!attributes) {
             attributes = elDef.attributes = [];
-        } else if (typeof attributes === 'object') {
+        } else if (typeof attributes === "object") {
             if (!Array.isArray(attributes)) {
-                attributes = elDef.attributes = Object.keys(attributes).map((attrName) => {
-                    var attrDef = {
-                        name: attrName
-                    };
+                attributes = elDef.attributes = Object.keys(attributes).map(
+                    attrName => {
+                        var attrDef = {
+                            name: attrName
+                        };
 
-                    var val = attributes[attrName];
-                    if (val != null) {
-                        if (val instanceof Node) {
-                            attrDef.value = val;
-                        } else {
-                            extend(attrDef, val);
+                        var val = attributes[attrName];
+                        if (val != null) {
+                            if (val instanceof Node) {
+                                attrDef.value = val;
+                            } else {
+                                extend(attrDef, val);
+                            }
                         }
-                    } 
 
-                    return attrDef;
-                });
+                        return attrDef;
+                    }
+                );
             }
         } else {
-            throw new Error('Invalid attributes');
+            throw new Error("Invalid attributes");
         }
 
-        var isAtTag = typeof tagName === 'string' && tagName.startsWith('@');
+        var isAtTag = typeof tagName === "string" && tagName.startsWith("@");
 
         if (isAtTag && this.escapeAtTags) {
-            tagName = tagName.replace(/^@/, 'at_');
+            tagName = tagName.replace(/^@/, "at_");
             elDef.tagName = tagName;
         }
 
@@ -486,16 +510,25 @@ class CompileContext extends EventEmitter {
             node = builder.customTag(elNode);
             node.body = node.makeContainer(node.body.items);
         } else {
-            if (typeof tagName === 'string') {
+            if (typeof tagName === "string") {
                 tagDef = taglibLookup.getTag(tagName);
-                if (!tagDef && !this.isMacro(tagName) && tagName.indexOf(':') === -1) {
-                    var customElement = htmlElements.getRegisteredElement(tagName, this.dirname);
+                if (
+                    !tagDef &&
+                    !this.isMacro(tagName) &&
+                    tagName.indexOf(":") === -1
+                ) {
+                    var customElement = htmlElements.getRegisteredElement(
+                        tagName,
+                        this.dirname
+                    );
                     if (customElement) {
                         elNode.customElement = customElement;
                         elNode.addRuntimeFlag(FLAG_CUSTOM_ELEMENT);
 
                         if (customElement.import) {
-                            this.addDependency(this.getRequirePath(customElement.import));
+                            this.addDependency(
+                                this.getRequirePath(customElement.import)
+                            );
                         }
                     } else if (!this.ignoreUnrecognizedTags) {
                         if (this._parsingFinished) {
@@ -517,13 +550,19 @@ class CompileContext extends EventEmitter {
                 if (nodeFactoryFunc) {
                     var newNode = nodeFactoryFunc(elNode, this);
                     if (!(newNode instanceof Node)) {
-                        throw new Error('Invalid node returned from node factory for tag "' + tagName + '".');
+                        throw new Error(
+                            'Invalid node returned from node factory for tag "' +
+                                tagName +
+                                '".'
+                        );
                     }
 
                     if (newNode != node) {
                         // Make sure the body container is associated with the correct node
                         if (newNode.body && newNode.body !== node) {
-                            newNode.body = newNode.makeContainer(newNode.body.items);
+                            newNode.body = newNode.makeContainer(
+                                newNode.body.items
+                            );
                         }
                         node = newNode;
                     }
@@ -544,7 +583,7 @@ class CompileContext extends EventEmitter {
         var foundAttrs = {};
 
         // Validate the attributes
-        attributes.forEach((attr) => {
+        attributes.forEach(attr => {
             let attrName = attr.name;
             if (!attrName) {
                 // Attribute will be name for placeholder attributes. For example: <div ${data.myAttrs}>
@@ -561,9 +600,15 @@ class CompileContext extends EventEmitter {
                     //Tag doesn't allow dynamic attributes
                     this.addError({
                         node: node,
-                        message: 'The tag "' + tagName + '" in taglib "' + getTaglibPath(tagDef.taglibId) + '" does not support attribute "' + attrName + '"'
+                        message:
+                            'The tag "' +
+                            tagName +
+                            '" in taglib "' +
+                            getTaglibPath(tagDef.taglibId) +
+                            '" does not support attribute "' +
+                            attrName +
+                            '"'
                     });
-
                 }
                 return;
             }
@@ -585,10 +630,13 @@ class CompileContext extends EventEmitter {
             // Add default values for any attributes. If an attribute has a declared
             // default value and the attribute was not found on the element
             // then add the attribute with the specified default value
-            tagDef.forEachAttribute((attrDef) => {
+            tagDef.forEachAttribute(attrDef => {
                 var attrName = attrDef.name;
 
-                if (attrDef.hasOwnProperty('defaultValue') && !foundAttrs.hasOwnProperty(attrName)) {
+                if (
+                    attrDef.hasOwnProperty("defaultValue") &&
+                    !foundAttrs.hasOwnProperty(attrName)
+                ) {
                     attributes.push({
                         name: attrName,
                         value: builder.literal(attrDef.defaultValue)
@@ -598,7 +646,14 @@ class CompileContext extends EventEmitter {
                     if (!foundAttrs.hasOwnProperty(attrName)) {
                         this.addError({
                             node: node,
-                            message: 'The "' + attrName + '" attribute is required for tag "' + tagName + '" in taglib "' + getTaglibPath(tagDef.taglibId) + '".'
+                            message:
+                                'The "' +
+                                attrName +
+                                '" attribute is required for tag "' +
+                                tagName +
+                                '" in taglib "' +
+                                getTaglibPath(tagDef.taglibId) +
+                                '".'
                         });
                     }
                 }
@@ -635,23 +690,33 @@ class CompileContext extends EventEmitter {
     }
 
     importTemplate(relativePath, varName) {
-        ok(typeof relativePath === 'string', '"path" should be a string');
+        ok(typeof relativePath === "string", '"path" should be a string');
         var builder = this.builder;
-		varName = varName || removeExt(path.basename(relativePath)) + '_template';
+        varName =
+            varName || removeExt(path.basename(relativePath)) + "_template";
 
         var templateVar;
 
         if (this.options.browser || this.options.requireTemplates) {
             // When compiling a Marko template for the browser we just use `require('./template.marko')`
-            templateVar = this.addStaticVar(varName, builder.require(builder.literal(relativePath)));
+            templateVar = this.addStaticVar(
+                varName,
+                builder.require(builder.literal(relativePath))
+            );
         } else {
             // When compiling a Marko template for the server we just use `loadTemplate(require.resolve('./template.marko'))`
-            let loadTemplateArg = requireResolve(builder, builder.literal(relativePath));
-            let loadFunctionCall = builder.functionCall(this.helper('loadTemplate'), [ loadTemplateArg ]);
+            let loadTemplateArg = requireResolve(
+                builder,
+                builder.literal(relativePath)
+            );
+            let loadFunctionCall = builder.functionCall(
+                this.helper("loadTemplate"),
+                [loadTemplateArg]
+            );
             templateVar = this.addStaticVar(varName, loadFunctionCall);
         }
 
-        this.pushMeta('tags', relativePath, true);
+        this.pushMeta("tags", relativePath, true);
 
         return templateVar;
     }
@@ -663,7 +728,7 @@ class CompileContext extends EventEmitter {
         } else {
             dependency = path;
         }
-        this.pushMeta('deps', dependency, true);
+        this.pushMeta("deps", dependency, true);
     }
 
     pushMeta(key, value, unique) {
@@ -671,9 +736,12 @@ class CompileContext extends EventEmitter {
 
         property = this.meta[key];
 
-        if(!property) {
+        if (!property) {
             this.meta[key] = [value];
-        } else if(!unique || !property.some(e => JSON.stringify(e) === JSON.stringify(value))) {
+        } else if (
+            !unique ||
+            !property.some(e => JSON.stringify(e) === JSON.stringify(value))
+        ) {
             property.push(value);
         }
     }
@@ -695,7 +763,10 @@ class CompileContext extends EventEmitter {
     }
 
     isPreserveWhitespace() {
-        if (this.isFlagSet(FLAG_PRESERVE_WHITESPACE) || this._preserveWhitespace === true) {
+        if (
+            this.isFlagSet(FLAG_PRESERVE_WHITESPACE) ||
+            this._preserveWhitespace === true
+        ) {
             return true;
         }
     }
@@ -718,10 +789,13 @@ class CompileContext extends EventEmitter {
     resolvePath(pathExpression) {
         ok(pathExpression, '"pathExpression" is required');
 
-        if (pathExpression.type === 'Literal') {
+        if (pathExpression.type === "Literal") {
             let path = pathExpression.value;
-            if (typeof path === 'string') {
-                return this.addStaticVar(path, this.builder.requireResolve(pathExpression));
+            if (typeof path === "string") {
+                return this.addStaticVar(
+                    path,
+                    this.builder.requireResolve(pathExpression)
+                );
             }
         }
         return pathExpression;
@@ -730,9 +804,9 @@ class CompileContext extends EventEmitter {
     resolveTemplate(pathExpression) {
         ok(pathExpression, '"pathExpression" is required');
 
-        if (pathExpression.type === 'Literal') {
+        if (pathExpression.type === "Literal") {
             let path = pathExpression.value;
-            if (typeof path === 'string') {
+            if (typeof path === "string") {
                 return this.importTemplate(path);
             }
         }
@@ -745,12 +819,12 @@ class CompileContext extends EventEmitter {
         let staticNodes = [];
         let staticVars = this.getStaticVars();
 
-        let staticVarNodes = Object.keys(staticVars).map((varName) => {
+        let staticVarNodes = Object.keys(staticVars).map(varName => {
             var varInit = staticVars[varName];
             return builder.variableDeclarator(varName, varInit);
         });
 
-        if(additionalVars) {
+        if (additionalVars) {
             staticVarNodes = additionalVars.concat(staticVarNodes);
         }
 
@@ -769,8 +843,14 @@ class CompileContext extends EventEmitter {
 
     get helpersIdentifier() {
         if (!this._helpersIdentifier) {
-            var target = this.outputType === 'vdom' ? 'marko/runtime/vdom/helpers' : 'marko/runtime/html/helpers';
-            this._helpersIdentifier = this.importModule('marko_helpers', target);
+            var target =
+                this.outputType === "vdom"
+                    ? "marko/runtime/vdom/helpers"
+                    : "marko/runtime/html/helpers";
+            this._helpersIdentifier = this.importModule(
+                "marko_helpers",
+                target
+            );
         }
         return this._helpersIdentifier;
     }
@@ -780,37 +860,49 @@ class CompileContext extends EventEmitter {
         if (!helperIdentifier) {
             var helperInfo = helpers[name];
 
-            if (helperInfo && typeof helperInfo === 'object') {
+            if (helperInfo && typeof helperInfo === "object") {
                 if (!helperInfo.module) {
                     helperInfo = helperInfo[this.outputType];
                 }
             }
 
             if (!helperInfo) {
-                throw new Error('Invalid helper: ' + name);
+                throw new Error("Invalid helper: " + name);
             }
 
-            if (typeof helperInfo === 'string') {
+            if (typeof helperInfo === "string") {
                 let methodName = helperInfo;
                 var methodIdentifier = this.builder.identifier(methodName);
 
                 helperIdentifier = this.addStaticVar(
-                    'marko_' + name,
-                    this.builder.memberExpression(this.helpersIdentifier, methodIdentifier));
+                    "marko_" + name,
+                    this.builder.memberExpression(
+                        this.helpersIdentifier,
+                        methodIdentifier
+                    )
+                );
             } else if (helperInfo && helperInfo.module) {
                 if (helperInfo.method) {
-                    let moduleIdentifier = this.importModule('marko_' + helperInfo.module, helperInfo.module);
+                    let moduleIdentifier = this.importModule(
+                        "marko_" + helperInfo.module,
+                        helperInfo.module
+                    );
                     helperIdentifier = this.addStaticVar(
-                        'marko_' + name,
-                        this.builder.memberExpression(moduleIdentifier, helperInfo.method));
+                        "marko_" + name,
+                        this.builder.memberExpression(
+                            moduleIdentifier,
+                            helperInfo.method
+                        )
+                    );
                 } else {
-                    helperIdentifier = this.importModule('marko_' + name, helperInfo.module);
+                    helperIdentifier = this.importModule(
+                        "marko_" + name,
+                        helperInfo.module
+                    );
                 }
             } else {
-                throw new Error('Invalid helper: ' + name);
+                throw new Error("Invalid helper: " + name);
             }
-
-
 
             this._helpers[name] = helperIdentifier;
         }
@@ -841,7 +933,7 @@ class CompileContext extends EventEmitter {
 
     optimize(rootNode) {
         if (this._optimizers) {
-            this._optimizers.forEach((optimizer) => {
+            this._optimizers.forEach(optimizer => {
                 optimizer.optimize(rootNode, this);
             });
         }
@@ -852,17 +944,17 @@ class CompileContext extends EventEmitter {
     }
 
     isBrowserTarget() {
-        return this.target === 'browser';
+        return this.target === "browser";
     }
 
     isServerTarget() {
-        return this.target === 'server';
+        return this.target === "server";
     }
 }
 
 CompileContext.prototype.util = {
-    isValidJavaScriptIdentifier: require('./util/isValidJavaScriptIdentifier'),
-    isJavaScriptReservedWord: require('./util/isJavaScriptReservedWord')
+    isValidJavaScriptIdentifier: require("./util/isValidJavaScriptIdentifier"),
+    isJavaScriptReservedWord: require("./util/isJavaScriptReservedWord")
 };
 
 module.exports = CompileContext;

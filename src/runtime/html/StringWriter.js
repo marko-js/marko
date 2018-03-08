@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 function StringWriter() {
-    this.str = '';
+    this.str = "";
 }
 
 StringWriter.prototype = {

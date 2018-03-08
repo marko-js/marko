@@ -24,8 +24,8 @@
 var isReady = false;
 var readyBound = false;
 
-var defaultWindow = typeof window != 'undefined' && window;
-var defaultDocument = typeof document != 'undefined' && document;
+var defaultWindow = typeof window != "undefined" && window;
+var defaultDocument = typeof document != "undefined" && document;
 
 var listeners = [];
 
@@ -60,7 +60,11 @@ function bindReady(doc) {
     // The ready event handler
     function domContentLoaded() {
         if (doc.addEventListener) {
-            doc.removeEventListener("DOMContentLoaded", domContentLoaded, false);
+            doc.removeEventListener(
+                "DOMContentLoaded",
+                domContentLoaded,
+                false
+            );
             doc.removeEventListener("load", domContentLoaded, false);
         } else {
             // we're here because readyState !== "loading" in oldIE
@@ -92,11 +96,16 @@ function bindReady(doc) {
     // Catch cases where $ is called after the
     // browser event has already occurred. IE <= 10 has a bug that results in 'interactive' being assigned
     // to the readyState before the DOM is really ready
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+    if (
+        document.attachEvent
+            ? document.readyState === "complete"
+            : document.readyState !== "loading"
+    ) {
         // We will get here if the browser is IE and the readyState === 'complete' or the browser
         // is not IE and the readyState === 'interactive' || 'complete'
         domReady(doc);
-    } else if (doc.addEventListener) { // Standards-based browsers support DOMContentLoaded
+    } else if (doc.addEventListener) {
+        // Standards-based browsers support DOMContentLoaded
         // Use the handy event callback
         doc.addEventListener("DOMContentLoaded", domContentLoaded, false);
         // A fallback to win.onload, that will always work
@@ -112,7 +121,9 @@ function bindReady(doc) {
         // continually check to see if the document is ready
         try {
             toplevel = win.frameElement == null;
-        } catch (e) { /* ignore error */ }
+        } catch (e) {
+            /* ignore error */
+        }
         if (doc.documentElement.doScroll && toplevel) {
             doScrollCheck();
         }
@@ -135,7 +146,7 @@ function ready(callback, thisObj, doc) {
 module.exports = ready;
 
 module.exports.patchComponent = function(proto) {
-    (proto || require('./Component').prototype).ready = function (callback) {
+    (proto || require("./Component").prototype).ready = function(callback) {
         var document = this.el.ownerDocument;
         ready(callback, this, document);
     };

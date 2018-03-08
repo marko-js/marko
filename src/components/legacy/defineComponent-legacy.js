@@ -23,6 +23,5 @@ module.exports = function defineComponent(def) {
     return defineWidget(def, renderer);
 };
 
-defineRenderer = require('./defineRenderer-legacy');
-defineWidget = require('./defineWidget-legacy');
-
+defineRenderer = require("./defineRenderer-legacy");
+defineWidget = require("./defineWidget-legacy");

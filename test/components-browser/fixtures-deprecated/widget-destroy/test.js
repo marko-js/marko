@@ -1,14 +1,14 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var widget = helpers.mount(require.resolve('./index'), {
+module.exports = function(helpers) {
+    var widget = helpers.mount(require.resolve("./index"), {
         showSimple: true
     });
 
-    var simple = widget.getWidget('simple');
+    var simple = widget.getWidget("simple");
     var simpleDestroyed = false;
 
-    simple.onDestroy = function () {
+    simple.onDestroy = function() {
         simpleDestroyed = true;
     };
 
@@ -22,5 +22,5 @@ module.exports = function (helpers) {
     expect(simpleDestroyed).to.equal(true);
     expect(simple.isDestroyed()).to.equal(true);
 
-    expect(widget.getWidget('simple') == null).to.equal(true);
+    expect(widget.getWidget("simple") == null).to.equal(true);
 };

@@ -6,7 +6,6 @@ var tagStartRegExp = /(^\s*(?:(?:exports.(?:tag|TAG))|(?:TAG))\s*=\s*)\{/m;
 var tokensRegExp = /"(?:[^"]|\\")*"|'(?:[^'])|(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)|[{};]/g;
 
 function extractTagDef(code) {
-
     var startMatches = tagStartRegExp.exec(code);
 
     var tagDefStart;
@@ -19,16 +18,15 @@ function extractTagDef(code) {
         var depth = 0;
 
         while ((nextTokenMatches = tokensRegExp.exec(code))) {
-            if (nextTokenMatches[0] === '{') {
+            if (nextTokenMatches[0] === "{") {
                 depth++;
                 continue;
-            } else if (nextTokenMatches[0] === '}') {
+            } else if (nextTokenMatches[0] === "}") {
                 if (--depth === 0) {
                     tagDefEnd = tokensRegExp.lastIndex;
                     break;
                 }
-            }
-            else if (nextTokenMatches[0] === ';') {
+            } else if (nextTokenMatches[0] === ";") {
                 tagDefEnd = nextTokenMatches.index;
                 break;
             }
@@ -41,11 +39,11 @@ function extractTagDef(code) {
             try {
                 // Try parsing it as JSON
                 tagDefObject = JSON.parse(jsTagDef);
-            } catch(e) {
+            } catch (e) {
                 // Try parsing it as JavaScript
                 try {
-                    tagDefObject = eval('(' + jsTagDef + ')');
-                } catch(e) {
+                    tagDefObject = eval("(" + jsTagDef + ")");
+                } catch (e) {
                     tagDefObject = {};
                 }
             }

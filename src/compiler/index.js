@@ -1,28 +1,32 @@
-'use strict';
+"use strict";
 
-var Compiler = require('./Compiler');
-var Walker = require('./Walker');
-var Parser = require('./Parser');
-var HtmlJsParser = require('./HtmlJsParser');
-var Builder = require('./Builder');
-var extend = require('raptor-util/extend');
-var CompileContext = require('./CompileContext');
-var globalConfig = require('./config');
-var InlineCompiler = require('./InlineCompiler');
-var ok = require('assert').ok;
-var fs = require('fs');
-var taglibLoader = require('./taglib-loader');
+var Compiler = require("./Compiler");
+var Walker = require("./Walker");
+var Parser = require("./Parser");
+var HtmlJsParser = require("./HtmlJsParser");
+var Builder = require("./Builder");
+var extend = require("raptor-util/extend");
+var CompileContext = require("./CompileContext");
+var globalConfig = require("./config");
+var InlineCompiler = require("./InlineCompiler");
+var ok = require("assert").ok;
+var fs = require("fs");
+var taglibLoader = require("./taglib-loader");
 
 var defaults = extend({}, globalConfig);
 
-Object.defineProperty(exports, 'defaultOptions', {
-    get: function() { return globalConfig;  },
+Object.defineProperty(exports, "defaultOptions", {
+    get: function() {
+        return globalConfig;
+    },
     enumerable: true,
     configurable: false
 });
 
-Object.defineProperty(exports, 'config', {
-    get: function() { return globalConfig;  },
+Object.defineProperty(exports, "config", {
+    get: function() {
+        return globalConfig;
+    },
     enumerable: true,
     configurable: false
 });
@@ -34,7 +38,8 @@ var rawParser = new Parser(
     }),
     {
         raw: true
-    });
+    }
+);
 
 function configure(newConfig) {
     if (!newConfig) {
@@ -59,14 +64,14 @@ function createWalker(options) {
 }
 
 function shouldIgnoreUnrecognizedTags(path) {
-    return path.endsWith('.xml') || path.endsWith('.xml.marko');
+    return path.endsWith(".xml") || path.endsWith(".xml.marko");
 }
 
 function _compile(src, filename, userOptions, callback) {
     registerCoreTaglibs();
 
     ok(filename, '"filename" argument is required');
-    ok(typeof filename === 'string', '"filename" argument should be a string');
+    ok(typeof filename === "string", '"filename" argument should be a string');
 
     var options = {};
 
@@ -89,7 +94,7 @@ function _compile(src, filename, userOptions, callback) {
 
         try {
             compiled = compiler.compile(src, context);
-        } catch(e) {
+        } catch (e) {
             return callback(e);
         }
 
@@ -101,7 +106,7 @@ function _compile(src, filename, userOptions, callback) {
 }
 
 function compile(src, filename, options, callback) {
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
         callback = options;
         options = null;
     }
@@ -113,23 +118,26 @@ function compile(src, filename, options, callback) {
 }
 
 function compileForBrowser(src, filename, options, callback) {
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
         callback = options;
         options = null;
     }
 
-    options = extend({
-        output: 'vdom',
-        meta: false,
-        browser: true,
-        sourceOnly: false
-    }, options);
+    options = extend(
+        {
+            output: "vdom",
+            meta: false,
+            browser: true,
+            sourceOnly: false
+        },
+        options
+    );
 
     return compile(src, filename, options, callback);
 }
 
 function compileFile(filename, options, callback) {
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
         callback = options;
         options = null;
     }
@@ -138,7 +146,7 @@ function compileFile(filename, options, callback) {
     options.sourceOnly = options.sourceOnly !== false;
 
     if (callback) {
-        fs.readFile(filename, {encoding: 'utf8'}, function(err, templateSrc) {
+        fs.readFile(filename, { encoding: "utf8" }, function(err, templateSrc) {
             if (err) {
                 return callback(err);
             }
@@ -146,21 +154,23 @@ function compileFile(filename, options, callback) {
             _compile(templateSrc, filename, options, callback);
         });
     } else {
-        let templateSrc = fs.readFileSync(filename, {encoding: 'utf8'});
+        let templateSrc = fs.readFileSync(filename, { encoding: "utf8" });
         return _compile(templateSrc, filename, options, callback);
     }
 }
 
 function compileFileForBrowser(filename, options, callback) {
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
         callback = options;
         options = null;
     }
 
-    options = extend({output: 'vdom', meta: false, browser: true, sourceOnly: false}, options);
+    options = extend(
+        { output: "vdom", meta: false, browser: true, sourceOnly: false },
+        options
+    );
     return compileFile(filename, options, callback);
 }
-
 
 function createInlineCompiler(filename, userOptions) {
     registerCoreTaglibs();
@@ -174,7 +184,7 @@ function createInlineCompiler(filename, userOptions) {
     }
 
     var compiler = defaultCompiler;
-    var context = new CompileContext('', filename, compiler.builder, options);
+    var context = new CompileContext("", filename, compiler.builder, options);
     return new InlineCompiler(context, compiler);
 }
 
@@ -183,7 +193,7 @@ function checkUpToDate(/*templateFile, templateJsFile*/) {
 }
 
 function getLastModified(path, options, callback) {
-    if (typeof options === 'function') {
+    if (typeof options === "function") {
         callback = options;
         options = null;
     }
@@ -199,16 +209,23 @@ function clearCaches() {
 
 function parseRaw(templateSrc, filename) {
     registerCoreTaglibs();
-    var context = new CompileContext(templateSrc, filename, Builder.DEFAULT_BUILDER);
+    var context = new CompileContext(
+        templateSrc,
+        filename,
+        Builder.DEFAULT_BUILDER
+    );
     var parsed = rawParser.parse(templateSrc, context);
 
     if (context.hasErrors()) {
         var errors = context.getErrors();
 
-        var message = 'An error occurred while trying to compile template at path "' + filename + '". Error(s) in template:\n';
+        var message =
+            'An error occurred while trying to compile template at path "' +
+            filename +
+            '". Error(s) in template:\n';
         for (var i = 0, len = errors.length; i < len; i++) {
             let error = errors[i];
-            message += (i + 1) + ') ' + error.toString() + '\n';
+            message += i + 1 + ") " + error.toString() + "\n";
         }
         var error = new Error(message);
         error.errors = errors;
@@ -233,10 +250,10 @@ exports.builder = Builder.DEFAULT_BUILDER;
 exports.configure = configure;
 exports.clearCaches = clearCaches;
 
-var taglibLookup = require('./taglib-lookup');
+var taglibLookup = require("./taglib-lookup");
 exports.taglibLookup = taglibLookup;
 exports.taglibLoader = taglibLoader;
-exports.taglibFinder = require('./taglib-finder');
+exports.taglibFinder = require("./taglib-finder");
 
 function registerTaglib(taglibProps, taglibPath) {
     var taglib = taglibLoader.createTaglib(taglibPath);
@@ -249,15 +266,35 @@ var coreTaglibsRegistered = false;
 function registerCoreTaglibs() {
     if (!coreTaglibsRegistered) {
         coreTaglibsRegistered = true;
-        registerTaglib(require('../taglibs/core/marko.json'), require.resolve('../taglibs/core/marko.json'));
-        registerTaglib(require('../taglibs/layout/marko.json'), require.resolve('../taglibs/layout/marko.json'));
-        registerTaglib(require('../taglibs/html/marko.json'), require.resolve('../taglibs/html/marko.json'));
-        registerTaglib(require('../taglibs/svg/marko.json'), require.resolve('../taglibs/svg/marko.json'));
-        registerTaglib(require('../taglibs/async/marko.json'), require.resolve('../taglibs/async/marko.json'));
-        registerTaglib(require('../taglibs/cache/marko.json'), require.resolve('../taglibs/cache/marko.json'));
-        registerTaglib(require('../components/taglib/marko.json'), require.resolve('../components/taglib/marko.json'));
+        registerTaglib(
+            require("../taglibs/core/marko.json"),
+            require.resolve("../taglibs/core/marko.json")
+        );
+        registerTaglib(
+            require("../taglibs/layout/marko.json"),
+            require.resolve("../taglibs/layout/marko.json")
+        );
+        registerTaglib(
+            require("../taglibs/html/marko.json"),
+            require.resolve("../taglibs/html/marko.json")
+        );
+        registerTaglib(
+            require("../taglibs/svg/marko.json"),
+            require.resolve("../taglibs/svg/marko.json")
+        );
+        registerTaglib(
+            require("../taglibs/async/marko.json"),
+            require.resolve("../taglibs/async/marko.json")
+        );
+        registerTaglib(
+            require("../taglibs/cache/marko.json"),
+            require.resolve("../taglibs/cache/marko.json")
+        );
+        registerTaglib(
+            require("../components/taglib/marko.json"),
+            require.resolve("../components/taglib/marko.json")
+        );
     }
-
 }
 
 function buildTaglibLookup(dirname) {
@@ -270,11 +307,11 @@ exports.buildTaglibLookup = buildTaglibLookup;
 exports.registerTaglib = function(filePath) {
     registerCoreTaglibs();
 
-    ok(typeof filePath === 'string', '"filePath" should be a string');
+    ok(typeof filePath === "string", '"filePath" should be a string');
     var taglib = taglibLoader.loadTaglibFromFile(filePath);
     taglibLookup.registerTaglib(taglib);
     clearCaches();
 };
 
 exports.isVDOMSupported = true;
-exports.modules = require('./modules');
+exports.modules = require("./modules");

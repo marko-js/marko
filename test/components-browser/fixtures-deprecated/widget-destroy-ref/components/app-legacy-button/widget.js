@@ -1,5 +1,5 @@
 function Widget() {
-    this.name = 'app-legacy-button';
+    this.name = "app-legacy-button";
 }
 
 Widget.prototype = {};

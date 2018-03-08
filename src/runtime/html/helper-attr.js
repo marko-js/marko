@@ -1,4 +1,4 @@
-var escape = require('./escape');
+var escape = require("./escape");
 var escapeString = escape.escapeString;
 var escapeXmlAttr = escape.escapeXmlAttr;
 
@@ -9,21 +9,31 @@ function attr(name, value, shouldEscape) {
     shouldEscape = shouldEscape !== false;
     var type = typeof value;
 
-    if (type === 'string') {
-        return ' ' + name + '="' + (shouldEscape ? escapeXmlAttr(value) : value) + '"';
+    if (type === "string") {
+        return (
+            " " +
+            name +
+            '="' +
+            (shouldEscape ? escapeXmlAttr(value) : value) +
+            '"'
+        );
     } else if (value === true) {
-        return ' ' + name;
+        return " " + name;
     } else if (value == null || value === false) {
-        return '';
-    } else if (type === 'object') {
+        return "";
+    } else if (type === "object") {
         value = JSON.stringify(value);
         if (shouldEscape) {
-            value = escapeString(value, stringifiedAttrTest, stringifiedAttrReplace);
+            value = escapeString(
+                value,
+                stringifiedAttrTest,
+                stringifiedAttrReplace
+            );
         }
 
-        return ' ' + name + "='" + value + "'";
+        return " " + name + "='" + value + "'";
     } else {
-        return ' ' + name + '=' + value; // number (doesn't need quotes)
+        return " " + name + "=" + value; // number (doesn't need quotes)
     }
 }
 

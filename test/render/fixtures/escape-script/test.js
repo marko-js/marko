@@ -1,6 +1,6 @@
 exports.templateData = {
     foo: {
-        name: 'Evil </script>'
+        name: "Evil </script>"
     }
 };
 

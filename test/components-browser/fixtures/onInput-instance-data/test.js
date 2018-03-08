@@ -1,15 +1,15 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-require('./component');
+require("./component");
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(component.string).to.equal('world');
+    expect(component.string).to.equal("world");
     expect(component.number).to.equal(12);
     expect(component.boolean).to.equal(true);
     expect(component.complex).to.deep.equal({
         a: '<"hello">',
-        b: 'test'
+        b: "test"
     });
 };

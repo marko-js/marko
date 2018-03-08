@@ -1,14 +1,14 @@
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require("marko").load(require.resolve("./template.marko"));
 
-exports.render = function (input, out) {
+exports.render = function(input, out) {
     var viewModel = {};
     var config = {
-        string: 'world',
+        string: "world",
         number: 12,
         boolean: true,
         complex: {
             a: '<"hello">',
-            b: 'test'
+            b: "test"
         }
     };
 

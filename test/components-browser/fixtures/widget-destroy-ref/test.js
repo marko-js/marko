@@ -1,7 +1,7 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
     var button1Component = component.getButton1();
     expect(button1Component != null).to.equal(true);
@@ -10,5 +10,5 @@ module.exports = function (helpers) {
 
     button1Component = component.getButton1();
     expect(button1Component === undefined).to.equal(true);
-    expect(component.getComponent('simple') == null).to.equal(true);
+    expect(component.getComponent("simple") == null).to.equal(true);
 };

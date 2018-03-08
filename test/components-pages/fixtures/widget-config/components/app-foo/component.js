@@ -1,6 +1,6 @@
 module.exports = {
     onInput: function() {
-        this.name = 'app-foo';
+        this.name = "app-foo";
     },
 
     onMount: function() {

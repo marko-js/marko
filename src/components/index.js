@@ -1,14 +1,13 @@
-'use strict';
+"use strict";
 
-var warp10 = require('warp10');
+var warp10 = require("warp10");
 var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 
-
 function safeJSONReplacer(match) {
-    if (match === '</') {
-        return '\\u003C/';
+    if (match === "</") {
+        return "\\u003C/";
     } else {
-        return '\\u' + match.charCodeAt(0).toString(16);
+        return "\\u" + match.charCodeAt(0).toString(16);
     }
 }
 
@@ -16,13 +15,23 @@ function safeJSON(json) {
     return json.replace(safeJSONRegExp, safeJSONReplacer);
 }
 
-function addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray) {
+function addComponentsFromContext(
+    componentsContext,
+    componentsFinal,
+    typesLookup,
+    typesArray
+) {
     var nestedContexts = componentsContext.___nestedContexts;
     if (nestedContexts !== undefined) {
         // We want to initialize any UI components nested inside an async
         // fragment first so we will add components from nested contexts first
         nestedContexts.forEach(function(nestedContext) {
-            addComponentsFromContext(nestedContext, componentsFinal, typesLookup, typesArray);
+            addComponentsFromContext(
+                nestedContext,
+                componentsFinal,
+                typesLookup,
+                typesArray
+            );
         });
     }
 
@@ -72,7 +81,7 @@ function addComponentsFromContext(componentsContext, componentsFinal, typesLooku
         var hasProps = false;
 
         let componentKeys = Object.keys(component);
-        for (let i=0, len=componentKeys.length; i<len; i++) {
+        for (let i = 0, len = componentKeys.length; i < len; i++) {
             let key = componentKeys[i];
 
             if (component[key] !== undefined) {
@@ -89,7 +98,7 @@ function addComponentsFromContext(componentsContext, componentsFinal, typesLooku
             // This ensures that we add the proper getter/setter for the state property.
 
             let stateKeys = Object.keys(state);
-            for (let i=0, len=stateKeys.length; i<len; i++) {
+            for (let i = 0, len = stateKeys.length; i < len; i++) {
                 let key = stateKeys[i];
 
                 if (state[key] === undefined) {
@@ -116,10 +125,10 @@ function addComponentsFromContext(componentsContext, componentsFinal, typesLooku
         };
 
         componentsFinal.push([
-            id,                  // 0 = id
-            typeIndex,           // 1 = type
-            input,               // 2 = input
-            extra                // 3
+            id, // 0 = id
+            typeIndex, // 1 = type
+            input, // 2 = input
+            extra // 3
         ]);
     }
 
@@ -136,10 +145,15 @@ function getRenderedComponents(out) {
     var typesLookup = {};
     var typesArray = [];
 
-    addComponentsFromContext(componentsContext, componentsFinal, typesLookup, typesArray);
+    addComponentsFromContext(
+        componentsContext,
+        componentsFinal,
+        typesLookup,
+        typesArray
+    );
 
     if (componentsFinal.length !== 0) {
-        return {w: componentsFinal, t: typesArray};
+        return { w: componentsFinal, t: typesArray };
     }
 }
 
@@ -150,12 +164,16 @@ function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
     }
 
     var cspNonce = targetOut.global.cspNonce;
-    var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
+    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
-    targetOut.write('<script' + nonceAttr + '>' +
-        '(function(){var w=window;w.$components=(w.$components||[]).concat(' +
-        safeJSON(warp10.stringify(renderedComponents)) +
-        ')||w.$components})()</script>');
+    targetOut.write(
+        "<script" +
+            nonceAttr +
+            ">" +
+            "(function(){var w=window;w.$components=(w.$components||[]).concat(" +
+            safeJSON(warp10.stringify(renderedComponents)) +
+            ")||w.$components})()</script>"
+    );
 }
 
 exports.writeInitComponentsCode = writeInitComponentsCode;

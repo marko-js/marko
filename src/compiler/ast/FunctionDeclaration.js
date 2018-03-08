@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var ok = require('assert').ok;
+var Node = require("./Node");
+var ok = require("assert").ok;
 
 class FunctionDeclaration extends Node {
     constructor(def) {
-        super('FunctionDeclaration');
+        super("FunctionDeclaration");
         this.name = def.name;
         this.params = def.params;
         this.body = this.makeContainer(def.body);
@@ -26,41 +26,49 @@ class FunctionDeclaration extends Node {
         var statement = this.statement;
 
         if (name != null) {
-            ok(typeof name === 'string' || name.type === 'Identifier', 'Function name should be a string or Identifier');
+            ok(
+                typeof name === "string" || name.type === "Identifier",
+                "Function name should be a string or Identifier"
+            );
         }
 
         if (name) {
-            writer.write('function ');
+            writer.write("function ");
             writer.write(name);
-            writer.write('(');
+            writer.write("(");
         } else {
-            writer.write('function(');
+            writer.write("function(");
         }
 
         if (params && params.length) {
-            for (let i=0, paramsLen = params.length; i<paramsLen; i++) {
+            for (let i = 0, paramsLen = params.length; i < paramsLen; i++) {
                 if (i !== 0) {
-                    writer.write(', ');
+                    writer.write(", ");
                 }
                 var param = params[i];
 
-                if (typeof param === 'string') {
+                if (typeof param === "string") {
                     writer.write(param);
                 } else {
-                    if (param.type !== 'Identifier') {
-                        throw new Error('Illegal param ' + JSON.stringify(param) + ' for FunctionDeclaration: ' + JSON.stringify(this));
+                    if (param.type !== "Identifier") {
+                        throw new Error(
+                            "Illegal param " +
+                                JSON.stringify(param) +
+                                " for FunctionDeclaration: " +
+                                JSON.stringify(this)
+                        );
                     }
                     writer.write(param);
                 }
             }
         }
 
-        writer.write(') ');
+        writer.write(") ");
 
         writer.writeBlock(body);
 
         if (statement) {
-            writer.write('\n');
+            writer.write("\n");
         }
     }
 
