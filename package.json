@@ -1,25 +1,9 @@
 {
     "name": "marko",
+    "version": "4.9.1",
+    "license": "MIT",
     "description":
         "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
-    "keywords": [
-        "front-end",
-        "templating",
-        "template",
-        "async",
-        "streaming",
-        "components",
-        "ui",
-        "vdom",
-        "dom",
-        "morphdom",
-        "virtual",
-        "virtual-dom"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/marko-js/marko.git"
-    },
     "scripts": {
         "build": "node scripts/build.js",
         "build-src": "node scripts/build.js src",
@@ -40,15 +24,6 @@
     "lint-staged": {
         "*.{js,json,css,md}": ["prettier --write", "git add"]
     },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": [
-        "Patrick Steele-Idem <pnidem@gmail.com>",
-        "Michael Rawlings <ml.rawlings@gmail.com>",
-        "Phillip Gates-Idem <phillip.idem@gmail.com>",
-        "Austin Kelleher <a@alk.im>",
-        "Dylan Piercey <pierceydylan@gmail.com>",
-        "Martin Aberer"
-    ],
     "dependencies": {
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
@@ -118,10 +93,6 @@
         "through": "^2.3.4",
         "through2": "^2.0.1"
     },
-    "license": "MIT",
-    "bin": {
-        "markoc": "bin/markoc"
-    },
     "main": "index.js",
     "browser": {
         "./compiler.js": "./compiler-browser.marko",
@@ -129,8 +100,8 @@
         "./index.js": "./index-browser.marko",
         "./legacy-components.js": "./legacy-components-browser.marko"
     },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
+    "bin": {
+        "markoc": "bin/markoc"
     },
     "nyc": {
         "exclude": [
@@ -144,9 +115,38 @@
         ]
     },
     "homepage": "http://markojs.com/",
-    "version": "4.9.1",
     "logo": {
         "url":
             "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/marko-js/marko.git"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": [
+        "Patrick Steele-Idem <pnidem@gmail.com>",
+        "Michael Rawlings <ml.rawlings@gmail.com>",
+        "Phillip Gates-Idem <phillip.idem@gmail.com>",
+        "Austin Kelleher <a@alk.im>",
+        "Dylan Piercey <pierceydylan@gmail.com>",
+        "Martin Aberer"
+    ],
+    "keywords": [
+        "front-end",
+        "templating",
+        "template",
+        "async",
+        "streaming",
+        "components",
+        "ui",
+        "vdom",
+        "dom",
+        "morphdom",
+        "virtual",
+        "virtual-dom"
+    ]
 }
