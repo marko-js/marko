@@ -11,5 +11,9 @@ input.*
 /test-dist/
 /test-generated/
 *.marko.js
+*.html.js
+*.xml.js
+*.generated.js
 .nyc_output
 coverage
+package-lock.json
