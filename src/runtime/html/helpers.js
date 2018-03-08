@@ -10,8 +10,6 @@ var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require('./helper-attr');
 var attrsHelper = require('./helper-attrs');
 
-var classList;
-
 
 
 

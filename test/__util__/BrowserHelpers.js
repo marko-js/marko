@@ -1,5 +1,4 @@
 var expect = require('chai').expect;
-var path = require('path');
 var assert = require('assert');
 var markoComponents = require('marko/components');
 var getComponentsFromMeta = require('./components-from-meta');

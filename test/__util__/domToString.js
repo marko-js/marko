@@ -33,7 +33,6 @@ function vdomToHTML(node, options) {
         } else if (nodeType === 8) {
             serializeCommentHelper(node, indent);
         } else {
-            console.log('Invalid node:', node);
             html += indent + `INVALID NODE TYPE ${nodeType}\n`;
             // throw new Error('Unexpected node type');
         }

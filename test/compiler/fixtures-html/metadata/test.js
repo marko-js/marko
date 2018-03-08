@@ -1,4 +1,3 @@
-var expect = require('chai').expect;
 var config = require('marko/compiler/config');
 var oldMeta = config.meta;
 

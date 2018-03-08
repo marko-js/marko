@@ -7,7 +7,7 @@ module.exports = require('marko/legacy-components').defineComponent({
             number: 12,
             boolean: true,
             complex: {
-                a: '<\"hello">',
+                a: '<"hello">',
                 b: 'test'
             }
         };

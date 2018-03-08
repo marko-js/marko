@@ -69,6 +69,7 @@ function generateRegisterComponentCode(componentModule, transformHelper, isSplit
 function getComponentId(filename) {
     let componentId = lassoModulesClientTransport.getClientPath(filename);
     // TODO: turn on for production
+    // eslint-disable-next-line no-constant-condition
     if (false) {
         componentId = shorthash.unique(componentId);
     }

@@ -40,7 +40,7 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     },
     {
         name: 'status-var',
-        pattern: /status\-var\s?=\s?/
+        pattern: /status-var\s?=\s?/
     },
     {
         name: 'iterator',
@@ -52,11 +52,11 @@ var tokenizer = require('../../../compiler/util/tokenizer').create([
     },
     {
         name: 'groupOpen',
-        pattern: /[\{\(\[]/
+        pattern: /[{([]/
     },
     {
         name: 'groupClose',
-        pattern: /[\}\)\]]/
+        pattern: /[})\]]/
     },
     {
         name: 'array',

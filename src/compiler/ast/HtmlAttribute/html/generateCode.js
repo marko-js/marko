@@ -78,6 +78,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
             if (isStringLiteral(part)) {
                 part.value = escapeXmlAttr(part.value);
             } else if (part.type === 'Literal') {
+                // do nothing
             } else if (isNoEscapeXml(part)) {
                 part = codegen.builder.functionCall(context.helper('str'), [part]);
             } else {

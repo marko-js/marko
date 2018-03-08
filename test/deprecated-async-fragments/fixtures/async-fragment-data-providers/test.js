@@ -1,6 +1,6 @@
 exports.templateData = {
-    sharedData: function (args, done) {
-        return new Promise(function (resolve, reject) {
+    sharedData: function () {
+        return new Promise(function (resolve) {
             setTimeout(function () {
                 resolve({ name: 'testSharedData' });
             }, 100);

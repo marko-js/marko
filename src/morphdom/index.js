@@ -53,7 +53,7 @@ function morphdom(
         isRerenderInBrowser = globalComponentsContext.___isRerenderInBrowser;
     }
 
-    function createMarkerComment(referenceNode, parentNode) {
+    function createMarkerComment() {
         return doc.createComment('$marko');
     }
 

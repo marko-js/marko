@@ -8,7 +8,7 @@ class Identifier extends Node {
         this.name = def ? def.name : undefined;
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

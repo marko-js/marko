@@ -5,7 +5,7 @@ module.exports = require('marko/legacy-components').defineComponent({
         return { interactive:input.interactive }
     },
 
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             interactive: state.interactive
         };

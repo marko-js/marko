@@ -21,7 +21,7 @@ module.exports = require('marko-widgets').defineComponent({
 		};
 	},
 
-	getTemplateData: function(state, input) {
+	getTemplateData: function(state) {
 		return state;
 	},
 

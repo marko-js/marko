@@ -31,17 +31,11 @@ function legacyGetDefaultComponentModule(dirname) {
 function checkIsInnerBind(el) {
     var curNode = el;
 
-    while (true) {
+    do {
         if (curNode.data.hasBoundComponent) {
             return true;
         }
-
-        curNode = curNode.parentNode;
-
-        if (!curNode) {
-            break;
-        }
-    }
+    } while ((curNode = curNode.parentNode));
 
     return false;
 }
@@ -54,13 +48,11 @@ module.exports = function handleLegacyBind() {
     let componentModule;
     let rendererModule;
 
-    let isLegacyComponent = false;
-
     if (el.hasAttribute('w-bind')) {
         let bindAttr = el.getAttribute('w-bind');
 
         context.deprecate('Legacy components using w-bind and defineRenderer/defineComponent or defineComponent are deprecated. See: https://github.com/marko-js/marko/issues/421');
-        this.isLegacyComponent = isLegacyComponent = true;
+        this.isLegacyComponent = true;
         context.setMeta('legacy', true);
 
         // Remove the w-bind attribute since we don't want it showing up in the output DOM

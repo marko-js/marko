@@ -7,7 +7,7 @@ exports.render = function (input, out) {
         number: 12,
         boolean: true,
         complex: {
-            a: '<\"hello">',
+            a: '<"hello">',
             b: 'test'
         }
     };

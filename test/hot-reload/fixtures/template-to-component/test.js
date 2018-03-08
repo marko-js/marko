@@ -14,19 +14,19 @@ function copyFiles(dir) {
 exports.check = function (marko, hotReload, expect, helpers) {
     try {
         fs.mkdirSync(nodePath.join(__dirname, 'temp'));
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     try {
         fs.unlinkSync(nodePath.join(__dirname, 'temp/component.js'));
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     try {
         fs.unlinkSync(nodePath.join(__dirname, 'temp/index.marko'));
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     try {
         fs.unlinkSync(nodePath.join(__dirname, 'temp/index.marko.js'));
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     var tempTemplatePath = nodePath.join(__dirname, 'temp/index.marko');
 

@@ -1,3 +1,3 @@
-module.exports = function transform(el, context) {
+module.exports = function transform(el) {
     el.addNestedVariable('foo');
 };

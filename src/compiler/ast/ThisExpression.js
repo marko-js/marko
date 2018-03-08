@@ -3,11 +3,11 @@
 var Node = require('./Node');
 
 class ThisExpression extends Node {
-    constructor(def) {
+    constructor() {
         super('ThisExpression');
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

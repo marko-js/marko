@@ -2,7 +2,7 @@ var AttributePlaceholder = require('../ast/AttributePlaceholder');
 
 module.exports = function replacePlaceholderEscapeFuncs(node, context) {
     var walker = context.createWalker({
-        exit: function(node, parent) {
+        exit: function(node) {
             if (node.type === 'FunctionCall' &&
                 node.callee.type === 'Identifier') {
 

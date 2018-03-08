@@ -294,7 +294,7 @@ describe('AsyncStream', function () {
             expect(err).to.be.an('error');
             expect(out.getOutput()).to.equal('1');
             done();
-        }).then(data => {
+        }).then(() => {
             throw new Error('Should not get here!');
         });
 
@@ -503,7 +503,7 @@ describe('AsyncStream', function () {
         var PassThrough = stream.PassThrough;
         var passthrough = new PassThrough();
 
-        passthrough.on('error', function (err) {
+        passthrough.on('error', function () {
             done();
         });
 
@@ -798,11 +798,7 @@ describe('AsyncStream', function () {
     it('should support out.stream for accessing the original stream', function (done) {
 
         var through = require('through');
-        var outStr = '';
-
-        var stream = through(function write(str) {
-            outStr += str;
-        });
+        var stream = through(function write() {});
 
         var out = createAsyncStream(stream);
         expect(out.stream).to.equal(stream);

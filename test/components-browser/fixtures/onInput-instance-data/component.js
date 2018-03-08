@@ -4,7 +4,7 @@ module.exports = {
         this.number = 12;
         this.boolean = true;
         this.complex = {
-            a: '<\"hello">',
+            a: '<"hello">',
             b: 'test'
         };
     },

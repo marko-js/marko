@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-function Widget(config) {
+function Widget() {
     this.name = 'app-legacy-button';
 
     var logOutput = this.logOutput = [];

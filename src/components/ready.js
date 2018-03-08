@@ -112,7 +112,7 @@ function bindReady(doc) {
         // continually check to see if the document is ready
         try {
             toplevel = win.frameElement == null;
-        } catch (e) {}
+        } catch (e) { /* ignore error */ }
         if (doc.documentElement.doScroll && toplevel) {
             doScrollCheck();
         }

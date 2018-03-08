@@ -9,7 +9,7 @@ module.exports = {
         hooks.length = 0;
     },
 
-    getHookNames: function (component) {
+    getHookNames: function () {
         return hooks;
     }
 };

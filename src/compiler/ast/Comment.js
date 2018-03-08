@@ -19,7 +19,7 @@ class Comment extends Node {
         }
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

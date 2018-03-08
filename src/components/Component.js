@@ -91,7 +91,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
         // Otherwise, there are handlers for all of the changed properties
         // so apply the updates using those handlers
 
-        handlers.forEach(function(handler, i) {
+        handlers.forEach(function(handler) {
             var propertyName = handler[0];
             handlerMethod = handler[1];
 
@@ -440,7 +440,7 @@ Component.prototype = componentProto = {
         }
     },
 
-    shouldUpdate: function(newState, newProps) {
+    shouldUpdate: function() {
         return true;
     },
 
@@ -542,6 +542,7 @@ Component.prototype = componentProto = {
     },
 
     get el() {
+        // eslint-disable-next-line no-constant-condition
         if ('MARKO_DEBUG') {
             complain('The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.');
         }
@@ -554,6 +555,7 @@ Component.prototype = componentProto = {
     },
 
     get els() {
+        // eslint-disable-next-line no-constant-condition
         if ('MARKO_DEBUG') {
             complain('The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.');
         }

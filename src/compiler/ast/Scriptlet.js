@@ -11,7 +11,7 @@ class Scriptlet extends Node {
         this.block = def.block;
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

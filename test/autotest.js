@@ -154,7 +154,7 @@ exports.scanDir = function(autoTestDir, run, options) {
         }
         fs.readdirSync(autoTestDir)
             .forEach(function(name) {
-                if (/^(\.|\~)/.test(name)) {
+                if (/^(\.|~)/.test(name)) {
                     return;
                 }
 

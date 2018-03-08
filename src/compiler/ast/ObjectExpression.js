@@ -99,7 +99,7 @@ class ObjectExpression extends Node {
         this.properties = walker.walk(this.properties);
     }
 
-    toString(codegen) {
+    toString() {
         var properties = this.properties;
 
         if (!properties || !properties.length) {

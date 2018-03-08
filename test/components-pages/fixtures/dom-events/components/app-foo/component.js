@@ -1,6 +1,6 @@
 module.exports = {
 
-    onInput: function(input) {
+    onInput: function() {
         this.state = {
             name: 'app-foo'
         };

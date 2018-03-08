@@ -17,7 +17,7 @@ class DocumentType extends Node {
         ];
     }
 
-    generateVDOMCode(codegen) {
+    generateVDOMCode() {
         return null;
     }
 

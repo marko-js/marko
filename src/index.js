@@ -26,7 +26,7 @@ function fixFlush() {
             // middleware, but, otherwise, it should typically not exist.
             delete require('http').OutgoingMessage.prototype.flush;
         }
-    } catch(e) {}
+    } catch(e) { /* ignore error */ }
 }
 
 fixFlush();

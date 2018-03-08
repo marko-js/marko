@@ -1,7 +1,7 @@
 var elTest = /[&<]/;
 var elTestReplace = /[&<]/g;
-var attrTest = /[&<\"\n]/;
-var attrReplace = /[&<\"\n]/g;
+var attrTest = /[&<"\n]/;
+var attrReplace = /[&<"\n]/g;
 
 var replacements = {
     '<': '&lt;',

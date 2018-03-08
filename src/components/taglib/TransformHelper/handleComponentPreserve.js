@@ -46,7 +46,7 @@ function addPreserve(transformHelper, bodyOnly, condition) {
     return preserveNode;
 }
 
-function deprecatedWarning(preserveType, transformHelper, el) {
+function deprecatedWarning(preserveType, transformHelper) {
     let attribute = preserveType.attribute;
     let suffix = preserveType.suffix;
     let context = transformHelper.getCompileContext();

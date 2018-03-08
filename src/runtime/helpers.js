@@ -96,7 +96,7 @@ var helpers = {
     /**
      * Helper to load a custom tag
      */
-    t: function loadTagHelper(renderer, targetProperty, isRepeated) {
+    t: function loadTagHelper(renderer) {
         if (renderer) {
             renderer = resolveRenderer(renderer);
         }

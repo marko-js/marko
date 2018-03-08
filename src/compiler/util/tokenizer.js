@@ -23,12 +23,12 @@ function create(tokens) {
         .join('|'), 'g');
 
     return {
-        forEachToken: function(value, callback, thisObj) {
+        forEachToken: function(value, callback) {
             tokensRegExp.lastIndex = 0; // Start searching from the beginning again
             var matches;
             while ((matches = tokensRegExp.exec(value))) {
                 let token = getToken(matches);
-                callback.call(this, token);
+                callback(token);
             }
         }
     };

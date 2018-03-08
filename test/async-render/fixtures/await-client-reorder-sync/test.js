@@ -7,7 +7,7 @@ exports.templateData = {
     }
 };
 
-exports.checkEvents = function (events, helpers, out) {
+exports.checkEvents = function (events, helpers) {
     events = events.map(function (eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);

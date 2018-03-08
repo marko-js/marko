@@ -1,5 +1,5 @@
 module.exports = {
-    onInput: function(input) {
+    onInput: function() {
         this.state = {
             'evil': '</script><script>alert("hello")</script>'
         };
@@ -7,7 +7,7 @@ module.exports = {
         this.evil = '</script><script>alert("hello")</script>';
     },
 
-    onMount: function(componentConfig) {
+    onMount: function() {
         this.componentConfig = {
             evil: this.evil
         };

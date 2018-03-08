@@ -14,7 +14,7 @@ function copyFiles(dir) {
 exports.check = function (marko, hotReload, expect, helpers) {
     try {
         fs.mkdirSync(nodePath.join(__dirname, 'temp'));
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     var tempTemplatePath = nodePath.join(__dirname, 'temp/index.marko');
 

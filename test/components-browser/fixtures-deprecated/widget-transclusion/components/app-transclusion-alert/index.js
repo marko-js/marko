@@ -13,7 +13,7 @@ module.exports = require('marko/legacy-components').defineComponent({
         return input.message || input.renderBody;
     },
 
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         var type = state.type;
 
         var className = 'alert alert-' + type;

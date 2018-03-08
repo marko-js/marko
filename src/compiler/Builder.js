@@ -27,7 +27,6 @@ var ForRange = require('./ast/ForRange');
 var HtmlComment = require('./ast/HtmlComment');
 var SelfInvokingFunction = require('./ast/SelfInvokingFunction');
 var ForStatement = require('./ast/ForStatement');
-var BinaryExpression = require('./ast/BinaryExpression');
 var UpdateExpression = require('./ast/UpdateExpression');
 var UnaryExpression = require('./ast/UnaryExpression');
 var MemberExpression = require('./ast/MemberExpression');
@@ -310,7 +309,7 @@ class Builder {
         return new Identifier({name});
     }
 
-    identifierOut(name) {
+    identifierOut() {
         return identifierOut;
     }
 
@@ -445,7 +444,7 @@ class Builder {
         return new ObjectExpression({properties});
     }
 
-    parseExpression(str, options) {
+    parseExpression(str) {
         ok(typeof str === 'string', '"str" should be a string expression');
         var parsed = parseExpression(str, DEFAULT_BUILDER);
         return parsed;
@@ -456,7 +455,7 @@ class Builder {
         return parseJavaScriptArgs(args, DEFAULT_BUILDER);
     }
 
-    parseStatement(str, options) {
+    parseStatement(str) {
         ok(typeof str === 'string', '"str" should be a string expression');
         var parsed = parseStatement(str, DEFAULT_BUILDER);
         return parsed;

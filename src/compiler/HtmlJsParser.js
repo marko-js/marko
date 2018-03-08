@@ -35,7 +35,7 @@ class HtmlJsParser {
                 handlers.handleCharacters(event.value, 'static-text');
             },
 
-            onOpenTagName(event, parser) {
+            onOpenTagName(event) {
                 event.selfClosed = false; // Don't allow self-closed tags
 
                 var tagParseOptions = handlers.getTagParseOptions(event);

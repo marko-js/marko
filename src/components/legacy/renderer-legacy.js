@@ -7,7 +7,6 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var handleBeginAsync = modernRenderer.___handleBeginAsync;
 var beginComponent = require('../beginComponent');
 var endComponent = require('../endComponent');
-var registry = require('../registry');
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = '$wa';
 

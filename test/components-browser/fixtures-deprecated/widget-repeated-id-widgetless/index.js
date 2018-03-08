@@ -4,7 +4,7 @@ var simpleRenderer = require('./components/app-simple').renderer;
 module.exports = require('marko/legacy-components').defineComponent({
 	template: require('./template.marko'),
 
-	getTemplateData: function (state, input) {
+	getTemplateData: function () {
 		return {
 			renderers: [widgetLessRenderer, widgetLessRenderer, simpleRenderer]
 		};

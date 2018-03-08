@@ -9,7 +9,7 @@ module.exports = require('marko/legacy-components').defineComponent({
         };
     },
 
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             name: state.name,
             count: state.count,

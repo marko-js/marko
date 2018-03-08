@@ -4,7 +4,6 @@ var fs = require('fs');
 var path = require('path');
 var autotest = require('../autotest');
 var compiler = require('marko/compiler');
-var expect = require('chai').expect;
 
 describe('components-compilation (html)', function () {
     autotest.scanDir(path.join(__dirname, './fixtures-html'), run);

@@ -1,6 +1,4 @@
 module.exports = function () {
-    var name = 'Frank';
-
     var template1 = marko`
         test-foo
         test-foo`;

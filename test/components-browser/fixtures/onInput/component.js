@@ -7,7 +7,7 @@ module.exports = {
         this.setUpTest();
     },
 
-    onMount: function (config) {
+    onMount: function () {
         expect(this.state.count).to.eql(0);
         expect(this.foo).to.eql('bar');
         expect(this.array).to.eql([1, 2, 3]);

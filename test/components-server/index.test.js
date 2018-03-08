@@ -18,7 +18,7 @@ describe(TEST_NAME, function () {
 
 function run (dir, helpers, done) {
     var testFunc = require(path.join(dir, 'test.js'));
-    if (testFunc.length === 1) {
+    if (testFunc.length <= 1) {
         testFunc(helpers);
         done();
     } else {

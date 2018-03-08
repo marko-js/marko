@@ -9,7 +9,7 @@ class Code extends Node {
         this.value = def.value;
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

@@ -10,7 +10,7 @@ class Expression extends Node {
         ok(this.value != null, 'Invalid expression');
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 

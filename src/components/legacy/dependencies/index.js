@@ -48,7 +48,8 @@ function attachDepsAndComponentsToTemplate(target, context) {
     var components = target.___components = {};
 
     if (!template.meta) {
-        console.error('Metadata not set for template at ', template.path);
+        // eslint-disable-next-line no-console
+        console.warn('Metadata not set for template at ', template.path);
         return;
     }
 
@@ -79,7 +80,7 @@ function attachDepsAndComponentsToTemplate(target, context) {
 
             try {
                 tag = req.resolve(tag.slice(0, 0 - ext.length) + '.js');
-            } catch(e) {}
+            } catch(e) { /* ignore error */ }
 
             tag = req(tag);
 
@@ -155,7 +156,7 @@ function resolveDep(dep, root, context) {
 }
 
 function parseDependencyString(string) {
-    var match = /^(?:([\w-]+)(?:\:\s*|\s+))?(.*?(?:\.(\w+))?)$/.exec(string);
+    var match = /^(?:([\w-]+)(?::\s*|\s+))?(.*?(?:\.(\w+))?)$/.exec(string);
     return {
         type: match[1] || match[3],
         path: match[2]

@@ -642,7 +642,6 @@ class CustomTag extends HtmlElement {
             parentCustomTag = context.getData(CUSTOM_TAG_KEY);
             if (!parentCustomTag) {
                 if (tagDef.parentTagName) {
-                    console.error(new Error(this.tagName + ' not nested in ' + tagDef.parentTagName));
                     codegen.addError(`Invalid usage of the <${this.tagName}> nested tag. Tag not nested within a <${tagDef.parentTagName}> tag.`);
                 } else {
                     codegen.addError(`Invalid usage of the <${this.tagName}> nested tag. Tag not nested within a custom tag.`);

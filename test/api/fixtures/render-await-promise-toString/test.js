@@ -4,7 +4,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     var template = marko.load(nodePath.join(__dirname, 'template.marko'));
 
     template.render({
-        userPromise: new Promise((resolve, reject) => {
+        userPromise: new Promise((resolve) => {
             setTimeout(function () {
                 resolve({ name: 'John' });
             }, 10);

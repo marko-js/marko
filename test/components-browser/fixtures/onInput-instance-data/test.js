@@ -9,7 +9,7 @@ module.exports = function (helpers) {
     expect(component.number).to.equal(12);
     expect(component.boolean).to.equal(true);
     expect(component.complex).to.deep.equal({
-        a: '<\"hello">',
+        a: '<"hello">',
         b: 'test'
     });
 };

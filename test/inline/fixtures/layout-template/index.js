@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 var layout = marko`
     <!DOCTYPE html>
     html lang="en"

@@ -17,7 +17,7 @@ function virtualizeChildNodes(node, vdomParent) {
     }
 }
 
-function virtualize(node, shallow) {
+function virtualize(node) {
     switch(node.nodeType) {
         case 1:
             return VElement.___virtualize(node, virtualizeChildNodes);

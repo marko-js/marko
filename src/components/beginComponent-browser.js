@@ -1,6 +1,6 @@
 var ComponentDef = require('./ComponentDef');
 
-module.exports = function beginComponent(componentsContext, component, isSplitComponen, parentComponentDeft) {
+module.exports = function beginComponent(componentsContext, component) {
     var componentId = component.id;
 
     var globalContext = componentsContext.___globalContext;

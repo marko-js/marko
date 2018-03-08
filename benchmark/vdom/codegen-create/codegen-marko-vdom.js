@@ -34,7 +34,7 @@ module.exports = function(node) {
         }
     }
 
-    function codegenText(node, level) {
+    function codegenText(node) {
         code += `.t(${JSON.stringify(node.nodeValue)})\n`;
     }
 
@@ -53,7 +53,7 @@ module.exports = function(node) {
     return 'return ' + code + '\n';
 };
 
-module.exports.generateInitCode = function(node, html) {
+module.exports.generateInitCode = function() {
     return `
     var MarkoVDOM = window.MarkoVDOM;
     var createElement = MarkoVDOM.createElement;

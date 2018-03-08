@@ -3,7 +3,7 @@
 function getSpecifiers(importDeclaration) {
     var match = /^(.+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
     if(!match) {
-        return { moduleSpecifier: importDeclaration.replace(/\"|\'/g, "").trim() };
+        return { moduleSpecifier: importDeclaration.replace(/"|'/g, "").trim() };
     }
 
     return {
@@ -28,7 +28,7 @@ function getImportSpecifierGroups(importSpecifierSet) {
 }
 
 function getVariableName(moduleSpecifier) {
-    var withoutPath = /([^\/\\]+)$/.exec(moduleSpecifier)[1];
+    var withoutPath = /([^/\\]+)$/.exec(moduleSpecifier)[1];
     var withoutExtension = withoutPath.replace(/\.[a-z0-9]+$/i, '');
     return withoutExtension.replace(/[^a-z0-9]+([a-z])/gi, (_, p1) => p1.toUpperCase())+'_module';
 }

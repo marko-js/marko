@@ -11,9 +11,7 @@ module.exports = function (helpers, done) {
     expect(widget.$('button').html()).to.equal('Test Button');
     expect(widget.$('li', 'ul').length).to.equal(3);
 
-    var count = 0;
     widget.$(function () {
-        count++;
         done();
     });
 };

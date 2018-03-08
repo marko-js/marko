@@ -12,7 +12,7 @@ var bundlesMinDir = path.join(__dirname, 'build/bundles.min');
 
 try {
     fs.mkdirSync(bundlesMinDir);
-} catch(e) {}
+} catch(e) { /* ignore error */ }
 
 var promiseChain = Promise.resolve();
 

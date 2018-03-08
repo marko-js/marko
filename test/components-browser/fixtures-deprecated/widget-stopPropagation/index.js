@@ -1,5 +1,3 @@
-var expect = require('chai').expect;
-
 module.exports = require('marko/legacy-components').defineComponent({
 	template: require.resolve('./template.marko'),
 
@@ -15,7 +13,7 @@ module.exports = require('marko/legacy-components').defineComponent({
 		this.buttonClicked = false;
 	},
 
-	handleDivClick: function (event) {
+	handleDivClick: function () {
 		this.divClicked = true;
 	},
 

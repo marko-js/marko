@@ -6,7 +6,6 @@ var nodePath = require('path');
 var scanTagsDir = require('./scanTagsDir');
 var markoModules = require('../modules'); // NOTE: different implementation for browser
 var propertyHandlers = require('property-handlers');
-var types = require('./types');
 var jsonFileReader = require('./json-file-reader');
 var tryRequire = require('try-require');
 var resolveFrom = tryRequire('resolve-from', require);
@@ -69,7 +68,7 @@ class TaglibLoader {
             try {
                 var pkg = jsonFileReader.readFileSync(packageJsonPath);
                 taglib.id = pkg.name;
-            } catch(e) {}
+            } catch(e) { /* ignore error */ }
 
             if (!taglib.id) {
                 taglib.id = filePath;

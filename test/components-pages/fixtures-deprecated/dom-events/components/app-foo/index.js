@@ -7,7 +7,7 @@ module.exports = require('marko-widgets').defineComponent({
         };
     },
 
-    init: function(widgetConfig) {
+    init: function() {
         window.fooWidget = this;
         this.mouseMoveEvent = null;
         this.clickEvent = null;

@@ -1,4 +1,4 @@
-function Widget(config) {
+function Widget() {
     this.name = 'app-legacy-button';
 }
 

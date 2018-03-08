@@ -64,7 +64,6 @@ module.exports = function(target, getEl, afterInsert) {
         insertAfter: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            el = el;
             var nextSibling = referenceEl.nextSibling;
             var parentNode = referenceEl.parentNode;
             if (nextSibling) {

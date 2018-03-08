@@ -1,4 +1,3 @@
-var fs = require('fs');
 var path = require('path');
 
 exports.check = function (marko, markoCompiler, expect, helpers, done) {

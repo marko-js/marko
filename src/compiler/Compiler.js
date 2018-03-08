@@ -86,7 +86,7 @@ function handleErrors(context) {
 }
 
 class CompiledTemplate {
-    constructor(ast, context, codeGenerator) {
+    constructor(ast, context) {
         this.ast = ast;
         this.context = context;
         this.filename = context.filename;
@@ -123,7 +123,7 @@ class CompiledTemplate {
 }
 
 class Compiler {
-    constructor(options, userOptions, inline) {
+    constructor(options) {
         ok(options, '"options" is required');
 
         this.builder = options.builder;

@@ -14,13 +14,11 @@ exports.createController = function (template) {
     return function (req, res) {
         return res.marko(template).then(() => {
             fulfilled = true;
-        }).catch(err => {
-            console.error('Error fulfilling res.marko: ', err);
         });
     };
 };
 
-exports.checkResponse = function (response, expect, helpers) {
+exports.checkResponse = function (response, expect) {
     expect(fulfilled).to.equal(true);
     expect(response.body).to.equal('<div></div>');
 };

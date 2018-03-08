@@ -23,7 +23,7 @@ module.exports = function load(templatePath, templateSrc, options) {
             try {
                 fs.accessSync(jsFilePath);
                 foundPrecompiled = true;
-            } catch(e) {}
+            } catch(e) { /* ignore error */ }
 
             if (foundPrecompiled) {
                 return require(jsFilePath);

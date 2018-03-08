@@ -186,9 +186,6 @@ module.exports = function handleRootNodes() {
     let templateRoot = this.el;
 
     let rootNodes = [];
-    let hasIdCount = 0;
-    let nodeWithAssignedId;
-    let assignedId;
     let transformHelper = this;
 
     let walker = context.createWalker({
@@ -198,12 +195,6 @@ module.exports = function handleRootNodes() {
             if (node.type === 'TemplateRoot' || !node.type) {
                 // Don't worry about the TemplateRoot or an Container node
             } else if (node.type === 'HtmlElement') {
-                if (node.hasAttribute('id')) {
-                    hasIdCount++;
-                    nodeWithAssignedId = node;
-                    assignedId = node.getAttributeValue('id');
-                }
-
                 if (tagName === 'style') {
                     handleStyleElement(node, transformHelper);
                 }

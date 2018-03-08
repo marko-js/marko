@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 require('raptor-polyfill/string/endsWith');
 
 const nodePath = require('path');
@@ -7,7 +9,6 @@ const nodeRequire = require('./node-require');
 var compiler;
 var marko;
 var runtime;
-var components;
 
 var modifiedId = 1;
 var HOT_RELOAD_KEY = Symbol('HOT_RELOAD');
@@ -90,7 +91,7 @@ exports.enable = function(options) {
 
     var oldCreateTemplate = runtime.t;
 
-    runtime.t = function hotReloadCreateTemplate(path) {
+    runtime.t = function hotReloadCreateTemplate() {
         var originalTemplate = oldCreateTemplate.apply(runtime, arguments);
         var actualRenderFunc;
 
@@ -192,4 +193,3 @@ exports.handleFileModified = function(path, options) {
 compiler = require('./compiler');
 marko = require('./');
 runtime = require('./runtime/html');
-components = require('./components');

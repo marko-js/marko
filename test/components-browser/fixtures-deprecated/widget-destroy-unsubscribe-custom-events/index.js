@@ -1,13 +1,13 @@
 module.exports = require('marko/legacy-components').defineComponent({
     template: require.resolve('./template.marko'),
-    getInitialState: function (input) {
+    getInitialState: function () {
         return {};
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function () {
         return {};
     },
 
-    destroyButton1: function (size) {
+    destroyButton1: function () {
         this.getWidget('button1').destroy();
     },
 

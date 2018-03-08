@@ -8,7 +8,7 @@ function compileAndCheck(path, shouldWriteToDisk) {
 
     try {
         fs.unlinkSync(compiledFile);
-    } catch (e) {}
+    } catch (e) { /* ignore error */ }
 
     require(resolved);
 

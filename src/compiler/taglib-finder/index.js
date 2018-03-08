@@ -10,7 +10,6 @@ var lassoCachingFS = require('lasso-caching-fs');
 var findCache = {};
 var excludedDirs = {};
 var excludedPackages = {};
-var taglibsForNodeModulesDirCache = {};
 
 /**
  * Reset all internal state to the default state. This
@@ -21,7 +20,6 @@ function reset() {
     findCache = {};
     excludedDirs = {};
     excludedPackages = {};
-    taglibsForNodeModulesDirCache = {};
 }
 
 function existsCached(path) {
@@ -94,6 +92,7 @@ function find(dirname, registeredTaglibs) {
 
     // First walk up the directory tree looking for marko.json files or components/ directories
     let curDirname = dirname;
+    // eslint-disable-next-line no-constant-condition
     while(true) {
         if(!excludedDirs[curDirname]) {
             let taglibPath = nodePath.join(curDirname, 'marko.json');
@@ -113,7 +112,6 @@ function find(dirname, registeredTaglibs) {
                     helper.addTaglib(taglib);
                 }
             }
-
         }
 
         if (curDirname === rootDirname) {
@@ -150,7 +148,6 @@ function find(dirname, registeredTaglibs) {
 function clearCache() {
     lassoCachingFS.clearCaches();
     findCache = {};
-    taglibsForNodeModulesDirCache = {};
 }
 
 function excludeDir(dir) {

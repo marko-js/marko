@@ -1,4 +1,3 @@
-import commonjsPlugin from 'rollup-plugin-commonjs';
 import browserifyPlugin from 'rollup-plugin-browserify-transform';
 import nodeResolvePlugin from 'rollup-plugin-node-resolve';
 import babelPlugin from 'rollup-plugin-babel';

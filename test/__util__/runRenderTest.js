@@ -152,7 +152,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         var expectedHtml;
                         try {
                             expectedHtml = fs.readFileSync(path.join(dir, 'vdom-expected.html'), { encoding: 'utf8' });
-                        } catch (e) {}
+                        } catch (e) { /* ignore error */ }
 
                         if (expectedHtml) {
                             return callback(null, expectedHtml);

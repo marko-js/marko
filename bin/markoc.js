@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 var fs = require('fs');
 var nodePath = require('path');
 var cwd = process.cwd();
@@ -11,11 +13,11 @@ var markoPkgVersion;
 try {
     var markoPkgPath = resolveFrom(process.cwd(), 'marko/package.json');
     markoPkgVersion = require(markoPkgPath).version;
-} catch(e) {}
+} catch(e) { /* ignore error */ }
 
 try {
     markoCompilerPath = resolveFrom(process.cwd(), 'marko/compiler');
-} catch(e) {}
+} catch(e) { /* ignore error */ }
 
 var markoCompiler;
 
@@ -177,7 +179,7 @@ function isIgnored(path, dir, stat) {
         if (!match && stat && stat.isDirectory()) {
             try {
                 stat = fs.statSync(path);
-            } catch(e) {}
+            } catch(e) { /* ignore error */ }
 
             if (stat && stat.isDirectory()) {
                 match = rule.match(path + '/');
@@ -301,7 +303,7 @@ if (args.clean) {
                 }
             }
         },
-        function(err) {
+        function() {
             if (deleteCount === 0) {
                 console.log('No *.marko.js files were found. Already clean.');
             } else {
@@ -313,7 +315,6 @@ if (args.clean) {
 } else {
     var found = {};
     var compileCount = 0;
-    var failed;
     var failed = [];
 
     var compile = function(path, context) {
@@ -336,7 +337,7 @@ if (args.clean) {
             }
 
             context.beginAsync();
-            fs.writeFile(outPath, src, {encoding: 'utf8'}, function(err, src) {
+            fs.writeFile(outPath, src, {encoding: 'utf8'}, function(err) {
                 if (err) {
                     failed.push('Failed to write "' + path + '". Error: ' + (err.stack || err));
                     context.endAsync(err);

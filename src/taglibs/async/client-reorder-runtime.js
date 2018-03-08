@@ -33,3 +33,5 @@ function $af(id, after, doc, sourceEl, targetEl, docFragment, childNodes, i, len
 
     // sourceEl.parentNode.removeChild(sourceEl);
 }
+
+window.$af = $af;

@@ -115,10 +115,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
     dir = nodePath.resolve(tagsConfigDirname, dir);
     let children = fs.readdirSync(dir);
 
-    let rendererJSFile;
-
     for (let i=0, len=children.length; i<len; i++) {
-        rendererJSFile = null;
         let childFilename = children[i];
         if (childFilename === 'node_modules') {
             continue;

@@ -55,6 +55,7 @@ function getRegisteredElement(tagName, dir) {
 
     var currentDir = dir;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
         var filePath = path.join(currentDir, 'html-elements.json');
         if (lassoCachingFS.existsSync(filePath)) {

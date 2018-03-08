@@ -1,5 +1,5 @@
 module.exports = {
-    onInput: function(input) {
+    onInput: function() {
         var parent = {
             child: {
             }
@@ -13,7 +13,7 @@ module.exports = {
         };
     },
 
-    onMount: function(componentConfig) {
+    onMount: function() {
         if (!window.fooComponents) {
             window.fooComponents = [];
         }

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const shelljs = require('shelljs');
 const mkdir = shelljs.mkdir;
 const rm = shelljs.rm;

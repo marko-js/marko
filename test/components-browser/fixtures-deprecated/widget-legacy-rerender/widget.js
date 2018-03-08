@@ -1,4 +1,4 @@
-function Widget(config) {}
+function Widget() {}
 
 Widget.prototype = {
     renderer: require('./renderer')

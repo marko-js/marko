@@ -5,7 +5,7 @@ var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 
 
 function safeJSONReplacer(match) {
-    if (match === '<\/') {
+    if (match === '</') {
         return '\\u003C/';
     } else {
         return '\\u' + match.charCodeAt(0).toString(16);

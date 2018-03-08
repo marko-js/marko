@@ -48,7 +48,7 @@ function requestData(provider, args, thisObj, timeout) {
             asyncValue.___reject(error);
         }, timeout);
 
-        asyncValue.___done(function(err, data) {
+        asyncValue.___done(function() {
             if (timeoutId != null) {
                 clearTimeout(timeoutId);
             }
@@ -171,6 +171,7 @@ module.exports = function awaitTag(input, out) {
             if (err.code === 'ERR_AWAIT_TIMEDOUT' && input.renderTimeout) {
                 input.renderTimeout(asyncOut);
             } else if (input.renderError) {
+                // eslint-disable-next-line no-console
                 console.error('Await (' + name + ') failed. Error:', (err.stack || err));
                 input.renderError(asyncOut);
             } else {

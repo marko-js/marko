@@ -7,7 +7,7 @@ module.exports = function nodeFactory(el, context) {
 
     try {
         vars = context.builder.parseStatement(el.tagString);
-    } catch(e) {}
+    } catch(e) { /* ignore error */ }
 
     if (vars) {
         return vars;

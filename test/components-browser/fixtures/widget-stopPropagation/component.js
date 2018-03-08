@@ -4,7 +4,7 @@ module.exports = {
 		this.buttonClicked = false;
 	},
 
-	handleDivClick: function (event) {
+	handleDivClick: function () {
 		this.divClicked = true;
 	},
 

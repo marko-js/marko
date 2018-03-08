@@ -2,8 +2,8 @@ var escape = require('./escape');
 var escapeString = escape.escapeString;
 var escapeXmlAttr = escape.escapeXmlAttr;
 
-var stringifiedAttrTest = /[&\'\n]/;
-var stringifiedAttrReplace = /[&\'\n]/g;
+var stringifiedAttrTest = /[&'\n]/;
+var stringifiedAttrReplace = /[&'\n]/g;
 
 function attr(name, value, shouldEscape) {
     shouldEscape = shouldEscape !== false;

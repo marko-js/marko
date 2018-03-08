@@ -11,7 +11,7 @@ module.exports = require('marko/legacy-components').defineComponent({
         };
     },
 
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         var alertType = state.alertType;
         var alertMessage = state.alertMessage;
 

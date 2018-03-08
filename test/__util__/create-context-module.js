@@ -149,7 +149,7 @@ function findNearestContextModule (cur) {
     if (cur instanceof ContextModule) {
       return cur;
     }
-  } while (cur = cur.parent);
+  } while ((cur = cur.parent));
 }
 
 /**

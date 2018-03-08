@@ -59,8 +59,7 @@ class FinalNodes {
 }
 
 class CodeGenerator {
-    constructor(context, options) {
-        options = options || {};
+    constructor(context) {
         this.root = null;
 
         this._code = '';

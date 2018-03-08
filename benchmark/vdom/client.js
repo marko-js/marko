@@ -38,7 +38,7 @@ function runSuite(suite) {
         running = true;
 
         suite
-            .on('start', function(event) {
+            .on('start', function() {
                 resultsEl.innerHTML += 'Running "' + suite.name + '"...\n';
             })
             .on('cycle', function(event) {

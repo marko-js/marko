@@ -59,16 +59,14 @@ SpecialElHandlers.prototype = {
     },
     SELECT: function(fromEl, toEl) {
         if (!toEl.___hasAttribute('multiple')) {
-            var selectedIndex = -1;
-            var i = 0;
+            var i = -1;
             var curChild = toEl.___firstChild;
             while(curChild) {
                 if (curChild.___nodeName == 'OPTION') {
+                    i++;
                     if (curChild.___hasAttribute('selected')) {
-                        selectedIndex = i;
                         break;
                     }
-                    i++;
                 }
                 curChild = curChild.___nextSibling;
             }

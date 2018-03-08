@@ -6,7 +6,7 @@ module.exports = {
 		};
 	},
 
-	getTemplateData: function (state, input) {
+	getTemplateData: function (state) {
 		return {
 			name: state.name,
 			messageCount: state.messageCount

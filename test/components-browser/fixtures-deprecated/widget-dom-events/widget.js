@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-function Widget(config) {
+function Widget() {
     this.logOutput = [];
 
     this.name = 'app-dom-events';

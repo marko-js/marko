@@ -7,7 +7,7 @@ module.exports = require('marko/legacy-components').defineComponent({
             colors: input.colors || []
         };
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             heading: state.heading,
             message: state.message,

@@ -5,7 +5,7 @@ module.exports = require('marko/legacy-components').defineComponent({
             name: input.name
         };
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return state;
     },
     setName: function (newName) {

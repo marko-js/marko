@@ -12,7 +12,7 @@ module.exports = require('marko/legacy-components').defineComponent({
     getInitialBody: function (input) {
         return input.label || input.renderBody;
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         var rootAttrs = {};
 
         var classParts = ['app-button'];

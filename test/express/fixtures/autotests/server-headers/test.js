@@ -19,7 +19,7 @@ exports.createController = function (template) {
     };
 };
 
-exports.checkResponse = function (response, expect, helpers) {
+exports.checkResponse = function (response, expect) {
     expect(response.headers['content-type']).to.equal('text/html; charset=utf-8');
     expect(response.body).to.equal('<div></div>');
 };

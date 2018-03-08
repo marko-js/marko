@@ -3,7 +3,7 @@
 var tagStartRegExp = /(^\s*(?:(?:exports.(?:tag|TAG))|(?:TAG))\s*=\s*)\{/m;
 
 // Tokens: "<string>", '<string>', /*<some comment*/, //<single line comment>, {, }, ;
-var tokensRegExp = /"(?:[^"]|\\")*"|'(?:[^'])|(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)|[\{\};]/g;
+var tokensRegExp = /"(?:[^"]|\\")*"|'(?:[^'])|(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)|[{};]/g;
 
 function extractTagDef(code) {
 

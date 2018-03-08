@@ -158,7 +158,7 @@ class TemplateRoot extends Node {
         this.moduleCode = moduleCode;
     }
 
-    toJSON(prettyPrinter) {
+    toJSON() {
         return {
             type: this.type,
             body: this.body

@@ -57,7 +57,7 @@ class Node {
         this._events.on(event, listener);
     }
 
-    emit(event, args) {
+    emit() {
         if (this._events) {
             this._events.emit.apply(this._events, arguments);
         }
@@ -238,7 +238,7 @@ class Node {
      * of this node that is the same version we use when
      * serializing to JSON.
      */
-    inspect(depth, opts) {
+    inspect() {
         // We inspect in the simplified version of this object t
         return this.toJSON();
     }
@@ -311,7 +311,7 @@ class Node {
         return preserveWhitespace === true;
     }
 
-    setFinalNode(isFinal) {
+    setFinalNode() {
         this._finalNode = true;
     }
 
@@ -351,7 +351,7 @@ class Node {
         var currentTextLiteral = null;
         var literalTextNodes = [];
 
-        body.forEach((curChild, i) => {
+        body.forEach((curChild) => {
             if (curChild.noOutput) {
                 // Skip over AST nodes that produce no HTML output
                 return;

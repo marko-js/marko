@@ -9,7 +9,6 @@ var charProps = require('char-props');
 var UniqueVars = require('./util/UniqueVars');
 var PosInfo = require('./util/PosInfo');
 var CompileError = require('./CompileError');
-var path = require('path');
 var Node = require('./ast/Node');
 var macros = require('./util/macros');
 var extend = require('raptor-util/extend');
@@ -334,9 +333,7 @@ class CompileContext extends EventEmitter {
         if (path === 'marko') {
             path = this.markoModulePrefix;
         } else if (path.startsWith('marko/')) {
-            if (path.startsWith('marko/src/') || path.startsWith('marko/dist/')) {
-
-            } else {
+            if (!path.startsWith('marko/src/') && !path.startsWith('marko/dist/')) {
                 path = this.markoModulePrefix + path.substring('marko/'.length);
             }
         }
@@ -451,13 +448,13 @@ class CompileContext extends EventEmitter {
                     };
 
                     var val = attributes[attrName];
-                    if (val == null) {
-
-                    } if (val instanceof Node) {
-                        attrDef.value = val;
-                    } else {
-                        extend(attrDef, val);
-                    }
+                    if (val != null) {
+                        if (val instanceof Node) {
+                            attrDef.value = val;
+                        } else {
+                            extend(attrDef, val);
+                        }
+                    } 
 
                     return attrDef;
                 });
@@ -659,7 +656,7 @@ class CompileContext extends EventEmitter {
         return templateVar;
     }
 
-    addDependency(path, type, options) {
+    addDependency(path, type) {
         var dependency;
         if (type) {
             dependency = { type, path };

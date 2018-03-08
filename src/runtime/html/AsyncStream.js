@@ -438,10 +438,6 @@ var proto = AsyncStream.prototype = {
             this.end();
         }
 
-        if (console) {
-            console.error(message);
-        }
-
         return this;
     },
 

@@ -1,4 +1,4 @@
-function Widget(config) {
+function Widget() {
     this.name = 'app-nested-widget-bind/foo';
     window.addWidget('app-nested-widget-bind/foo', this);
 }

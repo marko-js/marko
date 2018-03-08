@@ -1,4 +1,4 @@
-exports.render = function (input, out) {
+exports.render = function (input) {
      var tabs = input.tabs;
      tabs.addTab(input);
 };

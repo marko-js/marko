@@ -5,7 +5,7 @@ module.exports = require('marko/legacy-components').defineComponent({
             buttonSize: input.buttonSize || 'normal'
         };
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             buttonSize: state.buttonSize
         };

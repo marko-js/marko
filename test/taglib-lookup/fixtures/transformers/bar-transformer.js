@@ -1,1 +1,1 @@
-exports.transform = function (node, compiler, template) {};
+exports.transform = function () {};

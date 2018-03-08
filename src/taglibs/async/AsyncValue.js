@@ -1,6 +1,6 @@
 var nextTick = require('../../runtime/nextTick');
 
-function AsyncValue(options) {
+function AsyncValue() {
     /**
      * The data that was provided via call to resolve(data).
      * This property is assumed to be public and available for inspection.

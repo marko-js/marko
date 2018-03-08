@@ -1,12 +1,12 @@
 module.exports = require('marko/legacy-components').defineComponent({
     template: require.resolve('./template.marko'),
-    getInitialState: function (input) {
+    getInitialState: function () {
         return {
             buttonSize: 'small',
             buttonLabel: 'Initial Label'
         };
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             buttonSize: state.buttonSize,
             buttonLabel: state.buttonLabel

@@ -1,5 +1,5 @@
 module.exports = {
-    destroyButton1: function (size) {
+    destroyButton1: function () {
         this.getComponent('button1').destroy();
     },
 

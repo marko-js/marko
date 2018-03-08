@@ -11,7 +11,6 @@ var autotest = require('../autotest');
 const fs = require('fs');
 const morphdom = require('marko/morphdom');
 const createJSDOMModule = require('../__util__/create-jsdom-module');
-const expect = require('chai').expect;
 function serializeNode(node) {
 
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
@@ -83,30 +82,6 @@ function serializeNode(node) {
     serializeHelper(node, '');
 
     return html;
-}
-
-function buildElLookup(node) {
-    var map = {};
-
-    function buildMapHelper(node) {
-        if (node.nodeType !== 1) {
-            return;
-        }
-
-        var id = node.getAttribute('id');
-        if (id) {
-            map[id] = node;
-        }
-
-        var curNode = node.firstChild;
-        while (curNode) {
-            buildMapHelper(curNode);
-            curNode = curNode.nextSibling;
-        }
-    }
-
-    buildMapHelper(node);
-    return map;
 }
 
 describe('morphdom', function () {

@@ -2,8 +2,7 @@
  * Babel plugin for production builds which converts "MARKO_DEBUG"
  * strings to false to be removed by babel-plugin-minify-dead-code-elimination.
  */
-module.exports = function babelPluginMarkoDebug (babel) {
-  const t = babel.types;
+module.exports = function babelPluginMarkoDebug () {
   return {
     visitor: {
       IfStatement: (path) => {

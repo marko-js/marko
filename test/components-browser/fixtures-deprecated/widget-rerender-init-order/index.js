@@ -5,7 +5,7 @@ module.exports = require('marko/legacy-components').defineComponent({
             version: input.version
         };
     },
-    getTemplateData: function (state, input) {
+    getTemplateData: function (state) {
         return {
             version: state.version
         };

@@ -2,7 +2,7 @@
 var getTransformHelper = require('./util/getTransformHelper');
 
 
-function tagDefinitionHasOverridingKeyAttribute(el, context) {
+function tagDefinitionHasOverridingKeyAttribute(el) {
     if (!el.hasAttribute('key')) {
         return false;
     }
