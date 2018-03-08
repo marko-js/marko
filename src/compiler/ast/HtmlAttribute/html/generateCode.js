@@ -77,15 +77,15 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
             var part = flattenedConcats[i];
             if (isStringLiteral(part)) {
                 part.value = escapeXmlAttr(part.value);
-            } else if (part.type === 'Literal') {
-                // do nothing
-            } else if (isNoEscapeXml(part)) {
-                part = codegen.builder.functionCall(context.helper('str'), [part]);
-            } else {
-                if (escape !== false) {
-                    part = builder.functionCall(context.helper('escapeXmlAttr'), [part]);
+            } else if (part.type !== 'Literal') {
+                if (isNoEscapeXml(part)) {
+                    part = codegen.builder.functionCall(context.helper('str'), [part]);
+                } else {
+                    if (escape !== false) {
+                        part = builder.functionCall(context.helper('escapeXmlAttr'), [part]);
+                    }
                 }
-            }
+            } 
             addHtml(part);
         }
         addHtmlLiteral('"');
