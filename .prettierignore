@@ -11,3 +11,5 @@ input.*
 /test-dist/
 /test-generated/
 *.marko.js
+.nyc_output
+coverage

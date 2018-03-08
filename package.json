@@ -29,6 +29,7 @@
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && open ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",
     "lint": "eslint .",
+    "format": "prettier \"**/*.{js,json}\" --write",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
@@ -101,6 +102,7 @@
     "mocha": "^5.0.1",
     "nyc": "^10.3.2",
     "open": "0.0.5",
+    "prettier": "^1.11.1",
     "request": "^2.72.0",
     "semver": "^5.4.1",
     "shelljs": "^0.7.7",
