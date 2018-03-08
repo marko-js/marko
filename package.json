@@ -10,7 +10,7 @@
         "prepublish": "npm run build-src",
         "precommit": "lint-staged",
         "test": "npm run lint -s && npm run mocha -s",
-        "test-ci": "npm run test-generate-coverage",
+        "test-ci": "npm run check-format && npm run test-generate-coverage",
         "mocha":
             "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js",
         "test-coverage":
@@ -18,10 +18,12 @@
         "test-generate-coverage": "nyc -asc npm test",
         "lint": "eslint .",
         "format": "prettier \"**/*.{js,json,css,md}\" --write",
+        "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
         "coveralls": "nyc report --reporter=text-lcov | coveralls",
         "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
     },
     "lint-staged": {
+        "*.js": ["eslint"],
         "*.{js,json,css,md}": ["prettier --write", "git add"]
     },
     "dependencies": {
