@@ -68,7 +68,9 @@ describe(TEST_NAME, function () {
 
 describe(TEST_NAME + ' (hydrated)', function () {
     var hydrateOptions = { 
-        skip: (_, dir) => require(path.join(dir, 'test.js')).skipHydrate
+        skip: (_, dir) => require(path.join(dir, 'test.js')).skipHydrate,
+        fails: (_, dir) => require(path.join(dir, 'test.js')).failHydrate,
+        file: (_, dir) => path.join(dir, 'test.js')
     };
 
     autotest.scanDir(

@@ -89,6 +89,7 @@
     "fs-extra": "^2.0.0",
     "ignoring-watcher": "^1.0.2",
     "istanbul-lib-instrument": "^1.8.0",
+    "it-fails": "^1.0.0",
     "jquery": "^3.1.1",
     "jsdom": "^9.12.0",
     "jshint": "^2.5.0",
@@ -96,7 +97,7 @@
     "marko-widgets": "^7.0.1",
     "micromatch": "^3.0.4",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.2.0",
+    "mocha": "^5.0.1",
     "nyc": "^10.3.2",
     "open": "0.0.5",
     "request": "^2.72.0",
@@ -131,7 +132,7 @@
     ]
   },
   "homepage": "http://markojs.com/",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }
