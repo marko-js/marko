@@ -3,7 +3,7 @@ module.exports = {
         window.splitComponent = this;
         this.clicked = false;
     },
-    handleClick: function (value) {
+    handleClick: function(value) {
         this.clicked = value;
     }
 };

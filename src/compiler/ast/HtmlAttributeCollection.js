@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
+var ok = require("assert").ok;
 
-var HtmlAttribute = require('./HtmlAttribute');
-var Node = require('./Node');
+var HtmlAttribute = require("./HtmlAttribute");
+var Node = require("./Node");
 
 class HtmlAttributeCollection {
     constructor(attributes) {
@@ -21,9 +21,9 @@ class HtmlAttributeCollection {
 
         var name = newAttr.name;
 
-        if (typeof name === 'string') {
+        if (typeof name === "string") {
             if (this.lookup.hasOwnProperty(name)) {
-                for (var i=0; i<this.all.length; i++) {
+                for (var i = 0; i < this.all.length; i++) {
                     var curAttr = this.all[i];
                     if (curAttr.name === name) {
                         this.all.splice(i, 1);
@@ -40,7 +40,7 @@ class HtmlAttributeCollection {
     }
 
     removeAttribute(name) {
-        ok(typeof name === 'string', 'Invalid attribute name');
+        ok(typeof name === "string", "Invalid attribute name");
 
         if (!this.lookup.hasOwnProperty(name)) {
             return false;
@@ -48,7 +48,7 @@ class HtmlAttributeCollection {
 
         delete this.lookup[name];
 
-        for (var i=0; i<this.all.length; i++) {
+        for (var i = 0; i < this.all.length; i++) {
             var curAttr = this.all[i];
             if (curAttr.name === name) {
                 this.all.splice(i, 1);
@@ -77,7 +77,7 @@ class HtmlAttributeCollection {
     }
 
     hasAttribute(name) {
-        ok(typeof name === 'string', 'Invalid attribute name');
+        ok(typeof name === "string", "Invalid attribute name");
         return this.lookup.hasOwnProperty(name);
     }
 
@@ -93,7 +93,7 @@ class HtmlAttributeCollection {
         var attr = this.getAttribute(name);
         if (attr) {
             attr.value = value;
-            if (typeof escape === 'boolean') {
+            if (typeof escape === "boolean") {
                 attr.escape = escape;
             }
         } else {
@@ -123,7 +123,7 @@ class HtmlAttributeCollection {
 
         if (attributes) {
             if (Array.isArray(attributes)) {
-                attributes.forEach((attr) => {
+                attributes.forEach(attr => {
                     this.addAttribute(attr);
                 });
             } else {
@@ -132,7 +132,11 @@ class HtmlAttributeCollection {
                         let attrValue = attributes[attrName];
                         let attrDef;
 
-                        if (attrValue != null && typeof attrValue === 'object' && !(attrValue instanceof Node)) {
+                        if (
+                            attrValue != null &&
+                            typeof attrValue === "object" &&
+                            !(attrValue instanceof Node)
+                        ) {
                             attrDef = attrValue;
                             attrDef.name = attrName;
                         } else {

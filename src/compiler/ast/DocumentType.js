@@ -1,9 +1,9 @@
-'use strict';
-var Node = require('./Node');
+"use strict";
+var Node = require("./Node");
 
 class DocumentType extends Node {
     constructor(def) {
-        super('DocumentType');
+        super("DocumentType");
         this.documentType = def.documentType;
     }
 
@@ -11,13 +11,13 @@ class DocumentType extends Node {
         var builder = codegen.builder;
 
         return [
-            builder.htmlLiteral('<!'),
+            builder.htmlLiteral("<!"),
             builder.html(codegen.generateCode(this.documentType)),
-            builder.htmlLiteral('>')
+            builder.htmlLiteral(">")
         ];
     }
 
-    generateVDOMCode(codegen) {
+    generateVDOMCode() {
         return null;
     }
 

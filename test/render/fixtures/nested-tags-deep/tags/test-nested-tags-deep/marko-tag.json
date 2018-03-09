@@ -3,8 +3,6 @@
     "@class": "string",
     "@items <item>[]": {
         "@foo": "string",
-        "@body <body>": {
-
-        }
+        "@body <body>": {}
     }
 }

@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-let path = require('path');
-let getComponentFiles = require('./getComponentFiles');
+let path = require("path");
+let getComponentFiles = require("./getComponentFiles");
 
-const esprima = require('esprima');
-const escodegen = require('escodegen');
-const FLAG_COMPONENT_STYLE = Symbol('COMPONENT_STYLE');
+const esprima = require("esprima");
+const escodegen = require("escodegen");
+const FLAG_COMPONENT_STYLE = Symbol("COMPONENT_STYLE");
 
 function handleStyleElement(styleEl, transformHelper) {
     if (styleEl.bodyText) {
@@ -15,26 +15,33 @@ function handleStyleElement(styleEl, transformHelper) {
     let attrs = styleEl.attributes;
 
     let styleCode;
-    let lang = 'css';
+    let lang = "css";
 
     let hasStyleBlock = false;
 
-    for (let i=attrs.length-1; i>=0; i--) {
+    for (let i = attrs.length - 1; i >= 0; i--) {
         let attr = attrs[i];
         let name = attr.name;
-        if (name.startsWith('{')) {
+        if (name.startsWith("{")) {
             hasStyleBlock = true;
 
             styleCode = name.slice(1, -1).trim();
-        } else if (name === 'class') {
-            if (attr.value.type !== 'Literal' || typeof attr.value.value !== 'string') {
+        } else if (name === "class") {
+            if (
+                attr.value.type !== "Literal" ||
+                typeof attr.value.value !== "string"
+            ) {
                 return;
             }
 
             lang = attr.value.value;
         } else {
             if (hasStyleBlock) {
-                transformHelper.context.addError(styleEl, 'Unsupported attribute on the component style tag: ' + attr.name);
+                transformHelper.context.addError(
+                    styleEl,
+                    "Unsupported attribute on the component style tag: " +
+                        attr.name
+                );
                 return;
             }
         }
@@ -51,8 +58,8 @@ function handleStyleElement(styleEl, transformHelper) {
         context.addDependency({
             type: lang,
             code: styleCode,
-            virtualPath: './'+path.basename(context.filename)+'.'+lang,
-            path: './'+path.basename(context.filename)
+            virtualPath: "./" + path.basename(context.filename) + "." + lang,
+            path: "./" + path.basename(context.filename)
         });
     }
 
@@ -61,11 +68,11 @@ function handleStyleElement(styleEl, transformHelper) {
 
 function methodToProperty(method) {
     return {
-        type: 'Property',
+        type: "Property",
         key: method.key,
         computed: false,
         value: method.value,
-        kind: 'init',
+        kind: "init",
         method: false,
         shorthand: false
     };
@@ -73,18 +80,23 @@ function methodToProperty(method) {
 
 function classToObject(cls, el, transformHelper) {
     return {
-        type: 'ObjectExpression',
-        properties: cls.body.body.map((method) => {
-            if(method.type != 'MethodDefinition') {
-                throw Error('Only methods are allowed on single file component class definitions.');
+        type: "ObjectExpression",
+        properties: cls.body.body.map(method => {
+            if (method.type != "MethodDefinition") {
+                throw Error(
+                    "Only methods are allowed on single file component class definitions."
+                );
             }
 
-            if (method.kind === 'method') {
+            if (method.kind === "method") {
                 return methodToProperty(method);
-            } else if (method.kind === 'constructor') {
-                transformHelper.context.deprecate('The constructor method should not be used for a component, use onCreate instead', el);
+            } else if (method.kind === "constructor") {
+                transformHelper.context.deprecate(
+                    "The constructor method should not be used for a component, use onCreate instead",
+                    el
+                );
                 let converted = methodToProperty(method);
-                converted.key.name = 'onCreate';
+                converted.key.name = "onCreate";
                 return converted;
             } else {
                 return method;
@@ -95,12 +107,12 @@ function classToObject(cls, el, transformHelper) {
 
 function handleClassDeclaration(classEl, transformHelper) {
     let tree;
-    let wrappedSrc = '('+classEl.tagString+'\n)';
+    let wrappedSrc = "(" + classEl.tagString + "\n)";
 
     try {
         tree = esprima.parseScript(wrappedSrc);
-    } catch(err) {
-        let message = 'Unable to parse JavaScript for component class. ' + err;
+    } catch (err) {
+        let message = "Unable to parse JavaScript for component class. " + err;
 
         if (err.index != null) {
             let errorIndex = err.index;
@@ -120,17 +132,23 @@ function handleClassDeclaration(classEl, transformHelper) {
     let expression = tree.body[0].expression;
 
     if (expression.superClass && expression.superClass.name) {
-        transformHelper.context.addError(classEl, 'A component class is not allowed to use `extends`. See: https://github.com/marko-js/marko/wiki/Error:-Component-class-with-extends');
+        transformHelper.context.addError(
+            classEl,
+            "A component class is not allowed to use `extends`. See: https://github.com/marko-js/marko/wiki/Error:-Component-class-with-extends"
+        );
         return;
     }
 
     let object = classToObject(expression, classEl, transformHelper);
-    let componentVar = transformHelper.context.addStaticVar('marko_component', escodegen.generate(object));
+    let componentVar = transformHelper.context.addStaticVar(
+        "marko_component",
+        escodegen.generate(object)
+    );
 
     let moduleInfo = {
         inlineId: componentVar,
         filename: transformHelper.filename,
-        requirePath: './' + path.basename(transformHelper.filename)
+        requirePath: "./" + path.basename(transformHelper.filename)
     };
 
     classEl.detach();
@@ -141,7 +159,7 @@ function handleClassDeclaration(classEl, transformHelper) {
 module.exports = function handleRootNodes() {
     let context = this.context;
 
-    if (context.isFlagSet('hasLegacyWidgetBind')) {
+    if (context.isFlagSet("hasLegacyWidgetBind")) {
         return;
     }
 
@@ -155,11 +173,11 @@ module.exports = function handleRootNodes() {
     let dirname = context.dirname;
 
     if (componentFiles.package) {
-        context.addDependency('package: ./' + componentFiles.package);
+        context.addDependency("package: ./" + componentFiles.package);
     }
 
-    componentFiles.styles.forEach((styleFile) => {
-        context.addDependency('./' + styleFile);
+    componentFiles.styles.forEach(styleFile => {
+        context.addDependency("./" + styleFile);
     });
 
     if (componentFiles.file) {
@@ -167,7 +185,7 @@ module.exports = function handleRootNodes() {
 
         let moduleInfo = {
             filename: path.join(dirname, file),
-            requirePath: './'+file.slice(0, file.lastIndexOf('.'))
+            requirePath: "./" + file.slice(0, file.lastIndexOf("."))
         };
 
         componentModule = rendererModule = moduleInfo;
@@ -178,33 +196,23 @@ module.exports = function handleRootNodes() {
 
         componentModule = {
             filename: path.join(dirname, file),
-            requirePath: './' + file.slice(
-                0, file.lastIndexOf('.'))
+            requirePath: "./" + file.slice(0, file.lastIndexOf("."))
         };
     }
 
     let templateRoot = this.el;
 
     let rootNodes = [];
-    let hasIdCount = 0;
-    let nodeWithAssignedId;
-    let assignedId;
     let transformHelper = this;
 
     let walker = context.createWalker({
         enter(node) {
             let tagName = node.tagName && node.tagName.toLowerCase();
 
-            if (node.type === 'TemplateRoot' || !node.type) {
+            if (node.type === "TemplateRoot" || !node.type) {
                 // Don't worry about the TemplateRoot or an Container node
-            } else if (node.type === 'HtmlElement') {
-                if (node.hasAttribute('id')) {
-                    hasIdCount++;
-                    nodeWithAssignedId = node;
-                    assignedId = node.getAttributeValue('id');
-                }
-
-                if (tagName === 'style') {
+            } else if (node.type === "HtmlElement") {
+                if (tagName === "style") {
                     handleStyleElement(node, transformHelper);
                 }
 
@@ -214,7 +222,7 @@ module.exports = function handleRootNodes() {
                 walker.skip();
 
                 return;
-            } else if (node.type === 'CustomTag') {
+            } else if (node.type === "CustomTag") {
                 let tag = context.taglibLookup.getTag(node.tagName);
 
                 if (!tag.noOutput) {
@@ -223,15 +231,21 @@ module.exports = function handleRootNodes() {
 
                 walker.skip();
                 return;
-            } else if (node.type === 'Scriptlet') {
+            } else if (node.type === "Scriptlet") {
                 walker.skip();
                 return;
             } else {
-                if (tagName === 'class') {
-                    let classComponentModule = handleClassDeclaration(node, transformHelper);
+                if (tagName === "class") {
+                    let classComponentModule = handleClassDeclaration(
+                        node,
+                        transformHelper
+                    );
 
                     if (rendererModule != null) {
-                        transformHelper.context.addError(node, 'The component has both an inline component `class` and a separate `component.js`. This is not allowed. See: https://github.com/marko-js/marko/wiki/Error:-Component-inline-and-external');
+                        transformHelper.context.addError(
+                            node,
+                            "The component has both an inline component `class` and a separate `component.js`. This is not allowed. See: https://github.com/marko-js/marko/wiki/Error:-Component-inline-and-external"
+                        );
                         return;
                     }
 
@@ -256,13 +270,15 @@ module.exports = function handleRootNodes() {
     //     return;
     // }
 
-    if (context.isFlagSet('hasWidgetTypes')) {
-        context.addError('The <widget-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514');
+    if (context.isFlagSet("hasWidgetTypes")) {
+        context.addError(
+            "The <widget-types> tag is no longer supported. See: https://github.com/marko-js/marko/issues/514"
+        );
     }
 
     // After normalizing the text nodes to remove whitespace we may have detached
     // some of the root text nodes so remove those from our list
-    rootNodes = rootNodes.filter((rootNode) => {
+    rootNodes = rootNodes.filter(rootNode => {
         return rootNode.isDetached() !== true;
     });
 
@@ -277,7 +293,7 @@ module.exports = function handleRootNodes() {
 
         componentModule = rendererModule = {
             filename: this.filename,
-            requirePath: './' + path.basename(this.filename)
+            requirePath: "./" + path.basename(this.filename)
         };
     }
 

@@ -1,3 +1,3 @@
-module.exports = function generator(elNode, generator) {
-    throw new Error('Something Happened!');
+module.exports = function generator() {
+    throw new Error("Something Happened!");
 };

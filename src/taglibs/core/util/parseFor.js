@@ -1,99 +1,98 @@
-'use strict';
-var removeComments = require('../../../compiler/util/removeComments');
-var compiler = require('../../../compiler');
+"use strict";
+var removeComments = require("../../../compiler/util/removeComments");
+var compiler = require("../../../compiler");
 
 var integerRegExp = /^-?\d+$/;
 var numberRegExp = /^-?(?:\d+|\d+\.\d*|\d*\.\d+|\d+\.\d+)$/;
 
-var tokenizer = require('../../../compiler/util/tokenizer').create([
+var tokenizer = require("../../../compiler/util/tokenizer").create([
     {
-        name: 'stringDouble',
-        pattern: /"(?:[^"]|\\")*"/,
+        name: "stringDouble",
+        pattern: /"(?:[^"]|\\")*"/
     },
     {
-        name: 'stringSingle',
+        name: "stringSingle",
         pattern: /'(?:[^']|\\')*'/
     },
     {
-        name: 'in',
-        pattern: /\s+in\s+/,
+        name: "in",
+        pattern: /\s+in\s+/
     },
     {
-        name: 'from',
+        name: "from",
         pattern: /\s+from\s+/
     },
     {
-        name: 'to',
-        pattern: /\s+to\s+/,
+        name: "to",
+        pattern: /\s+to\s+/
     },
     {
-        name: 'step',
-        pattern: /\s+step\s+/,
+        name: "step",
+        pattern: /\s+step\s+/
     },
     {
-        name: 'semicolon',
-        pattern: /[;]/,
+        name: "semicolon",
+        pattern: /[;]/
     },
     {
-        name: 'separator',
+        name: "separator",
         pattern: /separator\s?=\s?/
     },
     {
-        name: 'status-var',
-        pattern: /status\-var\s?=\s?/
+        name: "status-var",
+        pattern: /status-var\s?=\s?/
     },
     {
-        name: 'iterator',
+        name: "iterator",
         pattern: /iterator\s?=\s?/
     },
     {
-        name: 'pipe',
+        name: "pipe",
         pattern: /\s+\|\s+/
     },
     {
-        name: 'groupOpen',
-        pattern: /[\{\(\[]/
+        name: "groupOpen",
+        pattern: /[{([]/
     },
     {
-        name: 'groupClose',
-        pattern: /[\}\)\]]/
+        name: "groupClose",
+        pattern: /[})\]]/
     },
     {
-        name: 'array',
+        name: "array",
         pattern: /array/
     }
 ]);
 
 var inRegExp = /^\s*([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
 
-
 function throwError(message) {
     var error = new Error(message);
-    error.code = 'INVALID_FOR';
+    error.code = "INVALID_FOR";
     throw error;
 }
 
 function buildIdentifier(name, errorMessage) {
     try {
         return compiler.builder.identifier(name);
-    } catch(e) {
-        throwError(errorMessage + ': ' + e.message);
+    } catch (e) {
+        throwError(errorMessage + ": " + e.message);
     }
 }
 
 function parseExpression(str, errorMessage) {
     try {
         return compiler.builder.parseExpression(str);
-    } catch(e) {
-        throwError(errorMessage + ': ' + e.message);
+    } catch (e) {
+        throwError(errorMessage + ": " + e.message);
     }
 }
 
 function parseStatement(str, errorMessage) {
     try {
         return compiler.builder.parseStatement(str);
-    } catch(e) {
-        throwError(errorMessage + ': ' + e.message);
+    } catch (e) {
+        throwError(errorMessage + ": " + e.message);
     }
 }
 
@@ -147,15 +146,15 @@ module.exports = function(str) {
     var inRegExpMatches = inRegExp.exec(str);
     if (inRegExpMatches) {
         if (inRegExpMatches[1] && inRegExpMatches[2]) {
-            loopType = 'ForEachProp';
+            loopType = "ForEachProp";
             nameVarName = inRegExpMatches[1];
             valueVarName = inRegExpMatches[2];
         } else {
-            loopType = 'ForEach';
+            loopType = "ForEach";
             varName = inRegExpMatches[1];
         }
 
-        str = ' in ' + str.substring(inRegExpMatches[0].length);
+        str = " in " + str.substring(inRegExpMatches[0].length);
     }
 
     function finishVarName(end) {
@@ -170,75 +169,75 @@ module.exports = function(str) {
         var start = prevToken.end;
         var part = str.substring(start, end).trim();
 
-        switch(prevToken.name) {
-            case 'from':
+        switch (prevToken.name) {
+            case "from":
                 fromExpression = part;
                 break;
-            case 'to':
+            case "to":
                 toExpression = part;
                 break;
-            case 'in':
+            case "in":
                 inExpression = part;
                 break;
-            case 'step':
+            case "step":
                 stepExpression = part;
                 break;
-            case 'status-var':
+            case "status-var":
                 statusVarName = part;
                 break;
-            case 'separator':
+            case "separator":
                 separatorExpression = part;
                 break;
-            case 'iterator':
+            case "iterator":
                 iteratorExpression = part;
                 break;
-            case 'array':
+            case "array":
                 isArray = true;
                 break;
-            case 'pipe':
+            case "pipe":
                 if (part.length !== 0) {
-                    throwError('Unexpected input: ' + part);
+                    throwError("Unexpected input: " + part);
                     return;
                 }
                 break;
         }
     }
 
-    tokenizer.forEachToken(str, (token) => {
-        switch(token.name) {
-            case 'groupOpen':
+    tokenizer.forEachToken(str, token => {
+        switch (token.name) {
+            case "groupOpen":
                 depth++;
                 break;
-            case 'groupClose':
+            case "groupClose":
                 depth--;
                 break;
-            case 'in':
+            case "in":
                 if (depth === 0) {
                     prevToken = token;
                 }
                 break;
-            case 'from':
+            case "from":
                 if (depth === 0 && !loopType) {
-                    loopType = 'ForRange';
+                    loopType = "ForRange";
                     finishVarName(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'to':
-                if (depth === 0 && prevToken && prevToken.name === 'from') {
+            case "to":
+                if (depth === 0 && prevToken && prevToken.name === "from") {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'step':
-                if (depth === 0 && prevToken && prevToken.name === 'to') {
+            case "step":
+                if (depth === 0 && prevToken && prevToken.name === "to") {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'semicolon':
+            case "semicolon":
                 if (depth === 0) {
-                    loopType = 'For';
+                    loopType = "For";
 
                     if (forInit == null) {
                         forInit = str.substring(0, token.start);
@@ -246,39 +245,57 @@ module.exports = function(str) {
                         forTest = str.substring(prevToken.end, token.start);
                         forUpdate = str.substring(token.end);
                     } else {
-                        throwError('Invalid native for loop. Expected format: <init>; <test>; <update>');
+                        throwError(
+                            "Invalid native for loop. Expected format: <init>; <test>; <update>"
+                        );
                     }
 
                     prevToken = token;
                 }
                 break;
-            case 'pipe':
+            case "pipe":
                 if (depth === 0) {
                     pipeFound = true;
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'status-var':
-                if (depth === 0 && pipeFound && str.charAt(token.start-1) === ' ') {
+            case "status-var":
+                if (
+                    depth === 0 &&
+                    pipeFound &&
+                    str.charAt(token.start - 1) === " "
+                ) {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'separator':
-                if (depth === 0 && pipeFound && str.charAt(token.start-1) === ' ') {
+            case "separator":
+                if (
+                    depth === 0 &&
+                    pipeFound &&
+                    str.charAt(token.start - 1) === " "
+                ) {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'iterator':
-                if (depth === 0 && pipeFound && str.charAt(token.start-1) === ' ') {
+            case "iterator":
+                if (
+                    depth === 0 &&
+                    pipeFound &&
+                    str.charAt(token.start - 1) === " "
+                ) {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
                 break;
-            case 'array':
-                if (depth === 0 && pipeFound && str.charAt(token.start-1) === ' ') {
+            case "array":
+                if (
+                    depth === 0 &&
+                    pipeFound &&
+                    str.charAt(token.start - 1) === " "
+                ) {
                     finishPrevPart(token.start);
                     prevToken = token;
                 }
@@ -293,97 +310,117 @@ module.exports = function(str) {
     }
 
     if (separatorExpression) {
-        separatorExpression = parseExpression(separatorExpression, 'Invalid "separator" expression');
+        separatorExpression = parseExpression(
+            separatorExpression,
+            'Invalid "separator" expression'
+        );
     }
 
     if (iteratorExpression) {
-        iteratorExpression = parseExpression(iteratorExpression, 'Invalid "iterator" expression');
+        iteratorExpression = parseExpression(
+            iteratorExpression,
+            'Invalid "iterator" expression'
+        );
     }
 
     if (fromExpression) {
-        fromExpression = createNumberExpression(fromExpression, 'Invalid "from" expression');
+        fromExpression = createNumberExpression(
+            fromExpression,
+            'Invalid "from" expression'
+        );
     }
 
     if (toExpression) {
-        toExpression = createNumberExpression(toExpression, 'Invalid "to" expression');
+        toExpression = createNumberExpression(
+            toExpression,
+            'Invalid "to" expression'
+        );
     }
 
     if (stepExpression) {
-        stepExpression = createNumberExpression(stepExpression, 'Invalid "step" expression');
+        stepExpression = createNumberExpression(
+            stepExpression,
+            'Invalid "step" expression'
+        );
     }
 
     if (varName != null) {
-        varName = buildIdentifier(varName, 'Invalid variable name');
+        varName = buildIdentifier(varName, "Invalid variable name");
     }
 
     if (nameVarName) {
-        nameVarName = buildIdentifier(nameVarName, 'Invalid name variable');
+        nameVarName = buildIdentifier(nameVarName, "Invalid name variable");
     }
 
     if (valueVarName) {
-        valueVarName = buildIdentifier(valueVarName, 'Invalid value variable');
+        valueVarName = buildIdentifier(valueVarName, "Invalid value variable");
     }
 
     if (statusVarName) {
-        statusVarName = parseExpression(statusVarName, 'Invalid status-var option');
-        if (statusVarName.type === 'Literal') {
+        statusVarName = parseExpression(
+            statusVarName,
+            "Invalid status-var option"
+        );
+        if (statusVarName.type === "Literal") {
             statusVarName = compiler.builder.identifier(statusVarName.value);
-        } else  if (statusVarName.type !== 'Identifier') {
-            throwError('Invalid status-var option');
+        } else if (statusVarName.type !== "Identifier") {
+            throwError("Invalid status-var option");
         }
     }
 
     if (forInit) {
-        forInit = parseStatement(forInit, 'Invalid for loop init');
+        forInit = parseStatement(forInit, "Invalid for loop init");
     }
 
     if (forTest) {
-        forTest = parseExpression(forTest, 'Invalid for loop test');
+        forTest = parseExpression(forTest, "Invalid for loop test");
     }
 
     if (forUpdate) {
-        forUpdate = parseExpression(forUpdate, 'Invalid for loop update');
+        forUpdate = parseExpression(forUpdate, "Invalid for loop update");
     }
 
     // No more tokens... now we need to sort out what happened
-    if (loopType === 'ForEach') {
+    if (loopType === "ForEach") {
         return {
-            'loopType': loopType,
-            'varName': varName,
-            'in': inExpression,
-            'separator': separatorExpression,
-            'statusVarName': statusVarName,
-            'iterator': iteratorExpression,
-            'isArray': isArray
+            loopType: loopType,
+            varName: varName,
+            in: inExpression,
+            separator: separatorExpression,
+            statusVarName: statusVarName,
+            iterator: iteratorExpression,
+            isArray: isArray
         };
-    } else if (loopType === 'ForEachProp') {
+    } else if (loopType === "ForEachProp") {
         return {
-            'loopType': loopType,
-            'nameVarName': nameVarName,
-            'valueVarName': valueVarName,
-            'in': inExpression,
-            'separator': separatorExpression,
-            'statusVarName': statusVarName
+            loopType: loopType,
+            nameVarName: nameVarName,
+            valueVarName: valueVarName,
+            in: inExpression,
+            separator: separatorExpression,
+            statusVarName: statusVarName
         };
-    } else if (loopType === 'ForRange') {
+    } else if (loopType === "ForRange") {
         return {
-            'loopType': loopType,
-            'varName': varName,
-            'from': fromExpression,
-            'to': toExpression,
-            'step': stepExpression
+            loopType: loopType,
+            varName: varName,
+            from: fromExpression,
+            to: toExpression,
+            step: stepExpression
         };
-    } else if (loopType === 'For') {
+    } else if (loopType === "For") {
         if (forTest == null) {
-            throwError('Invalid native for loop. Expected format: <init>; <test>; <update>');
+            throwError(
+                "Invalid native for loop. Expected format: <init>; <test>; <update>"
+            );
         }
         return {
-            'loopType': loopType,
-            'init': forInit,
-            'test': forTest,
-            'update': forUpdate
+            loopType: loopType,
+            init: forInit,
+            test: forTest,
+            update: forUpdate
         };
     } else {
-        throwError('Invalid for loop');
+        throwError("Invalid for loop");
     }
 };

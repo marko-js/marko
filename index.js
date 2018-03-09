@@ -1,7 +1,7 @@
-var isDebug = require('./env').isDebug;
+var isDebug = require("./env").isDebug;
 
 if (isDebug) {
-    module.exports = require('./src/');
+    module.exports = require("./src/");
 } else {
-    module.exports = require('./dist/');
+    module.exports = require("./dist/");
 }

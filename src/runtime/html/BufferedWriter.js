@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Simple wrapper that can be used to wrap a stream
@@ -7,7 +7,7 @@
  * by reducing the number of chunks by buffering the output.
  */
 function BufferedWriter(wrappedStream) {
-    this._buffer = '';
+    this._buffer = "";
     this._wrapped = wrappedStream;
 }
 
@@ -19,7 +19,7 @@ BufferedWriter.prototype = {
     flush: function() {
         if (this._buffer.length !== 0) {
             this._wrapped.write(this._buffer);
-            this._buffer = '';
+            this._buffer = "";
             if (this._wrapped.flush) {
                 this._wrapped.flush();
             }
@@ -34,7 +34,7 @@ BufferedWriter.prototype = {
     },
 
     clear: function() {
-        this._buffer = '';
+        this._buffer = "";
     }
 };
 

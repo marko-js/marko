@@ -1,21 +1,26 @@
-require('raptor-polyfill/string/endsWith');
+/* eslint-disable no-console */
 
-const nodePath = require('path');
-const fs = require('fs');
-const nodeRequire = require('./node-require');
+require("raptor-polyfill/string/endsWith");
+
+const nodePath = require("path");
+const fs = require("fs");
+const nodeRequire = require("./node-require");
 
 var compiler;
 var marko;
 var runtime;
-var components;
 
 var modifiedId = 1;
-var HOT_RELOAD_KEY = Symbol('HOT_RELOAD');
+var HOT_RELOAD_KEY = Symbol("HOT_RELOAD");
 
 function cleaResolvePathCache() {
-    var modulePathCache = require('module').Module._pathCache;
+    var modulePathCache = require("module").Module._pathCache;
     if (!modulePathCache) {
-        console.log('[marko/hot-reload] WARNING: Missing: require("module").Module._pathCache [' + __filename + ']');
+        console.log(
+            '[marko/hot-reload] WARNING: Missing: require("module").Module._pathCache [' +
+                __filename +
+                "]"
+        );
         return;
     }
 
@@ -26,11 +31,11 @@ function cleaResolvePathCache() {
 }
 
 function tryReloadTemplate(path) {
-    path = path.replace(/\.js$/, '');
+    path = path.replace(/\.js$/, "");
 
     try {
         return marko.load(path);
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 }
@@ -48,7 +53,7 @@ exports.enable = function(options) {
 
     // We set an environment variable so that _all_ marko modules
     // installed in the project will have hot reload enabled.
-    process.env.MARKO_HOT_RELOAD = 'true';
+    process.env.MARKO_HOT_RELOAD = "true";
 
     function createHotReloadProxy(func, template, methodName) {
         var hotReloadData = template[HOT_RELOAD_KEY];
@@ -67,16 +72,23 @@ exports.enable = function(options) {
         function hotReloadProxy() {
             if (hotReloadData.modifiedId !== modifiedId) {
                 hotReloadData.modifiedId = modifiedId;
-                hotReloadData.latest = tryReloadTemplate(templatePath) || template;
+                hotReloadData.latest =
+                    tryReloadTemplate(templatePath) || template;
 
                 if (hotReloadData.latest !== template) {
                     template.meta = hotReloadData.latest.meta;
-                    if (!silent) { console.log('[marko/hot-reload] Template successfully reloaded: ' + templatePath); }
+                    if (!silent) {
+                        console.log(
+                            "[marko/hot-reload] Template successfully reloaded: " +
+                                templatePath
+                        );
+                    }
                 }
             }
 
             var latest = hotReloadData.latest;
-            var originals = latest[HOT_RELOAD_KEY] && latest[HOT_RELOAD_KEY].originals;
+            var originals =
+                latest[HOT_RELOAD_KEY] && latest[HOT_RELOAD_KEY].originals;
             if (!originals) {
                 originals = latest;
             }
@@ -90,17 +102,21 @@ exports.enable = function(options) {
 
     var oldCreateTemplate = runtime.t;
 
-    runtime.t = function hotReloadCreateTemplate(path) {
+    runtime.t = function hotReloadCreateTemplate() {
         var originalTemplate = oldCreateTemplate.apply(runtime, arguments);
         var actualRenderFunc;
 
-        Object.defineProperty(originalTemplate, '_', {
+        Object.defineProperty(originalTemplate, "_", {
             get: function() {
                 return actualRenderFunc;
             },
 
             set: function(renderFunc) {
-                actualRenderFunc = createHotReloadProxy(renderFunc, originalTemplate, '_');
+                actualRenderFunc = createHotReloadProxy(
+                    renderFunc,
+                    originalTemplate,
+                    "_"
+                );
             }
         });
 
@@ -121,15 +137,18 @@ function _endsWithMarkoExtension(path, requireExtensions) {
 }
 
 function normalizeExtension(extension) {
-    if (extension.charAt(0) !== '.') {
-        extension = '.' + extension;
+    if (extension.charAt(0) !== ".") {
+        extension = "." + extension;
     }
     return extension;
 }
 
 exports.handleFileModified = function(path, options) {
     if (!fs.existsSync(path)) {
-        console.log('[marko/hot-reload] WARNING cannot resolve template path: ', path);
+        console.log(
+            "[marko/hot-reload] WARNING cannot resolve template path: ",
+            path
+        );
         return;
     }
 
@@ -137,7 +156,7 @@ exports.handleFileModified = function(path, options) {
     var silent = options.silent || false;
 
     // Default hot-reloaded extensions
-    var requireExtensions = ['.marko', '.marko.html', '.marko.xml'];
+    var requireExtensions = [".marko", ".marko.html", ".marko.xml"];
 
     if (options.extension) {
         requireExtensions.push(options.extension);
@@ -159,37 +178,38 @@ exports.handleFileModified = function(path, options) {
     var basename = nodePath.basename(path);
 
     function handleFileModified() {
-        if (!silent) { console.log('[marko/hot-reload] File modified: ' + path); }
+        if (!silent) {
+            console.log("[marko/hot-reload] File modified: " + path);
+        }
         runtime.cache = {};
         compiler.clearCaches();
         cleaResolvePathCache();
         modifiedId++;
     }
 
-    if (basename === 'marko-tag.json' || basename === 'marko.json') {
+    if (basename === "marko-tag.json" || basename === "marko.json") {
         handleFileModified();
         // If we taglib was modified then uncache *all* templates so that they will
         // all be reloaded
-        Object.keys(require.cache).forEach((filename) => {
-            if (filename.endsWith('.marko') || filename.endsWith('.marko.js')) {
+        Object.keys(require.cache).forEach(filename => {
+            if (filename.endsWith(".marko") || filename.endsWith(".marko.js")) {
                 delete require.cache[filename];
             }
         });
     } else if (_endsWithMarkoExtension(path, requireExtensions)) {
         handleFileModified();
         delete require.cache[path];
-        delete require.cache[path + '.js'];
-    } else if (basename === 'component.js') {
+        delete require.cache[path + ".js"];
+    } else if (basename === "component.js") {
         handleFileModified();
         var dir = nodePath.dirname(path);
-        var templatePath = nodePath.join(dir, 'index.marko');
+        var templatePath = nodePath.join(dir, "index.marko");
         delete require.cache[path];
         delete require.cache[templatePath];
-        delete require.cache[templatePath + '.js'];
+        delete require.cache[templatePath + ".js"];
     }
 };
 
-compiler = require('./compiler');
-marko = require('./');
-runtime = require('./runtime/html');
-components = require('./components');
+compiler = require("./compiler");
+marko = require("./");
+runtime = require("./runtime/html");

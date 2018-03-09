@@ -1,3 +1,3 @@
 exports.templateData = {
-    "active": true
+    active: true
 };

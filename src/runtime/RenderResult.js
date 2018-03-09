@@ -1,28 +1,28 @@
-var domInsert = require('./dom-insert');
+var domInsert = require("./dom-insert");
 
 function getComponentDefs(result) {
     var componentDefs = result.___components;
 
     if (!componentDefs) {
-        throw Error('No component');
+        throw Error("No component");
     }
     return componentDefs;
 }
 
 function RenderResult(out) {
-   this.out = this.___out = out;
-   this.___components = undefined;
+    this.out = this.___out = out;
+    this.___components = undefined;
 }
 
 module.exports = RenderResult;
 
-var proto = RenderResult.prototype = {
+var proto = (RenderResult.prototype = {
     getComponent: function() {
         return this.getComponents()[0];
     },
     getComponents: function(selector) {
         if (this.___components === undefined) {
-            throw Error('Not added to DOM');
+            throw Error("Not added to DOM");
         }
 
         var componentDefs = getComponentDefs(this);
@@ -59,8 +59,8 @@ var proto = RenderResult.prototype = {
     toString: function() {
         return this.___out.toString();
     },
-    document: typeof document != 'undefined' && document
-};
+    document: typeof document != "undefined" && document
+});
 
 // Add all of the following DOM methods to Component.prototype:
 // - appendTo(referenceEl)
@@ -75,6 +75,11 @@ domInsert(
         return renderResult.getNode(referenceEl.ownerDocument);
     },
     function afterInsert(renderResult, referenceEl) {
-        var isShadow = typeof ShadowRoot === 'function' && referenceEl instanceof ShadowRoot;
-        return renderResult.afterInsert(isShadow ? referenceEl : referenceEl.ownerDocument);
-    });
+        var isShadow =
+            typeof ShadowRoot === "function" &&
+            referenceEl instanceof ShadowRoot;
+        return renderResult.afterInsert(
+            isShadow ? referenceEl : referenceEl.ownerDocument
+        );
+    }
+);

@@ -1,7 +1,7 @@
 function indentStr(level) {
-    var str = '';
-    for (var i=0; i<level; i++) {
-        str += '  ';
+    var str = "";
+    for (var i = 0; i < level; i++) {
+        str += "  ";
     }
 
     return str;
@@ -9,54 +9,55 @@ function indentStr(level) {
 
 module.exports = function(node) {
     function codegenChildNodes(node, level) {
-
         var curChild = node.firstChild;
         if (!curChild) {
-            return 'null';
+            return "null";
         }
 
-        var code = '[\n';
-
+        var code = "[\n";
 
         var childLevel = level + 2;
-        while(curChild) {
+        while (curChild) {
             code += indentStr(childLevel) + codegen(curChild, childLevel);
             curChild = curChild.nextSibling;
 
             if (curChild) {
-                code += ',\n';
+                code += ",\n";
             } else {
-                code += '\n';
+                code += "\n";
             }
         }
 
-        code += indentStr(level + 1) + ']';
+        code += indentStr(level + 1) + "]";
 
         return code;
     }
 
     function codegenEl(node, level) {
-
         var attributesMap = null;
 
         var attributes = node.attributes;
         if (attributes.length) {
             attributesMap = {};
 
-            for (var i=0; i<attributes.length; i++) {
+            for (var i = 0; i < attributes.length; i++) {
                 var attr = attributes[i];
                 var attrName = attr.name;
                 var attrValue = attr.value;
 
-                if (attrName === 'class') {
-                    attrName = 'className';
+                if (attrName === "class") {
+                    attrName = "className";
                 }
                 attributesMap[attrName] = attrValue;
             }
         }
 
-
-        return  `React.createElement(${JSON.stringify(node.nodeName)}, ${JSON.stringify(attributesMap)}, ${codegenChildNodes(node, level)})`;
+        return `React.createElement(${JSON.stringify(
+            node.nodeName
+        )}, ${JSON.stringify(attributesMap)}, ${codegenChildNodes(
+            node,
+            level
+        )})`;
     }
 
     function codegen(node, level) {
@@ -67,5 +68,5 @@ module.exports = function(node) {
         }
     }
 
-    return 'return ' + codegen(node, 0) + '\n';
+    return "return " + codegen(node, 0) + "\n";
 };

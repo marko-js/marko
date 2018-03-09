@@ -1,5 +1,5 @@
 exports.templateData = {
-    "myAttrs": {
-        "hello": "world"
+    myAttrs: {
+        hello: "world"
     }
 };

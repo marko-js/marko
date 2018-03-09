@@ -1,0 +1,17 @@
+# minified
+*.min.js
+
+# test
+*actual*
+*expected*
+input.js
+
+# generated
+*dist*
+*generated*
+*.marko.js
+*.marko.*.js
+*.html.js
+~vdom.skip
+
+node_modules

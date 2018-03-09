@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 function removeWhitespaceNodes(whitespaceNodes) {
-    for (var i=0; i<whitespaceNodes.length; i++) {
+    for (var i = 0; i < whitespaceNodes.length; i++) {
         whitespaceNodes[i].detach();
     }
     whitespaceNodes.length = 0;
@@ -11,7 +11,7 @@ function removeWhitespaceNodes(whitespaceNodes) {
 
 class If extends Node {
     constructor(def) {
-        super('If');
+        super("If");
         this.test = def.test;
         this.body = this.makeContainer(def.body);
         this.else = def.else;
@@ -26,8 +26,8 @@ class If extends Node {
             // correctly.
             let previous = this;
             let whitespaceNodes = [];
-            this.forEachNextSibling((curNode) => {
-                if (curNode.type === 'Else') {
+            this.forEachNextSibling(curNode => {
+                if (curNode.type === "Else") {
                     curNode.detach();
                     if (whitespaceNodes.length) {
                         removeWhitespaceNodes(whitespaceNodes);
@@ -35,7 +35,7 @@ class If extends Node {
                     previous.else = curNode;
                     curNode.matched = true;
                     return false; // Stop searching
-                } else if (curNode.type === 'ElseIf') {
+                } else if (curNode.type === "ElseIf") {
                     curNode.detach();
                     if (whitespaceNodes.length) {
                         removeWhitespaceNodes(whitespaceNodes);
@@ -45,7 +45,7 @@ class If extends Node {
                     previous = curNode;
                     curNode.matched = true;
                     return true; // Keep searching since they may be more ElseIf/Else nodes...
-                } else if (curNode.type === 'Text') {
+                } else if (curNode.type === "Text") {
                     if (curNode.isWhitespace()) {
                         whitespaceNodes.push(curNode);
                         return true; // Just whitespace... keep searching
@@ -69,15 +69,15 @@ class If extends Node {
         var test = this.test;
         var body = this.body;
 
-        writer.write('if (');
+        writer.write("if (");
         writer.write(test);
-        writer.write(') ');
+        writer.write(") ");
         writer.writeBlock(body);
         if (this.else) {
-            writer.write(' else ');
+            writer.write(" else ");
             writer.write(this.else);
         } else {
-            writer.write('\n');
+            writer.write("\n");
         }
     }
 

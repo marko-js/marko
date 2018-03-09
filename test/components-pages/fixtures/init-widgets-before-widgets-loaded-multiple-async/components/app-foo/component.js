@@ -1,19 +1,18 @@
 module.exports = {
-    onInput: function(input) {
+    onInput: function() {
         var parent = {
-            child: {
-            }
+            child: {}
         };
 
         parent.child.parent = parent;
 
         this.state = {
-            name: 'app-foo',
+            name: "app-foo",
             parent: parent
         };
     },
 
-    onMount: function(componentConfig) {
+    onMount: function() {
         if (!window.fooComponents) {
             window.fooComponents = [];
         }

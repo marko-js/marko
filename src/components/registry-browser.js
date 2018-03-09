@@ -1,4 +1,4 @@
-var defineComponent = require('./defineComponent');
+var defineComponent = require("./defineComponent");
 
 var registered = {};
 var loaded = {};
@@ -23,12 +23,12 @@ function load(typeName, isLegacy) {
 
         if (target) {
             target = target();
-        } else if(isLegacy) {
+        } else if (isLegacy) {
             target = window.$markoLegacy.load(typeName);
         }
 
         if (!target) {
-            throw Error('Component not found: ' + typeName);
+            throw Error("Component not found: " + typeName);
         }
 
         loaded[typeName] = target;
@@ -49,7 +49,10 @@ function getComponentClass(typeName, isLegacy) {
     ComponentClass = ComponentClass.Component || ComponentClass;
 
     if (!ComponentClass.___isComponent) {
-        ComponentClass = defineComponent(ComponentClass, ComponentClass.renderer);
+        ComponentClass = defineComponent(
+            ComponentClass,
+            ComponentClass.renderer
+        );
     }
 
     // Make the component "type" accessible on each component instance

@@ -1,9 +1,9 @@
-var jsonFileReader = require('./json-file-reader');
-var types = require('./types');
-var cache = require('./cache');
-var loaders = require('./loaders');
+var jsonFileReader = require("./json-file-reader");
+var types = require("./types");
+var cache = require("./cache");
+var loaders = require("./loaders");
 
-var ok = require('assert').ok;
+var ok = require("assert").ok;
 
 function loadTagFromFile(filePath) {
     ok(filePath, '"filePath" is required');
@@ -18,7 +18,6 @@ function loadTagFromFile(filePath) {
 
         var tagProps = jsonFileReader.readFileSync(filePath);
         loaders.loadTagFromProps(tag, tagProps);
-
     }
 
     return tag;

@@ -1,26 +1,27 @@
-'use strict';
+"use strict";
 
-var Node = require('../Node');
-var Literal = require('../Literal');
-var HtmlAttributeCollection = require('../HtmlAttributeCollection');
-var generateHTMLCode = require('./html/generateCode');
-var generateVDOMCode = require('./vdom/generateCode');
-var vdomUtil = require('../../util/vdom');
+var Node = require("../Node");
+var Literal = require("../Literal");
+var HtmlAttributeCollection = require("../HtmlAttributeCollection");
+var generateHTMLCode = require("./html/generateCode");
+var generateVDOMCode = require("./vdom/generateCode");
+var vdomUtil = require("../../util/vdom");
 
 function beforeGenerateCode(event) {
     var tagName = event.node.tagName;
     var context = event.context;
 
-    var tagDef = typeof tagName === 'string' ? context.getTagDef(tagName) : undefined;
-    if (tagDef && tagDef.htmlType === 'svg') {
-        context.pushFlag('SVG');
+    var tagDef =
+        typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
+    if (tagDef && tagDef.htmlType === "svg") {
+        context.pushFlag("SVG");
     }
 
-    if (tagName === 'script') {
-        context.pushFlag('SCRIPT_BODY');
+    if (tagName === "script") {
+        context.pushFlag("SCRIPT_BODY");
     }
-    if (tagName === 'style') {
-        context.pushFlag('STYLE_BODY');
+    if (tagName === "style") {
+        context.pushFlag("STYLE_BODY");
     }
 }
 
@@ -28,23 +29,24 @@ function afterGenerateCode(event) {
     var tagName = event.node.tagName;
     var context = event.context;
 
-    var tagDef = typeof tagName === 'string' ? context.getTagDef(tagName) : undefined;
+    var tagDef =
+        typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
 
-    if (tagDef && tagDef.htmlType === 'svg') {
-        context.popFlag('SVG');
+    if (tagDef && tagDef.htmlType === "svg") {
+        context.popFlag("SVG");
     }
 
-    if (tagName === 'script') {
-        context.popFlag('SCRIPT_BODY');
+    if (tagName === "script") {
+        context.popFlag("SCRIPT_BODY");
     }
-    if (tagName === 'style') {
-        context.popFlag('STYLE_BODY');
+    if (tagName === "style") {
+        context.popFlag("STYLE_BODY");
     }
 }
 
 class HtmlElement extends Node {
     constructor(def) {
-        super('HtmlElement');
+        super("HtmlElement");
         this.tagName = null;
         this.tagNameExpression = null;
         this.setTagName(def.tagName);
@@ -65,8 +67,8 @@ class HtmlElement extends Node {
         this.runtimeFlags = 0; // Runtime flags are used to flag VDOM nodes with important information (flags are OR'd together)
         this.key = undefined;
 
-        this.on('beforeGenerateCode', beforeGenerateCode);
-        this.on('afterGenerateCode', afterGenerateCode);
+        this.on("beforeGenerateCode", beforeGenerateCode);
+        this.on("afterGenerateCode", afterGenerateCode);
     }
 
     addRuntimeFlag(value) {
@@ -112,7 +114,8 @@ class HtmlElement extends Node {
     }
 
     getAttributeValue(name) {
-        var attr = this._attributes != null && this._attributes.getAttribute(name);
+        var attr =
+            this._attributes != null && this._attributes.getAttribute(name);
         if (attr) {
             return attr.value;
         }
@@ -127,7 +130,7 @@ class HtmlElement extends Node {
             return;
         }
 
-        for(var attrName in attrs) {
+        for (var attrName in attrs) {
             var attrValue = attrs[attrName];
             this.setAttributeValue(attrName, attrValue);
         }
@@ -177,7 +180,7 @@ class HtmlElement extends Node {
     forEachAttribute(callback, thisObj) {
         var attributes = this._attributes.all.concat([]);
 
-        for (let i=0, len=attributes.length; i<len; i++) {
+        for (let i = 0, len = attributes.length; i < len; i++) {
             callback.call(thisObj, attributes[i]);
         }
     }
@@ -193,8 +196,8 @@ class HtmlElement extends Node {
             } else {
                 this.tagNameExpression = tagName;
             }
-        } else if (typeof tagName === 'string') {
-            this.tagNameExpression = new Literal({value: tagName});
+        } else if (typeof tagName === "string") {
+            this.tagNameExpression = new Literal({ value: tagName });
             this.tagName = tagName;
         }
     }

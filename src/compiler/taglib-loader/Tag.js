@@ -1,12 +1,12 @@
-'use strict';
-var forEachEntry = require('raptor-util/forEachEntry');
-var ok = require('assert').ok;
+"use strict";
+var forEachEntry = require("raptor-util/forEachEntry");
+var ok = require("assert").ok;
 var CustomTag;
-var path = require('path');
-var markoModules = require('../modules');
+var path = require("path");
+var markoModules = require("../modules");
 
 function createCustomTag(el, tagDef) {
-    CustomTag = CustomTag || require('../ast/CustomTag');
+    CustomTag = CustomTag || require("../ast/CustomTag");
     return new CustomTag(el, tagDef);
 }
 
@@ -16,7 +16,7 @@ function createCustomTagNodeFactory(tagDef) {
     };
 }
 
-class Tag{
+class Tag {
     constructor(filePath) {
         this.filePath = filePath;
         if (filePath) {
@@ -64,13 +64,13 @@ class Tag{
             return;
         }
 
-        forEachEntry(this.importedVariables, function (key, importedVariable) {
+        forEachEntry(this.importedVariables, function(key, importedVariable) {
             callback.call(thisObj, importedVariable);
         });
     }
 
     forEachTransformer(callback, thisObj) {
-        forEachEntry(this.transformers, function (key, transformer) {
+        forEachEntry(this.transformers, function(key, transformer) {
             callback.call(thisObj, transformer);
         });
     }
@@ -80,7 +80,6 @@ class Tag{
             if (this.transformers.hasOwnProperty(k)) {
                 return true;
             }
-
         }
         return false;
     }
@@ -90,15 +89,16 @@ class Tag{
         if (attr.pattern) {
             this.patternAttributes.push(attr);
         } else {
-            if (attr.name === '*') {
+            if (attr.name === "*") {
                 attr.dynamicAttribute = true;
 
-                if (attr.targetProperty === null || attr.targetProperty === '') {
+                if (
+                    attr.targetProperty === null ||
+                    attr.targetProperty === ""
+                ) {
                     attr.targetProperty = null;
-
-                }
-                else if (!attr.targetProperty) {
-                    attr.targetProperty = '*';
+                } else if (!attr.targetProperty) {
+                    attr.targetProperty = "*";
                 }
             }
 
@@ -106,7 +106,7 @@ class Tag{
         }
     }
     toString() {
-        return '[Tag: <' + this.name + '@' + this.taglibId + '>]';
+        return "[Tag: <" + this.name + "@" + this.taglibId + ">]";
     }
     forEachAttribute(callback, thisObj) {
         for (var attrName in this.attributes) {
@@ -119,7 +119,7 @@ class Tag{
         var attributes = this.attributes;
 
         // try by exact match first
-        var attribute = attributes[attrName] || attributes['*'];
+        var attribute = attributes[attrName] || attributes["*"];
 
         if (attribute === undefined && this.patternAttributes) {
             // try searching by pattern
@@ -191,7 +191,7 @@ class Tag{
             return;
         }
 
-        forEachEntry(this.nestedTags, function (key, nestedTag) {
+        forEachEntry(this.nestedTags, function(key, nestedTag) {
             callback.call(thisObj, nestedTag);
         });
     }
@@ -207,7 +207,9 @@ class Tag{
         let codeGeneratorModulePath = this.codeGeneratorModulePath;
 
         if (this.codeGeneratorModulePath) {
-            var loadedCodeGenerator = markoModules.require(this.codeGeneratorModulePath);
+            var loadedCodeGenerator = markoModules.require(
+                this.codeGeneratorModulePath
+            );
             nodeFactory = function(elNode) {
                 elNode.setType(codeGeneratorModulePath);
                 elNode.setCodeGenerator(loadedCodeGenerator);
@@ -215,8 +217,12 @@ class Tag{
             };
         } else if (this.nodeFactoryPath) {
             nodeFactory = markoModules.require(this.nodeFactoryPath);
-            if (typeof nodeFactory !== 'function') {
-                throw new Error('Invalid node factory exported by module at path "' + this.nodeFactoryPath + '"');
+            if (typeof nodeFactory !== "function") {
+                throw new Error(
+                    'Invalid node factory exported by module at path "' +
+                        this.nodeFactoryPath +
+                        '"'
+                );
             }
         } else if (this.renderer || this.template || this.isNestedTag) {
             nodeFactory = createCustomTagNodeFactory(this);

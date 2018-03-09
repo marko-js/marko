@@ -1,21 +1,21 @@
-var extend = require('raptor-util/extend');
-var expect = require('chai').expect;
+var extend = require("raptor-util/extend");
+var expect = require("chai").expect;
 
 exports.templateData = {
-    userInfoShort: function (done) {
-        setTimeout(function () {
+    userInfoShort: function(done) {
+        setTimeout(function() {
             done(null, {});
         }, 600);
     },
-    userInfoLong: function (done) {
-        setTimeout(function () {
+    userInfoLong: function(done) {
+        setTimeout(function() {
             done(null, {});
         }, 1000);
     }
 };
 
-exports.checkEvents = function (events, helpers) {
-    events = events.map(function (eventInfo) {
+exports.checkEvents = function(events, helpers) {
+    events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
 
@@ -28,5 +28,5 @@ exports.checkEvents = function (events, helpers) {
         };
     });
 
-    helpers.compare(events, '-events.json');
+    helpers.compare(events, "-events.json");
 };

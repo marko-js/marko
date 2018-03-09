@@ -1,3 +1,3 @@
 exports.templateData = {
-    short: 'short'
+    short: "short"
 };

@@ -2,16 +2,15 @@ module.exports = function(app) {
     var Suite = window.Benchmark.Suite;
     var MarkoVDOM = app.vdom;
 
-    var suite = new Suite('walk');
+    var suite = new Suite("walk");
 
-    var todomvcDOM = document.getElementById('todoapp');
+    var todomvcDOM = document.getElementById("todoapp");
     var todomvcDOMVirtual = MarkoVDOM.virtualize(todomvcDOM);
 
     function toHTML(node) {
-
         // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
         // BAD: return (new XMLSerializer()).serializeToString(node);
-        var html = '';
+        var html = "";
         function serializeHelper(node, indent) {
             if (node.nodeType === 1) {
                 serializeElHelper(node, indent);
@@ -20,7 +19,7 @@ module.exports = function(app) {
             } else if (node.nodeType === 8) {
                 serializeCommentHelper(node, indent);
             } else {
-                console.log('Invalid node:', node);
+                console.log("Invalid node:", node);
                 html += indent + `INVALID NODE TYPE ${node.nodeType}\n`;
                 // throw new Error('Unexpected node type');
             }
@@ -29,62 +28,64 @@ module.exports = function(app) {
         function serializeElHelper(el, indent) {
             var tagName = el.nodeName;
 
-            if (el.namespaceURI === 'http://www.w3.org/2000/svg') {
-                tagName = 'svg:' + tagName;
-            } else if (el.namespaceURI === 'http://www.w3.org/1998/Math/MathML') {
-                tagName = 'math:' + tagName;
+            if (el.namespaceURI === "http://www.w3.org/2000/svg") {
+                tagName = "svg:" + tagName;
+            } else if (
+                el.namespaceURI === "http://www.w3.org/1998/Math/MathML"
+            ) {
+                tagName = "math:" + tagName;
             }
 
-            html += indent + '<' + tagName;
+            html += indent + "<" + tagName;
 
             var attributes = el.attributes;
             var attributesArray = [];
 
-            for (var i=0; i<attributes.length; i++) {
+            for (var i = 0; i < attributes.length; i++) {
                 var attr = attributes[i];
                 var attrName = attr.name;
                 if (attr.namespaceURI) {
-                    attrName = attr.namespaceURI + ':' + attrName;
+                    attrName = attr.namespaceURI + ":" + attrName;
                 }
-                attributesArray.push(' ' + attrName + '="' + attr.value + '"');
+                attributesArray.push(" " + attrName + '="' + attr.value + '"');
             }
 
             attributesArray.sort();
 
-            html += attributesArray.join('');
+            html += attributesArray.join("");
 
-            html += '>\n';
+            html += ">\n";
 
-            if (tagName.toUpperCase() === 'TEXTAREA') {
-                html += indent + '  VALUE: ' + JSON.stringify(el.value) + '\n';
+            if (tagName.toUpperCase() === "TEXTAREA") {
+                html += indent + "  VALUE: " + JSON.stringify(el.value) + "\n";
             } else {
                 var curChild = el.firstChild;
-                while(curChild) {
-                    serializeHelper(curChild, indent + '  ');
+                while (curChild) {
+                    serializeHelper(curChild, indent + "  ");
                     curChild = curChild.nextSibling;
                 }
             }
         }
 
         function serializeTextHelper(node, indent) {
-            html += indent + JSON.stringify(node.nodeValue) + '\n';
+            html += indent + JSON.stringify(node.nodeValue) + "\n";
         }
 
         function serializeCommentHelper(node, indent) {
-            html += indent + '<!--' + JSON.stringify(node.nodeValue) + '-->\n';
+            html += indent + "<!--" + JSON.stringify(node.nodeValue) + "-->\n";
         }
 
-        serializeHelper(node, '');
+        serializeHelper(node, "");
 
         return html;
     }
 
     // add tests
-    suite.add('real DOM', function() {
+    suite.add("real DOM", function() {
         return toHTML(todomvcDOM);
     });
 
-    suite.add('marko-vdom', function() {
+    suite.add("marko-vdom", function() {
         return toHTML(todomvcDOMVirtual);
     });
 

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var Identifier = require('./Identifier');
-var isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
+var Node = require("./Node");
+var Identifier = require("./Identifier");
+var isValidJavaScriptVarName = require("../util/isValidJavaScriptVarName");
 
 class VariableDeclarator extends Node {
     constructor(def) {
-        super('VariableDeclarator');
+        super("VariableDeclarator");
         this.id = def.id;
         this.init = def.init;
 
@@ -16,8 +16,8 @@ class VariableDeclarator extends Node {
         }
 
         if (!isValidJavaScriptVarName(name)) {
-            var error = new Error('Invalid JavaScript variable name: ' + name);
-            error.code = 'INVALID_VAR_NAME';
+            var error = new Error("Invalid JavaScript variable name: " + name);
+            error.code = "INVALID_VAR_NAME";
             throw error;
         }
     }
@@ -32,14 +32,14 @@ class VariableDeclarator extends Node {
         var id = this.id;
         var init = this.init;
 
-        if (!(id instanceof Identifier) && typeof id !== 'string') {
-            throw new Error('Invalid variable name: ' + id);
+        if (!(id instanceof Identifier) && typeof id !== "string") {
+            throw new Error("Invalid variable name: " + id);
         }
 
         writer.write(id);
 
         if (init != null) {
-            writer.write(' = ');
+            writer.write(" = ");
             writer.write(init);
         }
     }

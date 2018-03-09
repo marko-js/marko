@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class Assignment extends Node {
     constructor(def) {
-        super('Assignment');
+        super("Assignment");
         this.left = def.left;
         this.right = def.right;
         this.operator = def.operator;
@@ -22,18 +22,18 @@ class Assignment extends Node {
         var operator = this.operator;
 
         writer.write(left);
-        writer.write(' '  + (operator || '=') + ' ');
+        writer.write(" " + (operator || "=") + " ");
 
         var wrap = right instanceof Assignment;
 
         if (wrap) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(right);
 
         if (wrap) {
-            writer.write(')');
+            writer.write(")");
         }
     }
 
@@ -58,18 +58,18 @@ class Assignment extends Node {
         var right = this.right;
         var operator = this.operator;
 
-        var result = left.toString() + ' ' + (operator || '=') + ' ';
+        var result = left.toString() + " " + (operator || "=") + " ";
 
         var wrap = right instanceof Assignment;
 
         if (wrap) {
-            result += '(';
+            result += "(";
         }
 
         result += right.toString();
 
         if (wrap) {
-            result += ')';
+            result += ")";
         }
 
         return result;

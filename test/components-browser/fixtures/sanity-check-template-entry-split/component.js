@@ -1,5 +1,5 @@
 module.exports = {
-    onInput: function (input) {
+    onInput: function(input) {
         return {
             name: input.name.toUpperCase()
         };

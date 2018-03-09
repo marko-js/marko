@@ -1,46 +1,46 @@
 module.exports = {
-    onInput: function (input) {
+    onInput: function(input) {
         this.state = {
             checked: input.checked === true,
-            className: input['class'],
+            className: input["class"],
             data: input.data,
             body: input.label || input.renderBody
         };
     },
 
-    isChecked: function () {
+    isChecked: function() {
         return this.state.checked === true;
     },
 
-    setChecked: function (newChecked) {
+    setChecked: function(newChecked) {
         if (newChecked !== this.state.checked) {
-            this.setState('checked', !this.state.checked);
+            this.setState("checked", !this.state.checked);
         }
     },
 
-    toggle: function () {
+    toggle: function() {
         this.setChecked(!this.state.checked);
     },
 
-    getData: function () {
+    getData: function() {
         return this.state.data;
     },
 
-    handleClick: function () {
+    handleClick: function() {
         var newChecked = !this.state.checked;
 
         var defaultPrevented = false;
 
-        this.emit('toggle', {
+        this.emit("toggle", {
             checked: newChecked,
             data: this.state.data,
-            preventDefault: function () {
+            preventDefault: function() {
                 defaultPrevented = true;
             }
         });
 
         if (!defaultPrevented) {
-            this.setState('checked', newChecked);
+            this.setState("checked", newChecked);
         }
     }
 };

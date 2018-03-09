@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 const isArray = Array.isArray;
-const Node = require('./ast/Node');
-const Literal = require('./ast/Literal');
-const Identifier = require('./ast/Identifier');
-const HtmlElement = require('./ast/HtmlElement');
-const Html = require('./ast/Html');
-const ok = require('assert').ok;
-const Container = require('./ast/Container');
-const createError = require('raptor-util/createError');
+const Node = require("./ast/Node");
+const Literal = require("./ast/Literal");
+const Identifier = require("./ast/Identifier");
+const HtmlElement = require("./ast/HtmlElement");
+const Html = require("./ast/Html");
+const ok = require("assert").ok;
+const Container = require("./ast/Container");
+const createError = require("raptor-util/createError");
 
 class GeneratorEvent {
     constructor(node, codegen) {
@@ -59,16 +59,14 @@ class FinalNodes {
 }
 
 class CodeGenerator {
-    constructor(context, options) {
-        options = options || {};
+    constructor(context) {
         this.root = null;
 
-        this._code = '';
-        this.currentIndent = '';
+        this._code = "";
+        this.currentIndent = "";
         this.inFunction = false;
 
         this._doneListeners = [];
-
 
         this.builder = context.builder;
 
@@ -76,9 +74,8 @@ class CodeGenerator {
 
         ok(this.builder, '"this.builder" is required');
 
-        this._codegenCodeMethodName = 'generate' +
-            context.outputType.toUpperCase() +
-            'Code';
+        this._codegenCodeMethodName =
+            "generate" + context.outputType.toUpperCase() + "Code";
     }
 
     addVar(name, value) {
@@ -120,20 +117,20 @@ class CodeGenerator {
             } else {
                 return func.call(node, node, this);
             }
-        } catch(err) {
-            var errorMessage = 'Generating code for ';
+        } catch (err) {
+            var errorMessage = "Generating code for ";
 
             if (node instanceof HtmlElement) {
-                errorMessage += '<'+node.tagName+'> tag';
+                errorMessage += "<" + node.tagName + "> tag";
             } else {
-                errorMessage += node.type + ' node';
+                errorMessage += node.type + " node";
             }
 
             if (node.pos) {
-                errorMessage += ' ('+this.context.getPosInfo(node.pos)+')';
+                errorMessage += " (" + this.context.getPosInfo(node.pos) + ")";
             }
 
-            errorMessage += ' failed. Error: ' + err;
+            errorMessage += " failed. Error: " + err;
 
             throw createError(errorMessage, err /* cause */);
         }
@@ -141,12 +138,12 @@ class CodeGenerator {
 
     _generateCode(node, finalNodes) {
         if (isArray(node)) {
-            node.forEach((child) => {
+            node.forEach(child => {
                 this._generateCode(child, finalNodes);
             });
             return;
         } else if (node instanceof Container) {
-            node.forEach((child) => {
+            node.forEach(child => {
                 if (child.container === node) {
                     this._generateCode(child, finalNodes);
                 }
@@ -158,7 +155,11 @@ class CodeGenerator {
             return;
         }
 
-        if (typeof node === 'string' || node._finalNode || !(node instanceof Node)) {
+        if (
+            typeof node === "string" ||
+            node._finalNode ||
+            !(node instanceof Node)
+        ) {
             finalNodes.push(node);
             return;
         }
@@ -179,9 +180,12 @@ class CodeGenerator {
         }
 
         beforeAfterEvent.isBefore = true;
-        beforeAfterEvent.node.emit('beforeGenerateCode', beforeAfterEvent);
-        this.context.emit('beforeGenerateCode:' + beforeAfterEvent.node.type, beforeAfterEvent);
-        this.context.emit('beforeGenerateCode', beforeAfterEvent);
+        beforeAfterEvent.node.emit("beforeGenerateCode", beforeAfterEvent);
+        this.context.emit(
+            "beforeGenerateCode:" + beforeAfterEvent.node.type,
+            beforeAfterEvent
+        );
+        this.context.emit("beforeGenerateCode", beforeAfterEvent);
 
         if (beforeAfterEvent.insertedNodes) {
             this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
@@ -197,11 +201,18 @@ class CodeGenerator {
             if (codeGeneratorFunc) {
                 node.setCodeGenerator(null);
 
-                generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, false);
+                generatedCode = this._invokeCodeGenerator(
+                    codeGeneratorFunc,
+                    node,
+                    false
+                );
 
                 if (generatedCode === null) {
                     node = null;
-                } else if (generatedCode !== undefined && generatedCode !== node) {
+                } else if (
+                    generatedCode !== undefined &&
+                    generatedCode !== node
+                ) {
                     node = null;
                     this._generateCode(generatedCode, finalNodes);
                 }
@@ -216,7 +227,11 @@ class CodeGenerator {
             }
 
             if (codeGeneratorFunc) {
-                generatedCode = this._invokeCodeGenerator(codeGeneratorFunc, node, true);
+                generatedCode = this._invokeCodeGenerator(
+                    codeGeneratorFunc,
+                    node,
+                    true
+                );
 
                 if (generatedCode === undefined || generatedCode === node) {
                     finalNodes.push(node);
@@ -231,9 +246,12 @@ class CodeGenerator {
         }
 
         beforeAfterEvent.isBefore = false;
-        beforeAfterEvent.node.emit('afterGenerateCode', beforeAfterEvent);
-        this.context.emit('afterGenerateCode:' + beforeAfterEvent.node.type, beforeAfterEvent);
-        this.context.emit('afterGenerateCode', beforeAfterEvent);
+        beforeAfterEvent.node.emit("afterGenerateCode", beforeAfterEvent);
+        this.context.emit(
+            "afterGenerateCode:" + beforeAfterEvent.node.type,
+            beforeAfterEvent
+        );
+        this.context.emit("afterGenerateCode", beforeAfterEvent);
 
         if (beforeAfterEvent.insertedNodes) {
             this._generateCode(beforeAfterEvent.insertedNodes, finalNodes);
@@ -258,7 +276,7 @@ class CodeGenerator {
 
         let finalNodes = new FinalNodes();
 
-        var isList = typeof node.forEach === 'function';
+        var isList = typeof node.forEach === "function";
 
         this._generateCode(node, finalNodes);
 
@@ -292,12 +310,12 @@ class CodeGenerator {
 
         let node = this._currentNode;
 
-        if (typeof message === 'object') {
+        if (typeof message === "object") {
             let errorInfo = message;
             errorInfo.node = node;
             this.context.addError(errorInfo);
         } else {
-            this.context.addError({node, message, code});
+            this.context.addError({ node, message, code });
         }
     }
 

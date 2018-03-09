@@ -1,23 +1,22 @@
-'use strict';
+"use strict";
 
-var runtimeHtmlHelpers = require('../../../../runtime/html/helpers');
+var runtimeHtmlHelpers = require("../../../../runtime/html/helpers");
 var attr = runtimeHtmlHelpers.a;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
 
 function isStringLiteral(node) {
-    return node.type === 'Literal' && typeof node.value === 'string';
+    return node.type === "Literal" && typeof node.value === "string";
 }
 
 function isNoEscapeXml(node) {
-    return node.type === 'AttributePlaceholder' &&
-        node.escape === false;
+    return node.type === "AttributePlaceholder" && node.escape === false;
 }
 
 function flattenAttrConcats(node) {
     // return [node];
 
     function flattenHelper(node) {
-        if (node.type === 'BinaryExpression' && node.operator === '+') {
+        if (node.type === "BinaryExpression" && node.operator === "+") {
             let left = flattenHelper(node.left);
             let right = flattenHelper(node.right);
 
@@ -34,11 +33,11 @@ function flattenAttrConcats(node) {
                     concats: [node]
                 };
             }
-
         }
 
         return {
-            isString: isStringLiteral(node) || node.type === 'AttributePlaceholder',
+            isString:
+                isStringLiteral(node) || node.type === "AttributePlaceholder",
             concats: [node]
         };
     }
@@ -63,36 +62,52 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
         finalNodes.push(builder.htmlLiteral(value));
     }
 
-
-    for (let i=0; i<flattenedConcats.length; i++) {
-        if (flattenedConcats[i].type === 'Literal' || flattenedConcats[i].type === 'AttributePlaceholder') {
+    for (let i = 0; i < flattenedConcats.length; i++) {
+        if (
+            flattenedConcats[i].type === "Literal" ||
+            flattenedConcats[i].type === "AttributePlaceholder"
+        ) {
             hasLiteral = true;
             break;
         }
     }
 
     if (hasLiteral) {
-        addHtmlLiteral(' ' + name + '="');
-        for (let i=0; i<flattenedConcats.length; i++) {
+        addHtmlLiteral(" " + name + '="');
+        for (let i = 0; i < flattenedConcats.length; i++) {
             var part = flattenedConcats[i];
             if (isStringLiteral(part)) {
                 part.value = escapeXmlAttr(part.value);
-            } else if (part.type === 'Literal') {
-            } else if (isNoEscapeXml(part)) {
-                part = codegen.builder.functionCall(context.helper('str'), [part]);
-            } else {
-                if (escape !== false) {
-                    part = builder.functionCall(context.helper('escapeXmlAttr'), [part]);
+            } else if (part.type !== "Literal") {
+                if (isNoEscapeXml(part)) {
+                    part = codegen.builder.functionCall(context.helper("str"), [
+                        part
+                    ]);
+                } else {
+                    if (escape !== false) {
+                        part = builder.functionCall(
+                            context.helper("escapeXmlAttr"),
+                            [part]
+                        );
+                    }
                 }
             }
             addHtml(part);
         }
         addHtmlLiteral('"');
     } else {
-        if (name === 'class') {
-            addHtml(codegen.builder.functionCall(context.helper('classAttr'), [value]));
-        } else if (name === 'style') {
-            addHtml(codegen.builder.functionCall(context.helper('styleAttr'), [value]));
+        if (name === "class") {
+            addHtml(
+                codegen.builder.functionCall(context.helper("classAttr"), [
+                    value
+                ])
+            );
+        } else if (name === "style") {
+            addHtml(
+                codegen.builder.functionCall(context.helper("styleAttr"), [
+                    value
+                ])
+            );
         } else {
             if (escape === false || isNoEscapeXml(value)) {
                 escape = false;
@@ -104,7 +119,9 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
                 attrArgs.push(codegen.builder.literal(false));
             }
 
-            addHtml(codegen.builder.functionCall(context.helper('attr'), attrArgs));
+            addHtml(
+                codegen.builder.functionCall(context.helper("attr"), attrArgs)
+            );
         }
     }
 
@@ -134,12 +151,12 @@ module.exports = function generateCode(node, codegen) {
         return generateCodeForExpressionAttr(name, value, escape, codegen);
     } else if (argument) {
         return [
-            builder.htmlLiteral(' ' + name + '('),
+            builder.htmlLiteral(" " + name + "("),
             builder.htmlLiteral(argument),
-            builder.htmlLiteral(')')
+            builder.htmlLiteral(")")
         ];
     } else {
         // Attribute with no value is a boolean attribute
-        return builder.htmlLiteral(' ' + name);
+        return builder.htmlLiteral(" " + name);
     }
 };

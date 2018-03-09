@@ -1,0 +1,22 @@
+# minfied
+*.min.js
+
+# tests
+*actual*
+*expected*
+input.*
+
+# generated
+/dist/
+/test-dist/
+/test-generated/
+*.marko.js
+*.html.js
+*.xml.js
+*.generated.js
+.nyc_output
+coverage
+
+# controlled by npm's formatter
+package-lock.json
+package.json

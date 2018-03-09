@@ -3,7 +3,7 @@ module.exports = function notEmpty(o) {
         return false;
     } else if (Array.isArray(o)) {
         return !!o.length;
-    } else if (o === '') {
+    } else if (o === "") {
         return false;
     }
 

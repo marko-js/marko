@@ -1,4 +1,4 @@
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     markoCompiler.configure(); // Use defaults
     expect(markoCompiler.config.writeToDisk).to.equal(true);
     expect(markoCompiler.config.preserveWhitespace).to.equal(false);

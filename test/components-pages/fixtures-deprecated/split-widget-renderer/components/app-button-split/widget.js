@@ -1,4 +1,4 @@
-module.exports = require('marko-widgets').defineWidget({
+module.exports = require("marko-widgets").defineWidget({
     init: function() {
         window.appButtonSplit = this;
     },

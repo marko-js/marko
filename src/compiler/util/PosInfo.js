@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-var path = require('path');
+var path = require("path");
 
 function getRelativePath(absolutePath) {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
         absolutePath = path.resolve(process.cwd(), absolutePath);
         return path.relative(process.cwd(), absolutePath);
     } else {
@@ -19,7 +19,10 @@ class PosInfo {
     }
 
     toString() {
-        return this.path + (this.line != null ? (":" + this.line + ":" + this.column) : '');
+        return (
+            this.path +
+            (this.line != null ? ":" + this.line + ":" + this.column : "")
+        );
     }
 }
 

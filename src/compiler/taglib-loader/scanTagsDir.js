@@ -1,38 +1,38 @@
-'use strict';
+"use strict";
 
-const nodePath = require('path');
-const fs = require('fs');
-const stripJsonComments = require('strip-json-comments');
-const tagDefFromCode = require('./tag-def-from-code');
-const loaders = require('./loaders');
-const fsReadOptions = { encoding: 'utf8' };
-const extend = require('raptor-util/extend');
-const types = require('./types');
+const nodePath = require("path");
+const fs = require("fs");
+const stripJsonComments = require("strip-json-comments");
+const tagDefFromCode = require("./tag-def-from-code");
+const loaders = require("./loaders");
+const fsReadOptions = { encoding: "utf8" };
+const extend = require("raptor-util/extend");
+const types = require("./types");
 
 const tagFileTypes = [
-    'template',
-    'renderer',
-    'transformer',
-    'code-generator',
-    'node-factory',
+    "template",
+    "renderer",
+    "transformer",
+    "code-generator",
+    "node-factory"
 ];
 
 const searchFiles = [
-    { name:'index.marko', type:'template' },
-    { name:'renderer', type:'renderer' },
-    { name:'index', type:'renderer' },
-    { name:'template.marko', type:'template' },
-    { name:'template.html', type:'template' },
-    { name:'code-generator', type:'code-generator' },
-    { name:'node-factory', type:'node-factory' },
-    { name:'transformer', type:'transformer' },
+    { name: "index.marko", type: "template" },
+    { name: "renderer", type: "renderer" },
+    { name: "index", type: "renderer" },
+    { name: "template.marko", type: "template" },
+    { name: "template.html", type: "template" },
+    { name: "code-generator", type: "code-generator" },
+    { name: "node-factory", type: "node-factory" },
+    { name: "transformer", type: "transformer" }
 ];
 
 function createDefaultTagDef() {
     return {
         attributes: {
-            '*': {
-                type: 'string',
+            "*": {
+                type: "string",
                 targetProperty: null,
                 preserveName: false
             }
@@ -46,7 +46,7 @@ function getFileMap(dirname) {
 
     files.forEach(file => {
         let extName = nodePath.extname(file);
-        let baseName = file.slice(0, -1*extName.length);
+        let baseName = file.slice(0, -1 * extName.length);
         let fullPath = nodePath.join(dirname, file);
         fileMap[baseName] = fileMap[baseName] || {};
         fileMap[baseName][extName] = fullPath;
@@ -60,26 +60,26 @@ function getFileMap(dirname) {
 function getPath(filename, fileMap) {
     let file = fileMap[filename];
 
-    if(!file) return;
-    if(file.__path) return file.__path;
-    if(file.js) return file['.js'];
+    if (!file) return;
+    if (file.__path) return file.__path;
+    if (file.js) return file[".js"];
 
     return file[Object.keys(file)[0]];
 }
 
 function findAndSetFile(tagDef, tagDirname) {
-    if(!fs.statSync(tagDirname).isDirectory()) {
+    if (!fs.statSync(tagDirname).isDirectory()) {
         return;
     }
 
     let fileMap = getFileMap(tagDirname);
 
-    for(let i = 0; i < searchFiles.length; i++) {
+    for (let i = 0; i < searchFiles.length; i++) {
         let name = searchFiles[i].name;
         let type = searchFiles[i].type;
         let path = getPath(name, fileMap);
 
-        if(path) {
+        if (path) {
             tagDef[type] = path;
             return true;
         }
@@ -87,8 +87,8 @@ function findAndSetFile(tagDef, tagDirname) {
 }
 
 function hasFile(tagDef) {
-    for(let i = 0; i < tagFileTypes.length; i++) {
-        if(tagDef[tagFileTypes[i]]) return true;
+    for (let i = 0; i < tagFileTypes.length; i++) {
+        if (tagDef[tagFileTypes[i]]) return true;
     }
     return false;
 }
@@ -99,28 +99,31 @@ function hasFile(tagDef) {
  * @param {String|Object} dir the path to directory to scan
  * @param {String} taglib the taglib that is being loaded
  */
-module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, taglib, dependencyChain) {
+module.exports = function scanTagsDir(
+    tagsConfigPath,
+    tagsConfigDirname,
+    dir,
+    taglib,
+    dependencyChain
+) {
     let prefix;
 
-    if (typeof dir === 'object') {
+    if (typeof dir === "object") {
         prefix = dir.prefix;
         dir = dir.path;
     }
 
     if (prefix == null) {
         // no prefix by default
-        prefix = '';
+        prefix = "";
     }
 
     dir = nodePath.resolve(tagsConfigDirname, dir);
     let children = fs.readdirSync(dir);
 
-    let rendererJSFile;
-
-    for (let i=0, len=children.length; i<len; i++) {
-        rendererJSFile = null;
+    for (let i = 0, len = children.length; i < len; i++) {
         let childFilename = children[i];
-        if (childFilename === 'node_modules') {
+        if (childFilename === "node_modules") {
             continue;
         }
 
@@ -130,7 +133,7 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
         let tagJsonPath;
 
         let ext = nodePath.extname(childFilename);
-        if (ext === '.marko') {
+        if (ext === ".marko") {
             tagName = childFilename.slice(0, 0 - ext.length);
             tagDirname = dir;
             tagDef = createDefaultTagDef();
@@ -139,16 +142,25 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             tagName = prefix + childFilename;
 
             tagDirname = nodePath.join(dir, childFilename);
-            tagJsonPath = nodePath.join(tagDirname, 'marko-tag.json');
+            tagJsonPath = nodePath.join(tagDirname, "marko-tag.json");
 
             let hasTagJson = false;
             if (fs.existsSync(tagJsonPath)) {
                 hasTagJson = true;
                 // marko-tag.json exists in the directory, use that as the tag definition
                 try {
-                    tagDef = JSON.parse(stripJsonComments(fs.readFileSync(tagJsonPath, fsReadOptions)));
-                } catch(e) {
-                    throw new Error('Unable to parse JSON file at path "' + tagJsonPath + '". Error: ' + e);
+                    tagDef = JSON.parse(
+                        stripJsonComments(
+                            fs.readFileSync(tagJsonPath, fsReadOptions)
+                        )
+                    );
+                } catch (e) {
+                    throw new Error(
+                        'Unable to parse JSON file at path "' +
+                            tagJsonPath +
+                            '". Error: ' +
+                            e
+                    );
                 }
             } else {
                 tagJsonPath = null;
@@ -157,9 +169,14 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
 
             if (!hasFile(tagDef)) {
                 let fileWasSet = findAndSetFile(tagDef, tagDirname);
-                if(!fileWasSet) {
+                if (!fileWasSet) {
                     if (hasTagJson) {
-                        throw new Error('Invalid tag file: ' + tagJsonPath + '. Neither a renderer or a template was found for tag. ' + JSON.stringify(tagDef, null, 2));
+                        throw new Error(
+                            "Invalid tag file: " +
+                                tagJsonPath +
+                                ". Neither a renderer or a template was found for tag. " +
+                                JSON.stringify(tagDef, null, 2)
+                        );
                     } else {
                         // Skip this directory... there doesn't appear to be anything in it
                         continue;
@@ -168,8 +185,13 @@ module.exports = function scanTagsDir(tagsConfigPath, tagsConfigDirname, dir, ta
             }
 
             if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
-                let templateCode = fs.readFileSync(tagDef.renderer || tagDef.template, fsReadOptions);
-                let extractedTagDef = tagDefFromCode.extractTagDef(templateCode);
+                let templateCode = fs.readFileSync(
+                    tagDef.renderer || tagDef.template,
+                    fsReadOptions
+                );
+                let extractedTagDef = tagDefFromCode.extractTagDef(
+                    templateCode
+                );
                 if (extractedTagDef) {
                     extend(tagDef, extractedTagDef);
                 }

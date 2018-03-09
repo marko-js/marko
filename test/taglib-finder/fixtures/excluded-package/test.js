@@ -1,9 +1,9 @@
-exports.dir = 'a/b/c';
+exports.dir = "a/b/c";
 
-exports.before = function (taglibFinder) {
-    taglibFinder.excludePackage('excluded-dependency');
+exports.before = function(taglibFinder) {
+    taglibFinder.excludePackage("excluded-dependency");
 };
 
-exports.after = function (taglibFinder) {
+exports.after = function(taglibFinder) {
     taglibFinder.reset();
 };

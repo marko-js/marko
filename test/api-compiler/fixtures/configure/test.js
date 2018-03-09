@@ -1,5 +1,5 @@
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
-    var compiler = require('marko/compiler');
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
+    var compiler = require("marko/compiler");
     compiler.configure(); // Use defaults
     expect(compiler.config.writeToDisk).to.equal(true);
     expect(compiler.config.preserveWhitespace).to.equal(false);

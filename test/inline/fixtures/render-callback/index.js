@@ -1,5 +1,5 @@
-module.exports = function (done) {
-    var name = 'Frank';
+module.exports = function(done) {
+    var name = "Frank";
     var template = marko`
         <div>
             Hello ${name}!

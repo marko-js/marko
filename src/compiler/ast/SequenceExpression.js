@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class SequenceExpression extends Node {
     constructor(def) {
-        super('SequenceExpression');
+        super("SequenceExpression");
         this.expressions = def.expressions;
     }
 
@@ -14,12 +14,11 @@ class SequenceExpression extends Node {
     }
 
     writeCode(writer) {
-
-        for (var i=0; i<this.expressions.length; i++) {
+        for (var i = 0; i < this.expressions.length; i++) {
             var expression = this.expressions[i];
 
             if (i !== 0) {
-                writer.write(', ');
+                writer.write(", ");
             }
 
             writer.write(expression);
@@ -32,7 +31,7 @@ class SequenceExpression extends Node {
 
     toJSON() {
         return {
-            type: 'SequenceExpression',
+            type: "SequenceExpression",
             expressions: this.expressions
         };
     }
@@ -42,13 +41,13 @@ class SequenceExpression extends Node {
     }
 
     toString() {
-        var code = '';
+        var code = "";
 
-        for (var i=0; i<this.expressions.length; i++) {
+        for (var i = 0; i < this.expressions.length; i++) {
             var expression = this.expressions[i];
 
             if (i !== 0) {
-                code += ', ';
+                code += ", ";
             }
 
             code += expression;

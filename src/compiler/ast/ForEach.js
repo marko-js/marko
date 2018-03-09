@@ -1,10 +1,10 @@
-'use strict';
-var ok = require('assert').ok;
-var Node = require('./Node');
+"use strict";
+var ok = require("assert").ok;
+var Node = require("./Node");
 
 class ForEach extends Node {
     constructor(def) {
-        super('ForEach');
+        super("ForEach");
         this.varName = def.varName;
         this.in = def.in;
         this.body = this.makeContainer(def.body);
@@ -28,7 +28,7 @@ class ForEach extends Node {
         var isArray = this.isArray;
 
         if (separator && !statusVarName) {
-            statusVarName = '__loop';
+            statusVarName = "__loop";
         }
 
         if (iterator) {
@@ -43,13 +43,16 @@ class ForEach extends Node {
                 builder.functionDeclaration(null, params, this.body)
             ]);
         } else if (statusVarName) {
-
             let body = this.body;
 
             if (separator) {
                 let isNotLastTest = builder.functionCall(
-                    builder.memberExpression(statusVarName, builder.identifier('isLast')),
-                    []);
+                    builder.memberExpression(
+                        statusVarName,
+                        builder.identifier("isLast")
+                    ),
+                    []
+                );
 
                 isNotLastTest = builder.negate(isNotLastTest);
 
@@ -60,34 +63,58 @@ class ForEach extends Node {
                 ]);
             }
 
-            return builder.functionCall(context.helper('forEachWithStatusVar'), [
-                inExpression,
-                builder.functionDeclaration(null, [varName, statusVarName], body)
-            ]);
+            return builder.functionCall(
+                context.helper("forEachWithStatusVar"),
+                [
+                    inExpression,
+                    builder.functionDeclaration(
+                        null,
+                        [varName, statusVarName],
+                        body
+                    )
+                ]
+            );
         } else {
             if (isArray) {
                 context.addVar(varName.name);
-                var indexVarId = context.addVar(varName.name + '__i');
-                var arrayVarId = context.addVar(varName.name + '__array');
-                var lengthVarId = context.addVar(varName.name + '__len');
+                var indexVarId = context.addVar(varName.name + "__i");
+                var arrayVarId = context.addVar(varName.name + "__array");
+                var lengthVarId = context.addVar(varName.name + "__len");
 
                 var init = builder.sequenceExpression([
                     builder.assignment(indexVarId, builder.literal(0)),
                     builder.assignment(arrayVarId, inExpression),
-                    builder.assignment(lengthVarId, builder.binaryExpression(arrayVarId, '&&', builder.memberExpression(arrayVarId, builder.identifier('length'))))
+                    builder.assignment(
+                        lengthVarId,
+                        builder.binaryExpression(
+                            arrayVarId,
+                            "&&",
+                            builder.memberExpression(
+                                arrayVarId,
+                                builder.identifier("length")
+                            )
+                        )
+                    )
                 ]);
 
-                var test = builder.binaryExpression(indexVarId, '<', lengthVarId);
+                var test = builder.binaryExpression(
+                    indexVarId,
+                    "<",
+                    lengthVarId
+                );
 
-                var update = builder.unaryExpression(indexVarId, '++');
+                var update = builder.unaryExpression(indexVarId, "++");
 
                 var loopBody = [
-                        builder.assignment(varName, builder.memberExpression(arrayVarId, indexVarId, true))
-                    ].concat(this.body);
+                    builder.assignment(
+                        varName,
+                        builder.memberExpression(arrayVarId, indexVarId, true)
+                    )
+                ].concat(this.body);
 
                 return builder.forStatement(init, test, update, loopBody);
             } else {
-                return builder.functionCall(context.helper('forEach'), [
+                return builder.functionCall(context.helper("forEach"), [
                     inExpression,
                     builder.functionDeclaration(null, [varName], this.body)
                 ]);

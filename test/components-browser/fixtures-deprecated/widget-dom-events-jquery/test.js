@@ -1,24 +1,24 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers, done) {
-    var widget = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers, done) {
+    var widget = helpers.mount(require.resolve("./index"), {});
     var $el = widget.$();
-    var $button = widget.$('#button');
+    var $button = widget.$("#button");
 
-    $el.click(function () {
-        helpers.log('$el:click');
+    $el.click(function() {
+        helpers.log("$el:click");
     });
 
-    $button.click(function (event) {
+    $button.click(function(event) {
         event.stopPropagation();
-        helpers.log('$button:click');
+        helpers.log("$button:click");
     });
 
     // Trigger a click event on the root element
     helpers.triggerClick(widget.el);
-    helpers.triggerClick(widget.getEl('button'));
+    helpers.triggerClick(widget.getEl("button"));
 
-    expect(helpers.logOutput).to.deep.equal(['$el:click', '$button:click']);
+    expect(helpers.logOutput).to.deep.equal(["$el:click", "$button:click"]);
 
     done();
 };

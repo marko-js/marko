@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var fs = require('fs');
+var fs = require("fs");
 var enabledTest = process.env.TEST;
-var updateExpectations = process.env.hasOwnProperty('UPDATE_EXPECTATIONS');
-var path = require('path');
-var assert = require('assert');
-const projectRoot = path.join(__dirname, '..');
+var updateExpectations = process.env.hasOwnProperty("UPDATE_EXPECTATIONS");
+var path = require("path");
+var assert = require("assert");
+const projectRoot = path.join(__dirname, "..");
 
 var enabledTestNames = enabledTest && enabledTest.split(/[\s*,\s*/]/);
 var enabledTests = null;
@@ -13,7 +13,7 @@ var enabledTests = null;
 if (enabledTestNames && enabledTestNames.length > 0) {
     enabledTests = {};
     enabledTest = null;
-    enabledTestNames.forEach((testName) => {
+    enabledTestNames.forEach(testName => {
         enabledTests[testName] = true;
     });
 }
@@ -23,46 +23,50 @@ function replaceAll(str, substr, replacement) {
 }
 
 function normalize(str) {
-    if (typeof str === 'string') {
-        return replaceAll(str, projectRoot, 'PROJECT_ROOT');
+    if (typeof str === "string") {
+        return replaceAll(str, projectRoot, "PROJECT_ROOT");
     }
     return str;
 }
 
 function compareHelper(dir, actual, prefix, suffix, format) {
-    var actualPath = path.join(dir, prefix + 'actual' + suffix);
-    var expectedPath = path.join(dir, prefix + 'expected' + suffix);
+    var actualPath = path.join(dir, prefix + "actual" + suffix);
+    var expectedPath = path.join(dir, prefix + "expected" + suffix);
 
     actual = normalize(actual);
     format = format || (contents => contents);
 
-    var isObject = typeof actual === 'string' ? false : true;
+    var isObject = typeof actual === "string" ? false : true;
     var actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
-    fs.writeFileSync(actualPath, actualString, { encoding: 'utf8' });
+    fs.writeFileSync(actualPath, actualString, { encoding: "utf8" });
 
     var expectedString;
 
     try {
-        expectedString = fs.readFileSync(expectedPath, { encoding: 'utf8' });
-    } catch(e) {
-        expectedString = isObject ? '"TBD"' : 'TBD';
-        fs.writeFileSync(expectedPath, expectedString, {encoding: 'utf8'});
+        expectedString = fs.readFileSync(expectedPath, { encoding: "utf8" });
+    } catch (e) {
+        expectedString = isObject ? '"TBD"' : "TBD";
+        fs.writeFileSync(expectedPath, expectedString, { encoding: "utf8" });
     }
 
-    actual = isObject ? JSON.parse(actualString) : actualString.replace(/\r?\n$/, '');
+    actual = isObject
+        ? JSON.parse(actualString)
+        : actualString.replace(/\r?\n$/, "");
 
-    if (typeof actual === 'string') {
-        actual = replaceAll(actual, projectRoot, 'PROJECT_ROOT');
+    if (typeof actual === "string") {
+        actual = replaceAll(actual, projectRoot, "PROJECT_ROOT");
     }
 
-    var expected = isObject ? JSON.parse(expectedString) : expectedString.replace(/\r?\n$/, '');
+    var expected = isObject
+        ? JSON.parse(expectedString)
+        : expectedString.replace(/\r?\n$/, "");
     var formattedActual = format(actual);
     var formattedExpected = format(expected);
     try {
         assert.deepEqual(formattedActual, formattedExpected);
-    } catch(e) {
+    } catch (e) {
         if (updateExpectations) {
-            fs.writeFileSync(expectedPath, actualString, { encoding: 'utf8' });
+            fs.writeFileSync(expectedPath, actualString, { encoding: "utf8" });
         } else {
             throw e;
         }
@@ -76,7 +80,7 @@ function autoTest(name, dir, run, options, done) {
 
     var helpers = {
         compareSequence(actual, prefix, suffix) {
-            if (typeof prefix === 'object') {
+            if (typeof prefix === "object") {
                 var options = prefix;
                 prefix = options.prefix;
                 suffix = options.suffix;
@@ -84,14 +88,14 @@ function autoTest(name, dir, run, options, done) {
                 suffix = prefix;
                 prefix = null;
             } else if (arguments.length === 1) {
-                suffix = '.html';
+                suffix = ".html";
                 prefix = null;
             }
 
-            prefix = prefix || '';
-            suffix = suffix || '';
+            prefix = prefix || "";
+            suffix = suffix || "";
 
-            let sequenceKey = prefix + '|' + suffix;
+            let sequenceKey = prefix + "|" + suffix;
 
             let sequence = compareSequenceLookup[sequenceKey];
             if (sequence === undefined) {
@@ -101,13 +105,13 @@ function autoTest(name, dir, run, options, done) {
                 compareSequenceLookup[sequenceKey]++;
             }
 
-            suffix = '.' + sequence + suffix;
+            suffix = "." + sequence + suffix;
 
             compareHelper(dir, actual, prefix, suffix);
         },
 
         compare(actual, prefix, suffix, format) {
-            if (typeof prefix === 'object') {
+            if (typeof prefix === "object") {
                 var options = prefix;
                 prefix = options.prefix;
                 suffix = options.suffix;
@@ -115,20 +119,20 @@ function autoTest(name, dir, run, options, done) {
                 suffix = prefix;
                 prefix = null;
             } else if (arguments.length === 1) {
-                suffix = '.html';
+                suffix = ".html";
                 prefix = null;
             }
 
-            prefix = prefix || '';
-            suffix = suffix || '';
+            prefix = prefix || "";
+            suffix = suffix || "";
 
-            let sequenceKey = prefix + '|' + suffix;
+            let sequenceKey = prefix + "|" + suffix;
 
             let sequence = compareSequenceLookup[sequenceKey];
             if (sequence === undefined) {
                 compareSequenceLookup[sequenceKey] = 2;
             } else {
-                suffix = '.' + sequence + suffix;
+                suffix = "." + sequence + suffix;
                 compareSequenceLookup[sequenceKey]++;
             }
 
@@ -144,51 +148,64 @@ exports.scanDir = function(autoTestDir, run, options) {
     var testGroup = path.basename(autoTestDir);
     var describeFunc = describe;
 
-    if(enabledTest && testGroup === enabledTest) {
+    if (enabledTest && testGroup === enabledTest) {
         describeFunc = describe.only;
     }
 
-    describeFunc('', function() {
-        if(options.timeout) {
+    describeFunc("", function() {
+        if (options.timeout) {
             this.timeout(options.timeout);
         }
-        fs.readdirSync(autoTestDir)
-            .forEach(function(name) {
-                if (/^(\.|\~)/.test(name)) {
-                    return;
-                }
+        fs.readdirSync(autoTestDir).forEach(function(name) {
+            if (/^(\.|~)/.test(name)) {
+                return;
+            }
 
-                if (enabledTests && !enabledTests[name] && !enabledTests[testGroup] && !enabledTests[testGroup+'/'+name]) {
-                    return;
-                }
+            if (
+                enabledTests &&
+                !enabledTests[name] &&
+                !enabledTests[testGroup] &&
+                !enabledTests[testGroup + "/" + name]
+            ) {
+                return;
+            }
 
-                var testFunc = options.type === 'describe' ? describe : it;
-                var dir = path.join(autoTestDir, name);
-                var meta = {};
+            var testFunc = options.type === "describe" ? describe : it;
+            var dir = path.join(autoTestDir, name);
+            var meta = {};
 
-                if (enabledTest && (name === enabledTest || testGroup+'/'+name === enabledTest)) {
-                    testFunc = testFunc.only;
-                }
+            if (
+                enabledTest &&
+                (name === enabledTest || testGroup + "/" + name === enabledTest)
+            ) {
+                testFunc = testFunc.only;
+            }
 
-                var skipReason = options.skip && options.skip(name, dir);
-                if (name.endsWith('.skip') || skipReason) {
-                    testFunc = testFunc.skip;
-                    meta.details = typeof skipReason === 'string' ? skipReason : 'Pending';
-                }
+            var skipReason = options.skip && options.skip(name, dir);
+            if (name.endsWith(".skip") || skipReason) {
+                testFunc = testFunc.skip;
+                meta.details =
+                    typeof skipReason === "string" ? skipReason : "Pending";
+            }
 
-                if (name.endsWith('.fails') || options.fails && options.fails(name, dir)) {
-                    testFunc = testFunc.fails;
-                }
+            if (
+                name.endsWith(".fails") ||
+                (options.fails && options.fails(name, dir))
+            ) {
+                testFunc = testFunc.fails;
+            }
 
-                if (options.file) {
-                    meta.file = options.file(name, dir);
-                }
+            if (options.file) {
+                meta.file = options.file(name, dir);
+            }
 
-                var test = testFunc(options.name !== false ? name : '', function(done) {
-                    autoTest(name, dir, run, options, done);
-                });
-
-                Object.assign(test, meta);
+            var test = testFunc(options.name !== false ? name : "", function(
+                done
+            ) {
+                autoTest(name, dir, run, options, done);
             });
+
+            Object.assign(test, meta);
+        });
     });
 };

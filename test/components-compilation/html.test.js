@@ -1,28 +1,30 @@
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var fs = require('fs');
-var path = require('path');
-var autotest = require('../autotest');
-var compiler = require('marko/compiler');
-var expect = require('chai').expect;
+var fs = require("fs");
+var path = require("path");
+var autotest = require("../autotest");
+var compiler = require("marko/compiler");
 
-describe('components-compilation (html)', function () {
-    autotest.scanDir(path.join(__dirname, './fixtures-html'), run);
+describe("components-compilation (html)", function() {
+    autotest.scanDir(path.join(__dirname, "./fixtures-html"), run);
 
-    describe("deprecated", function () {
-        autotest.scanDir(path.join(__dirname, './fixtures-html-deprecated'), run);
-    })
+    describe("deprecated", function() {
+        autotest.scanDir(
+            path.join(__dirname, "./fixtures-html-deprecated"),
+            run
+        );
+    });
 });
 
 function run(dir, helpers, done) {
-    var templatePath = path.join(dir, 'index.marko');
-    var mainPath = path.join(dir, 'test.js');
+    var templatePath = path.join(dir, "index.marko");
+    var mainPath = path.join(dir, "test.js");
     var main;
 
     if (!fs.existsSync(templatePath)) {
-        templatePath = path.join(dir, 'template.marko');
+        templatePath = path.join(dir, "template.marko");
         if (!fs.existsSync(templatePath)) {
-            return done(new Error('Template not found for test'));
+            return done(new Error("Template not found for test"));
         }
     }
 
@@ -30,7 +32,11 @@ function run(dir, helpers, done) {
         main = require(mainPath);
     }
 
-    var compilerOptions = { output: 'html', writeVersionComment: false, autoKeyEnabled: true };
+    var compilerOptions = {
+        output: "html",
+        writeVersionComment: false,
+        autoKeyEnabled: true
+    };
 
     if (main && main.checkError) {
         var e;
@@ -42,19 +48,25 @@ function run(dir, helpers, done) {
         }
 
         if (!e) {
-            throw new Error('Error expected');
+            throw new Error("Error expected");
         }
 
         main.checkError(e);
         done();
     } else if (main && main.checkTemplate) {
-        var template = require('marko').load(templatePath, Object.assign(compilerOptions, main.compilerOptions));
+        var template = require("marko").load(
+            templatePath,
+            Object.assign(compilerOptions, main.compilerOptions)
+        );
         main.checkTemplate(template);
         done();
     } else {
-        var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
-        compiledSrc = compiledSrc.replace(/marko\/dist\//g, 'marko/src/');
-        helpers.compare(compiledSrc, '.js');
+        var compiledSrc = compiler.compileFile(
+            templatePath,
+            Object.assign(compilerOptions, main && main.compilerOptions)
+        );
+        compiledSrc = compiledSrc.replace(/marko\/dist\//g, "marko/src/");
+        helpers.compare(compiledSrc, ".js");
         done();
     }
 }

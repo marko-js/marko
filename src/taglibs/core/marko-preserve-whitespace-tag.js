@@ -1,3 +1,3 @@
-module.exports = function codeGenerator(elNode, codegen) {
+module.exports = function codeGenerator(elNode) {
     return elNode.body;
 };

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 var isArray = Array.isArray;
-var Container = require('./ast/Container');
+var Container = require("./ast/Container");
 
 function noop() {}
 
@@ -53,7 +53,7 @@ class Walker {
         });
 
         if (hasRemoval) {
-            for (let i=array.length-1; i>=0; i--) {
+            for (let i = array.length - 1; i >= 0; i--) {
                 if (array[i] == null) {
                     array.splice(i, 1);
                 }
@@ -66,7 +66,7 @@ class Walker {
     }
 
     _walkContainer(nodes) {
-        nodes.forEach((node) => {
+        nodes.forEach(node => {
             var transformed = this.walk(node);
             if (!transformed) {
                 node.container.removeChild(node);
@@ -77,13 +77,15 @@ class Walker {
     }
 
     walk(node) {
-        if (!node || this._stopped || typeof node === 'string') {
+        if (!node || this._stopped || typeof node === "string") {
             return node;
         }
 
         this._reset();
 
-        var parent = this._stack.length ? this._stack[this._stack.length - 1] : undefined;
+        var parent = this._stack.length
+            ? this._stack[this._stack.length - 1]
+            : undefined;
 
         this._stack.push(node);
 
@@ -149,4 +151,3 @@ class Walker {
 }
 
 module.exports = Walker;
-

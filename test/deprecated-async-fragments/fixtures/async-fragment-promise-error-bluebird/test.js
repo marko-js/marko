@@ -1,6 +1,6 @@
-var deferred = require('bluebird').defer();
+var deferred = require("bluebird").defer();
 
-setTimeout(function () {
+setTimeout(function() {
     deferred.resolve({});
 }, 200);
 

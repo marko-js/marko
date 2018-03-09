@@ -1,7 +1,7 @@
-var helloComponent = require('./components/hello');
+var helloComponent = require("./components/hello");
 
 module.exports = {
-    onMount: function () {
+    onMount: function() {
         this.renderedHtml = helloComponent.renderToString({
             name: this.input.name
         });

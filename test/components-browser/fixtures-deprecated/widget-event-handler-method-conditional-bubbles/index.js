@@ -1,15 +1,15 @@
-module.exports = require('marko/legacy-components').defineComponent({
-	template: require.resolve('./template.marko'),
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require.resolve("./template.marko"),
 
-	getTemplateData: function (state, input) {
-		return {};
-	},
+    getTemplateData: function() {
+        return {};
+    },
 
-	init: function () {
-		this.clicked = false;
-	},
+    init: function() {
+        this.clicked = false;
+    },
 
-	handleButtonClick: function () {
-		this.clicked = true;
-	}
+    handleButtonClick: function() {
+        this.clicked = true;
+    }
 });

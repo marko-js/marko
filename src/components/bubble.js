@@ -1,34 +1,34 @@
 module.exports = [
     /* Mouse Events */
-    'click',
-    'dblclick',
-    'mousedown',
-    'mouseup',
+    "click",
+    "dblclick",
+    "mousedown",
+    "mouseup",
     // 'mouseover',
     // 'mousemove',
     // 'mouseout',
-    'dragstart',
-    'drag',
+    "dragstart",
+    "drag",
     // 'dragenter',
     // 'dragleave',
     // 'dragover',
-    'drop',
-    'dragend',
+    "drop",
+    "dragend",
 
     /* Keyboard Events */
-    'keydown',
-    'keypress',
-    'keyup',
+    "keydown",
+    "keypress",
+    "keyup",
 
     /* Form Events */
-    'select',
-    'change',
-    'submit',
-    'reset',
-    'input',
+    "select",
+    "change",
+    "submit",
+    "reset",
+    "input",
 
-    'attach', // Pseudo event supported by Marko
-    'detach'  // Pseudo event supported by Marko
+    "attach", // Pseudo event supported by Marko
+    "detach" // Pseudo event supported by Marko
 
     // 'focus', <-- Does not bubble
     // 'blur', <-- Does not bubble

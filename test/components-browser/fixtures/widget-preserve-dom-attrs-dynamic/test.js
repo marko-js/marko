@@ -1,15 +1,15 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {
-        className: 'foo'
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {
+        className: "foo"
     });
 
-    var span = component.el.querySelector('span');
-    expect(span.className).to.equal('foo');
+    var span = component.el.querySelector("span");
+    expect(span.className).to.equal("foo");
 
-    component.setState('className', 'bar');
+    component.setState("className", "bar");
     component.update();
 
-    expect(span.className).to.equal('foo');
+    expect(span.className).to.equal("foo");
 };

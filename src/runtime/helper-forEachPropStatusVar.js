@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function LoopStatus(getLength, isLast, isFirst, getIndex) {
     this.getLength = getLength;
@@ -13,18 +13,19 @@ module.exports = function forEachPropStatusVarHelper(object, callback) {
     var i = 0;
     var len = keys.length;
     var loopStatus = new LoopStatus(
-            function getLength() {
-                return len;
-            },
-            function isLast() {
-                return i === len - 1;
-            },
-            function isFirst() {
-                return i === 0;
-            },
-            function getIndex() {
-                return i;
-            });
+        function getLength() {
+            return len;
+        },
+        function isLast() {
+            return i === len - 1;
+        },
+        function isFirst() {
+            return i === 0;
+        },
+        function getIndex() {
+            return i;
+        }
+    );
 
     for (; i < len; i++) {
         var key = keys[i];

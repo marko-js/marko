@@ -1,13 +1,13 @@
-'use strict';
-var EventEmitter = require('events-light');
-var StringWriter = require('./StringWriter');
-var BufferedWriter = require('./BufferedWriter');
-var defaultDocument = typeof document != 'undefined' && document;
-var RenderResult = require('../RenderResult');
-var attrsHelper = require('./helper-attrs');
-var escapeXml = require('./escape').escapeXml;
+"use strict";
+var EventEmitter = require("events-light");
+var StringWriter = require("./StringWriter");
+var BufferedWriter = require("./BufferedWriter");
+var defaultDocument = typeof document != "undefined" && document;
+var RenderResult = require("../RenderResult");
+var attrsHelper = require("./helper-attrs");
+var escapeXml = require("./escape").escapeXml;
 
-var voidWriter = { write:function(){} };
+var voidWriter = { write: function() {} };
 
 function State(root, stream, writer, events) {
     this.root = root;
@@ -19,11 +19,10 @@ function State(root, stream, writer, events) {
 }
 
 function AsyncStream(global, writer, parentOut, shouldBuffer) {
-
     if (parentOut === null) {
-        throw new Error('illegal state');
+        throw new Error("illegal state");
     }
-    var finalGlobal = this.attributes = global || {};
+    var finalGlobal = (this.attributes = global || {});
     var originalStream;
     var state;
 
@@ -31,7 +30,8 @@ function AsyncStream(global, writer, parentOut, shouldBuffer) {
         state = parentOut._state;
         originalStream = state.stream;
     } else {
-        var events = finalGlobal.events /* deprecated */ = writer && writer.on ? writer : new EventEmitter();
+        var events = (finalGlobal.events /* deprecated */ =
+            writer && writer.on ? writer : new EventEmitter());
 
         if (writer) {
             originalStream = writer;
@@ -78,19 +78,19 @@ function AsyncStream(global, writer, parentOut, shouldBuffer) {
 AsyncStream.DEFAULT_TIMEOUT = 10000;
 
 /**
-* If set to `true`, AsyncStream errors will include the full stack trace
-*/
+ * If set to `true`, AsyncStream errors will include the full stack trace
+ */
 AsyncStream.INCLUDE_STACK =
-    typeof process !== 'undefined' &&
+    typeof process !== "undefined" &&
     (!process.env.NODE_ENV ||
-        process.env.NODE_ENV === 'development' ||
-        process.env.NODE_ENV === 'dev');
+        process.env.NODE_ENV === "development" ||
+        process.env.NODE_ENV === "dev");
 
 AsyncStream.enableAsyncStackTrace = function() {
     AsyncStream.INCLUDE_STACK = true;
 };
 
-var proto = AsyncStream.prototype = {
+var proto = (AsyncStream.prototype = {
     constructor: AsyncStream,
     ___document: defaultDocument,
     ___isOut: true,
@@ -132,7 +132,7 @@ var proto = AsyncStream.prototype = {
 
     beginAsync: function(options) {
         if (this._sync) {
-            throw new Error('beginAsync() not allowed when using renderSync()');
+            throw new Error("beginAsync() not allowed when using renderSync()");
         }
 
         var state = this._state;
@@ -156,52 +156,60 @@ var proto = AsyncStream.prototype = {
            ┃ NOW ┃               ↓↑              ↓↑
            ┗━━━━━┛  prevWriter → currentWriter → newWriter → nextWriter  */
 
-       var timeout;
-       var name;
+        var timeout;
+        var name;
 
-       this._remaining++;
+        this._remaining++;
 
-       if (options != null) {
-           if (typeof options === 'number') {
-               timeout = options;
-           } else {
-               timeout = options.timeout;
+        if (options != null) {
+            if (typeof options === "number") {
+                timeout = options;
+            } else {
+                timeout = options.timeout;
 
-               if (options.last === true) {
-                   if (timeout == null) {
-                       // Don't assign a timeout to last flush fragments
-                       // unless it is explicitly given a timeout
-                       timeout = 0;
-                   }
+                if (options.last === true) {
+                    if (timeout == null) {
+                        // Don't assign a timeout to last flush fragments
+                        // unless it is explicitly given a timeout
+                        timeout = 0;
+                    }
 
-                   this._lastCount++;
-               }
+                    this._lastCount++;
+                }
 
-               name = options.name;
-           }
-       }
+                name = options.name;
+            }
+        }
 
-       if (timeout == null) {
-           timeout = AsyncStream.DEFAULT_TIMEOUT;
-       }
+        if (timeout == null) {
+            timeout = AsyncStream.DEFAULT_TIMEOUT;
+        }
 
-       newStream._stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
-       newStream.name = name;
+        newStream._stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
+        newStream.name = name;
 
-       if (timeout > 0) {
-           newStream._timeoutId = setTimeout(function() {
-               newStream.error(new Error('Async fragment ' + (name ? '(' + name + ') ': '') + 'timed out after ' + timeout + 'ms'));
-           }, timeout);
-       }
+        if (timeout > 0) {
+            newStream._timeoutId = setTimeout(function() {
+                newStream.error(
+                    new Error(
+                        "Async fragment " +
+                            (name ? "(" + name + ") " : "") +
+                            "timed out after " +
+                            timeout +
+                            "ms"
+                    )
+                );
+            }, timeout);
+        }
 
-       state.events.emit('beginAsync', {
-           writer: newStream, // Legacy
-           parentWriter: this, // Legacy
-           out: newStream,
-           parentOut: this
-       });
+        state.events.emit("beginAsync", {
+            writer: newStream, // Legacy
+            parentWriter: this, // Legacy
+            out: newStream,
+            parentOut: this
+        });
 
-       return newStream;
+        return newStream;
     },
 
     _doFinish: function() {
@@ -212,7 +220,7 @@ var proto = AsyncStream.prototype = {
         if (state.writer.end) {
             state.writer.end();
         } else {
-            state.events.emit('finish', this.___getResult());
+            state.events.emit("finish", this.___getResult());
         }
     },
 
@@ -248,29 +256,29 @@ var proto = AsyncStream.prototype = {
            ┃     ┃  ──────────────┴────────────────────────────────
            ┗━━━━━┛    Flushed & garbage collected: nextWriter  */
 
-       var parentOut = this._parentOut;
+        var parentOut = this._parentOut;
 
-       if (parentOut === undefined) {
-           if (remaining === 0) {
-               this._doFinish();
-           } else if (remaining - this._lastCount === 0) {
-               this._emitLast();
-           }
-       } else {
-           var timeoutId = this._timeoutId;
+        if (parentOut === undefined) {
+            if (remaining === 0) {
+                this._doFinish();
+            } else if (remaining - this._lastCount === 0) {
+                this._emitLast();
+            }
+        } else {
+            var timeoutId = this._timeoutId;
 
-           if (timeoutId) {
-               clearTimeout(timeoutId);
-           }
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
 
-           if (remaining === 0) {
-               parentOut._handleChildDone();
-           } else if (remaining - this._lastCount === 0) {
-               this._emitLast();
-           }
-       }
+            if (remaining === 0) {
+                parentOut._handleChildDone();
+            } else if (remaining - this._lastCount === 0) {
+                this._emitLast();
+            }
+        }
 
-       return this;
+        return this;
     },
 
     _handleChildDone: function() {
@@ -318,9 +326,9 @@ var proto = AsyncStream.prototype = {
     on: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.finished === true) {
+        if (event === "finish" && state.finished === true) {
             callback(this.___getResult());
-        } else if (event === 'last') {
+        } else if (event === "last") {
             this.onLast(callback);
         } else {
             state.events.on(event, callback);
@@ -332,9 +340,9 @@ var proto = AsyncStream.prototype = {
     once: function(event, callback) {
         var state = this._state;
 
-        if (event === 'finish' && state.finished === true) {
+        if (event === "finish" && state.finished === true) {
             callback(this.___getResult());
-        } else if (event === 'last') {
+        } else if (event === "last") {
             this.onLast(callback);
         } else {
             state.events.once(event, callback);
@@ -377,7 +385,7 @@ var proto = AsyncStream.prototype = {
 
     emit: function(type, arg) {
         var events = this._state.events;
-        switch(arguments.length) {
+        switch (arguments.length) {
             case 1:
                 events.emit(type);
                 break;
@@ -415,31 +423,27 @@ var proto = AsyncStream.prototype = {
         var message;
 
         if (name) {
-            message = 'Render async fragment error (' + name + ')';
+            message = "Render async fragment error (" + name + ")";
         } else {
-            message = 'Render error';
+            message = "Render error";
         }
 
-        message += '. Exception: ' + (e.stack || e);
+        message += ". Exception: " + (e.stack || e);
 
         if (stack) {
-            message += '\nCreation stack trace: ' + stack;
+            message += "\nCreation stack trace: " + stack;
         }
 
         e = new Error(message);
 
         try {
-            this.emit('error', e);
+            this.emit("error", e);
         } finally {
             // If there is no listener for the error event then it will
             // throw a new here. In order to ensure that the async fragment
             // is still properly ended we need to put the end() in a `finally`
             // block
             this.end();
-        }
-
-        if (console) {
-            console.error(message);
         }
 
         return this;
@@ -462,22 +466,17 @@ var proto = AsyncStream.prototype = {
     },
 
     element: function(tagName, elementAttrs, openTagOnly) {
-        var str = '<' + tagName +
-            attrsHelper(elementAttrs) +
-            '>';
+        var str = "<" + tagName + attrsHelper(elementAttrs) + ">";
 
         if (openTagOnly !== true) {
-            str += '</' + tagName + '>';
+            str += "</" + tagName + ">";
         }
 
         this.write(str);
     },
 
     beginElement: function(name, elementAttrs) {
-
-        var str = '<' + name +
-            attrsHelper(elementAttrs) +
-            '>';
+        var str = "<" + name + attrsHelper(elementAttrs) + ">";
 
         this.write(str);
 
@@ -490,11 +489,11 @@ var proto = AsyncStream.prototype = {
 
     endElement: function() {
         var tagName = this._elStack.pop();
-        this.write('</' + tagName + '>');
+        this.write("</" + tagName + ">");
     },
 
     comment: function(str) {
-        this.write('<!--' + escapeXml(str) + '-->');
+        this.write("<!--" + escapeXml(str) + "-->");
     },
 
     text: function(str) {
@@ -513,7 +512,7 @@ var proto = AsyncStream.prototype = {
 
         if (!node) {
             if (html) {
-                newBodyEl = doc.createElement('body');
+                newBodyEl = doc.createElement("body");
                 newBodyEl.innerHTML = html;
                 if (newBodyEl.childNodes.length == 1) {
                     // If the rendered component resulted in a single node then just use that node
@@ -537,8 +536,8 @@ var proto = AsyncStream.prototype = {
     then: function(fn, fnErr) {
         var out = this;
         var promise = new Promise(function(resolve, reject) {
-            out.on('error', reject);
-            out.on('finish', function(result) {
+            out.on("error", reject);
+            out.on("finish", function(result) {
                 resolve(result);
             });
         });
@@ -555,7 +554,7 @@ var proto = AsyncStream.prototype = {
         this.___assignedKey = key;
         this.___assignedCustomEvents = customEvents;
     }
-};
+});
 
 // alias:
 proto.w = proto.write;

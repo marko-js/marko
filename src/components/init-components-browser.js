@@ -1,12 +1,12 @@
-'use strict';
-var warp10Finalize = require('warp10/finalize');
-var eventDelegation = require('./event-delegation');
+"use strict";
+var warp10Finalize = require("warp10/finalize");
+var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
-var componentsUtil = require('./util');
+var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
-var ComponentDef = require('./ComponentDef');
-var registry = require('./registry');
+var ComponentDef = require("./ComponentDef");
+var registry = require("./registry");
 var serverRenderedGlobals = {};
 var serverComponentStartNodes = {};
 var serverComponentEndNodes = {};
@@ -20,27 +20,31 @@ function indexServerComponentBoundaries(node) {
     var componentId;
 
     node = node.firstChild;
-    while(node) {
-        if (node.nodeType === 8) { // Comment node
+    while (node) {
+        if (node.nodeType === 8) {
+            // Comment node
             var commentValue = node.nodeValue;
-            if (commentValue[0] === 'M') {
+            if (commentValue[0] === "M") {
                 componentId = commentValue.substring(2);
 
                 var firstChar = commentValue[1];
 
-                if (firstChar === '/') {
+                if (firstChar === "/") {
                     serverComponentEndNodes[componentId] = node;
-                } else if (firstChar === '^' || firstChar === '#'){
+                } else if (firstChar === "^" || firstChar === "#") {
                     serverComponentStartNodes[componentId] = node;
                 }
             }
-        } else if (node.nodeType === 1) { // HTML element node
-            var markoKey = node.getAttribute('data-marko-key');
+        } else if (node.nodeType === 1) {
+            // HTML element node
+            var markoKey = node.getAttribute("data-marko-key");
             if (markoKey) {
-                var separatorIndex = markoKey.indexOf(' ');
-                componentId = markoKey.substring(separatorIndex+1);
+                var separatorIndex = markoKey.indexOf(" ");
+                componentId = markoKey.substring(separatorIndex + 1);
                 markoKey = markoKey.substring(0, separatorIndex);
-                var keyedElements = keyedElementsByComponentId[componentId] || (keyedElementsByComponentId[componentId] = {});
+                var keyedElements =
+                    keyedElementsByComponentId[componentId] ||
+                    (keyedElementsByComponentId[componentId] = {});
                 keyedElements[markoKey] = node;
             }
             indexServerComponentBoundaries(node);
@@ -48,13 +52,12 @@ function indexServerComponentBoundaries(node) {
 
         node = node.nextSibling;
     }
-
 }
 
 function invokeComponentEventHandler(component, targetMethodName, args) {
     var method = component[targetMethodName];
     if (!method) {
-        throw Error('Method not found: ' + targetMethodName);
+        throw Error("Method not found: " + targetMethodName);
     }
 
     method.apply(component, args);
@@ -76,8 +79,18 @@ function addEventListenerHelper(el, eventType, isOnce, listener) {
     };
 }
 
-function addDOMEventListeners(component, el, eventType, targetMethodName, isOnce, extraArgs, handles) {
-    var removeListener = addEventListenerHelper(el, eventType, isOnce, function(event) {
+function addDOMEventListeners(
+    component,
+    el,
+    eventType,
+    targetMethodName,
+    isOnce,
+    extraArgs,
+    handles
+) {
+    var removeListener = addEventListenerHelper(el, eventType, isOnce, function(
+        event
+    ) {
         var args = [event, el];
         if (extraArgs) {
             args = extraArgs.concat(args);
@@ -125,7 +138,15 @@ function initComponent(componentDef, doc) {
             var isOnce = domEventArgs[3];
             var extraArgs = domEventArgs[4];
 
-            addDOMEventListeners(component, eventEl, eventType, targetMethodName, isOnce, extraArgs, eventListenerHandles);
+            addDOMEventListeners(
+                component,
+                eventEl,
+                eventType,
+                targetMethodName,
+                isOnce,
+                extraArgs,
+                eventListenerHandles
+            );
         });
 
         if (eventListenerHandles.length) {
@@ -134,10 +155,10 @@ function initComponent(componentDef, doc) {
     }
 
     if (component.___mounted) {
-        component.___emitLifecycleEvent('update');
+        component.___emitLifecycleEvent("update");
     } else {
         component.___mounted = true;
-        component.___emitLifecycleEvent('mount');
+        component.___emitLifecycleEvent("mount");
     }
 }
 
@@ -155,11 +176,9 @@ function initClientRendered(componentDefs, doc) {
     eventDelegation.___init(doc);
 
     doc = doc || defaultDocument;
-    for (var i=componentDefs.length-1; i>=0; i--) {
+    for (var i = componentDefs.length - 1; i >= 0; i--) {
         var componentDef = componentDefs[i];
-        initComponent(
-            componentDef,
-            doc);
+        initComponent(componentDef, doc);
     }
 }
 
@@ -201,7 +220,12 @@ function initServerRendered(renderedComponents, doc) {
     }
 
     componentDefs.forEach(function(componentDef) {
-        componentDef = ComponentDef.___deserialize(componentDef, typesArray, serverRenderedGlobals, registry);
+        componentDef = ComponentDef.___deserialize(
+            componentDef,
+            typesArray,
+            serverRenderedGlobals,
+            registry
+        );
         var componentId = componentDef.id;
         var component = componentDef.___component;
 
@@ -246,7 +270,8 @@ function initServerRendered(renderedComponents, doc) {
             }
         }
 
-        component.___keyedElements = keyedElementsByComponentId[componentId] || {};
+        component.___keyedElements =
+            keyedElementsByComponentId[componentId] || {};
         component.___startNode = startNode;
         component.___endNode = endNode;
 

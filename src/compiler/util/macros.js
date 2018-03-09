@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-var safeVarName = require('./safeVarName');
-var ok = require('assert').ok;
+var safeVarName = require("./safeVarName");
+var ok = require("assert").ok;
 
 class MacrosContext {
     constructor() {
@@ -13,7 +13,7 @@ class MacrosContext {
             return false;
         }
 
-        if (name.type === 'Literal') {
+        if (name.type === "Literal") {
             name = name.value;
         }
 
@@ -26,45 +26,43 @@ class MacrosContext {
 
     registerMacro(name, params) {
         ok(name, '"name" is required');
-        ok(typeof name === 'string', '"name" should be a string');
+        ok(typeof name === "string", '"name" should be a string');
         if (params == null) {
             params = [];
-
         } else {
             ok(Array.isArray(params), '"params" should be an array');
         }
 
-
         var hasOut = false;
         var hasRenderBody = false;
-        params.forEach((param) => {
-            if (param === 'out') {
+        params.forEach(param => {
+            if (param === "out") {
                 hasOut = true;
-            } else if (param === 'renderBody') {
+            } else if (param === "renderBody") {
                 hasRenderBody = true;
             }
         });
 
         if (!hasOut) {
-            params.push('out');
+            params.push("out");
         }
 
         if (!hasRenderBody) {
-            params.push('renderBody');
+            params.push("renderBody");
         }
 
         var paramIndexes = {};
         params.forEach((param, i) => {
             paramIndexes[param] = i;
 
-            if (param === 'out') {
+            if (param === "out") {
                 hasOut = true;
-            } else if (param === 'renderBody') {
+            } else if (param === "renderBody") {
                 hasRenderBody = true;
             }
         });
 
-        var functionName = 'macro_' + safeVarName(name);
+        var functionName = "macro_" + safeVarName(name);
 
         var macroDef = {
             name: name,

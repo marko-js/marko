@@ -1,3 +1,3 @@
 exports.templateData = {
-    layoutDynamic: require('./layout-default.marko')
+    layoutDynamic: require("./layout-default.marko")
 };

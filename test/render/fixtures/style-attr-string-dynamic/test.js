@@ -1,3 +1,3 @@
 exports.templateData = {
-    style: 'color: red'
+    style: "color: red"
 };

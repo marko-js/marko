@@ -1,11 +1,11 @@
 function Component() {
-    throw new Error('THIS SHOULD NOT BE CALLED');
+    throw new Error("THIS SHOULD NOT BE CALLED");
 }
 
 Component.prototype = {
-    onCreate: function () {
+    onCreate: function() {
         this.state = {
-            name: 'Frank'
+            name: "Frank"
         };
     }
 };

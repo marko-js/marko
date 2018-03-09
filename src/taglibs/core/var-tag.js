@@ -1,13 +1,17 @@
-var isValidJavaScriptVarName = require('../../compiler/util/isValidJavaScriptVarName');
+var isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
 
 module.exports = function nodeFactory(el, context) {
-    context.deprecate('The "<var>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags');
+    context.deprecate(
+        'The "<var>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
+    );
 
     var vars;
 
     try {
         vars = context.builder.parseStatement(el.tagString);
-    } catch(e) {}
+    } catch (e) {
+        /* ignore error */
+    }
 
     if (vars) {
         return vars;
@@ -16,11 +20,14 @@ module.exports = function nodeFactory(el, context) {
     var builder = context.builder;
     var hasError = false;
 
-    var declarations = el.attributes.map((attr) => {
+    var declarations = el.attributes.map(attr => {
         var varName = attr.name;
 
         if (!isValidJavaScriptVarName(varName)) {
-            context.addError('Invalid JavaScript variable name: ' + varName, 'INVALID_VAR_NAME');
+            context.addError(
+                "Invalid JavaScript variable name: " + varName,
+                "INVALID_VAR_NAME"
+            );
             hasError = true;
             return;
         }

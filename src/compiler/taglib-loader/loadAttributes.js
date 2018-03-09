@@ -1,6 +1,6 @@
-var ok = require('assert').ok;
-var forEachEntry = require('raptor-util/forEachEntry');
-var loaders = require('./loaders');
+var ok = require("assert").ok;
+var forEachEntry = require("raptor-util/forEachEntry");
+var loaders = require("./loaders");
 
 module.exports = function loadAttributes(value, parent, dependencyChain) {
     ok(parent);
@@ -10,7 +10,8 @@ module.exports = function loadAttributes(value, parent, dependencyChain) {
         var attr = loaders.loadAttributeFromProps(
             attrName,
             attrProps,
-            dependencyChain.append('@' + attrName));
+            dependencyChain.append("@" + attrName)
+        );
 
         parent.addAttribute(attr);
     });

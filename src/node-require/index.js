@@ -1,22 +1,26 @@
-'use strict';
-require('../');
+"use strict";
+require("../");
 
-const path = require('path');
-const resolveFrom = require('resolve-from');
-const fs = require('fs');
-const fsReadOptions = { encoding: 'utf8' };
-const MARKO_EXTENSIONS = Symbol('MARKO_EXTENSIONS');
+const path = require("path");
+const resolveFrom = require("resolve-from");
+const fs = require("fs");
+const fsReadOptions = { encoding: "utf8" };
+const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
 function normalizeExtension(extension) {
-    if (extension.charAt(0) !== '.') {
-        extension = '.' + extension;
+    if (extension.charAt(0) !== ".") {
+        extension = "." + extension;
     }
     return extension;
 }
 
 function compile(templatePath, markoCompiler, compilerOptions) {
     if (compilerOptions) {
-        compilerOptions = Object.assign({}, markoCompiler.defaultOptions, compilerOptions);
+        compilerOptions = Object.assign(
+            {},
+            markoCompiler.defaultOptions,
+            compilerOptions
+        );
     } else {
         compilerOptions = markoCompiler.defaultOptions;
     }
@@ -33,9 +37,12 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         templateSrc = fs.readFileSync(templatePath, fsReadOptions);
         compiledSrc = markoCompiler.compile(templateSrc, templatePath);
     } else {
-        var targetFile = templatePath + '.js';
+        var targetFile = templatePath + ".js";
 
-        if (markoCompiler.defaultOptions.assumeUpToDate && fs.existsSync(targetFile)) {
+        if (
+            markoCompiler.defaultOptions.assumeUpToDate &&
+            fs.existsSync(targetFile)
+        ) {
             // If the target file already exists and "assumeUpToDate" then just use the previously
             // compiled template.
             return fs.readFileSync(targetFile, fsReadOptions);
@@ -49,14 +56,21 @@ function compile(templatePath, markoCompiler, compilerOptions) {
             compiledSrc = fs.readFileSync(targetFile, fsReadOptions);
         } else {
             templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-        	compiledSrc = markoCompiler.compile(templateSrc, templatePath, compilerOptions);
+            compiledSrc = markoCompiler.compile(
+                templateSrc,
+                templatePath,
+                compilerOptions
+            );
 
             // Write to a temporary file and move it into place to avoid problems
             // assocatiated with multiple processes write to the same file. We only
             // write the compiled source code to disk so that stack traces will
             // be accurate.
             var filename = path.basename(targetFile);
-            var tempFile = path.join(targetDir, '.' + process.pid + '.' + Date.now() + '.' + filename);
+            var tempFile = path.join(
+                targetDir,
+                "." + process.pid + "." + Date.now() + "." + filename
+            );
             fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
             fs.renameSync(tempFile, targetFile);
         }
@@ -74,14 +88,14 @@ function getLoadedTemplate(path) {
 function install(options) {
     options = options || {};
 
-    var requireExtensions = options.require ? // options.require introduced for testing
-        options.require.extensions :
-        require.extensions;
+    var requireExtensions = options.require // options.require introduced for testing
+        ? options.require.extensions
+        : require.extensions;
 
     var compilerOptions = options.compilerOptions;
 
     if (compilerOptions) {
-        require('../compiler').configure(compilerOptions);
+        require("../compiler").configure(compilerOptions);
     } else {
         compilerOptions = {};
     }
@@ -97,12 +111,13 @@ function install(options) {
     }
 
     if (extensions.length === 0) {
-        extensions.push('.marko');
+        extensions.push(".marko");
     }
 
     function markoRequireExtension(module, filename) {
-        var targetFile = filename + '.js';
-        var cachedTemplate = getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
+        var targetFile = filename + ".js";
+        var cachedTemplate =
+            getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
         if (cachedTemplate) {
             // The template has already been loaded so use the exports of the already loaded template
             module.exports = cachedTemplate;
@@ -112,7 +127,7 @@ function install(options) {
         // Resolve the appropriate compiler relative to the location of the
         // marko template file on disk using the "resolve-from" module.
         var dirname = path.dirname(filename);
-        var markoCompilerModulePath = resolveFrom(dirname, 'marko/compiler');
+        var markoCompilerModulePath = resolveFrom(dirname, "marko/compiler");
         var markoCompiler = require(markoCompilerModulePath);
 
         // Now use the appropriate Marko compiler to compile the Marko template
@@ -124,10 +139,11 @@ function install(options) {
         module._compile(compiledSrc, targetFile);
     }
 
-    requireExtensions[MARKO_EXTENSIONS] = requireExtensions[MARKO_EXTENSIONS] ||
+    requireExtensions[MARKO_EXTENSIONS] =
+        requireExtensions[MARKO_EXTENSIONS] ||
         (requireExtensions[MARKO_EXTENSIONS] = []);
 
-    extensions.forEach((extension) => {
+    extensions.forEach(extension => {
         extension = normalizeExtension(extension);
         requireExtensions[extension] = markoRequireExtension;
         requireExtensions[MARKO_EXTENSIONS].push(extension);

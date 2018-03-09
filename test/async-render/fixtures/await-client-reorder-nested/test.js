@@ -1,27 +1,27 @@
-var extend = require('raptor-util/extend');
-var expect = require('chai').expect;
+var extend = require("raptor-util/extend");
+var expect = require("chai").expect;
 
 exports.templateData = {
-    outer: function (callback) {
-        setTimeout(function () {
+    outer: function(callback) {
+        setTimeout(function() {
             callback(null, {});
         }, 100);
     },
-    inner1: function (callback) {
-        setTimeout(function () {
+    inner1: function(callback) {
+        setTimeout(function() {
             callback(null, {});
         }, 200);
     },
-    inner2: function (callback) {
-        setTimeout(function () {
+    inner2: function(callback) {
+        setTimeout(function() {
             callback(null, {});
         }, 300);
     }
 };
 
-exports.checkHtml = function () {};
-exports.checkEvents = function (events, helpers, out) {
-    events = events.map(function (eventInfo) {
+exports.checkHtml = function() {};
+exports.checkEvents = function(events, helpers, out) {
+    events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
 
@@ -34,5 +34,5 @@ exports.checkEvents = function (events, helpers, out) {
         };
     });
 
-    helpers.compare(events, out.isVDOM ? '-events-vdom.json' : '-events.json');
+    helpers.compare(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
 };

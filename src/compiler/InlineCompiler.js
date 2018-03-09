@@ -1,28 +1,28 @@
-'use strict';
+"use strict";
 
-let CodeWriter = require('./CodeWriter');
+let CodeWriter = require("./CodeWriter");
 
 function fixIndentation(lines) {
     let length = lines.length;
     let startLine = 0;
     let endLine = length;
 
-    for (; startLine<length; startLine++) {
+    for (; startLine < length; startLine++) {
         let line = lines[startLine];
-        if (line.trim() !== '') {
+        if (line.trim() !== "") {
             break;
         }
     }
 
-    for (; endLine>startLine; endLine--) {
-        let line = lines[endLine-1];
-        if (line.trim() !== '') {
+    for (; endLine > startLine; endLine--) {
+        let line = lines[endLine - 1];
+        if (line.trim() !== "") {
             break;
         }
     }
 
     if (endLine === startLine) {
-        return '';
+        return "";
     }
 
     if (startLine !== 0 || endLine !== length) {
@@ -33,7 +33,7 @@ function fixIndentation(lines) {
     let indentToRemove = /^\s*/.exec(firstLine)[0];
 
     if (indentToRemove) {
-        for (let i=0; i<lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
             if (line.startsWith(indentToRemove)) {
                 lines[i] = line.substring(indentToRemove.length);
@@ -41,13 +41,13 @@ function fixIndentation(lines) {
         }
     }
 
-    return lines.join('\n');
+    return lines.join("\n");
 }
 
 function normalizeTemplateSrc(src) {
     let lines = src.split(/\r\n|\n\r|\n/);
     if (lines.length) {
-        if (lines[0].trim() === '') {
+        if (lines[0].trim() === "") {
             return fixIndentation(lines);
         }
     }

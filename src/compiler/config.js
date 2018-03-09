@@ -1,7 +1,7 @@
 var config;
 
 /* globals window */
-var g = typeof window === 'undefined' ? global : window;
+var g = typeof window === "undefined" ? global : window;
 
 function shouldAssumeUpToDate() {
     if (process.env.MARKO_CLEAN != null) {
@@ -48,7 +48,7 @@ if (g.__MARKO_CONFIG) {
         preserveWhitespace: false,
 
         // The default output mode for compiled templates
-        output: 'html',
+        output: "html",
 
         /**
          * Whether the version should be written to the template as a comment e.g.

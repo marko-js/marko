@@ -1,5 +1,5 @@
 module.exports = {
     onMount() {
-        window.components = this.getComponents('components');
+        window.components = this.getComponents("components");
     }
-}
+};

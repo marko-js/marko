@@ -1,5 +1,5 @@
-module.exports = require('marko-widgets').defineComponent({
-    template: require.resolve('./template.marko'),
+module.exports = require("marko-widgets").defineComponent({
+    template: require.resolve("./template.marko"),
 
     getTemplateData: function(state, input) {
         return {
@@ -8,6 +8,6 @@ module.exports = require('marko-widgets').defineComponent({
     },
 
     emitPressEvent: function() {
-        this.emit('press', { widget: this });
+        this.emit("press", { widget: this });
     }
 });

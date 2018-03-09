@@ -1,9 +1,9 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'));
-    var buttonComponent = component.getComponent('button');
-    var countComponent = component.getComponent('count');
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"));
+    var buttonComponent = component.getComponent("button");
+    var countComponent = component.getComponent("count");
 
     expect(buttonComponent).to.exist;
     expect(countComponent).to.exist;

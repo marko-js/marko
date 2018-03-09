@@ -1,1 +1,1 @@
-exports.newIndentation = '        ';
+exports.newIndentation = "        ";

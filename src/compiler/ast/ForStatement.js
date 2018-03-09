@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ForStatement extends Node {
     constructor(def) {
-        super('ForStatement');
+        super("ForStatement");
         this.init = def.init;
         this.test = def.test;
         this.update = def.update;
@@ -25,29 +25,29 @@ class ForStatement extends Node {
         var update = this.update;
         var body = this.body;
 
-        writer.write('for (');
+        writer.write("for (");
 
         if (init) {
             writer.write(init);
         }
 
-        writer.write('; ');
+        writer.write("; ");
 
         if (test) {
             writer.write(test);
         }
 
-        writer.write('; ');
+        writer.write("; ");
 
         if (update) {
             writer.write(update);
         }
 
-        writer.write(') ');
+        writer.write(") ");
 
         writer.writeBlock(body);
 
-        writer.write('\n');
+        writer.write("\n");
     }
 
     walk(walker) {

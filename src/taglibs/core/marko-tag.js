@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
 module.exports = function codeGenerator(elNode, codegen) {
     var builder = codegen.builder;
 
-    if (elNode.hasAttribute('no-browser-rerender')) {
+    if (elNode.hasAttribute("no-browser-rerender")) {
         let lhs = builder.memberExpression(
-            builder.identifier('out'),
-            builder.identifier('global'));
+            builder.identifier("out"),
+            builder.identifier("global")
+        );
 
-        lhs = builder.memberExpression(lhs, builder.identifier('noBrowserRerender'));
+        lhs = builder.memberExpression(
+            lhs,
+            builder.identifier("noBrowserRerender")
+        );
 
         let rhs = builder.literal(true);
 

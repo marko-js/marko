@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var assert = require('assert');
-var raptorRegexp = require('raptor-regexp');
-var propertyHandlers = require('property-handlers');
-var types = require('./types');
-var createError = require('raptor-util/createError');
+var assert = require("assert");
+var raptorRegexp = require("raptor-regexp");
+var propertyHandlers = require("property-handlers");
+var types = require("./types");
+var createError = require("raptor-util/createError");
 
 class AttrLoader {
     constructor(attr, dependencyChain) {
@@ -20,12 +20,12 @@ class AttrLoader {
 
         if (attrProps == null) {
             attrProps = {};
-        } else if (typeof attrProps === 'string') {
+        } else if (typeof attrProps === "string") {
             attrProps = {
                 type: attrProps
             };
         } else {
-            assert.ok(typeof attrProps === 'object', 'Invalid "attrProps"');
+            assert.ok(typeof attrProps === "object", 'Invalid "attrProps"');
         }
 
         propertyHandlers(attrProps, this, this.dependencyChain.toString());
@@ -47,7 +47,7 @@ class AttrLoader {
      */
     type(value) {
         var attr = this.attr;
-        if (value.charAt(0) === '#') {
+        if (value.charAt(0) === "#") {
             attr.ref = value.substring(1);
         } else {
             attr.type = value;
@@ -132,9 +132,7 @@ class AttrLoader {
     /**
      * The description of the attribute. Only used for documentation.
      */
-    description() {
-
-    }
+    description() {}
 
     /**
      * The "set-flag" property allows a "flag" to be added to a Node instance
@@ -210,9 +208,8 @@ class AttrLoader {
     }
 }
 
-
 function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
-    assert.ok(typeof attrName === 'string');
+    assert.ok(typeof attrName === "string");
     assert.ok(dependencyChain, '"dependencyChain" is required');
 
     var attr = new types.Attribute(attrName);
@@ -221,8 +218,16 @@ function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
 
     try {
         attrLoader.load(attrProps);
-    } catch(err) {
-        throw createError('Unable to load attribute "' + attrName + '" (' + dependencyChain + '): ' + err, err);
+    } catch (err) {
+        throw createError(
+            'Unable to load attribute "' +
+                attrName +
+                '" (' +
+                dependencyChain +
+                "): " +
+                err,
+            err
+        );
     }
 
     return attr;
@@ -231,6 +236,5 @@ function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
 loadAttributeFromProps.isSupportedProperty = function(name) {
     return AttrLoader.prototype.hasOwnProperty(name);
 };
-
 
 module.exports = loadAttributeFromProps;

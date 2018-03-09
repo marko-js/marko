@@ -1,17 +1,17 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-   var widget = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var widget = helpers.mount(require.resolve("./index"), {});
 
-   helpers.triggerMouseMove(widget.getEl('inputWithoutHandler'));
-   expect(widget.mouseMoved).to.equal(false);
+    helpers.triggerMouseMove(widget.getEl("inputWithoutHandler"));
+    expect(widget.mouseMoved).to.equal(false);
 
-   helpers.triggerMouseMove(widget.getEl('inputWithHandler'));
-   expect(widget.mouseMoved).to.equal(true);
+    helpers.triggerMouseMove(widget.getEl("inputWithHandler"));
+    expect(widget.mouseMoved).to.equal(true);
 
-   // Reset widget.mouseMoved
-   widget.mouseMoved = false;
+    // Reset widget.mouseMoved
+    widget.mouseMoved = false;
 
-   helpers.triggerMouseMove(widget.getEl('inputWithLiteralHandler'));
-   expect(widget.mouseMoved).to.equal(true);
+    helpers.triggerMouseMove(widget.getEl("inputWithLiteralHandler"));
+    expect(widget.mouseMoved).to.equal(true);
 };

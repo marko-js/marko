@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class SelfInvokingFunction extends Node {
     constructor(def) {
-        super('SelfInvokingFunction');
+        super("SelfInvokingFunction");
         this.params = def.params;
         this.args = def.args;
         this.body = this.makeContainer(def.body);
@@ -18,8 +18,15 @@ class SelfInvokingFunction extends Node {
         var body = codegen.generateCode(this.body);
         codegen.inFunction = oldInFunction;
 
-        var functionDeclaration = codegen.builder.functionDeclaration(null, params, body);
-        var functionCall = codegen.builder.functionCall(functionDeclaration, args);
+        var functionDeclaration = codegen.builder.functionDeclaration(
+            null,
+            params,
+            body
+        );
+        var functionCall = codegen.builder.functionCall(
+            functionDeclaration,
+            args
+        );
 
         return functionCall;
     }

@@ -1,30 +1,32 @@
-const shelljs = require('shelljs');
+/* eslint-disable no-console */
+
+const shelljs = require("shelljs");
 const mkdir = shelljs.mkdir;
 const rm = shelljs.rm;
 const cp = shelljs.cp;
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 const babel = require("babel-core");
-const mm = require('micromatch');
+const mm = require("micromatch");
 
-const rootDir = path.join(__dirname, '..');
+const rootDir = path.join(__dirname, "..");
 
 function babelTransformFile(sourceFile, targetFile, babelOptions) {
     babelOptions = Object.assign({}, babelOptions);
     babelOptions.filename = sourceFile;
-    var source = fs.readFileSync(sourceFile, 'utf-8');
+    var source = fs.readFileSync(sourceFile, "utf-8");
     var transformed = babel.transform(source, babelOptions).code;
 
-    fs.writeFileSync(targetFile, transformed, { encoding: 'utf8' });
+    fs.writeFileSync(targetFile, transformed, { encoding: "utf8" });
 }
 
 function createMatcher(patterns) {
-    var matchers = patterns.map((pattern) => {
+    var matchers = patterns.map(pattern => {
         return mm.matcher(pattern, { matchBase: true });
     });
 
     return function isMatch(file) {
-        for (var i=0; i<matchers.length; i++) {
+        for (var i = 0; i < matchers.length; i++) {
             if (matchers[i](file)) {
                 return true;
             }
@@ -37,7 +39,7 @@ function createMatcher(patterns) {
 function findFiles(dir, callback, isExcluded) {
     function findFilesHelper(parentDir, parentRelativePath) {
         var names = fs.readdirSync(parentDir);
-        for (var i=0; i<names.length; i++) {
+        for (var i = 0; i < names.length; i++) {
             var name = names[i];
             var file = path.join(parentDir, name);
             var relativePath = path.join(parentRelativePath, name);
@@ -56,7 +58,7 @@ function findFiles(dir, callback, isExcluded) {
         }
     }
 
-    findFilesHelper(dir, '/');
+    findFilesHelper(dir, "/");
 }
 
 exports.buildDir = function buildDir(sourceName, targetName, options) {
@@ -78,24 +80,27 @@ exports.buildDir = function buildDir(sourceName, targetName, options) {
         isBabelExcluded = createMatcher(options.babelExclude);
     }
 
-    rm('-rf', distDir);
+    rm("-rf", distDir);
 
-    findFiles(sourceDir, function(sourceFile, relativePath, stat) {
-        var targetFile = path.join(distDir, relativePath);
-        var targetDir = path.dirname(targetFile);
+    findFiles(
+        sourceDir,
+        function(sourceFile, relativePath, stat) {
+            var targetFile = path.join(distDir, relativePath);
+            var targetDir = path.dirname(targetFile);
 
-        if (stat.isFile()) {
-            mkdir('-p', targetDir);
+            if (stat.isFile()) {
+                mkdir("-p", targetDir);
 
-            var ext = path.extname(relativePath);
-            if (ext !== '.js' || isBabelExcluded(relativePath)) {
-                console.log('Copying file:', relativePath);
-                cp(sourceFile, targetDir + '/');
-            } else {
-                console.log("Running babel: " + relativePath);
-                babelTransformFile(sourceFile, targetFile, babelOptions);
+                var ext = path.extname(relativePath);
+                if (ext !== ".js" || isBabelExcluded(relativePath)) {
+                    console.log("Copying file:", relativePath);
+                    cp(sourceFile, targetDir + "/");
+                } else {
+                    console.log("Running babel: " + relativePath);
+                    babelTransformFile(sourceFile, targetFile, babelOptions);
+                }
             }
-        }
-    }, isExcluded);
-
+        },
+        isExcluded
+    );
 };

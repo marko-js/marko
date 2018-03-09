@@ -3,15 +3,20 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_HEAD_EL = 4;
 
 function nextComponentIdProvider(out) {
-    var prefix = out.global.componentIdPrefix || 's'; // "s" is for server (we use "b" for the browser)
+    var prefix = out.global.componentIdPrefix || "s"; // "s" is for server (we use "b" for the browser)
     var nextId = 0;
 
     return function nextComponentId() {
-        return prefix + (nextId++);
+        return prefix + nextId++;
     };
 }
 
-function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs) {
+function attachBubblingEvent(
+    componentDef,
+    handlerMethodName,
+    isOnce,
+    extraArgs
+) {
     if (handlerMethodName) {
         if (extraArgs) {
             var component = componentDef.___component;
@@ -33,10 +38,17 @@ function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs)
                 }
             }
 
-            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce + ' ' + eventIndex;
-
+            return (
+                handlerMethodName +
+                " " +
+                componentDef.id +
+                " " +
+                isOnce +
+                " " +
+                eventIndex
+            );
         } else {
-            return handlerMethodName + ' ' + componentDef.id + ' ' + isOnce;
+            return handlerMethodName + " " + componentDef.id + " " + isOnce;
         }
     }
 }

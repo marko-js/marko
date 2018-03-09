@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 var layout = marko`
     <!DOCTYPE html>
     html lang="en"
@@ -10,9 +12,9 @@ var layout = marko`
                 layout-placeholder name="body"
     `;
 
-module.exports = function () {
-    var title = 'Hello World';
-    var name = 'Frank';
+module.exports = function() {
+    var title = "Hello World";
+    var name = "Frank";
 
     var template = marko`
         layout-use(layout) title=title

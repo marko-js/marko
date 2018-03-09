@@ -1,7 +1,7 @@
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require("marko").load(require.resolve("./template.marko"));
 
 module.exports = function(input, out) {
-    var className = input['class'] || 'app-hello';
+    var className = input["class"] || "app-hello";
 
     template.render(
         {
@@ -11,6 +11,6 @@ module.exports = function(input, out) {
                 name: input.name
             }
         },
-        out);
-
+        out
+    );
 };
