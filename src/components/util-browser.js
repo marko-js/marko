@@ -1,5 +1,4 @@
 var markoUID = window.$MUID || (window.$MUID = { i: 0 });
-
 var runtimeId = markoUID.i++;
 
 var componentLookup = {};

@@ -5,7 +5,7 @@ var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;
 
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
-var listenersAttachedKey = "$MED" + runtimeId;
+var listenersAttachedKey = "$MDE" + runtimeId;
 
 function getEventFromEl(el, eventName) {
     var virtualProps = getMarkoPropsFromEl(el);
