@@ -1,6 +1,6 @@
 var markoUID = window.$MUID || (window.$MUID = { i: 0 });
 
-var runtimeId = new Date().getTime() + String(Math.random()).slice(2); // slice the non-decimal part of the random output
+var runtimeId = markoUID.i++;
 
 var componentLookup = {};
 
@@ -81,7 +81,7 @@ function nextComponentId() {
     // marko runtimes. This allows multiple instances of marko to be
     // loaded in the same window and they should all place nice
     // together
-    return "b" + markoUID.i++;
+    return "c" + markoUID.i++;
 }
 
 function nextComponentIdProvider() {
