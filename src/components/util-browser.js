@@ -1,5 +1,6 @@
 var markoUID = window.$MUID || (window.$MUID = { i: 0 });
-var runtimeId = markoUID.i++;
+
+var runtimeId = new Date().getTime() + String(Math.random()).slice(2); // slice the non-decimal part of the random output
 
 var componentLookup = {};
 
