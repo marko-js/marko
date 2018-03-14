@@ -4,9 +4,14 @@
 
 ## 4.9.x
 
-### 4.9.1
+### 4.9.2
 
 * Fixes collisions with multiple Marko runtimes on the same page. [#1019](https://github.com/marko-js/marko/pull/1019)
+* Switch to using prettier and eslint. [#1016](https://github.com/marko-js/marko/pull/1016)
+
+### 4.9.1
+
+* Fixes an issue with keyed elements not getting properly removed. [#1013](https://github.com/marko-js/marko/pull/1013)
 
 ### 4.9.0
 
