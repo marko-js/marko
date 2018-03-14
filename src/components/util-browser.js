@@ -80,7 +80,7 @@ function nextComponentId() {
     // marko runtimes. This allows multiple instances of marko to be
     // loaded in the same window and they should all place nice
     // together
-    return "b" + markoUID.i++;
+    return "c" + markoUID.i++;
 }
 
 function nextComponentIdProvider() {
