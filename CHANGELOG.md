@@ -4,6 +4,10 @@
 
 ## 4.9.x
 
+### 4.9.1
+
+* Fixes collisions with multiple Marko runtimes on the same page. [#1019](https://github.com/marko-js/marko/pull/1019)
+
 ### 4.9.0
 
 * Fixes related to hydration, split components, and the legacy compatibility layer [#1010](https://github.com/marko-js/marko/pull/1010)
