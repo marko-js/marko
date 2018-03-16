@@ -16,3 +16,5 @@ module.exports = function(helpers) {
 
     delete window.addWidget;
 };
+
+module.exports.fails = true;
