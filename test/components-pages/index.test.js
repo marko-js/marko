@@ -1,32 +1,19 @@
 require("../__util__/test-init");
 
-var path = require("path");
 var autotest = require("../autotest");
 var asyncTestSuite = require("../__util__/async-test-suite");
 var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
-var TEST_NAME = path.basename(__dirname);
 
-describe(TEST_NAME, function() {
-    autotest.scanDir(path.join(__dirname, "./fixtures"), run, {
-        type: "describe",
-        name: false
-    });
-});
-
-describe(TEST_NAME + " (deprecated)", function() {
-    autotest.scanDir(path.join(__dirname, "./fixtures-deprecated"), run, {
-        type: "describe",
-        name: false
-    });
-});
+autotest("fixtures", run);
+autotest("fixtures-deprecated", run);
 
 /**
  * Builds a page with marko & lasso and then pipes it through jsdom, loading co-located tests.
  */
-function run(dir) {
+function run({ resolve }) {
     asyncTestSuite(function() {
-        var testFile = path.join(dir, "tests.js");
-        var templateFile = path.join(dir, "template.marko");
+        var testFile = resolve("tests.js");
+        var templateFile = resolve("template.marko");
         var template = require(templateFile);
         return template.render({}).then(function(html) {
             var browser = createJSDOMModule(__dirname, String(html), {
