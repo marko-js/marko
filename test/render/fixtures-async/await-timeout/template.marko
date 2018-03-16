@@ -1,0 +1,32 @@
+-- BEFORE
+<await(user from data.userInfoShort)
+    timeout=10
+    name="userInfo1">
+
+    <await-timeout>
+        1-A timeout has occurred!
+    </await-timeout>
+    1
+</await>
+<await(user from data.userInfoShort)
+    timeout-message="2-A timeout has occurred!"
+    timeout=10
+    name="userInfo2">
+    2
+</await>
+<await(user from data.userInfoLong)
+    timeout-message="3-A timeout has occurred!"
+    timeout=100
+    name="userInfo3">
+    3
+</await>
+<await(user from data.userInfoLong)
+    timeout=100
+    name="userInfo4">
+
+    <await-timeout>
+        4-A timeout has occurred!
+    </await-timeout>
+    4
+</await>
+-- AFTER

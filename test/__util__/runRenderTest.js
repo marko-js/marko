@@ -15,7 +15,7 @@ const domToString = require("./domToString");
 const expect = require("chai").expect;
 const toDiffableHtml = require("diffable-html");
 
-function createAsyncVerifier(main, helpers, out) {
+function createAsyncVerifier(main, snapshot, out) {
     var events = [];
     var eventsByAwaitInstance = {};
 
@@ -43,7 +43,7 @@ function createAsyncVerifier(main, helpers, out) {
     return {
         verify() {
             if (main.checkEvents) {
-                main.checkEvents(events, helpers, out);
+                main.checkEvents(events, { compare: snapshot }, out);
             }
 
             // Make sure all of the await instances were correctly ended
@@ -59,7 +59,7 @@ function createAsyncVerifier(main, helpers, out) {
     };
 }
 
-module.exports = function runRenderTest(dir, helpers, done, options) {
+module.exports = function runRenderTest(dir, snapshot, done, options) {
     let output = options.output || "html";
 
     global.document = defaultDocument;
@@ -153,7 +153,7 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
             let asyncEventsVerifier;
 
             if (checkAsyncEvents) {
-                asyncEventsVerifier = createAsyncVerifier(main, helpers, out);
+                asyncEventsVerifier = createAsyncVerifier(main, snapshot, out);
             }
 
             var verifyOutput = function(result) {
@@ -242,7 +242,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                             browser.window.document.body,
                             { childrenOnly: true }
                         );
-                        helpers.compare(vdomString, "vdom-", ".generated.html");
+                        snapshot(vdomString, {
+                            name: "vdom-",
+                            ext: ".generated.html"
+                        });
 
                         if (checkAsyncEvents) {
                             asyncEventsVerifier.verify();
@@ -258,7 +261,10 @@ module.exports = function runRenderTest(dir, helpers, done, options) {
                         });
                         main.checkHtml(html);
                     } else {
-                        helpers.compare(html, "", ".html", toDiffableHtml);
+                        snapshot(html, {
+                            ext: ".html",
+                            format: toDiffableHtml
+                        });
                     }
 
                     if (checkAsyncEvents) {

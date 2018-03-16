@@ -30,7 +30,9 @@ module.exports = function autotest(fixturesName, run) {
         fs.readdirSync(fixturesDirectory).forEach(fixtureName => {
             let fixtureDirectory = path.join(fixturesDirectory, fixtureName);
             let context = {};
-            if (modes.length > 1) {
+            if (fixtureName[0] === "~") {
+                // skip the fixture directory
+            } else if (modes.length > 1) {
                 describe(fixtureName, function() {
                     modes.forEach(mode => {
                         runFixtureTest(
@@ -113,6 +115,7 @@ function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
         resolve: filePathFromFixture,
         test: runMochaTest,
         skip: skipMochaTest,
+        dir: fixtureDirectory,
         snapshot,
         snapshotSequence, // DEPRECATED
         mode,
