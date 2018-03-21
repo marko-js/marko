@@ -5,27 +5,24 @@ require("../__util__/test-init");
 var chai = require("chai");
 chai.config.includeStack = true;
 
-var nodePath = require("path");
 require("../../compiler");
 var autotest = require("../autotest");
 var markocPath = require.resolve("../../bin/markoc");
 var childProcess = require("child_process");
 var fs = require("fs");
 
-describe("markoc", function() {
-    var autoTestDir = nodePath.join(__dirname, "./fixtures");
-
-    autotest.scanDir(
-        autoTestDir,
-        function run(dir, helpers, done) {
-            const testModule = require(nodePath.join(dir, "test.js"));
+autotest("fixtures", ({ test, dir, resolve }) => {
+    test(
+        done => {
+            const testModule = require(resolve("test.js"));
+            const helpers = {};
 
             helpers.existsSync = function(filename) {
-                return fs.existsSync(nodePath.join(dir, filename));
+                return fs.existsSync(resolve(filename));
             };
 
             helpers.readSync = function(filename) {
-                return fs.readFileSync(nodePath.join(dir, filename));
+                return fs.readFileSync(resolve(filename));
             };
 
             helpers.spawnSync = function(args, options) {

@@ -4,16 +4,13 @@ require("../__util__/test-init");
 
 var chai = require("chai");
 chai.config.includeStack = true;
-var path = require("path");
 var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-describe("inline", function() {
-    var autoTestDir = path.join(__dirname, "./fixtures");
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var indexPath = path.join(dir, "index.js");
+autotest("fixtures", ({ test, resolve, snapshot }) => {
+    test(done => {
+        var indexPath = resolve("index.js");
         var inlineCompiler = compiler.createInlineCompiler(indexPath);
 
         var compilerOptions = { writeVersionComment: false };
@@ -30,13 +27,13 @@ describe("inline", function() {
             src = staticCode + "\n\n" + src;
         }
 
-        var outputFile = path.join(dir, "index.generated.js");
+        var outputFile = resolve("index.generated.js");
         fs.writeFileSync(outputFile, src, { encoding: "utf8" });
 
         var func = require(outputFile);
 
         function handleOutput(result) {
-            helpers.compare(result.toString(), ".html");
+            snapshot(result.toString(), ".html");
             done();
         }
 

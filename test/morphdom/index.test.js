@@ -5,12 +5,67 @@ require("../__util__/test-init");
 var chai = require("chai");
 chai.config.includeStack = true;
 
-var path = require("path");
-
 var autotest = require("../autotest");
 const fs = require("fs");
 const morphdom = require("marko/morphdom");
 const createJSDOMModule = require("../__util__/create-jsdom-module");
+
+autotest("fixtures", ({ test, resolve, snapshot }) => {
+    test(() => {
+        var fromHTML = fs.readFileSync(resolve("from.html"), {
+            encoding: "utf8"
+        });
+        var toHTML = fs.readFileSync(resolve("to.html"), {
+            encoding: "utf8"
+        });
+
+        let fromDocument = createJSDOMModule({
+            dir: __dirname,
+            html: "<html><body>" + fromHTML + "</body></html>"
+        }).window.document;
+        let toDocument = createJSDOMModule({
+            dir: __dirname,
+            html: "<html><body>" + toHTML + "</body></html>"
+        }).window.document;
+
+        let fromNode = fromDocument.body;
+        let realToNode = toDocument.body;
+
+        var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
+            realToNode
+        );
+        var expectedHTML = serializeNode(realToNode);
+        fs.writeFileSync(resolve("expected.html"), expectedHTML, {
+            encoding: "utf8"
+        });
+
+        var parentNode = fromNode;
+        var startNode = fromNode.firstChild;
+        var endNode = null;
+        var toNode = targetVEl;
+        var doc = fromDocument;
+        var componentsContext = {
+            ___preserved: {},
+            ___preservedBodies: {},
+            ___globalContext: {
+                ___isRerenderInBrowser: true
+            }
+        };
+
+        morphdom(
+            parentNode,
+            startNode,
+            endNode,
+            toNode,
+            doc,
+            componentsContext
+        );
+
+        var actualHTML = serializeNode(fromNode);
+        snapshot(actualHTML, ".html");
+    });
+});
+
 function serializeNode(node) {
     // NOTE: We don't use XMLSerializer because we need to sort the attributes to correctly compare output HTML strings
     // BAD: return (new XMLSerializer()).serializeToString(node);
@@ -84,63 +139,3 @@ function serializeNode(node) {
 
     return html;
 }
-
-describe("morphdom", function() {
-    var autoTestDir = path.join(__dirname, "./fixtures");
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var fromHTML = fs.readFileSync(path.join(dir, "from.html"), {
-            encoding: "utf8"
-        });
-        var toHTML = fs.readFileSync(path.join(dir, "to.html"), {
-            encoding: "utf8"
-        });
-
-        let fromDocument = createJSDOMModule({
-            dir: __dirname,
-            html: "<html><body>" + fromHTML + "</body></html>"
-        }).window.document;
-        let toDocument = createJSDOMModule({
-            dir: __dirname,
-            html: "<html><body>" + toHTML + "</body></html>"
-        }).window.document;
-
-        let fromNode = fromDocument.body;
-        let realToNode = toDocument.body;
-
-        var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
-            realToNode
-        );
-        var expectedHTML = serializeNode(realToNode);
-        fs.writeFileSync(path.join(dir, "expected.html"), expectedHTML, {
-            encoding: "utf8"
-        });
-
-        var parentNode = fromNode;
-        var startNode = fromNode.firstChild;
-        var endNode = null;
-        var toNode = targetVEl;
-        var doc = fromDocument;
-        var componentsContext = {
-            ___preserved: {},
-            ___preservedBodies: {},
-            ___globalContext: {
-                ___isRerenderInBrowser: true
-            }
-        };
-
-        morphdom(
-            parentNode,
-            startNode,
-            endNode,
-            toNode,
-            doc,
-            componentsContext
-        );
-
-        var actualHTML = serializeNode(fromNode);
-        helpers.compare(actualHTML, ".html");
-
-        return done();
-    });
-});

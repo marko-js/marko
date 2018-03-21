@@ -6,24 +6,24 @@ var chai = require("chai");
 chai.config.includeStack = true;
 
 var expect = require("chai").expect;
-var nodePath = require("path");
 
 var autotest = require("../autotest");
 var marko = require("marko");
 
 var hotReload = require("marko/hot-reload");
 hotReload.enable();
-describe("hot-reload", function() {
-    var autoTestDir = nodePath.join(__dirname, "./fixtures");
 
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
+autotest("fixtures", ({ test, resolve, snapshot, snapshotSequence }) => {
+    test(() => {
         require("marko/compiler").configure({
             assumeUpToDate: false
         });
 
-        var test = require(nodePath.join(dir, "test.js"));
+        var main = require(resolve("test.js"));
 
-        test.check(marko, hotReload, expect, helpers);
-        done();
+        main.check(marko, hotReload, expect, {
+            compare: snapshot,
+            compareSequence: snapshotSequence
+        });
     });
 });
