@@ -4,17 +4,14 @@ require("../__util__/test-init");
 
 var chai = require("chai");
 chai.config.includeStack = true;
-var path = require("path");
 var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-describe("compiler (vdom)", function() {
-    var autoTestDir = path.join(__dirname, "./fixtures-vdom");
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var templatePath = path.join(dir, "template.marko");
-        var mainPath = path.join(dir, "test.js");
+autotest("fixtures-vdom", ({ test, resolve, snapshot }) => {
+    test(done => {
+        var templatePath = resolve("template.marko");
+        var mainPath = resolve("test.js");
         var main;
 
         if (fs.existsSync(mainPath)) {
@@ -52,7 +49,7 @@ describe("compiler (vdom)", function() {
             } else {
                 var actualSrc = compiledTemplate.code;
                 actualSrc = actualSrc.replace(/marko\/dist\//g, "marko/src/");
-                helpers.compare(actualSrc, ".js");
+                snapshot(actualSrc, ".js");
             }
 
             done();
