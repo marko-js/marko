@@ -74,18 +74,13 @@ To add a new test, you'll find the appropriate test suite, copy a fixture, and m
 
 A few of the tests suites use the same fixtures for multiple test scenarios. For example, the `component-browser` tests run once rendering the component in a browser environment and a second time rendering in a server environment, then hydrating in the browser.
 
-For some tests, it might be necessary to skip the test in one of these scenarios. This is done by exporting a `skipHydrate` (or similiarly named) property from the fixture. The value of the property should be a string explaining why the test is skipped.
+For some tests, it might be necessary to skip the test in one of these scenarios. This is done by exporting a [`skip_hydrate`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures/implicit-component/test.js#L10) (or similiarly named) property from the fixture. The value of the property should be a string explaining why the test is skipped.
 
 #### Adding a failing test case
 
-If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. You can mark a fixture as expected to fail by appending `.fails` to the directory name:
+If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. You can mark a fixture as expected to fail by appending exporting a [`fails`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures-deprecated/widget-multiple-binds-in-template/test.js#L20) property from the fixture.
 
-```
-⤷ fixtures/
-      ⤷ my-test-scenario.fails/
-```
-
-In the case that a fixture is used in multiple test scenarios, you can mark the test as failing in a specific scenario by exporting a `failsHydrate` (or similarly named) property from the fixture.
+In the case that a fixture is used in multiple test scenarios, you can mark the test as failing in a specific scenario by exporting a [`fails_hydrate`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures-deprecated/widget-conditional/test.js#L19) (or similarly named) property from the fixture.
 
 Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) to report a error, but document that there is an issue and give others a starting point for fixing the problem.
 
