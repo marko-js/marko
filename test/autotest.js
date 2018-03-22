@@ -51,17 +51,17 @@ module.exports = function autotest(fixturesName, run) {
     });
 };
 
-function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
-    const filePathFromFixture = file => path.join(fixtureDirectory, file);
-    const testPath = filePathFromFixture("test.js");
-    const hasTestFile = fs.existsSync(testPath);
+function runFixtureTest(name, dir, run, mode, context) {
+    const resolve = file => path.join(dir, file);
+    const mainPath = resolve("test.js");
+    const hasMainFile = fs.existsSync(mainPath);
     let mochaTestFunction = it;
     let mochaDetails;
 
-    if (hasTestFile) {
-        const test = require(testPath);
-        const skip = test.skip || test["skip_" + mode];
-        const fails = test.fails || test["fails_" + mode];
+    if (hasMainFile) {
+        const main = require(mainPath);
+        const skip = main.skip || main["skip_" + mode];
+        const fails = main.fails || main["fails_" + mode];
         if (skip) {
             mochaTestFunction = it.skip;
             mochaDetails = skip;
@@ -71,91 +71,81 @@ function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
         }
     }
 
-    const snapshot = (actual, options) => {
-        let name = (options && options.name) || "";
+    const snapshot = (actual, opts) => {
+        let prefix = opts && opts.name ? opts.name + "-" : "";
         let ext =
-            typeof options === "string"
-                ? options
-                : (options && options.ext) || ".html";
-        let format = (options && options.format) || formatters[ext];
-        return compareHelper(fixtureDirectory, actual, name, ext, format);
+            typeof opts === "string" ? opts : (opts && opts.ext) || ".html";
+        let actualPath = resolve(prefix + "actual" + ext);
+        let expectedPath = resolve(prefix + "expected" + ext);
+        let format = (opts && opts.format) || formatters[ext];
+        let isObject = typeof actual === "string" ? false : true;
+        let actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
+        let expectedString = loadExpected(expectedPath, isObject);
+        let expected;
+
+        fs.writeFileSync(actualPath, actualString, { encoding: "utf8" });
+
+        actual = normalize(actualString, isObject, format);
+        expected = normalize(expectedString, isObject, format);
+
+        try {
+            assert.deepEqual(actual, expected);
+        } catch (e) {
+            if (updateExpectations) {
+                fs.writeFileSync(expectedPath, actualString, {
+                    encoding: "utf8"
+                });
+            } else {
+                throw e;
+            }
+        }
     };
 
-    const runMochaTest = fn => {
-        const test = mochaTestFunction(fixtureName, fn);
+    const test = fn => {
+        const test = mochaTestFunction(name, fn);
         test.details = mochaDetails;
-        test.file = testPath;
+        test.file = mainPath;
         return test;
     };
 
-    const skipMochaTest = reason => {
-        const test = it.skip(fixtureName);
+    const skip = reason => {
+        const test = it.skip(name);
         test.details = reason;
-        test.file = testPath;
+        test.file = mainPath;
         return test;
     };
 
     run({
-        resolve: filePathFromFixture,
-        test: runMochaTest,
-        skip: skipMochaTest,
-        dir: fixtureDirectory,
+        resolve,
+        test,
+        skip,
+        dir,
         snapshot,
         mode,
         context
     });
 }
 
-function compareHelper(dir, actual, name, ext, format) {
-    var prefix = name ? name + "-" : "";
-    var actualPath = path.join(dir, prefix + "actual" + ext);
-    var expectedPath = path.join(dir, prefix + "expected" + ext);
-
-    actual = normalize(actual);
-    format = format || (contents => contents);
-
-    var isObject = typeof actual === "string" ? false : true;
-    var actualString = isObject ? JSON.stringify(actual, null, 4) : actual;
-    fs.writeFileSync(actualPath, actualString, { encoding: "utf8" });
-
-    var expectedString;
-
+function loadExpected(expectedPath, isObject) {
     try {
-        expectedString = fs.readFileSync(expectedPath, { encoding: "utf8" });
+        return fs.readFileSync(expectedPath, { encoding: "utf8" });
     } catch (e) {
-        expectedString = isObject ? '"TBD"' : "TBD";
-        fs.writeFileSync(expectedPath, expectedString, { encoding: "utf8" });
-    }
-
-    actual = isObject
-        ? JSON.parse(actualString)
-        : actualString.replace(/\r?\n$/, "");
-
-    if (typeof actual === "string") {
-        actual = replaceAll(actual, projectRoot, "PROJECT_ROOT");
-    }
-
-    var expected = isObject
-        ? JSON.parse(expectedString)
-        : expectedString.replace(/\r?\n$/, "");
-    var formattedActual = format(actual);
-    var formattedExpected = format(expected);
-    try {
-        assert.deepEqual(formattedActual, formattedExpected);
-    } catch (e) {
-        if (updateExpectations) {
-            fs.writeFileSync(expectedPath, actualString, { encoding: "utf8" });
-        } else {
-            throw e;
-        }
+        let expected = `${path.basename(expectedPath)} does not exist`;
+        return isObject ? JSON.stringify(expected) : expected;
     }
 }
 
-function normalize(str) {
-    if (typeof str === "string") {
-        return replaceAll(str, projectRoot, "PROJECT_ROOT");
+function normalize(content, isObject, format) {
+    if (isObject) {
+        content = JSON.parse(content);
+    } else {
+        content = replaceAll(content, projectRoot, "PROJECT_ROOT").replace(
+            /\r?\n$/g,
+            ""
+        );
     }
-    return str;
+    format = format || (content => content);
+    return format(content);
 }
 
 function replaceAll(str, substr, replacement) {
