@@ -6,12 +6,12 @@ var adjustIndent = require("marko/compiler/util/adjustIndent");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures", ({ test, path, require, compare }) => {
+autotest("fixtures", ({ test, resolve, snapshot }) => {
     test(() => {
-        var testSettings = require("test.js");
-        var input = fs.readFileSync(path("input.txt"), { encoding: "utf8" });
+        var testSettings = require(resolve("test.js"));
+        var input = fs.readFileSync(resolve("input.txt"), { encoding: "utf8" });
         var newIndentation = testSettings.newIndentation;
         var output = adjustIndent(input, newIndentation);
-        compare(output, ".txt");
+        snapshot(output, ".txt");
     });
 });
