@@ -243,7 +243,7 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
                             { childrenOnly: true }
                         );
                         snapshot(vdomString, {
-                            name: "vdom-",
+                            name: "vdom",
                             ext: ".generated.html"
                         });
 

@@ -19,8 +19,8 @@ autotest("fixtures", ({ test, resolve, snapshot }) => {
             var vdomNode = virtualize(domNode);
             var vdomHTML = toHTML(vdomNode);
             snapshot(vdomHTML, {
-                suffix: ".html",
-                prefix: "virtualized-"
+                ext: ".html",
+                name: "virtualized"
             });
         }
     });

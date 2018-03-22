@@ -13,7 +13,7 @@ var marko = require("marko");
 var hotReload = require("marko/hot-reload");
 hotReload.enable();
 
-autotest("fixtures", ({ test, resolve, snapshotSequence }) => {
+autotest("fixtures", ({ test, resolve, snapshot }) => {
     test(() => {
         require("marko/compiler").configure({
             assumeUpToDate: false
@@ -21,6 +21,6 @@ autotest("fixtures", ({ test, resolve, snapshotSequence }) => {
 
         var main = require(resolve("test.js"));
 
-        main.check(marko, hotReload, expect, snapshotSequence);
+        main.check(marko, hotReload, expect, snapshot);
     });
 });

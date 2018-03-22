@@ -22,10 +22,16 @@ exports.check = function(marko, hotReload, expect, snapshot) {
 
     copyFiles(nodePath.join(__dirname, "a"));
     var component = require(tempTemplatePath);
-    snapshot(component.renderSync().toString());
+    snapshot(component.renderSync().toString(), {
+        name: "initial",
+        ext: ".html"
+    });
 
     hotReload.handleFileModified(tempTemplatePath);
 
     copyFiles(nodePath.join(__dirname, "b"));
-    snapshot(component.renderSync().toString());
+    snapshot(component.renderSync().toString(), {
+        name: "reloaded",
+        ext: ".html"
+    });
 };

@@ -41,7 +41,10 @@ exports.check = function(marko, hotReload, expect, snapshot) {
     copyFiles(nodePath.join(__dirname, "a"));
     var component = require(tempTemplatePath);
 
-    snapshot(component.renderToString({ name: "Frank" }), ".html");
+    snapshot(component.renderToString({ name: "Frank" }), {
+        name: "initial",
+        ext: ".html"
+    });
 
     try {
         fs.unlinkSync(nodePath.join(__dirname, "temp/component.js"));
@@ -53,5 +56,8 @@ exports.check = function(marko, hotReload, expect, snapshot) {
 
     copyFiles(nodePath.join(__dirname, "b"));
 
-    snapshot(component.renderToString({ name: "Jane" }), ".html");
+    snapshot(component.renderToString({ name: "Jane" }), {
+        name: "reloaded",
+        ext: ".html"
+    });
 };

@@ -10,13 +10,22 @@ exports.check = function(marko, hotReload, expect, snapshot) {
 
     var template = require(tempTemplatePath);
 
-    snapshot(template.renderSync({ name: "John" }).toString());
+    snapshot(template.renderSync({ name: "John" }).toString(), {
+        name: "initial",
+        ext: ".html"
+    });
 
     fs.writeFileSync(tempTemplatePath, templateSrc + "!", { encoding: "utf8" });
 
-    snapshot(template.renderSync({ name: "John" }).toString());
+    snapshot(template.renderSync({ name: "John" }).toString(), {
+        name: "modified",
+        ext: ".html"
+    });
 
     hotReload.handleFileModified(tempTemplatePath);
 
-    snapshot(template.renderSync({ name: "John" }).toString());
+    snapshot(template.renderSync({ name: "John" }).toString(), {
+        name: "reloaded",
+        ext: ".html"
+    });
 };

@@ -55,7 +55,6 @@ function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
     const filePathFromFixture = file => path.join(fixtureDirectory, file);
     const testPath = filePathFromFixture("test.js");
     const hasTestFile = fs.existsSync(testPath);
-    let compareSequenceLookup = {};
     let mochaTestFunction = it;
     let mochaDetails;
 
@@ -73,28 +72,13 @@ function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
     }
 
     const snapshot = (actual, options) => {
-        let name = (options && (options.prefix || options.name)) || "";
+        let name = (options && options.name) || "";
         let ext =
             typeof options === "string"
                 ? options
-                : (options && (options.suffix || options.ext)) || ".html";
+                : (options && options.ext) || ".html";
         let format = (options && options.format) || formatters[ext];
-        let sequenceKey = JSON.stringify(options);
-        let sequence = compareSequenceLookup[sequenceKey];
-        if (sequence === undefined) {
-            compareSequenceLookup[sequenceKey] = 2;
-        } else {
-            ext = "." + sequence + ext;
-            compareSequenceLookup[sequenceKey]++;
-        }
         return compareHelper(fixtureDirectory, actual, name, ext, format);
-    };
-
-    const snapshotSequence = (actual, options) => {
-        let sequenceKey = JSON.stringify(options);
-        compareSequenceLookup[sequenceKey] =
-            compareSequenceLookup[sequenceKey] || 1;
-        return snapshot(actual, options);
     };
 
     const runMochaTest = fn => {
@@ -117,15 +101,15 @@ function runFixtureTest(fixtureName, fixtureDirectory, run, mode, context) {
         skip: skipMochaTest,
         dir: fixtureDirectory,
         snapshot,
-        snapshotSequence, // DEPRECATED
         mode,
         context
     });
 }
 
-function compareHelper(dir, actual, prefix, suffix, format) {
-    var actualPath = path.join(dir, prefix + "actual" + suffix);
-    var expectedPath = path.join(dir, prefix + "expected" + suffix);
+function compareHelper(dir, actual, name, ext, format) {
+    var prefix = name ? name + "-" : "";
+    var actualPath = path.join(dir, prefix + "actual" + ext);
+    var expectedPath = path.join(dir, prefix + "expected" + ext);
 
     actual = normalize(actual);
     format = format || (contents => contents);
