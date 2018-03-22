@@ -1,3 +1,5 @@
+"use strict";
+
 require("../__util__/test-init");
 
 var autotest = require("../autotest");

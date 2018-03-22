@@ -1,3 +1,5 @@
+"use strict";
+
 require("../__util__/test-init");
 var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var fs = require("fs");
