@@ -11,7 +11,10 @@ var markocPath = require.resolve("../../bin/markoc");
 var childProcess = require("child_process");
 var fs = require("fs");
 
-autotest("fixtures", ({ test, dir, resolve }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let resolve = fixture.resolve;
     test(
         done => {
             const testModule = require(resolve("test.js"));

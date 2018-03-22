@@ -10,7 +10,11 @@ var autotest = require("../autotest");
 
 var taglibFinder = require("marko/compiler/taglib-finder");
 
-autotest("fixtures", ({ test, dir, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var test = require(resolve("test.js"));
 

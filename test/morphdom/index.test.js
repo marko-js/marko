@@ -10,7 +10,10 @@ const fs = require("fs");
 const morphdom = require("marko/morphdom");
 const createJSDOMModule = require("../__util__/create-jsdom-module");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var fromHTML = fs.readFileSync(resolve("from.html"), {
             encoding: "utf8"

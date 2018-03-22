@@ -10,7 +10,10 @@ var builder = compiler.createBuilder();
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var input = fs.readFileSync(resolve("input.js"), {
             encoding: "utf8"

@@ -7,7 +7,10 @@ var compiler = require("marko/compiler");
 autotest("fixtures-html", run);
 autotest("fixtures-html-deprecated", run);
 
-function run({ test, resolve, snapshot }) {
+function run(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var templatePath = resolve("index.marko");
         var mainPath = resolve("test.js");

@@ -49,7 +49,10 @@ var vdomHelpers = {
     virtualizeElement: VElement.___virtualize
 };
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var helpers = {};
         helpers.vdom = vdomHelpers;

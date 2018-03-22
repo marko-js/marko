@@ -20,7 +20,11 @@ setup();
 autotest("versions/express-4/fixtures", run);
 autotest("versions/express-5/fixtures", run);
 
-function run({ test, dir, resolve, snapshot }) {
+function run(fixture) {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(done => {
         var express = require(resolveFrom(dir, "express"));
         var mainPath = resolve("test.js");

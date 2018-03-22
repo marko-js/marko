@@ -5,7 +5,10 @@ var toHTML = require("../__util__/toHTML");
 var createJSDOMModule = require("../__util__/create-jsdom-module");
 var autotest = require("../autotest");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var inputPath = resolve("input.html");
         if (fs.existsSync(inputPath)) {

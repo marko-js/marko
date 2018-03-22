@@ -27,13 +27,21 @@ autotest("fixtures-async-deprecated", {
     vdom: testRunnerAsync
 });
 
-function testRunner({ test, dir, mode, snapshot }) {
+function testRunner(fixture) {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let mode = fixture.mode;
+    let snapshot = fixture.snapshot;
     test(done => {
         runRenderTest(dir, snapshot, done, { output: mode });
     });
 }
 
-function testRunnerAsync({ test, dir, mode, snapshot }) {
+function testRunnerAsync(fixture) {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let mode = fixture.mode;
+    let snapshot = fixture.snapshot;
     test(done => {
         runRenderTest(dir, snapshot, done, {
             output: mode,

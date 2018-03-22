@@ -20,7 +20,10 @@ autotest("fixtures-deprecated", {
     hydrate: runHydrateTest
 });
 
-function runClientTest({ test, resolve, context }) {
+function runClientTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
     test(done => {
         let helpers = new BrowserHelpers();
         let testFile = resolve("test.js");
@@ -44,7 +47,10 @@ function runClientTest({ test, resolve, context }) {
     });
 }
 
-function runHydrateTest({ test, resolve, context }) {
+function runHydrateTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
     test(done => {
         var components = context.rendered;
         if (!components)

@@ -8,7 +8,10 @@ var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures-vdom", ({ test, resolve, snapshot }) => {
+autotest("fixtures-vdom", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(done => {
         var templatePath = resolve("template.marko");
         var mainPath = resolve("test.js");

@@ -10,7 +10,8 @@ autotest("fixtures-deprecated", run);
 /**
  * Builds a page with marko & lasso and then pipes it through jsdom, loading co-located tests.
  */
-function run({ resolve }) {
+function run(fixture) {
+    let resolve = fixture.resolve;
     asyncTestSuite(function() {
         var testFile = resolve("tests.js");
         var templateFile = resolve("template.marko");

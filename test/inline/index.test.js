@@ -8,7 +8,10 @@ var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(done => {
         var indexPath = resolve("index.js");
         var inlineCompiler = compiler.createInlineCompiler(indexPath);

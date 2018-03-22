@@ -15,7 +15,10 @@ var parser = new Parser(new HtmlJsParser());
 
 compiler.buildTaglibLookup(__dirname);
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var templatePath = resolve("template.marko");
         var src = fs.readFileSync(templatePath, { encoding: "utf8" });

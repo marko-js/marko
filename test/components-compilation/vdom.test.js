@@ -4,7 +4,10 @@ var fs = require("fs");
 var autotest = require("../autotest");
 var compiler = require("marko/compiler");
 
-autotest("fixtures-vdom", ({ test, resolve, snapshot }) => {
+autotest("fixtures-vdom", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var templatePath = resolve("index.marko");
         var mainPath = resolve("test.js");

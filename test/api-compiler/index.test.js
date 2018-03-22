@@ -10,7 +10,10 @@ var autotest = require("../autotest");
 var marko = require("../../");
 var markoCompiler = require("../../compiler");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(done => {
         require(resolve("test.js")).check(
             marko,

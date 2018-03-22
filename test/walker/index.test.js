@@ -8,7 +8,10 @@ chai.config.includeStack = true;
 var compiler = require("../../compiler");
 var autotest = require("../autotest");
 
-autotest("fixtures", ({ test, resolve, snapshot }) => {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
     test(() => {
         var getAST = require(resolve("index.js"));
         snapshot(getAST(compiler), ".json");

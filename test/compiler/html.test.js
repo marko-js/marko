@@ -66,7 +66,10 @@ function runTestForExtension(dir, snapshot, extension, done) {
     return true;
 }
 
-autotest("fixtures-html", ({ test, dir, snapshot }) => {
+autotest("fixtures-html", fixture => {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let snapshot = fixture.snapshot;
     test(done => {
         for (let i = 0; i < EXTENSIONS.length; i++) {
             const extension = EXTENSIONS[i];
