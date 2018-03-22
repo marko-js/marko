@@ -96,6 +96,13 @@ function runFixtureTest(name, dir, run, mode, context) {
                     encoding: "utf8"
                 });
             } else {
+                e.stack = e.stack.slice(
+                    e.stack.indexOf("\n", e.stack.indexOf("\n") + 1) + 1
+                );
+                e.message = `SnapshotError: ${path.relative(
+                    process.cwd(),
+                    actualPath
+                )}`;
                 throw e;
             }
         }
