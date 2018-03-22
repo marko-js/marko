@@ -1,18 +1,17 @@
-var nodePath = require("path");
 var through = require("through");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var output = "";
     var outStream = through(function write(data) {
         output += data;
     });
 
     outStream.on("end", function() {
-        helpers.compare(output);
+        snapshot(output);
         done();
     });
 
-    var template = require(nodePath.join(__dirname, "template.marko"));
+    var template = require("./template.marko");
     template
         .stream({
             name: "John"

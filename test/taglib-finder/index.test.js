@@ -15,7 +15,7 @@ autotest("fixtures", ({ test, dir, resolve, snapshot }) => {
         var test = require(resolve("test.js"));
 
         if (test.check) {
-            test.check(taglibFinder, { compare: snapshot });
+            test.check(taglibFinder, snapshot);
         } else {
             if (test.before) {
                 test.before(taglibFinder);

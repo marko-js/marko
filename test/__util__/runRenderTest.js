@@ -43,7 +43,7 @@ function createAsyncVerifier(main, snapshot, out) {
     return {
         verify() {
             if (main.checkEvents) {
-                main.checkEvents(events, { compare: snapshot }, out);
+                main.checkEvents(events, snapshot, out);
             }
 
             // Make sure all of the await instances were correctly ended

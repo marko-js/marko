@@ -51,7 +51,7 @@ function runTestForExtension(dir, snapshot, extension, done) {
             templatePath,
             Object.assign(compilerOptions, main.compilerOptions)
         );
-        main.checkTemplate(template, { compare: snapshot });
+        main.checkTemplate(template, snapshot);
         done();
     } else {
         var compiledSrc = compiler.compileFile(

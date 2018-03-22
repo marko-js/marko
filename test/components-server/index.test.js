@@ -6,10 +6,10 @@ autotest("fixtures", ({ test, resolve, snapshot }) => {
     test(done => {
         var testFunc = require(resolve("test.js"));
         if (testFunc.length <= 1) {
-            testFunc({ compare: snapshot });
+            testFunc(snapshot);
             done();
         } else {
-            testFunc({ compare: snapshot }, done);
+            testFunc(snapshot, done);
         }
     });
 });

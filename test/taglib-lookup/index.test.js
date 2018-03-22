@@ -14,6 +14,6 @@ markoCompiler.buildTaglibLookup(__dirname);
 autotest("fixtures", ({ test, resolve, snapshot }) => {
     test(() => {
         var test = require(resolve("test.js"));
-        test.check(markoCompiler, expect, { compare: snapshot });
+        test.check(markoCompiler, expect, snapshot);
     });
 });

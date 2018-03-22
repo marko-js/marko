@@ -17,7 +17,7 @@ autotest("fixtures", ({ test, resolve, snapshot }) => {
             marko,
             markoCompiler,
             expect,
-            { compare: snapshot },
+            snapshot,
             done
         );
     });

@@ -11,6 +11,6 @@ var autotest = require("../autotest");
 autotest("fixtures", ({ test, resolve, snapshot }) => {
     test(done => {
         var main = require(resolve("test.js"));
-        main.check(expect, { compare: snapshot }, done);
+        main.check(expect, snapshot, done);
     });
 });

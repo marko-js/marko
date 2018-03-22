@@ -20,7 +20,7 @@ exports.templateData = {
 };
 
 exports.checkHtml = function() {};
-exports.checkEvents = function(events, helpers, out) {
+exports.checkEvents = function(events, snapshot, out) {
     events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
@@ -34,5 +34,5 @@ exports.checkEvents = function(events, helpers, out) {
         };
     });
 
-    helpers.compare(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
+    snapshot(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
 };

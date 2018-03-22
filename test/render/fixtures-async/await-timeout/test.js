@@ -14,7 +14,7 @@ exports.templateData = {
     }
 };
 
-exports.checkEvents = function(events, helpers) {
+exports.checkEvents = function(events, snapshot) {
     events = events.map(function(eventInfo) {
         var arg = extend({}, eventInfo.arg);
         expect(arg.out != null).to.equal(true);
@@ -28,5 +28,5 @@ exports.checkEvents = function(events, helpers) {
         };
     });
 
-    helpers.compare(events, "-events.json");
+    snapshot(events, "-events.json");
 };

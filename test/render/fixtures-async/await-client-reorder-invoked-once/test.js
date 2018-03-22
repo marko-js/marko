@@ -19,7 +19,7 @@ exports.templateData = {
     }
 };
 
-exports.checkEvents = function(events, helpers, out) {
+exports.checkEvents = function(events, snapshot, out) {
     // Expect that we invoked the await reorderer. If true, it was only able to
     // be invoked once.
     expect(out.global.__awaitReordererInvoked).to.equal(true);
@@ -37,5 +37,5 @@ exports.checkEvents = function(events, helpers, out) {
         };
     });
 
-    helpers.compare(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
+    snapshot(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
 };

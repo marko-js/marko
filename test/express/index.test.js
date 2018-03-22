@@ -72,9 +72,7 @@ function run({ test, dir, resolve, snapshot }) {
                         if (main.checkResponse) {
                             response.body = body;
                             response.error = error;
-                            main.checkResponse(response, expect, {
-                                compare: snapshot
-                            });
+                            main.checkResponse(response, expect, snapshot);
                         } else {
                             if (error) {
                                 return done(error);
