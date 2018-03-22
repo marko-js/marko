@@ -3,4 +3,3 @@ exports.templateData = {
         foo: "bar"
     }
 };
-exports.vdomSkip = true;

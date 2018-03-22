@@ -110,10 +110,6 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
         return oldDone();
     };
 
-    if (isVDOM && main.vdomSkip) {
-        return done();
-    }
-
     var compilerOptions = {
         output: output,
         writeToDisk: main.writeToDisk !== false,

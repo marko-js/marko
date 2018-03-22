@@ -3,6 +3,8 @@
 var runtimeHtmlHelpers = require("marko/runtime/html/helpers");
 var escapeXml = runtimeHtmlHelpers.x;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
+var escapeScript = runtimeHtmlHelpers.xs;
+var escapeStyle = runtimeHtmlHelpers.xc;
 
 var openTagOnly = {};
 
@@ -115,7 +117,11 @@ function vdomToHTML(node, options) {
                 while (curChild) {
                     let nodeType = curChild.nodeType || curChild.___nodeType;
                     if (nodeType === 3) {
-                        let escapeText = tagName.toUpperCase() !== "SCRIPT";
+                        let tag = tagName.toUpperCase();
+                        let escapeText =
+                            tag === "SCRIPT"
+                                ? escapeScript
+                                : tag === "STYLE" ? escapeStyle : escapeXml;
                         serializeTextHelper(curChild, escapeText);
                     } else {
                         serializeHelper(curChild);
@@ -134,10 +140,8 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, escape) {
-        html +=
-            escape !== false
-                ? escapeXml(getNodeValue(node))
-                : getNodeValue(node);
+        escape = escape || escapeXml;
+        html += escape(getNodeValue(node));
     }
 
     function serializeCommentHelper(node) {

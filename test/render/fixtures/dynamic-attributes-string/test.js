@@ -2,4 +2,4 @@ exports.templateData = {
     attrs: ' foo="bar" baz'
 };
 
-exports.vdomSkip = true;
+exports.fails_vdom = true;
