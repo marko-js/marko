@@ -180,35 +180,21 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
                         require("marko/runtime/vdom/AsyncVDOMBuilder").prototype.___document = defaultDocument;
                         global.document = defaultDocument;
 
-                        let htmlTemplatePath = path.join(dir, "template.marko");
-                        let htmlTemplate = marko.load(htmlTemplatePath);
-                        let htmlMainPath = path.join(dir, "test.js");
-                        let htmlMain = fs.existsSync(htmlMainPath)
-                            ? require(htmlMainPath)
-                            : {};
+                        let expectedHtmlPath = path.join(dir, "expected.html");
+                        let html = fs.readFileSync(expectedHtmlPath, "utf-8");
+                        let browser = createJSDOMModule({
+                            dir: __dirname,
+                            html: "<html><body>" + html + "</body></html>"
+                        });
 
-                        htmlTemplate.render(
-                            htmlMain.templateData || {},
-                            function(err, html) {
-                                if (err) {
-                                    return callback(err);
-                                }
-
-                                let browser = createJSDOMModule({
-                                    dir: __dirname,
-                                    html:
-                                        "<html><body>" + html + "</body></html>"
-                                });
-                                let expectedHtml = domToString(
-                                    browser.window.document.body,
-                                    { childrenOnly: true }
-                                );
-
-                                process.nextTick(function() {
-                                    callback(null, expectedHtml);
-                                });
-                            }
+                        expectedHtml = domToString(
+                            browser.window.document.body,
+                            { childrenOnly: true }
                         );
+
+                        process.nextTick(function() {
+                            callback(null, expectedHtml);
+                        });
                     };
 
                     getExpectedHtml(function(err, expectedHtml) {
