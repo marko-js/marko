@@ -17,8 +17,8 @@ const resolveFrom = require("resolve-from");
 const fixturesDirectory = path.join(__dirname, "./fixtures");
 
 setup();
-autotest("express-4/fixtures", run);
-autotest("express-5/fixtures", run);
+autotest("versions/express-4/fixtures", run);
+autotest("versions/express-5/fixtures", run);
 
 function run({ test, dir, resolve, snapshot }) {
     test(done => {
@@ -97,7 +97,7 @@ function run({ test, dir, resolve, snapshot }) {
 
 function setup() {
     ["express-4", "express-5"].forEach(version => {
-        var versionDirectory = path.join(__dirname, version);
+        var versionDirectory = path.join(__dirname, "versions", version);
         execSync("npm install", { cwd: versionDirectory });
         shell.cp("-R", fixturesDirectory, versionDirectory);
     });
