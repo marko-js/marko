@@ -15,7 +15,7 @@ npm install marko --save
 require("marko/node-require").install();
 
 const http = require("http");
-const server = require("http").createServer();
+const server = http.createServer();
 
 const port = 8080;
 const indexTemplate = require("./index.marko");
