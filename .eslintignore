@@ -13,5 +13,6 @@ input.js
 *.marko.*.js
 *.html.js
 ~vdom.skip
+coverage
 
 node_modules
