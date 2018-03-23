@@ -78,7 +78,7 @@ For some tests, it might be necessary to skip the test in one of these scenarios
 
 #### Adding a failing test case
 
-If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. You can mark a fixture as expected to fail by appending exporting a [`fails`](https://github.com/marko-js/marko/blob/0833ada47eeb5c833a11ef01fcd53ae39b0b7491/test/render/fixtures/spread-attribute-function-object/test.js#L1) property from the fixture.  The value of the `fails` property should be a string with the issue number.  Upon merging a failing test case, a maintainer will update the corresponding issue to add the [`has failing test`](https://github.com/marko-js/marko/labels/has%20failing%20test) label.
+If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. You can mark a fixture as expected to fail by appending exporting a [`fails`](https://github.com/marko-js/marko/blob/0833ada47eeb5c833a11ef01fcd53ae39b0b7491/test/render/fixtures/spread-attribute-function-object/test.js#L1) property from the fixture. The value of the `fails` property should be a string with the issue number. Upon merging a failing test case, a maintainer will update the corresponding issue to add the [`has failing test`](https://github.com/marko-js/marko/labels/has%20failing%20test) label.
 
 In the case that a fixture is used in multiple test scenarios, you can mark the test as failing in a specific scenario by exporting a [`fails_hydrate`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures-deprecated/widget-conditional/test.js#L19) (or similarly named) property from the fixture.
 
@@ -118,7 +118,7 @@ Here's some to get started with:
 * [good first issue](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22): great for new contributors
 * [help wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) issues: won't be tackled in the near future by the maintainers... we need your help!
 * [unassigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
-* [has failing test](https://github.com/marko-js/marko/labels/has%20failing%20test) issues: open issues that already have a failing test case in the repo.  make it pass!
+* [has failing test](https://github.com/marko-js/marko/labels/has%20failing%20test) issues: open issues that already have a failing test case in the repo. make it pass!
 
 ## Reporting bugs and other issues
 
