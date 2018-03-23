@@ -1,24 +1,20 @@
+"use strict";
+
 require("../__util__/test-init");
 
-var path = require("path");
 var autotest = require("../autotest");
-var compiler = require("../../compiler");
-var TEST_NAME = path.basename(__dirname);
 
-describe(TEST_NAME, function() {
-    before(function() {
-        compiler.configure({ output: "html", assumeUpToDate: false });
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(done => {
+        var testFunc = require(resolve("test.js"));
+        if (testFunc.length <= 1) {
+            testFunc(snapshot);
+            done();
+        } else {
+            testFunc(snapshot, done);
+        }
     });
-
-    autotest.scanDir(path.join(__dirname, "./fixtures"), run);
 });
-
-function run(dir, helpers, done) {
-    var testFunc = require(path.join(dir, "test.js"));
-    if (testFunc.length <= 1) {
-        testFunc(helpers);
-        done();
-    } else {
-        testFunc(helpers, done);
-    }
-}

@@ -1,6 +1,6 @@
 var nodePath = require("path");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var templatePath = nodePath.join(__dirname, "template.marko");
     var template = require(templatePath);
     template.render(
@@ -12,7 +12,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
                 return done(err);
             }
 
-            helpers.compare(result.toString());
+            snapshot(result.toString());
             done();
         }
     );

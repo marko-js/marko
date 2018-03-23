@@ -2,4 +2,4 @@ exports.templateData = {
     name: "World"
 };
 
-exports.vdomSkip = true;
+exports.fails_vdom = true;

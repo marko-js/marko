@@ -1,7 +1,7 @@
 var nodePath = require("path");
 var through = require("through");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var output = "";
 
     var stream = through(function write(data) {
@@ -13,7 +13,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var out = runtimeHtml.createWriter(stream);
     out
         .on("end", function() {
-            helpers.compare(output);
+            snapshot(output);
             done();
         })
         .on("error", function(e) {

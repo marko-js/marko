@@ -11,7 +11,7 @@ var fs = require("fs");
 
 const EXTENSIONS = [".marko", ".xml.marko"];
 
-function runTestForExtension(dir, helpers, extension, done) {
+function runTestForExtension(dir, snapshot, extension, done) {
     var templatePath = path.join(dir, `template${extension}`);
 
     if (!fs.existsSync(templatePath)) {
@@ -51,7 +51,7 @@ function runTestForExtension(dir, helpers, extension, done) {
             templatePath,
             Object.assign(compilerOptions, main.compilerOptions)
         );
-        main.checkTemplate(template, helpers);
+        main.checkTemplate(template, snapshot);
         done();
     } else {
         var compiledSrc = compiler.compileFile(
@@ -59,20 +59,21 @@ function runTestForExtension(dir, helpers, extension, done) {
             Object.assign(compilerOptions, main && main.compilerOptions)
         );
         compiledSrc = compiledSrc.replace(/marko\/dist\//g, "marko/src/");
-        helpers.compare(compiledSrc, ".js");
+        snapshot(compiledSrc, ".js");
         done();
     }
 
     return true;
 }
 
-describe("compiler (html)", function() {
-    var autoTestDir = path.join(__dirname, "./fixtures-html");
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
+autotest("fixtures-html", fixture => {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let snapshot = fixture.snapshot;
+    test(done => {
         for (let i = 0; i < EXTENSIONS.length; i++) {
             const extension = EXTENSIONS[i];
-            let complete = runTestForExtension(dir, helpers, extension, done);
+            let complete = runTestForExtension(dir, snapshot, extension, done);
 
             if (complete) {
                 return;

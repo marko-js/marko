@@ -1,4 +1,1 @@
-exports.templateData = {
-    name: '<label for="hello">Hello</label>'
-};
-exports.vdomSkip = true;
+exports.skip_vdom = "keyed elements are not supported in server-rendered vdom";

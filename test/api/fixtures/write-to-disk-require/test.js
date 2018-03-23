@@ -2,7 +2,7 @@ var nodePath = require("path");
 var fs = require("fs");
 var requireHook = require("../../../../node-require");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var compiledPath;
 
     requireHook.install({
@@ -17,7 +17,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
         var template = require(templatePath);
         delete require.cache[templatePath];
         expect(fs.existsSync(compiledPath)).to.equal(true);
-        helpers.compare(template.renderSync({ name: "Frank" }).toString());
+        snapshot(template.renderSync({ name: "Frank" }).toString());
     } finally {
         fs.unlinkSync(compiledPath);
         requireHook.install({

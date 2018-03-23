@@ -35,4 +35,4 @@ module.exports = function(helpers) {
     expect(helpers.targetEl.childNodes[2]).to.equal(nextSibling);
 };
 
-module.exports.skipHydrate = "a split widget cannot re-render when hydrated";
+module.exports.skip_hydrate = "a split widget cannot re-render when hydrated";

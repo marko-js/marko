@@ -1,0 +1,114 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT"
+            },
+            "finished": true
+        }
+    }
+]

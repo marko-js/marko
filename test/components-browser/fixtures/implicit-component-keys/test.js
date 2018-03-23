@@ -21,4 +21,4 @@ module.exports = function(helpers) {
     expect(els[1]).to.equal(elsAfter[0]);
 };
 
-module.exports.skipHydrate = "Implicit components do not get hydrated";
+module.exports.skip_hydrate = "Implicit components do not get hydrated";

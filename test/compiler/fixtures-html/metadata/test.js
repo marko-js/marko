@@ -3,9 +3,9 @@ var oldMeta = config.meta;
 
 config.meta = true;
 
-exports.checkTemplate = function(template, helpers) {
+exports.checkTemplate = function(template, snapshot) {
     var dependencies = template.getDependencies();
     config.meta = oldMeta;
 
-    helpers.compare(JSON.stringify(dependencies, null, 4), ".json");
+    snapshot(JSON.stringify(dependencies, null, 4), ".json");
 };

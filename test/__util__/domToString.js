@@ -112,11 +112,24 @@ function vdomToHTML(node, options) {
     }
 
     function serializeTextHelper(node, indent) {
-        html += indent + JSON.stringify(getNodeValue(node)) + "\n";
+        html +=
+            indent +
+            JSON.stringify(
+                getNodeValue(node)
+                    .replace(/\/~vdom\.skip/g, "")
+                    .replace(/s\d+(-\d+)*/g, "s-normalized")
+            ) +
+            "\n";
     }
 
     function serializeCommentHelper(node, indent) {
-        html += indent + "<!--" + JSON.stringify(getNodeValue(node)) + "-->\n";
+        html +=
+            indent +
+            "<!--" +
+            JSON.stringify(
+                getNodeValue(node).replace(/s\d+(-\d+)*/g, "s-normalized")
+            ) +
+            "-->\n";
     }
 
     if (

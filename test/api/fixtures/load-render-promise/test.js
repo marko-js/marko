@@ -2,7 +2,7 @@
 
 const nodePath = require("path");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     let template = marko.load(nodePath.join(__dirname, "template.marko"));
 
     template
@@ -10,7 +10,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
             name: "John"
         })
         .then(result => {
-            helpers.compare(result.toString());
+            snapshot(result.toString());
             done();
         })
         .catch(err => {

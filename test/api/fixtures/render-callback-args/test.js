@@ -1,10 +1,10 @@
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var template = require("./template.marko");
     var data = {
         name: "John"
     };
     template.renderToString(data, function(error, html, out) {
-        helpers.compare(html);
+        snapshot(html);
         expect(out != null).to.equal(true);
         done();
     });

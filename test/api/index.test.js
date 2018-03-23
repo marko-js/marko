@@ -6,29 +6,30 @@ var chai = require("chai");
 chai.config.includeStack = true;
 
 var expect = require("chai").expect;
-var nodePath = require("path");
 require("../../compiler");
 var autotest = require("../autotest");
 var marko = require("../../");
 var markoCompiler = require("../../compiler");
 
-describe("api", function() {
-    autotest.scanDir(nodePath.join(__dirname, "./fixtures"), function run(
-        dir,
-        helpers,
-        done
-    ) {
-        var test = require(nodePath.join(dir, "test.js"));
-        test.check(marko, markoCompiler, expect, helpers, done);
-    });
-
-    describe("deprecated", function() {
-        autotest.scanDir(
-            nodePath.join(__dirname, "./fixtures-deprecated"),
-            function run(dir, helpers, done) {
-                var test = require(nodePath.join(dir, "test.js"));
-                test.check(marko, markoCompiler, expect, done);
-            }
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(done => {
+        require(resolve("test.js")).check(
+            marko,
+            markoCompiler,
+            expect,
+            snapshot,
+            done
         );
+    });
+});
+
+autotest("fixtures-deprecated", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    test(done => {
+        require(resolve("test.js")).check(marko, markoCompiler, expect, done);
     });
 });

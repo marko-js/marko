@@ -68,6 +68,7 @@
         "benchmark": "^2.1.1",
         "bluebird": "^3.4.7",
         "builtins": "^2.0.0",
+        "caller-path": "^2.0.0",
         "chai": "^3.3.0",
         "codecov": "^2.3.0",
         "coveralls": "^2.13.1",

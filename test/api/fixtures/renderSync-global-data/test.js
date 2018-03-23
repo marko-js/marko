@@ -1,6 +1,6 @@
 var nodePath = require("path");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var template = marko.load(nodePath.join(__dirname, "template.marko"));
     var data = {
         name: "John",
@@ -9,6 +9,6 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
         }
     };
     var result = template.renderSync(data);
-    helpers.compare(result.toString());
+    snapshot(result.toString());
     done();
 };

@@ -1,10 +1,11 @@
-require("../__util__/test-init");
+"use strict";
 
-var path = require("path");
+require("../__util__/test-init");
 
 var fs = require("fs");
 var domToString = require("../__util__/domToString");
 var createJSDOMModule = require("../__util__/create-jsdom-module");
+var autotest = require("../autotest");
 
 var document = createJSDOMModule({
     dir: __dirname,
@@ -50,24 +51,23 @@ var vdomHelpers = {
     virtualizeElement: VElement.___virtualize
 };
 
-describe("vdom-create", () => {
-    require("../autotest").scanDir(path.join(__dirname, "./fixtures"), function(
-        dir,
-        helpers,
-        done
-    ) {
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(() => {
+        var helpers = {};
         helpers.vdom = vdomHelpers;
         helpers.document = document;
 
-        var mainPath = path.join(dir, "index.js");
+        var mainPath = resolve("index.js");
         if (fs.existsSync(mainPath)) {
             var main = require(mainPath);
             var rootNode = main(helpers);
 
             var rootNodeHTML =
                 rootNode != null ? domToString(rootNode) : "(null)";
-            helpers.compare(rootNodeHTML, ".html");
+            snapshot(rootNodeHTML, ".html");
         }
-        done();
     });
 });

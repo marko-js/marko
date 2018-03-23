@@ -23,16 +23,17 @@ function createCodeWriter(context) {
     return new CodeWriter(context, builder);
 }
 
-describe("compiler/codegen", function() {
-    var autoTestDir = path.join(__dirname, "./fixtures");
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var main = require(path.join(dir, "index.js"));
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(done => {
+        var main = require(resolve("index.js"));
         var generateCodeFunc = main;
 
         var context = new CompileContext(
             "dummy",
-            path.join(dir, "dummy.marko"),
+            resolve("dummy.marko"),
             builder
         );
         var codegen = createCodeGenerator(context);
@@ -46,16 +47,18 @@ describe("compiler/codegen", function() {
         var actualSrc = codeWriter.getCode();
         actualSrc = actualSrc.replace(/marko\/dist\//g, "marko/src/");
 
-        helpers.compare(actualSrc, ".js");
+        snapshot(actualSrc, { ext: ".js" });
         done();
     });
+});
 
+describe("codegen", function() {
     it("should not allow a return outside a function", function() {
         let builder = compiler.createBuilder();
 
         var context = new CompileContext(
             "dummy",
-            path.join(autoTestDir, "dummy.marko"),
+            path.join(__dirname, "dummy.marko"),
             builder
         );
         var codegen = createCodeGenerator(context);

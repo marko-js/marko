@@ -1,50 +1,34 @@
 "use strict";
 require("../__util__/test-init");
 
-var path = require("path");
 var autotest = require("../autotest");
 var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
 var ssrTemplate = require("./template.marko");
-var TEST_NAME = path.basename(__dirname);
-var renderedCache = {};
+var hydrateComponentPath = require.resolve("./template.component-browser.js");
+var browserHelpersPath = require.resolve("../__util__/BrowserHelpers");
+var testTargetHTML = '<div id="testsTarget"></div><div></div>';
+var browser = createJSDOMModule(__dirname, testTargetHTML);
+var BrowserHelpers = browser.require(browserHelpersPath);
 
-describe(TEST_NAME, function() {
-    var browser = createJSDOMModule(
-        __dirname,
-        '<div id="testsTarget"></div><div></div>'
-    );
-    var BrowserHelpers = browser.require("../__util__/BrowserHelpers");
-    var helpers;
+autotest("fixtures", {
+    client: runClientTest,
+    hydrate: runHydrateTest
+});
 
-    beforeEach(function() {
-        helpers = new BrowserHelpers();
-    });
+autotest("fixtures-deprecated", {
+    client: runClientTest,
+    hydrate: runHydrateTest
+});
 
-    afterEach(function() {
-        helpers.instances.forEach(function(instance) {
-            instance.destroy();
-        });
-
-        helpers.targetEl.innerHTML = "";
-    });
-
-    after(function() {
-        browser.window.close();
-    });
-
-    autotest.scanDir(path.join(__dirname, "./fixtures"), runBrowserRender);
-
-    describe("deprecated", function() {
-        autotest.scanDir(
-            path.join(__dirname, "./fixtures-deprecated"),
-            runBrowserRender
-        );
-    });
-
-    function runBrowserRender(dir, _, done) {
-        var testFile = path.join(dir, "test.js");
-        var testFunc = browser.require(testFile);
-        var isAsync = testFunc.length > 1;
+function runClientTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
+    test(done => {
+        let helpers = new BrowserHelpers();
+        let testFile = resolve("test.js");
+        let testFunc = browser.require(testFile);
+        let isAsync = testFunc.length > 1;
 
         if (isAsync) {
             testFunc(helpers, cleanupAndFinish);
@@ -55,40 +39,22 @@ describe(TEST_NAME, function() {
 
         function cleanupAndFinish(err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.rendered;
-
-            if (err) {
-                done(err);
-            } else {
-                done();
-            }
+            context.rendered = helpers.rendered;
+            helpers.instances.forEach(instance => instance.destroy());
+            helpers.targetEl.innerHTML = "";
+            done(err);
         }
-    }
-});
-
-describe(TEST_NAME + " (hydrated)", function() {
-    var hydrateOptions = {
-        skip: (_, dir) => require(path.join(dir, "test.js")).skipHydrate,
-        fails: (_, dir) => require(path.join(dir, "test.js")).failHydrate,
-        file: (_, dir) => path.join(dir, "test.js")
-    };
-
-    autotest.scanDir(
-        path.join(__dirname, "./fixtures"),
-        runServerRender,
-        hydrateOptions
-    );
-
-    describe("deprecated", function() {
-        autotest.scanDir(
-            path.join(__dirname, "./fixtures-deprecated"),
-            runServerRender,
-            hydrateOptions
-        );
     });
+}
 
-    function runServerRender(dir, _, done) {
-        var components = renderedCache[dir];
+function runHydrateTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
+    test(done => {
+        var components = context.rendered;
+        if (!components)
+            throw new Error("No components rendered by client version of test");
         var $global = components.reduce(
             ($g, c) => Object.assign($g, c.$global),
             {}
@@ -110,7 +76,7 @@ describe(TEST_NAME + " (hydrated)", function() {
                                 )
                             );
                         var rootComponent = browser.require(
-                            require.resolve("./template.component-browser.js")
+                            hydrateComponentPath
                         );
                         marko.register(ssrTemplate.meta.id, rootComponent);
                         components.forEach(function(def) {
@@ -123,11 +89,9 @@ describe(TEST_NAME + " (hydrated)", function() {
                         });
                     }
                 });
-                var testFile = path.join(dir, "test.js");
+                var testFile = resolve("test.js");
                 var testFunc = browser.require(testFile);
-                var BrowserHelpers = browser.require(
-                    "../__util__/BrowserHelpers"
-                );
+                var BrowserHelpers = browser.require(browserHelpersPath);
                 var helpers = new BrowserHelpers();
                 var isAsync = testFunc.length > 1;
                 var curInstance = 0;
@@ -147,5 +111,5 @@ describe(TEST_NAME + " (hydrated)", function() {
                 }
             })
             .catch(done);
-    }
-});
+    });
+}

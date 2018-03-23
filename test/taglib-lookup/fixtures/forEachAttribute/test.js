@@ -1,4 +1,4 @@
-exports.check = function(markoCompiler, expect, helpers) {
+exports.check = function(markoCompiler, expect, snapshot) {
     var taglibLookup = markoCompiler.taglibLookup;
     var lookup = taglibLookup.buildLookup(__dirname);
 
@@ -8,5 +8,5 @@ exports.check = function(markoCompiler, expect, helpers) {
         attrNames.push(attr.name);
     });
 
-    helpers.compare(attrNames, ".json");
+    snapshot(attrNames, ".json");
 };
