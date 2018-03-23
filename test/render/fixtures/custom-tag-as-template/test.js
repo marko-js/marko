@@ -1,3 +1,3 @@
 exports.templateData = {
-    "title": "My Page Title"
+    title: "My Page Title"
 };

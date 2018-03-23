@@ -1,11 +1,11 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
-    var fooComponent = component.getComponent('foo');
-    expect(fooComponent.el.className).to.equal('foo');
+    var fooComponent = component.getComponent("foo");
+    expect(fooComponent.el.className).to.equal("foo");
 
-    var link = component.getEl('link');
-    expect(link.nodeName).to.equal('A');
+    var link = component.getEl("link");
+    expect(link.nodeName).to.equal("A");
 };

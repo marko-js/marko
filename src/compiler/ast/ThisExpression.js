@@ -1,22 +1,22 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ThisExpression extends Node {
-    constructor(def) {
-        super('ThisExpression');
+    constructor() {
+        super("ThisExpression");
     }
 
-    generateCode(codegen) {
+    generateCode() {
         return this;
     }
 
     writeCode(writer) {
-        writer.write('this');
+        writer.write("this");
     }
 
     toString() {
-        return 'this';
+        return "this";
     }
 }
 

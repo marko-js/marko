@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class Else extends Node {
     constructor(def) {
-        super('Else');
+        super("Else");
         this.body = this.makeContainer(def.body);
         this.matched = false;
     }
 
     generateCode(codegen) {
         if (!this.matched) {
-            codegen.addError('Unmatched else statement');
+            codegen.addError("Unmatched else statement");
             return;
         }
 
@@ -22,7 +22,7 @@ class Else extends Node {
     writeCode(writer) {
         var body = this.body;
         writer.writeBlock(body);
-        writer.write('\n');
+        writer.write("\n");
     }
 
     walk(walker) {

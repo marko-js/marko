@@ -10,7 +10,7 @@ To get started let's look at template-based tags which allow you to include anot
 
 ### Discovering tags
 
-When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/`. It then attempts to load the children of these directories as custom tags.  The children can be a Marko template or a directory with an `index.marko` template (and other supporting files).
+When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/`. It then attempts to load the children of these directories as custom tags. The children can be a Marko template or a directory with an `index.marko` template (and other supporting files).
 
 ```dir
 components/
@@ -28,9 +28,9 @@ pages/
 
 When compiling the template at `pages/home/index.marko`, the following tags would be found:
 
-- `<app-header>`
-- `<app-footer>`
-- `<home-banner>`
+* `<app-header>`
+* `<app-footer>`
+* `<home-banner>`
 
 So now, instead of needing to specify a path:
 
@@ -39,19 +39,20 @@ So now, instead of needing to specify a path:
 ```
 
 You can just use the tag name:
+
 ```marko
 <app-header/>
 ```
 
 ## Using tags from npm
 
-Using custom tags from `npm` is easy.  Ensure that the package is installed and listed in your `package.json` dependencies:
+Using custom tags from `npm` is easy. Ensure that the package is installed and listed in your `package.json` dependencies:
 
 ```
 npm install --save some-third-party-package
 ```
 
-And that's it.  Marko will now discover these tags when compiling your templates and you can simply use them in your templates:
+And that's it. Marko will now discover these tags when compiling your templates and you can simply use them in your templates:
 
 ```marko
 <div>
@@ -67,52 +68,51 @@ As an example, given a template at path `/my-project/src/pages/login/template.ma
 
 ```json
 {
-    "name": "my-package",
-    "dependencies": {
-        "foo": "1.0.0"
-    },
-    "devDependencies": {
-        "bar": "1.0.0"
-    }
+  "name": "my-package",
+  "dependencies": {
+    "foo": "1.0.0"
+  },
+  "devDependencies": {
+    "bar": "1.0.0"
+  }
 }
 ```
 
 The search path will be the following:
 
-1. `/my-project/src/pages/login/marko.json`
-2. `/my-project/src/pages/marko.json`
-3. `/my-project/src/marko.json`
-4. `/my-project/marko.json`
-5. `/my-project/node_modules/foo/marko.json`
-6. `/my-project/node_modules/bar/marko.json`
+1.  `/my-project/src/pages/login/marko.json`
+2.  `/my-project/src/pages/marko.json`
+3.  `/my-project/src/marko.json`
+4.  `/my-project/marko.json`
+5.  `/my-project/node_modules/foo/marko.json`
+6.  `/my-project/node_modules/bar/marko.json`
 
 ### Hiding taglibs
 
-If you wish to hide particular folder and/or node_module from discovery of marko.json, you can exclude certain directories or packages.  This is used primarily for testing.
+If you wish to hide particular folder and/or node_module from discovery of marko.json, you can exclude certain directories or packages. This is used primarily for testing.
 
 ```javascript
-    require('marko/compiler').taglibFinder.excludeDir(dirPath);
-    // Where 'dirPath' is an absolute path to the folder containing marko.json
+require("marko/compiler").taglibFinder.excludeDir(dirPath);
+// Where 'dirPath' is an absolute path to the folder containing marko.json
 
-    require('marko/compiler').taglibFinder.excludePackage(packageName);
-    // Where 'packageName' is the name of the node_module containing marko.json
+require("marko/compiler").taglibFinder.excludePackage(packageName);
+// Where 'packageName' is the name of the node_module containing marko.json
 ```
 
 These statements should be used before any rendering begins in the process.
-
 
 ### marko.json syntax
 
 ```json
 {
-    "tags": {
-        "my-hello": {
-            "renderer": "./hello-renderer",
-            "attributes": {
-                "name": "string"
-            }
-        }
+  "tags": {
+    "my-hello": {
+      "renderer": "./hello-renderer",
+      "attributes": {
+        "name": "string"
+      }
     }
+  }
 }
 ```
 
@@ -120,10 +120,10 @@ Marko also supports a short-hand for declaring tags and attributes. The followin
 
 ```json
 {
-    "<my-hello>": {
-        "renderer": "./hello-renderer",
-        "@name": "string"
-    }
+  "<my-hello>": {
+    "renderer": "./hello-renderer",
+    "@name": "string"
+  }
 }
 ```
 
@@ -133,18 +133,18 @@ Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `mark
 
 ```json
 {
-    "<my-hello>": {
-        "renderer": "./hello-renderer",
-        "@name": "string"
-    },
-    "<my-foo>": {
-        "renderer": "./foo-renderer",
-        "@*": "string"
-    },
-    "<my-bar>": "./path/to/my-bar/marko-tag.json",
-    "<my-baz>": {
-        "template": "./baz-template.marko"
-    },
+  "<my-hello>": {
+    "renderer": "./hello-renderer",
+    "@name": "string"
+  },
+  "<my-foo>": {
+    "renderer": "./foo-renderer",
+    "@*": "string"
+  },
+  "<my-bar>": "./path/to/my-bar/marko-tag.json",
+  "<my-baz>": {
+    "template": "./baz-template.marko"
+  }
 }
 ```
 
@@ -186,11 +186,11 @@ Above, we tell Marko this attribute name contains a pattern so that it will allo
 
 ### Custom directory scanning
 
-You can configure the `tags-dir` value in your `marko.json` to configure the name of the directory that marko scans in for custom tags.  As described above, by default it uses the name `components/`.  You can override this at a directory level and give a path to another directory to scan:
+You can configure the `tags-dir` value in your `marko.json` to configure the name of the directory that marko scans in for custom tags. As described above, by default it uses the name `components/`. You can override this at a directory level and give a path to another directory to scan:
 
 ```json
 {
-    "tags-dir": "./ui-components"
+  "tags-dir": "./ui-components"
 }
 ```
 
@@ -198,7 +198,7 @@ You can configure the `tags-dir` value in your `marko.json` to configure the nam
 
 ```json
 {
-    "tags-dir": ["./ui-components", "./components"]
+  "tags-dir": ["./ui-components", "./components"]
 }
 ```
 

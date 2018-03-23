@@ -52,7 +52,8 @@ VNode.prototype = {
         if (this.___isTextArea === true) {
             if (child.___Text) {
                 var childValue = child.___nodeValue;
-                this.___valueInternal = (this.___valueInternal || '') + childValue;
+                this.___valueInternal =
+                    (this.___valueInternal || "") + childValue;
             } else {
                 throw TypeError();
             }
@@ -74,13 +75,15 @@ VNode.prototype = {
     },
 
     ___finishChild: function finishChild() {
-        if (this.___childCount === this.___finalChildCount && this.___parentNode) {
+        if (
+            this.___childCount === this.___finalChildCount &&
+            this.___parentNode
+        ) {
             return this.___parentNode.___finishChild();
         } else {
             return this;
         }
-    },
-
+    }
 
     // ,toJSON: function() {
     //     var clone = Object.assign({

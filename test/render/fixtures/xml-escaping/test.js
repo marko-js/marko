@@ -1,4 +1,4 @@
 exports.templateData = {
-    "name": "<Patrick>",
-    "welcome": "<span>Welcome</span>"
+    name: "<Patrick>",
+    welcome: "<span>Welcome</span>"
 };

@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var ok = require('assert').ok;
+var Node = require("./Node");
+var ok = require("assert").ok;
 
 class Macro extends Node {
     constructor(def) {
-        super('Macro');
+        super("Macro");
         this.name = def.name;
         this.params = def.params;
         this.body = this.makeContainer(def.body);

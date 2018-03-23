@@ -1,5 +1,5 @@
 function Widget(config) {
-    this.name = 'app-widget-config';
+    this.name = "app-widget-config";
     this.config = config;
 }
 

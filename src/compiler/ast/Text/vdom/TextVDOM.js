@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-const Node = require('../../Node');
-const Literal = require('../../Literal');
-const vdomUtil = require('../../../util/vdom');
+const Node = require("../../Node");
+const Literal = require("../../Literal");
+const vdomUtil = require("../../../util/vdom");
 
 class TextVDOM extends Node {
     constructor(def) {
-        super('TextVDOM');
+        super("TextVDOM");
         this.arguments = [def.argument];
         this.isStatic = def.isStatic;
         this.escape = def.escape !== false;
@@ -27,7 +27,7 @@ class TextVDOM extends Node {
     _append(appendArgument) {
         let args = this.arguments;
         let len = args.length;
-        let last = args[len-1];
+        let last = args[len - 1];
 
         if (last instanceof Literal && appendArgument instanceof Literal) {
             last.value += appendArgument.value;
@@ -59,16 +59,16 @@ class TextVDOM extends Node {
         let args = this.arguments;
         let escape = this.escape;
 
-        var funcName = escape ? 't' : 'h';
+        var funcName = escape ? "t" : "h";
 
         function writeTextArgs() {
-            writer.write('(');
+            writer.write("(");
 
-            for (let i=0, len=args.length; i<len; i++) {
+            for (let i = 0, len = args.length; i < len; i++) {
                 let arg = args[i];
 
                 if (i !== 0) {
-                    writer.write(' +\n');
+                    writer.write(" +\n");
                     writer.writeLineIndent();
                     writer.writeIndent();
                 }
@@ -76,16 +76,16 @@ class TextVDOM extends Node {
                 writer.write(arg);
             }
 
-            writer.write(')');
+            writer.write(")");
         }
 
         if (this.isChild) {
-            writer.write('.');
+            writer.write(".");
             writer.write(builder.identifier(funcName));
         } else if (this.isStatic && this.createTextId) {
             writer.write(this.createTextId);
         } else {
-            writer.write('out.');
+            writer.write("out.");
             writer.write(builder.identifier(funcName));
         }
 

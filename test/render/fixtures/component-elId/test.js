@@ -1,4 +1,4 @@
 exports.templateData = {
-    "name": "World"
+    name: "World"
 };
-exports.vdomSkip = true;
+exports.skip_vdom = "keyed elements are not supported in server-rendered vdom";

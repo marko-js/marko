@@ -1,7 +1,7 @@
 exports.templateData = {
     header: {
-        renderBody: function (out) {
-            out.write('Header content!');
+        renderBody: function(out) {
+            out.write("Header content!");
         }
     }
 };

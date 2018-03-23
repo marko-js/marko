@@ -1,11 +1,11 @@
 module.exports = {
     onInput: function() {
         this.state = {
-            type: 'state',
-            name: 'foo'
+            type: "state",
+            name: "foo"
         };
-        this.type = 'config';
-        this.name = 'foo';
+        this.type = "config";
+        this.name = "foo";
     },
 
     onMount: function() {

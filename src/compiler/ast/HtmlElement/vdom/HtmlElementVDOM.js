@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const Node = require('../../Node');
-const vdomUtil = require('../../../util/vdom');
+const Node = require("../../Node");
+const vdomUtil = require("../../../util/vdom");
 
 const FLAG_IS_SVG = 1;
 const FLAG_IS_TEXTAREA = 2;
@@ -22,7 +22,7 @@ function finalizeCreateArgs(createArgs, builder) {
     var length = createArgs.length;
     var lastArg;
 
-    for (var i=length-1; i>=0; i--) {
+    for (var i = length - 1; i >= 0; i--) {
         var arg = createArgs[i];
         if (arg) {
             lastArg = arg;
@@ -34,7 +34,6 @@ function finalizeCreateArgs(createArgs, builder) {
                 } else {
                     createArgs[i] = builder.literalNull();
                 }
-
             } else {
                 length--;
             }
@@ -46,25 +45,25 @@ function finalizeCreateArgs(createArgs, builder) {
 }
 
 const MAYBE_SVG = {
-    'a': true,
-    'script': true,
-    'style': true
+    a: true,
+    script: true,
+    style: true
 };
 
 const SIMPLE_ATTRS = {
-    'class': true,
-    'style': true,
-    'id': true
+    class: true,
+    style: true,
+    id: true
 };
 
 function isStaticProperties(properties) {
     for (var k in properties) {
         var v = properties[k];
-        if (v.type !== 'Literal') {
+        if (v.type !== "Literal") {
             return false;
         }
 
-        if (typeof v.value === 'object') {
+        if (typeof v.value === "object") {
             return false;
         }
     }
@@ -74,7 +73,7 @@ function isStaticProperties(properties) {
 
 class HtmlElementVDOM extends Node {
     constructor(def) {
-        super('HtmlElementVDOM');
+        super("HtmlElementVDOM");
         this.tagName = def.tagName;
         this.isStatic = def.isStatic;
         this.isAttrsStatic = def.isAttrsStatic;
@@ -90,8 +89,8 @@ class HtmlElementVDOM extends Node {
         this.isTextArea = false;
         this.hasAttributes = false;
         this.hasSimpleAttrs = false; // This will be set to true if the HTML element
-                                     // only attributes in the following set:
-                                     // ['id', 'style', 'class']
+        // only attributes in the following set:
+        // ['id', 'style', 'class']
 
         this.isChild = false;
         this.createElementId = undefined;
@@ -107,25 +106,27 @@ class HtmlElementVDOM extends Node {
 
         let tagName = this.tagName;
 
-        if (tagName.type === 'Literal' && typeof tagName.value === 'string') {
+        if (tagName.type === "Literal" && typeof tagName.value === "string") {
             let tagDef = context.getTagDef(tagName.value);
             if (tagDef) {
-                if (tagDef.htmlType  === 'svg') {
+                if (tagDef.htmlType === "svg") {
                     this.isSVG = true;
                 } else {
-                    if (MAYBE_SVG[tagName.value] && context.isFlagSet('SVG')) {
+                    if (MAYBE_SVG[tagName.value] && context.isFlagSet("SVG")) {
                         this.isSVG = true;
                     } else {
-                        this.tagName = tagName = builder.literal(tagName.value.toUpperCase());
+                        this.tagName = tagName = builder.literal(
+                            tagName.value.toUpperCase()
+                        );
 
-                        if (tagName.value === 'TEXTAREA') {
+                        if (tagName.value === "TEXTAREA") {
                             this.isTextArea = true;
                         }
                     }
                 }
             }
             this.isLiteralTag = true;
-        } else if (context.isFlagSet('SVG')) {
+        } else if (context.isFlagSet("SVG")) {
             this.isSVG = true;
         }
 
@@ -136,7 +137,8 @@ class HtmlElementVDOM extends Node {
         let attributesArg = null;
 
         var hasNamedAttributes = false;
-        var hasDynamicAttributes = dynamicAttributes != null && dynamicAttributes.length !== 0;
+        var hasDynamicAttributes =
+            dynamicAttributes != null && dynamicAttributes.length !== 0;
         var hasSpreadAttributes = false;
 
         var hasSimpleAttrs = true;
@@ -149,11 +151,14 @@ class HtmlElementVDOM extends Node {
 
         if (attributes != null && attributes.length !== 0) {
             let explicitAttrs = null;
-            let addAttrs = (expr) => {
+            let addAttrs = expr => {
                 if (!attributesArg) {
                     attributesArg = expr;
                 } else {
-                    attributesArg = builder.functionCall(context.helper('merge'), [expr, attributesArg]);
+                    attributesArg = builder.functionCall(
+                        context.helper("merge"),
+                        [expr, attributesArg]
+                    );
                 }
             };
             let addAttr = function(name, value) {
@@ -167,21 +172,24 @@ class HtmlElementVDOM extends Node {
                     explicitAttrs = {};
                 }
 
-                if (value.type === 'Literal') {
+                if (value.type === "Literal") {
                     let literalValue = value.value;
                     if (literalValue == null || literalValue === false) {
                         return;
-                    } else if (typeof literalValue === 'number') {
+                    } else if (typeof literalValue === "number") {
                         value.value = literalValue.toString();
                     }
-                } else if (value.type === 'AttributePlaceholder') {
-                    value = codegen.builder.functionCall(context.helper('str'), [value]);
+                } else if (value.type === "AttributePlaceholder") {
+                    value = codegen.builder.functionCall(
+                        context.helper("str"),
+                        [value]
+                    );
                 }
 
                 explicitAttrs[name] = value;
             };
 
-            attributes.forEach((attr) => {
+            attributes.forEach(attr => {
                 // deprecated
                 if (!attr.name && !attr.spread) {
                     return;
@@ -212,9 +220,9 @@ class HtmlElementVDOM extends Node {
 
         // deprecated
         if (hasDynamicAttributes) {
-            dynamicAttributes.forEach((attrs) => {
+            dynamicAttributes.forEach(attrs => {
                 if (attributesArg) {
-                    let mergeVar = context.helper('merge');
+                    let mergeVar = context.helper("merge");
                     attributesArg = builder.functionCall(mergeVar, [
                         attributesArg, // Input props from the attributes take precedence
                         attrs
@@ -225,7 +233,13 @@ class HtmlElementVDOM extends Node {
             });
         }
 
-        if (!this.isAttrsStatic && hasNamedAttributes && hasSimpleAttrs && !hasDynamicAttributes && !hasSpreadAttributes) {
+        if (
+            !this.isAttrsStatic &&
+            hasNamedAttributes &&
+            hasSimpleAttrs &&
+            !hasDynamicAttributes &&
+            !hasSpreadAttributes
+        ) {
             this.hasSimpleAttrs = true;
         }
 
@@ -268,10 +282,9 @@ class HtmlElementVDOM extends Node {
             createArgs[INDEX_KEY] = key;
 
             if (!this.isStatic) {
-                createArgs[INDEX_COMPONENT] = builder.identifier('component');
+                createArgs[INDEX_COMPONENT] = builder.identifier("component");
             }
         }
-
 
         if (childCount != null) {
             createArgs[INDEX_CHILD_COUNT] = builder.literal(childCount);
@@ -301,7 +314,11 @@ class HtmlElementVDOM extends Node {
 
         let properties = this.properties;
 
-        if (this.properties && properties.type === 'Literal' && Object.keys(properties.value).length === 0) {
+        if (
+            this.properties &&
+            properties.type === "Literal" &&
+            Object.keys(properties.value).length === 0
+        ) {
             properties = null;
         }
         if (properties) {
@@ -315,35 +332,42 @@ class HtmlElementVDOM extends Node {
         let funcCall;
 
         if (this.isChild) {
-            writer.write('.');
+            writer.write(".");
 
             funcCall = builder.functionCall(
-                builder.identifier(this.isLiteralTag || this.isSVG ? 'e' : 'ed'),
-                createArgs);
+                builder.identifier(
+                    this.isLiteralTag || this.isSVG ? "e" : "ed"
+                ),
+                createArgs
+            );
         } else if (this.isStatic && this.createElementId) {
-            funcCall = builder.functionCall(
-                this.createElementId,
-                createArgs);
+            funcCall = builder.functionCall(this.createElementId, createArgs);
         } else if (this.isHtmlOnly) {
-            writer.write('out.');
+            writer.write("out.");
             funcCall = builder.functionCall(
-                builder.identifier(this.isLiteralTag || this.isSVG ? 'e' : 'ed'),
-                createArgs);
+                builder.identifier(
+                    this.isLiteralTag || this.isSVG ? "e" : "ed"
+                ),
+                createArgs
+            );
         } else {
-            writer.write('out.');
+            writer.write("out.");
             funcCall = builder.functionCall(
-                builder.identifier(this.isLiteralTag || this.isSVG ? 'be' : 'bed'),
-                createArgs);
+                builder.identifier(
+                    this.isLiteralTag || this.isSVG ? "be" : "bed"
+                ),
+                createArgs
+            );
         }
 
         writer.write(funcCall);
 
         if (body && body.length) {
             writer.incIndent();
-            for(let i=0; i<body.length; i++) {
+            for (let i = 0; i < body.length; i++) {
                 let child = body[i];
                 child.isChild = true;
-                writer.write('\n');
+                writer.write("\n");
                 writer.writeLineIndent();
                 writer.write(child);
             }
@@ -356,13 +380,18 @@ class HtmlElementVDOM extends Node {
     }
 
     finalizeProperties(context) {
-        if (this.properties.type === 'Literal' && isStaticProperties(this.properties.value)) {
+        if (
+            this.properties.type === "Literal" &&
+            isStaticProperties(this.properties.value)
+        ) {
             if (Object.keys(this.properties.value).length === 0) {
                 this.properties = null;
             } else {
-                this.properties = context.addStaticVar('props', this.properties);
+                this.properties = context.addStaticVar(
+                    "props",
+                    this.properties
+                );
             }
-
         }
     }
 }

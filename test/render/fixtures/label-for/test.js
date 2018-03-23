@@ -1,3 +1,3 @@
 exports.templateData = {
-    "name": "<label for=\"hello\">Hello</label>"
+    name: '<label for="hello">Hello</label>'
 };

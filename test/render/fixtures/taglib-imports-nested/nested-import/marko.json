@@ -1,5 +1,3 @@
 {
-  "taglib-imports": [
-    "./components/marko.json"
-  ]
+    "taglib-imports": ["./components/marko.json"]
 }

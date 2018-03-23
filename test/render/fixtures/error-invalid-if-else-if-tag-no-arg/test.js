@@ -1,8 +1,8 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
 exports.templateData = {};
 
-exports.checkError = function (e) {
+exports.checkError = function(e) {
     var message = e.toString();
-    expect(message).to.contain('Invalid <else-if> tag. Argument is missing');
+    expect(message).to.contain("Invalid <else-if> tag. Argument is missing");
 };

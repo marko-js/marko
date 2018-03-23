@@ -1,26 +1,26 @@
-var pubsub = require('../../../../../__util__/pubsub');
+var pubsub = require("../../../../../__util__/pubsub");
 
 module.exports = {
-    onInput: function (input) {
+    onInput: function(input) {
         this.name = input.name;
         this.channel = input.channel;
     },
 
-    onMount: function () {
+    onMount: function() {
         var self = this;
 
         if (this.channel) {
-            pubsub.channel(this.channel).on('emitTestEvent2', function () {
+            pubsub.channel(this.channel).on("emitTestEvent2", function() {
                 self.emitTestEvent2();
             });
         }
     },
 
-    emitTestEvent1: function () {
-        this.emit('testEvent', 'a', 'b');
+    emitTestEvent1: function() {
+        this.emit("testEvent", "a", "b");
     },
 
-    emitTestEvent2: function () {
-        this.emit('testEvent');
+    emitTestEvent2: function() {
+        this.emit("testEvent");
     }
 };

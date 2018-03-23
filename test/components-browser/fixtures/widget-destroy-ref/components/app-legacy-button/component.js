@@ -1,5 +1,5 @@
 module.exports = {
-    onMount: function () {
-        this.name = 'app-legacy-button';
+    onMount: function() {
+        this.name = "app-legacy-button";
     }
 };

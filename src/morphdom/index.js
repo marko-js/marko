@@ -1,12 +1,12 @@
-'use strict';
-var specialElHandlers = require('./specialElHandlers');
-var componentsUtil = require('../components/util');
+"use strict";
+var specialElHandlers = require("./specialElHandlers");
+var componentsUtil = require("../components/util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
-var VElement = require('../runtime/vdom/vdom').___VElement;
-var virtualizeElement =  VElement.___virtualize;
+var VElement = require("../runtime/vdom/vdom").___VElement;
+var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
-var eventDelegation = require('../components/event-delegation');
+var eventDelegation = require("../components/event-delegation");
 
 var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
@@ -34,17 +34,20 @@ function insertBefore(node, referenceNode, parentNode) {
 }
 
 function insertAfter(node, referenceNode, parentNode) {
-    return parentNode.insertBefore(node, referenceNode && referenceNode.nextSibling);
+    return parentNode.insertBefore(
+        node,
+        referenceNode && referenceNode.nextSibling
+    );
 }
 
 function morphdom(
-        parentNode,
-        startNode,
-        endNode,
-        toNode,
-        doc,
-        componentsContext
-    ) {
+    parentNode,
+    startNode,
+    endNode,
+    toNode,
+    doc,
+    componentsContext
+) {
     var globalComponentsContext;
     var isRerenderInBrowser = false;
 
@@ -53,11 +56,17 @@ function morphdom(
         isRerenderInBrowser = globalComponentsContext.___isRerenderInBrowser;
     }
 
-    function createMarkerComment(referenceNode, parentNode) {
-        return doc.createComment('$marko');
+    function createMarkerComment() {
+        return doc.createComment("$marko");
     }
 
-    function insertVirtualNodeBefore(vNode, key, referenceEl, parentEl, component) {
+    function insertVirtualNodeBefore(
+        vNode,
+        key,
+        referenceEl,
+        parentEl,
+        component
+    ) {
         var realNode = vNode.___actualize(doc);
         insertBefore(realNode, referenceEl, parentEl);
 
@@ -73,8 +82,17 @@ function morphdom(
         onNodeAdded(realNode, componentsContext);
     }
 
-    function insertVirtualComponentBefore(vComponent, referenceNode, referenceNodeParentEl, component) {
-        component.___startNode = component.___endNode = insertBefore(createMarkerComment(), referenceNode, referenceNodeParentEl);
+    function insertVirtualComponentBefore(
+        vComponent,
+        referenceNode,
+        referenceNodeParentEl,
+        component
+    ) {
+        component.___startNode = component.___endNode = insertBefore(
+            createMarkerComment(),
+            referenceNode,
+            referenceNodeParentEl
+        );
         morphComponent(referenceNodeParentEl, component, vComponent);
     }
 
@@ -87,7 +105,7 @@ function morphdom(
         // a single text node
         var isPrevText = vChild.___nodeType === TEXT_NODE;
 
-        while((vChild = vChild.___nextSibling)) {
+        while ((vChild = vChild.___nextSibling)) {
             var nextRealNode = endNode.nextSibling;
 
             // We stop when there are no more corresponding real nodes or when
@@ -127,16 +145,30 @@ function morphdom(
         var tempChild;
 
         if (!beforeChild) {
-            tempChild = beforeChild = insertBefore(createMarkerComment(), startNode, parentFromNode);
+            tempChild = beforeChild = insertBefore(
+                createMarkerComment(),
+                startNode,
+                parentFromNode
+            );
         }
 
-        morphChildren(parentFromNode, startNode, afterChild, vComponent, component);
+        morphChildren(
+            parentFromNode,
+            startNode,
+            afterChild,
+            vComponent,
+            component
+        );
 
         endNode = undefined;
 
         startNode = beforeChild.nextSibling;
         if (!startNode || startNode === afterChild) {
-            startNode = endNode = insertAfter(createMarkerComment(), beforeChild, parentFromNode);
+            startNode = endNode = insertAfter(
+                createMarkerComment(),
+                beforeChild,
+                parentFromNode
+            );
         }
 
         if (tempChild) {
@@ -153,14 +185,24 @@ function morphdom(
 
         // Make sure we don't use a detached node as the component boundary and
         // we can't use a node that is already the boundary node for another component
-        if (startNode.___markoDetached !== undefined || startNode.___markoComponent) {
-            startNode = insertBefore(createMarkerComment(), startNode, parentFromNode);
+        if (
+            startNode.___markoDetached !== undefined ||
+            startNode.___markoComponent
+        ) {
+            startNode = insertBefore(
+                createMarkerComment(),
+                startNode,
+                parentFromNode
+            );
         }
 
         if (endNode.___markoDetached !== undefined || endNode.___endNode) {
-            endNode = insertAfter(createMarkerComment(), endNode, parentFromNode);
+            endNode = insertAfter(
+                createMarkerComment(),
+                endNode,
+                parentFromNode
+            );
         }
-
 
         startNode.___markoComponent = component;
         endNode.___endNode = true;
@@ -189,7 +231,13 @@ function morphdom(
         component.destroy();
     }
 
-    function morphChildren(parentFromNode, startNode, endNode, toNode, component) {
+    function morphChildren(
+        parentFromNode,
+        startNode,
+        endNode,
+        toNode,
+        component
+    ) {
         var curFromNodeChild = startNode;
         var curToNodeChild = toNode.___firstChild;
 
@@ -211,35 +259,65 @@ function morphdom(
             var componentForNode = curToNodeChild.___component || component;
 
             if (curToNodeType === COMPONENT_NODE) {
-
-                if ((matchingFromComponent = existingComponentLookup[componentForNode.id]) === undefined) {
+                if (
+                    (matchingFromComponent =
+                        existingComponentLookup[componentForNode.id]) ===
+                    undefined
+                ) {
                     if (isRerenderInBrowser === true) {
                         var firstVChild = curToNodeChild.___firstChild;
                         if (firstVChild) {
                             if (!curFromNodeChild) {
-                                curFromNodeChild = insertBefore(createMarkerComment(), null, parentFromNode);
+                                curFromNodeChild = insertBefore(
+                                    createMarkerComment(),
+                                    null,
+                                    parentFromNode
+                                );
                             }
 
                             componentForNode.___startNode = curFromNodeChild;
-                            componentForNode.___endNode = resolveComponentEndNode(curFromNodeChild, firstVChild, parentFromNode);
-
-                        }  else {
-                            componentForNode.___startNode = componentForNode.___endNode = insertBefore(createMarkerComment(), curFromNodeChild, parentFromNode);
+                            componentForNode.___endNode = resolveComponentEndNode(
+                                curFromNodeChild,
+                                firstVChild,
+                                parentFromNode
+                            );
+                        } else {
+                            componentForNode.___startNode = componentForNode.___endNode = insertBefore(
+                                createMarkerComment(),
+                                curFromNodeChild,
+                                parentFromNode
+                            );
                         }
 
-                        curFromNodeChild = morphComponent(parentFromNode, componentForNode, curToNodeChild);
+                        curFromNodeChild = morphComponent(
+                            parentFromNode,
+                            componentForNode,
+                            curToNodeChild
+                        );
                     } else {
-                        insertVirtualComponentBefore(curToNodeChild, curFromNodeChild, parentFromNode, componentForNode);
+                        insertVirtualComponentBefore(
+                            curToNodeChild,
+                            curFromNodeChild,
+                            parentFromNode,
+                            componentForNode
+                        );
                     }
                 } else {
-                    if (matchingFromComponent.___startNode !== curFromNodeChild) {
-                        if (curFromNodeChild &&
-                            (fromComponent = curFromNodeChild.___markoComponent) &&
-                            globalComponentsContext.___renderedComponentsById[fromComponent.id] === undefined) {
-
+                    if (
+                        matchingFromComponent.___startNode !== curFromNodeChild
+                    ) {
+                        if (
+                            curFromNodeChild &&
+                            (fromComponent =
+                                curFromNodeChild.___markoComponent) &&
+                            globalComponentsContext.___renderedComponentsById[
+                                fromComponent.id
+                            ] === undefined
+                        ) {
                             // The component associated with the current real DOM node was not rendered
                             // so we should just remove it out of the real DOM by destroying it
-                            curFromNodeChild = fromComponent.___endNode.nextSibling;
+                            curFromNodeChild =
+                                fromComponent.___endNode.nextSibling;
                             destroyComponent(fromComponent);
                             continue;
                         }
@@ -247,17 +325,29 @@ function morphdom(
                         // We need to move the existing component into
                         // the correct location and preserve focus.
                         var activeElement = doc.activeElement;
-                        insertBefore(matchingFromComponent.___detach(), curFromNodeChild, parentFromNode);
+                        insertBefore(
+                            matchingFromComponent.___detach(),
+                            curFromNodeChild,
+                            parentFromNode
+                        );
                         // This focus patch should be a temporary fix.
-                        if (activeElement !== doc.activeElement && activeElement.focus) {
+                        if (
+                            activeElement !== doc.activeElement &&
+                            activeElement.focus
+                        ) {
                             activeElement.focus();
                         }
                     }
 
                     if (curToNodeChild.___preserve) {
-                        curFromNodeChild = matchingFromComponent.___endNode.nextSibling;
+                        curFromNodeChild =
+                            matchingFromComponent.___endNode.nextSibling;
                     } else {
-                        curFromNodeChild = morphComponent(parentFromNode, componentForNode, curToNodeChild);
+                        curFromNodeChild = morphComponent(
+                            parentFromNode,
+                            componentForNode,
+                            curToNodeChild
+                        );
                     }
                 }
 
@@ -267,13 +357,13 @@ function morphdom(
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
 
-                var keySequence = componentForNode.___keySequence ||
+                var keySequence =
+                    componentForNode.___keySequence ||
                     (componentForNode.___keySequence = globalComponentsContext.___createKeySequence());
 
                 // We have a keyed element. This is the fast path for matching
                 // up elements
                 curToNodeKey = keySequence.___nextKey(curToNodeKey);
-
 
                 if (curFromNodeChild) {
                     if (curFromNodeChild !== endNode) {
@@ -288,34 +378,72 @@ function morphdom(
                     if ((curToNodeChild.___flags & FLAG_PRESERVE) === 0) {
                         // We just skip over the fromNode if it is preserved
 
-
-                        if (compareNodeNames(curToNodeChild, curVFromNodeChild)) {
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey);
+                        if (
+                            compareNodeNames(curToNodeChild, curVFromNodeChild)
+                        ) {
+                            morphEl(
+                                curFromNodeChild,
+                                curVFromNodeChild,
+                                curToNodeChild,
+                                componentForNode,
+                                curToNodeKey
+                            );
                         } else {
                             // Remove the old node
-                            detachNode(curFromNodeChild, parentFromNode, componentForNode);
+                            detachNode(
+                                curFromNodeChild,
+                                parentFromNode,
+                                componentForNode
+                            );
 
                             // Incompatible nodes. Just move the target VNode into the DOM at this position
-                            insertVirtualNodeBefore(curToNodeChild, curToNodeKey, curFromNodeChild, parentFromNode, componentForNode);
+                            insertVirtualNodeBefore(
+                                curToNodeChild,
+                                curToNodeKey,
+                                curFromNodeChild,
+                                parentFromNode,
+                                componentForNode
+                            );
                         }
                     } else {
                         // this should be preserved.
-
                     }
                 } else {
-                    if ((matchingFromEl = componentForNode.___keyedElements[curToNodeKey]) === undefined) {
-                        if (isRerenderInBrowser === true && curFromNodeChild &&
-                                curFromNodeChild.nodeType === ELEMENT_NODE &&
-                                curFromNodeChild.nodeName === curToNodeChild.___nodeName) {
-                            curVFromNodeChild = virtualizeElement(curFromNodeChild);
+                    if (
+                        (matchingFromEl =
+                            componentForNode.___keyedElements[curToNodeKey]) ===
+                        undefined
+                    ) {
+                        if (
+                            isRerenderInBrowser === true &&
+                            curFromNodeChild &&
+                            curFromNodeChild.nodeType === ELEMENT_NODE &&
+                            curFromNodeChild.nodeName ===
+                                curToNodeChild.___nodeName
+                        ) {
+                            curVFromNodeChild = virtualizeElement(
+                                curFromNodeChild
+                            );
                             curFromNodeChild.___markoKey = curToNodeKey;
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey);
+                            morphEl(
+                                curFromNodeChild,
+                                curVFromNodeChild,
+                                curToNodeChild,
+                                componentForNode,
+                                curToNodeKey
+                            );
                             curToNodeChild = toNextSibling;
                             curFromNodeChild = fromNextSibling;
                             continue;
                         }
 
-                        insertVirtualNodeBefore(curToNodeChild, curToNodeKey, curFromNodeChild, parentFromNode, componentForNode);
+                        insertVirtualNodeBefore(
+                            curToNodeChild,
+                            curToNodeKey,
+                            curFromNodeChild,
+                            parentFromNode,
+                            componentForNode
+                        );
                         fromNextSibling = curFromNodeChild;
                     } else {
                         if (matchingFromEl.___markoDetached !== undefined) {
@@ -323,7 +451,9 @@ function morphdom(
                         }
                         curVFromNodeChild = matchingFromEl.___markoVElement;
 
-                        if (compareNodeNames(curVFromNodeChild, curToNodeChild)) {
+                        if (
+                            compareNodeNames(curVFromNodeChild, curToNodeChild)
+                        ) {
                             if (fromNextSibling === matchingFromEl) {
                                 // Single element removal:
                                 // A <-> A
@@ -336,14 +466,21 @@ function morphdom(
                                 // B <-> C <-- We are here
                                 // C     B
 
-                                if (toNextSibling && toNextSibling.___key === curFromNodeKey) {
+                                if (
+                                    toNextSibling &&
+                                    toNextSibling.___key === curFromNodeKey
+                                ) {
                                     // Single element swap
 
                                     // We want to stay on the current real DOM node
                                     fromNextSibling = curFromNodeChild;
 
                                     // But move the matching element into place
-                                    insertBefore(matchingFromEl, curFromNodeChild, parentFromNode);
+                                    insertBefore(
+                                        matchingFromEl,
+                                        curFromNodeChild,
+                                        parentFromNode
+                                    );
                                 } else {
                                     // Single element removal
 
@@ -351,13 +488,17 @@ function morphdom(
                                     // and the matching real DOM node will fall into
                                     // place. We will continue diffing with next sibling
                                     // after the real DOM node that just fell into place
-                                    fromNextSibling = fromNextSibling.nextSibling;
+                                    fromNextSibling =
+                                        fromNextSibling.nextSibling;
 
                                     if (curFromNodeChild) {
-                                        detachNode(curFromNodeChild, parentFromNode, componentForNode);
+                                        detachNode(
+                                            curFromNodeChild,
+                                            parentFromNode,
+                                            componentForNode
+                                        );
                                     }
                                 }
-
                             } else {
                                 // A <-> A
                                 // B <-> D <-- We are here
@@ -365,21 +506,47 @@ function morphdom(
                                 // D
 
                                 // We need to move the matching node into place
-                                insertAfter(matchingFromEl, curFromNodeChild, parentFromNode);
+                                insertAfter(
+                                    matchingFromEl,
+                                    curFromNodeChild,
+                                    parentFromNode
+                                );
 
                                 if (curFromNodeChild) {
-                                    detachNode(curFromNodeChild, parentFromNode, componentForNode);
+                                    detachNode(
+                                        curFromNodeChild,
+                                        parentFromNode,
+                                        componentForNode
+                                    );
                                 }
                             }
 
-                            if ((curToNodeChild.___flags & FLAG_PRESERVE) === 0) {
-                                morphEl(matchingFromEl, curVFromNodeChild, curToNodeChild, componentForNode, curToNodeKey, curToNodeKey);
+                            if (
+                                (curToNodeChild.___flags & FLAG_PRESERVE) ===
+                                0
+                            ) {
+                                morphEl(
+                                    matchingFromEl,
+                                    curVFromNodeChild,
+                                    curToNodeChild,
+                                    componentForNode,
+                                    curToNodeKey,
+                                    curToNodeKey
+                                );
                             }
-
-
                         } else {
-                            insertVirtualNodeBefore(curToNodeChild, curToNodeKey, curFromNodeChild, parentFromNode, componentForNode);
-                            detachNode(matchingFromEl, parentFromNode, componentForNode);
+                            insertVirtualNodeBefore(
+                                curToNodeChild,
+                                curToNodeKey,
+                                curFromNodeChild,
+                                parentFromNode,
+                                componentForNode
+                            );
+                            detachNode(
+                                matchingFromEl,
+                                parentFromNode,
+                                componentForNode
+                            );
                         }
                     }
                 }
@@ -393,7 +560,10 @@ function morphdom(
             // it is also not a preserve node. Let's now match up the HTML
             // element, text node, comment, etc.
             while (curFromNodeChild && curFromNodeChild !== endNode) {
-                if ((fromComponent = curFromNodeChild.___markoComponent) && fromComponent !== componentForNode) {
+                if (
+                    (fromComponent = curFromNodeChild.___markoComponent) &&
+                    fromComponent !== componentForNode
+                ) {
                     // The current "to" element is not associated with a component,
                     // but the current "from" element is associated with a component
 
@@ -402,7 +572,11 @@ function morphdom(
                     // not compatible with the current "to" node
                     curFromNodeChild = fromComponent.___endNode.nextSibling;
 
-                    if (!globalComponentsContext.___renderedComponentsById[fromComponent.id]) {
+                    if (
+                        !globalComponentsContext.___renderedComponentsById[
+                            fromComponent.id
+                        ]
+                    ) {
                         destroyComponent(fromComponent);
                     }
 
@@ -421,28 +595,45 @@ function morphdom(
                         curVFromNodeChild = curFromNodeChild.___markoVElement;
                         if (curVFromNodeChild === undefined) {
                             if (isRerenderInBrowser === true) {
-                                curVFromNodeChild = virtualizeElement(curFromNodeChild);
+                                curVFromNodeChild = virtualizeElement(
+                                    curFromNodeChild
+                                );
                             } else {
                                 // Skip over nodes that don't look like ours...
                                 curFromNodeChild = fromNextSibling;
                                 continue;
                             }
-                        } else if ((curFromNodeKey = curVFromNodeChild.___key)) {
+                        } else if (
+                            (curFromNodeKey = curVFromNodeChild.___key)
+                        ) {
                             // We have a keyed element here but our target VDOM node
                             // is not keyed so this not doesn't belong
                             isCompatible = false;
                         }
 
-                        isCompatible = isCompatible !== false && compareNodeNames(curVFromNodeChild, curToNodeChild) === true;
+                        isCompatible =
+                            isCompatible !== false &&
+                            compareNodeNames(
+                                curVFromNodeChild,
+                                curToNodeChild
+                            ) === true;
 
                         if (isCompatible === true) {
                             // We found compatible DOM elements so transform
                             // the current "from" node to match the current
                             // target DOM node.
-                            morphEl(curFromNodeChild, curVFromNodeChild, curToNodeChild, component, curToNodeKey);
+                            morphEl(
+                                curFromNodeChild,
+                                curVFromNodeChild,
+                                curToNodeChild,
+                                component,
+                                curToNodeKey
+                            );
                         }
-
-                    } else if (curFromNodeType === TEXT_NODE || curFromNodeType === COMMENT_NODE) {
+                    } else if (
+                        curFromNodeType === TEXT_NODE ||
+                        curFromNodeType === COMMENT_NODE
+                    ) {
                         // Both nodes being compared are Text or Comment nodes
                         isCompatible = true;
                         // Simply update nodeValue on the original node to
@@ -451,23 +642,42 @@ function morphdom(
                         var content = curFromNodeChild.nodeValue;
                         if (content == curToNodeChild.___nodeValue) {
                             if (/^F\^/.test(content)) {
-                                var closingContent = content.replace(/^F\^/, 'F/');
-                                while((curFromNodeChild = curFromNodeChild.nextSibling)) {
-                                    if (curFromNodeChild.nodeValue === closingContent) {
+                                var closingContent = content.replace(
+                                    /^F\^/,
+                                    "F/"
+                                );
+                                while (
+                                    (curFromNodeChild =
+                                        curFromNodeChild.nextSibling)
+                                ) {
+                                    if (
+                                        curFromNodeChild.nodeValue ===
+                                        closingContent
+                                    ) {
                                         break;
                                     }
                                 }
-                                while((curToNodeChild = curToNodeChild.___nextSibling)) {
-                                    if (curToNodeChild.___nodeValue === closingContent) {
+                                while (
+                                    (curToNodeChild =
+                                        curToNodeChild.___nextSibling)
+                                ) {
+                                    if (
+                                        curToNodeChild.___nodeValue ===
+                                        closingContent
+                                    ) {
                                         break;
                                     }
                                 }
                                 curToNodeChild = curToNodeChild.___nextSibling;
-                                curFromNodeChild = curFromNodeChild === endNode ? null : curFromNodeChild.nextSibling;
+                                curFromNodeChild =
+                                    curFromNodeChild === endNode
+                                        ? null
+                                        : curFromNodeChild.nextSibling;
                                 continue outer;
                             }
                         } else {
-                            curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
+                            curFromNodeChild.nodeValue =
+                                curToNodeChild.___nodeValue;
                         }
                     }
                 }
@@ -480,11 +690,23 @@ function morphdom(
                 }
 
                 if (curFromNodeKey) {
-                    if (globalComponentsContext.___preservedEls[curFromNodeKey] === undefined) {
-                        detachNode(curFromNodeChild, parentFromNode, componentForNode);
+                    if (
+                        globalComponentsContext.___preservedEls[
+                            curFromNodeKey
+                        ] === undefined
+                    ) {
+                        detachNode(
+                            curFromNodeChild,
+                            parentFromNode,
+                            componentForNode
+                        );
                     }
                 } else {
-                    detachNode(curFromNodeChild, parentFromNode, componentForNode);
+                    detachNode(
+                        curFromNodeChild,
+                        parentFromNode,
+                        componentForNode
+                    );
                 }
 
                 curFromNodeChild = fromNextSibling;
@@ -494,7 +716,13 @@ function morphdom(
             // our "to node" and we exhausted all of the children "from"
             // nodes. Therefore, we will just append the current "to" node
             // to the end
-            insertVirtualNodeBefore(curToNodeChild, curToNodeKey, curFromNodeChild, parentFromNode, componentForNode);
+            insertVirtualNodeBefore(
+                curToNodeChild,
+                curToNodeKey,
+                curFromNodeChild,
+                parentFromNode,
+                componentForNode
+            );
 
             curToNodeChild = toNextSibling;
             curFromNodeChild = fromNextSibling;
@@ -503,11 +731,18 @@ function morphdom(
         // We have processed all of the "to nodes". If curFromNodeChild is
         // non-null then we still have some from nodes left over that need
         // to be removed
-        while (curFromNodeChild && (endNode === null || curFromNodeChild !== endNode)) {
+        while (
+            curFromNodeChild &&
+            (endNode === null || curFromNodeChild !== endNode)
+        ) {
             fromNextSibling = curFromNodeChild.nextSibling;
 
             if ((fromComponent = curFromNodeChild.___markoComponent)) {
-                if (globalComponentsContext.___renderedComponentsById[fromComponent.id]) {
+                if (
+                    globalComponentsContext.___renderedComponentsById[
+                        fromComponent.id
+                    ]
+                ) {
                     // Skip over this component since it was rendered in the target VDOM
                     // and will be moved into place later
                     curFromNodeChild = fromComponent.___endNode.nextSibling;
@@ -519,7 +754,9 @@ function morphdom(
 
             // For transcluded content, we need to check if the element belongs to a different component
             // context than the current component and ensure it gets removed from its key index.
-            fromComponent = curVFromNodeChild && curVFromNodeChild.___component || component;
+            fromComponent =
+                (curVFromNodeChild && curVFromNodeChild.___component) ||
+                component;
 
             detachNode(curFromNodeChild, parentFromNode, fromComponent);
 
@@ -541,12 +778,15 @@ function morphdom(
 
         morphAttrs(fromEl, vFromEl, toEl);
 
-        if (toElKey && globalComponentsContext.___preservedElBodies[toElKey] === true) {
+        if (
+            toElKey &&
+            globalComponentsContext.___preservedElBodies[toElKey] === true
+        ) {
             // Don't morph the children since they are preserved
             return;
         }
 
-        if (nodeName !== 'TEXTAREA') {
+        if (nodeName !== "TEXTAREA") {
             morphChildren(fromEl, fromEl.firstChild, null, toEl, component);
         }
 
@@ -568,14 +808,16 @@ function morphdom(
             if (componentToDestroy) {
                 componentToDestroy.destroy();
             } else if (node.parentNode) {
-                destroyNodeRecursive(node, detachedFromComponent !== true && detachedFromComponent);
+                destroyNodeRecursive(
+                    node,
+                    detachedFromComponent !== true && detachedFromComponent
+                );
 
                 if (eventDelegation.___handleNodeDetach(node) != false) {
-                     node.parentNode.removeChild(node);
+                    node.parentNode.removeChild(node);
                 }
             }
         }
-
     });
 }
 

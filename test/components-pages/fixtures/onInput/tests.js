@@ -1,120 +1,122 @@
-var path = require('path');
-var expect = require('chai').expect;
+var path = require("path");
+var expect = require("chai").expect;
 
 describe(path.basename(__dirname), function() {
-    it('should allow return', function() {
-        var component = window.components['onInput-return'];
+    it("should allow return", function() {
+        var component = window.components["onInput-return"];
 
-        expect(component.input.name).to.equal('FRANK');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('FRANK');
+        expect(component.input.name).to.equal("FRANK");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("FRANK");
 
         component.input = {
-            name: 'John'
+            name: "John"
         };
 
         component.update();
 
-        expect(component.input.name).to.equal('JOHN');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('JOHN');
+        expect(component.input.name).to.equal("JOHN");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("JOHN");
     });
 
-    it('should allow input to be assigned to null', function() {
-        var component = window.components['onInput-assign-null'];
+    it("should allow input to be assigned to null", function() {
+        var component = window.components["onInput-assign-null"];
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('John');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("John");
 
         component.input = {
-            name: 'Jane'
+            name: "Jane"
         };
 
         component.update();
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('Jane');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("Jane");
 
         component.input = {
-            name: 'Henry'
+            name: "Henry"
         };
 
         component.update();
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('Henry');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("Henry");
     });
 
-    it('should allow input to be assigned to null with return', function() {
-        var component = window.components['onInput-assign-null-and-return'];
+    it("should allow input to be assigned to null with return", function() {
+        var component = window.components["onInput-assign-null-and-return"];
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('JANE');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("JANE");
 
         component.input = {
-            name: 'Frank'
+            name: "Frank"
         };
 
         component.update();
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('FRANK');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("FRANK");
 
         component.input = {
-            name: 'Henry'
+            name: "Henry"
         };
 
         component.update();
 
         expect(component.input).to.equal(null);
-        expect(component.el.querySelector('.name').innerHTML).to.equal('HENRY');
+        expect(component.el.querySelector(".name").innerHTML).to.equal("HENRY");
     });
 
-    it('should allow input to be assigned to a new object', function() {
-        var component = window.components['onInput-assign-object'];
+    it("should allow input to be assigned to a new object", function() {
+        var component = window.components["onInput-assign-object"];
 
-        expect(component.input.name).to.equal('FRANK');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('Frank');
+        expect(component.input.name).to.equal("FRANK");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
 
         component.input = {
-            name: 'Jane'
+            name: "Jane"
         };
 
         component.update();
 
-        expect(component.input.name).to.equal('JANE');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('Jane');
+        expect(component.input.name).to.equal("JANE");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("Jane");
 
         component.input = {
-            name: 'Henry'
+            name: "Henry"
         };
 
         component.update();
 
-        expect(component.input.name).to.equal('HENRY');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('Henry');
+        expect(component.input.name).to.equal("HENRY");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("Henry");
     });
 
-    it('should allow input to be assigned to a new object with return', function() {
-        var component = window.components['onInput-assign-object-and-return'];
+    it("should allow input to be assigned to a new object with return", function() {
+        var component = window.components["onInput-assign-object-and-return"];
 
-        expect(component.input.name).to.equal('HEATHER');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('heather');
+        expect(component.input.name).to.equal("HEATHER");
+        expect(component.el.querySelector(".name").innerHTML).to.equal(
+            "heather"
+        );
 
         component.input = {
-            name: 'Jane'
+            name: "Jane"
         };
 
         component.update();
 
-        expect(component.input.name).to.equal('JANE');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('jane');
+        expect(component.input.name).to.equal("JANE");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("jane");
 
         component.input = {
-            name: 'Henry'
+            name: "Henry"
         };
 
         component.update();
 
-        expect(component.input.name).to.equal('HENRY');
-        expect(component.el.querySelector('.name').innerHTML).to.equal('henry');
+        expect(component.input.name).to.equal("HENRY");
+        expect(component.el.querySelector(".name").innerHTML).to.equal("henry");
     });
 });

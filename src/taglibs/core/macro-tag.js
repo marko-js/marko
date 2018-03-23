@@ -1,10 +1,12 @@
 module.exports = function nodeFactory(elNode, context) {
-
     var attributes = elNode.attributes;
     var defAttr = attributes[0];
 
-    if(!defAttr || defAttr.value !== undefined) {
-        context.addError(elNode, 'The <macro> tag must contain a name as its first attribute, example: <macro greeting()>');
+    if (!defAttr || defAttr.value !== undefined) {
+        context.addError(
+            elNode,
+            "The <macro> tag must contain a name as its first attribute, example: <macro greeting()>"
+        );
         return elNode;
     }
 
@@ -12,7 +14,10 @@ module.exports = function nodeFactory(elNode, context) {
     var macroName = defAttr.name;
 
     if (context.isMacro(macroName)) {
-        context.addError(elNode, `<macro> tag with duplicate name of "${macroName}" found.`);
+        context.addError(
+            elNode,
+            `<macro> tag with duplicate name of "${macroName}" found.`
+        );
         return elNode;
     }
 

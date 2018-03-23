@@ -1,32 +1,29 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
-var propertyHandlers = require('property-handlers');
-var isObjectEmpty = require('raptor-util/isObjectEmpty');
-var nodePath = require('path');
-var markoModules = require('../modules'); // NOTE: different implementation for browser
-var ok = require('assert').ok;
+var ok = require("assert").ok;
+var propertyHandlers = require("property-handlers");
+var isObjectEmpty = require("raptor-util/isObjectEmpty");
+var nodePath = require("path");
+var markoModules = require("../modules"); // NOTE: different implementation for browser
 var bodyFunctionRegExp = /^([A-Za-z_$][A-Za-z0-9_]*)(?:\(([^)]*)\))?$/;
 var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
-var propertyHandlers = require('property-handlers');
-var forEachEntry = require('raptor-util/forEachEntry');
-var markoCompiler = require('../');
-var createError = require('raptor-util/createError');
-var types = require('./types');
-var loaders = require('./loaders');
-
+var forEachEntry = require("raptor-util/forEachEntry");
+var markoCompiler = require("../");
+var createError = require("raptor-util/createError");
+var types = require("./types");
+var loaders = require("./loaders");
 
 function exists(path) {
     try {
         markoModules.resolve(path);
         return true;
-    } catch(e) {
+    } catch (e) {
         return false;
     }
 }
 
 function removeDashes(str) {
-    return str.replace(/-([a-z])/g, function (match, lower) {
+    return str.replace(/-([a-z])/g, function(match, lower) {
         return lower.toUpperCase();
     });
 }
@@ -37,14 +34,13 @@ function hasAttributes(tagProps) {
     }
 
     for (var name in tagProps) {
-        if (tagProps.hasOwnProperty(name) && name.startsWith('@')) {
+        if (tagProps.hasOwnProperty(name) && name.startsWith("@")) {
             return true;
         }
     }
 
     return false;
 }
-
 
 /**
  * We load tag definition using this class. Properties in the taglib
@@ -68,15 +64,13 @@ class TagLoader {
         if (!hasAttributes(tagProps)) {
             // allow any attributes if no attributes are declared
             tagProps.attributes = {
-                '*': {
-                    type: 'string',
+                "*": {
+                    type: "string",
                     targetProperty: null,
                     preserveName: false
                 }
             };
         }
-
-
 
         propertyHandlers(tagProps, this, this.dependencyChain.toString());
     }
@@ -86,27 +80,33 @@ class TagLoader {
 
         var nestedVariable;
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             nestedVariable = {
                 name: value
             };
         } else {
             nestedVariable = {};
 
-            propertyHandlers(value, {
+            propertyHandlers(
+                value,
+                {
+                    name: function(value) {
+                        nestedVariable.name = value;
+                    },
 
-                name: function(value) {
-                    nestedVariable.name = value;
+                    nameFromAttribute: function(value) {
+                        nestedVariable.nameFromAttribute = value;
+                    }
                 },
-
-                nameFromAttribute: function(value) {
-                    nestedVariable.nameFromAttribute = value;
-                }
-
-            }, dependencyChain.toString());
+                dependencyChain.toString()
+            );
 
             if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
-                throw new Error('The "name" or "name-from-attribute" attribute is required for a nested variable (' + dependencyChain + ')');
+                throw new Error(
+                    'The "name" or "name-from-attribute" attribute is required for a nested variable (' +
+                        dependencyChain +
+                        ")"
+                );
             }
         }
 
@@ -119,7 +119,7 @@ class TagLoader {
      * match properties in the form of "@attr_name" or
      * "<nested_tag_name>"
      */
-    '*'(name, value) {
+    "*"(name, value) {
         var tag = this.tag;
         var dependencyChain = this.dependencyChain;
         var parts = name.split(/\s+|\s+[,]\s+/);
@@ -133,16 +133,16 @@ class TagLoader {
 
         // We do one pass to figure out if there is an
         // attribute or nested tag or both
-        for (i=0; i<parts.length; i++) {
+        for (i = 0; i < parts.length; i++) {
             part = parts[i];
-            if (part.startsWith('@')) {
+            if (part.startsWith("@")) {
                 hasAttr = true;
 
                 if (i === 0) {
                     // Use the first attribute value as the name of the target property
                     nestedTagTargetProperty = part.substring(1);
                 }
-            } else if (part.startsWith('<')) {
+            } else if (part.startsWith("<")) {
                 hasNestedTag = true;
             } else {
                 // Unmatched property that is not an attribute or a
@@ -155,10 +155,10 @@ class TagLoader {
         var tagProps = {};
         var k;
 
-        if (value != null && typeof value === 'object') {
+        if (value != null && typeof value === "object") {
             for (k in value) {
                 if (value.hasOwnProperty(k)) {
-                    if (k.startsWith('@') || k.startsWith('<')) {
+                    if (k.startsWith("@") || k.startsWith("<")) {
                         // Move over all of the attributes and nested tags
                         // to the tag definition.
                         tagProps[k] = value[k];
@@ -170,8 +170,10 @@ class TagLoader {
                         // and attribute definition.
                         var propNameDashes = removeDashes(k);
 
-                        if (isSupportedProperty(propNameDashes) &&
-                            loaders.isSupportedAttributeProperty(propNameDashes)) {
+                        if (
+                            isSupportedProperty(propNameDashes) &&
+                            loaders.isSupportedAttributeProperty(propNameDashes)
+                        ) {
                             // Move over all of the properties that are associated with a tag
                             // and attribute
                             tagProps[k] = value[k];
@@ -181,7 +183,9 @@ class TagLoader {
                             // Move over all of the properties that are associated with a tag
                             tagProps[k] = value[k];
                             delete value[k];
-                        } else if (loaders.isSupportedAttributeProperty(propNameDashes)) {
+                        } else if (
+                            loaders.isSupportedAttributeProperty(propNameDashes)
+                        ) {
                             // Move over all of the properties that are associated with an attr
                             attrProps[k] = value[k];
                             delete value[k];
@@ -193,18 +197,20 @@ class TagLoader {
             // If there are any left over properties then something is wrong
             // with the user's taglib.
             if (!isObjectEmpty(value)) {
-                throw new Error('Unsupported properties of [' +
-                    Object.keys(value).join(', ') +
-                    ']');
+                throw new Error(
+                    "Unsupported properties of [" +
+                        Object.keys(value).join(", ") +
+                        "]"
+                );
             }
 
             var type = attrProps.type;
             if (!type && hasAttr && hasNestedTag) {
                 // If we have an attribute and a nested tag then default
                 // the attribute type to "expression"
-                attrProps.type = 'expression';
+                attrProps.type = "expression";
             }
-        } else if (typeof value === 'string') {
+        } else if (typeof value === "string") {
             if (hasNestedTag && hasAttr) {
                 tagProps = attrProps = {
                     type: value
@@ -222,49 +228,52 @@ class TagLoader {
 
         // Now that we have separated out attribute properties and tag properties
         // we need to create the actual attributes and nested tags
-        for (i=0; i<parts.length; i++) {
+        for (i = 0; i < parts.length; i++) {
             part = parts[i];
-            if (part.startsWith('@')) {
+            if (part.startsWith("@")) {
                 // This is a shorthand attribute
                 var attrName = part.substring(1);
 
                 var attr = loaders.loadAttributeFromProps(
                     attrName,
                     attrProps,
-                    dependencyChain.append(part));
+                    dependencyChain.append(part)
+                );
 
                 tag.addAttribute(attr);
-            } else if (part.startsWith('<')) {
-
+            } else if (part.startsWith("<")) {
                 // This is a shorthand nested tag
                 let nestedTag = new types.Tag(this.filePath);
 
                 loadTagFromProps(
                     nestedTag,
                     tagProps,
-                    dependencyChain.append(part));
+                    dependencyChain.append(part)
+                );
 
                 // We use the '[]' suffix to indicate that a nested tag
                 // can be repeated
                 var isNestedTagRepeated = false;
-                if (part.endsWith('[]')) {
+                if (part.endsWith("[]")) {
                     isNestedTagRepeated = true;
                     part = part.slice(0, -2);
                 }
 
-                var nestedTagName = part.substring(1, part.length-1);
+                var nestedTagName = part.substring(1, part.length - 1);
                 nestedTag.name = nestedTagName;
                 nestedTag.isRepeated = isNestedTagRepeated;
                 // Use the name of the attribute as the target property unless
                 // this target property was explicitly provided
-                nestedTag.targetProperty = attrProps.targetProperty || nestedTagTargetProperty;
+                nestedTag.targetProperty =
+                    attrProps.targetProperty || nestedTagTargetProperty;
                 tag.addNestedTag(nestedTag);
 
                 if (!nestedTag.isRepeated) {
                     let attr = loaders.loadAttributeFromProps(
                         nestedTag.targetProperty,
-                        { type: 'object' },
-                        dependencyChain.append(part));
+                        { type: "object" },
+                        dependencyChain.append(part)
+                    );
 
                     tag.addAttribute(attr);
                 }
@@ -328,7 +337,11 @@ class TagLoader {
     attributes(value) {
         var tag = this.tag;
 
-        loaders.loadAttributes(value, tag, this.dependencyChain.append('attributes'));
+        loaders.loadAttributes(
+            value,
+            tag,
+            this.dependencyChain.append("attributes")
+        );
     }
 
     /**
@@ -382,7 +395,7 @@ class TagLoader {
 
         var transformer = new types.Transformer();
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             // The value is a simple string type
             // so treat the value as the path to the JS
             // module for the transformer
@@ -396,30 +409,34 @@ class TagLoader {
          * to process each property to load the Transformer
          * definition.
          */
-        propertyHandlers(value, {
-            path(value) {
-                var path = markoModules.resolveFrom(dirname, value);
-                transformer.path = path;
-            },
+        propertyHandlers(
+            value,
+            {
+                path(value) {
+                    var path = markoModules.resolveFrom(dirname, value);
+                    transformer.path = path;
+                },
 
-            priority(value) {
-                transformer.priority = value;
-            },
+                priority(value) {
+                    transformer.priority = value;
+                },
 
-            name(value) {
-                transformer.name = value;
-            },
+                name(value) {
+                    transformer.name = value;
+                },
 
-            properties(value) {
-                var properties = transformer.properties || (transformer.properties = {});
-                for (var k in value) {
-                    if (value.hasOwnProperty(k)) {
-                        properties[k] = value[k];
+                properties(value) {
+                    var properties =
+                        transformer.properties || (transformer.properties = {});
+                    for (var k in value) {
+                        if (value.hasOwnProperty(k)) {
+                            properties[k] = value[k];
+                        }
                     }
                 }
-            }
-
-        }, this.dependencyChain.append('transformer'));
+            },
+            this.dependencyChain.append("transformer")
+        );
 
         ok(transformer.path, '"path" is required for transformer');
 
@@ -443,7 +460,7 @@ class TagLoader {
      * }
      */
     var(value) {
-        this._handleVar(value, this.dependencyChain.append('var'));
+        this._handleVar(value, this.dependencyChain.append("var"));
     }
     /**
      * The "vars" property is equivalent to the "var" property
@@ -452,7 +469,10 @@ class TagLoader {
     vars(value) {
         if (value) {
             value.forEach((v, i) => {
-                this._handleVar(v, this.dependencyChain.append('vars[' + i + ']'));
+                this._handleVar(
+                    v,
+                    this.dependencyChain.append("vars[" + i + "]")
+                );
             });
         }
     }
@@ -469,18 +489,32 @@ class TagLoader {
         var tag = this.tag;
         var parts = bodyFunctionRegExp.exec(value);
         if (!parts) {
-            throw new Error('Invalid value of "' + value + '" for "body-function". Expected value to be of the following form: <function-name>([param1, param2, ...])');
+            throw new Error(
+                'Invalid value of "' +
+                    value +
+                    '" for "body-function". Expected value to be of the following form: <function-name>([param1, param2, ...])'
+            );
         }
 
         var functionName = parts[1];
         var params = parts[2];
         if (params) {
             params = params.trim().split(/\s*,\s*/);
-            for (var i=0; i<params.length; i++) {
+            for (var i = 0; i < params.length; i++) {
                 if (params[i].length === 0) {
-                    throw new Error('Invalid parameters for body-function with value of "' + value + '"');
+                    throw new Error(
+                        'Invalid parameters for body-function with value of "' +
+                            value +
+                            '"'
+                    );
                 } else if (!safeVarName.test(params[i])) {
-                    throw new Error('Invalid parameter name of "' + params[i] + '" for body-function with value of "' + value + '"');
+                    throw new Error(
+                        'Invalid parameter name of "' +
+                            params[i] +
+                            '" for body-function with value of "' +
+                            value +
+                            '"'
+                    );
                 }
             }
         } else {
@@ -510,16 +544,19 @@ class TagLoader {
 
             if (!expression) {
                 expression = varName;
-            }
-            else if (typeof expression === 'object') {
+            } else if (typeof expression === "object") {
                 expression = expression.expression;
             }
 
             if (!expression) {
-                throw new Error('Invalid "import-var": ' + require('util').inspect(varValue));
+                throw new Error(
+                    'Invalid "import-var": ' + require("util").inspect(varValue)
+                );
             }
 
-            importedVar.expression = markoCompiler.builder.parseExpression(expression);
+            importedVar.expression = markoCompiler.builder.parseExpression(
+                expression
+            );
             tag.addImportedVariable(importedVar);
         });
     }
@@ -549,13 +586,12 @@ class TagLoader {
         var tag = this.tag;
 
         forEachEntry(value, (nestedTagName, nestedTagDef) => {
-            var dependencyChain = this.dependencyChain.append(`nestedTags["${nestedTagName}]`);
+            var dependencyChain = this.dependencyChain.append(
+                `nestedTags["${nestedTagName}]`
+            );
             var nestedTag = new types.Tag(filePath);
 
-            loadTagFromProps(
-                nestedTag,
-                nestedTagDef,
-                dependencyChain);
+            loadTagFromProps(nestedTag, nestedTagDef, dependencyChain);
 
             nestedTag.name = nestedTagName;
             tag.addNestedTag(nestedTag);
@@ -563,8 +599,9 @@ class TagLoader {
             if (!nestedTag.isRepeated) {
                 let attr = loaders.loadAttributeFromProps(
                     nestedTag.targetProperty,
-                    { type: 'object' },
-                    dependencyChain);
+                    { type: "object" },
+                    dependencyChain
+                );
 
                 tag.addAttribute(attr);
             }
@@ -581,10 +618,16 @@ class TagLoader {
      * content is parsed.
      */
     body(value) {
-        if (value === 'static-text' || value === 'parsed-text' || value === 'html') {
+        if (
+            value === "static-text" ||
+            value === "parsed-text" ||
+            value === "html"
+        ) {
             this.tag.body = value;
         } else {
-            throw new Error('Invalid value for "body". Allowed: "static-text", "parsed-text" or "html"');
+            throw new Error(
+                'Invalid value for "body". Allowed: "static-text", "parsed-text" or "html"'
+            );
         }
     }
 
@@ -617,7 +660,8 @@ class TagLoader {
             return;
         }
 
-        var attributeGroups = this.tag.attributeGroups || (this.tag.attributeGroups = []);
+        var attributeGroups =
+            this.tag.attributeGroups || (this.tag.attributeGroups = []);
         this.tag.attributeGroups = attributeGroups.concat(value);
     }
 
@@ -635,21 +679,22 @@ function isSupportedProperty(name) {
 }
 
 function loadTagFromProps(tag, tagProps, dependencyChain) {
-    ok(typeof tagProps === 'object', 'Invalid "tagProps"');
+    ok(typeof tagProps === "object", 'Invalid "tagProps"');
     ok(dependencyChain, '"dependencyChain" is required');
 
     var tagLoader = new TagLoader(tag, dependencyChain);
 
     try {
         tagLoader.load(tagProps);
-    } catch(err) {
-        throw createError('Unable to load tag (' + dependencyChain + '): ' + err, err);
+    } catch (err) {
+        throw createError(
+            "Unable to load tag (" + dependencyChain + "): " + err,
+            err
+        );
     }
 
     return tag;
 }
-
-
 
 module.exports = loadTagFromProps;
 

@@ -1,11 +1,11 @@
-var marko = require('../');
+var marko = require("../");
 
 function defineRenderer(def) {
     var template = def.template;
     var getTemplateData = def.getTemplateData;
     var renderer = def.renderer;
 
-    if (typeof template === 'string') {
+    if (typeof template === "string") {
         template = marko.load(template);
     }
 
@@ -32,9 +32,9 @@ function defineRenderer(def) {
             // Use getTemplateData(state, props, out) to get the template
             // data. If that method is not provided then just use the
             // the state (if provided) or the input data.
-            var templateData = getTemplateData ?
-                getTemplateData(newProps, out) :
-                newProps;
+            var templateData = getTemplateData
+                ? getTemplateData(newProps, out)
+                : newProps;
 
             // Render the template associated with the component using the final template
             // data that we constructed

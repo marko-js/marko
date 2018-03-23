@@ -6,11 +6,13 @@
         },
         {
             "type": "js",
-            "url": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.js"
+            "url":
+                "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.js"
         },
         {
             "type": "js",
-            "url": "https://cdnjs.cloudflare.com/ajax/libs/benchmark/2.1.2/benchmark.js"
+            "url":
+                "https://cdnjs.cloudflare.com/ajax/libs/benchmark/2.1.2/benchmark.js"
         },
         "benchmark/benchmark.js",
         "require-run: ./client.js"

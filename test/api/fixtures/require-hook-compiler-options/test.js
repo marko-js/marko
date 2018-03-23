@@ -1,21 +1,23 @@
-var expect = require('chai').expect;
-var fs = require('fs');
-var requireHook = require('../../../../node-require');
+var expect = require("chai").expect;
+var fs = require("fs");
+var requireHook = require("../../../../node-require");
 
 function compileAndCheck(path, shouldWriteToDisk) {
     var resolved = require.resolve(path);
-    var compiledFile = resolved + '.js';
+    var compiledFile = resolved + ".js";
 
     try {
         fs.unlinkSync(compiledFile);
-    } catch (e) {}
+    } catch (e) {
+        /* ignore error */
+    }
 
     require(resolved);
 
     expect(fs.existsSync(compiledFile)).to.equal(shouldWriteToDisk);
 }
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function(marko, markoCompiler, expect, helpers, done) {
     try {
         requireHook.install({
             compilerOptions: {
@@ -27,8 +29,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
         expect(markoCompiler.config.writeToDisk).to.equal(true);
         expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
-        compileAndCheck('./a.marko', true /* should write to disk */);
-        compileAndCheck('./e.xml.marko', true /* should write to disk */);
+        compileAndCheck("./a.marko", true /* should write to disk */);
+        compileAndCheck("./e.xml.marko", true /* should write to disk */);
 
         requireHook.install({
             compilerOptions: {
@@ -48,7 +50,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
         expect(markoCompiler.config.writeToDisk).to.equal(true);
         expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
-        compileAndCheck('./b.marko', false /* should write to disk */);
+        compileAndCheck("./b.marko", false /* should write to disk */);
 
         markoCompiler.configure(); // Reset to defaults
         expect(markoCompiler.config.writeToDisk).to.equal(true);
@@ -61,7 +63,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
             }
         });
 
-        compileAndCheck('./c.marko', true /* should write to disk */);
+        compileAndCheck("./c.marko", true /* should write to disk */);
 
         requireHook.install({
             compilerOptions: {
@@ -74,7 +76,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
             preserveWhitespace: true
         });
 
-        compileAndCheck('./d.marko', false /* should write to disk */);
+        compileAndCheck("./d.marko", false /* should write to disk */);
 
         done();
     } finally {
@@ -83,6 +85,6 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
             compilerOptions: {
                 writeToDisk: false
             }
-        })
+        });
     }
 };

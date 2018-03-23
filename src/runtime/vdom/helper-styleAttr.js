@@ -12,22 +12,24 @@ module.exports = function(style) {
 
     var type = typeof style;
 
-    if (type === 'string') {
+    if (type === "string") {
         return style;
-    } else if (type === 'object') {
-        var styles = '';
+    } else if (type === "object") {
+        var styles = "";
         for (var name in style) {
             var value = style[name];
             if (value != null) {
-                if (typeof value === 'number' && value) {
-                    value += 'px';
+                if (typeof value === "number" && value) {
+                    value += "px";
                 }
 
                 var nameDashed = dashedNames[name];
                 if (!nameDashed) {
-                    nameDashed = dashedNames[name] = name.replace(/([A-Z])/g, '-$1').toLowerCase();
+                    nameDashed = dashedNames[name] = name
+                        .replace(/([A-Z])/g, "-$1")
+                        .toLowerCase();
                 }
-                styles += nameDashed + ':' + value + ';';
+                styles += nameDashed + ":" + value + ";";
             }
         }
         return styles || null;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var Template;
 
@@ -9,13 +9,13 @@ var Template;
  * @private
  */
 exports.t = function createTemplate(path) {
-     return new Template(path);
+    return new Template(path);
 };
 
-require('../../');
+require("../../");
 
-var AsyncStream = require('./AsyncStream');
-Template = require('./Template');
+var AsyncStream = require("./AsyncStream");
+Template = require("./Template");
 
 function createOut(globalData, parent, state, buffer) {
     return new AsyncStream(globalData, parent, state, buffer);
@@ -30,4 +30,4 @@ exports.___createOut = createOut;
 exports.AsyncStream = AsyncStream;
 exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;
 
-require('../createOut').___setCreateOut(createOut);
+require("../createOut").___setCreateOut(createOut);

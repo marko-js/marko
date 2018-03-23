@@ -1,5 +1,3 @@
 exports.templateData = {
-    colors: ['red', 'green', 'blue']
+    colors: ["red", "green", "blue"]
 };
-
-exports.vdomSkip = true;

@@ -1,8 +1,8 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {});
-    var el = component.getEl('root');
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
+    var el = component.getEl("root");
 
     expect(el.children.length).to.equal(2);
     component.toggle();

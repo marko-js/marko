@@ -1,5 +1,5 @@
-var notEmpty = require('./notEmpty');
+var notEmpty = require("./notEmpty");
 
-module.exports = function (o) {
+module.exports = function(o) {
     return !notEmpty(o);
 };

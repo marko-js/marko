@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const NO_UPDATE_ATTR_SUFFIX = ':no-update';
+const NO_UPDATE_ATTR_SUFFIX = ":no-update";
 
-var PRESERVE_ATTRS_HELPER_ADDED = Symbol('PRESERVE_ATTRS_HELPER_ADDED');
+var PRESERVE_ATTRS_HELPER_ADDED = Symbol("PRESERVE_ATTRS_HELPER_ADDED");
 
 module.exports = function handleComponentPreserveAttrs() {
     var el = this.el;
@@ -25,22 +25,29 @@ module.exports = function handleComponentPreserveAttrs() {
             el.removeAttribute(attrName);
 
             noUpdateAttrs.push(realAttr);
-        } else if (attrName === 'w-preserve-attrs') {
-            context.deprecate(`The 'w-preserve-attrs' attribute is deprecated. Please use the ':no-update' attribute instead.`);
+        } else if (attrName === "w-preserve-attrs") {
+            context.deprecate(
+                `The 'w-preserve-attrs' attribute is deprecated. Please use the ':no-update' attribute instead.`
+            );
 
-            var preserveAttrsExpression = el.getAttributeValue('w-preserve-attrs');
+            var preserveAttrsExpression = el.getAttributeValue(
+                "w-preserve-attrs"
+            );
 
-            noUpdateAttrs.push.apply(noUpdateAttrs, preserveAttrsExpression.value.split(','));
-            el.removeAttribute('w-preserve-attrs');
+            noUpdateAttrs.push.apply(
+                noUpdateAttrs,
+                preserveAttrsExpression.value.split(",")
+            );
+            el.removeAttribute("w-preserve-attrs");
         }
     });
 
     if (noUpdateAttrs.length) {
-        el.setPropertyValue('noupdate', builder.literal(noUpdateAttrs));
+        el.setPropertyValue("noupdate", builder.literal(noUpdateAttrs));
 
         if (!context.isFlagSet(PRESERVE_ATTRS_HELPER_ADDED)) {
             context.setFlag(PRESERVE_ATTRS_HELPER_ADDED);
-            context.importModule(null, 'marko/runtime/vdom/preserve-attrs');
+            context.importModule(null, "marko/runtime/vdom/preserve-attrs");
         }
     }
 };

@@ -1,7 +1,7 @@
 module.exports = {
     onInput() {
         this.state = {
-            name: 'John'
+            name: "John"
         };
     }
 };

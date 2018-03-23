@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-var ok = require('assert').ok;
-var taglibTypes = require('../taglib-loader/types');
-var Text = require('../ast/Text');
-var extend = require('raptor-util/extend');
+var ok = require("assert").ok;
+var taglibTypes = require("../taglib-loader/types");
+var Text = require("../ast/Text");
+var extend = require("raptor-util/extend");
 
 function transformerComparator(a, b) {
     a = a.priority;
@@ -29,19 +29,20 @@ function TAG_COMPARATOR(a, b) {
 function merge(target, source) {
     for (var k in source) {
         if (source.hasOwnProperty(k)) {
-            if (target[k] && typeof target[k] === 'object' &&
-                source[k] && typeof source[k] === 'object') {
-
+            if (
+                target[k] &&
+                typeof target[k] === "object" &&
+                source[k] &&
+                typeof source[k] === "object"
+            ) {
                 if (source.__noMerge) {
                     // Don't merge objects that are explicitly marked as "do not merge"
                     continue;
                 }
 
                 if (Array.isArray(target[k]) || Array.isArray(source[k])) {
-
                     var targetArray = target[k];
                     var sourceArray = source[k];
-
 
                     if (!Array.isArray(targetArray)) {
                         targetArray = [targetArray];
@@ -59,7 +60,6 @@ function merge(target, source) {
                     merge(newTarget, source[k]);
                     target[k] = newTarget;
                 }
-
             } else {
                 target[k] = source[k];
             }
@@ -97,7 +97,7 @@ class TaglibLookup {
 
         function handleNestedTags(tag, parentTagName) {
             tag.forEachNestedTag(function(nestedTag) {
-                var fullyQualifiedName = parentTagName + ':' + nestedTag.name;
+                var fullyQualifiedName = parentTagName + ":" + nestedTag.name;
                 // Create a clone of the nested tag since we need to add some new
                 // properties
                 var clonedNestedTag = new Tag();
@@ -147,7 +147,7 @@ class TaglibLookup {
 
         if (sortedTags === undefined) {
             sortedTags = this._sortedTags = [];
-            this.forEachTag((tag) => {
+            this.forEachTag(tag => {
                 sortedTags.push(tag);
             });
             sortedTags.sort(TAG_COMPARATOR);
@@ -180,8 +180,6 @@ class TaglibLookup {
         var globalAttributes = this.merged.attributes;
         var taglibAttributeGroups = this.merged.attributeGroups;
 
-
-
         function findAttributesForTagName(tagName) {
             var tag = tags[tagName];
             if (!tag) {
@@ -207,9 +205,10 @@ class TaglibLookup {
             }
 
             if (tag.attributeGroups) {
-                for (let i=0; i<tag.attributeGroups.length; i++) {
+                for (let i = 0; i < tag.attributeGroups.length; i++) {
                     let attributeGroupName = tag.attributeGroups[i];
-                    let attributeGroup = taglibAttributeGroups[attributeGroupName];
+                    let attributeGroup =
+                        taglibAttributeGroups[attributeGroupName];
                     if (attributeGroup) {
                         for (let attrName in attributeGroup) {
                             handleAttr(attributeGroup[attrName]);
@@ -224,11 +223,11 @@ class TaglibLookup {
         }
 
         findAttributesForTagName(tagName); // Look for an exact match at the tag level
-        findAttributesForTagName('*'); // Including attributes that apply to all tags
+        findAttributesForTagName("*"); // Including attributes that apply to all tags
     }
 
     getTag(element) {
-        if (typeof element === 'string') {
+        if (typeof element === "string") {
             element = {
                 tagName: element
             };
@@ -243,13 +242,13 @@ class TaglibLookup {
     }
 
     getAttribute(element, attr) {
-        if (typeof element === 'string') {
+        if (typeof element === "string") {
             element = {
                 tagName: element
             };
         }
 
-        if (typeof attr === 'string') {
+        if (typeof attr === "string") {
             attr = {
                 name: attr
             };
@@ -270,9 +269,10 @@ class TaglibLookup {
             var attribute = attributes[attrName];
             if (attribute === undefined) {
                 if (tag.attributeGroups) {
-                    for (let i=0; i<tag.attributeGroups.length; i++) {
+                    for (let i = 0; i < tag.attributeGroups.length; i++) {
                         let attributeGroupName = tag.attributeGroups[i];
-                        let attributeGroup = taglibAttributeGroups[attributeGroupName];
+                        let attributeGroup =
+                            taglibAttributeGroups[attributeGroupName];
                         if (attributeGroup) {
                             attribute = attributeGroup[attrName];
                             if (attribute !== undefined) {
@@ -283,10 +283,14 @@ class TaglibLookup {
                 }
             }
 
-            if (attribute === undefined && attrName !== '*') {
+            if (attribute === undefined && attrName !== "*") {
                 if (tag.patternAttributes) {
                     // try searching by pattern
-                    for (var i = 0, len = tag.patternAttributes.length; i < len; i++) {
+                    for (
+                        var i = 0, len = tag.patternAttributes.length;
+                        i < len;
+                        i++
+                    ) {
                         var patternAttribute = tag.patternAttributes[i];
                         if (patternAttribute.pattern.test(attrName)) {
                             attribute = patternAttribute;
@@ -310,9 +314,10 @@ class TaglibLookup {
             return findAttributeForTag(tag, tag.attributes, attrName);
         }
 
-        var attrDef = tryAttribute(tagName, attrName) || // Look for an exact match at the tag level
-            tryAttribute('*', attrName) || // If not there, see if there is a exact match on the attribute name for attributes that apply to all tags
-            tryAttribute(tagName, '*'); // Otherwise, see if there is a splat attribute for the tag
+        var attrDef =
+            tryAttribute(tagName, attrName) || // Look for an exact match at the tag level
+            tryAttribute("*", attrName) || // If not there, see if there is a exact match on the attribute name for attributes that apply to all tags
+            tryAttribute(tagName, "*"); // Otherwise, see if there is a splat attribute for the tag
 
         if (attrDef && attrDef.ref) {
             attrDef = globalAttributes[attrDef.ref];
@@ -340,7 +345,7 @@ class TaglibLookup {
     }
 
     forEachTagTransformer(element, callback, thisObj) {
-        if (typeof element === 'string') {
+        if (typeof element === "string") {
             element = {
                 tagName: element
             };
@@ -356,7 +361,7 @@ class TaglibLookup {
 
         function addTransformer(transformer) {
             if (!transformer || !transformer.getFunc) {
-                throw new Error('Invalid transformer');
+                throw new Error("Invalid transformer");
             }
 
             transformers.push(transformer);
@@ -371,12 +376,14 @@ class TaglibLookup {
         if (this.merged.tags) {
             if (tagName) {
                 if (this.merged.tags[tagName]) {
-                    this.merged.tags[tagName].forEachTransformer(addTransformer);
+                    this.merged.tags[tagName].forEachTransformer(
+                        addTransformer
+                    );
                 }
             }
 
-            if (this.merged.tags['*']) {
-                this.merged.tags['*'].forEachTransformer(addTransformer);
+            if (this.merged.tags["*"]) {
+                this.merged.tags["*"].forEachTransformer(addTransformer);
             }
         }
 
@@ -398,11 +405,12 @@ class TaglibLookup {
 
             for (var taglibId in this.taglibsById) {
                 if (this.taglibsById.hasOwnProperty(taglibId)) {
-
-                    var taglibInputFiles = this.taglibsById[taglibId].getInputFiles();
+                    var taglibInputFiles = this.taglibsById[
+                        taglibId
+                    ].getInputFiles();
                     var len = taglibInputFiles.length;
                     if (len) {
-                        for (var i=0; i<len; i++) {
+                        for (var i = 0; i < len; i++) {
                             inputFilesSet[taglibInputFiles[i]] = true;
                         }
                     }
@@ -416,7 +424,7 @@ class TaglibLookup {
     }
 
     toString() {
-        return 'lookup: ' + this.getInputFiles().join(', ');
+        return "lookup: " + this.getInputFiles().join(", ");
     }
 }
 

@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class Vars extends Node {
     constructor(def) {
-        super('Vars');
-        this.kind = def.kind || 'var';
+        super("Vars");
+        this.kind = def.kind || "var";
         this.declarations = def.declarations;
         this.body = this.makeContainer(def.body);
     }
@@ -33,18 +33,17 @@ class Vars extends Node {
         var kind = this.kind;
         var isStatement = this.statement;
 
-
         if (!declarations || !declarations.length) {
             return;
         }
 
         writer.incIndent(4);
 
-        for (let i=0; i<declarations.length; i++) {
+        for (let i = 0; i < declarations.length; i++) {
             var declarator = declarations[i];
 
             if (i === 0) {
-                writer.write(kind + ' ');
+                writer.write(kind + " ");
             } else {
                 writer.writeLineIndent();
             }
@@ -52,10 +51,10 @@ class Vars extends Node {
             writer.write(declarator);
 
             if (i < declarations.length - 1) {
-                writer.write(',\n');
+                writer.write(",\n");
             } else {
                 if (isStatement) {
-                    writer.write(';\n');
+                    writer.write(";\n");
                 }
             }
         }

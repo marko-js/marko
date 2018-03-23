@@ -1,22 +1,24 @@
-require('../__util__/test-init');
+"use strict";
 
-var fs = require('fs');
-var path = require('path');
-var autotest = require('../autotest');
-var compiler = require('marko/compiler');
+require("../__util__/test-init");
 
-describe('components-compilation (vdom)', function () {
-    var autoTestDir = path.join(__dirname, './fixtures-vdom');
+var fs = require("fs");
+var autotest = require("../autotest");
+var compiler = require("marko/compiler");
 
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var templatePath = path.join(dir, 'index.marko');
-        var mainPath = path.join(dir, 'test.js');
+autotest("fixtures-vdom", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(() => {
+        var templatePath = resolve("index.marko");
+        var mainPath = resolve("test.js");
         var main;
 
         if (!fs.existsSync(templatePath)) {
-            templatePath = path.join(dir, 'template.marko');
+            templatePath = resolve("template.marko");
             if (!fs.existsSync(templatePath)) {
-                return done(new Error('Template not found for test'));
+                throw new Error("Template not found for test");
             }
         }
 
@@ -24,7 +26,11 @@ describe('components-compilation (vdom)', function () {
             main = require(mainPath);
         }
 
-        var compilerOptions = { output: 'vdom', writeVersionComment: false, autoKeyEnabled: true };
+        var compilerOptions = {
+            output: "vdom",
+            writeVersionComment: false,
+            autoKeyEnabled: true
+        };
 
         if (main && main.checkError) {
             var e;
@@ -36,20 +42,23 @@ describe('components-compilation (vdom)', function () {
             }
 
             if (!e) {
-                throw new Error('Error expected');
+                throw new Error("Error expected");
             }
 
             main.checkError(e);
-            done();
         } else if (main && main.checkTemplate) {
-            var template = require('marko').load(templatePath, Object.assign(compilerOptions, main.compilerOptions));
+            var template = require("marko").load(
+                templatePath,
+                Object.assign(compilerOptions, main.compilerOptions)
+            );
             main.checkTemplate(template);
-            done();
         } else {
-            var compiledSrc = compiler.compileFile(templatePath, Object.assign(compilerOptions, main && main.compilerOptions));
-            compiledSrc = compiledSrc.replace(/marko\/dist\//g, 'marko/src/');
-            helpers.compare(compiledSrc, '.js');
-            done();
+            var compiledSrc = compiler.compileFile(
+                templatePath,
+                Object.assign(compilerOptions, main && main.compilerOptions)
+            );
+            compiledSrc = compiledSrc.replace(/marko\/dist\//g, "marko/src/");
+            snapshot(compiledSrc, ".js");
         }
     });
 });

@@ -1,9 +1,9 @@
 module.exports = {
     onInput: function() {
-        this.name = 'app-foo';
+        this.name = "app-foo";
     },
 
-    onMount: function(componentConfig) {
+    onMount: function() {
         this.componentConfig = {
             name: this.name
         };

@@ -1,20 +1,25 @@
-var nodePath = require('path');
+var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
-    var runtimeHtml = require('marko/html');
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+    var runtimeHtml = require("marko/html");
 
     var out = runtimeHtml.createWriter();
-    out.on('finish', function (result) {
-        helpers.compare(result.getOutput());
-        done();
-    }).on('error', function (e) {
-        done(e);
-    });
+    out
+        .on("finish", function(result) {
+            snapshot(result.getOutput());
+            done();
+        })
+        .on("error", function(e) {
+            done(e);
+        });
 
-    var template = marko.load(nodePath.join(__dirname, 'template.marko'));
-    template.render({
-        name: 'John'
-    }, out);
+    var template = marko.load(nodePath.join(__dirname, "template.marko"));
+    template.render(
+        {
+            name: "John"
+        },
+        out
+    );
 
     out.end();
 };

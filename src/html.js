@@ -1,1 +1,1 @@
-module.exports = require('./runtime/html');
+module.exports = require("./runtime/html");

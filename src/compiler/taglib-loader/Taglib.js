@@ -1,8 +1,8 @@
-'use strict';
-var forEachEntry = require('raptor-util/forEachEntry');
-var ok = require('assert').ok;
-var path = require('path');
-var loaders = require('./loaders');
+"use strict";
+var forEachEntry = require("raptor-util/forEachEntry");
+var ok = require("assert").ok;
+var path = require("path");
+var loaders = require("./loaders");
 
 function handleImport(taglib, importedTaglib) {
     var importsLookup = taglib.importsLookup || (taglib.importsLookup = {});
@@ -46,7 +46,9 @@ class Taglib {
         attribute.filePath = this.filePath;
 
         if (!attribute.pattern && !attribute.name) {
-            throw new Error('Invalid attribute: ' + require('util').inspect(attribute));
+            throw new Error(
+                "Invalid attribute: " + require("util").inspect(attribute)
+            );
         }
 
         this.attributes[attribute.key] = attribute;
@@ -64,7 +66,7 @@ class Taglib {
         return attribute;
     }
     addTag(tag) {
-        ok(arguments.length === 1, 'Invalid args');
+        ok(arguments.length === 1, "Invalid args");
         if (!tag.name) {
             throw new Error('"tag.name" is required: ' + JSON.stringify(tag));
         }
@@ -78,9 +80,13 @@ class Taglib {
         this.transformers.push(transformer);
     }
     forEachTag(callback, thisObj) {
-        forEachEntry(this.tags, function (key, tag) {
-            callback.call(thisObj, tag);
-        }, this);
+        forEachEntry(
+            this.tags,
+            function(key, tag) {
+                callback.call(thisObj, tag);
+            },
+            this
+        );
     }
 
     addImport(path) {

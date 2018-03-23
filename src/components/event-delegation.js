@@ -1,20 +1,20 @@
-var componentsUtil = require('./util');
+var componentsUtil = require("./util");
 var runtimeId = componentsUtil.___runtimeId;
 var componentLookup = componentsUtil.___componentLookup;
 var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;
 
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
-var listenersAttachedKey = '$MED' + runtimeId;
+var listenersAttachedKey = "$MDE" + runtimeId;
 
 function getEventFromEl(el, eventName) {
     var virtualProps = getMarkoPropsFromEl(el);
     var eventInfo = virtualProps[eventName];
 
-    if (typeof eventInfo === 'string') {
-        eventInfo = eventInfo.split(' ');
+    if (typeof eventInfo === "string") {
+        eventInfo = eventInfo.split(" ");
         if (eventInfo[2]) {
-            eventInfo[2] = eventInfo[2] === 'true';
+            eventInfo[2] = eventInfo[2] === "true";
         }
         if (eventInfo.length == 4) {
             eventInfo[3] = parseInt(eventInfo[3], 10);
@@ -43,11 +43,11 @@ function delegateEvent(node, eventName, target, event) {
 
     var targetFunc = targetComponent[targetMethod];
     if (!targetFunc) {
-        throw Error('Method not found: ' + targetMethod);
+        throw Error("Method not found: " + targetMethod);
     }
 
     if (extraArgs != null) {
-        if (typeof extraArgs === 'number') {
+        if (typeof extraArgs === "number") {
             extraArgs = targetComponent.___bubblingDomEvents[extraArgs];
         }
     }
@@ -69,7 +69,7 @@ function attachBubbleEventListeners(doc) {
     // we again walk up the tree starting at the target associated
     // with the event to find any mappings for event. Each mapping
     // is from a DOM event type to a method of a component.
-    require('./bubble').forEach(function addBubbleHandler(eventType) {
+    require("./bubble").forEach(function addBubbleHandler(eventType) {
         body.addEventListener(eventType, function(event) {
             var propagationStopped = false;
 
@@ -93,7 +93,7 @@ function attachBubbleEventListeners(doc) {
 
             // Search up the tree looking DOM events mapped to target
             // component methods
-            var propName = 'on' + eventType;
+            var propName = "on" + eventType;
             var target;
 
             // Attributes will have the following form:
@@ -107,7 +107,7 @@ function attachBubbleEventListeners(doc) {
                         break;
                     }
                 }
-            } while((curNode = curNode.parentNode) && curNode.getAttribute);
+            } while ((curNode = curNode.parentNode) && curNode.getAttribute);
         });
     });
 }

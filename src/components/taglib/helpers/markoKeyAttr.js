@@ -4,6 +4,6 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 
 module.exports = function markoKeyAttr(key, componentDef) {
     if ((componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0) {
-        return key + ' ' + componentDef.id;
+        return key + " " + componentDef.id;
     }
 };

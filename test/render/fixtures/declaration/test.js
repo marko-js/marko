@@ -1,2 +1,2 @@
 exports.templateData = {};
-exports.vdomSkip = true;
+exports.skip_vdom = "declarations are not supported in vdom";

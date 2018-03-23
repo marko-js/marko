@@ -1,1 +1,1 @@
-exports.render = function (input, out) {};
+exports.render = function() {};

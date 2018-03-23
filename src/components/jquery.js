@@ -1,29 +1,29 @@
-var ready = require('./ready');
+var ready = require("./ready");
 
-var idRegExp = /^\#(\S+)( .*)?/;
+var idRegExp = /^#(\S+)( .*)?/;
 
 exports.patchComponent = function(jQuery, proto, delayThrow) {
     /* globals window */
 
     if (!(jQuery || (jQuery = window.$)) && !delayThrow) {
-        throw new Error('jQuery not found');
+        throw new Error("jQuery not found");
     }
 
-    (proto || require('./Component').prototype).$ = function jqueryProxy(arg) {
+    (proto || require("./Component").prototype).$ = function jqueryProxy(arg) {
         var args = arguments;
         var self = this;
 
         if (!jQuery) {
-            throw new Error('jQuery not found');
+            throw new Error("jQuery not found");
         }
 
         if (args.length === 1) {
             //Handle an "ondomready" callback function
-            if (typeof arg === 'function') {
+            if (typeof arg === "function") {
                 return ready(function() {
                     arg.call(self);
                 });
-            } else if (typeof arg === 'string') {
+            } else if (typeof arg === "string") {
                 var match = idRegExp.exec(arg);
                 //Reset the search to 0 so the next call to exec will start from the beginning for the new string
                 if (match != null) {
@@ -36,14 +36,16 @@ exports.patchComponent = function(jQuery, proto, delayThrow) {
                 } else {
                     var rootEl = self.getEl();
                     if (!rootEl) {
-                        throw new Error('Root element is not defined for component');
+                        throw new Error(
+                            "Root element is not defined for component"
+                        );
                     }
                     if (rootEl) {
                         return jQuery(arg, rootEl);
                     }
                 }
             }
-        } else if (args.length === 2 && typeof args[1] === 'string') {
+        } else if (args.length === 2 && typeof args[1] === "string") {
             return jQuery(arg, self.getEl(args[1]));
         } else if (args.length === 0) {
             return jQuery(self.el);

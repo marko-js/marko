@@ -1,15 +1,15 @@
-'use strict';
-var AsyncStream = require('./AsyncStream');
-var makeRenderable = require('../renderable');
-var stream = require('stream');
+"use strict";
+var AsyncStream = require("./AsyncStream");
+var makeRenderable = require("../renderable");
+var stream = require("stream");
 
 class Readable extends stream.Readable {
     constructor(template, data, options) {
-       super();
-       this._t = template;
-       this._d = data;
-       this._shouldBuffer = !options || options.shouldBuffer !== false;
-       this._rendered = false;
+        super();
+        this._t = template;
+        this._d = data;
+        this._shouldBuffer = !options || options.shouldBuffer !== false;
+        this._rendered = false;
     }
 
     write(data) {

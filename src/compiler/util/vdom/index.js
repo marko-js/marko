@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const VDOMOptimizer = require('./VDOMOptimizer');
-const isStaticValue = require('./isStaticValue');
+const VDOMOptimizer = require("./VDOMOptimizer");
+const isStaticValue = require("./isStaticValue");
 
 const OPTIMIZER_ADDED_KEY = Symbol();
 

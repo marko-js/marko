@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 class NewExpression extends Node {
     constructor(def) {
-        super('NewExpression');
+        super("NewExpression");
         this.callee = def.callee;
         this.args = def.args;
     }
@@ -20,37 +20,42 @@ class NewExpression extends Node {
         var callee = this.callee;
         var args = this.args;
 
-        writer.write('new ');
+        writer.write("new ");
 
         var wrap = isCompoundExpression(callee);
 
         if (wrap) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(callee);
 
         if (wrap) {
-            writer.write(')');
+            writer.write(")");
         }
 
-        writer.write('(');
+        writer.write("(");
 
         if (args && args.length) {
-            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+            for (let i = 0, argsLen = args.length; i < argsLen; i++) {
                 if (i !== 0) {
-                    writer.write(', ');
+                    writer.write(", ");
                 }
 
                 let arg = args[i];
                 if (!arg) {
-                    throw new Error('Arg ' + i + ' is not valid for new expression: ' + JSON.stringify(this.toJSON()));
+                    throw new Error(
+                        "Arg " +
+                            i +
+                            " is not valid for new expression: " +
+                            JSON.stringify(this.toJSON())
+                    );
                 }
                 writer.write(arg);
             }
         }
 
-        writer.write(')');
+        writer.write(")");
     }
 
     isCompoundExpression() {
@@ -59,7 +64,7 @@ class NewExpression extends Node {
 
     toJSON() {
         return {
-            type: 'NewExpression',
+            type: "NewExpression",
             callee: this.callee,
             args: this.args
         };
@@ -74,27 +79,26 @@ class NewExpression extends Node {
         var callee = this.callee;
         var args = this.args;
 
-        let result = 'new ';
+        let result = "new ";
 
         var wrap = isCompoundExpression(callee);
 
         if (wrap) {
-            result += '(';
+            result += "(";
         }
 
         result += callee;
 
         if (wrap) {
-            result += ')';
+            result += ")";
         }
 
-
-        result += '(';
+        result += "(";
 
         if (args && args.length) {
-            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+            for (let i = 0, argsLen = args.length; i < argsLen; i++) {
                 if (i !== 0) {
-                    result += ', ';
+                    result += ", ";
                 }
 
                 let arg = args[i];
@@ -102,7 +106,7 @@ class NewExpression extends Node {
             }
         }
 
-        result += ')';
+        result += ")";
 
         return result;
     }

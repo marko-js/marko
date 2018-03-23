@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 const escapeEndingScriptTagRegExp = /<\//g;
-const warp10 = require('warp10');
+const warp10 = require("warp10");
 
 function getSerializedGlobals(outGlobal) {
     let serializedGlobalsLookup = outGlobal.serializedGlobals;
     if (serializedGlobalsLookup) {
         let serializedGlobals;
         let keys = Object.keys(serializedGlobalsLookup);
-        for (let i=0, len=keys.length; i<len; i++) {
+        for (let i = 0, len = keys.length; i < len; i++) {
             let key = keys[i];
             if (serializedGlobalsLookup[key] === true) {
                 let value = outGlobal[key];
@@ -33,9 +33,15 @@ module.exports = function render(input, out) {
         return;
     }
     var cspNonce = outGlobal.cspNonce;
-    var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
+    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
-    out.write('<script' + nonceAttr + '>$MG=' +
-        warp10.stringify(serializedGlobals).replace(escapeEndingScriptTagRegExp, '\\u003C/') +
-        '</script>');
+    out.write(
+        "<script" +
+            nonceAttr +
+            ">$MG=" +
+            warp10
+                .stringify(serializedGlobals)
+                .replace(escapeEndingScriptTagRegExp, "\\u003C/") +
+            "</script>"
+    );
 };

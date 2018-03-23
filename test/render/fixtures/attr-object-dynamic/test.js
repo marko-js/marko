@@ -1,3 +1,3 @@
 exports.templateData = {
-    myObject: { hello: 'world\'s' }
+    myObject: { hello: "world's" }
 };

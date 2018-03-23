@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = function assignComponentId(isRepeated) {
     // First check if we have already assigned an ID to thie element
@@ -19,7 +19,7 @@ module.exports = function assignComponentId(isRepeated) {
     let assignedKey;
     var nestedIdExpression;
     var idExpression;
-    
+
     // In order to attach a DOM event listener directly we need to make sure
     // the target HTML element has an ID that we can use to get a reference
     // to the element during initialization. We generate this unique ID
@@ -32,11 +32,11 @@ module.exports = function assignComponentId(isRepeated) {
     // 3) The HTML does not have an "id" or "ref" attribute. We must add
     //    an "id" attribute with a unique ID.
 
-    var isHtmlElement = el.type === 'HtmlElement';
-    var isCustomTag = el.type === 'CustomTag';
+    var isHtmlElement = el.type === "HtmlElement";
+    var isCustomTag = el.type === "CustomTag";
 
     // LEGACY -- Remove in Marko 5.0
-    if (!isCustomTag && el.tagName === 'invoke') {
+    if (!isCustomTag && el.tagName === "invoke") {
         isCustomTag = true;
     }
 
@@ -44,29 +44,37 @@ module.exports = function assignComponentId(isRepeated) {
         return;
     }
 
-    if (el.hasAttribute('w-id')) {
-        context.deprecate('The "w-id" attribute is deprecated. Please use "key" instead.');
+    if (el.hasAttribute("w-id")) {
+        context.deprecate(
+            'The "w-id" attribute is deprecated. Please use "key" instead.'
+        );
 
-        if (el.hasAttribute('key')) {
-            this.addError('The "w-id" attribute cannot be used in conjunction with the "key" attributes.');
+        if (el.hasAttribute("key")) {
+            this.addError(
+                'The "w-id" attribute cannot be used in conjunction with the "key" attributes.'
+            );
             return;
         }
 
-        if (el.hasAttribute('ref')) {
-            this.addError('The "w-id" attribute cannot be used in conjunction with the "ref" attributes.');
+        if (el.hasAttribute("ref")) {
+            this.addError(
+                'The "w-id" attribute cannot be used in conjunction with the "ref" attributes.'
+            );
             return;
         }
 
-        assignedKey = el.getAttributeValue('w-id');
+        assignedKey = el.getAttributeValue("w-id");
 
-        el.removeAttribute('w-id');
-    } else if (el.hasAttribute('key')) {
-        assignedKey = el.getAttributeValue('key');
-        el.removeAttribute('key');
-    } else if (el.hasAttribute('ref')) {
-        context.deprecate('The "ref" attribute is deprecated. Please use "key" instead.');
-        assignedKey = el.getAttributeValue('ref');
-        el.removeAttribute('ref');
+        el.removeAttribute("w-id");
+    } else if (el.hasAttribute("key")) {
+        assignedKey = el.getAttributeValue("key");
+        el.removeAttribute("key");
+    } else if (el.hasAttribute("ref")) {
+        context.deprecate(
+            'The "ref" attribute is deprecated. Please use "key" instead.'
+        );
+        assignedKey = el.getAttributeValue("ref");
+        el.removeAttribute("ref");
     }
 
     if (assignedKey) {
@@ -75,12 +83,21 @@ module.exports = function assignComponentId(isRepeated) {
         if (isCustomTag) {
             idExpression = this.buildComponentElIdFunctionCall(assignedKey);
             // The element is a custom tag
-            this.getComponentArgs().setKey(nestedIdExpression, true /* user assigned key */);
+            this.getComponentArgs().setKey(
+                nestedIdExpression,
+                true /* user assigned key */
+            );
         } else {
             idExpression = assignedKey;
             if (el.data.userAssignedKey !== false) {
-                if (context.data.hasLegacyForKey || context.data.hasImperativeComponentIds) {
-                    el.setAttributeValue('id', this.buildComponentElIdFunctionCall(assignedKey));
+                if (
+                    context.data.hasLegacyForKey ||
+                    context.data.hasImperativeComponentIds
+                ) {
+                    el.setAttributeValue(
+                        "id",
+                        this.buildComponentElIdFunctionCall(assignedKey)
+                    );
                 }
             }
 
@@ -91,7 +108,9 @@ module.exports = function assignComponentId(isRepeated) {
         // Case 3 - We need to add a unique auto key
         let uniqueKey = this.nextUniqueId();
 
-        nestedIdExpression = isRepeated ? builder.literal(uniqueKey + '[]') : builder.literal(uniqueKey.toString());
+        nestedIdExpression = isRepeated
+            ? builder.literal(uniqueKey + "[]")
+            : builder.literal(uniqueKey.toString());
 
         idExpression = builder.literal(uniqueKey.toString());
 
@@ -114,7 +133,7 @@ module.exports = function assignComponentId(isRepeated) {
             }
 
             let uniqueElId = transformHelper.nextUniqueId();
-            let idVarName = '__key' + uniqueElId;
+            let idVarName = "__key" + uniqueElId;
             let idVar = builder.identifier(idVarName);
 
             this.idVarNode = builder.vars([
@@ -122,17 +141,20 @@ module.exports = function assignComponentId(isRepeated) {
                     id: idVarName,
                     init: builder.functionCall(
                         builder.memberExpression(
-                            builder.identifier('__component'),
-                            builder.identifier('___nextKey')),
-                        [ idExpression ])
+                            builder.identifier("__component"),
+                            builder.identifier("___nextKey")
+                        ),
+                        [idExpression]
+                    )
                 }
             ]);
 
             this.idExpression = idExpression = idVar;
 
             this.nestedIdExpression = nestedIdExpression = builder.concat(
-                builder.literal('#'),
-                idVar);
+                builder.literal("#"),
+                idVar
+            );
 
             if (isCustomTag) {
                 transformHelper.getComponentArgs().setKey(nestedIdExpression);

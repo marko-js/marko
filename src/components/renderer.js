@@ -1,22 +1,22 @@
-var componentsUtil = require('./util');
+var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 
-var ComponentsContext = require('./ComponentsContext');
+var ComponentsContext = require("./ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var registry = require('./registry');
-var copyProps = require('raptor-util/copyProps');
+var registry = require("./registry");
+var copyProps = require("raptor-util/copyProps");
 var isServer = componentsUtil.___isServer === true;
-var beginComponent = require('./beginComponent');
-var endComponent = require('./endComponent');
+var beginComponent = require("./beginComponent");
+var endComponent = require("./endComponent");
 
-var COMPONENT_BEGIN_ASYNC_ADDED_KEY = '$wa';
+var COMPONENT_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
 function resolveComponentKey(globalComponentsContext, key, parentComponentDef) {
-    if (key[0] === '#') {
+    if (key[0] === "#") {
         return key.substring(1);
     } else {
-        return parentComponentDef.id + '-' + parentComponentDef.___nextKey(key);
+        return parentComponentDef.id + "-" + parentComponentDef.___nextKey(key);
     }
 }
 
@@ -27,16 +27,24 @@ function handleBeginAsync(event) {
 
     if (componentsContext !== undefined) {
         // We are going to start a nested ComponentsContext
-        asyncOut.___components = new ComponentsContext(asyncOut, componentsContext);
+        asyncOut.___components = new ComponentsContext(
+            asyncOut,
+            componentsContext
+        );
     }
     // Carry along the component arguments
     asyncOut.c(
         parentOut.___assignedComponentDef,
         parentOut.___assignedKey,
-        parentOut.___assignedCustomEvents);
+        parentOut.___assignedCustomEvents
+    );
 }
 
-function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) {
+function createRendererFunc(
+    templateRenderFunc,
+    componentProps,
+    renderingLogic
+) {
     renderingLogic = renderingLogic || {};
     var onInput = renderingLogic.onInput;
     var typeName = componentProps.___type;
@@ -51,7 +59,7 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
         if (out.isSync() === false) {
             if (!outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY]) {
                 outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY] = true;
-                out.on('beginAsync', handleBeginAsync);
+                out.on("beginAsync", handleBeginAsync);
             }
         }
 
@@ -88,7 +96,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 var key = out.___assignedKey;
 
                 if (key != null) {
-                    id = resolveComponentKey(globalComponentsContext, key.toString(), componentDefFromArgs);
+                    id = resolveComponentKey(
+                        globalComponentsContext,
+                        key.toString(),
+                        componentDefFromArgs
+                    );
                 } else {
                     id = componentDefFromArgs.___nextComponentId();
                 }
@@ -109,7 +121,8 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 out,
                 typeName,
                 customEvents,
-                scope);
+                scope
+            );
 
             // This is the final input after running the lifecycle methods.
             // We will be passing the input to the template for the `input` param
@@ -118,7 +131,11 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
             component.___updatedInput = undefined; // We don't want ___updatedInput to be serialized to the browser
         } else {
             if (!component) {
-                if (isRerender && (component = componentLookup[id]) && component.___type !== typeName) {
+                if (
+                    isRerender &&
+                    (component = componentLookup[id]) &&
+                    component.___type !== typeName
+                ) {
                     // Destroy the existing component since
                     component.destroy();
                     component = undefined;
@@ -134,11 +151,15 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                     if (shouldApplySplitMixins === true) {
                         shouldApplySplitMixins = false;
 
-                        var renderingLogicProps = typeof renderingLogic == 'function' ?
-                            renderingLogic.prototype :
-                            renderingLogic;
+                        var renderingLogicProps =
+                            typeof renderingLogic == "function"
+                                ? renderingLogic.prototype
+                                : renderingLogic;
 
-                        copyProps(renderingLogicProps, component.constructor.prototype);
+                        copyProps(
+                            renderingLogicProps,
+                            component.constructor.prototype
+                        );
                     }
                 }
 
@@ -152,18 +173,24 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
                 }
 
                 if (isExisting === false) {
-                    emitLifecycleEvent(component, 'create', input, out);
+                    emitLifecycleEvent(component, "create", input, out);
                 }
 
                 input = component.___setInput(input, onInput, out);
 
                 if (isExisting === true) {
-                    if (component.___isDirty === false || component.shouldUpdate(input, component.___state) === false) {
+                    if (
+                        component.___isDirty === false ||
+                        component.shouldUpdate(input, component.___state) ===
+                            false
+                    ) {
                         // We put a placeholder element in the output stream to ensure that the existing
                         // DOM node is matched up correctly when using morphdom. We flag the VElement
                         // node to track that it is a preserve marker
                         out.___preserveComponent(component);
-                        globalComponentsContext.___renderedComponentsById[id] = true;
+                        globalComponentsContext.___renderedComponentsById[
+                            id
+                        ] = true;
                         component.___reset(); // The component is no longer dirty so reset internal flags
                         return;
                     }
@@ -172,17 +199,28 @@ function createRendererFunc(templateRenderFunc, componentProps, renderingLogic) 
 
             component.___global = outGlobal;
 
-            emitLifecycleEvent(component, 'render', out);
+            emitLifecycleEvent(component, "render", out);
         }
 
-        var componentDef =
-          beginComponent(componentsContext, component, isSplit, componentDefFromArgs, isImplicitComponent);
+        var componentDef = beginComponent(
+            componentsContext,
+            component,
+            isSplit,
+            componentDefFromArgs,
+            isImplicitComponent
+        );
 
         componentDef.___isExisting = isExisting;
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(input, out, componentDef, component, component.___rawState);
+        templateRenderFunc(
+            input,
+            out,
+            componentDef,
+            component,
+            component.___rawState
+        );
 
         endComponent(out, componentDef);
         componentsContext.___componentDef = parentComponentDef;

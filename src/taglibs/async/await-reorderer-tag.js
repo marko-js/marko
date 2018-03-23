@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const clientReorder = require('./client-reorder');
+const clientReorder = require("./client-reorder");
 
 module.exports = function(input, out) {
     // We cannot call beginSync() when using renderSync(). In this case we will
@@ -21,39 +21,54 @@ module.exports = function(input, out) {
 
     global.__awaitReordererInvoked = true;
 
-    var asyncOut = out.beginAsync({ last: true, timeout: -1, name: 'await-reorderer' });
+    var asyncOut = out.beginAsync({
+        last: true,
+        timeout: -1,
+        name: "await-reorderer"
+    });
 
     out.onLast(function(next) {
         var awaitContext = global.___clientReorderContext;
         var remaining;
 
         // Validate that we have remaining <await> instances that need handled
-        if (!awaitContext ||
+        if (
+            !awaitContext ||
             !awaitContext.instances ||
-            !(remaining = awaitContext.instances.length)) {
+            !(remaining = awaitContext.instances.length)
+        ) {
             asyncOut.end();
             next();
             return;
         }
 
         function handleAwait(awaitInfo) {
-            awaitInfo.out.on('finish', function(result) {
+            awaitInfo.out
+                .on("finish", function(result) {
                     if (!global._afRuntime) {
                         asyncOut.write(clientReorder.getCode());
                         global._afRuntime = true;
                     }
 
-                    asyncOut.write('<div id="af' + awaitInfo.id + '" style="display:none">' +
-                        result.toString() +
-                        '</div>' +
-                        '<script type="text/javascript">$af(' +
-                            (typeof awaitInfo.id === 'number' ? awaitInfo.id : '"' + awaitInfo.id + '"') +
-                            (awaitInfo.after ? (',"' + awaitInfo.after + '"') : '' ) +
-                        ')</script>');
+                    asyncOut.write(
+                        '<div id="af' +
+                            awaitInfo.id +
+                            '" style="display:none">' +
+                            result.toString() +
+                            "</div>" +
+                            '<script type="text/javascript">$af(' +
+                            (typeof awaitInfo.id === "number"
+                                ? awaitInfo.id
+                                : '"' + awaitInfo.id + '"') +
+                            (awaitInfo.after
+                                ? ',"' + awaitInfo.after + '"'
+                                : "") +
+                            ")</script>"
+                    );
 
                     awaitInfo.out.writer = asyncOut.writer;
 
-                    out.emit('await:finish', awaitInfo);
+                    out.emit("await:finish", awaitInfo);
 
                     out.flush();
 
@@ -62,14 +77,14 @@ module.exports = function(input, out) {
                         next();
                     }
                 })
-                .on('error', function(err) {
+                .on("error", function(err) {
                     asyncOut.error(err);
                 });
         }
 
         awaitContext.instances.forEach(handleAwait);
 
-        out.on('await:clientReorder', function(awaitInfo) {
+        out.on("await:clientReorder", function(awaitInfo) {
             remaining++;
             handleAwait(awaitInfo);
         });

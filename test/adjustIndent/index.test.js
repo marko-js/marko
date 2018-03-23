@@ -1,24 +1,20 @@
-'use strict';
+"use strict";
 
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var chai = require('chai');
-chai.config.includeStack = true;
-var path = require('path');
-var adjustIndent = require('marko/compiler/util/adjustIndent');
-var autotest = require('../autotest');
-var fs = require('fs');
+var adjustIndent = require("marko/compiler/util/adjustIndent");
+var autotest = require("../autotest");
+var fs = require("fs");
 
-describe('adjustIndent', function () {
-    var autoTestDir = path.join(__dirname, './fixtures');
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        var inputPath = path.join(dir, 'input.txt');
-        var testSettings = require(path.join(dir, 'test.js'));
-        var input = fs.readFileSync(inputPath, { encoding: 'utf8' });
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(() => {
+        var testSettings = require(resolve("test.js"));
+        var input = fs.readFileSync(resolve("input.txt"), { encoding: "utf8" });
         var newIndentation = testSettings.newIndentation;
         var output = adjustIndent(input, newIndentation);
-        helpers.compare(output, '.txt');
-        done();
+        snapshot(output, ".txt");
     });
 });

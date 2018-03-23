@@ -1,5 +1,5 @@
 module.exports = {
-    onInput: function (input) {
+    onInput: function(input) {
         this.name = input.name;
         this.channel = input.channel;
     }

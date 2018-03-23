@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class AttributePlaceholder extends Node {
     constructor(def) {
-        super('AttributePlaceholder');
+        super("AttributePlaceholder");
         this.value = def.value;
         this.escape = def.escape;
     }

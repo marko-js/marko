@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ContainerNode extends Node {
     constructor(type) {

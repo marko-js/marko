@@ -1,32 +1,32 @@
-require('../patch-module');
+require("../patch-module");
 
-require('marko/node-require');
-require('marko/express');
+require("marko/node-require");
+require("marko/express");
 
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV === "production";
 
-require('lasso').configure({
-    outputDir: __dirname + '/static',
+require("lasso").configure({
+    outputDir: __dirname + "/static",
     bundlingEnabled: isProduction,
     fingerprintsEnabled: isProduction,
     minify: isProduction
 });
 
-var express = require('express');
+var express = require("express");
 
 var app = express();
 
-var serveStatic = require('serve-static');
+var serveStatic = require("serve-static");
 
-require('./codegen-create/run');
+require("./codegen-create/run");
 
-var template = require('./index.marko');
+var template = require("./index.marko");
 
-app.use('/codegen-create', serveStatic(__dirname + '/codegen-create'));
+app.use("/codegen-create", serveStatic(__dirname + "/codegen-create"));
 
-app.use(require('lasso/middleware').serveStatic());
+app.use(require("lasso/middleware").serveStatic());
 
-app.get('/', function(req, res) {
+app.get("/", function(req, res) {
     res.marko(template);
 });
 
@@ -35,5 +35,5 @@ app.listen(8080, function(err) {
         throw err;
     }
 
-    console.log('Server ready:\nhttp://localhost:8080');
+    console.log("Server ready:\nhttp://localhost:8080");
 });

@@ -1,5 +1,5 @@
 module.exports = {
-    onCreate: function (input) {
+    onCreate: function() {
         this.state = {
             clicked: false
         };

@@ -1,21 +1,14 @@
-'use strict';
-var extend = require('raptor-util/extend');
+"use strict";
+var extend = require("raptor-util/extend");
 
-var STYLE_ATTR = 'style';
-var CLASS_ATTR = 'class';
+var STYLE_ATTR = "style";
+var CLASS_ATTR = "class";
 
-var escape = require('./escape');
+var escape = require("./escape");
 var escapeXml = escape.escapeXml;
 var escapeXmlAttr = escape.escapeXmlAttr;
-var attrHelper = require('./helper-attr');
-var attrsHelper = require('./helper-attrs');
-
-var classList;
-
-
-
-
-
+var attrHelper = require("./helper-attr");
+var attrsHelper = require("./helper-attrs");
 
 /**
  * Internal method to escape special XML characters
@@ -45,7 +38,9 @@ exports.xa = escapeXmlAttr;
  */
 var escapeEndingScriptTagRegExp = /<\/script/g;
 exports.xs = function escapeScriptHelper(val) {
-    return (typeof val === 'string') ? val.replace(escapeEndingScriptTagRegExp, '\\u003C/script') : val;
+    return typeof val === "string"
+        ? val.replace(escapeEndingScriptTagRegExp, "\\u003C/script")
+        : val;
 };
 
 /**
@@ -63,7 +58,9 @@ exports.xs = function escapeScriptHelper(val) {
  */
 var escapeEndingStyleTagRegExp = /<\/style/g;
 exports.xc = function escapeScriptHelper(val) {
-    return (typeof val === 'string') ? val.replace(escapeEndingStyleTagRegExp, '\\003C/style') : val;
+    return typeof val === "string"
+        ? val.replace(escapeEndingStyleTagRegExp, "\\003C/style")
+        : val;
 };
 
 /**
@@ -90,31 +87,33 @@ var dashedNames = {};
 
 exports.sa = function(style) {
     if (!style) {
-        return '';
+        return "";
     }
 
     var type = typeof style;
 
-    if (type === 'string') {
+    if (type === "string") {
         return attrHelper(STYLE_ATTR, style, false);
-    } else if (type === 'object') {
-        var styles = '';
+    } else if (type === "object") {
+        var styles = "";
         for (var name in style) {
             var value = style[name];
             if (value != null) {
-                if (typeof value === 'number' && value) {
-                    value += 'px';
+                if (typeof value === "number" && value) {
+                    value += "px";
                 }
                 var nameDashed = dashedNames[name];
                 if (!nameDashed) {
-                    nameDashed = dashedNames[name] = name.replace(/([A-Z])/g, '-$1').toLowerCase();
+                    nameDashed = dashedNames[name] = name
+                        .replace(/([A-Z])/g, "-$1")
+                        .toLowerCase();
                 }
-                styles += nameDashed + ':' + value + ';';
+                styles += nameDashed + ":" + value + ";";
             }
         }
-        return styles ? ' ' + STYLE_ATTR + '="' + styles +'"' : '';
+        return styles ? " " + STYLE_ATTR + '="' + styles + '"' : "";
     } else {
-        return '';
+        return "";
     }
 };
 
@@ -128,37 +127,39 @@ exports.sa = function(style) {
  */
 exports.ca = function(classNames) {
     if (!classNames) {
-        return '';
+        return "";
     }
 
-    if (typeof classNames === 'string') {
+    if (typeof classNames === "string") {
         return attrHelper(CLASS_ATTR, classNames, false);
     } else {
         return attrHelper(CLASS_ATTR, classList(classNames), false);
     }
 };
 
-
 function classList(arg) {
-    var len, name, value, str = '';
+    var len,
+        name,
+        value,
+        str = "";
 
     if (arg) {
-        if (typeof arg === 'string') {
+        if (typeof arg === "string") {
             if (arg) {
-                str += ' ' + arg;
+                str += " " + arg;
             }
-        } else if (typeof (len = arg.length) === 'number') {
-            for (var i=0; i<len; i++) {
+        } else if (typeof (len = arg.length) === "number") {
+            for (var i = 0; i < len; i++) {
                 value = classList(arg[i]);
                 if (value) {
-                    str += ' ' + value;
+                    str += " " + value;
                 }
             }
-        } else if (typeof arg === 'object') {
+        } else if (typeof arg === "object") {
             for (name in arg) {
                 value = arg[name];
                 if (value) {
-                    str += ' ' + name;
+                    str += " " + name;
                 }
             }
         }
@@ -167,10 +168,9 @@ function classList(arg) {
     return (str && str.slice(1)) || null;
 }
 
-var commonHelpers = require('../helpers');
+var commonHelpers = require("../helpers");
 extend(exports, commonHelpers);
 exports.cl = classList;
-
 
 /**
  * Internal helper method to insert a script tag that assigns properties
@@ -183,20 +183,21 @@ var assignPropsFunction = `
         Object.assign(s.previousSibling, p);
         s.parentNode.removeChild(s);
     }
-`.replace(/\s+/g, ' ')
- .replace(/([\W]) (.)/g, '$1$2')
- .replace(/(.) ([\W])/g, '$1$2')
- .trim();
+`
+    .replace(/\s+/g, " ")
+    .replace(/([\W]) (.)/g, "$1$2")
+    .replace(/(.) ([\W])/g, "$1$2")
+    .trim();
 exports.p = function propsForPreviousNode(props, out) {
     var cspNonce = out.global.cspNonce;
-    var nonceAttr = cspNonce ? ' nonce='+JSON.stringify(cspNonce) : '';
+    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
-    out.w('<script' + nonceAttr + '>');
+    out.w("<script" + nonceAttr + ">");
 
     if (!out.global.assignPropsFunction) {
         out.w(assignPropsFunction);
         out.global.assignPropsFunction = true;
     }
 
-    out.w('ap_(' + escapeScript(JSON.stringify(props)) + ');</script>');
+    out.w("ap_(" + escapeScript(JSON.stringify(props)) + ");</script>");
 };

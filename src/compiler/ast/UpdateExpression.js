@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 class UpdateExpression extends Node {
     constructor(def) {
-        super('UpdateExpression');
+        super("UpdateExpression");
         this.argument = def.argument;
         this.operator = def.operator;
         this.prefix = def.prefix === true;
@@ -28,13 +28,13 @@ class UpdateExpression extends Node {
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(argument);
 
         if (wrap) {
-            writer.write(')');
+            writer.write(")");
         }
 
         if (!prefix) {
@@ -48,7 +48,7 @@ class UpdateExpression extends Node {
 
     toJSON() {
         return {
-            type: 'UpdateExpression',
+            type: "UpdateExpression",
             argument: this.argument,
             operator: this.operator,
             prefix: this.prefix
@@ -64,7 +64,7 @@ class UpdateExpression extends Node {
         var operator = this.operator;
         var prefix = this.prefix;
 
-        let result = '';
+        let result = "";
 
         if (prefix) {
             result += operator;
@@ -73,13 +73,13 @@ class UpdateExpression extends Node {
         var wrap = isCompoundExpression(argument);
 
         if (wrap) {
-            result += '(';
+            result += "(";
         }
 
         result += argument;
 
         if (wrap) {
-            result += ')';
+            result += ")";
         }
 
         if (!prefix) {

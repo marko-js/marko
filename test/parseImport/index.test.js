@@ -1,32 +1,32 @@
-'use strict';
+"use strict";
 
-require('../__util__/test-init');
+require("../__util__/test-init");
 
-var chai = require('chai');
+var chai = require("chai");
 chai.config.includeStack = true;
-var parseFor = require('marko/taglibs/core/util/parseImport.js');
-var autotest = require('../autotest');
-var fs = require('fs');
-var path = require('path');
+var parseFor = require("marko/taglibs/core/util/parseImport.js");
+var autotest = require("../autotest");
+var fs = require("fs");
 
-describe('parseImport', function () {
-
-    var autoTestDir = path.join(__dirname, './fixtures');
-
-    autotest.scanDir(autoTestDir, function run(dir, helpers, done) {
-        let inputPath = path.join(dir, 'input.txt');
-        let input = fs.readFileSync(inputPath, { encoding: 'utf8' });
+autotest("fixtures", fixture => {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let snapshot = fixture.snapshot;
+    test(() => {
+        let inputPath = resolve("input.txt");
+        let input = fs.readFileSync(inputPath, { encoding: "utf8" });
 
         try {
             let parsed = parseFor(input);
-            helpers.compare(parsed, '.json');
-            return done();
+            snapshot(parsed, ".json");
         } catch (e) {
-            if (e.code === 'INVALID_FOR') {
-                helpers.compare({
-                    error: e.message
-                }, '.json');
-                return done();
+            if (e.code === "INVALID_FOR") {
+                snapshot(
+                    {
+                        error: e.message
+                    },
+                    ".json"
+                );
             } else {
                 throw e;
             }

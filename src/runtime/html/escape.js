@@ -1,14 +1,14 @@
 var elTest = /[&<]/;
 var elTestReplace = /[&<]/g;
-var attrTest = /[&<\"\n]/;
-var attrReplace = /[&<\"\n]/g;
+var attrTest = /[&<"\n]/;
+var attrReplace = /[&<"\n]/g;
 
 var replacements = {
-    '<': '&lt;',
-    '&': '&amp;',
-    '"': '&quot;',
-    '\'': '&#39;',
-    '\n': '&#10;' //Preserve new lines so that they don't get normalized as space
+    "<": "&lt;",
+    "&": "&amp;",
+    '"': "&quot;",
+    "'": "&#39;",
+    "\n": "&#10;" //Preserve new lines so that they don't get normalized as space
 };
 
 function replaceChar(match) {
@@ -21,15 +21,15 @@ function escapeString(str, regexpTest, regexpReplace) {
 
 function escapeXmlHelper(value, regexpTest, regexpReplace) {
     // check for most common case first
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return escapeString(value, regexpTest, regexpReplace);
     } else if (value == null) {
-        return '';
-    } else if (typeof value === 'object') {
+        return "";
+    } else if (typeof value === "object") {
         if (value.toHTML) {
             return value.toHTML();
         }
-    } else if (value === true || value === false || typeof value === 'number') {
+    } else if (value === true || value === false || typeof value === "number") {
         return value.toString();
     }
 

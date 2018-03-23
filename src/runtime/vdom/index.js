@@ -1,10 +1,10 @@
-'use strict';
-require('../../');
+"use strict";
+require("../../");
 
 // helpers provide a core set of various utility methods
 // that are available in every template
-var AsyncVDOMBuilder = require('./AsyncVDOMBuilder');
-var makeRenderable = require('../renderable');
+var AsyncVDOMBuilder = require("./AsyncVDOMBuilder");
+var makeRenderable = require("../renderable");
 
 /**
  * Method is for internal usage only. This method
@@ -13,7 +13,7 @@ var makeRenderable = require('../renderable');
  * @private
  */
 exports.t = function createTemplate(path) {
-     return new Template(path);
+    return new Template(path);
 };
 
 function Template(path, func) {
@@ -26,13 +26,13 @@ function createOut(globalData, parent, parentOut) {
     return new AsyncVDOMBuilder(globalData, parent, parentOut);
 }
 
-var Template_prototype = Template.prototype = {
+var Template_prototype = (Template.prototype = {
     createOut: createOut
-};
+});
 
 makeRenderable(Template_prototype);
 
 exports.Template = Template;
 exports.___createOut = createOut;
 
-require('../createOut').___setCreateOut(createOut);
+require("../createOut").___setCreateOut(createOut);

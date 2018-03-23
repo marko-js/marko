@@ -127,7 +127,7 @@ button.example-button on-click('increment') — Click me!
 
 Can’t make up your mind or just want to paste in that code snippet from
 StackOverflow? HTML syntax can be used within in the concise syntax. You’ll come
-back and make it consistent…*one day*.
+back and make it consistent…_one day_.
 
 #### 5. Import JavaScript modules
 
@@ -174,8 +174,8 @@ imported:
 #### 7. Use JavaScript to set CSS classes and styles
 
 Setting CSS classes and styles is made easy using JavaScript! Marko will happily
-accept simple strings, JavaScript objects and arrays (*falsy values will be
-ignored).*
+accept simple strings, JavaScript objects and arrays (_falsy values will be
+ignored)._
 
 ```marko
 $ const fontColor = input.color || 'blue';
@@ -243,23 +243,29 @@ components](http://markojs.com/docs/server-side-rendering/) rendered on the
 server when the page loads in the browser):
 
 ```js
-require('marko/node-require').install(); // require .marko files!
+require("marko/node-require").install(); // require .marko files!
 
-const http = require('http');
-const template = require('./template');
+const http = require("http");
+const template = require("./template");
 
-http.createServer().on('request', (req, res) => {
-  template.render({
-    name: 'Frank',
-    count: 30,
-    colors: ['red', 'green', 'blue']
-  }, res);
-}).listen(8080);
+http
+  .createServer()
+  .on("request", (req, res) => {
+    template.render(
+      {
+        name: "Frank",
+        count: 30,
+        colors: ["red", "green", "blue"]
+      },
+      res
+    );
+  })
+  .listen(8080);
 ```
 
 #### Bonus: Friendly compile-time errors
 
-We all make mistakes *every now and then*. Typo in your custom tag? Forgot an
+We all make mistakes _every now and then_. Typo in your custom tag? Forgot an
 ending tag? No worries! Marko will give you a friendly error message and point
 you right to the problematic code.
 
@@ -276,7 +282,7 @@ Unrecognized tag: fancy-buttn — More details: https://github.com/marko-js/mark
 
 Coming soon: auto correction and autonomous coding
 
-*****
+---
 
-*Cover image credit:
-*[Wikipedia](https://en.wikipedia.org/wiki/List_of_rock_formations#/media/File:Amanhecer_no_Hercules_--.jpg)
+_Cover image credit:
+_[Wikipedia](https://en.wikipedia.org/wiki/List_of_rock_formations#/media/File:Amanhecer_no_Hercules_--.jpg)

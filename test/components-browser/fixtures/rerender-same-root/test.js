@@ -1,16 +1,16 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require.resolve('./index'), {
-        label: 'Foo'
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {
+        label: "Foo"
     });
 
-    var rootEl = component.getEl('root');
+    var rootEl = component.getEl("root");
 
     component.input = {
-        label: 'Bar'
+        label: "Bar"
     };
     component.update();
 
-    expect(component.getEl('root')).to.equal(rootEl);
+    expect(component.getEl("root")).to.equal(rootEl);
 };

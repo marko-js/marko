@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var safeVarName = require('./safeVarName');
+var safeVarName = require("./safeVarName");
 
 class UniqueVars {
     constructor() {
@@ -8,7 +8,7 @@ class UniqueVars {
     }
 
     addVar(name, value) {
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
             // Convert the non-string value into a string for easy comparison
             value = JSON.stringify(value);
         }
@@ -20,7 +20,7 @@ class UniqueVars {
             var vars = entry.vars;
 
             // See if there is already a variable with the requested value
-            for (var i=0; i<vars.length; i++) {
+            for (var i = 0; i < vars.length; i++) {
                 var curVar = vars[i];
                 if (curVar.value === value) {
                     return curVar.name;
@@ -28,7 +28,7 @@ class UniqueVars {
             }
 
             let newEntry = {
-                name: name + (++entry.counter),
+                name: name + ++entry.counter,
                 value: value
             };
 

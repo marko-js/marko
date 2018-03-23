@@ -1,4 +1,4 @@
-var extend = require('raptor-util/extend');
+var extend = require("raptor-util/extend");
 
 function ensure(state, propertyName) {
     var proto = state.constructor.prototype;
@@ -44,12 +44,22 @@ State.prototype = {
 
         for (key in rawState) {
             if (!(key in newState)) {
-                state.___set(key, undefined, false /* ensure:false */, false /* forceDirty:false */);
+                state.___set(
+                    key,
+                    undefined,
+                    false /* ensure:false */,
+                    false /* forceDirty:false */
+                );
             }
         }
 
         for (key in newState) {
-            state.___set(key, newState[key], true /* ensure:true */, false /* forceDirty:false */);
+            state.___set(
+                key,
+                newState[key],
+                true /* ensure:true */,
+                false /* forceDirty:false */
+            );
         }
     },
     ___set: function(name, value, shouldEnsure, forceDirty) {

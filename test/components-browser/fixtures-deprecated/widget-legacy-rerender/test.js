@@ -1,14 +1,14 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var previousSibling = document.createElement('div');
+module.exports = function(helpers) {
+    var previousSibling = document.createElement("div");
     helpers.targetEl.appendChild(previousSibling);
 
-    var widget = helpers.mount(require.resolve('./index'), {
-        label: 'Foo'
+    var widget = helpers.mount(require.resolve("./index"), {
+        label: "Foo"
     });
 
-    var nextSibling = document.createElement('div');
+    var nextSibling = document.createElement("div");
     helpers.targetEl.appendChild(nextSibling);
 
     expect(widget.el.previousSibling).to.equal(previousSibling);
@@ -16,19 +16,18 @@ module.exports = function (helpers) {
 
     var parentNode = widget.el.parentNode;
 
-    expect(widget.el.innerHTML.trim()).to.equal('Foo');
+    expect(widget.el.innerHTML.trim()).to.equal("Foo");
 
     // var oldEl = widget.el;
 
     widget.rerender({
-        label: 'Bar'
+        label: "Bar"
     });
 
-    expect(widget.el.innerHTML.trim()).to.equal('Bar');
+    expect(widget.el.innerHTML.trim()).to.equal("Bar");
 
     expect(widget.el.parentNode).to.equal(parentNode);
     // expect(widget.el !== oldEl).to.equal(true);
-
 
     expect(helpers.targetEl.childNodes.length).to.equal(3);
     expect(helpers.targetEl.childNodes[0]).to.equal(previousSibling);
@@ -36,4 +35,4 @@ module.exports = function (helpers) {
     expect(helpers.targetEl.childNodes[2]).to.equal(nextSibling);
 };
 
-module.exports.skipHydrate = 'a split widget cannot re-render when hydrated';
+module.exports.skip_hydrate = "a split widget cannot re-render when hydrated";

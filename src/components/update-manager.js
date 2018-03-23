@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 var updatesScheduled = false;
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
 
-var nextTick = require('../runtime/nextTick');
+var nextTick = require("../runtime/nextTick");
 
 /**
  * This function is called when we schedule the update of "unbatched"
@@ -39,7 +39,7 @@ function updateComponents(queue) {
     // Loop over the components in the queue and update them.
     // NOTE: It is okay if the queue grows during the iteration
     //       since we will still get to them at the end
-    for (var i=0; i<queue.length; i++) {
+    for (var i = 0; i < queue.length; i++) {
         var component = queue[i];
         component.___update(); // Do the actual component update
     }
@@ -84,7 +84,7 @@ function queueComponentUpdate(component) {
         // If the stack has a non-zero length then we know that a batch has
         // been started so we can just queue the component on the top batch. When
         // the batch is ended this component will be updated.
-        var batch = batchStack[batchStackLen-1];
+        var batch = batchStack[batchStackLen - 1];
 
         // We default the batch queue to null to avoid creating an Array instance
         // unnecessarily. If it is null then we create a new Array, otherwise

@@ -1,4 +1,4 @@
-var eventDelegation = require('./event-delegation');
+var eventDelegation = require("./event-delegation");
 var delegateEvent = eventDelegation.___delegateEvent;
 var getEventFromEl = eventDelegation.___getEventFromEl;
 
@@ -8,7 +8,7 @@ var getEventFromEl = eventDelegation.___getEventFromEl;
 
 function handleNodeAttach(node, componentsContext) {
     if (node.nodeType === 1) {
-        var eventName = 'onattach';
+        var eventName = "onattach";
         var target = getEventFromEl(node, eventName);
         if (target) {
             var out = componentsContext.___out;
@@ -17,10 +17,10 @@ function handleNodeAttach(node, componentsContext) {
             var attachTargets = data.___attachTargets;
             if (!attachTargets) {
                 attachTargets = data.___attachTargets = [];
-                out.on('___componentsInitialized', function() {
-                    for (var i=0; i<attachTargets.length; i+=2) {
+                out.on("___componentsInitialized", function() {
+                    for (var i = 0; i < attachTargets.length; i += 2) {
                         var node = attachTargets[i];
-                        var target = attachTargets[i+1];
+                        var target = attachTargets[i + 1];
                         delegateEvent(node, eventName, target, {});
                     }
                 });
@@ -34,7 +34,7 @@ function handleNodeAttach(node, componentsContext) {
 
 function handleNodeDetach(node) {
     if (node.nodeType === 1) {
-        var eventName = 'ondetach';
+        var eventName = "ondetach";
         var target = getEventFromEl(node, eventName);
         if (target) {
             var allowDetach;

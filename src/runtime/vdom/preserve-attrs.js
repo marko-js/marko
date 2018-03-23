@@ -1,4 +1,4 @@
-var extend = require('raptor-util/extend');
+var extend = require("raptor-util/extend");
 
 function removePreservedAttributes(attrs, props) {
     var preservedAttrs = props && props.noupdate;
@@ -12,4 +12,4 @@ function removePreservedAttributes(attrs, props) {
     return attrs;
 }
 
-require('./VElement').___removePreservedAttributes = removePreservedAttributes;
+require("./VElement").___removePreservedAttributes = removePreservedAttributes;

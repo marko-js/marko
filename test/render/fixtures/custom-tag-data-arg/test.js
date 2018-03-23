@@ -1,4 +1,4 @@
 exports.templateData = {
-    "name": "Frank",
-    "adult": true
+    name: "Frank",
+    adult: true
 };

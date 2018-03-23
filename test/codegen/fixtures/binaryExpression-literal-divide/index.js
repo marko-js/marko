@@ -1,5 +1,9 @@
-'use strict';
+"use strict";
 
-module.exports = function (builder) {
-    return builder.binaryExpression(builder.literal(10), '/', builder.literal(2));
+module.exports = function(builder) {
+    return builder.binaryExpression(
+        builder.literal(10),
+        "/",
+        builder.literal(2)
+    );
 };

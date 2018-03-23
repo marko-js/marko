@@ -1,4 +1,4 @@
 exports.templateData = {
-    myTagName: 'world',
+    myTagName: "world",
     foo: true
 };

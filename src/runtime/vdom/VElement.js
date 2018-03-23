@@ -1,8 +1,8 @@
 /* jshint newcap:false */
-var VNode = require('./VNode');
-var inherit = require('raptor-util/inherit');
-var NS_XLINK = 'http://www.w3.org/1999/xlink';
-var ATTR_XLINK_HREF = 'xlink:href';
+var VNode = require("./VNode");
+var inherit = require("raptor-util/inherit");
+var NS_XLINK = "http://www.w3.org/1999/xlink";
+var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
 
 var toString = String;
@@ -15,13 +15,13 @@ var FLAG_CUSTOM_ELEMENT = 16;
 
 var defineProperty = Object.defineProperty;
 
-var ATTR_HREF = 'href';
+var ATTR_HREF = "href";
 var EMPTY_OBJECT = Object.freeze({});
 
 function convertAttrValue(type, value) {
     if (value === true) {
-        return '';
-    } else if (type == 'object') {
+        return "";
+    } else if (type == "object") {
         return JSON.stringify(value);
     } else {
         return toString(value);
@@ -73,7 +73,7 @@ function VElement(tagName, attrs, key, component, childCount, flags, props) {
 
     if ((this.___flags = flags || 0)) {
         if (flags & FLAG_IS_SVG) {
-            namespaceURI = 'http://www.w3.org/2000/svg';
+            namespaceURI = "http://www.w3.org/2000/svg";
         }
         if (flags & FLAG_IS_TEXTAREA) {
             isTextArea = true;
@@ -106,7 +106,17 @@ VElement.prototype = {
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
     e: function(tagName, attrs, key, component, childCount, flags, props) {
-        var child = this.___appendChild(new VElement(tagName, attrs, key, component, childCount, flags, props));
+        var child = this.___appendChild(
+            new VElement(
+                tagName,
+                attrs,
+                key,
+                component,
+                childCount,
+                flags,
+                props
+            )
+        );
 
         if (childCount === 0) {
             return this.___finishChild();
@@ -123,7 +133,17 @@ VElement.prototype = {
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
     ed: function(tagName, attrs, key, component, childCount, flags, props) {
-        var child = this.___appendChild(VElement.___createElementDynamicTag(tagName, attrs, key, component, childCount, flags, props));
+        var child = this.___appendChild(
+            VElement.___createElementDynamicTag(
+                tagName,
+                attrs,
+                key,
+                component,
+                childCount,
+                flags,
+                props
+            )
+        );
 
         if (childCount === 0) {
             return this.___finishChild();
@@ -152,9 +172,10 @@ VElement.prototype = {
         var attributes = this.___attributes;
         var flags = this.___flags;
 
-        var el = namespaceURI !== undefined ?
-            doc.createElementNS(namespaceURI, tagName) :
-            doc.createElement(tagName);
+        var el =
+            namespaceURI !== undefined
+                ? doc.createElementNS(namespaceURI, tagName)
+                : doc.createElement(tagName);
 
         if (flags & FLAG_CUSTOM_ELEMENT) {
             Object.assign(el, attributes);
@@ -165,7 +186,7 @@ VElement.prototype = {
                 if (attrValue !== false && attrValue != null) {
                     var type = typeof attrValue;
 
-                    if (type !== 'string') {
+                    if (type !== "string") {
                         // Special attributes aren't copied to the real DOM. They are only
                         // kept in the virtual attributes map
                         attrValue = convertAttrValue(type, attrValue);
@@ -200,31 +221,47 @@ VElement.prototype = {
 
 inherit(VElement, VNode);
 
-var proto = VElementClone.prototype = VElement.prototype;
+var proto = (VElementClone.prototype = VElement.prototype);
 
-['checked', 'selected', 'disabled'].forEach(function(name) {
+["checked", "selected", "disabled"].forEach(function(name) {
     defineProperty(proto, name, {
-        get: function () {
+        get: function() {
             var value = this.___attributes[name];
             return value !== false && value != null;
         }
     });
 });
 
-defineProperty(proto, '___value', {
-    get: function () {
+defineProperty(proto, "___value", {
+    get: function() {
         var value = this.___valueInternal;
         if (value == null) {
             value = this.___attributes.value;
         }
-        return value != null ? toString(value) : '';
+        return value != null ? toString(value) : "";
     }
 });
 
-VElement.___createElementDynamicTag = function(tagName, attrs, key, component, childCount, flags, props) {
+VElement.___createElementDynamicTag = function(
+    tagName,
+    attrs,
+    key,
+    component,
+    childCount,
+    flags,
+    props
+) {
     var namespace = attrs && attrs.xmlns;
     tagName = namespace ? tagName : tagName.toUpperCase();
-    var element = new VElement(tagName, attrs, key, component, childCount, flags, props);
+    var element = new VElement(
+        tagName,
+        attrs,
+        key,
+        component,
+        childCount,
+        flags,
+        props
+    );
     element.___namespaceURI = namespace;
     return element;
 };
@@ -245,10 +282,10 @@ function virtualizeElement(node, virtualizeChildNodes) {
 
     if (attrCount) {
         attrs = {};
-        for (var i=0; i<attrCount; i++) {
+        for (var i = 0; i < attrCount; i++) {
             var attr = attributes[i];
             var attrName = attr.name;
-            if (!xmlnsRegExp.test(attrName) && attrName !== 'data-marko') {
+            if (!xmlnsRegExp.test(attrName) && attrName !== "data-marko") {
                 var attrNamespaceURI = attr.namespaceURI;
                 if (attrNamespaceURI === NS_XLINK) {
                     attrs[ATTR_XLINK_HREF] = attr.value;
@@ -262,12 +299,20 @@ function virtualizeElement(node, virtualizeChildNodes) {
     var flags = 0;
 
     var tagName = node.nodeName;
-    if (tagName === 'TEXTAREA') {
+    if (tagName === "TEXTAREA") {
         flags |= FLAG_IS_TEXTAREA;
     }
 
-    var vdomEl = new VElement(tagName, attrs, null /*key*/, null /*component*/, 0 /*child count*/, flags, null /*props*/);
-    if (node.namespaceURI !== 'http://www.w3.org/1999/xhtml') {
+    var vdomEl = new VElement(
+        tagName,
+        attrs,
+        null /*key*/,
+        null /*component*/,
+        0 /*child count*/,
+        flags,
+        null /*props*/
+    );
+    if (node.namespaceURI !== "http://www.w3.org/1999/xhtml") {
         vdomEl.___namespaceURI = node.namespaceURI;
     }
 
@@ -326,7 +371,7 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var attrValue;
 
     if (toFlags & FLAG_SIMPLE_ATTRS && fromFlags & FLAG_SIMPLE_ATTRS) {
-        if (oldAttrs['class'] !== (attrValue = attrs['class'])) {
+        if (oldAttrs["class"] !== (attrValue = attrs["class"])) {
             fromEl.className = attrValue;
         }
         if (oldAttrs.id !== (attrValue = attrs.id)) {
@@ -337,7 +382,6 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
         }
         return;
     }
-
 
     // In some cases we only want to set an attribute value for the first
     // render or we don't want certain attributes to be touched. To support
@@ -364,7 +408,7 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
         } else if (oldAttrs[attrName] !== attrValue) {
             var type = typeof attrValue;
 
-            if (type !== 'string') {
+            if (type !== "string") {
                 attrValue = convertAttrValue(type, attrValue);
             }
 

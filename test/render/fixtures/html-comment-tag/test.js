@@ -1,5 +1,5 @@
 exports.templateData = {
-    "name": "World"
+    name: "World"
 };
 
-exports.vdomSkip = true;
+exports.fails_vdom = true;

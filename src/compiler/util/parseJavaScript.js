@@ -1,16 +1,16 @@
-'use strict';
-var ok = require('assert').ok;
+"use strict";
+var ok = require("assert").ok;
 
-const esprima = require('esprima');
+const esprima = require("esprima");
 
 function parseExpression(src, builder, isExpression) {
-    ok(typeof src === 'string', '"src" should be a string expression');
+    ok(typeof src === "string", '"src" should be a string expression');
     ok(builder, '"builder" is required');
 
     function convert(node) {
         if (Array.isArray(node)) {
             let nodes = node;
-            for (let i=0; i<nodes.length; i++) {
+            for (let i = 0; i < nodes.length; i++) {
                 var converted = convert(nodes[i]);
                 if (converted == null) {
                     return null;
@@ -20,15 +20,15 @@ function parseExpression(src, builder, isExpression) {
             return nodes;
         }
 
-        switch(node.type) {
-            case 'ArrayExpression': {
+        switch (node.type) {
+            case "ArrayExpression": {
                 let elements = convert(node.elements);
                 if (!elements) {
                     return null;
                 }
                 return builder.arrayExpression(elements);
             }
-            case 'AssignmentExpression': {
+            case "AssignmentExpression": {
                 let left = convert(node.left);
                 if (!left) {
                     return null;
@@ -41,7 +41,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.assignment(left, right, node.operator);
             }
-            case 'BinaryExpression': {
+            case "BinaryExpression": {
                 let left = convert(node.left);
                 if (!left) {
                     return null;
@@ -54,7 +54,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.binaryExpression(left, node.operator, right);
             }
-            case 'BlockStatement': {
+            case "BlockStatement": {
                 let body = convert(node.body);
                 if (!body) {
                     return null;
@@ -62,7 +62,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return body;
             }
-            case 'CallExpression': {
+            case "CallExpression": {
                 let callee = convert(node.callee);
 
                 if (!callee) {
@@ -76,7 +76,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.functionCall(callee, args);
             }
-            case 'ConditionalExpression': {
+            case "ConditionalExpression": {
                 let test = convert(node.test);
 
                 if (!test) {
@@ -95,13 +95,17 @@ function parseExpression(src, builder, isExpression) {
                     return null;
                 }
 
-                return builder.conditionalExpression(test, consequent, alternate);
+                return builder.conditionalExpression(
+                    test,
+                    consequent,
+                    alternate
+                );
             }
-            case 'ExpressionStatement': {
+            case "ExpressionStatement": {
                 return convert(node.expression);
             }
-            case 'FunctionDeclaration':
-            case 'FunctionExpression': {
+            case "FunctionDeclaration":
+            case "FunctionExpression": {
                 let name = null;
 
                 if (node.id) {
@@ -123,21 +127,24 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.functionDeclaration(name, params, body);
             }
-            case 'Identifier': {
+            case "Identifier": {
                 return builder.identifier(node.name);
             }
-            case 'Literal': {
+            case "Literal": {
                 let literalValue;
 
                 if (node.regex) {
-                    literalValue = new RegExp(node.regex.pattern, node.regex.flags);
+                    literalValue = new RegExp(
+                        node.regex.pattern,
+                        node.regex.flags
+                    );
                 } else {
                     literalValue = node.value;
                 }
 
                 return builder.literal(literalValue);
             }
-            case 'LogicalExpression': {
+            case "LogicalExpression": {
                 let left = convert(node.left);
                 if (!left) {
                     return null;
@@ -150,7 +157,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.logicalExpression(left, node.operator, right);
             }
-            case 'MemberExpression': {
+            case "MemberExpression": {
                 let object = convert(node.object);
                 if (!object) {
                     return null;
@@ -161,9 +168,13 @@ function parseExpression(src, builder, isExpression) {
                     return null;
                 }
 
-                return builder.memberExpression(object, property, node.computed);
+                return builder.memberExpression(
+                    object,
+                    property,
+                    node.computed
+                );
             }
-            case 'NewExpression': {
+            case "NewExpression": {
                 let callee = convert(node.callee);
 
                 if (!callee) {
@@ -177,20 +188,20 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.newExpression(callee, args);
             }
-            case 'Program': {
+            case "Program": {
                 if (node.body && node.body.length === 1) {
                     return convert(node.body[0]);
                 }
                 return null;
             }
-            case 'ObjectExpression': {
+            case "ObjectExpression": {
                 let properties = convert(node.properties);
                 if (!properties) {
                     return null;
                 }
                 return builder.objectExpression(properties);
             }
-            case 'Property': {
+            case "Property": {
                 let computed = node.computed === true;
 
                 let key = convert(node.key);
@@ -198,7 +209,7 @@ function parseExpression(src, builder, isExpression) {
                     return null;
                 }
 
-                if (!computed && key.type === 'Identifier') {
+                if (!computed && key.type === "Identifier") {
                     // Favor using a Literal AST node to represent
                     // the key instead of an Identifier
                     key = builder.literal(key.name);
@@ -211,7 +222,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.property(key, value, computed);
             }
-            case 'ReturnStatement': {
+            case "ReturnStatement": {
                 var argument = node.argument;
 
                 if (argument != null) {
@@ -223,26 +234,34 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.returnStatement(argument);
             }
-            case 'ThisExpression': {
+            case "ThisExpression": {
                 return builder.thisExpression();
             }
-            case 'UnaryExpression': {
+            case "UnaryExpression": {
                 let argument = convert(node.argument);
                 if (!argument) {
                     return null;
                 }
 
-                return builder.unaryExpression(argument, node.operator, node.prefix);
+                return builder.unaryExpression(
+                    argument,
+                    node.operator,
+                    node.prefix
+                );
             }
-            case 'UpdateExpression': {
+            case "UpdateExpression": {
                 let argument = convert(node.argument);
                 if (!argument) {
                     return null;
                 }
 
-                return builder.updateExpression(argument, node.operator, node.prefix);
+                return builder.updateExpression(
+                    argument,
+                    node.operator,
+                    node.prefix
+                );
             }
-            case 'VariableDeclarator': {
+            case "VariableDeclarator": {
                 var id = convert(node.id);
                 if (!id) {
                     return null;
@@ -259,7 +278,7 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.variableDeclarator(id, init);
             }
-            case 'VariableDeclaration': {
+            case "VariableDeclaration": {
                 var kind = node.kind;
 
                 var declarations = convert(node.declarations);
@@ -277,27 +296,31 @@ function parseExpression(src, builder, isExpression) {
     let jsAST;
     try {
         if (isExpression) {
-            src = '(' + src + ')';
+            src = "(" + src + ")";
         }
         jsAST = esprima.parseScript(src);
-    } catch(e) {
+    } catch (e) {
         if (e.index == null) {
             // Doesn't look like an Esprima parse error... just rethrow the exception
             throw e;
         }
         var errorIndex = e.index;
-        var errorMessage = '\n' + e.description;
+        var errorMessage = "\n" + e.description;
         if (errorIndex != null && errorIndex >= 0) {
             if (isExpression) {
                 errorIndex--; // Account for extra paren added to start
             }
-            errorMessage += ': ';
-            errorMessage += src + '\n'+ new Array(errorMessage.length + errorIndex + 1).join(" ") + '^';
+            errorMessage += ": ";
+            errorMessage +=
+                src +
+                "\n" +
+                new Array(errorMessage.length + errorIndex + 1).join(" ") +
+                "^";
         }
         var wrappedError = new Error(errorMessage);
         wrappedError.index = errorIndex;
         wrappedError.src = src;
-        wrappedError.code = 'ERR_INVALID_JAVASCRIPT_EXPRESSION';
+        wrappedError.code = "ERR_INVALID_JAVASCRIPT_EXPRESSION";
         throw wrappedError;
     }
 
