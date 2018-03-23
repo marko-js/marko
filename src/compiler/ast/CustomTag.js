@@ -421,6 +421,7 @@ class CustomTag extends HtmlElement {
                 let propName = importedVariable.targetProperty;
                 let propExpression = importedVariable.expression;
 
+                explicitAttrs = explicitAttrs || {};
                 explicitAttrs[propName] = propExpression;
             });
         }
