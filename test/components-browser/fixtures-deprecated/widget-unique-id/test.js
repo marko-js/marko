@@ -1,10 +1,10 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
+module.exports = function(helpers) {
     var widgets = [];
 
     function renderWidget() {
-        var widget = helpers.mount(require('./index'), {});
+        var widget = helpers.mount(require.resolve("./index"), {});
         widgets.push(widget);
     }
 
@@ -13,7 +13,7 @@ module.exports = function (helpers) {
     renderWidget();
 
     var ids = {};
-    widgets.forEach(function (widget) {
+    widgets.forEach(function(widget) {
         ids[widget.id] = true;
     });
 

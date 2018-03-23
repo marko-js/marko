@@ -8,19 +8,14 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
       return module.exports;
     }),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr");
+    marko_defineComponent = components_helpers.c;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("H1", {
-      "data-marko-key": marko_keyAttr(input.myStartKey, __component)
-    }, input.myStartKey, component, 0);
+  out.e("H1", null, input.myStartKey, component, 0);
 
-  out.e("DIV", {
-      "data-marko-key": marko_keyAttr(input.myEndKey, __component)
-    }, input.myEndKey, component, 0);
+  out.e("DIV", null, input.myEndKey, component, 0);
 }
 
 marko_template._ = marko_renderer(render, {

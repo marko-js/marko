@@ -1,115 +1,97 @@
-'use strict';
-require('../__util__/test-init');
+"use strict";
+require("../__util__/test-init");
 
-var path = require('path');
-var autotest = require('../autotest');
-var createJSDOMModule = require('../__util__/create-marko-jsdom-module');
-var ssrTemplate = require('./template.marko');
-var TEST_NAME = path.basename(__dirname);
-var renderedCache = {};
+var autotest = require("../autotest");
+var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
+var ssrTemplate = require("./template.marko");
+var hydrateComponentPath = require.resolve("./template.component-browser.js");
+var browserHelpersPath = require.resolve("../__util__/BrowserHelpers");
+var testTargetHTML = '<div id="testsTarget"></div><div></div>';
+var browser = createJSDOMModule(__dirname, testTargetHTML);
+var BrowserHelpers = browser.require(browserHelpersPath);
 
-describe(TEST_NAME, function () {
-    var browser = createJSDOMModule(__dirname, '<div id="testsTarget"></div><div></div>');
-    var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
-    var helpers;
+autotest("fixtures", {
+    client: runClientTest,
+    hydrate: runHydrateTest
+});
 
-    beforeEach(function () {
-        helpers = new BrowserHelpers();
-    })
+autotest("fixtures-deprecated", {
+    client: runClientTest,
+    hydrate: runHydrateTest
+});
 
-    afterEach(function () {
-        helpers.components.forEach(function (component) {
-            component.instance.destroy();
-        });
+function runClientTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
+    test(done => {
+        let helpers = new BrowserHelpers();
+        let testFile = resolve("test.js");
+        let testFunc = browser.require(testFile);
+        let isAsync = testFunc.length > 1;
 
-        helpers.targetEl.innerHTML = '';
-    });
-
-    after(function () {
-        browser.window.close();
-    });
-
-    autotest.scanDir(
-        path.join(__dirname, './fixtures'),
-        runBrowserRender
-    );
-
-    describe('deprecated', function () {
-        autotest.scanDir(
-            path.join(__dirname, './fixtures-deprecated'),
-            runBrowserRender
-        );
-    });
-
-    function runBrowserRender(dir, _, done) {
-        var testFile = path.join(dir, 'test.js');
-        var testFunc = browser.require(testFile);
-        var isAsync = testFunc.length > 1;
-    
         if (isAsync) {
             testFunc(helpers, cleanupAndFinish);
         } else {
             testFunc(helpers);
             cleanupAndFinish();
         }
-    
-        function cleanupAndFinish (err) {
+
+        function cleanupAndFinish(err) {
             // Cache components for use in hydrate run.
-            renderedCache[dir] = helpers.components.map(component => ({
-                type: component.type,
-                logic: component.logic,
-                template: component.template && require(component.template),
-                input: component.input,
-                $global: component.$global
-            }));
-    
-            if (err) {
-                done(err);
-            } else {
-                done();
-            }
+            context.rendered = helpers.rendered;
+            helpers.instances.forEach(instance => instance.destroy());
+            helpers.targetEl.innerHTML = "";
+            done(err);
         }
-    }
-});
-
-describe(TEST_NAME + ' (hydrated)', function () {
-    var hydrateOptions = { 
-        skip: (_, dir) => require(path.join(dir, 'test.js')).skipHydrate
-    };
-
-    autotest.scanDir(
-        path.join(__dirname, './fixtures'),
-        runServerRender,
-        hydrateOptions
-    );
-
-    describe.skip('deprecated', function () {
-        autotest.scanDir(
-            path.join(__dirname, './fixtures-deprecated'),
-            runServerRender,
-            hydrateOptions
-        );
     });
+}
 
-    function runServerRender(dir, _, done) {
-        var components = renderedCache[dir];
-        var $global = components.reduce(($g, c) => Object.assign($g, c.$global), {});
+function runHydrateTest(fixture) {
+    let test = fixture.test;
+    let resolve = fixture.resolve;
+    let context = fixture.context;
+    test(done => {
+        var components = context.rendered;
+        if (!components)
+            throw new Error("No components rendered by client version of test");
+        var $global = components.reduce(
+            ($g, c) => Object.assign($g, c.$global),
+            {}
+        );
         ssrTemplate
             .render({ components: components, $global: $global })
-            .then(function (html) {
+            .then(function(html) {
                 var browser = createJSDOMModule(__dirname, String(html), {
                     beforeParse(window, browser) {
-                        var marko = browser.require('marko/components');
-                        var rootComponent = browser.require(require.resolve('./template.component-browser.js'));
+                        var marko = browser.require("marko/components");
+                        var legacy = browser.require("marko/legacy-components");
+                        legacy.load = type =>
+                            legacy.defineWidget(
+                                browser.require(
+                                    type.replace(
+                                        /^.*\/components-browser/,
+                                        __dirname
+                                    )
+                                )
+                            );
+                        var rootComponent = browser.require(
+                            hydrateComponentPath
+                        );
                         marko.register(ssrTemplate.meta.id, rootComponent);
-                        components.forEach(function (component) {
-                            marko.register(component.type, browser.require(component.logic));
+                        components.forEach(function(def) {
+                            Object.keys(def.components).forEach(type => {
+                                marko.register(
+                                    type,
+                                    browser.require(def.components[type])
+                                );
+                            });
                         });
                     }
                 });
-                var testFile = path.join(dir, 'test.js');
+                var testFile = resolve("test.js");
                 var testFunc = browser.require(testFile);
-                var BrowserHelpers = browser.require('../__util__/BrowserHelpers');
+                var BrowserHelpers = browser.require(browserHelpersPath);
                 var helpers = new BrowserHelpers();
                 var isAsync = testFunc.length > 1;
                 var curInstance = 0;
@@ -117,10 +99,10 @@ describe(TEST_NAME + ' (hydrated)', function () {
                 browser.window.$initComponents();
                 helpers.isHydrate = true;
 
-                helpers.mount = function () {
+                helpers.mount = function() {
                     return browser.window.components[curInstance++];
-                }
-    
+                };
+
                 if (isAsync) {
                     testFunc(helpers, done);
                 } else {
@@ -129,5 +111,5 @@ describe(TEST_NAME + ' (hydrated)', function () {
                 }
             })
             .catch(done);
-    }
-});
+    });
+}

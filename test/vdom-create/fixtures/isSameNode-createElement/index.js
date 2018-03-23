@@ -1,4 +1,4 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
 function isSameNode(virtualEl, realEl) {
     var vFromEl = realEl.___markoVElement;
@@ -10,9 +10,23 @@ function isSameNode(virtualEl, realEl) {
     return false;
 }
 
-module.exports = function (helpers) {
-    var div = helpers.vdom.createElement('div', null, null /* key */, null /* component */, 0 /* childCount */, null, { i: 'abc123' /* key */ });
-    var span = helpers.vdom.createElement('span', null, null /* key */, null /* component */, 0 /* childCount */);
+module.exports = function(helpers) {
+    var div = helpers.vdom.createElement(
+        "div",
+        null,
+        null /* key */,
+        null /* component */,
+        0 /* childCount */,
+        null,
+        { i: "abc123" /* key */ }
+    );
+    var span = helpers.vdom.createElement(
+        "span",
+        null,
+        null /* key */,
+        null /* component */,
+        0 /* childCount */
+    );
 
     var divClone = div.___cloneNode();
     // expect(div.___isSameNode(divClone)).to.equal(true);

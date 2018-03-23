@@ -1,3 +1,3 @@
 exports.templateData = {
-    name: 'Marko'
+    name: "Marko"
 };

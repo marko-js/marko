@@ -1,6 +1,4 @@
-function Component() {
-
-}
+function Component() {}
 
 Component.prototype = {
     onMount: function() {

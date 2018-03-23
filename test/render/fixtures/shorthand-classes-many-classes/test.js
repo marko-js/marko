@@ -1,3 +1,3 @@
 exports.templateData = {
-    cls: 'test123'
+    cls: "test123"
 };

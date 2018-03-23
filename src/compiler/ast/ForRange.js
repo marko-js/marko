@@ -1,12 +1,12 @@
-'use strict';
-var ok = require('assert').ok;
-var Node = require('./Node');
-var Literal = require('./Literal');
-var Identifier = require('./Identifier');
+"use strict";
+var ok = require("assert").ok;
+var Node = require("./Node");
+var Literal = require("./Literal");
+var Identifier = require("./Identifier");
 
 class ForRange extends Node {
     constructor(def) {
-        super('ForRange');
+        super("ForRange");
         this.varName = def.varName;
         this.body = this.makeContainer(def.body);
         this.from = def.from;
@@ -32,10 +32,13 @@ class ForRange extends Node {
         }
 
         if (step == null) {
-            let fromLiteral = (from instanceof Literal) && from.value;
-            let toLiteral = (to instanceof Literal) && to.value;
+            let fromLiteral = from instanceof Literal && from.value;
+            let toLiteral = to instanceof Literal && to.value;
 
-            if (typeof fromLiteral === 'number' && typeof toLiteral === 'number') {
+            if (
+                typeof fromLiteral === "number" &&
+                typeof toLiteral === "number"
+            ) {
                 if (fromLiteral > toLiteral) {
                     step = builder.literal(-1);
                 } else {
@@ -48,7 +51,7 @@ class ForRange extends Node {
             step = builder.literalNull();
         }
 
-        return builder.functionCall(context.helper('forRange'), [
+        return builder.functionCall(context.helper("forRange"), [
             from,
             to,
             step,

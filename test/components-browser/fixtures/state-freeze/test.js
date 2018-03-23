@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(function () {
-        component.state.foo = 'bar';
+    expect(function() {
+        component.state.foo = "bar";
     }).to.throw(TypeError);
 };

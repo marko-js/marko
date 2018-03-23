@@ -1,10 +1,10 @@
-'use strict';
-var ComponentArgsCompiler = require('./ComponentArgsCompiler');
-var getRequirePath = require('../getRequirePath');
+"use strict";
+var ComponentArgsCompiler = require("./ComponentArgsCompiler");
+var getRequirePath = require("../getRequirePath");
 
-var MARKO_WIDGETS_VAR_KEY = Symbol('MARKO_WIDGETS_VAR');
+var MARKO_WIDGETS_VAR_KEY = Symbol("MARKO_WIDGETS_VAR");
 var WIDGET_PROPS_KEY;
-var HAS_COMPONENT_KEY = Symbol('HAS_WIDGET');
+var HAS_COMPONENT_KEY = Symbol("HAS_WIDGET");
 
 class TransformHelper {
     constructor(el, context) {
@@ -31,14 +31,16 @@ class TransformHelper {
 
     getTemplateModule() {
         return {
-            requirePath:this.context.getRequirePath(this.filename)
+            requirePath: this.context.getRequirePath(this.filename)
         };
     }
 
     hasBoundComponentForTemplate() {
-        return this.context.data.componentModule != null ||
+        return (
+            this.context.data.componentModule != null ||
             this.context.data[HAS_COMPONENT_KEY] ||
-            this.context.data[WIDGET_PROPS_KEY] != null;
+            this.context.data[WIDGET_PROPS_KEY] != null
+        );
     }
 
     addError(message, code) {
@@ -46,7 +48,10 @@ class TransformHelper {
     }
 
     getComponentArgs() {
-        return this.componentArgs || (this.componentArgs = new ComponentArgsCompiler());
+        return (
+            this.componentArgs ||
+            (this.componentArgs = new ComponentArgsCompiler())
+        );
     }
 
     nextUniqueId() {
@@ -55,7 +60,37 @@ class TransformHelper {
             this.context.data.componentNextElId = 0;
         }
 
-        return (this.context.data.componentNextElId++);
+        return this.context.data.componentNextElId++;
+    }
+
+    serializeKey() {
+        var el = this.el;
+        var key = el.key;
+        var context = this.context;
+        var builder = this.builder;
+
+        if (
+            !this.__keySerialized &&
+            context.isServerTarget() &&
+            context.isSplitComponent
+        ) {
+            var markoKeyAttrVar = context.importModule(
+                "marko_keyAttr",
+                this.getMarkoComponentsRequirePath(
+                    "marko/components/taglib/helpers/markoKeyAttr"
+                )
+            );
+
+            el.setAttributeValue(
+                "data-marko-key",
+                builder.functionCall(markoKeyAttrVar, [
+                    key,
+                    builder.identifier("__component")
+                ])
+            );
+
+            this.__keySerialized = true;
+        }
     }
 
     getIdExpression() {
@@ -89,10 +124,16 @@ class TransformHelper {
 
     get markoComponentsVar() {
         if (!this.context.data[MARKO_WIDGETS_VAR_KEY]) {
-            this.context.data[MARKO_WIDGETS_VAR_KEY] =
-                this.context.importModule(
-                    'marko_components',
-                    this.getMarkoComponentsRequirePath(this.isLegacyComponent ? 'marko/components/legacy' : 'marko/components'));
+            this.context.data[
+                MARKO_WIDGETS_VAR_KEY
+            ] = this.context.importModule(
+                "marko_components",
+                this.getMarkoComponentsRequirePath(
+                    this.isLegacyComponent
+                        ? "marko/components/legacy"
+                        : "marko/components"
+                )
+            );
         }
 
         return this.context.data[MARKO_WIDGETS_VAR_KEY];
@@ -101,18 +142,23 @@ class TransformHelper {
     buildComponentElIdFunctionCall(id) {
         var builder = this.builder;
 
-        if (id.type === 'Literal' && id.value === '') {
+        if (id.type === "Literal" && id.value === "") {
             let componentElId = builder.memberExpression(
-                builder.identifier('__component'),
-                builder.identifier('id'));
+                builder.identifier("__component"),
+                builder.identifier("id")
+            );
 
             return componentElId;
         } else {
             let componentElId = builder.memberExpression(
-                builder.identifier('__component'),
-                builder.identifier('elId'));
+                builder.identifier("__component"),
+                builder.identifier("elId")
+            );
 
-            return builder.functionCall(componentElId, arguments.length === 0 ? [] : [ id ]);
+            return builder.functionCall(
+                componentElId,
+                arguments.length === 0 ? [] : [id]
+            );
         }
     }
 
@@ -121,13 +167,13 @@ class TransformHelper {
     }
 }
 
-TransformHelper.prototype.assignComponentId = require('./assignComponentId');
-TransformHelper.prototype.convertToComponent = require('./convertToComponent');
-TransformHelper.prototype.handleRootNodes = require('./handleRootNodes');
-TransformHelper.prototype.handleComponentEvents = require('./handleComponentEvents');
-TransformHelper.prototype.handleComponentPreserve = require('./handleComponentPreserve');
-TransformHelper.prototype.handleComponentPreserveAttrs = require('./handleComponentPreserveAttrs');
-TransformHelper.prototype.handleScopedAttrs = require('./handleScopedAttrs');
-TransformHelper.prototype.handleLegacyBind = require('./handleLegacyBind');
+TransformHelper.prototype.assignComponentId = require("./assignComponentId");
+TransformHelper.prototype.convertToComponent = require("./convertToComponent");
+TransformHelper.prototype.handleRootNodes = require("./handleRootNodes");
+TransformHelper.prototype.handleComponentEvents = require("./handleComponentEvents");
+TransformHelper.prototype.handleComponentPreserve = require("./handleComponentPreserve");
+TransformHelper.prototype.handleComponentPreserveAttrs = require("./handleComponentPreserveAttrs");
+TransformHelper.prototype.handleScopedAttrs = require("./handleScopedAttrs");
+TransformHelper.prototype.handleLegacyBind = require("./handleLegacyBind");
 
 module.exports = TransformHelper;

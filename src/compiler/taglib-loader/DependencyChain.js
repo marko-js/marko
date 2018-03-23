@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class DependencyChain {
     constructor(array) {
@@ -10,7 +10,7 @@ class DependencyChain {
     }
 
     toString() {
-        return '[' + this.array.join(' → ') + ']';
+        return "[" + this.array.join(" → ") + "]";
     }
 }
 

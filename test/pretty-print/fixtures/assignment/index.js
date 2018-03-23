@@ -1,6 +1,6 @@
-module.exports = function (builder) {
+module.exports = function(builder) {
     var templateRoot = builder.templateRoot;
     var assignment = builder.assignment;
 
-    return templateRoot([assignment('a', '1')]);
+    return templateRoot([assignment("a", "1")]);
 };

@@ -1,1 +1,1 @@
-module.exports = require('./runtime/vdom');
+module.exports = require("./runtime/vdom");

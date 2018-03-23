@@ -1,14 +1,14 @@
-var nodePath = require('path');
+var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
-    var template = marko.load(nodePath.join(__dirname, 'template.marko'));
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+    var template = marko.load(nodePath.join(__dirname, "template.marko"));
     var data = {
-        name: 'John',
+        name: "John",
         $global: {
-            greeting: 'Greetings'
+            greeting: "Greetings"
         }
     };
     var result = template.renderSync(data);
-    helpers.compare(result.toString());
+    snapshot(result.toString());
     done();
 };

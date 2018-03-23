@@ -4,8 +4,8 @@ var initialIndentationRegExp = /^\s+/;
 function removeInitialEmptyLines(lines) {
     var i;
 
-    for (i=0; i<lines.length; i++) {
-        if (lines[i].trim() !== '') {
+    for (i = 0; i < lines.length; i++) {
+        if (lines[i].trim() !== "") {
             break;
         }
     }
@@ -19,16 +19,16 @@ function removeInitialEmptyLines(lines) {
 
 function removeTrailingEmptyLines(lines) {
     var i;
-    var last = lines.length-1;
+    var last = lines.length - 1;
 
-    for (i=last; i>=0; i--) {
-        if (lines[i].trim() !== '') {
+    for (i = last; i >= 0; i--) {
+        if (lines[i].trim() !== "") {
             break;
         }
     }
 
     if (i !== last) {
-        lines = lines.slice(0, i+1);
+        lines = lines.slice(0, i + 1);
     }
 
     return lines;
@@ -44,12 +44,14 @@ function adjustIndent(str, newIndentation) {
     lines = removeTrailingEmptyLines(lines);
 
     if (lines.length === 0) {
-        return '';
+        return "";
     }
 
     var initialIndentationMatches = initialIndentationRegExp.exec(lines[0]);
 
-    var indentation = initialIndentationMatches ? initialIndentationMatches[0] : '';
+    var indentation = initialIndentationMatches
+        ? initialIndentationMatches[0]
+        : "";
     if (!indentation && !newIndentation) {
         return str;
     }
@@ -62,9 +64,9 @@ function adjustIndent(str, newIndentation) {
         lines[i] = line;
     });
 
-    return newIndentation ?
-        lines.join('\n' + newIndentation) :
-        lines.join('\n');
+    return newIndentation
+        ? lines.join("\n" + newIndentation)
+        : lines.join("\n");
 }
 
 module.exports = adjustIndent;

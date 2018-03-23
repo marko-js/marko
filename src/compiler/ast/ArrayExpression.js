@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ArrayExpression extends Node {
     constructor(def) {
-        super('ArrayExpression');
+        super("ArrayExpression");
         this.elements = def.elements;
     }
 
@@ -17,12 +17,12 @@ class ArrayExpression extends Node {
         var elements = this.elements;
 
         if (!elements || !elements.length) {
-            writer.write('[]');
+            writer.write("[]");
             return;
         }
 
         writer.incIndent();
-        writer.write('[\n');
+        writer.write("[\n");
         writer.incIndent();
 
         elements.forEach((element, i) => {
@@ -30,15 +30,15 @@ class ArrayExpression extends Node {
             writer.write(element);
 
             if (i < elements.length - 1) {
-                writer.write(',\n');
+                writer.write(",\n");
             } else {
-                writer.write('\n');
+                writer.write("\n");
             }
         });
 
         writer.decIndent();
         writer.writeLineIndent();
-        writer.write(']');
+        writer.write("]");
         writer.decIndent();
     }
 
@@ -48,24 +48,24 @@ class ArrayExpression extends Node {
 
     toJSON() {
         return {
-            type: 'ArrayExpression',
+            type: "ArrayExpression",
             elements: this.elements
         };
     }
 
     toString() {
-        var result = '[';
+        var result = "[";
         var elements = this.elements;
         if (elements) {
             elements.forEach((element, i) => {
                 if (i !== 0) {
-                    result += ', ';
+                    result += ", ";
                 }
                 result += element.toString();
             });
         }
 
-        return result + ']';
+        return result + "]";
     }
 }
 

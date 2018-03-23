@@ -1,12 +1,12 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
     // expect(Array.isArray(component.___domEventListenerHandles)).to.equal(true);
 
     var el = component.el;
-    var fooLink = component.getEl('fooLink');
+    var fooLink = component.getEl("fooLink");
 
     component.destroy();
 
@@ -18,6 +18,6 @@ module.exports = function (helpers) {
 
     // Make sure there are no DOM event listeners
     component.clearLog();
-    helpers.triggerMouseEvent(fooLink, 'mouseout');
+    helpers.triggerMouseEvent(fooLink, "mouseout");
     expect(component.logOutput).to.deep.equal([]);
 };

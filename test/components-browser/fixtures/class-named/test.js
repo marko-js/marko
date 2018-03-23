@@ -1,7 +1,7 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(component.sayHello('Frank')).to.equal('Hello Frank!');
+    expect(component.sayHello("Frank")).to.equal("Hello Frank!");
 };

@@ -1,8 +1,8 @@
-var nodePath = require('path');
-var expect = require('chai').expect;
+var nodePath = require("path");
+var expect = require("chai").expect;
 
-exports.check = function (taglibFinder) {
-    var finderDir = nodePath.join(__dirname, 'a/b/c');
+exports.check = function(taglibFinder) {
+    var finderDir = nodePath.join(__dirname, "a/b/c");
 
     function getPaths() {
         return taglibFinder.find(finderDir, []).map(taglib => {
@@ -12,7 +12,7 @@ exports.check = function (taglibFinder) {
 
     var pathsBeforeExclude = getPaths();
 
-    taglibFinder.excludePackage('excluded-dependency');
+    taglibFinder.excludePackage("excluded-dependency");
 
     taglibFinder.clearCache();
 

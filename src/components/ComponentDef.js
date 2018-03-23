@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 var repeatedRegExp = /\[\]$/;
-var componentUtil = require('./util');
+var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
-var extend = require('raptor-util/extend');
-var KeySequence = require('./KeySequence');
+var extend = require("raptor-util/extend");
+var KeySequence = require("./KeySequence");
 
-/*
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+/*
 var FLAG_HAS_BODY_EL = 2;
 var FLAG_HAS_HEAD_EL = 4;
 */
@@ -21,7 +21,7 @@ function ComponentDef(component, componentId, globalComponentsContext) {
     this.___component = component;
     this.id = componentId;
 
-    this.___domEvents = undefined;         // An array of DOM events that need to be added (in sets of three)
+    this.___domEvents = undefined; // An array of DOM events that need to be added (in sets of three)
 
     this.___isExisting = false;
 
@@ -36,14 +36,15 @@ function ComponentDef(component, componentId, globalComponentsContext) {
 }
 
 ComponentDef.prototype = {
-
     ___nextKey: function(key) {
-        var keySequence = this.___keySequence || (this.___keySequence = new KeySequence());
+        var keySequence =
+            this.___keySequence || (this.___keySequence = new KeySequence());
         return keySequence.___nextKey(key);
     },
 
     ___preserveDOMNode: function(key, bodyOnly) {
-        var lookup = this.___preservedDOMNodes || (this.___preservedDOMNodes = {});
+        var lookup =
+            this.___preservedDOMNodes || (this.___preservedDOMNodes = {});
         lookup[key] = bodyOnly ? 2 : 1;
     },
 
@@ -55,15 +56,18 @@ ComponentDef.prototype = {
      * an ID with the current index for the current nestedId.
      * (e.g. "myParentId-foo[0]", "myParentId-foo[1]", etc.)
      */
-    elId: function (nestedId) {
+    elId: function(nestedId) {
         var id = this.id;
         if (nestedId == null) {
             return id;
         } else {
-            if (typeof nestedId == 'string' && repeatedRegExp.test(nestedId)) {
-                return this.___globalComponentsContext.___nextRepeatedId(id, nestedId);
+            if (typeof nestedId == "string" && repeatedRegExp.test(nestedId)) {
+                return this.___globalComponentsContext.___nextRepeatedId(
+                    id,
+                    nestedId
+                );
             } else {
-                return id + '-' + nestedId;
+                return id + "-" + nestedId;
             }
         }
     },
@@ -75,7 +79,7 @@ ComponentDef.prototype = {
      * @param  {String} targetMethod The name of the method to invoke on the scoped component
      * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
      */
-     e: function(type, targetMethod, elId, isOnce, extraArgs) {
+    e: function(type, targetMethod, elId, isOnce, extraArgs) {
         if (targetMethod) {
             // The event handler method is allowed to be conditional. At render time if the target
             // method is null then we do not attach any direct event listeners.
@@ -84,14 +88,15 @@ ComponentDef.prototype = {
                 targetMethod,
                 elId,
                 isOnce,
-                extraArgs]);
+                extraArgs
+            ]);
         }
     },
     /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
      */
     ___nextComponentId: function() {
-        return this.id + '-c' + (this.___nextIdIndex++);
+        return this.id + "-c" + this.___nextIdIndex++;
     },
 
     d: function(handlerMethodName, isOnce, extraArgs) {
@@ -103,42 +108,54 @@ ComponentDef.prototype = {
     }
 };
 
-ComponentDef.___deserialize = function(o, types, globals, registry) {
-    var id        = o[0];
-    var typeName  = types[o[1]];
-    var input     = o[2];
-    var extra     = o[3];
+ComponentDef.___deserialize = function(o, types, global, registry) {
+    var id = o[0];
+    var typeName = types[o[1]];
+    var input = o[2];
+    var extra = o[3];
 
     var isLegacy = extra.l;
     var state = extra.s;
     var componentProps = extra.w;
+    var flags = extra.f;
 
-    var component = typeName /* legacy */ && registry.___createComponent(typeName, id, isLegacy);
+    var component =
+        typeName /* legacy */ &&
+        registry.___createComponent(typeName, id, isLegacy);
 
-    if (extra.b) {
-        component.___bubblingDomEvents = extra.b;
-    }
-
-    // Preview newly created component from being queued for update since we area
+    // Prevent newly created component from being queued for update since we area
     // just building it from the server info
     component.___updateQueued = true;
 
-    if (state) {
-        var undefinedPropNames = extra.u;
-        if (undefinedPropNames) {
-            undefinedPropNames.forEach(function(undefinedPropName) {
-                state[undefinedPropName] = undefined;
-            });
+    if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+        if (component.onCreate) {
+            component.onCreate(input, { global });
         }
-        // We go through the setter here so that we convert the state object
-        // to an instance of `State`
-        component.state = state;
+        if (component.onInput) {
+            input = component.onInput(input, { global }) || input;
+        }
+    } else {
+        if (state) {
+            var undefinedPropNames = extra.u;
+            if (undefinedPropNames) {
+                undefinedPropNames.forEach(function(undefinedPropName) {
+                    state[undefinedPropName] = undefined;
+                });
+            }
+            // We go through the setter here so that we convert the state object
+            // to an instance of `State`
+            component.state = state;
+        }
+
+        if (componentProps) {
+            extend(component, componentProps);
+        }
     }
 
     component.___input = input;
 
-    if (componentProps) {
-        extend(component, componentProps);
+    if (extra.b) {
+        component.___bubblingDomEvents = extra.b;
     }
 
     var scope = extra.p;
@@ -147,7 +164,7 @@ ComponentDef.___deserialize = function(o, types, globals, registry) {
         component.___setCustomEvents(customEvents, scope);
     }
 
-    component.___global = globals;
+    component.___global = global;
 
     return {
         id: id,

@@ -1,11 +1,10 @@
-
-var lassoPackageRoot = require('lasso-package-root');
-var path = require('path');
-var lassoCachingFS = require('lasso-caching-fs');
-var fs = require('fs');
-var stripJsonComments = require('strip-json-comments');
-var fsReadOptions = { encoding: 'utf8' };
-var modules = require('../modules');
+var lassoPackageRoot = require("lasso-package-root");
+var path = require("path");
+var lassoCachingFS = require("lasso-caching-fs");
+var fs = require("fs");
+var stripJsonComments = require("strip-json-comments");
+var fsReadOptions = { encoding: "utf8" };
+var modules = require("../modules");
 
 function parseJSONFile(path) {
     var json = fs.readFileSync(path, fsReadOptions);
@@ -13,24 +12,27 @@ function parseJSONFile(path) {
     try {
         var taglibProps = JSON.parse(stripJsonComments(json));
         return taglibProps;
-    } catch(e) {
-        throw new Error('Unable to parse JSON file at path "' + path + '". Error: ' + e);
+    } catch (e) {
+        throw new Error(
+            'Unable to parse JSON file at path "' + path + '". Error: ' + e
+        );
     }
 }
 
-
 function loadTags(file) {
-
     var raw = parseJSONFile(file);
     var tags = {};
 
     for (var k in raw) {
         if (raw.hasOwnProperty(k)) {
-            if (k.charAt(0) === '<' && k.charAt(k.length - 1) === '>') {
+            if (k.charAt(0) === "<" && k.charAt(k.length - 1) === ">") {
                 var tagName = k.substring(1, k.length - 1);
-                var tag = tags[tagName] = raw[k];
-                if (tag.import && tag.import[0] === '.') {
-                    tag.import = modules.resolveFrom(path.dirname(file), tag.import);
+                var tag = (tags[tagName] = raw[k]);
+                if (tag.import && tag.import[0] === ".") {
+                    tag.import = modules.resolveFrom(
+                        path.dirname(file),
+                        tag.import
+                    );
                 }
             }
         }
@@ -39,13 +41,12 @@ function loadTags(file) {
     return tags;
 }
 
-
 var cache = {};
 
 function getPackageRootDir(dirname) {
     try {
         return lassoPackageRoot.getRootDir(dirname);
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 }
@@ -55,8 +56,9 @@ function getRegisteredElement(tagName, dir) {
 
     var currentDir = dir;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
-        var filePath = path.join(currentDir, 'html-elements.json');
+        var filePath = path.join(currentDir, "html-elements.json");
         if (lassoCachingFS.existsSync(filePath)) {
             var tags = cache[filePath];
             if (!tags) {
@@ -69,7 +71,11 @@ function getRegisteredElement(tagName, dir) {
         }
 
         var parentDir = path.dirname(currentDir);
-        if (!parentDir || parentDir === currentDir || parentDir === packageRootDir) {
+        if (
+            !parentDir ||
+            parentDir === currentDir ||
+            parentDir === packageRootDir
+        ) {
             break;
         }
         currentDir = parentDir;

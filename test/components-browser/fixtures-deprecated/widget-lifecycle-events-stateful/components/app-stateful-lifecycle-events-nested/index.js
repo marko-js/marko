@@ -1,48 +1,53 @@
-module.exports = require('marko/legacy-components').defineComponent({
-	template: require.resolve('./template.marko'),
+var lifecycle = require("../../lifecycle-recorder");
 
-	getInitialState: function (input) {
-		return {
-			messageCount: input.messageCount,
-			name: input.name
-		};
-	},
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require.resolve("./template.marko"),
 
-	getTemplateData: function (state, input) {
-		return {
-			messageCount: state.messageCount
-		};
-	},
+    getInitialState: function(input) {
+        return {
+            messageCount: input.messageCount,
+            name: input.name
+        };
+    },
 
-	init: function () {
-		if (this.INIT_CALLED) {
-			throw new Error('Doublie init()');
-		}
-		this.INIT_CALLED = true;
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'init');
-	},
+    getTemplateData: function(state) {
+        return {
+            messageCount: state.messageCount
+        };
+    },
 
-	setMessageCount: function (messageCount) {
-		this.setState('messageCount', messageCount);
-	},
+    init: function() {
+        if (this.INIT_CALLED) {
+            throw new Error("Doublie init()");
+        }
+        this.INIT_CALLED = true;
+        lifecycle.record(this.state.name || this.id, "init");
+    },
 
-	onRender: function (eventArg) {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
-	},
+    setMessageCount: function(messageCount) {
+        this.setState("messageCount", messageCount);
+    },
 
-	onBeforeDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onBeforeDestroy');
-	},
+    onRender: function(eventArg) {
+        lifecycle.record(
+            this.state.name || this.id,
+            eventArg.firstRender ? "onRender:firstRender" : "onRender"
+        );
+    },
 
-	onDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onDestroy');
-	},
+    onBeforeDestroy: function() {
+        lifecycle.record(this.state.name || this.id, "onBeforeDestroy");
+    },
 
-	onBeforeUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onBeforeUpdate');
-	},
+    onDestroy: function() {
+        lifecycle.record(this.state.name || this.id, "onDestroy");
+    },
 
-	onUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.state.name || this.id, 'onUpdate');
-	}
+    onBeforeUpdate: function() {
+        lifecycle.record(this.state.name || this.id, "onBeforeUpdate");
+    },
+
+    onUpdate: function() {
+        lifecycle.record(this.state.name || this.id, "onUpdate");
+    }
 });

@@ -1,1 +1,1 @@
-module.exports = function (input, out) {};
+module.exports = function() {};

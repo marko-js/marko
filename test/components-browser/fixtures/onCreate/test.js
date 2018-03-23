@@ -1,10 +1,11 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index.marko'), {
-        name: 'Frank',
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index.marko"), {
+        name: "Frank",
         $global: {
-            name: 'Frank'
+            name: "Frank",
+            serializedGlobals: { name: true }
         }
     });
 
@@ -12,6 +13,6 @@ module.exports = function (helpers) {
     var onCreateInput = onCreateArgs[0];
     var onCreateOut = onCreateArgs[1];
 
-    expect(onCreateInput.name).to.equal('Frank');
-    expect(onCreateOut.global.name).to.equal('Frank');
+    expect(onCreateInput.name).to.equal("Frank");
+    expect(onCreateOut.global.name).to.equal("Frank");
 };

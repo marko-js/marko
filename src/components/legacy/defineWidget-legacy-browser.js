@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 /* jshint newcap:false */
 
- var BaseState;
- var BaseComponent;
- var inherit;
- var jQuery = require('../jquery');
- var ready = require('../ready');
+var BaseState;
+var BaseComponent;
+var inherit;
+var jQuery = require("../jquery");
+var ready = require("../ready");
 
 module.exports = function defineWidget(def, renderer) {
     def = def.Widget || def;
@@ -17,10 +17,10 @@ module.exports = function defineWidget(def, renderer) {
     var ComponentClass = function() {};
     var proto;
 
-    if (typeof def === 'function') {
+    if (typeof def === "function") {
         proto = def.prototype;
         proto.init = def;
-    } else if (typeof def === 'object') {
+    } else if (typeof def === "object") {
         proto = def;
     } else {
         throw TypeError();
@@ -51,12 +51,7 @@ module.exports = function defineWidget(def, renderer) {
 
     // get legacy methods
     var init = proto.init;
-    var onRender = (function(onRender) {
-        return function() {
-            this.___input = null;
-            if (onRender) onRender.apply(this, arguments);
-        };
-    }(proto.onRender));
+    var onRender = proto.onRender;
     var onBeforeUpdate = proto.onBeforeUpdate;
     var onUpdate = proto.onUpdate;
     var onBeforeDestroy = proto.onBeforeDestroy;
@@ -75,30 +70,28 @@ module.exports = function defineWidget(def, renderer) {
 
     // convert legacy to modern
 
-    if (init || onRender) {
-        proto.onMount = function() {
-            var self = this;
-            var config = this.$c;
-            if (init) init.call(this, config);
-            if (onRender) {
-                onRender.call(this, { firstRender:true });
-                this.on('___legacyRender', function() {
-                    self.___didUpdate = true;
-                });
-            }
-        };
-    }
+    proto.onMount = function() {
+        var self = this;
+        var config = this.$c;
+        if (init) init.call(this, config);
+        if (onRender) {
+            onRender.call(this, { firstRender: true });
+            this.on("___legacyRender", function() {
+                self.___didUpdate = true;
+            });
+        }
+        this.___input = null;
+    };
 
-    if (onBeforeUpdate || onUpdate) {
-        proto.onUpdate = function() {
-            if (onBeforeUpdate) onBeforeUpdate.call(this);
-            if (onUpdate) onUpdate.call(this);
-            if (onRender && this.___didUpdate) {
-                this.___didUpdate = false;
-                onRender.call(this, {});
-            }
-        };
-    }
+    proto.onUpdate = function() {
+        if (onBeforeUpdate) onBeforeUpdate.call(this);
+        if (onUpdate) onUpdate.call(this);
+        if (onRender && this.___didUpdate) {
+            this.___didUpdate = false;
+            onRender.call(this, {});
+        }
+        this.___input = null;
+    };
 
     if (onBeforeDestroy || onDestroy) {
         proto.onDestroy = function() {
@@ -107,18 +100,19 @@ module.exports = function defineWidget(def, renderer) {
         };
     }
 
-
     // Set a flag on the constructor function to make it clear this is
     // a component so that we can short-circuit this work later
     Component.___isComponent = true;
 
-    function State() { BaseState.apply(this, arguments); }
+    function State() {
+        BaseState.apply(this, arguments);
+    }
     inherit(State, BaseState);
     proto.___State = State;
 
     jQuery.patchComponent(
-        window.$, 
-        proto, 
+        window.$,
+        proto,
         true /* don't throw error until used if `$` is missing*/
     );
 
@@ -129,10 +123,11 @@ module.exports = function defineWidget(def, renderer) {
         if (renderer) {
             // Legacy support
             var createOut = renderer.createOut;
-            if (typeof renderer !== 'function') {
+            if (typeof renderer !== "function") {
                 var rendererObject = renderer;
                 renderer = function(input, out) {
-                    var rendererFunc = rendererObject.renderer || rendererObject.render;
+                    var rendererFunc =
+                        rendererObject.renderer || rendererObject.render;
                     rendererFunc(input, out);
                 };
                 renderer.createOut = createOut;
@@ -146,7 +141,6 @@ module.exports = function defineWidget(def, renderer) {
         }
     }
 
-
     if (renderer) {
         // Add the rendering related methods as statics on the
         // new component constructor function
@@ -158,6 +152,6 @@ module.exports = function defineWidget(def, renderer) {
     return Component;
 };
 
-BaseState = require('./State-legacy');
-BaseComponent = require('../Component');
-inherit = require('raptor-util/inherit');
+BaseState = require("./State-legacy");
+BaseComponent = require("../Component");
+inherit = require("raptor-util/inherit");

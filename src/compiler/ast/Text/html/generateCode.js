@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-var escapeXml = require('../../../../runtime/html/helpers').x;
-var Literal = require('../../Literal');
+var escapeXml = require("../../../../runtime/html/helpers").x;
+var Literal = require("../../Literal");
 
 module.exports = function(node, codegen) {
     var context = codegen.context;
@@ -16,7 +16,10 @@ module.exports = function(node, codegen) {
                 return;
             }
 
-            if (context.isFlagSet('SCRIPT_BODY') || context.isFlagSet('STYLE_BODY')) {
+            if (
+                context.isFlagSet("SCRIPT_BODY") ||
+                context.isFlagSet("STYLE_BODY")
+            ) {
                 escape = false;
             }
 
@@ -29,23 +32,23 @@ module.exports = function(node, codegen) {
             let builder = codegen.builder;
 
             if (escape) {
-                let escapeIdentifier = context.helper('escapeXml');
+                let escapeIdentifier = context.helper("escapeXml");
 
-                if (context.isFlagSet('SCRIPT_BODY')) {
-                    escapeIdentifier = context.helper('escapeScript');
+                if (context.isFlagSet("SCRIPT_BODY")) {
+                    escapeIdentifier = context.helper("escapeScript");
                 }
 
-                if (context.isFlagSet('STYLE_BODY')) {
-                    escapeIdentifier = context.helper('escapeStyle');
+                if (context.isFlagSet("STYLE_BODY")) {
+                    escapeIdentifier = context.helper("escapeStyle");
                 }
 
                 // TODO Only escape the parts that need to be escaped if it is a compound expression with static
                 //      text parts
-                argument = builder.functionCall(
-                    escapeIdentifier,
-                    [argument]);
+                argument = builder.functionCall(escapeIdentifier, [argument]);
             } else {
-                argument = builder.functionCall(context.helper('str'), [ argument ]);
+                argument = builder.functionCall(context.helper("str"), [
+                    argument
+                ]);
             }
             htmlArray.push(argument);
         }

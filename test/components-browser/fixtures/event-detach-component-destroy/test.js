@@ -1,16 +1,16 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(helpers.targetEl.querySelector('.root') != null).to.equal(true);
+    expect(helpers.targetEl.querySelector(".root") != null).to.equal(true);
 
     expect(component.detachEvent).to.equal(undefined);
     component.destroy();
 
-    expect(helpers.targetEl.querySelector('.root') != null).to.equal(true);
+    expect(helpers.targetEl.querySelector(".root") != null).to.equal(true);
     expect(component.detachEvent != null).to.equal(true);
 
     component.detachEvent.detach();
-    expect(helpers.targetEl.querySelector('.root') == null).to.equal(true);
+    expect(helpers.targetEl.querySelector(".root") == null).to.equal(true);
 };

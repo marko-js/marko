@@ -1,10 +1,10 @@
-'use strict';
-var Container = require('./Container');
-var ArrayContainer = require('./ArrayContainer');
-var ok = require('assert').ok;
-var extend = require('raptor-util/extend');
-var inspect = require('util').inspect;
-var EventEmitter = require('events').EventEmitter;
+"use strict";
+var Container = require("./Container");
+var ArrayContainer = require("./ArrayContainer");
+var ok = require("assert").ok;
+var extend = require("raptor-util/extend");
+var inspect = require("util").inspect;
+var EventEmitter = require("events").EventEmitter;
 
 function trim(textNode) {
     if (textNode.preserveWhitespace === true) {
@@ -17,17 +17,17 @@ function trim(textNode) {
 
     if (isFirst) {
         //First child
-        text = text.replace(/^\r?\n\s*/g, '');
+        text = text.replace(/^\r?\n\s*/g, "");
     }
     if (isLast) {
         //Last child
-        text = text.replace(/\r?\n\s*$/g, '');
+        text = text.replace(/\r?\n\s*$/g, "");
     }
     if (/^\r?\n\s*$/.test(text)) {
         //Whitespace between elements
-        text = '';
+        text = "";
     }
-    text = text.replace(/\s+/g, ' ');
+    text = text.replace(/\s+/g, " ");
     textNode.argument.value = text;
 }
 
@@ -57,7 +57,7 @@ class Node {
         this._events.on(event, listener);
     }
 
-    emit(event, args) {
+    emit() {
         if (this._events) {
             this._events.emit.apply(this._events, arguments);
         }
@@ -72,33 +72,33 @@ class Node {
     }
 
     onBeforeGenerateCode(listener) {
-        this.on('beforeGenerateCode', listener);
+        this.on("beforeGenerateCode", listener);
     }
 
     onAfterGenerateCode(listener) {
-        this.on('afterGenerateCode', listener);
+        this.on("afterGenerateCode", listener);
     }
 
     wrapWith(wrapperNode) {
-        ok(this.container, 'Node does not belong to a container: ' + this);
+        ok(this.container, "Node does not belong to a container: " + this);
         var replaced = this.container.replaceChild(wrapperNode, this);
-        ok(replaced, 'Invalid state. Child does not belong to the container');
+        ok(replaced, "Invalid state. Child does not belong to the container");
         wrapperNode.appendChild(this);
     }
 
     replaceWith(newNode) {
-        ok(this.container, 'Node does not belong to a container: ' + this);
+        ok(this.container, "Node does not belong to a container: " + this);
         var replaced = this.container.replaceChild(newNode, this);
-        ok(replaced, 'Invalid state. Child does not belong to the container');
+        ok(replaced, "Invalid state. Child does not belong to the container");
     }
 
     insertSiblingBefore(newNode) {
-        ok(this.container, 'Node does not belong to a container: ' + this);
+        ok(this.container, "Node does not belong to a container: " + this);
         this.container.insertChildBefore(newNode, this);
     }
 
     insertSiblingAfter(newNode) {
-        ok(this.container, 'Node does not belong to a container: ' + this);
+        ok(this.container, "Node does not belong to a container: " + this);
         this.container.insertChildAfter(newNode, this);
     }
 
@@ -116,24 +116,24 @@ class Node {
     }
 
     prependChild(node) {
-        ok(this.body, 'Node does not support child nodes: ' + this);
+        ok(this.body, "Node does not support child nodes: " + this);
         this.body.prependChild(node);
     }
 
     appendChild(node) {
-        ok(this.body, 'Node does not support child nodes: ' + this);
+        ok(this.body, "Node does not support child nodes: " + this);
         this.body.appendChild(node);
     }
 
     appendChildren(nodes) {
-        ok(this.body, 'Node does not support child nodes: ' + this);
-        nodes.forEach((node) => {
+        ok(this.body, "Node does not support child nodes: " + this);
+        nodes.forEach(node => {
             this.body.appendChild(node);
         });
     }
 
     insertBefore(newNode, referenceNode) {
-        ok(this.body, 'Node does not support child nodes: ' + this);
+        ok(this.body, "Node does not support child nodes: " + this);
         this.body.insertBefore(newNode, referenceNode);
     }
 
@@ -144,8 +144,11 @@ class Node {
     }
 
     moveChildrenTo(targetNode) {
-        ok(this.body, 'Node does not support child nodes: ' + this);
-        ok(this !== targetNode, 'Target node cannot be the same as the source node');
+        ok(this.body, "Node does not support child nodes: " + this);
+        ok(
+            this !== targetNode,
+            "Target node cannot be the same as the source node"
+        );
 
         this.body.moveChildrenTo(targetNode);
     }
@@ -238,7 +241,7 @@ class Node {
      * of this node that is the same version we use when
      * serializing to JSON.
      */
-    inspect(depth, opts) {
+    inspect() {
         // We inspect in the simplified version of this object t
         return this.toJSON();
     }
@@ -256,12 +259,15 @@ class Node {
         if (!this._codeGeneratorFuncs) {
             this._codeGeneratorFuncs = {};
         }
-        this._codeGeneratorFuncs[mode || 'DEFAULT'] = codeGeneratorFunc;
+        this._codeGeneratorFuncs[mode || "DEFAULT"] = codeGeneratorFunc;
     }
 
     getCodeGenerator(mode) {
         if (this._codeGeneratorFuncs) {
-            return this._codeGeneratorFuncs[mode] || this._codeGeneratorFuncs.DEFAULT;
+            return (
+                this._codeGeneratorFuncs[mode] ||
+                this._codeGeneratorFuncs.DEFAULT
+            );
         } else {
             return undefined;
         }
@@ -280,12 +286,12 @@ class Node {
     }
 
     get bodyText() {
-        var bodyText = '';
+        var bodyText = "";
 
-        this.forEachChild((child) => {
-            if (child.type === 'Text') {
+        this.forEachChild(child => {
+            if (child.type === "Text") {
                 var childText = child.argument;
-                if (childText && childText.type === 'Literal') {
+                if (childText && childText.type === "Literal") {
                     bodyText += childText.value;
                 }
             }
@@ -311,7 +317,7 @@ class Node {
         return preserveWhitespace === true;
     }
 
-    setFinalNode(isFinal) {
+    setFinalNode() {
         this._finalNode = true;
     }
 
@@ -326,16 +332,20 @@ class Node {
 
         this._childTextNormalized = true;
 
-        var trimStartEnd = forceTrimStartEnd === true || this._trimStartEnd === true;
+        var trimStartEnd =
+            forceTrimStartEnd === true || this._trimStartEnd === true;
 
         var isPreserveWhitespace = false;
 
         if (!forceTrim) {
-            if (context.isPreserveWhitespace() || this.preserveWhitespace === true || this.isPreserveWhitespace()) {
+            if (
+                context.isPreserveWhitespace() ||
+                this.preserveWhitespace === true ||
+                this.isPreserveWhitespace()
+            ) {
                 isPreserveWhitespace = true;
             }
         }
-
 
         if (isPreserveWhitespace && trimStartEnd !== true) {
             return;
@@ -351,20 +361,24 @@ class Node {
         var currentTextLiteral = null;
         var literalTextNodes = [];
 
-        body.forEach((curChild, i) => {
+        body.forEach(curChild => {
             if (curChild.noOutput) {
                 // Skip over AST nodes that produce no HTML output
                 return;
             }
 
-            if (curChild.type === 'Text' && curChild.isLiteral()) {
-                curChild.isFirst  = null;
-                curChild.isLast  = null;
+            if (curChild.type === "Text" && curChild.isLiteral()) {
+                curChild.isFirst = null;
+                curChild.isLast = null;
 
-                if (currentTextLiteral &&
-                        currentTextLiteral.preserveWhitespace === curChild.preserveWhitespace &&
-                        currentTextLiteral.escape === curChild.escape) {
-                    currentTextLiteral.argument.value += curChild.argument.value;
+                if (
+                    currentTextLiteral &&
+                    currentTextLiteral.preserveWhitespace ===
+                        curChild.preserveWhitespace &&
+                    currentTextLiteral.escape === curChild.escape
+                ) {
+                    currentTextLiteral.argument.value +=
+                        curChild.argument.value;
                     curChild.detach();
                 } else {
                     currentTextLiteral = curChild;
@@ -389,14 +403,21 @@ class Node {
             if (literalTextNodes.length) {
                 // We will only trim the first and last nodes
                 var firstTextNode = literalTextNodes[0];
-                var lastTextNode = literalTextNodes[literalTextNodes.length - 1];
+                var lastTextNode =
+                    literalTextNodes[literalTextNodes.length - 1];
 
                 if (firstTextNode.isFirst) {
-                    firstTextNode.argument.value = firstTextNode.argument.value.replace(/^\s*/, '');
+                    firstTextNode.argument.value = firstTextNode.argument.value.replace(
+                        /^\s*/,
+                        ""
+                    );
                 }
 
                 if (lastTextNode.isLast) {
-                    lastTextNode.argument.value = lastTextNode.argument.value.replace(/\s*$/, '');
+                    lastTextNode.argument.value = lastTextNode.argument.value.replace(
+                        /\s*$/,
+                        ""
+                    );
                 }
             }
         }
@@ -405,15 +426,15 @@ class Node {
             literalTextNodes.forEach(trim);
         }
 
-        literalTextNodes.forEach((textNode) => {
-            if (textNode.argument.value === '') {
+        literalTextNodes.forEach(textNode => {
+            if (textNode.argument.value === "") {
                 textNode.detach();
             }
         });
     }
 
     get childCount() {
-        ok(this.body, 'Node does not support child nodes: ' + this);
+        ok(this.body, "Node does not support child nodes: " + this);
         return this.body.length;
     }
 }

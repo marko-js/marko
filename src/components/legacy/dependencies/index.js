@@ -1,7 +1,7 @@
-var path = require('path');
-var defaultResolveFrom = require('resolve-from');
+var path = require("path");
+var defaultResolveFrom = require("resolve-from");
 var env = process.env.NODE_ENV;
-var production = !env || env !== 'development';
+var production = !env || env !== "development";
 
 function getRootDeps(template, context) {
     if (production && template.___depsArray) {
@@ -10,14 +10,16 @@ function getRootDeps(template, context) {
 
     attachDepsAndComponentsToTemplate(template, context);
 
-    var deps = template.___depsArray = Object.keys(template.___deps).map(key => template.___deps[key]);
+    var deps = (template.___depsArray = Object.keys(template.___deps).map(
+        key => template.___deps[key]
+    ));
     var initModule = getInitModule(template.path, template.___components);
 
     if (initModule) deps.push(initModule);
 
     deps.push({
-        type: 'require',
-        path: require.resolve('../../boot'),
+        type: "require",
+        path: require.resolve("../../boot"),
         run: true
     });
 
@@ -41,14 +43,15 @@ function attachDepsAndComponentsToTemplate(target, context) {
         template = target;
     }
 
-    if (typeof template.createOut !== 'function') return;
+    if (typeof template.createOut !== "function") return;
     if (production && target.___deps) return;
 
-    var deps = target.___deps = {};
-    var components = target.___components = {};
+    var deps = (target.___deps = {});
+    var components = (target.___components = {});
 
     if (!template.meta) {
-        console.error('Metadata not set for template at ', template.path);
+        // eslint-disable-next-line no-console
+        console.warn("Metadata not set for template at ", template.path);
         return;
     }
 
@@ -63,7 +66,8 @@ function attachDepsAndComponentsToTemplate(target, context) {
     }
 
     if (meta.id && meta.component) {
-        var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
+        var resolveFrom =
+            (context && context.resolveFrom) || defaultResolveFrom;
         components[meta.id] = {
             id: meta.id,
             path: resolveFrom(root, meta.component)
@@ -78,8 +82,10 @@ function attachDepsAndComponentsToTemplate(target, context) {
             var req = context.require || require;
 
             try {
-                tag = req.resolve(tag.slice(0, 0 - ext.length) + '.js');
-            } catch(e) {}
+                tag = req.resolve(tag.slice(0, 0 - ext.length) + ".js");
+            } catch (e) {
+                /* ignore error */
+            }
 
             tag = req(tag);
 
@@ -98,17 +104,20 @@ function getInitModule(path, components) {
         components = Object.keys(components).map(key => components[key]);
 
         if (components.length) {
-            var virtualPath = path + '.init.js';
-            var registrations = components.map(component =>
-                `components.register('${component.id}', require('${component.path}'));`
+            var virtualPath = path + ".init.js";
+            var registrations = components.map(
+                component =>
+                    `components.register('${component.id}', require('${
+                        component.path
+                    }'));`
             );
             var code = `
                 var components = require('marko/components');
-                ${registrations.join('\n')}
+                ${registrations.join("\n")}
             `;
 
             module = {
-                type: 'require',
+                type: "require",
                 run: true,
                 virtualModule: {
                     path: virtualPath,
@@ -129,16 +138,17 @@ function getInitModule(path, components) {
 }
 
 function resolveDep(dep, root, context) {
-    if (typeof dep === 'string') {
+    if (typeof dep === "string") {
         dep = parseDependencyString(dep);
     }
 
     if (dep.path) {
-        var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
+        var resolveFrom =
+            (context && context.resolveFrom) || defaultResolveFrom;
         dep.path = resolveFrom(root, dep.path);
 
-        if(dep.path && !dep.type) {
-            dep.type = dep.path.slice(dep.path.lastIndexOf('.')+1);
+        if (dep.path && !dep.type) {
+            dep.type = dep.path.slice(dep.path.lastIndexOf(".") + 1);
         }
     }
 
@@ -146,8 +156,8 @@ function resolveDep(dep, root, context) {
         dep.virtualPath = path.resolve(root, dep.virtualPath);
     }
 
-    if (dep.type === 'js') {
-        dep.type = 'require';
+    if (dep.type === "js") {
+        dep.type = "require";
         dep.run = true;
     }
 
@@ -155,7 +165,7 @@ function resolveDep(dep, root, context) {
 }
 
 function parseDependencyString(string) {
-    var match = /^(?:([\w-]+)(?:\:\s*|\s+))?(.*?(?:\.(\w+))?)$/.exec(string);
+    var match = /^(?:([\w-]+)(?::\s*|\s+))?(.*?(?:\.(\w+))?)$/.exec(string);
     return {
         type: match[1] || match[3],
         path: match[2]

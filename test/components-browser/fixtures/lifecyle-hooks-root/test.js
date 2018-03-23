@@ -1,18 +1,16 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), { name: 'Frank' });
-    expect(component.el.querySelector('.name').innerHTML).to.equal('Frank');
-    expect(component.hookNames).to.deep.equal(['create', 'render', 'mount']);
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {
+        name: "Frank"
+    });
+    expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+    expect(component.hookNames).to.deep.equal(["create", "render", "mount"]);
     component.reset();
 
-    component.input = { name: 'John' };
+    component.input = { name: "John" };
     component.update();
 
-    expect(component.el.querySelector('.name').innerHTML).to.equal('John');
-    expect(component.hookNames).to.deep.equal(['render', 'update']);
+    expect(component.el.querySelector(".name").innerHTML).to.equal("John");
+    expect(component.hookNames).to.deep.equal(["render", "update"]);
 };
-
-// Temporarily skip failing hydrate test
-// TODO: enable this test
-module.exports.skipHydrate = true;

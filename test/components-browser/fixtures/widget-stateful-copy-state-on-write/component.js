@@ -1,8 +1,8 @@
 module.exports = {
-    onInput: function (input) {
+    onInput: function(input) {
         this.state = {
-            size: input.size || 'normal',
-            variant: input.variant || 'primary'
+            size: input.size || "normal",
+            variant: input.variant || "primary"
         };
     }
 };

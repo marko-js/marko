@@ -1,27 +1,32 @@
-'use strict';
-var ok = require('assert').ok;
+"use strict";
+var ok = require("assert").ok;
 
-var Node = require('./Node');
-var isCompoundExpression = require('../util/isCompoundExpression');
+var Node = require("./Node");
+var isCompoundExpression = require("../util/isCompoundExpression");
 
 class FunctionCall extends Node {
     constructor(def) {
-        super('FunctionCall');
+        super("FunctionCall");
         this.callee = def.callee;
 
         ok(this.callee, '"callee" is required');
 
-        let args = this.args = def.args;
+        let args = (this.args = def.args);
 
         if (args) {
             if (!Array.isArray(args)) {
-                throw new Error('Invalid args');
+                throw new Error("Invalid args");
             }
 
-            for (let i=0; i<args.length; i++) {
+            for (let i = 0; i < args.length; i++) {
                 let arg = args[i];
                 if (!arg) {
-                    throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON(), null, 2));
+                    throw new Error(
+                        "Arg " +
+                            i +
+                            " is not valid for function call: " +
+                            JSON.stringify(this.toJSON(), null, 2)
+                    );
                 }
             }
         }
@@ -41,34 +46,37 @@ class FunctionCall extends Node {
         var wrapWithParens = isCompoundExpression(callee);
 
         if (wrapWithParens) {
-            writer.write('(');
+            writer.write("(");
         }
 
         writer.write(callee);
 
         if (wrapWithParens) {
-            writer.write(')');
+            writer.write(")");
         }
 
-        writer.write('(');
+        writer.write("(");
 
         if (args && args.length) {
-            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+            for (let i = 0, argsLen = args.length; i < argsLen; i++) {
                 if (i !== 0) {
-                    writer.write(', ');
+                    writer.write(", ");
                 }
 
                 let arg = args[i];
                 if (!arg) {
-                    throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON()));
+                    throw new Error(
+                        "Arg " +
+                            i +
+                            " is not valid for function call: " +
+                            JSON.stringify(this.toJSON())
+                    );
                 }
                 writer.write(arg);
             }
         }
 
-        writer.write(')');
-
-
+        writer.write(")");
     }
 
     walk(walker) {
@@ -80,23 +88,28 @@ class FunctionCall extends Node {
         var callee = this.callee;
         var args = this.args;
 
-        var result = callee.toString() + '(';
+        var result = callee.toString() + "(";
 
         if (args && args.length) {
-            for (let i=0, argsLen = args.length; i<argsLen; i++) {
+            for (let i = 0, argsLen = args.length; i < argsLen; i++) {
                 if (i !== 0) {
-                    result += ', ';
+                    result += ", ";
                 }
 
                 let arg = args[i];
                 if (!arg) {
-                    throw new Error('Arg ' + i + ' is not valid for function call: ' + JSON.stringify(this.toJSON()));
+                    throw new Error(
+                        "Arg " +
+                            i +
+                            " is not valid for function call: " +
+                            JSON.stringify(this.toJSON())
+                    );
                 }
                 result += arg;
             }
         }
 
-        result += ')';
+        result += ")";
         return result;
     }
 }

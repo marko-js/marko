@@ -1,15 +1,11 @@
 {
     "<foo>": {
         "@cat": "boolean",
-        "attribute-groups": [
-            "my-attribute-group"
-        ]
+        "attribute-groups": ["my-attribute-group"]
     },
     "<bar>": {
         "@dog": "boolean",
-        "attribute-groups": [
-            "my-attribute-group"
-        ]
+        "attribute-groups": ["my-attribute-group"]
     },
 
     "attribute-groups": {

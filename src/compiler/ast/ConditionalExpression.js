@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class ConditionalExpression extends Node {
     constructor(def) {
-        super('ConditionalExpression');
+        super("ConditionalExpression");
         this.test = def.test;
         this.consequent = def.consequent;
         this.alternate = def.alternate;
@@ -23,9 +23,9 @@ class ConditionalExpression extends Node {
         var alternate = this.alternate;
 
         writer.write(test);
-        writer.write(' ? ');
+        writer.write(" ? ");
         writer.write(consequent);
-        writer.write(' : ');
+        writer.write(" : ");
         writer.write(alternate);
     }
 
@@ -35,7 +35,7 @@ class ConditionalExpression extends Node {
 
     toJSON() {
         return {
-            type: 'ConditionalExpression',
+            type: "ConditionalExpression",
             test: this.test,
             consequent: this.consequent,
             alternate: this.alternate
@@ -52,7 +52,7 @@ class ConditionalExpression extends Node {
         var test = this.test;
         var consequent = this.consequent;
         var alternate = this.alternate;
-        return test.toString() + ' ? ' + consequent + ' : ' + alternate;
+        return test.toString() + " ? " + consequent + " : " + alternate;
     }
 }
 

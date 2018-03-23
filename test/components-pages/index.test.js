@@ -1,47 +1,35 @@
-require('../__util__/test-init');
+"use strict";
 
-var path = require('path');
-var autotest = require('../autotest');
-var asyncTestSuite = require('../__util__/async-test-suite');
-var createJSDOMModule = require('../__util__/create-marko-jsdom-module');
-var TEST_NAME = path.basename(__dirname)
+require("../__util__/test-init");
 
-describe(TEST_NAME, function () {
-  autotest.scanDir(
-    path.join(__dirname, './fixtures'),
-    run,
-    { type: 'describe', name: false }
-  );
-});
+var autotest = require("../autotest");
+var asyncTestSuite = require("../__util__/async-test-suite");
+var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
 
-describe(TEST_NAME + ' (deprecated)', function () {
-  autotest.scanDir(
-    path.join(__dirname, './fixtures-deprecated'),
-    run,
-    { type: 'describe', name: false }
-  );
-});
+autotest("fixtures", run);
+autotest("fixtures-deprecated", run);
 
 /**
  * Builds a page with marko & lasso and then pipes it through jsdom, loading co-located tests.
  */
-function run(dir) {
-  asyncTestSuite(function () {
-    var testFile = path.join(dir, 'tests.js');
-    var templateFile = path.join(dir, 'template.marko');
-    var template = require(templateFile);
-    return template
-      .render({})
-      .then(function (html) {
-        var browser = createJSDOMModule(__dirname, String(html), {
-          beforeParse(window,  browser) {
-            browser.require('../../components');
-            browser.require(templateFile);
-          }
+function run(fixture) {
+    let resolve = fixture.resolve;
+    asyncTestSuite(function() {
+        var testFile = resolve("tests.js");
+        var templateFile = resolve("template.marko");
+        var template = require(templateFile);
+        return template.render({}).then(function(html) {
+            var browser = createJSDOMModule(__dirname, String(html), {
+                beforeParse(window, browser) {
+                    browser.require("../../components");
+                    browser.require(templateFile);
+                }
+            });
+            after(function() {
+                browser.window.close();
+            });
+            browser.require(testFile);
+            browser.window.$initComponents();
         });
-        after(function () { browser.window.close(); });
-        browser.require(testFile);
-        browser.window.$initComponents();
-      });
-  });
+    });
 }

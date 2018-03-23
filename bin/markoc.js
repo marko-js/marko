@@ -1,36 +1,42 @@
-var fs = require('fs');
-var nodePath = require('path');
+/* eslint-disable no-console */
+
+var fs = require("fs");
+var nodePath = require("path");
 var cwd = process.cwd();
-var resolveFrom = require('resolve-from');
+var resolveFrom = require("resolve-from");
 
 // Try to use the Marko compiler installed with the project
 var markoCompilerPath;
-const markocPkgVersion = require('../package.json').version;
+const markocPkgVersion = require("../package.json").version;
 
 var markoPkgVersion;
 try {
-    var markoPkgPath = resolveFrom(process.cwd(), 'marko/package.json');
+    var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
     markoPkgVersion = require(markoPkgPath).version;
-} catch(e) {}
+} catch (e) {
+    /* ignore error */
+}
 
 try {
-    markoCompilerPath = resolveFrom(process.cwd(), 'marko/compiler');
-} catch(e) {}
+    markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
+} catch (e) {
+    /* ignore error */
+}
 
 var markoCompiler;
 
 if (markoCompilerPath) {
     markoCompiler = require(markoCompilerPath);
 } else {
-    markoCompiler = require('../compiler');
+    markoCompiler = require("../compiler");
 }
 
-var Minimatch = require('minimatch').Minimatch;
+var Minimatch = require("minimatch").Minimatch;
 
-var appModulePath = require('app-module-path');
+var appModulePath = require("app-module-path");
 
-require('raptor-polyfill/string/startsWith');
-require('raptor-polyfill/string/endsWith');
+require("raptor-polyfill/string/startsWith");
+require("raptor-polyfill/string/endsWith");
 
 markoCompiler.defaultOptions.checkUpToDate = false;
 
@@ -42,58 +48,65 @@ var mmOptions = {
 
 function relPath(path) {
     if (path.startsWith(cwd)) {
-        return path.substring(cwd.length+1);
+        return path.substring(cwd.length + 1);
     }
 }
 
-var args = require('argly').createParser({
-        '--help': {
-            type: 'boolean',
-            description: 'Show this help message'
+var args = require("argly")
+    .createParser({
+        "--help": {
+            type: "boolean",
+            description: "Show this help message"
         },
-        '--files --file -f *': {
-            type: 'string[]',
-            description: 'A set of directories or files to compile'
+        "--files --file -f *": {
+            type: "string[]",
+            description: "A set of directories or files to compile"
         },
-        '--ignore -i': {
-            type: 'string[]',
-            description: 'An ignore rule (default: --ignore "/node_modules" ".*")'
+        "--ignore -i": {
+            type: "string[]",
+            description:
+                'An ignore rule (default: --ignore "/node_modules" ".*")'
         },
-        '--clean -c': {
-            type: 'boolean',
-            description: 'Clean all of the *.marko.js files'
+        "--clean -c": {
+            type: "boolean",
+            description: "Clean all of the *.marko.js files"
         },
-        '--force': {
-            type: 'boolean',
-            description: 'Force template recompilation even if unchanged'
+        "--force": {
+            type: "boolean",
+            description: "Force template recompilation even if unchanged"
         },
-        '--paths -p': {
-            type: 'string[]',
-            description: 'Additional directories to add to the Node.js module search path'
+        "--paths -p": {
+            type: "string[]",
+            description:
+                "Additional directories to add to the Node.js module search path"
         },
-        '--vdom -V': {
-            type: 'boolean',
-            description: 'VDOM output'
+        "--vdom -V": {
+            type: "boolean",
+            description: "VDOM output"
         },
-        '--version -v': {
-            type: 'boolean',
-            description: 'Print markoc and marko compiler versions to the console'
+        "--version -v": {
+            type: "boolean",
+            description:
+                "Print markoc and marko compiler versions to the console"
         }
     })
-    .usage('Usage: $0 <pattern> [options]')
-    .example('Compile a single template', '$0 template.marko')
-    .example('Compile all templates in the current directory', '$0 .')
-    .example('Compile multiple templates', '$0 template.marko src/ foo/')
-    .example('Delete all *.marko.js files in the current directory', '$0 . --clean')
+    .usage("Usage: $0 <pattern> [options]")
+    .example("Compile a single template", "$0 template.marko")
+    .example("Compile all templates in the current directory", "$0 .")
+    .example("Compile multiple templates", "$0 template.marko src/ foo/")
+    .example(
+        "Delete all *.marko.js files in the current directory",
+        "$0 . --clean"
+    )
     .validate(function(result) {
         if (result.help) {
             this.printUsage();
             process.exit(0);
         } else if (result.version) {
-            console.log('markoc@' + markocPkgVersion);
+            console.log("markoc@" + markocPkgVersion);
 
             if (markoPkgVersion) {
-                console.log('marko@' + markoPkgVersion);
+                console.log("marko@" + markoPkgVersion);
             }
 
             process.exit(0);
@@ -114,20 +127,19 @@ var args = require('argly').createParser({
     })
     .parse();
 
-var output = 'html';
+var output = "html";
 
 var isForBrowser = false;
 
 if (args.vdom) {
-    output = 'vdom';
+    output = "vdom";
     isForBrowser = true;
 }
-
 
 var compileOptions = {
     output: output,
     browser: isForBrowser,
-    compilerType: 'markoc',
+    compilerType: "markoc",
     compilerVersion: markoPkgVersion || markocPkgVersion
 };
 
@@ -146,30 +158,28 @@ if (paths && paths.length) {
 var ignoreRules = args.ignore;
 
 if (!ignoreRules) {
-    ignoreRules = ['/node_modules', '.*'];
+    ignoreRules = ["/node_modules", ".*"];
 }
 
-ignoreRules = ignoreRules.filter(function (s) {
+ignoreRules = ignoreRules.filter(function(s) {
     s = s.trim();
     return s && !s.match(/^#/);
 });
 
-ignoreRules = ignoreRules.map(function (pattern) {
-
+ignoreRules = ignoreRules.map(function(pattern) {
     return new Minimatch(pattern, mmOptions);
 });
-
 
 function isIgnored(path, dir, stat) {
     if (path.startsWith(dir)) {
         path = path.substring(dir.length);
     }
 
-    path = path.replace(/\\/g, '/');
+    path = path.replace(/\\/g, "/");
 
     var ignore = false;
     var ignoreRulesLength = ignoreRules.length;
-    for (var i=0; i<ignoreRulesLength; i++) {
+    for (var i = 0; i < ignoreRulesLength; i++) {
         var rule = ignoreRules[i];
 
         var match = rule.match(path);
@@ -177,13 +187,14 @@ function isIgnored(path, dir, stat) {
         if (!match && stat && stat.isDirectory()) {
             try {
                 stat = fs.statSync(path);
-            } catch(e) {}
+            } catch (e) {
+                /* ignore error */
+            }
 
             if (stat && stat.isDirectory()) {
-                match = rule.match(path + '/');
+                match = rule.match(path + "/");
             }
         }
-
 
         if (match) {
             if (rule.negate) {
@@ -199,7 +210,7 @@ function isIgnored(path, dir, stat) {
 
 function walk(files, options, done) {
     if (!files || files.length === 0) {
-        done('No files provided');
+        done("No files provided");
     }
 
     var pending = 0;
@@ -227,7 +238,6 @@ function walk(files, options, done) {
                 } else {
                     done(null);
                 }
-
             }
         }
     };
@@ -266,7 +276,7 @@ function walk(files, options, done) {
         });
     }
 
-    for (var i=0; i<files.length; i++) {
+    for (var i = 0; i < files.length; i++) {
         var file = nodePath.resolve(cwd, files[i]);
 
         var stat = fs.statSync(file);
@@ -288,32 +298,34 @@ if (args.clean) {
             file: function(file, context) {
                 var basename = nodePath.basename(file);
 
-                if (basename.endsWith('.marko.js') || basename.endsWith('.marko.html') || basename.endsWith('.marko.xml.js')) {
+                if (
+                    basename.endsWith(".marko.js") ||
+                    basename.endsWith(".marko.html") ||
+                    basename.endsWith(".marko.xml.js")
+                ) {
                     context.beginAsync();
                     fs.unlink(file, function(err) {
                         if (err) {
                             return context.endAsync(err);
                         }
                         deleteCount++;
-                        console.log('Deleted: ' + file);
+                        console.log("Deleted: " + file);
                         context.endAsync();
                     });
                 }
             }
         },
-        function(err) {
+        function() {
             if (deleteCount === 0) {
-                console.log('No *.marko.js files were found. Already clean.');
+                console.log("No *.marko.js files were found. Already clean.");
             } else {
-                console.log('Deleted ' + deleteCount + ' file(s)');
+                console.log("Deleted " + deleteCount + " file(s)");
             }
-
-        });
-
+        }
+    );
 } else {
     var found = {};
     var compileCount = 0;
-    var failed;
     var failed = [];
 
     var compile = function(path, context) {
@@ -322,36 +334,50 @@ if (args.clean) {
         }
 
         found[path] = true;
-        var outPath = path + '.js';
+        var outPath = path + ".js";
 
-        console.log('Compiling:\n  Input:  ' + relPath(path) + '\n  Output: ' + relPath(outPath) + '\n');
+        console.log(
+            "Compiling:\n  Input:  " +
+                relPath(path) +
+                "\n  Output: " +
+                relPath(outPath) +
+                "\n"
+        );
 
         context.beginAsync();
 
         markoCompiler.compileFile(path, compileOptions, function(err, src) {
             if (err) {
-                failed.push('Failed to compile "' + relPath(path) + '". Error: ' + (err.stack || err));
+                failed.push(
+                    'Failed to compile "' +
+                        relPath(path) +
+                        '". Error: ' +
+                        (err.stack || err)
+                );
                 context.endAsync(err);
                 return;
             }
 
             context.beginAsync();
-            fs.writeFile(outPath, src, {encoding: 'utf8'}, function(err, src) {
+            fs.writeFile(outPath, src, { encoding: "utf8" }, function(err) {
                 if (err) {
-                    failed.push('Failed to write "' + path + '". Error: ' + (err.stack || err));
+                    failed.push(
+                        'Failed to write "' +
+                            path +
+                            '". Error: ' +
+                            (err.stack || err)
+                    );
                     context.endAsync(err);
                     return;
                 }
 
                 compileCount++;
                 context.endAsync();
-
             });
 
             context.endAsync();
         });
     };
-
 
     if (args.files && args.files.length) {
         walk(
@@ -360,7 +386,11 @@ if (args.clean) {
                 file: function(file, context) {
                     var basename = nodePath.basename(file);
 
-                    if (basename.endsWith('.marko') || basename.endsWith('.marko.html') || basename.endsWith('.marko.xml')) {
+                    if (
+                        basename.endsWith(".marko") ||
+                        basename.endsWith(".marko.html") ||
+                        basename.endsWith(".marko.xml")
+                    ) {
                         compile(file, context);
                     }
                 }
@@ -368,7 +398,10 @@ if (args.clean) {
             function(err) {
                 if (err) {
                     if (failed.length) {
-                        console.error('The following errors occurred:\n- ' + failed.join('\n- '));
+                        console.error(
+                            "The following errors occurred:\n- " +
+                                failed.join("\n- ")
+                        );
                     } else {
                         console.error(err);
                     }
@@ -377,11 +410,11 @@ if (args.clean) {
                 }
 
                 if (compileCount === 0) {
-                    console.log('No templates found');
+                    console.log("No templates found");
                 } else {
-                    console.log('Compiled ' + compileCount + ' templates(s)');
+                    console.log("Compiled " + compileCount + " templates(s)");
                 }
-
-            });
+            }
+        );
     }
 }

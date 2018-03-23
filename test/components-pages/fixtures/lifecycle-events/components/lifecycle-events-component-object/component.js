@@ -1,15 +1,15 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
 module.exports = {
     onCreate: function(input, out) {
         // if (typeof window !== 'undefined') {
         //     throw new Error('onCreate should not be called in the browser');
         // }
-        if (this.state !== undefined) {
-            throw new Error('this.state should be undefined');
+        if (this.state != null) {
+            throw new Error("this.state should be undefined");
         }
         this.state = {
-            events: ['onCreate']
+            events: ["onCreate"]
         };
 
         this.onCreateInputName = input.name;
@@ -21,7 +21,7 @@ module.exports = {
         //     throw new Error('onRender should not be called in the browser');
         // }
 
-        this.state.events.push('onRender');
+        this.state.events.push("onRender");
 
         if (!out || !out.write) {
             throw new Error('"out" argument expected');
@@ -33,17 +33,21 @@ module.exports = {
         //     throw new Error('onInput should not be called in the browser');
         // }
 
-        this.state.events.push('onInput[' + input.name + ']');
+        this.state.events.push("onInput[" + input.name + "]");
     },
 
     onMount: function() {
         var componentsLookup = window.components || (window.components = {});
-        componentsLookup['lifecycle-events-component-object'] = this;
+        componentsLookup["lifecycle-events-component-object"] = this;
     },
 
     test: function() {
-        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender', 'onRender']);
-        expect(this.onCreateInputName).to.equal('Frank');
-        expect(this.onCreateOutName).to.equal('FrankGlobal');
+        expect(this.state.events).to.deep.equal([
+            "onCreate",
+            "onInput[Frank]",
+            "onRender"
+        ]);
+        expect(this.onCreateInputName).to.equal("Frank");
+        expect(this.onCreateOutName).to.equal("FrankGlobal");
     }
 };

@@ -1,9 +1,9 @@
-'use strict';
-var Node = require('./Node');
+"use strict";
+var Node = require("./Node");
 
 class Declaration extends Node {
     constructor(def) {
-        super('Declaration');
+        super("Declaration");
         this.declaration = def.declaration;
     }
 
@@ -11,9 +11,9 @@ class Declaration extends Node {
         var builder = codegen.builder;
 
         return [
-            builder.htmlLiteral('<?'),
+            builder.htmlLiteral("<?"),
             codegen.generateCode(builder.text(this.declaration)),
-            builder.htmlLiteral('?>')
+            builder.htmlLiteral("?>")
         ];
     }
 

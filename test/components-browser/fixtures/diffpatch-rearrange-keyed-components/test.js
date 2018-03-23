@@ -1,7 +1,7 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index"), {});
 
     var previousComponents = {};
 
@@ -9,7 +9,7 @@ module.exports = function (helpers) {
         component.input = { letters: letters };
         component.update();
 
-        var divs = component.getEl('root').querySelectorAll('div');
+        var divs = component.getEl("root").querySelectorAll("div");
 
         expect(divs.length).to.equal(letters.length);
 
@@ -30,7 +30,7 @@ module.exports = function (helpers) {
             expect(divs[i].innerHTML).to.equal(letter);
         }
 
-        Object.keys(previousComponents).forEach(function (letter) {
+        Object.keys(previousComponents).forEach(function(letter) {
             if (!(letter in newComponents)) {
                 expect(previousComponents[letter].isDestroyed()).to.equal(true);
             }
@@ -39,56 +39,56 @@ module.exports = function (helpers) {
         previousComponents = newComponents;
     }
 
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Single component swap
-    checkOrder(['a', 'c', 'b', 'd', 'e']);
+    checkOrder(["a", "c", "b", "d", "e"]);
 
     // Single component removal (remove 'C')
-    checkOrder(['a', 'b', 'd', 'e']);
+    checkOrder(["a", "b", "d", "e"]);
 
     // Single component addition
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Double component addition
-    checkOrder(['a', 'b', 'b1', 'b2', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "b1", "b2", "c", "d", "e"]);
 
     // Double component removal
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Swap b and d
-    checkOrder(['a', 'd', 'c', 'b', 'e']);
+    checkOrder(["a", "d", "c", "b", "e"]);
 
     // Swap b and d back to normal
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Swap a and c
-    checkOrder(['c', 'b', 'a', 'd', 'e']);
+    checkOrder(["c", "b", "a", "d", "e"]);
 
     // Swap c and a back to normal
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Single component addition to START
-    checkOrder(['1', 'a', 'b', 'c', 'd', 'e']);
+    checkOrder(["1", "a", "b", "c", "d", "e"]);
 
     // Double component addition to START
-    checkOrder(['3', '2', '1', 'a', 'b', 'c', 'd', 'e']);
+    checkOrder(["3", "2", "1", "a", "b", "c", "d", "e"]);
 
     // Single component removal from START
-    checkOrder(['2', '1', 'a', 'b', 'c', 'd', 'e']);
+    checkOrder(["2", "1", "a", "b", "c", "d", "e"]);
 
     // Double component removal from START
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 
     // Single component addition to END
-    checkOrder(['a', 'b', 'c', 'd', 'e', 'f']);
+    checkOrder(["a", "b", "c", "d", "e", "f"]);
 
     // Double component addition to END
-    checkOrder(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
+    checkOrder(["a", "b", "c", "d", "e", "f", "g", "h"]);
 
     // Single component removal from END
-    checkOrder(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+    checkOrder(["a", "b", "c", "d", "e", "f", "g"]);
 
     // Double component removal from END
-    checkOrder(['a', 'b', 'c', 'd', 'e']);
+    checkOrder(["a", "b", "c", "d", "e"]);
 };

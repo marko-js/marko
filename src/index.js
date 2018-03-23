@@ -1,20 +1,24 @@
-'use strict';
-require('./components/legacy/dependencies/html');
+"use strict";
+require("./components/legacy/dependencies/html");
 
 if (!process.env.BUNDLE) {
     if (process.env.MARKO_HOT_RELOAD) {
-        require('./hot-reload').enable();
+        require("./hot-reload").enable();
     }
 
     // If process was launched with browser refresh then automatically
     // enable browser-refresh
-    require('./browser-refresh').enable();
+    require("./browser-refresh").enable();
 }
 
 function fixFlush() {
     try {
-        var OutgoingMessage = require('http').OutgoingMessage;
-        if (OutgoingMessage.prototype.flush && OutgoingMessage.prototype.flush.toString().indexOf('deprecated') !== -1) {
+        var OutgoingMessage = require("http").OutgoingMessage;
+        if (
+            OutgoingMessage.prototype.flush &&
+            OutgoingMessage.prototype.flush.toString().indexOf("deprecated") !==
+                -1
+        ) {
             // Yes, we are monkey-patching http. This method should never have been added and it was introduced on
             // the iojs fork. It was quickly deprecated and I'm 99% sure no one is actually using it.
             // See:
@@ -24,12 +28,14 @@ function fixFlush() {
             // This method causes problems since marko looks for the flush method and calls it found.
             // The `res.flush()` method is introduced by the [compression](https://www.npmjs.com/package/compression)
             // middleware, but, otherwise, it should typically not exist.
-            delete require('http').OutgoingMessage.prototype.flush;
+            delete require("http").OutgoingMessage.prototype.flush;
         }
-    } catch(e) {}
+    } catch (e) {
+        /* ignore error */
+    }
 }
 
 fixFlush();
 
-exports.createOut = require('./runtime/createOut');
-exports.load = require('./loader');
+exports.createOut = require("./runtime/createOut");
+exports.load = require("./loader");

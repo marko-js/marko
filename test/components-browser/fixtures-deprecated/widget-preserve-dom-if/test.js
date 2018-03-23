@@ -1,21 +1,29 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var widget = helpers.mount(require('./index'), {});
+module.exports = function(helpers) {
+    var widget = helpers.mount(require.resolve("./index"), {});
 
     function getTimestamps() {
-
         return {
-            preserveId: widget.getEl('preserve').getAttribute('data-renderId'),
-            preserveIdBody: widget.getEl('preserve').innerHTML,
-            preserveBodyId: widget.getEl('preserveBody').getAttribute('data-renderId'),
-            preserveBodyIdBody: widget.getEl('preserveBody').innerHTML,
-            widgetId: widget.getWidget('widget').state.name,
-            preserveClass: widget.el.querySelector('.preserve').getAttribute('data-renderId'),
-            preserveClassBody: widget.el.querySelector('.preserve').innerHTML,
-            preserveBodyClass: widget.el.querySelector('.preserve-body').getAttribute('data-renderId'),
-            preserveBodyClassBody: widget.el.querySelector('.preserve-body').innerHTML,
-            widgetClass: require('marko/legacy-components').getWidgetForEl(widget.el.querySelector('.widget-no-id')).state.name
+            preserveId: widget.getEl("preserve").getAttribute("data-renderId"),
+            preserveIdBody: widget.getEl("preserve").innerHTML,
+            preserveBodyId: widget
+                .getEl("preserveBody")
+                .getAttribute("data-renderId"),
+            preserveBodyIdBody: widget.getEl("preserveBody").innerHTML,
+            widgetId: widget.getWidget("widget").state.name,
+            preserveClass: widget.el
+                .querySelector(".preserve")
+                .getAttribute("data-renderId"),
+            preserveClassBody: widget.el.querySelector(".preserve").innerHTML,
+            preserveBodyClass: widget.el
+                .querySelector(".preserve-body")
+                .getAttribute("data-renderId"),
+            preserveBodyClassBody: widget.el.querySelector(".preserve-body")
+                .innerHTML,
+            widgetClass: require("marko/legacy-components").getWidgetForEl(
+                widget.el.querySelector(".widget-no-id")
+            ).state.name
         };
     }
 
@@ -27,16 +35,16 @@ module.exports = function (helpers) {
     });
 
     var timestamps = getTimestamps();
-    expect(timestamps.preserveId).to.equal('0');
-    expect(timestamps.preserveIdBody).to.equal('0');
-    expect(timestamps.preserveBodyId).to.equal('10');
-    expect(timestamps.preserveBodyIdBody).to.equal('0');
-    expect(timestamps.widgetId).to.equal('0');
-    expect(timestamps.preserveClass).to.equal('0');
-    expect(timestamps.preserveClassBody).to.equal('0');
-    expect(timestamps.preserveBodyClass).to.equal('10');
-    expect(timestamps.preserveBodyClassBody).to.equal('0');
-    expect(timestamps.widgetClass).to.equal('0');
+    expect(timestamps.preserveId).to.equal("0");
+    expect(timestamps.preserveIdBody).to.equal("0");
+    expect(timestamps.preserveBodyId).to.equal("10");
+    expect(timestamps.preserveBodyIdBody).to.equal("0");
+    expect(timestamps.widgetId).to.equal("0");
+    expect(timestamps.preserveClass).to.equal("0");
+    expect(timestamps.preserveClassBody).to.equal("0");
+    expect(timestamps.preserveBodyClass).to.equal("10");
+    expect(timestamps.preserveBodyClassBody).to.equal("0");
+    expect(timestamps.widgetClass).to.equal("0");
 
     // expect(newEls1.el != null).to.equal(true);
     // expect(newEls1.el).to.equal(origEls.el);
@@ -64,14 +72,14 @@ module.exports = function (helpers) {
     });
 
     timestamps = getTimestamps();
-    expect(timestamps.preserveId).to.equal('100');
-    expect(timestamps.preserveIdBody).to.equal('100');
-    expect(timestamps.preserveBodyId).to.equal('100');
-    expect(timestamps.preserveBodyIdBody).to.equal('100');
-    expect(timestamps.widgetId).to.equal('100');
-    expect(timestamps.preserveClass).to.equal('100');
-    expect(timestamps.preserveClassBody).to.equal('100');
-    expect(timestamps.preserveBodyClass).to.equal('100');
-    expect(timestamps.preserveBodyClassBody).to.equal('100');
-    expect(timestamps.widgetClass).to.equal('100');
+    expect(timestamps.preserveId).to.equal("100");
+    expect(timestamps.preserveIdBody).to.equal("100");
+    expect(timestamps.preserveBodyId).to.equal("100");
+    expect(timestamps.preserveBodyIdBody).to.equal("100");
+    expect(timestamps.widgetId).to.equal("100");
+    expect(timestamps.preserveClass).to.equal("100");
+    expect(timestamps.preserveClassBody).to.equal("100");
+    expect(timestamps.preserveBodyClass).to.equal("100");
+    expect(timestamps.preserveBodyClassBody).to.equal("100");
+    expect(timestamps.widgetClass).to.equal("100");
 };

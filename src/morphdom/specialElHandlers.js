@@ -2,9 +2,9 @@ function syncBooleanAttrProp(fromEl, toEl, name) {
     if (fromEl[name] !== toEl[name]) {
         fromEl[name] = toEl[name];
         if (fromEl[name]) {
-            fromEl.setAttribute(name, '');
+            fromEl.setAttribute(name, "");
         } else {
-            fromEl.removeAttribute(name, '');
+            fromEl.removeAttribute(name, "");
         }
     }
 }
@@ -17,7 +17,7 @@ SpecialElHandlers.prototype = {
      * attribute when reading over the attributes using selectEl.attributes
      */
     OPTION: function(fromEl, toEl) {
-        syncBooleanAttrProp(fromEl, toEl, 'selected');
+        syncBooleanAttrProp(fromEl, toEl, "selected");
     },
     /**
      * The "value" attribute is special for the <input> element since it sets
@@ -26,15 +26,15 @@ SpecialElHandlers.prototype = {
      * initial value.  Similar for the "checked" attribute, and "disabled".
      */
     INPUT: function(fromEl, toEl) {
-        syncBooleanAttrProp(fromEl, toEl, 'checked');
-        syncBooleanAttrProp(fromEl, toEl, 'disabled');
+        syncBooleanAttrProp(fromEl, toEl, "checked");
+        syncBooleanAttrProp(fromEl, toEl, "disabled");
 
         if (fromEl.value != toEl.___value) {
             fromEl.value = toEl.___value;
         }
 
-        if (!toEl.___hasAttribute('value')) {
-            fromEl.removeAttribute('value');
+        if (!toEl.___hasAttribute("value")) {
+            fromEl.removeAttribute("value");
         }
     },
 
@@ -50,7 +50,10 @@ SpecialElHandlers.prototype = {
             // node value and vise versa. This ignores an empty update.
             var oldValue = firstChild.nodeValue;
 
-            if (oldValue == newValue || (!newValue && oldValue == fromEl.placeholder)) {
+            if (
+                oldValue == newValue ||
+                (!newValue && oldValue == fromEl.placeholder)
+            ) {
                 return;
             }
 
@@ -58,17 +61,15 @@ SpecialElHandlers.prototype = {
         }
     },
     SELECT: function(fromEl, toEl) {
-        if (!toEl.___hasAttribute('multiple')) {
-            var selectedIndex = -1;
-            var i = 0;
+        if (!toEl.___hasAttribute("multiple")) {
+            var i = -1;
             var curChild = toEl.___firstChild;
-            while(curChild) {
-                if (curChild.___nodeName == 'OPTION') {
-                    if (curChild.___hasAttribute('selected')) {
-                        selectedIndex = i;
+            while (curChild) {
+                if (curChild.___nodeName == "OPTION") {
+                    i++;
+                    if (curChild.___hasAttribute("selected")) {
                         break;
                     }
-                    i++;
                 }
                 curChild = curChild.___nextSibling;
             }

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const getTransformHelper = require('./util/getTransformHelper');
-const generateRegisterComponentCode = require('./util/generateRegisterComponentCode');
-const resolveFrom = require('resolve-from');
+const getTransformHelper = require("./util/getTransformHelper");
+const generateRegisterComponentCode = require("./util/generateRegisterComponentCode");
+const resolveFrom = require("resolve-from");
 
 module.exports = function codeGenerator(el, codegen) {
     var context = codegen.context;
@@ -16,9 +16,9 @@ module.exports = function codeGenerator(el, codegen) {
 
     var typesObject = {};
 
-    attrs.forEach((attr) => {
+    attrs.forEach(attr => {
         if (!attr.isLiteralString()) {
-            codegen.addError('Component type should be a string');
+            codegen.addError("Component type should be a string");
             return;
         }
 
@@ -27,7 +27,13 @@ module.exports = function codeGenerator(el, codegen) {
         let filename = resolveFrom(transformHelper.dirname, requirePath);
 
         if (!filename) {
-            transformHelper.addError('Target file not found: ' + requirePath + ' (from: ' + transformHelper.dirname + ')');
+            transformHelper.addError(
+                "Target file not found: " +
+                    requirePath +
+                    " (from: " +
+                    transformHelper.dirname +
+                    ")"
+            );
             return;
         }
 
@@ -37,10 +43,14 @@ module.exports = function codeGenerator(el, codegen) {
             requirePath: requirePath
         };
 
-        typesObject[attr.name] = generateRegisterComponentCode(componentModule, transformHelper, false).node;
+        typesObject[attr.name] = generateRegisterComponentCode(
+            componentModule,
+            transformHelper,
+            false
+        ).node;
     });
 
-    codegen.addStaticVar('marko_componentTypes', builder.literal(typesObject));
+    codegen.addStaticVar("marko_componentTypes", builder.literal(typesObject));
 
     return null;
 };

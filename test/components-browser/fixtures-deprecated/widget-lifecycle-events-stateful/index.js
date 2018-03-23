@@ -1,55 +1,60 @@
-module.exports = require('marko/legacy-components').defineComponent({
-	template: require.resolve('./template.marko'),
+var lifecycle = require("./lifecycle-recorder");
 
-	getInitialState: function (input) {
-		return {
-			name: input.name,
-			messageCount: input.messageCount
-		};
-	},
+module.exports = require("marko/legacy-components").defineComponent({
+    template: require.resolve("./template.marko"),
 
-	getTemplateData: function (state, input) {
-		return {
-			name: state.name,
-			messageCount: state.messageCount
-		};
-	},
+    getInitialState: function(input) {
+        return {
+            name: input.name,
+            messageCount: input.messageCount
+        };
+    },
 
-	init: function () {
-		this.lifecycleEvents = [];
-		window.recordWidgetLifecycleEvent(this.id, 'init');
-	},
+    getTemplateData: function(state) {
+        return {
+            name: state.name,
+            messageCount: state.messageCount
+        };
+    },
 
-	onRender: function (eventArg) {
-		window.recordWidgetLifecycleEvent(this.id, eventArg.firstRender ? 'onRender:firstRender' : 'onRender');
-	},
+    init: function() {
+        this.lifecycleEvents = [];
+        lifecycle.record(this.id, "init");
+    },
 
-	update_messageCount: function (newMessageCount) {
-		this.getWidget('nestedStateful').setMessageCount(newMessageCount);
-		this.getWidget('nestedStateful').update();
-	},
+    onRender: function(eventArg) {
+        lifecycle.record(
+            this.id,
+            eventArg.firstRender ? "onRender:firstRender" : "onRender"
+        );
+    },
 
-	setName: function (newName) {
-		this.setState('name', newName);
-	},
+    update_messageCount: function(newMessageCount) {
+        this.getWidget("nestedStateful").setMessageCount(newMessageCount);
+        this.getWidget("nestedStateful").update();
+    },
 
-	setMessageCount: function (newMessageCount) {
-		this.setState('messageCount', newMessageCount);
-	},
+    setName: function(newName) {
+        this.setState("name", newName);
+    },
 
-	onBeforeDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onBeforeDestroy');
-	},
+    setMessageCount: function(newMessageCount) {
+        this.setState("messageCount", newMessageCount);
+    },
 
-	onDestroy: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onDestroy');
-	},
+    onBeforeDestroy: function() {
+        lifecycle.record(this.id, "onBeforeDestroy");
+    },
 
-	onBeforeUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onBeforeUpdate');
-	},
+    onDestroy: function() {
+        lifecycle.record(this.id, "onDestroy");
+    },
 
-	onUpdate: function () {
-		window.recordWidgetLifecycleEvent(this.id, 'onUpdate');
-	}
+    onBeforeUpdate: function() {
+        lifecycle.record(this.id, "onBeforeUpdate");
+    },
+
+    onUpdate: function() {
+        lifecycle.record(this.id, "onUpdate");
+    }
 });

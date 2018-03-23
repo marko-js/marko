@@ -1,1 +1,1 @@
-module.exports = require('deresolve');
+module.exports = require("deresolve");

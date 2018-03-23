@@ -9,18 +9,23 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr");
+    marko_helpers = require("marko/src/runtime/vdom/helpers"),
+    marko_createElement = marko_helpers.e,
+    marko_const = marko_helpers.const,
+    marko_const_nextId = marko_const("339bea"),
+    marko_node0 = marko_createElement("H1", null, "myStart", null, 0, 0, {
+        i: marko_const_nextId()
+      }),
+    marko_node1 = marko_createElement("DIV", null, "myEnd", null, 0, 0, {
+        i: marko_const_nextId()
+      });
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("H1", {
-      "data-marko-key": marko_keyAttr("myStart", __component)
-    }, "myStart", component, 0);
+  out.n(marko_node0, component);
 
-  out.e("DIV", {
-      "data-marko-key": marko_keyAttr("myEnd", __component)
-    }, "myEnd", component, 0);
+  out.n(marko_node1, component);
 }
 
 marko_template._ = marko_renderer(render, {

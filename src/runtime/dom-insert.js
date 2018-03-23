@@ -1,14 +1,14 @@
-var extend = require('raptor-util/extend');
-var componentsUtil = require('../components/util');
+var extend = require("raptor-util/extend");
+var componentsUtil = require("../components/util");
 var destroyComponentForNode = componentsUtil.___destroyComponentForNode;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 
 function resolveEl(el) {
-    if (typeof el == 'string') {
+    if (typeof el == "string") {
         var elId = el;
         el = document.getElementById(elId);
         if (!el) {
-            throw Error('Not found: ' + elId);
+            throw Error("Not found: " + elId);
         }
     }
     return el;
@@ -45,13 +45,13 @@ module.exports = function(target, getEl, afterInsert) {
             var el = getEl(this, referenceEl);
 
             var curChild = referenceEl.firstChild;
-            while(curChild) {
+            while (curChild) {
                 var nextSibling = curChild.nextSibling; // Just in case the DOM changes while removing
                 beforeRemove(curChild);
                 curChild = nextSibling;
             }
 
-            referenceEl.innerHTML = '';
+            referenceEl.innerHTML = "";
             referenceEl.appendChild(el);
             return afterInsert(this, referenceEl);
         },
@@ -64,7 +64,6 @@ module.exports = function(target, getEl, afterInsert) {
         insertAfter: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            el = el;
             var nextSibling = referenceEl.nextSibling;
             var parentNode = referenceEl.parentNode;
             if (nextSibling) {

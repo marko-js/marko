@@ -1,5 +1,5 @@
-var marko = require('../../');
-var makeRenderable = require('../../runtime/renderable');
+var marko = require("../../");
+var makeRenderable = require("../../runtime/renderable");
 
 module.exports = function defineRenderer(renderingLogic) {
     var renderer = renderingLogic.renderer;
@@ -10,7 +10,7 @@ module.exports = function defineRenderer(renderingLogic) {
 
     var template = renderingLogic.template;
 
-    if (typeof template === 'string') {
+    if (typeof template === "string") {
         template = marko.load(template);
     }
 
@@ -26,11 +26,12 @@ module.exports = function defineRenderer(renderingLogic) {
     }
 
     renderer.___isRenderer = true;
-    renderer.createOut = template ? template.createOut : renderingLogic.createOut;
+    renderer.createOut = template
+        ? template.createOut
+        : renderingLogic.createOut;
     renderer.template = template;
 
     makeRenderable(renderer, renderer);
 
     return renderer;
 };
-

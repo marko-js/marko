@@ -1,5 +1,5 @@
-var defaultCreateOut = require('./createOut');
-var extend = require('raptor-util/extend');
+var defaultCreateOut = require("./createOut");
+var extend = require("raptor-util/extend");
 
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
     try {
@@ -8,7 +8,7 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
         if (shouldEnd) {
             finalOut.end();
         }
-    } catch(err) {
+    } catch (err) {
         var actualEnd = finalOut.end;
         finalOut.end = function() {};
 
@@ -21,7 +21,8 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
 }
 
 module.exports = function(target, renderer) {
-    var renderFunc = renderer && (renderer.renderer || renderer.render || renderer);
+    var renderFunc =
+        renderer && (renderer.renderer || renderer.render || renderer);
     var createOut = target.createOut || renderer.createOut || defaultCreateOut;
 
     return extend(target, {
@@ -40,10 +41,11 @@ module.exports = function(target, renderer) {
             }
 
             if (callback) {
-                out.on('finish', function() {
-                       callback(null, out.toString(), out);
-                   })
-                   .once('error', callback);
+                out
+                    .on("finish", function() {
+                        callback(null, out.toString(), out);
+                    })
+                    .once("error", callback);
 
                 return safeRender(render, localData, out, true);
             } else {
@@ -109,7 +111,7 @@ module.exports = function(target, renderer) {
                 finalOut = out;
                 shouldEnd = false;
                 extend(out.global, globalData);
-            } else if (typeof out == 'function') {
+            } else if (typeof out == "function") {
                 finalOut = createOut(globalData);
                 callback = out;
             } else {
@@ -123,10 +125,10 @@ module.exports = function(target, renderer) {
 
             if (callback) {
                 finalOut
-                    .on('finish', function() {
+                    .on("finish", function() {
                         callback(null, finalOut.___getResult());
                     })
-                    .once('error', callback);
+                    .once("error", callback);
             }
 
             globalData = finalOut.global;

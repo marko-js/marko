@@ -1,5 +1,5 @@
-var modernMarko = require('../');
-var Component = require('../Component');
+var modernMarko = require("../");
+var Component = require("../Component");
 
 // expose legacy
 window.$markoLegacy = exports;
@@ -8,13 +8,13 @@ exports.load = function(typeName) {
 };
 
 // legacy api
-exports.defineComponent = require('./defineComponent-legacy');
-exports.defineWidget = require('./defineWidget-legacy');
-exports.defineRenderer = require('./defineRenderer-legacy');
-exports.makeRenderable = exports.renderable = require('../../runtime/renderable');
+exports.defineComponent = require("./defineComponent-legacy");
+exports.defineWidget = require("./defineWidget-legacy");
+exports.defineRenderer = require("./defineRenderer-legacy");
+exports.makeRenderable = exports.renderable = require("../../runtime/renderable");
 
 // browser only
-var Widget = exports.Widget = Component;
+var Widget = (exports.Widget = Component);
 exports.onInitWidget = modernMarko.onInitComponent;
 exports.getWidgetForEl = modernMarko.getComponentForEl;
 exports.initWidgets = modernMarko.init;
@@ -33,7 +33,7 @@ if (Widget) {
     };
 }
 
-var RenderResult = require('../../runtime/RenderResult');
+var RenderResult = require("../../runtime/RenderResult");
 
 RenderResult.prototype.getWidget = RenderResult.prototype.getComponent;
 RenderResult.prototype.getWidgets = RenderResult.prototype.getComponents;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class ServerComponent {
     constructor(id, input, out, typeName, customEvents, scope) {

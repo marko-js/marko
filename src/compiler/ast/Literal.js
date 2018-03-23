@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 var isArray = Array.isArray;
-const isValidJavaScriptVarName = require('../util/isValidJavaScriptVarName');
+const isValidJavaScriptVarName = require("../util/isValidJavaScriptVarName");
 
 function walkValue(value, walker) {
     if (!value) {
@@ -11,16 +11,16 @@ function walkValue(value, walker) {
         return walker.walk(value);
     } else if (isArray(value)) {
         let array = value;
-        for (let i=0; i<array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             let el = array[i];
             array[i] = walkValue(el, walker);
         }
         return array;
-    } else if (typeof value === 'object') {
+    } else if (typeof value === "object") {
         let object = value;
 
         let keys = Object.keys(object);
-        for (let i=0; i<keys.length; i++) {
+        for (let i = 0; i < keys.length; i++) {
             let key = keys[i];
             let oldValue = object[key];
             let newValue = walkValue(oldValue, walker);
@@ -37,17 +37,17 @@ function walkValue(value, walker) {
 
 class Literal extends Node {
     constructor(def) {
-        super('Literal');
+        super("Literal");
         this.value = def.value;
     }
 
     generateCode(codegen) {
         if (this.value != null) {
             if (isArray(this.value)) {
-                for (var i=0; i<this.value.length; i++) {
+                for (var i = 0; i < this.value.length; i++) {
                     this.value[i] = codegen.generateCode(this.value[i]);
                 }
-            } else if (typeof this.value === 'object') {
+            } else if (typeof this.value === "object") {
                 if (!(this.value instanceof RegExp)) {
                     var newObject = {};
                     for (var k in this.value) {
@@ -70,47 +70,47 @@ class Literal extends Node {
     toString() {
         var value = this.value;
         if (value === null) {
-            return 'null';
+            return "null";
         } else if (value === undefined) {
-            return 'undefined';
-        } else if (typeof value === 'string') {
+            return "undefined";
+        } else if (typeof value === "string") {
             return JSON.stringify(value);
         } else if (value === true) {
-            return 'true';
+            return "true";
         } else if (value === false) {
-            return 'false';
-        }  else if (isArray(value)) {
-            return '[' + value.join(', ') + ']';
-        } else if (typeof value === 'number') {
+            return "false";
+        } else if (isArray(value)) {
+            return "[" + value.join(", ") + "]";
+        } else if (typeof value === "number") {
             return value.toString();
         } else if (value instanceof RegExp) {
             return value.toString();
-        } else if (typeof value === 'object') {
+        } else if (typeof value === "object") {
             let keys = Object.keys(value);
             if (keys.length === 0) {
-                return '{}';
+                return "{}";
             }
 
-            var result = '{ ';
+            var result = "{ ";
 
-            for (let i=0; i<keys.length; i++) {
+            for (let i = 0; i < keys.length; i++) {
                 let k = keys[i];
                 let v = value[k];
 
                 if (i !== 0) {
-                    result += ', ';
+                    result += ", ";
                 }
 
                 if (isValidJavaScriptVarName(k)) {
-                    result += k + ': ';
+                    result += k + ": ";
                 } else {
-                    result += JSON.stringify(k) + ': ';
+                    result += JSON.stringify(k) + ": ";
                 }
 
                 result += v;
             }
 
-            return result + ' }';
+            return result + " }";
         }
     }
 

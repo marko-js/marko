@@ -2,9 +2,7 @@
     "taglib-id": "marko-html",
     "<html-comment>": {
         "renderer": "./html-comment-tag.js",
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<a>": {
         "@href": "#html-href",
@@ -25,12 +23,11 @@
             },
             {
                 "displayText": "a href=\"mailto:\"",
-                "snippet": "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
+                "snippet":
+                    "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<abbr>": {
         "html": true,
@@ -40,15 +37,11 @@
                 "snippet": "abbr title=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<address>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<area>": {
         "@alt": "#html-alt",
@@ -65,24 +58,19 @@
             {},
             {
                 "displayText": "area shape=\"\" coords=\"\" href=\"\"",
-                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
+                "snippet":
+                    "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<article>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<aside>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<audio>": {
         "@autoplay": "#html-autoplay",
@@ -99,15 +87,11 @@
                 "snippet": "audio src=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<b>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<base>": {
         "@href": "#html-href",
@@ -119,9 +103,7 @@
                 "snippet": "base href=\"${1:#}\" target=\"${2:_blank}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<bdi>": {
         "html": true,
@@ -131,9 +113,7 @@
                 "snippet": "bdi dir=\"${1:auto}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<bdo>": {
         "html": true,
@@ -143,9 +123,7 @@
                 "snippet": "bdo dir=\"${1:auto}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<blockquote>": {
         "@cite": "#html-cite",
@@ -156,9 +134,7 @@
                 "snippet": "blockquote cite=\"${1:http://}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<body>": {
         "@onafterprint": "#html-onafterprint",
@@ -177,15 +153,11 @@
         "@onundo": "#html-onundo",
         "@onunload": "#html-onunload",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<br>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<button>": {
         "@autofocus": "#html-autofocus",
@@ -207,9 +179,7 @@
                 "snippet": "button type=\"${1:button}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<canvas>": {
         "@height": "#html-height",
@@ -218,44 +188,33 @@
         "autocomplete": [
             {},
             {
-                "snippet": "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
+                "snippet":
+                    "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<caption>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<cite>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<code>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<col>": {
         "@span": "#html-span",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<colgroup>": {
         "@span": "#html-span",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<command>": {
         "@checked": "#html-checked",
@@ -265,42 +224,30 @@
         "@radiogroup": "#html-radiogroup",
         "@type": "#html-type",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<datalist>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<dd>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<del>": {
         "@cite": "#html-cite",
         "@datetime": "#html-datetime",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<details>": {
         "@open": "#html-open",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<dfn>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<div>": {
         "html": true,
@@ -310,27 +257,19 @@
                 "snippet": "div class=\"$2\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<dl>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<dt>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<em>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<embed>": {
         "@height": "#html-height",
@@ -341,39 +280,30 @@
         "autocomplete": [
             {},
             {
-                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
+                "snippet":
+                    "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<fieldset>": {
         "@disabled": "#html-disabled",
         "@form": "#html-form",
         "@name": "#html-name",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<figcaption>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<figure>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<footer>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<form>": {
         "@accept-charset": "#html-accept-charset",
@@ -388,72 +318,51 @@
         "autocomplete": [
             {},
             {
-                "snippet": "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
+                "snippet":
+                    "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h1>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h2>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h3>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h4>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h5>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<h6>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<head>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<header>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<hgroup>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<hr>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<html>": {
         "@manifest": "#html-manifest",
@@ -467,22 +376,20 @@
             },
             {
                 "displayText": "HTML page",
-                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+                "snippet":
+                    "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
             },
             {
                 "displayText": "HTML page (concise)",
-                "snippet": "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+                "snippet":
+                    "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<i>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<iframe>": {
         "@height": "#html-height",
@@ -499,9 +406,7 @@
                 "snippet": "iframe src=\"$1\" width=\"$2\" height=\"$3\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<img>": {
         "@alt": "#html-alt",
@@ -518,9 +423,7 @@
                 "snippet": "img src=\"$1\" alt=\"$2\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<input>": {
         "@accept": "#html-accept",
@@ -557,27 +460,22 @@
         "autocomplete": [
             {},
             {
-                "snippet": "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
+                "snippet":
+                    "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
                 "triggerAutocompleteAfterInsert": true
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<ins>": {
         "@cite": "#html-cite",
         "@datetime": "#html-datetime",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<kbd>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<keygen>": {
         "@autofocus": "#html-autofocus",
@@ -590,12 +488,11 @@
         "autocomplete": [
             {},
             {
-                "snippet": "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
+                "snippet":
+                    "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<label>": {
         "@for": "#html-for",
@@ -607,22 +504,16 @@
                 "snippet": "label${1: for=\"$2\"}"
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<legend>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<li>": {
         "@value": "#html-value",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<link>": {
         "@disabled": "#html-disabled",
@@ -636,7 +527,8 @@
         "autocomplete": [
             {},
             {
-                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
+                "snippet":
+                    "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
             },
             {
                 "snippet": "link rel=\"icon\" href=\"$1.ico\""
@@ -645,30 +537,22 @@
                 "snippet": "link rel=\"import\" href=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<map>": {
         "@name": "#html-name",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<mark>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<menu>": {
         "@label": "#html-label",
         "@type": "#html-type",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<meta>": {
         "@charset": "#html-charset",
@@ -681,9 +565,7 @@
                 "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<meter>": {
         "@form": "#html-form",
@@ -697,24 +579,19 @@
         "autocomplete": [
             {},
             {
-                "snippet": "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
+                "snippet":
+                    "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<nav>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<noscript>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<object>": {
         "@archive": "#html-archive",
@@ -735,18 +612,14 @@
                 "snippet": "object data=\"${1:http://}\" type=\"${2:mimetype}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<ol>": {
         "@reversed": "#html-reversed",
         "@start": "#html-start",
         "@type": "#html-type",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<optgroup>": {
         "@disabled": "#html-disabled",
@@ -757,9 +630,7 @@
                 "snippet": "optgroup label=\"${1:Group 1}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<option>": {
         "@disabled": "#html-disabled",
@@ -767,9 +638,7 @@
         "@selected": "#html-selected",
         "@value": "#html-value",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<output>": {
         "@for": "#html-for",
@@ -781,15 +650,11 @@
                 "snippet": "output name=\"${1:result}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<p>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<param>": {
         "@name": "#html-name",
@@ -800,22 +665,16 @@
                 "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<picture>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<pre>": {
         "preserve-whitespace": true,
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<progress>": {
         "@form": "#html-form",
@@ -827,9 +686,7 @@
                 "snippet": "progress value=\"${1:50}\" max=\"${2:100}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<q>": {
         "@cite": "#html-cite",
@@ -839,38 +696,26 @@
                 "snippet": "q cite=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<rp>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<rt>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<ruby>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<s>": {
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<samp>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<script>": {
         "preserve-whitespace": true,
@@ -882,7 +727,8 @@
         "autocomplete": [
             {
                 "snippet": "script template-helpers",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
+                "descriptionMoreURL":
+                    "http://markojs.com/docs/marko/language-guide/#helpers"
             }
         ],
         "@async": "#html-async",
@@ -891,15 +737,11 @@
         "@src": "#html-src",
         "@type": "#html-type",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<section>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<select>": {
         "@autofocus": "#html-autofocus",
@@ -915,15 +757,11 @@
                 "snippet": "select class=\"$1\" name=\"$2\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<small>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<source>": {
         "@media": "#html-media",
@@ -935,21 +773,15 @@
                 "snippet": "source src=\"${1:http://}\" type=\"${2:mimetype}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<span>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<strong>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<style>": {
         "preserve-whitespace": true,
@@ -963,49 +795,35 @@
                 "snippet": "style media=\"screen\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<sub>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<summary>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<sup>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<table>": {
         "@border": "#html-border",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<tbody>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<td>": {
         "@colspan": "#html-colspan",
         "@headers": "#html-headers",
         "@rowspan": "#html-rowspan",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<textarea>": {
         "preserve-whitespace": true,
@@ -1025,18 +843,15 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet": "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
+                "snippet":
+                    "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<tfoot>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<th>": {
         "@colspan": "#html-colspan",
@@ -1044,35 +859,25 @@
         "@rowspan": "#html-rowspan",
         "@scope": "#html-scope",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<thead>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<time>": {
         "@datetime": "#html-datetime",
         "@pubdate": "#html-pubdate",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<title>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<tr>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<track>": {
         "@default": "#html-default",
@@ -1083,23 +888,18 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
+                "snippet":
+                    "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<u>": {
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<ul>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<video>": {
         "@autoplay": "#html-autoplay",
@@ -1116,18 +916,15 @@
         "autocomplete": [
             {
                 "displayText": "video src=\"\" autoplay poster=\"\"",
-                "snippet": "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
+                "snippet":
+                    "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<wbr>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ],
+        "attribute-groups": ["html-attributes"],
         "openTagOnly": true
     },
     "attribute-groups": {
@@ -1148,32 +945,19 @@
                 "html": true
             },
             "dir": {
-                "enum": [
-                    "ltr",
-                    "rtl"
-                ],
+                "enum": ["ltr", "rtl"],
                 "html": true
             },
             "draggable": {
-                "enum": [
-                    "auto",
-                    "false",
-                    "true"
-                ],
+                "enum": ["auto", "false", "true"],
                 "html": true
             },
             "dropzone": {
-                "enum": [
-                    "copy",
-                    "move",
-                    "link"
-                ],
+                "enum": ["copy", "move", "link"],
                 "html": true
             },
             "hidden": {
-                "enum": [
-                    "hidden"
-                ],
+                "enum": ["hidden"],
                 "html": true
             },
             "id": {
@@ -1633,10 +1417,7 @@
             "name": "async"
         },
         "html-autocomplete": {
-            "enum": [
-                "off",
-                "on"
-            ],
+            "enum": ["off", "on"],
             "html": true,
             "name": "autocomplete"
         },
@@ -1651,11 +1432,7 @@
             "name": "autoplay"
         },
         "html-behavior": {
-            "enum": [
-                "scroll",
-                "slide",
-                "alternate"
-            ],
+            "enum": ["scroll", "slide", "alternate"],
             "html": true,
             "name": "behavior"
         },
@@ -1783,12 +1560,7 @@
             "name": "defer"
         },
         "html-direction": {
-            "enum": [
-                "left",
-                "right",
-                "up",
-                "down"
-            ],
+            "enum": ["left", "right", "up", "down"],
             "html": true,
             "name": "direction"
         },
@@ -1832,10 +1604,7 @@
             "name": "formenctype"
         },
         "html-formmethod": {
-            "enum": [
-                "get",
-                "post"
-            ],
+            "enum": ["get", "post"],
             "html": true,
             "name": "formmethod"
         },
@@ -1845,12 +1614,7 @@
             "name": "formnovalidate"
         },
         "html-formtarget": {
-            "enum": [
-                "_blank",
-                "_parent",
-                "_self",
-                "_top"
-            ],
+            "enum": ["_blank", "_parent", "_self", "_top"],
             "html": true,
             "name": "formtarget"
         },
@@ -1879,11 +1643,7 @@
             "name": "hspace"
         },
         "html-http-equiv": {
-            "enum": [
-                "content-type",
-                "default-style",
-                "refresh"
-            ],
+            "enum": ["content-type", "default-style", "refresh"],
             "html": true,
             "name": "http-equiv"
         },
@@ -1897,11 +1657,7 @@
             "name": "ismap"
         },
         "html-keytype": {
-            "enum": [
-                "dsa",
-                "ec",
-                "rsa"
-            ],
+            "enum": ["dsa", "ec", "rsa"],
             "html": true,
             "name": "keytype"
         },
@@ -2004,10 +1760,7 @@
             "name": "mediagroup"
         },
         "html-method": {
-            "enum": [
-                "get",
-                "post"
-            ],
+            "enum": ["get", "post"],
             "html": true,
             "name": "method"
         },
@@ -2056,11 +1809,7 @@
             "name": "poster"
         },
         "html-preload": {
-            "enum": [
-                "auto",
-                "metadata",
-                "none"
-            ],
+            "enum": ["auto", "metadata", "none"],
             "html": true,
             "name": "preload"
         },
@@ -2136,12 +1885,7 @@
             "name": "selected"
         },
         "html-scope": {
-            "enum": [
-                "col",
-                "colgroup",
-                "row",
-                "rowgroup"
-            ],
+            "enum": ["col", "colgroup", "row", "rowgroup"],
             "html": true,
             "name": "scope"
         },
@@ -2159,12 +1903,7 @@
             "name": "scrolldelay"
         },
         "html-shape": {
-            "enum": [
-                "circle",
-                "default",
-                "poly",
-                "rect"
-            ],
+            "enum": ["circle", "default", "poly", "rect"],
             "html": true,
             "name": "shape"
         },
@@ -2173,9 +1912,7 @@
             "name": "size"
         },
         "html-sizes": {
-            "enum": [
-                "any"
-            ],
+            "enum": ["any"],
             "html": true,
             "name": "sizes"
         },
@@ -2208,12 +1945,7 @@
             "name": "step"
         },
         "html-target": {
-            "enum": [
-                "_blank",
-                "_parent",
-                "_self",
-                "_top"
-            ],
+            "enum": ["_blank", "_parent", "_self", "_top"],
             "html": true,
             "name": "target"
         },
@@ -2243,10 +1975,7 @@
             "name": "width"
         },
         "html-wrap": {
-            "enum": [
-                "hard",
-                "soft"
-            ],
+            "enum": ["hard", "soft"],
             "html": true,
             "name": "wrap"
         },
@@ -2261,28 +1990,20 @@
     },
     "<big>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<dialog>": {
         "@open": "#html-open",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<ilayer>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<main>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<marquee>": {
         "@align": "#html-align",
@@ -2298,21 +2019,15 @@
         "@vspace": "#html-vspace",
         "@width": "#html-width",
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<tt>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<var>": {
         "html": true,
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<content>": {
         "html": true,
@@ -2322,9 +2037,7 @@
                 "snippet": "content select=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<data>": {
         "html": true,
@@ -2334,9 +2047,7 @@
                 "snippet": "data value=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<menuitem>": {
         "html": true,
@@ -2346,9 +2057,7 @@
                 "snippet": "menuitem type=\"${1:command}\" label=\"${2:Save}\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<opt>": {
         "html": true,
@@ -2357,9 +2066,7 @@
                 "snippet": "option${1: value=\"${2:option}\"}"
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     },
     "<template>": {
         "html": true,
@@ -2368,8 +2075,6 @@
                 "snippet": "template id=\"$1\""
             }
         ],
-        "attribute-groups": [
-            "html-attributes"
-        ]
+        "attribute-groups": ["html-attributes"]
     }
 }

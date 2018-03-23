@@ -1,1 +1,1 @@
-exports.dir = 'a/b/c';
+exports.dir = "a/b/c";

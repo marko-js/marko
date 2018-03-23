@@ -1,13 +1,13 @@
-'use strict';
-const Node = require('../../Node');
+"use strict";
+const Node = require("../../Node");
 
 class EndElementVDOM extends Node {
     constructor() {
-        super('EndElementVDOM');
+        super("EndElementVDOM");
     }
 
     writeCode(writer) {
-        writer.write('out.ee()');
+        writer.write("out.ee()");
     }
 }
 

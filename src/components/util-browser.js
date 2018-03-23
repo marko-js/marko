@@ -1,4 +1,3 @@
-
 var markoUID = window.$MUID || (window.$MUID = { i: 0 });
 var runtimeId = markoUID.i++;
 
@@ -9,7 +8,10 @@ var EMPTY_OBJECT = {};
 
 function getComponentForEl(el, doc) {
     if (el) {
-        var node = typeof el == 'string' ? (doc || defaultDocument).getElementById(el) : el;
+        var node =
+            typeof el == "string"
+                ? (doc || defaultDocument).getElementById(el)
+                : el;
         if (node) {
             return node.___markoComponent;
         }
@@ -18,14 +20,9 @@ function getComponentForEl(el, doc) {
 
 var lifecycleEventMethods = {};
 
-[
-    'create',
-    'render',
-    'update',
-    'mount',
-    'destroy'
-].forEach(function(eventName) {
-    lifecycleEventMethods[eventName] = 'on' + eventName[0].toUpperCase() + eventName.substring(1);
+["create", "render", "update", "mount", "destroy"].forEach(function(eventName) {
+    lifecycleEventMethods[eventName] =
+        "on" + eventName[0].toUpperCase() + eventName.substring(1);
 });
 
 /**
@@ -70,7 +67,7 @@ function destroyNodeRecursive(node, component) {
         }
 
         var curChild = node.firstChild;
-        while(curChild) {
+        while (curChild) {
             destroyComponentForNode(curChild);
             destroyNodeRecursive(curChild, component);
             curChild = curChild.nextSibling;
@@ -83,14 +80,19 @@ function nextComponentId() {
     // marko runtimes. This allows multiple instances of marko to be
     // loaded in the same window and they should all place nice
     // together
-    return 'b' + (markoUID.i++);
+    return "c" + markoUID.i++;
 }
 
 function nextComponentIdProvider() {
     return nextComponentId;
 }
 
-function attachBubblingEvent(componentDef, handlerMethodName, isOnce, extraArgs) {
+function attachBubblingEvent(
+    componentDef,
+    handlerMethodName,
+    isOnce,
+    extraArgs
+) {
     if (handlerMethodName) {
         var componentId = componentDef.id;
         if (extraArgs) {
@@ -110,8 +112,10 @@ function getMarkoPropsFromEl(el) {
     } else {
         virtualProps = el.___markoVProps;
         if (!virtualProps) {
-            virtualProps = el.getAttribute('data-marko');
-            el.___markoVProps = virtualProps = virtualProps ? JSON.parse(virtualProps) : EMPTY_OBJECT;
+            virtualProps = el.getAttribute("data-marko");
+            el.___markoVProps = virtualProps = virtualProps
+                ? JSON.parse(virtualProps)
+                : EMPTY_OBJECT;
         }
     }
 

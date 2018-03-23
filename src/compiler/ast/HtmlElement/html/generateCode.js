@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-var StartTag = require('./StartTag');
-var EndTag = require('./EndTag');
+var StartTag = require("./StartTag");
+var EndTag = require("./EndTag");
 
 module.exports = function generateCode(node, codegen) {
     var builder = codegen.builder;
@@ -17,15 +17,18 @@ module.exports = function generateCode(node, codegen) {
     var properties = node.getProperties();
 
     if (properties) {
-        var objectProps = Object.keys(properties).map((propName) => {
+        var objectProps = Object.keys(properties).map(propName => {
             return builder.property(
                 builder.identifier(propName),
-                properties[propName]);
+                properties[propName]
+            );
         });
 
-        node.setAttributeValue('data-marko',
+        node.setAttributeValue(
+            "data-marko",
             builder.objectExpression(objectProps),
-            false);
+            false
+        );
     }
 
     var attributes = node._attributes && node._attributes.all;
@@ -46,7 +49,7 @@ module.exports = function generateCode(node, codegen) {
     if (hasBody || bodyOnlyIf) {
         openTagOnly = false;
         selfClosed = false;
-    } else if (selfClosed){
+    } else if (selfClosed) {
         openTagOnly = true;
     }
 
@@ -70,12 +73,17 @@ module.exports = function generateCode(node, codegen) {
 
     if (isCustomElement && attributes && attributes.length) {
         propertiesScript = builder.functionCall(
-            codegen.context.helper('propsForPreviousNode'),
+            codegen.context.helper("propsForPreviousNode"),
             [
-                builder.objectExpression(attributes.map((attr) =>
-                    builder.property(builder.identifier(attr.name), attr.value)
-                )),
-                builder.identifier('out')
+                builder.objectExpression(
+                    attributes.map(attr =>
+                        builder.property(
+                            builder.identifier(attr.name),
+                            attr.value
+                        )
+                    )
+                ),
+                builder.identifier("out")
             ]
         );
     }
@@ -89,24 +97,12 @@ module.exports = function generateCode(node, codegen) {
             endTag,
             propertiesScript
         ]);
-        return [
-            startIf,
-            body,
-            endIf
-        ];
+        return [startIf, body, endIf];
     } else {
         if (openTagOnly) {
-            return [
-                codegen.generateCode(startTag),
-                propertiesScript
-            ];
+            return [codegen.generateCode(startTag), propertiesScript];
         } else {
-            return [
-                startTag,
-                body,
-                endTag,
-                propertiesScript
-            ];
+            return [startTag, body, endTag, propertiesScript];
         }
     }
 };

@@ -7,6 +7,7 @@ The easiest way to get started with Marko is to use the [Try Online](https://mar
 Marko makes it easy to represent your UI using a syntax that is like HTML:
 
 _hello.marko_
+
 ```marko
 <h1>Hello World</h1>
 ```
@@ -14,6 +15,7 @@ _hello.marko_
 In fact, Marko is so much like HTML, that you can use it as a replacement for a templating language like handlebars, mustache, or pug:
 
 _template.marko_
+
 ```marko
 <!doctype html>
 <html>
@@ -26,7 +28,7 @@ _template.marko_
 </html>
 ```
 
-However, Marko is much more than a templating language.  It's a UI library that allows you to break your application into components that are self-contained and describe how the application view changes over time and in response to user actions.
+However, Marko is much more than a templating language. It's a UI library that allows you to break your application into components that are self-contained and describe how the application view changes over time and in response to user actions.
 
 In the browser, when the data representing your UI changes, Marko will automatically and efficiently update the DOM to reflect the changes.
 
@@ -35,6 +37,7 @@ In the browser, when the data representing your UI changes, Marko will automatic
 Let's say we have a `<button>` that we want to assign some behavior to when it is clicked:
 
 _button.marko_
+
 ```marko
 <button>Click me!</button>
 ```
@@ -42,6 +45,7 @@ _button.marko_
 Marko makes this really easy, allowing you to define a `class` for a component right in the `.marko` view and call methods of that class with `on-` attributes:
 
 _button.marko_
+
 ```marko
 class {
     sayHi() {
@@ -54,9 +58,10 @@ class {
 
 ### Adding state
 
-Alerting when a button is clicked is great, but what about updating your UI in response to an action?  Marko's stateful components make this easy.  All you need to do is set `this.state` from inside your component's class. This makes a new `state` variable available to your view.  When a value in `this.state` is changed, the view will automatically re-render and only update the part of the DOM that changed.
+Alerting when a button is clicked is great, but what about updating your UI in response to an action? Marko's stateful components make this easy. All you need to do is set `this.state` from inside your component's class. This makes a new `state` variable available to your view. When a value in `this.state` is changed, the view will automatically re-render and only update the part of the DOM that changed.
 
 _counter.marko_
+
 ```marko
 class {
     onCreate() {

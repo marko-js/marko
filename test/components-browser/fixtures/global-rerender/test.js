@@ -1,19 +1,19 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index.marko'), {
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index.marko"), {
         $global: {
-            name: 'Frank',
-            serializedGlobals: { name:true }
+            name: "Frank",
+            serializedGlobals: { name: true }
         }
     });
 
-    expect(component.el.querySelector('.name').innerHTML).to.equal('Frank');
-    expect(component.el.querySelector('.count').innerHTML).to.equal('1');
+    expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+    expect(component.el.querySelector(".count").innerHTML).to.equal("1");
 
     component.state.count++;
     component.update();
 
-    expect(component.el.querySelector('.name').innerHTML).to.equal('Frank');
-    expect(component.el.querySelector('.count').innerHTML).to.equal('2');
+    expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+    expect(component.el.querySelector(".count").innerHTML).to.equal("2");
 };

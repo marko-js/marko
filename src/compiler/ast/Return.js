@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-var Node = require('./Node');
+var Node = require("./Node");
 
 class Return extends Node {
     constructor(def) {
-        super('Return');
+        super("Return");
         this.argument = def.argument;
     }
 
@@ -21,10 +21,10 @@ class Return extends Node {
         var argument = this.argument;
 
         if (argument) {
-            writer.write('return ');
+            writer.write("return ");
             writer.write(argument);
         } else {
-            writer.write('return');
+            writer.write("return");
         }
     }
 

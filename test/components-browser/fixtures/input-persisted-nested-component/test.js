@@ -1,27 +1,39 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-module.exports = function (helpers) {
-    var component = helpers.mount(require('./index.marko'), {
-        color: 'red'
+module.exports = function(helpers) {
+    var component = helpers.mount(require.resolve("./index.marko"), {
+        color: "red"
     });
 
-    expect(component.el.getAttribute('style')).to.equal('color:red;');
-    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:red;');
-    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('0');
+    expect(component.el.getAttribute("style")).to.equal("color:red;");
+    expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
+        "color:red;"
+    );
+    expect(
+        component.getComponent("counter").el.querySelector(".count").innerHTML
+    ).to.equal("0");
 
-    component.getComponent('counter').increment();
-    component.getComponent('counter').update();
+    component.getComponent("counter").increment();
+    component.getComponent("counter").update();
 
-    expect(component.el.getAttribute('style')).to.equal('color:red;');
-    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color:red;');
-    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('1');
+    expect(component.el.getAttribute("style")).to.equal("color:red;");
+    expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
+        "color:red;"
+    );
+    expect(
+        component.getComponent("counter").el.querySelector(".count").innerHTML
+    ).to.equal("1");
 
-    component.updateColor('green');
+    component.updateColor("green");
     component.update();
 
-    expect(component.el.getAttribute('style')).to.equal('color: green;');
-    expect(component.getComponent('counter').el.getAttribute('style')).to.equal('color: green;');
-    expect(component.getComponent('counter').el.querySelector('.count').innerHTML).to.equal('1');
+    expect(component.el.getAttribute("style")).to.equal("color: green;");
+    expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
+        "color: green;"
+    );
+    expect(
+        component.getComponent("counter").el.querySelector(".count").innerHTML
+    ).to.equal("1");
 
     //
     // expect(component.el.style.color).to.equal('#09c;');

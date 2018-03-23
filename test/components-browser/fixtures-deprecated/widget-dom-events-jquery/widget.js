@@ -1,3 +1,3 @@
-function Widget(config) {}
+function Widget() {}
 
 exports.Widget = Widget;

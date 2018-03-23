@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = function generateCode(node, codegen, vdomUtil) {
     var context = codegen.context;
@@ -12,17 +12,21 @@ module.exports = function generateCode(node, codegen, vdomUtil) {
     var attrValue = node.value;
 
     if (attrValue) {
-        if (attrValue.type === 'Literal') {
+        if (attrValue.type === "Literal") {
             var literalValue = attrValue.value;
 
             if (literalValue instanceof RegExp) {
                 node.value = builder.literal(literalValue.source);
             }
         } else {
-            if (name === 'class') {
-                node.value = builder.functionCall(context.helper('classAttr'), [attrValue]);
-            } else if (name === 'style') {
-                node.value = builder.functionCall(context.helper('styleAttr'), [attrValue]);
+            if (name === "class") {
+                node.value = builder.functionCall(context.helper("classAttr"), [
+                    attrValue
+                ]);
+            } else if (name === "style") {
+                node.value = builder.functionCall(context.helper("styleAttr"), [
+                    attrValue
+                ]);
             }
         }
     }

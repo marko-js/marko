@@ -1,8 +1,8 @@
 module.exports = {
-  onCreate: function () {
-    this.clicked = false;
-  },
-  handleButtonClick: function () {
-    this.clicked = true;
-  }
+    onCreate: function() {
+        this.clicked = false;
+    },
+    handleButtonClick: function() {
+        this.clicked = true;
+    }
 };

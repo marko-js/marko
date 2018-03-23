@@ -12,6 +12,6 @@ module.exports = function defineWidget(def, renderer) {
             template: renderer.template
         };
     } else {
-        return {___isComponent: true};
+        return { ___isComponent: true };
     }
 };

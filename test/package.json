@@ -2,7 +2,6 @@
     "name": "marko-test",
     "version": "1.0.0",
     "dependencies": {
-        "lasso": "*",
         "browser-refresh-taglib": "*",
         "marko-widgets": "*"
     }

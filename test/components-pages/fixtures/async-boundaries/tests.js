@@ -1,9 +1,7 @@
-var path = require('path');
-var expect = require('chai').expect;
-var markoComponents = require('marko/components');
+var path = require("path");
 
 describe(path.basename(__dirname), function() {
-    it('should initialize components correctly across async boundaries', function() {
+    it("should initialize components correctly across async boundaries", function() {
         window.appInitAsync.test();
     });
 });
