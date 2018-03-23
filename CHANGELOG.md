@@ -4,6 +4,10 @@
 
 ## 4.9.x
 
+### 4.9.3
+
+* Fix import-var compilation when there are no explicit attributes [#1002](https://github.com/marko-js/marko/pull/1002)
+
 ### 4.9.2
 
 * Fixes collisions with multiple Marko runtimes on the same page. [#1019](https://github.com/marko-js/marko/pull/1019)
