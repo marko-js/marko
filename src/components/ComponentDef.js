@@ -129,10 +129,10 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
 
     if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
         if (component.onCreate) {
-            component.onCreate(input, { global });
+            component.onCreate(input, { global: global });
         }
         if (component.onInput) {
-            input = component.onInput(input, { global }) || input;
+            input = component.onInput(input, { global: global }) || input;
         }
     } else {
         if (state) {
