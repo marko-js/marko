@@ -244,6 +244,9 @@ class Parser {
                     attrValue = attrRawValue.slice(3);
                     attrName = undefined;
                     attrSpread = true;
+                    if (attr.argument) {
+                        attrValue += "(" + attr.argument.value + ")";
+                    }
                 } else if (attr.value == null) {
                     attrValue = undefined;
                 } else {
