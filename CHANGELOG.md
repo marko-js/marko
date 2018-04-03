@@ -4,6 +4,18 @@
 
 ## 4.9.x
 
+### 4.9.6
+
+* Fix #1008 Spread attribute now supports functions (`..attrs()`) [#1029](https://github.com/marko-js/marko/pull/1029)
+
+### 4.9.5
+
+* Fix `onBeforeUpdate` timing for legacy component layer [#1027](https://github.com/marko-js/marko/pull/1027)
+
+### 4.9.4
+
+* Fix breaking older browsers with es6 object shorthand notation [bc0e91d5](https://github.com/marko-js/marko/commit/bc0e91d517d7b8de484c745a5734f15347ed0d26)
+
 ### 4.9.3
 
 * Fix import-var compilation when there are no explicit attributes [#1002](https://github.com/marko-js/marko/pull/1002)
