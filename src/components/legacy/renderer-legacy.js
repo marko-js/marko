@@ -230,7 +230,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         };
 
-        if (component && isExisting) {
+        if (!isFakeComponent && !registry.___isServer) {
             component.___emitLifecycleEvent("___legacyRender");
         }
 

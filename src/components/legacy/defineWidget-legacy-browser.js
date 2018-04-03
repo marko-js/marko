@@ -69,6 +69,13 @@ module.exports = function defineWidget(def, renderer) {
     proto.getWidgets = proto.getComponents;
 
     // convert legacy to modern
+    var originalUpdate = proto.update;
+    proto.update = function() {
+        this.___legacyExplicitUpdate = true;
+        onBeforeUpdate && onBeforeUpdate.call(this);
+        originalUpdate.apply(this, arguments);
+        this.___legacyExplicitUpdate = false;
+    };
 
     proto.onMount = function() {
         var self = this;
@@ -76,20 +83,21 @@ module.exports = function defineWidget(def, renderer) {
         if (init) init.call(this, config);
         if (onRender) {
             onRender.call(this, { firstRender: true });
-            this.on("___legacyRender", function() {
-                self.___didUpdate = true;
-            });
         }
+        this.on("___legacyRender", function() {
+            if (!self.___legacyExplicitUpdate && onBeforeUpdate) {
+                onBeforeUpdate.call(this);
+            }
+
+            self.___didUpdate = true;
+        });
         this.___input = null;
     };
 
     proto.onUpdate = function() {
-        if (onBeforeUpdate) onBeforeUpdate.call(this);
         if (onUpdate) onUpdate.call(this);
-        if (onRender && this.___didUpdate) {
-            this.___didUpdate = false;
-            onRender.call(this, {});
-        }
+        if (onRender && this.___didUpdate) onRender.call(this, {});
+        this.___didUpdate = false;
         this.___input = null;
     };
 
