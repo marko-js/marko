@@ -48,6 +48,7 @@ var DocumentType = require("./ast/DocumentType");
 var Declaration = require("./ast/Declaration");
 var SequenceExpression = require("./ast/SequenceExpression");
 var CustomTag = require("./ast/CustomTag");
+var DynamicTag = require("./ast/DynamicTag");
 
 var parseExpression = require("./util/parseExpression");
 var parseStatement = require("./util/parseStatement");
@@ -186,6 +187,10 @@ class Builder {
 
     documentType(documentType) {
         return new DocumentType({ documentType });
+    }
+
+    dynamicTag(el, tagExpression) {
+        return new DynamicTag(el, tagExpression);
     }
 
     elseStatement(body) {

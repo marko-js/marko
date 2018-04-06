@@ -60,7 +60,7 @@ class ComponentArgs {
 
         args = finalizeArgs(args, builder);
 
-        if (el.type === "CustomTag") {
+        if (el.type === "CustomTag" || el.type === "DynamicTag") {
             el.generateRenderTagCode = function(codegen, tagVar, tagArgs) {
                 tagArgs = tagArgs.concat(args);
                 return codegen.builder.functionCall(tagVar, tagArgs);

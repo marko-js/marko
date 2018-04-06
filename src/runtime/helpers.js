@@ -1,5 +1,11 @@
 "use strict";
 var isArray = Array.isArray;
+var RENDER_BODY_TOKEN = "%FN";
+var RENDER_BODY_TO_JSON = function() {
+    return RENDER_BODY_TOKEN;
+};
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var IS_SERVER = typeof window === "undefined";
 
 function isFunction(arg) {
     return typeof arg == "function";
@@ -90,6 +96,51 @@ var helpers = {
         } else if (isFunction(array)) {
             // Also allow the first argument to be a custom iterator function
             array(callback);
+        }
+    },
+
+    /**
+     * Helper to render a dynamic tag
+     */
+    d: function dynamicTag(out, tag, attrs, componentDef, key, customEvents) {
+        if (tag) {
+            if (typeof tag === "string") {
+                if (attrs.renderBody) {
+                    var renderBody = attrs.renderBody;
+                    var otherAttrs = Object.assign({}, attrs);
+                    delete otherAttrs.renderBody;
+                    out.beginElement(tag, otherAttrs);
+                    renderBody(out);
+                    out.endElement();
+                } else {
+                    out.element(tag, attrs);
+                }
+            } else if (tag.renderer || tag.render) {
+                var renderer = tag.renderer || tag.render;
+                out.c(componentDef, key, customEvents);
+                renderer(attrs, out);
+                out.___assignedComponentDef = null;
+            } else {
+                var render = (tag && tag.renderBody) || tag;
+                var isFn = typeof render === "function";
+                var isToken = render === RENDER_BODY_TOKEN;
+
+                if (isFn || isToken) {
+                    var flags = componentDef ? componentDef.___flags : 0;
+                    var parentId = componentDef ? componentDef.id : "";
+                    var willRerender = flags & FLAG_WILL_RERENDER_IN_BROWSER;
+                    var resolvedKey = parentId + " " + key;
+                    var insertMarkers = IS_SERVER ? willRerender : isToken;
+                    if (insertMarkers) out.comment("F^" + resolvedKey);
+                    if (isFn) {
+                        render.toJSON = RENDER_BODY_TO_JSON;
+                        render(out, attrs);
+                    }
+                    if (insertMarkers) out.comment("F/" + resolvedKey);
+                } else {
+                    out.error("Invalid dynamic tag value");
+                }
+            }
         }
     },
 
