@@ -80,10 +80,6 @@ var args = require("argly")
             description:
                 "Additional directories to add to the Node.js module search path"
         },
-        "--quiet -q": {
-            type: "boolean",
-            description: "Only print warnings and errors"
-        },
         "--vdom -V": {
             type: "boolean",
             description: "VDOM output"
@@ -340,14 +336,13 @@ if (args.clean) {
         found[path] = true;
         var outPath = path + ".js";
 
-        if (!args.quiet)
-            console.log(
-                "Compiling:\n  Input:  " +
-                    relPath(path) +
-                    "\n  Output: " +
-                    relPath(outPath) +
-                    "\n"
-            );
+        console.log(
+            "Compiling:\n  Input:  " +
+                relPath(path) +
+                "\n  Output: " +
+                relPath(outPath) +
+                "\n"
+        );
 
         context.beginAsync();
 
