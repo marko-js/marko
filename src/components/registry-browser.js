@@ -1,4 +1,6 @@
+var complain = "MARKO_DEBUG" && require("complain");
 var defineComponent = require("./defineComponent");
+var loader = require("../loader");
 
 var registered = {};
 var loaded = {};
@@ -25,6 +27,14 @@ function load(typeName, isLegacy) {
             target = target();
         } else if (isLegacy) {
             target = window.$markoLegacy.load(typeName);
+        } else {
+            target = loader(typeName);
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain(
+                    "Looks like you used `require:` in your browser.json to load a component.  This requires that Marko has knowledge of how lasso generates paths and will be removed in a future version.  `marko-dependencies:/path/to/template.marko` should be used instead."
+                );
+            }
         }
 
         if (!target) {
