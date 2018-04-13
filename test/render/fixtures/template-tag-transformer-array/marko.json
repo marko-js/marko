@@ -1,0 +1,5 @@
+{
+    "<span>": {
+        "transformer": ["./transformer-1", "./transformer-2"]
+    }
+}

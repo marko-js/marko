@@ -42,6 +42,51 @@ function hasAttributes(tagProps) {
     return false;
 }
 
+function addTransformer(tagLoader, value) {
+    const dirname = tagLoader.dirname;
+    const tag = tagLoader.tag;
+
+    const transformer = new types.Transformer();
+
+    /**
+     * The transformer is a complex type and we need
+     * to process each property to load the Transformer
+     * definition.
+     */
+    propertyHandlers(
+        value,
+        {
+            path(value) {
+                const path = markoModules.resolveFrom(dirname, value);
+                transformer.path = path;
+            },
+
+            priority(value) {
+                transformer.priority = value;
+            },
+
+            name(value) {
+                transformer.name = value;
+            },
+
+            properties(value) {
+                var properties =
+                    transformer.properties || (transformer.properties = {});
+                for (var k in value) {
+                    if (value.hasOwnProperty(k)) {
+                        properties[k] = value[k];
+                    }
+                }
+            }
+        },
+        tagLoader.dependencyChain.append("transformer")
+    );
+
+    ok(transformer.path, '"path" is required for transformer');
+
+    tag.addTransformer(transformer);
+}
+
 /**
  * We load tag definition using this class. Properties in the taglib
  * definition (which is just a JavaScript object with properties)
@@ -390,11 +435,6 @@ class TagLoader {
      * the AST using the DOM-like API to change how the code gets generated.
      */
     transformer(value) {
-        var tag = this.tag;
-        var dirname = this.dirname;
-
-        var transformer = new types.Transformer();
-
         if (typeof value === "string") {
             // The value is a simple string type
             // so treat the value as the path to the JS
@@ -402,45 +442,19 @@ class TagLoader {
             value = {
                 path: value
             };
+
+            addTransformer(this, value);
+        } else if (Array.isArray(value)) {
+            value.forEach(transformerPath => {
+                value = {
+                    path: transformerPath
+                };
+
+                addTransformer(this, value);
+            });
+        } else {
+            addTransformer(this, value);
         }
-
-        /**
-         * The transformer is a complex type and we need
-         * to process each property to load the Transformer
-         * definition.
-         */
-        propertyHandlers(
-            value,
-            {
-                path(value) {
-                    var path = markoModules.resolveFrom(dirname, value);
-                    transformer.path = path;
-                },
-
-                priority(value) {
-                    transformer.priority = value;
-                },
-
-                name(value) {
-                    transformer.name = value;
-                },
-
-                properties(value) {
-                    var properties =
-                        transformer.properties || (transformer.properties = {});
-                    for (var k in value) {
-                        if (value.hasOwnProperty(k)) {
-                            properties[k] = value[k];
-                        }
-                    }
-                }
-            },
-            this.dependencyChain.append("transformer")
-        );
-
-        ok(transformer.path, '"path" is required for transformer');
-
-        tag.addTransformer(transformer);
     }
 
     /**
