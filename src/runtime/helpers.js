@@ -1,5 +1,4 @@
 "use strict";
-var isArray = Array.isArray;
 
 function isFunction(arg) {
     return typeof arg == "function";
@@ -83,13 +82,19 @@ var helpers = {
      * @private
      */
     f: function forEachHelper(array, callback) {
-        if (isArray(array)) {
+        if (!array) return;
+
+        if (isFunction(array)) {
+            // Also allow the first argument to be a custom iterator function
+            array(callback);
+        } else {
+            if (!array.forEach) {
+                array = [array];
+            }
+
             for (var i = 0; i < array.length; i++) {
                 callback(array[i]);
             }
-        } else if (isFunction(array)) {
-            // Also allow the first argument to be a custom iterator function
-            array(callback);
         }
     },
 
