@@ -39,20 +39,14 @@ JSX using a somewhat contrived UI component as an example:
 
 ```jsx
 class Counter extends React.Component {
-  constructor(props) {
-    super(props);
-
+  constructor() {
     this.state = { count: 0 };
-
-    function doIncrement(delta) {
-      this.setState(prevState => ({
-        count: prevState.count + delta
-      }));
-    }
-
-    this.decrement = doIncrement.bind(this, -1);
-    this.increment = doIncrement.bind(this, 1);
   }
+  
+  increment(delta) {
+    this.setState({ count: this.state.count + delta });
+  }
+  
   render() {
     var count = this.state.count;
     var countClassName = "count";
@@ -66,8 +60,8 @@ class Counter extends React.Component {
     return (
       <div className="click-count">
         <div className={countClassName}>{count}</div>
-        <button onClick={this.decrement}>-1</button>
-        <button onClick={this.increment}>+1</button>
+        <button onClick={() => { this.increment(-1) }.bind(this) }>-1</button>
+        <button onClick={() => { this.increment(1) }.bind(this) }}>+1</button>
       </div>
     );
   }
