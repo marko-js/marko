@@ -48,7 +48,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var component = globalComponentsContext.___rerenderComponent;
 
         var isRerender = component !== undefined;
-        var isHydrate = component && !component.___mounted; // globalComponentsContext.___isRerenderInBrowser
         var id = assignedId;
         var isExisting;
         var customEvents;
@@ -164,25 +163,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             if (!componentBody) {
                 // Default to using the nested content as the component body
                 componentBody = input.renderBody;
-            }
-        }
-
-        if (isExisting === true && !isHydrate && !componentBody) {
-            if (
-                !component.___isDirty ||
-                !component.shouldUpdate(input, component.___state)
-            ) {
-                if (customEvents) {
-                    component.___setCustomEvents(customEvents, scope);
-                }
-
-                // We put a placeholder element in the output stream to ensure that the existing
-                // DOM node is matched up correctly when using morphdom. We flag the VElement
-                // node to track that it is a preserve marker
-                out.___preserveComponent(component);
-                globalComponentsContext.___renderedComponentsById[id] = true;
-                component.___reset(); // The component is no longer dirty so reset internal flags
-                return;
             }
         }
 

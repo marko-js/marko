@@ -142,3 +142,5 @@ module.exports = function(helpers) {
 
     lifecycle.reset();
 };
+
+module.exports.fails = "issue #1038";
