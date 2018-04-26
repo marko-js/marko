@@ -22,6 +22,30 @@ function exists(path) {
     }
 }
 
+function addTransformer(taglibLoader, value) {
+    // Marko allows a "text-transformer" to be registered. The provided
+    // text transformer will be called for any static text found in a template.
+    const taglib = taglibLoader.taglib;
+    const dirname = taglibLoader.dirname;
+
+    const transformer = new types.Transformer();
+
+    propertyHandlers(
+        value,
+        {
+            path(value) {
+                const path = markoModules.resolveFrom(dirname, value);
+                transformer.path = path;
+            }
+        },
+        taglibLoader.dependencyChain.append("transformer").toString()
+    );
+
+    ok(transformer.path, '"path" is required for transformer');
+
+    taglib.addTransformer(transformer);
+}
+
 /**
  * We load a taglib definion using this class. Properties in the taglib
  * definition (which is just a JavaScript object with properties)
@@ -342,34 +366,32 @@ class TaglibLoader {
         taglib.id = value;
     }
 
+    /**
+     * If a custom tag has an associated transformer then the transformer
+     * will be called on the compile-time Node. The transformer can manipulate
+     * the AST using the DOM-like API to change how the code gets generated.
+     */
     transformer(value) {
-        // Marko allows a "text-transformer" to be registered. The provided
-        // text transformer will be called for any static text found in a template.
-        var taglib = this.taglib;
-        var dirname = this.dirname;
-
-        var transformer = new types.Transformer();
-
         if (typeof value === "string") {
+            // The value is a simple string type
+            // so treat the value as the path to the JS
+            // module for the transformer
             value = {
                 path: value
             };
+
+            addTransformer(this, value);
+        } else if (Array.isArray(value)) {
+            value.forEach(transformerPath => {
+                value = {
+                    path: transformerPath
+                };
+
+                addTransformer(this, value);
+            });
+        } else {
+            addTransformer(this, value);
         }
-
-        propertyHandlers(
-            value,
-            {
-                path(value) {
-                    var path = markoModules.resolveFrom(dirname, value);
-                    transformer.path = path;
-                }
-            },
-            this.dependencyChain.append("transformer").toString()
-        );
-
-        ok(transformer.path, '"path" is required for transformer');
-
-        taglib.addTransformer(transformer);
     }
 
     attributeGroups(value) {
