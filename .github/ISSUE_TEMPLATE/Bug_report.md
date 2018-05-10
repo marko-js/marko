@@ -1,7 +1,6 @@
 ---
 name: "\U0001F41BBug report"
 about: Something isn't working right
-
 ---
 
 ### Marko Version: x.x.x
@@ -37,7 +36,9 @@ about: Something isn't working right
 ### Steps to Reproduce
 
 <!-- Provide a link to a live example -->
+
 <!-- or an unambiguous set of steps to reproduce this bug -->
+
 <!-- include code to reproduce, if relevant -->
 
 1.  first...
