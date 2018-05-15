@@ -1,7 +1,8 @@
 "use strict";
 var ok = require("assert").ok;
 
-const esprima = require("esprima");
+const jsParser = require("babylon");
+const codeFrame = require("babel-code-frame");
 
 function parseExpression(src, builder, isExpression) {
     ok(typeof src === "string", '"src" should be a string expression');
@@ -188,6 +189,12 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.newExpression(callee, args);
             }
+            case "File": {
+                if (node.program) {
+                    return convert(node.program);
+                }
+                return null;
+            }
             case "Program": {
                 if (node.body && node.body.length === 1) {
                     return convert(node.body[0]);
@@ -295,30 +302,24 @@ function parseExpression(src, builder, isExpression) {
 
     let jsAST;
     try {
-        if (isExpression) {
-            src = "(" + src + ")";
-        }
-        jsAST = esprima.parseScript(src);
+        jsAST = jsParser[isExpression ? "parseExpression" : "parse"](src, {
+            sourceType: "script",
+            plugins: ["estree"]
+        });
     } catch (e) {
-        if (e.index == null) {
-            // Doesn't look like an Esprima parse error... just rethrow the exception
+        if (e.loc == null) {
+            // Doesn't look like an Babylon parse error... just rethrow the exception
             throw e;
         }
-        var errorIndex = e.index;
-        var errorMessage = "\n" + e.description;
-        if (errorIndex != null && errorIndex >= 0) {
-            if (isExpression) {
-                errorIndex--; // Account for extra paren added to start
-            }
-            errorMessage += ": ";
-            errorMessage +=
-                src +
-                "\n" +
-                new Array(errorMessage.length + errorIndex + 1).join(" ") +
-                "^";
-        }
-        var wrappedError = new Error(errorMessage);
-        wrappedError.index = errorIndex;
+
+        // TODO: include marko source code as well.
+        var wrappedError = new Error(
+            "\n" +
+                codeFrame(src, e.loc.line, e.loc.column, {
+                    highlightCode: true
+                })
+        );
+        wrappedError.index = e.pos;
         wrappedError.src = src;
         wrappedError.code = "ERR_INVALID_JAVASCRIPT_EXPRESSION";
         throw wrappedError;

@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 exports.templateData = {
-    short: "short"
+    throw: "throw"
 };
 
 exports.checkError = function(e) {
@@ -10,5 +10,5 @@ exports.checkError = function(e) {
 
     var message = e.toString();
     expect(message).to.contain("template.marko:1:0");
-    expect(message).to.contain("Invalid JavaScript variable name: short");
+    expect(message).to.contain("Invalid JavaScript variable name: throw");
 };

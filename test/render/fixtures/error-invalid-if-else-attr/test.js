@@ -1,9 +1,10 @@
 var expect = require("chai").expect;
+var stripAnsi = require("strip-ansi");
 
 exports.templateData = {};
 
 exports.checkError = function(e) {
-    var message = e.toString();
+    var message = stripAnsi(e.toString());
     // expect(message).to.contain('Error: Unable to compile template at path');
-    expect(message).to.contain("Unexpected number: (input.foo === dasda 0)");
+    expect(message).to.contain("input.foo === dasda 0");
 };

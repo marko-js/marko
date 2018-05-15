@@ -3,8 +3,8 @@
 let path = require("path");
 let getComponentFiles = require("./getComponentFiles");
 
-const esprima = require("esprima");
-const escodegen = require("escodegen");
+const jsCodegen = require("escodegen");
+const jsParser = require("babylon");
 const FLAG_COMPONENT_STYLE = Symbol("COMPONENT_STYLE");
 
 function handleStyleElement(styleEl, transformHelper) {
@@ -82,7 +82,7 @@ function classToObject(cls, el, transformHelper) {
     return {
         type: "ObjectExpression",
         properties: cls.body.body.map(method => {
-            if (method.type != "MethodDefinition") {
+            if (method.type !== "MethodDefinition") {
                 throw Error(
                     "Only methods are allowed on single file component class definitions."
                 );
@@ -106,11 +106,14 @@ function classToObject(cls, el, transformHelper) {
 }
 
 function handleClassDeclaration(classEl, transformHelper) {
-    let tree;
-    let wrappedSrc = "(" + classEl.tagString + "\n)";
+    const src = classEl.tagString;
+    let expression;
 
     try {
-        tree = esprima.parseScript(wrappedSrc);
+        expression = jsParser.parseExpression(src, {
+            sourceType: "script",
+            plugins: ["estree"]
+        });
     } catch (err) {
         let message = "Unable to parse JavaScript for component class. " + err;
 
@@ -129,7 +132,6 @@ function handleClassDeclaration(classEl, transformHelper) {
         transformHelper.context.addError(classEl, message);
         return;
     }
-    let expression = tree.body[0].expression;
 
     if (expression.superClass && expression.superClass.name) {
         transformHelper.context.addError(
@@ -142,7 +144,7 @@ function handleClassDeclaration(classEl, transformHelper) {
     let object = classToObject(expression, classEl, transformHelper);
     let componentVar = transformHelper.context.addStaticVar(
         "marko_component",
-        escodegen.generate(object)
+        jsCodegen.generate(object)
     );
 
     let moduleInfo = {
