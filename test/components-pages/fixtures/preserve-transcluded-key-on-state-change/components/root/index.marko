@@ -1,0 +1,11 @@
+class {
+    onMount() {
+        window.component = this;
+    }
+}
+
+<container>
+    <@renderBody> 
+        <child key="child"/>
+    </@renderBody>
+</container>
