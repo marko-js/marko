@@ -116,10 +116,8 @@ function handleClassDeclaration(classEl, transformHelper) {
         });
     } catch (err) {
         let message = "Unable to parse JavaScript for component class. " + err;
-
-        if (err.index != null) {
-            let errorIndex = err.index;
-            // message += '\n' + err.description;
+        if (err.pos != null) {
+            let errorIndex = err.pos;
             if (errorIndex != null && errorIndex >= 0) {
                 transformHelper.context.addError({
                     pos: classEl.pos + errorIndex,
