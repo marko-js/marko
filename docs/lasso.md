@@ -1,3 +1,108 @@
+# Marko + Lasso
+
+The [lasso-marko](https://github.com/lasso-js/lasso-marko) plugin for [Lasso.js](https://github.com/lasso-js/lasso) will automatically compile all imported Marko templates during bundling. In addition, the `lasso-marko` plugin will automatically bundle any template dependencies (including required CSS).
+
+Lasso.js provides Marko custom tags for injecting JavaScript and CSS bundles, images and other resources.
+
+The sample [marko-lasso](https://github.com/marko-js-samples/marko-lasso) app demonstrates how to build a production-ready web application using Marko and Lasso.
+
+## Installation
+
+```
+npm install lasso-marko --save
+```
+
+## Registering the plugin
+
+```js
+require('lasso').configure({
+    "plugins": [
+        ...
+        "lasso-marko"
+    ]
+    ...
+});
+```
+
+## Lasso custom tags
+
+To inject the required JavaScript and CSS into the page you will want to use the `<lasso-page>`, `<lasso-head>` and `<lasso-body>` tags.
+
+If you are using lasso@^3 (latest), make sure to install the [lasso-marko-taglib](https://github.com/lasso-js/lasso-marko-taglib), so that you can use the lasso custom tags.
+
+```
+npm install lasso-marko
+npm install @lasso/marko-taglib
+```
+
+After installing, the lasso custom tags can be used in your templates:
+
+```html
+<lasso-page package-path="./browser.json" />
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Marko + Lasso</title>
+        <lasso-head/>
+    </head>
+    <body>
+        <lasso-body/>
+    </body>
+</html>
+```
+
+The `browser.json` provides a simple way for declaring _top-level_ page dependencies. For example:
+
+_browser.json_
+
+```json
+{
+  "dependencies": ["./style.css", "require-run: ./client.js"]
+}
+```
+
+Lasso.js will automatically bundle up transitive dependencies by building and walking a dependency graph.
+
+## Client-side rendering
+
+Marko templates can be imported and rendered by any JavaScript module. The code below shows how to render a top-level UI component and have it be mounted to the DOM as a child `document.body`:
+
+_client.js_
+
+```js
+require("./components/app/index.marko")
+  .renderSync({})
+  .appendTo(document.body);
+```
+
+When Lasso.js bundles up the code above it will automatically bundle up the required `./components/app/index.marko` file.
+
+## Server-side rendering
+
+If you are rendering the initial UI on the server then it is necessary to make sure that all UI components are bundled and sent to the browser so that UI components can be mounted in the browser. For example:
+
+_about-me/index.marko_
+
+```marko
+<lasso-page package-path="./browser.json" />
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Marko + Lasso</title>
+
+        <!-- CSS will be inserted here -->
+        <lasso-head/>
+    </head>
+    <body>
+        <!-- Top-level UI component: -->
+        <app/>
+
+        <!-- JS will be inserted here -->
+        <lasso-body/>
     </body>
 </html>
 ```
@@ -47,3 +152,26 @@ browser-refresh server.js
           "path": "src/ui-modules/outdated-browser-banner/index.marko",
           "slot": "inline",
           "inline": true
+      }```
+
+- **`package`**:
+    It is a collection of dependencies. For eg) `browser.json` is a commonly used package type.
+    It could be used to point to another `browser.json` from within one component's `browser.json`.
+    Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
+    
+    ```{
+            "type": "package",
+            "if-flag": "showDiagEnabled",
+            "path": "src/ui-modules/show-diag/browser.json",
+            "slot": "inline",
+            "inline": true
+        }```
+   
+ - **`require`**:
+    If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+    ```{
+            "run": true,
+            "type": "require",
+            "if-flag": "browserInit",
+            "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
+        }```
