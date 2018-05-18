@@ -132,13 +132,15 @@ browser-refresh server.js
    This bundles the code to register the components, but does not include code to initialize the component.
    Mostly useful, if you have to move components around in the page and then initialize them.
    
-   ```{
+   ```json
+   {
           "type": "marko-dependencies",
           "if-flag": "outdatedBrowserBanner",
           "path": "src/ui-modules/outdated-browser-banner/index.marko",
           "slot": "inline",
           "inline": true
-      }```
+   }
+   ```
 
 - **`marko-hydrate`**:
    It includes all the dependencies needed by the rendered template.
@@ -146,32 +148,38 @@ browser-refresh server.js
    Initialization is therefore handled.
    
    
-   ```{
+   ```json
+   {
           "type": "marko-dependencies",
           "if-flag": "outdatedBrowserBanner",
           "path": "src/ui-modules/outdated-browser-banner/index.marko",
           "slot": "inline",
           "inline": true
-      }```
+   }
+   ```
 
 - **`package`**:
     It is a collection of dependencies. For eg) `browser.json` is a commonly used package type.
     It could be used to point to another `browser.json` from within one component's `browser.json`.
     Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
     
-    ```{
+    ```json
+    {
             "type": "package",
             "if-flag": "showDiagEnabled",
             "path": "src/ui-modules/show-diag/browser.json",
             "slot": "inline",
             "inline": true
-        }```
+    }
+    ```
    
  - **`require`**:
     If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
-    ```{
+    ```json
+    {
             "run": true,
             "type": "require",
             "if-flag": "browserInit",
             "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
-        }```
+    }
+    ```
