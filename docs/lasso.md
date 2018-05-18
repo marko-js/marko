@@ -150,11 +150,9 @@ browser-refresh server.js
    
    ```json
    {
-          "type": "marko-dependencies",
+          "type": "marko-hydrate",
           "if-flag": "outdatedBrowserBanner",
-          "path": "src/ui-modules/outdated-browser-banner/index.marko",
-          "slot": "inline",
-          "inline": true
+          "path": "src/ui-modules/outdated-browser-banner/index.marko"
    }
    ```
 
