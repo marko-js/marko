@@ -50,6 +50,7 @@ class FunctionDeclaration extends Node {
                 if (typeof param === "string") {
                     writer.write(param);
                 } else {
+                    /*
                     if (param.type !== "Identifier") {
                         throw new Error(
                             "Illegal param " +
@@ -58,6 +59,7 @@ class FunctionDeclaration extends Node {
                                 JSON.stringify(this)
                         );
                     }
+                    */
                     writer.write(param);
                 }
             }

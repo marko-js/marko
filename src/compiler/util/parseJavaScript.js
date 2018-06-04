@@ -9,6 +9,19 @@ function parseExpression(src, builder, isExpression) {
 
     function convert(node) {
         if (Array.isArray(node)) {
+            return node.map(convert);
+        }
+        let markoNode = getMarkoNode(node);
+        if (!markoNode) {
+            markoNode = builder.expression(
+                src.slice(node.range[0], node.range[1])
+            );
+        }
+        return markoNode;
+    }
+
+    function getMarkoNode(node) {
+        if (Array.isArray(node)) {
             let nodes = node;
             for (let i = 0; i < nodes.length; i++) {
                 var converted = convert(nodes[i]);
@@ -298,7 +311,7 @@ function parseExpression(src, builder, isExpression) {
         if (isExpression) {
             src = "(" + src + ")";
         }
-        jsAST = esprima.parseScript(src);
+        jsAST = esprima.parseScript(src, { range: true });
     } catch (e) {
         if (e.index == null) {
             // Doesn't look like an Esprima parse error... just rethrow the exception
@@ -324,12 +337,7 @@ function parseExpression(src, builder, isExpression) {
         throw wrappedError;
     }
 
-    var converted = convert(jsAST);
-    if (converted == null) {
-        converted = builder.expression(src);
-    }
-
-    return converted;
+    return convert(jsAST);
 }
 
 module.exports = parseExpression;

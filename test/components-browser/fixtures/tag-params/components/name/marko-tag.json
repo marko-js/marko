@@ -1,0 +1,4 @@
+{
+    "transformer": "./transformer.js",
+    "renderer": "./index.marko"
+}
