@@ -9,8 +9,9 @@ describe(path.basename(__dirname), function() {
         var components = window.components;
         var html = components.html;
         var componentIds = components.componentIds;
+        var testsTarget = document.getElementById("testsTarget");
 
-        document.getElementById("testsTarget").innerHTML = html; // Add the HTML to the DOM
+        testsTarget.innerHTML = html; // Add the HTML to the DOM
 
         // Initialize the components to bind behavior!
         markoComponents.init(componentIds);
@@ -45,5 +46,10 @@ describe(path.basename(__dirname), function() {
         expect(
             window.simpleComponents[1].componentConfig.messageCount
         ).to.equal(20);
+
+        testsTarget.innerHTML = html; // Reset html.
+        markoComponents.init(componentIds); // Re-initialize the components.
+
+        expect(window.simpleComponents.length).to.equal(4);
     });
 });
