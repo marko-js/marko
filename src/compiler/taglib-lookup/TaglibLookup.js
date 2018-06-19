@@ -233,7 +233,7 @@ class TaglibLookup {
             };
         }
         var tags = this.merged.tags;
-        if (!element || !tags) {
+        if (!tags) {
             return;
         }
 
