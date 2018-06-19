@@ -168,7 +168,25 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render. In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events). This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render. In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events). This class can be exported from `component.js` or defined right in the template as with single-file components. In this case your component folder may contain a `component.js` file and compulsorily a `component-browser.js`. The following [lifecycle methods](#lifecycle-events) will go inside the `component.js` file:
+```
+class {
+  onCreate(input, out) { }
+  onInput(input, out) { }
+  onRender(out) { }
+  onDestroy() { }
+}
+```
+And the following [lifecycle methods](#lifecycle-events) will go inside the `component-browser.js` file:
+
+```
+class {
+  onMount() { }
+  onUpdate() { }
+}
+```
+
+Any javascript code related to the DOM or browser should also be inside the `component-browser.js` file.
 
 ### Example
 
