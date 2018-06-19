@@ -102,7 +102,7 @@ var helpers = {
     /**
      * Helper to render a dynamic tag
      */
-    d: function dynamicTag(out, tag, attrs, componentDef, key, customEvents) {
+    d: function dynamicTag(tag, attrs, out, componentDef, key, customEvents) {
         if (tag) {
             if (typeof tag === "string") {
                 if (attrs.renderBody) {
@@ -115,8 +115,8 @@ var helpers = {
                 } else {
                     out.element(tag, attrs);
                 }
-            } else if (tag.renderer || tag.render) {
-                var renderer = tag.renderer || tag.render;
+            } else if (tag._ || tag.renderer || tag.render) {
+                var renderer = tag._ || tag.renderer || tag.render;
                 out.c(componentDef, key, customEvents);
                 renderer(attrs, out);
                 out.___assignedComponentDef = null;

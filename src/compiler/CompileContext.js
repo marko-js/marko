@@ -498,6 +498,7 @@ class CompileContext extends EventEmitter {
         var node;
         var elNode = builder.htmlElement(elDef);
         elNode.pos = elDef.pos;
+        elNode.tagName = elDef.tagName;
 
         this._currentNode = elNode;
 
@@ -505,12 +506,10 @@ class CompileContext extends EventEmitter {
 
         var taglibLookup = this.taglibLookup;
 
-        if (tagName instanceof Node) {
-            node = builder.dynamicTag(elNode, tagName);
-            node.body = node.makeContainer(node.body.items);
-        } else if (isAtTag && !this.escapeAtTags) {
-            // NOTE: The tag definition can't be determined now since it will be
-            //       determined by the parent custom tag.
+        if ((isAtTag && !this.escapeAtTags) || tagName instanceof Node) {
+            // NOTE: The tag definition can't be determined now
+            //       For @tags it will be determined by the parent
+            //       For dynamic tags we cannot know at compile time
             node = builder.customTag(elNode);
             node.body = node.makeContainer(node.body.items);
         } else {

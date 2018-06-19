@@ -33,7 +33,6 @@ module.exports = function assignComponentId(isRepeated) {
     //    an "id" attribute with a unique ID.
 
     var isHtmlElement = el.type === "HtmlElement";
-    var isDynamicTag = el.type === "DynamicTag";
     var isCustomTag = el.type === "CustomTag";
 
     // LEGACY -- Remove in Marko 5.0
@@ -41,7 +40,7 @@ module.exports = function assignComponentId(isRepeated) {
         isCustomTag = true;
     }
 
-    if (!isCustomTag && !isHtmlElement && !isDynamicTag) {
+    if (!isCustomTag && !isHtmlElement) {
         return;
     }
 
@@ -81,7 +80,7 @@ module.exports = function assignComponentId(isRepeated) {
     if (assignedKey) {
         nestedIdExpression = assignedKey;
 
-        if (isCustomTag || isDynamicTag) {
+        if (isCustomTag) {
             idExpression = this.buildComponentElIdFunctionCall(assignedKey);
             // The element is a custom tag
             this.getComponentArgs().setKey(
@@ -115,7 +114,7 @@ module.exports = function assignComponentId(isRepeated) {
 
         idExpression = builder.literal(uniqueKey.toString());
 
-        if (isCustomTag || isDynamicTag) {
+        if (isCustomTag) {
             this.getComponentArgs().setKey(nestedIdExpression);
         } else {
             el.setKey(idExpression);
@@ -157,7 +156,7 @@ module.exports = function assignComponentId(isRepeated) {
                 idVar
             );
 
-            if (isCustomTag || isDynamicTag) {
+            if (isCustomTag) {
                 transformHelper.getComponentArgs().setKey(nestedIdExpression);
             } else {
                 el.setKey(idExpression);

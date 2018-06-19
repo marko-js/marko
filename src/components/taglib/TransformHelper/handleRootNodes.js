@@ -222,14 +222,10 @@ module.exports = function handleRootNodes() {
                 walker.skip();
 
                 return;
-            } else if (node.type === "DynamicTag") {
-                rootNodes.push(node);
-                walker.skip();
-                return;
             } else if (node.type === "CustomTag") {
                 let tag = context.taglibLookup.getTag(node.tagName);
 
-                if (!tag.noOutput) {
+                if (!tag || !tag.noOutput) {
                     rootNodes.push(node);
                 }
 

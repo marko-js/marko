@@ -359,6 +359,7 @@ class CustomTag extends HtmlElement {
         }
 
         let tagName = tagDef.isNestedTag ? tagDef.name : this.tagName;
+        let isDynamicTag = tagDef.isDynamicTag;
 
         // Loop over the attributes found on the HTML element and add the corresponding properties
         // to the input object for the custom tag
@@ -385,10 +386,11 @@ class CustomTag extends HtmlElement {
                 addAttrs(attr.value);
                 explicitAttrs = null;
             } else {
-                let attrDef =
-                    attr.def ||
-                    context.taglibLookup.getAttribute(tagName, attrName) ||
-                    tagDef.getAttribute(attr.name);
+                let attrDef = isDynamicTag
+                    ? {}
+                    : attr.def ||
+                      context.taglibLookup.getAttribute(tagName, attrName) ||
+                      tagDef.getAttribute(attr.name);
 
                 if (!attrDef) {
                     let errorMessage =
@@ -524,6 +526,8 @@ class CustomTag extends HtmlElement {
                     tagDef.targetProperty = nestedTagName;
                     tagDef.parentCustomTag = parentCustomTag;
                 }
+            } else if (!this.tagName && this.tagNameExpression) {
+                tagDef = { isDynamicTag: true };
             } else {
                 throw new Error('"tagDef" is required for CustomTag');
             }
@@ -596,8 +600,10 @@ class CustomTag extends HtmlElement {
         let renderTagNode;
 
         let isNestedTag = tagDef.isNestedTag === true;
+        let isDynamicTag = tagDef.isDynamicTag === true;
         let tagVarName = tagDef.name + (isNestedTag ? "_nested_tag" : "_tag");
         let rendererPath = this._rendererPath || tagDef.renderer;
+        let tagVar;
         let rendererRequirePath;
         let requireRendererFunctionCall;
 
@@ -650,6 +656,13 @@ class CustomTag extends HtmlElement {
                     inputProps,
                     parentCustomTag.getNestedTagVar(context)
                 ];
+            } else if (isDynamicTag) {
+                tagVar = context.helper("dynamicTag");
+                tagArgs = [
+                    this.tagNameExpression,
+                    inputProps,
+                    builder.identifierOut()
+                ];
             } else {
                 loadTag = builder.functionCall(context.helper("loadTag"), [
                     requireRendererFunctionCall // The first param is the renderer
@@ -658,7 +671,7 @@ class CustomTag extends HtmlElement {
                 tagArgs = [inputProps, builder.identifierOut()];
             }
 
-            let tagVar = codegen.addStaticVar(tagVarName, loadTag);
+            tagVar = tagVar || codegen.addStaticVar(tagVarName, loadTag);
 
             if (isNestedTag) {
                 renderTagNode = builder.functionCall(tagVar, tagArgs);
