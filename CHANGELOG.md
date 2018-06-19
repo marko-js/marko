@@ -2,7 +2,21 @@
 
 # 4.x
 
+## 4.10.x
+
+### 4.10.1
+
+* Fix issue with calling `require('marko/components').init(components)` multiple times.
+
+### 4.10.0
+
+* Fix #1049 Fix documentation urls on the website.
+
 ## 4.9.x
+
+### 4.9.7
+
+* Fix #1038 Legacy compatibility dirty check returning false positives.
 
 ### 4.9.6
 
