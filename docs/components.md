@@ -185,7 +185,8 @@ class {
   onUpdate() { }
 }
 ```
-Also all your DOM manipulation javascript and jQuery goes inside the `component-browser.js` file.
+
+Any javascript code related to the DOM or browser should also be inside the `component-browser.js` file.
 
 ### Example
 
