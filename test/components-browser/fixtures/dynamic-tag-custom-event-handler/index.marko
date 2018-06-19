@@ -1,0 +1,15 @@
+import helloComponent from './components/hello.marko';
+
+class {
+    onCreate() {
+        this.helloReceived = false;
+    }
+
+    handleHello() {
+        this.helloReceived = true;
+    }
+}
+
+<div>
+    <${helloComponent} on-hello('handleHello')/>
+</div>

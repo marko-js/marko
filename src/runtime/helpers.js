@@ -105,15 +105,34 @@ var helpers = {
     d: function dynamicTag(tag, attrs, out, componentDef, key, customEvents) {
         if (tag) {
             if (typeof tag === "string") {
+                var component = componentDef && componentDef.component;
+                var events =
+                    customEvents &&
+                    customEvents.reduce((events, eventArray) => {
+                        events["on" + eventArray[0]] = componentDef.d(
+                            eventArray[1],
+                            eventArray[2],
+                            eventArray[3]
+                        );
+                        return events;
+                    }, {});
                 if (attrs.renderBody) {
                     var renderBody = attrs.renderBody;
                     var otherAttrs = Object.assign({}, attrs);
                     delete otherAttrs.renderBody;
-                    out.beginElement(tag, otherAttrs);
+                    out.beginElement(
+                        tag,
+                        otherAttrs,
+                        key,
+                        component,
+                        0,
+                        0,
+                        events
+                    );
                     renderBody(out);
                     out.endElement();
                 } else {
-                    out.element(tag, attrs);
+                    out.element(tag, attrs, key, component, 0, 0, events);
                 }
             } else if (tag._ || tag.renderer || tag.render) {
                 var renderer = tag._ || tag.renderer || tag.render;
