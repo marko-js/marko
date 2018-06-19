@@ -103,46 +103,44 @@ browser-refresh server.js
 
 ## Lasso package types commonly used with Marko
 
-For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` is sufficient to render and bundle components without the need for explicit `browser.json` files.  For more advanced use cases, the following bundle types may be defined in a `browser.json` for Lasso.
+For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` is sufficient to render and bundle components without the need for explicit `browser.json` files. For more advanced use cases, the following bundle types may be defined in a `browser.json` for Lasso.
 
-- **`marko-dependencies`**: (provided by `lasso-marko`)
-   Includes all the dependencies needed by template and the code to register all components that would be rendered by the template.  It does not automatically initialize the component, so is most useful if you need to initialize components manually.
-   
-   ```json
-   {
-          "type": "marko-dependencies",
-          "path": "src/ui-modules/outdated-browser-banner/index.marko"
-   }
-   ```
+* **`marko-dependencies`**: (provided by `lasso-marko`)
+  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. It does not automatically initialize the component, so is most useful if you need to initialize components manually.
 
-- **`marko-hydrate`**: (provided by `lasso-marko`)
-   Includes all the dependencies needed by template and the code to register all components that would be rendered by the template.  This also includes the code to initialize the rendered components.  Including this bundle on the page will automatically hydrate server rendered components.
-   
-   ```json
-   {
-          "type": "marko-hydrate",
-          "path": "src/ui-modules/outdated-browser-banner/index.marko"
-   }
-   ```
+  ```json
+  {
+    "type": "marko-dependencies",
+    "path": "src/ui-modules/outdated-browser-banner/index.marko"
+  }
+  ```
 
-- **`package`**:
-    A collection of dependencies. `browser.json` is the most common package type.
-    It could be used to point to another `browser.json` from within one component's `browser.json`.
-    Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
-    
-    ```json
-    {
-            "type": "package",
-            "path": "src/ui-modules/show-diag/browser.json",
-    }
-    ```
-   
- - **`require`**:
-    If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
-    ```json
-    {
-            "run": true,
-            "type": "require",
-            "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
-    }
-    ```
+* **`marko-hydrate`**: (provided by `lasso-marko`)
+  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
+
+  ```json
+  {
+    "type": "marko-hydrate",
+    "path": "src/ui-modules/outdated-browser-banner/index.marko"
+  }
+  ```
+
+* **`package`**:
+  A collection of dependencies. `browser.json` is the most common package type.
+  It could be used to point to another `browser.json` from within one component's `browser.json`.
+  Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
+  ```json
+  {
+    "type": "package",
+    "path": "src/ui-modules/show-diag/browser.json"
+  }
+  ```
+* **`require`**:
+  If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+  ```json
+  {
+    "run": true,
+    "type": "require",
+    "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
+  }
+  ```
