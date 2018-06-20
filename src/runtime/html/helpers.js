@@ -1,14 +1,13 @@
 "use strict";
 var extend = require("raptor-util/extend");
 
-var STYLE_ATTR = "style";
-var CLASS_ATTR = "class";
+var STYLE_ATTR = (exports.___STYLE_ATTR = "style");
+var CLASS_ATTR = (exports.___CLASS_ATTR = "class");
 
 var escape = require("./escape");
 var escapeXml = escape.escapeXml;
 var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require("./helper-attr");
-var attrsHelper = require("./helper-attrs");
 
 /**
  * Internal method to escape special XML characters
@@ -73,7 +72,7 @@ exports.a = attrHelper;
  * Internal method to render multiple HTML attributes based on the properties of an object
  * @private
  */
-exports.as = attrsHelper;
+exports.as = require("./helper-attrs");
 
 /**
  * Internal helper method to handle the "style" attribute. The value can either
@@ -92,29 +91,31 @@ exports.sa = function(style) {
 
     var type = typeof style;
 
-    if (type === "string") {
-        return attrHelper(STYLE_ATTR, style, false);
-    } else if (type === "object") {
-        var styles = "";
-        for (var name in style) {
-            var value = style[name];
-            if (value != null) {
-                if (typeof value === "number" && value) {
-                    value += "px";
+    if (type !== "string") {
+        if (type === "object") {
+            var styles = "";
+            for (var name in style) {
+                var value = style[name];
+                if (value != null) {
+                    if (typeof value === "number" && value) {
+                        value += "px";
+                    }
+                    var nameDashed = dashedNames[name];
+                    if (!nameDashed) {
+                        nameDashed = dashedNames[name] = name
+                            .replace(/([A-Z])/g, "-$1")
+                            .toLowerCase();
+                    }
+                    styles += nameDashed + ":" + value + ";";
                 }
-                var nameDashed = dashedNames[name];
-                if (!nameDashed) {
-                    nameDashed = dashedNames[name] = name
-                        .replace(/([A-Z])/g, "-$1")
-                        .toLowerCase();
-                }
-                styles += nameDashed + ":" + value + ";";
             }
+            style = styles;
+        } else {
+            return "";
         }
-        return styles ? " " + STYLE_ATTR + '="' + styles + '"' : "";
-    } else {
-        return "";
     }
+
+    return attrHelper(STYLE_ATTR, style);
 };
 
 /**

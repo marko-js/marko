@@ -9,6 +9,7 @@ var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
 var morphdom = require("../../morphdom");
+var attrsHelper = require("./helper-attrs");
 
 var EVENT_UPDATE = "update";
 var EVENT_FINISH = "finish";
@@ -106,7 +107,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ) {
         var element = VElement.___createElementDynamicTag(
             tagName,
-            attrs,
+            attrsHelper(attrs),
             key,
             component,
             childCount,
@@ -196,7 +197,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ) {
         var element = VElement.___createElementDynamicTag(
             tagName,
-            attrs,
+            attrsHelper(attrs),
             key,
             component,
             childCount,
