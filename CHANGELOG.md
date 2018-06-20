@@ -2,6 +2,13 @@
 
 # 4.x
 
+## 4.11.x
+
+### 4.11.0
+
+* Implement #880: `<${dynamic}>` tag
+* `<include>` should be considered deprecated. Formal deprecation warning to come.
+
 ## 4.10.x
 
 ### 4.10.1
