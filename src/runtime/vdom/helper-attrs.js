@@ -1,6 +1,3 @@
-var styleAttr = require("./helper-styleAttr");
-var classAttr = require("./helpers").ca;
-
 /**
  * Helper for processing dynamic attributes
  */
@@ -20,3 +17,6 @@ module.exports = function(attributes) {
     }
     return attributes;
 };
+
+var styleAttr = require("./helper-styleAttr");
+var classAttr = require("./helpers").ca;

@@ -52,7 +52,9 @@ var helpers = extend(
             } else {
                 return classList(classNames);
             }
-        }
+        },
+
+        as: require("./helper-attrs")
     },
     commonHelpers
 );
