@@ -120,7 +120,7 @@ var helpers = {
                     var renderBody = attrs.renderBody;
                     var otherAttrs = Object.assign({}, attrs);
                     delete otherAttrs.renderBody;
-                    out.beginElement(
+                    out.___beginElementDynamic(
                         tag,
                         otherAttrs,
                         key,
@@ -130,9 +130,17 @@ var helpers = {
                         events
                     );
                     renderBody(out);
-                    out.endElement();
+                    out.___endElement();
                 } else {
-                    out.element(tag, attrs, key, component, 0, 0, events);
+                    out.___elementDynamic(
+                        tag,
+                        attrs,
+                        key,
+                        component,
+                        0,
+                        0,
+                        events
+                    );
                 }
             } else if (tag._ || tag.renderer || tag.render) {
                 var renderer = tag._ || tag.renderer || tag.render;
