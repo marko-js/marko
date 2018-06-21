@@ -115,10 +115,10 @@ Comment on the issue and let us know you'd like to tackle it. If for some reason
 
 Here's some to get started with:
 
-* [good first issue](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22): great for new contributors
-* [help wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) issues: won't be tackled in the near future by the maintainers... we need your help!
-* [unassigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
-* [has failing test](https://github.com/marko-js/marko/labels/has%20failing%20test) issues: open issues that already have a failing test case in the repo. make it pass!
+- [good first issue](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22): great for new contributors
+- [help wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) issues: won't be tackled in the near future by the maintainers... we need your help!
+- [unassigned](https://github.com/marko-js/marko/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20no%3Aassignee%20) issues: open issues that no one has claimed... yet
+- [has failing test](https://github.com/marko-js/marko/labels/has%20failing%20test) issues: open issues that already have a failing test case in the repo. make it pass!
 
 ## Reporting bugs and other issues
 
@@ -152,13 +152,13 @@ Once you post an issue, a maintainer will add one or more labels to it. Below is
 
 Every issue should be assigned one of these.
 
-* **bug**: A bug report
-* **unverified-bug**: A bug report that has not been verified
-* **feature**: A feature request
-* **question**: A question about how to do something in Marko
-* **community**: Related to community building, improving the contribution process, etc.
-* **tech debt**: Related to refactoring code, test structure, etc.
-* **docs**: Related to documentation/website
+- **bug**: A bug report
+- **unverified-bug**: A bug report that has not been verified
+- **feature**: A feature request
+- **question**: A question about how to do something in Marko
+- **community**: Related to community building, improving the contribution process, etc.
+- **tech debt**: Related to refactoring code, test structure, etc.
+- **docs**: Related to documentation/website
 
 ### Scope
 
@@ -171,12 +171,12 @@ Every issue should be assigned one of these.
 
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
 
-* **parser**: Relates to [`htmljs-parser`](https://github.com/marko-js/htmljs-parser)
-* **compiler**: Relates to the [compiler](../src/compiler) (server only)
-* **runtime**: Relates to the [runtime](../src/runtime) (isomorphic/universal)
-* **core-taglib**: Relates to [custom tags](../src/taglib) that ship with Marko
-* **components**: Relates to [components](../src/components)
-* **tools**: Relates to editor plugins, commandline tools, etc.
+- **parser**: Relates to [`htmljs-parser`](https://github.com/marko-js/htmljs-parser)
+- **compiler**: Relates to the [compiler](../src/compiler) (server only)
+- **runtime**: Relates to the [runtime](../src/runtime) (isomorphic/universal)
+- **core-taglib**: Relates to [custom tags](../src/taglib) that ship with Marko
+- **components**: Relates to [components](../src/components)
+- **tools**: Relates to editor plugins, commandline tools, etc.
 
 ### Status
 
@@ -186,9 +186,9 @@ What part of the Marko stack does this issue apply to? In most cases there shoul
 
 In many cases, additional _actions_ should be taken when applying one of these.
 
-* **backlog**: Tasks planned to be worked on
-* **in progress**: This is currently being worked on.
-* **needs review**: This issue needs to be followed up on.
+- **backlog**: Tasks planned to be worked on
+- **in progress**: This is currently being worked on.
+- **needs review**: This issue needs to be followed up on.
 
 ### Reason closed
 
@@ -199,12 +199,12 @@ In many cases, additional _actions_ should be taken when applying one of these.
 ![](https://img.shields.io/badge/reason%20closed-inactivity-bfd4f2.svg)
 ![](https://img.shields.io/badge/reason%20closed-no%20issue-c5def5.svg)
 
-* **resolved**: The question was answered, the bug was fixed, or the feature was implemented.
-* **duplicate**: Someone has already posted the same or a very similar issue. A comment should be added that references the original issue.
-* **declined**: This feature will not be implemented.
-* **not a bug**: This is not a bug, but either user error or intended behavior.
-* **inactivity**: There was not enough info to reproduce the bug or not enough interest in the feature to hash out an implementation plan and the conversation has stalled.
-* **no issue**: This wasn't so much an issue as a comment
+- **resolved**: The question was answered, the bug was fixed, or the feature was implemented.
+- **duplicate**: Someone has already posted the same or a very similar issue. A comment should be added that references the original issue.
+- **declined**: This feature will not be implemented.
+- **not a bug**: This is not a bug, but either user error or intended behavior.
+- **inactivity**: There was not enough info to reproduce the bug or not enough interest in the feature to hash out an implementation plan and the conversation has stalled.
+- **no issue**: This wasn't so much an issue as a comment
 
 ### Other
 
@@ -214,8 +214,8 @@ In many cases, additional _actions_ should be taken when applying one of these.
 ![](https://img.shields.io/badge/-needs%20more%20info-dd9944.svg)
 ![](https://img.shields.io/badge/-user%20land-e8c9c9.svg)
 
-* **good first issue**: Small tasks that would be good for first time contributors.
-* **help wanted**: Not on the roadmap, but we'd love for someone in the community to tackle it.
-* **blocked**: Cannot be completed until something else happens first. This should be described in a comment with a link to the blocking issue.
-* **needs more info**: The original poster needs to provide more information before action can be taken.
-* **user land**: Something that probably won't be added to core, but could be implemented/proved out as a separate module.
+- **good first issue**: Small tasks that would be good for first time contributors.
+- **help wanted**: Not on the roadmap, but we'd love for someone in the community to tackle it.
+- **blocked**: Cannot be completed until something else happens first. This should be described in a comment with a link to the blocking issue.
+- **needs more info**: The original poster needs to provide more information before action can be taken.
+- **user land**: Something that probably won't be added to core, but could be implemented/proved out as a separate module.
