@@ -1,13 +1,14 @@
 "use strict";
 var extend = require("raptor-util/extend");
 
-var STYLE_ATTR = (exports.___STYLE_ATTR = "style");
-var CLASS_ATTR = (exports.___CLASS_ATTR = "class");
+var STYLE_ATTR = "style";
+var CLASS_ATTR = "class";
 
 var escape = require("./escape");
 var escapeXml = escape.escapeXml;
 var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require("./helper-attr");
+var attrsHelper = require("./helper-attrs");
 
 /**
  * Internal method to escape special XML characters
@@ -72,7 +73,7 @@ exports.a = attrHelper;
  * Internal method to render multiple HTML attributes based on the properties of an object
  * @private
  */
-exports.as = require("./helper-attrs");
+exports.as = attrsHelper;
 
 /**
  * Internal helper method to handle the "style" attribute. The value can either
