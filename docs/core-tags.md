@@ -405,27 +405,27 @@ $ var personPromise = new Promise((resolve, reject) => {
 
 Advanced implementation:
 
-* `<await>` tag signature
-  * Basic usage: `<await(results from dataProvider)>...</await>`
-  * Optional attributes
-    * client-reorder `boolean`
-    * arg `expression`
-    * arg-\* `string`
-    * method `string`
-    * timeout `integer`
-    * timeout-message `string`
-    * error-message `string`
-    * placeholder `string`
-    * renderTimeout `function`
-    * renderError `function`
-    * renderPlaceholder `function`
-    * name `string`
-    * scope `expression`
-    * show-after `string`
-  * Optional child tags
-    * `<await-placeholder>Loading...</await-placeholder>`
-    * `<await-timeout>Request timed out</await-timeout>`
-    * `<await-error>Request errored</await-error>`
+- `<await>` tag signature
+  - Basic usage: `<await(results from dataProvider)>...</await>`
+  - Optional attributes
+    - client-reorder `boolean`
+    - arg `expression`
+    - arg-\* `string`
+    - method `string`
+    - timeout `integer`
+    - timeout-message `string`
+    - error-message `string`
+    - placeholder `string`
+    - renderTimeout `function`
+    - renderError `function`
+    - renderPlaceholder `function`
+    - name `string`
+    - scope `expression`
+    - show-after `string`
+  - Optional child tags
+    - `<await-placeholder>Loading...</await-placeholder>`
+    - `<await-timeout>Request timed out</await-timeout>`
+    - `<await-error>Request errored</await-error>`
 
 ## Comments
 
@@ -494,9 +494,9 @@ Alternatively, the `<marko-compiler-options>` tag may be used to configure white
 
 The `marko-body` attribute can be used to control how body content is parsed. The following values are supported:
 
-* `html` - Body content will be parsed HTML (the default)
-* `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
-* `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
+- `html` - Body content will be parsed HTML (the default)
+- `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
+- `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
 
 _input.marko_
 

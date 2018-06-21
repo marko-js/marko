@@ -289,15 +289,13 @@ describe("AsyncStream", function() {
     it("should catch error in promise catch if `error` listener only set inside mixin", function(done) {
         const out = new AsyncStream();
 
-        out
-            .catch(err => {
-                expect(err).to.be.an("error");
-                expect(out.getOutput()).to.equal("1");
-                done();
-            })
-            .then(() => {
-                throw new Error("Should not get here!");
-            });
+        out.catch(err => {
+            expect(err).to.be.an("error");
+            expect(out.getOutput()).to.equal("1");
+            done();
+        }).then(() => {
+            throw new Error("Should not get here!");
+        });
 
         out.write("1");
         out.error(new Error("test"));

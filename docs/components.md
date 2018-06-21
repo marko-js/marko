@@ -12,9 +12,9 @@ With Marko, the DOM output of a UI component is based on input properties and a 
 
 Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
 
-* **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
-* **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
-* **Styling** - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
+- **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
+- **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
+- **Styling** - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
 
 ## Server-side rendering
 
@@ -250,7 +250,7 @@ class {
 Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
 1.  `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
-    * For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
+    - For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
 2.  `event` - The native DOM event
 3.  `el` - The DOM element that the event listener was attached to
 
@@ -800,12 +800,12 @@ Adds a one time listener function for the event named eventName. The next time e
 
 Marko defines six distinct lifecycle events:
 
-* `create`
-* `input`
-* `render`
-* `mount`
-* `update`
-* `destroy`
+- `create`
+- `input`
+- `render`
+- `mount`
+- `update`
+- `destroy`
 
 These events are emitted at specific points over the lifecycle of a component as shown below:
 
