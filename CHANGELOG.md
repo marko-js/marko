@@ -4,6 +4,24 @@
 
 ## 4.11.x
 
+### 4.11.1
+
+* Fixes a regression in `<${dynamic}>` tags for object/array class/style attributes:
+  ```marko
+  $ const style = { color:'blue' };
+  <${tagName} style=style/>
+  ```
+* Allows dynamic attributes defined using `...spread` to include object/array class/style (#933):
+  ```marko
+  $ const attrs = { style:{ color:'blue' } };
+  <tag ...attrs/>
+  ```
+* Fixes issue where object/array class/style attributes could not be used with `...spread` (#1007):
+  ```marko
+  $ const attrs = {};
+  <tag class=["oops"] ...attrs/>
+  ```
+
 ### 4.11.0
 
 * Implement #880: `<${dynamic}>` tag
