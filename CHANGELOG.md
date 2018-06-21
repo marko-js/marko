@@ -4,6 +4,10 @@
 
 ## 4.11.x
 
+### 4.11.2
+
+- Fixes another regression in the `<${dynamic}>` tag where `dashed-case` attributes were being converted to `camelCase` when rendering html elements.
+
 ### 4.11.1
 
 - Fixes a regression in `<${dynamic}>` tags for object/array class/style attributes:

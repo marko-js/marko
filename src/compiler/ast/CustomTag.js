@@ -289,8 +289,9 @@ class CustomTag extends HtmlElement {
                 // that are not declared (i.e. "*" attributes)
                 //
                 if (
-                    attrDef.removeDashes === true ||
-                    attrDef.preserveName === false
+                    tagDef.isDynamicTag !== true &&
+                    (attrDef.removeDashes === true ||
+                        attrDef.preserveName === false)
                 ) {
                     propName = removeDashes(attrName);
                 } else {
@@ -319,7 +320,10 @@ class CustomTag extends HtmlElement {
                             );
                         }
                     }
-                } else if (attrDef.preserveName === true) {
+                } else if (
+                    attrDef.preserveName === true ||
+                    tagDef.isDynamicTag === true
+                ) {
                     propName = attrName;
                 } else {
                     propName = removeDashes(attrName);

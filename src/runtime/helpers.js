@@ -1,4 +1,5 @@
 "use strict";
+var removeDashes = require("../compiler/util/removeDashes");
 var isArray = Array.isArray;
 var RENDER_BODY_TOKEN = "%FN";
 var RENDER_BODY_TO_JSON = function() {
@@ -142,30 +143,37 @@ var helpers = {
                         events
                     );
                 }
-            } else if (tag._ || tag.renderer || tag.render) {
-                var renderer = tag._ || tag.renderer || tag.render;
-                out.c(componentDef, key, customEvents);
-                renderer(attrs, out);
-                out.___assignedComponentDef = null;
             } else {
-                var render = (tag && tag.renderBody) || tag;
-                var isFn = typeof render === "function";
-                var isToken = render === RENDER_BODY_TOKEN;
-
-                if (isFn || isToken) {
-                    var flags = componentDef ? componentDef.___flags : 0;
-                    var parentId = componentDef ? componentDef.id : "";
-                    var willRerender = flags & FLAG_WILL_RERENDER_IN_BROWSER;
-                    var resolvedKey = parentId + " " + key;
-                    var insertMarkers = IS_SERVER ? willRerender : isToken;
-                    if (insertMarkers) out.comment("F^" + resolvedKey);
-                    if (isFn) {
-                        render.toJSON = RENDER_BODY_TO_JSON;
-                        render(out, attrs);
-                    }
-                    if (insertMarkers) out.comment("F/" + resolvedKey);
+                attrs = Object.keys(attrs).reduce(function(r, key) {
+                    r[removeDashes(key)] = attrs[key];
+                    return r;
+                }, {});
+                if (tag._ || tag.renderer || tag.render) {
+                    var renderer = tag._ || tag.renderer || tag.render;
+                    out.c(componentDef, key, customEvents);
+                    renderer(attrs, out);
+                    out.___assignedComponentDef = null;
                 } else {
-                    out.error("Invalid dynamic tag value");
+                    var render = (tag && tag.renderBody) || tag;
+                    var isFn = typeof render === "function";
+                    var isToken = render === RENDER_BODY_TOKEN;
+
+                    if (isFn || isToken) {
+                        var flags = componentDef ? componentDef.___flags : 0;
+                        var parentId = componentDef ? componentDef.id : "";
+                        var willRerender =
+                            flags & FLAG_WILL_RERENDER_IN_BROWSER;
+                        var resolvedKey = parentId + " " + key;
+                        var insertMarkers = IS_SERVER ? willRerender : isToken;
+                        if (insertMarkers) out.comment("F^" + resolvedKey);
+                        if (isFn) {
+                            render.toJSON = RENDER_BODY_TO_JSON;
+                            render(out, attrs);
+                        }
+                        if (insertMarkers) out.comment("F/" + resolvedKey);
+                    } else {
+                        out.error("Invalid dynamic tag value");
+                    }
                 }
             }
         }
