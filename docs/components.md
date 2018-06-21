@@ -646,8 +646,9 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 | `key`        | `String`    | the scoped identifier for the element                                                                                                                                                                            |
 | `index`      | `Number`    | _optional_ the index of the component, if `key` references a repeated component                                                                                                                                  |
 | return value | `Component` | a reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (e.g. `key="items[]"`) then the component at the given index will be returned. |
-For example, let the following be the component DOM,
 
+
+For example, let the following be the component DOM,
 ```marko
 <app-main>
 <app-child key="child"/>
