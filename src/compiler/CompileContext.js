@@ -79,6 +79,7 @@ const helpers = {
         module: "marko/components/legacy/helpers",
         method: "w"
     },
+    dynamicTag: "d",
     escapeXml: "x",
     escapeXmlAttr: "xa",
     escapeScript: "xs",
@@ -495,21 +496,22 @@ class CompileContext extends EventEmitter {
         }
 
         var node;
-        var elNode = builder.htmlElement(elDef);
-        elNode.pos = elDef.pos;
-
-        this._currentNode = elNode;
-
         var tagDef;
 
         var taglibLookup = this.taglibLookup;
 
-        if (isAtTag && !this.escapeAtTags) {
-            // NOTE: The tag definition can't be determined now since it will be
-            //       determined by the parent custom tag.
-            node = builder.customTag(elNode);
+        if ((isAtTag && !this.escapeAtTags) || tagName instanceof Node) {
+            // NOTE: The tag definition can't be determined now
+            //       For @tags it will be determined by the parent
+            //       For dynamic tags we cannot know at compile time
+            node = builder.customTag(elDef);
             node.body = node.makeContainer(node.body.items);
         } else {
+            let elNode = builder.htmlElement(elDef);
+            elNode.pos = elDef.pos;
+
+            this._currentNode = elNode;
+
             if (typeof tagName === "string") {
                 tagDef = taglibLookup.getTag(tagName);
                 if (

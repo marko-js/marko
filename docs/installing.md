@@ -190,7 +190,7 @@ _layout.marko_
     <lasso-head/>
 </head>
 <body>
-    <include(input.body)/>
+    <${input.body}/>
     <lasso-body/>
 </body>
 </html>

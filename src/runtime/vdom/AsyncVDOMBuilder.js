@@ -9,6 +9,7 @@ var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
 var morphdom = require("../../morphdom");
+var attrsHelper = require("./helper-attrs");
 
 var EVENT_UPDATE = "update";
 var EVENT_FINISH = "finish";
@@ -95,7 +96,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         return this.___beginNode(element, childCount);
     },
 
-    ___elementDynamicTag: function(
+    ___elementDynamic: function(
         tagName,
         attrs,
         key,
@@ -106,7 +107,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ) {
         var element = VElement.___createElementDynamicTag(
             tagName,
-            attrs,
+            attrsHelper(attrs),
             key,
             component,
             childCount,
@@ -185,7 +186,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    ___beginElementDynamicTag: function(
+    ___beginElementDynamic: function(
         tagName,
         attrs,
         key,
@@ -196,7 +197,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ) {
         var element = VElement.___createElementDynamicTag(
             tagName,
-            attrs,
+            attrsHelper(attrs),
             key,
             component,
             childCount,
@@ -467,10 +468,8 @@ var proto = (AsyncVDOMBuilder.prototype = {
 });
 
 proto.e = proto.element;
-proto.ed = proto.___elementDynamicTag;
 proto.be = proto.beginElement;
-proto.bed = proto.___beginElementDynamicTag;
-proto.ee = proto.endElement;
+proto.ee = proto.___endElement = proto.endElement;
 proto.t = proto.text;
 proto.h = proto.w = proto.write = proto.html;
 

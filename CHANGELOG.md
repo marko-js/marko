@@ -2,7 +2,46 @@
 
 # 4.x
 
+## 4.11.x
+
+### 4.11.1
+
+* Fixes a regression in `<${dynamic}>` tags for object/array class/style attributes:
+  ```marko
+  $ const style = { color:'blue' };
+  <${tagName} style=style/>
+  ```
+* Allows dynamic attributes defined using `...spread` to include object/array class/style (#933):
+  ```marko
+  $ const attrs = { style:{ color:'blue' } };
+  <tag ...attrs/>
+  ```
+* Fixes issue where object/array class/style attributes could not be used with `...spread` (#1007):
+  ```marko
+  $ const attrs = {};
+  <tag class=["oops"] ...attrs/>
+  ```
+
+### 4.11.0
+
+* Implement #880: `<${dynamic}>` tag
+* `<include>` should be considered deprecated. Formal deprecation warning to come.
+
+## 4.10.x
+
+### 4.10.1
+
+* Fix issue with calling `require('marko/components').init(components)` multiple times.
+
+### 4.10.0
+
+* Fix #1049 Fix documentation urls on the website.
+
 ## 4.9.x
+
+### 4.9.7
+
+* Fix #1038 Legacy compatibility dirty check returning false positives.
 
 ### 4.9.6
 

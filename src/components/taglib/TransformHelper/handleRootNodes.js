@@ -223,9 +223,9 @@ module.exports = function handleRootNodes() {
 
                 return;
             } else if (node.type === "CustomTag") {
-                let tag = context.taglibLookup.getTag(node.tagName);
+                let tagDef = node.resolveTagDef(context);
 
-                if (!tag.noOutput) {
+                if (!tagDef.noOutput) {
                     rootNodes.push(node);
                 }
 

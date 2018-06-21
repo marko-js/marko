@@ -1,0 +1,15 @@
+import Modal from './modal.marko';
+
+class {
+    onClick() {
+    	this.clicked = true;
+    }
+}
+
+<${Modal}>
+    <@body>
+    	<li>
+    	    <button type="button" key="button" on-click('onClick')>Test link</button>
+    	</li>
+    </@body>
+</>

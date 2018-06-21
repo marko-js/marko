@@ -38,8 +38,6 @@ npm install @lasso/marko-taglib
 After installing, the lasso custom tags can be used in your templates:
 
 ```html
-<lasso-page package-path="./browser.json" />
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -51,16 +49,6 @@ After installing, the lasso custom tags can be used in your templates:
         <lasso-body/>
     </body>
 </html>
-```
-
-The `browser.json` provides a simple way for declaring _top-level_ page dependencies. For example:
-
-_browser.json_
-
-```json
-{
-  "dependencies": ["./style.css", "require-run: ./client.js"]
-}
 ```
 
 Lasso.js will automatically bundle up transitive dependencies by building and walking a dependency graph.
@@ -86,8 +74,6 @@ If you are rendering the initial UI on the server then it is necessary to make s
 _about-me/index.marko_
 
 ```marko
-<lasso-page package-path="./browser.json" />
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -107,16 +93,6 @@ _about-me/index.marko_
 </html>
 ```
 
-Typically, adding the top-level UI component as a page dependency is all that is required:
-
-_about-me/browser.json_
-
-```json
-{
-  "dependencies": ["./style.css", "require: ./components/app/index.marko"]
-}
-```
-
 ## Browser refresh
 
 [browser-refresh](https://github.com/patrick-steele-idem/browser-refresh) is recommended in development for instant page refreshes and hot reloading of Marko templates, styles and other resources. `browser-refresh` works well with Lasso and Marko and is very easy to use as a drop-in replacement for `node`:
@@ -124,3 +100,47 @@ _about-me/browser.json_
 ```bash
 browser-refresh server.js
 ```
+
+## Lasso package types commonly used with Marko
+
+For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` is sufficient to render and bundle components without the need for explicit `browser.json` files. For more advanced use cases, the following bundle types may be defined in a `browser.json` for Lasso.
+
+* **`marko-dependencies`**: (provided by `lasso-marko`)
+  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. It does not automatically initialize the component, so is most useful if you need to initialize components manually.
+
+  ```json
+  {
+    "type": "marko-dependencies",
+    "path": "src/ui-modules/outdated-browser-banner/index.marko"
+  }
+  ```
+
+* **`marko-hydrate`**: (provided by `lasso-marko`)
+  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
+
+  ```json
+  {
+    "type": "marko-hydrate",
+    "path": "src/ui-modules/outdated-browser-banner/index.marko"
+  }
+  ```
+
+* **`package`**:
+  A collection of dependencies. `browser.json` is the most common package type.
+  It could be used to point to another `browser.json` from within one component's `browser.json`.
+  Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
+  ```json
+  {
+    "type": "package",
+    "path": "src/ui-modules/show-diag/browser.json"
+  }
+  ```
+* **`require`**:
+  If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+  ```json
+  {
+    "run": true,
+    "type": "require",
+    "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
+  }
+  ```
