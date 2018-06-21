@@ -41,11 +41,9 @@ module.exports = function(target, renderer) {
             }
 
             if (callback) {
-                out
-                    .on("finish", function() {
-                        callback(null, out.toString(), out);
-                    })
-                    .once("error", callback);
+                out.on("finish", function() {
+                    callback(null, out.toString(), out);
+                }).once("error", callback);
 
                 return safeRender(render, localData, out, true);
             } else {

@@ -123,8 +123,8 @@ Compared to solutions based on JSX that exclusively do virtual DOM rendering,
 Marko has a huge advantage for server-side rendering. When rendering to a
 virtual DOM tree on the server it’s a two-step process to render HTML:
 
-* First pass to produce an entire virtual DOM tree in memory
-* Second pass to serialize the virtual DOM tree to an HTML string that can then be
+- First pass to produce an entire virtual DOM tree in memory
+- Second pass to serialize the virtual DOM tree to an HTML string that can then be
   sent over the wire (this requires traversing the entire tree structure)
 
 In contrast, Marko renders directly to an HTML stream in a single pass. There is

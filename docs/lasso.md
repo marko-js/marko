@@ -105,7 +105,7 @@ browser-refresh server.js
 
 For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` is sufficient to render and bundle components without the need for explicit `browser.json` files. For more advanced use cases, the following bundle types may be defined in a `browser.json` for Lasso.
 
-* **`marko-dependencies`**: (provided by `lasso-marko`)
+- **`marko-dependencies`**: (provided by `lasso-marko`)
   Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. It does not automatically initialize the component, so is most useful if you need to initialize components manually.
 
   ```json
@@ -115,7 +115,7 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
   }
   ```
 
-* **`marko-hydrate`**: (provided by `lasso-marko`)
+- **`marko-hydrate`**: (provided by `lasso-marko`)
   Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
 
   ```json
@@ -125,7 +125,7 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
   }
   ```
 
-* **`package`**:
+- **`package`**:
   A collection of dependencies. `browser.json` is the most common package type.
   It could be used to point to another `browser.json` from within one component's `browser.json`.
   Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
@@ -135,7 +135,7 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
     "path": "src/ui-modules/show-diag/browser.json"
   }
   ```
-* **`require`**:
+- **`require`**:
   If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
   ```json
   {

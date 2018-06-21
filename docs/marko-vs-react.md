@@ -113,24 +113,24 @@ Online](http://markojs.com/try-online/?gist=8fe46bc5866605aca0dfeec202604011)</s
 
 Marko and React have the following in common:
 
-* UI component-based
-* JavaScript and HTML markup can be intertwined
-* No restrictions on JavaScript (use ES5 or ES2015+, your choice)
-* Virtual DOM rendering in the browser
-* DOM diffing/patching is used to reconcile views
-* Both support keyed element matching
-* UI components can have input properties
-* UI components can have internal state
-* Changes to state trigger an asynchronous update to the DOM
-* Updates to the DOM are batched
-* Compatible with central application state stores such as Redux and MobX
-* UI components can be embedded using custom tags
-* Declarative event binding (no `domEl.addEventListener()` needed)
-* Support for all DOM events
-* Event delegation utilized internally for DOM events that bubble
-* IE9+ support
-* Similar lifecycle events for UI components
-* JSX and Marko both compile to JavaScript
+- UI component-based
+- JavaScript and HTML markup can be intertwined
+- No restrictions on JavaScript (use ES5 or ES2015+, your choice)
+- Virtual DOM rendering in the browser
+- DOM diffing/patching is used to reconcile views
+- Both support keyed element matching
+- UI components can have input properties
+- UI components can have internal state
+- Changes to state trigger an asynchronous update to the DOM
+- Updates to the DOM are batched
+- Compatible with central application state stores such as Redux and MobX
+- UI components can be embedded using custom tags
+- Declarative event binding (no `domEl.addEventListener()` needed)
+- Support for all DOM events
+- Event delegation utilized internally for DOM events that bubble
+- IE9+ support
+- Similar lifecycle events for UI components
+- JSX and Marko both compile to JavaScript
 
 ### Differences
 
@@ -138,106 +138,106 @@ At a high level here are some differences:
 
 #### Differences in rendering
 
-* **Improved performance:** Marko renders to a virtual DOM in the browser and
+- **Improved performance:** Marko renders to a virtual DOM in the browser and
   directly to an HTML stream on the server (Marko supports multiple compilation
   targets).
-* **Improved performance:** Marko supports asynchronous rendering with [early
+- **Improved performance:** Marko supports asynchronous rendering with [early
   flushing of
   HTML](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
   for improvements in actual and perceived page load times.
-* **Improved performance: **React requires an additional client-side re-render if
+- **Improved performance: **React requires an additional client-side re-render if
   a page is initially rendered on the server while Marko does not.
-* **Improved ease of use: **Marko automatically serializes UI component state and
+- **Improved ease of use: **Marko automatically serializes UI component state and
   input down to the browser so that the browser can pick up right where the server
   left off.
-* **Improved ease of use: **Marko is suitable for rendering an entire HTML page on
+- **Improved ease of use: **Marko is suitable for rendering an entire HTML page on
   the server with support for tags such as `<doctype>` and `<html>`
 
 #### Differences in syntax
 
-* **Improved ease of use: **Marko uses the
+- **Improved ease of use: **Marko uses the
   [HTML-JS](http://markojs.com/docs/syntax/) syntax and the
   [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) syntax is offered
   for React.
-* **Improved ease of use: **Marko supports both a concise syntax and a familiar
+- **Improved ease of use: **Marko supports both a concise syntax and a familiar
   HTML syntax.
-* **Improved ease of use: **JSX requires strict XML while Marko aligns with less
+- **Improved ease of use: **JSX requires strict XML while Marko aligns with less
   strict HTML that web developers are used to.
-* **Improved ease of use: **With Marko, _all_ HTML attribute values are parsed as
+- **Improved ease of use: **With Marko, _all_ HTML attribute values are parsed as
   JavaScript expressions.
-* **Improved ease of use: **Marko supports simple directives for conditionals,
+- **Improved ease of use: **Marko supports simple directives for conditionals,
   looping, etc.
-* **JSX limitation: **JSX is “just JavaScript” but requires expressions that
+- **JSX limitation: **JSX is “just JavaScript” but requires expressions that
   preclude the usage of JavaScript statements such as in certain places.
 
 #### Differences in compilation
 
-* **Improved performance: **Marko supports multiple compilation outputs (Marko
+- **Improved performance: **Marko supports multiple compilation outputs (Marko
   VDOM and HTML streaming are currently supported).
-* **Improved ease of use: **Marko compiles UI components to JavaScript modules
+- **Improved ease of use: **Marko compiles UI components to JavaScript modules
   that export a rendering API.
-* **Expanded capabilities: **Marko supports a robust API for controlling how
+- **Expanded capabilities: **Marko supports a robust API for controlling how
   custom tags and custom attributes get compiled and it supports compile-time
   transforms based on a friendly Abstract Syntax Tree (AST).
-* **Improved performance: **JSX is just syntactic sugar that translates elements
+- **Improved performance: **JSX is just syntactic sugar that translates elements
   to `createElement()` function calls while the Marko compiler has full control over how things are
   compiled and optimized.
-* **Improved ease of use: **React requires all UI components to be explicitly
+- **Improved ease of use: **React requires all UI components to be explicitly
   imported before they can be used as custom tags while Marko supports both
   explicit importing and implicit importing.
-* **Improved performance: **Marko has a modular runtime and the compiler generates
+- **Improved performance: **Marko has a modular runtime and the compiler generates
   code that only imports the parts of the Marko runtime that are needed for much
   smaller builds.
-* **Improved ease of use: **Marko supports optional compile-time checks to ensure
+- **Improved ease of use: **Marko supports optional compile-time checks to ensure
   that only allowed attributes are passed to custom tags. (React `PropTypes` only provide
   validation at render-time)
-* **Improved ease of use: **Marko validates _all_ tag names at compile-time.
-* **Improved ease of use: **Marko provides its own compiler that integrates with
+- **Improved ease of use: **Marko validates _all_ tag names at compile-time.
+- **Improved ease of use: **Marko provides its own compiler that integrates with
   Node.js and JavaScript module bundlers while React JSX requires babel and custom
   babel transforms.
 
 #### Differences in UI components
 
-* **Reduced boilerplate: **No explicit extending of JavaScript classes in Marko
+- **Reduced boilerplate: **No explicit extending of JavaScript classes in Marko
   (in contrast to `class Counter extends React.Component` in React).
-* **Improved ease of use: **Modifications to UI component state are synchronous
+- **Improved ease of use: **Modifications to UI component state are synchronous
   with Marko while [the rules for React are more
   complicated](https://facebook.github.io/react/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous).
-* **Improved ease of use: **Marko watches UI component state objects to allow
+- **Improved ease of use: **Marko watches UI component state objects to allow
   state to be modified directly (e.g., `this.state.count++`).
-* **Improved ease of use: **Marko supports single-file UI components combining
+- **Improved ease of use: **Marko supports single-file UI components combining
   JavaScript behavior, CSS styling (with support for CSS preprocessors) and HTML
   markup. (React requires using one of the many [CSS in JS
   solutions](https://github.com/MicheleBertoli/css-in-js) if you want styles in
   the same file as your component and there is no standard in the community)
-* **Improved maintainability: **Marko supports a seamless transition from a
+- **Improved maintainability: **Marko supports a seamless transition from a
   single-file UI component to a multi-file UI component.
-* **Improved performance:** Marko assumes UI components are pure by default and
+- **Improved performance:** Marko assumes UI components are pure by default and
   skips re-rendering when input properties and state are unchanged (React requires
   extending
   [React.PureComponent](https://facebook.github.io/react/docs/react-api.html#react.purecomponent)).
 
 #### Differences in event systems
 
-* **Reduced complexity: **React utilizes [synthetic
+- **Reduced complexity: **React utilizes [synthetic
   events](https://facebook.github.io/react/docs/events.html) while Marko utilizes
   real DOM events.
-* **Improved ease of use: **Custom events are emitted using the [EventEmitter
+- **Improved ease of use: **Custom events are emitted using the [EventEmitter
   API](https://nodejs.org/api/events.html) in Marko (e.g., `this.emit('myCustomEvent', arg1, arg2)`).
-* **Improved ease of use: **Marko has a consistent approach for listening to both
+- **Improved ease of use: **Marko has a consistent approach for listening to both
   native DOM events and custom events.
-* **Improved ease of use: **React requires passing around `Function` references for custom
+- **Improved ease of use: **React requires passing around `Function` references for custom
   events while Marko automatically delegates emitted custom events to event
   handler methods on components.
-* **Improved ease of use: **Marko provides a simple mechanism for binding
+- **Improved ease of use: **Marko provides a simple mechanism for binding
   additional arguments to event handler methods and `this` will be the component
   instance.
 
 #### Differences in compatibility
 
-* **Marko limitation: **Marko has no support for native mobile similar to React
+- **Marko limitation: **Marko has no support for native mobile similar to React
   Native (although with Marko VDOM rendering, this is possible).
-* **Marko limitation: **Marko requires a JavaScript module bundler (such as
+- **Marko limitation: **Marko requires a JavaScript module bundler (such as
   [Lasso](http://markojs.com/docs/lasso/),
   [Webpack](http://markojs.com/docs/webpack/),
   [Rollup](http://markojs.com/docs/rollup/) or
@@ -828,21 +828,21 @@ your code readable.
 Here are just a few reasons you should consider using
 [Marko](http://markojs.com/) over React:
 
-* Marko requires much less boilerplate.
-* Marko has much better performance based on our benchmarks.
-* Marko offers a clean and powerful syntax that aligns with HTML while also
+- Marko requires much less boilerplate.
+- Marko has much better performance based on our benchmarks.
+- Marko offers a clean and powerful syntax that aligns with HTML while also
   allowing the full power of JavaScript.
-* Marko has much less complexity and a very small runtime.
-* Marko has a much lower page weight for faster page loads.
-* Marko has strong integrations with Node.js.
-* Marko allows for extremely powerful IDE and editor plugins (see the [Marko
+- Marko has much less complexity and a very small runtime.
+- Marko has a much lower page weight for faster page loads.
+- Marko has strong integrations with Node.js.
+- Marko allows for extremely powerful IDE and editor plugins (see the [Marko
   plugin for Atom](https://github.com/marko-js/atom-language-marko) as an
   example).
-* Marko has a powerful compiler that allows new features to be added without
+- Marko has a powerful compiler that allows new features to be added without
   introducing bloat.
-* eBay relies heavily on Marko and it is being used to build ebay.com (including
+- eBay relies heavily on Marko and it is being used to build ebay.com (including
   the mobile web).
-* Marko has a strong and growing community on
+- Marko has a strong and growing community on
   [GitHub](https://github.com/marko-js/marko) and in
   [Gitter](https://gitter.im/marko-js/marko).
 

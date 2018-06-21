@@ -11,14 +11,12 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var runtimeHtml = require("marko/src/html");
 
     var out = runtimeHtml.createWriter(stream);
-    out
-        .on("end", function() {
-            snapshot(output);
-            done();
-        })
-        .on("error", function(e) {
-            done(e);
-        });
+    out.on("end", function() {
+        snapshot(output);
+        done();
+    }).on("error", function(e) {
+        done(e);
+    });
 
     var template = marko.load(nodePath.join(__dirname, "template.marko"));
 

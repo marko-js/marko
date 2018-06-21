@@ -28,9 +28,9 @@ pages/
 
 When compiling the template at `pages/home/index.marko`, the following tags would be found:
 
-* `<app-header>`
-* `<app-footer>`
-* `<home-banner>`
+- `<app-header>`
+- `<app-footer>`
+- `<home-banner>`
 
 So now, instead of needing to specify a path:
 
