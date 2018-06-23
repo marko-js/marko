@@ -1,0 +1,14 @@
+class {
+  onMount() {
+    window.appComponent = this
+    this.array = [0,0,0]
+  }
+}
+<div for(value in component.array)>
+  ${value}
+  <for(let i = 0 ; i < value; i++)>
+    X
+    <Box if( i % 2 == 0)/>
+    <Box else/>
+  </>
+</>
