@@ -44,11 +44,11 @@ class Counter extends React.Component {
 
     this.state = { count: 0 };
   }
-  
+
   increment(delta) {
     this.setState({ count: this.state.count + delta });
   }
-  
+
   render() {
     const count = this.state.count;
     let countClassName = "count";
@@ -62,8 +62,20 @@ class Counter extends React.Component {
     return (
       <div className="click-count">
         <div className={countClassName}>{count}</div>
-        <button onClick={() => { this.increment(-1) } }>-1</button>
-        <button onClick={() => { this.increment(1) } }>+1</button>
+        <button
+          onClick={() => {
+            this.increment(-1);
+          }}
+        >
+          -1
+        </button>
+        <button
+          onClick={() => {
+            this.increment(1);
+          }}
+        >
+          +1
+        </button>
       </div>
     );
   }

@@ -16,6 +16,7 @@ input.*
 *.generated.js
 .nyc_output
 coverage
+~*
 
 # controlled by npm's formatter
 package-lock.json
