@@ -20,7 +20,11 @@ function render(input, out, __component, component, state) {
 
   out.w("<div><span>A</span><ul>");
 
+  var for__2 = 0;
+
   marko_forEach(colors, function(color) {
+    var keyscope__3 = "[" + ((for__2++) + "]");
+
     out.w("<li>" +
       marko_escapeXml(color) +
       "</li>");
@@ -28,13 +32,13 @@ function render(input, out, __component, component, state) {
 
   out.w("</ul>");
 
-  var __key3 = __component.___nextKey("preservedP");
+  var __key5 = __component.___nextKey("preservedP");
 
   out.w("<p>");
 
   _preserve_tag({
       bodyOnly: true,
-      key: __key3,
+      key: __key5,
       renderBody: function renderBody(out) {
         out.w(marko_escapeXml(Date.now()));
       }
@@ -44,7 +48,7 @@ function render(input, out, __component, component, state) {
 
   include_tag({
       _target: foo_template
-    }, out, __component, "5");
+    }, out, __component, "7");
 }
 
 marko_template._ = marko_renderer(render, {

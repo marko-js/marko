@@ -28,11 +28,15 @@ function render(input, out, __component, component, state) {
 
   out.w("<div>");
 
+  var for__2 = 0;
+
   marko_forEach([
       "red",
       "green",
       "blue"
     ], function(color) {
+    var keyscope__3 = "[" + ((for__2++) + "]");
+
     macro_renderButton(color, out);
   });
 

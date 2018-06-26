@@ -17,7 +17,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
         i: marko_const_nextId()
       })
       .t("No colors!"),
-    marko_node1 = marko_createElement("DIV", null, "5", null, 1, 0, {
+    marko_node1 = marko_createElement("DIV", null, "7", null, 1, 0, {
         i: marko_const_nextId()
       })
       .t("No colors!");
@@ -47,8 +47,12 @@ function render(input, out, __component, component, state) {
   if (input.colors.length) {
     out.be("UL", null, "3", component);
 
+    var for__4 = 0;
+
     marko_forEach(input.colors, function(color) {
-      out.e("LI", null, "4", component, 1)
+      var keyscope__5 = "[" + ((for__4++) + "]");
+
+      out.e("LI", null, "6" + keyscope__5, component, 1)
         .t(color);
     });
 
