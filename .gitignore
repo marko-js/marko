@@ -19,3 +19,4 @@ coverage
 /dist/
 /test-dist/
 /test-generated/
+.vs/

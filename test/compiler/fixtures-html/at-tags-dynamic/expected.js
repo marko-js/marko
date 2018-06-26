@@ -21,7 +21,11 @@ function render(input, out, __component, component, state) {
 
   hello_tag(marko_mergeNestedTagsHelper({
       renderBody: function renderBody(out, hello0) {
+        var for__1 = 0;
+
         marko_forEach(input.colors, function(color) {
+          var keyscope__2 = "[" + ((for__1++) + "]");
+
           hello_foo_nested_tag({
               renderBody: function renderBody(out) {
                 out.w("Foo!");

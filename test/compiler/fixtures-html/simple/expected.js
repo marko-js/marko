@@ -33,7 +33,11 @@ function render(input, out, __component, component, state) {
   if (input.colors.length) {
     out.w("<ul>");
 
+    var for__4 = 0;
+
     marko_forEach(input.colors, function(color) {
+      var keyscope__5 = "[" + ((for__4++) + "]");
+
       out.w("<li>" +
         marko_escapeXml(color) +
         "</li>");
