@@ -4,6 +4,11 @@
 
 ## 4.11.x
 
+### 4.11.3
+
+- Fixes #952
+- Fixes automatic keying of elements/components in `<for>` loops
+
 ### 4.11.2
 
 - Fixes another regression in the `<${dynamic}>` tag where `dashed-case` attributes were being converted to `camelCase` when rendering html elements.
