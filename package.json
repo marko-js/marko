@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "4.11.2",
+    "version": "4.11.3",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
@@ -10,8 +10,7 @@
         "precommit": "lint-staged",
         "test": "npm run lint -s && npm run mocha -s",
         "test-ci": "npm run check-format && npm run test-generate-coverage",
-        "mocha": "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js || exit 1",
-        "mocha-cli": "mocha --timeout 10000 --max-old-space-size=768",
+        "mocha": "mocha --timeout 10000 --max-old-space-size=768 ./test/*/*.test.js",
         "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
         "test-generate-coverage": "nyc -asc npm test",
         "lint": "eslint .",
