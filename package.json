@@ -82,7 +82,7 @@
         "istanbul-lib-instrument": "^1.8.0",
         "it-fails": "^1.0.0",
         "jquery": "^3.1.1",
-        "jsdom": "^9.12.0",
+        "jsdom-context-require": "^1.0.1",
         "lasso-resolve-from": "^1.2.0",
         "lint-staged": "^7.0.0",
         "marko-widgets": "^7.0.1",

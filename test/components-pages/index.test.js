@@ -4,7 +4,7 @@ require("../__util__/test-init");
 
 var autotest = require("../autotest");
 var asyncTestSuite = require("../__util__/async-test-suite");
-var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
+var createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
 
 autotest("fixtures", run);
 autotest("fixtures-deprecated", run);
@@ -19,7 +19,7 @@ function run(fixture) {
         var templateFile = resolve("template.marko");
         var template = require(templateFile);
         return template.render({}).then(function(html) {
-            var browser = createJSDOMModule(__dirname, String(html), {
+            var browser = createBrowserWithMarko(__dirname, String(html), {
                 beforeParse(window, browser) {
                     browser.require("../../components");
                     browser.require(templateFile);
