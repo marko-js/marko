@@ -24,7 +24,7 @@ function $af(
         len = childNodes.length;
 
         for (; i < len; i++) {
-            docFragment.appendChild(childNodes.item(0));
+            docFragment.appendChild(childNodes.item(i));
         }
 
         targetEl.parentNode.replaceChild(docFragment, targetEl);
