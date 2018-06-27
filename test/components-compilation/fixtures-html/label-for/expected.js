@@ -18,10 +18,10 @@ function render(input, out, __component, component, state) {
     marko_attr("for", __component.elId(marko_for_key0)) +
     ">Submit</label>");
 
-  var marko_id_key1 = "submitButton";
+  var marko_id_key2 = "submitButton";
 
   out.w("<button" +
-    marko_attr("id", __component.elId(marko_id_key1)) +
+    marko_attr("id", __component.elId(marko_id_key2)) +
     ">Submit</button>");
 }
 

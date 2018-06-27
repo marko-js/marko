@@ -95,16 +95,6 @@ module.exports = function handleComponentKeyAttrs() {
                 finalAttributeName,
                 this.buildComponentElIdFunctionCall(varIdNode)
             );
-
-            if (
-                !el.hasAttribute("key") &&
-                !el.hasAttribute("w-id") &&
-                !el.hasAttribute("ref")
-            ) {
-                // The scoped attribute should be suitable for a key
-                el.setAttributeValue("key", varIdNode);
-                el.data.userAssignedKey = false;
-            }
         }
     });
 };
