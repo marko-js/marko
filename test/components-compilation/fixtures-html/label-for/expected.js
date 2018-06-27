@@ -12,16 +12,10 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  var marko_for_key0 = "submitButton";
-
   out.w("<label" +
-    marko_attr("for", __component.elId(marko_for_key0)) +
-    ">Submit</label>");
-
-  var marko_id_key2 = "submitButton";
-
-  out.w("<button" +
-    marko_attr("id", __component.elId(marko_id_key2)) +
+    marko_attr("for", __component.elId("submitButton")) +
+    ">Submit</label><button" +
+    marko_attr("id", __component.elId("submitButton")) +
     ">Submit</button>");
 }
 
