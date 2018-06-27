@@ -1,7 +1,5 @@
 "use strict";
 
-const removeDashes = require("../../../compiler/util/removeDashes");
-
 const deprecatedKeySuffix = ":key";
 const scopedSuffix = ":scoped";
 const deprecatedAttrs = {
@@ -13,7 +11,6 @@ const deprecatedAttrs = {
 module.exports = function handleComponentKeyAttrs() {
     let el = this.el;
     let context = this.context;
-    let builder = this.builder;
     const filePosition = el.pos ? context.getPosInfo(el.pos) : context.filename;
 
     var attrs = el.attributes.concat([]);
@@ -79,21 +76,9 @@ module.exports = function handleComponentKeyAttrs() {
                 return;
             }
 
-            let uniqueElId = this.nextUniqueId();
-            let idVarName =
-                "marko_" +
-                removeDashes(finalAttributeName) +
-                "_key" +
-                uniqueElId;
-
-            let varNode = builder.var(idVarName, attribute.value);
-
-            el.insertSiblingBefore(varNode);
-            let varIdNode = builder.identifier(idVarName);
-
             el.setAttributeValue(
                 finalAttributeName,
-                this.buildComponentElIdFunctionCall(varIdNode)
+                this.buildComponentElIdFunctionCall(attribute.value)
             );
         }
     });
