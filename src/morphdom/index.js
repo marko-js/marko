@@ -7,7 +7,6 @@ var VElement = require("../runtime/vdom/vdom").___VElement;
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var eventDelegation = require("../components/event-delegation");
-var complain = "MARKO_DEBUG" && require("complain");
 
 var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
@@ -263,19 +262,8 @@ function morphdom(
                 if (
                     (matchingFromComponent =
                         existingComponentLookup[componentForNode.id]) ===
-                        undefined ||
-                    !matchingFromComponent.___startNode.isConnected
+                    undefined
                 ) {
-                    // eslint-disable-next-line no-constant-condition
-                    if ("MARKO_DEBUG") {
-                        if (matchingFromComponent) {
-                            complain(
-                                'The component with id "' +
-                                    matchingFromComponent.id +
-                                    '" was not properly destroyed.'
-                            );
-                        }
-                    }
                     if (isRerenderInBrowser === true) {
                         var firstVChild = curToNodeChild.___firstChild;
                         if (firstVChild) {
