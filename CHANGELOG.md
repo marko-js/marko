@@ -4,6 +4,11 @@
 
 ## 4.11.x
 
+### 4.11.4
+
+- Fixes an issue with scoped attributes automatically setting keys in a problematic way (#1069)
+- Fixes #1059 and #1052 - `Cannot read property 'nextSibling' of null`
+
 ### 4.11.3
 
 - Fixes #952
