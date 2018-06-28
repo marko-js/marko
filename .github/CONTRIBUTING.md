@@ -45,7 +45,7 @@ npm run test-coverage
 While developing you can run a single test group and use [grep](https://mochajs.org/#-g---grep-pattern) to filter the tests:
 
 ```
-npm run mocha -- --grep=lifecycle
+npm test -- --grep=lifecycle
 ```
 
 ### Adding tests
@@ -89,7 +89,7 @@ Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) 
 If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon (<img height="16" src="https://user-images.githubusercontent.com/1958812/37050480-d53e4276-2128-11e8-8c7a-f5d842956c98.png"/>) to start debugging. Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
 
 ```
-npm run mocha -- --grep=test-name --inspect-brk
+npm test -- --grep=test-name --inspect-brk
 ```
 
 In addition to [setting breakpoints](https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints), you can also add [`debugger;`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statements in both your JavaScript files and Marko templates:
@@ -106,7 +106,7 @@ A number of the test suites make use snapshot comparisons. For example, the `ren
 To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory. You can also use the `UPDATE_EXPECTATIONS` env variable to cause the test runner to update the `expected` file for all currently failing tests in a suite:
 
 ```
-UPDATE_EXPECTATIONS=1 npm run mocha
+UPDATE_EXPECTATIONS=1 npm test
 ```
 
 ## Tackling an existing issue
