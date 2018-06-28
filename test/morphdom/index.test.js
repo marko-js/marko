@@ -8,7 +8,7 @@ chai.config.includeStack = true;
 var autotest = require("../autotest");
 const fs = require("fs");
 const morphdom = require("marko/morphdom");
-const createJSDOMModule = require("../__util__/create-jsdom-module");
+const createBrowser = require("jsdom-context-require");
 
 autotest("fixtures", fixture => {
     let test = fixture.test;
@@ -22,11 +22,11 @@ autotest("fixtures", fixture => {
             encoding: "utf8"
         });
 
-        let fromDocument = createJSDOMModule({
+        let fromDocument = createBrowser({
             dir: __dirname,
             html: "<html><body>" + fromHTML + "</body></html>"
         }).window.document;
-        let toDocument = createJSDOMModule({
+        let toDocument = createBrowser({
             dir: __dirname,
             html: "<html><body>" + toHTML + "</body></html>"
         }).window.document;

@@ -4,10 +4,10 @@ require("../__util__/test-init");
 
 var fs = require("fs");
 var domToString = require("../__util__/domToString");
-var createJSDOMModule = require("../__util__/create-jsdom-module");
+var createBrowser = require("jsdom-context-require");
 var autotest = require("../autotest");
 
-var document = createJSDOMModule({
+var document = createBrowser({
     dir: __dirname,
     html: "<html><body></body></html>"
 }).window.document;
