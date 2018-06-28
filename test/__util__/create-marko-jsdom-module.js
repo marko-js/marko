@@ -1,7 +1,7 @@
 "use strict";
 
 const jQuery = require("jquery");
-const createJSDOMModule = require("./create-jsdom-module");
+const createBrowser = require("jsdom-context-require");
 const compiler = require("../../compiler");
 const noop = function() {};
 const globals = [
@@ -32,7 +32,7 @@ const browserExtensions = {
 
 module.exports = function(dir, html, options) {
     options = options || {};
-    return createJSDOMModule({
+    return createBrowser({
         dir: dir,
         html: html,
         extensions: browserExtensions,
