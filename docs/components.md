@@ -505,6 +505,8 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 
 An array of the root [HTML elements](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
 
+> `this.el` and `this.els` are deprecated. Please `this.gelEl()` or `this.getEls()` methods. see [Methods](https://markojs.com/docs/components/#codegetelkey-indexcode)
+
 ### `this.id`
 
 The String ID of the root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
@@ -645,6 +647,20 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 | `key`        | `String`    | the scoped identifier for the element                                                                                                                                                                            |
 | `index`      | `Number`    | _optional_ the index of the component, if `key` references a repeated component                                                                                                                                  |
 | return value | `Component` | a reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (e.g. `key="items[]"`) then the component at the given index will be returned. |
+
+For example, given the following component,
+
+```marko
+<app-main>
+    <app-child key="child"/>
+</app-main>
+```
+
+then the following javascript can be used to get the `<app-child/>` component.
+
+```javascript
+var childComponent = this.getComponent("child");
+```
 
 ### `getComponents(key, [, index])`
 
