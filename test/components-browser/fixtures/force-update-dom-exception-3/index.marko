@@ -1,0 +1,20 @@
+class {
+  onCreate() {
+    this.array = [0]
+  }
+  onMount() {
+    window.appComponent = this
+  }
+}
+<div.ArrayModel>
+  ${component.array.length}
+  <hr>
+  <for(value in component.array)>
+      ${value}
+      <for(let i = 0 ; i < value; i++)>
+        <Box-even if( i % 2 == 0)/>
+        <Box-odd else/>
+      </for>
+      <hr>
+  </for>
+</div>
