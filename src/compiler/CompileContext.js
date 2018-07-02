@@ -281,6 +281,8 @@ class CompileContext extends EventEmitter {
 
         if (location != null) {
             location = this.getPosInfo(location).toString();
+        } else {
+            location = this.filename;
         }
 
         complain(message, { location });
