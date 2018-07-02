@@ -4,6 +4,10 @@
 
 ## 4.11.x
 
+### 4.11.5
+
+- Add fallback location for compile-time deprecation warnings
+
 ### 4.11.4
 
 - Fixes an issue with scoped attributes automatically setting keys in a problematic way (#1069)
