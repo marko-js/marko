@@ -2,10 +2,10 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = {
-        test: function(e) {
-          return;
+        test: function (e) {
+            return;
         }
-      },
+    },
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/class-method-empty-return/index.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,

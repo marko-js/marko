@@ -1,11 +1,11 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_component = ({
-    test: async function () {
-        await Promise.resolve();
-    }
-}),
+    marko_component = {
+        test: async function () {
+            await Promise.resolve();
+        }
+    },
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/nodejs-8-async-await/index.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
