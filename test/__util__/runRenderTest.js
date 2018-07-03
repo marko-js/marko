@@ -1,7 +1,7 @@
 "use strict";
 
-const createJSDOMModule = require("../__util__/create-jsdom-module");
-const defaultDocument = createJSDOMModule({
+const createBrowser = require("jsdom-context-require");
+const defaultDocument = createBrowser({
     dir: __dirname,
     html: "<html><body></body></html>"
 }).window.document;
@@ -182,7 +182,7 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
 
                         let expectedHtmlPath = path.join(dir, "expected.html");
                         let html = fs.readFileSync(expectedHtmlPath, "utf-8");
-                        let browser = createJSDOMModule({
+                        let browser = createBrowser({
                             dir: __dirname,
                             html: "<html><body>" + html + "</body></html>"
                         });
@@ -216,7 +216,7 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
 
                         let vdomHtml = domToHTML(actualNode);
 
-                        let browser = createJSDOMModule({
+                        let browser = createBrowser({
                             dir: __dirname,
                             html: "<html><body>" + vdomHtml + "</body></html>"
                         });

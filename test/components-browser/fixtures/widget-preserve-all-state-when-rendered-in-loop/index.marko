@@ -1,0 +1,21 @@
+class {
+    onCreate() {
+        this.state = { items: [] };
+    }
+
+    addItem(id) {
+        this.state.items = this.state.items.concat(id);
+    }
+
+    removeItem(id) {
+        this.state.items = this.state.items.filter(item => item !== id);
+    }
+}
+
+<div>
+    <for(item in state.items)>
+        <div key=item>
+          <span/>
+        </div>
+    </for>
+</div>

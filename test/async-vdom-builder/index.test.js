@@ -62,8 +62,7 @@ describe("AsyncVDOMBuilder", function() {
     it("promise", function(done) {
         const out = new AsyncVDOMBuilder();
         out.element("div", {}, 0);
-        out
-            .end()
+        out.end()
             .then(result => {
                 expect(getChildNodes(result.getOutput()).length).to.equal(1);
                 done();

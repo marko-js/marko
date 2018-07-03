@@ -92,29 +92,31 @@ exports.sa = function(style) {
 
     var type = typeof style;
 
-    if (type === "string") {
-        return attrHelper(STYLE_ATTR, style, false);
-    } else if (type === "object") {
-        var styles = "";
-        for (var name in style) {
-            var value = style[name];
-            if (value != null) {
-                if (typeof value === "number" && value) {
-                    value += "px";
+    if (type !== "string") {
+        if (type === "object") {
+            var styles = "";
+            for (var name in style) {
+                var value = style[name];
+                if (value != null) {
+                    if (typeof value === "number" && value) {
+                        value += "px";
+                    }
+                    var nameDashed = dashedNames[name];
+                    if (!nameDashed) {
+                        nameDashed = dashedNames[name] = name
+                            .replace(/([A-Z])/g, "-$1")
+                            .toLowerCase();
+                    }
+                    styles += nameDashed + ":" + value + ";";
                 }
-                var nameDashed = dashedNames[name];
-                if (!nameDashed) {
-                    nameDashed = dashedNames[name] = name
-                        .replace(/([A-Z])/g, "-$1")
-                        .toLowerCase();
-                }
-                styles += nameDashed + ":" + value + ";";
             }
+            style = styles;
+        } else {
+            return "";
         }
-        return styles ? " " + STYLE_ATTR + '="' + styles + '"' : "";
-    } else {
-        return "";
     }
+
+    return attrHelper(STYLE_ATTR, style);
 };
 
 /**

@@ -121,7 +121,8 @@ class CodeGenerator {
             var errorMessage = "Generating code for ";
 
             if (node instanceof HtmlElement) {
-                errorMessage += "<" + node.tagName + "> tag";
+                errorMessage +=
+                    "<" + (node.tagName || node.tagNameExpression) + "> tag";
             } else {
                 errorMessage += node.type + " node";
             }

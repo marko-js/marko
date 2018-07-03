@@ -254,6 +254,7 @@ function initServerRendered(renderedComponents, doc) {
                 // and we will remove the end comment node
                 startNode = endNode = startNodeComment;
             } else {
+                delete serverComponentStartNodes[componentId];
                 startNodeComment.parentNode.removeChild(startNodeComment);
 
                 if (startNode.parentNode === document) {
@@ -266,6 +267,7 @@ function initServerRendered(renderedComponents, doc) {
             }
 
             if (endNodeComment) {
+                delete serverComponentEndNodes[componentId];
                 endNodeComment.parentNode.removeChild(endNodeComment);
             }
         }

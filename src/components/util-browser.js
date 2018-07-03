@@ -57,6 +57,7 @@ function destroyComponentForNode(node) {
     }
 }
 function destroyNodeRecursive(node, component) {
+    destroyComponentForNode(node);
     if (node.nodeType === 1) {
         var key;
 
@@ -68,7 +69,6 @@ function destroyNodeRecursive(node, component) {
 
         var curChild = node.firstChild;
         while (curChild) {
-            destroyComponentForNode(curChild);
             destroyNodeRecursive(curChild, component);
             curChild = curChild.nextSibling;
         }

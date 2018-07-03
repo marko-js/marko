@@ -2,12 +2,12 @@
 require("../__util__/test-init");
 
 var autotest = require("../autotest");
-var createJSDOMModule = require("../__util__/create-marko-jsdom-module");
+var createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
 var ssrTemplate = require("./template.marko");
 var hydrateComponentPath = require.resolve("./template.component-browser.js");
 var browserHelpersPath = require.resolve("../__util__/BrowserHelpers");
 var testTargetHTML = '<div id="testsTarget"></div><div></div>';
-var browser = createJSDOMModule(__dirname, testTargetHTML);
+var browser = createBrowserWithMarko(__dirname, testTargetHTML);
 var BrowserHelpers = browser.require(browserHelpersPath);
 
 autotest("fixtures", {
@@ -62,7 +62,7 @@ function runHydrateTest(fixture) {
         ssrTemplate
             .render({ components: components, $global: $global })
             .then(function(html) {
-                var browser = createJSDOMModule(__dirname, String(html), {
+                var browser = createBrowserWithMarko(__dirname, String(html), {
                     beforeParse(window, browser) {
                         var marko = browser.require("marko/components");
                         var legacy = browser.require("marko/legacy-components");

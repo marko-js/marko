@@ -199,7 +199,11 @@ class HtmlElementVDOM extends Node {
                     if (explicitAttrs) {
                         addAttrs(builder.literal(explicitAttrs));
                     }
-                    addAttrs(attr.value);
+                    addAttrs(
+                        codegen.builder.functionCall(context.helper("attrs"), [
+                            attr.value
+                        ])
+                    );
                     explicitAttrs = null;
                     hasSpreadAttributes = true;
                 } else {

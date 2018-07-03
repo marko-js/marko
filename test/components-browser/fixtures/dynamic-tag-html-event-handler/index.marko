@@ -1,0 +1,15 @@
+class {
+    onCreate() {
+        this.helloReceived = false;
+    }
+
+    handleHello() {
+        this.helloReceived = true;
+    }
+}
+
+$ const tagName = "button";
+
+<div>
+    <${tagName} on-click('handleHello')/>
+</div>

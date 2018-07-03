@@ -12,9 +12,9 @@ With Marko, the DOM output of a UI component is based on input properties and a 
 
 Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
 
-* **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
-* **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
-* **Styling** - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
+- **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
+- **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
+- **Styling** - Cascading StyleSheet with support for CSS preprocessors such as Less or Sass
 
 ## Server-side rendering
 
@@ -168,7 +168,27 @@ counter/
     component-browser.js
 ```
 
-A split component might also need to do some set up as part of the initial render. In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events). This class can be exported from `component.js` or defined right in the template as with single-file components.
+A split component might also need to do some set up as part of the initial render. In this case, the component may define a second component class to use the `onCreate`, `onInput`, and `onRender` [lifecycle methods](#lifecycle-events). This class can be exported from `component.js` or defined right in the template as with single-file components. In this case your component folder may contain a `component.js` file and compulsorily a `component-browser.js`. The following [lifecycle methods](#lifecycle-events) will go inside the `component.js` file:
+
+```
+class {
+  onCreate(input, out) { }
+  onInput(input, out) { }
+  onRender(out) { }
+  onDestroy() { }
+}
+```
+
+And the following [lifecycle methods](#lifecycle-events) will go inside the `component-browser.js` file:
+
+```
+class {
+  onMount() { }
+  onUpdate() { }
+}
+```
+
+Any javascript code related to the DOM or browser should also be inside the `component-browser.js` file.
 
 ### Example
 
@@ -230,7 +250,7 @@ class {
 Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
 
 1.  `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
-    * For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
+    - For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
 2.  `event` - The native DOM event
 3.  `el` - The DOM element that the event listener was attached to
 
@@ -485,6 +505,8 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 
 An array of the root [HTML elements](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
 
+> `this.el` and `this.els` are deprecated. Please `this.gelEl()` or `this.getEls()` methods. see [Methods](https://markojs.com/docs/components/#codegetelkey-indexcode)
+
 ### `this.id`
 
 The String ID of the root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
@@ -625,6 +647,20 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 | `key`        | `String`    | the scoped identifier for the element                                                                                                                                                                            |
 | `index`      | `Number`    | _optional_ the index of the component, if `key` references a repeated component                                                                                                                                  |
 | return value | `Component` | a reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (e.g. `key="items[]"`) then the component at the given index will be returned. |
+
+For example, given the following component,
+
+```marko
+<app-main>
+    <app-child key="child"/>
+</app-main>
+```
+
+then the following javascript can be used to get the `<app-child/>` component.
+
+```javascript
+var childComponent = this.getComponent("child");
+```
 
 ### `getComponents(key, [, index])`
 
@@ -780,12 +816,12 @@ Adds a one time listener function for the event named eventName. The next time e
 
 Marko defines six distinct lifecycle events:
 
-* `create`
-* `input`
-* `render`
-* `mount`
-* `update`
-* `destroy`
+- `create`
+- `input`
+- `render`
+- `mount`
+- `update`
+- `destroy`
 
 These events are emitted at specific points over the lifecycle of a component as shown below:
 

@@ -6,7 +6,7 @@ Marko gives you access to the same API that is used to write the [Core Tags](./c
 
 ## Writing custom tags
 
-To get started let's look at template-based tags which allow you to include another template using a named custom tag rather than specifying a filesystem path and using `<include>`.
+To get started let's look at template-based tags which allow you to render another template using a named custom tag rather than importing by a filesystem path.
 
 ### Discovering tags
 
@@ -28,14 +28,15 @@ pages/
 
 When compiling the template at `pages/home/index.marko`, the following tags would be found:
 
-* `<app-header>`
-* `<app-footer>`
-* `<home-banner>`
+- `<app-header>`
+- `<app-footer>`
+- `<home-banner>`
 
 So now, instead of needing to specify a path:
 
 ```marko
-<include('../../components/app-header/index.marko')/>
+import AppHeader from '../../components/app-header/index.marko';
+<${AppHeader}/>
 ```
 
 You can just use the tag name:

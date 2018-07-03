@@ -4,7 +4,7 @@ require("../__util__/test-init");
 var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var fs = require("fs");
 var toHTML = require("../__util__/toHTML");
-var createJSDOMModule = require("../__util__/create-jsdom-module");
+var createBrowser = require("jsdom-context-require");
 var autotest = require("../autotest");
 
 autotest("fixtures", fixture => {
@@ -16,7 +16,7 @@ autotest("fixtures", fixture => {
         if (fs.existsSync(inputPath)) {
             var inputHtml = fs.readFileSync(inputPath, { encoding: "utf8" });
 
-            var document = createJSDOMModule({
+            var document = createBrowser({
                 dir: __dirname,
                 html: "<html><body>" + inputHtml + "</body></html>"
             }).window.document;

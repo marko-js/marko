@@ -272,56 +272,52 @@ export var route = '/about';
 </html>
 ``` -->
 
-## Reusable content
-
-### `<include>`
-
-The include tag is used to embed another template (or part of another template) in the current template.
-
-The include tag can take a path to a template as the first argument:
+## `<${dynamic}>`
 
 ```marko
-<include('./path/to/template.marko')/>
+<${useDiv ? 'div' : 'span'}>
+    Hello there!
+</>
 ```
 
-The second argument may be used to pass input to the included template:
+The `<${dynamic}>` tag is used to render a tag, component, or transcluded content that isn't determined until runtime.
+
+### Dynamic components
+
+The `<${dynamic}>` tag can be used to embed another template in the current template:
 
 ```marko
-<include('./path/to/template.marko', { name:'Frank' })/>
+import componentA from "./path/to/component-a.marko";
+import componentB from "./path/to/component-b.marko";
+
+<${useA ? componentA : componentB} name="Frank"/>
 ```
 
-Attributes may also be used to pass data to the included template and can be used in combination with the input parameter:
+You can also switch between a normal HTML tag and a Marko component:
 
 ```marko
-<include('./path/to/template.marko', data) name="Frank"/>
+import FancyButton from "./path/to/fancy-button.marko";
+
+<${isFancy ? FancyButton : 'button'}>
+    Button text
+</>
 ```
 
-You can also include imported UI compoments (or a reference to a load UI component):
+### Layouts and transcluded content
 
-```marko
-import Hello from './components/hello/index.marko';
-
-<include(Hello) name='Frank' />
-
-// Include a reference to a UI component:
-<include(input.myDynamicComponent) name='Frank' />
-```
-
-#### Layouts with nested attributes
-
-In addition to including external content, you can inject additional content chunks into the external content. This is accomplished by using nested attribute tags which are denoted by the `@` symbol:
+You can pass transcluded content to a tag using nested attribute tags which are denoted by the `@` symbol:
 
 _page.marko_
 
 ```marko
-<include('./layout.marko')>
+<layout>
     <@body>
         <h1>Hello Marko</h1>
     </@body>
-</include>
+</layout>
 ```
 
-Then in your layout template you can include the injected content:
+Then in your layout template you can render the transcluded content using the `<${dynamic}>` tag:
 
 _layout.marko_
 
@@ -330,7 +326,7 @@ _layout.marko_
 <html>
     <body>
         <!-- this comes from <@body> -->
-        <include(input.body)/>
+        <${input.body}/>
     </body>
 </html>
 ```
@@ -409,27 +405,27 @@ $ var personPromise = new Promise((resolve, reject) => {
 
 Advanced implementation:
 
-* `<await>` tag signature
-  * Basic usage: `<await(results from dataProvider)>...</await>`
-  * Optional attributes
-    * client-reorder `boolean`
-    * arg `expression`
-    * arg-\* `string`
-    * method `string`
-    * timeout `integer`
-    * timeout-message `string`
-    * error-message `string`
-    * placeholder `string`
-    * renderTimeout `function`
-    * renderError `function`
-    * renderPlaceholder `function`
-    * name `string`
-    * scope `expression`
-    * show-after `string`
-  * Optional child tags
-    * `<await-placeholder>Loading...</await-placeholder>`
-    * `<await-timeout>Request timed out</await-timeout>`
-    * `<await-error>Request errored</await-error>`
+- `<await>` tag signature
+  - Basic usage: `<await(results from dataProvider)>...</await>`
+  - Optional attributes
+    - client-reorder `boolean`
+    - arg `expression`
+    - arg-\* `string`
+    - method `string`
+    - timeout `integer`
+    - timeout-message `string`
+    - error-message `string`
+    - placeholder `string`
+    - renderTimeout `function`
+    - renderError `function`
+    - renderPlaceholder `function`
+    - name `string`
+    - scope `expression`
+    - show-after `string`
+  - Optional child tags
+    - `<await-placeholder>Loading...</await-placeholder>`
+    - `<await-timeout>Request timed out</await-timeout>`
+    - `<await-error>Request errored</await-error>`
 
 ## Comments
 
@@ -498,9 +494,9 @@ Alternatively, the `<marko-compiler-options>` tag may be used to configure white
 
 The `marko-body` attribute can be used to control how body content is parsed. The following values are supported:
 
-* `html` - Body content will be parsed HTML (the default)
-* `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
-* `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
+- `html` - Body content will be parsed HTML (the default)
+- `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
+- `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
 
 _input.marko_
 

@@ -122,10 +122,10 @@ function render(data, out) {
 
 The VDOM output allows optimizations that were previously not possible:
 
-* Static subtrees are pulled into variables that are only initialized once and reused for every render
-* Static attributes that are on dynamic elements are pulled out to static variables
-* Diffing is skipped when comparing static subtrees
-* Diffing is skipped when comparing static attributes
+- Static subtrees are pulled into variables that are only initialized once and reused for every render
+- Static attributes that are on dynamic elements are pulled out to static variables
+- Diffing is skipped when comparing static subtrees
+- Diffing is skipped when comparing static attributes
 
 Our benchmarks show a significant improvement in rendering time and we are consistently outperforming React/Preact/Inferno, Vue and other UI libraries.
 
@@ -137,11 +137,11 @@ You will no longer need to install `marko-widgets` as an external library, and t
 
 ### Improved component lifecycle methods ([#396](https://github.com/marko-js/marko/issues/396))
 
-* `getInitialState()` ➔ `onInput(input)`
-* `getComponentConfig()` ➔ `onInput(input)`
-* `init(config)` ➔ `onMount()`
-* `getTemplateData(input, state)` ➔ (no longer needed)
-* `getInitialProps(input)` ➔ (no longer needed)
+- `getInitialState()` ➔ `onInput(input)`
+- `getComponentConfig()` ➔ `onInput(input)`
+- `init(config)` ➔ `onMount()`
+- `getTemplateData(input, state)` ➔ (no longer needed)
+- `getInitialProps(input)` ➔ (no longer needed)
 
 ```js
 class {
@@ -272,17 +272,17 @@ require("./template.marko")
 
 ### Less Boilerplate
 
-* Removed: `w-bind`
-* Removed: `w-extend`
-* Removed: `require('marko-widgets').defineComponent(...)`
-* Removed: `require('marko-widgets').defineWidget(...)`
-* Removed: `require('marko-widgets').defineRenderer(...)`
-* Removed: `w-body` (use `<include()>` instead)
-* `w-on*="handleSomeEvent"` --> `on*('handleSomeEvent')`
-* `w-id` --> `key`
-* `w-for` --> `for-key`
-* `w-preserve` --> `no-update`
-* `class="foo" w-preserve-attrs="class"` --> `class:no-update="foo"`
+- Removed: `w-bind`
+- Removed: `w-extend`
+- Removed: `require('marko-widgets').defineComponent(...)`
+- Removed: `require('marko-widgets').defineWidget(...)`
+- Removed: `require('marko-widgets').defineRenderer(...)`
+- Removed: `w-body` (use `<include()>` instead)
+- `w-on*="handleSomeEvent"` --> `on*('handleSomeEvent')`
+- `w-id` --> `key`
+- `w-for` --> `for-key`
+- `w-preserve` --> `no-update`
+- `class="foo" w-preserve-attrs="class"` --> `class:no-update="foo"`
 
 Some of these things are described in more detail later in this document.
 
@@ -380,9 +380,9 @@ static {
 
 ### Template variables
 
-* `data` --> `input` - References the input object (should be treated as immutable)
-* Introduced `state` - References the components raw state object (for components only)
-* Introduced `component` - References the component instance (for components only)
+- `data` --> `input` - References the input object (should be treated as immutable)
+- Introduced `state` - References the components raw state object (for components only)
+- Introduced `component` - References the component instance (for components only)
 
 ## Other Improvements
 
