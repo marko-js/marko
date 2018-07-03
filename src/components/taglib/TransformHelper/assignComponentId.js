@@ -106,6 +106,7 @@ module.exports = function assignComponentId(isRepeated) {
         }
     } else {
         // Case 3 - We need to add a unique auto key
+        let parentForKey = getParentForKeyVar(el, this);
         let uniqueKey = this.nextUniqueId();
 
         nestedIdExpression = isRepeated
@@ -113,6 +114,19 @@ module.exports = function assignComponentId(isRepeated) {
             : builder.literal(uniqueKey.toString());
 
         idExpression = builder.literal(uniqueKey.toString());
+
+        if (parentForKey) {
+            idExpression = builder.binaryExpression(
+                idExpression,
+                "+",
+                parentForKey
+            );
+            nestedIdExpression = builder.binaryExpression(
+                nestedIdExpression,
+                "+",
+                parentForKey
+            );
+        }
 
         if (isCustomTag) {
             this.getComponentArgs().setKey(nestedIdExpression);
@@ -167,4 +181,67 @@ module.exports = function assignComponentId(isRepeated) {
     };
 
     return this.componentIdInfo;
+};
+
+const getParentForKeyVar = (el, transformHelper) => {
+    const context = transformHelper.context;
+    const builder = context.builder;
+    const parentFor = getParentFor(el);
+
+    if (!parentFor) return null;
+    if (parentFor.keyVar) return parentFor.keyVar;
+
+    const keyExpression =
+        getChildKey(parentFor) || createIndexKey(parentFor, transformHelper);
+    const bracketedKeyExpression = builder.binaryExpression(
+        builder.literal("["),
+        "+",
+        builder.binaryExpression(keyExpression, "+", builder.literal("]"))
+    );
+    const varName = "keyscope__" + transformHelper.nextUniqueId();
+    const varDeclaration = builder.var(varName, bracketedKeyExpression);
+
+    parentFor.prependChild(varDeclaration);
+
+    return (parentFor.keyVar = builder.identifier(varName));
+};
+
+const createIndexKey = (forNode, transformHelper) => {
+    const context = transformHelper.context;
+    const builder = context.builder;
+    const varName = "for__" + transformHelper.nextUniqueId();
+    const intialize = builder.parseStatement(`var ${varName} = 0;`);
+    const parentForKey = getParentForKeyVar(forNode, transformHelper);
+
+    forNode.insertSiblingBefore(intialize);
+
+    let keyExpression = builder.parseExpression(`${varName}++`);
+
+    if (parentForKey) {
+        keyExpression = builder.binaryExpression(
+            keyExpression,
+            "+",
+            parentForKey
+        );
+    }
+
+    return keyExpression;
+};
+
+const getParentFor = el => {
+    let current = el;
+    while ((current = current.parentNode)) {
+        if (current.tagName === "for") return current;
+    }
+};
+
+const getChildKey = el => {
+    let current = el.firstChild;
+    while (current) {
+        if (current.key) return current.key;
+        if (current.hasAttribute && current.hasAttribute("key")) {
+            return current.getAttributeValue("key");
+        }
+        current = current.nextSibling;
+    }
 };

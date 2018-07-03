@@ -558,5 +558,8 @@ var proto = (AsyncStream.prototype = {
 
 // alias:
 proto.w = proto.write;
+proto.___elementDynamic = proto.element;
+proto.___beginElementDynamic = proto.beginElement;
+proto.___endElement = proto.endElement;
 
 module.exports = AsyncStream;

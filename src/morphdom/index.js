@@ -738,16 +738,15 @@ function morphdom(
             fromNextSibling = curFromNodeChild.nextSibling;
 
             if ((fromComponent = curFromNodeChild.___markoComponent)) {
+                curFromNodeChild = fromComponent.___endNode.nextSibling;
                 if (
-                    globalComponentsContext.___renderedComponentsById[
+                    !globalComponentsContext.___renderedComponentsById[
                         fromComponent.id
                     ]
                 ) {
-                    // Skip over this component since it was rendered in the target VDOM
-                    // and will be moved into place later
-                    curFromNodeChild = fromComponent.___endNode.nextSibling;
-                    continue;
+                    destroyComponent(fromComponent);
                 }
+                continue;
             }
 
             curVFromNodeChild = curFromNodeChild.___markoVElement;

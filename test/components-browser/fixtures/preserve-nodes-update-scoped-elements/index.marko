@@ -1,0 +1,13 @@
+class {
+    onCreate() {
+        this.state = { show: true };
+    }
+    hide() {
+        this.state.show = false;
+    }
+}
+
+<div>
+    <label for:scoped="abc" if(state.show)/>
+    <input id:scoped="abc"/>
+</div>

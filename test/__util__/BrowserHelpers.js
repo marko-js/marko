@@ -113,7 +113,7 @@ BrowserHelpers.prototype = {
     },
 
     cleanPath: function(path) {
-        return path.replace(/\.\d+\.in-module-context$/, "");
+        return path.replace(/\.\d+\.in-context$/, "");
     }
 };
 

@@ -8,13 +8,11 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
+    marko_helpers = require("marko/src/runtime/vdom/helpers"),
+    marko_dynamicTag = marko_helpers.d,
     marko_attrs0 = {
         width: "140",
         height: "30"
-      },
-    marko_attrs1 = {
-        width: "200",
-        height: "200"
       };
 
 function render(input, out, __component, component, state) {
@@ -22,8 +20,14 @@ function render(input, out, __component, component, state) {
 
   var isCircle = true;
 
-  out.e("svg", marko_attrs0, "0", component, 1, 1)
-    .e(isCircle ? "circle" : "square", marko_attrs1, "1", component, 0, 1);
+  out.be("svg", marko_attrs0, "0", component, null, 1);
+
+  marko_dynamicTag(isCircle ? "circle" : "square", {
+      width: 200,
+      height: 200
+    }, out, __component, "1");
+
+  out.ee();
 }
 
 marko_template._ = marko_renderer(render, {

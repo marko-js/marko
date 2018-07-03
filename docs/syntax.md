@@ -232,13 +232,7 @@ Below is the same `if()` directive used as an attribute:
 </strong>
 ```
 
-Most directives support JavaScript expressions, and some even support multiple arguments:
-
-```marko
-<include(target, input)/>
-```
-
-Others allow a custom syntax:
+Most directives support JavaScript expressions, others allow a custom syntax:
 
 ```marko
 <for(item in items)/>

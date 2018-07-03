@@ -15,9 +15,8 @@ coverage
 *.marko.xml.js
 /test/generated/
 .nyc_output
-yarn.lock
-package-lock.json
 *.swp
 /dist/
 /test-dist/
 /test-generated/
+.vs/

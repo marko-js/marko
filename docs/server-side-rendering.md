@@ -24,10 +24,10 @@ module.exports = function(req) {
 
 > **ProTip:** Marko also provides server-side framework integrations:
 >
-> * [express](/docs/express.md)
-> * [hapi](/docs/hapi.md)
-> * [koa](/docs/koa.md)
-> * [huncwot](/docs/huncwot.md)
+> - [express](./express.md)
+> - [hapi](./hapi.md)
+> - [koa](./koa.md)
+> - [huncwot](./huncwot.md)
 
 ## UI Bootstrapping
 
@@ -67,8 +67,8 @@ _routes/index/template.marko_
 
 > **ProTip:** We have provided some sample apps to help you get started with Marko + Lasso
 >
-> * [marko-lasso](https://github.com/marko-js-samples/marko-lasso)
-> * [ui-components-playground](https://github.com/marko-js-samples/ui-components-playground)
+> - [marko-lasso](https://github.com/marko-js-samples/marko-lasso)
+> - [ui-components-playground](https://github.com/marko-js-samples/ui-components-playground)
 
 ### Bootstrapping: Non-Lasso
 
@@ -94,9 +94,9 @@ require("marko/components").init();
 
 > **ProTip:** We have provided some sample apps to help you get started:
 >
-> * [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
-> * [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
-> * [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
+> - [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
+> - [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
+> - [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
 
 # Serialization
 
@@ -122,11 +122,11 @@ class {
 
 There are some caveats associated with rendering a page on the server:
 
-* The UI component data for top-level UI components must be serializable:
-  * Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
-  * Functions are not serializable
-* Care should be taken to avoid having Marko serialize too much data
-* None of the data in `out.global` is serialized by default, but this can be changed as shown below
+- The UI component data for top-level UI components must be serializable:
+  - Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
+  - Functions are not serializable
+- Care should be taken to avoid having Marko serialize too much data
+- None of the data in `out.global` is serialized by default, but this can be changed as shown below
 
 ## Serializing globals
 
