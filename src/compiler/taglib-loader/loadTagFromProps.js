@@ -686,6 +686,10 @@ class TagLoader {
     htmlType(value) {
         this.tag.htmlType = value;
     }
+
+    featureFlags(value) {
+        this.tag.featureFlags = value;
+    }
 }
 
 function isSupportedProperty(name) {

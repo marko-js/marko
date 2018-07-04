@@ -814,8 +814,12 @@ class CustomTag extends HtmlElement {
             if (
                 checkIfNestedTagCanBeAddedDirectlyToInput(this, parentCustomTag)
             ) {
+                let params = getNestedVariables(this, this.tagDef, codegen);
                 let renderBody = hasBody
-                    ? builder.renderBodyFunction(body)
+                    ? builder.renderBodyFunction(
+                          body,
+                          [builder.identifier("out")].concat(params)
+                      )
                     : null;
                 let additionalAttrs = renderBody ? { renderBody } : null;
                 let inputProps = this.buildInputProps(codegen, additionalAttrs);
