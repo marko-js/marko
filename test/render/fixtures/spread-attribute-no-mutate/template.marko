@@ -1,0 +1,13 @@
+import assert from "assert";
+
+$ var before = {
+    hidden: false
+};
+
+$ var after = {
+    class: 'test'
+};
+
+<div ...before id="dom" ...after/>
+<test ...before id="custom" ...after/>
+<div ...before id="dom" ...after/>

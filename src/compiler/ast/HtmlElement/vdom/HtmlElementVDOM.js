@@ -151,16 +151,7 @@ class HtmlElementVDOM extends Node {
 
         if (attributes != null && attributes.length !== 0) {
             let explicitAttrs = null;
-            let addAttrs = expr => {
-                if (!attributesArg) {
-                    attributesArg = expr;
-                } else {
-                    attributesArg = builder.functionCall(
-                        context.helper("merge"),
-                        [expr, attributesArg]
-                    );
-                }
-            };
+            let attrs = [];
             let addAttr = function(name, value) {
                 hasNamedAttributes = true;
 
@@ -189,17 +180,18 @@ class HtmlElementVDOM extends Node {
                 explicitAttrs[name] = value;
             };
 
-            attributes.forEach(attr => {
+            attributes.forEach((attr, i) => {
                 // deprecated
                 if (!attr.name && !attr.spread) {
                     return;
                 }
 
                 if (attr.spread) {
-                    if (explicitAttrs) {
-                        addAttrs(builder.literal(explicitAttrs));
+                    let isFirstOfMany = i === 0 && attributes.length > 1;
+                    if (explicitAttrs || isFirstOfMany) {
+                        attrs.push(builder.literal(explicitAttrs || {}));
                     }
-                    addAttrs(
+                    attrs.push(
                         codegen.builder.functionCall(context.helper("attrs"), [
                             attr.value
                         ])
@@ -218,8 +210,13 @@ class HtmlElementVDOM extends Node {
             });
 
             if (explicitAttrs) {
-                addAttrs(builder.literal(explicitAttrs));
+                attrs.push(builder.literal(explicitAttrs));
             }
+
+            attributesArg =
+                attrs.length > 1
+                    ? builder.functionCall(context.helper("assign"), attrs)
+                    : attrs[0];
         }
 
         // deprecated

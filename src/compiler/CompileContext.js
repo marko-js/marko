@@ -57,6 +57,7 @@ function requireResolve(builder, path) {
 }
 
 const helpers = {
+    assign: { module: "marko/runtime/helper-assign" },
     attr: "a",
     attrs: "as",
     classAttr: "ca",
