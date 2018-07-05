@@ -2,9 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = {
-        onCreate: function () {
-        }
-    },
+        onCreate: function() {}
+      },
     marko_componentType = "/marko-test$1.0.0/compiler/fixtures-html/class-tag/template.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,

@@ -142,7 +142,7 @@ function handleClassDeclaration(classEl, transformHelper) {
     let object = classToObject(expression, classEl, transformHelper);
     let componentVar = transformHelper.context.addStaticVar(
         "marko_component",
-        transformHelper.builder.code(escodegen.generate(object))
+        escodegen.generate(object)
     );
 
     let moduleInfo = {

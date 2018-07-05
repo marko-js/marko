@@ -2,11 +2,9 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = {
-        foo: function () {
-        },
-        bar: function () {
-        }
-    },
+        foo: function() {},
+        bar: function() {}
+      },
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/component-inline-class/index.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
