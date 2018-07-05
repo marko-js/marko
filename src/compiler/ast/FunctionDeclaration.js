@@ -45,23 +45,8 @@ class FunctionDeclaration extends Node {
                 if (i !== 0) {
                     writer.write(", ");
                 }
-                var param = params[i];
 
-                if (typeof param === "string") {
-                    writer.write(param);
-                } else {
-                    /*
-                    if (param.type !== "Identifier") {
-                        throw new Error(
-                            "Illegal param " +
-                                JSON.stringify(param) +
-                                " for FunctionDeclaration: " +
-                                JSON.stringify(this)
-                        );
-                    }
-                    */
-                    writer.write(param);
-                }
+                writer.write(params[i]);
             }
         }
 
