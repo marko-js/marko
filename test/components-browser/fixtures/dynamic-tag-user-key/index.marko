@@ -1,0 +1,13 @@
+import helloComponent from './components/hello.marko';
+
+class {
+    onCreate() {
+        this.helloReceived = false;
+    }
+
+    onMount() {
+        this.getComponent('hello').on('hello', () => this.helloReceived = true)
+    }
+}
+
+<${helloComponent} key="hello"/>
