@@ -160,31 +160,43 @@ _output.html_
 
 ### Style attribute
 
-You can pass a string as the value of `style` just as you would in HTML, but Marko also supports passing an object as the value of the `style` attribute:
+You can pass a string as the value of `style` just as you would in HTML, but Marko also supports passing an object or array as the value of the `style` attribute:
 
 ```marko
-<div style={ color:'red', fontWeight:'bold' }/>
+<!-- string: -->
+<div style='display:block;margin-right:16px'/>
+
+<!-- object: -->
+<div style={ display: 'block', color:false, marginRight: 16 }/>
+
+<!-- array: -->
+<div style=['display:block', null, { marginRight: 16 }]/>
 ```
+
+In all cases, the output will be the same:
 
 Output:
 
 ```html
-<div style="color:red;font-weight:bold;"></div>
+<div style="display:block;margin-right:16px;"></div>
 ```
 
 ### Class attribute
 
-The `class` attribute also support object expressions or an array expressions (in addition to a string value) as shown below:
+The `class` attribute also support object expressions or array expressions (in addition to a string value) as shown below:
 
 ```marko
-<!-- array: -->
-<div class=['a', null, 'c']/>
+<!-- string: -->
+<div class="a c"/>
 
 <!-- object: -->
 <div class={ a:true, b:false, c:true }/>
+
+<!-- array: -->
+<div class=['a', null, { c:true }]/>
 ```
 
-In both cases, the output will be the same:
+In all cases, the output will be the same:
 
 _output.html_
 
