@@ -1,6 +1,7 @@
 "use strict";
 var ok = require("assert").ok;
 var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
+var enableTagParams = require("./util/enableTagParams");
 var extend = require("raptor-util/extend");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
@@ -400,7 +401,13 @@ class Parser {
         }
 
         this.prevTextNode = null;
-        this.stack.pop();
+        var { node } = this.stack.pop();
+        var tagDef = node.tagDef;
+        if (tagDef && tagDef.featureFlags) {
+            if (tagDef.featureFlags.includes("params")) {
+                enableTagParams(node, this.context.builder);
+            }
+        }
     }
 
     handleComment(comment) {

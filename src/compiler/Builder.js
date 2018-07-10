@@ -52,6 +52,7 @@ var CustomTag = require("./ast/CustomTag");
 var parseExpression = require("./util/parseExpression");
 var parseStatement = require("./util/parseStatement");
 var parseJavaScriptArgs = require("./util/parseJavaScriptArgs");
+var parseJavaScriptParams = require("./util/parseJavaScriptParams");
 var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
 var isValidJavaScriptIdentifier = require("./util/isValidJavaScriptIdentifier");
 
@@ -473,6 +474,11 @@ class Builder {
     parseJavaScriptArgs(args) {
         ok(typeof args === "string", '"args" should be a string');
         return parseJavaScriptArgs(args, DEFAULT_BUILDER);
+    }
+
+    parseJavaScriptParams(params) {
+        ok(typeof params === "string", '"params" should be a string');
+        return parseJavaScriptParams(params, DEFAULT_BUILDER);
     }
 
     parseStatement(str) {
