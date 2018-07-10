@@ -9,6 +9,7 @@ var escapeXml = escape.escapeXml;
 var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require("./helper-attr");
 var attrsHelper = require("./helper-attrs");
+var styleHelper = require("../vdom/helper-styleAttr");
 
 /**
  * Internal method to escape special XML characters
@@ -83,38 +84,10 @@ exports.as = attrsHelper;
  * sa({color: 'red', 'font-weight': 'bold'}) ==> ' style="color: red; font-weight: bold"'
  */
 
-var dashedNames = {};
-
 exports.sa = function(style) {
-    if (!style) {
-        return "";
-    }
+    style = styleHelper(style);
 
-    var type = typeof style;
-
-    if (type !== "string") {
-        if (type === "object") {
-            var styles = "";
-            for (var name in style) {
-                var value = style[name];
-                if (value != null) {
-                    if (typeof value === "number" && value) {
-                        value += "px";
-                    }
-                    var nameDashed = dashedNames[name];
-                    if (!nameDashed) {
-                        nameDashed = dashedNames[name] = name
-                            .replace(/([A-Z])/g, "-$1")
-                            .toLowerCase();
-                    }
-                    styles += nameDashed + ":" + value + ";";
-                }
-            }
-            style = styles;
-        } else {
-            return "";
-        }
-    }
+    if (!style) return "";
 
     return attrHelper(STYLE_ATTR, style);
 };
