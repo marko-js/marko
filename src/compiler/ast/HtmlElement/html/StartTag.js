@@ -35,25 +35,18 @@ class StartTag extends Node {
                 }
             } else {
                 let explicitAttrs = null;
-                let attrsExpression = null;
-                let addAttrs = expr => {
-                    if (!attrsExpression) {
-                        attrsExpression = expr;
-                    } else {
-                        attrsExpression = builder.functionCall(
-                            context.helper("merge"),
-                            [expr, attrsExpression]
-                        );
-                    }
-                };
+                let attrs = [];
 
                 for (let i = 0; i < attributes.length; i++) {
                     let attr = attributes[i];
                     if (attr.spread) {
-                        if (explicitAttrs) {
-                            addAttrs(builder.objectExpression(explicitAttrs));
+                        let isFirstOfMany = i === 0 && attributes.length !== 1;
+                        if (explicitAttrs || isFirstOfMany) {
+                            attrs.push(
+                                builder.objectExpression(explicitAttrs || {})
+                            );
                         }
-                        addAttrs(attr.value);
+                        attrs.push(attr.value);
                         explicitAttrs = null;
                     } else {
                         explicitAttrs = explicitAttrs || {};
@@ -62,12 +55,19 @@ class StartTag extends Node {
                 }
 
                 if (explicitAttrs) {
-                    addAttrs(builder.objectExpression(explicitAttrs));
+                    attrs.push(builder.objectExpression(explicitAttrs));
                 }
 
                 let attrsFunctionCall = builder.functionCall(
                     context.helper("attrs"),
-                    [attrsExpression]
+                    [
+                        attrs.length > 1
+                            ? builder.functionCall(
+                                  context.helper("assign"),
+                                  attrs
+                              )
+                            : attrs[0]
+                    ]
                 );
                 nodes.push(builder.html(attrsFunctionCall));
             }

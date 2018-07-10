@@ -263,17 +263,7 @@ class CustomTag extends HtmlElement {
         let explicitAttrs = null;
         let computedAttrs = null;
         let inputProps = null;
-
-        function addAttrs(expr) {
-            if (!inputProps) {
-                inputProps = expr;
-            } else {
-                inputProps = builder.functionCall(context.helper("merge"), [
-                    expr,
-                    inputProps
-                ]);
-            }
-        }
+        let attrs = [];
 
         function handleAttr(attrName, attrValue, attrDef) {
             if (!attrDef) {
@@ -370,7 +360,7 @@ class CustomTag extends HtmlElement {
 
         // Loop over the attributes found on the HTML element and add the corresponding properties
         // to the input object for the custom tag
-        this.forEachAttribute(attr => {
+        this.forEachAttribute((attr, i) => {
             let attrName = attr.name;
             if (!attrName && !attr.spread) {
                 return; // Skip attributes with no names
@@ -387,10 +377,11 @@ class CustomTag extends HtmlElement {
             }
 
             if (attr.spread) {
-                if (explicitAttrs) {
-                    addAttrs(builder.objectExpression(explicitAttrs));
+                let isFirstOfMany = i === 0 && this.attributes.length > 1;
+                if (explicitAttrs || isFirstOfMany) {
+                    attrs.push(builder.objectExpression(explicitAttrs || {}));
                 }
-                addAttrs(attr.value);
+                attrs.push(attr.value);
                 explicitAttrs = null;
             } else {
                 let attrDef = isDynamicTag
@@ -445,8 +436,13 @@ class CustomTag extends HtmlElement {
             if (computedAttrs) {
                 computedAttrs.forEach(prop => attrProps.properties.push(prop));
             }
-            addAttrs(attrProps);
+            attrs.push(attrProps);
         }
+
+        inputProps =
+            attrs.length > 1
+                ? builder.functionCall(context.helper("assign"), attrs)
+                : attrs[0];
 
         inputProps = inputProps || builder.objectExpression();
 
