@@ -7,7 +7,7 @@ function tagDefinitionHasOverridingKeyAttribute(el) {
     }
 
     var tagDef = el.tagDef;
-    if (tagDef && tagDef.hasAttribute("key")) {
+    if (tagDef && !tagDef.isDynamicTag && tagDef.hasAttribute("key")) {
         return true;
     }
 
