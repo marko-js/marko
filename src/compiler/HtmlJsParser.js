@@ -21,7 +21,7 @@ class HtmlJsParser {
                             event.escape
                         );
                     }
-                } else if (event.withinOpenTag) {
+                } else if (event.withinOpenTag || event.withinTagName) {
                     // Don't escape placeholder for dynamic attributes. For example: <div ${data.myAttrs}></div>
                 } else {
                     // placeholder within attribute
