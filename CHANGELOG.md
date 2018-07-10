@@ -2,6 +2,15 @@
 
 # 4.x
 
+## 4.12.x
+
+### 4.12.0
+
+- Tag params (#1076)
+- Style arrays (#1082)
+- Fix #1075 - cannot compile dynamic tag at root with user key (#1081)
+- Fix #1078 - mutating spread attributes (#1080)
+
 ## 4.11.x
 
 ### 4.11.5
