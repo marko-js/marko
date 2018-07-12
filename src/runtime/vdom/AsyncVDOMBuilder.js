@@ -417,7 +417,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
             // Create the root document fragment node
             doc = doc || this.___document || document;
             this.___vnode = node = vdomTree.___actualize(doc);
-            morphdom(node, null, null, vdomTree, doc, this.___components);
+            morphdom(node, vdomTree, doc, this.___components);
         }
         return node;
     },
