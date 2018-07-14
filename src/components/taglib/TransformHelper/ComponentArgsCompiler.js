@@ -42,18 +42,13 @@ class ComponentArgs {
     }
 
     compile(transformHelper) {
-        var el = transformHelper.el;
-        var builder = transformHelper.builder;
-
         if (!this.key && !this.customEvents) {
-            if (el.type === "CustomTag") {
-                el.generateRenderTagCode = function(codegen, tagVar, tagArgs) {
-                    tagArgs = tagArgs.concat(builder.identifier("__component"));
-                    return codegen.builder.functionCall(tagVar, tagArgs);
-                };
-            }
             return;
         }
+
+        var el = transformHelper.el;
+
+        var builder = transformHelper.builder;
 
         var args = new Array(4);
         args[0] = builder.identifier("__component");
