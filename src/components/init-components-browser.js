@@ -3,6 +3,7 @@ var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
+var HTMLFragment = require("../morphdom").HTMLFragment;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var ComponentDef = require("./ComponentDef");
@@ -272,23 +273,19 @@ function initServerRendered(renderedComponents, doc) {
             }
         }
 
+        var rootNode = (component.___rootNode = new HTMLFragment());
+        startNode.parentNode.insertBefore(rootNode.startNode, startNode);
+        endNode.parentNode.insertBefore(rootNode.endNode, endNode.nextSibling);
+        rootNode.___markoComponent = component;
+
+        if (startNode === startNodeComment) {
+            startNodeComment.parentNode.removeChild(startNodeComment);
+        }
+
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
-        component.___startNode = startNode;
-        component.___endNode = endNode;
-
-        startNode.___markoComponent = component;
 
         delete keyedElementsByComponentId[componentId];
-
-        // Mark the start node so that we know we need to skip past this
-        // node when matching up children
-        startNode.___startNode = true;
-
-        // Mark the end node so that when we attempt to find boundaries
-        // for nested UI components we don't accidentally go outside the boundary
-        // of the parent component
-        endNode.___endNode = true;
 
         initComponent(componentDef, doc || defaultDocument);
     });

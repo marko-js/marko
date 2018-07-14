@@ -62,7 +62,8 @@ function firstChild(node) {
 }
 
 function removeChild(node) {
-    node.parentNode.removeChild(node);
+    if (node.remove) node.remove();
+    else node.parentNode.removeChild(node);
 }
 // var counter = 0;
 class HTMLFragment {
@@ -71,73 +72,48 @@ class HTMLFragment {
         this.endNode = document.createTextNode(""); //document.createComment('/' + counter);
         this.startNode.fragment = this;
         this.endNode.fragment = this;
-        this.detached = true;
-        this.nodes = [this.startNode, this.endNode];
+        this.detachedContainer = document.createDocumentFragment();
+        this.detachedContainer.appendChild(this.startNode);
+        this.detachedContainer.appendChild(this.endNode);
     }
     get firstChild() {
-        let firstChild;
-        if (this.detached) {
-            firstChild = this.nodes[1];
-        } else {
-            firstChild = this.startNode.nextSibling;
-        }
-        return firstChild === this.endNode ? null : firstChild;
+        let firstChild = this.startNode.nextSibling;
+        return firstChild === this.endNode ? undefined : firstChild;
     }
     get lastChild() {
-        let lastChild;
-        if (this.detached) {
-            const nodes = this.nodes;
-            lastChild = nodes[nodes.length - 2];
-        } else {
-            lastChild = this.endNode.previousSibling;
-        }
-        return lastChild === this.startNode ? null : lastChild;
+        let lastChild = this.endNode.previousSibling;
+        return lastChild === this.startNode ? undefined : lastChild;
     }
     get nextSibling() {
         return this.endNode.nextSibling;
     }
     get nodes() {
-        if (this.detached) return this._n_;
-        const nodes = (this._n_ = []);
+        const nodes = [];
         let current = this.startNode;
-        do {
+        while (current !== this.endNode) {
             nodes.push(current);
             current = current.nextSibling;
-        } while (current !== this.endNode);
+        }
         nodes.push(current);
         return nodes;
-    }
-    set nodes(n) {
-        this._n_ = n;
     }
     insertBefore(newChildNode, referenceNode) {
         const actualReference =
             referenceNode == null ? this.endNode : referenceNode;
-        if (this.detached) {
-            this.nodes.splice(
-                this.nodes.indexOf(actualReference),
-                0,
-                newChildNode
-            );
-        } else {
-            insertBefore(
-                newChildNode,
-                actualReference,
-                this.startNode.parentNode
-            );
-        }
-        return newChildNode;
+        return insertBefore(
+            newChildNode,
+            actualReference,
+            this.startNode.parentNode
+        );
     }
     insertInto(newParentNode, referenceNode) {
         this.nodes.forEach(node =>
             insertBefore(node, referenceNode, newParentNode)
         );
-        this.detached = false;
         return this;
     }
     remove() {
-        this.nodes.forEach(node => removeChild(node));
-        this.detached = true;
+        this.nodes.forEach(node => this.detachedContainer.appendChild(node));
     }
 }
 
@@ -196,7 +172,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
 
     function morphComponent(component, vComponent) {
+        component.___keySequence = globalComponentsContext.___createKeySequence();
         morphChildren(component.___rootNode, vComponent, component);
+        component.___keySequence = undefined; // We don't need to track keys anymore
     }
 
     var detachedNodes = [];
@@ -243,18 +221,22 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     undefined
                 ) {
                     if (isRerenderInBrowser === true) {
-                        var firstVChild = curToNodeChild.___firstChild;
-                        if (firstVChild) {
-                            componentForNode.___rootNode = curFromNodeChild;
-                        } else {
-                            componentForNode.___rootNode = insertBefore(
-                                createFragmentNode(),
-                                curFromNodeChild,
-                                fromNode
-                            );
-                        }
+                        var rootNode = (componentForNode.___rootNode = createFragmentNode());
+                        var numChildren = curToNodeChild.___childCount;
+                        var targetNode = curFromNodeChild;
+
+                        insertBefore(rootNode.startNode, targetNode, fromNode);
+
+                        while (numChildren--)
+                            targetNode = targetNode && targetNode.nextSibling;
+
+                        insertBefore(rootNode.endNode, targetNode, fromNode);
+
+                        rootNode.___markoComponent = componentForNode;
 
                         morphComponent(componentForNode, curToNodeChild);
+
+                        curFromNodeChild = nextSibling(rootNode);
                     } else {
                         insertVirtualComponentBefore(
                             curToNodeChild,
@@ -314,6 +296,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             } else if ((curToNodeKey = curToNodeChild.___key)) {
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
+
+                var keySequence =
+                    componentForNode.___keySequence ||
+                    (componentForNode.___keySequence = globalComponentsContext.___createKeySequence());
+
+                // We have a keyed element. This is the fast path for matching
+                // up elements
+                curToNodeKey = keySequence.___nextKey(curToNodeKey);
 
                 if (curFromNodeChild) {
                     curFromNodeKey = curFromNodeChild.___markoKey;
@@ -737,7 +727,13 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
     } // END: morphEl(...)
 
-    morphChildren(fromNode, toNode);
+    var component = toNode.___component;
+
+    if (component) {
+        component.___keySequence = null;
+    }
+
+    morphChildren(fromNode, toNode, component);
 
     detachedNodes.forEach(function(node) {
         var detachedFromComponent = node.___markoDetached;
@@ -763,3 +759,4 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 }
 
 module.exports = morphdom;
+module.exports.HTMLFragment = HTMLFragment;

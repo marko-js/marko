@@ -6,6 +6,14 @@ var componentLookup = {};
 var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
+function getParentComponentForEl(node) {
+    while (node && !node.___markoComponent) {
+        node = node.previousSibling || node.parentNode;
+        node = (node && node.fragment) || node;
+    }
+    return node && node.___markoComponent;
+}
+
 function getComponentForEl(el, doc) {
     if (el) {
         var node =
@@ -13,7 +21,7 @@ function getComponentForEl(el, doc) {
                 ? (doc || defaultDocument).getElementById(el)
                 : el;
         if (node) {
-            return node.___markoComponent;
+            return getParentComponentForEl(node);
         }
     }
 }
@@ -50,7 +58,7 @@ function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
 }
 
 function destroyComponentForNode(node) {
-    var componentToDestroy = node.___markoComponent;
+    var componentToDestroy = (node.fragment || node).___markoComponent;
     if (componentToDestroy) {
         componentToDestroy.___destroyShallow();
         delete componentLookup[componentToDestroy.id];
