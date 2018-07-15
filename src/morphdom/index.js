@@ -7,11 +7,22 @@ var VElement = require("../runtime/vdom/vdom").___VElement;
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var eventDelegation = require("../components/event-delegation");
+var fragment = require("./fragment");
+var helpers = require("./helpers");
+var constants = require("./constants");
 
-var ELEMENT_NODE = 1;
-var TEXT_NODE = 3;
-var COMMENT_NODE = 8;
-var COMPONENT_NODE = 2;
+var insertBefore = helpers.___insertBefore;
+var insertAfter = helpers.___insertAfter;
+var nextSibling = helpers.___nextSibling;
+var firstChild = helpers.___firstChild;
+var removeChild = helpers.___removeChild;
+var createFragmentNode = fragment.___createFragmentNode;
+var createMatchingFragment = fragment.___createMatchingFragment;
+
+var ELEMENT_NODE = constants.___ELEMENT_NODE;
+var TEXT_NODE = constants.___TEXT_NODE;
+var COMMENT_NODE = constants.___COMMENT_NODE;
+var COMPONENT_NODE = constants.___COMPONENT_NODE;
 
 // var FLAG_IS_SVG = 1;
 // var FLAG_IS_TEXTAREA = 2;
@@ -27,144 +38,6 @@ function onNodeAdded(node, componentsContext) {
     if (node.nodeType === 1) {
         eventDelegation.___handleNodeAttach(node, componentsContext);
     }
-}
-
-function insertBefore(node, referenceNode, parentNode) {
-    if (node.insertInto) {
-        return node.insertInto(parentNode, referenceNode);
-    }
-    return parentNode.insertBefore(
-        node,
-        (referenceNode && referenceNode.startNode) || referenceNode
-    );
-}
-
-function insertAfter(node, referenceNode, parentNode) {
-    return insertBefore(
-        node,
-        referenceNode && referenceNode.nextSibling,
-        parentNode
-    );
-}
-
-function nextSibling(node) {
-    var next = node.nextSibling;
-    var fragment = next && next.fragment;
-    if (fragment) {
-        return next === fragment.startNode ? fragment : null;
-    }
-    return next;
-}
-
-function firstChild(node) {
-    var next = node.firstChild;
-    return (next && next.fragment) || next;
-}
-
-function removeChild(node) {
-    if (node.remove) node.remove();
-    else node.parentNode.removeChild(node);
-}
-// var counter = 0;
-class HTMLFragment {
-    constructor() {
-        this.startNode = document.createTextNode(""); //document.createComment(++counter + ':');
-        this.endNode = document.createTextNode(""); //document.createComment('/' + counter);
-        this.startNode.fragment = this;
-        this.endNode.fragment = this;
-        this.detachedContainer = document.createDocumentFragment();
-        this.detachedContainer.appendChild(this.startNode);
-        this.detachedContainer.appendChild(this.endNode);
-    }
-    get firstChild() {
-        let firstChild = this.startNode.nextSibling;
-        return firstChild === this.endNode ? undefined : firstChild;
-    }
-    get lastChild() {
-        let lastChild = this.endNode.previousSibling;
-        return lastChild === this.startNode ? undefined : lastChild;
-    }
-    get nextSibling() {
-        return this.endNode.nextSibling;
-    }
-    get nodes() {
-        const nodes = [];
-        let current = this.startNode;
-        while (current !== this.endNode) {
-            nodes.push(current);
-            current = current.nextSibling;
-        }
-        nodes.push(current);
-        return nodes;
-    }
-    insertBefore(newChildNode, referenceNode) {
-        const actualReference =
-            referenceNode == null ? this.endNode : referenceNode;
-        return insertBefore(
-            newChildNode,
-            actualReference,
-            this.startNode.parentNode
-        );
-    }
-    insertInto(newParentNode, referenceNode) {
-        this.nodes.forEach(node =>
-            insertBefore(node, referenceNode, newParentNode)
-        );
-        return this;
-    }
-    remove() {
-        this.nodes.forEach(node => this.detachedContainer.appendChild(node));
-    }
-}
-
-function createFragmentNode() {
-    /*var fragment = doc.createElement('div');
-    fragment.type = "fragment";
-    fragment.style.display = "contents";
-    return fragment;*/
-    return new HTMLFragment();
-}
-
-function matchFragment(realParent, realNode, virtualNode) {
-    var fragment = createFragmentNode();
-    var numChildren = getNormalizedChildCount(virtualNode);
-    var targetNode = realNode;
-
-    insertBefore(fragment.startNode, targetNode, realParent);
-
-    while (numChildren--) targetNode = targetNode && targetNode.nextSibling;
-
-    insertBefore(fragment.endNode, targetNode, realParent);
-
-    return fragment;
-}
-
-function getNormalizedChildCount(virtualNode) {
-    return normalizeNodesToCount(virtualNode).length;
-}
-
-function normalizeNodesToCount(virtualNode, previousChildIsText) {
-    var currentChild = virtualNode.___firstChild;
-    var nodes = [];
-    while (currentChild) {
-        var nodeType = currentChild.___nodeType;
-        if (nodeType === COMPONENT_NODE) {
-            nodes = nodes.concat(normalizeNodesToCount(currentChild));
-            var lastChildSoFar = nodes[nodes.length - 1];
-            previousChildIsText =
-                lastChildSoFar && lastChildSoFar.___nodeType === TEXT_NODE;
-        } else if (nodeType === TEXT_NODE) {
-            if (!previousChildIsText) {
-                nodes.push(currentChild);
-                previousChildIsText = true;
-            }
-        } else {
-            nodes.push(currentChild);
-            previousChildIsText = false;
-        }
-        currentChild = currentChild.___nextSibling;
-    }
-    return nodes;
 }
 
 function morphdom(fromNode, toNode, doc, componentsContext) {
@@ -263,7 +136,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     undefined
                 ) {
                     if (isRerenderInBrowser === true) {
-                        var rootNode = matchFragment(
+                        var rootNode = createMatchingFragment(
                             fromNode,
                             curFromNodeChild,
                             curToNodeChild
@@ -796,4 +669,3 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 }
 
 module.exports = morphdom;
-module.exports.HTMLFragment = HTMLFragment;

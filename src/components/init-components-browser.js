@@ -3,7 +3,7 @@ var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
-var HTMLFragment = require("../morphdom").HTMLFragment;
+var createFragmentNode = require("../morphdom/fragment").___createFragmentNode;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var ComponentDef = require("./ComponentDef");
@@ -230,16 +230,14 @@ function initServerRendered(renderedComponents, doc) {
         var componentId = componentDef.id;
         var component = componentDef.___component;
 
-        var startNode;
-        var endNode;
+        var rootNode;
         var flags = componentDef.___flags;
         if ((flags & 6) === 6) {
-            startNode = document.head;
-            endNode = document.body;
+            rootNode = createFragmentNode(document.head);
         } else if (flags & FLAG_HAS_BODY_EL) {
-            startNode = endNode = document.body;
+            rootNode = createFragmentNode(document.body);
         } else if (flags & FLAG_HAS_HEAD_EL) {
-            startNode = endNode = document.head;
+            rootNode = createFragmentNode(document.head, document.body);
         } else {
             var startNodeComment = serverComponentStartNodes[componentId];
             if (!startNodeComment) {
@@ -248,39 +246,19 @@ function initServerRendered(renderedComponents, doc) {
             }
             var endNodeComment = serverComponentEndNodes[componentId];
 
-            startNode = startNodeComment.nextSibling;
+            rootNode = createFragmentNode(
+                startNodeComment.nextSibling,
+                endNodeComment
+            );
 
-            if (startNode === endNodeComment) {
-                // Component has no output nodes so just mount to the start comment node
-                // and we will remove the end comment node
-                startNode = endNode = startNodeComment;
-            } else {
-                delete serverComponentStartNodes[componentId];
-                startNodeComment.parentNode.removeChild(startNodeComment);
-
-                if (startNode.parentNode === document) {
-                    endNode = startNode = document.documentElement;
-                } else {
-                    // Remove the start and end comment nodes and use the inner nodes
-                    // as the boundary
-                    endNode = endNodeComment.previousSibling;
-                }
-            }
-
-            if (endNodeComment) {
-                delete serverComponentEndNodes[componentId];
-                endNodeComment.parentNode.removeChild(endNodeComment);
-            }
-        }
-
-        var rootNode = (component.___rootNode = new HTMLFragment());
-        startNode.parentNode.insertBefore(rootNode.startNode, startNode);
-        endNode.parentNode.insertBefore(rootNode.endNode, endNode.nextSibling);
-        rootNode.___markoComponent = component;
-
-        if (startNode === startNodeComment) {
+            delete serverComponentStartNodes[componentId];
+            delete serverComponentEndNodes[componentId];
             startNodeComment.parentNode.removeChild(startNodeComment);
+            endNodeComment.parentNode.removeChild(endNodeComment);
         }
+
+        component.___rootNode = rootNode;
+        rootNode.___markoComponent = component;
 
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
