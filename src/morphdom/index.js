@@ -117,6 +117,56 @@ class HTMLFragment {
     }
 }
 
+function createFragmentNode() {
+    /*var fragment = doc.createElement('div');
+    fragment.type = "fragment";
+    fragment.style.display = "contents";
+    return fragment;*/
+    return new HTMLFragment();
+}
+
+function matchFragment(realParent, realNode, virtualNode) {
+    var fragment = createFragmentNode();
+    var numChildren = getNormalizedChildCount(virtualNode);
+    var targetNode = realNode;
+
+    insertBefore(fragment.startNode, targetNode, realParent);
+
+    while (numChildren--) targetNode = targetNode && targetNode.nextSibling;
+
+    insertBefore(fragment.endNode, targetNode, realParent);
+
+    return fragment;
+}
+
+function getNormalizedChildCount(virtualNode) {
+    return normalizeNodesToCount(virtualNode).length;
+}
+
+function normalizeNodesToCount(virtualNode, previousChildIsText) {
+    var currentChild = virtualNode.___firstChild;
+    var nodes = [];
+    while (currentChild) {
+        var nodeType = currentChild.___nodeType;
+        if (nodeType === COMPONENT_NODE) {
+            nodes = nodes.concat(normalizeNodesToCount(currentChild));
+            var lastChildSoFar = nodes[nodes.length - 1];
+            previousChildIsText =
+                lastChildSoFar && lastChildSoFar.___nodeType === TEXT_NODE;
+        } else if (nodeType === TEXT_NODE) {
+            if (!previousChildIsText) {
+                nodes.push(currentChild);
+                previousChildIsText = true;
+            }
+        } else {
+            nodes.push(currentChild);
+            previousChildIsText = false;
+        }
+        currentChild = currentChild.___nextSibling;
+    }
+    return nodes;
+}
+
 function morphdom(fromNode, toNode, doc, componentsContext) {
     var globalComponentsContext;
     var isRerenderInBrowser = false;
@@ -124,14 +174,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     if (componentsContext) {
         globalComponentsContext = componentsContext.___globalContext;
         isRerenderInBrowser = globalComponentsContext.___isRerenderInBrowser;
-    }
-
-    function createFragmentNode() {
-        /*var fragment = doc.createElement('div');
-        fragment.type = "fragment";
-        fragment.style.display = "contents";
-        return fragment;*/
-        return new HTMLFragment();
     }
 
     function insertVirtualNodeBefore(
@@ -221,17 +263,12 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     undefined
                 ) {
                     if (isRerenderInBrowser === true) {
-                        var rootNode = (componentForNode.___rootNode = createFragmentNode());
-                        var numChildren = curToNodeChild.___childCount;
-                        var targetNode = curFromNodeChild;
-
-                        insertBefore(rootNode.startNode, targetNode, fromNode);
-
-                        while (numChildren--)
-                            targetNode = targetNode && targetNode.nextSibling;
-
-                        insertBefore(rootNode.endNode, targetNode, fromNode);
-
+                        var rootNode = matchFragment(
+                            fromNode,
+                            curFromNodeChild,
+                            curToNodeChild
+                        );
+                        componentForNode.___rootNode = rootNode;
                         rootNode.___markoComponent = componentForNode;
 
                         morphComponent(componentForNode, curToNodeChild);
