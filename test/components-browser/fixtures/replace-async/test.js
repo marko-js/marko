@@ -9,8 +9,10 @@ module.exports = function(helpers, done) {
         .render({ name: "John" })
         .then(function(result) {
             result.replace(targetEl);
-            expect(component.el.firstChild.className).to.equal("hello");
-            expect(component.el.firstChild.innerHTML).to.equal("Hello John");
+            expect(component.el.firstElementChild.className).to.equal("hello");
+            expect(component.el.firstElementChild.innerHTML).to.equal(
+                "Hello John"
+            );
             done();
         })
         .catch(function(err) {
