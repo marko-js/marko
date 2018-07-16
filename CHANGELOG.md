@@ -4,6 +4,10 @@
 
 ## 4.12.x
 
+### 4.12.1
+
+- Fix #1022 - transcluded keys don't match, stateful component not preserved (#1086)
+
 ### 4.12.0
 
 - Tag params (#1076)
