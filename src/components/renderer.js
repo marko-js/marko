@@ -22,7 +22,7 @@ function resolveComponentKey(
         return key.substring(1);
     } else {
         parentComponentDef = parentComponentDef || ownerComponentDef;
-        return ownerComponentDef.id + "-" + parentComponentDef.___nextKey(key);
+        return parentComponentDef.___nextKey(ownerComponentDef.id + "-" + key);
     }
 }
 
