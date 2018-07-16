@@ -1,0 +1,9 @@
+class {
+    onCreate() {
+        this.state = { hideOwnCounter:false };
+    }
+}
+
+<div>
+    <counter key="counter" if(!state.hideOwnCounter)/>|<include(input.renderBody)/>
+</div>

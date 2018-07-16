@@ -12,11 +12,17 @@ var endComponent = require("./endComponent");
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
-function resolveComponentKey(globalComponentsContext, key, parentComponentDef) {
+function resolveComponentKey(
+    globalComponentsContext,
+    key,
+    ownerComponentDef,
+    parentComponentDef
+) {
     if (key[0] === "#") {
         return key.substring(1);
     } else {
-        return parentComponentDef.id + "-" + parentComponentDef.___nextKey(key);
+        parentComponentDef = parentComponentDef || ownerComponentDef;
+        return parentComponentDef.___nextKey(ownerComponentDef.id + "-" + key);
     }
 }
 
@@ -73,7 +79,7 @@ function createRendererFunc(
         var customEvents;
         var scope;
         var parentComponentDef = componentsContext.___componentDef;
-        var componentDefFromArgs = out.___assignedComponentDef;
+        var ownerComponentDef = out.___assignedComponentDef;
 
         if (component) {
             // If component is provided then we are currently rendering
@@ -87,9 +93,9 @@ function createRendererFunc(
             // DOM (if any) so we will need to resolve the component ID from
             // the assigned key. We also need to handle any custom event bindings
             // that were provided.
-            if (componentDefFromArgs) {
+            if (ownerComponentDef) {
                 // console.log('componentArgs:', componentArgs);
-                scope = componentDefFromArgs.id;
+                scope = ownerComponentDef.id;
                 out.___assignedComponentDef = null;
 
                 customEvents = out.___assignedCustomEvents;
@@ -99,10 +105,11 @@ function createRendererFunc(
                     id = resolveComponentKey(
                         globalComponentsContext,
                         key.toString(),
-                        componentDefFromArgs
+                        ownerComponentDef,
+                        parentComponentDef
                     );
                 } else {
-                    id = componentDefFromArgs.___nextComponentId();
+                    id = ownerComponentDef.___nextComponentId();
                 }
             } else {
                 id = globalComponentsContext.___nextComponentId();
@@ -206,7 +213,7 @@ function createRendererFunc(
             componentsContext,
             component,
             isSplit,
-            componentDefFromArgs,
+            ownerComponentDef,
             isImplicitComponent
         );
 
