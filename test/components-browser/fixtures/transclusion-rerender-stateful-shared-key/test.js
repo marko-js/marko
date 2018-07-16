@@ -5,15 +5,15 @@ module.exports = function(helpers) {
     var container = root.getComponent("container");
     var counter = root.getComponent("counter");
 
-    expect(helpers.targetEl.textContent).to.equal("0");
+    expect(helpers.targetEl.textContent).to.equal("0|0");
 
     counter.increment();
     counter.update();
 
-    expect(helpers.targetEl.textContent).to.equal("1");
+    expect(helpers.targetEl.textContent).to.equal("0|1");
 
-    container.forceUpdate();
+    container.state.hideOwnCounter = true;
     container.update();
 
-    expect(helpers.targetEl.textContent).to.equal("1");
+    expect(helpers.targetEl.textContent).to.equal("|1");
 };
