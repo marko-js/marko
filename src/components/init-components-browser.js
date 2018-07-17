@@ -166,9 +166,16 @@ function addDOMEventListeners(
     });
     handles.push(removeListener);
 }
+let ___mobx_init_from_server = [];
 
 function initComponent(componentDef, doc) {
     var component = componentDef.___component;
+
+    // all components that were rendered on the server that are mobx enabled
+    // need to be re-rendered in the browser to allow mobx to track the observables used during the render.. the only way to avoid this would be to serialize them from the server which I think is impracticable
+    if (___mobx_init_from_server && component.___mobx_reaction) {
+        ___mobx_init_from_server.push(component);
+    }
 
     if (!component || !component.___isComponent) {
         return; // legacy
@@ -252,6 +259,14 @@ function initClientRendered(componentDefs, doc) {
  * This method initializes all components that were rendered on the server by iterating over all
  * of the component IDs.
  */
+function initServerRenderedGlobals() {
+    var globals = window.$MG;
+    if (globals) {
+        serverRenderedGlobals = warp10Finalize(globals);
+        delete window.$MG;
+    }
+    return serverRenderedGlobals;
+}
 function initServerRendered(renderedComponents, doc) {
     if (!renderedComponents) {
         renderedComponents = win.$components;
@@ -282,11 +297,7 @@ function initServerRendered(renderedComponents, doc) {
     indexServerComponentBoundaries(doc, runtimeId);
     eventDelegation.___init(doc);
 
-    var globals = window.$MG;
-    if (globals) {
-        serverRenderedGlobals = warp10Finalize(globals);
-        delete window.$MG;
-    }
+    initServerRenderedGlobals();
 
     componentDefs.forEach(function(componentDef) {
         componentDef = ComponentDef.___deserialize(
@@ -308,6 +319,11 @@ function initServerRendered(renderedComponents, doc) {
             });
         }
     });
+
+    let components = [].concat(___mobx_init_from_server);
+    ___mobx_init_from_server = [];
+    components.forEach(c => c.___mobx_mark_dirty.bind(c));
+
 }
 
 function hydrateComponent(componentDef, doc) {
@@ -328,7 +344,9 @@ function hydrateComponent(componentDef, doc) {
         initComponent(componentDef, doc || defaultDocument);
         return true;
     }
+
 }
 
 exports.___initClientRendered = initClientRendered;
 exports.___initServerRendered = initServerRendered;
+exports.___initServerRenderedGlobals = initServerRenderedGlobals;

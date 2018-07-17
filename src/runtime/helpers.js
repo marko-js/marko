@@ -3,7 +3,6 @@ var removeDashes = require("../compiler/util/removeDashes");
 var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
-var isArray = Array.isArray;
 var RENDER_BODY_TOKEN = "%FN";
 var RENDER_BODY_TO_JSON = function() {
     return RENDER_BODY_TOKEN;
@@ -93,13 +92,13 @@ var helpers = {
      * @private
      */
     f: function forEachHelper(array, callback) {
-        if (isArray(array)) {
+        if (isFunction(array)) {
+            // Also allow the first argument to be a custom iterator function
+            array(callback);
+        } else if (array) {
             for (var i = 0; i < array.length; i++) {
                 callback(array[i]);
             }
-        } else if (isFunction(array)) {
-            // Also allow the first argument to be a custom iterator function
-            array(callback);
         }
     },
 

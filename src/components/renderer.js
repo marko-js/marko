@@ -212,16 +212,23 @@ function createRendererFunc(
 
         componentDef.___isExisting = isExisting;
 
-        // Render the template associated with the component using the final template
-        // data that we constructed
-        templateRenderFunc(
-            input,
-            out,
-            componentDef,
-            component,
-            component.___rawState
-        );
-
+        let renderFunc = function() {
+            // Render the template associated with the component using the final template
+            // data that we constructed
+            templateRenderFunc(
+                input,
+                out,
+                componentDef,
+                component,
+                component.___rawState
+            );
+        };
+        if (component.___mobx_render) {
+            // delegate the rendering to the component so that it can do it within its mobx.Reaction
+            component.___mobx_render(renderFunc);
+        } else {
+            renderFunc();
+        }
         endComponent(out, componentDef);
         componentsContext.___componentDef = parentComponentDef;
     };
