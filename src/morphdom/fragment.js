@@ -50,14 +50,10 @@ function createFragmentNode(startNode, nextNode, parentNode) {
     fragment.startNode.fragment = fragment;
     fragment.endNode.fragment = fragment;
     var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
-    if (startNode) {
-        parentNode = parentNode || startNode.parentNode || detachedContainer;
-        insertBefore(fragment.startNode, startNode, parentNode);
-        insertBefore(fragment.endNode, nextNode, parentNode);
-    } else {
-        detachedContainer.appendChild(fragment.startNode);
-        detachedContainer.appendChild(fragment.endNode);
-    }
+    parentNode =
+        parentNode || (startNode && startNode.parentNode) || detachedContainer;
+    insertBefore(fragment.startNode, startNode, parentNode);
+    insertBefore(fragment.endNode, nextNode, parentNode);
     return fragment;
 }
 
