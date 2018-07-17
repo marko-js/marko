@@ -101,9 +101,16 @@ function addDOMEventListeners(
     });
     handles.push(removeListener);
 }
+let ___mobx_init_from_server = [];
 
 function initComponent(componentDef, doc) {
     var component = componentDef.___component;
+
+    // all components that were rendered on the server that are mobx enabled
+    // need to be re-rendered in the browser to allow mobx to rebuild its observable refs
+    if (___mobx_init_from_server && component.___mobx_reaction) {
+        ___mobx_init_from_server.push(component);
+    }
 
     if (!component || !component.___isComponent) {
         return; // legacy
@@ -266,6 +273,12 @@ function initServerRendered(renderedComponents, doc) {
         delete keyedElementsByComponentId[componentId];
 
         initComponent(componentDef, doc || defaultDocument);
+    });
+
+    let components = [].concat(___mobx_init_from_server);
+    ___mobx_init_from_server = null;
+    components.forEach(c => {
+        c.___mobx_mark_dirty();
     });
 }
 
