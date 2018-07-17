@@ -9,7 +9,6 @@ var morphAttrs = VElement.___morphAttrs;
 var eventDelegation = require("../components/event-delegation");
 var fragment = require("./fragment");
 var helpers = require("./helpers");
-var constants = require("./constants");
 
 var insertBefore = helpers.___insertBefore;
 var insertAfter = helpers.___insertAfter;
@@ -17,12 +16,12 @@ var nextSibling = helpers.___nextSibling;
 var firstChild = helpers.___firstChild;
 var removeChild = helpers.___removeChild;
 var createFragmentNode = fragment.___createFragmentNode;
-var createMatchingFragment = fragment.___createMatchingFragment;
+var beginFragmentNode = fragment.___beginFragmentNode;
 
-var ELEMENT_NODE = constants.___ELEMENT_NODE;
-var TEXT_NODE = constants.___TEXT_NODE;
-var COMMENT_NODE = constants.___COMMENT_NODE;
-var COMPONENT_NODE = constants.___COMPONENT_NODE;
+var ELEMENT_NODE = 1;
+var TEXT_NODE = 3;
+var COMMENT_NODE = 8;
+var COMPONENT_NODE = 2;
 
 // var FLAG_IS_SVG = 1;
 // var FLAG_IS_TEXTAREA = 2;
@@ -86,9 +85,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         morphComponent(component, vComponent);
     }
 
-    function morphComponent(component, vComponent) {
+    function morphComponent(component, vComponent, isUnfinishedFragment) {
         component.___keySequence = globalComponentsContext.___createKeySequence();
-        morphChildren(component.___rootNode, vComponent, component);
+        morphChildren(
+            component.___rootNode,
+            vComponent,
+            component,
+            isUnfinishedFragment
+        );
         component.___keySequence = undefined; // We don't need to track keys anymore
     }
 
@@ -108,7 +112,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         component.destroy();
     }
 
-    function morphChildren(fromNode, toNode, component) {
+    function morphChildren(fromNode, toNode, component, isUnfinishedFragment) {
         var curFromNodeChild = firstChild(fromNode);
         var curToNodeChild = toNode.___firstChild;
 
@@ -136,15 +140,18 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     undefined
                 ) {
                     if (isRerenderInBrowser === true) {
-                        var rootNode = createMatchingFragment(
-                            fromNode,
+                        var rootNode = beginFragmentNode(
                             curFromNodeChild,
-                            curToNodeChild
+                            fromNode
                         );
                         componentForNode.___rootNode = rootNode;
                         rootNode.___markoComponent = componentForNode;
 
-                        morphComponent(componentForNode, curToNodeChild);
+                        morphComponent(
+                            componentForNode,
+                            curToNodeChild,
+                            true /* isUnfinishedFragment */
+                        );
 
                         curFromNodeChild = nextSibling(rootNode);
                     } else {
@@ -573,35 +580,41 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             curFromNodeChild = fromNextSibling;
         }
 
-        // We have processed all of the "to nodes". If curFromNodeChild is
-        // non-null then we still have some from nodes left over that need
-        // to be removed
-        while (curFromNodeChild) {
-            fromNextSibling = nextSibling(curFromNodeChild);
+        // We have processed all of the "to nodes".
+        if (isUnfinishedFragment) {
+            // If we are in an unfinished fragment, we have reached the end of the nodes
+            // we were matching up and need to end the fragment
+            fromNode.___finishFragment(curFromNodeChild);
+        } else {
+            // If curFromNodeChild is non-null then we still have some from nodes
+            // left over that need to be removed
+            while (curFromNodeChild) {
+                fromNextSibling = nextSibling(curFromNodeChild);
 
-            if ((fromComponent = curFromNodeChild.___markoComponent)) {
-                curFromNodeChild = fromNextSibling;
-                if (
-                    !globalComponentsContext.___renderedComponentsById[
-                        fromComponent.id
-                    ]
-                ) {
-                    destroyComponent(fromComponent);
+                if ((fromComponent = curFromNodeChild.___markoComponent)) {
+                    curFromNodeChild = fromNextSibling;
+                    if (
+                        !globalComponentsContext.___renderedComponentsById[
+                            fromComponent.id
+                        ]
+                    ) {
+                        destroyComponent(fromComponent);
+                    }
+                    continue;
                 }
-                continue;
+
+                curVFromNodeChild = curFromNodeChild.___markoVElement;
+
+                // For transcluded content, we need to check if the element belongs to a different component
+                // context than the current component and ensure it gets removed from its key index.
+                fromComponent =
+                    (curVFromNodeChild && curVFromNodeChild.___component) ||
+                    component;
+
+                detachNode(curFromNodeChild, fromNode, fromComponent);
+
+                curFromNodeChild = fromNextSibling;
             }
-
-            curVFromNodeChild = curFromNodeChild.___markoVElement;
-
-            // For transcluded content, we need to check if the element belongs to a different component
-            // context than the current component and ensure it gets removed from its key index.
-            fromComponent =
-                (curVFromNodeChild && curVFromNodeChild.___component) ||
-                component;
-
-            detachNode(curFromNodeChild, fromNode, fromComponent);
-
-            curFromNodeChild = fromNextSibling;
         }
     }
 

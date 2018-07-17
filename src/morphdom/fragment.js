@@ -1,10 +1,5 @@
 var helpers = require("./helpers");
-var constants = require("./constants");
-
 var insertBefore = helpers.___insertBefore;
-
-var TEXT_NODE = constants.___TEXT_NODE;
-var COMPONENT_NODE = constants.___COMPONENT_NODE;
 
 var fragmentPrototype = {
     get firstChild() {
@@ -66,42 +61,17 @@ function createFragmentNode(startNode, nextNode, parentNode) {
     return fragment;
 }
 
-function createMatchingFragment(parentNode, startNode, virtualNode) {
-    var numChildren = getNormalizedChildCount(virtualNode);
-    var nextNode = startNode;
-
-    while (numChildren--) nextNode = nextNode && nextNode.nextSibling;
-
-    return createFragmentNode(startNode, nextNode, parentNode);
-}
-
-function getNormalizedChildCount(virtualNode) {
-    return normalizeNodesToCount(virtualNode).length;
-}
-
-function normalizeNodesToCount(virtualNode, previousChildIsText) {
-    var currentChild = virtualNode.___firstChild;
-    var nodes = [];
-    while (currentChild) {
-        var nodeType = currentChild.___nodeType;
-        if (nodeType === COMPONENT_NODE) {
-            nodes = nodes.concat(normalizeNodesToCount(currentChild));
-            var lastChildSoFar = nodes[nodes.length - 1];
-            previousChildIsText =
-                lastChildSoFar && lastChildSoFar.___nodeType === TEXT_NODE;
-        } else if (nodeType === TEXT_NODE) {
-            if (!previousChildIsText) {
-                nodes.push(currentChild);
-                previousChildIsText = true;
-            }
-        } else {
-            nodes.push(currentChild);
-            previousChildIsText = false;
-        }
-        currentChild = currentChild.___nextSibling;
-    }
-    return nodes;
+function beginFragmentNode(startNode, parentNode) {
+    var fragment = createFragmentNode(startNode, null, parentNode);
+    fragment.___finishFragment = function(nextNode) {
+        insertBefore(
+            fragment.endNode,
+            nextNode,
+            parentNode || startNode.parentNode
+        );
+    };
+    return fragment;
 }
 
 exports.___createFragmentNode = createFragmentNode;
-exports.___createMatchingFragment = createMatchingFragment;
+exports.___beginFragmentNode = beginFragmentNode;
