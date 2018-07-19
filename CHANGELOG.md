@@ -4,6 +4,10 @@
 
 ## 4.12.x
 
+### 4.12.2
+
+- Fixes automatic keying of elements/components in `for()` attribute loops
+
 ### 4.12.1
 
 - Fix #1022 - transcluded keys don't match, stateful component not preserved (#1086)
