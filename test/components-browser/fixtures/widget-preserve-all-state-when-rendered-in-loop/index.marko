@@ -13,8 +13,11 @@ class {
 }
 
 <div>
-    <for(item in state.items)>
-        <div key=item>
+    <div for(item in state.items) key=`loop1:${item}`>
+        <span/>
+    </div>
+    <for(var i = 0; i < state.items.length; i++)>
+        <div key=`loop2:${state.items[i]}`>
           <span/>
         </div>
     </for>

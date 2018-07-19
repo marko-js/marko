@@ -20,7 +20,11 @@ function render(input, out, __component, component, state) {
     if (node.children) {
       out.w("<ul>");
 
+      var for__1 = 0;
+
       marko_forEach(node.children, function(child) {
+        var keyscope__2 = "[" + ((for__1++) + "]");
+
         out.w("<li>");
 
         macro_renderTree(child, out);

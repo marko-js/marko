@@ -19,7 +19,11 @@ function render(input, out, __component, component, state) {
   if (input.colors.length) {
     out.w("<ul>");
 
+    var for__1 = 0;
+
     marko_forEach(input.colors, function(color) {
+      var keyscope__2 = "[" + ((for__1++) + "]");
+
       out.w("<li>" +
         marko_escapeXml(color) +
         "</li>");
@@ -33,10 +37,10 @@ function render(input, out, __component, component, state) {
   if (input.colors.length) {
     out.w("<ul>");
 
-    var for__4 = 0;
+    var for__6 = 0;
 
     marko_forEach(input.colors, function(color) {
-      var keyscope__5 = "[" + ((for__4++) + "]");
+      var keyscope__7 = "[" + ((for__6++) + "]");
 
       out.w("<li>" +
         marko_escapeXml(color) +
