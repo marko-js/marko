@@ -116,7 +116,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         component.destroy();
     }
 
-    function morphChildren(fromNode, toNode, component, isUnfinishedFragment) {
+    function morphChildren(fromNode, toNode, component) {
         var curFromNodeChild = firstChild(fromNode);
         var curToNodeChild = toNode.___firstChild;
 
@@ -151,11 +151,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         componentForNode.___rootNode = rootNode;
                         rootNode.___markoComponent = componentForNode;
 
-                        morphComponent(
-                            componentForNode,
-                            curToNodeChild,
-                            true /* isUnfinishedFragment */
-                        );
+                        morphComponent(componentForNode, curToNodeChild);
 
                         curFromNodeChild = nextSibling(rootNode);
                     } else {
@@ -576,7 +572,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
 
         // We have processed all of the "to nodes".
-        if (isUnfinishedFragment) {
+        if (fromNode.___finishFragment) {
             // If we are in an unfinished fragment, we have reached the end of the nodes
             // we were matching up and need to end the fragment
             fromNode.___finishFragment(curFromNodeChild);

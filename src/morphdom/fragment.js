@@ -60,6 +60,7 @@ function createFragmentNode(startNode, nextNode, parentNode) {
 function beginFragmentNode(startNode, parentNode) {
     var fragment = createFragmentNode(startNode, null, parentNode);
     fragment.___finishFragment = function(nextNode) {
+        fragment.___finishFragment = null;
         insertBefore(
             fragment.endNode,
             nextNode,
