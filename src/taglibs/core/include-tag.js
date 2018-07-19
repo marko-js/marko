@@ -37,15 +37,18 @@ function doInclude(input, out, throwError) {
         var willRerenderInBrowser =
             componentDef &&
             componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER;
-        var key = (componentDef && componentDef.id) + " " + out.___assignedKey;
         var isFn = renderBody !== RENDER_BODY_TOKEN;
-        var insertMarkers = (IS_SERVER && willRerenderInBrowser) || !isFn;
-        if (insertMarkers) out.comment("F^" + key);
-        if (renderBody !== RENDER_BODY_TOKEN) {
+        var preserve = (IS_SERVER && willRerenderInBrowser) || !isFn;
+        out.___beginFragment(
+            out.___assignedKey,
+            componentDef && componentDef.___component,
+            preserve
+        );
+        if (isFn) {
             renderBody.toJSON = RENDER_BODY_TO_JSON;
             renderBody(out, arg);
         }
-        if (insertMarkers) out.comment("F/" + key);
+        out.___endFragment();
     }
 }
 

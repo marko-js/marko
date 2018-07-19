@@ -5,6 +5,7 @@ var VDocumentFragment = vdom.___VDocumentFragment;
 var VComment = vdom.___VComment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
+var VFragment = vdom.___VFragment;
 var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
@@ -206,6 +207,16 @@ var proto = (AsyncVDOMBuilder.prototype = {
         );
         this.___beginNode(element, childCount, true);
         return this;
+    },
+
+    ___beginFragment: function(key, component, preserve) {
+        var fragment = new VFragment(key, component, preserve);
+        this.___beginNode(fragment, null, true);
+        return this;
+    },
+
+    ___endFragment: function() {
+        this.endElement();
     },
 
     endElement: function() {

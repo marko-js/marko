@@ -22,6 +22,7 @@ var ELEMENT_NODE = 1;
 var TEXT_NODE = 3;
 var COMMENT_NODE = 8;
 var COMPONENT_NODE = 2;
+var FRAGMENT_NODE = 12;
 
 // var FLAG_IS_SVG = 1;
 // var FLAG_IS_TEXTAREA = 2;
@@ -58,7 +59,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         var realNode = vNode.___actualize(doc);
         insertBefore(realNode, referenceEl, parentEl);
 
-        if (vNode.___nodeType === ELEMENT_NODE) {
+        if (
+            vNode.___nodeType === ELEMENT_NODE ||
+            vNode.___nodeType === FRAGMENT_NODE
+        ) {
             if (key) {
                 realNode.___markoKey = key;
                 component.___keyedElements[key] = realNode;
@@ -222,7 +226,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
                 if (curFromNodeKey === curToNodeKey) {
                     // Elements line up. Now we just have to make sure they are compatible
-                    if ((curToNodeChild.___flags & FLAG_PRESERVE) === 0) {
+                    if (
+                        (curToNodeChild.___flags & FLAG_PRESERVE) === 0 &&
+                        !curToNodeChild.___preserve
+                    ) {
                         // We just skip over the fromNode if it is preserved
 
                         if (
@@ -261,27 +268,62 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             componentForNode.___keyedElements[curToNodeKey]) ===
                         undefined
                     ) {
-                        if (
-                            isRerenderInBrowser === true &&
-                            curFromNodeChild &&
-                            curFromNodeChild.nodeType === ELEMENT_NODE &&
-                            curFromNodeChild.nodeName ===
-                                curToNodeChild.___nodeName
-                        ) {
-                            curVFromNodeChild = virtualizeElement(
-                                curFromNodeChild
-                            );
-                            curFromNodeChild.___markoKey = curToNodeKey;
-                            morphEl(
-                                curFromNodeChild,
-                                curVFromNodeChild,
-                                curToNodeChild,
-                                componentForNode,
-                                curToNodeKey
-                            );
-                            curToNodeChild = toNextSibling;
-                            curFromNodeChild = fromNextSibling;
-                            continue;
+                        if (isRerenderInBrowser === true && curFromNodeChild) {
+                            if (
+                                curFromNodeChild.nodeType === ELEMENT_NODE &&
+                                curFromNodeChild.nodeName ===
+                                    curToNodeChild.___nodeName
+                            ) {
+                                curVFromNodeChild = virtualizeElement(
+                                    curFromNodeChild
+                                );
+                                curFromNodeChild.___markoKey = curToNodeKey;
+                                morphEl(
+                                    curFromNodeChild,
+                                    curVFromNodeChild,
+                                    curToNodeChild,
+                                    componentForNode,
+                                    curToNodeKey
+                                );
+                                curToNodeChild = toNextSibling;
+                                curFromNodeChild = fromNextSibling;
+                                continue;
+                            } else if (
+                                curToNodeChild.___nodeType === FRAGMENT_NODE &&
+                                curFromNodeChild.nodeType === COMMENT_NODE
+                            ) {
+                                var content = curFromNodeChild.nodeValue;
+                                if (content == "F#" + curToNodeChild.___key) {
+                                    var endNode = curFromNodeChild;
+                                    while (
+                                        endNode.nodeType !== COMMENT_NODE ||
+                                        endNode.nodeValue !== "F/"
+                                    )
+                                        endNode = endNode.nextSibling;
+
+                                    var fragment = createFragmentNode(
+                                        curFromNodeChild,
+                                        endNode.nextSibling,
+                                        fromNode
+                                    );
+                                    fragment.___markoKey = curToNodeKey;
+                                    fragment.___markoVElement = curToNodeChild;
+                                    removeChild(curFromNodeChild);
+                                    removeChild(endNode);
+
+                                    if (!curToNodeChild.___preserve) {
+                                        morphChildren(
+                                            fragment,
+                                            curToNodeChild,
+                                            componentForNode
+                                        );
+                                    }
+
+                                    curToNodeChild = toNextSibling;
+                                    curFromNodeChild = fragment.nextSibling;
+                                    continue;
+                                }
+                            }
                         }
 
                         insertVirtualNodeBefore(
@@ -486,47 +528,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         isCompatible = true;
                         // Simply update nodeValue on the original node to
                         // change the text value
-
-                        var content = curFromNodeChild.nodeValue;
-                        if (content == curToNodeChild.___nodeValue) {
-                            if (/^F\^/.test(content)) {
-                                var closingContent = content.replace(
-                                    /^F\^/,
-                                    "F/"
-                                );
-                                while (
-                                    (curFromNodeChild = nextSibling(
-                                        curFromNodeChild
-                                    ))
-                                ) {
-                                    if (
-                                        curFromNodeChild.nodeValue ===
-                                        closingContent
-                                    ) {
-                                        break;
-                                    }
-                                }
-                                while (
-                                    (curToNodeChild =
-                                        curToNodeChild.___nextSibling)
-                                ) {
-                                    if (
-                                        curToNodeChild.___nodeValue ===
-                                        closingContent
-                                    ) {
-                                        break;
-                                    }
-                                }
-                                curToNodeChild = curToNodeChild.___nextSibling;
-                                curFromNodeChild = nextSibling(
-                                    curFromNodeChild
-                                );
-                                continue outer;
-                            }
-                        } else {
-                            curFromNodeChild.nodeValue =
-                                curToNodeChild.___nodeValue;
-                        }
+                        curFromNodeChild.nodeValue =
+                            curToNodeChild.___nodeValue;
                     }
                 }
 

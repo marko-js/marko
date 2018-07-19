@@ -8,24 +8,26 @@ module.exports = function(helpers) {
     expect(buttonComponent).to.exist;
     expect(countComponent).to.exist;
 
-    // TODO: enable this part of the test
-    /*
-    expect(buttonComponent.el.innerHTML).to.contain('0');
-    expect(buttonComponent.el.className).to.equal('app-button app-button-small');
+    expect(buttonComponent.el.innerHTML).to.contain("0");
+    expect(buttonComponent.el.className).to.equal(
+        "app-button app-button-small"
+    );
 
-    buttonComponent.setSize('large');
+    buttonComponent.setSize("large");
     buttonComponent.update();
-    expect(buttonComponent.el.innerHTML).to.contxain('0');
-    expect(buttonComponent.el.className).to.equal('app-button app-button-large');
+    expect(buttonComponent.el.innerHTML).to.contain("0");
+    expect(buttonComponent.el.className).to.equal(
+        "app-button app-button-large"
+    );
 
-    debugger;
     countComponent.increment();
     countComponent.update();
-    expect(buttonComponent.el.innerHTML).to.contain('1');
+    expect(buttonComponent.el.innerHTML).to.contain("1");
 
-    buttonComponent.setSize('small');
+    buttonComponent.setSize("small");
     buttonComponent.update();
-    expect(buttonComponent.el.innerHTML).to.contain('1');
-    expect(buttonComponent.el.className).to.equal('app-button app-button-small');
-    */
+    expect(buttonComponent.el.innerHTML).to.contain("1");
+    expect(buttonComponent.el.className).to.equal(
+        "app-button app-button-small"
+    );
 };

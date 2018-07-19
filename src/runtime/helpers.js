@@ -105,8 +105,8 @@ var helpers = {
      */
     d: function dynamicTag(tag, attrs, out, componentDef, key, customEvents) {
         if (tag) {
+            var component = componentDef && componentDef.___component;
             if (typeof tag === "string") {
-                var component = componentDef && componentDef.component;
                 var events =
                     customEvents &&
                     customEvents.reduce(function(events, eventArray) {
@@ -160,17 +160,15 @@ var helpers = {
 
                     if (isFn || isToken) {
                         var flags = componentDef ? componentDef.___flags : 0;
-                        var parentId = componentDef ? componentDef.id : "";
                         var willRerender =
                             flags & FLAG_WILL_RERENDER_IN_BROWSER;
-                        var resolvedKey = parentId + " " + key;
-                        var insertMarkers = IS_SERVER ? willRerender : isToken;
-                        if (insertMarkers) out.comment("F^" + resolvedKey);
+                        var preserve = IS_SERVER ? willRerender : isToken;
+                        out.___beginFragment(key, component, preserve);
                         if (isFn) {
                             render.toJSON = RENDER_BODY_TO_JSON;
                             render(out, attrs);
                         }
-                        if (insertMarkers) out.comment("F/" + resolvedKey);
+                        out.___endFragment();
                     } else {
                         out.error("Invalid dynamic tag value");
                     }
