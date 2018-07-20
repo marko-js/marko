@@ -228,10 +228,14 @@ const createIndexKey = (forNode, transformHelper) => {
     return keyExpression;
 };
 
+const forASTNodes = ["ForEach", "ForEachProp", "ForRange", "ForStatement"];
+
 const getParentFor = el => {
     let current = el;
     while ((current = current.parentNode)) {
-        if (current.tagName === "for") return current;
+        if (current.tagName === "for" || forASTNodes.includes(current.type)) {
+            return current;
+        }
     }
 };
 
