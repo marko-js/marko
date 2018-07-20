@@ -92,13 +92,14 @@ module.exports = function defineComponent(def, renderer) {
             if (this.___mobx_reaction) return false;
             // if (this.mobxObservable())console.log("mobxObservable", this.mobxObservable());
             this.___mobx_reaction = new mobx.Reaction(
-                this.___type,
-                this.___mobx_mark_dirty.bind(this)
+                this.___type, // string identifier for the reaction
+                this.___mobx_mark_dirty.bind(this) // mark the component as dirty when any tracked observable changes
             );
             return true;
         };
 
         // hook which renderer.js calls
+        // call the renderFunc within the recation so that mobx can track any observable accessed during rendering
         proto.___mobx_render = function(renderFunc) {
             this.___mobx_reaction.track(() => {
                 mobx._allowStateChanges(false, renderFunc);
