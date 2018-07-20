@@ -381,7 +381,7 @@ The `key` attribute can be used to pair HTML elements or UI components that are 
 
 ```marko
 <ul>
-  <for(users in input.users)>
+  <for(user in input.users)>
       <li key=user.id>${user.name}</li>
   </for>
 </ul>
