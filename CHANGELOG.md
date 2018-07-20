@@ -4,6 +4,12 @@
 
 ## 4.12.x
 
+### diffpatch-drivenow-mobx
+
+- mobx state management (src/components/defineComponent.js,src/components/renderer.js,src/components/init-components-browser.js)
+- support array like objects in for tag (src/runtime/helpers.js)
+- serilize globals at end of body (src/components/taglib/body-transformer.js)
+
 ### 4.12.2
 
 - Fixes automatic keying of elements/components in `for()` attribute loops
