@@ -2,6 +2,7 @@ var helpers = require("./helpers");
 var insertBefore = helpers.___insertBefore;
 
 var fragmentPrototype = {
+    nodeType: 12,
     get firstChild() {
         let firstChild = this.startNode.nextSibling;
         return firstChild === this.endNode ? undefined : firstChild;
@@ -9,6 +10,10 @@ var fragmentPrototype = {
     get lastChild() {
         let lastChild = this.endNode.previousSibling;
         return lastChild === this.startNode ? undefined : lastChild;
+    },
+    get parentNode() {
+        let parentNode = this.startNode.parentNode;
+        return parentNode === this.detachedContainer ? undefined : parentNode;
     },
     get nextSibling() {
         return this.endNode.nextSibling;

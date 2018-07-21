@@ -43,6 +43,7 @@ function onNodeAdded(node, componentsContext) {
 function morphdom(fromNode, toNode, doc, componentsContext) {
     var globalComponentsContext;
     var isRerenderInBrowser = false;
+    var keySequences = {};
 
     if (componentsContext) {
         globalComponentsContext = componentsContext.___globalContext;
@@ -90,20 +91,18 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
 
     function morphComponent(component, vComponent, isUnfinishedFragment) {
-        component.___keySequence = globalComponentsContext.___createKeySequence();
         morphChildren(
             component.___rootNode,
             vComponent,
             component,
             isUnfinishedFragment
         );
-        component.___keySequence = undefined; // We don't need to track keys anymore
     }
 
     var detachedNodes = [];
 
     function detachNode(node, parentNode, component) {
-        if (node.nodeType === ELEMENT_NODE) {
+        if (node.nodeType === ELEMENT_NODE || node.nodeType === FRAGMENT_NODE) {
             detachedNodes.push(node);
             node.___markoDetached = component || true;
         } else {
@@ -207,8 +206,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curFromNodeKey = undefined;
 
                 var keySequence =
-                    componentForNode.___keySequence ||
-                    (componentForNode.___keySequence = globalComponentsContext.___createKeySequence());
+                    keySequences[componentForNode.id] ||
+                    (keySequences[
+                        componentForNode.id
+                    ] = globalComponentsContext.___createKeySequence());
 
                 // We have a keyed element. This is the fast path for matching
                 // up elements
@@ -641,13 +642,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
     } // END: morphEl(...)
 
-    var component = toNode.___component;
-
-    if (component) {
-        component.___keySequence = null;
-    }
-
-    morphChildren(fromNode, toNode, component);
+    morphChildren(fromNode, toNode, toNode.___component);
 
     detachedNodes.forEach(function(node) {
         var detachedFromComponent = node.___markoDetached;
