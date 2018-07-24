@@ -19,9 +19,11 @@ const tagFileTypes = [
 
 const searchFiles = [
     { name: "index.marko", type: "template" },
+    { name: "index.mark", type: "template" },
     { name: "renderer", type: "renderer" },
     { name: "index", type: "renderer" },
     { name: "template.marko", type: "template" },
+    { name: "template.mark", type: "template" },
     { name: "template.html", type: "template" },
     { name: "code-generator", type: "code-generator" },
     { name: "node-factory", type: "node-factory" },
@@ -133,7 +135,7 @@ module.exports = function scanTagsDir(
         let tagJsonPath;
 
         let ext = nodePath.extname(childFilename);
-        if (ext === ".marko") {
+        if (ext === ".marko" || ext === ".mark") {
             tagName = childFilename.slice(0, 0 - ext.length);
             tagDirname = dir;
             tagDef = createDefaultTagDef();
