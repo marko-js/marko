@@ -9,6 +9,6 @@ exports.checkError = function(e) {
     );
     expect(message).to.contain('Invalid "in" expression:');
     expect(message).to.contain(
-        "Unexpected identifier: ({'foo': 'low', 'bar': 'high'} foo)"
+        "Unexpected identifier: {'foo': 'low', 'bar': 'high'} foo"
     );
 };

@@ -8,5 +8,5 @@ exports.checkError = function(e) {
         "An error occurred while trying to compile template at path"
     );
     expect(message).to.contain('Invalid "to" expression:');
-    expect(message).to.contain("Unexpected number: ('abc'.length 1)");
+    expect(message).to.contain("Unexpected number: 'abc'.length 1");
 };

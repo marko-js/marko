@@ -8,5 +8,5 @@ exports.checkError = function(e) {
         "An error occurred while trying to compile template at path"
     );
     expect(message).to.contain("Invalid expression for if statement:");
-    expect(message).to.contain("Unexpected identifier: (false foo)");
+    expect(message).to.contain("Unexpected identifier: false foo");
 };

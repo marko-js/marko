@@ -295,10 +295,7 @@ function parseExpression(src, builder, isExpression) {
 
     let jsAST;
     try {
-        if (isExpression) {
-            src = "(" + src + ")";
-        }
-        jsAST = esprima.parseScript(src);
+        jsAST = esprima.parseScript(isExpression ? "(" + src + ")" : src);
     } catch (e) {
         if (e.index == null) {
             // Doesn't look like an Esprima parse error... just rethrow the exception
