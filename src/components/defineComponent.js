@@ -4,7 +4,7 @@
 var BaseState = require("./State");
 var BaseComponent = require("./Component");
 var inherit = require("raptor-util/inherit");
-var mobx = require("mobx");
+let mobx;
 
 module.exports = function defineComponent(def, renderer) {
     if (def.___isComponent) {
@@ -39,6 +39,8 @@ module.exports = function defineComponent(def, renderer) {
      *
      */
     if (proto.mobxObservable) {
+        if (!mobx) mobx = require("mobx");
+
         // trying to work out the most reliale way of forcing an update, so far state-change is the preference
         // it just introduces a ___mobx property into the component state, or creates the state if not defined
         // TODO need to consider serilisation for when used on a server rendered component
