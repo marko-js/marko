@@ -71,7 +71,13 @@ function destroyNodeRecursive(node, component) {
 
         if (component && (key = node.___markoKey)) {
             if (node === component.___keyedElements[key]) {
-                delete component.___keyedElements[key];
+                if (node.___markoComponent && /\[\]$/.test(key)) {
+                    delete component.___keyedElements[key][
+                        node.___markoComponent.id
+                    ];
+                } else {
+                    delete component.___keyedElements[key];
+                }
             }
         }
 

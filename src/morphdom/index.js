@@ -55,7 +55,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         key,
         referenceEl,
         parentEl,
-        component
+        ownerComponent,
+        parentComponent
     ) {
         var realNode = vNode.___actualize(doc);
         insertBefore(realNode, referenceEl, parentEl);
@@ -66,10 +67,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         ) {
             if (key) {
                 realNode.___markoKey = key;
-                component.___keyedElements[key] = realNode;
+                var isAutoKeyed = /^\d+(\[.+\])?$/.test(key);
+                (isAutoKeyed
+                    ? parentComponent
+                    : ownerComponent
+                ).___keyedElements[key] = realNode;
             }
 
-            morphChildren(realNode, vNode, component);
+            morphChildren(realNode, vNode, parentComponent);
         }
 
         onNodeAdded(realNode, componentsContext);
@@ -79,32 +84,46 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         vComponent,
         referenceNode,
         referenceNodeParentEl,
-        component
+        component,
+        key,
+        ownerComponent,
+        parentComponent
     ) {
-        component.___rootNode = insertBefore(
+        var rootNode = (component.___rootNode = insertBefore(
             createFragmentNode(),
             referenceNode,
             referenceNodeParentEl
-        );
-        component.___rootNode.___markoComponent = component;
+        ));
+        rootNode.___markoComponent = component;
+
+        if (key && ownerComponent) {
+            var keyedElements = ownerComponent.___keyedElements;
+            if (key[0] === "#") {
+                key = key.replace("#" + parentComponent.id + "-", "");
+            }
+            if (/\[\]$/.test(key)) {
+                var repeatedElementsForKey = (keyedElements[key] =
+                    keyedElements[key] || {});
+                repeatedElementsForKey[component.id] = rootNode;
+            } else {
+                keyedElements[key] = rootNode;
+            }
+            rootNode.___markoKey = key;
+        }
+
         morphComponent(component, vComponent);
     }
 
-    function morphComponent(component, vComponent, isUnfinishedFragment) {
-        morphChildren(
-            component.___rootNode,
-            vComponent,
-            component,
-            isUnfinishedFragment
-        );
+    function morphComponent(component, vComponent) {
+        morphChildren(component.___rootNode, vComponent, component);
     }
 
     var detachedNodes = [];
 
-    function detachNode(node, parentNode, component) {
+    function detachNode(node, parentNode, ownerComponent) {
         if (node.nodeType === ELEMENT_NODE || node.nodeType === FRAGMENT_NODE) {
             detachedNodes.push(node);
-            node.___markoDetached = component || true;
+            node.___markoDetached = ownerComponent || true;
         } else {
             destroyNodeRecursive(node);
             removeChild(node);
@@ -115,7 +134,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         component.destroy();
     }
 
-    function morphChildren(fromNode, toNode, component) {
+    function morphChildren(fromNode, toNode, parentComponent) {
         var curFromNodeChild = firstChild(fromNode);
         var curToNodeChild = toNode.___firstChild;
 
@@ -133,24 +152,48 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         outer: while (curToNodeChild) {
             toNextSibling = curToNodeChild.___nextSibling;
             curToNodeType = curToNodeChild.___nodeType;
+            curToNodeKey = curToNodeChild.___key;
 
-            var componentForNode = curToNodeChild.___component || component;
+            var ownerComponent =
+                curToNodeChild.___ownerComponent || parentComponent;
+            var referenceComponent;
+            var isAutoKeyed;
 
             if (curToNodeType === COMPONENT_NODE) {
+                var component = curToNodeChild.___component;
                 if (
                     (matchingFromComponent =
-                        existingComponentLookup[componentForNode.id]) ===
-                    undefined
+                        existingComponentLookup[component.id]) === undefined
                 ) {
                     if (isRerenderInBrowser === true) {
                         var rootNode = beginFragmentNode(
                             curFromNodeChild,
                             fromNode
                         );
-                        componentForNode.___rootNode = rootNode;
-                        rootNode.___markoComponent = componentForNode;
+                        component.___rootNode = rootNode;
+                        rootNode.___markoComponent = component;
 
-                        morphComponent(componentForNode, curToNodeChild);
+                        if (ownerComponent && curToNodeKey) {
+                            rootNode.___markoKey = curToNodeKey;
+                            if (curToNodeKey[0] === "#") {
+                                curToNodeKey = curToNodeKey.replace(
+                                    "#" + parentComponent.id + "-",
+                                    ""
+                                );
+                            }
+                            var keyedElements = ownerComponent.___keyedElements;
+                            if (/\[\]$/.test(curToNodeKey)) {
+                                var repeatedElementsForKey = (keyedElements[
+                                    curToNodeKey
+                                ] =
+                                    keyedElements[curToNodeKey] || {});
+                                repeatedElementsForKey[component.id] = rootNode;
+                            } else {
+                                keyedElements[curToNodeKey] = rootNode;
+                            }
+                        }
+
+                        morphComponent(component, curToNodeChild);
 
                         curFromNodeChild = nextSibling(rootNode);
                     } else {
@@ -158,7 +201,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             curToNodeChild,
                             curFromNodeChild,
                             fromNode,
-                            componentForNode
+                            component,
+                            curToNodeKey,
+                            ownerComponent,
+                            parentComponent
                         );
                     }
                 } else {
@@ -195,20 +241,31 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     }
 
                     if (!curToNodeChild.___preserve) {
-                        morphComponent(componentForNode, curToNodeChild);
+                        morphComponent(component, curToNodeChild);
                     }
                 }
 
                 curToNodeChild = toNextSibling;
                 continue;
-            } else if ((curToNodeKey = curToNodeChild.___key)) {
+            } else if (curToNodeKey) {
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
 
+                isAutoKeyed = /^\d+(\[.+\])?$/.test(curToNodeKey);
+
+                if (isAutoKeyed) {
+                    if (ownerComponent !== parentComponent) {
+                        curToNodeKey += ownerComponent.id;
+                    }
+                    referenceComponent = parentComponent;
+                } else {
+                    referenceComponent = ownerComponent;
+                }
+
                 var keySequence =
-                    keySequences[componentForNode.id] ||
+                    keySequences[referenceComponent.id] ||
                     (keySequences[
-                        componentForNode.id
+                        referenceComponent.id
                     ] = globalComponentsContext.___createKeySequence());
 
                 // We have a keyed element. This is the fast path for matching
@@ -236,15 +293,16 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curFromNodeChild,
                                 curVFromNodeChild,
                                 curToNodeChild,
-                                componentForNode,
-                                curToNodeKey
+                                curToNodeKey,
+                                ownerComponent,
+                                parentComponent
                             );
                         } else {
                             // Remove the old node
                             detachNode(
                                 curFromNodeChild,
                                 fromNode,
-                                componentForNode
+                                ownerComponent
                             );
 
                             // Incompatible nodes. Just move the target VNode into the DOM at this position
@@ -253,7 +311,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curToNodeKey,
                                 curFromNodeChild,
                                 fromNode,
-                                componentForNode
+                                ownerComponent,
+                                parentComponent
                             );
                         }
                     } else {
@@ -262,8 +321,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 } else {
                     if (
                         (matchingFromEl =
-                            componentForNode.___keyedElements[curToNodeKey]) ===
-                        undefined
+                            referenceComponent.___keyedElements[
+                                curToNodeKey
+                            ]) === undefined
                     ) {
                         if (isRerenderInBrowser === true && curFromNodeChild) {
                             if (
@@ -279,8 +339,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                     curFromNodeChild,
                                     curVFromNodeChild,
                                     curToNodeChild,
-                                    componentForNode,
-                                    curToNodeKey
+                                    curToNodeKey,
+                                    ownerComponent,
+                                    parentComponent
                                 );
                                 curToNodeChild = toNextSibling;
                                 curFromNodeChild = fromNextSibling;
@@ -290,7 +351,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curFromNodeChild.nodeType === COMMENT_NODE
                             ) {
                                 var content = curFromNodeChild.nodeValue;
-                                if (content == "F#" + curToNodeChild.___key) {
+                                if (content == "F#" + curToNodeKey) {
                                     var endNode = curFromNodeChild;
                                     while (
                                         endNode.nodeType !== COMMENT_NODE ||
@@ -312,7 +373,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                         morphChildren(
                                             fragment,
                                             curToNodeChild,
-                                            componentForNode
+                                            parentComponent
                                         );
                                     }
 
@@ -328,7 +389,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             curToNodeKey,
                             curFromNodeChild,
                             fromNode,
-                            componentForNode
+                            ownerComponent,
+                            parentComponent
                         );
                         fromNextSibling = curFromNodeChild;
                     } else {
@@ -382,7 +444,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                         detachNode(
                                             curFromNodeChild,
                                             fromNode,
-                                            componentForNode
+                                            ownerComponent
                                         );
                                     }
                                 }
@@ -403,7 +465,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                     detachNode(
                                         curFromNodeChild,
                                         fromNode,
-                                        componentForNode
+                                        ownerComponent
                                     );
                                 }
                             }
@@ -416,9 +478,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                     matchingFromEl,
                                     curVFromNodeChild,
                                     curToNodeChild,
-                                    componentForNode,
                                     curToNodeKey,
-                                    curToNodeKey
+                                    ownerComponent,
+                                    parentComponent
                                 );
                             }
                         } else {
@@ -427,12 +489,13 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curToNodeKey,
                                 curFromNodeChild,
                                 fromNode,
-                                componentForNode
+                                ownerComponent,
+                                parentComponent
                             );
                             detachNode(
                                 matchingFromEl,
                                 fromNode,
-                                componentForNode
+                                ownerComponent
                             );
                         }
                     }
@@ -449,10 +512,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             while (curFromNodeChild) {
                 fromNextSibling = nextSibling(curFromNodeChild);
 
-                if (
-                    (fromComponent = curFromNodeChild.___markoComponent) &&
-                    fromComponent !== componentForNode
-                ) {
+                if ((fromComponent = curFromNodeChild.___markoComponent)) {
                     // The current "to" element is not associated with a component,
                     // but the current "from" element is associated with a component
 
@@ -513,8 +573,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curFromNodeChild,
                                 curVFromNodeChild,
                                 curToNodeChild,
-                                component,
-                                curToNodeKey
+                                curToNodeKey,
+                                ownerComponent,
+                                parentComponent
                             );
                         }
                     } else if (
@@ -543,14 +604,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             curFromNodeKey
                         ] === undefined
                     ) {
-                        detachNode(
-                            curFromNodeChild,
-                            fromNode,
-                            componentForNode
-                        );
+                        detachNode(curFromNodeChild, fromNode, ownerComponent);
                     }
                 } else {
-                    detachNode(curFromNodeChild, fromNode, componentForNode);
+                    detachNode(curFromNodeChild, fromNode, ownerComponent);
                 }
 
                 curFromNodeChild = fromNextSibling;
@@ -565,7 +622,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curToNodeKey,
                 curFromNodeChild,
                 fromNode,
-                componentForNode
+                ownerComponent,
+                parentComponent
             );
 
             curToNodeChild = toNextSibling;
@@ -600,8 +658,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 // For transcluded content, we need to check if the element belongs to a different component
                 // context than the current component and ensure it gets removed from its key index.
                 fromComponent =
-                    (curVFromNodeChild && curVFromNodeChild.___component) ||
-                    component;
+                    curVFromNodeChild && curVFromNodeChild.___ownerComponent;
 
                 detachNode(curFromNodeChild, fromNode, fromComponent);
 
@@ -610,11 +667,18 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
     }
 
-    function morphEl(fromEl, vFromEl, toEl, component, toElKey) {
+    function morphEl(
+        fromEl,
+        vFromEl,
+        toEl,
+        toElKey,
+        ownerComponent,
+        parentComponent
+    ) {
         var nodeName = toEl.___nodeName;
 
         if (isRerenderInBrowser === true && toElKey) {
-            component.___keyedElements[toElKey] = fromEl;
+            ownerComponent.___keyedElements[toElKey] = fromEl;
         }
 
         var constId = toEl.___constId;
@@ -633,7 +697,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
 
         if (nodeName !== "TEXTAREA") {
-            morphChildren(fromEl, toEl, component);
+            morphChildren(fromEl, toEl, parentComponent);
         }
 
         var specialElHandler = specialElHandlers[nodeName];

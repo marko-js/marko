@@ -50,34 +50,24 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
-        var customEvents;
-        var scope;
         var parentComponentDef;
+        var ownerComponentDef = out.___assignedComponentDef;
+        var ownerComponentId = ownerComponentDef && ownerComponentDef.id;
+        var key = out.___assignedKey;
+        var customEvents = out.___assignedCustomEvents;
 
         if (component) {
             id = component.id;
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
-            parentComponentDef = componentsContext.___componentDef;
-            var componentDefFromArgs;
-            if ((componentDefFromArgs = out.___assignedComponentDef)) {
-                scope = componentDefFromArgs.id;
+            if ((parentComponentDef = componentsContext.___componentDef)) {
                 out.___assignedComponentDef = null;
-
-                customEvents = out.___assignedCustomEvents;
-                var key = out.___assignedKey;
 
                 if (key != null) {
                     key = key.toString();
                 }
-                id =
-                    id ||
-                    resolveComponentKey(
-                        globalComponentsContext,
-                        key,
-                        componentDefFromArgs
-                    );
+                id = id || resolveComponentKey(key, parentComponentDef);
             } else if (parentComponentDef) {
                 id = parentComponentDef.___nextComponentId();
             } else {
@@ -94,7 +84,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 out,
                 typeName,
                 customEvents,
-                scope
+                ownerComponentId
             );
         } else {
             if (!component) {
@@ -185,8 +175,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var componentDef = beginComponent(
             componentsContext,
             component,
-            isSplit,
-            parentComponentDef
+            key,
+            ownerComponentDef,
+            isSplit
         );
 
         // This is a hack, but we have to swap out the component instance stored with this node
@@ -227,11 +218,11 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if (customEvents && componentDef.___component) {
             if (registry.___isServer) {
                 componentDef.___customEvents = customEvents;
-                componentDef.___scope = scope;
+                componentDef.___scope = ownerComponentId;
             } else {
                 componentDef.___component.___setCustomEvents(
                     customEvents,
-                    scope
+                    ownerComponentId
                 );
             }
         }

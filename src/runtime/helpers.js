@@ -1,5 +1,8 @@
 "use strict";
 var removeDashes = require("../compiler/util/removeDashes");
+var ComponentsContext = require("../components/ComponentsContext");
+var getComponentsContext = ComponentsContext.___getComponentsContext;
+var ComponentDef = require("../components/ComponentDef");
 var isArray = Array.isArray;
 var RENDER_BODY_TOKEN = "%FN";
 var RENDER_BODY_TO_JSON = function() {
@@ -165,8 +168,21 @@ var helpers = {
                         var preserve = IS_SERVER ? willRerender : isToken;
                         out.___beginFragment(key, component, preserve);
                         if (isFn) {
+                            var componentsContext = getComponentsContext(out);
+                            var parentComponentDef =
+                                componentsContext.___componentDef;
+                            var globalContext =
+                                componentsContext.___globalContext;
+                            componentsContext.___componentDef = new ComponentDef(
+                                component,
+                                parentComponentDef.id +
+                                    "-" +
+                                    parentComponentDef.___nextKey(key),
+                                globalContext
+                            );
                             render.toJSON = RENDER_BODY_TO_JSON;
                             render(out, attrs);
+                            componentsContext.___componentDef = parentComponentDef;
                         }
                         out.___endFragment();
                     } else {

@@ -11,7 +11,7 @@ VNode.prototype = {
         this.___nextSiblingInternal = null;
     },
 
-    ___component: null,
+    ___ownerComponent: null,
 
     get ___firstChild() {
         var firstChild = this.___firstChildInternal;

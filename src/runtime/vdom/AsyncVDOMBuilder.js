@@ -57,13 +57,13 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ___isOut: true,
     ___document: defaultDocument,
 
-    bc: function(component) {
-        var vComponent = new VComponent(component);
+    bc: function(component, key, ownerComponent) {
+        var vComponent = new VComponent(component, key, ownerComponent);
         return this.___beginNode(vComponent, 0, true);
     },
 
-    ___preserveComponent: function(component) {
-        var vComponent = new VComponent(component, true);
+    ___preserveComponent: function(component, key, ownerComponent) {
+        var vComponent = new VComponent(component, key, ownerComponent, true);
         this.___beginNode(vComponent, 0);
     },
 
@@ -123,7 +123,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         //       and a node can only have one parent node.
         var clone = node.___cloneNode();
         this.node(clone);
-        clone.___component = component;
+        clone.___ownerComponent = component;
 
         return this;
     },

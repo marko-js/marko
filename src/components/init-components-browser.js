@@ -9,31 +9,68 @@ var componentLookup = componentsUtil.___componentLookup;
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
 var serverRenderedGlobals = {};
-var serverComponentStartNodes = {};
-var serverComponentEndNodes = {};
+var serverComponentRootNodes = {};
 var keyedElementsByComponentId = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var FLAG_HAS_BODY_EL = 2;
 var FLAG_HAS_HEAD_EL = 4;
 
-function indexServerComponentBoundaries(node) {
+function indexServerComponentBoundaries(node, stack) {
     var componentId;
+    var ownerId;
+    var ownerComponent;
+    var keyedElements;
+    var nextSibling;
+    stack = stack || [];
 
     node = node.firstChild;
     while (node) {
+        nextSibling = node.nextSibling;
         if (node.nodeType === 8) {
             // Comment node
             var commentValue = node.nodeValue;
             if (commentValue[0] === "M") {
-                componentId = commentValue.substring(2);
-
                 var firstChar = commentValue[1];
 
-                if (firstChar === "/") {
-                    serverComponentEndNodes[componentId] = node;
-                } else if (firstChar === "^" || firstChar === "#") {
-                    serverComponentStartNodes[componentId] = node;
+                if (firstChar === "^" || firstChar === "#") {
+                    stack.push(node);
+                } else if (firstChar === "/") {
+                    var endNode = node;
+                    var startNode = stack.pop();
+                    var rootNode = createFragmentNode(
+                        startNode.nextSibling,
+                        endNode
+                    );
+
+                    startNode.parentNode.removeChild(startNode);
+                    endNode.parentNode.removeChild(endNode);
+
+                    componentId = startNode.nodeValue.substring(2);
+                    firstChar = startNode.nodeValue[1];
+
+                    if (firstChar === "^") {
+                        var parts = componentId.split(/ /g);
+                        var key = parts[2];
+                        ownerId = parts[1];
+                        componentId = parts[0];
+                        if ((ownerComponent = componentLookup[ownerId])) {
+                            keyedElements = ownerComponent.___keyedElements;
+                        } else {
+                            keyedElements =
+                                keyedElementsByComponentId[ownerId] ||
+                                (keyedElementsByComponentId[ownerId] = {});
+                        }
+                        if (/\[\]$/.test(key)) {
+                            var repeatedElementsForKey = (keyedElements[key] =
+                                keyedElements[key] || {});
+                            repeatedElementsForKey[componentId] = rootNode;
+                        } else {
+                            keyedElements[key] = rootNode;
+                        }
+                    }
+
+                    serverComponentRootNodes[componentId] = rootNode;
                 }
             }
         } else if (node.nodeType === 1) {
@@ -41,17 +78,21 @@ function indexServerComponentBoundaries(node) {
             var markoKey = node.getAttribute("data-marko-key");
             if (markoKey) {
                 var separatorIndex = markoKey.indexOf(" ");
-                componentId = markoKey.substring(separatorIndex + 1);
+                ownerId = markoKey.substring(separatorIndex + 1);
                 markoKey = markoKey.substring(0, separatorIndex);
-                var keyedElements =
-                    keyedElementsByComponentId[componentId] ||
-                    (keyedElementsByComponentId[componentId] = {});
+                if ((ownerComponent = componentLookup[ownerId])) {
+                    keyedElements = ownerComponent.___keyedElements;
+                } else {
+                    keyedElements =
+                        keyedElementsByComponentId[ownerId] ||
+                        (keyedElementsByComponentId[ownerId] = {});
+                }
                 keyedElements[markoKey] = node;
             }
-            indexServerComponentBoundaries(node);
+            indexServerComponentBoundaries(node, stack);
         }
 
-        node = node.nextSibling;
+        node = nextSibling;
     }
 }
 
@@ -233,33 +274,22 @@ function initServerRendered(renderedComponents, doc) {
         var rootNode;
         var flags = componentDef.___flags;
         if ((flags & 6) === 6) {
-            rootNode = createFragmentNode(document.head);
+            rootNode = createFragmentNode(doc.head);
         } else if (flags & FLAG_HAS_BODY_EL) {
-            rootNode = createFragmentNode(document.body);
+            rootNode = createFragmentNode(doc.body);
         } else if (flags & FLAG_HAS_HEAD_EL) {
-            rootNode = createFragmentNode(document.head, document.body);
+            rootNode = createFragmentNode(doc.head, doc.body);
         } else {
-            var startNodeComment = serverComponentStartNodes[componentId];
-            if (!startNodeComment) {
+            rootNode = serverComponentRootNodes[componentId];
+            if (!rootNode) {
                 indexServerComponentBoundaries(doc);
-                startNodeComment = serverComponentStartNodes[componentId];
+                rootNode = serverComponentRootNodes[componentId];
             }
-            var endNodeComment = serverComponentEndNodes[componentId];
-
-            rootNode = createFragmentNode(
-                startNodeComment.nextSibling,
-                endNodeComment
-            );
-
-            delete serverComponentStartNodes[componentId];
-            delete serverComponentEndNodes[componentId];
-            startNodeComment.parentNode.removeChild(startNodeComment);
-            endNodeComment.parentNode.removeChild(endNodeComment);
+            delete serverComponentRootNodes[componentId];
         }
 
         component.___rootNode = rootNode;
         rootNode.___markoComponent = component;
-
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
 

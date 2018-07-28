@@ -60,7 +60,15 @@ function VElementClone(other) {
     this.___isTextArea = other.___isTextArea;
 }
 
-function VElement(tagName, attrs, key, component, childCount, flags, props) {
+function VElement(
+    tagName,
+    attrs,
+    key,
+    ownerComponent,
+    childCount,
+    flags,
+    props
+) {
     this.___VNode(childCount);
 
     var constId;
@@ -81,7 +89,7 @@ function VElement(tagName, attrs, key, component, childCount, flags, props) {
     }
 
     this.___key = key;
-    this.___component = component;
+    this.___ownerComponent = ownerComponent;
     this.___attributes = attrs || EMPTY_OBJECT;
     this.___properties = props || EMPTY_OBJECT;
     this.___namespaceURI = namespaceURI;
@@ -105,13 +113,13 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, key, component, childCount, flags, props) {
+    e: function(tagName, attrs, key, ownerComponent, childCount, flags, props) {
         var child = this.___appendChild(
             new VElement(
                 tagName,
                 attrs,
                 key,
-                component,
+                ownerComponent,
                 childCount,
                 flags,
                 props
@@ -132,13 +140,21 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    ed: function(tagName, attrs, key, component, childCount, flags, props) {
+    ed: function(
+        tagName,
+        attrs,
+        key,
+        ownerComponent,
+        childCount,
+        flags,
+        props
+    ) {
         var child = this.___appendChild(
             VElement.___createElementDynamicTag(
                 tagName,
                 attrs,
                 key,
-                component,
+                ownerComponent,
                 childCount,
                 flags,
                 props
@@ -158,9 +174,9 @@ VElement.prototype = {
      *
      * @param  {String} value The value for the new Comment node
      */
-    n: function(node, component) {
+    n: function(node, ownerComponent) {
         node = node.___cloneNode();
-        node.___component = component;
+        node.___ownerComponent = ownerComponent;
         this.___appendChild(node);
         return this.___finishChild();
     },
@@ -246,7 +262,7 @@ VElement.___createElementDynamicTag = function(
     tagName,
     attrs,
     key,
-    component,
+    ownerComponent,
     childCount,
     flags,
     props
@@ -257,7 +273,7 @@ VElement.___createElementDynamicTag = function(
         tagName,
         attrs,
         key,
-        component,
+        ownerComponent,
         childCount,
         flags,
         props
@@ -307,7 +323,7 @@ function virtualizeElement(node, virtualizeChildNodes) {
         tagName,
         attrs,
         null /*key*/,
-        null /*component*/,
+        null /*ownerComponent*/,
         0 /*child count*/,
         flags,
         null /*props*/

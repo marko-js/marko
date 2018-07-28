@@ -238,22 +238,14 @@ Component.prototype = componentProto = {
         return els;
     },
     getComponent: function(key, index) {
-        return componentLookup[resolveComponentIdHelper(this, key, index)];
+        var rootNode = this.___keyedElements[resolveKeyHelper(key, index)];
+        return rootNode && rootNode.___markoComponent;
     },
     getComponents: function(key) {
-        key = key + "[]";
-
-        var components = [];
-        var i = 0;
-        var component;
-        while (
-            (component =
-                componentLookup[resolveComponentIdHelper(this, key, i)])
-        ) {
-            components.push(component);
-            i++;
-        }
-        return components;
+        var lookup = this.___keyedElements[key + "[]"];
+        return lookup
+            ? Object.values(lookup).map(rootNode => rootNode.___markoComponent)
+            : [];
     },
     destroy: function() {
         if (this.___destroyed) {
