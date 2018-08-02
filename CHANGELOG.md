@@ -4,6 +4,10 @@
 
 ## 4.12.x
 
+### 4.12.4
+
+- Don't render invalid attribute names on the server (#1103)
+
 ### 4.12.3
 
 - Removes extra parenthesis in output javascript for expressions that Marko does not understand.
