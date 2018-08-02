@@ -4,9 +4,9 @@ module.exports = [
     "dblclick",
     "mousedown",
     "mouseup",
-    // 'mouseover',
-    // 'mousemove',
-    // 'mouseout',
+    "mouseover",
+    "mousemove",
+    "mouseout",
     "dragstart",
     "drag",
     // 'dragenter',
@@ -28,10 +28,10 @@ module.exports = [
     "input",
 
     "attach", // Pseudo event supported by Marko
-    "detach" // Pseudo event supported by Marko
+    "detach", // Pseudo event supported by Marko
 
-    // 'focus', <-- Does not bubble
-    // 'blur', <-- Does not bubble
+    "focus", //<-- Does not bubble
+    "blur" //<-- Does not bubble
     // 'focusin', <-- Not supported in all browsers
     // 'focusout' <-- Not supported in all browsers
 ];

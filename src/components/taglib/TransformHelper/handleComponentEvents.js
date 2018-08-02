@@ -2,21 +2,11 @@
 
 var ATTACH_DETACH_KEY = Symbol("attach-detach");
 
-var bubbleEventsLookup = {};
-
-require("../../bubble").forEach(function(eventType) {
-    bubbleEventsLookup[eventType] = true;
-});
-
-function isBubbleEvent(eventType) {
-    return bubbleEventsLookup.hasOwnProperty(eventType);
-}
-
 function isUpperCase(c) {
     return c == c.toUpperCase();
 }
 
-function addBubblingEventListener(transformHelper, options) {
+function addDelegatedEventListener(transformHelper, options) {
     var el = transformHelper.el;
 
     if (transformHelper.hasBoundComponentForTemplate() === false) {
@@ -30,22 +20,22 @@ function addBubblingEventListener(transformHelper, options) {
 
     var builder = transformHelper.builder;
 
-    var addBubblingEventMethod = builder.memberExpression(
+    var addDelegatedEventMethod = builder.memberExpression(
         builder.identifier("__component"),
         builder.identifier("d")
     );
 
-    var addBubblingEventArgs = [options.targetMethod];
+    var addDelegatedEventArgs = [options.eventType, options.targetMethod];
 
-    addBubblingEventArgs.push(options.isOnce);
+    addDelegatedEventArgs.push(options.isOnce);
 
     if (options.extraArgs) {
-        addBubblingEventArgs.push(builder.arrayExpression(options.extraArgs));
+        addDelegatedEventArgs.push(builder.arrayExpression(options.extraArgs));
     }
 
     var propValue = builder.functionCall(
-        addBubblingEventMethod,
-        addBubblingEventArgs
+        addDelegatedEventMethod,
+        addDelegatedEventArgs
     );
     var propName = "on" + options.eventType.value;
     el.setPropertyValue(propName, propValue, false);
@@ -65,42 +55,6 @@ function addBubblingEventListener(transformHelper, options) {
             );
         }
     }
-}
-
-function addDirectEventListener(transformHelper, options) {
-    var builder = transformHelper.builder;
-    var el = transformHelper.el;
-
-    var addDomEvent = builder.memberExpression(
-        builder.identifier("__component"),
-        builder.identifier("e")
-    );
-
-    let componentIdInfo = transformHelper.assignComponentId(
-        true /* repeated */
-    );
-    let idVarNode = componentIdInfo.idVarNode
-        ? null
-        : componentIdInfo.createIdVarNode();
-
-    var helperArgs = [
-        options.eventType,
-        options.targetMethod,
-        componentIdInfo.idExpression,
-        options.isOnce
-    ];
-
-    if (options.extraArgs) {
-        helperArgs.push(builder.arrayExpression(options.extraArgs));
-    }
-
-    var addDomEventFunctionCall = builder.functionCall(addDomEvent, helperArgs);
-
-    el.onBeforeGenerateCode(event => {
-        event.insertCode([idVarNode, addDomEventFunctionCall]);
-    });
-
-    transformHelper.serializeKey();
 }
 
 function addCustomEventListener(transformHelper, options) {
@@ -225,34 +179,14 @@ module.exports = function handleComponentEvents() {
                     eventType = eventType.toLowerCase();
                 }
 
-                // Node is for an HTML element so treat the event as a DOM event
-                var willBubble = isBubbleEvent(eventType);
-
                 eventType = builder.literal(eventType);
 
-                if (willBubble) {
-                    // The event is white listed for bubbling so we know that
-                    // we have already attached a listener on document.body
-                    // that can be used to handle the event. We will add
-                    // a "data-w-on{eventType}" attribute to the output HTML
-                    // for this element that will be used to map the event
-                    // to a method on the containing component.
-                    addBubblingEventListener(this, {
-                        eventType,
-                        targetMethod,
-                        extraArgs,
-                        isOnce
-                    });
-                } else {
-                    // The event does not bubble so we must attach a DOM
-                    // event listener directly to the target element.
-                    addDirectEventListener(this, {
-                        eventType,
-                        targetMethod,
-                        extraArgs,
-                        isOnce
-                    });
-                }
+                addDelegatedEventListener(this, {
+                    eventType,
+                    targetMethod,
+                    extraArgs,
+                    isOnce
+                });
             }
         });
     }

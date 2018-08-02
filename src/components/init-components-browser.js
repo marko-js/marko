@@ -1,6 +1,5 @@
 "use strict";
 var warp10Finalize = require("warp10/finalize");
-var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
 var componentsUtil = require("./util");
@@ -171,10 +170,6 @@ function initComponent(componentDef, doc) {
  * @param  {Array<marko-components/lib/ComponentDef>} componentDefs An array of ComponentDef instances
  */
 function initClientRendered(componentDefs, doc) {
-    // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any components
-    eventDelegation.___init(doc);
-
     doc = doc || defaultDocument;
     for (var i = componentDefs.length - 1; i >= 0; i--) {
         var componentDef = componentDefs[i];
@@ -204,10 +199,6 @@ function initServerRendered(renderedComponents, doc) {
     }
 
     doc = doc || defaultDocument;
-
-    // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any components
-    eventDelegation.___init(doc);
 
     renderedComponents = warp10Finalize(renderedComponents);
 

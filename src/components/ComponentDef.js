@@ -2,6 +2,8 @@
 var repeatedRegExp = /\[\]$/;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
+var addDelegatedEventHandler = require("./event-delegation")
+    .___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 
@@ -99,7 +101,8 @@ ComponentDef.prototype = {
         return this.id + "-c" + this.___nextIdIndex++;
     },
 
-    d: function(handlerMethodName, isOnce, extraArgs) {
+    d: function(eventName, handlerMethodName, isOnce, extraArgs) {
+        addDelegatedEventHandler(eventName);
         return attachBubblingEvent(this, handlerMethodName, isOnce, extraArgs);
     },
 
