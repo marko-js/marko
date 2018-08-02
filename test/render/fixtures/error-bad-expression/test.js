@@ -13,5 +13,5 @@ exports.checkError = function(e) {
     expect(message).to.contain(
         'Invalid JavaScript expression for attribute "class"'
     );
-    expect(message).to.contain("Unexpected identifier: ((this is not valid))");
+    expect(message).to.contain("Unexpected identifier: (this is not valid)");
 };

@@ -9,6 +9,6 @@ exports.checkError = function(e) {
     );
     expect(message).to.contain('Invalid "in" expression:');
     expect(message).to.contain(
-        "Unexpected identifier: (['red', 'blue', 'green'] foo)"
+        "Unexpected identifier: ['red', 'blue', 'green'] foo"
     );
 };
