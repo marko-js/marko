@@ -6,7 +6,7 @@ module.exports = function attrs(arg) {
                 out += helpers.sa(arg[attrName]);
             } else if (attrName === "class") {
                 out += helpers.ca(arg[attrName]);
-            } else {
+            } else if (isValidAttrName(attrName)) {
                 out += attrHelper(attrName, arg[attrName]);
             }
         }
@@ -19,3 +19,21 @@ module.exports = function attrs(arg) {
 
 var attrHelper = require("./helper-attr");
 var helpers = require("./helpers");
+
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+var invalidAttrNameCharacters = /[\s'"</=\\]/u;
+var validAttrs = Object.create(null);
+var invalidAttrs = Object.create(null);
+
+function isValidAttrName(attrName) {
+    if (validAttrs[attrName]) return true;
+    if (invalidAttrs[attrName]) return false;
+
+    if (!invalidAttrNameCharacters.test(attrName)) {
+        validAttrs[attrName] = true;
+        return true;
+    } else {
+        invalidAttrs[attrName] = true;
+        return false;
+    }
+}
