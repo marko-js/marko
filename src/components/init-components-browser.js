@@ -1,5 +1,6 @@
 "use strict";
 var warp10Finalize = require("warp10/finalize");
+var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
 var componentsUtil = require("./util");
@@ -37,6 +38,7 @@ function indexServerComponentBoundaries(node) {
         } else if (node.nodeType === 1) {
             // HTML element node
             var markoKey = node.getAttribute("data-marko-key");
+            var markoProps = node.getAttribute("data-marko");
             if (markoKey) {
                 var separatorIndex = markoKey.indexOf(" ");
                 componentId = markoKey.substring(separatorIndex + 1);
@@ -45,6 +47,16 @@ function indexServerComponentBoundaries(node) {
                     keyedElementsByComponentId[componentId] ||
                     (keyedElementsByComponentId[componentId] = {});
                 keyedElements[markoKey] = node;
+            }
+            if (markoProps) {
+                markoProps = JSON.parse(markoProps);
+                Object.keys(markoProps).forEach(function(key) {
+                    if (key.slice(0, 2) === "on") {
+                        eventDelegation.___addDelegatedEventHandler(
+                            key.slice(2)
+                        );
+                    }
+                });
             }
             indexServerComponentBoundaries(node);
         }
@@ -170,6 +182,10 @@ function initComponent(componentDef, doc) {
  * @param  {Array<marko-components/lib/ComponentDef>} componentDefs An array of ComponentDef instances
  */
 function initClientRendered(componentDefs, doc) {
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any components
+    eventDelegation.___init(doc);
+
     doc = doc || defaultDocument;
     for (var i = componentDefs.length - 1; i >= 0; i--) {
         var componentDef = componentDefs[i];
@@ -199,6 +215,11 @@ function initServerRendered(renderedComponents, doc) {
     }
 
     doc = doc || defaultDocument;
+
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any components
+    indexServerComponentBoundaries(doc);
+    eventDelegation.___init(doc);
 
     renderedComponents = warp10Finalize(renderedComponents);
 
@@ -232,10 +253,6 @@ function initServerRendered(renderedComponents, doc) {
             startNode = endNode = document.head;
         } else {
             var startNodeComment = serverComponentStartNodes[componentId];
-            if (!startNodeComment) {
-                indexServerComponentBoundaries(doc);
-                startNodeComment = serverComponentStartNodes[componentId];
-            }
             var endNodeComment = serverComponentEndNodes[componentId];
 
             startNode = startNodeComment.nextSibling;
