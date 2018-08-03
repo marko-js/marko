@@ -2,6 +2,8 @@
 var repeatedRegExp = /\[\]$/;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
+var addDelegatedEventHandler = require("./event-delegation")
+    .___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 
@@ -72,34 +74,14 @@ ComponentDef.prototype = {
         }
     },
     /**
-     * Registers a DOM event for a nested HTML element associated with the
-     * component. This is only done for non-bubbling events that require
-     * direct event listeners to be added.
-     * @param  {String} type The DOM event type ("mouseover", "mousemove", etc.)
-     * @param  {String} targetMethod The name of the method to invoke on the scoped component
-     * @param  {String} elId The DOM element ID of the DOM element that the event listener needs to be added too
-     */
-    e: function(type, targetMethod, elId, isOnce, extraArgs) {
-        if (targetMethod) {
-            // The event handler method is allowed to be conditional. At render time if the target
-            // method is null then we do not attach any direct event listeners.
-            (this.___domEvents || (this.___domEvents = [])).push([
-                type,
-                targetMethod,
-                elId,
-                isOnce,
-                extraArgs
-            ]);
-        }
-    },
-    /**
      * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
      */
     ___nextComponentId: function() {
         return this.id + "-c" + this.___nextIdIndex++;
     },
 
-    d: function(handlerMethodName, isOnce, extraArgs) {
+    d: function(eventName, handlerMethodName, isOnce, extraArgs) {
+        addDelegatedEventHandler(eventName);
         return attachBubblingEvent(this, handlerMethodName, isOnce, extraArgs);
     },
 

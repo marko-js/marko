@@ -6,6 +6,7 @@ var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
 var listenersAttachedKey = "$MDE" + runtimeId;
+var delegatedEvents = {};
 
 function getEventFromEl(el, eventName) {
     var virtualProps = getMarkoPropsFromEl(el);
@@ -60,56 +61,64 @@ function delegateEvent(node, eventName, target, event) {
     }
 }
 
-function attachBubbleEventListeners(doc) {
+function addDelegatedEventHandler(eventType) {
+    if (!delegatedEvents[eventType]) {
+        delegatedEvents[eventType] = true;
+    }
+}
+
+function addDelegatedEventHandlerToDoc(eventType, doc) {
     var body = doc.body || doc;
-    // Here's where we handle event delegation using our own mechanism
-    // for delegating events. For each event that we have white-listed
-    // as supporting bubble, we will attach a listener to the root
-    // document.body element. When we get notified of a triggered event,
-    // we again walk up the tree starting at the target associated
-    // with the event to find any mappings for event. Each mapping
-    // is from a DOM event type to a method of a component.
-    require("./bubble").forEach(function addBubbleHandler(eventType) {
-        body.addEventListener(eventType, function(event) {
-            var propagationStopped = false;
+    var listeners = (doc[listenersAttachedKey] =
+        doc[listenersAttachedKey] || {});
+    if (!listeners[eventType]) {
+        body.addEventListener(
+            eventType,
+            (listeners[eventType] = function(event) {
+                var propagationStopped = false;
 
-            // Monkey-patch to fix #97
-            var oldStopPropagation = event.stopPropagation;
+                // Monkey-patch to fix #97
+                var oldStopPropagation = event.stopPropagation;
 
-            event.stopPropagation = function() {
-                oldStopPropagation.call(event);
-                propagationStopped = true;
-            };
+                event.stopPropagation = function() {
+                    oldStopPropagation.call(event);
+                    propagationStopped = true;
+                };
 
-            var curNode = event.target;
-            if (!curNode) {
-                return;
-            }
-
-            // event.target of an SVGElementInstance does not have a
-            // `getAttribute` function in IE 11.
-            // See https://github.com/marko-js/marko/issues/796
-            curNode = curNode.correspondingUseElement || curNode;
-
-            // Search up the tree looking DOM events mapped to target
-            // component methods
-            var propName = "on" + eventType;
-            var target;
-
-            // Attributes will have the following form:
-            // on<event_type>("<target_method>|<component_id>")
-
-            do {
-                if ((target = getEventFromEl(curNode, propName))) {
-                    delegateEvent(curNode, propName, target, event);
-
-                    if (propagationStopped) {
-                        break;
-                    }
+                var curNode = event.target;
+                if (!curNode) {
+                    return;
                 }
-            } while ((curNode = curNode.parentNode) && curNode.getAttribute);
-        });
-    });
+
+                // event.target of an SVGElementInstance does not have a
+                // `getAttribute` function in IE 11.
+                // See https://github.com/marko-js/marko/issues/796
+                curNode = curNode.correspondingUseElement || curNode;
+
+                // Search up the tree looking DOM events mapped to target
+                // component methods
+                var propName = "on" + eventType;
+                var target;
+
+                // Attributes will have the following form:
+                // on<event_type>("<target_method>|<component_id>")
+
+                do {
+                    if ((target = getEventFromEl(curNode, propName))) {
+                        delegateEvent(curNode, propName, target, event);
+
+                        if (propagationStopped) {
+                            break;
+                        }
+                    }
+                } while (
+                    (curNode = curNode.parentNode) &&
+                    curNode.getAttribute
+                );
+            }),
+            true
+        );
+    }
 }
 
 function noop() {}
@@ -118,10 +127,9 @@ exports.___handleNodeAttach = noop;
 exports.___handleNodeDetach = noop;
 exports.___delegateEvent = delegateEvent;
 exports.___getEventFromEl = getEventFromEl;
-
+exports.___addDelegatedEventHandler = addDelegatedEventHandler;
 exports.___init = function(doc) {
-    if (!doc[listenersAttachedKey]) {
-        doc[listenersAttachedKey] = true;
-        attachBubbleEventListeners(doc);
-    }
+    Object.keys(delegatedEvents).forEach(function(eventType) {
+        addDelegatedEventHandlerToDoc(eventType, doc);
+    });
 };

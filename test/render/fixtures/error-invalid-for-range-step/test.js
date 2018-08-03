@@ -8,5 +8,5 @@ exports.checkError = function(e) {
         "An error occurred while trying to compile template at path"
     );
     expect(message).to.contain('Invalid "step" expression:');
-    expect(message).to.contain("Unexpected number: (0 0)");
+    expect(message).to.contain("Unexpected number: 0 0");
 };

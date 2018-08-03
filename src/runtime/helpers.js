@@ -114,6 +114,7 @@ var helpers = {
                     customEvents &&
                     customEvents.reduce(function(events, eventArray) {
                         events["on" + eventArray[0]] = componentDef.d(
+                            eventArray[0],
                             eventArray[1],
                             eventArray[2],
                             eventArray[3]
