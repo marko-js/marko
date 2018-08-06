@@ -586,8 +586,13 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         isCompatible = true;
                         // Simply update nodeValue on the original node to
                         // change the text value
-                        curFromNodeChild.nodeValue =
-                            curToNodeChild.___nodeValue;
+                        if (
+                            curFromNodeChild.nodeValue !==
+                            curToNodeChild.___nodeValue
+                        ) {
+                            curFromNodeChild.nodeValue =
+                                curToNodeChild.___nodeValue;
+                        }
                     }
                 }
 
