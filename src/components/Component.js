@@ -47,7 +47,10 @@ function handleCustomEventWithMethodListener(
     }
 
     var targetComponent = componentLookup[component.___scope];
-    var targetMethod = targetComponent[targetMethodName];
+    var targetMethod =
+        typeof targetMethodName === "function"
+            ? targetMethodName
+            : targetComponent[targetMethodName];
     if (!targetMethod) {
         throw Error("Method not found: " + targetMethodName);
     }

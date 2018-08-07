@@ -42,7 +42,10 @@ function delegateEvent(node, eventName, target, event) {
         return;
     }
 
-    var targetFunc = targetComponent[targetMethod];
+    var targetFunc =
+        typeof targetMethod === "function"
+            ? targetMethod
+            : targetComponent[targetMethod];
     if (!targetFunc) {
         throw Error("Method not found: " + targetMethod);
     }
