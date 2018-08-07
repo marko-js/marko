@@ -216,22 +216,23 @@ module.exports = {
 
 ## Event handling
 
-The `on-[event](methodName, ...args)` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
+The `on-[event](methodName|function, ...args)` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Events handlers may be specified by `methodName` (a string that matches a method on the component instance) or they may be a `function`. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
 
-You may also use the `once-[event](methodName, ...args)` attribute, which will listen for only the first event, and then remove the listener for any subsequent events.
+You may also use the `once-[event](methodName|function, ...args)` attribute, which will listen for only the first event, and then remove the listener for any subsequent events.
 
 ### Attaching DOM event listeners
 
-The code below illustrates how to attach an event listener for a native DOM event:
+The code below illustrates how to attach an event listener for native DOM events:
 
 ```marko
 class {
   onButtonClick(name, event, el) {
     alert(`Hello ${name}!`);
   }
-  fadeIn(event, el) {
-      // ... fade the image in
-  }
+}
+
+static function fadeIn(event, el) {
+  // fade the image in
 }
 
 <div>
@@ -243,11 +244,11 @@ class {
     Say Hello to John
   </button>
 
-  <img src='foo.jpg' once-load('fadeIn') />
+  <img src='foo.jpg' once-load(fadeIn) />
 </div>
 ```
 
-Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
+The following arguments are passed to the event handler when the event is fired:
 
 1.  `...args` - Any extra arguments bind are _prepended_ to the arguments passed to the component's handler method
     - For example: `on-click('onButtonClick', arg1, arg2)` → `onButtonClick(arg1, arg2, event, el)`)
@@ -277,7 +278,7 @@ class {
 </div>
 ```
 
-Any string that represents a valid JavaScript identifier is allowed for the event handler method name and it can be a JavaScript expression. The following arguments are passed to the handler method when the event is fired:
+The following arguments are passed to the event handler when the event is fired:
 
 1.  `...args` - Any extra bind arguments are _prepended_ to the arguments passed to the component's handler method
 2.  `...eventArgs` - The arguments passed to `this.emit()` by the target UI component
@@ -318,13 +319,13 @@ this.emit("foo", "bar", "baz");
 
 ## Attributes
 
-### `on-[event](methodName, ...args)`
+### `on-[event](methodName|function, ...args)`
 
-The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName, ...args)` attribute.
+The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName|function, ...args)` attribute.
 
-### `once-[event](methodName, ...args)`
+### `once-[event](methodName|function, ...args)`
 
-This is the same as the `on-*` attribute except that its listener will only be invoked for the first event, and then removed from memory after that. Please see the [Event handling](#event-handling) section above for more details on how to use the the `once-[event](methodName, ...args)` attribute.
+This is the same as the `on-*` attribute except that its listener will only be invoked for the first event, and then removed from memory after that. Please see the [Event handling](#event-handling) section above for more details on how to use the the `once-[event](methodName|function, ...args)` attribute.
 
 ### `key`
 
@@ -792,7 +793,7 @@ A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.h
 | `eventName` | `String` | the name of the event                                 |
 | `...args`   | `Any`    | all subsequent parameters are passed to the listeners |
 
-Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName, ...args)` attribute](#declarative-custom-events) attribute or `targetComponent.on()`.
+Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName|function, ...args)` attribute](#declarative-custom-events) attribute or `targetComponent.on()`.
 
 ### `on(eventName, handler)`
 
