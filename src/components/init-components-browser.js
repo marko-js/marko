@@ -38,39 +38,44 @@ function indexServerComponentBoundaries(node, stack) {
                 } else if (firstChar === "/") {
                     var endNode = node;
                     var startNode = stack.pop();
-                    var rootNode = createFragmentNode(
-                        startNode.nextSibling,
-                        endNode
-                    );
+                    var hasHeadBodyIndicator = commentValue[2] === "/";
+                    if (!hasHeadBodyIndicator) {
+                        var rootNode = createFragmentNode(
+                            startNode.nextSibling,
+                            endNode
+                        );
+
+                        componentId = startNode.nodeValue.substring(2);
+                        firstChar = startNode.nodeValue[1];
+
+                        if (firstChar === "^") {
+                            var parts = componentId.split(/ /g);
+                            var key = parts[2];
+                            ownerId = parts[1];
+                            componentId = parts[0];
+                            if ((ownerComponent = componentLookup[ownerId])) {
+                                keyedElements = ownerComponent.___keyedElements;
+                            } else {
+                                keyedElements =
+                                    keyedElementsByComponentId[ownerId] ||
+                                    (keyedElementsByComponentId[ownerId] = {});
+                            }
+                            if (/\[\]$/.test(key)) {
+                                var repeatedElementsForKey = (keyedElements[
+                                    key
+                                ] =
+                                    keyedElements[key] || {});
+                                repeatedElementsForKey[componentId] = rootNode;
+                            } else {
+                                keyedElements[key] = rootNode;
+                            }
+                        }
+
+                        serverComponentRootNodes[componentId] = rootNode;
+                    }
 
                     startNode.parentNode.removeChild(startNode);
                     endNode.parentNode.removeChild(endNode);
-
-                    componentId = startNode.nodeValue.substring(2);
-                    firstChar = startNode.nodeValue[1];
-
-                    if (firstChar === "^") {
-                        var parts = componentId.split(/ /g);
-                        var key = parts[2];
-                        ownerId = parts[1];
-                        componentId = parts[0];
-                        if ((ownerComponent = componentLookup[ownerId])) {
-                            keyedElements = ownerComponent.___keyedElements;
-                        } else {
-                            keyedElements =
-                                keyedElementsByComponentId[ownerId] ||
-                                (keyedElementsByComponentId[ownerId] = {});
-                        }
-                        if (/\[\]$/.test(key)) {
-                            var repeatedElementsForKey = (keyedElements[key] =
-                                keyedElements[key] || {});
-                            repeatedElementsForKey[componentId] = rootNode;
-                        } else {
-                            keyedElements[key] = rootNode;
-                        }
-                    }
-
-                    serverComponentRootNodes[componentId] = rootNode;
                 }
             }
         } else if (node.nodeType === 1) {

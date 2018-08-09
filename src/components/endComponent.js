@@ -2,6 +2,10 @@
 
 module.exports = function endComponent(out, componentDef) {
     if (componentDef.___renderBoundary) {
-        out.w("<!--M/-->");
+        if (componentDef.___flags & 2 || componentDef.___flags & 4) {
+            out.w("<!--M//-->");
+        } else {
+            out.w("<!--M/-->");
+        }
     }
 };
