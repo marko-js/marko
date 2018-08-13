@@ -13,8 +13,6 @@ var serverComponentRootNodes = {};
 var keyedElementsByComponentId = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-var FLAG_HAS_BODY_EL = 2;
-var FLAG_HAS_HEAD_EL = 4;
 
 function indexServerComponentBoundaries(node, stack) {
     var componentId;
@@ -38,41 +36,45 @@ function indexServerComponentBoundaries(node, stack) {
                 } else if (firstChar === "/") {
                     var endNode = node;
                     var startNode = stack.pop();
-                    var hasHeadBodyIndicator = commentValue[2] === "/";
-                    if (!hasHeadBodyIndicator) {
-                        var rootNode = createFragmentNode(
+                    var rootNode;
+
+                    if (startNode.parentNode === endNode.parentNode) {
+                        rootNode = createFragmentNode(
                             startNode.nextSibling,
                             endNode
                         );
-
-                        componentId = startNode.nodeValue.substring(2);
-                        firstChar = startNode.nodeValue[1];
-
-                        if (firstChar === "^") {
-                            var parts = componentId.split(/ /g);
-                            var key = parts[2];
-                            ownerId = parts[1];
-                            componentId = parts[0];
-                            if ((ownerComponent = componentLookup[ownerId])) {
-                                keyedElements = ownerComponent.___keyedElements;
-                            } else {
-                                keyedElements =
-                                    keyedElementsByComponentId[ownerId] ||
-                                    (keyedElementsByComponentId[ownerId] = {});
-                            }
-                            if (/\[\]$/.test(key)) {
-                                var repeatedElementsForKey = (keyedElements[
-                                    key
-                                ] =
-                                    keyedElements[key] || {});
-                                repeatedElementsForKey[componentId] = rootNode;
-                            } else {
-                                keyedElements[key] = rootNode;
-                            }
-                        }
-
-                        serverComponentRootNodes[componentId] = rootNode;
+                    } else {
+                        rootNode = createFragmentNode(
+                            endNode.parentNode.firstChild,
+                            endNode
+                        );
                     }
+
+                    componentId = startNode.nodeValue.substring(2);
+                    firstChar = startNode.nodeValue[1];
+
+                    if (firstChar === "^") {
+                        var parts = componentId.split(/ /g);
+                        var key = parts[2];
+                        ownerId = parts[1];
+                        componentId = parts[0];
+                        if ((ownerComponent = componentLookup[ownerId])) {
+                            keyedElements = ownerComponent.___keyedElements;
+                        } else {
+                            keyedElements =
+                                keyedElementsByComponentId[ownerId] ||
+                                (keyedElementsByComponentId[ownerId] = {});
+                        }
+                        if (/\[\]$/.test(key)) {
+                            var repeatedElementsForKey = (keyedElements[key] =
+                                keyedElements[key] || {});
+                            repeatedElementsForKey[componentId] = rootNode;
+                        } else {
+                            keyedElements[key] = rootNode;
+                        }
+                    }
+
+                    serverComponentRootNodes[componentId] = rootNode;
 
                     startNode.parentNode.removeChild(startNode);
                     endNode.parentNode.removeChild(endNode);
@@ -285,21 +287,28 @@ function initServerRendered(renderedComponents, doc) {
             serverRenderedGlobals,
             registry
         );
-        var componentId = componentDef.id;
-        var component = componentDef.___component;
 
-        var rootNode;
-        var flags = componentDef.___flags;
-        if ((flags & 6) === 6) {
-            rootNode = createFragmentNode(doc.head);
-        } else if (flags & FLAG_HAS_BODY_EL) {
-            rootNode = createFragmentNode(doc.body);
-        } else if (flags & FLAG_HAS_HEAD_EL) {
-            rootNode = createFragmentNode(doc.head, doc.body);
-        } else {
-            rootNode = serverComponentRootNodes[componentId];
-            delete serverComponentRootNodes[componentId];
+        if (!hydrateComponent(componentDef, doc)) {
+            // hydrateComponent will return false if there is not rootNode
+            // for the component.  If this is the case, we'll wait until the
+            // DOM has fully loaded to attempt to init the component again.
+            doc.addEventListener("DOMContentLoaded", function() {
+                if (!hydrateComponent(componentDef, doc)) {
+                    indexServerComponentBoundaries(doc);
+                    hydrateComponent(componentDef, doc);
+                }
+            });
         }
+    });
+}
+
+function hydrateComponent(componentDef, doc) {
+    var componentId = componentDef.id;
+    var component = componentDef.___component;
+    var rootNode = serverComponentRootNodes[componentId];
+
+    if (rootNode) {
+        delete serverComponentRootNodes[componentId];
 
         component.___rootNode = rootNode;
         rootNode.___markoComponent = component;
@@ -309,7 +318,8 @@ function initServerRendered(renderedComponents, doc) {
         delete keyedElementsByComponentId[componentId];
 
         initComponent(componentDef, doc || defaultDocument);
-    });
+        return true;
+    }
 }
 
 exports.___initClientRendered = initClientRendered;

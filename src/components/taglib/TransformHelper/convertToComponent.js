@@ -1,10 +1,6 @@
 "use strict";
 const generateRegisterComponentCode = require("../util/generateRegisterComponentCode");
 
-// var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-var FLAG_HAS_BODY_EL = 2;
-var FLAG_HAS_HEAD_EL = 4;
-
 module.exports = function handleComponentBind(options) {
     let context = this.context;
     let builder = this.builder;
@@ -85,31 +81,6 @@ module.exports = function handleComponentBind(options) {
         });
         el.wrapWith(componentNode);
         return;
-    }
-
-    var flags = 0;
-
-    rootNodes.forEach(rootNode => {
-        if (rootNode.type === "HtmlElement") {
-            if (rootNode.tagName === "body") {
-                flags |= FLAG_HAS_BODY_EL;
-            } else if (rootNode.tagName === "head") {
-                flags |= FLAG_HAS_HEAD_EL;
-            }
-        }
-    });
-
-    if (flags) {
-        context.root.appendChild(
-            builder.assignment(
-                builder.memberExpression(
-                    builder.identifier("__component"),
-                    builder.identifier("___flags")
-                ),
-                builder.literal(flags),
-                "|="
-            )
-        );
     }
 
     let markoComponentVar;
