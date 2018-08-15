@@ -72,7 +72,7 @@ Now, we need to bundle these files for use in the browser. We can use a tool cal
 
 ```
 npm install --global lasso-cli
-npm install --save lasso-marko
+npm install --save lasso lasso-marko
 ```
 
 Now we can build our bundle for the browser:
