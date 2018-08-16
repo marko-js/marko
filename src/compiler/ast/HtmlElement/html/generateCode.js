@@ -19,7 +19,7 @@ module.exports = function generateCode(node, codegen) {
     if (properties) {
         var objectProps = Object.keys(properties).map(propName => {
             return builder.property(
-                builder.identifier(propName),
+                builder.literal(propName),
                 properties[propName]
             );
         });

@@ -16,6 +16,11 @@ BrowserHelpers.prototype = {
         el.dispatchEvent(ev);
     },
 
+    triggerCustomEvent: function(el, type, detail) {
+        var ev = new CustomEvent(type, { detail: detail });
+        el.dispatchEvent(ev);
+    },
+
     triggerMouseEvent: function(el, type) {
         var ev = document.createEvent("MouseEvent");
         ev.initMouseEvent(
