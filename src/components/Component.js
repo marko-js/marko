@@ -223,7 +223,7 @@ Component.prototype = componentProto = {
     },
     getEl: function(key, index) {
         if (key) {
-            return this.___keyedElements[resolveKeyHelper(key, index)];
+            return this.___keyedElements["@" + resolveKeyHelper(key, index)];
         } else {
             return this.___rootNode && this.___rootNode.firstChild;
         }

@@ -22,7 +22,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
           cx: "100",
           cy: "100",
           r: "100"
-        }, "1", null, 0, 1);
+        }, null, null, 0, 1);
 
 function render(input, out, __component, component, state) {
   var data = input;

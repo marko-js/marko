@@ -136,6 +136,28 @@ function getMarkoPropsFromEl(el) {
     return virtualProps;
 }
 
+function normalizeComponentKey(key, parentId) {
+    if (key[0] === "#") {
+        key = key.replace("#" + parentId + "-", "");
+    }
+    return key;
+}
+
+function addComponentRootToKeyedElements(
+    keyedElements,
+    key,
+    rootNode,
+    componentId
+) {
+    if (/\[\]$/.test(key)) {
+        var repeatedElementsForKey = (keyedElements[key] =
+            keyedElements[key] || {});
+        repeatedElementsForKey[componentId] = rootNode;
+    } else {
+        keyedElements[key] = rootNode;
+    }
+}
+
 exports.___runtimeId = runtimeId;
 exports.___componentLookup = componentLookup;
 exports.___getComponentForEl = getComponentForEl;
@@ -145,3 +167,5 @@ exports.___destroyNodeRecursive = destroyNodeRecursive;
 exports.___nextComponentIdProvider = nextComponentIdProvider;
 exports.___attachBubblingEvent = attachBubblingEvent;
 exports.___getMarkoPropsFromEl = getMarkoPropsFromEl;
+exports.___addComponentRootToKeyedElements = addComponentRootToKeyedElements;
+exports.___normalizeComponentKey = normalizeComponentKey;

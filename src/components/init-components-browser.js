@@ -6,6 +6,8 @@ var defaultDocument = document;
 var createFragmentNode = require("../morphdom/fragment").___createFragmentNode;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
+var addComponentRootToKeyedElements =
+    componentsUtil.___addComponentRootToKeyedElements;
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
 var serverRenderedGlobals = {};
@@ -65,13 +67,12 @@ function indexServerComponentBoundaries(node, stack) {
                                 keyedElementsByComponentId[ownerId] ||
                                 (keyedElementsByComponentId[ownerId] = {});
                         }
-                        if (/\[\]$/.test(key)) {
-                            var repeatedElementsForKey = (keyedElements[key] =
-                                keyedElements[key] || {});
-                            repeatedElementsForKey[componentId] = rootNode;
-                        } else {
-                            keyedElements[key] = rootNode;
-                        }
+                        addComponentRootToKeyedElements(
+                            keyedElements,
+                            key,
+                            rootNode,
+                            componentId
+                        );
                     }
 
                     serverComponentRootNodes[componentId] = rootNode;

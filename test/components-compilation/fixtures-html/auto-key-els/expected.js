@@ -32,7 +32,7 @@ function render(input, out, __component, component, state) {
 
   out.w("</ul>");
 
-  var __key5 = __component.___nextKey("preservedP");
+  var __key5 = __component.___nextKey("@preservedP");
 
   out.w("<p>");
 

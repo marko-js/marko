@@ -20,7 +20,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_node0 = marko_createElement("HEAD", null, "1", null, 1, 0, {
         i: marko_const_nextId()
       })
-      .e("TITLE", null, "2", null, 1)
+      .e("TITLE", null, null, null, 1)
         .t("Hello"),
     marko_node1 = marko_createElement("H1", null, "4", null, 1, 0, {
         i: marko_const_nextId()

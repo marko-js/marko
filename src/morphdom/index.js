@@ -3,6 +3,9 @@ var specialElHandlers = require("./specialElHandlers");
 var componentsUtil = require("../components/util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
+var addComponentRootToKeyedElements =
+    componentsUtil.___addComponentRootToKeyedElements;
+var normalizeComponentKey = componentsUtil.___normalizeComponentKey;
 var VElement = require("../runtime/vdom/vdom").___VElement;
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
@@ -29,6 +32,10 @@ var FRAGMENT_NODE = 12;
 // var FLAG_SIMPLE_ATTRS = 4;
 var FLAG_PRESERVE = 8;
 // var FLAG_CUSTOM_ELEMENT = 16;
+
+function isAutoKey(key) {
+    return !/^@/.test(key);
+}
 
 function compareNodeNames(fromEl, toEl) {
     return fromEl.___nodeName === toEl.___nodeName;
@@ -67,8 +74,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         ) {
             if (key) {
                 realNode.___markoKey = key;
-                var isAutoKeyed = /^\d+(\[.+\])?$/.test(key);
-                (isAutoKeyed
+                (isAutoKey(key)
                     ? parentComponent
                     : ownerComponent
                 ).___keyedElements[key] = realNode;
@@ -97,17 +103,13 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         rootNode.___markoComponent = component;
 
         if (key && ownerComponent) {
-            var keyedElements = ownerComponent.___keyedElements;
-            if (key[0] === "#") {
-                key = key.replace("#" + parentComponent.id + "-", "");
-            }
-            if (/\[\]$/.test(key)) {
-                var repeatedElementsForKey = (keyedElements[key] =
-                    keyedElements[key] || {});
-                repeatedElementsForKey[component.id] = rootNode;
-            } else {
-                keyedElements[key] = rootNode;
-            }
+            key = normalizeComponentKey(key, parentComponent.id);
+            addComponentRootToKeyedElements(
+                ownerComponent.___keyedElements,
+                key,
+                rootNode,
+                component.id
+            );
             rootNode.___markoKey = key;
         }
 
@@ -157,7 +159,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             var ownerComponent =
                 curToNodeChild.___ownerComponent || parentComponent;
             var referenceComponent;
-            var isAutoKeyed;
 
             if (curToNodeType === COMPONENT_NODE) {
                 var component = curToNodeChild.___component;
@@ -174,23 +175,17 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         rootNode.___markoComponent = component;
 
                         if (ownerComponent && curToNodeKey) {
+                            curToNodeKey = normalizeComponentKey(
+                                curToNodeKey,
+                                parentComponent.id
+                            );
+                            addComponentRootToKeyedElements(
+                                ownerComponent.___keyedElements,
+                                curToNodeKey,
+                                rootNode,
+                                component.id
+                            );
                             rootNode.___markoKey = curToNodeKey;
-                            if (curToNodeKey[0] === "#") {
-                                curToNodeKey = curToNodeKey.replace(
-                                    "#" + parentComponent.id + "-",
-                                    ""
-                                );
-                            }
-                            var keyedElements = ownerComponent.___keyedElements;
-                            if (/\[\]$/.test(curToNodeKey)) {
-                                var repeatedElementsForKey = (keyedElements[
-                                    curToNodeKey
-                                ] =
-                                    keyedElements[curToNodeKey] || {});
-                                repeatedElementsForKey[component.id] = rootNode;
-                            } else {
-                                keyedElements[curToNodeKey] = rootNode;
-                            }
                         }
 
                         morphComponent(component, curToNodeChild);
@@ -251,11 +246,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
 
-                isAutoKeyed = /^\d+(\[.+\])?$/.test(curToNodeKey);
-
-                if (isAutoKeyed) {
+                if (isAutoKey(curToNodeKey)) {
                     if (ownerComponent !== parentComponent) {
-                        curToNodeKey += ownerComponent.id;
+                        curToNodeKey += ":" + ownerComponent.id;
                     }
                     referenceComponent = parentComponent;
                 } else {
@@ -662,10 +655,15 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
                 // For transcluded content, we need to check if the element belongs to a different component
                 // context than the current component and ensure it gets removed from its key index.
-                fromComponent =
-                    curVFromNodeChild && curVFromNodeChild.___ownerComponent;
+                if (isAutoKey(fromNode.___markoKey)) {
+                    referenceComponent = parentComponent;
+                } else {
+                    referenceComponent =
+                        curVFromNodeChild &&
+                        curVFromNodeChild.___ownerComponent;
+                }
 
-                detachNode(curFromNodeChild, fromNode, fromComponent);
+                detachNode(curFromNodeChild, fromNode, referenceComponent);
 
                 curFromNodeChild = fromNextSibling;
             }
