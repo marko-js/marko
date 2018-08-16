@@ -38,13 +38,15 @@ var fragmentPrototype = {
         );
     },
     insertInto(newParentNode, referenceNode) {
-        this.nodes.forEach(node =>
-            insertBefore(node, referenceNode, newParentNode)
-        );
+        this.nodes.forEach(function(node) {
+            insertBefore(node, referenceNode, newParentNode);
+        });
         return this;
     },
     remove() {
-        this.nodes.forEach(node => this.detachedContainer.appendChild(node));
+        this.nodes.forEach(function(node) {
+            this.detachedContainer.appendChild(node);
+        });
     }
 };
 

@@ -247,7 +247,9 @@ Component.prototype = componentProto = {
     getComponents: function(key) {
         var lookup = this.___keyedElements[key + "[]"];
         return lookup
-            ? Object.values(lookup).map(rootNode => rootNode.___markoComponent)
+            ? Object.keys(lookup).map(function(key) {
+                  return lookup[key].___markoComponent;
+              })
             : [];
     },
     destroy: function() {
