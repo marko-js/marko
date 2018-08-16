@@ -242,6 +242,15 @@ Component.prototype = componentProto = {
     },
     getComponent: function(key, index) {
         var rootNode = this.___keyedElements[resolveKeyHelper(key, index)];
+        if (/\[\]$/.test(key)) {
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain(
+                    "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
+                );
+            }
+            rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
+        }
         return rootNode && rootNode.___markoComponent;
     },
     getComponents: function(key) {
