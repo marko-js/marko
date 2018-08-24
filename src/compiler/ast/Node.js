@@ -241,7 +241,7 @@ class Node {
      * of this node that is the same version we use when
      * serializing to JSON.
      */
-    inspect() {
+    [inspect.custom]() {
         // We inspect in the simplified version of this object t
         return this.toJSON();
     }
