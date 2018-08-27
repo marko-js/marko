@@ -4,6 +4,7 @@ var VDocumentFragment = require("./VDocumentFragment");
 var VElement = require("./VElement");
 var VText = require("./VText");
 var VComponent = require("./VComponent");
+var VFragment = require("./VFragment");
 
 var defaultDocument = typeof document != "undefined" && document;
 var specialHtmlRegexp = /[&<]/;
@@ -91,6 +92,7 @@ exports.___VDocumentFragment = VDocumentFragment;
 exports.___VElement = VElement;
 exports.___VText = VText;
 exports.___VComponent = VComponent;
+exports.___VFragment = VFragment;
 exports.___virtualize = virtualize;
 exports.___virtualizeHTML = virtualizeHTML;
 exports.___defaultDocument = defaultDocument;

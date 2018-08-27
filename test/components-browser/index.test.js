@@ -33,13 +33,18 @@ function runClientTest(fixture) {
         if (isAsync) {
             testFunc(helpers, cleanupAndFinish);
         } else {
-            testFunc(helpers);
-            cleanupAndFinish();
+            let err;
+            try {
+                testFunc(helpers);
+            } catch (e) {
+                err = e;
+            }
+            cleanupAndFinish(err);
         }
 
         function cleanupAndFinish(err) {
             // Cache components for use in hydrate run.
-            context.rendered = helpers.rendered;
+            if (!err) context.rendered = helpers.rendered;
             helpers.instances.forEach(instance => instance.destroy());
             helpers.targetEl.innerHTML = "";
             done(err);

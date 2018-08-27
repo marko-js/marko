@@ -140,12 +140,6 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
     return false;
 }
 
-function getNodes(component) {
-    var nodes = [];
-    component.___forEachNode(nodes.push.bind(nodes));
-    return nodes;
-}
-
 var componentProto;
 
 /**
@@ -157,8 +151,7 @@ function Component(id) {
     EventEmitter.call(this);
     this.id = id;
     this.___state = null;
-    this.___startNode = null;
-    this.___endNode = null;
+    this.___rootNode = null;
     this.___subscriptions = null;
     this.___domEventListenerHandles = null;
     this.___bubblingDomEvents = null; // Used to keep track of bubbling DOM events for components rendered on the server
@@ -230,9 +223,9 @@ Component.prototype = componentProto = {
     },
     getEl: function(key, index) {
         if (key) {
-            return this.___keyedElements[resolveKeyHelper(key, index)];
+            return this.___keyedElements["@" + resolveKeyHelper(key, index)];
         } else {
-            return this.___startNode;
+            return this.___rootNode && this.___rootNode.firstChild;
         }
     },
     getEls: function(key) {
@@ -248,29 +241,33 @@ Component.prototype = componentProto = {
         return els;
     },
     getComponent: function(key, index) {
-        return componentLookup[resolveComponentIdHelper(this, key, index)];
+        var rootNode = this.___keyedElements[resolveKeyHelper(key, index)];
+        if (/\[\]$/.test(key)) {
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain(
+                    "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
+                );
+            }
+            rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
+        }
+        return rootNode && rootNode.___markoComponent;
     },
     getComponents: function(key) {
-        key = key + "[]";
-
-        var components = [];
-        var i = 0;
-        var component;
-        while (
-            (component =
-                componentLookup[resolveComponentIdHelper(this, key, i)])
-        ) {
-            components.push(component);
-            i++;
-        }
-        return components;
+        var lookup = this.___keyedElements[key + "[]"];
+        return lookup
+            ? Object.keys(lookup).map(function(key) {
+                  return lookup[key].___markoComponent;
+              })
+            : [];
     },
     destroy: function() {
         if (this.___destroyed) {
             return;
         }
 
-        var nodes = getNodes(this);
+        var root = this.___rootNode;
+        var nodes = this.___rootNode.nodes;
 
         this.___destroyShallow();
 
@@ -281,6 +278,8 @@ Component.prototype = componentProto = {
                 node.parentNode.removeChild(node);
             }
         });
+
+        root.detached = true;
 
         delete componentLookup[this.id];
     },
@@ -293,9 +292,9 @@ Component.prototype = componentProto = {
         emitLifecycleEvent(this, "destroy");
         this.___destroyed = true;
 
-        this.___startNode.___markoComponent = undefined;
+        this.___rootNode.___markoComponent = undefined;
 
-        this.___startNode = this.___endNode = null;
+        this.___rootNode = null;
 
         // Unsubscribe from all DOM events
         this.___removeDOMEventListeners();
@@ -492,8 +491,7 @@ Component.prototype = componentProto = {
             throw TypeError();
         }
 
-        var startNode = this.___startNode;
-        var endNodeNextSibling = this.___endNode.nextSibling;
+        var rootNode = this.___rootNode;
 
         var doc = self.___document;
         var input = this.___renderInput || this.___input;
@@ -514,16 +512,9 @@ Component.prototype = componentProto = {
 
             var result = new RenderResult(out);
 
-            var targetNode = out.___getOutput();
+            var targetNode = out.___getOutput().___firstChild;
 
-            morphdom(
-                startNode.parentNode,
-                startNode,
-                endNodeNextSibling,
-                targetNode,
-                doc,
-                componentsContext
-            );
+            morphdom(rootNode, targetNode, doc, componentsContext);
 
             result.afterInsert(doc);
         });
@@ -532,23 +523,9 @@ Component.prototype = componentProto = {
     },
 
     ___detach: function() {
-        var fragment = this.___document.createDocumentFragment();
-        this.___forEachNode(fragment.appendChild.bind(fragment));
-        return fragment;
-    },
-
-    ___forEachNode: function(callback) {
-        var currentNode = this.___startNode;
-        var endNode = this.___endNode;
-
-        for (;;) {
-            var nextSibling = currentNode.nextSibling;
-            callback(currentNode);
-            if (currentNode == endNode) {
-                break;
-            }
-            currentNode = nextSibling;
-        }
+        var root = this.___rootNode;
+        root.remove();
+        return root;
     },
 
     ___removeDOMEventListeners: function() {
@@ -589,12 +566,7 @@ Component.prototype = componentProto = {
                 'The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.'
             );
         }
-        var el = this.___startNode;
-        while (el) {
-            if (el.nodeType === ELEMENT_NODE) return el;
-            if (el === this.___endNode) return;
-            el = el.nextSibling;
-        }
+        return this.___rootNode && this.___rootNode.firstChild;
     },
 
     get els() {
@@ -604,7 +576,9 @@ Component.prototype = componentProto = {
                 'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.'
             );
         }
-        return getNodes(this).filter(function(el) {
+        return (this.___rootNode ? this.___rootNode.nodes : []).filter(function(
+            el
+        ) {
             return el.nodeType === ELEMENT_NODE;
         });
     }

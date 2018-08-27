@@ -18,18 +18,24 @@ function run(fixture) {
         var testFile = resolve("tests.js");
         var templateFile = resolve("template.marko");
         var template = require(templateFile);
-        return template.render({}).then(function(html) {
-            var browser = createBrowserWithMarko(__dirname, String(html), {
-                beforeParse(window, browser) {
-                    browser.require("../../components");
-                    browser.require(templateFile);
-                }
+        return template
+            .render({})
+            .then(function(html) {
+                var browser = createBrowserWithMarko(__dirname, String(html), {
+                    beforeParse(window, browser) {
+                        browser.require("../../components");
+                        browser.window.$initComponents();
+                        browser.require(templateFile);
+                    }
+                });
+                after(function() {
+                    browser.window.close();
+                });
+                return browser;
+            })
+            .then(function(browser) {
+                browser.window.document.close();
+                browser.require(testFile);
             });
-            after(function() {
-                browser.window.close();
-            });
-            browser.require(testFile);
-            browser.window.$initComponents();
-        });
     });
 }

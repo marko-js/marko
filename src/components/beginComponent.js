@@ -9,8 +9,9 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 module.exports = function beginComponent(
     componentsContext,
     component,
+    key,
+    ownerComponentDef,
     isSplitComponent,
-    parentComponentDef,
     isImplicitComponent
 ) {
     var globalContext = componentsContext.___globalContext;
@@ -25,8 +26,8 @@ module.exports = function beginComponent(
 
     // On the server
     if (
-        parentComponentDef &&
-        parentComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
+        ownerComponentDef &&
+        ownerComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
     ) {
         componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
         return componentDef;
@@ -47,9 +48,20 @@ module.exports = function beginComponent(
 
     if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
         componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
-        out.w("<!--M#" + componentId + "-->");
+    }
+
+    if (ownerComponentDef && key != null) {
+        out.w(
+            "<!--M^" +
+                componentId +
+                " " +
+                ownerComponentDef.id +
+                " " +
+                key +
+                "-->"
+        );
     } else {
-        out.w("<!--M^" + componentId + "-->");
+        out.w("<!--M#" + componentId + "-->");
     }
 
     return componentDef;

@@ -4,6 +4,4 @@ class {
     }
 }
 
-<div>
-    <counter key="counter" if(!state.hideOwnCounter)/>|<include(input.renderBody)/>
-</div>
+<counter key="counter" if(!state.hideOwnCounter)/><span>|</span><${input}/>

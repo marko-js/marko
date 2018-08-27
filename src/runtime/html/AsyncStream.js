@@ -500,6 +500,24 @@ var proto = (AsyncStream.prototype = {
         this.write(escapeXml(str));
     },
 
+    ___beginFragment: function(key, component, preserve) {
+        if (preserve) {
+            this.write("<!--F#" + escapeXml(key) + "-->");
+        }
+        if (this._elStack) {
+            this._elStack.push(preserve);
+        } else {
+            this._elStack = [preserve];
+        }
+    },
+
+    ___endFragment: function() {
+        var preserve = this._elStack.pop();
+        if (preserve) {
+            this.write("<!--F/-->");
+        }
+    },
+
     ___getNode: function(doc) {
         var node = this._node;
         var curEl;

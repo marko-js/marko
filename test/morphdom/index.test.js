@@ -42,9 +42,6 @@ autotest("fixtures", fixture => {
             encoding: "utf8"
         });
 
-        var parentNode = fromNode;
-        var startNode = fromNode.firstChild;
-        var endNode = null;
         var toNode = targetVEl;
         var doc = fromDocument;
         var componentsContext = {
@@ -55,14 +52,7 @@ autotest("fixtures", fixture => {
             }
         };
 
-        morphdom(
-            parentNode,
-            startNode,
-            endNode,
-            toNode,
-            doc,
-            componentsContext
-        );
+        morphdom(fromNode, toNode, doc, componentsContext);
 
         var actualHTML = serializeNode(fromNode);
         snapshot(actualHTML, ".html");

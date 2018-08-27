@@ -88,7 +88,6 @@ module.exports = function assignComponentId(isRepeated) {
                 true /* user assigned key */
             );
         } else {
-            idExpression = assignedKey;
             if (el.data.userAssignedKey !== false) {
                 if (
                     context.data.hasLegacyForKey ||
@@ -101,13 +100,26 @@ module.exports = function assignComponentId(isRepeated) {
                 }
             }
 
-            el.setKey(assignedKey);
+            // mark as user-assigned key (@)
+            if (assignedKey.type === "Literal") {
+                idExpression = builder.literal("@" + assignedKey.value);
+            } else {
+                idExpression = builder.binaryExpression(
+                    builder.literal("@"),
+                    "+",
+                    assignedKey
+                );
+            }
+
+            el.setKey(idExpression);
             this.serializeKey();
         }
     } else {
         // Case 3 - We need to add a unique auto key
         let parentForKey = getParentForKeyVar(el, this);
         let uniqueKey = this.nextUniqueId();
+
+        el.isAutoKeyed = true;
 
         nestedIdExpression = isRepeated
             ? builder.literal(uniqueKey + "[]")

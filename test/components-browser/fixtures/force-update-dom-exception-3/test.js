@@ -34,5 +34,3 @@ module.exports = function(helpers) {
         component.update();
     });
 };
-
-module.exports.fails = "issue #1059";

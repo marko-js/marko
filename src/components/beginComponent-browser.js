@@ -1,6 +1,11 @@
 var ComponentDef = require("./ComponentDef");
 
-module.exports = function beginComponent(componentsContext, component) {
+module.exports = function beginComponent(
+    componentsContext,
+    component,
+    key,
+    ownerComponentDef
+) {
     var componentId = component.id;
 
     var globalContext = componentsContext.___globalContext;
@@ -13,6 +18,6 @@ module.exports = function beginComponent(componentsContext, component) {
     componentsContext.___components.push(componentDef);
 
     var out = componentsContext.___out;
-    out.bc(component);
+    out.bc(component, key, ownerComponentDef && ownerComponentDef.___component);
     return componentDef;
 };

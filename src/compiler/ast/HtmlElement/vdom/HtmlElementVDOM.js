@@ -84,6 +84,7 @@ class HtmlElementVDOM extends Node {
         this.dynamicAttributes = def.dynamicAttributes;
         this.key = def.key;
         this.runtimeFlags = def.runtimeFlags;
+        this.isAutoKeyed = def.isAutoKeyed;
 
         this.isSVG = false;
         this.isTextArea = false;
@@ -279,7 +280,10 @@ class HtmlElementVDOM extends Node {
             createArgs[INDEX_ATTRS] = attributesArg;
         }
 
-        if (key) {
+        if (
+            key &&
+            (!this.isAutoKeyed || !this.isStatic || this.createElementId)
+        ) {
             createArgs[INDEX_KEY] = key;
 
             if (!this.isStatic) {

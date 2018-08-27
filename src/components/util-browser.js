@@ -6,6 +6,14 @@ var componentLookup = {};
 var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
+function getParentComponentForEl(node) {
+    while (node && !node.___markoComponent) {
+        node = node.previousSibling || node.parentNode;
+        node = (node && node.fragment) || node;
+    }
+    return node && node.___markoComponent;
+}
+
 function getComponentForEl(el, doc) {
     if (el) {
         var node =
@@ -13,7 +21,7 @@ function getComponentForEl(el, doc) {
                 ? (doc || defaultDocument).getElementById(el)
                 : el;
         if (node) {
-            return node.___markoComponent;
+            return getParentComponentForEl(node);
         }
     }
 }
@@ -50,7 +58,7 @@ function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
 }
 
 function destroyComponentForNode(node) {
-    var componentToDestroy = node.___markoComponent;
+    var componentToDestroy = (node.fragment || node).___markoComponent;
     if (componentToDestroy) {
         componentToDestroy.___destroyShallow();
         delete componentLookup[componentToDestroy.id];
@@ -58,17 +66,23 @@ function destroyComponentForNode(node) {
 }
 function destroyNodeRecursive(node, component) {
     destroyComponentForNode(node);
-    if (node.nodeType === 1) {
+    if (node.nodeType === 1 || node.nodeType === 12) {
         var key;
 
         if (component && (key = node.___markoKey)) {
             if (node === component.___keyedElements[key]) {
-                delete component.___keyedElements[key];
+                if (node.___markoComponent && /\[\]$/.test(key)) {
+                    delete component.___keyedElements[key][
+                        node.___markoComponent.id
+                    ];
+                } else {
+                    delete component.___keyedElements[key];
+                }
             }
         }
 
         var curChild = node.firstChild;
-        while (curChild) {
+        while (curChild && curChild !== node.endNode) {
             destroyNodeRecursive(curChild, component);
             curChild = curChild.nextSibling;
         }
@@ -122,6 +136,28 @@ function getMarkoPropsFromEl(el) {
     return virtualProps;
 }
 
+function normalizeComponentKey(key, parentId) {
+    if (key[0] === "#") {
+        key = key.replace("#" + parentId + "-", "");
+    }
+    return key;
+}
+
+function addComponentRootToKeyedElements(
+    keyedElements,
+    key,
+    rootNode,
+    componentId
+) {
+    if (/\[\]$/.test(key)) {
+        var repeatedElementsForKey = (keyedElements[key] =
+            keyedElements[key] || {});
+        repeatedElementsForKey[componentId] = rootNode;
+    } else {
+        keyedElements[key] = rootNode;
+    }
+}
+
 exports.___runtimeId = runtimeId;
 exports.___componentLookup = componentLookup;
 exports.___getComponentForEl = getComponentForEl;
@@ -131,3 +167,5 @@ exports.___destroyNodeRecursive = destroyNodeRecursive;
 exports.___nextComponentIdProvider = nextComponentIdProvider;
 exports.___attachBubblingEvent = attachBubblingEvent;
 exports.___getMarkoPropsFromEl = getMarkoPropsFromEl;
+exports.___addComponentRootToKeyedElements = addComponentRootToKeyedElements;
+exports.___normalizeComponentKey = normalizeComponentKey;
