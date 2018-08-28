@@ -223,7 +223,24 @@ Component.prototype = componentProto = {
     },
     getEl: function(key, index) {
         if (key) {
-            return this.___keyedElements["@" + resolveKeyHelper(key, index)];
+            var resolvedKey = resolveKeyHelper(key, index);
+            var keyedElement = this.___keyedElements["@" + resolvedKey];
+
+            if (!keyedElement) {
+                var keyedComponent = this.getComponent(resolvedKey);
+
+                if (keyedComponent) {
+                    // eslint-disable-next-line no-constant-condition
+                    if ("MARKO_DEBUG") {
+                        complain(
+                            "Accessing the elements of a child component using 'component.getEl' is deprecated."
+                        );
+                    }
+                    return keyedComponent.___rootNode.firstChild;
+                }
+            }
+
+            return keyedElement;
         } else {
             return this.___rootNode && this.___rootNode.firstChild;
         }
