@@ -2,6 +2,46 @@
 
 # 4.x
 
+## 4.13.x
+
+### 4.13.2
+
+- Allow discovering tags where the template name matches the directory name (#1117):
+
+```
+components/
+  tag-name/
+    tag-name.marko
+    tag-name.style.css
+```
+
+### 4.13.1
+
+- Remove es2015 features from runtime. (#1115)
+
+### 4.13.0
+
+#### PR #1094
+
+**Introducing HTMLFragment**
+
+- Updates the diffing algorithm to use an HTMLFragment node as an abstraction rather than keeping track of startNode and endNode all throughout the diffing algorithm.
+- Uses the HTMLFragment for the `<${dynamic}>` tag and `<include>` tags to preserve server-rendered content for which the `renderBody` is not available in the browser.
+
+**Changes to keys**
+
+- Component ids are based on the resulting parent tree (not the owner tree). This means we cannot rely on the ids in the global lookup, so component key/refs are now also stored on the component instance.
+- Autokeyed elements are now stored on the parent rather than the owner. User assigned key/refs are still stored on the owner component. Because of this, user assigned keys are now prefixed to differentiate them from autokeys. This also has the benefit that assigning numeric keys can no longer conflict with the autokeys.
+- Static node trees are now only auto assigned a key for the top-level node (instead of all nodes). This is because:
+  - When updating, only the top-level node is considered.
+  - When static nodes are hoisted out of the render method, they are not associated with the owner component
+
+**Changes to Hydration**
+
+- Server comment starting markers now have the component's key serialized so the component can be attached to its owner
+- Server comment markers no longer have the id on the closing marker, it is stack based.
+- Normalize differences between hydration and client-rendering, so post mount the DOM looks the same regardless of whether a component was server or client rendered.
+
 ## 4.12.x
 
 ### 4.12.4
