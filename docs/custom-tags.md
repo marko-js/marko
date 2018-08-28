@@ -10,14 +10,11 @@ To get started let's look at template-based tags which allow you to render anoth
 
 ### Discovering tags
 
-When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/`. It then attempts to load the children of these directories as custom tags. The children can be a Marko template or a directory with an `index.marko` template (and other supporting files).
+When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/`. It then attempts to load the children of these directories as custom tags.
 
 ```dir
 components/
-    app-header/
-        index.marko
-        logo.png
-        style.css
+    app-header.marko
     app-footer.marko
 pages/
     home/
@@ -43,6 +40,32 @@ You can just use the tag name:
 
 ```marko
 <app-header/>
+```
+
+#### Tag directories
+
+In addition to a Marko template, the children of `components/` can be a directory with an `index.marko` template (and other supporting files):
+
+```dir
+components/
+    app-header/
+        index.marko
+        logo.png
+        style.css
+    app-footer/
+        index.marko
+```
+
+Or a directory with a template whose name matches its parent directory:
+
+```dir
+components/
+    app-header/
+        app-header.marko
+        app-header.style.css
+        logo.png
+    app-footer/
+        app-footer.marko
 ```
 
 ## Using tags from npm
