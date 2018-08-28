@@ -4,23 +4,23 @@ var insertBefore = helpers.___insertBefore;
 var fragmentPrototype = {
     nodeType: 12,
     get firstChild() {
-        let firstChild = this.startNode.nextSibling;
+        var firstChild = this.startNode.nextSibling;
         return firstChild === this.endNode ? undefined : firstChild;
     },
     get lastChild() {
-        let lastChild = this.endNode.previousSibling;
+        var lastChild = this.endNode.previousSibling;
         return lastChild === this.startNode ? undefined : lastChild;
     },
     get parentNode() {
-        let parentNode = this.startNode.parentNode;
+        var parentNode = this.startNode.parentNode;
         return parentNode === this.detachedContainer ? undefined : parentNode;
     },
     get nextSibling() {
         return this.endNode.nextSibling;
     },
     get nodes() {
-        const nodes = [];
-        let current = this.startNode;
+        var nodes = [];
+        var current = this.startNode;
         while (current !== this.endNode) {
             nodes.push(current);
             current = current.nextSibling;
@@ -28,8 +28,8 @@ var fragmentPrototype = {
         nodes.push(current);
         return nodes;
     },
-    insertBefore(newChildNode, referenceNode) {
-        const actualReference =
+    insertBefore: function(newChildNode, referenceNode) {
+        var actualReference =
             referenceNode == null ? this.endNode : referenceNode;
         return insertBefore(
             newChildNode,
@@ -37,13 +37,13 @@ var fragmentPrototype = {
             this.startNode.parentNode
         );
     },
-    insertInto(newParentNode, referenceNode) {
+    insertInto: function(newParentNode, referenceNode) {
         this.nodes.forEach(function(node) {
             insertBefore(node, referenceNode, newParentNode);
         });
         return this;
     },
-    remove() {
+    remove: function() {
         this.nodes.forEach(function(node) {
             this.detachedContainer.appendChild(node);
         });
