@@ -157,6 +157,8 @@ module.exports = function defineWidget(def, renderer) {
         Component.renderSync = renderer.renderSync;
     }
 
+    Component._isWidget = true;
+
     return Component;
 };
 

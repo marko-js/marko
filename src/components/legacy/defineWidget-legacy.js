@@ -6,12 +6,13 @@ module.exports = function defineWidget(def, renderer) {
     if (renderer) {
         return {
             ___isComponent: true,
+            _isWidget: true,
             renderer: renderer,
             render: renderer.render,
             renderSync: renderer.renderSync,
             template: renderer.template
         };
     } else {
-        return { ___isComponent: true };
+        return { ___isComponent: true, _isWidget: true };
     }
 };
