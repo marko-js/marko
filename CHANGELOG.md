@@ -4,7 +4,7 @@
 
 ## 4.13.x
 
-### 4.13.2
+### 4.13.3
 
 - Propagate errors to express automatically with the `res.marko` api. [#1119](https://github.com/marko-js/marko/pull/1119)
 - Support multi line import statments. [#1118](https://github.com/marko-js/marko/pull/1118)
