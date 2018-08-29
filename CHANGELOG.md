@@ -6,7 +6,12 @@
 
 ### 4.13.2
 
-- Allow discovering tags where the template name matches the directory name (#1117):
+- Propagate errors to express automatically with the `res.marko` api. [#1119](https://github.com/marko-js/marko/pull/1119)
+- Support multi line import statments. [#1118](https://github.com/marko-js/marko/pull/1118)
+
+### 4.13.2
+
+- Allow discovering tags where the template name matches the directory name [#1117](https://github.com/marko-js/marko/pull/1117):
 
 ```
 components/
@@ -17,7 +22,7 @@ components/
 
 ### 4.13.1
 
-- Remove es2015 features from runtime. (#1115)
+- Remove es2015 features from runtime. [#1115](https://github.com/marko-js/marko/pull/1115)
 
 ### 4.13.0
 
@@ -46,7 +51,7 @@ components/
 
 ### 4.12.4
 
-- Don't render invalid attribute names on the server (#1103)
+- Don't render invalid attribute names on the server [#1103](https://github.com/marko-js/marko/pull/1103)
 
 ### 4.12.3
 
@@ -58,14 +63,14 @@ components/
 
 ### 4.12.1
 
-- Fix #1022 - transcluded keys don't match, stateful component not preserved (#1086)
+- Fix #1022 - transcluded keys don't match, stateful component not preserved [#1086](https://github.com/marko-js/marko/pull/1086)
 
 ### 4.12.0
 
-- Tag params (#1076)
-- Style arrays (#1082)
-- Fix #1075 - cannot compile dynamic tag at root with user key (#1081)
-- Fix #1078 - mutating spread attributes (#1080)
+- Tag params [#1076](https://github.com/marko-js/marko/pull/1076)
+- Style arrays [#1082](https://github.com/marko-js/marko/pull/1082)
+- Fix #1075 - cannot compile dynamic tag at root with user key [#1081](https://github.com/marko-js/marko/pull/1081)
+- Fix #1078 - mutating spread attributes [#1080](https://github.com/marko-js/marko/pull/1080)
 
 ## 4.11.x
 
@@ -75,7 +80,7 @@ components/
 
 ### 4.11.4
 
-- Fixes an issue with scoped attributes automatically setting keys in a problematic way (#1069)
+- Fixes an issue with scoped attributes automatically setting keys in a problematic way [#1069](https://github.com/marko-js/marko/pull/1069)
 - Fixes #1059 and #1052 - `Cannot read property 'nextSibling' of null`
 
 ### 4.11.3
@@ -94,12 +99,12 @@ components/
   $ const style = { color:'blue' };
   <${tagName} style=style/>
   ```
-- Allows dynamic attributes defined using `...spread` to include object/array class/style (#933):
+- Allows dynamic attributes defined using `...spread` to include object/array class/style [#933](https://github.com/marko-js/marko/pull/933):
   ```marko
   $ const attrs = { style:{ color:'blue' } };
   <tag ...attrs/>
   ```
-- Fixes issue where object/array class/style attributes could not be used with `...spread` (#1007):
+- Fixes issue where object/array class/style attributes could not be used with `...spread` [#1007](https://github.com/marko-js/marko/pull/1007):
   ```marko
   $ const attrs = {};
   <tag class=["oops"] ...attrs/>
@@ -273,7 +278,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 
 - Add ids for any key when component.elId/getElId is used as an attribute value
 - Use indexOf instead of includes to support Node 4
-- [docs] Fixes [#841](https://github.com/marko-js/marko/issues/841) - `docs/components.md` refers to deprecated "data" variable (#842)
+- [docs] Fixes [#841](https://github.com/marko-js/marko/issues/841) - `docs/components.md` refers to deprecated "data" variable [#842](https://github.com/marko-js/marko/pull/842)
 
 ### 4.5.0-beta.1
 
@@ -297,7 +302,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 ### 4.4.28
 
 - fix undefined reference error in Component.js
-- Increase mocha timeout to avoid CI build's failing (#821)
+- Increase mocha timeout to avoid CI build's failing [#821](https://github.com/marko-js/marko/pull/821)
 
 ### 4.4.27
 
@@ -307,7 +312,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 
 ### 4.4.26
 
-- Add better interop for importing modules with default exports (#803)
+- Add better interop for importing modules with default exports [#803](https://github.com/marko-js/marko/pull/803)
 
 ### 4.4.25
 
@@ -325,13 +330,13 @@ Summary of changes across all beta releases for the `4.5.0` release:
 - simplify a condition judgement in components-jquery
 - Fixes #790 - Class tag should not allow nested body content.
 - Update `compile/index.js` test description
-- Update handleRootNodes.js (#747)
+- Update handleRootNodes.js [#747](https://github.com/marko-js/marko/pull/747)
 - [docs] Fix reference to lifecycle section in docs.
 
 ### 4.4.22
 
 - Fixes #784 - Fix compiled preserve-attrs path.
-- [testing] Fix express tests (#779)
+- [testing] Fix express tests [#779](https://github.com/marko-js/marko/pull/779)
 - [docs] Update webpack.md
 
 ### 4.4.21
@@ -351,7 +356,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 - [morphdom] Ensure `onBeforeNodeDiscarded` is only called once by looking to see if the node is still attached.
 - [morphdom] Infinite loop fix in morphdom
 - Fixes #761 - component.elId() does not work on the server
-- Fixes #755 - Allow diffing of HTML, head, and body. (#756)
+- Fixes #755 - Allow diffing of HTML, head, and body. [#756](https://github.com/marko-js/marko/pull/756)
 - [docs] Updated component docs
 - [docs] Use relative link for image
 - [testing] User default npm version for each Node.js version
@@ -362,7 +367,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 
 ### 4.4.17
 
-- Put package (`browser.json`) deps before others and parent deps before child deps (#750)
+- Put package (`browser.json`) deps before others and parent deps before child deps [#750](https://github.com/marko-js/marko/pull/750)
 - [docs] Fix typo in redux.md
 - [docs] Add redux document to structure.json
 - [docs] Add doc describing how to use Redux with Marko.
@@ -395,7 +400,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 
 - Fixes #728 - Do not use module keyword because webpack compiles it to a custom object.
 - Fixes #719 - Support Express 4 and Express 5.
-- fixes #658 by removing empty style blocks (#715)
+- fixes #658 by removing empty style blocks [#715](https://github.com/marko-js/marko/pull/715)
 - fixes #688 - add reference to browser.json in meta dependencies
 - [docs] Fix broken link
 - [docs] Fix Marko syntax in docs causing compilation errors on the website.
@@ -430,7 +435,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 
 ### 4.4.3
 
-- Use parent module to require express patch (#701)
+- Use parent module to require express patch [#701](https://github.com/marko-js/marko/pull/701)
 - [docs] Reference app should point to "marko-lasso" because "ui-components-playground" does not contain lasso
 - [docs] Add articles section to docs.
 
