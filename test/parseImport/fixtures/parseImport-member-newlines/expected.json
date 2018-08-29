@@ -1,0 +1,14 @@
+[
+    {
+        "name": "jquery_module",
+        "value": "jquery",
+        "module": true
+    },
+    {
+        "name": "fn",
+        "value": {
+            "object": "jquery_module",
+            "property": "fn"
+        }
+    }
+]
