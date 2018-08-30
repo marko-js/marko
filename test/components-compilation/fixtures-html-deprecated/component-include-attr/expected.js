@@ -12,7 +12,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, widget, component) {
   var data = input;
 
-  out.w("<div><h1>Header</h1><div>");
+  out.w("<div data-widget=\"/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index\"><h1>Header</h1><div>");
 
   include_tag({
       _target: __component.b
