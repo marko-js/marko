@@ -109,7 +109,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
     // just building it from the server info
     component.___updateQueued = true;
 
-    if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+    if (!isLegacy && flags & FLAG_WILL_RERENDER_IN_BROWSER) {
         if (component.onCreate) {
             component.onCreate(input, { global: global });
         }
