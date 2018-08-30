@@ -123,8 +123,12 @@ var helpers = {
                     }, {});
                 if (attrs.renderBody) {
                     var renderBody = attrs.renderBody;
-                    var otherAttrs = Object.assign({}, attrs);
-                    delete otherAttrs.renderBody;
+                    var otherAttrs = {};
+                    for (var attrKey in attrs) {
+                        if (attrKey !== "renderBody") {
+                            otherAttrs[attrKey] = attrs[attrKey];
+                        }
+                    }
                     out.___beginElementDynamic(
                         tag,
                         otherAttrs,

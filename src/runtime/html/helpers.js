@@ -155,7 +155,8 @@ var escapeScript = exports.xs;
 var assignPropsFunction = `
     function ap_(p) {
         var s = document.currentScript;
-        Object.assign(s.previousSibling, p);
+        var ps = s.previousSibling;
+        for (var k in p) ps[k] = p[k];
         s.parentNode.removeChild(s);
     }
 `
