@@ -14,7 +14,7 @@ module.exports = function(helpers, done) {
 
         // console.log('HTML', html);
 
-        expect(Object.keys(renderedComponents).length).to.equal(2);
+        expect(Object.keys(renderedComponents).length).to.equal(3);
         var componentDefs = renderedComponents.w;
         expect(componentDefs.length).to.equal(3);
 
