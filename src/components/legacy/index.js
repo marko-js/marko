@@ -8,4 +8,5 @@ exports.makeRenderable = exports.renderable = require("../../runtime/renderable"
 
 // server only
 exports.writeInitWidgetsCode = modernMarko.writeInitComponentsCode;
-exports.getRenderedWidgets = modernMarko.getRenderedComponents;
+exports.getRenderedWidgets = exports.getRenderedWidgetIds =
+    modernMarko.getRenderedComponents;
