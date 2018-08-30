@@ -4,6 +4,10 @@
 
 ## 4.13.x
 
+### 4.13.4
+
+- Remove Object.assign calls in the browser. [#1120](https://github.com/marko-js/marko/pull/1120)
+
 ### 4.13.3
 
 - Propagate errors to express automatically with the `res.marko` api. [#1119](https://github.com/marko-js/marko/pull/1119)
