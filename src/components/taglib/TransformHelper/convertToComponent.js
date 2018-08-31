@@ -55,6 +55,12 @@ module.exports = function handleComponentBind(options) {
                 "data-widget",
                 builder.literal(componentType.id)
             );
+            if (!el.hasAttribute("id")) {
+                el.setAttributeValue(
+                    "id",
+                    this.buildComponentElIdFunctionCall()
+                );
+            }
         }
 
         let dependencyModule =
