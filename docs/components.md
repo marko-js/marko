@@ -977,10 +977,6 @@ Moves the UI component's DOM elements into the position after the target element
 this.appendTo(document.body);
 ```
 
-### `detach()`
-
-Detaches the component's root element(s) from the DOM by removing the UI component's DOM elements from its parent node.
-
 ### `insertAfter(targetEl)`
 
 Moves the UI component's DOM elements into the position after the target DOM element.

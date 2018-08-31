@@ -72,12 +72,14 @@ function findAndSetFile(tagDef, tagDirname) {
         return;
     }
 
+    let tagName = nodePath.basename(tagDirname);
     let fileMap = getFileMap(tagDirname);
 
     for (let i = 0; i < searchFiles.length; i++) {
         let name = searchFiles[i].name;
         let type = searchFiles[i].type;
-        let path = getPath(name, fileMap);
+        let repeatedName = tagName + "." + name.replace("index.", "");
+        let path = getPath(name, fileMap) || getPath(repeatedName, fileMap);
 
         if (path) {
             tagDef[type] = path;

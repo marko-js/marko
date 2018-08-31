@@ -1,7 +1,7 @@
 "use strict";
 
 function getSpecifiers(importDeclaration) {
-    var match = /^(.+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
+    var match = /^([\s\S]+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
     if (!match) {
         return {
             moduleSpecifier: importDeclaration.replace(/"|'/g, "").trim()
@@ -16,7 +16,8 @@ function getSpecifiers(importDeclaration) {
 
 function getImportSpecifierGroups(importSpecifierSet) {
     var defaultImport = importSpecifierSet;
-    var decomposedImports = /(?:,\s*)?{(.*)}$/.exec(importSpecifierSet) || [];
+    var decomposedImports =
+        /(?:,\s*)?{([\s\S]*)}$/.exec(importSpecifierSet) || [];
 
     if (decomposedImports.length) {
         defaultImport = defaultImport.replace(decomposedImports[0], "");
