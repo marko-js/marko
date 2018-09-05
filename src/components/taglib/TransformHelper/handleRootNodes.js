@@ -159,7 +159,10 @@ function handleClassDeclaration(classEl, transformHelper) {
 module.exports = function handleRootNodes() {
     let context = this.context;
 
-    if (context.isFlagSet("hasLegacyWidgetBind")) {
+    if (
+        context.isFlagSet("hasLegacyWidgetBind") ||
+        context.isFlagSet("hasLegacyWidgetAttr")
+    ) {
         return;
     }
 
@@ -298,7 +301,6 @@ module.exports = function handleRootNodes() {
     }
 
     // templateRoot._normalizeChildTextNodes(context, false, true);
-
     this.convertToComponent({
         isImplicitComponent,
         rootNodes,

@@ -54,13 +54,15 @@
             "type": "string",
             "preserve-name": true,
             "autocomplete": [],
-            "deprecated": true
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@w-id": {
             "type": "string",
             "preserve-name": true,
             "autocomplete": [],
-            "deprecated": true
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@on*": {
             "pattern": true,
@@ -97,12 +99,14 @@
             "preserve-name": true,
             "set-flag": "hasComponentEvents",
             "autocomplete": [],
-            "deprecated": true
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@w-body": {
             "preserve-name": true,
             "autocomplete": [],
-            "deprecated": true
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@w-preserve": {
             "type": "flag",

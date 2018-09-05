@@ -94,6 +94,9 @@ const helpers = {
         module: "marko/runtime/helper-forEachWithStatusVar"
     },
     forRange: { module: "marko/runtime/helper-forRange" },
+    getWidgetFromOut: {
+        module: "marko/components/legacy/helper-getWidgetFromOut"
+    },
     include: "i",
     loadNestedTag: { module: "marko/runtime/helper-loadNestedTag" },
     loadTag: "t",
