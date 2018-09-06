@@ -35,5 +35,13 @@ if (Widget) {
 
 var RenderResult = require("../../runtime/RenderResult");
 
-RenderResult.prototype.getWidget = RenderResult.prototype.getComponent;
-RenderResult.prototype.getWidgets = RenderResult.prototype.getComponents;
+RenderResult.prototype.getWidget = function() {
+    return this.getWidgets()[0];
+};
+RenderResult.prototype.getWidgets = function() {
+    return RenderResult.prototype.getComponents
+        .apply(this, arguments)
+        .filter(function(component) {
+            return component.___isLegacy;
+        });
+};

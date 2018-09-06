@@ -46,6 +46,7 @@ module.exports = function defineWidget(def, renderer) {
     // The same prototype will be used by our constructor after
     // we he have set up the prototype chain using the inherit function
     proto = Component.prototype = ComponentClass.prototype;
+    proto.___isLegacy = true;
 
     proto.constructor = def.constructor = Component;
 
@@ -57,8 +58,7 @@ module.exports = function defineWidget(def, renderer) {
     var onBeforeDestroy = proto.onBeforeDestroy;
     var onDestroy = proto.onDestroy;
 
-    // delete legacy methods
-    delete proto.init;
+    // delete legacy methods that conflict
     delete proto.onRender;
     delete proto.onBeforeUpdate;
     delete proto.onUpdate;
