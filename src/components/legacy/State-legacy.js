@@ -10,10 +10,10 @@ function ensure(state, propertyName) {
             set: function(value) {
                 if (value === undefined) {
                     // Don't store state properties with an undefined or null value
-                    delete this.___raw[name];
+                    delete this.___raw[propertyName];
                 } else {
                     // Otherwise, store the new value in the component state
-                    this.___raw[name] = value;
+                    this.___raw[propertyName] = value;
                 }
             }
         });
