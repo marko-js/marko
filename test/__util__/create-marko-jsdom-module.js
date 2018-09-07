@@ -38,6 +38,7 @@ module.exports = function(dir, html, options) {
         extensions: browserExtensions,
         // runScripts: 'dangerously', // JSDOM 10+
         beforeParse(window, browser) {
+            window.global = window;
             jQuery(window);
             browser.require("complain").log = noop;
             globals.forEach(function(k) {

@@ -1,3 +1,6 @@
+var domData = require("../../components/dom-data");
+var keysByDOMNode = domData.___keyByDOMNode;
+var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
 var createFragmentNode = require("../../morphdom/fragment")
@@ -14,8 +17,8 @@ VFragment.prototype = {
     ___nodeType: 12,
     ___actualize: function() {
         var fragment = createFragmentNode();
-        fragment.___markoKey = this.___key;
-        fragment.___markoVElement = this;
+        keysByDOMNode.set(fragment, this.___key);
+        vElementByDOMNode.set(fragment, this);
         return fragment;
     }
 };
