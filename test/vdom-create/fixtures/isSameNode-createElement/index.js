@@ -1,7 +1,9 @@
 var expect = require("chai").expect;
+var domData = require("../../../../src/components/dom-data");
+var vElementByDOMNode = domData.___vElementByDOMNode;
 
 function isSameNode(virtualEl, realEl) {
-    var vFromEl = realEl.___markoVElement;
+    var vFromEl = vElementByDOMNode.get(realEl);
     var constId = virtualEl.___constId;
     if (constId !== undefined && vFromEl.___constId === constId) {
         return true;

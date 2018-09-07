@@ -1,4 +1,6 @@
 var expect = require("chai").expect;
+var domData = require("../../../../src/components/dom-data");
+var vElementByDOMNode = domData.___vElementByDOMNode;
 
 module.exports = function(helpers) {
     var component = helpers.mount(require.resolve("./index"), {});
@@ -27,7 +29,7 @@ module.exports = function(helpers) {
         for (var i = 0; i < els.length; i++) {
             var el = els[i];
             var component = helpers.getComponentForEl(el);
-            var key = el.___markoVElement.___key;
+            var key = vElementByDOMNode.get(el).___key;
             lookup[key] = {
                 el: el,
                 component: component,

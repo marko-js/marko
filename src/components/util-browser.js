@@ -1,3 +1,8 @@
+var domData = require("./dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
+var keysByDOMNode = domData.___keyByDOMNode;
+var vElementsByDOMNode = domData.___vElementByDOMNode;
+var vPropsByDOMNode = domData.___vPropsByDOMNode;
 var markoUID = window.$MUID || (window.$MUID = { i: 0 });
 var runtimeId = markoUID.i++;
 
@@ -7,11 +12,11 @@ var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
 function getParentComponentForEl(node) {
-    while (node && !node.___markoComponent) {
+    while (node && !componentsByDOMNode.get(node)) {
         node = node.previousSibling || node.parentNode;
         node = (node && node.fragment) || node;
     }
-    return node && node.___markoComponent;
+    return node && componentsByDOMNode.get(node);
 }
 
 function getComponentForEl(el, doc) {
@@ -58,7 +63,7 @@ function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
 }
 
 function destroyComponentForNode(node) {
-    var componentToDestroy = (node.fragment || node).___markoComponent;
+    var componentToDestroy = componentsByDOMNode.get(node.fragment || node);
     if (componentToDestroy) {
         componentToDestroy.___destroyShallow();
         delete componentLookup[componentToDestroy.id];
@@ -69,11 +74,11 @@ function destroyNodeRecursive(node, component) {
     if (node.nodeType === 1 || node.nodeType === 12) {
         var key;
 
-        if (component && (key = node.___markoKey)) {
+        if (component && (key = keysByDOMNode.get(node))) {
             if (node === component.___keyedElements[key]) {
-                if (node.___markoComponent && /\[\]$/.test(key)) {
+                if (componentsByDOMNode.get(node) && /\[\]$/.test(key)) {
                     delete component.___keyedElements[key][
-                        node.___markoComponent.id
+                        componentsByDOMNode.get(node).id
                     ];
                 } else {
                     delete component.___keyedElements[key];
@@ -118,18 +123,21 @@ function attachBubblingEvent(
 }
 
 function getMarkoPropsFromEl(el) {
-    var vElement = el.___markoVElement;
+    var vElement = vElementsByDOMNode.get(el);
     var virtualProps;
 
     if (vElement) {
         virtualProps = vElement.___properties;
     } else {
-        virtualProps = el.___markoVProps;
+        virtualProps = vPropsByDOMNode.get(el);
         if (!virtualProps) {
             virtualProps = el.getAttribute("data-marko");
-            el.___markoVProps = virtualProps = virtualProps
-                ? JSON.parse(virtualProps)
-                : EMPTY_OBJECT;
+            vPropsByDOMNode.set(
+                el,
+                (virtualProps = virtualProps
+                    ? JSON.parse(virtualProps)
+                    : EMPTY_OBJECT)
+            );
         }
     }
 
