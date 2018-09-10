@@ -28,6 +28,14 @@ function convertAttrValue(type, value) {
     }
 }
 
+function assign(a, b) {
+    for (var key in b) {
+        if (b.hasOwnProperty(key)) {
+            a[key] = b[key];
+        }
+    }
+}
+
 function setAttribute(el, namespaceURI, name, value) {
     if (namespaceURI === null) {
         el.setAttribute(name, value);
@@ -194,7 +202,7 @@ VElement.prototype = {
                 : doc.createElement(tagName);
 
         if (flags & FLAG_CUSTOM_ELEMENT) {
-            Object.assign(el, attributes);
+            assign(el, attributes);
         } else {
             for (var attrName in attributes) {
                 var attrValue = attributes[attrName];
@@ -362,7 +370,7 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var props = toEl.___properties;
 
     if (toFlags & FLAG_CUSTOM_ELEMENT) {
-        return Object.assign(fromEl, attrs);
+        return assign(fromEl, attrs);
     }
 
     var attrName;
