@@ -43,6 +43,7 @@ module.exports = function beginComponent(
     componentsContext.___components.push(componentDef);
 
     let out = componentsContext.___out;
+    let runtimeId = (out.global.runtimeId = out.global.runtimeId || "M");
 
     componentDef.___renderBoundary = true;
 
@@ -52,7 +53,9 @@ module.exports = function beginComponent(
 
     if (ownerComponentDef && key != null) {
         out.w(
-            "<!--M^" +
+            "<!--" +
+                runtimeId +
+                "^" +
                 componentId +
                 " " +
                 ownerComponentDef.id +
@@ -61,7 +64,7 @@ module.exports = function beginComponent(
                 "-->"
         );
     } else {
-        out.w("<!--M#" + componentId + "-->");
+        out.w("<!--" + runtimeId + "#" + componentId + "-->");
     }
 
     return componentDef;
