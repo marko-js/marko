@@ -10,6 +10,8 @@ var addComponentRootToKeyedElements =
     componentsUtil.___addComponentRootToKeyedElements;
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
+var domData = require("./dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
 var serverRenderedGlobals = {};
 var serverComponentRootNodes = {};
 var keyedElementsByComponentId = {};
@@ -317,7 +319,7 @@ function hydrateComponent(componentDef, doc) {
         delete serverComponentRootNodes[componentId];
 
         component.___rootNode = rootNode;
-        rootNode.___markoComponent = component;
+        componentsByDOMNode.set(rootNode, component);
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
 

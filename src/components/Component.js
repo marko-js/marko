@@ -18,6 +18,8 @@ var inherit = require("raptor-util/inherit");
 var updateManager = require("./update-manager");
 var morphdom = require("../morphdom");
 var eventDelegation = require("./event-delegation");
+var domData = require("./dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
 
 var slice = Array.prototype.slice;
 
@@ -268,13 +270,13 @@ Component.prototype = componentProto = {
             }
             rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
         }
-        return rootNode && rootNode.___markoComponent;
+        return rootNode && componentsByDOMNode.get(rootNode);
     },
     getComponents: function(key) {
         var lookup = this.___keyedElements[key + "[]"];
         return lookup
             ? Object.keys(lookup).map(function(key) {
-                  return lookup[key].___markoComponent;
+                  return componentsByDOMNode.get(lookup[key]);
               })
             : [];
     },
@@ -309,7 +311,7 @@ Component.prototype = componentProto = {
         emitLifecycleEvent(this, "destroy");
         this.___destroyed = true;
 
-        this.___rootNode.___markoComponent = undefined;
+        componentsByDOMNode.set(this.___rootNode, undefined);
 
         this.___rootNode = null;
 
