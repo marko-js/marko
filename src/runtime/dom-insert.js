@@ -24,7 +24,7 @@ module.exports = function(target, getEl, afterInsert) {
         appendTo: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            referenceEl.appendChild(el);
+            el.insertInto(referenceEl);
             return afterInsert(this, referenceEl);
         },
         prependTo: function(referenceEl) {
