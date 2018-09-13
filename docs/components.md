@@ -10,7 +10,7 @@ With Marko, the DOM output of a UI component is based on input properties and a 
 
 ## Component structure
 
-Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
+Marko makes it easy to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
 
 - **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
 - **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
@@ -69,7 +69,7 @@ style.less {
 }
 ```
 
-> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
+> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
 
 ## Multi-file components
 
