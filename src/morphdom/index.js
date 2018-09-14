@@ -367,12 +367,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                         endNode.nextSibling,
                                         fromNode
                                     );
-
                                     keysByDOMNode.set(fragment, curToNodeKey);
                                     vElementByDOMNode.set(
                                         fragment,
                                         curToNodeChild
                                     );
+                                    referenceComponent.___keyedElements[
+                                        curToNodeKey
+                                    ] = fragment;
                                     removeChild(curFromNodeChild);
                                     removeChild(endNode);
 
