@@ -10,18 +10,21 @@ var addComponentRootToKeyedElements =
     componentsUtil.___addComponentRootToKeyedElements;
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
+var domData = require("./dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
 var serverRenderedGlobals = {};
 var serverComponentRootNodes = {};
 var keyedElementsByComponentId = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 
-function indexServerComponentBoundaries(node, stack) {
+function indexServerComponentBoundaries(node, runtimeId, stack) {
     var componentId;
     var ownerId;
     var ownerComponent;
     var keyedElements;
     var nextSibling;
+    var runtimeLength = runtimeId.length;
     stack = stack || [];
 
     node = node.firstChild;
@@ -30,8 +33,8 @@ function indexServerComponentBoundaries(node, stack) {
         if (node.nodeType === 8) {
             // Comment node
             var commentValue = node.nodeValue;
-            if (commentValue[0] === "M") {
-                var firstChar = commentValue[1];
+            if (commentValue.slice(0, runtimeLength) === runtimeId) {
+                var firstChar = commentValue[runtimeLength];
 
                 if (firstChar === "^" || firstChar === "#") {
                     stack.push(node);
@@ -52,8 +55,10 @@ function indexServerComponentBoundaries(node, stack) {
                         );
                     }
 
-                    componentId = startNode.nodeValue.substring(2);
-                    firstChar = startNode.nodeValue[1];
+                    componentId = startNode.nodeValue.substring(
+                        runtimeLength + 1
+                    );
+                    firstChar = startNode.nodeValue[runtimeLength];
 
                     if (firstChar === "^") {
                         var parts = componentId.split(/ /g);
@@ -108,7 +113,7 @@ function indexServerComponentBoundaries(node, stack) {
                     }
                 });
             }
-            indexServerComponentBoundaries(node, stack);
+            indexServerComponentBoundaries(node, runtimeId, stack);
         }
 
         node = nextSibling;
@@ -266,15 +271,17 @@ function initServerRendered(renderedComponents, doc) {
 
     doc = doc || defaultDocument;
 
-    // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any components
-    indexServerComponentBoundaries(doc);
-    eventDelegation.___init(doc);
-
     renderedComponents = warp10Finalize(renderedComponents);
 
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
+    var runtimeId = renderedComponents.r;
+
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any components
+    indexServerComponentBoundaries(doc, runtimeId);
+    eventDelegation.___init(doc);
+
     var globals = window.$MG;
     if (globals) {
         serverRenderedGlobals = warp10Finalize(globals);
@@ -295,7 +302,7 @@ function initServerRendered(renderedComponents, doc) {
             // DOM has fully loaded to attempt to init the component again.
             doc.addEventListener("DOMContentLoaded", function() {
                 if (!hydrateComponent(componentDef, doc)) {
-                    indexServerComponentBoundaries(doc);
+                    indexServerComponentBoundaries(doc, runtimeId);
                     hydrateComponent(componentDef, doc);
                 }
             });
@@ -312,7 +319,7 @@ function hydrateComponent(componentDef, doc) {
         delete serverComponentRootNodes[componentId];
 
         component.___rootNode = rootNode;
-        rootNode.___markoComponent = component;
+        componentsByDOMNode.set(rootNode, component);
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
 

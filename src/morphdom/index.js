@@ -12,6 +12,11 @@ var morphAttrs = VElement.___morphAttrs;
 var eventDelegation = require("../components/event-delegation");
 var fragment = require("./fragment");
 var helpers = require("./helpers");
+var domData = require("../components/dom-data");
+var keysByDOMNode = domData.___keyByDOMNode;
+var componentByDOMNode = domData.___componentByDOMNode;
+var vElementByDOMNode = domData.___vElementByDOMNode;
+var detachedByDOMNode = domData.___detachedByDOMNode;
 
 var insertBefore = helpers.___insertBefore;
 var insertAfter = helpers.___insertAfter;
@@ -73,7 +78,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             vNode.___nodeType === FRAGMENT_NODE
         ) {
             if (key) {
-                realNode.___markoKey = key;
+                keysByDOMNode.set(realNode, key);
                 (isAutoKey(key)
                     ? parentComponent
                     : ownerComponent
@@ -100,7 +105,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             referenceNode,
             referenceNodeParentEl
         ));
-        rootNode.___markoComponent = component;
+        componentByDOMNode.set(rootNode, component);
 
         if (key && ownerComponent) {
             key = normalizeComponentKey(key, parentComponent.id);
@@ -110,7 +115,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 rootNode,
                 component.id
             );
-            rootNode.___markoKey = key;
+            keysByDOMNode.set(rootNode, key);
         }
 
         morphComponent(component, vComponent);
@@ -125,7 +130,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     function detachNode(node, parentNode, ownerComponent) {
         if (node.nodeType === ELEMENT_NODE || node.nodeType === FRAGMENT_NODE) {
             detachedNodes.push(node);
-            node.___markoDetached = ownerComponent || true;
+            detachedByDOMNode.set(node, ownerComponent || true);
         } else {
             destroyNodeRecursive(node);
             removeChild(node);
@@ -172,7 +177,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             fromNode
                         );
                         component.___rootNode = rootNode;
-                        rootNode.___markoComponent = component;
+                        componentByDOMNode.set(rootNode, component);
 
                         if (ownerComponent && curToNodeKey) {
                             curToNodeKey = normalizeComponentKey(
@@ -185,7 +190,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 rootNode,
                                 component.id
                             );
-                            rootNode.___markoKey = curToNodeKey;
+
+                            keysByDOMNode.set(rootNode, curToNodeKey);
                         }
 
                         morphComponent(component, curToNodeChild);
@@ -208,8 +214,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     ) {
                         if (
                             curFromNodeChild &&
-                            (fromComponent =
-                                curFromNodeChild.___markoComponent) &&
+                            (fromComponent = componentByDOMNode.get(
+                                curFromNodeChild
+                            )) &&
                             globalComponentsContext.___renderedComponentsById[
                                 fromComponent.id
                             ] === undefined
@@ -266,8 +273,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curToNodeKey = keySequence.___nextKey(curToNodeKey);
 
                 if (curFromNodeChild) {
-                    curFromNodeKey = curFromNodeChild.___markoKey;
-                    curVFromNodeChild = curFromNodeChild.___markoVElement;
+                    curFromNodeKey = keysByDOMNode.get(curFromNodeChild);
+                    curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
                     fromNextSibling = nextSibling(curFromNodeChild);
                 }
 
@@ -327,7 +334,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curVFromNodeChild = virtualizeElement(
                                     curFromNodeChild
                                 );
-                                curFromNodeChild.___markoKey = curToNodeKey;
+                                keysByDOMNode.set(
+                                    curFromNodeChild,
+                                    curToNodeKey
+                                );
                                 morphEl(
                                     curFromNodeChild,
                                     curVFromNodeChild,
@@ -357,8 +367,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                         endNode.nextSibling,
                                         fromNode
                                     );
-                                    fragment.___markoKey = curToNodeKey;
-                                    fragment.___markoVElement = curToNodeChild;
+                                    keysByDOMNode.set(fragment, curToNodeKey);
+                                    vElementByDOMNode.set(
+                                        fragment,
+                                        curToNodeChild
+                                    );
                                     referenceComponent.___keyedElements[
                                         curToNodeKey
                                     ] = fragment;
@@ -390,10 +403,15 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         );
                         fromNextSibling = curFromNodeChild;
                     } else {
-                        if (matchingFromEl.___markoDetached !== undefined) {
-                            matchingFromEl.___markoDetached = undefined;
+                        if (
+                            detachedByDOMNode.get(matchingFromEl) !== undefined
+                        ) {
+                            detachedByDOMNode.set(matchingFromEl, undefined);
                         }
-                        curVFromNodeChild = matchingFromEl.___markoVElement;
+
+                        curVFromNodeChild = vElementByDOMNode.get(
+                            matchingFromEl
+                        );
 
                         if (
                             compareNodeNames(curVFromNodeChild, curToNodeChild)
@@ -508,7 +526,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             while (curFromNodeChild) {
                 fromNextSibling = nextSibling(curFromNodeChild);
 
-                if ((fromComponent = curFromNodeChild.___markoComponent)) {
+                if (
+                    (fromComponent = componentByDOMNode.get(curFromNodeChild))
+                ) {
                     // The current "to" element is not associated with a component,
                     // but the current "from" element is associated with a component
 
@@ -535,7 +555,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 if (curFromNodeType === curToNodeType) {
                     if (curFromNodeType === ELEMENT_NODE) {
                         // Both nodes being compared are Element nodes
-                        curVFromNodeChild = curFromNodeChild.___markoVElement;
+                        curVFromNodeChild = vElementByDOMNode.get(
+                            curFromNodeChild
+                        );
                         if (curVFromNodeChild === undefined) {
                             if (isRerenderInBrowser === true) {
                                 curVFromNodeChild = virtualizeElement(
@@ -642,7 +664,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             while (curFromNodeChild) {
                 fromNextSibling = nextSibling(curFromNodeChild);
 
-                if ((fromComponent = curFromNodeChild.___markoComponent)) {
+                if (
+                    (fromComponent = componentByDOMNode.get(curFromNodeChild))
+                ) {
                     curFromNodeChild = fromNextSibling;
                     if (
                         !globalComponentsContext.___renderedComponentsById[
@@ -654,11 +678,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     continue;
                 }
 
-                curVFromNodeChild = curFromNodeChild.___markoVElement;
+                curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
 
                 // For transcluded content, we need to check if the element belongs to a different component
                 // context than the current component and ensure it gets removed from its key index.
-                if (isAutoKey(fromNode.___markoKey)) {
+                if (isAutoKey(keysByDOMNode.get(fromNode))) {
                     referenceComponent = parentComponent;
                 } else {
                     referenceComponent =
@@ -715,12 +739,12 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     morphChildren(fromNode, toNode, toNode.___component);
 
     detachedNodes.forEach(function(node) {
-        var detachedFromComponent = node.___markoDetached;
+        var detachedFromComponent = detachedByDOMNode.get(node);
 
         if (detachedFromComponent !== undefined) {
-            node.___markoDetached = undefined;
+            detachedByDOMNode.set(node, undefined);
 
-            var componentToDestroy = node.___markoComponent;
+            var componentToDestroy = componentByDOMNode.get(node);
             if (componentToDestroy) {
                 componentToDestroy.destroy();
             } else if (node.parentNode) {

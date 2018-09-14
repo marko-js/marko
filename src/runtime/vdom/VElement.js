@@ -1,4 +1,6 @@
 /* jshint newcap:false */
+var domData = require("../../components/dom-data");
+var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
 var NS_XLINK = "http://www.w3.org/1999/xlink";
@@ -229,7 +231,7 @@ VElement.prototype = {
             }
         }
 
-        el.___markoVElement = this;
+        vElementByDOMNode.set(el, this);
 
         return el;
     },
@@ -364,7 +366,7 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var fromFlags = vFromEl.___flags;
     var toFlags = toEl.___flags;
 
-    fromEl.___markoVElement = toEl;
+    vElementByDOMNode.set(fromEl, toEl);
 
     var attrs = toEl.___attributes;
     var props = toEl.___properties;
