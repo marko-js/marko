@@ -1,3 +1,0 @@
-module.exports = {
-    onMount: function() {}
-};
