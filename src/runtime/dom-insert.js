@@ -2,6 +2,11 @@ var extend = require("raptor-util/extend");
 var componentsUtil = require("../components/util");
 var destroyComponentForNode = componentsUtil.___destroyComponentForNode;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
+var helpers = require("../morphdom/helpers");
+
+var insertBefore = helpers.___insertBefore;
+var insertAfter = helpers.___insertAfter;
+var removeChild = helpers.___removeChild;
 
 function resolveEl(el) {
     if (typeof el == "string") {
@@ -24,20 +29,21 @@ module.exports = function(target, getEl, afterInsert) {
         appendTo: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            referenceEl.appendChild(el);
+            insertBefore(el, null, referenceEl);
             return afterInsert(this, referenceEl);
         },
         prependTo: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            referenceEl.insertBefore(el, referenceEl.firstChild || null);
+            insertBefore(el, referenceEl.firstChild || null, referenceEl);
             return afterInsert(this, referenceEl);
         },
         replace: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
             beforeRemove(referenceEl);
-            referenceEl.parentNode.replaceChild(el, referenceEl);
+            insertBefore(el, referenceEl, referenceEl.parentNode);
+            removeChild(referenceEl);
             return afterInsert(this, referenceEl);
         },
         replaceChildrenOf: function(referenceEl) {
@@ -52,25 +58,19 @@ module.exports = function(target, getEl, afterInsert) {
             }
 
             referenceEl.innerHTML = "";
-            referenceEl.appendChild(el);
+            insertBefore(el, null, referenceEl);
             return afterInsert(this, referenceEl);
         },
         insertBefore: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            referenceEl.parentNode.insertBefore(el, referenceEl);
+            insertBefore(el, referenceEl, referenceEl.parentNode);
             return afterInsert(this, referenceEl);
         },
         insertAfter: function(referenceEl) {
             referenceEl = resolveEl(referenceEl);
             var el = getEl(this, referenceEl);
-            var nextSibling = referenceEl.nextSibling;
-            var parentNode = referenceEl.parentNode;
-            if (nextSibling) {
-                parentNode.insertBefore(el, nextSibling);
-            } else {
-                parentNode.appendChild(el);
-            }
+            insertAfter(el, referenceEl, referenceEl.parentNode);
             return afterInsert(this, referenceEl);
         }
     });

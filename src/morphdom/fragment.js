@@ -40,13 +40,13 @@ var fragmentPrototype = {
     insertInto: function(newParentNode, referenceNode) {
         this.nodes.forEach(function(node) {
             insertBefore(node, referenceNode, newParentNode);
-        });
+        }, this);
         return this;
     },
     remove: function() {
         this.nodes.forEach(function(node) {
             this.detachedContainer.appendChild(node);
-        });
+        }, this);
     }
 };
 
