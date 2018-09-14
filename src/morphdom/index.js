@@ -359,6 +359,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                     );
                                     fragment.___markoKey = curToNodeKey;
                                     fragment.___markoVElement = curToNodeChild;
+                                    referenceComponent.___keyedElements[
+                                        curToNodeKey
+                                    ] = fragment;
                                     removeChild(curFromNodeChild);
                                     removeChild(endNode);
 
