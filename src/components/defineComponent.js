@@ -69,7 +69,7 @@ module.exports = function defineComponent(def, renderer) {
         }
         let onDestroy = proto.onDestroy;
         proto.onDestroy = function() {
-            console.log("::onDestroy")
+            //console.log("::onDestroy")
             this.___mobx_reaction && this.___mobx_reaction.dispose();
             delete this.___mobx_reaction;
             if (onDestroy) onDestroy.apply(this, arguments);
