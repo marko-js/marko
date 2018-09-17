@@ -67,13 +67,13 @@ module.exports = function defineComponent(def, renderer) {
                 this.update();
             };
         }
-        // let onDestroy = proto.onDestroy;
-        // proto.onDestroy = function() {
-        //     console.log("::onDestroy")
-        //     this.___mobx_reaction && this.___mobx_reaction.dispose();
-        //     delete this.___mobx_reaction;
-        //     if (onDestroy) onDestroy.apply(this, arguments);
-        // };
+        let onDestroy = proto.onDestroy;
+        proto.onDestroy = function() {
+            console.log("::onDestroy")
+            this.___mobx_reaction && this.___mobx_reaction.dispose();
+            delete this.___mobx_reaction;
+            if (onDestroy) onDestroy.apply(this, arguments);
+        };
         let onCreate = proto.onCreate;
         proto.onCreate = function() {
             this.___mobx_init();
