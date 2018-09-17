@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "4.12.2-diffpatch-drivenow-mobx-4",
+    "version": "v4.12.2-diffpatch-drivenow-mobx-5",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
