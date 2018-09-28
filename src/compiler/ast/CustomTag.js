@@ -377,8 +377,8 @@ class CustomTag extends HtmlElement {
             }
 
             if (attr.spread) {
-                let isFirstOfMany = i === 0 && this.attributes.length > 1;
-                if (explicitAttrs || isFirstOfMany) {
+                let isFirst = i === 0;
+                if (explicitAttrs || isFirst) {
                     attrs.push(builder.objectExpression(explicitAttrs || {}));
                 }
                 attrs.push(attr.value);

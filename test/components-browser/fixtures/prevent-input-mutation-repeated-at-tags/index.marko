@@ -1,0 +1,14 @@
+class {
+    onCreate() {
+        this.data = { a: 1 };
+    }
+    onMount() {
+        window.component = this;
+    }
+}
+
+<menu ...component.data>
+    <for(i from 1 to 3)>
+        <@item>${i}</@item>
+    </for>
+</menu>
