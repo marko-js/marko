@@ -321,7 +321,7 @@ this.emit("foo", "bar", "baz");
 
 ### `on-[event](methodName|function, ...args)`
 
-The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName|function, ...args)` attribute.
+The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName|function, ...args)` attribute.
 
 ### `once-[event](methodName|function, ...args)`
 
@@ -373,8 +373,8 @@ class {
   <div key="a">A</div>
 </if>
 <else>
-  <div key="b">B</div>
   <div key="a">A</div>
+  <div key="b">B</div>
 </else>
 ```
 
@@ -869,7 +869,7 @@ class {
 
 ```js
 component.on("input", function(input, out) {
-  // The component was destroyed!
+  // The component received an input
 });
 ```
 
