@@ -869,7 +869,7 @@ class {
 
 ```js
 component.on("input", function(input, out) {
-  // The component was received an input
+  // The component received an input
 });
 ```
 
