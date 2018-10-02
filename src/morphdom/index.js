@@ -252,6 +252,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             } else if (curToNodeKey) {
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
+                let curToNodeKeyOriginal = curToNodeKey;
 
                 if (isAutoKey(curToNodeKey)) {
                     if (ownerComponent !== parentComponent) {
@@ -354,7 +355,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curFromNodeChild.nodeType === COMMENT_NODE
                             ) {
                                 var content = curFromNodeChild.nodeValue;
-                                if (content == "F#" + curToNodeKey) {
+                                if (content == "F#" + curToNodeKeyOriginal) {
                                     var endNode = curFromNodeChild;
                                     while (
                                         endNode.nodeType !== COMMENT_NODE ||
