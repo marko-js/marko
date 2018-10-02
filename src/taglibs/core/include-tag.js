@@ -33,7 +33,8 @@ function doInclude(input, out, throwError) {
     if (renderBody) {
         var componentsContext = out.___components;
         var componentDef =
-            componentsContext && componentsContext.___componentDef;
+            out.___assignedComponentDef ||
+            (componentsContext && componentsContext.___componentDef);
         var willRerenderInBrowser =
             componentDef &&
             componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER;
