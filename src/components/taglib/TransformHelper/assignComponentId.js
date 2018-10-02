@@ -206,9 +206,16 @@ const getParentForKeyVar = (el, transformHelper) => {
     const keyExpression =
         getChildKey(parentFor) || createIndexKey(parentFor, transformHelper);
     const bracketedKeyExpression = builder.binaryExpression(
-        builder.literal("["),
+        builder.memberExpression(
+            builder.identifier("component"),
+            builder.identifier("id")
+        ),
         "+",
-        builder.binaryExpression(keyExpression, "+", builder.literal("]"))
+        builder.binaryExpression(
+            builder.literal("["),
+            "+",
+            builder.binaryExpression(keyExpression, "+", builder.literal("]"))
+        )
     );
     const varName = "keyscope__" + transformHelper.nextUniqueId();
     const varDeclaration = builder.var(varName, bracketedKeyExpression);

@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
       var for__1 = 0;
 
       marko_forEach(node.children, function(child) {
-        var keyscope__2 = "[" + ((for__1++) + "]");
+        var keyscope__2 = component.id + ("[" + ((for__1++) + "]"));
 
         out.w("<li>");
 

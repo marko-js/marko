@@ -37,7 +37,7 @@ function render(input, out, __component, component, state) {
     var for__1 = 0;
 
     marko_forEach(input.colors, function(color) {
-      var keyscope__2 = "[" + ((for__1++) + "]");
+      var keyscope__2 = component.id + ("[" + ((for__1++) + "]"));
 
       out.e("LI", null, "3" + keyscope__2, component, 1)
         .t(color);
@@ -54,7 +54,7 @@ function render(input, out, __component, component, state) {
     var for__6 = 0;
 
     marko_forEach(input.colors, function(color) {
-      var keyscope__7 = "[" + ((for__6++) + "]");
+      var keyscope__7 = component.id + ("[" + ((for__6++) + "]"));
 
       out.e("LI", null, "8" + keyscope__7, component, 1)
         .t(color);

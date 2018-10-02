@@ -35,7 +35,7 @@ function render(input, out, __component, component, state) {
       "green",
       "blue"
     ], function(color) {
-    var keyscope__3 = "[" + ((for__2++) + "]");
+    var keyscope__3 = component.id + ("[" + ((for__2++) + "]"));
 
     macro_renderButton(color, out);
   });
