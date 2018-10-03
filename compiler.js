@@ -5,3 +5,4 @@ if (isDebug) {
 } else {
     module.exports = require("./dist/compiler");
 }
+//
