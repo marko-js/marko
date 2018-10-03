@@ -19,18 +19,29 @@ module.exports = function handleComponentBind(options) {
     let rootNodes = options.rootNodes;
     let isLegacyInnerBind = options.isLegacyInnerBind;
     var isImplicitComponent = options.isImplicitComponent === true;
-
+    var hasTagParams = context.isFlagSet("hasTagParams");
     var isSplit = false;
 
     if (
         (rendererModule && rendererModule !== componentModule) ||
         (!rendererModule && componentModule)
     ) {
-        componentProps.___split = isSplit = true;
+        if (hasTagParams) {
+            context.addError(
+                context.exampleTagParam,
+                "Cannot use tag params within a split component."
+            );
+        } else {
+            componentProps.___split = isSplit = true;
+        }
     }
 
     if (isImplicitComponent) {
-        componentProps.___implicit = true;
+        if (hasTagParams) {
+            isImplicitComponent = false;
+        } else {
+            componentProps.___implicit = true;
+        }
     }
 
     if (componentModule) {

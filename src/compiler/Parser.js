@@ -405,7 +405,7 @@ class Parser {
         var tagDef = node.tagDef;
         if (tagDef && tagDef.featureFlags) {
             if (tagDef.featureFlags.includes("params")) {
-                enableTagParams(node, this.context.builder);
+                enableTagParams(node, this.context);
             }
         }
     }
