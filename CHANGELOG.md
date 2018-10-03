@@ -4,6 +4,10 @@
 
 ## 4.13.x
 
+### 4.13.7
+
+- Prevent treating components with tag params being treated as implicit components. [#1149](https://github.com/marko-js/marko/pull/1149)
+
 ### 4.13.6
 
 - Prevent mutating component input when using a single spread attribute with repeated @tags. [#1142](https://github.com/marko-js/marko/pull/1142)
