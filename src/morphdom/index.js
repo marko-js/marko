@@ -252,7 +252,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             } else if (curToNodeKey) {
                 curVFromNodeChild = undefined;
                 curFromNodeKey = undefined;
-                let curToNodeKeyOriginal = curToNodeKey;
+                var curToNodeKeyOriginal = curToNodeKey;
 
                 if (isAutoKey(curToNodeKey)) {
                     if (ownerComponent !== parentComponent) {
