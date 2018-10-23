@@ -56,12 +56,12 @@
   "devDependencies": {
     "bluebird": "^2.9.30",
     "chai": "^3.3.0",
-    "coveralls": "^2.11.9",
-    "express": "^4.13.4",
+    "coveralls": "^3.0.2",
+    "express": "^4.16.4",
     "istanbul": "^0.4.3",
-    "jshint": "^2.5.0",
-    "mocha": "^2.3.3",
-    "request": "^2.72.0",
+    "jshint": "^2.9.6",
+    "mocha": "^5.2.0",
+    "request": "^2.88.0",
     "require-self-ref": "^2.0.1",
     "through": "^2.3.4"
   },
