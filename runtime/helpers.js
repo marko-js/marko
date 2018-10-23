@@ -252,7 +252,7 @@ module.exports = exports = {
         }
 
         if (typeof style === 'string') {
-            return attr(STYLE_ATTR, style, false);
+            return attr(STYLE_ATTR, style);
         } else if (typeof style === 'object') {
             var parts = [];
             for (var name in style) {
@@ -263,7 +263,7 @@ module.exports = exports = {
                     }
                 }
             }
-            return parts ? attr(STYLE_ATTR, parts.join(';'), false) : '';
+            return parts ? attr(STYLE_ATTR, parts.join(';')) : '';
         } else {
             return '';
         }
