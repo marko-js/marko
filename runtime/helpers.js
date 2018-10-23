@@ -26,6 +26,23 @@ var STYLE_ATTR = 'style';
 var CLASS_ATTR = 'class';
 var escapeEndingScriptTagRegExp = /<\//g;
 
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+var invalidAttrNameCharacters = /[\s'"</=\\]/;
+var validAttrs = Object.create(null);
+var invalidAttrs = Object.create(null);
+
+function isValidAttrName(attrName) {
+    if (validAttrs[attrName]) return true;
+    if (invalidAttrs[attrName]) return false;
+     if (!invalidAttrNameCharacters.test(attrName)) {
+        validAttrs[attrName] = true;
+        return true;
+    } else {
+        invalidAttrs[attrName] = true;
+        return false;
+    }
+}
+
 function classListHelper(arg, classNames) {
     var len;
 
@@ -230,7 +247,9 @@ module.exports = exports = {
         if (typeof arg === 'object') {
             var out = '';
             for (var attrName in arg) {
-                out += attr(attrName, arg[attrName]);
+                if (isValidAttrName(attrName)) {
+                    out += attr(attrName, arg[attrName]);
+                }
             }
             return out;
         } else if (typeof arg === 'string') {
