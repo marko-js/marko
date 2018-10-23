@@ -1,6 +1,6 @@
 {
     "<assign>": {
-        "code-generator": "./assign-tag",
+        "transformer": "./assign-tag",
         "open-tag-only": true,
         "deprecated": true
     },
