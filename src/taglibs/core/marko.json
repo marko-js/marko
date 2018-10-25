@@ -139,7 +139,7 @@
         ]
     },
     "<invoke>": {
-        "transformer": "./invoke-tag",
+        "code-generator": "./invoke-tag",
         "deprecated": true
     },
     "<macro>": {
