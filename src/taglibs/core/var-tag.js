@@ -37,10 +37,7 @@ module.exports = function nodeFactory(elNode, context) {
         firstChild.type === "Text" &&
         /^\s+/.test(firstChild.argument.value)
     ) {
-        firstChild.argument.value = firstChild.argument.value.replace(
-            /^\s*/,
-            ""
-        );
+        firstChild.argument.value = firstChild.argument.value.trimLeft();
     }
 
     if (
@@ -48,7 +45,7 @@ module.exports = function nodeFactory(elNode, context) {
         lastChild.type === "Text" &&
         /^\s+/.test(lastChild.argument.value)
     ) {
-        lastChild.argument.value = lastChild.argument.value.replace(/\s*$/, "");
+        lastChild.argument.value = lastChild.argument.value.trimRight();
     }
 
     elNode.body.forEach(node => {
