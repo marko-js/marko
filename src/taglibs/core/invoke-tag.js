@@ -71,7 +71,7 @@ module.exports = function codeGenerator(elNode, context) {
         //     spread: true
         //   });
         // newNode = context.createNodeForEl(
-        //     context.builder.parseExpression(functionName),
+        //     context.builder.parseExpression("data.template"),
         //     attrs
         // );
     } else if (
@@ -88,7 +88,7 @@ module.exports = function codeGenerator(elNode, context) {
         //     spread: true
         //   });
         // newNode = context.createNodeForEl(
-        //     context.builder.parseExpression(functionName),
+        //     context.builder.parseExpression("data.template"),
         //     attrs
         // );
     } else if (argsLength > 1 && argsContainsOut && !outIsFirstIndex) {
@@ -106,7 +106,6 @@ module.exports = function codeGenerator(elNode, context) {
         newNode = context.builder.scriptlet({
             value: functionCallExpression
         });
-        // debugger;
     }
 
     context.deprecate(
