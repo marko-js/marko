@@ -4,7 +4,6 @@ module.exports = function codeGenerator(elNode, context) {
     const args = context.builder.parseJavaScriptArgs(functionAttr.argument);
     const argsLength = args.length;
     const functionName = functionAttr.name;
-    //const functionNameParsed = context.builder.parseExpression(functionAttr.name);//functionName.object.name + functionName.property.name
 
     let outIsFirstIndex = false;
     let argsContainsOut = false;
@@ -25,7 +24,6 @@ module.exports = function codeGenerator(elNode, context) {
 
     if (
         functionName === "data.renderBody" &&
-        argsLength === 1 &&
         argsContainsOut &&
         outIsFirstIndex
     ) {
@@ -33,65 +31,23 @@ module.exports = function codeGenerator(elNode, context) {
         // <${data.renderBody} w-id="barTest"/>
         attrs.unshift({
             value: args[0],
-            spread: true
+            spread: argsLength === 1 ? false : true
         });
 
         newNode = context.createNodeForEl(
             context.builder.parseExpression(functionName),
             attrs
         );
-    } else if (
-        functionName === "data.renderBody" &&
-        argsLength > 1 &&
-        argsContainsOut &&
-        outIsFirstIndex
-    ) {
-        // No Tests
-        // <invoke data.renderBody(out, {}) w-id="barTest"/>
-        // <${data.renderBody} ...{} w-id="barTest"/>
-        // attrs.unshift({
-        //     value: args[0],
-        //     spread: true
-        //   });
-        // newNode = context.createNodeForEl(
-        //     context.builder.parseExpression(functionName),
-        //     attrs
-        // );
-    } else if (
-        functionName === "data.template.render" &&
-        argsLength > 1 &&
-        argsContainsOut &&
-        !outIsFirstIndex
-    ) {
-        // No Tests
+    } else if (argsLength > 1 && argsContainsOut && !outIsFirstIndex) {
+        // <invoke data.barRenderer({}, out) w-id="barTest"/>
+        // <${{ render:data.barRenderer }} ...{} w-id="barTest"/>
+
         // <invoke data.template.render({}, out) w-id="barTest"/>
         // <${data.template} ...{} w-id="barTest"/>
-        // attrs.unshift({
-        //     value: args[0],
-        //     spread: true
-        //   });
-        // newNode = context.createNodeForEl(
-        //     context.builder.parseExpression("data.template"),
-        //     attrs
-        // );
-    } else if (
-        functionName === "data.template.renderer" &&
-        argsLength > 1 &&
-        argsContainsOut &&
-        !outIsFirstIndex
-    ) {
-        // No Tests
+
         // <invoke data.template.renderer({}, out) w-id="barTest"/>
         // <${data.template} ...{} w-id="barTest"/>
-        // attrs.unshift({
-        //     value: args[0],
-        //     spread: true
-        //   });
-        // newNode = context.createNodeForEl(
-        //     context.builder.parseExpression("data.template"),
-        //     attrs
-        // );
-    } else if (argsLength > 1 && argsContainsOut && !outIsFirstIndex) {
+
         attrs.unshift({
             value: args[0],
             spread: true
