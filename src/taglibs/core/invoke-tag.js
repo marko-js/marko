@@ -23,15 +23,17 @@ module.exports = function codeGenerator(elNode, context) {
     attrs.splice(0, 1);
 
     if (
-        functionName === "data.renderBody" &&
+        (functionName === "data.renderBody" ||
+            functionName === "input.renderBody") &&
         argsContainsOut &&
         outIsFirstIndex
     ) {
         // <invoke data.renderBody(out) w-id="barTest"/>
         // <${data.renderBody} w-id="barTest"/>
+
         attrs.unshift({
             value: args[0],
-            spread: argsLength === 1 ? false : true
+            spread: true
         });
 
         newNode = context.createNodeForEl(
