@@ -43,10 +43,10 @@ module.exports = function codeGenerator(elNode, context) {
         // <${{ render:data.barRenderer }} ...{} w-id="barTest"/>
 
         // <invoke data.template.render({}, out) w-id="barTest"/>
-        // <${data.template} ...{} w-id="barTest"/>
+        // <${{ render: data.template.render }} ...{} w-id="barTest"/>
 
         // <invoke data.template.renderer({}, out) w-id="barTest"/>
-        // <${data.template} ...{} w-id="barTest"/>
+        // <${{ render: data.template.renderer }} ...{} w-id="barTest"/>
 
         attrs.unshift({
             value: args[0],
