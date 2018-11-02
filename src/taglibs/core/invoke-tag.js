@@ -20,6 +20,7 @@ module.exports = function codeGenerator(elNode, context) {
         }
     });
 
+    // Removes HtmlAtrribute
     attrs.splice(0, 1);
 
     if (
@@ -28,8 +29,8 @@ module.exports = function codeGenerator(elNode, context) {
         argsContainsOut &&
         outIsFirstIndex
     ) {
-        // <invoke data.renderBody(out) w-id="barTest"/>
-        // <${data.renderBody} w-id="barTest"/>
+        // Handles cases for the following:
+        // 1. <invoke data.renderBody(out) w-id="barTest"/> --> <${data.renderBody} w-id="barTest"/>
 
         attrs.unshift({
             value: args[0],
@@ -41,14 +42,10 @@ module.exports = function codeGenerator(elNode, context) {
             attrs
         );
     } else if (argsLength > 1 && argsContainsOut && !outIsFirstIndex) {
-        // <invoke data.barRenderer({}, out) w-id="barTest"/>
-        // <${{ render:data.barRenderer }} ...{} w-id="barTest"/>
-
-        // <invoke data.template.render({}, out) w-id="barTest"/>
-        // <${{ render: data.template.render }} ...{} w-id="barTest"/>
-
-        // <invoke data.template.renderer({}, out) w-id="barTest"/>
-        // <${{ render: data.template.renderer }} ...{} w-id="barTest"/>
+        // Handles cases for the following:
+        // 1. <invoke data.barRenderer({}, out) w-id="barTest"/> --> <${{ render:data.barRenderer }} ...{} w-id="barTest"/>
+        // 2. <invoke data.template.render({}, out) w-id="barTest"/> --> <${{ render: data.template.render }} ...{} w-id="barTest"/>
+        // 3. <invoke data.template.renderer({}, out) w-id="barTest"/> --> <${{ render: data.template.renderer }} ...{} w-id="barTest"/>
 
         attrs.unshift({
             value: args[0],
@@ -60,6 +57,9 @@ module.exports = function codeGenerator(elNode, context) {
             attrs
         );
     } else {
+        // Handles all other cases:
+        // 1. e.g. <invoke console.log('hello') /> --> console.log(arguement/s)
+
         functionCallExpression = functionName + "(" + args + ");";
         newNode = context.builder.scriptlet({
             value: functionCallExpression
