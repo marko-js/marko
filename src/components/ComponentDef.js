@@ -1,5 +1,4 @@
 "use strict";
-var repeatedRegExp = /\[\]$/;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
@@ -63,14 +62,7 @@ ComponentDef.prototype = {
         if (nestedId == null) {
             return id;
         } else {
-            if (typeof nestedId == "string" && repeatedRegExp.test(nestedId)) {
-                return this.___globalComponentsContext.___nextRepeatedId(
-                    id,
-                    nestedId
-                );
-            } else {
-                return id + "-" + nestedId;
-            }
+            return id + "-" + nestedId;
         }
     },
     /**
