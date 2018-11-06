@@ -14,4 +14,4 @@ module.exports = function(helpers) {
     expect(widget.id).to.equal(oldId);
 };
 
-module.exports.skipHydrate = "a split widget cannot re-render when hydrated";
+module.exports.skip_hydrate = "a split widget cannot re-render when hydrated";
