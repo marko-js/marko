@@ -9,7 +9,7 @@ function getComponentFiles(filename) {
         return null;
     }
 
-    let nameNoExt = path.basename(filename, ext);
+    let nameNoExt = path.basename(filename, ext).replace(/\[[^\]]*\]?$/, "");
 
     let isEntry = "index" === nameNoExt;
 
