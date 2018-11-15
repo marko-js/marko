@@ -4,6 +4,18 @@
 
 ## 4.13.x
 
+### 4.13.10
+
+- Adds a hidden api used to make [@marko-tags/context](https://github.com/marko-js/tags/tree/master/tags/context) possible. [#1168](https://github.com/marko-js/marko/pull/1168)
+
+### 4.13.9
+
+- Improve support for [arc]() by normalizing file system names with square brackets. [#1166](https://github.com/marko-js/marko/pull/1166)
+
+### 4.13.8
+
+- Quick patch for `4.13.7` that removes a `let` assignment. [#1153](https://github.com/marko-js/marko/pull/1153)
+
 ### 4.13.7
 
 - Prevent treating components with tag params being treated as implicit components. [#1149](https://github.com/marko-js/marko/pull/1149)
