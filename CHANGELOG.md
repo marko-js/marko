@@ -4,6 +4,11 @@
 
 ## 4.13.x
 
+### 4.13.11
+
+- Add spread attribute optimization, fix issue with spreading non objects. [#1171](https://github.com/marko-js/marko/pull/1171)
+- Move `#` to the start of `:scoped` attributes (allows for `href:scoped="#name"`). [#1172](https://github.com/marko-js/marko/pull/1172)
+
 ### 4.13.10
 
 - Adds a hidden api used to make [@marko-tags/context](https://github.com/marko-js/tags/tree/master/tags/context) possible. [#1168](https://github.com/marko-js/marko/pull/1168)
