@@ -63,6 +63,10 @@ ComponentDef.prototype = {
         if (nestedId == null) {
             return id;
         } else {
+            if (nestedId.startsWith("#")) {
+                id = "#" + id;
+                nestedId = nestedId.substring(1);
+            }
             if (typeof nestedId == "string" && repeatedRegExp.test(nestedId)) {
                 return this.___globalComponentsContext.___nextRepeatedId(
                     id,
