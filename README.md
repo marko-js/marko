@@ -34,6 +34,7 @@ with on [Marko's Try-Online](http://markojs.com/try-online/). Additional
 [component documentation](http://markojs.com/docs/components/) can be found on
 the Marko.js website.
 
+
 ## Single file
 
 The following single-file component renders a button and a counter with the
