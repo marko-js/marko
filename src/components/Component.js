@@ -20,6 +20,7 @@ var morphdom = require("../morphdom");
 var eventDelegation = require("./event-delegation");
 var domData = require("./dom-data");
 var componentsByDOMNode = domData.___componentByDOMNode;
+var CONTEXT_KEY = "__subtree_context__";
 
 var slice = Array.prototype.slice;
 
@@ -403,6 +404,7 @@ Component.prototype = componentProto = {
 
         var oldInput = this.___input;
         this.___input = undefined;
+        this.___context = (out && out[CONTEXT_KEY]) || this.___context;
 
         if (onInput) {
             // We need to set a flag to preview `this.input = foo` inside
@@ -521,6 +523,7 @@ Component.prototype = componentProto = {
             var out = createOut(globalData);
             out.sync();
             out.___document = self.___document;
+            out[CONTEXT_KEY] = self.___context;
 
             var componentsContext = getComponentsContext(out);
             var globalComponentsContext = componentsContext.___globalContext;
