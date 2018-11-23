@@ -422,6 +422,18 @@ The above code will produce output HTML similar to the following:
 </div>
 ```
 
+**`href:scoped`**
+
+```marko
+<a href:scoped="#anchor">Go to Anchor</a>
+<div id:scoped="anchor"></div>
+```
+
+```html
+<a href="#c0-anchor">Go to Anchor</a>
+<div id="c0-anchor"></div>
+```
+
 ### `no-update`
 
 Preserves the DOM subtree associated with the DOM element or component such that

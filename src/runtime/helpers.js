@@ -152,10 +152,13 @@ var helpers = {
                     );
                 }
             } else {
-                attrs = Object.keys(attrs).reduce(function(r, key) {
-                    r[removeDashes(key)] = attrs[key];
-                    return r;
-                }, {});
+                if (typeof attrs === "object") {
+                    attrs = Object.keys(attrs).reduce(function(r, key) {
+                        r[removeDashes(key)] = attrs[key];
+                        return r;
+                    }, {});
+                }
+
                 if (tag._ || tag.renderer || tag.render) {
                     var renderer = tag._ || tag.renderer || tag.render;
                     out.c(componentDef, key, customEvents);
