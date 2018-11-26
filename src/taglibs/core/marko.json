@@ -1,6 +1,6 @@
 {
     "<assign>": {
-        "code-generator": "./assign-tag",
+        "transformer": "./assign-tag",
         "open-tag-only": true,
         "deprecated": true
     },
@@ -213,7 +213,7 @@
         ]
     },
     "<var>": {
-        "node-factory": "./var-tag",
+        "transformer": "./var-tag",
         "deprecated": true
     },
     "<while>": {

@@ -1,49 +1,56 @@
 var isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
 
-module.exports = function nodeFactory(el, context) {
+module.exports = function nodeFactory(elNode, context) {
+    const builder = context.builder;
+    let firstChild = elNode.firstChild;
+    let lastChild = elNode.lastChild;
+    let newNode = null;
+    let hasError = false;
+
     context.deprecate(
         'The "<var>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
     );
 
-    var vars;
-
-    try {
-        vars = context.builder.parseStatement(el.tagString);
-    } catch (e) {
-        /* ignore error */
-    }
-
-    if (vars) {
-        return vars;
-    }
-
-    var builder = context.builder;
-    var hasError = false;
-
-    var declarations = el.attributes.map(attr => {
-        var varName = attr.name;
-
-        if (!isValidJavaScriptVarName(varName)) {
+    elNode.attributes.map(attr => {
+        if (!isValidJavaScriptVarName(attr.name)) {
             context.addError(
-                "Invalid JavaScript variable name: " + varName,
+                "Invalid JavaScript variable name: " + attr.name,
                 "INVALID_VAR_NAME"
             );
             hasError = true;
             return;
         }
 
-        var id = builder.identifier(varName);
-        var init = attr.value;
+        newNode = builder.scriptlet({
+            value: "var " + attr.name + "=" + attr.rawValue + ";"
+        });
 
-        return {
-            id: id,
-            init
-        };
+        elNode.insertSiblingBefore(newNode);
     });
 
     if (hasError) {
-        return el;
+        return elNode;
     }
 
-    return context.builder.vars(declarations);
+    if (
+        firstChild &&
+        firstChild.type === "Text" &&
+        /^\s+/.test(firstChild.argument.value)
+    ) {
+        firstChild.argument.value = firstChild.argument.value.trimLeft();
+    }
+
+    if (
+        lastChild &&
+        lastChild.type === "Text" &&
+        /^\s+/.test(lastChild.argument.value)
+    ) {
+        lastChild.argument.value = lastChild.argument.value.trimRight();
+    }
+
+    elNode.body.forEach(node => {
+        elNode.insertSiblingBefore(node);
+    });
+
+    elNode.detach();
 };
