@@ -1,4 +1,5 @@
 {
+    "transformer": "./root-transformer",
     "<assign>": {
         "transformer": "./assign-tag",
         "open-tag-only": true,
