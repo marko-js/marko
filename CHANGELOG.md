@@ -4,6 +4,12 @@
 
 ## 4.13.x
 
+### 4.13.12
+
+- `<invoke>` tag translates to modern Marko scriptlet (or dynamic tag). [#1165](https://github.com/marko-js/marko/pull/1165)
+- `<assign>` tag translates to modern Marko scriptlet. [#1158](https://github.com/marko-js/marko/pull/1158)
+- Imperative rendering in scriptlets translates to modern Marko dynamic tag. [#1174](https://github.com/marko-js/marko/pull/1174)
+
 ### 4.13.11
 
 - Add spread attribute optimization, fix issue with spreading non objects. [#1171](https://github.com/marko-js/marko/pull/1171)
