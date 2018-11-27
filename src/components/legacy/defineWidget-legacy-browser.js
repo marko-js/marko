@@ -50,6 +50,12 @@ module.exports = function defineWidget(def, renderer) {
 
     proto.constructor = def.constructor = Component;
 
+    Object.defineProperty(proto, "__document", {
+        get: function() {
+            return this.___document;
+        }
+    });
+
     Object.defineProperty(proto, "el", {
         get: function() {
             return (
