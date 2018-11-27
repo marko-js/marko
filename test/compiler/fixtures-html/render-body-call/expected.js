@@ -62,6 +62,10 @@ function render(input, out, __component, component, state) {
   let i = 10;
 
   while (i--) marko_dynamicTag(input, {}, out, __component, "16")
+
+  if (z) {
+    marko_dynamicTag(renderD, {}, out, __component, "17");
+  }
 }
 
 marko_template._ = marko_renderer(render, {

@@ -1,7 +1,8 @@
+const replacePlaceholderEscapeFuncs = require("../../compiler/util/replacePlaceholderEscapeFuncs");
+
 module.exports = function codeGenerator(elNode, context) {
     const attributes = elNode.attributes;
     const builder = context.builder;
-    let newNode = null;
 
     context.deprecate(
         'The "<assign>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
@@ -14,19 +15,21 @@ module.exports = function codeGenerator(elNode, context) {
         return elNode;
     }
 
-    attributes.map(attr => {
-        if (attr.value == null) {
-            newNode = builder.scriptlet({
-                value: attr.name
-            });
-        } else {
-            newNode = builder.scriptlet({
-                value: attr.name + "=" + attr.rawValue
-            });
-        }
-
-        elNode.insertSiblingBefore(newNode);
-    });
-
-    elNode.detach();
+    elNode.replaceWith(
+        builder.scriptlet({
+            value: replacePlaceholderEscapeFuncs(
+                builder.parseExpression(
+                    elNode.attributes
+                        .map(
+                            attr =>
+                                attr.value == null
+                                    ? attr.name
+                                    : `${attr.name} = ${attr.rawValue}`
+                        )
+                        .join(", ")
+                ),
+                context
+            )
+        })
+    );
 };
