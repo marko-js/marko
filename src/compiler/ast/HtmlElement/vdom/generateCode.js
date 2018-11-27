@@ -39,6 +39,7 @@ module.exports = function(node, codegen, vdomUtil) {
     var properties = codegen.generateCode(node.getProperties());
     var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
     var key = node.key;
+    var isAutoKeyed = node.isAutoKeyed;
     var runtimeFlags = node.runtimeFlags;
     var nextConstId = node.nextConstId;
 
@@ -91,7 +92,8 @@ module.exports = function(node, codegen, vdomUtil) {
         isHtmlOnly,
         dynamicAttributes,
         nextConstId,
-        runtimeFlags
+        runtimeFlags,
+        isAutoKeyed
     });
 
     if (bodyOnlyIf) {

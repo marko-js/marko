@@ -3,36 +3,87 @@ var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
+var createFragmentNode = require("../morphdom/fragment").___createFragmentNode;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
+var addComponentRootToKeyedElements =
+    componentsUtil.___addComponentRootToKeyedElements;
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
+var domData = require("./dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
 var serverRenderedGlobals = {};
-var serverComponentStartNodes = {};
-var serverComponentEndNodes = {};
+var serverComponentRootNodes = {};
 var keyedElementsByComponentId = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-var FLAG_HAS_BODY_EL = 2;
-var FLAG_HAS_HEAD_EL = 4;
 
-function indexServerComponentBoundaries(node) {
+function indexServerComponentBoundaries(node, runtimeId, stack) {
     var componentId;
+    var ownerId;
+    var ownerComponent;
+    var keyedElements;
+    var nextSibling;
+    var runtimeLength = runtimeId.length;
+    stack = stack || [];
 
     node = node.firstChild;
     while (node) {
+        nextSibling = node.nextSibling;
         if (node.nodeType === 8) {
             // Comment node
             var commentValue = node.nodeValue;
-            if (commentValue[0] === "M") {
-                componentId = commentValue.substring(2);
+            if (commentValue.slice(0, runtimeLength) === runtimeId) {
+                var firstChar = commentValue[runtimeLength];
 
-                var firstChar = commentValue[1];
+                if (firstChar === "^" || firstChar === "#") {
+                    stack.push(node);
+                } else if (firstChar === "/") {
+                    var endNode = node;
+                    var startNode = stack.pop();
+                    var rootNode;
 
-                if (firstChar === "/") {
-                    serverComponentEndNodes[componentId] = node;
-                } else if (firstChar === "^" || firstChar === "#") {
-                    serverComponentStartNodes[componentId] = node;
+                    if (startNode.parentNode === endNode.parentNode) {
+                        rootNode = createFragmentNode(
+                            startNode.nextSibling,
+                            endNode
+                        );
+                    } else {
+                        rootNode = createFragmentNode(
+                            endNode.parentNode.firstChild,
+                            endNode
+                        );
+                    }
+
+                    componentId = startNode.nodeValue.substring(
+                        runtimeLength + 1
+                    );
+                    firstChar = startNode.nodeValue[runtimeLength];
+
+                    if (firstChar === "^") {
+                        var parts = componentId.split(/ /g);
+                        var key = parts[2];
+                        ownerId = parts[1];
+                        componentId = parts[0];
+                        if ((ownerComponent = componentLookup[ownerId])) {
+                            keyedElements = ownerComponent.___keyedElements;
+                        } else {
+                            keyedElements =
+                                keyedElementsByComponentId[ownerId] ||
+                                (keyedElementsByComponentId[ownerId] = {});
+                        }
+                        addComponentRootToKeyedElements(
+                            keyedElements,
+                            key,
+                            rootNode,
+                            componentId
+                        );
+                    }
+
+                    serverComponentRootNodes[componentId] = rootNode;
+
+                    startNode.parentNode.removeChild(startNode);
+                    endNode.parentNode.removeChild(endNode);
                 }
             }
         } else if (node.nodeType === 1) {
@@ -41,11 +92,15 @@ function indexServerComponentBoundaries(node) {
             var markoProps = node.getAttribute("data-marko");
             if (markoKey) {
                 var separatorIndex = markoKey.indexOf(" ");
-                componentId = markoKey.substring(separatorIndex + 1);
+                ownerId = markoKey.substring(separatorIndex + 1);
                 markoKey = markoKey.substring(0, separatorIndex);
-                var keyedElements =
-                    keyedElementsByComponentId[componentId] ||
-                    (keyedElementsByComponentId[componentId] = {});
+                if ((ownerComponent = componentLookup[ownerId])) {
+                    keyedElements = ownerComponent.___keyedElements;
+                } else {
+                    keyedElements =
+                        keyedElementsByComponentId[ownerId] ||
+                        (keyedElementsByComponentId[ownerId] = {});
+                }
                 keyedElements[markoKey] = node;
             }
             if (markoProps) {
@@ -58,10 +113,10 @@ function indexServerComponentBoundaries(node) {
                     }
                 });
             }
-            indexServerComponentBoundaries(node);
+            indexServerComponentBoundaries(node, runtimeId, stack);
         }
 
-        node = node.nextSibling;
+        node = nextSibling;
     }
 }
 
@@ -216,15 +271,17 @@ function initServerRendered(renderedComponents, doc) {
 
     doc = doc || defaultDocument;
 
-    // Ensure that event handlers to handle delegating events are
-    // always attached before initializing any components
-    indexServerComponentBoundaries(doc);
-    eventDelegation.___init(doc);
-
     renderedComponents = warp10Finalize(renderedComponents);
 
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
+    var runtimeId = renderedComponents.r;
+
+    // Ensure that event handlers to handle delegating events are
+    // always attached before initializing any components
+    indexServerComponentBoundaries(doc, runtimeId);
+    eventDelegation.___init(doc);
+
     var globals = window.$MG;
     if (globals) {
         serverRenderedGlobals = warp10Finalize(globals);
@@ -238,68 +295,39 @@ function initServerRendered(renderedComponents, doc) {
             serverRenderedGlobals,
             registry
         );
-        var componentId = componentDef.id;
-        var component = componentDef.___component;
 
-        var startNode;
-        var endNode;
-        var flags = componentDef.___flags;
-        if ((flags & 6) === 6) {
-            startNode = document.head;
-            endNode = document.body;
-        } else if (flags & FLAG_HAS_BODY_EL) {
-            startNode = endNode = document.body;
-        } else if (flags & FLAG_HAS_HEAD_EL) {
-            startNode = endNode = document.head;
-        } else {
-            var startNodeComment = serverComponentStartNodes[componentId];
-            var endNodeComment = serverComponentEndNodes[componentId];
-
-            startNode = startNodeComment.nextSibling;
-
-            if (startNode === endNodeComment) {
-                // Component has no output nodes so just mount to the start comment node
-                // and we will remove the end comment node
-                startNode = endNode = startNodeComment;
-            } else {
-                delete serverComponentStartNodes[componentId];
-                startNodeComment.parentNode.removeChild(startNodeComment);
-
-                if (startNode.parentNode === document) {
-                    endNode = startNode = document.documentElement;
-                } else {
-                    // Remove the start and end comment nodes and use the inner nodes
-                    // as the boundary
-                    endNode = endNodeComment.previousSibling;
+        if (!hydrateComponent(componentDef, doc)) {
+            // hydrateComponent will return false if there is not rootNode
+            // for the component.  If this is the case, we'll wait until the
+            // DOM has fully loaded to attempt to init the component again.
+            doc.addEventListener("DOMContentLoaded", function() {
+                if (!hydrateComponent(componentDef, doc)) {
+                    indexServerComponentBoundaries(doc, runtimeId);
+                    hydrateComponent(componentDef, doc);
                 }
-            }
-
-            if (endNodeComment) {
-                delete serverComponentEndNodes[componentId];
-                endNodeComment.parentNode.removeChild(endNodeComment);
-            }
+            });
         }
+    });
+}
 
+function hydrateComponent(componentDef, doc) {
+    var componentId = componentDef.id;
+    var component = componentDef.___component;
+    var rootNode = serverComponentRootNodes[componentId];
+
+    if (rootNode) {
+        delete serverComponentRootNodes[componentId];
+
+        component.___rootNode = rootNode;
+        componentsByDOMNode.set(rootNode, component);
         component.___keyedElements =
             keyedElementsByComponentId[componentId] || {};
-        component.___startNode = startNode;
-        component.___endNode = endNode;
-
-        startNode.___markoComponent = component;
 
         delete keyedElementsByComponentId[componentId];
 
-        // Mark the start node so that we know we need to skip past this
-        // node when matching up children
-        startNode.___startNode = true;
-
-        // Mark the end node so that when we attempt to find boundaries
-        // for nested UI components we don't accidentally go outside the boundary
-        // of the parent component
-        endNode.___endNode = true;
-
         initComponent(componentDef, doc || defaultDocument);
-    });
+        return true;
+    }
 }
 
 exports.___initClientRendered = initClientRendered;

@@ -137,6 +137,8 @@ function addComponentsFromContext(
 
 function getRenderedComponents(out) {
     var componentsContext = out.___components;
+    var runtimeId = out.global.runtimeId;
+
     if (componentsContext === null) {
         return;
     }
@@ -153,7 +155,7 @@ function getRenderedComponents(out) {
     );
 
     if (componentsFinal.length !== 0) {
-        return { w: componentsFinal, t: typesArray };
+        return { r: runtimeId, w: componentsFinal, t: typesArray };
     }
 }
 

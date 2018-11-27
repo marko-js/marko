@@ -1,5 +1,8 @@
 "use strict";
 var removeDashes = require("../compiler/util/removeDashes");
+var ComponentsContext = require("../components/ComponentsContext");
+var getComponentsContext = ComponentsContext.___getComponentsContext;
+var ComponentDef = require("../components/ComponentDef");
 var isArray = Array.isArray;
 var RENDER_BODY_TOKEN = "%FN";
 var RENDER_BODY_TO_JSON = function() {
@@ -105,8 +108,8 @@ var helpers = {
      */
     d: function dynamicTag(tag, attrs, out, componentDef, key, customEvents) {
         if (tag) {
+            var component = componentDef && componentDef.___component;
             if (typeof tag === "string") {
-                var component = componentDef && componentDef.component;
                 var events =
                     customEvents &&
                     customEvents.reduce(function(events, eventArray) {
@@ -120,8 +123,12 @@ var helpers = {
                     }, {});
                 if (attrs.renderBody) {
                     var renderBody = attrs.renderBody;
-                    var otherAttrs = Object.assign({}, attrs);
-                    delete otherAttrs.renderBody;
+                    var otherAttrs = {};
+                    for (var attrKey in attrs) {
+                        if (attrKey !== "renderBody") {
+                            otherAttrs[attrKey] = attrs[attrKey];
+                        }
+                    }
                     out.___beginElementDynamic(
                         tag,
                         otherAttrs,
@@ -145,10 +152,13 @@ var helpers = {
                     );
                 }
             } else {
-                attrs = Object.keys(attrs).reduce(function(r, key) {
-                    r[removeDashes(key)] = attrs[key];
-                    return r;
-                }, {});
+                if (typeof attrs === "object") {
+                    attrs = Object.keys(attrs).reduce(function(r, key) {
+                        r[removeDashes(key)] = attrs[key];
+                        return r;
+                    }, {});
+                }
+
                 if (tag._ || tag.renderer || tag.render) {
                     var renderer = tag._ || tag.renderer || tag.render;
                     out.c(componentDef, key, customEvents);
@@ -161,17 +171,28 @@ var helpers = {
 
                     if (isFn || isToken) {
                         var flags = componentDef ? componentDef.___flags : 0;
-                        var parentId = componentDef ? componentDef.id : "";
                         var willRerender =
                             flags & FLAG_WILL_RERENDER_IN_BROWSER;
-                        var resolvedKey = parentId + " " + key;
-                        var insertMarkers = IS_SERVER ? willRerender : isToken;
-                        if (insertMarkers) out.comment("F^" + resolvedKey);
+                        var preserve = IS_SERVER ? willRerender : isToken;
+                        out.___beginFragment(key, component, preserve);
                         if (isFn) {
+                            var componentsContext = getComponentsContext(out);
+                            var parentComponentDef =
+                                componentsContext.___componentDef;
+                            var globalContext =
+                                componentsContext.___globalContext;
+                            componentsContext.___componentDef = new ComponentDef(
+                                component,
+                                parentComponentDef.id +
+                                    "-" +
+                                    parentComponentDef.___nextKey(key),
+                                globalContext
+                            );
                             render.toJSON = RENDER_BODY_TO_JSON;
                             render(out, attrs);
+                            componentsContext.___componentDef = parentComponentDef;
                         }
-                        if (insertMarkers) out.comment("F/" + resolvedKey);
+                        out.___endFragment();
                     } else {
                         out.error("Invalid dynamic tag value");
                     }

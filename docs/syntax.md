@@ -114,9 +114,29 @@ Whitespace may optionally be used around the equal sign of an attribute:
 tag value = 5
 ```
 
-### Conditional attributes
+### Boolean attributes
 
-If an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output.
+HTML defines the following rules for [boolean attributes](https://www.w3.org/TR/2008/WD-html5-20080610/semantics.html#boolean):
+
+> The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value.
+
+In Marko, if an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output. If an attribute value is `true`, only the attribute name is included in the output.
+
+```marko
+<input type="checkbox" checked=true>
+<input type="checkbox" checked=false>
+```
+
+Would render to the following HTML:
+
+```html
+<input type="checkbox" checked>
+<input type="checkbox">
+```
+
+#### Conditional attributes
+
+You can take advantage of the way Marko handles boolean attributes to conditionally render attributes:
 
 ```marko
 <div class=(active && 'tab-active')>Hello</div>

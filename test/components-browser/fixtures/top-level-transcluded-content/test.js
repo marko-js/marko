@@ -14,5 +14,3 @@ module.exports = function(helpers) {
     component.update();
     expect(helpers.targetEl.textContent).to.equal("Hello world");
 };
-
-module.exports.fails = "issue #1033";

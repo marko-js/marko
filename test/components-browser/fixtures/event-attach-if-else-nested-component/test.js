@@ -6,11 +6,18 @@ module.exports = function(helpers) {
         color: colors[0]
     });
 
-    expect(component.events.length).to.equal(1);
-    expect(component.events[0].color).to.equal("blue");
-    expect(component.events[0].node).to.equal(
-        component.el.querySelectorAll("li")[0]
-    );
+    if (helpers.isHydrate) {
+        // When hydrating, the first color item was rendered on the
+        // server so there is no corresponding attach event f
+        // we'll push an empty event so the indexes line up
+        component.events.push(null);
+    } else {
+        expect(component.events.length).to.equal(1);
+        expect(component.events[0].color).to.equal("blue");
+        expect(component.events[0].node).to.equal(
+            component.el.querySelectorAll("li")[0]
+        );
+    }
 
     component.input = { color: colors[1] };
     component.update();

@@ -21,7 +21,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
       .e("a", {
           "xlink:href": "https://developer.mozilla.org/en-US/docs/SVG",
           target: "_blank"
-        }, "1", null, 0, 1);
+        }, null, null, 0, 1);
 
 function render(input, out, __component, component, state) {
   var data = input;

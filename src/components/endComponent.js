@@ -2,6 +2,6 @@
 
 module.exports = function endComponent(out, componentDef) {
     if (componentDef.___renderBoundary) {
-        out.w("<!--M/" + componentDef.id + "-->");
+        out.w("<!--" + out.global.runtimeId + "/-->");
     }
 };

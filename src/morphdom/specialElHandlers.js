@@ -33,7 +33,7 @@ SpecialElHandlers.prototype = {
             fromEl.value = toEl.___value;
         }
 
-        if (!toEl.___hasAttribute("value")) {
+        if (fromEl.hasAttribute("value") && !toEl.___hasAttribute("value")) {
             fromEl.removeAttribute("value");
         }
     },
@@ -63,18 +63,21 @@ SpecialElHandlers.prototype = {
     SELECT: function(fromEl, toEl) {
         if (!toEl.___hasAttribute("multiple")) {
             var i = -1;
+            var selected = 0;
             var curChild = toEl.___firstChild;
             while (curChild) {
                 if (curChild.___nodeName == "OPTION") {
                     i++;
                     if (curChild.___hasAttribute("selected")) {
-                        break;
+                        selected = i;
                     }
                 }
                 curChild = curChild.___nextSibling;
             }
 
-            fromEl.selectedIndex = i;
+            if (fromEl.selectedIndex !== selected) {
+                fromEl.selectedIndex = selected;
+            }
         }
     }
 };

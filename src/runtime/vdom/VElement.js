@@ -1,4 +1,6 @@
 /* jshint newcap:false */
+var domData = require("../../components/dom-data");
+var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
 var NS_XLINK = "http://www.w3.org/1999/xlink";
@@ -25,6 +27,14 @@ function convertAttrValue(type, value) {
         return JSON.stringify(value);
     } else {
         return toString(value);
+    }
+}
+
+function assign(a, b) {
+    for (var key in b) {
+        if (b.hasOwnProperty(key)) {
+            a[key] = b[key];
+        }
     }
 }
 
@@ -60,7 +70,15 @@ function VElementClone(other) {
     this.___isTextArea = other.___isTextArea;
 }
 
-function VElement(tagName, attrs, key, component, childCount, flags, props) {
+function VElement(
+    tagName,
+    attrs,
+    key,
+    ownerComponent,
+    childCount,
+    flags,
+    props
+) {
     this.___VNode(childCount);
 
     var constId;
@@ -81,7 +99,7 @@ function VElement(tagName, attrs, key, component, childCount, flags, props) {
     }
 
     this.___key = key;
-    this.___component = component;
+    this.___ownerComponent = ownerComponent;
     this.___attributes = attrs || EMPTY_OBJECT;
     this.___properties = props || EMPTY_OBJECT;
     this.___namespaceURI = namespaceURI;
@@ -105,13 +123,13 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    e: function(tagName, attrs, key, component, childCount, flags, props) {
+    e: function(tagName, attrs, key, ownerComponent, childCount, flags, props) {
         var child = this.___appendChild(
             new VElement(
                 tagName,
                 attrs,
                 key,
-                component,
+                ownerComponent,
                 childCount,
                 flags,
                 props
@@ -132,13 +150,21 @@ VElement.prototype = {
      * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
      * @param  {int|null} childCount The number of child nodes (or `null` if not known)
      */
-    ed: function(tagName, attrs, key, component, childCount, flags, props) {
+    ed: function(
+        tagName,
+        attrs,
+        key,
+        ownerComponent,
+        childCount,
+        flags,
+        props
+    ) {
         var child = this.___appendChild(
             VElement.___createElementDynamicTag(
                 tagName,
                 attrs,
                 key,
-                component,
+                ownerComponent,
                 childCount,
                 flags,
                 props
@@ -158,9 +184,9 @@ VElement.prototype = {
      *
      * @param  {String} value The value for the new Comment node
      */
-    n: function(node, component) {
+    n: function(node, ownerComponent) {
         node = node.___cloneNode();
-        node.___component = component;
+        node.___ownerComponent = ownerComponent;
         this.___appendChild(node);
         return this.___finishChild();
     },
@@ -178,7 +204,7 @@ VElement.prototype = {
                 : doc.createElement(tagName);
 
         if (flags & FLAG_CUSTOM_ELEMENT) {
-            Object.assign(el, attributes);
+            assign(el, attributes);
         } else {
             for (var attrName in attributes) {
                 var attrValue = attributes[attrName];
@@ -205,7 +231,7 @@ VElement.prototype = {
             }
         }
 
-        el.___markoVElement = this;
+        vElementByDOMNode.set(el, this);
 
         return el;
     },
@@ -238,7 +264,12 @@ defineProperty(proto, "___value", {
         if (value == null) {
             value = this.___attributes.value;
         }
-        return value != null ? toString(value) : "";
+        return value != null
+            ? toString(value)
+            : this.___attributes.type === "checkbox" ||
+              this.___attributes.type === "radio"
+                ? "on"
+                : "";
     }
 });
 
@@ -246,7 +277,7 @@ VElement.___createElementDynamicTag = function(
     tagName,
     attrs,
     key,
-    component,
+    ownerComponent,
     childCount,
     flags,
     props
@@ -257,7 +288,7 @@ VElement.___createElementDynamicTag = function(
         tagName,
         attrs,
         key,
-        component,
+        ownerComponent,
         childCount,
         flags,
         props
@@ -307,7 +338,7 @@ function virtualizeElement(node, virtualizeChildNodes) {
         tagName,
         attrs,
         null /*key*/,
-        null /*component*/,
+        null /*ownerComponent*/,
         0 /*child count*/,
         flags,
         null /*props*/
@@ -335,13 +366,13 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
     var fromFlags = vFromEl.___flags;
     var toFlags = toEl.___flags;
 
-    fromEl.___markoVElement = toEl;
+    vElementByDOMNode.set(fromEl, toEl);
 
     var attrs = toEl.___attributes;
     var props = toEl.___properties;
 
     if (toFlags & FLAG_CUSTOM_ELEMENT) {
-        return Object.assign(fromEl, attrs);
+        return assign(fromEl, attrs);
     }
 
     var attrName;

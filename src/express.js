@@ -55,7 +55,6 @@ function patchResponse(response) {
             }
 
             res.set({ "content-type": "text/html; charset=utf-8" });
-
-            return template.render(data, res);
+            return template.render(data, res).on("error", req.next);
         };
 }

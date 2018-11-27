@@ -181,7 +181,7 @@ class HtmlElement extends Node {
         var attributes = this._attributes.all.concat([]);
 
         for (let i = 0, len = attributes.length; i < len; i++) {
-            callback.call(thisObj, attributes[i]);
+            callback.call(thisObj, attributes[i], i);
         }
     }
 

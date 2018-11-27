@@ -3,5 +3,3 @@ module.exports = function(helpers) {
     component.setState("showLast", false);
     component.update();
 };
-
-module.exports.fails_hydrate = "issue #1051";

@@ -5,6 +5,7 @@ var VDocumentFragment = vdom.___VDocumentFragment;
 var VComment = vdom.___VComment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
+var VFragment = vdom.___VFragment;
 var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
@@ -56,13 +57,13 @@ var proto = (AsyncVDOMBuilder.prototype = {
     ___isOut: true,
     ___document: defaultDocument,
 
-    bc: function(component) {
-        var vComponent = new VComponent(component);
+    bc: function(component, key, ownerComponent) {
+        var vComponent = new VComponent(component, key, ownerComponent);
         return this.___beginNode(vComponent, 0, true);
     },
 
-    ___preserveComponent: function(component) {
-        var vComponent = new VComponent(component, true);
+    ___preserveComponent: function(component, key, ownerComponent) {
+        var vComponent = new VComponent(component, key, ownerComponent, true);
         this.___beginNode(vComponent, 0);
     },
 
@@ -122,7 +123,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         //       and a node can only have one parent node.
         var clone = node.___cloneNode();
         this.node(clone);
-        clone.___component = component;
+        clone.___ownerComponent = component;
 
         return this;
     },
@@ -206,6 +207,16 @@ var proto = (AsyncVDOMBuilder.prototype = {
         );
         this.___beginNode(element, childCount, true);
         return this;
+    },
+
+    ___beginFragment: function(key, component, preserve) {
+        var fragment = new VFragment(key, component, preserve);
+        this.___beginNode(fragment, null, true);
+        return this;
+    },
+
+    ___endFragment: function() {
+        this.endElement();
     },
 
     endElement: function() {
@@ -417,7 +428,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
             // Create the root document fragment node
             doc = doc || this.___document || document;
             this.___vnode = node = vdomTree.___actualize(doc);
-            morphdom(node, null, null, vdomTree, doc, this.___components);
+            morphdom(node, vdomTree, doc, this.___components);
         }
         return node;
     },

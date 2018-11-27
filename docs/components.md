@@ -10,7 +10,7 @@ With Marko, the DOM output of a UI component is based on input properties and a 
 
 ## Component structure
 
-Marko makes it easy to to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
+Marko makes it easy to co-locate your component's class and styles with the HTML view that they correspond to. The following are the key part of any UI component:
 
 - **View** - The HTML template for your UI component. Receives input properties and states and renders to either HTML (server-side) or virtual DOM nodes (browser-side)
 - **Client-side behavior** - Implemented as a JavaScript class with methods and properties to provide initialization, event handling (including DOM events, custom events and lifecycle events) and state management
@@ -69,7 +69,7 @@ style.less {
 }
 ```
 
-> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
+> **Note:** The code in the style section is processed in a context that is separate from the rest of the template so you won't be able to use JavaScript variables inside the style section. If you need variables in your CSS then you will need to use a CSS pre-processor that supports variables.
 
 ## Multi-file components
 
@@ -321,7 +321,7 @@ this.emit("foo", "bar", "baz");
 
 ### `on-[event](methodName|function, ...args)`
 
-The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName|function, ...args)` attribute.
+The `on-*` attribute allows an event listener to be attached for either a native DOM event (when used on a native DOM element such as a `<div>`) or a UI component event (when used on a custom tag for a UI component such as `<my-component>`. The `on-*` attribute is used to associate an event handler method with an event name. Please see the [Event handling](#event-handling) section above for more details on how to use the the `on-[event](methodName|function, ...args)` attribute.
 
 ### `once-[event](methodName|function, ...args)`
 
@@ -373,8 +373,8 @@ class {
   <div key="a">A</div>
 </if>
 <else>
-  <div key="b">B</div>
   <div key="a">A</div>
+  <div key="b">B</div>
 </else>
 ```
 
@@ -420,6 +420,18 @@ The above code will produce output HTML similar to the following:
 <div id:scoped="descriptionClose">
    Closing this window will discard any information entered and return you back to the main page
 </div>
+```
+
+**`href:scoped`**
+
+```marko
+<a href:scoped="#anchor">Go to Anchor</a>
+<div id:scoped="anchor"></div>
+```
+
+```html
+<a href="#c0-anchor">Go to Anchor</a>
+<div id="c0-anchor"></div>
 ```
 
 ### `no-update`
@@ -869,7 +881,7 @@ class {
 
 ```js
 component.on("input", function(input, out) {
-  // The component was destroyed!
+  // The component received an input
 });
 ```
 
@@ -976,10 +988,6 @@ Moves the UI component's DOM elements into the position after the target element
 ```js
 this.appendTo(document.body);
 ```
-
-### `detach()`
-
-Detaches the component's root element(s) from the DOM by removing the UI component's DOM elements from its parent node.
 
 ### `insertAfter(targetEl)`
 
