@@ -89,6 +89,7 @@ module.exports = function defineWidget(def, renderer) {
     proto.onMount = function() {
         var self = this;
         var config = this.$c;
+        if (this.el) this.el.__widget = this;
         if (init) init.call(this, config || {});
         if (onRender) {
             onRender.call(this, { firstRender: true });
