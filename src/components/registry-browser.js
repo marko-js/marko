@@ -7,11 +7,6 @@ var loaded = {};
 var componentTypes = {};
 
 function register(componentId, def) {
-    // We do this to kick off registering of nested components
-    // but we don't use the return value just yet since there
-    // is a good chance that it resulted in a circular dependency
-    def();
-
     registered[componentId] = def;
     delete loaded[componentId];
     delete componentTypes[componentId];
