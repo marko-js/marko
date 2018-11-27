@@ -112,6 +112,10 @@ class Node {
             return array;
         }
 
+        if (!Array.isArray(array) && array instanceof Node) {
+            array = [array];
+        }
+
         return new ArrayContainer(this, array);
     }
 
