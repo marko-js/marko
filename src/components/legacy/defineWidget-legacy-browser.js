@@ -50,6 +50,15 @@ module.exports = function defineWidget(def, renderer) {
 
     proto.constructor = def.constructor = Component;
 
+    Object.defineProperty(proto, "el", {
+        get: function() {
+            return (
+                this.getEl("_wbind") ||
+                (this.___rootNode && this.___rootNode.firstChild)
+            );
+        }
+    });
+
     // get legacy methods
     var init = proto.init;
     var onRender = proto.onRender;

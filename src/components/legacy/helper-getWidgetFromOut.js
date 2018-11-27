@@ -4,7 +4,7 @@ var getComponentsContext = require("../ComponentsContext")
 module.exports = function(out) {
     var componentsContext = getComponentsContext(out);
     var componentDef =
-        (componentsContext && componentsContext.___componentDef) || {};
+        (componentsContext && componentsContext.___legacyComponentDef) || {};
     componentDef._c = componentDef.___component;
     return componentDef;
 };

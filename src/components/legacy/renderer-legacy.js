@@ -118,6 +118,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             ownerComponentDef,
             isSplit
         );
+        var parentLegacyComponentDef = componentsContext.___legacyComponentDef;
+        componentsContext.___legacyComponentDef = componentDef;
 
         // This is a hack, but we have to swap out the component instance stored with this node
         var vComponentNode = out.___parent;
@@ -161,6 +163,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         endComponent(out, componentDef);
         componentsContext.___componentDef = parentComponentDef;
+        componentsContext.___legacyComponentDef = parentLegacyComponentDef;
     };
 }
 
