@@ -4,16 +4,16 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/compiler/fixtures-html/invoke/template.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c;
+    marko_defineComponent = components_helpers.c,
+    marko_helpers = require("marko/src/runtime/html/helpers"),
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.c(__component, "0");
-
-  input.renderBody(out);
-
-  out.c(null);
+  marko_dynamicTag(input, {
+      x: 1
+    }, out, __component, "hi");
 }
 
 marko_template._ = marko_renderer(render, {

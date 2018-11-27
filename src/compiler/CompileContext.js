@@ -455,7 +455,7 @@ class CompileContext extends EventEmitter {
         var elDef;
         var builder = this.builder;
 
-        if (typeof tagName === "object") {
+        if (typeof tagName === "object" && !(tagName instanceof Node)) {
             elDef = tagName;
             tagName = elDef.tagName;
             attributes = elDef.attributes;

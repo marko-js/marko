@@ -192,7 +192,15 @@ function parseExpression(src, builder, isExpression) {
                 if (node.body && node.body.length === 1) {
                     return convert(node.body[0]);
                 }
-                return null;
+
+                let container = builder.containerNode();
+                for (let child of node.body) {
+                    let convertedChild = convert(child);
+                    if (convertedChild) {
+                        container.appendChild(convertedChild);
+                    }
+                }
+                return container;
             }
             case "ObjectExpression": {
                 let properties = convert(node.properties);
@@ -206,6 +214,10 @@ function parseExpression(src, builder, isExpression) {
 
                 let key = convert(node.key);
                 if (!key) {
+                    return null;
+                }
+
+                if (node.kind === "get" || node.kind === "set") {
                     return null;
                 }
 
@@ -287,6 +299,49 @@ function parseExpression(src, builder, isExpression) {
                     return null;
                 }
                 return builder.vars(declarations, kind);
+            }
+            case "IfStatement": {
+                const ifNode = builder.ifStatement(
+                    convert(node.test),
+                    convert(node.consequent)
+                );
+
+                let alternate = node.alternate;
+
+                if (!alternate) {
+                    return ifNode;
+                }
+
+                const container = builder.containerNode();
+                container.appendChild(ifNode);
+
+                do {
+                    container.appendChild(
+                        alternate.consequent
+                            ? builder.elseIfStatement(
+                                  convert(alternate.test),
+                                  convert(alternate.consequent)
+                              )
+                            : builder.elseStatement(convert(alternate))
+                    );
+                    alternate = alternate.alternate;
+                } while (alternate);
+
+                return container;
+            }
+            case "ForStatement": {
+                return builder.forStatement(
+                    convert(node.init),
+                    convert(node.test),
+                    convert(node.update),
+                    convert(node.body)
+                );
+            }
+            case "WhileStatement": {
+                return builder.whileStatement(
+                    convert(node.test),
+                    convert(node.body)
+                );
             }
             default:
                 return null;

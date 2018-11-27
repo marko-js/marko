@@ -1,0 +1,32 @@
+$ {
+  input.renderBody(out);
+  input.renderThing(out);
+  input.renderBody(out, attrs);
+  renderBody(out);
+}
+
+$ input.template.render({ x: 1 }, out);
+$ input.template.renderer({ y() {} }, out);
+$ input.barRenderer(null, out);
+
+$ input.barRenderer({}, true, out);
+
+$ if (x) {
+  renderA(out);
+} else if (y) {
+  renderB(out);
+} else {
+  renderC(out);
+}
+
+$ x && render(out);
+$ x || render(out);
+
+$ for (let i = 0; i < 10; i++) {
+  input.items[i].renderBody(out);
+}
+
+$ let i = 10;
+$ while (i--) {
+  input.renderBody(out);
+}

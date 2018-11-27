@@ -4,6 +4,29 @@
 
 ## 4.13.x
 
+### 4.13.12
+
+- `<invoke>` tag translates to modern Marko scriptlet (or dynamic tag). [#1165](https://github.com/marko-js/marko/pull/1165)
+- `<assign>` tag translates to modern Marko scriptlet. [#1158](https://github.com/marko-js/marko/pull/1158)
+- Imperative rendering in scriptlets translates to modern Marko dynamic tag. [#1174](https://github.com/marko-js/marko/pull/1174)
+
+### 4.13.11
+
+- Add spread attribute optimization, fix issue with spreading non objects. [#1171](https://github.com/marko-js/marko/pull/1171)
+- Move `#` to the start of `:scoped` attributes (allows for `href:scoped="#name"`). [#1172](https://github.com/marko-js/marko/pull/1172)
+
+### 4.13.10
+
+- Adds a hidden api used to make [@marko-tags/context](https://github.com/marko-js/tags/tree/master/tags/context) possible. [#1168](https://github.com/marko-js/marko/pull/1168)
+
+### 4.13.9
+
+- Improve support for [arc]() by normalizing file system names with square brackets. [#1166](https://github.com/marko-js/marko/pull/1166)
+
+### 4.13.8
+
+- Quick patch for `4.13.7` that removes a `let` assignment. [#1153](https://github.com/marko-js/marko/pull/1153)
+
 ### 4.13.7
 
 - Prevent treating components with tag params being treated as implicit components. [#1149](https://github.com/marko-js/marko/pull/1149)

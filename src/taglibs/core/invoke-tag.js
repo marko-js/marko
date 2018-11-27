@@ -1,27 +1,43 @@
-module.exports = function codeGenerator(elNode, codegen) {
-    var context = codegen.context;
+const renderCallToDynamicTag = require("./util/renderCallToDynamicTag");
+
+module.exports = function codeGenerator(elNode, context) {
+    const builder = context.builder;
+    const functionAttr = elNode.attributes[0];
+    const functionArgs = functionAttr.argument;
+
     context.deprecate(
         'The "<invoke>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
     );
 
-    var functionAttr = elNode.attributes[0];
     if (!functionAttr) {
-        codegen.addError(
+        context.addError(
             'Invalid <invoke> tag. Missing function attribute. Expected: <invoke console.log("Hello World")'
         );
         return;
     }
 
-    var arg = functionAttr.argument;
-
-    if (arg === undefined) {
-        codegen.addError(
+    if (functionArgs === undefined) {
+        context.addError(
             'Invalid <invoke> tag. Missing function arguments. Expected: <invoke console.log("Hello World")'
         );
         return;
     }
 
-    var functionName = functionAttr.name;
-    var functionCallExpression = functionName + "(" + arg + ")";
-    return codegen.builder.parseExpression(functionCallExpression);
+    const functionCallExpression = `${functionAttr.name}(${functionArgs})`;
+    const functionAst = context.builder.parseExpression(functionCallExpression);
+    let replacement = renderCallToDynamicTag(functionAst, context);
+
+    if (replacement) {
+        elNode.forEachAttribute(attr => {
+            if (attr !== functionAttr) {
+                replacement.addAttribute(attr);
+            }
+        });
+    } else {
+        replacement = builder.scriptlet({
+            value: functionCallExpression
+        });
+    }
+
+    elNode.replaceWith(replacement);
 };

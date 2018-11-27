@@ -62,6 +62,11 @@ ComponentDef.prototype = {
         if (nestedId == null) {
             return id;
         } else {
+            if (nestedId.startsWith("#")) {
+                id = "#" + id;
+                nestedId = nestedId.substring(1);
+            }
+
             return id + "-" + nestedId;
         }
     },
