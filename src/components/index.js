@@ -170,9 +170,9 @@ function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
         "<script" +
             nonceAttr +
             ">" +
-            "(function(){var w=window;w.$components=(w.$components||[]).concat(" +
+            "(function(){var init = function() {var w=window;w.$components=(w.$components||[]).concat(" +
             safeJSON(warp10.stringify(renderedComponents)) +
-            ")||w.$components})()</script>"
+            ')||w.$components}; if(document.readyState === "loading") { document.addEventListener("DOMContentLoaded", init); } else { init(); }})()</script>'
     );
 }
 
