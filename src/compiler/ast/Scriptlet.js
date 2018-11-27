@@ -22,7 +22,9 @@ class Scriptlet extends Node {
             return;
         }
 
-        code = adjustIndent(code, writer.currentIndent);
+        if (typeof code === "string") {
+            code = adjustIndent(code, writer.currentIndent);
+        }
 
         writer.write(code);
         writer.write("\n");
