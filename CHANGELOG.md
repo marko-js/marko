@@ -4,6 +4,11 @@
 
 ## 4.13.x
 
+### 4.13.13
+
+- Fix regression: parsing of `if` statments without braces (in scriptlets & otherwise). [#1175](https://github.com/marko-js/marko/pull/1175)
+- Fix regression: `<var>` and `<assign>` tags with non-standard placeholders in normal string attributes. [#1176](https://github.com/marko-js/marko/pull/1176)
+
 ### 4.13.12
 
 - `<invoke>` tag translates to modern Marko scriptlet (or dynamic tag). [#1165](https://github.com/marko-js/marko/pull/1165)
