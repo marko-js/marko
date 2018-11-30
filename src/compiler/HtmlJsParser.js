@@ -50,7 +50,12 @@ class HtmlJsParser {
 
             onOpenTag(event, parser) {
                 event.selfClosed = false; // Don't allow self-closed tags
-                handlers.handleStartElement(event, parser);
+                var tagString = parser
+                    .substring(event.pos, event.endPos)
+                    .replace(/^<|\/>$|>$/g, "")
+                    .trim();
+
+                handlers.handleStartElement(event, tagString);
 
                 var tagParseOptions = handlers.getTagParseOptions(event);
                 if (tagParseOptions) {
