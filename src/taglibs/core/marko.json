@@ -1,10 +1,4 @@
 {
-    "transformer": "./root-transformer",
-    "<assign>": {
-        "transformer": "./assign-tag",
-        "open-tag-only": true,
-        "deprecated": true
-    },
     "<class>": {
         "code-generator": "./class-tag",
         "open-tag-only": true
@@ -139,10 +133,6 @@
             }
         ]
     },
-    "<invoke>": {
-        "transformer": "./invoke-tag",
-        "deprecated": true
-    },
     "<macro>": {
         "node-factory": "./macro-tag",
         "autocomplete": [
@@ -212,10 +202,6 @@
                     "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
             }
         ]
-    },
-    "<var>": {
-        "transformer": "./var-tag",
-        "deprecated": true
     },
     "<while>": {
         "code-generator": "./while-tag",

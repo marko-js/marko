@@ -1,0 +1,16 @@
+{
+    "migrator": "./root-migrator",
+    "<invoke>": {
+        "migrator": "./invoke-tag",
+        "deprecated": true
+    },
+    "<assign>": {
+        "migrator": "./assign-tag",
+        "open-tag-only": true,
+        "deprecated": true
+    },
+    "<var>": {
+        "migrator": "./var-tag",
+        "deprecated": true
+    }
+}

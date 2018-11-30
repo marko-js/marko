@@ -326,6 +326,15 @@ class TaglibLookup {
         return attrDef;
     }
 
+    forEachTemplateMigrator(callback, thisObj) {
+        for (var key in this.taglibsById) {
+            var migration = this.taglibsById[key].getMigrator();
+            if (migration) {
+                callback.call(thisObj, migration);
+            }
+        }
+    }
+
     forEachTemplateTransformer(callback, thisObj) {
         var transformers = this.merged.transformers;
         if (transformers && transformers.length) {

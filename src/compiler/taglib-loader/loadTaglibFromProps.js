@@ -322,6 +322,18 @@ class TaglibLoader {
         }
     }
 
+    /**
+     * A taglib can be mapped to module that is used
+     * migrate deprecated features to modern features across the entire template.
+     */
+    migrator(value) {
+        var taglib = this.taglib;
+        var dirname = this.dirname;
+
+        var path = markoModules.resolveFrom(dirname, value);
+        taglib.migratorPath = path;
+    }
+
     textTransformer(value) {
         // Marko allows a "text-transformer" to be registered. The provided
         // text transformer will be called for any static text found in a template.

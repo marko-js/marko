@@ -1,4 +1,6 @@
 const isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
+const replacePlaceholderEscapeFuncs = require("../../compiler/util/replacePlaceholderEscapeFuncs");
+const printJS = require("./util/printJS");
 
 module.exports = function nodeFactory(elNode, context) {
     const attributes = elNode.attributes;
@@ -60,7 +62,7 @@ module.exports = function nodeFactory(elNode, context) {
     }
 
     elNode.insertSiblingBefore(
-        builder.scriptlet({ value: builder.vars(vars) })
+        builder.scriptlet({ value: printJS(builder.vars(vars), context) })
     );
     elNode.forEachChild(node => elNode.insertSiblingBefore(node));
     elNode.detach();

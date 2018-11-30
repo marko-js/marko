@@ -198,6 +198,14 @@ class Tag {
     hasNestedTags() {
         return this.nestedTags != null;
     }
+    getMigrator() {
+        var path = this.migratorPath;
+
+        if (path) {
+            return (this._migrator =
+                this._migrator || markoModules.require(path));
+        }
+    }
     getNodeFactory() {
         var nodeFactory = this._nodeFactory;
         if (nodeFactory !== undefined) {

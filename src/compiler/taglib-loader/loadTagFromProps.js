@@ -390,6 +390,18 @@ class TagLoader {
     }
 
     /**
+     * A custom tag can be mapped to module that is used
+     * migrate deprecated features to modern features.
+     */
+    migrator(value) {
+        var tag = this.tag;
+        var dirname = this.dirname;
+
+        var path = markoModules.resolveFrom(dirname, value);
+        tag.migratorPath = path;
+    }
+
+    /**
      * A custom tag can be mapped to module that is is used
      * to generate compile-time code for the custom tag. A
      * node type is created based on the methods and methods

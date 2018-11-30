@@ -1,3 +1,5 @@
+const printJS = require("./printJS");
+
 module.exports = function renderCallToDynamicTag(ast, context) {
     const builder = context.builder;
     const args = ast.args;
@@ -58,7 +60,15 @@ module.exports = function renderCallToDynamicTag(ast, context) {
         );
     }
 
-    return context.createNodeForEl(tagName, tagAttrs, null, true, true);
+    tagName = `\${${printJS(tagName, context)}}`;
+    return builder.htmlElement(
+        tagName,
+        tagAttrs,
+        undefined,
+        undefined,
+        true,
+        true
+    );
 };
 
 function toAttributesOrSpread(val) {

@@ -274,6 +274,10 @@ function registerCoreTaglibs() {
     if (!coreTaglibsRegistered) {
         coreTaglibsRegistered = true;
         registerTaglib(
+            require("../taglibs/migrate/marko.json"),
+            require.resolve("../taglibs/migrate/marko.json")
+        );
+        registerTaglib(
             require("../taglibs/core/marko.json"),
             require.resolve("../taglibs/core/marko.json")
         );
