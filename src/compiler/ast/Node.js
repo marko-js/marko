@@ -40,7 +40,7 @@ class Node {
         this.tagDef = null; // The tag definition associated with this Node
         this._codeGeneratorFuncs = null;
         this._flags = {};
-        this._transformersApplied = {};
+        this._transformersApplied = new Set();
         this._preserveWhitespace = null;
         this._events = null;
         this._childTextNormalized = undefined;
@@ -191,11 +191,11 @@ class Node {
     }
 
     isTransformerApplied(transformer) {
-        return this._transformersApplied[transformer.id] === true;
+        return this._transformersApplied.has(transformer);
     }
 
     setTransformerApplied(transformer) {
-        this._transformersApplied[transformer.id] = true;
+        this._transformersApplied.add(transformer);
     }
 
     toString() {

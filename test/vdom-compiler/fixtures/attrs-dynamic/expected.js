@@ -13,9 +13,9 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   var attrs = {
-          foo: "bar",
-          hello: "world"
-        }
+      foo: "bar",
+      hello: "world"
+    }
 
   out.e("DIV", attrs, null, null, 3)
     .t("Hello ")

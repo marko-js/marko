@@ -2,6 +2,7 @@
 var ok = require("assert").ok;
 var extend = require("raptor-util/extend");
 var Normalizer = require("./Normalizer");
+var Migrator = require("./Migrator");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     "preserve-whitespace": function(attr, context) {
@@ -96,12 +97,18 @@ class Parser {
         var rootNode = builder.templateRoot();
         var mergedOptions = Object.assign({}, this.defaultOptions, options);
         var raw = mergedOptions.raw === true;
+        var migrate = mergedOptions.migrate === true;
 
         this.stack.push({
             node: rootNode
         });
 
         this.parserImpl.parse(src, this, context.filename, mergedOptions);
+
+        if (migrate) {
+            var migrator = new Migrator();
+            rootNode = migrator.migrate(rootNode, context);
+        }
 
         if (!raw) {
             var normalizer = new Normalizer();
@@ -141,6 +148,10 @@ class Parser {
 
         if (argument) {
             argument = argument.value;
+        }
+
+        if (!el.tagNameExpression && !tagName) {
+            tagName = el.tagName = "assign";
         }
 
         if (tagName === "marko-compiler-options") {

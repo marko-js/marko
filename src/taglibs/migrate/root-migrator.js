@@ -4,7 +4,7 @@ const printJS = require("./util/printJS");
 const OUT_IDENTIFIER_REG = /[(,] *out *[,)]/;
 const renderCallToDynamicTag = require("./util/renderCallToDynamicTag");
 
-module.exports = function transform(el, context) {
+module.exports = function migrator(el, context) {
     const walker = context.createWalker({
         enter(node) {
             if (
@@ -76,9 +76,12 @@ module.exports = function transform(el, context) {
                             "if",
                             undefined,
                             [replaceScriptlets(node.right, context)],
-                            node.operator === "&&"
-                                ? node.left
-                                : builder.negate(node.left),
+                            printJS(
+                                node.operator === "&&"
+                                    ? node.left
+                                    : builder.negate(node.left),
+                                context
+                            ),
                             false,
                             false
                         );
@@ -98,7 +101,7 @@ module.exports = function transform(el, context) {
                             "if",
                             undefined,
                             replaceScriptlets(node.body, context),
-                            node.test,
+                            printJS(node.test, context),
                             false,
                             false
                         );
@@ -108,7 +111,7 @@ module.exports = function transform(el, context) {
                             "else-if",
                             undefined,
                             replaceScriptlets(node.body, context),
-                            node.test,
+                            printJS(node.test, context),
                             false,
                             false
                         );

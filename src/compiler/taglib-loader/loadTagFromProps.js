@@ -396,9 +396,7 @@ class TagLoader {
     migrator(value) {
         var tag = this.tag;
         var dirname = this.dirname;
-
-        var path = markoModules.resolveFrom(dirname, value);
-        tag.migratorPath = path;
+        tag.migratorPaths.push(markoModules.resolveFrom(dirname, value));
     }
 
     /**

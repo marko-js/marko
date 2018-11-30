@@ -1,5 +1,8 @@
 {
     "migrator": "./root-migrator",
+    "<*>": {
+        "migrator": "./control-flow-directives"
+    },
     "<invoke>": {
         "migrator": "./invoke-tag",
         "deprecated": true

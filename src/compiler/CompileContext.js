@@ -460,10 +460,6 @@ class CompileContext extends EventEmitter {
             elDef = { tagName, argument, attributes, openTagOnly, selfClosed };
         }
 
-        if (elDef.tagName === "") {
-            elDef.tagName = tagName = "assign";
-        }
-
         if (!attributes) {
             attributes = elDef.attributes = [];
         } else if (typeof attributes === "object") {

@@ -60,15 +60,17 @@ module.exports = function renderCallToDynamicTag(ast, context) {
         );
     }
 
-    tagName = `\${${printJS(tagName, context)}}`;
-    return builder.htmlElement(
-        tagName,
+    const el = builder.htmlElement(
+        undefined,
         tagAttrs,
         undefined,
         undefined,
         true,
         true
     );
+
+    el.rawTagNameExpression = printJS(tagName, context);
+    return el;
 };
 
 function toAttributesOrSpread(val) {
