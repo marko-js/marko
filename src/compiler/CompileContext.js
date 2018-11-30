@@ -626,8 +626,6 @@ class CompileContext extends EventEmitter {
                 this.setFlag(attrDef.setContextFlag);
             }
 
-            attr.def = attrDef;
-
             foundAttrs[attrName] = true;
         });
 

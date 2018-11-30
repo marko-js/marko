@@ -1,8 +1,8 @@
 "use strict";
 var ok = require("assert").ok;
-var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
-var enableTagParams = require("./util/enableTagParams");
 var extend = require("raptor-util/extend");
+var Normalizer = require("./Normalizer");
+var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     "preserve-whitespace": function(attr, context) {
@@ -13,51 +13,9 @@ var COMPILER_ATTRIBUTE_HANDLERS = {
     }
 };
 
-var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
-
-function isIEConditionalComment(comment) {
-    return ieConditionalCommentRegExp.test(comment);
-}
-
-function mergeShorthandClassNames(el, shorthandClassNames, context) {
-    var builder = context.builder;
-    let classNames = shorthandClassNames.map(className => {
-        return builder.parseExpression(className.value);
-    });
-
-    var classAttr = el.getAttributeValue("class");
-    if (classAttr) {
-        classNames.push(classAttr);
-    }
-
-    let prevClassName;
-
-    var finalClassNames = [];
-
-    for (var i = 0; i < classNames.length; i++) {
-        let className = classNames[i];
-        if (
-            prevClassName &&
-            className.type === "Literal" &&
-            prevClassName.type === "Literal"
-        ) {
-            prevClassName.value += " " + className.value;
-        } else {
-            finalClassNames.push(className);
-            prevClassName = className;
-        }
-    }
-
-    if (finalClassNames.length === 1) {
-        el.setAttributeValue("class", finalClassNames[0]);
-    } else {
-        el.setAttributeValue(
-            "class",
-            builder.functionCall(context.helper("classList"), [
-                builder.literal(finalClassNames)
-            ])
-        );
-    }
+function getSimplifiedValue(node) {
+    if (node.type === "Literal") return node.value;
+    return node;
 }
 
 function getParserStateForTag(parser, el, tagDef) {
@@ -144,6 +102,11 @@ class Parser {
 
         this.parserImpl.parse(src, this, context.filename);
 
+        if (!this.raw) {
+            var normalizer = new Normalizer();
+            rootNode = normalizer.normalize(rootNode, context);
+        }
+
         return rootNode;
     }
 
@@ -167,12 +130,11 @@ class Parser {
         }
     }
 
-    handleStartElement(el, parser) {
+    handleStartElement(el, tagString) {
         var context = this.context;
         var builder = context.builder;
 
         var tagName = el.tagName;
-        var tagNameExpression = el.tagNameExpression;
         var attributes = el.attributes;
         var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
 
@@ -180,150 +142,41 @@ class Parser {
             argument = argument.value;
         }
 
-        var raw = this.raw;
+        if (tagName === "marko-compiler-options") {
+            this.parentNode.setTrimStartEnd(true);
 
-        if (!raw) {
-            if (tagNameExpression) {
-                tagName = builder.parseExpression(tagNameExpression);
-            } else if (tagName === "marko-compiler-options") {
-                this.parentNode.setTrimStartEnd(true);
+            attributes.forEach(function(attr) {
+                let attrName = attr.name;
+                let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 
-                attributes.forEach(function(attr) {
-                    let attrName = attr.name;
-                    let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
+                if (!handler) {
+                    context.addError({
+                        code: "ERR_INVALID_COMPILER_OPTION",
+                        message:
+                            'Invalid Marko compiler option of "' +
+                            attrName +
+                            '". Allowed: ' +
+                            Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(", "),
+                        pos: el.pos,
+                        node: el
+                    });
+                    return;
+                }
 
-                    if (!handler) {
-                        context.addError({
-                            code: "ERR_INVALID_COMPILER_OPTION",
-                            message:
-                                'Invalid Marko compiler option of "' +
-                                attrName +
-                                '". Allowed: ' +
-                                Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(
-                                    ", "
-                                ),
-                            pos: el.pos,
-                            node: el
-                        });
-                        return;
-                    }
-
-                    handler(attr, context);
-                });
-
-                return;
-            }
+                handler(attr, context);
+            });
         }
 
         this.prevTextNode = null;
 
         var tagDef = el.tagName ? this.context.getTagDef(el.tagName) : null;
 
-        var attributeParseErrors = [];
-        // <div class="foo"> -> "div class=foo"
-        var tagString = parser
-            .substring(el.pos, el.endPos)
-            .replace(/^<|\/>$|>$/g, "")
-            .trim();
+        var shouldParseAttributes = !tagDef || tagDef.parseAttributes !== false;
 
-        var shouldParsedAttributes =
-            !tagDef || tagDef.parseAttributes !== false;
-
-        var parsedAttributes = [];
-
-        if (shouldParsedAttributes) {
-            attributes.forEach(attr => {
-                var attrName = attr.name;
-                var attrRawValue = attr.value;
-                var attrSpread;
-                var attrValue;
-
-                if (attr.hasOwnProperty("literalValue")) {
-                    attrValue = builder.literal(attr.literalValue);
-                } else if (/^\.\.\./.test(attrName)) {
-                    attrRawValue = attrName;
-                    attrValue = attrRawValue.slice(3);
-                    attrName = undefined;
-                    attrSpread = true;
-                    if (attr.argument) {
-                        attrValue += "(" + attr.argument.value + ")";
-                    }
-                } else if (attr.value == null) {
-                    attrValue = undefined;
-                } else {
-                    attrValue = attrRawValue;
-                }
-
-                if (typeof attrValue === "string") {
-                    let parsedExpression;
-                    let valid = true;
-                    try {
-                        parsedExpression = builder.parseExpression(attrValue);
-                    } catch (e) {
-                        if (shouldParsedAttributes) {
-                            valid = false;
-                            attributeParseErrors.push(
-                                'Invalid JavaScript expression for attribute "' +
-                                    attr.name +
-                                    '": ' +
-                                    e
-                            );
-                        } else {
-                            // Attribute failed to parse. Skip it...
-                            return;
-                        }
-                    }
-
-                    if (valid) {
-                        if (raw) {
-                            attrValue = parsedExpression;
-                        } else {
-                            attrValue = replacePlaceholderEscapeFuncs(
-                                parsedExpression,
-                                context
-                            );
-                        }
-                    } else {
-                        attrValue = null;
-                    }
-                }
-
-                var attrDef = {
-                    name: attrName,
-                    value: attrValue,
-                    rawValue: attrRawValue
-                };
-
-                if (attr.argument) {
-                    // TODO Do something with the argument pos
-                    attrDef.argument = attr.argument.value;
-                }
-
-                if (attrSpread) {
-                    attrDef.spread = true;
-                }
-
-                if (attrName) {
-                    if (
-                        attrName === "for-key" ||
-                        attrName === "for-ref" ||
-                        attrName === "w-for" ||
-                        attrName.endsWith(":key")
-                    ) {
-                        context.data.hasLegacyForKey = true;
-                    }
-                }
-
-                if (attrRawValue) {
-                    if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrRawValue)) {
-                        // TODO: add complain call here
-                        context.data.hasImperativeComponentIds = true;
-                    }
-                }
-
-                parsedAttributes.push(attrDef);
-            });
-        }
+        var parsedAttributes = shouldParseAttributes
+            ? this.parseAttributes(attributes)
+            : [];
+        var attributeParseErrors = parsedAttributes.errors;
 
         var elDef = {
             tagName: tagName,
@@ -335,54 +188,32 @@ class Parser {
             attributes: parsedAttributes
         };
 
-        var node;
+        var node = builder.htmlElement(elDef);
+        node.pos = elDef.pos;
+        node.tagDef = tagDef;
 
-        if (raw) {
-            node = builder.htmlElement(elDef);
-            node.pos = elDef.pos;
-            node.tagDef = tagDef;
-        } else {
-            node = this.context.createNodeForEl(elDef);
-        }
-
-        if (attributeParseErrors.length) {
+        if (attributeParseErrors && attributeParseErrors.length) {
             attributeParseErrors.forEach(e => {
                 context.addError(node, e);
             });
         }
 
-        if (raw) {
-            if (el.shorthandId) {
-                let parsed = builder.parseExpression(el.shorthandId.value);
-                node.rawShorthandId = parsed.value;
-            }
+        if (el.shorthandId) {
+            let parsed = builder.parseExpression(el.shorthandId.value);
+            node.rawShorthandId = getSimplifiedValue(parsed);
+        }
 
-            if (el.shorthandClassNames) {
-                node.rawShorthandClassNames = el.shorthandClassNames.map(
-                    className => {
-                        let parsed = builder.parseExpression(className.value);
-                        return parsed.value;
-                    }
-                );
-            }
-        } else {
-            if (el.shorthandClassNames) {
-                mergeShorthandClassNames(node, el.shorthandClassNames, context);
-            }
-
-            if (el.shorthandId) {
-                if (node.hasAttribute("id")) {
-                    context.addError(
-                        node,
-                        'A shorthand ID cannot be used in conjunction with the "id" attribute'
-                    );
-                } else {
-                    node.setAttributeValue(
-                        "id",
-                        builder.parseExpression(el.shorthandId.value)
-                    );
+        if (el.shorthandClassNames) {
+            node.rawShorthandClassNames = el.shorthandClassNames.map(
+                className => {
+                    let parsed = builder.parseExpression(className.value);
+                    return getSimplifiedValue(parsed);
                 }
-            }
+            );
+        }
+
+        if (el.tagNameExpression) {
+            node.rawTagNameExpression = el.tagNameExpression;
         }
 
         this.parentNode.appendChild(node);
@@ -393,36 +224,112 @@ class Parser {
         });
     }
 
-    handleEndElement(elementName) {
-        if (this.raw !== true) {
-            if (elementName === "marko-compiler-options") {
-                return;
-            }
-        }
+    parseAttributes(attributes) {
+        var context = this.context;
+        var builder = context.builder;
+        var attributeParseErrors = [];
+        // <div class="foo"> -> "div class=foo"
+        var parsedAttributes = [];
 
-        this.prevTextNode = null;
-        var { node } = this.stack.pop();
-        var tagDef = node.tagDef;
-        if (tagDef && tagDef.featureFlags) {
-            if (tagDef.featureFlags.includes("params")) {
-                enableTagParams(node, this.context);
+        attributes.forEach(attr => {
+            var attrName = attr.name;
+            var attrRawValue = attr.value;
+            var attrSpread;
+            var attrValue;
+
+            if (attr.hasOwnProperty("literalValue")) {
+                attrValue = builder.literal(attr.literalValue);
+            } else if (/^\.\.\./.test(attrName)) {
+                attrRawValue = attrName;
+                attrValue = attrRawValue.slice(3);
+                attrName = undefined;
+                attrSpread = true;
+                if (attr.argument) {
+                    attrValue += "(" + attr.argument.value + ")";
+                }
+            } else if (attr.value == null) {
+                attrValue = undefined;
+            } else {
+                attrValue = attrRawValue;
             }
-        }
+
+            if (typeof attrValue === "string") {
+                let parsedExpression;
+                let valid = true;
+                try {
+                    parsedExpression = builder.parseExpression(attrValue);
+                } catch (e) {
+                    valid = false;
+                    attributeParseErrors.push(
+                        'Invalid JavaScript expression for attribute "' +
+                            attr.name +
+                            '": ' +
+                            e
+                    );
+                }
+
+                if (valid) {
+                    attrValue = replacePlaceholderEscapeFuncs(
+                        parsedExpression,
+                        context
+                    );
+                } else {
+                    attrValue = null;
+                }
+            }
+
+            var attrDef = {
+                name: attrName,
+                value: attrValue,
+                rawValue: attrRawValue
+            };
+
+            if (attr.argument) {
+                // TODO Do something with the argument pos
+                attrDef.argument = attr.argument.value;
+            }
+
+            if (attrSpread) {
+                attrDef.spread = true;
+            }
+
+            if (attrName) {
+                if (
+                    attrName === "for-key" ||
+                    attrName === "for-ref" ||
+                    attrName === "w-for" ||
+                    attrName.endsWith(":key")
+                ) {
+                    context.data.hasLegacyForKey = true;
+                }
+            }
+
+            if (attrRawValue) {
+                if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrRawValue)) {
+                    // TODO: add complain call here
+                    context.data.hasImperativeComponentIds = true;
+                }
+            }
+
+            parsedAttributes.push(attrDef);
+        });
+
+        parsedAttributes.errors = attributeParseErrors;
+
+        return parsedAttributes;
+    }
+
+    handleEndElement() {
+        this.prevTextNode = null;
+        this.stack.pop();
     }
 
     handleComment(comment) {
         this.prevTextNode = null;
 
         var builder = this.context.builder;
-
-        var preserveComment =
-            this.context.isPreserveComments() ||
-            isIEConditionalComment(comment);
-
-        if (this.raw || preserveComment) {
-            var commentNode = builder.htmlComment(builder.literal(comment));
-            this.parentNode.appendChild(commentNode);
-        }
+        var commentNode = builder.htmlComment(builder.literal(comment));
+        this.parentNode.appendChild(commentNode);
     }
 
     handleDeclaration(value) {
