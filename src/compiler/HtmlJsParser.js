@@ -3,11 +3,10 @@ var htmljs = require("htmljs-parser");
 
 class HtmlJsParser {
     constructor(options) {
-        this.ignorePlaceholders =
-            options && options.ignorePlaceholders === true;
+        this.defaultOptions = options;
     }
 
-    parse(src, handlers, filename) {
+    parse(src, handlers, filename, options) {
         var listeners = {
             onText(event) {
                 handlers.handleCharacters(event.value, event.parseMode);
@@ -97,8 +96,9 @@ class HtmlJsParser {
             }
         };
 
+        var mergedOptions = Object.assign({}, this.defaultOptions, options);
         var parser = (this.parser = htmljs.createParser(listeners, {
-            ignorePlaceholders: this.ignorePlaceholders,
+            ignorePlaceholders: mergedOptions.ignorePlaceholders,
             isOpenTagOnly: function(tagName) {
                 return handlers.isOpenTagOnly(tagName);
             }

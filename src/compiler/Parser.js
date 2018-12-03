@@ -71,7 +71,7 @@ class Parser {
         this.prevTextNode = null;
         this.stack = null;
 
-        this.raw = options && options.raw === true;
+        this.defaultOptions = options;
 
         // The context gets provided when parse is called
         // but we store it as part of the object so that the handler
@@ -84,7 +84,7 @@ class Parser {
         this.stack = [];
     }
 
-    parse(src, context) {
+    parse(src, context, options) {
         ok(typeof src === "string", '"src" should be a string');
         ok(context, '"context" is required');
 
@@ -94,14 +94,16 @@ class Parser {
 
         var builder = context.builder;
         var rootNode = builder.templateRoot();
+        var mergedOptions = Object.assign({}, this.defaultOptions, options);
+        var raw = mergedOptions.raw === true;
 
         this.stack.push({
             node: rootNode
         });
 
-        this.parserImpl.parse(src, this, context.filename);
+        this.parserImpl.parse(src, this, context.filename, mergedOptions);
 
-        if (!this.raw) {
+        if (!raw) {
             var normalizer = new Normalizer();
             rootNode = normalizer.normalize(rootNode, context);
         }

@@ -32,14 +32,6 @@ Object.defineProperty(exports, "config", {
 });
 
 var defaultParser = new Parser(new HtmlJsParser());
-var rawParser = new Parser(
-    new HtmlJsParser({
-        ignorePlaceholders: true
-    }),
-    {
-        raw: true
-    }
-);
 
 function configure(newConfig) {
     if (!newConfig) {
@@ -207,20 +199,34 @@ function clearCaches() {
     exports.taglibLoader.clearCache();
 }
 
-function parseRaw(templateSrc, filename) {
+function parseRaw(templateSrc, filename, options) {
+    return parse(
+        templateSrc,
+        filename,
+        Object.assign(
+            {
+                raw: true,
+                ignorePlaceholders: true
+            },
+            options
+        )
+    );
+}
+
+function parse(templateSrc, filename, options) {
     registerCoreTaglibs();
     var context = new CompileContext(
         templateSrc,
         filename,
         Builder.DEFAULT_BUILDER
     );
-    var parsed = rawParser.parse(templateSrc, context);
+    var parsed = defaultParser.parse(templateSrc, context, options);
 
     if (context.hasErrors()) {
         var errors = context.getErrors();
 
         var message =
-            'An error occurred while trying to compile template at path "' +
+            'An error occurred while trying to parse template at path "' +
             filename +
             '". Error(s) in template:\n';
         for (var i = 0, len = errors.length; i < len; i++) {
@@ -241,6 +247,7 @@ exports.compile = compile;
 exports.compileForBrowser = compileForBrowser;
 exports.compileFileForBrowser = compileFileForBrowser;
 exports.parseRaw = parseRaw;
+exports.parse = parse;
 exports.createInlineCompiler = createInlineCompiler;
 
 exports.checkUpToDate = checkUpToDate;
