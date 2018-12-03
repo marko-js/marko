@@ -6,14 +6,14 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_escapeXmlAttr = marko_helpers.xa;
+    marko_attr = marko_helpers.a;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div foo=\"Hello " +
-    marko_escapeXmlAttr(input.name) +
-    "\"></div>");
+  out.w("<div" +
+    marko_attr("foo", "Hello " + input.name) +
+    "></div>");
 
   var foo = "Hello " + input.name;
 }

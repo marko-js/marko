@@ -144,6 +144,24 @@ function parseExpression(src, builder, isExpression) {
 
                 return builder.literal(literalValue);
             }
+            case "TaggedTemplateExpression": {
+                if (node.tag.name === "$nonstandard") {
+                    const quasi = convert(node.quasi);
+                    if (quasi) {
+                        quasi.nonstandard = true;
+                        return quasi;
+                    }
+                }
+                return null;
+            }
+            case "TemplateLiteral": {
+                const quasis = node.quasis.map(q => q.value.cooked);
+                const expressions = convert(node.expressions);
+                if (expressions) {
+                    return builder.templateLiteral(quasis, expressions);
+                }
+                return null;
+            }
             case "LogicalExpression": {
                 let left = convert(node.left);
                 if (!left) {

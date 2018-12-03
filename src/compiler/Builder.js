@@ -40,6 +40,7 @@ var ArrayExpression = require("./ast/ArrayExpression");
 var Property = require("./ast/Property");
 var VariableDeclarator = require("./ast/VariableDeclarator");
 var ThisExpression = require("./ast/ThisExpression");
+var TemplateLiteral = require("./ast/TemplateLiteral");
 var Expression = require("./ast/Expression");
 var Scriptlet = require("./ast/Scriptlet");
 var ContainerNode = require("./ast/ContainerNode");
@@ -53,7 +54,6 @@ var parseExpression = require("./util/parseExpression");
 var parseStatement = require("./util/parseStatement");
 var parseJavaScriptArgs = require("./util/parseJavaScriptArgs");
 var parseJavaScriptParams = require("./util/parseJavaScriptParams");
-var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
 var isValidJavaScriptIdentifier = require("./util/isValidJavaScriptIdentifier");
 
 var DEFAULT_BUILDER;
@@ -487,8 +487,8 @@ class Builder {
         return parsed;
     }
 
-    replacePlaceholderEscapeFuncs(node, context) {
-        return replacePlaceholderEscapeFuncs(node, context);
+    replacePlaceholderEscapeFuncs(node) {
+        return node;
     }
 
     program(body) {
@@ -561,6 +561,10 @@ class Builder {
 
         var operator = "===";
         return new BinaryExpression({ left, right, operator });
+    }
+
+    templateLiteral(quasis, expressions) {
+        return new TemplateLiteral({ quasis, expressions });
     }
 
     templateRoot(body) {
