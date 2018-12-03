@@ -23,6 +23,8 @@ class Tag {
             this.dir = path.dirname(filePath);
         }
 
+        this.migrators = {};
+        this.migratorPaths = [];
         this.attributes = {};
         this.transformers = {};
         this.patternAttributes = [];
@@ -198,6 +200,16 @@ class Tag {
     hasNestedTags() {
         return this.nestedTags != null;
     }
+
+    forEachMigrator(callback, thisObj) {
+        this.migratorPaths
+            .map(function(path) {
+                return (this.migrators[path] =
+                    this.migrators[path] || markoModules.require(path));
+            }, this)
+            .forEach(callback, thisObj);
+    }
+
     getNodeFactory() {
         var nodeFactory = this._nodeFactory;
         if (nodeFactory !== undefined) {

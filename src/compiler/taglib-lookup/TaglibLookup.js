@@ -326,6 +326,59 @@ class TaglibLookup {
         return attrDef;
     }
 
+    forEachTemplateMigrator(callback, thisObj) {
+        for (var key in this.taglibsById) {
+            var migration = this.taglibsById[key].getMigrator();
+            if (migration) {
+                callback.call(thisObj, migration);
+            }
+        }
+    }
+
+    forEachTagMigrator(element, callback, thisObj) {
+        if (typeof element === "string") {
+            element = {
+                tagName: element
+            };
+        }
+
+        var tagName = element.tagName;
+        /*
+         * If the node is an element node then we need to find all matching
+         * migrators based on the URI and the local name of the element.
+         */
+
+        var migrators = [];
+
+        function addMigrator(migrator) {
+            if (typeof migrator !== "function") {
+                throw new Error("Invalid transformer");
+            }
+
+            migrators.push(migrator);
+        }
+
+        /*
+         * Handle all of the migrators for all possible matching migrators.
+         *
+         * Start with the least specific and end with the most specific.
+         */
+
+        if (this.merged.tags) {
+            if (tagName) {
+                if (this.merged.tags[tagName]) {
+                    this.merged.tags[tagName].forEachMigrator(addMigrator);
+                }
+            }
+
+            if (this.merged.tags["*"]) {
+                this.merged.tags["*"].forEachMigrator(addMigrator);
+            }
+        }
+
+        migrators.forEach(callback, thisObj);
+    }
+
     forEachTemplateTransformer(callback, thisObj) {
         var transformers = this.merged.transformers;
         if (transformers && transformers.length) {

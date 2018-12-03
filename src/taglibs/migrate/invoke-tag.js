@@ -1,9 +1,12 @@
 const renderCallToDynamicTag = require("./util/renderCallToDynamicTag");
+const migrateControlFlowDirectives = require("./control-flow-directives");
 
-module.exports = function codeGenerator(elNode, context) {
+module.exports = function migrator(elNode, context) {
     const builder = context.builder;
     const functionAttr = elNode.attributes[0];
     const functionArgs = functionAttr.argument;
+    migrateControlFlowDirectives(elNode, context);
+    elNode.setTransformerApplied(migrateControlFlowDirectives);
 
     context.deprecate(
         'The "<invoke>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'

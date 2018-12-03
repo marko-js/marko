@@ -1,4 +1,5 @@
 const isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
+const printJS = require("./util/printJS");
 
 module.exports = function nodeFactory(elNode, context) {
     const attributes = elNode.attributes;
@@ -34,34 +35,31 @@ module.exports = function nodeFactory(elNode, context) {
         lastChild.argument.value = lastChild.argument.value.trimRight();
     }
 
-    const vars = elNode.attributes.map(attr => {
+    const scriptlets = elNode.attributes.map(attr => {
         const name = attr.name;
         const val = attr.rawValue;
 
-        if (!isValidJavaScriptVarName(attr.name)) {
+        if (!isValidJavaScriptVarName(name)) {
             hasError = true;
             context.addError(
-                "Invalid JavaScript variable name: " + attr.name,
+                "Invalid JavaScript variable name: " + name,
                 "INVALID_VAR_NAME"
             );
             return;
         }
 
-        let parsedExpression = val;
-        if (val != null) {
-            parsedExpression = builder.parseExpression(val);
-        }
-
-        return builder.variableDeclarator(name, parsedExpression);
+        return builder.scriptlet({
+            value: `var ${
+                val == null ? name : `${name} = ${printJS(attr.value, context)}`
+            }`
+        });
     });
 
     if (hasError) {
         return;
     }
 
-    elNode.insertSiblingBefore(
-        builder.scriptlet({ value: builder.vars(vars) })
-    );
+    scriptlets.forEach(scriptlet => elNode.insertSiblingBefore(scriptlet));
     elNode.forEachChild(node => elNode.insertSiblingBefore(node));
     elNode.detach();
 };

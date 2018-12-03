@@ -3,6 +3,7 @@ var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
 var loaders = require("./loaders");
+var markoModules = require("../modules");
 
 function handleImport(taglib, importedTaglib) {
     var importsLookup = taglib.importsLookup || (taglib.importsLookup = {});
@@ -64,6 +65,14 @@ class Taglib {
             }
         }
         return attribute;
+    }
+    getMigrator() {
+        var path = this.migratorPath;
+
+        if (path) {
+            return (this._migrator =
+                this._migrator || markoModules.require(path));
+        }
     }
     addTag(tag) {
         ok(arguments.length === 1, "Invalid args");

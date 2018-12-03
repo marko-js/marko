@@ -154,7 +154,7 @@ class Compiler {
         var codeGenerator = new CodeGenerator(context);
 
         // STAGE 1: Parse the template to produce the initial AST
-        var ast = this.parser.parse(src, context);
+        var ast = this.parser.parse(src, context, { migrate: true });
         context._parsingFinished = true;
 
         if (!context.ignoreUnrecognizedTags && context.unrecognizedTags) {
