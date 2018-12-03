@@ -2,6 +2,15 @@
 
 # 4.x
 
+## 4.14.x
+
+### 4.14.0
+
+- Add migration stage, deprecate rendering with `out`, deprecate control-flow directive as attributes. [#1180](https://github.com/marko-js/marko/pull/1180)
+- parse = parseRaw + normalize [#1179](https://github.com/marko-js/marko/pull/1179)
+- parse nonstandard string with placeholder to TemplateLiteral node, transpile template literals. [#1179](https://github.com/marko-js/marko/pull/1179)
+- add new parse api
+
 ## 4.13.x
 
 ### 4.13.13
