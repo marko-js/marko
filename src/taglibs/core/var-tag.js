@@ -1,5 +1,4 @@
 const isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
-const replacePlaceholderEscapeFuncs = require("../../compiler/util/replacePlaceholderEscapeFuncs");
 
 module.exports = function nodeFactory(elNode, context) {
     const attributes = elNode.attributes;
@@ -50,10 +49,7 @@ module.exports = function nodeFactory(elNode, context) {
 
         let parsedExpression = val;
         if (val != null) {
-            parsedExpression = replacePlaceholderEscapeFuncs(
-                builder.parseExpression(val),
-                context
-            );
+            parsedExpression = builder.parseExpression(val);
         }
 
         return builder.variableDeclarator(name, parsedExpression);

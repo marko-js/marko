@@ -2,7 +2,6 @@
 var ok = require("assert").ok;
 var extend = require("raptor-util/extend");
 var Normalizer = require("./Normalizer");
-var replacePlaceholderEscapeFuncs = require("./util/replacePlaceholderEscapeFuncs");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
     "preserve-whitespace": function(attr, context) {
@@ -269,10 +268,7 @@ class Parser {
                 }
 
                 if (valid) {
-                    attrValue = replacePlaceholderEscapeFuncs(
-                        parsedExpression,
-                        context
-                    );
+                    attrValue = parsedExpression;
                 } else {
                     attrValue = null;
                 }

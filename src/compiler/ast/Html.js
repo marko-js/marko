@@ -47,7 +47,8 @@ class Html extends Node {
         }
     }
 
-    generateHTMLCode() {
+    generateHTMLCode(codegen) {
+        this.argument = codegen.generateCode(this.argument);
         return this;
     }
 

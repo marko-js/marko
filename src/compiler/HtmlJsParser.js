@@ -21,17 +21,21 @@ class HtmlJsParser {
                             event.escape
                         );
                     }
-                } else if (event.withinOpenTag || event.withinTagName) {
-                    // Don't escape placeholder for dynamic attributes. For example: <div ${data.myAttrs}></div>
-                } else {
-                    // placeholder within attribute
-                    if (event.escape) {
-                        event.value = "$escapeXml(" + event.value + ")";
-                    } else {
-                        event.value = "$noEscapeXml(" + event.value + ")";
-                    }
                 }
-                // placeholder within content
+            },
+
+            onString(event) {
+                if (!event.isStringLiteral) {
+                    let value = "";
+                    event.stringParts.forEach(part => {
+                        if (part.type === "placeholder") {
+                            value += "${" + part.value + "}";
+                        } else {
+                            value += part.replace(/`/g, "\\`");
+                        }
+                    });
+                    event.value = "$nonstandard`" + value + "`";
+                }
             },
 
             onCDATA(event) {

@@ -148,6 +148,9 @@ module.exports = function generateCode(node, codegen) {
 
         return builder.htmlLiteral(attr(name, literalValue));
     } else if (value != null) {
+        if (value.type === "TemplateLiteral") {
+            value.nonstandard = false;
+        }
         return generateCodeForExpressionAttr(name, value, escape, codegen);
     } else if (argument) {
         return [

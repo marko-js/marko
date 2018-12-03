@@ -4,6 +4,10 @@ module.exports = function generateCode(node, codegen, vdomUtil) {
     var context = codegen.context;
     var builder = codegen.builder;
 
+    if (node.value && node.value.type === "TemplateLiteral") {
+        node.value.nonstandard = false;
+    }
+
     // node.name = codegen.generateCode(node.name);
     node.value = codegen.generateCode(node.value);
     node.isStatic = vdomUtil.isStaticValue(node.value);

@@ -118,10 +118,7 @@ module.exports = function handleComponentEvents() {
                     return;
                 }
 
-                targetMethod = builder.replacePlaceholderEscapeFuncs(
-                    parsedArgs[0],
-                    context
-                );
+                targetMethod = parsedArgs[0];
 
                 if (parsedArgs.length > 1) {
                     extraArgs = parsedArgs.slice(1);

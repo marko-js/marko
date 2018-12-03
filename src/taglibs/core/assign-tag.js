@@ -1,5 +1,3 @@
-const replacePlaceholderEscapeFuncs = require("../../compiler/util/replacePlaceholderEscapeFuncs");
-
 module.exports = function codeGenerator(elNode, context) {
     const attributes = elNode.attributes;
     const builder = context.builder;
@@ -17,18 +15,15 @@ module.exports = function codeGenerator(elNode, context) {
 
     elNode.replaceWith(
         builder.scriptlet({
-            value: replacePlaceholderEscapeFuncs(
-                builder.parseExpression(
-                    elNode.attributes
-                        .map(
-                            attr =>
-                                attr.value == null
-                                    ? attr.name
-                                    : `${attr.name} = ${attr.rawValue}`
-                        )
-                        .join(", ")
-                ),
-                context
+            value: builder.parseExpression(
+                elNode.attributes
+                    .map(
+                        attr =>
+                            attr.value == null
+                                ? attr.name
+                                : `${attr.name} = ${attr.rawValue}`
+                    )
+                    .join(", ")
             )
         })
     );
