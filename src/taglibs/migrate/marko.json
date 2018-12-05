@@ -15,5 +15,9 @@
     "<var>": {
         "migrator": "./var-tag",
         "deprecated": true
+    },
+    "<await>": {
+        "migrator": "./await-tag",
+        "deprecated": true
     }
 }
