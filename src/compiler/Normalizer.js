@@ -112,7 +112,6 @@ class Normalizer {
         });
 
         newNode.pos = elNode.pos;
-        newNode.tagDef = elNode.tagDef;
 
         if (elNode.rawShorthandClassNames) {
             mergeShorthandClassNames(
