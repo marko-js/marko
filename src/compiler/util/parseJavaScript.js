@@ -216,6 +216,8 @@ function parseExpression(src, builder, isExpression) {
                     let convertedChild = convert(child);
                     if (convertedChild) {
                         container.appendChild(convertedChild);
+                    } else {
+                        return null;
                     }
                 }
                 return container;
@@ -319,11 +321,14 @@ function parseExpression(src, builder, isExpression) {
                 return builder.vars(declarations, kind);
             }
             case "IfStatement": {
-                const ifNode = builder.ifStatement(
-                    convert(node.test),
-                    convert(node.consequent)
-                );
+                const ifNodeTest = convert(node.test);
+                const ifNodeBody = convert(node.consequent);
 
+                if (!ifNodeTest || !ifNodeBody) {
+                    return null;
+                }
+
+                const ifNode = builder.ifStatement(ifNodeTest, ifNodeBody);
                 let alternate = node.alternate;
 
                 if (!alternate) {
@@ -334,32 +339,68 @@ function parseExpression(src, builder, isExpression) {
                 container.appendChild(ifNode);
 
                 do {
-                    container.appendChild(
-                        alternate.consequent
-                            ? builder.elseIfStatement(
-                                  convert(alternate.test),
-                                  convert(alternate.consequent)
-                              )
-                            : builder.elseStatement(convert(alternate))
-                    );
+                    if (alternate.consequent) {
+                        const elseIfNodeTest = convert(alternate.test);
+                        const elseIfNodeBody = convert(alternate.consequent);
+
+                        if (!elseIfNodeTest || !elseIfNodeBody) {
+                            return null;
+                        }
+
+                        container.appendChild(
+                            builder.elseIfStatement(
+                                elseIfNodeTest,
+                                elseIfNodeBody
+                            )
+                        );
+                    } else {
+                        const elseNodeBody = convert(alternate);
+
+                        if (!elseNodeBody) {
+                            return null;
+                        }
+
+                        container.appendChild(
+                            builder.elseStatement(elseNodeBody)
+                        );
+                    }
+
                     alternate = alternate.alternate;
                 } while (alternate);
 
                 return container;
             }
             case "ForStatement": {
+                const forNodeInit = convert(node.init);
+                const forNodeTest = convert(node.test);
+                const forNodeUpdate = convert(node.update);
+                const forNodeBody = convert(node.body);
+
+                if (
+                    !forNodeInit ||
+                    !forNodeTest ||
+                    !forNodeUpdate ||
+                    !forNodeBody
+                ) {
+                    return null;
+                }
+
                 return builder.forStatement(
-                    convert(node.init),
-                    convert(node.test),
-                    convert(node.update),
-                    convert(node.body)
+                    forNodeInit,
+                    forNodeTest,
+                    forNodeUpdate,
+                    forNodeBody
                 );
             }
             case "WhileStatement": {
-                return builder.whileStatement(
-                    convert(node.test),
-                    convert(node.body)
-                );
+                const whileNodeTest = convert(node.test);
+                const whileNodeBody = convert(node.body);
+
+                if (!whileNodeTest || !whileNodeBody) {
+                    return null;
+                }
+
+                return builder.whileStatement(whileNodeTest, whileNodeBody);
             }
             default:
                 return null;

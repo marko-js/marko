@@ -2,18 +2,15 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = {
-        onCreate: function() {
-          this.state = {
-              message: "didnt run it"
-            };
-
-          if (true) {
+    onCreate: function () {
+        this.state = { message: 'didnt run it' };
+        if (true) {
             runIt(() => {
                 this.state.message = 'ran it';
             });
-          }
         }
-      },
+    }
+},
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/arrow-functions/index.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
