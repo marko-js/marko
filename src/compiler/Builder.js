@@ -5,6 +5,7 @@ var ok = require("assert").ok;
 var Node = require("./ast/Node");
 var Program = require("./ast/Program");
 var TemplateRoot = require("./ast/TemplateRoot");
+var ArrowFunction = require("./ast/ArrowFunction");
 var FunctionDeclaration = require("./ast/FunctionDeclaration");
 var FunctionCall = require("./ast/FunctionCall");
 var Literal = require("./ast/Literal");
@@ -274,6 +275,10 @@ class Builder {
         }
 
         return new FunctionCall({ callee, args });
+    }
+
+    arrowFunction(params, body) {
+        return new ArrowFunction({ params, body });
     }
 
     functionDeclaration(name, params, body) {

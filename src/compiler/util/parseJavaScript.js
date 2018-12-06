@@ -361,6 +361,20 @@ function parseExpression(src, builder, isExpression) {
                     convert(node.body)
                 );
             }
+            case "ArrowFunctionExpression": {
+                let params = convert(node.params);
+                if (!params) {
+                    return null;
+                }
+
+                let body = convert(node.body);
+                if (!body) {
+                    return null;
+                }
+
+                return builder.arrowFunction(params, body);
+            }
+
             default:
                 return null;
         }
