@@ -66,6 +66,90 @@ function render(input, out, __component, component, state) {
   if (z) {
     marko_dynamicTag(renderD, {}, out, __component, "17");
   }
+
+  // if.test
+  if (async () => {}) {
+      renderBody(out);
+  }
+
+  // if.consequent
+  if (true) {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // if.alternate
+  if (false) {
+  } else {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // elseif.test
+  if (false) {
+  } else if (async () => {}) {
+      renderBody(out);
+  }
+
+  // elseif.consequent
+  if (false) {
+  } else if (true) {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // elseif.alternate
+  if (false) {
+  } else if (false) {
+  } else {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // for.init
+  for (let x = (async () => {}); x < y; x++) {
+      renderBody(out);
+  }
+
+  // for.test
+  for (let x = 1; (async () => {}); x++) {
+      renderBody(out);
+  }
+
+  // for.update
+  for (let x = 1; x < y; (async () => {})) {
+      renderBody(out);
+  }
+
+  // for.body
+  for (let x = 1; x < y; x++) {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // while.test
+  while ((async () => {})) {
+      renderBody(out);
+  }
+
+  // while.body
+  while (true) {
+      async function x() {
+          renderBody(out);
+      }
+  }
+
+  // dowhile.body
+  do {
+      async function x() {
+          renderBody(out);
+      }
+  } while (true);
 }
 
 marko_template._ = marko_renderer(render, {
