@@ -115,7 +115,7 @@ module.exports = {
 
 ## Concise Syntax
 
-Marko also support a beautiful concise syntax as an alternative to the HTML
+Marko also supports a beautifully concise syntax as an alternative to HTML
 syntax. Find out more about the [concise syntax here](http://markojs.com/docs/concise/).
 
 ```marko
