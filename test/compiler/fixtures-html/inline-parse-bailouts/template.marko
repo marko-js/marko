@@ -1,0 +1,101 @@
+/**
+ * This test ensures that syntax that Marko does not understand is skipped over
+ * while parsing and prints out properly.
+ */
+
+$ {
+    // if.test
+    if (async () => {}) {
+    }
+}
+
+$ {
+    // if.consequent
+    if (true) {
+        async function x() {
+
+        }
+    }
+}
+
+$ {
+    // if.alternate
+    if (false) {
+    } else {
+        async function x() {
+
+        }
+    }
+}
+
+$ {
+    // elseif.test
+    if (false) {
+    } else if (async () => {}) {
+    }
+}
+
+$ {
+    // elseif.consequent
+    if (false) {
+    } else if (true) {
+        async function x() {
+
+        }
+    }
+}
+
+$ {
+    // elseif.alternate
+    if (false) {
+    } else if (false) {
+    } else {
+        async function x() {
+
+        }
+    }
+}
+
+$ {
+    // for.init
+    for (let x = (async () => {}); x < y; x++) {
+
+    }
+}
+
+$ {
+    // for.test
+    for (let x = 1; (async () => {}); x++) {
+
+    }
+}
+
+$ {
+    // for.update
+    for (let x = 1; x < y; (async () => {})) {
+
+    }
+}
+
+$ {
+    // for.body
+    for (let x = 1; x < y; x++) {
+        async function x() {
+
+        }
+    }
+}
+
+$ {
+    // while.test
+    while ((async () => {})) {}
+}
+
+$ {
+    // while.body
+    while (true) {
+        async function x() {
+
+        }
+    }
+}
