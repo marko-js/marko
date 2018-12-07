@@ -1,5 +1,4 @@
-module.exports = function migrate(el, context) {
-    const builder = context.builder;
+module.exports = function migrate(el) {
     el.forEachAttribute(attr => {
         const name = attr.name;
         if (!name.startsWith("w-on")) {
@@ -10,5 +9,4 @@ module.exports = function migrate(el, context) {
         attr.argument = attr.value.toString();
         attr.value = null;
     });
-    builder.htmlElement(el.tagName, el.attributes, [], undefined, false, false);
 };
