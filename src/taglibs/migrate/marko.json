@@ -15,5 +15,25 @@
     "<var>": {
         "migrator": "./var-tag",
         "deprecated": true
+    },
+    "<async-fragment>": {
+        "migrator": "./async-fragment-tag",
+        "deprecated": true
+    },
+    "<async-fragments>": {
+        "migrator": "./async-fragment-tag",
+        "deprecated": true
+    },
+    "<async-fragment-placeholder>": {
+        "migrator": "./async-fragment-tag",
+        "deprecated": true
+    },
+    "<async-fragment-timeout>": {
+        "migrator": "./async-fragment-tag",
+        "deprecated": true
+    },
+    "<async-fragment-error>": {
+        "migrator": "./async-fragment-tag",
+        "deprecated": true
     }
 }
