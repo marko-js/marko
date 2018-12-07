@@ -21,14 +21,14 @@ module.exports = function migrator(oldNode, context) {
         `The "<${oldTag}>" tag is deprecated. Please use "<${newTag}>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
     );
 
-    if (!attributes) {
-        context.addError(
-            "Invalid <aync-fragment> tag. Argument is missing. Example; <async-fragment data-provider=data.userInfo var='userInfo' />"
-        );
-        return oldNode;
-    }
-
     if (oldTag == "async-fragment" /* new: <await> */) {
+        if (!attributes || !attributes.length) {
+            context.addError(
+                'Invalid <aync-fragment> tag. Argument is missing. Example; <async-fragment data-provider=data.userInfo var="userInfo" />'
+            );
+            return oldNode;
+        }
+
         // need to convert data-provider and var attributes
         // to an argument: <await(var from dataProvider)>
         varName = oldNode.getAttributeValue("var").value;
@@ -37,7 +37,7 @@ module.exports = function migrator(oldNode, context) {
 
         if (!context.util.isValidJavaScriptIdentifier(varName)) {
             context.addError(
-                "Invalid <aync-fragment> tag. Argument's variable name should be a valid JavaScript identifier. Example: user, as in <await(user from data.userProvider)>"
+                'Invalid <aync-fragment> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <async-fragment data-provider=data.userInfo var="userInfo" />'
             );
             return;
         }
