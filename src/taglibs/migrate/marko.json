@@ -1,7 +1,7 @@
 {
     "migrator": "./root-migrator",
     "<*>": {
-        "migrator": "./control-flow-directives"
+        "migrator": "./common-tag-migrator"
     },
     "<invoke>": {
         "migrator": "./invoke-tag",
