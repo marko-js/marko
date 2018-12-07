@@ -1,0 +1,19 @@
+static {
+    function runIt(fn) {
+        fn()
+    }
+}
+class {
+    onCreate() {
+        this.state = {
+            message : "didnt run it"
+        }
+        if (true) {
+            runIt(()=>{
+                this.state.message = "ran it"
+            })
+        }
+
+    }
+}
+<div>Broken [${state.message}]</div>

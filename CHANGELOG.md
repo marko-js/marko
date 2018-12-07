@@ -4,6 +4,14 @@
 
 ## 4.14.x
 
+### 4.14.2
+
+- Convert the `<async-fragment>` transformer into a migrator. [#1185](https://github.com/marko-js/marko/pull/1185)
+
+### 4.14.1
+
+- Fix regression causing some parsed javascript nodes to be omitted from output. [#1184](https://github.com/marko-js/marko/pull/1184)
+
 ### 4.14.0
 
 - Add migration stage, deprecate rendering with `out`, deprecate control-flow directive as attributes. [#1180](https://github.com/marko-js/marko/pull/1180)

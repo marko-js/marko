@@ -115,6 +115,34 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
   }
   ```
 
+  **Note:** To initialize the server rendered components, there are 2 steps:
+
+  **Step 1:** Manually _retrieve_ server rendered components, shipped via `marko-dependencies`.
+
+  To retrieve the list of server rendered components, do:
+
+
+     ```javascript
+            template.render(data, (err, output) => {
+              const renderedComponentsList = require('marko/components').getRenderedComponents(output.out);
+              const html = output.getOutput();
+            });
+            res.json({
+                renderedComponentsList,
+                html
+            });
+     ```
+    **Step 2:** Manually *initialize* server rendered components, shipped via `marko-dependencies`.
+
+    To initialize the list of server rendered components, do:
+
+
+     ```javascript
+            // from the response received, retrieve as
+            require('marko/components').init(response.renderedComponentsList);
+     ```
+     **Note:** Ensure Step 2 is inside a DOM-ready wrapper, for the legacy widgets layer to load (if there are widgets built out of Marko 3, that is being used inside a Marko 4 component.)
+
 - **`marko-hydrate`**: (provided by `lasso-marko`)
   Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
 
@@ -124,6 +152,8 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
     "path": "src/ui-modules/outdated-browser-banner/index.marko"
   }
   ```
+
+  **Note:** `marko-hydrate` will initialize the component if its defined on the global `window.$components` which is inserted by `Marko` when it sees a `<body>` tag. Else, if you are just rendering out and lasso-ing the a portion of a page with a set of components, include `<init-components/>` at the end of the associated `template.marko` file that builds out the page fragment.
 
 - **`package`**:
   A collection of dependencies. `browser.json` is the most common package type.
@@ -137,10 +167,21 @@ For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` i
   ```
 - **`require`**:
   If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+
   ```json
   {
-    "run": true,
     "type": "require",
     "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
   }
   ```
+
+- **`require and run`**:
+  If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format and be executed immediately.
+
+```json
+{
+  "run": true,
+  "type": "require",
+  "path": "src/ui-modules/my-module/init.js"
+}
+```
