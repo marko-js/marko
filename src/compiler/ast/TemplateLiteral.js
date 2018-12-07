@@ -38,24 +38,6 @@ class TemplateLiteral extends Node {
     }
 
     writeCode(writer) {
-        for (let i = 0; i <= this.quasis.length; i++) {
-            const quasi = this.quasis[i];
-            const expr = this.expressions[i];
-            if (quasi || i === 0) {
-                if (i > 0) writer.write("+");
-                writer.write(JSON.stringify(quasi));
-            }
-            if (expr) {
-                writer.write("+");
-                writer.write("(");
-                writer.write(expr);
-                writer.write(")");
-            }
-        }
-        writer.write("\n");
-    }
-
-    toString() {
         let code = "";
         let quote = this.nonstandard ? '"' : "`";
         let escape = new RegExp(quote, "g");
@@ -65,7 +47,8 @@ class TemplateLiteral extends Node {
             if (quasi) code += quasi.replace(escape, `\\${quote}`);
             if (expr) code += "${" + expr.toString() + "}";
         }
-        return quote + code + quote;
+        writer.write(quote + code + quote);
+        writer.write("\n");
     }
 }
 
