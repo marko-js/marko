@@ -11,7 +11,7 @@ module.exports = function migrate(el, context) {
 
         name = name.substring("w-on".length);
         if (name.startsWith("-")) name = name.substring("-".length);
-        attr.name = `on-${name.toLowerCase()}`;
+        attr.name = `on${name.charAt(0).toUpperCase() + name.slice(1)}`;
         attr.argument = attr.value.toString();
         attr.value = null;
     });
