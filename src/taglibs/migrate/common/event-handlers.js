@@ -6,7 +6,7 @@ module.exports = function migrate(el, context) {
         }
 
         context.deprecate(
-            `The "w-on-*" attribute is deprecated. Please use the on-* attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive`
+            `The "w-on-*" attribute is deprecated. Please use the on-* attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
         );
 
         attr.name = name.substring("w-".length);
