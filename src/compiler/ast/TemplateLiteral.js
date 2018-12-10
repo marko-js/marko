@@ -40,16 +40,35 @@ class TemplateLiteral extends Node {
     writeCode(writer) {
         let code = "";
         let quote = this.nonstandard ? '"' : "`";
-        let escape = new RegExp(quote, "g");
         for (let i = 0; i <= this.quasis.length; i++) {
             const quasi = this.quasis[i];
             const expr = this.expressions[i];
-            if (quasi) code += quasi.replace(escape, `\\${quote}`);
+            if (quasi) code += escapeQuasi(quasi, quote);
             if (expr) code += "${" + expr.toString() + "}";
         }
         writer.write(quote + code + quote);
         writer.write("\n");
     }
+}
+
+function escapeQuasi(quasi, quote) {
+    if (!quasi) return "";
+    return quasi.replace(/["`\\\n\r\u2028\u2029]|\${/g, match => {
+        switch (match) {
+            case quote:
+            case "${":
+            case "\\":
+                return "\\" + match;
+            case "\n":
+                return "\\n";
+            case "\r":
+                return "\\r";
+            case "\u2028":
+                return "\\u2028";
+            case "\u2029":
+                return "\\u2029";
+        }
+    });
 }
 
 module.exports = TemplateLiteral;

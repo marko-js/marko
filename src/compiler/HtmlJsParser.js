@@ -30,7 +30,25 @@ class HtmlJsParser {
                         if (part.type === "placeholder") {
                             value += "${" + part.value + "}";
                         } else {
-                            value += part.replace(/`/g, "\\`");
+                            value += part.replace(
+                                /[`\\\n\r\u2028\u2029]|\${/g,
+                                match => {
+                                    switch (match) {
+                                        case "`":
+                                        case "${":
+                                        case "\\":
+                                            return "\\" + match;
+                                        case "\n":
+                                            return "\\n";
+                                        case "\r":
+                                            return "\\r";
+                                        case "\u2028":
+                                            return "\\u2028";
+                                        case "\u2029":
+                                            return "\\u2029";
+                                    }
+                                }
+                            );
                         }
                     });
                     event.value = "$nonstandard`" + value + "`";
