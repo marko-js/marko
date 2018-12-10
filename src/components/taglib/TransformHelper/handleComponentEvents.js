@@ -73,7 +73,6 @@ function addCustomEventListener(transformHelper, options) {
 module.exports = function handleComponentEvents() {
     var el = this.el;
     var builder = this.builder;
-    var context = this.context;
     var isCustomTag = el.type !== "HtmlElement";
     // We configured the Marko compiler to attach a flag to nodes that
     // have one or more attributes that match the "w-on*" pattern.
@@ -123,12 +122,6 @@ module.exports = function handleComponentEvents() {
                 if (parsedArgs.length > 1) {
                     extraArgs = parsedArgs.slice(1);
                 }
-            } else if (attrName.startsWith("w-on")) {
-                context.deprecate(
-                    '"w-on*" attributes are deprecated. Please use "on*()" instead.'
-                );
-                eventType = attrName.substring(4); // Chop off "w-on"
-                targetMethod = attr.value;
             }
 
             if (!eventType || !targetMethod) {
