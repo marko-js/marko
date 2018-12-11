@@ -6,14 +6,15 @@ module.exports = function migrate(el, context) {
                 return;
             }
 
-            const values = attr.value.toString();
+            const values = attr.value.value;
             context.deprecate(
                 `The "w-preserve-attrs" attribute is deprecated. Please use ":no-update" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
             );
 
             values.split(",").forEach(val => {
                 let attrValue = el.getAttributeValue(val);
-                el.setAttributeValue(`${val}:no-update`, attrValue || "");
+                if (!attrValue) attrValue = "''";
+                el.setAttributeValue(`${val}:no-update`, attrValue);
             });
 
             el.removeAttribute(attr.name);
