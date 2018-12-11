@@ -30,6 +30,7 @@ autotest("fixtures", fixture => {
     test(done => {
         var main = require(resolve("index.js"));
         var generateCodeFunc = main;
+        var skipCodegen = main.skipCodegen === true;
 
         var context = new CompileContext(
             "dummy",
@@ -40,7 +41,7 @@ autotest("fixtures", fixture => {
         var codeWriter = createCodeWriter(context);
 
         var ast = generateCodeFunc(builder, codegen);
-        var finalAST = codegen.generateCode(ast);
+        var finalAST = skipCodegen ? ast : codegen.generateCode(ast);
 
         codeWriter.write(finalAST);
 
