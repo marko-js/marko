@@ -245,7 +245,7 @@ Component.prototype = componentProto = {
 
             return keyedElement;
         } else {
-            return this.___rootNode && this.___rootNode.firstChild;
+            return this.el;
         }
     },
     getEls: function(key) {
@@ -302,6 +302,8 @@ Component.prototype = componentProto = {
         root.detached = true;
 
         delete componentLookup[this.id];
+        delete this.___rootNode;
+        this.___keyedElements = {};
     },
 
     ___destroyShallow: function() {

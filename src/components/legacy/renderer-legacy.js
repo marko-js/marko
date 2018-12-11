@@ -13,10 +13,10 @@ var WIDGETS_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
 function createRendererFunc(templateRenderFunc, componentProps) {
     var typeName = componentProps.___type;
-    var assignedId = componentProps.id;
+    //var assignedId = componentProps.id;
     var isSplit = componentProps.___split === true;
 
-    return function renderer(input, out, renderingLogic) {
+    return function renderer(input, out, assignedId, renderingLogic) {
         var outGlobal = out.global;
 
         if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
@@ -24,23 +24,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             out.on("beginAsync", handleBeginAsync);
         }
 
-        var getInitialProps;
-        var getTemplateData;
-        var getInitialState;
-        var getWidgetConfig;
-        var getInitialBody;
-
-        if (renderingLogic) {
-            getInitialProps = renderingLogic.getInitialProps;
-            getTemplateData = renderingLogic.getTemplateData;
-            getInitialState = renderingLogic.getInitialState;
-            getWidgetConfig = renderingLogic.getWidgetConfig;
-            getInitialBody = renderingLogic.getInitialBody;
-        }
-
-        var widgetConfig;
-        var componentBody;
-        var componentState;
+        var widgetConfig = input.widgetConfig;
+        var widgetBody = input.widgetBody;
+        var widgetState = input.widgetState;
 
         var componentsContext = getComponentsContext(out);
         var globalComponentsContext = componentsContext.___globalContext;
@@ -56,14 +42,14 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var key = out.___assignedKey;
         var customEvents = out.___assignedCustomEvents;
 
+        out.___assignedComponentDef = null;
+
         if (component) {
             id = component.id;
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
             if ((parentComponentDef = componentsContext.___componentDef)) {
-                out.___assignedComponentDef = null;
-
                 if (key != null) {
                     key = key.toString();
                 }
@@ -108,54 +94,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             }
         }
 
-        if (component) {
-            component.___updateQueued = true;
-        }
-
-        if (input) {
-            if (getWidgetConfig) {
-                // If getWidgetConfig() was implemented then use that to
-                // get the component config. The component config will be passed
-                // to the component constructor. If rendered on the server the
-                // component config will be serialized to a JSON-like data
-                // structure and stored in a "data-w-config" attribute.
-                widgetConfig = getWidgetConfig(input, out);
-            } else {
-                widgetConfig = input.widgetConfig;
-            }
-
-            if (widgetConfig) {
-                component.$c = widgetConfig;
-            }
-
-            if (getInitialBody) {
-                // If we have component a component body then pass it to the template
-                // so that it is available to the component tag and can be inserted
-                // at the w-body marker
-                componentBody = getInitialBody(input, out);
-            }
-
-            // If we do not have state then we need to go through the process
-            // of converting the input to a component state, or simply normalizing
-            // the input using getInitialProps
-
-            if (getInitialProps) {
-                // This optional method is used to normalize input state
-                input = getInitialProps(input, out) || {};
-            }
-
-            if (getInitialState) {
-                // This optional method is used to derive the component state
-                // from the input properties
-                component.state = componentState = getInitialState(input, out);
-            }
-
-            if (!componentBody) {
-                // Default to using the nested content as the component body
-                componentBody = input.renderBody;
-            }
-        }
-
         var isFakeComponent = false;
 
         if (!component) {
@@ -165,12 +103,13 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 ___keyedElements: {}
             };
         } else {
-            componentState = component.___rawState || componentState;
+            component.___updateQueued = true;
         }
 
-        var templateInput = getTemplateData
-            ? getTemplateData(componentState, input, out)
-            : componentState || input || {};
+        component.$c = widgetConfig;
+        component.state = widgetState;
+        component.___legacyBody =
+            widgetBody || component.___legacyBody || "%FN";
 
         var componentDef = beginComponent(
             componentsContext,
@@ -179,6 +118,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             ownerComponentDef,
             isSplit
         );
+        var parentLegacyComponentDef = componentsContext.___legacyComponentDef;
+        componentsContext.___legacyComponentDef = componentDef;
 
         // This is a hack, but we have to swap out the component instance stored with this node
         var vComponentNode = out.___parent;
@@ -186,8 +127,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.___isLegacy = true;
-        componentDef.b = component.___legacyBody =
-            componentBody || component.___legacyBody || "%FN";
+        componentDef.b = component.___legacyBody;
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;
         };
@@ -207,13 +147,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         // Render the template associated with the component using the final template
         // data that we constructed
-        templateRenderFunc(
-            templateInput,
-            out,
-            componentDef,
-            componentDef,
-            component
-        );
+        templateRenderFunc(input, out, componentDef, componentDef, component);
 
         if (customEvents && componentDef.___component) {
             if (registry.___isServer) {
@@ -229,6 +163,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         endComponent(out, componentDef);
         componentsContext.___componentDef = parentComponentDef;
+        componentsContext.___legacyComponentDef = parentLegacyComponentDef;
     };
 }
 

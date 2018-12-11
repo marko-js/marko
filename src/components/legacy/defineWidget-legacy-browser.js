@@ -7,6 +7,8 @@ var inherit;
 var jQuery = require("../jquery");
 var ready = require("../ready");
 
+var complain = "MARKO_DEBUG" && require("complain");
+
 module.exports = function defineWidget(def, renderer) {
     def = def.Widget || def;
 
@@ -46,8 +48,34 @@ module.exports = function defineWidget(def, renderer) {
     // The same prototype will be used by our constructor after
     // we he have set up the prototype chain using the inherit function
     proto = Component.prototype = ComponentClass.prototype;
+    proto.___isLegacy = true;
 
     proto.constructor = def.constructor = Component;
+
+    Object.defineProperty(proto, "__document", {
+        get: function() {
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain("__document is deprecated");
+            }
+            return this.___document;
+        }
+    });
+
+    Object.defineProperty(proto, "el", {
+        get: function() {
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain(
+                    "this.el is deprecated. assign a key to the root element and use getEl(key) instead."
+                );
+            }
+            return (
+                this.getEl("_wbind") ||
+                (this.___rootNode && this.___rootNode.firstChild)
+            );
+        }
+    });
 
     // get legacy methods
     var init = proto.init;
@@ -57,8 +85,7 @@ module.exports = function defineWidget(def, renderer) {
     var onBeforeDestroy = proto.onBeforeDestroy;
     var onDestroy = proto.onDestroy;
 
-    // delete legacy methods
-    delete proto.init;
+    // delete legacy methods that conflict
     delete proto.onRender;
     delete proto.onBeforeUpdate;
     delete proto.onUpdate;
@@ -80,7 +107,18 @@ module.exports = function defineWidget(def, renderer) {
     proto.onMount = function() {
         var self = this;
         var config = this.$c;
-        if (init) init.call(this, config);
+        if (this.el) {
+            Object.defineProperty(this.el, "__widget", {
+                get: function() {
+                    // eslint-disable-next-line no-constant-condition
+                    if ("MARKO_DEBUG") {
+                        complain("__widget is deprecated");
+                    }
+                    return self;
+                }
+            });
+        }
+        if (init) init.call(this, config || {});
         if (onRender) {
             onRender.call(this, { firstRender: true });
         }
@@ -156,6 +194,16 @@ module.exports = function defineWidget(def, renderer) {
         Component.render = renderer.render;
         Component.renderSync = renderer.renderSync;
     }
+
+    Object.defineProperty(Component, "_isWidget", {
+        get: function() {
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                complain("_isWidget is deprecated");
+            }
+            return true;
+        }
+    });
 
     return Component;
 };

@@ -60,6 +60,9 @@ module.exports = function handleLegacyBind() {
         // Remove the w-bind attribute since we don't want it showing up in the output DOM
         el.removeAttribute("w-bind");
 
+        // Set key value so we can get the root using this.el
+        el.setAttributeValue("key", builder.literal("_wbind"));
+
         // Read the value for the w-bind attribute. This will be an AST node for the parsed JavaScript
         let bindAttrValue = bindAttr.value;
 

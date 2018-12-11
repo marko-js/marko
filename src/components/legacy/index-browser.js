@@ -1,6 +1,8 @@
 var modernMarko = require("../");
 var Component = require("../Component");
 
+var complain = "MARKO_DEBUG" && require("complain");
+
 // expose legacy
 window.$markoLegacy = exports;
 exports.load = function(typeName) {
@@ -35,5 +37,21 @@ if (Widget) {
 
 var RenderResult = require("../../runtime/RenderResult");
 
-RenderResult.prototype.getWidget = RenderResult.prototype.getComponent;
-RenderResult.prototype.getWidgets = RenderResult.prototype.getComponents;
+RenderResult.prototype.getWidget = function() {
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        complain("getWidget is deprecated. use getComponent instead.");
+    }
+    return this.getWidgets()[0];
+};
+RenderResult.prototype.getWidgets = function() {
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        complain("getWidgets is deprecated. use getComponents instead.");
+    }
+    return RenderResult.prototype.getComponents
+        .apply(this, arguments)
+        .filter(function(component) {
+            return component.___isLegacy;
+        });
+};

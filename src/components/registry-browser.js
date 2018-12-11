@@ -7,11 +7,6 @@ var loaded = {};
 var componentTypes = {};
 
 function register(componentId, def) {
-    // We do this to kick off registering of nested components
-    // but we don't use the return value just yet since there
-    // is a good chance that it resulted in a circular dependency
-    def();
-
     registered[componentId] = def;
     delete loaded[componentId];
     delete componentTypes[componentId];
@@ -67,6 +62,31 @@ function getComponentClass(typeName, isLegacy) {
 
     // Make the component "type" accessible on each component instance
     ComponentClass.prototype.___type = typeName;
+
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        var classNameMatch = /\/([^/]+?)(?:\/index|\/template|)(?:\.marko|\.component(?:-browser)?|)$/.exec(
+            typeName
+        );
+        var className = classNameMatch
+            ? classNameMatch[1]
+            : "AnonymousComponent";
+        className = className.replace(/-(.)/g, function(g) {
+            return g[1].toUpperCase();
+        });
+        className = className
+            .replace(/\$\d+\.\d+\.\d+$/, "")
+            .replace(/[^\w]+/g, "_");
+        className = className[0].toUpperCase() + className.slice(1);
+        // eslint-disable-next-line no-unused-vars
+        var OldComponentClass = ComponentClass;
+        eval(
+            "ComponentClass = function " +
+                className +
+                "(id, doc) { OldComponentClass.call(this, id, doc); }"
+        );
+        ComponentClass.prototype = OldComponentClass.prototype;
+    }
 
     componentTypes[typeName] = ComponentClass;
 
