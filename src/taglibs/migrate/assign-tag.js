@@ -1,11 +1,11 @@
 const printJS = require("./util/printJS");
-const migrateControlFlowDirectives = require("./control-flow-directives");
+const commonTagMigrator = require("./common-tag-migrator");
 
 module.exports = function migrator(elNode, context) {
     const attributes = elNode.attributes;
     const builder = context.builder;
-    migrateControlFlowDirectives(elNode, context);
-    elNode.setTransformerApplied(migrateControlFlowDirectives);
+    commonTagMigrator(elNode, context);
+    elNode.setTransformerApplied(commonTagMigrator);
 
     context.deprecate(
         'The "<assign>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'

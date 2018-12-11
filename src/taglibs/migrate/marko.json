@@ -1,7 +1,7 @@
 {
     "migrator": "./root-migrator",
     "<*>": {
-        "migrator": "./control-flow-directives"
+        "migrator": "./common-tag-migrator"
     },
     "<invoke>": {
         "migrator": "./invoke-tag",
@@ -34,6 +34,12 @@
     },
     "<async-fragment-error>": {
         "migrator": "./async-fragment-tag",
+        "deprecated": true
+    },
+    "@w-id": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
         "deprecated": true
     }
 }
