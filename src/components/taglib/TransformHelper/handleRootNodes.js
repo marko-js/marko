@@ -298,7 +298,6 @@ module.exports = function handleRootNodes() {
     }
 
     // templateRoot._normalizeChildTextNodes(context, false, true);
-
     this.convertToComponent({
         isImplicitComponent,
         rootNodes,

@@ -18,6 +18,22 @@ module.exports = function transform(el, context) {
 
     if (el.type === "TemplateRoot") {
         transformHelper.handleRootNodes();
+        if (
+            !context.isFlagSet("hasLegacyWidgetBind") &&
+            context.isFlagSet("hasLegacyWidgetAttr")
+        ) {
+            let builder = context.builder;
+            let getWidgetFromOut = context.helper("getWidgetFromOut");
+            el.prependChild(
+                builder.vars({
+                    widget: builder.functionCall(getWidgetFromOut, [
+                        builder.identifier("out")
+                    ]),
+                    __component: builder.identifier("widget"),
+                    component: builder.memberExpression("__component", "_c")
+                })
+            );
+        }
         return;
     }
 

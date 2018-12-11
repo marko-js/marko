@@ -142,7 +142,7 @@ class TransformHelper {
     buildComponentElIdFunctionCall(id) {
         var builder = this.builder;
 
-        if (id.type === "Literal" && id.value === "") {
+        if (id && id.type === "Literal" && id.value === "") {
             let componentElId = builder.memberExpression(
                 builder.identifier("__component"),
                 builder.identifier("id")

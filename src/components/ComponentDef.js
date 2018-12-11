@@ -1,5 +1,4 @@
 "use strict";
-var repeatedRegExp = /\[\]$/;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
@@ -67,14 +66,8 @@ ComponentDef.prototype = {
                 id = "#" + id;
                 nestedId = nestedId.substring(1);
             }
-            if (typeof nestedId == "string" && repeatedRegExp.test(nestedId)) {
-                return this.___globalComponentsContext.___nextRepeatedId(
-                    id,
-                    nestedId
-                );
-            } else {
-                return id + "-" + nestedId;
-            }
+
+            return id + "-" + nestedId;
         }
     },
     /**
@@ -113,7 +106,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
     // just building it from the server info
     component.___updateQueued = true;
 
-    if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+    if (!isLegacy && flags & FLAG_WILL_RERENDER_IN_BROWSER) {
         if (component.onCreate) {
             component.onCreate(input, { global: global });
         }

@@ -66,6 +66,12 @@ module.exports = function assignComponentId(isRepeated) {
         assignedKey = el.getAttributeValue("w-id");
 
         el.removeAttribute("w-id");
+        if (!isCustomTag && !el.hasAttribute("id")) {
+            el.setAttributeValue(
+                "id",
+                this.buildComponentElIdFunctionCall(assignedKey)
+            );
+        }
     } else if (el.hasAttribute("key")) {
         assignedKey = el.getAttributeValue("key");
         el.removeAttribute("key");

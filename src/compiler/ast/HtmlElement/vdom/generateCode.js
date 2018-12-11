@@ -36,12 +36,18 @@ module.exports = function(node, codegen, vdomUtil) {
     var body = codegen.generateCode(node.body);
     var tagName = codegen.generateCode(node.tagNameExpression);
     var attributes = codegen.generateCode(node.getAttributes());
-    var properties = codegen.generateCode(node.getProperties());
     var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
-    var key = node.key;
+    var key = codegen.generateCode(node.key);
+    var properties = node.getProperties();
     var isAutoKeyed = node.isAutoKeyed;
     var runtimeFlags = node.runtimeFlags;
     var nextConstId = node.nextConstId;
+
+    if (properties) {
+        Object.keys(properties).forEach(
+            key => (properties[key] = codegen.generateCode(properties[key]))
+        );
+    }
 
     var builder = codegen.builder;
 
