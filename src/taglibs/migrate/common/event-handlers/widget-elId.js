@@ -8,7 +8,7 @@ module.exports = function migrate(el, context) {
 
         const argument = attr.argument;
         context.deprecate(
-            `The "widget.elId" is deprecated. Please use ":scoped" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+            `The "*=widget.elId("someId")" is deprecated. Please use "*:scoped="someId"" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
         );
 
         name = `${attr.name}:scoped`;
