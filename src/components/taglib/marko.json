@@ -88,16 +88,6 @@
                 "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
             }
         },
-        "@w-on*": {
-            "pattern": true,
-            "type": "string",
-            "allow-expressions": true,
-            "preserve-name": true,
-            "set-flag": "hasComponentEvents",
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
-        },
         "@w-body": {
             "preserve-name": true,
             "autocomplete": [],

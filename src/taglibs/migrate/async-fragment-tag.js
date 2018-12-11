@@ -1,4 +1,4 @@
-const migrateControlFlowDirectives = require("./control-flow-directives");
+const commonTagMigrator = require("./common-tag-migrator");
 const newTags = {
     "async-fragment": "await",
     "async-fragments": "await-reorderer",
@@ -14,8 +14,8 @@ module.exports = function migrator(oldNode, context) {
     let argument;
     const attributes = oldNode.attributes;
     const builder = context.builder;
-    migrateControlFlowDirectives(oldNode, context);
-    oldNode.setTransformerApplied(migrateControlFlowDirectives);
+    commonTagMigrator(oldNode, context);
+    oldNode.setTransformerApplied(commonTagMigrator);
 
     context.deprecate(
         `The "<${oldTag}>" tag is deprecated. Please use "<${newTag}>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
