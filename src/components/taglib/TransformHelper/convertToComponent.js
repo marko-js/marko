@@ -60,6 +60,20 @@ module.exports = function handleComponentBind(options) {
 
         context.setMeta("id", componentType.id);
 
+        if (isLegacyComponent) {
+            let el = rootNodes[0];
+            el.setAttributeValue(
+                "data-widget",
+                builder.literal(componentType.id)
+            );
+            if (!el.hasAttribute("id")) {
+                el.setAttributeValue(
+                    "id",
+                    this.buildComponentElIdFunctionCall()
+                );
+            }
+        }
+
         let dependencyModule =
             isLegacyComponent || isSplit
                 ? componentModule

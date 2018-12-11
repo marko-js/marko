@@ -24,7 +24,12 @@ module.exports = function migrator(elNode, context) {
                 value:
                     attr.value == null
                         ? attr.name
-                        : `${attr.name} = ${printJS(attr.value, context)}`
+                        : `${attr.name} = ${printJS(
+                              attr.value,
+                              context,
+                              null,
+                              true
+                          )}`
             })
         );
     });
