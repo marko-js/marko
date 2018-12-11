@@ -12,9 +12,7 @@ div class="thumbnail"
 _output.html_
 
 ```html
-<div class="thumbnail">
-    <img src="https://example.com/thumb.png"/>
-</div>
+<div class="thumbnail"><img src="https://example.com/thumb.png" /></div>
 ```
 
 ## Shorthand attributes
@@ -35,8 +33,7 @@ _output.html_
 
 ```html
 <div class="my-class"></div>
-<span id="my-id"></span>
-<button id="submit" class="primary large"></button>
+<span id="my-id"></span> <button id="submit" class="primary large"></button>
 ```
 
 > **ProTip:** These shorthand attributes are available within the HTML syntax as well
@@ -109,8 +106,7 @@ The output would be the following:
 _output.html_
 
 ```html
-<Hello World></Hello>
-<Welcome to Marko></Welcome>
+<Hello World></Hello> <Welcome to Marko></Welcome>
 ```
 
 Instead, prefix the lines with `--` so they are parsed as text:

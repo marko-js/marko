@@ -13,6 +13,5 @@ describe(path.basename(__dirname), function() {
         component.forceUpdate();
         component.update();
         expect(component.getComponent("child")).to.eql(originalChild);
-    }).details =
-        "issue #947";
+    }).details = "issue #947";
 });

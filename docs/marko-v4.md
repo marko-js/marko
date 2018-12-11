@@ -649,9 +649,10 @@ template.render({}, function(err, html, out) {});
 **New:**
 
 ```js
-template.render({})
-        .then(function(result){})
-        .catch(function(err) {});
+template
+  .render({})
+  .then(function(result) {})
+  .catch(function(err) {});
 
 // render() can now be used with async/await
 var out = await template.render({});

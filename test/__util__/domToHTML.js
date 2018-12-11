@@ -122,8 +122,8 @@ function vdomToHTML(node, options) {
                             tag === "SCRIPT"
                                 ? escapeScript
                                 : tag === "STYLE"
-                                    ? escapeStyle
-                                    : escapeXml;
+                                ? escapeStyle
+                                : escapeXml;
                         serializeTextHelper(curChild, escapeText);
                     } else {
                         serializeHelper(curChild);

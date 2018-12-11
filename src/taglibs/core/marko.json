@@ -8,8 +8,7 @@
         "attributes": {},
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             }
         ]
     },
@@ -19,13 +18,11 @@
         "autocomplete": [
             {
                 "snippet": "else-if(${1:condition})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             },
             {
                 "snippet": "else-if",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             }
         ]
     },
@@ -35,33 +32,27 @@
         "autocomplete": [
             {
                 "snippet": "for(${1:var} in ${2:array})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#for"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             },
             {
                 "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
             },
             {
                 "snippet": "for(${1:name},${2:value} in ${3:object})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#property-looping"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
             },
             {
                 "snippet": "for(${1:init}; ${2:test}; ${3:update})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
             },
             {
                 "snippet": "for(${1:var} from ${2:start} to ${3:end})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#range-looping"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
             },
             {
                 "snippet": "for",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#for"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             }
         ]
     },
@@ -71,12 +62,10 @@
         "autocomplete": [
             {
                 "snippet": "if(${1:condition})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
             }
         ]
     },
@@ -94,12 +83,10 @@
             {
                 "displayText": "include(<template>)",
                 "snippet": "include(${1:\"./target.marko\"})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
         ]
     },
@@ -109,12 +96,10 @@
             {
                 "displayText": "include-html(<path>)",
                 "snippet": "include-html(${1:\"./foo.html\"})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
         ]
     },
@@ -124,12 +109,10 @@
             {
                 "displayText": "include-text(<path>)",
                 "snippet": "include-text(${1:\"./foo.txt\"})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
         ]
     },
@@ -139,12 +122,10 @@
             {
                 "displayText": "macro <name>(<parmas>)",
                 "snippet": "macro ${1:name}(${2:param1, param2})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#macros"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#macros"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             }
         ],
         "no-output": true
@@ -153,8 +134,7 @@
         "code-generator": "./macro-body-tag",
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#macros",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
                 "openTagOnly": true
             }
         ]
@@ -169,8 +149,7 @@
         "preserve-whitespace": true,
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#whitespace"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#whitespace"
             }
         ]
     },
@@ -194,12 +173,10 @@
         "autocomplete": [
             {
                 "snippet": "unless(${1:condition})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
             }
         ]
     },
@@ -208,12 +185,10 @@
         "autocomplete": [
             {
                 "snippet": "while(${1:condition})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#looping"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#looping"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
             }
         ]
     },
@@ -223,12 +198,10 @@
             "autocomplete": [
                 {
                     "snippet": "body-only-if(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#body-only-if"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#body-only-if"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
                 }
             ]
         },
@@ -237,12 +210,10 @@
             "autocomplete": [
                 {
                     "snippet": "if(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
                 }
             ]
         },
@@ -251,12 +222,10 @@
             "autocomplete": [
                 {
                     "snippet": "else-if(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
                 }
             ]
         },
@@ -266,33 +235,26 @@
             "autocomplete": [
                 {
                     "snippet": "for(${1:var} in ${2:array})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#for"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
                 },
                 {
-                    "snippet":
-                        "for(${1:var} in ${2:array}) | status-var=${3:loop}",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
+                    "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
                 },
                 {
                     "snippet": "for(${1:name},${2:value} in ${3:object})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#property-looping"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
                 },
                 {
                     "snippet": "for(${1:init}; ${2:test}; ${3:update})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
                 },
                 {
                     "snippet": "for(${1:var} from ${2:start} to ${3:end})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#range-looping"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#for"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
                 }
             ]
         },
@@ -301,18 +263,15 @@
                 {
                     "displayText": "include(<template>)",
                     "snippet": "include(${1:\"./target.marko\"})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#includes"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {
                     "displayText": "include(data.renderBody)",
                     "snippet": "include(data.renderBody)",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#includes"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#includes"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 }
             ]
         },
@@ -329,12 +288,10 @@
             "autocomplete": [
                 {
                     "snippet": "while(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#looping"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko/language-guide/#looping"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
                 }
             ]
         },

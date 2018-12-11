@@ -45,13 +45,13 @@ function migrateTreeHelper(node, context) {
     migrateNode(node, context);
 
     /*
-   * Now process the child nodes by looping over the child nodes
-   * and migrating the subtree recursively
-   *
-   * NOTE: The length of the childNodes array might change as the tree is being performed.
-   *       The checks to prevent migrators from being applied multiple times makes
-   *       sure that this is not a problem.
-   */
+     * Now process the child nodes by looping over the child nodes
+     * and migrating the subtree recursively
+     *
+     * NOTE: The length of the childNodes array might change as the tree is being performed.
+     *       The checks to prevent migrators from being applied multiple times makes
+     *       sure that this is not a problem.
+     */
 
     node.forEachChild(function(childNode) {
         migrateTreeHelper(childNode, context);

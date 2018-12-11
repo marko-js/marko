@@ -268,8 +268,8 @@ defineProperty(proto, "___value", {
             ? toString(value)
             : this.___attributes.type === "checkbox" ||
               this.___attributes.type === "radio"
-                ? "on"
-                : "";
+            ? "on"
+            : "";
     }
 });
 

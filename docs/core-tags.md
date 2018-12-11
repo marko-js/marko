@@ -66,9 +66,9 @@ The output HTML would be the following:
 
 ```html
 <ul>
-    <li>red</li>
-    <li>green</li>
-    <li>blue</li>
+  <li>red</li>
+  <li>green</li>
+  <li>blue</li>
 </ul>
 ```
 
@@ -514,10 +514,7 @@ _output.html_
 
 ```html
 <div>
-    This is just one
-    &lt;span if(foo)&gt;
-        Hello ${THIS IS NOT VALID}!
-    &lt;/span&gt;
-    big text block
+  This is just one &lt;span if(foo)&gt; Hello ${THIS IS NOT VALID}!
+  &lt;/span&gt; big text block
 </div>
 ```

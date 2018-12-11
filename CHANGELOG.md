@@ -1290,15 +1290,9 @@ Example usage:
 
 ```html
 <ui-tabs orientation="horizontal">
-    <ui-tabs.tab title="Home">
-        Content for Home
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Profile">
-        Content for Profile
-    </ui-tabs.tab>
-    <ui-tabs.tab title="Messages">
-        Content for Messages
-    </ui-tabs.tab>
+  <ui-tabs.tab title="Home"> Content for Home </ui-tabs.tab>
+  <ui-tabs.tab title="Profile"> Content for Profile </ui-tabs.tab>
+  <ui-tabs.tab title="Messages"> Content for Messages </ui-tabs.tab>
 </ui-tabs>
 ```
 
@@ -1351,18 +1345,16 @@ exports.renderer = function(input, out) {
 
 ```html
 <div class="tabs">
-    <ul class="nav nav-tabs">
-        <li class="tab" for="tab in data.tabs">
-            <a href="#${tab.title}">
-                ${tab.title}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" for="tab in data.tabs">
-            <invoke function="tab.renderBody(out)"/>
-        </div>
+  <ul class="nav nav-tabs">
+    <li class="tab" for="tab in data.tabs">
+      <a href="#${tab.title}"> ${tab.title} </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" for="tab in data.tabs">
+      <invoke function="tab.renderBody(out)" />
     </div>
+  </div>
 </div>
 ```
 
@@ -1485,10 +1477,7 @@ MARKO_CLEAN=true node run.js
 - Fixed #35 - Added support for `<compiler-options>`. Example:
 
 ```html
-<compiler-options whitespace="preserve" />
-A
-B
-C
+<compiler-options whitespace="preserve" /> A B C
 ```
 
 ### 2.0.0
