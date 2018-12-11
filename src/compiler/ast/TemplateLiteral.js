@@ -38,35 +38,39 @@ class TemplateLiteral extends Node {
     }
 
     writeCode(writer) {
-        for (let i = 0; i <= this.quasis.length; i++) {
-            const quasi = this.quasis[i];
-            const expr = this.expressions[i];
-            if (quasi || i === 0) {
-                if (i > 0) writer.write("+");
-                writer.write(JSON.stringify(quasi));
-            }
-            if (expr) {
-                writer.write("+");
-                writer.write("(");
-                writer.write(expr);
-                writer.write(")");
-            }
-        }
-        writer.write("\n");
-    }
-
-    toString() {
         let code = "";
         let quote = this.nonstandard ? '"' : "`";
-        let escape = new RegExp(quote, "g");
         for (let i = 0; i <= this.quasis.length; i++) {
             const quasi = this.quasis[i];
             const expr = this.expressions[i];
-            if (quasi) code += quasi.replace(escape, `\\${quote}`);
+            if (quasi) code += escapeQuasi(quasi, quote);
             if (expr) code += "${" + expr.toString() + "}";
         }
-        return quote + code + quote;
+        writer.write(quote + code + quote);
+        writer.write("\n");
     }
+}
+
+function escapeQuasi(quasi, quote) {
+    if (!quasi) return "";
+    return quasi.replace(/["`\\\n\r\u2028\u2029]|\${/g, match => {
+        switch (match) {
+            case quote:
+            case "${":
+            case "\\":
+                return "\\" + match;
+            case "\n":
+                return "\\n";
+            case "\r":
+                return "\\r";
+            case "\u2028":
+                return "\\u2028";
+            case "\u2029":
+                return "\\u2029";
+            default:
+                return match;
+        }
+    });
 }
 
 module.exports = TemplateLiteral;

@@ -30,7 +30,10 @@ class HtmlJsParser {
                         if (part.type === "placeholder") {
                             value += "${" + part.value + "}";
                         } else {
-                            value += part.replace(/`/g, "\\`");
+                            value += part.replace(
+                                /`|\\|\${/g,
+                                match => "\\" + match
+                            );
                         }
                     });
                     event.value = "$nonstandard`" + value + "`";
