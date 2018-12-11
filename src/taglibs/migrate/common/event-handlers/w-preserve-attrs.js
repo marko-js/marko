@@ -12,9 +12,8 @@ module.exports = function migrate(el, context) {
             );
 
             values.split(",").forEach(val => {
-                const attrValue = el.getAttributeValue(val);
-                if (attrValue)
-                    el.setAttributeValue(`${val}:no-update`, attrValue);
+                let attrValue = el.getAttributeValue(val);
+                el.setAttributeValue(`${val}:no-update`, attrValue || "");
             });
 
             el.removeAttribute(attr.name);

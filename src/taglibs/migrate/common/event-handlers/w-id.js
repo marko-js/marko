@@ -11,7 +11,8 @@ module.exports = function migrate(el, context) {
             );
 
             el.setAttributeValue("key", attr.value);
-            el.setAttributeValue("id:scoped", attr.value);
+            if (!el.hasAttribute("id"))
+                el.setAttributeValue("id:scoped", attr.value);
             el.removeAttribute(attr.name);
         });
     }
