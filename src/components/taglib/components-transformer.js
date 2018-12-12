@@ -86,9 +86,6 @@ module.exports = function transform(el, context) {
         transformHelper.handleComponentPreserve();
     }
 
-    // Handle *:key properties (and deprecated w-for/for-key/for-ref)
-    transformHelper.handleScopedAttrs();
-
     if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
         if (el.hasAttribute("ref") || el.hasAttribute("key")) {
             transformHelper.assignComponentId();
@@ -101,6 +98,9 @@ module.exports = function transform(el, context) {
             transformHelper.assignComponentId();
         }
     }
+
+    // Handle *:scoped properties (and deprecated w-for/for-key/for-ref)
+    transformHelper.handleScopedAttrs();
 
     if (el.hasAttribute("w-body")) {
         transformHelper.handleComponentBody();
