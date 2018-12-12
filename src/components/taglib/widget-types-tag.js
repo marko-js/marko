@@ -8,7 +8,7 @@ module.exports = function codeGenerator(el, codegen) {
     var context = codegen.context;
     var transformHelper = getTransformHelper(el, context);
 
-    transformHelper.isLegacyComponent = true;
+    context.setMeta("legacy", true);
 
     var builder = codegen.builder;
 
