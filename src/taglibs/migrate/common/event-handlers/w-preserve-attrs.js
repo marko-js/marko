@@ -13,7 +13,7 @@ module.exports = function migrate(el, context) {
 
             values.split(",").forEach(val => {
                 let attrValue = el.getAttributeValue(val);
-                el.setAttributeValue(`${val}:no-update`, attrValue || "");
+                el.setAttributeValue(`${val}:no-update`, attrValue || "''");
             });
 
             el.removeAttribute(attr.name);
