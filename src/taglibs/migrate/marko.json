@@ -45,11 +45,21 @@
         "autocomplete": [],
         "deprecated": true
     },
+    "@w-for": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
+    },
     "@for-key": {
         "type": "string",
-        "preserve-name": true
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
     },
-    "@w-for": {
+    "@for-ref": {
         "type": "string",
         "preserve-name": true,
         "autocomplete": [],

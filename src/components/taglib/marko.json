@@ -26,12 +26,6 @@
                 }
             ]
         },
-        "@for-ref": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
         "@ref": {
             "type": "string",
             "preserve-name": true,
