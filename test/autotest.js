@@ -61,7 +61,12 @@ function runFixtureTest(name, dir, run, mode, context) {
     if (hasMainFile) {
         const main = require(mainPath);
         const skip = main.skip || main["skip_" + mode];
-        const fails = main.fails || main["fails_" + mode];
+        const fails =
+            main.fails ||
+            main["fails_" + mode] ||
+            (dir.includes("deprecated") &&
+                process.env.EXPECT_DEPRECATED_FAILURES &&
+                "this is deprecated");
         if (skip) {
             mochaTestFunction = it.skip;
             mochaDetails = skip;
