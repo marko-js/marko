@@ -23,8 +23,7 @@
             },
             {
                 "displayText": "a href=\"mailto:\"",
-                "snippet":
-                    "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
+                "snippet": "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -58,8 +57,7 @@
             {},
             {
                 "displayText": "area shape=\"\" coords=\"\" href=\"\"",
-                "snippet":
-                    "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
+                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -188,8 +186,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
+                "snippet": "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -280,8 +277,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
+                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -318,8 +314,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
+                "snippet": "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -376,13 +371,11 @@
             },
             {
                 "displayText": "HTML page",
-                "snippet":
-                    "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
             },
             {
                 "displayText": "HTML page (concise)",
-                "snippet":
-                    "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+                "snippet": "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -460,8 +453,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
+                "snippet": "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
                 "triggerAutocompleteAfterInsert": true
             }
         ],
@@ -488,8 +480,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
+                "snippet": "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -527,8 +518,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
+                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
             },
             {
                 "snippet": "link rel=\"icon\" href=\"$1.ico\""
@@ -579,8 +569,7 @@
         "autocomplete": [
             {},
             {
-                "snippet":
-                    "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
+                "snippet": "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -727,8 +716,7 @@
         "autocomplete": [
             {
                 "snippet": "script template-helpers",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/language-guide/#helpers"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#helpers"
             }
         ],
         "@async": "#html-async",
@@ -843,8 +831,7 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet":
-                    "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
+                "snippet": "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -888,8 +875,7 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet":
-                    "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
+                "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -916,8 +902,7 @@
         "autocomplete": [
             {
                 "displayText": "video src=\"\" autoplay poster=\"\"",
-                "snippet":
-                    "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
+                "snippet": "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"]

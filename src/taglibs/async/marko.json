@@ -39,13 +39,11 @@
         "@_name": "string",
         "@client-reorder": {
             "type": "boolean",
-            "description":
-                "Use JavaScript on client to move async fragment into the proper place."
+            "description": "Use JavaScript on client to move async fragment into the proper place."
         },
         "@scope": {
             "type": "expression",
-            "description":
-                "The value of 'this' when invoking the data provider function (N/A with promises)"
+            "description": "The value of 'this' when invoking the data provider function (N/A with promises)"
         },
         "@show-after": {
             "type": "string"
@@ -60,12 +58,10 @@
         "autocomplete": [
             {
                 "snippet": "await(${1:varName} from ${2:data.myDataProvider})",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
             }
         ]
     },
@@ -74,12 +70,10 @@
         "autocomplete": [
             {
                 "snippet": "await-reorderer",
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
             },
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
             }
         ]
     },
@@ -87,8 +81,7 @@
         "transformer": "./await-nested-tag-transformer",
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-placeholder><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-placeholder><code>"
             }
         ]
     },
@@ -96,8 +89,7 @@
         "transformer": "./await-nested-tag-transformer",
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-timeout><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-timeout><code>"
             }
         ]
     },
@@ -105,8 +97,7 @@
         "transformer": "./await-nested-tag-transformer",
         "autocomplete": [
             {
-                "descriptionMoreURL":
-                    "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-error><code>"
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-error><code>"
             }
         ]
     }
