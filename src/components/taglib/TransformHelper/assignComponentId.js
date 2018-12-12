@@ -68,7 +68,7 @@ module.exports = function assignComponentId(isRepeated) {
         } else {
             if (el.data.userAssignedKey !== false) {
                 if (
-                    context.data.hasLegacyForKey ||
+                    context.data.hasScoped ||
                     context.data.hasImperativeComponentIds
                 ) {
                     el.setAttributeValue(

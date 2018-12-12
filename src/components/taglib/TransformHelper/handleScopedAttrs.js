@@ -21,6 +21,10 @@ module.exports = function handleComponentKeyAttrs() {
             return;
         }
 
+        if (attributeName.endsWith(":scoped")) {
+            context.data.hasScoped = true;
+        }
+
         let fixedAttributeName = attributeName;
 
         // BEGIN support for deprecated for attributes

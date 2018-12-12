@@ -302,12 +302,6 @@ class Parser {
                 attrDef.spread = true;
             }
 
-            if (attrName) {
-                if (attrName.endsWith(":key")) {
-                    context.data.hasLegacyForKey = true;
-                }
-            }
-
             if (attrRawValue) {
                 if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrRawValue)) {
                     // TODO: add complain call here
