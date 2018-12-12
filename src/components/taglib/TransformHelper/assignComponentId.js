@@ -69,7 +69,8 @@ module.exports = function assignComponentId(isRepeated) {
             if (el.data.userAssignedKey !== false) {
                 if (
                     context.data.hasLegacyForKey ||
-                    context.data.hasImperativeComponentIds
+                    context.data.hasImperativeComponentIds ||
+                    !el.hasAttribute("id")
                 ) {
                     el.setAttributeValue(
                         "id",
