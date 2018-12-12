@@ -406,8 +406,7 @@ The `:scoped` modifier on an attribute allows you to reference another element a
 The above code will produce output HTML similar to the following:
 
 ```html
-<label for="c0-name">Name</label>
-<input id="c0-name" value="Frank">
+<label for="c0-name">Name</label> <input id="c0-name" value="Frank" />
 ```
 
 **`aria-describedby:key`**

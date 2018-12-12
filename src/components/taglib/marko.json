@@ -18,10 +18,6 @@
             "preserve-name": true,
             "deprecated": true
         },
-        "@for-key": {
-            "type": "string",
-            "preserve-name": true
-        },
         "@key": {
             "type": "string",
             "preserve-name": true,
@@ -49,20 +45,6 @@
             "preserve-name": true,
             "autocomplete": [],
             "deprecated": true
-        },
-        "@w-for": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
-        },
-        "@w-id": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@on*": {
             "pattern": true,
@@ -92,42 +74,11 @@
                     "https://markojs.com/docs/components/#attaching-dom-event-listeners"
             }
         },
-        "@w-on*": {
-            "pattern": true,
-            "type": "string",
-            "allow-expressions": true,
-            "preserve-name": true,
-            "set-flag": "hasComponentEvents",
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
-        },
         "@w-body": {
             "preserve-name": true,
             "autocomplete": [],
             "deprecated": true,
             "set-context-flag": "hasLegacyWidgetAttr"
-        },
-        "@w-preserve": {
-            "type": "flag",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
-        "@w-preserve-body": {
-            "type": "flag",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
-        "@w-preserve-if": {
-            "preserve-name": true,
-            "autocomplete": []
-        },
-        "@w-preserve-body-if": {
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
         },
         "@no-update": {
             "type": "flag",
@@ -168,12 +119,6 @@
                         "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
-        },
-        "@w-preserve-attrs": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
         },
         "transformer": "./components-transformer.js"
     },

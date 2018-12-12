@@ -40,14 +40,14 @@ After installing, the lasso custom tags can be used in your templates:
 ```html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Marko + Lasso</title>
-        <lasso-head/>
-    </head>
-    <body>
-        <lasso-body/>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Marko + Lasso</title>
+    <lasso-head />
+  </head>
+  <body>
+    <lasso-body />
+  </body>
 </html>
 ```
 

@@ -303,12 +303,7 @@ class Parser {
             }
 
             if (attrName) {
-                if (
-                    attrName === "for-key" ||
-                    attrName === "for-ref" ||
-                    attrName === "w-for" ||
-                    attrName.endsWith(":key")
-                ) {
+                if (attrName.endsWith(":key")) {
                     context.data.hasLegacyForKey = true;
                 }
             }

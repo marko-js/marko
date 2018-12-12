@@ -62,11 +62,11 @@ Run `webpack` from your terminal and you'll have a new `static/bundle.js` file c
 _index.html_
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<body>
+  <body>
     <script src="static/bundle.js"></script>
-</body>
+  </body>
 </html>
 ```
 

@@ -36,6 +36,15 @@
         "migrator": "./async-fragment-tag",
         "deprecated": true
     },
+    "@w-on*": {
+        "pattern": true,
+        "type": "string",
+        "allow-expressions": true,
+        "preserve-name": true,
+        "set-flag": "hasComponentEvents",
+        "autocomplete": [],
+        "deprecated": true
+    },
     "@for-key": {
         "type": "string",
         "preserve-name": true
