@@ -130,8 +130,7 @@ In Marko, if an attribute value expression evaluates to `null` or `false` then t
 Would render to the following HTML:
 
 ```html
-<input type="checkbox" checked>
-<input type="checkbox">
+<input type="checkbox" checked /> <input type="checkbox" />
 ```
 
 #### Conditional attributes
@@ -242,8 +241,7 @@ _output.html_
 
 ```html
 <div class="my-class"></div>
-<span id="my-id"></span>
-<button id="submit" class="primary large"></button>
+<span id="my-id"></span> <button id="submit" class="primary large"></button>
 ```
 
 ## Directives

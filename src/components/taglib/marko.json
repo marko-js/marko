@@ -29,12 +29,10 @@
                 {
                     "displayText": "key=\"<method>\"",
                     "snippet": "key=\"${1:method}\"",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
                 },
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
                 }
             ]
         },
@@ -74,8 +72,7 @@
                 {
                     "displayText": "on<event>(\"<method>\")",
                     "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
-                    "descriptionMoreURL":
-                        "https://markojs.com/docs/components/#attaching-dom-event-listeners"
+                    "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
                 }
             ]
         },
@@ -88,19 +85,8 @@
             "autocomplete": {
                 "displayText": "once<event>(\"<method>\")",
                 "snippet": "once${1:Click}(\"handle${2:Button}${1:Click}\")",
-                "descriptionMoreURL":
-                    "https://markojs.com/docs/components/#attaching-dom-event-listeners"
+                "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
             }
-        },
-        "@w-on*": {
-            "pattern": true,
-            "type": "string",
-            "allow-expressions": true,
-            "preserve-name": true,
-            "set-flag": "hasComponentEvents",
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@w-body": {
             "preserve-name": true,
@@ -134,8 +120,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -144,8 +129,7 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -154,8 +138,7 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-if(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
@@ -164,8 +147,7 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-body-if(${1:condition})",
-                    "descriptionMoreURL":
-                        "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
         },
