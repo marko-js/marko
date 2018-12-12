@@ -92,10 +92,6 @@ module.exports = function assignComponentId(isRepeated) {
             el.setKey(idExpression);
             this.serializeKey();
         }
-
-        if (!el.hasAttribute("id")) {
-            el.setAttributeValue("id:scoped", assignedKey);
-        }
     } else {
         // Case 3 - We need to add a unique auto key
         let parentForKey = getParentForKeyVar(el, this);
