@@ -8,6 +8,7 @@ module.exports = function migrate(el, context) {
             `The ":key" modifier is deprecated. Please use ":scoped" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
         );
 
+        context.data.hasLegacyForKey = true;
         let nameNoModifier = name.slice(0, 0 - ":key".length);
         let modifiedName = nameNoModifier + ":scoped";
         el.setAttributeValue(modifiedName, attr.value);
