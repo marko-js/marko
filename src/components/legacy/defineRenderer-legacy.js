@@ -42,8 +42,13 @@ module.exports = function defineRenderer(renderingLogic) {
             var componentsContext = getComponentsContext(out);
             var globalComponentsContext = componentsContext.___globalContext;
             var component = globalComponentsContext.___rerenderComponent;
-            var isReceivingNewInput = !component;
+            var isReceivingNewInput =
+                !component || component.___isReceivingNewInput;
             var parentComponentDef;
+
+            if (component) {
+                delete component.___isReceivingNewInput;
+            }
 
             // Render the template associated with the component using the final template
             // data that we constructed
