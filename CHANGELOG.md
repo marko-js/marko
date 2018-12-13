@@ -4,6 +4,16 @@
 
 ## 4.14.x
 
+### 4.14.4
+
+- Fix regression with `setProps` on legacy compatibility layer. [#1193](https://github.com/marko-js/marko/pull/1193)
+
+### 4.14.3
+
+- Move `w-on` compatibility to the migrate stage. [#1186](https://github.com/marko-js/marko/pull/1186)
+- Legacy compatibility (v3) improvements. [#1189](https://github.com/marko-js/marko/pull/1189)
+- Specially handle template literals in templates. [#1188](https://github.com/marko-js/marko/pull/1188)
+
 ### 4.14.2
 
 - Convert the `<async-fragment>` transformer into a migrator. [#1185](https://github.com/marko-js/marko/pull/1185)
