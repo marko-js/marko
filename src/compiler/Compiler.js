@@ -157,6 +157,8 @@ class Compiler {
         var ast = this.parser.parse(src, context, {
             migrate: true && !process.env.MARKO_NO_MIGRATE
         });
+        // console.log('ROOT', JSON.stringify(ast, null, 2));
+
         context._parsingFinished = true;
 
         if (!context.ignoreUnrecognizedTags && context.unrecognizedTags) {
@@ -173,9 +175,6 @@ class Compiler {
         }
 
         handleErrors(context);
-
-        context.root = ast;
-        // console.log('ROOT', JSON.stringify(ast, null, 2));
 
         // STAGE 2: Transform the initial AST to produce the final AST
         var transformedAST = transformTree(ast, context);

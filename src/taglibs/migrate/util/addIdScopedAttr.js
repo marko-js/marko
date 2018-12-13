@@ -1,5 +1,5 @@
 module.exports = function addIdScopedAttr(context, el, attrValue) {
-    const templateRoot = el.parentNode;
+    const templateRoot = context.root;
     const walker = context.createWalker({
         enter(node) {
             if (node.hasAttribute) {
