@@ -44,35 +44,7 @@ module.exports = function assignComponentId(isRepeated) {
         return;
     }
 
-    if (el.hasAttribute("w-id")) {
-        context.deprecate(
-            'The "w-id" attribute is deprecated. Please use "key" instead.'
-        );
-
-        if (el.hasAttribute("key")) {
-            this.addError(
-                'The "w-id" attribute cannot be used in conjunction with the "key" attributes.'
-            );
-            return;
-        }
-
-        if (el.hasAttribute("ref")) {
-            this.addError(
-                'The "w-id" attribute cannot be used in conjunction with the "ref" attributes.'
-            );
-            return;
-        }
-
-        assignedKey = el.getAttributeValue("w-id");
-
-        el.removeAttribute("w-id");
-        if (!isCustomTag && !el.hasAttribute("id")) {
-            el.setAttributeValue(
-                "id",
-                this.buildComponentElIdFunctionCall(assignedKey)
-            );
-        }
-    } else if (el.hasAttribute("key")) {
+    if (el.hasAttribute("key")) {
         assignedKey = el.getAttributeValue("key");
         el.removeAttribute("key");
     } else if (el.hasAttribute("ref")) {
@@ -95,10 +67,7 @@ module.exports = function assignComponentId(isRepeated) {
             );
         } else {
             if (el.data.userAssignedKey !== false) {
-                if (
-                    context.data.hasLegacyForKey ||
-                    context.data.hasImperativeComponentIds
-                ) {
+                if (context.data.hasImperativeComponentIds) {
                     el.setAttributeValue(
                         "id",
                         this.buildComponentElIdFunctionCall(assignedKey)

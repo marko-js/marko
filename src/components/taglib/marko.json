@@ -7,20 +7,10 @@
             "deprecated": true,
             "set-context-flag": "hasLegacyWidgetBind"
         },
-        "@w-scope": {
-            "type": "expression",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
         "@w-config": {
             "type": "expression",
             "preserve-name": true,
             "deprecated": true
-        },
-        "@for-key": {
-            "type": "string",
-            "preserve-name": true
         },
         "@key": {
             "type": "string",
@@ -36,31 +26,11 @@
                 }
             ]
         },
-        "@for-ref": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
         "@ref": {
             "type": "string",
             "preserve-name": true,
             "autocomplete": [],
             "deprecated": true
-        },
-        "@w-for": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
-        },
-        "@w-id": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true,
-            "set-context-flag": "hasLegacyWidgetAttr"
         },
         "@on*": {
             "pattern": true,
@@ -93,27 +63,6 @@
             "autocomplete": [],
             "deprecated": true,
             "set-context-flag": "hasLegacyWidgetAttr"
-        },
-        "@w-preserve": {
-            "type": "flag",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
-        "@w-preserve-body": {
-            "type": "flag",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
-        "@w-preserve-if": {
-            "preserve-name": true,
-            "autocomplete": []
-        },
-        "@w-preserve-body-if": {
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
         },
         "@no-update": {
             "type": "flag",
@@ -150,12 +99,6 @@
                     "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
                 }
             ]
-        },
-        "@w-preserve-attrs": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
         },
         "transformer": "./components-transformer.js"
     },

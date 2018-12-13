@@ -44,5 +44,60 @@
         "set-flag": "hasComponentEvents",
         "autocomplete": [],
         "deprecated": true
+    },
+    "@w-for": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
+    },
+    "@for-key": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
+    },
+    "@for-ref": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
+    },
+    "@w-id": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
+    },
+    "@w-preserve": {
+        "type": "flag",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true
+    },
+    "@w-preserve-body": {
+        "type": "flag",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true
+    },
+    "@w-preserve-if": {
+        "preserve-name": true,
+        "autocomplete": []
+    },
+    "@w-preserve-body-if": {
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true
+    },
+    "@w-preserve-attrs": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true
     }
 }

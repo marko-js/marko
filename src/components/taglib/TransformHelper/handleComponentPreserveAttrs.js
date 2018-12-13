@@ -25,20 +25,6 @@ module.exports = function handleComponentPreserveAttrs() {
             el.removeAttribute(attrName);
 
             noUpdateAttrs.push(realAttr);
-        } else if (attrName === "w-preserve-attrs") {
-            context.deprecate(
-                `The 'w-preserve-attrs' attribute is deprecated. Please use the ':no-update' attribute instead.`
-            );
-
-            var preserveAttrsExpression = el.getAttributeValue(
-                "w-preserve-attrs"
-            );
-
-            noUpdateAttrs.push.apply(
-                noUpdateAttrs,
-                preserveAttrsExpression.value.split(",")
-            );
-            el.removeAttribute("w-preserve-attrs");
         }
     });
 

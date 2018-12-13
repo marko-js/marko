@@ -1,8 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-const commonMigrators = fs
-    .readdirSync(path.join(__dirname, "./common/"))
-    .map(dir => require(`./common/${dir}`));
+const getMigrators = d =>
+    fs.statSync(d).isDirectory()
+        ? Array.prototype.concat(
+              ...fs.readdirSync(d).map(f => getMigrators(path.join(d, f)))
+          )
+        : require(d);
+const commonMigrators = getMigrators(path.join(__dirname, "./common/"));
 
 module.exports = function(el, context) {
     if (el.detachNode) {

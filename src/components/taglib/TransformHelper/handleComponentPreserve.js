@@ -144,31 +144,6 @@ const preserveTypes = [
     {
         attribute: "no-update-body-if",
         handler: preserveBodyIfHandler
-    },
-
-    // The deprecated preserve types
-    {
-        attribute: "w-preserve",
-        handler: preserveHandler,
-        deprecated: true
-    },
-    {
-        attribute: "w-preserve-if",
-        suffix: "-if",
-        handler: preserveIfHandler,
-        deprecated: true
-    },
-    {
-        attribute: "w-preserve-body",
-        suffix: "-body",
-        handler: preserveBodyHandler,
-        deprecated: true
-    },
-    {
-        attribute: "w-preserve-body-if",
-        suffix: "-body-if",
-        handler: preserveBodyIfHandler,
-        deprecated: true
     }
 ];
 

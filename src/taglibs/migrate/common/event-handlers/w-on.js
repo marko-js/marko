@@ -1,4 +1,4 @@
-const printJS = require("../util/printJS");
+const printJS = require("../../util/printJS");
 
 module.exports = function migrate(el, context) {
     el.forEachAttribute(attr => {

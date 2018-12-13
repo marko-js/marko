@@ -12,7 +12,6 @@
     "while",
     "$w",
     "w-bind",
-    "w-scope",
     "w-config",
     "for-key",
     "key",
