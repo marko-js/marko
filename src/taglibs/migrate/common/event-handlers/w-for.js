@@ -1,3 +1,5 @@
+const addIdScopedAttr = require("../../util/addIdScopedAttr");
+
 module.exports = function migrate(el, context) {
     if (
         el.hasAttribute("w-for") ||
@@ -17,11 +19,11 @@ module.exports = function migrate(el, context) {
                 `The "w-for", "for-key" and "for-ref" attributes are deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
             );
 
-            context.data.hasLegacyForKey = true;
             if (!el.hasAttribute("for:scoped")) {
                 el.setAttributeValue("for:scoped", attr.value);
                 el.removeAttribute(attr.name);
             }
+            addIdScopedAttr(context, el, attr.value);
         });
     }
 };

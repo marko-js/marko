@@ -1,3 +1,5 @@
+const addIdScopedAttr = require("../../util/addIdScopedAttr");
+
 module.exports = function migrate(el, context) {
     el.forEachAttribute(attr => {
         const name = attr.name;
@@ -8,10 +10,11 @@ module.exports = function migrate(el, context) {
             `The ":key" modifier is deprecated. Please use ":scoped" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
         );
 
-        context.data.hasLegacyForKey = true;
         let nameNoModifier = name.slice(0, 0 - ":key".length);
         let modifiedName = nameNoModifier + ":scoped";
         el.setAttributeValue(modifiedName, attr.value);
         el.removeAttribute(attr.name);
+
+        addIdScopedAttr(context, el, attr.value);
     });
 };
