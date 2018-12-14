@@ -1,0 +1,36 @@
+<!-- test/migrate/fixtures/render-call-in-scriptlet/template.marko -->
+
+<${input}/>
+<${input.renderThing}/>
+<${input} ...attrs/>
+<${renderBody}/>
+<${input.template} x=1/>
+<${input.template} y=(function() {})/>
+<${{
+    render: input.barRenderer
+}}/>
+<${function(out) {
+    input.barRenderer({}, true, out);
+}}/>
+<if(x)>
+    <${renderA}/>
+</if>
+<else-if(y)>
+    <${renderB}/>
+</else-if>
+<else>
+    <${renderC}/>
+</else>
+<if(x)>
+    <${render}/>
+</if>
+<if(!x)>
+    <${render}/>
+</if>
+<for(let i = 0; i < 10; i++)>
+    <${input.items[i]}/>
+</for>
+$ let i = 10;
+<while(i--)>
+    <${input}/>
+</while>
