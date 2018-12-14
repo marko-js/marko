@@ -1,6 +1,6 @@
 "use strict";
 
-if (!/^v6\.*/.test(process.version)) {
+if (!/^v6\..*/.test(process.version)) {
     require("../__util__/test-init");
 
     var path = require("path");
