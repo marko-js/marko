@@ -19,10 +19,15 @@ module.exports = function migrate(el, context) {
                 `The "w-for", "for-key" and "for-ref" attributes are deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
             );
 
-            if (!el.hasAttribute("for:scoped")) {
-                el.setAttributeValue("for:scoped", attr.value);
-                el.removeAttribute(attr.name);
+            if (el.hasAttribute("for:scoped")) {
+                context.addError(
+                    `The "${name}" attribute cannot be used in conjunction with "for:scoped".`
+                );
+                return;
             }
+
+            el.setAttributeValue("for:scoped", attr.value);
+            el.removeAttribute(attr.name);
             addIdScopedAttr(context, el, attr.value);
         });
     }

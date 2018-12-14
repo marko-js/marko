@@ -86,7 +86,7 @@ module.exports = function transform(el, context) {
         transformHelper.handleComponentPreserve();
     }
 
-    // Handle *:key properties (and deprecated w-for/for-key/for-ref)
+    // Handle *:scoped properties
     transformHelper.handleScopedAttrs();
 
     if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
