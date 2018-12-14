@@ -1,8 +1,8 @@
 "use strict";
 
-const printJS = require("./util/printJS");
+const printJS = require("../util/printJS");
 const OUT_IDENTIFIER_REG = /[(,] *out *[,)]/;
-const renderCallToDynamicTag = require("./util/renderCallToDynamicTag");
+const renderCallToDynamicTag = require("../util/renderCallToDynamicTag");
 
 module.exports = function migrator(el, context) {
     const walker = context.createWalker({

@@ -1,8 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const commonMigrators = fs
-    .readdirSync(path.join(__dirname, "./common/"))
-    .map(dir => require(`./common/${dir}`));
+    .readdirSync(__dirname)
+    .filter(entry => entry !== "index.js")
+    .map(entry => require(path.join(__dirname, entry)));
 
 module.exports = function(el, context) {
     if (el.detachNode) {
