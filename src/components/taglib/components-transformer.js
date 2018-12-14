@@ -81,12 +81,7 @@ module.exports = function transform(el, context) {
         el.hasAttribute("no-update") ||
         el.hasAttribute("no-update-body") ||
         el.hasAttribute("no-update-if") ||
-        el.hasAttribute("no-update-body-if") ||
-        /* Old preserve attributes */
-        el.hasAttribute("w-preserve") ||
-        el.hasAttribute("w-preserve-body") ||
-        el.hasAttribute("w-preserve-if") ||
-        el.hasAttribute("w-preserve-body-if")
+        el.hasAttribute("no-update-body-if")
     ) {
         transformHelper.handleComponentPreserve();
     }
@@ -95,11 +90,7 @@ module.exports = function transform(el, context) {
     transformHelper.handleScopedAttrs();
 
     if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
-        if (
-            el.hasAttribute("w-id") ||
-            el.hasAttribute("ref") ||
-            el.hasAttribute("key")
-        ) {
+        if (el.hasAttribute("ref") || el.hasAttribute("key")) {
             transformHelper.assignComponentId();
         }
 

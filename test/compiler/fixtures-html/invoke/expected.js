@@ -5,19 +5,15 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_getWidgetFromOut = require("marko/src/components/legacy/helper-getWidgetFromOut"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  var widget = marko_getWidgetFromOut(out),
-      __component = widget,
-      component = __component._c;
-
   marko_dynamicTag(input, {
-      x: 1
+      x: 1,
+      id: __component.elId("hi")
     }, out, __component, "hi");
 }
 
