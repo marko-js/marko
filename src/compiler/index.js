@@ -220,6 +220,10 @@ function parse(templateSrc, filename, options) {
         filename,
         Builder.DEFAULT_BUILDER
     );
+
+    if (options.onContext) {
+        options.onContext(context);
+    }
     var parsed = defaultParser.parse(templateSrc, context, options);
 
     if (context.hasErrors()) {

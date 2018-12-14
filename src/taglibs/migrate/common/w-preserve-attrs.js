@@ -12,8 +12,16 @@ module.exports = function migrate(el, context) {
             );
 
             values.split(",").forEach(val => {
-                let attrValue = el.getAttributeValue(val);
-                el.setAttributeValue(`${val}:no-update`, attrValue || "''");
+                const existingAttr = el.getAttribute(val);
+
+                if (existingAttr) {
+                    existingAttr.name += ":no-update";
+                } else {
+                    el.setAttributeValue(
+                        `${val}:no-update`,
+                        context.builder.literalNull()
+                    );
+                }
             });
 
             el.removeAttribute(attr.name);
