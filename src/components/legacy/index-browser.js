@@ -24,10 +24,13 @@ exports.initWidgets = modernMarko.init;
 // monkey patch Widget
 if (Widget) {
     var WidgetProto = Widget.prototype;
-    WidgetProto.setProps = WidgetProto.___setInput;
+    WidgetProto.setProps = function(newInput) {
+        this.___isReceivingNewInput = true;
+        this.___setInput(newInput);
+    };
     WidgetProto.rerender = function(newInput) {
         if (newInput) {
-            this.input = newInput;
+            this.setProps(newInput);
         }
 
         this.forceUpdate();

@@ -25,7 +25,8 @@ Module._resolveFilename = function(request, parent, isMain) {
             request === "marko/components" ||
             request === "marko/jquery" ||
             request === "marko/legacy-components" ||
-            request === "marko/ready"
+            request === "marko/ready" ||
+            request === "marko/env"
         ) {
             request = nodePath.join(
                 rootDir,
