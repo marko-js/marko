@@ -952,6 +952,10 @@ class CompileContext extends EventEmitter {
     isServerTarget() {
         return this.target === "server";
     }
+
+    addMigration() {
+        // Actual functionality implemented by marko migrate cli command.
+    }
 }
 
 CompileContext.prototype.util = {

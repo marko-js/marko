@@ -139,6 +139,10 @@ class TransformHelper {
         return this.context.data[MARKO_WIDGETS_VAR_KEY];
     }
 
+    get isLegacyComponent() {
+        return this.context.meta.legacy;
+    }
+
     buildComponentElIdFunctionCall(id) {
         var builder = this.builder;
 

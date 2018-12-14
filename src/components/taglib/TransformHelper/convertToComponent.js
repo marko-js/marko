@@ -11,8 +11,11 @@ module.exports = function handleComponentBind(options) {
 
     context.firstBind = true;
 
-    let isLegacyComponent = (this.isLegacyComponent =
-        options.isLegacyComponent === true);
+    if (options.isLegacyComponent) {
+        context.setMeta("legacy", true);
+    }
+
+    let isLegacyComponent = this.isLegacyComponent;
     let componentModule = options.componentModule;
     let rendererModule = options.rendererModule;
     let componentProps = options.componentProps || {};
