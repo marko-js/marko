@@ -1,4 +1,4 @@
-const commonTagMigrator = require("./common-tag-migrator");
+const commonTagMigrator = require("./all-tags");
 const newTags = {
     "async-fragment": "await",
     "async-fragments": "await-reorderer",

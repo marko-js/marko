@@ -1,7 +1,7 @@
 {
-    "migrator": "./root-migrator",
+    "migrator": "./all-templates",
     "<*>": {
-        "migrator": "./common-tag-migrator"
+        "migrator": "./all-tags"
     },
     "<invoke>": {
         "migrator": "./invoke-tag",
