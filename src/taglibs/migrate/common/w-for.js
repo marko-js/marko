@@ -1,4 +1,4 @@
-const addIdScopedAttr = require("../../util/addIdScopedAttr");
+const addIdScopedAttr = require("../util/addIdScopedAttr");
 
 module.exports = function migrate(el, context) {
     if (
