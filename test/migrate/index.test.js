@@ -16,30 +16,28 @@ autotest("fixtures", fixture => {
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;
-    let answersPath;
-    let answers = [];
+    let expectedPrompts = [];
 
     try {
-        answersPath = resolve("prompt-answers");
+        expectedPrompts = require(resolve("./prompts.js")).slice();
     } catch (_) {
         // Ignore
-    }
-
-    if (answersPath) {
-        answers = require(answersPath).slice();
     }
 
     test(() => {
         return migrate({
             dir: __dirname,
             files: [resolve("template.marko")],
-            prompt() {
-                if (!answers.length) {
+            prompt(opts) {
+                if (!expectedPrompts.length) {
                     throw new Error(
                         "Prompt occurred during migration test but no answer provided."
                     );
                 }
-                return answers.shift();
+
+                const currentPrompt = expectedPrompts.shift();
+                chai.expect(opts.message).to.eql(currentPrompt.question);
+                return currentPrompt.answer;
             }
         }).then(outputs => {
             const byExtension = Object.entries(outputs)
