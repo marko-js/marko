@@ -47,35 +47,12 @@ function addPreserve(transformHelper, bodyOnly, condition) {
     return preserveNode;
 }
 
-function deprecatedWarning(preserveType, transformHelper) {
-    let attribute = preserveType.attribute;
-    let suffix = preserveType.suffix;
-    let context = transformHelper.getCompileContext();
-
-    let newAttributeName = "no-update";
-    if (suffix) {
-        newAttributeName += suffix;
-    }
-
-    context.deprecate(
-        `The '${attribute}' attribute is deprecated. Please use '${newAttributeName}' instead.`
-    );
-}
-
 function preserveHandler(transformHelper, preserveType, el) {
-    if (preserveType.deprecated) {
-        deprecatedWarning(preserveType, transformHelper, el);
-    }
-
     el.removeAttribute(preserveType.attribute);
     addPreserve(transformHelper, false);
 }
 
 function preserveIfHandler(transformHelper, preserveType, el) {
-    if (preserveType.deprecated) {
-        deprecatedWarning(preserveType, transformHelper, el);
-    }
-
     let attribute = preserveType.attribute;
     let preserveIfAttr = el.getAttribute(attribute);
     let preserveIfCondition = preserveIfAttr.argument;
@@ -96,19 +73,11 @@ function preserveIfHandler(transformHelper, preserveType, el) {
 }
 
 function preserveBodyHandler(transformHelper, preserveType, el) {
-    if (preserveType.deprecated) {
-        deprecatedWarning(preserveType, transformHelper, el);
-    }
-
     el.removeAttribute(preserveType.attribute);
     addPreserve(transformHelper, true);
 }
 
 function preserveBodyIfHandler(transformHelper, preserveType, el) {
-    if (preserveType.deprecated) {
-        deprecatedWarning(preserveType, transformHelper, el);
-    }
-
     let attribute = preserveType.attribute;
     let preserveBodyIfAttr = el.getAttribute(attribute);
     let preserveBodyIfCondition = preserveBodyIfAttr.argument;
