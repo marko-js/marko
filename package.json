@@ -152,5 +152,27 @@
         "morphdom",
         "virtual",
         "virtual-dom"
+    ],
+    "files": [
+        "bin",
+        "dist",
+        "docs",
+        "helpers",
+        "src",
+        "browser-refresh.js",
+        "compiler-browser.marko",
+        "compiler.js",
+        "components-browser.marko",
+        "components.js",
+        "env.js",
+        "express.js",
+        "hot-reload.js",
+        "index-browser.marko",
+        "index.js",
+        "jquery.marko",
+        "legacy-components-browser.marko",
+        "legacy-components.js",
+        "node-require.js",
+        "ready.marko"
     ]
 }
