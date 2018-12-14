@@ -4,6 +4,12 @@
 
 ## 4.14.x
 
+### 4.14.5
+
+- Add `getTemplateData` migrator. [#1195](https://github.com/marko-js/marko/pull/1195)
+- Add migrators for most of the `w-*` attributes. [#1190](https://github.com/marko-js/marko/pull/1190)
+- Add basic legacy widget migration. [#1192](https://github.com/marko-js/marko/pull/1192)
+
 ### 4.14.4
 
 - Fix regression with `setProps` on legacy compatibility layer. [#1193](https://github.com/marko-js/marko/pull/1193)
