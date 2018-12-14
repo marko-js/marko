@@ -26,10 +26,10 @@ module.exports = function handleComponentKeyAttrs() {
         // BEGIN support for deprecated for attributes
         if (deprecatedAttrs[attributeName]) {
             context.deprecate(
-                `The "${attributeName}" attribute is deprecated. Please use "for:key" instead.`
+                `The "${attributeName}" attribute is deprecated. Please use "for:scoped" instead.`
             );
 
-            let incompatibleAttributes = ["for", "for:key"]
+            let incompatibleAttributes = ["for", "for:scoped"]
                 .concat(
                     Object.keys(deprecatedAttrs).filter(a => a != attributeName)
                 )

@@ -91,13 +91,14 @@ class Parser {
 
         this._reset();
 
-        this.context = context;
-
         var builder = context.builder;
         var rootNode = builder.templateRoot();
         var mergedOptions = Object.assign({}, this.defaultOptions, options);
         var raw = mergedOptions.raw === true;
         var migrate = mergedOptions.migrate === true;
+
+        context.root = rootNode;
+        this.context = context;
 
         this.stack.push({
             node: rootNode
@@ -300,17 +301,6 @@ class Parser {
 
             if (attrSpread) {
                 attrDef.spread = true;
-            }
-
-            if (attrName) {
-                if (
-                    attrName === "for-key" ||
-                    attrName === "for-ref" ||
-                    attrName === "w-for" ||
-                    attrName.endsWith(":key")
-                ) {
-                    context.data.hasLegacyForKey = true;
-                }
             }
 
             if (attrRawValue) {
