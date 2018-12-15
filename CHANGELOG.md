@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.7
+
+- Fix regression for `widget.elId` migration. [#1198](https://github.com/marko-js/marko/pull/1198)
+
 ### 4.14.6
 
 - Add a whitelist of files to publish to NPM. [#1197](https://github.com/marko-js/marko/pull/1197)
