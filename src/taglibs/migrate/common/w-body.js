@@ -1,4 +1,4 @@
-const renderCallToDynamicTag = require("../util/renderCallToDynamicTag");
+// const renderCallToDynamicTag = require("../util/renderCallToDynamicTag");
 
 module.exports = function migrate(el, context) {
     if (el.hasAttribute("w-body")) {
@@ -11,9 +11,18 @@ module.exports = function migrate(el, context) {
             value: "input"
         };
         el.removeAttribute("w-body");
-        const functionCallExpression = `${bodyValue.value}(out)`;
-        const functionAst = builder.parseExpression(functionCallExpression);
-        const childEl = renderCallToDynamicTag(functionAst, context);
+        // const functionCallExpression = `${bodyValue.value}(out)`;
+        // const functionAst = builder.parseExpression(functionCallExpression);
+        // const childEl = renderCallToDynamicTag(functionAst, context);
+        const childEl = builder.htmlElement(
+            undefined,
+            [],
+            undefined,
+            [],
+            true,
+            true
+        );
+        childEl.rawTagNameExpression = bodyValue.value;
         el.appendChild(childEl);
     }
 };
