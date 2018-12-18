@@ -103,7 +103,6 @@
     "@w-body": {
         "preserve-name": true,
         "autocomplete": [],
-        "deprecated": true,
-        "set-context-flag": "hasLegacyWidgetAttr"
+        "deprecated": true
     }
 }
