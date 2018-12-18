@@ -8,11 +8,16 @@ module.exports = function migrate(el, context) {
 
         const builder = context.builder;
         const bodyValue =
-            el.getAttributeValue("w-body") || builder.identifier("input");
+            el.getAttributeValue("w-body") ||
+            builder.memberExpression(
+                builder.identifier("__component"),
+                builder.identifier("b")
+            );
         el.removeAttribute("w-body");
 
-        const ifExpressionArg = `typeof ${builder.identifier(
-            "renderBody"
+        const ifExpressionArg = `typeof ${printJS(
+            bodyValue,
+            context
         )} === 'string'`;
         const ifTag = builder.htmlElement(
             "if",
