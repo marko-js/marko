@@ -1,5 +1,5 @@
 const printJS = require("./util/printJS");
-const commonTagMigrator = require("./common-tag-migrator");
+const commonTagMigrator = require("./all-tags");
 
 module.exports = function migrator(elNode, context) {
     const attributes = elNode.attributes;

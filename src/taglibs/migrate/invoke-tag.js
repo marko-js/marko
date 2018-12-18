@@ -1,5 +1,5 @@
 const renderCallToDynamicTag = require("./util/renderCallToDynamicTag");
-const commonTagMigrator = require("./common-tag-migrator");
+const commonTagMigrator = require("./all-tags");
 
 module.exports = function migrator(elNode, context) {
     const builder = context.builder;
