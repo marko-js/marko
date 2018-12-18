@@ -99,5 +99,11 @@
         "preserve-name": true,
         "autocomplete": [],
         "deprecated": true
+    },
+    "@w-body": {
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true,
+        "set-context-flag": "hasLegacyWidgetAttr"
     }
 }
