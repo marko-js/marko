@@ -9,28 +9,49 @@ module.exports = function migrate(el, context) {
         const builder = context.builder;
         const bodyValue =
             el.getAttributeValue("w-body") || builder.identifier("input");
+        let renderBodyValue = bodyValue;
+
         el.removeAttribute("w-body");
 
-        const ifExpressionArg = `typeof ${printJS(
-            bodyValue,
-            context
-        )} === 'string'`;
-        const ifTag = builder.htmlElement(
-            "if",
+        if (
+            bodyValue.type !== "MemberExpression" ||
+            bodyValue.property.name !== "renderBody"
+        ) {
+            renderBodyValue = builder.memberExpression(
+                bodyValue,
+                builder.identifier("renderBody")
+            );
+        }
+
+        const dynamicTag = builder.htmlElement(
             undefined,
-            [builder.text(bodyValue)],
-            printJS(ifExpressionArg, context),
-            false,
-            false
+            [],
+            undefined,
+            undefined,
+            true,
+            true
         );
-        const elseTag = builder.htmlElement(
-            "else",
-            undefined,
-            [bodyValue],
-            undefined,
-            false,
-            false
-        );
-        el.appendChildren([ifTag, elseTag]);
+
+        dynamicTag.rawTagNameExpression = printJS(bodyValue, context);
+
+        el.appendChildren([
+            builder.htmlElement(
+                "if",
+                undefined,
+                [dynamicTag],
+                `typeof ${printJS(renderBodyValue, context)} === 'function'`,
+                context,
+                false,
+                false
+            ),
+            builder.htmlElement(
+                "else",
+                undefined,
+                [builder.text(renderBodyValue)],
+                undefined,
+                false,
+                false
+            )
+        ]);
     }
 };
