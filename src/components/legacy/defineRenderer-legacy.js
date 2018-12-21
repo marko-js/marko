@@ -145,7 +145,7 @@ module.exports = function defineRenderer(renderingLogic) {
                 templateData.widgetState = widgetState;
             }
             if (widgetBody) {
-                templateData.widgetBody = widgetBody;
+                templateData.renderBody = widgetBody;
             }
             if (widgetConfig) {
                 templateData.widgetConfig = widgetConfig;

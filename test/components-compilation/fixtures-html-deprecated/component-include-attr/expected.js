@@ -6,6 +6,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     legacy_helpers = require("marko/src/components/legacy/helpers"),
     marko_rendererLegacy = legacy_helpers.r,
     marko_helpers = require("marko/src/runtime/html/helpers"),
+    marko_dynamicTag = marko_helpers.d,
     marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a;
 
@@ -16,10 +17,10 @@ function render(input, out, __component, widget, component) {
     marko_attr("id", __component.elId()) +
     "><h1>Header</h1><div>");
 
-  if ((typeof renderBody) === "string") {
-    out.w(marko_escapeXml(input));
+  if ((typeof input.renderBody) === "function") {
+    marko_dynamicTag(input, {}, out, __component, "2");
   } else {
-    input;
+    out.w(marko_escapeXml(input.renderBody));
   }
 
   out.w("</div></div>");

@@ -3,10 +3,10 @@ var removeDashes = require("../compiler/util/removeDashes");
 var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
+var w10NOOP = require("warp10/constants").NOOP;
 var isArray = Array.isArray;
-var RENDER_BODY_TOKEN = "%FN";
 var RENDER_BODY_TO_JSON = function() {
-    return RENDER_BODY_TOKEN;
+    return w10NOOP;
 };
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var IS_SERVER = typeof window === "undefined";
@@ -167,15 +167,15 @@ var helpers = {
                 } else {
                     var render = (tag && tag.renderBody) || tag;
                     var isFn = typeof render === "function";
-                    var isToken = render === RENDER_BODY_TOKEN;
 
-                    if (isFn || isToken) {
+                    if (isFn) {
                         var flags = componentDef ? componentDef.___flags : 0;
                         var willRerender =
                             flags & FLAG_WILL_RERENDER_IN_BROWSER;
-                        var preserve = IS_SERVER ? willRerender : isToken;
+                        var isW10NOOP = render === w10NOOP;
+                        var preserve = IS_SERVER ? willRerender : isW10NOOP;
                         out.___beginFragment(key, component, preserve);
-                        if (isFn) {
+                        if (!isW10NOOP && isFn) {
                             var componentsContext = getComponentsContext(out);
                             var parentComponentDef =
                                 componentsContext.___componentDef;

@@ -1,8 +1,8 @@
+<!-- test/migrate/fixtures/w-body/template.marko -->
+
 <div>
-  <if(typeof input.renderBody === "string")>
-    ${input.renderBody}
-  </if>
-  <else>
-    <${input}/>
-  </else>
+    <if(typeof input.renderBody === 'function')>
+        <${input}/>
+    </if>
+    <else>${input.renderBody}</else>
 </div>

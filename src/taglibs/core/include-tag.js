@@ -1,7 +1,8 @@
-var RENDER_BODY_TOKEN = "%FN";
+var w10NOOP = require("warp10/constants").NOOP;
 var RENDER_BODY_TO_JSON = function() {
-    return RENDER_BODY_TOKEN;
+    return w10NOOP;
 };
+
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var IS_SERVER = typeof window === "undefined";
 
@@ -17,10 +18,7 @@ function doInclude(input, out, throwError) {
             return target.render(arg, out), true;
         } else if (target.safeHTML) {
             return out.write(target.safeHTML), true;
-        } else if (
-            typeof renderBody !== "function" &&
-            renderBody !== RENDER_BODY_TOKEN
-        ) {
+        } else if (typeof renderBody !== "function") {
             if (typeof target === "string") {
                 // TODO: deprecate this
                 return target && out.text(target), true;
@@ -31,6 +29,7 @@ function doInclude(input, out, throwError) {
     }
 
     if (renderBody) {
+        var isFn = renderBody !== w10NOOP;
         var componentsContext = out.___components;
         var componentDef =
             out.___assignedComponentDef ||
@@ -38,7 +37,6 @@ function doInclude(input, out, throwError) {
         var willRerenderInBrowser =
             componentDef &&
             componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER;
-        var isFn = renderBody !== RENDER_BODY_TOKEN;
         var preserve = (IS_SERVER && willRerenderInBrowser) || !isFn;
         out.___beginFragment(
             out.___assignedKey,

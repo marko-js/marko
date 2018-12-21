@@ -3,34 +3,55 @@ const printJS = require("../util/printJS");
 module.exports = function migrate(el, context) {
     if (el.hasAttribute("w-body")) {
         context.deprecate(
-            'The "w-body" attribute is deprecated. Please use "<${dynamicTag}/>" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w-body)'
+            'The "w-body" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w-body)'
         );
 
         const builder = context.builder;
         const bodyValue =
             el.getAttributeValue("w-body") || builder.identifier("input");
+        let renderBodyValue = bodyValue;
+
         el.removeAttribute("w-body");
 
-        const ifExpressionArg = `typeof ${printJS(
-            bodyValue,
-            context
-        )} === 'string'`;
-        const ifTag = builder.htmlElement(
-            "if",
+        if (
+            bodyValue.type !== "MemberExpression" ||
+            bodyValue.property.name !== "renderBody"
+        ) {
+            renderBodyValue = builder.memberExpression(
+                bodyValue,
+                builder.identifier("renderBody")
+            );
+        }
+
+        const dynamicTag = builder.htmlElement(
             undefined,
-            [builder.text(bodyValue)],
-            printJS(ifExpressionArg, context),
-            false,
-            false
+            [],
+            undefined,
+            undefined,
+            true,
+            true
         );
-        const elseTag = builder.htmlElement(
-            "else",
-            undefined,
-            [bodyValue],
-            undefined,
-            false,
-            false
-        );
-        el.appendChildren([ifTag, elseTag]);
+
+        dynamicTag.rawTagNameExpression = printJS(bodyValue, context);
+
+        el.appendChildren([
+            builder.htmlElement(
+                "if",
+                undefined,
+                [dynamicTag],
+                `typeof ${printJS(renderBodyValue, context)} === 'function'`,
+                context,
+                false,
+                false
+            ),
+            builder.htmlElement(
+                "else",
+                undefined,
+                [builder.text(renderBodyValue)],
+                undefined,
+                false,
+                false
+            )
+        ]);
     }
 };
