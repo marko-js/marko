@@ -2,7 +2,7 @@
  * Helper for processing dynamic attributes
  */
 module.exports = function(attributes) {
-    if (attributes.style || attributes.class) {
+    if (attributes && (attributes.style || attributes.class)) {
         var newAttributes = {};
         Object.keys(attributes).forEach(function(name) {
             if (name === "class") {
