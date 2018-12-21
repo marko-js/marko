@@ -3,7 +3,7 @@ const printJS = require("../util/printJS");
 module.exports = function migrate(el, context) {
     if (el.hasAttribute("w-body")) {
         context.deprecate(
-            'The "w-body" attribute is deprecated. Please use "<${dynamicTag}/>" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w-body)'
+            'The "w-body" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w-body)'
         );
 
         const builder = context.builder;
