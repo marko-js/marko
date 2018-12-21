@@ -38,7 +38,6 @@ module.exports = function generateCode(node, codegen) {
     var hasBody = body && body.length;
     var openTagOnly = node.openTagOnly;
     var bodyOnlyIf = node.bodyOnlyIf;
-    var dynamicAttributes = node.dynamicAttributes;
     var selfClosed = node.selfClosed === true;
     var isCustomElement = node.customElement;
 
@@ -58,8 +57,7 @@ module.exports = function generateCode(node, codegen) {
         attributes: isCustomElement ? null : attributes,
         properties: properties,
         argument: argument,
-        selfClosed: selfClosed,
-        dynamicAttributes: isCustomElement ? null : dynamicAttributes
+        selfClosed: selfClosed
     });
 
     var endTag;

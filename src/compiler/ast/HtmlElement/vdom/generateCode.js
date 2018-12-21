@@ -36,7 +36,6 @@ module.exports = function(node, codegen, vdomUtil) {
     var body = codegen.generateCode(node.body);
     var tagName = codegen.generateCode(node.tagNameExpression);
     var attributes = codegen.generateCode(node.getAttributes());
-    var dynamicAttributes = codegen.generateCode(node.dynamicAttributes);
     var key = codegen.generateCode(node.key);
     var properties = node.getProperties();
     var isAutoKeyed = node.isAutoKeyed;
@@ -96,7 +95,6 @@ module.exports = function(node, codegen, vdomUtil) {
         isStatic,
         isAttrsStatic,
         isHtmlOnly,
-        dynamicAttributes,
         nextConstId,
         runtimeFlags,
         isAutoKeyed
