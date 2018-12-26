@@ -6,6 +6,11 @@
 
 ### 4.14.7
 
+- Add migrator from w-body to dynamic tag. [#1199](https://github.com/marko-js/marko/pull/1199)
+- Add migrator from dynamic attributes to spread attributes. [#1202](https://github.com/marko-js/marko/pull/1202)
+
+### 4.14.7
+
 - Fix regression for `widget.elId` migration. [#1198](https://github.com/marko-js/marko/pull/1198)
 
 ### 4.14.6
