@@ -11,7 +11,6 @@ class StartTag extends Node {
         this.properties = def.properties;
         this.argument = def.argument;
         this.selfClosed = def.selfClosed;
-        this.dynamicAttributes = def.dynamicAttributes;
     }
 
     generateCode(codegen) {
@@ -19,7 +18,6 @@ class StartTag extends Node {
 
         var tagName = this.tagName;
         var selfClosed = this.selfClosed;
-        var dynamicAttributes = this.dynamicAttributes;
         var context = codegen.context;
 
         var nodes = [builder.htmlLiteral("<"), builder.html(tagName)];
@@ -71,17 +69,6 @@ class StartTag extends Node {
                 );
                 nodes.push(builder.html(attrsFunctionCall));
             }
-        }
-
-        // deprecated
-        if (dynamicAttributes) {
-            dynamicAttributes.forEach(function(attrsExpression) {
-                let attrsFunctionCall = builder.functionCall(
-                    context.helper("attrs"),
-                    [attrsExpression]
-                );
-                nodes.push(builder.html(attrsFunctionCall));
-            });
         }
 
         if (selfClosed) {

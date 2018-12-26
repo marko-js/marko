@@ -81,7 +81,6 @@ class HtmlElementVDOM extends Node {
         this.attributes = def.attributes;
         this.properties = def.properties;
         this.body = def.body;
-        this.dynamicAttributes = def.dynamicAttributes;
         this.key = def.key;
         this.runtimeFlags = def.runtimeFlags;
         this.isAutoKeyed = def.isAutoKeyed;
@@ -133,13 +132,10 @@ class HtmlElementVDOM extends Node {
 
         let attributes = this.attributes;
         let properties = this.properties;
-        let dynamicAttributes = this.dynamicAttributes;
 
         let attributesArg = null;
 
         var hasNamedAttributes = false;
-        var hasDynamicAttributes =
-            dynamicAttributes != null && dynamicAttributes.length !== 0;
         var hasSpreadAttributes = false;
 
         var hasSimpleAttrs = true;
@@ -220,32 +216,16 @@ class HtmlElementVDOM extends Node {
                     : attrs[0];
         }
 
-        // deprecated
-        if (hasDynamicAttributes) {
-            dynamicAttributes.forEach(attrs => {
-                if (attributesArg) {
-                    let mergeVar = context.helper("merge");
-                    attributesArg = builder.functionCall(mergeVar, [
-                        attributesArg, // Input props from the attributes take precedence
-                        attrs
-                    ]);
-                } else {
-                    attributesArg = attrs;
-                }
-            });
-        }
-
         if (
             !this.isAttrsStatic &&
             hasNamedAttributes &&
             hasSimpleAttrs &&
-            !hasDynamicAttributes &&
             !hasSpreadAttributes
         ) {
             this.hasSimpleAttrs = true;
         }
 
-        this.hasAttributes = hasNamedAttributes || hasDynamicAttributes;
+        this.hasAttributes = hasNamedAttributes;
 
         this.attributesArg = attributesArg;
 
