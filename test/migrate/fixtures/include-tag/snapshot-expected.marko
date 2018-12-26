@@ -1,0 +1,53 @@
+<!-- test/migrate/fixtures/include-tag/template.marko -->
+
+<!-- test/migrate/fixtures/include-tag/template.marko -->
+import ExampleA from "./example-a.marko"
+import ExampleB from "./example-b.marko"
+import ExampleC from "./example-c/index.marko"
+import ExampleD_1 from "./example-d.marko"
+import ExampleE from "./example-e/index.marko"
+
+<!-- Import: basic -->
+<${ExampleA}/>
+<!-- Import: with attributes -->
+<${ExampleB} ...{
+        a: 1
+    } b=2/>
+<!-- Import: index -->
+<${ExampleC}/>
+<!-- Import: name conflict -->
+$ const ExampleD = undefined;
+<${ExampleD_1}/>
+<!-- Import: with body -->
+<${ExampleE}>
+    <div>Hi</div>
+</${ExampleE}>
+<!-- Dynamic: basic -->
+<if(typeof input.x === 'string')>${input.x}</if>
+<else>
+    <${input.x}/>
+</else>
+<!-- Dynamic: with attributes -->
+<if(typeof input.x === 'string')>${input.x}</if>
+<else>
+    <${input.x} ...{
+            a: 1
+        } b=2/>
+</else>
+<!-- Dynamic: with body -->
+<if(typeof input.x === 'string')>${input.x}</if>
+<else>
+    <${input.x}>
+        <div>Hi</div>
+    </${input.x}>
+</else>
+<!-- Directive -->
+<div>
+    <span/>
+    <if(typeof x === 'string')>${x}</if>
+    <else>
+        <${x} ...{
+                a: 1
+            }/>
+    </else>
+</div>

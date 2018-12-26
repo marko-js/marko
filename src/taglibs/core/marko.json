@@ -76,20 +76,6 @@
             "relaxRequireCommas": true
         }
     },
-    "<include>": {
-        "renderer": "./include-tag",
-        "transformer": "./include-tag-transformer",
-        "autocomplete": [
-            {
-                "displayText": "include(<template>)",
-                "snippet": "include(${1:\"./target.marko\"})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-            }
-        ]
-    },
     "<include-html>": {
         "code-generator": "./include-html-tag",
         "autocomplete": [
@@ -255,23 +241,6 @@
                 },
                 {
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
-                }
-            ]
-        },
-        "@include": {
-            "autocomplete": [
-                {
-                    "displayText": "include(<template>)",
-                    "snippet": "include(${1:\"./target.marko\"})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-                },
-                {
-                    "displayText": "include(data.renderBody)",
-                    "snippet": "include(data.renderBody)",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-                },
-                {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
                 }
             ]
         },

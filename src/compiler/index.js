@@ -268,10 +268,6 @@ function registerCoreTaglibs() {
             require.resolve("../taglibs/core/marko.json")
         );
         registerTaglib(
-            require("../taglibs/layout/marko.json"),
-            require.resolve("../taglibs/layout/marko.json")
-        );
-        registerTaglib(
             require("../taglibs/html/marko.json"),
             require.resolve("../taglibs/html/marko.json")
         );
