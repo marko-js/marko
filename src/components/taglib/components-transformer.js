@@ -37,30 +37,6 @@ module.exports = function transform(el, context) {
         return;
     }
 
-    if (el.hasAttribute("w-body")) {
-        // This is a legacy code block and should be removed in Marko v5
-        context.deprecate(
-            'The "w-body" attribute is deprecated. Please use "<include(...)" instead. See: https://github.com/marko-js/marko/issues/492'
-        );
-        let builder = context.builder;
-        let bodyValue = el.getAttributeValue("w-body");
-        el.removeAttribute("w-body");
-
-        let includeNode = context.createNodeForEl("include");
-
-        if (!bodyValue) {
-            bodyValue = builder.memberExpression(
-                builder.identifier("__component"),
-                builder.identifier("b")
-            );
-
-            includeNode.data.bodySlot = true;
-        }
-
-        includeNode.addProp("_target", bodyValue);
-        el.appendChild(includeNode);
-    }
-
     if (el.tagName === "widget-types") {
         context.setFlag("hasWidgetTypes");
     }
@@ -100,10 +76,6 @@ module.exports = function transform(el, context) {
         ) {
             transformHelper.assignComponentId();
         }
-    }
-
-    if (el.hasAttribute("w-body")) {
-        transformHelper.handleComponentBody();
     }
 
     // Handle w-preserve-attrs and :no-update attributes

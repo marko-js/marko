@@ -62,7 +62,6 @@ class HtmlElement extends Node {
 
         this.openTagOnly = def.openTagOnly;
         this.selfClosed = def.selfClosed;
-        this.dynamicAttributes = undefined;
         this.bodyOnlyIf = undefined;
         this.runtimeFlags = 0; // Runtime flags are used to flag VDOM nodes with important information (flags are OR'd together)
         this.key = undefined;
@@ -99,14 +98,6 @@ class HtmlElement extends Node {
         }
 
         return generateVDOMCode(this, codegen, vdomUtil);
-    }
-
-    addDynamicAttributes(expression) {
-        if (!this.dynamicAttributes) {
-            this.dynamicAttributes = [];
-        }
-
-        this.dynamicAttributes.push(expression);
     }
 
     getAttribute(name) {
@@ -214,8 +205,7 @@ class HtmlElement extends Node {
             tagString: this.tagString,
             argument: this.argument,
             body: this.body,
-            bodyOnlyIf: this.bodyOnlyIf,
-            dynamicAttributes: this.dynamicAttributes
+            bodyOnlyIf: this.bodyOnlyIf
         };
     }
 

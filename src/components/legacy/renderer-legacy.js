@@ -8,6 +8,7 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var handleBeginAsync = modernRenderer.___handleBeginAsync;
 var beginComponent = require("../beginComponent");
 var endComponent = require("../endComponent");
+var w10NOOP = require("warp10/constants").NOOP;
 
 var WIDGETS_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
@@ -25,7 +26,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         }
 
         var widgetConfig = input.widgetConfig;
-        var widgetBody = input.widgetBody;
+        var widgetBody = input.renderBody;
         var widgetState = input.widgetState;
 
         var componentsContext = getComponentsContext(out);
@@ -109,7 +110,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         component.$c = widgetConfig;
         component.state = widgetState;
         component.___legacyBody =
-            widgetBody || component.___legacyBody || "%FN";
+            widgetBody || component.___legacyBody || w10NOOP;
 
         var componentDef = beginComponent(
             componentsContext,
@@ -127,7 +128,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.___isLegacy = true;
-        componentDef.b = component.___legacyBody;
         componentDef.c = function(widgetConfig) {
             component.$c = widgetConfig;
         };

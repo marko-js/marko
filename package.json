@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "4.14.7",
+    "version": "4.14.8",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
@@ -58,7 +58,7 @@
         "simple-sha1": "^2.1.0",
         "strip-json-comments": "^2.0.1",
         "try-require": "^1.2.1",
-        "warp10": "^1.0.0"
+        "warp10": "^2.0.1"
     },
     "devDependencies": {
         "@marko/migrate": "^1.2.0",

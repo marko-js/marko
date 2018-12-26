@@ -6,8 +6,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     legacy_helpers = require("marko/src/components/legacy/helpers"),
     marko_rendererLegacy = legacy_helpers.r,
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag")),
+    marko_dynamicTag = marko_helpers.d,
+    marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a;
 
 function render(input, out, __component, widget, component) {
@@ -17,9 +17,11 @@ function render(input, out, __component, widget, component) {
     marko_attr("id", __component.elId()) +
     "><h1>Header</h1><div>");
 
-  include_tag({
-      _target: __component.b
-    }, out, __component, "2");
+  if ((typeof input.renderBody) === "function") {
+    marko_dynamicTag(input, {}, out, __component, "2");
+  } else {
+    out.w(marko_escapeXml(input.renderBody));
+  }
 
   out.w("</div></div>");
 }
@@ -31,8 +33,5 @@ marko_template._ = marko_rendererLegacy(render, {
 marko_template.meta = {
     legacy: true,
     id: "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index",
-    component: "./",
-    tags: [
-      "marko/src/taglibs/core/include-tag"
-    ]
+    component: "./"
   };

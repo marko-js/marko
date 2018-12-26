@@ -249,7 +249,6 @@ class CustomTag extends HtmlElement {
         this._hasDynamicNestedTags = false;
         this._additionalProps = null;
         this._rendererPath = null;
-        this.dynamicAttributes = undefined;
     }
 
     buildInputProps(codegen, additionalAttrs) {
@@ -458,16 +457,6 @@ class CustomTag extends HtmlElement {
             context.deprecate(
                 "Using <tag(attrs)> to pass dynamic attributes is deprecated. use ...attrs instead."
             );
-        }
-
-        if (this.dynamicAttributes) {
-            this.dynamicAttributes.forEach(dynamicAttributesExpression => {
-                inputProps = merge(
-                    dynamicAttributesExpression,
-                    inputProps,
-                    context
-                );
-            });
         }
 
         if (this._hasDynamicNestedTags) {
@@ -909,14 +898,6 @@ class CustomTag extends HtmlElement {
         } else {
             return renderTagNode;
         }
-    }
-
-    addDynamicAttributes(expression) {
-        if (!this.dynamicAttributes) {
-            this.dynamicAttributes = [];
-        }
-
-        this.dynamicAttributes.push(expression);
     }
 }
 
