@@ -7,7 +7,9 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
       return module.exports;
     }),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c;
+    marko_defineComponent = components_helpers.c,
+    marko_helpers = require("marko/src/runtime/vdom/helpers"),
+    marko_attrs = marko_helpers.as;
 
 function render(input, out, __component, component, state) {
   var data = input;
@@ -17,7 +19,7 @@ function render(input, out, __component, component, state) {
       hello: "world"
     }
 
-  out.e("DIV", attrs, null, null, 3)
+  out.e("DIV", marko_attrs(attrs), null, null, 3)
     .t("Hello ")
     .t(name)
     .t("!");
