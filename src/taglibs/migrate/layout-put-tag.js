@@ -6,11 +6,11 @@ module.exports = function migrator(oldNode, context) {
     oldNode.setTransformerApplied(commonTagMigrator);
 
     context.deprecate(
-        'The "<layout-put>" tag is deprecated. Please use "<@tags>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
+        'The "<layout-put>" tag is deprecated and replaced with first class language support. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tag'
     );
     if (!attributes) {
         context.addError(
-            'Invalid <layout-put> tag. Attribute is missing. Example; <layout-put into="body"></layout-put>'
+            'Invalid <layout-put> tag. Attribute is missing. Example; <layout-put into="body">Some Value</layout-put>'
         );
         return oldNode;
     }
