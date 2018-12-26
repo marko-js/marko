@@ -1,4 +1,4 @@
-const commonTagMigrator = require("../all-tags");
+const commonTagMigrator = require("./all-tags");
 
 module.exports = function migrator(oldNode, context) {
     const attributes = oldNode.attributes;
