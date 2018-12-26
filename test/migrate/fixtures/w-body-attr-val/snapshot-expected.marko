@@ -1,0 +1,8 @@
+<!-- test/migrate/fixtures/w-body-attr-val/template.marko -->
+
+<div>
+    <if(typeof input.title.renderBody === 'function')>
+        <${input.title}/>
+    </if>
+    <else>${input.title.renderBody}</else>
+</div>
