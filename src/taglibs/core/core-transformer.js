@@ -28,44 +28,6 @@ var coreAttrHandlers = [
         function(attr, node, el) {
             el.setPreserveWhitespace(true);
         }
-    ],
-    [
-        "marko-init",
-        function(attr, node, el) {
-            if (el.tagName !== "script") {
-                this.addError(
-                    'The "marko-init" attribute should only be used on the <script> tag'
-                );
-                return;
-            }
-            this.context.deprecate(
-                'The "marko-init" attribute is deprecated.  Use the static tag instead. See https://github.com/marko-js/marko/issues/547'
-            );
-            var bodyText = el.bodyText;
-            el.noOutput = true;
-            this.context.addStaticCode(bodyText);
-            el.detach();
-            return null;
-        }
-    ],
-    [
-        "template-helpers",
-        function(attr, node, el) {
-            if (el.tagName !== "script") {
-                this.addError(
-                    'The "template-helpers" attribute should only be used on the <script> tag'
-                );
-                return;
-            }
-            this.context.deprecate(
-                'The "template-helpers" attribute is deprecated and will be removed in the next release candidate. Use the static tag instead. See https://github.com/marko-js/marko/issues/547'
-            );
-            var bodyText = el.bodyText;
-            el.noOutput = true;
-            this.context.addStaticCode(bodyText);
-            el.detach();
-            return null;
-        }
     ]
 ];
 
