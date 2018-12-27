@@ -7,20 +7,21 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag"));
+    marko_escapeXml = marko_helpers.x,
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
   out.w("<div>\n    ");
 
-  include_tag({
-      _target: data.renderBody,
-      _arg: {
-          test: 1
-        }
-    }, out, __component, "1");
+  if ((typeof data.renderBody) === "string") {
+    out.w(marko_escapeXml(data.renderBody));
+  } else {
+    marko_dynamicTag(data.renderBody, {
+        test: 1
+      }, out, __component, "1");
+  }
 
   out.w("\n</div>");
 }
@@ -33,8 +34,5 @@ marko_template.Component = marko_defineComponent(marko_component, marko_template
 
 marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-html/include-input-whitespace-preserved/index.marko",
-    component: "./",
-    tags: [
-      "marko/src/taglibs/core/include-tag"
-    ]
+    component: "./"
   };

@@ -5,6 +5,7 @@ require("complain").log = function(message) {
     }
 };
 require("../../node-require").install({
-    compilerOptions: { writeToDisk: false }
+    compilerOptions: { writeToDisk: false },
+    extensions: [".marko", ".html"]
 });
 require("it-fails");

@@ -7,17 +7,19 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag"));
+    marko_escapeXml = marko_helpers.x,
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
   out.w("<div><h1>Header</h1><div>");
 
-  include_tag({
-      _target: data.renderBody
-    }, out, __component, "3");
+  if ((typeof data.renderBody) === "string") {
+    out.w(marko_escapeXml(data.renderBody));
+  } else {
+    marko_dynamicTag(data.renderBody, {}, out, __component, "3");
+  }
 
   out.w("</div></div>");
 }
@@ -30,8 +32,5 @@ marko_template.Component = marko_defineComponent(marko_component, marko_template
 
 marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-html/component-include-attr/index.marko",
-    component: "./",
-    tags: [
-      "marko/src/taglibs/core/include-tag"
-    ]
+    component: "./"
   };
