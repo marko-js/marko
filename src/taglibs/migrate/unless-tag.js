@@ -1,5 +1,4 @@
 const printJS = require("./util/printJS");
-const commonTagMigrator = require("./all-tags");
 
 module.exports = function migrator(oldNode, context) {
     if (oldNode.tagName !== "unless") {
@@ -7,8 +6,6 @@ module.exports = function migrator(oldNode, context) {
     }
     const attributes = oldNode.attributes;
     const argument = oldNode.argument;
-    commonTagMigrator(oldNode, context);
-    oldNode.setTransformerApplied(commonTagMigrator);
 
     context.deprecate(
         'The "<unless(x)>" tag is deprecated. Please use "<if(!x)>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-unless-tag'
@@ -29,7 +26,7 @@ module.exports = function migrator(oldNode, context) {
         "if",
         undefined,
         [],
-        printJS(`!${argument}`, context),
+        printJS(builder.negate(argument), context),
         false,
         false
     );
