@@ -1,0 +1,45 @@
+<!-- Basic -->
+<script marko-init>
+  var x = require("a");
+  var firstName = "John";
+  var lastName = "Smith";
+  var fullName = firstName + lastName;
+
+  function test() {
+    return null;
+  }
+
+  if (a) {
+    b();
+  } else if (c) {
+    d();
+  } else {
+    e();
+  }
+
+  while (a) {
+    console.log("testing");
+    console.log("loop");
+  }
+
+  for (var i = 0; i < len; i++) {
+    console.log("testing");
+    console.log("loop");
+  }
+</script>
+
+<!-- Not parseable -->
+<script marko-init>
+  const { x } = require("a");
+</script>
+
+<!-- Non static require -->
+<script marko-init>
+  const x = require("a" + b);
+</script>
+
+<!-- Template helpers alias -->
+<script template-helpers>
+  var x = require("a");
+  var firstName = "John";
+</script>

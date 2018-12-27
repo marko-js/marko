@@ -23,7 +23,7 @@ class WhileStatement extends Node {
         writer.write(test);
         writer.write(") ");
 
-        writer.write(body);
+        writer.writeBlock(body);
 
         writer.write("\n");
     }
