@@ -22,10 +22,10 @@ module.exports = function migrator(oldNode, context) {
     oldNode.removeAttribute("into");
     oldNode.removeAttribute("value");
 
-    const newNode = builder.htmlElement("@" + name, oldNode.getAttributes());
+    const newNode = builder.htmlElement("@" + name, attributes);
 
     if (value) {
-        newNode.appendChild(context.builder.text(value));
+        newNode.appendChild(builder.text(value));
     }
 
     oldNode.moveChildrenTo(newNode);
