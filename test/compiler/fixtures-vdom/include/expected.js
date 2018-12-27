@@ -8,16 +8,15 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    include_target_template = require("./include-target.marko"),
+    module_IncludeTarget = require("./include-target.marko"),
+    IncludeTarget = module_IncludeTarget.default || module_IncludeTarget,
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
-    marko_loadTag = marko_helpers.t,
-    include_tag = marko_loadTag(require("marko/src/taglibs/core/include-tag"));
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  include_tag({
-      _target: include_target_template,
+  marko_dynamicTag(IncludeTarget, {
       foo: "bar"
     }, out, __component, "0");
 }

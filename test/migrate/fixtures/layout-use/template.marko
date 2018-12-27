@@ -1,0 +1,30 @@
+<!-- Import: basic -->
+<layout-use("./example-a.marko")>
+  <div/>
+</>
+
+<!-- Import: with attributes -->
+<layout-use("./example-b.marko", { a: 1 }) b=2>
+  <div/>
+</>
+
+<!-- Import: index -->
+<layout-use("./example-c/index.marko")>
+  <div/>
+</>
+
+<!-- Import: name conflict -->
+$ const ExampleD = undefined;
+<layout-use("./example-d.marko")>
+  <div/>
+</>
+
+<!-- Dynamic: basic -->
+<layout-use(input.x)>
+  <div/>
+</>
+
+<!-- Dynamic: with attributes -->
+<layout-use(input.x, { a: 1 }) b=2>
+  <div/>
+</>
