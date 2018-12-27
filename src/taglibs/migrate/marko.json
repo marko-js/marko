@@ -36,9 +36,51 @@
         "migrator": "./async-fragment-tag",
         "deprecated": true
     },
+    "<include>": {
+        "migrator": "./include-tag",
+        "autocomplete": [
+            {
+                "displayText": "include(<template>)",
+                "snippet": "include(${1:\"./target.marko\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
+    },
     "<layout-put>": {
         "migrator": "./layout-put-tag",
         "deprecated": true
+    },
+    "<layout-use>": {
+        "@*": {
+            "remove-dashes": true,
+            "type": "string"
+        },
+        "migrator": "./layout-use-tag.js",
+        "autocomplete": [
+            {
+                "snippet": "layout-use(\"${1:./path/to/template.marko}\")",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-use><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-use><code>"
+            }
+        ]
+    },
+    "<layout-placeholder>": {
+        "@name": "string",
+        "migrator": "./layout-placeholder-tag",
+        "autocomplete": [
+            {
+                "snippet": "layout-placeholder name=\"${1:name}\"",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-placeholder><code>"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-placeholder><code>"
+            }
+        ]
     },
     "<unless>": {
         "migrator": "./unless-tag",
@@ -112,5 +154,22 @@
         "preserve-name": true,
         "autocomplete": [],
         "deprecated": true
+    },
+    "@include": {
+        "autocomplete": [
+            {
+                "displayText": "include(<template>)",
+                "snippet": "include(${1:\"./target.marko\"})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "displayText": "include(data.renderBody)",
+                "snippet": "include(data.renderBody)",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            },
+            {
+                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+            }
+        ]
     }
 }

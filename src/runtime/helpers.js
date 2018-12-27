@@ -1,4 +1,5 @@
 "use strict";
+var complain = "MARKO_DEBUG" && require("complain");
 var removeDashes = require("../compiler/util/removeDashes");
 var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
@@ -157,6 +158,8 @@ var helpers = {
                         r[removeDashes(key)] = attrs[key];
                         return r;
                     }, {});
+                } else if (attrs == null) {
+                    attrs = {};
                 }
 
                 if (tag._ || tag.renderer || tag.render) {
@@ -167,6 +170,18 @@ var helpers = {
                 } else {
                     var render = (tag && tag.renderBody) || tag;
                     var isFn = typeof render === "function";
+
+                    if (render.safeHTML) {
+                        // eslint-disable-next-line no-constant-condition
+                        if ("MARKO_DEBUG") {
+                            complain(
+                                "Using `<include(x)/>` or the `<${dynamic}/>` tags with a `{ safeHTML: ... }` object is deprecated. Use the unescaped text placeholder syntax instead."
+                            );
+                        }
+
+                        out.write(tag.safeHTML);
+                        return;
+                    }
 
                     if (isFn) {
                         var flags = componentDef ? componentDef.___flags : 0;

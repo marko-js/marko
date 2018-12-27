@@ -17,17 +17,8 @@ const globals = [
 ];
 
 const browserExtensions = {
-    ".marko": function(module, filename) {
-        return module._compile(
-            compiler.compileFile(filename, {
-                writeToDisk: false,
-                output: "vdom",
-                browser: true,
-                meta: true
-            }),
-            filename
-        );
-    }
+    ".marko": compileMarkoModule,
+    ".html": compileMarkoModule
 };
 
 module.exports = function(dir, html, options) {
@@ -50,3 +41,15 @@ module.exports = function(dir, html, options) {
         }
     });
 };
+
+function compileMarkoModule(module, filename) {
+    return module._compile(
+        compiler.compileFile(filename, {
+            writeToDisk: false,
+            output: "vdom",
+            browser: true,
+            meta: true
+        }),
+        filename
+    );
+}
