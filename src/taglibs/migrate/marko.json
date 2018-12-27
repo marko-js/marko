@@ -36,6 +36,10 @@
         "migrator": "./async-fragment-tag",
         "deprecated": true
     },
+    "<layout-put>": {
+        "migrator": "./layout-put-tag",
+        "deprecated": true
+    },
     "@w-on*": {
         "pattern": true,
         "type": "string",
