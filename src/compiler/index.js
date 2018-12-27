@@ -8,7 +8,6 @@ var Builder = require("./Builder");
 var extend = require("raptor-util/extend");
 var CompileContext = require("./CompileContext");
 var globalConfig = require("./config");
-var InlineCompiler = require("./InlineCompiler");
 var ok = require("assert").ok;
 var fs = require("fs");
 var taglibLoader = require("./taglib-loader");
@@ -164,22 +163,6 @@ function compileFileForBrowser(filename, options, callback) {
     return compileFile(filename, options, callback);
 }
 
-function createInlineCompiler(filename, userOptions) {
-    registerCoreTaglibs();
-
-    var options = {};
-
-    extend(options, globalConfig);
-
-    if (userOptions) {
-        extend(options, userOptions);
-    }
-
-    var compiler = defaultCompiler;
-    var context = new CompileContext("", filename, compiler.builder, options);
-    return new InlineCompiler(context, compiler);
-}
-
 function checkUpToDate(/*templateFile, templateJsFile*/) {
     return false; // TODO Implement checkUpToDate
 }
@@ -252,7 +235,6 @@ exports.compileForBrowser = compileForBrowser;
 exports.compileFileForBrowser = compileFileForBrowser;
 exports.parseRaw = parseRaw;
 exports.parse = parse;
-exports.createInlineCompiler = createInlineCompiler;
 
 exports.checkUpToDate = checkUpToDate;
 exports.getLastModified = getLastModified;
