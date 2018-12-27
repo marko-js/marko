@@ -15,16 +15,14 @@ module.exports = function migrator(oldNode, context) {
         return oldNode;
     }
 
+    const builder = context.builder;
     const name = oldNode.getAttributeValue("into").value;
     const value = oldNode.getAttributeValue("value");
 
     oldNode.removeAttribute("into");
     oldNode.removeAttribute("value");
 
-    const newNode = context.createNodeForEl(
-        "@" + name,
-        oldNode.getAttributes()
-    );
+    const newNode = builder.htmlElement("@" + name, oldNode.getAttributes());
 
     if (value) {
         newNode.appendChild(context.builder.text(value));
