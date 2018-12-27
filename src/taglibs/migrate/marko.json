@@ -40,6 +40,10 @@
         "migrator": "./layout-put-tag",
         "deprecated": true
     },
+    "<unless>": {
+        "migrator": "./unless-tag",
+        "deprecated": true
+    },
     "@w-on*": {
         "pattern": true,
         "type": "string",

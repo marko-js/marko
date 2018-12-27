@@ -168,18 +168,6 @@
             "ignoreAttributes": true
         }
     },
-    "<unless>": {
-        "node-factory": "./unless-tag",
-        "autocomplete": [
-            {
-                "snippet": "unless(${1:condition})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#unlesselse-ifelse"
-            }
-        ]
-    },
     "<while>": {
         "code-generator": "./while-tag",
         "autocomplete": [
@@ -272,14 +260,6 @@
                 },
                 {
                     "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-                }
-            ]
-        },
-        "@unless": {
-            "type": "statement",
-            "autocomplete": [
-                {
-                    "snippet": "unless(${1:condition})"
                 }
             ]
         },
