@@ -17,20 +17,6 @@
             }
         ]
     },
-    "<layout-put>": {
-        "@into": "string",
-        "@value": "string",
-        "transformer": "./put-tag",
-        "autocomplete": [
-            {
-                "snippet": "layout-put into=\"${1:name}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-put><code>"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/layout-taglib/#<code>&ltlayout-put><code>"
-            }
-        ]
-    },
     "<layout-placeholder>": {
         "@name": "string",
         "transformer": "./placeholder-tag",

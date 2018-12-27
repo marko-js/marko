@@ -5,10 +5,6 @@ const path = require("path");
 
 function getComponentFiles(filename) {
     let ext = path.extname(filename);
-    if (ext === ".js") {
-        return null;
-    }
-
     let nameNoExt = path.basename(filename, ext).replace(/\[[^\]]*\]?$/, "");
 
     let isEntry = "index" === nameNoExt;

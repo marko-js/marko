@@ -178,11 +178,6 @@ class HtmlElementVDOM extends Node {
             };
 
             attributes.forEach((attr, i) => {
-                // deprecated
-                if (!attr.name && !attr.spread) {
-                    return;
-                }
-
                 if (attr.spread) {
                     let isFirstOfMany = i === 0 && attributes.length > 1;
                     if (explicitAttrs || isFirstOfMany) {
