@@ -82,6 +82,10 @@
             }
         ]
     },
+    "<script>": {
+        "@marko-init": "boolean",
+        "@template-helpers": "boolean"
+    },
     "@w-on*": {
         "pattern": true,
         "type": "string",

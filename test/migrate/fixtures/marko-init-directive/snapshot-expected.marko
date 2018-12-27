@@ -1,0 +1,45 @@
+<!-- test/migrate/fixtures/marko-init-directive/template.marko -->
+
+<!-- Basic -->
+import x from "a"
+
+static var firstName = "John";
+
+static var lastName = "Smith";
+
+static var fullName = firstName + lastName;
+
+static function test() {
+    return null;
+}
+
+static if (a) {
+    b();
+} else if (c) {
+    d();
+} else {
+    e();
+}
+
+static while (a) {
+    console.log("testing");
+
+    console.log("loop");
+}
+
+static for (var i = 0; i < len; i++) {
+    console.log("testing");
+
+    console.log("loop");
+}
+
+<!-- Not parseable -->
+static const { x } = require("a");
+
+<!-- Non static require -->
+static var x = require("a" + b);
+
+<!-- Template helpers alias -->
+import x from "a"
+
+static var firstName = "John";

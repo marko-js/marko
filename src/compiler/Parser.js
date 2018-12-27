@@ -45,9 +45,11 @@ function getParserStateForTag(parser, el, tagDef) {
                     });
                     return;
                 }
-            } else if (attrName === "template-helpers") {
-                return "static-text";
-            } else if (attrName === "marko-init") {
+            } else if (
+                attrName === "template-helpers" ||
+                attrName === "marko-init"
+            ) {
+                // deprecated
                 return "static-text";
             }
         }
