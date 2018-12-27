@@ -4,7 +4,12 @@
 
 ## 4.14.x
 
-### 4.14.7
+### 4.14.9
+
+- Add migrator for layout tags and include tag/directive. [#1206](https://github.com/marko-js/marko/pull/1206) & [#1204](https://github.com/marko-js/marko/pull/1204)
+- Add migrator for `<script template-helpers>` and `<script marko-init>`. [#1209](https://github.com/marko-js/marko/pull/1209)
+
+### 4.14.8
 
 - Add migrator from w-body to dynamic tag. [#1199](https://github.com/marko-js/marko/pull/1199)
 - Add migrator from dynamic attributes to spread attributes. [#1202](https://github.com/marko-js/marko/pull/1202)
