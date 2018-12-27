@@ -73,6 +73,12 @@
         "deprecated": true,
         "set-context-flag": "hasLegacyWidgetAttr"
     },
+    "@ref": {
+        "type": "string",
+        "preserve-name": true,
+        "autocomplete": [],
+        "deprecated": true
+    },
     "@w-preserve": {
         "type": "flag",
         "preserve-name": true,

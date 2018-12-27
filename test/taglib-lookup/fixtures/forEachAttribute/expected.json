@@ -14,7 +14,6 @@
     "w-bind",
     "w-config",
     "key",
-    "ref",
     "no-update",
     "no-update-body",
     "no-update-if",
