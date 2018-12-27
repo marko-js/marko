@@ -70,10 +70,7 @@ module.exports = function transform(el, context) {
             transformHelper.assignComponentId();
         }
 
-        if (
-            context.options.autoKeyEnabled !== false &&
-            context.inline !== true
-        ) {
+        if (context.options.autoKeyEnabled !== false) {
             transformHelper.assignComponentId();
         }
     }

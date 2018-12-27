@@ -64,10 +64,6 @@ const helpers = {
     classList: "cl",
     const: "const",
     createElement: "e",
-    createInlineTemplate: {
-        vdom: { module: "marko/runtime/vdom/helper-createInlineTemplate" },
-        html: { module: "marko/runtime/html/helper-createInlineTemplate" }
-    },
     defineComponent: {
         module: "marko/components/helpers",
         method: "c"
@@ -166,7 +162,6 @@ class CompileContext extends EventEmitter {
         this._macros = null;
         this._preserveWhitespace = null;
         this._preserveComments = null;
-        this.inline = this.options.inline === true;
         this.useMeta = this.options.meta !== false;
         this.markoModulePrefix = isDebug ? "marko/src/" : "marko/dist/";
 
@@ -187,10 +182,6 @@ class CompileContext extends EventEmitter {
         this._fingerprint = undefined;
         this._optimizers = undefined;
         this.isComponent = false;
-    }
-
-    setInline(isInline) {
-        this.inline = isInline === true;
     }
 
     getPosInfo(pos) {
