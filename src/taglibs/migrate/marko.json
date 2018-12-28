@@ -82,6 +82,10 @@
             }
         ]
     },
+    "<unless>": {
+        "migrator": "./unless-tag",
+        "deprecated": true
+    },
     "<script>": {
         "@marko-init": "boolean",
         "@template-helpers": "boolean"
