@@ -3,32 +3,20 @@ const printJS = require("./util/printJS");
 const commonTagMigrator = require("./all-tags");
 
 module.exports = function render(elNode, context) {
+    commonTagMigrator(elNode, context);
+    elNode.setTransformerApplied(commonTagMigrator);
     context.deprecate(
         "The <layout-placeholder> tag is deprecated. Please use the <${dynamic}> tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tags"
     );
 
-    commonTagMigrator(elNode, context);
-    elNode.setTransformerApplied(commonTagMigrator);
-
     const builder = context.builder;
     const name = elNode.getAttributeValue("name");
-    let target;
-
-    if (name.type === "Literal" && typeof name.value === "string") {
-        target = builder.memberExpression("input", removeDashes(name.value));
-    } else {
-        target = builder.memberExpression("input", name, true);
-    }
-
-    const dynamicTag = builder.htmlElement(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        true,
-        true
-    );
-
+    const isLiteralString =
+        name.type === "Literal" && typeof name.value === "string";
+    const target = isLiteralString
+        ? builder.memberExpression("input", removeDashes(name.value))
+        : builder.memberExpression("input", name, true);
+    const dynamicTag = builder.htmlElement();
     const targetStr = (dynamicTag.rawTagNameExpression = printJS(
         target,
         context
@@ -40,26 +28,11 @@ module.exports = function render(elNode, context) {
     }
 
     elNode.insertSiblingBefore(
-        builder.htmlElement(
-            "if",
-            undefined,
-            [dynamicTag],
-            targetStr,
-            context,
-            false,
-            false
-        )
+        builder.htmlElement("if", undefined, [dynamicTag], targetStr)
     );
 
     elNode.insertSiblingBefore(
-        builder.htmlElement(
-            "else",
-            undefined,
-            elNode.body,
-            undefined,
-            false,
-            false
-        )
+        builder.htmlElement("else", undefined, elNode.body)
     );
 
     elNode.detach();
