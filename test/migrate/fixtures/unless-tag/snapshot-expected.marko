@@ -1,12 +1,11 @@
+<!-- test/migrate/fixtures/unless-tag/template.marko -->
+
 <if(!x)>
     <div/>
 </if>
 <if(!true)>
     <div/>
 </if>
-<if(!true sdsds)>
-    <div/>
-</if>
-<if(!x && y)>
+<if(!(x && y))>
     <div/>
 </if>

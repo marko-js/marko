@@ -1,9 +1,6 @@
 const printJS = require("./util/printJS");
 
 module.exports = function migrator(oldNode, context) {
-    if (oldNode.tagName !== "unless") {
-        return;
-    }
     const attributes = oldNode.attributes;
     const argument = oldNode.argument;
 
