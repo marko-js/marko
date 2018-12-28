@@ -1,7 +1,11 @@
 const isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
 const printJS = require("./util/printJS");
+const commonTagMigrator = require("./all-tags");
 
 module.exports = function nodeFactory(elNode, context) {
+    commonTagMigrator(elNode, context);
+    elNode.setTransformerApplied(commonTagMigrator);
+
     const attributes = elNode.attributes;
     const builder = context.builder;
     const firstChild = elNode.firstChild;

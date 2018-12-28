@@ -3,12 +3,11 @@ const printJS = require("./util/printJS");
 const commonTagMigrator = require("./all-tags");
 
 module.exports = function render(elNode, context) {
+    commonTagMigrator(elNode, context);
+    elNode.setTransformerApplied(commonTagMigrator);
     context.deprecate(
         "The <layout-use> tag is deprecated. Please use a combination of the <${dynamic}> tag and imports instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tags"
     );
-
-    commonTagMigrator(elNode, context);
-    elNode.setTransformerApplied(commonTagMigrator);
 
     const rawArg = elNode.argument;
     const attributes = elNode.attributes;
@@ -29,21 +28,11 @@ module.exports = function render(elNode, context) {
         attributes.unshift({ spread: true, value: arg });
     }
 
-    const dynamicTag = builder.htmlElement(
-        undefined,
-        attributes,
-        undefined,
-        undefined,
-        true,
-        true
-    );
-
-    if (target.type === "Literal") {
-        dynamicTag.rawTagNameExpression = importTag(target.value, context);
-    } else {
-        dynamicTag.rawTagNameExpression = printJS(target, context);
-    }
-
+    const dynamicTag = builder.htmlElement(undefined, attributes);
+    dynamicTag.rawTagNameExpression =
+        target.type === "Literal"
+            ? importTag(target.value, context)
+            : printJS(target, context);
     elNode.moveChildrenTo(dynamicTag);
     elNode.replaceWith(dynamicTag);
 };
