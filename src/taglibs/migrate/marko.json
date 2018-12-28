@@ -123,6 +123,11 @@
         "deprecated": true,
         "set-context-flag": "hasLegacyWidgetAttr"
     },
+    "@w-config": {
+        "type": "expression",
+        "preserve-name": true,
+        "deprecated": true
+    },
     "@ref": {
         "type": "string",
         "preserve-name": true,

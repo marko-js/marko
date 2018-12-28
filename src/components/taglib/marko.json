@@ -7,11 +7,6 @@
             "deprecated": true,
             "set-context-flag": "hasLegacyWidgetBind"
         },
-        "@w-config": {
-            "type": "expression",
-            "preserve-name": true,
-            "deprecated": true
-        },
         "@key": {
             "type": "string",
             "preserve-name": true,

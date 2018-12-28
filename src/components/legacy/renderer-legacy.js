@@ -25,9 +25,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             out.on("beginAsync", handleBeginAsync);
         }
 
-        var widgetConfig = input.widgetConfig;
         var widgetBody = input.renderBody;
         var widgetState = input.widgetState;
+        var widgetConfig = input.widgetConfig;
 
         var componentsContext = getComponentsContext(out);
         var globalComponentsContext = componentsContext.___globalContext;
@@ -107,8 +107,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             component.___updateQueued = true;
         }
 
-        component.$c = widgetConfig;
         component.state = widgetState;
+        component.widgetConfig = widgetConfig;
         component.___legacyBody =
             widgetBody || component.___legacyBody || w10NOOP;
 
@@ -128,9 +128,6 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         componentDef.___component = isFakeComponent ? null : component;
         componentDef.___isExisting = isExisting;
         componentDef.___isLegacy = true;
-        componentDef.c = function(widgetConfig) {
-            component.$c = widgetConfig;
-        };
 
         componentDef.t = function(typeName) {
             if (typeName) {
