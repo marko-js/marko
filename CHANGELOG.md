@@ -4,9 +4,14 @@
 
 ## 4.14.x
 
+### 4.14.12
+
+- Add migrator for `w-config` attribute. [#1214](https://github.com/marko-js/marko/pull/1214)
+- Add migrator for and deprecate `unless` tag/directive. [#1210](https://github.com/marko-js/marko/pull/1210)
+
 ### 4.14.11
 
-- Fix regression `w-body` tag. [#1213](https://github.com/marko-js/marko/pull/1213)
+- Fix regression with `w-body` tag. [#1213](https://github.com/marko-js/marko/pull/1213)
 
 ### 4.14.10
 
