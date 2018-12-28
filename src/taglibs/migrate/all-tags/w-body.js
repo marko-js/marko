@@ -18,11 +18,7 @@ module.exports = function migrate(el, context) {
         bodyValue,
         builder.identifier("renderBody")
     );
-    const condition = builder.binaryExpression(
-        builder.unaryExpression(renderBodyValue, "typeof", true),
-        "===",
-        builder.literal("function")
-    );
+    const condition = buildTypeOfFunction(renderBodyValue, context);
 
     dynamicTag.rawTagNameExpression = printJS(bodyValue, context);
 
@@ -35,7 +31,15 @@ module.exports = function migrate(el, context) {
             printJS(
                 isDefault
                     ? condition
-                    : builder.binaryExpression(bodyValue, "&&", condition),
+                    : builder.binaryExpression(
+                          bodyValue,
+                          "&&",
+                          builder.binaryExpression(
+                              buildTypeOfFunction(bodyValue, context),
+                              "||",
+                              condition
+                          )
+                      ),
                 context
             )
         ),
@@ -44,3 +48,12 @@ module.exports = function migrate(el, context) {
         ])
     ]);
 };
+
+function buildTypeOfFunction(node, context) {
+    const builder = context.builder;
+    return builder.binaryExpression(
+        builder.unaryExpression(node, "typeof", true),
+        "===",
+        builder.literal("function")
+    );
+}
