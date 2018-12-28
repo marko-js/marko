@@ -144,8 +144,10 @@ module.exports = function defineRenderer(renderingLogic) {
             // so that it is available to the widget tag
             if (widgetState) {
                 // eslint-disable-next-line no-constant-condition
-                if ("MARKO_DEBUG" && "widgetState" in templateData) {
-                    complain("Passing widgetState as input is deprecated.");
+                if ("MARKO_DEBUG") {
+                    if ("widgetState" in templateData) {
+                        complain("Passing widgetState as input is deprecated.");
+                    }
                 }
                 templateData.widgetState = widgetState;
             }
@@ -154,8 +156,12 @@ module.exports = function defineRenderer(renderingLogic) {
             }
             if (widgetConfig) {
                 // eslint-disable-next-line no-constant-condition
-                if ("MARKO_DEBUG" && "widgetConfig" in templateData) {
-                    complain("Passing widgetConfig as input is deprecated.");
+                if ("MARKO_DEBUG") {
+                    if ("widgetConfig" in templateData) {
+                        complain(
+                            "Passing widgetConfig as input is deprecated."
+                        );
+                    }
                 }
                 templateData.widgetConfig = widgetConfig;
             }
