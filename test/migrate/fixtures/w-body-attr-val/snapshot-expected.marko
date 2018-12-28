@@ -1,8 +1,14 @@
 <!-- test/migrate/fixtures/w-body-attr-val/template.marko -->
 
 <div>
-    <if(typeof input.title.renderBody === 'function')>
+    <if(input.title && ((typeof input.title === "function") || (typeof input.title.renderBody === "function")))>
         <${input.title}/>
     </if>
-    <else>${input.title.renderBody}</else>
+    <else>${input.title}</else>
+</div>
+<div>
+    <if((input.a ? input.b : input.c) && ((typeof (input.a ? input.b : input.c) === "function") || (typeof (input.a ? input.b : input.c).renderBody === "function")))>
+        <${input.a ? input.b : input.c}/>
+    </if>
+    <else>${input.a ? input.b : input.c}</else>
 </div>

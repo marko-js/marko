@@ -25,14 +25,7 @@ module.exports = function migrate(el, context) {
             );
             el.removeAttribute(name);
             el.wrapWith(
-                builder.htmlElement(
-                    name,
-                    undefined,
-                    [],
-                    attr.argument,
-                    false,
-                    false
-                )
+                builder.htmlElement(name, undefined, undefined, attr.argument)
             );
         }
     });

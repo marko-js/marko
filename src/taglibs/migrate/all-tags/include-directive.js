@@ -12,13 +12,6 @@ module.exports = function migrate(el, context) {
 
     el.removeAttribute("include");
     el.appendChild(
-        builder.htmlElement(
-            "include",
-            undefined,
-            [],
-            attr.argument,
-            false,
-            false
-        )
+        builder.htmlElement("include", undefined, undefined, attr.argument)
     );
 };

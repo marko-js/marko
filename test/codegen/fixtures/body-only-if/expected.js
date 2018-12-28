@@ -1,5 +1,5 @@
 if (true) {
-  if (!(!data.url)) {
+  if (!!data.url) {
     out.w("<a" +
       marko_attr("href", data.url) +
       ">");
@@ -7,7 +7,7 @@ if (true) {
 
   out.w("Hello World");
 
-  if (!(!data.url)) {
+  if (!!data.url) {
     out.w("</a>");
   }
 }

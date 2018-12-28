@@ -30,15 +30,7 @@ module.exports = function importTag(importPath, context) {
         i++;
     }
 
-    const importTag = builder.htmlElement(
-        "import",
-        undefined,
-        undefined,
-        context,
-        true,
-        true
-    );
-
+    const importTag = builder.htmlElement("import");
     importTag.tagString = `import ${identifier} from ${JSON.stringify(
         importPath
     )}`;
