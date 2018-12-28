@@ -60,15 +60,7 @@ module.exports = function renderCallToDynamicTag(ast, context) {
         );
     }
 
-    const el = builder.htmlElement(
-        undefined,
-        tagAttrs,
-        undefined,
-        undefined,
-        true,
-        true
-    );
-
+    const el = builder.htmlElement(undefined, tagAttrs);
     el.rawTagNameExpression = printJS(tagName, context);
     return el;
 };

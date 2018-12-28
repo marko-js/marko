@@ -81,9 +81,7 @@ module.exports = function migrator(el, context) {
                                     ? node.left
                                     : builder.negate(node.left),
                                 context
-                            ),
-                            false,
-                            false
+                            )
                         );
                         break;
                     case "FunctionCall":
@@ -101,9 +99,7 @@ module.exports = function migrator(el, context) {
                             "if",
                             undefined,
                             replaceScriptlets(node.body, context),
-                            printJS(node.test, context),
-                            false,
-                            false
+                            printJS(node.test, context)
                         );
                         break;
                     case "ElseIf":
@@ -111,19 +107,14 @@ module.exports = function migrator(el, context) {
                             "else-if",
                             undefined,
                             replaceScriptlets(node.body, context),
-                            printJS(node.test, context),
-                            false,
-                            false
+                            printJS(node.test, context)
                         );
                         break;
                     case "Else":
                         node = builder.htmlElement(
                             "else",
                             undefined,
-                            replaceScriptlets(node.body, context),
-                            undefined,
-                            false,
-                            false
+                            replaceScriptlets(node.body, context)
                         );
                         break;
                     case "ForStatement":
@@ -134,9 +125,7 @@ module.exports = function migrator(el, context) {
                             `${printJS(node.init, context)}; ${printJS(
                                 node.test,
                                 context
-                            )}; ${printJS(node.update, context)}`,
-                            false,
-                            false
+                            )}; ${printJS(node.update, context)}`
                         );
                         break;
                     case "WhileStatement":
@@ -144,9 +133,7 @@ module.exports = function migrator(el, context) {
                             "while",
                             undefined,
                             replaceScriptlets(node.body, context),
-                            printJS(node.test, context),
-                            false,
-                            false
+                            printJS(node.test, context)
                         );
                         break;
                     default:

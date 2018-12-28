@@ -5,7 +5,6 @@ const commonTagMigrator = require("./all-tags");
 module.exports = function migrator(elNode, context) {
     commonTagMigrator(elNode, context);
     elNode.setTransformerApplied(commonTagMigrator);
-
     context.deprecate(
         'The "<include>" tag is deprecated. Please use the "<${dynamic}/>" tag or regular text replacement instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-include-tag'
     );
@@ -31,50 +30,31 @@ module.exports = function migrator(elNode, context) {
         attributes.unshift({ spread: true, value: arg });
     }
 
-    const dynamicTag = builder.htmlElement(
-        undefined,
-        attributes,
-        undefined,
-        undefined,
-        true,
-        true
-    );
-
-    elNode.moveChildrenTo(dynamicTag);
+    const dynamicTag = builder.htmlElement(undefined, attributes, elNode.body);
 
     if (target.type === "Literal") {
         dynamicTag.rawTagNameExpression = importTag(target.value, context);
         elNode.replaceWith(dynamicTag);
-        return;
+    } else {
+        dynamicTag.rawTagNameExpression = printJS(target, context);
+        elNode.insertSiblingBefore(
+            builder.htmlElement(
+                "if",
+                undefined,
+                [builder.text(target)],
+                printJS(
+                    builder.binaryExpression(
+                        builder.unaryExpression(target, "typeof", true),
+                        "===",
+                        builder.literal("string")
+                    ),
+                    context
+                )
+            )
+        );
+        elNode.insertSiblingBefore(
+            builder.htmlElement("else", undefined, [dynamicTag])
+        );
+        elNode.detach();
     }
-
-    const targetStr = (dynamicTag.rawTagNameExpression = printJS(
-        target,
-        context
-    ));
-
-    elNode.insertSiblingBefore(
-        builder.htmlElement(
-            "if",
-            undefined,
-            [builder.text(target)],
-            `typeof ${targetStr} === 'string'`,
-            context,
-            false,
-            false
-        )
-    );
-
-    elNode.insertSiblingBefore(
-        builder.htmlElement(
-            "else",
-            undefined,
-            [dynamicTag],
-            undefined,
-            false,
-            false
-        )
-    );
-
-    elNode.detach();
 };

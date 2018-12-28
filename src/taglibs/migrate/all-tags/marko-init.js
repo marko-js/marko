@@ -72,15 +72,7 @@ module.exports = function migrate(el, context) {
 };
 
 function toStaticTag(node, context) {
-    const staticTag = context.builder.htmlElement(
-        "static",
-        undefined,
-        undefined,
-        context,
-        true,
-        true
-    );
-
+    const staticTag = context.builder.htmlElement("static");
     let jsStr = printJS(node, context).trim();
 
     if (
@@ -95,15 +87,7 @@ function toStaticTag(node, context) {
 }
 
 function toImportTag(id, from, context) {
-    const importTag = context.builder.htmlElement(
-        "import",
-        undefined,
-        undefined,
-        context,
-        true,
-        true
-    );
-
+    const importTag = context.builder.htmlElement("import");
     let importString = "import";
 
     if (id) {

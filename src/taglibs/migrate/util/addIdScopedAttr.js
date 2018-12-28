@@ -4,8 +4,11 @@ module.exports = function addIdScopedAttr(context, el, attrValue) {
         enter(node) {
             if (node.hasAttribute) {
                 if (
-                    node.hasAttribute("key") &&
-                    node.getAttributeValue("key").value == attrValue.value
+                    (node.hasAttribute("key") &&
+                        node.getAttributeValue("key").value ==
+                            attrValue.value) ||
+                    (node.hasAttribute("ref") &&
+                        node.getAttributeValue("ref").value == attrValue.value)
                 ) {
                     node.setAttributeValue("id:scoped", attrValue);
                 }

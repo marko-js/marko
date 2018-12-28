@@ -26,12 +26,6 @@
                 }
             ]
         },
-        "@ref": {
-            "type": "string",
-            "preserve-name": true,
-            "autocomplete": [],
-            "deprecated": true
-        },
         "@on*": {
             "pattern": true,
             "type": "statement",

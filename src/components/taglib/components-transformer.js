@@ -66,7 +66,7 @@ module.exports = function transform(el, context) {
     transformHelper.handleScopedAttrs();
 
     if (!tagDefinitionHasOverridingKeyAttribute(el, context)) {
-        if (el.hasAttribute("ref") || el.hasAttribute("key")) {
+        if (el.hasAttribute("key")) {
             transformHelper.assignComponentId();
         }
 

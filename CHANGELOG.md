@@ -4,6 +4,15 @@
 
 ## 4.14.x
 
+### 4.14.11
+
+- Fix regression `w-body` tag. [#1213](https://github.com/marko-js/marko/pull/1213)
+
+### 4.14.10
+
+- Add migrator for `ref` attribute. [#1207](https://github.com/marko-js/marko/pull/1207)
+- Fix regression with `var` tag and `w-body/include` tags. [#1212](https://github.com/marko-js/marko/pull/1212)
+
 ### 4.14.9
 
 - Add migrator for layout tags and include tag/directive. [#1206](https://github.com/marko-js/marko/pull/1206) & [#1204](https://github.com/marko-js/marko/pull/1204)
