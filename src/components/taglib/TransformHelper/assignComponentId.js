@@ -35,11 +35,6 @@ module.exports = function assignComponentId(isRepeated) {
     var isHtmlElement = el.type === "HtmlElement";
     var isCustomTag = el.type === "CustomTag";
 
-    // LEGACY -- Remove in Marko 5.0
-    if (!isCustomTag && el.tagName === "invoke") {
-        isCustomTag = true;
-    }
-
     if (!isCustomTag && !isHtmlElement) {
         return;
     }
@@ -47,12 +42,6 @@ module.exports = function assignComponentId(isRepeated) {
     if (el.hasAttribute("key")) {
         assignedKey = el.getAttributeValue("key");
         el.removeAttribute("key");
-    } else if (el.hasAttribute("ref")) {
-        context.deprecate(
-            'The "ref" attribute is deprecated. Please use "key" instead.'
-        );
-        assignedKey = el.getAttributeValue("ref");
-        el.removeAttribute("ref");
     }
 
     if (assignedKey) {
