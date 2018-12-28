@@ -71,20 +71,6 @@ module.exports = function handleLegacyBind() {
 
     // A component is bound to the el...
 
-    if (el.hasAttribute("w-config")) {
-        el.insertSiblingBefore(
-            builder.functionCall(
-                builder.memberExpression(
-                    builder.identifier("__component"),
-                    builder.identifier("c")
-                ),
-                [el.getAttributeValue("w-config")]
-            )
-        );
-
-        el.removeAttribute("w-config");
-    }
-
     let componentProps = {};
 
     let id = el.getAttributeValue("id");

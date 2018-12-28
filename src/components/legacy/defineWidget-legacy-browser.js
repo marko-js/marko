@@ -106,7 +106,7 @@ module.exports = function defineWidget(def, renderer) {
 
     proto.onMount = function() {
         var self = this;
-        var config = this.$c;
+        var config = this.widgetConfig;
         if (this.el) {
             Object.defineProperty(this.el, "__widget", {
                 get: function() {

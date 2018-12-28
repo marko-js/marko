@@ -45,6 +45,7 @@ if (shouldBuildTest) {
         babelExclude: ["*expected*.*", "input.js*"],
         exclude: [
             "/generated",
+            "**/node_modules/**",
             "*.marko.js",
             "*.skip",
             "*.generated.*",

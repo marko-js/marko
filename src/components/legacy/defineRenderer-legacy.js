@@ -1,3 +1,4 @@
+var complain = "MARKO_DEBUG" && require("complain");
 var marko = require("../../");
 var makeRenderable = require("../../runtime/renderable");
 var getComponentsContext = require("../ComponentsContext")
@@ -112,7 +113,7 @@ module.exports = function defineRenderer(renderingLogic) {
             } else if (component) {
                 widgetBody = component.___legacyBody;
                 widgetState = component.___rawState;
-                widgetConfig = component.$c;
+                widgetConfig = component.widgetConfig;
             }
 
             // Use getTemplateData(state, props, out) to get the template
@@ -142,12 +143,26 @@ module.exports = function defineRenderer(renderingLogic) {
             // If we have widget state then pass it to the template
             // so that it is available to the widget tag
             if (widgetState) {
+                // eslint-disable-next-line no-constant-condition
+                if ("MARKO_DEBUG") {
+                    if ("widgetState" in templateData) {
+                        complain("Passing widgetState as input is deprecated.");
+                    }
+                }
                 templateData.widgetState = widgetState;
             }
             if (widgetBody) {
                 templateData.renderBody = widgetBody;
             }
             if (widgetConfig) {
+                // eslint-disable-next-line no-constant-condition
+                if ("MARKO_DEBUG") {
+                    if ("widgetConfig" in templateData) {
+                        complain(
+                            "Passing widgetConfig as input is deprecated."
+                        );
+                    }
+                }
                 templateData.widgetConfig = widgetConfig;
             }
 
