@@ -1,0 +1,6 @@
+{
+  "fileNames": {
+    "test/migrate/fixtures/w-bind-prompt-y/index.js": "test/migrate/fixtures/w-bind-prompt-y/template.component.js"
+  },
+  "dependentPaths": {}
+}

@@ -83,7 +83,10 @@ module.exports = function migrate(el, context) {
                 .then(shouldMigrate => {
                     if (shouldMigrate) {
                         el.removeAttribute("w-bind");
-                        return helpers.run("componentFile", componentModule);
+                        return helpers.run("componentFile", {
+                            templateFile: context.filename,
+                            componentFile: componentModule.filename
+                        });
                     }
                 });
         }

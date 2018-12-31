@@ -8,29 +8,29 @@ import ExampleD_1 from "./example-d.marko"
 <!-- Import: basic -->
 <${ExampleA}>
     <div/>
-</${ExampleA}>
+</>
 <!-- Import: with attributes -->
 <${ExampleB} ...{
         a: 1
     } b=2>
     <div/>
-</${ExampleB}>
+</>
 <!-- Import: index -->
 <${ExampleC}>
     <div/>
-</${ExampleC}>
+</>
 <!-- Import: name conflict -->
 $ const ExampleD = undefined;
 <${ExampleD_1}>
     <div/>
-</${ExampleD_1}>
+</>
 <!-- Dynamic: basic -->
 <${input.x}>
     <div/>
-</${input.x}>
+</>
 <!-- Dynamic: with attributes -->
 <${input.x} ...{
         a: 1
     } b=2>
     <div/>
-</${input.x}>
+</>
