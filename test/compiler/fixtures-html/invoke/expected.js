@@ -12,8 +12,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   marko_dynamicTag(input, {
-      x: 1,
-      id: __component.elId("hi")
+      x: 1
     }, out, __component, "hi");
 }
 
