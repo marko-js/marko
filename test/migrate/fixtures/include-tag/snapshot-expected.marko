@@ -11,8 +11,8 @@ import ExampleE from "./example-e/index.marko"
 <${ExampleA}/>
 <!-- Import: with attributes -->
 <${ExampleB} ...{
-        a: 1
-    } b=2/>
+    a: 1
+} b=2/>
 <!-- Import: index -->
 <${ExampleC}/>
 <!-- Import: name conflict -->
@@ -23,19 +23,19 @@ $ const ExampleD = undefined;
     <div>Hi</div>
 </>
 <!-- Dynamic: basic -->
-<if(typeof input.x === 'string')>${input.x}</if>
+<if(typeof input.x === "string")>${input.x}</if>
 <else>
     <${input.x}/>
 </else>
 <!-- Dynamic: with attributes -->
-<if(typeof input.x === 'string')>${input.x}</if>
+<if(typeof input.x === "string")>${input.x}</if>
 <else>
     <${input.x} ...{
-            a: 1
-        } b=2/>
+        a: 1
+    } b=2/>
 </else>
 <!-- Dynamic: with body -->
-<if(typeof input.x === 'string')>${input.x}</if>
+<if(typeof input.x === "string")>${input.x}</if>
 <else>
     <${input.x}>
         <div>Hi</div>
@@ -44,10 +44,10 @@ $ const ExampleD = undefined;
 <!-- Directive -->
 <div>
     <span/>
-    <if(typeof x === 'string')>${x}</if>
+    <if(typeof x === "string")>${x}</if>
     <else>
         <${x} ...{
-                a: 1
-            }/>
+            a: 1
+        }/>
     </else>
 </div>
