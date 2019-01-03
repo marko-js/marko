@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.13
+
+- Support file name migrations with Marko migrate. [#1216](https://github.com/marko-js/marko/pull/1216)
+- Skip `id:scoped` when migrating w-id for custom tags. [#1217](https://github.com/marko-js/marko/pull/1217)
+
 ### 4.14.12
 
 - Add migrator for `w-config` attribute. [#1214](https://github.com/marko-js/marko/pull/1214)
