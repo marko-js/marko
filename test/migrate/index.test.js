@@ -41,7 +41,7 @@ if (!/^v6\..*/.test(process.version)) {
                     return currentPrompt.answer;
                 }
             }).then(outputs => {
-                const byExtension = Object.entries(outputs)
+                const byExtension = Object.entries(outputs.fileContents)
                     .sort(([a], [b]) => a.localeCompare(b))
                     .reduce((r, [file, source]) => {
                         const ext = path.extname(file);
@@ -54,6 +54,29 @@ if (!/^v6\..*/.test(process.version)) {
                         );
                         return r;
                     }, {});
+
+                if (
+                    !isEmpty(outputs.fileNames) ||
+                    !isEmpty(outputs.dependentPaths)
+                ) {
+                    snapshot(
+                        JSON.stringify(
+                            {
+                                fileNames: outputs.fileNames,
+                                dependentPaths: outputs.dependentPaths
+                            },
+                            null,
+                            2
+                        ).replace(
+                            /"(\/[^"]+)"/g,
+                            (_, file) => `"${path.relative(CWD, file)}"`
+                        ),
+                        {
+                            ext: ".json",
+                            name: "updated-path-snapshot"
+                        }
+                    );
+                }
 
                 Object.entries(byExtension).forEach(([ext, files]) => {
                     snapshot(files.join("\n\n"), {
@@ -76,4 +99,12 @@ function toComment(ext, str) {
         default:
             return `# ${str}`;
     }
+}
+
+function isEmpty(obj) {
+    for (const _ in obj) {
+        return false;
+    }
+
+    return true;
 }
