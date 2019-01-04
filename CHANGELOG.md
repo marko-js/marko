@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.14
+
+- Fix regression with `eval`ing class names in debug mode. [#1218](https://github.com/marko-js/marko/pull/1218)
+
 ### 4.14.13
 
 - Support file name migrations with Marko migrate. [#1216](https://github.com/marko-js/marko/pull/1216)
