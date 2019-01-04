@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.15
+
+- Improve migrating `widget` references to `component` in attributes. [#1220](https://github.com/marko-js/marko/pull/1220)
+
 ### 4.14.14
 
 - Fix regression with `eval`ing class names in debug mode. [#1218](https://github.com/marko-js/marko/pull/1218)
