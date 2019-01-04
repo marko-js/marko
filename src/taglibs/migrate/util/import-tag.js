@@ -42,6 +42,8 @@ module.exports = function importTag(importPath, context) {
         context.root.prependChild(importTag);
     }
 
+    migrateImports.identifiers[identifier] = true;
+    migrateImports.paths[importPath] = identifier;
     context._lastMigrateImport = importTag;
     return identifier;
 };

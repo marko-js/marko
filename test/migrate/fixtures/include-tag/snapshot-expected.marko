@@ -1,6 +1,5 @@
 <!-- test/migrate/fixtures/include-tag/template.marko -->
 
-<!-- test/migrate/fixtures/include-tag/template.marko -->
 import ExampleA from "./example-a.marko"
 import ExampleB from "./example-b.marko"
 import ExampleC from "./example-c/index.marko"
@@ -9,6 +8,8 @@ import ExampleE from "./example-e/index.marko"
 
 <!-- Import: basic -->
 <${ExampleA}/>
+<!-- Import: duplicated -->
+<${ExampleA} x=1/>
 <!-- Import: with attributes -->
 <${ExampleB} ...{
     a: 1

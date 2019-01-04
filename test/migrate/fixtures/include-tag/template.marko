@@ -1,52 +1,27 @@
-<!-- test/migrate/fixtures/include-tag/template.marko -->
-
-import ExampleA from "./example-a.marko"
-import ExampleB from "./example-b.marko"
-import ExampleC from "./example-c/index.marko"
-import ExampleD_1 from "./example-d.marko"
-import ExampleE from "./example-e/index.marko"
-
 <!-- Import: basic -->
-<${ExampleA}/>
+<include("./example-a.marko")/>
+<!-- Import: duplicated -->
+<include("./example-a.marko") x=1/>
 <!-- Import: with attributes -->
-<${ExampleB} ...{
-        a: 1
-    } b=2/>
+<include("./example-b.marko") ...{ a: 1 } b=2/>
 <!-- Import: index -->
-<${ExampleC}/>
+<include("./example-c/index.marko")/>
 <!-- Import: name conflict -->
 $ const ExampleD = undefined;
-<${ExampleD_1}/>
+<include("./example-d.marko")/>
 <!-- Import: with body -->
-<${ExampleE}>
+<include("./example-e/index.marko")>
     <div>Hi</div>
-</${ExampleE}>
+</include>
 <!-- Dynamic: basic -->
-<if(typeof input.x === 'string')>${input.x}</if>
-<else>
-    <${input.x}/>
-</else>
+<include(input.x)/>
 <!-- Dynamic: with attributes -->
-<if(typeof input.x === 'string')>${input.x}</if>
-<else>
-    <${input.x} ...{
-            a: 1
-        } b=2/>
-</else>
+<include(input.x) ...{ a: 1 } b=2/>
 <!-- Dynamic: with body -->
-<if(typeof input.x === 'string')>${input.x}</if>
-<else>
-    <${input.x}>
-        <div>Hi</div>
-    </${input.x}>
-</else>
+<include(input.x)>
+    <div>Hi</div>
+</include>
 <!-- Directive -->
-<div>
+<div include(x, { a: 1 })>
     <span/>
-    <if(typeof x === 'string')>${x}</if>
-    <else>
-        <${x} ...{
-                a: 1
-            }/>
-    </else>
 </div>
