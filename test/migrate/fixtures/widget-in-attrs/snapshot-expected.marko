@@ -1,0 +1,6 @@
+<!-- test/migrate/fixtures/widget-in-attrs/template.marko -->
+
+<div aria-describedby=(a && component.id)/>
+<div aria-describedby=(a && component.elId("x"))/>
+<div aria-describedby=(a && component.anything())/>
+$ var widgetId = a ? component.id : component.elId("b");
