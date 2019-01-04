@@ -76,16 +76,21 @@ function getComponentClass(typeName, isLegacy) {
         });
         className = className
             .replace(/\$\d+\.\d+\.\d+$/, "")
-            .replace(/[^\w]+/g, "_");
+            .replace(/^[^a-z$_]/i, "_$&")
+            .replace(/[^0-9a-z$_]+/gi, "_");
         className = className[0].toUpperCase() + className.slice(1);
         // eslint-disable-next-line no-unused-vars
-        var OldComponentClass = ComponentClass;
-        eval(
-            "ComponentClass = function " +
-                className +
-                "(id, doc) { OldComponentClass.call(this, id, doc); }"
-        );
-        ComponentClass.prototype = OldComponentClass.prototype;
+        try {
+            var OldComponentClass = ComponentClass;
+            eval(
+                "ComponentClass = function " +
+                    className +
+                    "(id, doc) { OldComponentClass.call(this, id, doc); }"
+            );
+            ComponentClass.prototype = OldComponentClass.prototype;
+        } catch (e) {
+            /** ignore error */
+        }
     }
 
     componentTypes[typeName] = ComponentClass;
