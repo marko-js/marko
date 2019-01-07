@@ -18,7 +18,7 @@ class TemplateLiteral extends Node {
         for (let i = 0; i <= this.quasis.length; i++) {
             const quasi = this.quasis[i];
             const expr = this.expressions[i];
-            if (quasi || (i === 0 && !this.nonstandard)) {
+            if (quasi || (i === 0 && !this.nonstandard && !this.quasis[1])) {
                 parts.push(builder.literal(quasi));
             }
             if (expr) {

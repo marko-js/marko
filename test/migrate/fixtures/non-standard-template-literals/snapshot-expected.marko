@@ -1,0 +1,18 @@
+<!-- test/migrate/fixtures/non-standard-template-literals/template.marko -->
+
+<div class=`${a}`/>
+<div class=`${a} ${b}`/>
+<div class={
+    a: b
+}/>
+<div class={
+    a: `${b} ${c}`
+}/>
+<test value=a/>
+<test value=`${a} ${b}`/>
+<test value={
+    a: b
+}/>
+<test value={
+    a: `${b} ${c}`
+}/>
