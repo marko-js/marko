@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.16
+
+- Add migration for non-standard template literals. [#1224](https://github.com/marko-js/marko/pull/1224)
+- Fix regression with dynamic attribute migration. [#1223](https://github.com/marko-js/marko/pull/1223)
+
 ### 4.14.15
 
 - Improve migrating `widget` references to `component` in attributes. [#1220](https://github.com/marko-js/marko/pull/1220)
