@@ -1,4 +1,5 @@
 const addIdScopedAttr = require("../util/addIdScopedAttr");
+const findBoundParent = require("../util/findBoundParent");
 
 module.exports = function migrate(el, context) {
     if (
@@ -15,9 +16,16 @@ module.exports = function migrate(el, context) {
                 return;
             }
 
-            context.deprecate(
-                `The "w-for", "for-key" and "for-ref" attributes are deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
-            );
+            if (name === "w-for" && !findBoundParent(el)) {
+                context.deprecate(
+                    `Using "w-for" in a template without a "w-bind" is deprecated. The "${name}" attribute is also deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                );
+                context.setMigrationFlag("legacyWidgetAttrsWithoutBind");
+            } else {
+                context.deprecate(
+                    `The "${name}" attribute is deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                );
+            }
 
             if (el.hasAttribute("for:scoped")) {
                 context.addError(

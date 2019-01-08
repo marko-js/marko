@@ -7,5 +7,3 @@ module.exports = function(helpers) {
 
     expect(el.tagName).to.eql("BUTTON");
 };
-
-module.exports.fails = "Issue #1219";
