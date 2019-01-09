@@ -301,28 +301,71 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 
 ### `<macro>`
 
-Parameterized macros allow for reusable fragments within an HTML template.
-A macro can be defined using the `<macro>` directive.
+Macros allow for reusable fragments within an HTML template.
+A macro can be defined using the `<macro>` tag, with a `name` attribute.
 
 ```marko
-<macro greeting(name, count)>
-    Hello ${name}! You have ${count} new messages.
+<macro name="greeting">
+    <span>Welcome!</span>
 </macro>
 ```
 
-The above macro can then be invoked as part of any expression. The following
-sample template shows how to use macro functions inside expressions:
+The above macro can then be used as if it was a regular `<greeting>` tag.
 
 ```marko
-<macro greeting(name, count)>
-    Hello ${name}! You have ${count} new messages.
+<greeting/>
+<greeting/>
+```
+
+The output HTML would be the following:
+
+```html
+<span>Welcome!</span> <span>Welcome!</span>
+```
+
+Macros become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
+
+```marko
+<macro|{ name, count }| name="greeting">
+    <span>Hello ${name}! You have ${count} new messages.</span>
 </macro>
+```
+
+This time the `<greeting>` macro is able to receive parameters from the outside, in this case `name` and `count`.
+
+```marko
+<greeting name="Frank" count=20/>
+```
+
+The output HTML would be the following:
+
+```html
+<span> Hello Frank! You have 10 new messages. </span>
+```
+
+Macros receive input similar to the root template, including a `renderBody` for displaying any provided body content.
+
+```marko
+<macro|{ renderBody }| name="special-heading">
+    <h1>
+        <${renderBody}/>!
+    </h1>
+</macro>
+
 <p>
-    <greeting("John", 10)/>
+    <special-heading>
+        Hello
+    </special-heading>
 </p>
+```
+
+The output HTML would be the following:
+
+```html
 <p>
-    <!-- Or, using named attributes: -->
-    <greeting name="Frank" count=20/>
+    <h1>
+        Hello!
+    </h1>
 </p>
 ```
 

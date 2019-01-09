@@ -395,7 +395,9 @@ class Node {
                 currentTextLiteral = null;
             }
 
-            isFirst = false;
+            if (isFirst && curChild.type !== "Scriptlet") {
+                isFirst = false;
+            }
         });
 
         if (currentTextLiteral) {

@@ -31,7 +31,6 @@ var UpdateExpression = require("./ast/UpdateExpression");
 var UnaryExpression = require("./ast/UnaryExpression");
 var MemberExpression = require("./ast/MemberExpression");
 var Code = require("./ast/Code");
-var InvokeMacro = require("./ast/InvokeMacro");
 var Macro = require("./ast/Macro");
 var ConditionalExpression = require("./ast/ConditionalExpression");
 var NewExpression = require("./ast/NewExpression");
@@ -329,14 +328,6 @@ class Builder {
         test = makeNode(test);
 
         return new If({ test, body, else: elseStatement });
-    }
-
-    invokeMacro(name, args, body) {
-        return new InvokeMacro({ name, args, body });
-    }
-
-    invokeMacroFromEl(el) {
-        return new InvokeMacro({ el });
     }
 
     literal(value) {
