@@ -145,6 +145,9 @@
     "<for>": {
         "migrator": "./for-tag"
     },
+    "<macro>": {
+        "migrator": "./macro-tag"
+    },
     "<layout-put>": {
         "migrator": "./layout-put-tag",
         "deprecated": true
