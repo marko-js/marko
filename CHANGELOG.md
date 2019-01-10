@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.17
+
+- Fixes [#1219](https://github.com/marko-js/marko/issues/1219) - transitive widget getEl and events [#1225](https://github.com/marko-js/marko/pull/1225)
+- Importing a marko template adds it to tags meta (fixes regression with `<include>` tag) [#1226](https://github.com/marko-js/marko/pull/1226)
+
 ### 4.14.16
 
 - Add migration for non-standard template literals. [#1224](https://github.com/marko-js/marko/pull/1224)
