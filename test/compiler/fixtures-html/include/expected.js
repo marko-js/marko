@@ -24,5 +24,8 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/marko-test$1.0.0/compiler/fixtures-html/include/template.marko"
+    id: "/marko-test$1.0.0/compiler/fixtures-html/include/template.marko",
+    tags: [
+      "./target.marko"
+    ]
   };
