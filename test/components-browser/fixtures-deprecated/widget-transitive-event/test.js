@@ -12,5 +12,3 @@ module.exports = function(helpers) {
 
     expect(window.transitiveHandled).to.eql(true);
 };
-
-module.exports.fails = "Issue #1219";

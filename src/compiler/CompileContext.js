@@ -232,6 +232,22 @@ class CompileContext extends EventEmitter {
         }
     }
 
+    setMigrationFlag(name) {
+        var el = this.migrationFlagEl;
+
+        if (!el.hasAttribute(name)) {
+            el.addAttribute({ name });
+        }
+    }
+
+    get migrationFlagEl() {
+        if (!this._mfe) {
+            this._mfe = this.builder.htmlElement("marko-migration-flags");
+            this.root.prependChild(this._mfe);
+        }
+        return this._mfe;
+    }
+
     pushData(key, data) {
         var dataStack = this._dataStacks[key];
         if (!dataStack) {

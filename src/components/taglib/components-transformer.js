@@ -18,10 +18,7 @@ module.exports = function transform(el, context) {
 
     if (el.type === "TemplateRoot") {
         transformHelper.handleRootNodes();
-        if (
-            !context.isFlagSet("hasLegacyWidgetBind") &&
-            context.isFlagSet("hasLegacyWidgetAttr")
-        ) {
+        if (context.isFlagSet("legacyWidgetAttrsWithoutBind")) {
             let builder = context.builder;
             let getWidgetFromOut = context.helper("getWidgetFromOut");
             el.prependChild(

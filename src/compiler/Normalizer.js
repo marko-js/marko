@@ -99,6 +99,14 @@ class Normalizer {
             return;
         }
 
+        if (elNode.tagName === "marko-migration-flags") {
+            elNode.attributes.forEach(attr => {
+                context.setFlag(attr.name);
+            });
+            elNode.detach();
+            return;
+        }
+
         var newNode = this.context.createNodeForEl({
             tagName: elNode.rawTagNameExpression
                 ? builder.parseExpression(elNode.rawTagNameExpression)
