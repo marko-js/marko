@@ -59,6 +59,7 @@ marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-html/auto-key-els/index.marko",
     component: "./",
     tags: [
+      "./foo.marko",
       "marko/src/components/taglib/preserve-tag"
     ]
   };

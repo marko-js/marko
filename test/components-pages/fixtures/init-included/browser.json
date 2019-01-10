@@ -1,0 +1,7 @@
+{
+    "dependencies": [
+        "require: ./components/app-foo",
+        "require: ./components/app-bar",
+        "require: ./components/app-baz"
+    ]
+}
