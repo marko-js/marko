@@ -1,3 +1,10 @@
-<macro test(stuff)>
-  <div/>
+<macro test(firstName, lastName)>
+  <div>
+    ${firstName} ${lastName}
+  </div>
 </macro>
+
+
+<test("John", "Smith")/>
+<test firstName="John" lastName="Smith"/>
+

@@ -14,7 +14,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  function macro_renderButton(color, out, renderBody) {
+  function macro_renderButton(out, macroInput) {
+    var color = macroInput.color
+
     out.w("<button" +
       marko_attr("data-marko", {
         onclick: __component.d("click", "handleColorClick", false, [
@@ -37,7 +39,9 @@ function render(input, out, __component, component, state) {
     ], function(color) {
     var keyscope__3 = "[" + ((for__2++) + "]");
 
-    macro_renderButton(color, out);
+    macro_renderButton(out, {
+        color: color
+      });
   });
 
   out.w("</div>");

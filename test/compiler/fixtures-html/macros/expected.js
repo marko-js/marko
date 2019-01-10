@@ -12,7 +12,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  function macro_renderTree(node, out, renderBody) {
+  function macro_renderTree(out, macroInput) {
+    var node = macroInput.node
+
     out.w("Name: " +
       marko_escapeXml(node.name) +
       " Children: ");
@@ -27,7 +29,9 @@ function render(input, out, __component, component, state) {
 
         out.w("<li>");
 
-        macro_renderTree(child, out);
+        macro_renderTree(out, {
+            node: child
+          });
 
         out.w("</li>");
       });
@@ -36,7 +40,9 @@ function render(input, out, __component, component, state) {
     }
   }
 
-  macro_renderTree(input.node, out);
+  macro_renderTree(out, {
+      node: input.node
+    });
 }
 
 marko_template._ = marko_renderer(render, {

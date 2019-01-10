@@ -110,15 +110,6 @@
         ],
         "no-output": true
     },
-    "<macro-body>": {
-        "code-generator": "./macro-body-tag",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
-                "openTagOnly": true
-            }
-        ]
-    },
     "<marko>": {
         "code-generator": "./marko-tag",
         "open-tag-only": true,
