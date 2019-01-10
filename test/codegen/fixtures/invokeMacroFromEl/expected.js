@@ -1,6 +1,9 @@
-function macro_greeting(name, age, out, renderBody) {
+function macro_greeting(out, macroInput) {
   out.w("Hello " +
-    marko_escapeXml(name));
+    marko_escapeXml(macroInput.name));
 }
 
-macro_greeting("Frank", 10, out);
+macro_greeting(out, {
+    name: "Frank",
+    age: 10
+  });

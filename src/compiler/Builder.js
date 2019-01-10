@@ -336,10 +336,6 @@ class Builder {
         return new If({ test, body, else: elseStatement });
     }
 
-    invokeMacro(name, args, body) {
-        return new InvokeMacro({ name, args, body });
-    }
-
     invokeMacroFromEl(el) {
         return new InvokeMacro({ el });
     }

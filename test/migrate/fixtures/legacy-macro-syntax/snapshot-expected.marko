@@ -1,5 +1,9 @@
 <!-- test/migrate/fixtures/legacy-macro-syntax/template.marko -->
 
-<macro(stuff) name="test">
-    <div/>
+<macro(macroInput) name="test">
+    $ var firstName = macroInput.firstName;
+    $ var lastName = macroInput.lastName;
+    <div>${firstName} ${lastName}</div>
 </macro>
+<test firstName="John" lastName="Smith"/>
+<test firstName="John" lastName="Smith"/>

@@ -52,6 +52,10 @@
     "<macro>": {
         "migrator": "./macro-tag"
     },
+    "<macro-body>": {
+        "migrator": "./macro-body-tag",
+        "deprecated": true
+    },
     "<layout-put>": {
         "migrator": "./layout-put-tag",
         "deprecated": true

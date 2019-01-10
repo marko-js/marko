@@ -690,12 +690,12 @@ class CompileContext extends EventEmitter {
         return this._macros.getRegisteredMacro(name);
     }
 
-    registerMacro(name, params) {
+    registerMacro(name) {
         if (!this._macros) {
             this._macros = macros.createMacrosContext();
         }
 
-        return this._macros.registerMacro(name, params);
+        return this._macros.registerMacro(name);
     }
 
     importTemplate(relativePath, varName) {

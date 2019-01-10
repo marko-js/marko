@@ -29,12 +29,11 @@ module.exports = function nodeFactory(elNode, context) {
     var argument = elNode.argument;
     var params;
     if (argument) {
-        params = argument.split(/\s*,\s*/);
+        params = builder.parseJavaScriptArgs(argument);
     } else {
         params = [];
     }
 
-    context.registerMacro(macroName, params);
-
+    context.registerMacro(macroName);
     return builder.macro(macroName, params, elNode.body);
 };

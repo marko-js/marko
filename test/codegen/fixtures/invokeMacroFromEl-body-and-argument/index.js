@@ -4,10 +4,15 @@ module.exports = function(builder) {
     return builder.program([
         builder.macro(
             "greeting",
-            ["name", "age"],
+            ["macroInput"],
             [
                 builder.text(builder.literal("Hello ")),
-                builder.text(builder.identifier("name"))
+                builder.text(
+                    builder.memberExpression(
+                        builder.identifier("macroInput"),
+                        builder.identifier("name")
+                    )
+                )
             ]
         ),
         builder.invokeMacroFromEl(
