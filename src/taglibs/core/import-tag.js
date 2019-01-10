@@ -1,8 +1,11 @@
 var isValidJavaScriptVarName = require("../../compiler/util/isValidJavaScriptVarName");
 var parseImport = require("./util/parseImport");
+const resolveFrom = require("resolve-from");
+const path = require("path");
 
 module.exports = function codeGenerator(el, codegen) {
     var builder = codegen.builder;
+    var context = codegen.context;
     var args = parseImport(el.tagString);
     var vars = {};
 
@@ -20,6 +23,10 @@ module.exports = function codeGenerator(el, codegen) {
         if (arg.module) {
             var requireExpression = builder.require(builder.literal(arg.value));
             var moduleName = "module_" + varName;
+
+            if (isMarkoTemplate(arg.value, context)) {
+                context.pushMeta("tags", arg.value, true);
+            }
 
             if (varName) {
                 // saves identifier under a module alias.
@@ -63,3 +70,10 @@ module.exports = function codeGenerator(el, codegen) {
 
     return [];
 };
+
+function isMarkoTemplate(importPath, context) {
+    const absolutePath = resolveFrom(context.dirname, importPath);
+    if (absolutePath) {
+        return path.extname(absolutePath) === ".marko";
+    }
+}
