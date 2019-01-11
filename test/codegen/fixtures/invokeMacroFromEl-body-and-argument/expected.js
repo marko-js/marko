@@ -3,8 +3,8 @@ function macro_greeting(out, macroInput) {
     marko_escapeXml(macroInput.name));
 }
 
-macro_greeting(out, {
+macro_greeting(out, marko_merge({
     renderBody: function renderBody(out) {
       out.w("This is the body passed to the macro");
     }
-  });
+  }, "Frank"), 10);

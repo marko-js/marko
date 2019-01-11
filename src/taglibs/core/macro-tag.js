@@ -29,7 +29,7 @@ module.exports = function nodeFactory(elNode, context) {
     var argument = elNode.argument;
     var params;
     if (argument) {
-        params = builder.parseJavaScriptArgs(argument);
+        params = builder.parseJavaScriptParams(argument);
     } else {
         params = [];
     }

@@ -1,6 +1,7 @@
 "use strict";
 
 var Node = require("./Node");
+var merge = require("../util/mergeProps");
 
 class InvokeMacro extends Node {
     constructor(def) {
@@ -34,6 +35,9 @@ class InvokeMacro extends Node {
             return;
         }
 
+        var args = el.argument
+            ? codegen.builder.parseJavaScriptArgs(el.argument)
+            : [];
         var inputObjectExpression = builder.objectExpression([]);
         var properties = inputObjectExpression.properties;
         el.forEachAttribute(attr => {
@@ -42,15 +46,23 @@ class InvokeMacro extends Node {
         });
 
         if (body && body.length) {
-            properties.push(
+            inputObjectExpression.properties.push(
                 builder.property("renderBody", builder.renderBodyFunction(body))
             );
         }
 
-        return builder.functionCall(builder.identifier(macroDef.functionName), [
-            builder.identifier("out"),
-            inputObjectExpression
-        ]);
+        if (inputObjectExpression.properties.length) {
+            args[0] = args[0]
+                ? merge(args[0], inputObjectExpression, codegen.context)
+                : inputObjectExpression;
+        }
+
+        args.unshift(builder.identifier("out"));
+
+        return builder.functionCall(
+            builder.identifier(macroDef.functionName),
+            args
+        );
     }
 
     walk(walker) {

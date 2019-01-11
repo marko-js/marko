@@ -1,10 +1,10 @@
-<macro({ title, renderBody }) name="alert">
+<macro alert(title)>
     <div>
         <h1>
             ${title}
         </h1>
         <p>
-            <${renderBody}/>
+            <macro-body/>
         </p>
     </div>
 </macro>
