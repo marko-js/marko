@@ -100,7 +100,7 @@
         "node-factory": "./macro-tag",
         "autocomplete": [
             {
-                "displayText": "macro(<parmas>) name=\"<name>\"",
+                "displayText": "macro(<params>) name=\"<name>\"",
                 "snippet": "macro ${1:name}(${2:param1, param2})",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             },
