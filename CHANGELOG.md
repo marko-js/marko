@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.18
+
+- Fixes [#1230](https://github.com/marko-js/marko/issues/1230) - regression with include tag migration outputing invalid identifiers [#1231](https://github.com/marko-js/marko/pull/1231)
+- Add migration for legacy nested tag syntax [#1129](https://github.com/marko-js/marko/pull/1129)
+
 ### 4.14.17
 
 - Fixes [#1219](https://github.com/marko-js/marko/issues/1219) - transitive widget getEl and events [#1225](https://github.com/marko-js/marko/pull/1225)
