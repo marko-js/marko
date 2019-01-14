@@ -5,6 +5,9 @@ import ExampleB from "./example-b.marko"
 import ExampleC from "./example-c/index.marko"
 import ExampleD_1 from "./example-d.marko"
 import ExampleE from "./example-e/index.marko"
+import ExampleF from "../../../hello/example-f.marko"
+import ExampleF_1 from "../../../hello2/example-f.marko"
+import ExampleH from "../../../hello/example-h/index.marko"
 
 <!-- Import: basic -->
 <${ExampleA}/>
@@ -23,6 +26,12 @@ $ const ExampleD = undefined;
 <${ExampleE}>
     <div>Hi</div>
 </>
+<!-- Import: complex path -->
+<${ExampleF}/>
+<!-- Import: complex path name conflict -->
+<${ExampleF_1}/>
+<!-- Import: complex path index -->
+<${ExampleH}/>
 <!-- Dynamic: basic -->
 <if(typeof input.x === "string")>${input.x}</if>
 <else>
