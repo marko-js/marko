@@ -1,5 +1,5 @@
 const camelCase = require("camelcase");
-const nameReg = /\/([^/]+?)(?:\/index)?(?:\..*)?$/;
+const nameReg = /\/([^/]+?)(?:\/index)?(?:\.[^/]+)?$/;
 
 module.exports = function importTag(importPath, context) {
     const builder = context.builder;
@@ -13,13 +13,14 @@ module.exports = function importTag(importPath, context) {
     }
 
     const match = nameReg.exec(importPath);
+
+    // Create a camelcased tagName identifier based off of the matched file name.
+    // Replace any invalid JS chars (We don't need to worry about reserved words because of camelcase).
     const requestedTagName = camelCase((match && match[1]) || "Template", {
         pascalCase: true
-    });
+    }).replace(/^[^$A-Z_]|[^0-9A-Z_$]/gi, "_");
 
-    // Replace any invalid JS chars.
-    // We don't need to worry about reserved words because of camelcase.
-    let identifier = requestedTagName.replace(/^[^$A-Z_]|[^0-9A-Z_$]/gi, "_");
+    let identifier = requestedTagName;
     let i = 1;
 
     while (

@@ -13,6 +13,12 @@ $ const ExampleD = undefined;
 <include("./example-e/index.marko")>
     <div>Hi</div>
 </include>
+<!-- Import: complex path -->
+<include("../../../hello/example-f.marko")/>
+<!-- Import: complex path name conflict -->
+<include("../../../hello2/example-f.marko")/>
+<!-- Import: complex path index -->
+<include("../../../hello/example-h/index.marko")/>
 <!-- Dynamic: basic -->
 <include(input.x)/>
 <!-- Dynamic: with attributes -->
