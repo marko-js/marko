@@ -49,6 +49,10 @@ class TemplateLiteral extends Node {
         writer.write(quote + code + quote);
         writer.write("\n");
     }
+
+    walk(walker) {
+        this.expressions = walker.walk(this.expressions);
+    }
 }
 
 function escapeQuasi(quasi, quote) {
