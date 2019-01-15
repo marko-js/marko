@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.19
+
+- Fixes walking into some AST nodes which was causing some migrations to not be as effective [#1233](https://github.com/marko-js/marko/pull/1233)
+
 ### 4.14.18
 
 - Fixes [#1230](https://github.com/marko-js/marko/issues/1230) - regression with include tag migration outputing invalid identifiers [#1231](https://github.com/marko-js/marko/pull/1231)
