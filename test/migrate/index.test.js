@@ -26,6 +26,11 @@ if (!/^v6\..*/.test(process.version)) {
         }
 
         test(() => {
+            const outputs = {
+                fileContents: {},
+                fileNames: {},
+                dependentPaths: {}
+            };
             return migrate({
                 dir: __dirname,
                 files: [resolve("template.marko")],
@@ -39,8 +44,17 @@ if (!/^v6\..*/.test(process.version)) {
                     const currentPrompt = expectedPrompts.shift();
                     chai.expect(opts.message).to.eql(currentPrompt.question);
                     return currentPrompt.answer;
+                },
+                onWriteFile(file, source) {
+                    outputs.fileContents[file] = source;
+                },
+                onRenameFile(from, to) {
+                    outputs.fileNames[from] = to;
+                },
+                onUpdateDependents(from, to) {
+                    outputs.dependentPaths[from] = to;
                 }
-            }).then(outputs => {
+            }).then(() => {
                 const byExtension = Object.entries(outputs.fileContents)
                     .sort(([a], [b]) => a.localeCompare(b))
                     .reduce((r, [file, source]) => {
