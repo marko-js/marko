@@ -22,12 +22,16 @@ class Scriptlet extends Node {
             return;
         }
 
-        if (typeof code === "string") {
+        if (typeof code === "string" && this.block) {
             code = adjustIndent(code, writer.currentIndent);
         }
 
         writer.write(code);
         writer.write("\n");
+    }
+
+    walk(walker) {
+        this.code = walker.walk(this.code);
     }
 }
 

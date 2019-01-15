@@ -63,7 +63,7 @@ class Vars extends Node {
     }
 
     walk(walker) {
-        this.argument = walker.walk(this.argument);
+        this.declarations = walker.walk(this.declarations);
     }
 
     /**
