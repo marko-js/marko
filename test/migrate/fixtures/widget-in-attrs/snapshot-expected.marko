@@ -3,4 +3,5 @@
 <div aria-describedby=(a && component.id)/>
 <div aria-describedby=(a && component.elId("x"))/>
 <div aria-describedby=(a && component.anything())/>
+<div aria-describedby=`${a} ${component.id}`/>
 $ var widgetId = a ? component.id : component.elId("b");
