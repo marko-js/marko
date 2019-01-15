@@ -6,7 +6,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_dynamicTag = marko_helpers.d;
+    marko_dynamicTag = marko_helpers.d,
+    marko_forRange = require("marko/src/runtime/helper-forRange");
 
 function render(input, out, __component, component, state) {
   var data = input;
@@ -53,11 +54,11 @@ function render(input, out, __component, component, state) {
 
   var for__13 = 0;
 
-  for (let i = 0; i < 10; i++) {
+  marko_forRange(0, 9, null, function(i) {
     var keyscope__14 = "[" + ((for__13++) + "]");
 
     marko_dynamicTag(input.items[i], {}, out, __component, "15" + keyscope__14);
-  }
+  });
 
   let i = 10;
 

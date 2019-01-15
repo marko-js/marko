@@ -147,6 +147,7 @@ class Normalizer {
 
         if (
             elNode.params.length &&
+            elNode.tagName !== "for" &&
             !(
                 (elNode.tagName === "@then" || elNode.tagName === "@catch") &&
                 elNode.parentNode.tagName === "await"
