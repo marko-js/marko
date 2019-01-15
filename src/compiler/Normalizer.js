@@ -145,7 +145,7 @@ class Normalizer {
             }
         }
 
-        if (elNode.params.length) {
+        if (elNode.params.length && elNode.tagName !== "for") {
             context.setFlag("hasTagParams");
             context.exampleTagParam = newNode;
         }

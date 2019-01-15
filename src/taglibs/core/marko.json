@@ -28,31 +28,25 @@
     },
     "<for>": {
         "code-generator": "./for-tag",
-        "attributes": {},
+        "attributes": {
+            "of": "expression",
+            "in": "expression",
+            "to": "expression",
+            "from": "expression",
+            "step": "expression"
+        },
         "autocomplete": [
             {
-                "snippet": "for(${1:var} in ${2:array})",
+                "snippet": "for|${1:value}, ${2:index}| of=\"${3:array}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             },
             {
-                "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
-            },
-            {
-                "snippet": "for(${1:name},${2:value} in ${3:object})",
+                "snippet": "for|${1:name}, ${2:value}| in=\"${3:object}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
             },
             {
-                "snippet": "for(${1:init}; ${2:test}; ${3:update})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
-            },
-            {
-                "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                "snippet": "for|${1:index}| from=\"${2:number}\" to=\"${3:number}\" step=\"${4:number}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
-            },
-            {
-                "snippet": "for",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             }
         ]
     },

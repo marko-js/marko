@@ -1,0 +1,84 @@
+<!-- Object -->
+<for(color, code in colors)>
+    <li>${color}: #${code}</li>
+</for>
+
+<!-- Range -->
+<for(i from 0 to 10)>
+    <li>${i}</li>
+</for>
+
+<!-- Regular -->
+<for(var i = 0; i < list.length; i++)>
+    ${i}
+</for>
+
+<for(var i = 0; list.length >= i; i++)>
+    ${i}
+</for>
+
+<for(var i = 0; i <= listSize; i += 2)>
+    ${i}
+</for>
+
+<for(var i = list.length; i >= 0; i--)>
+    ${i}
+</for>
+
+<for(var i = listSize; i > 0; i -= 2)>
+    ${i}
+</for>
+
+<!-- Strange: multi declaration -->
+<for(var i = 0, x = 2; i < listSize; i++)>
+    ${i}
+</for>
+
+<!-- Strange: invalid declaration -->
+<for(x(); i < listSize; i++)>
+    ${i}
+</for>
+
+<!-- Strange: invalid test -->
+<for(var i = 0; x(); i++)>
+    ${i}
+</for>
+
+<!-- Strange: invalid update -->
+<for(var i = 0; i < listSize; x())>
+    ${i}
+</for>
+
+<!-- Strange: missing parts -->
+<for(;i--;)>
+    ${i}
+</for>
+
+<!-- modifier: status-var -->
+<for(color in colors | status-var=loop)>
+  <li>
+      ${color}
+      ${loop.getIndex()+1}) of ${loop.getLength()}
+      <if(loop.isFirst())> - FIRST</if>
+      <if(loop.isLast())> - LAST</if>
+  </li>
+</for>
+
+<for(color in colors | status-var=loop)>
+  <li>
+      ${color}
+      ${loop.getIndex()+1}) of ${loop.getLength()}
+      <if(loop.isFirst())> - FIRST</if>
+      <if(loop.isLast())> - LAST</if>
+  </li>
+</for>
+
+<!-- modifier: separator -->
+<for(color in colors | separator=", ")>
+    <li>${color}</li>
+</for>
+
+<!-- modifier: iterator -->
+<for(color in colors | iterator=reverseIterator)>
+    <li>${color}</li>
+</for>

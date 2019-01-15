@@ -1,0 +1,85 @@
+<!-- test/migrate/fixtures/legacy-for-syntax/template.marko -->
+
+<!-- Object -->
+<for|color, code| in=colors>
+    <li>${color}: #${code}</li>
+</for>
+<!-- Range -->
+<for|i| from=0 to=10>
+    <li>${i}</li>
+</for>
+<!-- Regular -->
+<for|i| from=0 to=(list.length - 1)>${i}</for>
+$ var i = 0;
+<while(list.length >= i)>
+    ${i}
+    $ i++;
+</while>
+<for|i| from=0 to=listSize step=2>${i}</for>
+$ var i = list.length;
+<while(i >= 0)>
+    ${i}
+    $ i--;
+</while>
+$ var i = listSize;
+<while(i > 0)>
+    ${i}
+    $ i -= 2;
+</while>
+<!-- Strange: multi declaration -->
+$ var i = 0,
+    x = 2;
+<while(i < listSize)>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid declaration -->
+$ x();
+<while(i < listSize)>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid test -->
+$ var i = 0;
+<while(x())>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid update -->
+$ var i = 0;
+<while(i < listSize)>
+    ${i}
+    $ x();
+</while>
+<!-- Strange: missing parts -->
+<while(i--)>${i}</while>
+<!-- modifier: status-var -->
+<for|color, loopIndex, loopAll| of=colors>
+    <li>
+        ${color}${loopIndex + 1}) of ${loopAll.length}<if(loopIndex === 0)>
+            - FIRST
+        </if>
+        <if(loopIndex === loopAll.length - 1)>- LAST</if>
+    </li>
+</for>
+<for|color, loopIndex, loopAll| of=colors>
+    <li>
+        ${color}${loopIndex + 1}) of ${loopAll.length}<if(loopIndex === 0)>
+            - FIRST
+        </if>
+        <if(loopIndex === loopAll.length - 1)>- LAST</if>
+    </li>
+</for>
+<!-- modifier: separator -->
+<for|color, loopIndex, loopAll| of=colors>
+    <li>${color}</li>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- modifier: iterator -->
+$ var reverseIteratorColors = [];
+$ reverseIterator(colors, function(item) {
+    reverseIteratorColors.push(item);
+});
+<for|color| of=reverseIteratorColors>
+    <li>${color}</li>
+</for>
