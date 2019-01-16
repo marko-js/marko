@@ -1,0 +1,17 @@
+class {
+    onCreate() {
+        this.state = {
+            name:'Anna'
+        }
+    }
+    changeName() {
+        this.state.name = 'Vickie';
+    }
+}
+
+<div>
+    <${input} name=state.name/>
+    <button on-click('changeName')>
+        Change
+    </button>
+</div>

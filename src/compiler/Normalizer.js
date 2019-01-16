@@ -1,6 +1,5 @@
 "use strict";
 var ok = require("assert").ok;
-var enableTagParams = require("./util/enableTagParams");
 
 var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
 
@@ -112,6 +111,7 @@ class Normalizer {
                 ? builder.parseExpression(elNode.rawTagNameExpression)
                 : elNode.tagName,
             argument: elNode.argument,
+            params: elNode.params,
             tagString: elNode.tagString,
             openTagOnly: elNode.openTagOnly,
             selfClosed: elNode.selfClosed,
@@ -145,14 +145,12 @@ class Normalizer {
             }
         }
 
-        elNode.moveChildrenTo(newNode);
-
-        var tagDef = newNode.tagDef;
-        if (tagDef && tagDef.featureFlags) {
-            if (tagDef.featureFlags.includes("params")) {
-                enableTagParams(newNode, context);
-            }
+        if (elNode.params.length) {
+            context.setFlag("hasTagParams");
+            context.exampleTagParam = newNode;
         }
+
+        elNode.moveChildrenTo(newNode);
 
         return newNode;
     }
