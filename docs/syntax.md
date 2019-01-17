@@ -244,6 +244,36 @@ _output.html_
 <span id="my-id"></span> <button id="submit" class="primary large"></button>
 ```
 
+## Tag body parameters
+
+Tags can define parameters that are available to their body content. This is a powerful feature that allows components to provide functionality and data while giving you full control over what gets rendered.
+
+In the following example, `<mouse>` provides a parameter which we have named `position`:
+
+```marko
+<mouse|position|>
+   The mouse is at ${position.x}, ${position.y}!
+</mouse>
+```
+
+> `<mouse>` would [render its body](./core-tags.md#layouts-and-transcluded-content) and provide the position similar to this: `<${input} x=0 y=0/>`.
+
+> **Pro Tip**: Tag |parameters| are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
+>
+> ```
+> <mouse|{ x, y }|>
+>   The mouse is at ${x}, ${y}!
+> </mouse>
+> ```
+
+> **Warning**: These are tag _body_ parameters. Parameters are not available to attributes, only to the tag body.
+>
+> ```
+> <mouse|position| something=position>
+>   ReferenceError when setting the "something" attribute
+> </mouse>
+> ```
+
 ## Directives
 
 Directives are denoted by parenthesis and take an argument instead of a value. Many directives may be used as both tags and attributes.
