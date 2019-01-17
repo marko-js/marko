@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "4.14.19",
+    "version": "4.14.20",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
