@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.20
+
+- Add new `<tag|params|>` support and migrator for old syntax/flag [#1236](https://github.com/marko-js/marko/pull/1236)
+- Remove unneeded deprecation warning when using `component` within a template [#1235](https://github.com/marko-js/marko/pull/1235)
+
 ### 4.14.19
 
 - Fixes walking into some AST nodes which was causing some migrations to not be as effective [#1233](https://github.com/marko-js/marko/pull/1233)
