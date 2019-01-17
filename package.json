@@ -62,7 +62,7 @@
         "warp10": "^2.0.1"
     },
     "devDependencies": {
-        "@marko/migrate": "^4.0.0",
+        "@marko/migrate": "^4.1.0",
         "babel-cli": "^6.24.1",
         "babel-core": "^6.24.1",
         "babel-plugin-minprops": "^2.0.1",
