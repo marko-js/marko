@@ -44,6 +44,6 @@ function isWidgetMemberExpression(value) {
     return (
         value &&
         value.type === "MemberExpression" &&
-        (value.object.name === "widget" || value.object.name === "component")
+        value.object.name === "widget"
     );
 }
