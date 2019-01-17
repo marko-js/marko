@@ -76,8 +76,8 @@ function getNestedVariables(elNode, tagDef, codegen) {
         });
     }
 
-    if (elNode.additionalNestedVars.length) {
-        elNode.additionalNestedVars.forEach(variable => {
+    if (elNode.params.length) {
+        elNode.params.forEach(variable => {
             if (typeof variable === "string") {
                 variable = codegen.builder.identifier(variable);
             }
@@ -240,7 +240,6 @@ class CustomTag extends HtmlElement {
         super(el);
         this.type = "CustomTag";
         this.tagDef = tagDef;
-        this.additionalNestedVars = [];
         this._nestedTagVar = null;
         this._inputProps = null;
         this._isDirectlyNestedTag = false;
@@ -530,7 +529,7 @@ class CustomTag extends HtmlElement {
 
     addNestedVariable(name) {
         ok(name, '"name" is required');
-        this.additionalNestedVars.push(name);
+        this.params.push(name);
     }
 
     addNestedTag(nestedTag) {

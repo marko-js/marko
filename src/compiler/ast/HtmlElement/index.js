@@ -55,6 +55,7 @@ class HtmlElement extends Node {
         this._properties = def.properties;
         this.body = this.makeContainer(def.body);
         this.argument = def.argument;
+        this.params = def.params || [];
 
         if (!(this._attributes instanceof HtmlAttributeCollection)) {
             this._attributes = new HtmlAttributeCollection(this._attributes);

@@ -148,9 +148,14 @@ class Parser {
         var tagName = el.tagName;
         var attributes = el.attributes;
         var argument = el.argument; // e.g. For <for(color in colors)>, argument will be "color in colors"
+        var params = el.params;
 
         if (argument) {
             argument = argument.value;
+        }
+
+        if (params) {
+            params = builder.parseJavaScriptParams(params.value);
         }
 
         if (!el.tagNameExpression && !tagName) {
@@ -196,6 +201,7 @@ class Parser {
         var elDef = {
             tagName: tagName,
             argument: argument,
+            params: params,
             tagString,
             openTagOnly: el.openTagOnly === true,
             selfClosed: el.selfClosed === true,
