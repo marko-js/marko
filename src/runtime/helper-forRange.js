@@ -13,10 +13,12 @@ module.exports = function forRangeHelper(from, to, step, callback) {
 
     if (from < to) {
         // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG" && isNegative) {
-            complain(
-                '<for> "from" is less than "to" but you supplied a negative step value. This will no longer be supported in future versions of Marko.'
-            );
+        if ("MARKO_DEBUG") {
+            if (isNegative) {
+                complain(
+                    '<for> "from" is less than "to" but you supplied a negative step value. This will no longer be supported in future versions of Marko.'
+                );
+            }
         }
 
         for (i = from; i <= to; i += step) {

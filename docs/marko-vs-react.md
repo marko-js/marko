@@ -397,8 +397,8 @@ JSX is syntactic sugar on top of JavaScript, but it requires expressions, so
 simple things like an `if/else/for` statement don’t work on their own within a JSX element. As
 a result, you must either use a ternary expression, an immediately invoked
 function expression, function call expression, or the experimental `do {}` expression
-(stage 0 at the time of writing). This is not an issue for Marko, and directives
-such as `if()` and `for()` can be used anywhere as shown below:
+(stage 0 at the time of writing). This is not an issue for Marko, and tags
+such as `if()` and `for` can be used anywhere as shown below:
 
 #### React JSX
 
@@ -474,7 +474,7 @@ function renderColors(colors) {
 
 ```marko
 <ul>
-  <for(color in colors)>
+  <for|color| of=colors>
     <li.color style={ backgroundColor: color }>
         ${color}
     </li>
@@ -508,7 +508,7 @@ favor of indentation. Here’s how the Marko syntax options compare:
 
 ```marko
 <ul>
-  <for(color in colors)>
+  <for|color| of=colors>
     <li>${color}</li>
   </for>
 </ul>
@@ -518,7 +518,7 @@ favor of indentation. Here’s how the Marko syntax options compare:
 
 ```marko
 ul
-  for(color in colors)
+  for|color| of=colors
     li -- ${color}
 ```
 
@@ -526,7 +526,7 @@ ul
 
 ```marko
 ul
-  for(color in colors)
+  for|color| of=colors
     <li>${color}</li>
 ```
 
