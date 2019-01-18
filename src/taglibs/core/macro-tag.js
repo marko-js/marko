@@ -26,14 +26,6 @@ module.exports = function nodeFactory(elNode, context) {
         return elNode;
     }
 
-    var argument = elNode.argument;
-    var params;
-    if (argument) {
-        params = builder.parseJavaScriptParams(argument);
-    } else {
-        params = [];
-    }
-
     context.registerMacro(macroName);
-    return builder.macro(macroName, params, elNode.body);
+    return builder.macro(macroName, elNode.params, elNode.body);
 };

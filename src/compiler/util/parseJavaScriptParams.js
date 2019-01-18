@@ -12,7 +12,9 @@ function parseJavaScriptParams(params, builder) {
     var paramNodes = jsAST.body[0].expression.params;
     return paramNodes.map(node => {
         var nodeSrc = src.slice(node.range[0], node.range[1]);
-        return builder.expression(nodeSrc);
+        return node.type === "Identifier"
+            ? builder.identifier(nodeSrc)
+            : builder.expression(nodeSrc);
     });
 }
 

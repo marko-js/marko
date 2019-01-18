@@ -29,9 +29,10 @@ module.exports = function migrator(elNode, context) {
 
     const name = defAttr.name;
     const params = defAttr.argument
-        ? builder.parseJavaScriptArgs(defAttr.argument)
+        ? builder.parseJavaScriptParams(defAttr.argument)
         : [];
-    elNode.argument = "macroInput";
+    elNode.params = [builder.identifier("macroInput")];
+    elNode.argument = undefined;
     elNode.addAttribute({ name: "name", value: builder.literal(name) });
     elNode.removeAttribute(name);
 

@@ -301,32 +301,49 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 
 ### `<macro>`
 
-Parameterized macros allow for reusable fragments within an HTML template.
-A macro can be defined using the `<macro>` tag.
+Macro's allow for reusable fragments within an HTML template.
+A macro can be defined using the `<macro>` tag, with a `name` attribute.
 
 ```marko
-<macro({ name, count }) name="greeting">
-    Hello ${name}! You have ${count} new messages.
+<macro name="greeting">
+    <span>Welcome!</span>
 </macro>
 ```
 
-The above macro can then be used as if it was a regular `greeting` tag. The following
-sample template shows how to use macro functions inside a template:
+The above macro can then be used as if it was a regular `greeting` tag.
 
 ```marko
-<macro({ name, count }) name="greeting">
-    Hello ${name}! You have ${count} new messages.
-</macro>
+<greeting/>
+<greeting/>
 
-<p>
-    <greeting name="Frank" count=20/>
-</p>
+// Becomes
+<span>Welcome!</span>
+<span>Welcome!</span>
 ```
 
-Macro's receive input similar to the root template, including a `renderBody` for displaying any provided body content like so:
+Macro's become more useful when combined with [tag parameters](), allowing for more complex templates like so:
 
 ```marko
-<macro({ renderBody }) name="special-heading">
+<macro|{ name, count }| name="greeting">
+    <span>Hello ${name}! You have ${count} new messages.</span>
+</macro>
+```
+
+This time the `<greeting>` macro is able to receive parameters from the outside, in this case `name` and `count`.
+
+```marko
+<greeting name="Frank" count=20/>
+
+// Becomes
+<span>
+    Hello Frank! You have 10 new messages.
+</span>
+```
+
+Macro's receive input similar to the root template, including a `renderBody` for displaying any provided body content.
+
+```marko
+<macro|{ renderBody }| name="special-heading">
     <h1>
         <${renderBody}/>!
     </h1>
@@ -334,8 +351,16 @@ Macro's receive input similar to the root template, including a `renderBody` for
 
 <p>
     <special-heading>
-        Hello!
+        Hello
     </special-heading>
+</p>
+
+// Becomes
+
+<p>
+    <h1>
+        Hello!
+    </h1>
 </p>
 ```
 
