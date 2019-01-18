@@ -78,22 +78,25 @@ function migrateForLoop(elNode, context) {
 
                     elNode.insertSiblingBefore(
                         builder.scriptlet({
-                            value: builder.functionCall(parsed.iterator, [
-                                parsed.in,
-                                builder.functionDeclaration(
-                                    undefined,
-                                    [itemName],
-                                    [
-                                        builder.functionCall(
-                                            builder.memberExpression(
-                                                iteratorResultName,
-                                                builder.identifier("push")
-                                            ),
-                                            [itemName]
-                                        )
-                                    ]
-                                )
-                            ])
+                            value: printJS(
+                                builder.functionCall(parsed.iterator, [
+                                    parsed.in,
+                                    builder.functionDeclaration(
+                                        undefined,
+                                        [itemName],
+                                        [
+                                            builder.functionCall(
+                                                builder.memberExpression(
+                                                    iteratorResultName,
+                                                    builder.identifier("push")
+                                                ),
+                                                [itemName]
+                                            )
+                                        ]
+                                    )
+                                ]),
+                                context
+                            )
                         })
                     );
 
@@ -196,7 +199,8 @@ function migrateForLoop(elNode, context) {
                 if (parsed.init) {
                     elNode.insertSiblingBefore(
                         builder.scriptlet({
-                            value: printJS(parsed.init, context)
+                            value: printJS(parsed.init, context),
+                            block: true
                         })
                     );
                 }
@@ -204,7 +208,8 @@ function migrateForLoop(elNode, context) {
                 if (parsed.update) {
                     elNode.appendChild(
                         builder.scriptlet({
-                            value: printJS(parsed.update, context)
+                            value: printJS(parsed.update, context),
+                            block: true
                         })
                     );
                 }

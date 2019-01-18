@@ -5,6 +5,7 @@ var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
 var w10NOOP = require("warp10/constants").NOOP;
+var isArray = Array.isArray;
 var RENDER_BODY_TO_JSON = function() {
     return w10NOOP;
 };
@@ -102,6 +103,19 @@ var helpers = {
                     "Passing a non iterable to a <for> loop is deprecated. Prefer to use an <if> around the loop instead."
                 );
             }
+        } else if (isArray(array)) {
+            for (i = 0; i < array.length; i++) {
+                callback(array[i], i, array);
+            }
+            // eslint-disable-next-line no-constant-condition
+        } else if (typeof array.forEach === "function") {
+            array.forEach(callback);
+        } else if (typeof array.next === "function") {
+            i = 0;
+            do {
+                var result = array.next();
+                callback(result.value, i++, array);
+            } while (!result.done);
         } else if (isFunction(array)) {
             // eslint-disable-next-line no-constant-condition
             if ("MARKO_DEBUG") {
@@ -111,19 +125,6 @@ var helpers = {
             }
             // Also allow the first argument to be a custom iterator function
             array(callback);
-            // eslint-disable-next-line no-constant-condition
-        } else if (typeof array.length === "number") {
-            for (i = 0; i < array.length; i++) {
-                callback(array[i], i, array);
-            }
-        } else if (typeof array.forEach === "function") {
-            array.forEach(callback);
-        } else if (typeof array.next === "function") {
-            i = 0;
-            do {
-                var result = array.next();
-                callback(result.value, i++, array);
-            } while (!result.done);
         }
     },
 
