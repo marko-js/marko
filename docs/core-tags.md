@@ -376,7 +376,7 @@ The above macro can then be used as if it was a regular `greeting` tag.
 <span>Welcome!</span>
 ```
 
-Macro's become more useful when combined with [tag parameters](), allowing for more complex templates like so:
+Macro's become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
 
 ```marko
 <macro|{ name, count }| name="greeting">
