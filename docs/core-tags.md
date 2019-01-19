@@ -42,7 +42,7 @@ The `<for>` tag allows you to map an iterable, object properties or a range of n
 
 #### Iterating over a list
 
-Much like the [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop in javascript, providing an `of` attribute will iterate over the provided array/iterable. For convenience both the current item, index, and the current list will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+Much like the [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop in javascript, providing an `of` attribute will iterate over the provided array/iterable. The current item, index, and the input list will be provided as [tag parameters](./syntax.md#tag-body-parameters).
 
 ```marko
 <ul>
@@ -78,7 +78,7 @@ The output HTML would be the following:
 
 #### Iterating over an objects properties
 
-Much like the [`for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) loop in javascript, providing an `in` attribute will iterate over the provided objects properties. For convenience both the current property name and its value will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+Much like the [`for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) loop in javascript, providing an `in` attribute will iterate over the provided objects properties. The current property name and its value will be provided as [tag parameters](./syntax.md#tag-body-parameters).
 
 ```marko
 <ul>
@@ -108,7 +108,7 @@ The output HTML would be the following:
 
 #### Iterating between a range of numbers
 
-The final variant allows you to iterate between two numbers. You must provide a `from` and `to` attribute, along side an optional `step` attribute. If not specified, `step` defaults to 1. For convenience both the current number in the range will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+The final variant allows you to iterate between two numbers. You must provide a `from` and `to` attribute, along side an optional `step` attribute. If not specified, `step` defaults to 1. The current number in the range will be provided as [tag parameters](./syntax.md#tag-body-parameters).
 
 ```marko
 <ul>
@@ -301,66 +301,28 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 
 ### `<macro>`
 
-Macro's allow for reusable fragments within an HTML template.
-A macro can be defined using the `<macro>` tag, with a `name` attribute.
+Parameterized macros allow for reusable fragments within an HTML template.
+A macro can be defined using the `<macro>` directive.
 
 ```marko
-<macro name="greeting">
-    <span>Welcome!</span>
+<macro greeting(name, count)>
+    Hello ${name}! You have ${count} new messages.
 </macro>
 ```
 
-The above macro can then be used as if it was a regular `greeting` tag.
+The above macro can then be invoked as part of any expression. The following
+sample template shows how to use macro functions inside expressions:
 
 ```marko
-<greeting/>
-<greeting/>
-
-// Becomes
-<span>Welcome!</span>
-<span>Welcome!</span>
-```
-
-Macro's become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
-
-```marko
-<macro|{ name, count }| name="greeting">
-    <span>Hello ${name}! You have ${count} new messages.</span>
+<macro greeting(name, count)>
+    Hello ${name}! You have ${count} new messages.
 </macro>
-```
-
-This time the `<greeting>` macro is able to receive parameters from the outside, in this case `name` and `count`.
-
-```marko
-<greeting name="Frank" count=20/>
-
-// Becomes
-<span>
-    Hello Frank! You have 10 new messages.
-</span>
-```
-
-Macro's receive input similar to the root template, including a `renderBody` for displaying any provided body content.
-
-```marko
-<macro|{ renderBody }| name="special-heading">
-    <h1>
-        <${renderBody}/>!
-    </h1>
-</macro>
-
 <p>
-    <special-heading>
-        Hello
-    </special-heading>
+    <greeting("John", 10)/>
 </p>
-
-// Becomes
-
 <p>
-    <h1>
-        Hello!
-    </h1>
+    <!-- Or, using named attributes: -->
+    <greeting name="Frank" count=20/>
 </p>
 ```
 
