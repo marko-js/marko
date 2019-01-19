@@ -70,7 +70,7 @@ The output HTML would be the following:
 
 > **Pro Tip**: The `<for>` tag with an `of` attribute can iterate over any iterable just like the JavaScript [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop. In order to iterate over other "array like" objects (ones that just have a `length` property for example) you can use [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
 >
-> ```
+> ```marko
 > <for|letter, index| of=Array.from({ 0: "a", 1: "b", length: 2 })>
 >   ${index + 1}: ${letter}
 > </for>
