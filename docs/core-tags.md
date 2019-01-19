@@ -301,7 +301,7 @@ Special HTML characters will _not_ be escaped since the file is expected to be a
 
 ### `<macro>`
 
-Macro's allow for reusable fragments within an HTML template.
+Macros allow for reusable fragments within an HTML template.
 A macro can be defined using the `<macro>` tag, with a `name` attribute.
 
 ```marko
@@ -310,18 +310,20 @@ A macro can be defined using the `<macro>` tag, with a `name` attribute.
 </macro>
 ```
 
-The above macro can then be used as if it was a regular `greeting` tag.
+The above macro can then be used as if it was a regular `<greeting>` tag.
 
 ```marko
 <greeting/>
 <greeting/>
-
-// Becomes
-<span>Welcome!</span>
-<span>Welcome!</span>
 ```
 
-Macro's become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
+The output HTML would be the following:
+
+```html
+<span>Welcome!</span> <span>Welcome!</span>
+```
+
+Macros become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
 
 ```marko
 <macro|{ name, count }| name="greeting">
@@ -333,14 +335,15 @@ This time the `<greeting>` macro is able to receive parameters from the outside,
 
 ```marko
 <greeting name="Frank" count=20/>
-
-// Becomes
-<span>
-    Hello Frank! You have 10 new messages.
-</span>
 ```
 
-Macro's receive input similar to the root template, including a `renderBody` for displaying any provided body content.
+The output HTML would be the following:
+
+```html
+<span> Hello Frank! You have 10 new messages. </span>
+```
+
+Macros receive input similar to the root template, including a `renderBody` for displaying any provided body content.
 
 ```marko
 <macro|{ renderBody }| name="special-heading">
@@ -354,9 +357,11 @@ Macro's receive input similar to the root template, including a `renderBody` for
         Hello
     </special-heading>
 </p>
+```
 
-// Becomes
+The output HTML would be the following:
 
+```html
 <p>
     <h1>
         Hello!
