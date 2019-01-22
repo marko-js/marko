@@ -108,18 +108,18 @@ function migrateForLoop(elNode, context) {
                     varNamePrefix = parsed.statusVarName.name;
                     replaceStatusVarInBody(elNode, context, parsed);
                 }
+            }
 
-                if (parsed.separator) {
-                    needsParams = true;
-                    elNode.appendChild(
-                        builder.htmlElement(
-                            "if",
-                            undefined,
-                            [builder.text(parsed.separator, false, true)],
-                            `${varNamePrefix}Index !== ${varNamePrefix}All.length - 1`
-                        )
-                    );
-                }
+            if (parsed.separator) {
+                needsParams = true;
+                elNode.appendChild(
+                    builder.htmlElement(
+                        "if",
+                        undefined,
+                        [builder.text(parsed.separator, false, true)],
+                        `${varNamePrefix}Index !== ${varNamePrefix}All.length - 1`
+                    )
+                );
             }
 
             if (needsParams) {

@@ -1,6 +1,80 @@
-<!-- Object -->
+<!-- Array -->
+<for(color in colors)>
+    <li>${color}</li>
+</for>
+
+<!-- Array | iterator -->
+<for(color in colors | iterator=input.iterator)>
+    <li>${color}</li>
+</for>
+
+<!-- Array | separator -->
+<for(color in colors | separator=", ")>
+    <li>${color}</li>
+</for>
+
+<!-- Array | status-var -->
+<for(color in colors | status-var=loop)>
+    ${color}
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
+</for>
+
+<!-- Array | iterator separator -->
+<for(color in colors | iterator=input.iterator separator=", ")>
+    <li>${color}</li>
+</for>
+
+<!-- Array | status-var iterator -->
+<for(color in colors | status-var=loop iterator=input.iterator)>
+    ${color}
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
+</for>
+
+<!-- Array | status-var separator -->
+<for(color in colors | status-var=loop separator=", ")>
+    ${color}
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
+</for>
+
+<!-- Array | status-var iterator separator -->
+<for(color in colors | status-var=loop iterator=input.iterator separator=", ")>
+    ${color}
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
+</for>
+
+
+<!-- Properties -->
 <for(color, code in colors)>
     <li>${color}: #${code}</li>
+</for>
+
+<!-- Properties | separator -->
+<for(color, code in colors | separator=", ")>
+    <li>${color}: #${code}</li>
+</for>
+
+<!-- Properties | status-var -->
+<for(color, code in colors | status-var=loop)>
+    <li>${color}: #${code}</li>
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
+</for>
+
+<!-- Properties | status-var separator -->
+<for(color, code in colors | status-var=loop separator=", ")>
+    <li>${color}: #${code}</li>
+    ${loop.getIndex()+1}) of ${loop.getLength()}
+    <if(loop.isFirst())> - FIRST</if>
+    <if(loop.isLast())> - LAST</if>
 </for>
 
 <!-- Range -->
@@ -13,11 +87,12 @@
     ${i}
 </for>
 
-<for(var i = 0; list.length >= i; i++)>
+<for(var i = 0; i <= listSize; i += 2)>
     ${i}
 </for>
 
-<for(var i = 0; i <= listSize; i += 2)>
+<!-- Stange: backwards -->
+<for(var i = 0; list.length >= i; i++)>
     ${i}
 </for>
 
@@ -52,33 +127,4 @@
 <!-- Strange: missing parts -->
 <for(;i--;)>
     ${i}
-</for>
-
-<!-- modifier: status-var -->
-<for(color in colors | status-var=loop)>
-  <li>
-      ${color}
-      ${loop.getIndex()+1}) of ${loop.getLength()}
-      <if(loop.isFirst())> - FIRST</if>
-      <if(loop.isLast())> - LAST</if>
-  </li>
-</for>
-
-<for(color in colors | status-var=loop)>
-  <li>
-      ${color}
-      ${loop.getIndex()+1}) of ${loop.getLength()}
-      <if(loop.isFirst())> - FIRST</if>
-      <if(loop.isLast())> - LAST</if>
-  </li>
-</for>
-
-<!-- modifier: separator -->
-<for(color in colors | separator=", ")>
-    <li>${color}</li>
-</for>
-
-<!-- modifier: iterator -->
-<for(color in colors | iterator=reverseIterator)>
-    <li>${color}</li>
 </for>
