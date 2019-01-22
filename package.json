@@ -41,7 +41,7 @@
         "events": "^1.0.2",
         "events-light": "^1.0.0",
         "he": "^1.1.0",
-        "htmljs-parser": "^2.6.0",
+        "htmljs-parser": "^2.6.1",
         "lasso-caching-fs": "^1.0.1",
         "lasso-modules-client": "^2.0.4",
         "lasso-package-root": "^1.0.1",
