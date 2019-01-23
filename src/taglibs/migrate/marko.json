@@ -1,7 +1,7 @@
 {
-    "migrator": "./all-templates",
+    "migrator": "./all-templates/index",
     "<*>": {
-        "migrator": "./all-tags",
+        "migrator": "./all-tags/index",
         "@if": {
             "type": "statement",
             "deprecated": true
