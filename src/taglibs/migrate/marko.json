@@ -2,6 +2,102 @@
     "migrator": "./all-templates/index",
     "<*>": {
         "migrator": "./all-tags/index"
+        "@if": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@else-if": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@else": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@for": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@unless": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@while": {
+            "type": "statement",
+            "deprecated": true
+        },
+        "@w-on*": {
+            "pattern": true,
+            "type": "string",
+            "allow-expressions": true,
+            "preserve-name": true,
+            "set-flag": "hasComponentEvents",
+            "deprecated": true
+        },
+        "@w-for": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
+        },
+        "@for-key": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
+        },
+        "@for-ref": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
+        },
+        "@w-id": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true,
+            "set-context-flag": "hasLegacyWidgetAttr"
+        },
+        "@w-config": {
+            "type": "expression",
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@ref": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-preserve": {
+            "type": "flag",
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-preserve-body": {
+            "type": "flag",
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-preserve-if": {
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-preserve-body-if": {
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-preserve-attrs": {
+            "type": "string",
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@w-body": {
+            "preserve-name": true,
+            "deprecated": true
+        },
+        "@include": {
+            "deprecated": true
+        }
     },
     "<invoke>": {
         "migrator": "./invoke-tag",
@@ -89,102 +185,5 @@
     "<script>": {
         "@marko-init": "boolean",
         "@template-helpers": "boolean"
-    },
-    "@w-on*": {
-        "pattern": true,
-        "type": "string",
-        "allow-expressions": true,
-        "preserve-name": true,
-        "set-flag": "hasComponentEvents",
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-for": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true,
-        "set-context-flag": "hasLegacyWidgetAttr"
-    },
-    "@for-key": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true,
-        "set-context-flag": "hasLegacyWidgetAttr"
-    },
-    "@for-ref": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true,
-        "set-context-flag": "hasLegacyWidgetAttr"
-    },
-    "@w-id": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true,
-        "set-context-flag": "hasLegacyWidgetAttr"
-    },
-    "@w-config": {
-        "type": "expression",
-        "preserve-name": true,
-        "deprecated": true
-    },
-    "@ref": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-preserve": {
-        "type": "flag",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-preserve-body": {
-        "type": "flag",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-preserve-if": {
-        "preserve-name": true,
-        "autocomplete": []
-    },
-    "@w-preserve-body-if": {
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-preserve-attrs": {
-        "type": "string",
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@w-body": {
-        "preserve-name": true,
-        "autocomplete": [],
-        "deprecated": true
-    },
-    "@include": {
-        "autocomplete": [
-            {
-                "displayText": "include(<template>)",
-                "snippet": "include(${1:\"./target.marko\"})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-            },
-            {
-                "displayText": "include(data.renderBody)",
-                "snippet": "include(data.renderBody)",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-            },
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
-            }
-        ]
     }
 }
