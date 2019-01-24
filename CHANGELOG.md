@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.21
+
+- Update `htmljs-parser` to improve parsing regexes [htmljs-parser #61](https://github.com/marko-js/htmljs-parser/pull/61)
+
 ### 4.14.20
 
 - Add new `<tag|params|>` support and migrator for old syntax/flag [#1236](https://github.com/marko-js/marko/pull/1236)
