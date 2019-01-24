@@ -24,53 +24,13 @@ class MacrosContext {
         return this._byName[name];
     }
 
-    registerMacro(name, params) {
+    registerMacro(name) {
         ok(name, '"name" is required');
         ok(typeof name === "string", '"name" should be a string');
-        if (params == null) {
-            params = [];
-        } else {
-            ok(Array.isArray(params), '"params" should be an array');
-        }
-
-        var hasOut = false;
-        var hasRenderBody = false;
-        params.forEach(param => {
-            if (param === "out") {
-                hasOut = true;
-            } else if (param === "renderBody") {
-                hasRenderBody = true;
-            }
-        });
-
-        if (!hasOut) {
-            params.push("out");
-        }
-
-        if (!hasRenderBody) {
-            params.push("renderBody");
-        }
-
-        var paramIndexes = {};
-        params.forEach((param, i) => {
-            paramIndexes[param] = i;
-
-            if (param === "out") {
-                hasOut = true;
-            } else if (param === "renderBody") {
-                hasRenderBody = true;
-            }
-        });
-
         var functionName = "macro_" + safeVarName(name);
-
         var macroDef = {
             name: name,
-            params: params,
-            functionName: functionName,
-            getParamIndex: function(param) {
-                return paramIndexes[param];
-            }
+            functionName: functionName
         };
 
         this._byName[name] = macroDef;

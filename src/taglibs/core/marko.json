@@ -100,8 +100,8 @@
         "node-factory": "./macro-tag",
         "autocomplete": [
             {
-                "displayText": "macro <name>(<parmas>)",
-                "snippet": "macro ${1:name}(${2:param1, param2})",
+                "displayText": "macro|<params>| name=\"<name>\"",
+                "snippet": "macro|${1:params}| name=\"${2:name}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             },
             {
@@ -109,15 +109,6 @@
             }
         ],
         "no-output": true
-    },
-    "<macro-body>": {
-        "code-generator": "./macro-body-tag",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
-                "openTagOnly": true
-            }
-        ]
     },
     "<marko>": {
         "code-generator": "./marko-tag",
