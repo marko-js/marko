@@ -11,7 +11,7 @@ module.exports = function nodeFactory(elNode, context) {
     ) {
         context.addError(
             elNode,
-            'The <macro> tag must only contain a "name" attribute, example: <macro(data) name="my-macro">'
+            'The <macro> tag must only contain a "name" attribute, example: <macro|data| name="my-macro">'
         );
         return elNode;
     }
