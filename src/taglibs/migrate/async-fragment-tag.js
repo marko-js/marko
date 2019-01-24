@@ -1,59 +1,49 @@
-const commonTagMigrator = require("./all-tags");
+const awaitTagMigration = require("./await-tag");
 const newTags = {
-    "async-fragment": "await",
-    "async-fragments": "await-reorderer",
     "async-fragment-placeholder": "await-placeholder",
     "async-fragment-timeout": "await-timeout",
     "async-fragment-error": "await-error"
 };
-module.exports = function migrator(oldNode, context) {
-    const oldTag = oldNode.tagName;
-    const newTag = newTags[oldTag];
-    let provider;
-    let varName;
-    let argument;
-    const attributes = oldNode.attributes;
+module.exports = function migrator(elNode, context) {
     const builder = context.builder;
-    commonTagMigrator(oldNode, context);
-    oldNode.setTransformerApplied(commonTagMigrator);
+    const attributes = elNode.attributes;
 
     context.deprecate(
-        `The "<${oldTag}>" tag is deprecated. Please use "<${newTag}>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
+        `The "<async-fragment>" tag is deprecated. Please use "<await>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
     );
 
-    if (oldTag == "async-fragment" /* new: <await> */) {
-        if (!attributes || !attributes.length) {
-            context.addError(
-                'Invalid <aync-fragment> tag. Argument is missing. Example; <async-fragment data-provider=data.userInfo var="userInfo" />'
-            );
-            return oldNode;
-        }
-
-        // need to convert data-provider and var attributes
-        // to an argument: <await(var from dataProvider)>
-        varName = oldNode.getAttributeValue("var").value;
-        provider = oldNode.getAttributeValue("data-provider").toString();
-        argument = varName + " from " + provider;
-
-        if (!context.util.isValidJavaScriptIdentifier(varName)) {
-            context.addError(
-                'Invalid <aync-fragment> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <async-fragment data-provider=data.userInfo var="userInfo" />'
-            );
-            return;
-        }
-
-        oldNode.removeAttribute("var");
-        oldNode.removeAttribute("data-provider");
+    if (!attributes || !attributes.length) {
+        context.addError(
+            'Invalid <async-fragment> tag. Argument is missing. Example; <async-fragment data-provider=data.userInfo var="userInfo" />'
+        );
+        return elNode;
     }
 
-    if (oldTag == "async-fragments" /* new: <await-reorderer> */) {
-        // all this tag ever did was handling of client reordering
-        // we'll remove the attribute as that's all this new tag does
-        oldNode.removeAttribute("client-reorder");
+    // need to convert data-provider and var attributes
+    // to an argument: <await(var from dataProvider)>
+    const varName = elNode.getAttributeValue("var").value;
+    const provider = elNode.getAttributeValue("data-provider").toString();
+    const argument = varName + " from " + provider;
+    elNode.removeAttribute("var");
+    elNode.removeAttribute("data-provider");
+
+    if (!context.util.isValidJavaScriptIdentifier(varName)) {
+        context.addError(
+            'Invalid <async-fragment> tag. Argument\'s variable name should be a valid JavaScript identifier. Example: user, as in <async-fragment data-provider=data.userInfo var="userInfo" />'
+        );
+        return;
     }
 
-    const newNode = builder.htmlElement(newTag, attributes, [], argument);
+    elNode.forEachChild(child => {
+        const newTag = newTags[child.tagName];
+        if (newTag) {
+            child.tagName = newTag;
+            child.tagNameExpression = builder.literal(newTag);
+        }
+    });
 
-    oldNode.replaceWith(newNode);
-    oldNode.moveChildrenTo(newNode);
+    elNode.tagName = "await";
+    elNode.tagNameExpression = builder.literal(elNode.tagName);
+    elNode.argument = argument;
+    awaitTagMigration(elNode, context);
 };

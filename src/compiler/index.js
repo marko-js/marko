@@ -276,10 +276,6 @@ function registerCoreTaglibs() {
             require.resolve("../taglibs/svg/marko.json")
         );
         registerTaglib(
-            require("../taglibs/async/marko.json"),
-            require.resolve("../taglibs/async/marko.json")
-        );
-        registerTaglib(
             require("../taglibs/cache/marko.json"),
             require.resolve("../taglibs/cache/marko.json")
         );

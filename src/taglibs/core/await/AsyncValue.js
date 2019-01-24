@@ -1,4 +1,4 @@
-var nextTick = require("../../runtime/nextTick");
+var nextTick = require("../../../runtime/nextTick");
 
 function AsyncValue() {
     /**
