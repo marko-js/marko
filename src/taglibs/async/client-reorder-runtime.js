@@ -27,7 +27,10 @@ function $af(
             docFragment.appendChild(childNodes.item(0));
         }
 
-        targetEl.parentNode.replaceChild(docFragment, targetEl);
+        if (targetEl) {
+            targetEl.parentNode.replaceChild(docFragment, targetEl);
+        }
+
         af[id] = 1;
 
         after = af[id + "$"];
