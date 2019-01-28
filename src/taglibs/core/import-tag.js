@@ -24,12 +24,12 @@ module.exports = function codeGenerator(el, codegen) {
             var requireExpression = builder.require(builder.literal(arg.value));
             var moduleName = "module_" + varName;
 
-            if (isMarkoTemplate(arg.value, context)) {
-                context.importTemplate(arg.value, arg.name);
-                return;
-            }
-
             if (varName) {
+                if (isMarkoTemplate(arg.value, context)) {
+                    context.importTemplate(arg.value, varName);
+                    return;
+                }
+
                 // saves identifier under a module alias.
                 vars[varName] = codegen.addStaticVar(
                     moduleName,
