@@ -25,7 +25,8 @@ module.exports = function codeGenerator(el, codegen) {
             var moduleName = "module_" + varName;
 
             if (isMarkoTemplate(arg.value, context)) {
-                context.pushMeta("tags", arg.value, true);
+                context.importTemplate(arg.value, arg.name);
+                return;
             }
 
             if (varName) {
