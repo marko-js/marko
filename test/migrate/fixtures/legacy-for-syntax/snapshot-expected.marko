@@ -49,12 +49,11 @@ $ input.iterator(colors, function(item) {
     <if(loopIndex !== loopAll.length - 1)>,</if>
 </for>
 <!-- Array | status-var iterator separator -->
-<for|color, loop, loopIndex, loopAll| of=input.iterator.bind(null, colors)>
+<for|color, loop| of=input.iterator.bind(null, colors)>
     ${color}${loop.getIndex() + 1}) of ${loop.getLength()}<if(loop.isFirst())>
         - FIRST
     </if>
     <if(loop.isLast())>- LAST</if>
-    <if(loopIndex !== loopAll.length - 1)>,</if>
 </for>
 <!-- Properties -->
 <for|color, code| in=colors>

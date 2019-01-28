@@ -34,12 +34,15 @@ function migrateForLoop(elNode, context) {
         case "ForEach": {
             let varNamePrefix = "loop";
             let needsParams;
+            let isLegacyGenerator;
+
             elNode.params = [parsed.varName];
 
             if (parsed.iterator) {
                 if (parsed.statusVarName) {
                     // When we have both a status var and an iterator it's impossible to convert to a modern for loop.
                     // Instead we convert to the deprecated `<for of=generatorFunction>`.
+                    isLegacyGenerator = true;
                     elNode.params.push(parsed.statusVarName);
                     parsed.in = builder.functionCall(
                         builder.memberExpression(
@@ -110,23 +113,25 @@ function migrateForLoop(elNode, context) {
                 }
             }
 
-            if (parsed.separator) {
-                needsParams = true;
-                elNode.appendChild(
-                    builder.htmlElement(
-                        "if",
-                        undefined,
-                        [builder.text(parsed.separator, false, true)],
-                        `${varNamePrefix}Index !== ${varNamePrefix}All.length - 1`
-                    )
-                );
-            }
+            if (!isLegacyGenerator) {
+                if (parsed.separator) {
+                    needsParams = true;
+                    elNode.appendChild(
+                        builder.htmlElement(
+                            "if",
+                            undefined,
+                            [builder.text(parsed.separator, false, true)],
+                            `${varNamePrefix}Index !== ${varNamePrefix}All.length - 1`
+                        )
+                    );
+                }
 
-            if (needsParams) {
-                elNode.params.push(
-                    builder.identifier(`${varNamePrefix}Index`),
-                    builder.identifier(`${varNamePrefix}All`)
-                );
+                if (needsParams) {
+                    elNode.params.push(
+                        builder.identifier(`${varNamePrefix}Index`),
+                        builder.identifier(`${varNamePrefix}All`)
+                    );
+                }
             }
 
             elNode.setAttributeValue("of", parsed.in);
