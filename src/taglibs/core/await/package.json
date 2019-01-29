@@ -1,6 +1,6 @@
 {
     "browser": {
         "./client-reorder.js": "./client-reorder-browser.js",
-        "./await-reorderer-tag.js": "./noop-render.js"
+        "./reorderer-renderer.js": "./noop-render.js"
     }
 }

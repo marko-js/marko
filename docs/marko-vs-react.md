@@ -720,10 +720,10 @@ import fsp from 'fs-promise';
 $ var filePath = __dirname + '/hello.txt';
 $ var readPromise = fsp.readFile(filePath, {encoding: 'utf8'});
 
-<await(helloText from readPromise)>
-  <p>
-    ${helloText}
-  </p>
+<await(readPromise)>
+  <@then|helloText|>
+    <p>${helloText}</p>
+  </@then>
 </await>
 ```
 

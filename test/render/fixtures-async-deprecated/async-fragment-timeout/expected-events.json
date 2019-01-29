@@ -33,7 +33,8 @@
             "name": "userInfo1",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             }
         }
     },
@@ -43,7 +44,8 @@
             "name": "userInfo1",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             },
             "finished": true
         }
@@ -54,7 +56,8 @@
             "name": "userInfo2",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             }
         }
     },
@@ -64,7 +67,8 @@
             "name": "userInfo2",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             },
             "finished": true
         }
@@ -75,7 +79,8 @@
             "name": "userInfo3",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             }
         }
     },
@@ -85,7 +90,8 @@
             "name": "userInfo3",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             },
             "finished": true
         }
@@ -96,7 +102,8 @@
             "name": "userInfo4",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             }
         }
     },
@@ -106,7 +113,8 @@
             "name": "userInfo4",
             "clientReorder": false,
             "error": {
-                "code": "ERR_AWAIT_TIMEDOUT"
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
             },
             "finished": true
         }

@@ -1,8 +1,11 @@
 <!-- test/migrate/fixtures/async-fragment-tag/template.marko -->
 
-<await(userInfo from data.userInfo)>
-    Success!
-    <await-placeholder>loading...</await-placeholder>
-    <await-timeout>took too long!</await-timeout>
-    <await-error>something went wrong!</await-error>
+<await(data.userInfo)>
+    <@then|userInfo|>Success!</@then>
+    <@placeholder>loading...</@placeholder>
+    <@catch|err|>
+        <if(err.name === "TimeoutError")>took too long!</if>
+        <else>something went wrong!</else>
+    </@catch>
 </await>
+<await-reorderer/>

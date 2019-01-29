@@ -1104,8 +1104,10 @@ Given a template like this:
 **New:**
 
 ```marko
-<await(foo from data.provider)>
-    ${foo}
+<await(data.provider)>
+    <@then|foo|>
+        ${foo}
+    </@then>
 </await>
 ```
 
