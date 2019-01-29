@@ -42,7 +42,9 @@ $ const ExampleD = undefined;
 <else>
     <${input.x} ...{
         a: 1
-    } b=2/>
+    } ...{
+        b: 2
+    } c=3/>
 </else>
 <!-- Dynamic: with body -->
 <if(typeof input.x === "string")>${input.x}</if>
@@ -61,3 +63,15 @@ $ const ExampleD = undefined;
         }/>
     </else>
 </div>
+<!-- Include complex expression -->
+$ var includeTarget = input.x ? a : b;
+<if(typeof includeTarget === "string")>${includeTarget}</if>
+<else>
+    <${includeTarget}/>
+</else>
+<!-- Include complex expression 2 -->
+$ var includeTarget_2 = a();
+<if(typeof includeTarget_2 === "string")>${includeTarget_2}</if>
+<else>
+    <${includeTarget_2}/>
+</else>
