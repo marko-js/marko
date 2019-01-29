@@ -228,8 +228,13 @@ performance](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscoverin
 ```marko
 $ const searchResultsPromise = searchService.performSearch(keywords);
 
-<await(person from searchResultsPromise)>
-  <div>Hello ${person.name}!</div>
+<await(searchResultsPromise)>
+  <@then|person|>
+    Hello ${person.name}!
+  </@then>
+  <@catch|err|>
+    The error was: ${err.message}.
+  </@catch>
 </await>
 ```
 

@@ -385,9 +385,8 @@ sample template shows how to use macro functions inside expressions:
 
 ### `<await>`
 
-The `<await>` tag is used to dynamically load in content from a data provider. The data provider can be a `Promise` or a `callback`. Once the provider returns it's results the children are rendered.
-
-await-example.marko
+The `<await>` tag is used to render a template asynchronously with the results of a Promise.
+The `<@then>` and `<@catch>` attribute tags can optionally receive the value of the resolved and rejected promise respectively as [tag parameters](./syntax.md#tag-body-parameters). You can also provide a `<@placeholder>` attribute tag which will be displayed while the promise is pending.
 
 ```marko
 $ var personPromise = new Promise((resolve, reject) => {
@@ -398,34 +397,49 @@ $ var personPromise = new Promise((resolve, reject) => {
     }, 1000);
 });
 
-<await(person from personPromise)>
-    <div>Hello ${person.name}!</div>
+<await(personPromise)>
+    <@placeholder>
+        <!-- Displayed while promise is pending -->
+
+        Loading...
+    </@placeholder>
+
+    <@then|person|>
+        <!-- Displayed if promise resolves -->
+
+        <div>Hello ${person.name}!</div>
+    <@then>
+
+    <@catch|err|>
+        <!-- Displayed if promise rejects -->
+
+        Caught error: ${err.name}.
+    </@catch>
 </await>
 ```
 
-Advanced implementation:
+Optional Attributes:
 
-- `<await>` tag signature
-  - Basic usage: `<await(results from dataProvider)>...</await>`
-  - Optional attributes
-    - client-reorder `boolean`
-    - arg `expression`
-    - arg-\* `string`
-    - method `string`
-    - timeout `integer`
-    - timeout-message `string`
-    - error-message `string`
-    - placeholder `string`
-    - renderTimeout `function`
-    - renderError `function`
-    - renderPlaceholder `function`
-    - name `string`
-    - scope `expression`
-    - show-after `string`
-  - Optional child tags
-    - `<await-placeholder>Loading...</await-placeholder>`
-    - `<await-timeout>Request timed out</await-timeout>`
-    - `<await-error>Request errored</await-error>`
+- **timeout** `integer`: An optional timeout that when reached will cause the promise to reject with a `TimeoutError`.
+- **name** `string`: Used to improve debugging and also to ensure promise ordering with the `show-after` attribute.
+- **show-after** `string`: This attribute will ensure that (with client-reorder) this `await` block will always show after another `await` block with the provided name.
+- **client-reorder** `boolean`: If set anything after this promise will be sent out immediately, and reordered using JS in the browser.
+
+> **Pro Tip**: With the `timeout` attribute set you can differentiate `TimeoutError`s from promise rejections by checking the `name` property of the error.
+>
+> ```marko
+> <await(slowPromise) timeout=5000>
+>    <@then>Done</@then>
+>    <@catch|err|>
+>      <if(err.name === "TimeoutError)>
+>        Took too long to fetch the data!
+>      </if>
+>      <else>
+>        Promise failed with ${err.message}.
+>      </else>
+>    </@catch>
+> </await>
+> ```
 
 ## Comments
 

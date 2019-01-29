@@ -117,19 +117,16 @@
         "deprecated": true
     },
     "<async-fragments>": {
-        "migrator": "./async-fragment-tag",
+        "migrator": "./async-fragments-tag",
         "deprecated": true
     },
     "<async-fragment-placeholder>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<async-fragment-timeout>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<async-fragment-error>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<include>": {
@@ -180,6 +177,18 @@
     },
     "<unless>": {
         "migrator": "./unless-tag",
+        "deprecated": true
+    },
+    "<await>": {
+        "migrator": "./await-tag"
+    },
+    "<await-placeholder>": {
+        "deprecated": true
+    },
+    "<await-timeout>": {
+        "deprecated": true
+    },
+    "<await-error>": {
         "deprecated": true
     },
     "<script>": {

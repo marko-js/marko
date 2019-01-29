@@ -166,6 +166,45 @@
             }
         ]
     },
+    "<await>": {
+        "transformer": "./await/transformer",
+        "renderer": "./await/renderer",
+        "@_provider": "expression",
+        "@_name": "string",
+        "@timeout": "integer",
+        "@name": {
+            "type": "string",
+            "description": "Name of await",
+            "autocomplete": [
+                {
+                    "snippet": "name=\"${1:name}\""
+                },
+                {}
+            ]
+        },
+        "@client-reorder": {
+            "type": "boolean",
+            "description": "Use JavaScript on client to move async fragment into the proper place."
+        },
+        "@show-after": {
+            "type": "string"
+        },
+        "autocomplete": [
+            {
+                "snippet": "await(${1:promise})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
+            }
+        ]
+    },
+    "<await-reorderer>": {
+        "renderer": "./await/reorderer-renderer",
+        "autocomplete": [
+            {
+                "snippet": "await-reorderer",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+            }
+        ]
+    },
     "<*>": {
         "@body-only-if": {
             "type": "statement",
