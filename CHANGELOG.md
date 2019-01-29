@@ -4,6 +4,13 @@
 
 ## 4.14.x
 
+### 4.14.22
+
+- Fix issue with `no-update` not moving preserved items [#1247](https://github.com/marko-js/marko/pull/1247).
+- Fix regression with include tag migration where `<include(data())>` has side effects. [#1246](https://github.com/marko-js/marko/pull/1246)
+- Treat importing tags the same as using them in the template (uses `load` api instead of `require` when configured). [#1245](https://github.com/marko-js/marko/pull/1245)
+- Gracefully handle async client-reorder when nodes are missing during hydrate. [#1243](https://github.com/marko-js/marko/pull/1243)
+
 ### 4.14.21
 
 - Update `htmljs-parser` to improve parsing regexes [htmljs-parser #61](https://github.com/marko-js/htmljs-parser/pull/61)
