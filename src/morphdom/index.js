@@ -410,49 +410,77 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             detachedByDOMNode.set(matchingFromEl, undefined);
                         }
 
-                        curVFromNodeChild = vElementByDOMNode.get(
-                            matchingFromEl
-                        );
-
                         if (
-                            compareNodeNames(curVFromNodeChild, curToNodeChild)
+                            (curToNodeChild.___flags & FLAG_PRESERVE) === 0 &&
+                            !curToNodeChild.___preserve
                         ) {
-                            if (fromNextSibling === matchingFromEl) {
-                                // Single element removal:
-                                // A <-> A
-                                // B <-> C <-- We are here
-                                // C     D
-                                // D
-                                //
-                                // Single element swap:
-                                // A <-> A
-                                // B <-> C <-- We are here
-                                // C     B
+                            curVFromNodeChild = vElementByDOMNode.get(
+                                matchingFromEl
+                            );
 
-                                if (
-                                    toNextSibling &&
-                                    toNextSibling.___key === curFromNodeKey
-                                ) {
-                                    // Single element swap
+                            if (
+                                compareNodeNames(
+                                    curVFromNodeChild,
+                                    curToNodeChild
+                                )
+                            ) {
+                                if (fromNextSibling === matchingFromEl) {
+                                    // Single element removal:
+                                    // A <-> A
+                                    // B <-> C <-- We are here
+                                    // C     D
+                                    // D
+                                    //
+                                    // Single element swap:
+                                    // A <-> A
+                                    // B <-> C <-- We are here
+                                    // C     B
 
-                                    // We want to stay on the current real DOM node
-                                    fromNextSibling = curFromNodeChild;
+                                    if (
+                                        toNextSibling &&
+                                        toNextSibling.___key === curFromNodeKey
+                                    ) {
+                                        // Single element swap
 
-                                    // But move the matching element into place
-                                    insertBefore(
+                                        // We want to stay on the current real DOM node
+                                        fromNextSibling = curFromNodeChild;
+
+                                        // But move the matching element into place
+                                        insertBefore(
+                                            matchingFromEl,
+                                            curFromNodeChild,
+                                            fromNode
+                                        );
+                                    } else {
+                                        // Single element removal
+
+                                        // We need to remove the current real DOM node
+                                        // and the matching real DOM node will fall into
+                                        // place. We will continue diffing with next sibling
+                                        // after the real DOM node that just fell into place
+                                        fromNextSibling = nextSibling(
+                                            fromNextSibling
+                                        );
+
+                                        if (curFromNodeChild) {
+                                            detachNode(
+                                                curFromNodeChild,
+                                                fromNode,
+                                                ownerComponent
+                                            );
+                                        }
+                                    }
+                                } else {
+                                    // A <-> A
+                                    // B <-> D <-- We are here
+                                    // C
+                                    // D
+
+                                    // We need to move the matching node into place
+                                    insertAfter(
                                         matchingFromEl,
                                         curFromNodeChild,
                                         fromNode
-                                    );
-                                } else {
-                                    // Single element removal
-
-                                    // We need to remove the current real DOM node
-                                    // and the matching real DOM node will fall into
-                                    // place. We will continue diffing with next sibling
-                                    // after the real DOM node that just fell into place
-                                    fromNextSibling = nextSibling(
-                                        fromNextSibling
                                     );
 
                                     if (curFromNodeChild) {
@@ -463,55 +491,45 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                         );
                                     }
                                 }
-                            } else {
-                                // A <-> A
-                                // B <-> D <-- We are here
-                                // C
-                                // D
 
-                                // We need to move the matching node into place
-                                insertAfter(
-                                    matchingFromEl,
-                                    curFromNodeChild,
-                                    fromNode
-                                );
-
-                                if (curFromNodeChild) {
-                                    detachNode(
-                                        curFromNodeChild,
-                                        fromNode,
-                                        ownerComponent
+                                if (
+                                    (curToNodeChild.___flags &
+                                        FLAG_PRESERVE) ===
+                                    0
+                                ) {
+                                    morphEl(
+                                        matchingFromEl,
+                                        curVFromNodeChild,
+                                        curToNodeChild,
+                                        curToNodeKey,
+                                        ownerComponent,
+                                        parentComponent
                                     );
                                 }
-                            }
-
-                            if (
-                                (curToNodeChild.___flags & FLAG_PRESERVE) ===
-                                0
-                            ) {
-                                morphEl(
-                                    matchingFromEl,
-                                    curVFromNodeChild,
+                            } else {
+                                insertVirtualNodeBefore(
                                     curToNodeChild,
                                     curToNodeKey,
+                                    curFromNodeChild,
+                                    fromNode,
                                     ownerComponent,
                                     parentComponent
                                 );
+                                detachNode(
+                                    matchingFromEl,
+                                    fromNode,
+                                    ownerComponent
+                                );
                             }
                         } else {
-                            insertVirtualNodeBefore(
-                                curToNodeChild,
-                                curToNodeKey,
-                                curFromNodeChild,
-                                fromNode,
-                                ownerComponent,
-                                parentComponent
-                            );
-                            detachNode(
+                            // preserve the node
+                            // but still we need to diff the current from node
+                            insertBefore(
                                 matchingFromEl,
-                                fromNode,
-                                ownerComponent
+                                curFromNodeChild,
+                                fromNode
                             );
+                            fromNextSibling = curFromNodeChild;
                         }
                     }
                 }

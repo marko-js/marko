@@ -1,0 +1,9 @@
+<div>
+    <div.unpreserved-counter>${input.counter}</div>
+    <if(input.counter % 2 === 0)>
+        <div key="odd">odd</div>
+    </if>
+    <span key="preserve" data-counter=input.counter no-update>
+        <div.preserved-counter>${input.counter}</div>
+    </span>
+</div>
