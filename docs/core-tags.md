@@ -38,28 +38,24 @@ And support complex expressions:
 
 ### `<for>`
 
-The `<for>` tag allows iterating over an array of items:
+The `<for>` tag allows you to map an iterable, object properties or a range of numbers into a template. Like some of the other core tags, `<for>` relies on [tag parameters](./syntax.md#tag-body-parameters) to provide data about the current iteration to its body.
+
+#### Iterating over a list
+
+Much like the [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop in javascript, providing an `of` attribute will iterate over the provided array/iterable. The current item, index, and the input list will be provided as [tag parameters](./syntax.md#tag-body-parameters).
 
 ```marko
 <ul>
-    <for(color in colors)>
-        <li>${color}</li>
+    <for|color, index| of=colors>
+        <li>${index}: ${color}</li>
     </for>
 </ul>
 ```
 
-It may also be applied as an attribute:
-
-```marko
-<ul>
-    <li for(color in colors)>${color}</li>
-</ul>
-```
-
-With either of the above templates, and the following value for `colors`:
+With the following value for `colors`:
 
 ```js
-var colors = ["red", "green", "blue"];
+const colors = ["red", "green", "blue"];
 ```
 
 The output HTML would be the following:
@@ -72,121 +68,70 @@ The output HTML would be the following:
 </ul>
 ```
 
-#### Loop Status Variable
+> **Pro Tip**: The `<for>` tag with an `of` attribute can iterate over any iterable just like the JavaScript [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop. In order to iterate over other "array like" objects (ones that just have a `length` property for example) you can use [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+>
+> ```marko
+> <for|letter, index| of=Array.from({ 0: "a", 1: "b", length: 2 })>
+>   ${index + 1}: ${letter}
+> </for>
+> ```
 
-The `for` directive also supports a loop status variable in case you need to know the current loop index. For example:
+#### Iterating over an objects properties
 
-```marko
-<ul>
-    <li for(color in colors | status-var=loop)>
-        ${color}
-        ${loop.getIndex()+1}) of ${loop.getLength()}
-        <if(loop.isFirst())> - FIRST</if>
-        <if(loop.isLast())> - LAST</if>
-    </li>
-</ul>
-```
-
-##### Loop Status Methods
-
-###### `getLength()`
-
-Returns the length of the array
-
-###### `getIndex()`
-
-Returns the current loop index
-
-###### `isFirst()`
-
-Returns `true` if the current index is the first index, otherwise `false`
-
-###### `isLast()`
-
-Returns `true` if the current index is the last index, otherwise `false`
-
-#### Loop Separator
-
-Used for separating values in a loop by characters. The first element will not
-be prefixed and the last element will not be suffixed with the `separator`:
-
-```marko
-<div>
-    <!-- Output: red, green, blue -->
-    <span for(color in colors | separator=", ") style="color: ${color}">
-        ${color}
-    </span>
-</div>
-```
-
-#### Range Looping
-
-A range can be provided in the following format; `<var-name> from <from> to <to>[ step <step>]`.
-
-The `from`, `to` and `step` values must be numerical expressions. If not specified, step defaults to 1.
+Much like the [`for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) loop in javascript, providing an `in` attribute will iterate over the provided objects properties. The current property name and its value will be provided as [tag parameters](./syntax.md#tag-body-parameters).
 
 ```marko
 <ul>
-    <li for(i from 0 to 10)>
-        ${i}
-    </li>
+    <for|name, enabled| in=settings>
+        <li>${name}: ${enabled ? "on" : "off"}</li>
+    </for>
 </ul>
 ```
 
-```marko
-<ul>
-    <li for(i from 0 to 10 step 2)>
-        ${i}
-    </li>
-</ul>
+With the following value for `settings`:
+
+```js
+const settings = {
+  "Dark Mode": false,
+  Fullscreen: true
+};
 ```
 
-```marko
-<ul>
-    <li for(i from 0 to myArray.length-1)>
-        ${myArray[i]}
-    </li>
-</ul>
-```
-
-#### Property Looping
-
-```marko
-<ul>
-    <li for(name, value in settings)>
-        <b>${name}</b>: ${value}
-    </li>
-</ul>
-```
-
-#### Native JavaScript for-loop
-
-```marko
-<for(var i=1; i<=3; i++)>
-    ${i}
-</for>
-```
-
-#### Custom Iterator
-
-```marko
-static function reverseIterator(arrayList, callback) {
-    for(var i=arrayList.length-1; i>=0; i--){
-        callback(arrayList[i]);
-    }
-}
-
-<div for(item in ['a', 'b', 'c'] | iterator=reverseIterator)>
-    ${item}
-</div>
-```
-
-Output:
+The output HTML would be the following:
 
 ```html
-<div>c</div>
-<div>b</div>
-<div>a</div>
+<ul>
+  <li>Dark Mode: off</li>
+  <li>Fullscreen: on</li>
+</ul>
+```
+
+#### Iterating between a range of numbers
+
+The final variant allows you to iterate between two numbers. You must provide a `from` and `to` attribute, along side an optional `step` attribute. If not specified, `step` defaults to 1. The current number in the range will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+
+```marko
+<ul>
+    <for|i| from=0 to=10>
+        <li>${i}</li>
+    </for>
+</ul>
+```
+
+```marko
+<ul>
+    <for|i| from=0 to=10 step=2>
+        <li>${i}</li>
+    </for>
+</ul>
+```
+
+```marko
+<ul>
+    <for|i| from=0 to=(myArray.length - 1)>
+        <li>${myArray[i]}</li>
+    </for>
+</ul>
 ```
 
 ### `<while>`

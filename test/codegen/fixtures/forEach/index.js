@@ -5,5 +5,5 @@ module.exports = function(builder) {
     var forEach = builder.forEach;
     var text = builder.text;
 
-    return templateRoot([forEach("color", "data.colors", [text("color")])]);
+    return templateRoot([forEach(["color"], "data.colors", [text("color")])]);
 };

@@ -83,12 +83,6 @@ const helpers = {
     escapeStyle: "xc",
     forEach: "f",
     forEachProp: { module: "marko/runtime/helper-forEachProperty" },
-    forEachPropStatusVar: {
-        module: "marko/runtime/helper-forEachPropStatusVar"
-    },
-    forEachWithStatusVar: {
-        module: "marko/runtime/helper-forEachWithStatusVar"
-    },
     forRange: { module: "marko/runtime/helper-forRange" },
     getWidgetFromOut: {
         module: "marko/components/legacy/helper-getWidgetFromOut"

@@ -5,7 +5,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    hasRenderBodyKey = Symbol.for("hasRenderBody"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_loadTag = marko_helpers.t,
     await_tag = marko_loadTag(require("marko/src/taglibs/core/await/renderer"));
@@ -25,8 +24,7 @@ function render(input, out, __component, component, state) {
           renderBody: function renderBody(out) {
             out.w("something went wrong!");
           }
-        },
-      [hasRenderBodyKey]: true
+        }
     }, out, __component, "0");
 }
 

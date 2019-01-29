@@ -7,7 +7,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
-    hasRenderBodyKey = Symbol.for("hasRenderBody"),
     marko_loadTag = marko_helpers.t,
     await_tag = marko_loadTag(require("marko/src/taglibs/core/await/renderer"));
 
@@ -28,8 +27,7 @@ function render(input, out, __component, component, state) {
           renderBody: function renderBody(out) {
             out.w("Loading name...");
           }
-        },
-      [hasRenderBodyKey]: true
+        }
     }, out, __component, "0");
 }
 

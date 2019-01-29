@@ -345,7 +345,7 @@ class {
 <div>
   <h1 key="header">Hello</h1>
   <ul>
-    <for(color in ['red', 'green', 'blue'])>
+    <for|color| of=['red', 'green', 'blue']>
         <li key="colors[]">${color}</li>
     </for>
   </ul>
@@ -382,7 +382,7 @@ The `key` attribute can be used to pair HTML elements or UI components that are 
 
 ```marko
 <ul>
-  <for(user in input.users)>
+  <for|user| of=input.users>
       <li key=user.id>${user.name}</li>
   </for>
 </ul>
