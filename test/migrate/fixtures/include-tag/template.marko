@@ -22,7 +22,7 @@ $ const ExampleD = undefined;
 <!-- Dynamic: basic -->
 <include(input.x)/>
 <!-- Dynamic: with attributes -->
-<include(input.x) ...{ a: 1 } b=2/>
+<include(input.x, { a: 1 }) ...{ b: 2 } c=3/>
 <!-- Dynamic: with body -->
 <include(input.x)>
     <div>Hi</div>
@@ -31,3 +31,7 @@ $ const ExampleD = undefined;
 <div include(x, { a: 1 })>
     <span/>
 </div>
+<!-- Include complex expression -->
+<include(input.x ? a : b)/>
+<!-- Include complex expression 2 -->
+<include(a())/>

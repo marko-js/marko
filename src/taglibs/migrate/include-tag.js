@@ -36,15 +36,38 @@ module.exports = function migrator(elNode, context) {
         dynamicTag.rawTagNameExpression = importTag(target.value, context);
         elNode.replaceWith(dynamicTag);
     } else {
-        dynamicTag.rawTagNameExpression = printJS(target, context);
+        const isMemberOrIdentifer =
+            target.type === "MemberExpression" || target.type === "Identifier";
+        let finalTarget = target;
+
+        if (!isMemberOrIdentifer) {
+            const complexIncludeIdentifierCount = (context._complexIncludeIdentifierCount =
+                (context._complexIncludeIdentifierCount || 0) + 1);
+            let identifierName = "includeTarget";
+
+            if (complexIncludeIdentifierCount !== 1) {
+                identifierName += `_${complexIncludeIdentifierCount}`;
+            }
+
+            elNode.insertSiblingBefore(
+                builder.scriptlet({
+                    value: builder.vars({
+                        [identifierName]: target
+                    })
+                })
+            );
+
+            finalTarget = builder.identifier(identifierName);
+        }
+        dynamicTag.rawTagNameExpression = printJS(finalTarget, context);
         elNode.insertSiblingBefore(
             builder.htmlElement(
                 "if",
                 undefined,
-                [builder.text(target)],
+                [builder.text(finalTarget)],
                 printJS(
                     builder.binaryExpression(
-                        builder.unaryExpression(target, "typeof", true),
+                        builder.unaryExpression(finalTarget, "typeof", true),
                         "===",
                         builder.literal("string")
                     ),
