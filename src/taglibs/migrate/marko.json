@@ -142,6 +142,9 @@
             }
         ]
     },
+    "<for>": {
+        "migrator": "./for-tag"
+    },
     "<layout-put>": {
         "migrator": "./layout-put-tag",
         "deprecated": true

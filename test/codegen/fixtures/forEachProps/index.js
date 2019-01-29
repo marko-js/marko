@@ -5,8 +5,7 @@ module.exports = function(builder) {
 
     return templateRoot([
         builder.forEachProp({
-            nameVarName: "k",
-            valueVarName: "v",
+            params: ["k", "v"],
             in: "myObject",
             body: [
                 builder.functionCall("console.log", [

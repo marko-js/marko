@@ -1,0 +1,140 @@
+<!-- test/migrate/fixtures/legacy-for-syntax/template.marko -->
+
+<!-- Array -->
+<for|color| of=colors>
+    <li>${color}</li>
+</for>
+<!-- Array | iterator -->
+$ var iteratorColors = [];
+$ input.iterator(colors, function(item) {
+    iteratorColors.push(item);
+});
+<for|color| of=iteratorColors>
+    <li>${color}</li>
+</for>
+<!-- Array | separator -->
+<for|color, loopIndex, loopAll| of=colors>
+    <li>${color}</li>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- Array | status-var -->
+<for|color, loopIndex, loopAll| of=colors>
+    ${color}${loopIndex + 1}) of ${loopAll.length}<if(loopIndex === 0)>
+        - FIRST
+    </if>
+    <if(loopIndex === loopAll.length - 1)>- LAST</if>
+</for>
+<!-- Array | iterator separator -->
+$ var iteratorColors = [];
+$ input.iterator(colors, function(item) {
+    iteratorColors.push(item);
+});
+<for|color, loopIndex, loopAll| of=iteratorColors>
+    <li>${color}</li>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- Array | status-var iterator -->
+<for|color, loop| of=input.iterator.bind(null, colors)>
+    ${color}${loop.getIndex() + 1}) of ${loop.getLength()}<if(loop.isFirst())>
+        - FIRST
+    </if>
+    <if(loop.isLast())>- LAST</if>
+</for>
+<!-- Array | status-var separator -->
+<for|color, loopIndex, loopAll| of=colors>
+    ${color}${loopIndex + 1}) of ${loopAll.length}<if(loopIndex === 0)>
+        - FIRST
+    </if>
+    <if(loopIndex === loopAll.length - 1)>- LAST</if>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- Array | status-var iterator separator -->
+<for|color, loop| of=input.iterator.bind(null, colors)>
+    ${color}${loop.getIndex() + 1}) of ${loop.getLength()}<if(loop.isFirst())>
+        - FIRST
+    </if>
+    <if(loop.isLast())>- LAST</if>
+</for>
+<!-- Properties -->
+<for|color, code| in=colors>
+    <li>${color}: #${code}</li>
+</for>
+<!-- Properties | separator -->
+<for|color, loopIndex, loopAll| of=Object.keys(colors)>
+    $ var code = colors[color];
+    <li>${color}: #${code}</li>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- Properties | status-var -->
+<for|color, loopIndex, loopAll| of=Object.keys(colors)>
+    $ var code = colors[color];
+    <li>${color}: #${code}</li>
+    ${loopIndex + 1}
+    ) of 
+    ${loopAll.length}
+    <if(loopIndex === 0)>- FIRST</if>
+    <if(loopIndex === loopAll.length - 1)>- LAST</if>
+</for>
+<!-- Properties | status-var separator -->
+<for|color, loopIndex, loopAll| of=Object.keys(colors)>
+    $ var code = colors[color];
+    <li>${color}: #${code}</li>
+    ${loopIndex + 1}
+    ) of 
+    ${loopAll.length}
+    <if(loopIndex === 0)>- FIRST</if>
+    <if(loopIndex === loopAll.length - 1)>- LAST</if>
+    <if(loopIndex !== loopAll.length - 1)>,</if>
+</for>
+<!-- Range -->
+<for|i| from=0 to=10>
+    <li>${i}</li>
+</for>
+<!-- Regular -->
+<for|i| from=0 to=(list.length - 1)>${i}</for>
+<for|i| from=0 to=listSize step=2>${i}</for>
+<!-- Stange: backwards -->
+$ var i = 0;
+<while(list.length >= i)>
+    ${i}
+    $ i++;
+</while>
+$ var i = list.length;
+<while(i >= 0)>
+    ${i}
+    $ i--;
+</while>
+$ var i = listSize;
+<while(i > 0)>
+    ${i}
+    $ i -= 2;
+</while>
+<!-- Strange: multi declaration -->
+$ {
+    var i = 0,
+        x = 2;
+}
+<while(i < listSize)>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid declaration -->
+$ x();
+<while(i < listSize)>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid test -->
+$ var i = 0;
+<while(x())>
+    ${i}
+    $ i++;
+</while>
+<!-- Strange: invalid update -->
+$ var i = 0;
+<while(i < listSize)>
+    ${i}
+    $ x();
+</while>
+<!-- Strange: missing parts -->
+<while(i--)>${i}</while>

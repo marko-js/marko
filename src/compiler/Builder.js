@@ -203,47 +203,42 @@ class Builder {
         return new Expression({ value });
     }
 
-    forEach(varName, inExpression, body) {
-        if (arguments.length === 1) {
-            var def = arguments[0];
-            return new ForEach(def);
-        } else {
-            varName = makeNode(varName);
-            inExpression = makeNode(inExpression);
-            return new ForEach({ varName, in: inExpression, body });
-        }
+    forEach(params, ofExpression, body) {
+        return new ForEach(
+            arguments.length === 1
+                ? params
+                : {
+                      params: makeNode(params),
+                      of: makeNode(ofExpression),
+                      body
+                  }
+        );
     }
 
-    forEachProp(nameVarName, valueVarName, inExpression, body) {
-        if (arguments.length === 1) {
-            var def = arguments[0];
-            return new ForEachProp(def);
-        } else {
-            nameVarName = makeNode(nameVarName);
-            valueVarName = makeNode(valueVarName);
-            inExpression = makeNode(inExpression);
-            return new ForEachProp({
-                nameVarName,
-                valueVarName,
-                in: inExpression,
-                body
-            });
-        }
+    forEachProp(params, inExpression, body) {
+        return new ForEachProp(
+            arguments.length === 1
+                ? params
+                : {
+                      params: makeNode(params),
+                      in: makeNode(inExpression),
+                      body
+                  }
+        );
     }
 
-    forRange(varName, from, to, step, body) {
-        if (arguments.length === 1) {
-            var def = arguments[0];
-            return new ForRange(def);
-        } else {
-            varName = makeNode(varName);
-            from = makeNode(from);
-            to = makeNode(to);
-            step = makeNode(step);
-            body = makeNode(body);
-
-            return new ForRange({ varName, from, to, step, body });
-        }
+    forRange(params, from, to, step, body) {
+        return new ForRange(
+            arguments.length === 1
+                ? params
+                : {
+                      params: makeNode(params),
+                      from: makeNode(from),
+                      to: makeNode(to),
+                      step: makeNode(step),
+                      body
+                  }
+        );
     }
 
     forStatement(init, test, update, body) {

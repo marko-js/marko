@@ -18,15 +18,6 @@ var tokenizer = require("./tokenizer").create([
     }
 ]);
 
-/**
- * Parses a for loop string in the following forms:
- *
- * <varName> in <expression>
- * <varName> in <expression> | status-var=<varName> separator=<expression>
- * <varName> from <expression> to <expression>
- * <varName> from <expression> to <expression> step <expression>
- * <init>; <test>; <update>
- */
 module.exports = function removeComments(str) {
     var comments = [];
 
