@@ -5,8 +5,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    module_Target = require("./target.marko"),
-    Target = module_Target.default || module_Target,
+    marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
+    Target = marko_loadTemplate(require.resolve("./target.marko")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_dynamicTag = marko_helpers.d;
 

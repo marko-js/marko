@@ -8,8 +8,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     }),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    module_IncludeTarget = require("./include-target.marko"),
-    IncludeTarget = module_IncludeTarget.default || module_IncludeTarget,
+    IncludeTarget = require("./include-target.marko"),
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
     marko_dynamicTag = marko_helpers.d;
 
