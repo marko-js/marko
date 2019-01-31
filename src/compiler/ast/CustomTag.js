@@ -169,7 +169,22 @@ function processDirectlyNestedTags(node, codegen) {
 
             let ifNode = child;
 
-            let childChild = child.childCount === 1 && child.firstChild;
+            let childChild;
+            const childCount = child.childCount;
+
+            if (childCount === 1) {
+                childChild = child.firstChild;
+            } else if (childCount > 1 && childCount <= 3) {
+                const middleChild = child.firstChild.nextSibling;
+                if (
+                    isWhiteSpaceTextNode(child.firstChild) &&
+                    (childCount !== 3 ||
+                        isWhiteSpaceTextNode(middleChild.nextSibling))
+                ) {
+                    childChild = middleChild;
+                }
+            }
+
             if (childChild && childChild.type === "CustomTag") {
                 let customTag = childChild;
 
@@ -183,6 +198,14 @@ function processDirectlyNestedTags(node, codegen) {
             }
         }
     });
+}
+
+function isWhiteSpaceTextNode(node) {
+    return (
+        node.type === "Text" &&
+        node.argument.type === "Literal" &&
+        /^\s+$/.test(node.argument.value)
+    );
 }
 
 function merge(props1, props2, context) {
