@@ -168,10 +168,20 @@ function processDirectlyNestedTags(node, codegen) {
             }
 
             let ifNode = child;
+            let checkNode;
 
-            let childChild = child.childCount === 1 && child.firstChild;
-            if (childChild && childChild.type === "CustomTag") {
-                let customTag = childChild;
+            for (const curNode of child.body.array) {
+                if (!isWhiteSpaceTextNode(curNode)) {
+                    if (checkNode) {
+                        return;
+                    }
+
+                    checkNode = curNode;
+                }
+            }
+
+            if (checkNode && checkNode.type === "CustomTag") {
+                let customTag = checkNode;
 
                 let tagDef = customTag.resolveTagDef(codegen.context);
                 if (tagDef.isNestedTag && !tagDef.isRepeated) {
@@ -183,6 +193,14 @@ function processDirectlyNestedTags(node, codegen) {
             }
         }
     });
+}
+
+function isWhiteSpaceTextNode(node) {
+    return (
+        node.type === "Text" &&
+        node.argument.type === "Literal" &&
+        /^\s+$/.test(node.argument.value)
+    );
 }
 
 function merge(props1, props2, context) {
