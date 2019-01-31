@@ -4,6 +4,11 @@
 
 ## 4.14.x
 
+### 4.14.23
+
+- Fix warning that `"marko"` was using deprecated features. [#1250](https://github.com/marko-js/marko/pull/1250)
+- Improve code optimization for conditional `@nested` tags. [#1249](https://github.com/marko-js/marko/pull/1249)
+
 ### 4.14.22
 
 - Fix issue with `no-update` not moving preserved items [#1247](https://github.com/marko-js/marko/pull/1247).
