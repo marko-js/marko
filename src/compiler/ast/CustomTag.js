@@ -168,25 +168,20 @@ function processDirectlyNestedTags(node, codegen) {
             }
 
             let ifNode = child;
+            let checkNode;
 
-            let childChild;
-            const childCount = child.childCount;
+            for (const curNode of child.body.array) {
+                if (!isWhiteSpaceTextNode(curNode)) {
+                    if (checkNode) {
+                        return;
+                    }
 
-            if (childCount === 1) {
-                childChild = child.firstChild;
-            } else if (childCount > 1 && childCount <= 3) {
-                const middleChild = child.firstChild.nextSibling;
-                if (
-                    isWhiteSpaceTextNode(child.firstChild) &&
-                    (childCount !== 3 ||
-                        isWhiteSpaceTextNode(middleChild.nextSibling))
-                ) {
-                    childChild = middleChild;
+                    checkNode = curNode;
                 }
             }
 
-            if (childChild && childChild.type === "CustomTag") {
-                let customTag = childChild;
+            if (checkNode && checkNode.type === "CustomTag") {
+                let customTag = checkNode;
 
                 let tagDef = customTag.resolveTagDef(codegen.context);
                 if (tagDef.isNestedTag && !tagDef.isRepeated) {
