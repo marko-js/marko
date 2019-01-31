@@ -1,7 +1,7 @@
-module-code(function(require) {
+<module-code(function(require) {
     var isDebug = require('./env').isDebug;
     return `module.exports = require("./${isDebug ? 'src' : 'dist'}/index");\n`;
-});
+})/>
 
 // What's going on here? We are using Marko to do JavaScript code generation
 // during the module bundling phase to conditionally export either the
