@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.24
+
+- Fix regression in `<await>` that caused flushing to not occur in all cases [#1252](https://github.com/marko-js/marko/pull/1252)
+
 ### 4.14.23
 
 - Fix warning that `"marko"` was using deprecated features. [#1250](https://github.com/marko-js/marko/pull/1250)
