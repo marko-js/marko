@@ -147,6 +147,7 @@ module.exports = function awaitTag(input, out) {
 
         out.emit("await:clientReorder", awaitInfo);
     } else {
+        out.flush();
         asyncOut = awaitInfo.out = out.beginAsync({
             timeout: 0, // We will use our code for controlling timeout
             name: name
