@@ -36,3 +36,5 @@ exports.checkEvents = function(events, snapshot, out) {
 
     snapshot(events, out.isVDOM ? "-events-vdom.json" : "-events.json");
 };
+
+exports.skip_vdom = "client-reorder/placeholders are not supported in vdom";
