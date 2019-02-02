@@ -40,6 +40,18 @@ function createAsyncVerifier(main, snapshot, out) {
     addEventListener("await:beforeRender");
     addEventListener("await:finish");
 
+    var _flush = out.flush;
+    out.flush = function() {
+        try {
+            out.comment("FLUSH");
+        } catch (e) {
+            // we may try to flush after the out has ended
+            // if this is the case, trying to add a comment
+            // will throw an error.  we can safely ignore this
+        }
+        _flush && _flush.apply(out, arguments);
+    };
+
     return {
         verify() {
             if (main.checkEvents) {
