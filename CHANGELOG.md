@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.14.25
+
+- Fix regression with non standard template literals (`"stuff ${placeholder}"`) that have escaped content such as newlines [#1254](https://github.com/marko-js/marko/pull/1254)
+
 ### 4.14.24
 
 - Fix regression in `<await>` that caused flushing to not occur in all cases [#1252](https://github.com/marko-js/marko/pull/1252)
