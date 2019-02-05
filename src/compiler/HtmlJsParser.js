@@ -31,7 +31,7 @@ class HtmlJsParser {
                             value += "${" + part.value + "}";
                         } else {
                             value += part.replace(
-                                /`|\\|\${/g,
+                                /`|\${/g,
                                 match => "\\" + match
                             );
                         }
