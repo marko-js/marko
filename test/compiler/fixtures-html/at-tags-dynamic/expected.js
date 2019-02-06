@@ -7,7 +7,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_forEach = marko_helpers.f,
-    hasRenderBodyKey = Symbol.for("hasRenderBody"),
     marko_loadNestedTag = require("marko/src/runtime/helper-loadNestedTag"),
     hello_foo_nested_tag = marko_loadNestedTag("foo"),
     marko_mergeNestedTagsHelper = require("marko/src/runtime/helper-mergeNestedTags"),
@@ -32,8 +31,7 @@ function render(input, out, __component, component, state) {
               }
             }, hello0);
         });
-      },
-      [hasRenderBodyKey]: true
+      }
     }), out, __component, "0");
 }
 
