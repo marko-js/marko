@@ -5,82 +5,27 @@ var Node = require("./Node");
 class ForEachProp extends Node {
     constructor(def) {
         super("ForEachProp");
-        this.nameVarName = def.nameVarName;
-        this.valueVarName = def.valueVarName;
+        this.params = def.params;
         this.in = def.in;
-        this.separator = def.separator;
-        this.statusVarName = def.statusVarName;
         this.body = this.makeContainer(def.body);
-
-        ok(this.nameVarName, '"nameVarName" is required');
-        ok(this.valueVarName != null, '"valueVarName" is required');
         ok(this.in != null, '"in" is required');
     }
 
     generateCode(codegen) {
         var context = codegen.context;
-        var nameVarName = this.nameVarName;
-        var valueVarName = this.valueVarName;
+        var params = this.params;
         var inExpression = this.in;
         var body = this.body;
-        var separator = this.separator;
-        var statusVarName = this.statusVarName;
-
-        if (separator && !statusVarName) {
-            statusVarName = "__loop";
-        }
-
         var builder = codegen.builder;
 
-        if (statusVarName) {
-            let helperVar = context.helper("forEachPropStatusVar");
-            let forEachVarName = codegen.addStaticVar(
-                "forEacPropStatusVar",
-                helperVar
-            );
-            let body = this.body;
-
-            if (separator) {
-                let isNotLastTest = builder.functionCall(
-                    builder.memberExpression(
-                        statusVarName,
-                        builder.identifier("isLast")
-                    ),
-                    []
-                );
-
-                isNotLastTest = builder.negate(isNotLastTest);
-
-                body = body.items.concat([
-                    builder.ifStatement(isNotLastTest, [
-                        builder.text(separator)
-                    ])
-                ]);
-            }
-
-            return builder.functionCall(forEachVarName, [
-                inExpression,
-                builder.functionDeclaration(
-                    null,
-                    [nameVarName, valueVarName, statusVarName],
-                    body
-                )
-            ]);
-        } else {
-            return builder.functionCall(context.helper("forEachProp"), [
-                inExpression,
-                builder.functionDeclaration(
-                    null,
-                    [nameVarName, valueVarName],
-                    body
-                )
-            ]);
-        }
+        return builder.functionCall(context.helper("forEachProp"), [
+            inExpression,
+            builder.functionDeclaration(null, params, body)
+        ]);
     }
 
     walk(walker) {
-        this.nameVarName = walker.walk(this.nameVarName);
-        this.valueVarName = walker.walk(this.valueVarName);
+        this.params = walker.walk(this.params);
         this.in = walker.walk(this.in);
         this.body = walker.walk(this.body);
     }

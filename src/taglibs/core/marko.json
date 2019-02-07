@@ -28,31 +28,25 @@
     },
     "<for>": {
         "code-generator": "./for-tag",
-        "attributes": {},
+        "attributes": {
+            "of": "expression",
+            "in": "expression",
+            "to": "expression",
+            "from": "expression",
+            "step": "expression"
+        },
         "autocomplete": [
             {
-                "snippet": "for(${1:var} in ${2:array})",
+                "snippet": "for|${1:value}, ${2:index}| of=\"${3:array}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             },
             {
-                "snippet": "for(${1:var} in ${2:array}) | status-var=${3:loop}",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#loop-status-variable"
-            },
-            {
-                "snippet": "for(${1:name},${2:value} in ${3:object})",
+                "snippet": "for|${1:name}, ${2:value}| in=\"${3:object}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
             },
             {
-                "snippet": "for(${1:init}; ${2:test}; ${3:update})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#native-javascript-for-loop"
-            },
-            {
-                "snippet": "for(${1:var} from ${2:start} to ${3:end})",
+                "snippet": "for|${1:index}| from=\"${2:number}\" to=\"${3:number}\" step=\"${4:number}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
-            },
-            {
-                "snippet": "for",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
             }
         ]
     },
@@ -106,8 +100,8 @@
         "node-factory": "./macro-tag",
         "autocomplete": [
             {
-                "displayText": "macro <name>(<parmas>)",
-                "snippet": "macro ${1:name}(${2:param1, param2})",
+                "displayText": "macro|<params>| name=\"<name>\"",
+                "snippet": "macro|${2:param1, param2}| name=\"${1:name}\"",
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
             },
             {
@@ -115,15 +109,6 @@
             }
         ],
         "no-output": true
-    },
-    "<macro-body>": {
-        "code-generator": "./macro-body-tag",
-        "autocomplete": [
-            {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros",
-                "openTagOnly": true
-            }
-        ]
     },
     "<marko>": {
         "code-generator": "./marko-tag",
@@ -163,6 +148,45 @@
             },
             {
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+            }
+        ]
+    },
+    "<await>": {
+        "transformer": "./await/transformer",
+        "renderer": "./await/renderer",
+        "@_provider": "expression",
+        "@_name": "string",
+        "@timeout": "integer",
+        "@name": {
+            "type": "string",
+            "description": "Name of await",
+            "autocomplete": [
+                {
+                    "snippet": "name=\"${1:name}\""
+                },
+                {}
+            ]
+        },
+        "@client-reorder": {
+            "type": "boolean",
+            "description": "Use JavaScript on client to move async fragment into the proper place."
+        },
+        "@show-after": {
+            "type": "string"
+        },
+        "autocomplete": [
+            {
+                "snippet": "await(${1:promise})",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
+            }
+        ]
+    },
+    "<await-reorderer>": {
+        "renderer": "./await/reorderer-renderer",
+        "autocomplete": [
+            {
+                "snippet": "await-reorderer",
+                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
             }
         ]
     },

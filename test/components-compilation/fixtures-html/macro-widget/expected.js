@@ -9,12 +9,15 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
     marko_attr = marko_helpers.a,
-    marko_forEach = marko_helpers.f;
+    marko_forEach = marko_helpers.f,
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  function macro_renderButton(color, out, renderBody) {
+  function macro_renderButton(out, macroInput) {
+    var color = macroInput.color
+
     out.w("<button" +
       marko_attr("data-marko", {
         onclick: __component.d("click", "handleColorClick", false, [
@@ -37,7 +40,9 @@ function render(input, out, __component, component, state) {
     ], function(color) {
     var keyscope__3 = "[" + ((for__2++) + "]");
 
-    macro_renderButton(color, out);
+    marko_dynamicTag(macro_renderButton, {
+        color: color
+      }, out, __component, "4" + keyscope__3);
   });
 
   out.w("</div>");

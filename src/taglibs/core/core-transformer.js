@@ -57,6 +57,23 @@ var attributeTransformers = AttributeTransformer.prototype;
 module.exports = function transform(el, context) {
     el.removeAttribute("marko-body"); // This attribute is handled at parse time. We can just remove it now
 
+    if (context.isMacro(el.tagName)) {
+        // Replace any registered Macro call with a dynamic tag.
+        el.replaceWith(
+            (el = context.createNodeForEl({
+                tagName: context.builder.identifier(
+                    context.getRegisteredMacro(el.tagName).functionName
+                ),
+                attributes: el.attributes,
+                argument: el.argument,
+                params: el.params,
+                openTagOnly: el.openTagOnly,
+                selfClosed: el.selfClosed,
+                body: el.body
+            }))
+        );
+    }
+
     var attributeTransfomer;
     var node = el;
 

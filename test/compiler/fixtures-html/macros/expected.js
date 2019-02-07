@@ -7,12 +7,15 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
-    marko_forEach = marko_helpers.f;
+    marko_forEach = marko_helpers.f,
+    marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  function macro_renderTree(node, out, renderBody) {
+  function macro_renderTree(out, macroInput) {
+    var node = macroInput.node
+
     out.w("Name: " +
       marko_escapeXml(node.name) +
       " Children: ");
@@ -27,7 +30,9 @@ function render(input, out, __component, component, state) {
 
         out.w("<li>");
 
-        macro_renderTree(child, out);
+        marko_dynamicTag(macro_renderTree, {
+            node: child
+          }, out, __component, "4" + keyscope__2);
 
         out.w("</li>");
       });
@@ -36,7 +41,9 @@ function render(input, out, __component, component, state) {
     }
   }
 
-  macro_renderTree(input.node, out);
+  marko_dynamicTag(macro_renderTree, {
+      node: input.node
+    }, out, __component, "5");
 }
 
 marko_template._ = marko_renderer(render, {

@@ -7,7 +7,7 @@ exports.checkError = function(e) {
     expect(e.errors.length).to.equal(1);
 
     var message = e.toString();
-    expect(message).to.contain("Invalid <aync-fragment> tag");
+    expect(message).to.contain("Invalid <async-fragment> tag");
     expect(message).to.contain("should be a valid JavaScript identifier");
     expect(message).to.contain(
         '<async-fragment data-provider=data.userInfo var="userInfo" />'

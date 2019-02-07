@@ -5,7 +5,7 @@ module.exports = function(builder) {
 
     return program([
         builder.forRange({
-            varName: "i",
+            params: ["i"],
             from: builder.literal(0),
             to: "myArray.length",
             step: builder.literal(2),

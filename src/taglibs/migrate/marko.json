@@ -117,19 +117,16 @@
         "deprecated": true
     },
     "<async-fragments>": {
-        "migrator": "./async-fragment-tag",
+        "migrator": "./async-fragments-tag",
         "deprecated": true
     },
     "<async-fragment-placeholder>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<async-fragment-timeout>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<async-fragment-error>": {
-        "migrator": "./async-fragment-tag",
         "deprecated": true
     },
     "<include>": {
@@ -144,6 +141,16 @@
                 "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
             }
         ]
+    },
+    "<for>": {
+        "migrator": "./for-tag"
+    },
+    "<macro>": {
+        "migrator": "./macro-tag"
+    },
+    "<macro-body>": {
+        "migrator": "./macro-body-tag",
+        "deprecated": true
     },
     "<layout-put>": {
         "migrator": "./layout-put-tag",
@@ -180,6 +187,18 @@
     },
     "<unless>": {
         "migrator": "./unless-tag",
+        "deprecated": true
+    },
+    "<await>": {
+        "migrator": "./await-tag"
+    },
+    "<await-placeholder>": {
+        "deprecated": true
+    },
+    "<await-timeout>": {
+        "deprecated": true
+    },
+    "<await-error>": {
         "deprecated": true
     },
     "<script>": {

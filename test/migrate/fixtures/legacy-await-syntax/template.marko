@@ -1,0 +1,54 @@
+<await(user from getUserInfo())>
+  Hello ${user.name}
+</await>
+
+<await(user from getUserInfo()) renderPlaceholder=renderPlaceholderFn renderError=renderErrorFn>
+  Hello ${user.name}
+</await>
+
+<await(user from getUserInfo()) renderPlaceholder=renderPlaceholderFn renderError=renderErrorFn renderTimeout=renderTimeoutFn>
+  Hello ${user.name}
+</await>
+
+<await(user from getUserInfo()) renderPlaceholder=renderPlaceholderFn placeholder="Placeholder Attr" renderError=renderErrorFn error-message="Error Message Attr" renderTimeout=renderTimeoutFn timeout-message="Timeout Message Attr">
+  Hello ${user.name}
+</await>
+
+<await(user from getUserInfo()) renderPlaceholder=renderPlaceholderFn placeholder="Placeholder Attr" renderError=renderErrorFn error-message="Error Message Attr" renderTimeout=renderTimeoutFn timeout-message="Timeout Message Attr">
+  Hello ${user.name}
+  <await-placeholder>nested placeholder</await-placeholder>
+  <await-timeout>nested timeout</await-timeout>
+  <await-error>nested error</await-error>
+</await>
+
+<await(user from getters) method="user">
+  Hello ${user.name}
+</await>
+
+<await(user from getters) arg={ hello: "world" }>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) arg=something>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) arg={ hello: "world" } arg-x=1 arg-y=2>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) arg=something arg-x=1 arg-y=2>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) arg-x=1 arg-y=2>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) scope=window>
+  Hello ${user.name}
+</await>
+
+<await(user from getters) method="user" arg={ data: true } arg-x=1 arg-y=2 scope=window>
+  Hello ${user.name}
+</await>

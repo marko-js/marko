@@ -1,0 +1,90 @@
+<!-- test/migrate/fixtures/legacy-await-syntax/template.marko -->
+
+<await(getUserInfo())>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+<await(getUserInfo())>
+    <@then|user|>Hello ${user.name}</@then>
+    <@placeholder>
+        <${renderPlaceholderFn}/>
+    </@placeholder>
+    <@catch>
+        <${renderErrorFn}/>
+    </@catch>
+</await>
+<await(getUserInfo())>
+    <@then|user|>Hello ${user.name}</@then>
+    <@placeholder>
+        <${renderPlaceholderFn}/>
+    </@placeholder>
+    <@catch|err|>
+        <if(err.name === "TimeoutError")>
+            <${renderTimeoutFn}/>
+        </if>
+        <else>
+            <${renderErrorFn}/>
+        </else>
+    </@catch>
+</await>
+<await(getUserInfo())>
+    <@then|user|>Hello ${user.name}</@then>
+    <@placeholder>Placeholder Attr</@placeholder>
+    <@catch|err|>
+        <if(err.name === "TimeoutError")>Timeout Message Attr</if>
+        <else>Error Message Attr</else>
+    </@catch>
+</await>
+<await(getUserInfo())>
+    <@then|user|>Hello ${user.name}</@then>
+    <@placeholder>nested placeholder</@placeholder>
+    <@catch|err|>
+        <if(err.name === "TimeoutError")>nested timeout</if>
+        <else>nested error</else>
+    </@catch>
+</await>
+<await(getters["user"].bind(getters))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+<await(
+    getters.bind(null, {
+        hello: "world"
+    })
+)>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+<await(getters.bind(null, something))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+$ var arg = {
+    hello: "world"
+};
+$ arg["x"] = 1;
+$ arg["y"] = 2;
+<await(getters.bind(null, arg))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+$ var arg = something || {};
+$ arg["x"] = 1;
+$ arg["y"] = 2;
+<await(getters.bind(null, arg))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+<await(
+    getters.bind(null, {
+        x: 1,
+        y: 2
+    })
+)>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+<await(getters.bind(window))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>
+$ var arg = {
+    data: true
+};
+$ arg["x"] = 1;
+$ arg["y"] = 2;
+<await(getters["user"].bind(window, arg))>
+    <@then|user|>Hello ${user.name}</@then>
+</await>

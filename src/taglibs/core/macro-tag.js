@@ -1,17 +1,22 @@
 module.exports = function nodeFactory(elNode, context) {
+    var builder = context.builder;
     var attributes = elNode.attributes;
     var defAttr = attributes[0];
 
-    if (!defAttr || defAttr.value !== undefined) {
+    if (
+        !defAttr ||
+        defAttr.name !== "name" ||
+        !defAttr.value ||
+        typeof defAttr.value.value !== "string"
+    ) {
         context.addError(
             elNode,
-            "The <macro> tag must contain a name as its first attribute, example: <macro greeting()>"
+            'The <macro> tag must only contain a "name" attribute, example: <macro|data| name="my-macro">'
         );
         return elNode;
     }
 
-    var body = elNode.body;
-    var macroName = defAttr.name;
+    var macroName = defAttr.value.value;
 
     if (context.isMacro(macroName)) {
         context.addError(
@@ -21,17 +26,6 @@ module.exports = function nodeFactory(elNode, context) {
         return elNode;
     }
 
-    var argument = defAttr.argument;
-    var params;
-    if (argument) {
-        params = argument.split(/\s*,\s*/);
-    } else {
-        params = [];
-    }
-
-    var builder = context.builder;
-
-    context.registerMacro(macroName, params);
-
-    return builder.macro(macroName, params, body);
+    context.registerMacro(macroName);
+    return builder.macro(macroName, elNode.params, elNode.body);
 };

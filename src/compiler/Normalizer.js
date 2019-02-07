@@ -145,7 +145,15 @@ class Normalizer {
             }
         }
 
-        if (elNode.params.length) {
+        if (
+            elNode.params.length &&
+            elNode.tagName !== "for" &&
+            elNode.tagName !== "macro" &&
+            !(
+                (elNode.tagName === "@then" || elNode.tagName === "@catch") &&
+                elNode.parentNode.tagName === "await"
+            )
+        ) {
             context.setFlag("hasTagParams");
             context.exampleTagParam = newNode;
         }

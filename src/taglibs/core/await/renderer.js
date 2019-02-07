@@ -1,4 +1,5 @@
 "use strict";
+var complain = "MARKO_DEBUG" && require("complain");
 var isClientReorderSupported = require("./client-reorder").isSupported;
 var AsyncValue = require("./AsyncValue");
 
@@ -10,10 +11,17 @@ function safeRenderBody(renderBody, targetOut, data) {
     }
 }
 
-function requestData(provider, args, thisObj, timeout) {
+function requestData(provider, timeout) {
     var asyncValue = new AsyncValue();
 
     if (typeof provider === "function") {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+            complain(
+                "Passing a callback function to the <await> tag has been deprecated, please use a promise instead."
+            );
+        }
+
         var callback = function(err, data) {
             if (err) {
                 asyncValue.___reject(err);
@@ -25,9 +33,9 @@ function requestData(provider, args, thisObj, timeout) {
         var value =
             provider.length === 1
                 ? // one argument so only provide callback to function call
-                  provider.call(thisObj, callback)
+                  provider(callback)
                 : // two arguments so provide args and callback to function call
-                  provider.call(thisObj, args, callback);
+                  provider(null, callback);
 
         if (value !== undefined) {
             asyncValue.___resolve(value);
@@ -46,6 +54,7 @@ function requestData(provider, args, thisObj, timeout) {
             timeoutId = null;
             var error = new Error("Timed out after " + timeout + "ms");
             error.code = "ERR_AWAIT_TIMEDOUT";
+            error.name = "TimeoutError";
             asyncValue.___reject(error);
         }, timeout);
 
@@ -62,22 +71,16 @@ function requestData(provider, args, thisObj, timeout) {
 const LAST_OPTIONS = { last: true, name: "await:finish" };
 
 module.exports = function awaitTag(input, out) {
-    var arg = input.arg || {};
-    arg.out = out;
-
     var clientReorder =
         isClientReorderSupported && input.clientReorder === true && !out.isVDOM;
 
     var name = input.name || input._name;
-    var scope = input.scope || this;
-    var method = input.method;
     var timeout = input.timeout;
-    var dataProvider = input._dataProvider;
-    if (method) {
-        dataProvider = dataProvider[method].bind(dataProvider);
-    }
-
-    var asyncValue = requestData(dataProvider, arg, scope, timeout);
+    var provider = input._provider;
+    var asyncValue = requestData(provider, timeout);
+    var placeholderRenderer = input.placeholder && input.placeholder.renderBody;
+    var resultRenderer = input.then && input.then.renderBody;
+    var errorRenderer = input.catch && input.catch.renderBody;
 
     if (asyncValue.___settled) {
         // No point in using client-reordering if the data was fetched
@@ -91,7 +94,7 @@ module.exports = function awaitTag(input, out) {
     var awaitInfo = {
         name: name,
         clientReorder: clientReorder,
-        dataProvider: dataProvider
+        dataProvider: provider
     };
 
     if (clientReorder) {
@@ -107,9 +110,9 @@ module.exports = function awaitTag(input, out) {
         var id = (awaitInfo.id = input.name || clientReorderContext.nextId++);
         var placeholderIdAttrValue = "afph" + id;
 
-        if (input.renderPlaceholder) {
+        if (placeholderRenderer) {
             out.write('<span id="' + placeholderIdAttrValue + '">');
-            input.renderPlaceholder(out);
+            placeholderRenderer(out);
             out.write("</span>");
         } else {
             out.write(
@@ -173,26 +176,19 @@ module.exports = function awaitTag(input, out) {
         }
 
         if (err) {
-            if (err.code === "ERR_AWAIT_TIMEDOUT" && input.renderTimeout) {
-                input.renderTimeout(asyncOut);
-            } else if (input.renderError) {
-                // eslint-disable-next-line no-console
-                console.error(
-                    "Await (" + name + ") failed. Error:",
-                    err.stack || err
-                );
-                input.renderError(asyncOut);
+            if (errorRenderer) {
+                errorRenderer(asyncOut, err);
             } else {
                 asyncOut.error(err);
             }
         } else {
-            var renderBodyFunc = input.renderBody;
-            if (renderBodyFunc) {
+            if (resultRenderer) {
                 var renderBodyErr = safeRenderBody(
-                    renderBodyFunc,
+                    resultRenderer,
                     asyncOut,
                     data
                 );
+
                 if (renderBodyErr) {
                     return renderBody(renderBodyErr);
                 }
