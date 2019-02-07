@@ -5,7 +5,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    hasRenderBodyKey = Symbol.for("hasRenderBody"),
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
     test_template = marko_loadTemplate(require.resolve("./components/test")),
     marko_helpers = require("marko/src/runtime/html/helpers"),
@@ -20,8 +19,7 @@ function render(input, out, __component, component, state) {
           renderBody: function renderBody(out) {
             out.w("Hello");
           }
-        },
-      [hasRenderBodyKey]: true
+        }
     }, out, __component, "0");
 
   test_tag({
@@ -29,8 +27,7 @@ function render(input, out, __component, component, state) {
           renderBody: function renderBody(out) {
             out.w("Hello");
           }
-        },
-      [hasRenderBodyKey]: true
+        }
     }, out, __component, "2");
 }
 

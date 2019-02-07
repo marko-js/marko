@@ -7,7 +7,6 @@ const ok = require("assert").ok;
 const Node = require("./Node");
 
 const CUSTOM_TAG_KEY = Symbol("CustomTag");
-const HAS_RENDER_BODY_PROP_ADDED = Symbol();
 
 function getNestedVariables(elNode, tagDef, codegen) {
     let variableNames = [];
@@ -784,36 +783,6 @@ class CustomTag extends HtmlElement {
             parentCustomTag.addNestedTag(this);
 
             let hasBody = body && body.length;
-
-            if (
-                hasBody &&
-                context.isServerTarget() &&
-                !parentCustomTag.isFlagSet(HAS_RENDER_BODY_PROP_ADDED)
-            ) {
-                parentCustomTag.setFlag(HAS_RENDER_BODY_PROP_ADDED);
-
-                let hasRenderBodyKey = context.addStaticVar(
-                    "hasRenderBodyKey",
-                    builder.functionCall(
-                        builder.memberExpression(
-                            builder.identifier("Symbol"),
-                            builder.identifier("for")
-                        ),
-                        [builder.literal("hasRenderBody")]
-                    )
-                );
-
-                // We flag tags that have a `renderBody` function on the input
-                // since those tags must be handled differently if it happens to
-                // be a top-level UI component since the `input` would not
-                // be serializable (functions are not serializable). If know
-                // that a top-level UI component has non-serializable input
-                // then we won't use it as the browser-side re-render root
-                parentCustomTag.setAttributeValue(
-                    hasRenderBodyKey,
-                    codegen.builder.literal(true)
-                );
-            }
 
             if (
                 checkIfNestedTagCanBeAddedDirectlyToInput(this, parentCustomTag)
