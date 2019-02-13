@@ -6,7 +6,7 @@ If you just want to play around with Marko in the browser, head on over to our [
 
 ## Creating new apps
 
-If you're starting from scratch, [`marko-cli`](https://www.npmjs.com/package/marko-cli) provides a starter app to
+If you're starting from scratch, [`marko-cli`](https://github.com/marko-js/cli) provides a starter app to
 get you going quickly. To get started:
 
 ```bash
@@ -20,10 +20,10 @@ npm start
 
 ### Installing
 
-The Marko compiler runs on [Node.js](https://nodejs.org/) and can be installed using [npm](https://www.npmjs.com/package/marko/tutorial):
+The Marko compiler runs on [Node.js](https://nodejs.org/) and can be installed using [npm](https://www.npmjs.com/package/marko):
 
 ```
-npm install marko --save
+npm install marko
 ```
 
 or using [yarn](https://yarnpkg.com):
@@ -115,7 +115,7 @@ var out = fs.createWriteStream("hello.html", { encoding: "utf8" });
 hello.render({ name: "Frank" }, out);
 ```
 
-Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko CLI](https://github.com/marko-js/marko-cli):
+Using the Node.js require extension is completely optional. If you prefer to not use the Node.js require extension then you will need to precompile all of the marko templates using [Marko CLI](https://github.com/marko-js/cli):
 
 ```bash
 marko compile hello.marko
@@ -175,7 +175,7 @@ However, you still need to bundle the CSS & JavaScript for your page and include
 First install `lasso` and `lasso-marko`:
 
 ```
-npm install --save lasso lasso-marko
+npm install --save lasso lasso-marko @lasso/marko-taglib
 ```
 
 Next, in your page or layout view, add the `lasso-head` and `lasso-body` tags:

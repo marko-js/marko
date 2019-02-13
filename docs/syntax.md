@@ -13,7 +13,7 @@ Just about any valid HTML is valid Marko, but Marko extends the HTML language to
 
 ## Tags
 
-As you might expect, Marko supports all native HTML/SVG/whatever tags and attributes. In addition to these, it also comes with a set of useful [core tags](./core-tags.md). Beyond this, you can also build your own [custom tags](./custom-tags.md) and [install third-party tags](custom-tags.md#using-tags-from-npm) from `npm`.
+As you might expect, Marko supports all native HTML/SVG/whatever tags and attributes. In addition to these, it also comes with a set of useful [core tags](./core-tags.md). Beyond this, you can also build your own [custom tags](./custom-tags.md) and [install third-party tags](./custom-tags.md#using-tags-from-npm) from `npm`.
 
 All of these types of tags use the same syntax:
 
@@ -21,7 +21,7 @@ All of these types of tags use the same syntax:
 <my-tag-name/>
 ```
 
-You don't need to import tags. Marko will discover them based on the folder structure similar to how you don't specify full paths when using `node_modules/`. [The magic folder for Marko is `components/`](./custom-tags.md#discovering-tags).
+You don't need to import tags. Marko will discover them based on the folder structure similar to how you don't specify full paths when using `node_modules/`. [The magic folder for Marko is `components/`](./custom-tags.md#how-tags-are-discovered).
 
 ## Dynamic text
 
@@ -58,17 +58,17 @@ In marko attributes are parsed as JavaScript expressions (instead of just string
 <div class=myClassName/>
 <input type="checkbox" checked=isChecked/>
 
-<tag string="Hello"/>
-<tag number=1/>
-<tag template-string=`Hello ${name}`/>
-<tag boolean=true/>
-<tag array=[1, 2, 3]/>
-<tag object={ hello: "world" }/>
-<tag variable=name/>
-<tag function-call=user.getName()/>
+<custom-tag string="Hello"/>
+<custom-tag number=1/>
+<custom-tag template-string=`Hello ${name}`/>
+<custom-tag boolean=true/>
+<custom-tag array=[1, 2, 3]/>
+<custom-tag object={ hello: "world" }/>
+<custom-tag variable=name/>
+<custom-tag function-call=user.getName()/>
 ```
 
-Attributes that are passed to a custom tag are received as it's [`input`](./custom-tags#input).
+Attributes that are passed to a custom tag are received as it's [`input`](TODO).
 
 > **Note:** Although in most cases you won't see a difference, strings are parsed as JavaScript strings, not HTML strings. Where this comes up most often is using the `pattern` attribute with the `<input>` tag: you need to "double escape" your regex escape sequences much like you were passing a string to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) (or you can use a literal `/regex/`).
 >
@@ -94,21 +94,21 @@ _It does not contain any spaces_
 _It does not contain any right angle brackets (`>`)_
 
 ```marko
-<tag sum=1+2 difference=3-4/>
+<custom-tag sum=1+2 difference=3-4/>
 ```
 
 ```marko
-tag sum=1+2 difference=3-4
+custom-tag sum=1+2 difference=3-4
 ```
 
 _Spaces and `>` are contained within matching `()`, `[]`, `{}`, strings and regexps_
 
 ```marko
-<tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)/>
+<custom-tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)/>
 ```
 
 ```marko
-tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)
+custom-tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)
 ```
 
 ### Boolean attributes
@@ -199,7 +199,7 @@ _HTML Output:_
 > You can take advantage of this to implement both default attributes, and enforced attributes.
 >
 > ```marko
-> <tag ...defaults ...userSupplied class="overridden"/>
+> <custom-tag ...defaults ...userSupplied class="overridden"/>
 > ```
 
 > **ProTip:**
@@ -271,9 +271,11 @@ Renders the following HTML:
 
 _HTML Output:_
 
+<!-- prettier-ignore -->
 ```html
 <div class="my-class"></div>
-<span id="my-id"></span> <button id="submit" class="primary large"></button>
+<span id="my-id"></span>
+<button id="submit" class="primary large"></button>
 ```
 
 ## Parameters
@@ -290,7 +292,7 @@ In the following example, `<mouse>` provides a parameter which we have named `po
 </mouse>
 ```
 
-> `<mouse>` would [render its body](./core-tags.md#layouts-and-transcluded-content) and provide the position similar to this: `<${input.renderBody} x=0 y=0/>`.
+> `<mouse>` would [render its body](./body-content.md) and provide the position similar to this: `<${input.renderBody} x=0 y=0/>`.
 
 > **ProTip:** Tag `|parameters|` are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
 >
@@ -308,7 +310,7 @@ In the following example, `<mouse>` provides a parameter which we have named `po
 > </mouse>
 > ```
 
-Parameters are used by some of Marko's [core tags](./core-tags.md) like the `<for>`[TODO: link] and `<await>`[TODO: link] tags.
+Parameters are used by some of Marko's [core tags](./core-tags.md) like the [`<for>`](./core-tags.md#for) and [`<await>`](./core-tags.md#await) tags.
 
 ## Arguments
 
@@ -318,9 +320,13 @@ Some tags and attributes accept javascript style `arguments`. Arguments are deno
 <if(true)>
     <strong>Marko is awesome</strong>
 </if>
+
+<h1 body-only-if(skipHeading)>
+    Conditional display heading, but always show content!
+</h1>
 ```
 
-Arguments are used by some of Marko's [core tags](./core-tags.md) like the `<if>`[TODO: link] tag and `body-only-if`[TODO: link] attribute displayed above.
+Arguments are used by some of Marko's [core tags](./core-tags.md) like the [`<if>`](./core-tags.md#if-else-if-else) tag and [`body-only-if`](./core-tags.md#body-only-if) attribute displayed above.
 
 Previously you could also use them in your own [custom tags](./custom-tags.md) however it is now recommended to use [dynamic attributes](#dynamic-attributes).
 
@@ -394,7 +400,7 @@ import componentB from "./path/to/component-b.marko";
 
 ### Dynamic body content
 
-When a custom tag receives body content, it is passed as a `renderBody` property. To render this content you can pass the `renderBody` as the dynamic tagname.
+When a custom tag receives [body content](./body-content.md), it is passed as a `renderBody` property. To render this content you can pass the `renderBody` as the dynamic tagname.
 
 ```marko
 <div class="container">
@@ -416,7 +422,7 @@ The core `<await>` tag allows you to pass multiple body sections that it will co
     <@catch|error|>
         The promise rejected: ${error.message}
     </@catch>
-</div>
+</await>
 ```
 
 These body sections are also commonly used to create layouts:
@@ -432,7 +438,7 @@ These body sections are also commonly used to create layouts:
 </page-layout>
 ```
 
-These tags are passed to the custom tag as objects with a `renderBody`, it can then [render its body content]().
+These tags are passed to the custom tag as objects with a `renderBody`, it can then [render its body content](./body-content.md).
 
 > **Note:**
 > Attribute tags can have their own parameters, but like attributes, they cannot access the parameters of their parent tag:
@@ -497,7 +503,7 @@ $ {
 > </code>
 > ```
 
-> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](./core-tags.md#codeimportcode) it.
+> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](#importing-external-files) it.
 
 ### Static JavaScript
 
@@ -533,3 +539,16 @@ The `import` statement is used to access data and functions from external files.
 import sum from './utils/sum';
 <div>The sum of 2 + 3 is ${sum(2, 3)}</div>
 ```
+
+## Comments
+
+Standard HTML comments can be used and will be stripped out of the rendered output.
+At the top level of the template JavaScript comments (`// comment` and `/** comment */`) can also be used.
+
+```marko
+<!-- This is a comment that will not be rendered -->
+
+<h1>Hello</h1>
+```
+
+If you would like for your HTML comment to show up in the final output then you can use the [`html-comment` core tag](./core-tags.md#html-comment).

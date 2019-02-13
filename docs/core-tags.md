@@ -1,12 +1,10 @@
 # Core tags and attributes
 
-Marko provides a number of tags
+Much like HTML has its own set of native tags. Marko includes a set of base tags and global attributes which are necessary to build modern applications in a declarative way.
 
-## Control flow
+## `<if>`, `<else-if>`, `<else>`
 
-### `<if>`, `<else-if>`, `<else>`
-
-The `<if>`, `<else-if>`, and `<else>` tags provide conditional control-flow for templates.
+These tags allow you to represent [conditional content](./conditionals-and-lists.md#conditionals).
 
 ```marko
 <if(arriving)>
@@ -20,15 +18,7 @@ The `<if>`, `<else-if>`, and `<else>` tags provide conditional control-flow for 
 </else>
 ```
 
-Conditionals may also be applied as attributes:
-
-```marko
-<div if(arriving)>Hey there</div>
-<div else-if(leaving)>Bye now</div>
-<div else>What's up?</div>
-```
-
-And support complex expressions:
+And support complex expressions using the [tag arguments](./syntax.md#arguments) syntax:
 
 ```marko
 <if(Math.random() > 0.5)>
@@ -36,13 +26,29 @@ And support complex expressions:
 </if>
 ```
 
-### `<for>`
+> **Note:** You may see conditionals applied as attributes. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive).
+>
+> ```marko
+> <div if(arriving)>Hey there</div>
+> <div else-if(leaving)>Bye now</div>
+> <div else>What's up?</div>
+> ```
 
-The `<for>` tag allows you to map an iterable, object properties or a range of numbers into a template. Like some of the other core tags, `<for>` relies on [tag parameters](./syntax.md#tag-body-parameters) to provide data about the current iteration to its body.
+## `<for>`
 
-#### Iterating over a list
+The `<for>` tag allows you to map iterables, object properties or a range of numbers into a template. The `<for>` provides data about the current iteration to its body as [tag parameters](./syntax.md#parameters).
 
-Much like the [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop in javascript, providing an `of` attribute will iterate over the provided array/iterable. The current item, index, and the input list will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+> **Note:** You may see `for` used with parentheses as either a tag or an attribute. This [kinda-like-js-but-not-really](https://github.com/marko-js/marko/issues/577) syntax [is deprecated](https://github.com/marko-js/marko/pull/1238).
+>
+> ```marko
+> <li for(color in colors)>${color}</li>
+> ```
+
+### Iterating over a list
+
+Much like the [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop in JavaScript, providing an `of` attribute will iterate over an array/iterable. The current item, index, and the input list will be provided as [tag parameters](./syntax.md#parameters).
+
+_Marko Source:_
 
 ```marko
 <ul>
@@ -60,6 +66,8 @@ const colors = ["red", "green", "blue"];
 
 The output HTML would be the following:
 
+_HTML Output:_
+
 ```html
 <ul>
   <li>red</li>
@@ -76,9 +84,11 @@ The output HTML would be the following:
 > </for>
 > ```
 
-#### Iterating over an objects properties
+### Iterating over an object's properties
 
-Much like the [`for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) loop in javascript, providing an `in` attribute will iterate over the provided objects properties. The current property name and its value will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+Much like the [`for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) loop in javascript, providing an `in` attribute will iterate an objects properties. The current property name and its value will be provided as [tag parameters](./syntax.md#parameters).
+
+_Marko Source:_
 
 ```marko
 <ul>
@@ -99,6 +109,8 @@ const settings = {
 
 The output HTML would be the following:
 
+_HTML Output:_
+
 ```html
 <ul>
   <li>Dark Mode: off</li>
@@ -106,9 +118,9 @@ The output HTML would be the following:
 </ul>
 ```
 
-#### Iterating between a range of numbers
+### Iterating between a range of numbers
 
-The final variant allows you to iterate between two numbers. You must provide a `from` and `to` attribute, along side an optional `step` attribute. If not specified, `step` defaults to 1. The current number in the range will be provided as [tag parameters](./syntax.md#tag-body-parameters).
+The final variant allows you to iterate between two numbers. You must provide a `from` and `to` attribute, along side an optional `step` attribute. If not specified, `step` defaults to 1. The current number in the range will be provided as [tag parameters](./syntax.md#parameters).
 
 ```marko
 <ul>
@@ -118,6 +130,10 @@ The final variant allows you to iterate between two numbers. You must provide a 
 </ul>
 ```
 
+The step attribute allows you to increment by a specified amount:
+
+_Marko Source:_
+
 ```marko
 <ul>
     <for|i| from=0 to=10 step=2>
@@ -126,31 +142,34 @@ The final variant allows you to iterate between two numbers. You must provide a 
 </ul>
 ```
 
+_HTML Output:_
+
 ```marko
 <ul>
-    <for|i| from=0 to=(myArray.length - 1)>
-        <li>${myArray[i]}</li>
-    </for>
+    <li>0</li>
+    <li>2</li>
+    <li>4</li>
+    <li>6</li>
+    <li>8</li>
+    <li>10</li>
 </ul>
 ```
 
-### `<while>`
+> **ProTip:** Don't do this. Use `<for of>` instead:
+>
+> ```marko
+> <ul>
+>     <for|i| from=0 to=(myArray.length - 1)>
+>         <li>${myArray[i]}</li>
+>     </for>
+> </ul>
+> ```
 
-Any element can be repeated until a condition is met by using the `while` directive. The directive can be applied as an element or as an attribute.
+## `<while>`
 
-_Applied as an attribute:_
+Any element can be repeated until a condition is met by using the `while` tag.
 
-```marko
-$ var n = 0;
-
-<ul>
-    <li while(n < 4)>
-        ${n++}
-    </li>
-</ul>
-```
-
-_Applied as an element:_
+_Marko Source:_
 
 ```marko
 $ var n = 0;
@@ -162,9 +181,34 @@ $ var n = 0;
 </ul>
 ```
 
-### `body-only-if`
+_HTML Output:_
 
-If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute to handle this use case. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
+```html
+<ul>
+  <li>0</li>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+```
+
+> **Note:** You may also see `while` used as an attribute. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive).
+>
+> ```marko
+> $ var n = 0;
+>
+> <ul>
+>     <li while(n < 4)>${n++}</li>
+> </ul>
+> ```
+
+> **Note:** Use of the while tag is not recommended. You can accomplish the same behavior with an iterable and the `<for>` tag. In the future, mutating values while rendering may be restricted to enable further optimizations of the compiled code.
+
+## `body-only-if`
+
+If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
+
+_Marko Source:_
 
 ```marko
 <a href=input.linkUrl body-only-if(!input.linkUrl)>
@@ -174,176 +218,72 @@ If you find that you have a wrapper element that is conditional, but whose body 
 
 Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the output would be the following:
 
-```marko
-<a href="http://localhost/">
-    Some body content
-</a>
+_HTML Output:_
+
+```html
+<a href="http://localhost/"> Some body content </a>
 ```
 
 Given a value of `undefined` for the `input.linkUrl` variable: , the output would be the following:
 
-```marko
+_HTML Output:_
+
+```html
 Some body content
 ```
 
-## JavaScript
+## `<macro>`
 
-The following tags are always written using the [concise syntax](./concise.md), even when using HTML syntax for tags that generate HTML output.
+Macros allow for reusable fragments within a template.
+A macro can be defined using the `<macro>` tag and is made available as its `name` attribute.
 
-### `import`
+The following macro can then be as if it was a regular `<greeting>` tag.
 
-> **Static:** The code generated by `import` will run once when the template is loaded and be shared by all calls to render. It must be declared as a top level tag and does not have access to `data`, `state`, or other values passed in at render.
-
-The `import` tag is used to access data and functions from external files. It follows the same syntax as the [JavaScript `import` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
-
-```marko
-import sum from './utils/sum';
-<div>The sum of 2 + 3 is ${sum(2, 3)}</div>
-```
-
-<!-- ### `<export>`
-> **Static:** The code generated by `export` will run once when the template is loaded and be shared by all calls to render. It must be declared as a top level tag and does not have access to `data`, `state`, or other values passed in at render.
-
-The `export` tag is used to export values from the template.  It follows the same syntax as the [JavaScript `export` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), but only named exports are supported (the default export is the template).
-
-```marko
-export var route = '/about';
-
-<!doctype html>
-<html>
-    <body>
-        <h1>About us</h1>
-    </body>
-</html>
-``` -->
-
-## `<${dynamic}>`
-
-```marko
-<${useDiv ? 'div' : 'span'}>
-    Hello there!
-</>
-```
-
-The `<${dynamic}>` tag is used to render a tag, component, or transcluded content that isn't determined until runtime.
-
-### Dynamic components
-
-The `<${dynamic}>` tag can be used to embed another template in the current template:
-
-```marko
-import componentA from "./path/to/component-a.marko";
-import componentB from "./path/to/component-b.marko";
-
-<${useA ? componentA : componentB} name="Frank"/>
-```
-
-You can also switch between a normal HTML tag and a Marko component:
-
-```marko
-import FancyButton from "./path/to/fancy-button.marko";
-
-<${isFancy ? FancyButton : 'button'}>
-    Button text
-</>
-```
-
-### Layouts and transcluded content
-
-You can pass transcluded content to a tag using nested attribute tags which are denoted by the `@` symbol:
-
-_page.marko_
-
-```marko
-<layout>
-    <@body>
-        <h1>Hello Marko</h1>
-    </@body>
-</layout>
-```
-
-Then in your layout template you can render the transcluded content using the `<${dynamic}>` tag:
-
-_layout.marko_
-
-```marko
-<!doctype html>
-<html>
-    <body>
-        <!-- this comes from <@body> -->
-        <${input.body}/>
-    </body>
-</html>
-```
-
-<!--
-- You can use many nested attribute tags for multiple injection points
-- You can have repeated nested attribute tags by using `marko-tag.json` (components only)
-- You can add additional attributes to an nested attribute tag
-- You can pass data to a nested attribute tag's body?
--->
-
-### `<include-text>`
-
-```marko
-<include-text('./foo.txt')/>
-```
-
-Special HTML characters will be escaped. If you do not want escaping then use the `<include-html>` tag (see below).
-
-### `<include-html>`
-
-```marko
-<include-html('./foo.html')/>
-```
-
-Special HTML characters will _not_ be escaped since the file is expected to be an HTML file.
-
-### `<macro>`
-
-Macros allow for reusable fragments within an HTML template.
-A macro can be defined using the `<macro>` tag, with a `name` attribute.
+_Marko Source:_
 
 ```marko
 <macro name="greeting">
     <span>Welcome!</span>
 </macro>
-```
 
-The above macro can then be used as if it was a regular `<greeting>` tag.
-
-```marko
 <greeting/>
 <greeting/>
 ```
 
 The output HTML would be the following:
 
+_HTML Output:_
+
+<!-- prettier-ignore -->
 ```html
-<span>Welcome!</span> <span>Welcome!</span>
+<span>Welcome!</span>
+<span>Welcome!</span>
 ```
 
-Macros become more useful when combined with [tag parameters](./syntax.md#tag-body-parameters), allowing for more complex templates like so:
+Macros become more useful when combined with [tag parameters](./syntax.md#parameters), allowing for more complex templates.
+This time the `<greeting>` macro is able to receive parameters from the outside, in this case `name` and `count`.
+
+_Marko Source:_
 
 ```marko
 <macro|{ name, count }| name="greeting">
     <span>Hello ${name}! You have ${count} new messages.</span>
 </macro>
-```
 
-This time the `<greeting>` macro is able to receive parameters from the outside, in this case `name` and `count`.
-
-```marko
 <greeting name="Frank" count=20/>
 ```
 
 The output HTML would be the following:
 
+_HTML Output:_
+
 ```html
 <span> Hello Frank! You have 10 new messages. </span>
 ```
 
-Macros receive input similar to the root template, including a `renderBody` for displaying any provided body content.
+Macros receive input similar to the root template, including a `renderBody` for displaying any provided [body content](./body-content.md).
+
+_Marko Source:_
 
 ```marko
 <macro|{ renderBody }| name="special-heading">
@@ -361,6 +301,8 @@ Macros receive input similar to the root template, including a `renderBody` for 
 
 The output HTML would be the following:
 
+_HTML Output:_
+
 ```html
 <p>
     <h1>
@@ -369,12 +311,12 @@ The output HTML would be the following:
 </p>
 ```
 
-## Async content
+> **ProTip:** You can use a macro within itself to build recurive layouts (like a tree structure).
 
-### `<await>`
+## `<await>`
 
 The `<await>` tag is used to render a template asynchronously with the results of a Promise.
-The `<@then>` and `<@catch>` attribute tags can optionally receive the value of the resolved and rejected promise respectively as [tag parameters](./syntax.md#tag-body-parameters). You can also provide a `<@placeholder>` attribute tag which will be displayed while the promise is pending.
+The `<@then>` and `<@catch>` attribute tags can optionally receive the value of the resolved and rejected promise respectively as [tag parameters](./syntax.md#parameters). You can also provide a `<@placeholder>` attribute tag which will be displayed while the promise is pending.
 
 ```marko
 $ var personPromise = new Promise((resolve, reject) => {
@@ -419,7 +361,7 @@ Optional Attributes:
 > <await(slowPromise) timeout=5000>
 >    <@then>Done</@then>
 >    <@catch|err|>
->      <if(err.name === "TimeoutError)>
+>      <if(err.name === "TimeoutError")>
 >        Took too long to fetch the data!
 >      </if>
 >      <else>
@@ -429,50 +371,48 @@ Optional Attributes:
 > </await>
 > ```
 
-## Comments
+## `<include-text>`
 
-Standard HTML comments can be used to add comments to your template. The HTML comments will not show up in the rendered HTML.
-
-Example comments:
-
-```marko
-<!-- This is a comment that will not be rendered -->
-<h1>Hello</h1>
-```
-
-```js
-// You can also use standard JavaScript-style comments
-/*
- Block comments are also supported
- */
---Hello;
-```
-
-If you would like for your HTML comment to show up in the final output then you can use the custom `html-comment` tag.
-
-### `<html-comment>`
-
-_input.marko_
+You can inline abritrary text files into a template using the `include-text` tag.
+Special HTML characters will be escaped. If you do not want escaping then use the `<include-html>` tag (see below).
 
 ```marko
-<html-comment>This is a comment that *will* be rendered</html-comment>
-<h1>Hello</h1>
+<include-text('./foo.txt')/>
 ```
 
-_output.html_
+## `<include-html>`
+
+Like the `include-text` tag, the `include-html` tag allows you to inline the contents of a file. However this tag does _not_ escape special HTML characters.
+
+```marko
+<include-html('./foo.html')/>
+```
+
+## `<html-comment>`
+
+Standard HTML comments are automatically stripped from the output with Marko. For cases where you need to have these comments included with the output you can leverage the `<html-comment>` tag.
+
+_Marko Source:_
+
+```marko
+<html-comment>[if IE]><script src="..."></script><![endif]</html-comment>
+```
+
+_HTML Output:_
 
 ```html
-<!--This is a comment that *will* be rendered-->
-<h1>Hello</h1>
+<!--[if IE]><script src="..."></script><![endif]-->
 ```
 
-Alternatively, the `<marko-compiler-options>` tag may be used to configure comments for the entire template:
+> **Note:** You may also see the deprecated `<marko-compiler-options>` tag used to configure comments for the entire template:
+>
+> ```marko
+> <marko-compiler-options preserve-comments/>
+> ```
 
-```marko
-<marko-compiler-options preserve-comments/>
-```
+## Deprecated
 
-## Compiler options
+The following tags and attributes are deprecated, but you may see them in existing code.
 
 ### `marko-preserve-whitespace`
 
@@ -500,7 +440,7 @@ The `marko-body` attribute can be used to control how body content is parsed. Th
 - `static-text` - Body content will be parsed as static text (HTML tags will be ignored). Placeholders will be ignored.
 - `parsed-text` - Body content will be parsed as text (HTML tags will be ignored). Placeholders will not be ignored.
 
-_input.marko_
+_Marko Source_
 
 ```marko
 <div marko-body="static-text">
@@ -512,7 +452,7 @@ _input.marko_
 </div>
 ```
 
-_output.html_
+_HTML Output:_
 
 ```html
 <div>
