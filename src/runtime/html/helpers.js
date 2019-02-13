@@ -9,6 +9,7 @@ var escapeXml = escape.escapeXml;
 var escapeXmlAttr = escape.escapeXmlAttr;
 var attrHelper = require("./helper-attr");
 var attrsHelper = require("./helper-attrs");
+var mergeAttrsHelper = require("./helper-merge-attrs");
 var styleHelper = require("../vdom/helper-styleAttr");
 
 /**
@@ -75,6 +76,12 @@ exports.a = attrHelper;
  * @private
  */
 exports.as = attrsHelper;
+
+/**
+ * Internal method to merge multiple attribute objects together
+ * @private
+ */
+exports.am = mergeAttrsHelper;
 
 /**
  * Internal helper method to handle the "style" attribute. The value can either

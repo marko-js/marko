@@ -56,18 +56,16 @@ class StartTag extends Node {
                     attrs.push(builder.objectExpression(explicitAttrs));
                 }
 
-                let attrsFunctionCall = builder.functionCall(
-                    context.helper("attrs"),
-                    [
-                        attrs.length > 1
-                            ? builder.functionCall(
-                                  context.helper("assign"),
-                                  attrs
-                              )
-                            : attrs[0]
-                    ]
+                nodes.push(
+                    builder.html(
+                        builder.functionCall(
+                            context.helper(
+                                attrs.length === 1 ? "attrs" : "mergeAttrs"
+                            ),
+                            attrs
+                        )
+                    )
                 );
-                nodes.push(builder.html(attrsFunctionCall));
             }
         }
 

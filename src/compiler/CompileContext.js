@@ -60,6 +60,7 @@ const helpers = {
     assign: { module: "marko/runtime/helper-assign" },
     attr: "a",
     attrs: "as",
+    mergeAttrs: "am",
     classAttr: "ca",
     classList: "cl",
     const: "const",
