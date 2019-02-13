@@ -1,5 +1,6 @@
 {
     "<cached-fragment>": {
+        "deprecated": true,
         "renderer": "./cached-fragment-tag",
         "@cache-key": "string",
         "@cache-name": "string",

@@ -1,3 +1,4 @@
+// TODO: Should deprecate and extract into @marko/register
 var isDebug = require("./env").isDebug;
 
 if (isDebug) {

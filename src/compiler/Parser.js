@@ -163,6 +163,8 @@ class Parser {
         }
 
         if (tagName === "marko-compiler-options") {
+            context.deprecate("<marko-compiler-options> is deprecated.");
+
             this.parentNode.setTrimStartEnd(true);
 
             attributes.forEach(function(attr) {
