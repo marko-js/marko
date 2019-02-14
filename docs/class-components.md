@@ -1,4 +1,4 @@
-# Components
+# Class Components
 
 Marko makes it easy to create UI component that can be used as building blocks for constructing web pages and web applications of any complexity. Marko promotes creating self-contained UI components that are independently testable and that encapsulate the view, client-side behavior (e.g., event handling) and styling. UI components can easily be combined to create composite UI components. Marko UI components compile into small and efficient JavaScript modules that hide implementation details from outside users. Lastly, a Marko UI component can also be published to [npm](https://www.npmjs.com) so that it can be reused across applications.
 
@@ -456,7 +456,7 @@ it won't be modified when re-rendering the UI component.
 
 ### `no-update-if`
 
-Similar to [no-update](#codeno-updatecode) except that the DOM subtree is
+Similar to [no-update](#no-update) except that the DOM subtree is
 conditionally preserved:
 
 ```marko
@@ -470,7 +470,7 @@ conditionally preserved:
 
 ### `no-update-body`
 
-Similar to [no-update](#codeno-updatecode) except that only the child DOM nodes
+Similar to [no-update](#no-update) except that only the child DOM nodes
 are preserved:
 
 ```marko
@@ -482,7 +482,7 @@ are preserved:
 
 ### `no-update-body-if`
 
-Similar to [no-update-body](#codeno-update-bodycode) except that only the child
+Similar to [no-update-body](#no-update-body) except that only the child
 DOM nodes are conditionally preserved:
 
 ```marko
@@ -517,7 +517,7 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 
 An array of the root [HTML elements](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
 
-> `this.el` and `this.els` are deprecated. Please `this.gelEl()` or `this.getEls()` methods. see [Methods](https://markojs.com/docs/components/#codegetelkey-indexcode)
+> `this.el` and `this.els` are deprecated. Please `this.gelEl()` or `this.getEls()` methods. see [Methods](https://markojs.com/docs/components/#getelkey-index)
 
 ### `this.id`
 
@@ -687,7 +687,7 @@ Repeated components must have a value for the `key` attribute that ends with `[]
 ### `isDestroyed()`
 
 Returns `true` if a component has been destroyed using
-[`component.destroy()`](#codeondestroycode), otherwise `false`.
+[`component.destroy()`](#ondestroy), otherwise `false`.
 
 ### `isDirty()`
 
@@ -955,7 +955,7 @@ The `update` event is emitted (and `onUpdate` is called) when the component is c
 
 The `destroy` event is emitted (and `onDestroy` is called) when the component is about to be unmounted from the DOM and cleaned up. `onDestroy` should be used to do any additional clean up beyond what Marko handles itself.
 
-For example, cleaning up from our `scrollmonitor` example in [`onMount`](#codeonmountcode):
+For example, cleaning up from our `scrollmonitor` example in [`onMount`](#onmount):
 
 _example.marko_
 

@@ -1,15 +1,25 @@
 [
     {
-        "title": "Introduction",
+        "title": "Guides",
         "docs": [
             "Installing",
             "Getting started",
+            "Conditionals and lists",
+            "Custom tags",
+            "State",
+            "Styles",
+            "Events",
+            "Body content"
+        ]
+    },
+    {
+        "title": "Reference",
+        "docs": [
             "Rendering",
             "Syntax",
             "Core tags",
-            "Custom tags",
-            "Components",
-            "Server-side rendering"
+            "Class components",
+            "marko.json"
         ]
     },
     {

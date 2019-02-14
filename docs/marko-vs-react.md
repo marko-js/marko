@@ -711,7 +711,7 @@ tags.
 ### Async
 
 Even after rendering has started, Marko allows parts of the view to be rendered
-asynchronously using the [`<await>`](http://markojs.com/docs/core-tags/#codeampltawaitgtcode)
+asynchronously using the [`<await>`](http://markojs.com/docs/core-tags#await)
 tag as shown in the following Marko template:
 
 ```marko

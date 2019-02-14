@@ -1,50 +1,104 @@
 # Custom tags
 
-Marko gives you access to the same API that is used to write the [Core Tags](./core-tags.md) so that you can extend the language with custom tags and attributes.
+Custom tags allow you to break up your application UI into encapsulated, resuable components.
 
-> **ProTip:** We recommend that custom tags and custom attributes have at least one dash to indicate that they are not part of the standard HTML grammar.
+## Your first custom tag
 
-## Writing custom tags
+Let's say we have a page with the following content:
 
-To get started let's look at template-based tags which allow you to render another template using a named custom tag rather than importing by a filesystem path.
+_page.marko_
 
-### Discovering tags
+```marko
+<!doctype html>
+<html>
+<body>
+    <h1>Hello World!</h1>
+</body>
+</html>
+```
 
-When compiling a template Marko will search starting at template's directory, up to the project root for directories named `components/`. It then attempts to load the children of these directories as custom tags.
+However, this page is getting pretty complex and unmaintainable. Let's split out the content into a separate component. To do this, we'll create a `components/` folder and inside it a `hello.marko` file:
+
+_components/hello.marko_
+
+```marko
+<h1>Hello World!</h1>
+```
+
+Marko [automatically discovers](#how-tags-are-discovered) `.marko` files under a `components/` directory, so we can now use the `<hello>` tag in our page:
+
+_page.marko_
+
+```marko
+<!doctype html>
+<html>
+<body>
+    <hello/>
+</body>
+</html>
+```
+
+Now this `<hello>` tag can be used multiple times, and even on multiple pages. But what if we don't only want to say hello to the world? Let's pass some attributes.
+
+_page.marko_
+
+```marko
+<!doctype html>
+<html>
+<body>
+    <hello name="World"/>
+</body>
+</html>
+```
+
+The component will receive these attributes as `input`:
+
+_components/hello.marko_
+
+```marko
+<h1>Hello ${input.name}!</h1>
+```
+
+Nice.
+
+## How tags are discovered
+
+Marko discovers components relative to the `.marko` file where a custom tag is used. From this file, Marko walks up directories until it finds a `components/` folder which contains a component matching the name of the custom tag. If it reaches the project root without finding anything, it will then check installed packages for the component.
+
+Let's take a look at an example directory structure to better understand this:
 
 ```dir
 components/
     app-header.marko
     app-footer.marko
 pages/
+    about/
+        components/
+            team-members.marko
+        page.marko
     home/
         components/
             home-banner.marko
-        index.marko
+        page.marko
 ```
 
-When compiling the template at `pages/home/index.marko`, the following tags would be found:
+The file `pages/home/page.marko` can use the following tags:
 
 - `<app-header>`
 - `<app-footer>`
 - `<home-banner>`
 
-So now, instead of needing to specify a path:
+And the file `pages/about/page.marko` can use the following tags:
 
-```marko
-import AppHeader from '../../components/app-header/index.marko';
-<${AppHeader}/>
-```
+- `<app-header>`
+- `<app-footer>`
+- `<team-members>`
 
-You can just use the tag name:
+The home page can't see `<team-members>` and the about page can't see `<home-banner>`. By using nested `component/` directories, we've scoped our page-specific components to their respective pages.
 
-```marko
-<app-header/>
-```
+## Tag directories
 
-#### Tag directories
-
-In addition to a Marko template, the children of `components/` can be a directory with an `index.marko` template (and other supporting files):
+In addition to a Marko template, the children of `components/` can be a directory with an `index.marko` template:
 
 ```dir
 components/
@@ -68,164 +122,65 @@ components/
         app-footer.marko
 ```
 
+This allows you to create components that have other files associated with them and keep those files together in the directory structure.
+
+> **ProTip:**
+> You can take advantage of nested `components/` directories to create "subcomponents" that are only available to the component that contains them.
+>
+> ```dir
+> components/
+>     app-header/
+>         components/
+>             navigation.marko
+>             user-info.marko
+>         app-header.marko
+>     app-footer/
+>         app-footer.marko
+> ```
+
 ## Using tags from npm
 
-Using custom tags from `npm` is easy. Ensure that the package is installed and listed in your `package.json` dependencies:
+To use [tags from npm](https://www.npmjs.com/search?q=keywords%3Amarko%20components), ensure that the package is installed and listed in your `package.json` dependencies:
 
 ```
-npm install --save some-third-party-package
+npm install --save @marko/match-media
 ```
 
-And that's it. Marko will now discover these tags when compiling your templates and you can simply use them in your templates:
+Marko discover tags from packages defined in your `package.json`, so you can start using them right away:
 
 ```marko
 <div>
-    <some-third-party-tag/>
+    <match-media|{ mobile }| mobile="max-width:30em">
+        <!-- nice -->
+    </match-media>
 </div>
 ```
 
-## Advanced details
+## Publishing tags to npm
 
-Given a template file, the `marko` module will automatically discover all taglibs by searching relative to the template file. The taglib discoverer will automatically import all taglibs associated with packages found as dependencies in the containing package's root `package.json` file.
+We saw above that tags from npm are automatically discovered. In order to make this work, your package must include a [`marko.json`](./marko-json.md) at the root.
 
-As an example, given a template at path `/my-project/src/pages/login/template.marko` and given a `/my-project/package.json` similar to the following:
-
-```json
-{
-  "name": "my-package",
-  "dependencies": {
-    "foo": "1.0.0"
-  },
-  "devDependencies": {
-    "bar": "1.0.0"
-  }
-}
-```
-
-The search path will be the following:
-
-1.  `/my-project/src/pages/login/marko.json`
-2.  `/my-project/src/pages/marko.json`
-3.  `/my-project/src/marko.json`
-4.  `/my-project/marko.json`
-5.  `/my-project/node_modules/foo/marko.json`
-6.  `/my-project/node_modules/bar/marko.json`
-
-### Hiding taglibs
-
-If you wish to hide particular folder and/or node_module from discovery of marko.json, you can exclude certain directories or packages. This is used primarily for testing.
-
-```javascript
-require("marko/compiler").taglibFinder.excludeDir(dirPath);
-// Where 'dirPath' is an absolute path to the folder containing marko.json
-
-require("marko/compiler").taglibFinder.excludePackage(packageName);
-// Where 'packageName' is the name of the node_module containing marko.json
-```
-
-These statements should be used before any rendering begins in the process.
-
-### marko.json syntax
+_marko.json_
 
 ```json
 {
-  "tags": {
-    "my-hello": {
-      "renderer": "./hello-renderer",
-      "attributes": {
-        "name": "string"
-      }
-    }
-  }
+  "tags-dir": "./dist/components"
 }
 ```
 
-Marko also supports a short-hand for declaring tags and attributes. The following `marko.json` is equivalent to the `marko.json` above:
+This example file tells Marko to expose all components directly under the `dist/components/` directory to the application using your package.
 
-```json
-{
-  "<my-hello>": {
-    "renderer": "./hello-renderer",
-    "@name": "string"
-  }
-}
+We recommend adding the `marko` and `components` keywords to your `package.json` so others can find your components. Then `npm publish`!
+
+# Macros
+
+The [`<macro>`](./core-tags.md#macro) tag allows you to create custom tags in the same file that they are used in.
+
+```marko
+<macro|{ name }| name="welcome-message">
+    <h1>Hello ${name}!</h1>
+</macro>
+
+<welcome-message name="Patrick"/>
+<welcome-message name="Austin"/>
 ```
-
-### Defining Tags
-
-Tags can be defined by adding `"<tag_name>": <tag_def>` properties to your `marko.json`:
-
-```json
-{
-  "<my-hello>": {
-    "renderer": "./hello-renderer",
-    "@name": "string"
-  },
-  "<my-foo>": {
-    "renderer": "./foo-renderer",
-    "@*": "string"
-  },
-  "<my-bar>": "./path/to/my-bar/marko-tag.json",
-  "<my-baz>": {
-    "template": "./baz-template.marko"
-  }
-}
-```
-
-Every tag should be associated with a renderer or a template. When a custom tag is used in a template, the renderer (or template) will be invoked at render time to produce the HTML/output. If a `String` path to a `marko-tag.json` for a custom tag then the target `marko-tag.json` is loaded to define the tag.
-
-### Defining Attributes
-
-If you provide attributes then the Marko compiler will do validation to make sure only the supported attributes are provided. A wildcard attribute (`"@*"`) allows any attribute to be passed in. Below are sample attribute definitions:
-
-_Multiple attributes:_
-
-```javascript
-{
-    "@message": "string",     // String
-    "@my-data": "expression", // JavaScript expression
-    "@*": "string"            // Everything else will be added to a special "*" property
-}
-```
-
-#### Advanced defining attributes
-
-If you provide an object as your attribute definition, you can more fine-tune its definition:
-
-```javascript
-{
-    "@data-*": {
-        "type": "string",
-        "preserve-name": true,
-        "pattern": true,
-        "enum": [
-            "foo",
-            "bar"
-        ]
-    }
-}
-```
-
-Above, we tell Marko this attribute name contains a pattern so that it will allow any attribute matching `data-*`. We also tell it to preserve the attribute's name for the template or component, so that it will not be camel-cased (which is the default behavior). Lastly, we tell it that this attribute only has two possible values: `foo` and `bar`. Marko does not enforce the enum attribute, but instead uses it for autocompletion with any eligible plugins such as https://atom.io/packages/language-marko for Atom.
-
-### Custom directory scanning
-
-You can configure the `tags-dir` value in your `marko.json` to configure the name of the directory that marko scans in for custom tags. As described above, by default it uses the name `components/`. You can override this at a directory level and give a path to another directory to scan:
-
-```json
-{
-  "tags-dir": "./ui-components"
-}
-```
-
-`tags-dir` also accepts an array if you have taglibs organized in multiple folders.
-
-```json
-{
-  "tags-dir": ["./ui-components", "./components"]
-}
-```
-
-## Exporting tags
-
-To make tags from your project available to other projects, define the public tags in a `marko.json` at the root of your project.

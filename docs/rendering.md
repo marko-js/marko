@@ -8,7 +8,7 @@ _example.js_
 var fancyButton = require("./components/fancy-button");
 ```
 
-> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko DevTools](https://github.com/marko-js/marko-devtools). If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md), [`browserify`](./browserify.md) or [`rollup`](./rollup.md).
+> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko CLI](https://github.com/marko-js/cli). If you are targeting the browser, you will need to use a bundler like [`lasso`](../lasso.md), [`webpack`](../webpack.md), [`browserify`](../browserify.md) or [`rollup`](../rollup.md).
 
 Once you have a view, you can pass input data and render it:
 

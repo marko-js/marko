@@ -1,24 +1,36 @@
 # Syntax
 
-Marko's syntax is based on HTML, so you basically already know it. Marko extends the HTML language to add a few nice features which we'll cover here.
+Marko is HTML _re-imagined_ as a language for building dynamic and reactive user interfaces.
+Just about any valid HTML is valid Marko, but Marko extends the HTML language to allow building modern applications in a declarative way.
 
-> **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see our documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
+> **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see the documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
 
-## Text replacement
+> **Note:** Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text. The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+>
+> ```marko
+> -- Root level text
+> ```
 
-When you render a Marko template, you pass input data that is then available within the template as `input`. You can then use `${}` to insert a value into the template:
+## Tags
+
+As you might expect, Marko supports all native HTML/SVG/whatever tags and attributes. In addition to these, it also comes with a set of useful [core tags](./core-tags.md). Beyond this, you can also build your own [custom tags](./custom-tags.md) and [install third-party tags](./custom-tags.md#using-tags-from-npm) from `npm`.
+
+All of these types of tags use the same syntax:
 
 ```marko
-<div>
-    Hello ${input.name}
-</div>
+<my-tag-name/>
 ```
 
-You can actually pass any JavaScript expression here and the result of the expression will be inserted into the HTML output:
+You don't need to import tags. Marko discovers them based on the folder structure—similar to how you don't specify a full path when referencing a module in `node_modules/`. Marko looks in [`components/`](./custom-tags.md#how-tags-are-discovered) by default and this directory can be configured in [`marko.json`](./marko-json.md).
+
+## Dynamic text
+
+You can use placeholders (`${}`) to insert a value into the template:
+Placeholders accept any JavaScript expression and the result of the expression will be inserted into the HTML output:
 
 ```marko
 <div>
-    Hello ${'world'.toUpperCase()}
+    Hello ${"world".toUpperCase()}
 </div>
 ```
 
@@ -26,92 +38,77 @@ These values are automatically escaped so you don't accidentally insert maliciou
 
 ```marko
 <div>
-    Hello $!{htmlThatWillNotBeEscaped}
+    Hello $!{"<b>World</b>"}
 </div>
 ```
 
-### Escaping placeholders
+> **ProTip:** If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
+>
+> ```marko
+> <div>
+>     Placeholder example: <code>\${someValue}</code>
+> </div>
+> ```
 
-If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
+## Attributes
 
-```marko
-<div>
-    Placeholder example: <code>\${input}</code>
-</div>
-```
-
-## Root level text
-
-Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text. The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+In marko attributes are parsed as JavaScript expressions (instead of just strings).
 
 ```marko
--- Root level text
+<div class=myClassName/>
+<input type="checkbox" checked=isChecked/>
+
+<custom-tag string="Hello"/>
+<custom-tag number=1/>
+<custom-tag template-string=`Hello ${name}`/>
+<custom-tag boolean=true/>
+<custom-tag array=[1, 2, 3]/>
+<custom-tag object={ hello: "world" }/>
+<custom-tag variable=name/>
+<custom-tag function-call=user.getName()/>
 ```
 
-## Typed attributes
+Attributes that are passed to a custom tag are received as it's [`input`](TODO).
 
-A big improvement over HTML are the typed attributes Marko provides (instead of just strings).
+> **Note:** Although in most cases you won't see a difference, strings are parsed as JavaScript strings, not HTML strings. Where this comes up most often is using the `pattern` attribute with the `<input>` tag: you need to "double escape" your regex escape sequences much like you were passing a string to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) (or you can use a literal `/regex/`).
+>
+> _Marko Source:_
+>
+> ```marko
+> <input pattern="\\w+" type="text"/>
+> <input pattern=/\w+/ type="text"/>
+> ```
+>
+> _HTML Output:_
+>
+> ```marko
+> <input pattern="\w+" type="text"/>
+> ```
 
-```marko
-<div class=input.myClassName/>
-<input type="checkbox" checked=input.isChecked/>
-
-<tag string="Hello"/>
-<tag number=1/>
-<tag template-string=`Hello ${name}`/>
-<tag boolean=true/>
-<tag array=[1, 2, 3]/>
-<tag object={hello: 'world'}/>
-<tag variable=name/>
-<tag function-call=input.foo()/>
-```
-
-### Attribute expressions
+### Complex expressions
 
 Any JavaScript expression is a valid attribute value, provided it meets the following criteria:
 
 _It does not contain any spaces_
 
+_It does not contain any right angle brackets (`>`)_
+
 ```marko
-<tag sum=1+2 difference=3-4/>
+<custom-tag sum=1+2 difference=3-4/>
 ```
 
 ```marko
-tag sum=1+2 difference=3-4
+custom-tag sum=1+2 difference=3-4
 ```
 
-_Spaces are contained within matching `()`, `[]`, or `{}`_
+_Spaces and `>` are contained within matching `()`, `[]`, `{}`, strings and regexps_
 
 ```marko
-<tag sum=(1 + 2) difference=(3 - 4)/>
-```
-
-```marko
-tag sum=(1 + 2) difference=(3 - 4)
-```
-
-_Or, commas are used to delimit attributes_
-
-```marko
-<tag sum=1 + 2, difference=3 - 4/>
+<custom-tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)/>
 ```
 
 ```marko
-tag sum=1 + 2, difference=3 - 4
-```
-
-> **Note:** If you use commas to separate two attributes, you must use commas to separate _all_ attributes for that tag.
-
-#### Attribute whitespace
-
-Whitespace may optionally be used around the equal sign of an attribute:
-
-```marko
-<tag value = 5/>
-```
-
-```marko
-tag value = 5
+custom-tag sum=(1 + 2) difference=(3 - 4) greater=(1 > 2)
 ```
 
 ### Boolean attributes
@@ -120,81 +117,114 @@ HTML defines the following rules for [boolean attributes](https://www.w3.org/TR/
 
 > The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value.
 
-In Marko, if an attribute value expression evaluates to `null` or `false` then the attribute is not included in the output. If an attribute value is `true`, only the attribute name is included in the output.
+In Marko when an attribute value evaluates to `false`, `null`, or `undefined`, the attribute is not included in the output. If an attribute value is `true`, only the attribute name is included in the output.
+
+_Marko Source:_
 
 ```marko
 <input type="checkbox" checked=true>
 <input type="checkbox" checked=false>
 ```
 
-Would render to the following HTML:
+Renders the following HTML:
+
+_HTML Output:_
 
 ```html
 <input type="checkbox" checked /> <input type="checkbox" />
 ```
 
-#### Conditional attributes
-
-You can take advantage of the way Marko handles boolean attributes to conditionally render attributes:
+Similarly, when only an attribute name is defined, it is equivalent to specifying the attribute with a value of `true`:
 
 ```marko
-<div class=(active && 'tab-active')>Hello</div>
+<!-- These are equivalent -->
+<custom-menu expanded>
+<custom-menu expanded=true>
 ```
 
-With a value of `true` for `active`, the output would be the following:
-
-```html
-<div class="tab-active">Hello</div>
-```
-
-With a value of `false` for `active`, the output would be the following:
-
-```html
-<div>Hello</div>
-```
+> **ProTip:**
+> You can take advantage of the way Marko handles boolean attributes to conditionally render attributes:
+>
+> _Marko Source:_
+>
+> ```marko
+> <div class=(active && "tab-active")>Hello</div>
+> ```
+>
+> With a value of `true` for `active`, the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> <div class="tab-active">Hello</div>
+> ```
+>
+> With a value of `false` for `active`, the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> <div>Hello</div>
+> ```
 
 ### Dynamic attributes
 
-You can use the `...attrs` syntax inside an open tag to merge in the properties of an object as attributes to a tag:
+The spread syntax (`...`) can be used to merge in an object as attributes to a tag:
 
-_index.js_
-
-```js
-template.render({ attrs: { class: "active", href: "https://ebay.com/" } });
-```
-
-_link.marko_
+_Marko Source:_
 
 ```marko
-<a ...input.attrs target="_blank">eBay</a>
+<a ...attrs target="_blank">eBay</a>
+```
+
+With `attrs` as the following value:
+
+```js
+{
+    class: "active",
+    href: "https://ebay.com/"
+}
 ```
 
 would output the following HTML:
 
-_output.html_
+_HTML Output:_
 
 ```html
 <a class="active" href="https://ebay.com/" target="_blank">eBay</a>
 ```
 
+> **ProTip:**
+> With spread attributes order matters.
+> You can take advantage of this to implement both default attributes, and enforced attributes.
+>
+> ```marko
+> <custom-tag ...defaults ...userSupplied class="overridden"/>
+> ```
+
+> **ProTip:**
+> You can provide `undefined` to a spread attribute which will output nothing.
+
 ### Style attribute
 
-You can pass a string as the value of `style` just as you would in HTML, but Marko also supports passing an object or array as the value of the `style` attribute:
+You can pass a string as the value of `style` just as you would in HTML, in addition Marko supports passing an object or array as the value of the `style` attribute:
+
+_Marko Source:_
 
 ```marko
 <!-- string: -->
-<div style='display:block;margin-right:16px'/>
+<div style="display:block;margin-right:16px"/>
 
 <!-- object: -->
-<div style={ display: 'block', color:false, marginRight: 16 }/>
+<div style={ display: "block", color: false, marginRight: 16 }/>
 
 <!-- array: -->
-<div style=['display:block', null, { marginRight: 16 }]/>
+<div style=["display:block", null, { marginRight: 16 }]/>
 ```
 
 In all cases, the output will be the same:
 
-Output:
+_HTML Output:_
 
 ```html
 <div style="display:block;margin-right:16px;"></div>
@@ -202,7 +232,9 @@ Output:
 
 ### Class attribute
 
-The `class` attribute also support object expressions or array expressions (in addition to a string value) as shown below:
+The `class` attribute also supports receiving an object or array (in addition to a string) as shown below:
+
+_Marko Source:_
 
 ```marko
 <!-- string: -->
@@ -212,22 +244,22 @@ The `class` attribute also support object expressions or array expressions (in a
 <div class={ a:true, b:false, c:true }/>
 
 <!-- array: -->
-<div class=['a', null, { c:true }]/>
+<div class=["a", null, { c:true }]/>
 ```
 
 In all cases, the output will be the same:
 
-_output.html_
+_HTML Output:_
 
 ```html
 <div class="a c"></div>
 ```
 
-## Shorthand attributes
+### Shorthand attributes
 
 Marko provides a shorthand for declaring classes and ids on an element:
 
-_source.marko_
+_Marko Source:_
 
 ```marko
 <div.my-class/>
@@ -235,18 +267,22 @@ _source.marko_
 <button#submit.primary.large/>
 ```
 
-Yields this HTML:
+Renders the following HTML:
 
-_output.html_
+_HTML Output:_
 
+<!-- prettier-ignore -->
 ```html
 <div class="my-class"></div>
-<span id="my-id"></span> <button id="submit" class="primary large"></button>
+<span id="my-id"></span>
+<button id="submit" class="primary large"></button>
 ```
 
-## Tag body parameters
+## Parameters
 
-Tags can define parameters that are available to their body content. This is a powerful feature that allows components to provide functionality and data while giving you full control over what gets rendered.
+When a tag renders its body content, it may provide data which can be received by defining parameters after the tagname. Parameters are available to the tag's body content.
+
+This is a powerful feature that allows components to provide functionality and data while giving you full control over what gets rendered.
 
 In the following example, `<mouse>` provides a parameter which we have named `position`:
 
@@ -256,72 +292,184 @@ In the following example, `<mouse>` provides a parameter which we have named `po
 </mouse>
 ```
 
-> `<mouse>` would [render its body](./core-tags.md#layouts-and-transcluded-content) and provide the position similar to this: `<${input} x=0 y=0/>`.
+> `<mouse>` would [render its body](./body-content.md) and provide the position similar to this: `<${input.renderBody} x=0 y=0/>`.
 
-> **Pro Tip**: Tag |parameters| are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
+> **ProTip:** Tag `|parameters|` are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
 >
-> ```
+> ```marko
 > <mouse|{ x, y }|>
 >   The mouse is at ${x}, ${y}!
 > </mouse>
 > ```
 
-> **Warning**: These are tag _body_ parameters. Parameters are not available to attributes, only to the tag body.
+> **Note:** Parameters are not available to attributes, only to the tag body.
 >
-> ```
+> ```marko
 > <mouse|position| something=position>
 >   ReferenceError when setting the "something" attribute
 > </mouse>
 > ```
 
-## Directives
+Parameters are used by some of Marko's [core tags](./core-tags.md) like the [`<for>`](./core-tags.md#for) and [`<await>`](./core-tags.md#await) tags.
 
-Directives are denoted by parenthesis and take an argument instead of a value. Many directives may be used as both tags and attributes.
+## Arguments
+
+Some tags and attributes accept javascript style `arguments`. Arguments are denoted by parenthesis following the tag or attribute name. Arguments provide a way to pass unnamed data to a tag.
 
 ```marko
 <if(true)>
     <strong>Marko is awesome</strong>
 </if>
+
+<h1 body-only-if(skipHeading)>
+    Conditional display heading, but always show content!
+</h1>
 ```
 
-Below is the same `if()` directive used as an attribute:
+Arguments are used by some of Marko's [core tags](./core-tags.md) like the [`<if>`](./core-tags.md#if-else-if-else) tag and [`body-only-if`](./core-tags.md#body-only-if) attribute displayed above.
+
+Previously you could also use them in your own [custom tags](./custom-tags.md) however it is now recommended to use [dynamic attributes](#dynamic-attributes).
+
+## Dynamic tagname
+
+The `<${dynamic}>` syntax is used to render a tag or component that isn't determined until runtime. It can also be used within a [custom tag](./custom-tags.md) to render body content that was passed to that tag.
+
+_Marko Source:_
 
 ```marko
-<strong if(true)>
-    Marko is awesome
-</strong>
+<${href ? 'a' : 'button'} href=href>
+    Click me!
+</>
 ```
 
-Most directives support JavaScript expressions, others allow a custom syntax:
+With `href` as `https://ebay.com` would output the following HTML:
+
+_HTML Output:_
+
+```html
+<a href="https://ebay.com">Click me!</a>
+```
+
+And with `href` as `undefined` would output the following HTML:
+
+_HTML Output:_
+
+```html
+<button>Click me!</button>
+```
+
+### Dynamic components
+
+Instead of just strings, the dynamic tagname can also be a component:
 
 ```marko
-<for(item in items)/>
+import componentA from "./path/to/component-a.marko";
+import componentB from "./path/to/component-b.marko";
+
+<${useA ? componentA : componentB}/>
 ```
 
-Directives are used by many of our [Core Tags](./core-tags.md) for control-flow (`<if>`, `<else-if>`, `<for>`, etc.) and other features. You can also use them in your own [Custom Tags](./custom-tags.md).
+> **ProTip:**
+> You can also switch between a normal HTML tag and a component:
+>
+> ```marko
+> import FancyButton from "./path/to/fancy-button.marko";
+>
+> <${isFancy ? FancyButton : 'button'}>
+>     Button text
+> </>
+> ```
+
+> **Note:** You cannot reference a Marko custom tag using a name string:
+>
+> _Marko Source:_
+>
+> ```marko
+> <${isFancy ? 'fancy-button' : 'button'}>
+>     Button text
+> </>
+> ```
+>
+> With `isFancy` as `true` would output the following HTML:
+>
+> _HTML Output:_
+>
+> ```marko
+> <fancy-button>Button text</fancy-button>
+> ```
+
+### Dynamic body content
+
+When a custom tag receives [body content](./body-content.md), it is passed as a `renderBody` property. To render this content you can pass the `renderBody` as the dynamic tagname.
+
+```marko
+<div class="container">
+    <${input.renderBody}/>
+</div>
+```
+
+## Attribute Tag
+
+As the name implies, `<@attribute-tags>` are special attributes that take the form of tags. They allow you to pass named body sections to a [custom tag](./custom-tag.md).
+
+The core `<await>` tag allows you to pass multiple body sections that it will conditionally render based on the state of the promise.
+
+```marko
+<await(somePromise)>
+    <@then|result|>
+        The promise resolved: ${result}
+    </@then>
+    <@catch|error|>
+        The promise rejected: ${error.message}
+    </@catch>
+</await>
+```
+
+These body sections are also commonly used to create layouts:
+
+```marko
+<page-layout>
+    <@heading>
+        <h1>Hello</h1>
+    </@heading>
+    <@body>
+        <p>Lorem ipsum....</p>
+    </@body>
+</page-layout>
+```
+
+These tags are passed to the custom tag as objects with a `renderBody`, it can then [render its body content](./body-content.md).
+
+> **Note:**
+> Attribute tags can have their own parameters, but like attributes, they cannot access the parameters of their parent tag:
+>
+> ```marko
+> <list|item|>
+>   ${item.name}
+>   <@separator>${item} (oops, ReferenceError)</@separator>
+> </list>
+> ```
 
 ## Inline JavaScript
-
-> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](./core-tags.md#codeimportcode) it.
 
 To execute JavaScript in your template you can insert a Javascript statement using the `$ <code>` syntax.
 
 A line that starts with a `$` followed by a space will execute the code that follows.
 
 ```marko
-$ var name = input.name;
+$ const name = "World";
 
 <div>
     Hello, ${name}
-    $ console.log('The value rendered was', name);
+    $ console.log("The value rendered was", name);
 </div>
 ```
 
 A statement may continue onto subsequent lines if new lines are bounded by `{}`, `[]`, `()`, ` `` `, or `/**/`:
 
 ```marko
-$ var person = {
-    name: 'Frank',
+$ const person = {
+    name: "Frank",
     age: 32
 };
 ```
@@ -330,18 +478,36 @@ Multiple statements or an unbounded statement may be used by wrapping the statem
 
 ```marko
 $ {
-    var bgColor = getRandomColor();
-    var textColor = isLight(bgColor)
-        ? 'black'
-        : 'white';
+    const bgColor = getRandomColor();
+    const textColor = isLight(bgColor)
+        ? "black"
+        : "white";
 }
 ```
 
+> **ProTip:** Any JavaScript statement can be used here, even `debugger`:
+>
+> ```marko
+> <div>
+>     ${textColor}
+>     $ debugger; // Quickly debug `textColor`
+> </div>
+> ```
+
+> **ProTip:** If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
+>
+> ```marko
+> <p>You can run JS in a Marko template like this:</p>
+> <code>
+>     \$ var num = 123;
+> </code>
+> ```
+
+> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](#importing-external-files) it.
+
 ### Static JavaScript
 
-> **Static:** The JavaScript code that follows `static` will run once when the template is loaded and be shared by all calls to render. It must be declared at the top level and does not have access to values passed in at render.
-
-Inline JavaScript will run each time your template is rendered, if you only want to initialize some values once, use the `static` keyword:
+Inline JavaScript will run each time your template is rendered, but the JavaScript code that follows `static` will only run once when the template is loaded. It must be declared at the top level and does not have access to values passed in at render time.
 
 ```marko
 static var count = 0;
@@ -365,13 +531,24 @@ static {
 }
 ```
 
-### Escaping dollar signs
+### Importing external files
 
-If you need to output a `$` at the beginning of a line, you can escape it: `\$`.
+The `import` statement is used to access data and functions from external files. It follows the same syntax as the [JavaScript `import` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
 
 ```marko
-<p>You can run JS in a Marko template like this:</p>
-<code>
-    \$ var num = 123;
-</code>
+import sum from './utils/sum';
+<div>The sum of 2 + 3 is ${sum(2, 3)}</div>
 ```
+
+## Comments
+
+Standard HTML comments can be used and will be stripped out of the rendered output.
+At the top level of the template JavaScript comments (`// comment` and `/** comment */`) can also be used.
+
+```marko
+<!-- This is a comment that will not be rendered -->
+
+<h1>Hello</h1>
+```
+
+If you would like for your HTML comment to show up in the final output then you can use the [`html-comment` core tag](./core-tags.md#html-comment).

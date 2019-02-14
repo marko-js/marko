@@ -4,7 +4,7 @@ The easiest way to get started with Marko is to use the [Try Online](https://mar
 
 ## Hello world
 
-Marko makes it easy to represent your UI using a syntax that is like HTML:
+Marko makes it easy to represent your UI using a [syntax](./syntax.md) that is like HTML:
 
 _hello.marko_
 
@@ -28,7 +28,7 @@ _template.marko_
 </html>
 ```
 
-However, Marko is much more than a templating language. It's a UI library that allows you to break your application into components that are self-contained and describe how the application view changes over time and in response to user actions.
+However, Marko is much more than a templating language. It's a language that allows you to declaratively build an application by describing how the application view changes over time and in response to user actions.
 
 In the browser, when the data representing your UI changes, Marko will automatically and efficiently update the DOM to reflect the changes.
 
