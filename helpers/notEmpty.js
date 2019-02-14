@@ -1,3 +1,4 @@
+// TODO: deprecate this (and empty).
 module.exports = function notEmpty(o) {
     if (o == null) {
         return false;

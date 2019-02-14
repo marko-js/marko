@@ -1,4 +1,5 @@
 <module-code(function(require) {
+    require("complain")("marko/jquery is deprecated.");
     var isDebug = require('./env').isDebug;
     return `module.exports = require("./${isDebug ? 'src' : 'dist'}/components/jquery");\n`;
 })/>

@@ -111,11 +111,13 @@
         "no-output": true
     },
     "<marko>": {
+        "deprecated": true,
         "code-generator": "./marko-tag",
         "open-tag-only": true,
         "@no-browser-rerender": "boolean"
     },
     "<marko-preserve-whitespace>": {
+        "deprecated": true,
         "code-generator": "./marko-preserve-whitespace-tag",
         "preserve-whitespace": true,
         "autocomplete": [

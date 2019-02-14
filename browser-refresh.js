@@ -1,3 +1,5 @@
+// TODO: Should deprecate and extract into @marko/browser-refresh
+
 var isDebug = require("./env").isDebug;
 
 if (isDebug) {

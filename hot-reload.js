@@ -1,3 +1,5 @@
+// TODO: Should deprecate?
+
 var isDebug = require("./env").isDebug;
 
 if (isDebug) {
