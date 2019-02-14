@@ -18,6 +18,10 @@ function State(root, stream, writer, events) {
     this.finished = false;
 }
 
+function escapeEndingComment(text) {
+    return text.replace(/-->/g, "--&gt;");
+}
+
 function AsyncStream(global, writer, parentOut, shouldBuffer) {
     if (parentOut === null) {
         throw new Error("illegal state");
@@ -493,7 +497,7 @@ var proto = (AsyncStream.prototype = {
     },
 
     comment: function(str) {
-        this.write("<!--" + escapeXml(str) + "-->");
+        this.write("<!--" + escapeEndingComment(str) + "-->");
     },
 
     text: function(str) {
