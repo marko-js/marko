@@ -196,7 +196,10 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
                         let html = fs.readFileSync(expectedHtmlPath, "utf-8");
                         let browser = createBrowser({
                             dir: __dirname,
-                            html: "<html><body>" + html + "</body></html>"
+                            html:
+                                "<html><body>" +
+                                html.replace(/<!--F#\d+-->|<!--F\/-->/g, "") +
+                                "</body></html>"
                         });
 
                         expectedHtml = domToString(

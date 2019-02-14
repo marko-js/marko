@@ -12,44 +12,44 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  marko_dynamicTag(input, {}, out, __component, "0");
+  marko_dynamicTag(input, {}, null, out, __component, "0");
 
-  marko_dynamicTag(input.renderThing, {}, out, __component, "1");
+  marko_dynamicTag(input.renderThing, {}, null, out, __component, "1");
 
-  marko_dynamicTag(input, attrs, out, __component, "2");
+  marko_dynamicTag(input, attrs, null, out, __component, "2");
 
-  marko_dynamicTag(renderBody, {}, out, __component, "3");
+  marko_dynamicTag(renderBody, {}, null, out, __component, "3");
 
   marko_dynamicTag(input.template, {
       x: 1
-    }, out, __component, "4");
+    }, null, out, __component, "4");
 
   marko_dynamicTag(input.template, {
       y: function() {}
-    }, out, __component, "5");
+    }, null, out, __component, "5");
 
   marko_dynamicTag({
       render: input.barRenderer
-    }, {}, out, __component, "6");
+    }, {}, null, out, __component, "6");
 
   marko_dynamicTag(function(out) {
     input.barRenderer({}, true, out);
-  }, {}, out, __component, "7");
+  }, {}, null, out, __component, "7");
 
   if (x) {
-    marko_dynamicTag(renderA, {}, out, __component, "8");
+    marko_dynamicTag(renderA, {}, null, out, __component, "8");
   } else if (y) {
-    marko_dynamicTag(renderB, {}, out, __component, "9");
+    marko_dynamicTag(renderB, {}, null, out, __component, "9");
   } else {
-    marko_dynamicTag(renderC, {}, out, __component, "10");
+    marko_dynamicTag(renderC, {}, null, out, __component, "10");
   }
 
   if (x) {
-    marko_dynamicTag(render, {}, out, __component, "11");
+    marko_dynamicTag(render, {}, null, out, __component, "11");
   }
 
   if (!x) {
-    marko_dynamicTag(render, {}, out, __component, "12");
+    marko_dynamicTag(render, {}, null, out, __component, "12");
   }
 
   var for__13 = 0;
@@ -57,17 +57,17 @@ function render(input, out, __component, component, state) {
   marko_forRange(0, 9, null, function(i) {
     var keyscope__14 = "[" + ((for__13++) + "]");
 
-    marko_dynamicTag(input.items[i], {}, out, __component, "15" + keyscope__14);
+    marko_dynamicTag(input.items[i], {}, null, out, __component, "15" + keyscope__14);
   });
 
   let i = 10;
 
   while (i--) {
-    marko_dynamicTag(input, {}, out, __component, "16");
+    marko_dynamicTag(input, {}, null, out, __component, "16");
   }
 
   if (z) {
-    marko_dynamicTag(renderD, {}, out, __component, "17");
+    marko_dynamicTag(renderD, {}, null, out, __component, "17");
   }
 
   // if.test

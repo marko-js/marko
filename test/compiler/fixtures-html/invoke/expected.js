@@ -18,7 +18,7 @@ function render(input, out, __component, component, state) {
 
   marko_dynamicTag(input, {
       x: 1
-    }, out, __component, "hi");
+    }, null, out, __component, "hi");
 }
 
 marko_template._ = marko_renderer(render, {

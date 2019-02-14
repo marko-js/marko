@@ -42,7 +42,7 @@ function render(input, out, __component, component, state) {
 
     marko_dynamicTag(macro_renderButton, {
         color: color
-      }, out, __component, "4" + keyscope__3);
+      }, null, out, __component, "4" + keyscope__3);
   });
 
   out.w("</div>");
