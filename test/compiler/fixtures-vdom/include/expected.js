@@ -17,7 +17,7 @@ function render(input, out, __component, component, state) {
 
   marko_dynamicTag(IncludeTarget, {
       foo: "bar"
-    }, out, __component, "0");
+    }, null, out, __component, "0");
 }
 
 marko_template._ = marko_renderer(render, {

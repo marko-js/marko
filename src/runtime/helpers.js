@@ -131,7 +131,15 @@ var helpers = {
     /**
      * Helper to render a dynamic tag
      */
-    d: function dynamicTag(tag, attrs, out, componentDef, key, customEvents) {
+    d: function dynamicTag(
+        tag,
+        attrs,
+        args,
+        out,
+        componentDef,
+        key,
+        customEvents
+    ) {
         if (tag) {
             var component = componentDef && componentDef.___component;
             if (typeof tag === "string") {
@@ -177,13 +185,13 @@ var helpers = {
                     );
                 }
             } else {
-                if (typeof attrs === "object") {
+                if (attrs == null) {
+                    attrs = {};
+                } else if (typeof attrs === "object") {
                     attrs = Object.keys(attrs).reduce(function(r, key) {
                         r[removeDashes(key)] = attrs[key];
                         return r;
                     }, {});
-                } else if (attrs == null) {
-                    attrs = {};
                 }
 
                 if (tag._ || tag.renderer || tag.render) {
@@ -228,7 +236,13 @@ var helpers = {
                                 globalContext
                             );
                             render.toJSON = RENDER_BODY_TO_JSON;
-                            render(out, attrs);
+
+                            if (args) {
+                                render.apply(null, [out].concat(args, attrs));
+                            } else {
+                                render(out, attrs);
+                            }
+
                             componentsContext.___componentDef = parentComponentDef;
                         }
                         out.___endFragment();

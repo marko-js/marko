@@ -416,7 +416,7 @@ class CustomTag extends HtmlElement {
             inputProps = merge(this._additionalProps, inputProps, context);
         }
 
-        if (this.argument) {
+        if (this.argument && !isDynamicTag) {
             let argExpression = builder.parseExpression(this.argument);
             inputProps = merge(argExpression, inputProps, context);
             context.deprecate(
@@ -614,10 +614,16 @@ class CustomTag extends HtmlElement {
                     parentCustomTag.getNestedTagVar(context)
                 ];
             } else if (isDynamicTag) {
+                const argumentNode = this.argument
+                    ? builder.arrayExpression(
+                          [].concat(builder.parseExpression(this.argument))
+                      )
+                    : builder.literalNull();
                 tagVar = context.helper("dynamicTag");
                 tagArgs = [
                     this.tagNameExpression,
                     inputProps,
+                    argumentNode,
                     builder.identifierOut()
                 ];
             } else {

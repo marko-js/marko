@@ -25,7 +25,7 @@ function render(input, out, __component, component, state) {
   marko_dynamicTag(isCircle ? "circle" : "square", {
       width: 200,
       height: 200
-    }, out, __component, "1");
+    }, null, out, __component, "1");
 
   out.ee();
 }

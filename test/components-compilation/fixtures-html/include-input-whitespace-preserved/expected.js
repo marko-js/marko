@@ -20,7 +20,7 @@ function render(input, out, __component, component, state) {
   } else {
     marko_dynamicTag(data.renderBody, {
         test: 1
-      }, out, __component, "1");
+      }, null, out, __component, "1");
   }
 
   out.w("\n</div>");
