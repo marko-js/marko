@@ -338,7 +338,7 @@ $ var personPromise = new Promise((resolve, reject) => {
         <!-- Displayed if promise resolves -->
 
         <div>Hello ${person.name}!</div>
-    <@then>
+    </@then>
 
     <@catch|err|>
         <!-- Displayed if promise rejects -->

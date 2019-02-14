@@ -113,7 +113,9 @@ _components/layout.marko_
 
 ### Repeated attribute tags
 
-Using the fancy table:
+It is sometimes useful to allow multiple of the same attribute tag to be passed. This would allow us to, for example, build a custom table component which would allow its user to specify any number of columns, while still giving ther user control over how each column is rendered:
+
+_Marko Source:_
 
 ```marko
 <fancy-table data=people>
@@ -126,15 +128,30 @@ Using the fancy table:
 </fancy-table>
 ```
 
-The fancy table implementation
+In order to receive multiple of the same attribute tag, you need to specify that the attribute tag can be repeated in a [`marko-tag.json`](./marko-json.md#single-component-definition) file.
 
-```marko
+_components/fancy-table/marko-tag.json:_
+
+```js
+{
+    "@data": "array",
+    "<column>": {
+        "is-repeated": true
+    }
+}
+```
+
+We can then use the `<for>` tag to render the body content into table, passing the row data to each column's body.
+
+_components/fancy-table/index.marko:_
+
+```marko{4-8}
 <table class="fancy">
-    <for|data| of=input.data>
+    <for|row| of=input.data>
         <tr>
             <for|column| of=input.column>
                 <td>
-                    <${column.renderBody} ...data/>
+                    <${column.renderBody} ...row/>
                 </td>
             </for>
         </tr>
@@ -142,7 +159,9 @@ The fancy table implementation
 </table>
 ```
 
-People data:
+We now have a working `<fancy-table>`. Let's see what it renders:
+
+_Example Data:_
 
 ```js
 [
@@ -157,7 +176,7 @@ People data:
 ];
 ```
 
-The HTML Output when rendered with the above data:
+_HTML Output:_
 
 ```html
 <table class="fancy">
@@ -174,6 +193,10 @@ The HTML Output when rendered with the above data:
 
 ### Attributes on attribute tags
 
+If you look at our previous example, we had to prefix each cell with the column label. It would be better if we could give a name to each column instead and only render that once.
+
+_Marko Source:_
+
 ```marko
 <fancy-table>
     <@column|person| heading="Name">
@@ -185,24 +208,32 @@ The HTML Output when rendered with the above data:
 </fancy-table>
 ```
 
-```marko
+Now, each object in the `input.column` array will contain a `heading` property in addition to its `renderBody`. We can use another `<for>` and render the headings in `<th>` tags:
+
+_components/fancy-table/index.marko:_
+
+```marko{3-5}
 <table class="fancy">
     <tr>
         <for|column| of=input.column>
             <th>${column.heading}</th>
         </for>
     </tr>
-    <for|data| of=input.data>
+    <for|row| of=input.data>
         <tr>
             <for|column| of=input.column>
                 <td>
-                    <${column.renderBody} ...data/>
+                    <${column.renderBody} ...row/>
                 </td>
             </for>
         </tr>
     </for>
 </table>
 ```
+
+We'll now get a row of headings when we render our `<fancy-table>`
+
+_HTML Output:_
 
 ```html
 <table class="fancy">
@@ -223,7 +254,11 @@ The HTML Output when rendered with the above data:
 
 ### Nested attribute tags
 
-```marko
+Continuing to build on our example, what if we want to add some custom content or even components into the column headings? In this case, we can extend our `<fancy-table>` to use nested attribute tags. We'll now have `<@heading>` and `<@cell>` tags nested under `<@column>`. This gives users of our tag full control over how to render both column headings and the cells within the column!
+
+_Marko Source:_
+
+```marko{3-8}
 <fancy-table>
     <@column>
         <@heading>
@@ -244,7 +279,11 @@ The HTML Output when rendered with the above data:
 </fancy-table>
 ```
 
-```marko
+Now instead of rendering the heading as text, we'll render the heading's body content.
+
+_components/fancy-table/index.marko:_
+
+```marko{5}
 <table class="fancy">
     <tr>
         <for|column| of=input.column>
@@ -253,17 +292,21 @@ The HTML Output when rendered with the above data:
             </th>
         </for>
     </tr>
-    <for|data| of=input.data>
+    <for|row| of=input.data>
         <tr>
             <for|column| of=input.column>
                 <td>
-                    <${column.cell.renderBody} ...data/>
+                    <${column.cell.renderBody} ...row/>
                 </td>
             </for>
         </tr>
     </for>
 </table>
 ```
+
+Our headings can now include icons (any anything else)!
+
+_HTML Output:_
 
 ```html
 <table class="fancy">
@@ -281,3 +324,34 @@ The HTML Output when rendered with the above data:
   </tr>
 </table>
 ```
+
+### Dynamic attribute tags
+
+The flexibility of the `<fancy-table>` is great if you want to render columns differently or have columns that display the data in a special way (such as displaying an age derived from a date of birth). However, if all columns are basically the same, the user might feel they're repeating themselves. As you might expect, you can use `<for>` (and `<if>`) to dynamically render attribute tags.
+
+```marko
+$ const columns = [{
+    property: "name",
+    title: "Name",
+    icon: "profile"
+}, {
+    property: "age",
+    title: "Age",
+    icon: "calendar"
+}]
+
+<fancy-table>
+    <for|{ property, title, icon }|>
+        <@column>
+            <@heading>
+                <app-icon type=icon/> ${title}
+            </@heading>
+            <@cell|person|>
+                ${person[property]}
+            </@cell>
+        </@column>
+    </for>
+</fancy-table>
+```
+
+<component on-foo() on-click()>

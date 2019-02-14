@@ -70,9 +70,28 @@ Typically we recommend using `attributes` to pass data in to a child component, 
 
 ### Global/Subtree
 
-For passing state throughout a component tree without explicit attribute setting throughout the entire app, you can leverage the [`<context>`](https://github.com/marko-js/tags/tree/master/tags/context) tag. This tag is currently outside of Marko core, but can be [installed from npm](./custom-tags.md#using-tags-from-npm).
+For passing state throughout a component tree without explicit attribute setting throughout the entire app, you can leverage the [`<context>`](https://github.com/marko-js/tags/tree/master/tags/context) tag. This tag can be [installed from npm](./custom-tags.md#using-tags-from-npm).
 
 This tag allows you to pull state from any level above in the tree and can also be used to pass global state throughout your app.
+Context providers can register event handlers that any child in the tree can trigger similar to the [events API](./events.md).
+
+_fancy-form.marko_
+
+```marko
+<context coupon=input.coupon on-buy(handleBuy)>
+    <!-- Somewhere nested in the container will be the buy button -->
+    <fancy-container/>
+</context>
+```
+
+_fancy-save-button.marko_
+
+```marko
+<context|{ coupon }, emit| from="fancy-form">
+    Coupon: ${coupon}.
+    <button on-click(emit, "buy")>Buy</button>
+</context>
+```
 
 > **Note:** Context _couples_ tags together and can limit reuse of components.
 

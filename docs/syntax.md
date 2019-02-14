@@ -21,7 +21,7 @@ All of these types of tags use the same syntax:
 <my-tag-name/>
 ```
 
-You don't need to import tags. Marko will discover them based on the folder structure similar to how you don't specify full paths when using `node_modules/`. [The magic folder for Marko is `components/`](./custom-tags.md#how-tags-are-discovered).
+You don't need to import tags. Marko discovers them based on the folder structure—similar to how you don't specify a full path when referencing a module in `node_modules/`. Marko looks in [`components/`](./custom-tags.md#how-tags-are-discovered) by default and this directory can be configured in [`marko.json`](./marko-json.md).
 
 ## Dynamic text
 
