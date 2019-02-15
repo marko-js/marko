@@ -121,17 +121,17 @@ syntax. Find out more about the [concise syntax here](http://markojs.com/docs/co
 ```marko
 <!-- Marko HTML syntax -->
 <ul>
-    <li for(color in ['a', 'b', 'c'])>
-        ${color}
-    </li>
+    <for|color| of=['a', 'b', 'c']>
+        <li>${color}</li>
+    </for>
 </ul>
 ```
 
 ```marko
 // Marko concise syntax
 ul
-    li for(color in ['a', 'b', 'c'])
-        -- ${color}
+    for|color| of=['a', 'b', 'c']
+        li -- ${color}
 ```
 
 # Changelog
