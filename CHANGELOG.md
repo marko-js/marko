@@ -6,7 +6,7 @@
 
 ### 4.15.0
 
-The most notable change here is to the `<for>`, `<macro>` and `<await>` core tags. These tags previously each relied on custom syntax to implement an API that was not possible to do in userland when they were introduced. Generic solutions for these problems has arrived in the form of [attribute tags](https://markojs.com/docs/syntax#attribute-tags) and [tag parameters](https://markojs.com/docs/syntax#parameters).
+The most notable change here is to the `<for>`, `<macro>` and `<await>` core tags. These tags previously each relied on custom syntax to implement an API that was not possible to do in userland when they were introduced. Generic solutions for these problems has arrived in the form of [attribute tags](https://markojs.com/docs/syntax#attribute-tag) and [tag parameters](https://markojs.com/docs/syntax#parameters).
 
 With these new features in place and currently available in userland we set out to normalize these existing tags, hopefully making the learning process for Marko a little easier, and also promoting the use of these new features. We've also spent time formalizing some best practices, and highlighting this new syntax in the documentation on the [markojs.com](https://markojs.com) website.
 
