@@ -4,6 +4,24 @@
 
 ## 4.14.x
 
+### 4.15.0
+
+The most notable change here is to the `<for>`, `<macro>` and `<await>` core tags. These tags previously each relied on custom syntax to implement an API that was not possible to do in userland when they were introduced. Generic solutions for these problems has arrived in the form of [attribute tags](https://markojs.com/docs/syntax#attribute-tags) and [tag parameters](https://markojs.com/docs/syntax#parameters).
+
+With these new features in place and currently available in userland we set out to normalize these existing tags, hopefully making the learning process for Marko a little easier, and also promoting the use of these new features. We've also spent time formalizing some best practices, and highlighting this new syntax in the documentation on the [markojs.com](https://markojs.com) website.
+
+The existing syntax will continue to be supported until Marko 5 and will currently log a deprecation warning. For these deprecations and most others you can automatically migrate existing code using the [marko migrate](https://github.com/marko-js/cli/blob/master/packages/migrate/README.md) cli tool.
+
+- Updated documentation with guides and changes to syntax/core tags. [#1260](https://github.com/marko-js/marko/pull/1260)
+- Modernize the [`<for>` tag](https://markojs.com/docs/core-tags#for). [#1238](https://github.com/marko-js/marko/pull/1238)
+- Modernize the [`<await>` tag](https://markojs.com/docs/core-tags#await). [#1244](https://github.com/marko-js/marko/pull/1244)
+- Modernize the [`<macro>` tag](https://markojs.com/docs/core-tags#macro). [#1227](https://github.com/marko-js/marko/pull/1227)
+- Deprecated legacy top level imports (jquery/ready) and compiler option tags (recommended to use marko.json instead). [#1258](https://github.com/marko-js/marko/pull/1258)
+- Modern arguments support for the dynamic tag. [#1259](https://github.com/marko-js/marko/pull/1259)
+- Improves parsing inside of the `<html-comment>` tag to support the same style of content as actual html comments. [#1261](https://github.com/marko-js/marko/pull/1261)
+- Ignore only whitespace content inside of concise mode tags (including `class` and `style`) which would previously error. [#1256](https://github.com/marko-js/marko/pull/1256)
+- Fixes a regression with passing a string literal as a `${dynamic}` attribute and add a deprecation warning. [#1257](https://github.com/marko-js/marko/pull/1257)
+
 ### 4.14.25
 
 - Fix regression with non standard template literals (`"stuff ${placeholder}"`) that have escaped content such as newlines [#1254](https://github.com/marko-js/marko/pull/1254)

@@ -11,7 +11,7 @@ module.exports = function migrator(elNode, context) {
     }
 
     context.deprecate(
-        'The "<await(result from promise)>" syntax has been deprecated, please use the modern syntax of "<await(promise)><@then|result|>". See: https://github.com/marko-js/marko/wiki/Deprecation:-async-tag'
+        'The "<await(result from promise)>" syntax has been deprecated, please use the modern syntax of "<await(promise)><@then|result|>". See: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-await'
     );
 
     elNode.argument = undefined;

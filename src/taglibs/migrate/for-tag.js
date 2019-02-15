@@ -17,6 +17,10 @@ function migrateForLoop(elNode, context) {
         return;
     }
 
+    context.deprecate(
+        'The "<for(...)>" syntax has been deprecated, checkout the modern syntax here: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-for'
+    );
+
     try {
         parsed = parseFor(elNode.argument);
         elNode.argument = undefined;
