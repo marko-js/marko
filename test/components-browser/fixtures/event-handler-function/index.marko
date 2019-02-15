@@ -1,0 +1,11 @@
+class {}
+
+static function handleClick(component) {
+    if (component.clickCount === undefined) {
+        component.clickCount = 0;
+    }
+
+    component.clickCount++;
+}
+
+<button key="button" on-click(handleClick, component)/>
