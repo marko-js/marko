@@ -68,7 +68,7 @@ In marko attributes are parsed as JavaScript expressions (instead of just string
 <custom-tag function-call=user.getName()/>
 ```
 
-Attributes that are passed to a custom tag are received as it's [`input`](TODO).
+Attributes that are passed to a custom tag are received as it's [`input`](https://markojs.com/docs/class-components/#input).
 
 > **Note:** Although in most cases you won't see a difference, strings are parsed as JavaScript strings, not HTML strings. Where this comes up most often is using the `pattern` attribute with the `<input>` tag: you need to "double escape" your regex escape sequences much like you were passing a string to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) (or you can use a literal `/regex/`).
 >

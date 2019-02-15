@@ -353,5 +353,3 @@ $ const columns = [{
     </for>
 </fancy-table>
 ```
-
-<component on-foo() on-click()>

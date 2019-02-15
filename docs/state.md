@@ -66,7 +66,7 @@ When a property on `state` is set, the component will be scheduled for an update
 
 There are various tools available to manage state outside of a single component. Here are some basic guidelines.
 
-Typically we recommend using `attributes` to pass data in to a child component, and children can [emit events](./events.md) to communicate back up to their parents. In some cases this can become cumbersum with deeply nested data dependencies or global state.
+Typically we recommend using `attributes` to pass data in to a child component, and children can [emit events](./events.md#emitting-custom-events) to communicate back up to their parents. In some cases this can become cumbersum with deeply nested data dependencies or global state.
 
 ### Global/Subtree
 
