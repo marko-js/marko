@@ -16,7 +16,7 @@ module.exports = function generateCode(node, codegen) {
 
     var properties = node.getProperties();
 
-    if (properties) {
+    if (properties && !codegen.context.isStatefulComponent) {
         var objectProps = Object.keys(properties).map(propName => {
             return builder.property(
                 builder.literal(propName),

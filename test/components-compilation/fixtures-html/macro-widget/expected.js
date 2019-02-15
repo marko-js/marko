@@ -8,7 +8,6 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_escapeXml = marko_helpers.x,
-    marko_attr = marko_helpers.a,
     marko_forEach = marko_helpers.f,
     marko_dynamicTag = marko_helpers.d;
 
@@ -18,13 +17,7 @@ function render(input, out, __component, component, state) {
   function macro_renderButton(out, macroInput) {
     var color = macroInput.color
 
-    out.w("<button" +
-      marko_attr("data-marko", {
-        onclick: __component.d("click", "handleColorClick", false, [
-            color
-          ])
-      }, false) +
-      ">" +
+    out.w("<button>" +
       marko_escapeXml(color) +
       "</button>");
   }
