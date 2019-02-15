@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.15.1
+
+- Improve support for using raw functions as event handlers by not outputing `data-marko` content for components that will rerender in the browser. [#1262](https://github.com/marko-js/marko/pull/1262)
+
 ### 4.15.0
 
 The most notable change here is to the `<for>`, `<macro>` and `<await>` core tags. These tags previously each relied on custom syntax to implement an API that was not possible to do in userland when they were introduced. Generic solutions for these problems has arrived in the form of [attribute tags](https://markojs.com/docs/syntax#attribute-tag) and [tag parameters](https://markojs.com/docs/syntax#parameters).
