@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.15.2
+
+- Improve the webpack server-bundling experience by guarding a legacy (lasso-specific) api that uses a dynamic require and causes a warning to be emitted. [#1267](https://github.com/marko-js/marko/pull/1267)
+
 ### 4.15.1
 
 - Improve support for using raw functions as event handlers by not outputing `data-marko` content for components that will rerender in the browser. [#1262](https://github.com/marko-js/marko/pull/1262)
