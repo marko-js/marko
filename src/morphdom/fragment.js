@@ -52,13 +52,22 @@ var fragmentPrototype = {
 
 function createFragmentNode(startNode, nextNode, parentNode) {
     var fragment = Object.create(fragmentPrototype);
+    var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
+    parentNode =
+        parentNode || (startNode && startNode.parentNode) || detachedContainer;
+    if (
+        parentNode === document ||
+        parentNode === document.documentElement ||
+        parentNode === document.head
+    ) {
+        throw new Error(
+            "Stateful components cannot contain `<html>`, `<head>` or `<body>` tags. More details: https://github.com/marko-js/marko/wiki/Error:-Stateful-components-cannot-contain--html-,--head--or--body--tags"
+        );
+    }
     fragment.startNode = document.createTextNode("");
     fragment.endNode = document.createTextNode("");
     fragment.startNode.fragment = fragment;
     fragment.endNode.fragment = fragment;
-    var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
-    parentNode =
-        parentNode || (startNode && startNode.parentNode) || detachedContainer;
     insertBefore(fragment.startNode, startNode, parentNode);
     insertBefore(fragment.endNode, nextNode, parentNode);
     return fragment;
