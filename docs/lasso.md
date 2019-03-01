@@ -105,78 +105,87 @@ browser-refresh server.js
 
 For many use cases, the combination of `lasso-marko` and `@lasso/marko-taglib` is sufficient to render and bundle components without the need for explicit `browser.json` files. For more advanced use cases, the following bundle types may be defined in a `browser.json` for Lasso.
 
-- **`marko-dependencies`**: (provided by `lasso-marko`)
-  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. It does not automatically initialize the component, so is most useful if you need to initialize components manually.
+#### `marko-dependencies` _(provided by `lasso-marko`)_
 
-  ```json
-  {
-    "type": "marko-dependencies",
-    "path": "src/ui-modules/outdated-browser-banner/index.marko"
-  }
-  ```
+Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. It does not automatically initialize the component, so is most useful if you need to initialize components manually.
 
-  **Note:** To initialize the server rendered components, there are 2 steps:
+```json
+{
+  "type": "marko-dependencies",
+  "path": "src/ui-modules/outdated-browser-banner/index.marko"
+}
+```
 
-  **Step 1:** Manually _retrieve_ server rendered components, shipped via `marko-dependencies`.
+**Note:** To initialize the server rendered components, there are 2 steps:
 
-  To retrieve the list of server rendered components, do:
+**Step 1:** Manually _retrieve_ server rendered components, shipped via `marko-dependencies`.
 
+To retrieve the list of server rendered components, do:
 
-     ```javascript
-            template.render(data, (err, output) => {
-              const renderedComponentsList = require('marko/components').getRenderedComponents(output.out);
-              const html = output.getOutput();
-            });
-            res.json({
-                renderedComponentsList,
-                html
-            });
-     ```
-    **Step 2:** Manually *initialize* server rendered components, shipped via `marko-dependencies`.
+```javascript
+template.render(data, (err, output) => {
+  const renderedComponentsList = require("marko/components").getRenderedComponents(
+    output.out
+  );
+  const html = output.getOutput();
+});
+res.json({
+  renderedComponentsList,
+  html
+});
+```
 
-    To initialize the list of server rendered components, do:
+**Step 2:** Manually _initialize_ server rendered components, shipped via `marko-dependencies`.
 
+To initialize the list of server rendered components, do:
 
-     ```javascript
-            // from the response received, retrieve as
-            require('marko/components').init(response.renderedComponentsList);
-     ```
-     **Note:** Ensure Step 2 is inside a DOM-ready wrapper, for the legacy widgets layer to load (if there are widgets built out of Marko 3, that is being used inside a Marko 4 component.)
+```javascript
+// from the response received, retrieve as
+require("marko/components").init(response.renderedComponentsList);
+```
 
-- **`marko-hydrate`**: (provided by `lasso-marko`)
-  Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
+**Note:** Ensure Step 2 is inside a DOM-ready wrapper, for the legacy widgets layer to load (if there are widgets built out of Marko 3, that is being used inside a Marko 4 component.)
 
-  ```json
-  {
-    "type": "marko-hydrate",
-    "path": "src/ui-modules/outdated-browser-banner/index.marko"
-  }
-  ```
+#### `marko-hydrate` _(provided by `lasso-marko`)_
 
-  **Note:** `marko-hydrate` will initialize the component if its defined on the global `window.$components` which is inserted by `Marko` when it sees a `<body>` tag. Else, if you are just rendering out and lasso-ing the a portion of a page with a set of components, include `<init-components/>` at the end of the associated `template.marko` file that builds out the page fragment.
+Includes all the dependencies needed by template and the code to register all components that would be rendered by the template. This also includes the code to initialize the rendered components. Including this bundle on the page will automatically hydrate server rendered components.
 
-- **`package`**:
-  A collection of dependencies. `browser.json` is the most common package type.
-  It could be used to point to another `browser.json` from within one component's `browser.json`.
-  Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
-  ```json
-  {
-    "type": "package",
-    "path": "src/ui-modules/show-diag/browser.json"
-  }
-  ```
-- **`require`**:
-  If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+```json
+{
+  "type": "marko-hydrate",
+  "path": "src/ui-modules/outdated-browser-banner/index.marko"
+}
+```
 
-  ```json
-  {
-    "type": "require",
-    "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
-  }
-  ```
+**Note:** `marko-hydrate` will initialize the component if its defined on the global `window.$components` which is inserted by `Marko` when it sees a `<body>` tag. Else, if you are just rendering out and lasso-ing the a portion of a page with a set of components, include `<init-components/>` at the end of the associated `template.marko` file that builds out the page fragment.
 
-- **`require and run`**:
-  If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format and be executed immediately.
+#### `package`
+
+A collection of dependencies. `browser.json` is the most common package type.
+It could be used to point to another `browser.json` from within one component's `browser.json`.
+Typically also used when the dependencies of the referred `browser.json` have to be packaged inline.
+
+```json
+{
+  "type": "package",
+  "path": "src/ui-modules/show-diag/browser.json"
+}
+```
+
+#### `require`
+
+If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format.
+
+```json
+{
+  "type": "require",
+  "path": "src/ui-modules/dynamic-module-loader/dynamic-init-client.js"
+}
+```
+
+#### `require` and `run`
+
+If a javascript file has to be wrapped over for its common JS syntax, to a browser understandable format and be executed immediately.
 
 ```json
 {

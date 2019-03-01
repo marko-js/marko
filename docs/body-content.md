@@ -304,7 +304,7 @@ _components/fancy-table/index.marko:_
 </table>
 ```
 
-Our headings can now include icons (any anything else)!
+Our headings can now include icons (and anything else)!
 
 _HTML Output:_
 
