@@ -4,7 +4,7 @@
 
 ## 4.14.x
 
-### 4.15.2
+### 4.15.3
 
 - Fix false positive deprecation message for legacy nested tag syntax. [#1271](https://github.com/marko-js/marko/pull/1271)
 
