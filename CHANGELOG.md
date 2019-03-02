@@ -4,6 +4,10 @@
 
 ## 4.14.x
 
+### 4.15.2
+
+- Fix false positive deprecation message for legacy nested tag syntax. [#1271](https://github.com/marko-js/marko/pull/1271)
+
 ### 4.15.1
 
 - Improve support for using raw functions as event handlers by not outputing `data-marko` content for components that will rerender in the browser. [#1262](https://github.com/marko-js/marko/pull/1262)
