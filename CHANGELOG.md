@@ -2,7 +2,11 @@
 
 # 4.x
 
-## 4.14.x
+## 4.15.x
+
+### 4.15.3
+
+- Fix false positive deprecation message for legacy nested tag syntax. [#1271](https://github.com/marko-js/marko/pull/1271)
 
 ### 4.15.2
 
@@ -29,6 +33,8 @@ The existing syntax will continue to be supported until Marko 5 and will current
 - Improves parsing inside of the `<html-comment>` tag to support the same style of content as actual html comments. [#1261](https://github.com/marko-js/marko/pull/1261)
 - Ignore only whitespace content inside of concise mode tags (including `class` and `style`) which would previously error. [#1256](https://github.com/marko-js/marko/pull/1256)
 - Fixes a regression with passing a string literal as a `${dynamic}` attribute and add a deprecation warning. [#1257](https://github.com/marko-js/marko/pull/1257)
+
+## 4.14.x
 
 ### 4.14.25
 
