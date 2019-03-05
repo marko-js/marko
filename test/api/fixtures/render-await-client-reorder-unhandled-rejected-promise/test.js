@@ -8,7 +8,7 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
         {
             userPromise: new Promise((_, reject) => {
                 setTimeout(function() {
-                    reject(new Error("failed"));
+                    reject(new Error("User Promise Rejected Error"));
                 }, 10);
             })
         },
@@ -16,7 +16,9 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     );
 
     out.on("error", err => {
-        expect(err.message.startsWith("Render error")).to.equal(true);
+        expect(
+            err.message.indexOf("User Promise Rejected Error") !== -1
+        ).to.equal(true);
         done();
     });
 };
