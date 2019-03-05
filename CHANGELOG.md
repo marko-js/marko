@@ -4,6 +4,10 @@
 
 ## 4.15.x
 
+### 4.15.4
+
+- Forward errors from `<await client-reorder>` to the parent out to prevent potential unhandled rejections. [#1275](https://github.com/marko-js/marko/pull/1275)
+
 ### 4.15.3
 
 - Fix false positive deprecation message for legacy nested tag syntax. [#1271](https://github.com/marko-js/marko/pull/1271)
