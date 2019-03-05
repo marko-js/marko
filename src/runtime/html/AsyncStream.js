@@ -466,7 +466,10 @@ var proto = (AsyncStream.prototype = {
     },
 
     createOut: function() {
-        return new AsyncStream(this.global);
+        var newOut = new AsyncStream(this.global);
+        // Forward error events to the parent out.
+        newOut.on("error", this.emit.bind(this, "error"));
+        return newOut;
     },
 
     element: function(tagName, elementAttrs, openTagOnly) {
