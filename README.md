@@ -31,7 +31,7 @@ npm install marko --save
 Marko provides an elegant and readable syntax for both single-file components
 and components broken into separate files. There are plenty of examples to play
 with on [Marko's Try-Online](http://markojs.com/try-online/). Additional
-[component documentation](http://markojs.com/docs/components/) can be found on
+[component documentation](https://markojs.com/docs/class-components/) can be found on
 the Marko.js website.
 
 ## Single file
