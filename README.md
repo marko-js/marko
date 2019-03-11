@@ -1,9 +1,9 @@
 <p align="center">
-    <a href="http://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko logo" width="300" /></a><br /><br />
+    <a href="https://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko logo" width="300" /></a><br /><br />
 </p>
 
 Marko is a friendly (and fast!) UI library that makes building web apps fun.
-Learn more on [markojs.com](http://markojs.com/), and even [Try Marko Online!](http://markojs.com/try-online/)
+Learn more on [markojs.com](https://markojs.com/), and even [Try Marko Online!](https://markojs.com/try-online/)
 
 [![Build Status](https://travis-ci.org/marko-js/marko.svg?branch=master)](https://travis-ci.org/marko-js/marko)
 [![Coverage Status](https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg)](https://codecov.io/gh/marko-js/marko)
@@ -30,14 +30,14 @@ npm install marko --save
 
 Marko provides an elegant and readable syntax for both single-file components
 and components broken into separate files. There are plenty of examples to play
-with on [Marko's Try-Online](http://markojs.com/try-online/). Additional
-[component documentation](http://markojs.com/docs/components/) can be found on
+with on [Marko's Try-Online](https://markojs.com/try-online/). Additional
+[component documentation](https://markojs.com/docs/class-components/) can be found on
 the Marko.js website.
 
 ## Single file
 
 The following single-file component renders a button and a counter with the
-number of times the button has been clicked. [Try this example now!](http://markojs.com/try-online/?file=%2Fcomponents%2Fcomponents%2Fclick-count%2Findex.marko)
+number of times the button has been clicked. [Try this example now!](https://markojs.com/try-online/?file=%2Fcomponents%2Fcomponents%2Fclick-count%2Findex.marko)
 
 **click-count.marko**
 
@@ -116,7 +116,7 @@ module.exports = {
 ## Concise Syntax
 
 Marko also supports a beautifully concise syntax as an alternative to HTML
-syntax. Find out more about the [concise syntax here](http://markojs.com/docs/concise/).
+syntax. Find out more about the [concise syntax here](https://markojs.com/docs/concise/).
 
 ```marko
 <!-- Marko HTML syntax -->
@@ -140,7 +140,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Maintainers
 
-- [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](http://twitter.com/psteeleidem))
+- [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](https://twitter.com/psteeleidem))
 - [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
 - [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
 - [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
@@ -149,7 +149,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 # Code of Conduct
 
-This project adheres to the [eBay Code of Conduct](http://ebay.github.io/codeofconduct).
+This project adheres to the [eBay Code of Conduct](https://ebay.github.io/codeofconduct).
 By participating in this project you agree to abide by its terms.
 
 # License
