@@ -4,6 +4,10 @@
 
 ## 4.15.x
 
+### 4.15.6
+
+- Fix regression in older browsers caused by using `string.startsWith` in the runtime code.
+
 ### 4.15.5
 
 - Allow syntax that Marko does not understand (but esprima does) to pass through in the arguments syntax. [#1286](https://github.com/marko-js/marko/pull/1286)
