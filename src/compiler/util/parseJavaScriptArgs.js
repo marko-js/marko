@@ -8,16 +8,12 @@ function parseJavaScriptArgs(args, builder) {
     ok(typeof args === "string", '"args" should be a string');
     ok(builder, '"builder" is required');
 
-    const src = `_(${args})`;
-    const ast = parseRawJavaScriptAst(src, {
-        startOffset: 2,
-        endOffset: -1
-    });
+    const ast = parseRawJavaScriptAst`_(${args})`;
 
     return ast.body[0].expression.arguments.map(
         node =>
             convertRawJavaScriptAst(node, builder) ||
-            builder.expression(src.slice(node.range[0], node.range[1]))
+            builder.expression(ast.source.slice(node.range[0], node.range[1]))
     );
 }
 

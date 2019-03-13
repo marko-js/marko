@@ -6,12 +6,10 @@ const covertRawJavaScriptAst = require("./convertRawJavaScriptAst");
 
 function parseExpression(src, builder, isExpression) {
     ok(typeof src === "string", '"src" should be a string expression');
-    return (
-        covertRawJavaScriptAst(
-            parseRawJavaScriptAst(src, { expression: isExpression }),
-            builder
-        ) || builder.expression(src)
-    );
+    const ast = isExpression
+        ? parseRawJavaScriptAst`(${src})`
+        : parseRawJavaScriptAst`${src}`;
+    return covertRawJavaScriptAst(ast, builder) || builder.expression(src);
 }
 
 module.exports = parseExpression;

@@ -7,14 +7,10 @@ function parseJavaScriptParams(params, builder) {
     ok(typeof params === "string", '"params" should be a string');
     ok(builder, '"builder" is required');
 
-    const src = "(" + params + ") => {}";
-    const ast = parseRawJavaScriptAst(src, {
-        startOffset: 1,
-        endOffset: -7
-    });
+    const ast = parseRawJavaScriptAst`(${params}) => {}`;
 
     return ast.body[0].expression.params.map(node => {
-        const paramSrc = src.slice(node.range[0], node.range[1]);
+        const paramSrc = ast.source.slice(node.range[0], node.range[1]);
         return node.type === "Identifier"
             ? builder.identifier(paramSrc)
             : builder.expression(paramSrc);

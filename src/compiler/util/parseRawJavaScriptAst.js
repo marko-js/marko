@@ -3,32 +3,23 @@ var ok = require("assert").ok;
 
 const esprima = require("esprima");
 
-module.exports = function parseRawJavaScriptAst(src, opts) {
+module.exports = function parseRawJavaScriptAst(parts, src) {
+    ok(
+        parts.length === 2,
+        "Tagged template literal should only have one interpolated value (javascript source)"
+    );
     ok(typeof src === "string", '"src" should be a string expression');
 
-    let startOffset = 0;
-    let endOffset = undefined;
-    let parseSrc = src;
-
-    if (opts) {
-        if (opts.startOffset) {
-            startOffset = opts.startOffset || 0;
-        }
-
-        if (opts.endOffset) {
-            endOffset = opts.endOffset;
-        }
-
-        if (opts.expression) {
-            startOffset = (startOffset || 0) + 1;
-            endOffset = (endOffset || 0) - 1;
-            parseSrc = `(${src})`;
-        }
-    }
-
+    const startCode = parts[0];
+    const endCode = parts[1];
+    const startOffset = startCode.length;
+    const endOffset = -endCode.length || undefined;
+    const parseSrc = startCode + src + endCode;
     let jsAST;
+
     try {
         jsAST = esprima.parseScript(parseSrc, { range: true });
+        jsAST.source = parseSrc;
     } catch (e) {
         var errorIndex = e.index;
         var errorMessage = "\n" + e.description;
@@ -44,7 +35,7 @@ module.exports = function parseRawJavaScriptAst(src, opts) {
 
         errorMessage += ": ";
         errorMessage +=
-            parseSrc.slice(startOffset, endOffset || undefined) +
+            parseSrc.slice(startOffset, endOffset) +
             "\n" +
             new Array(errorMessage.length + errorIndex + 1).join(" ") +
             "^";
