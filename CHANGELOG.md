@@ -4,6 +4,11 @@
 
 ## 4.15.x
 
+### 4.15.5
+
+- Allow syntax that Marko does not understand (but esprima does) to pass through in the arguments syntax. [#1286](https://github.com/marko-js/marko/pull/1286)
+- Fix issue with `<title>` inside of an `<svg>` using the wrong namespace. [#1284](https://github.com/marko-js/marko/pull/1284)
+
 ### 4.15.4
 
 - Forward errors from `<await client-reorder>` to the parent out to prevent potential unhandled rejections. [#1275](https://github.com/marko-js/marko/pull/1275)
