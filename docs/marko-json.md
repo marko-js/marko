@@ -6,7 +6,7 @@ These files are automatically found using the same [discovery mechanism](./custo
 
 ## Single component definition
 
-The `marko-tag.json` allows you to configure various aspects about a single component. It will be automatically discovered if placed inside a [tag directory](./custom-tags#tag-directories).
+The `marko-tag.json` allows you to configure various aspects about a single component. It will be automatically discovered if placed inside a [tag directory](./custom-tags.md#tag-directories).
 
 ### Options
 
@@ -113,7 +113,7 @@ There are several options that provide a way to override the default discovery o
 
 ## Tag library definition
 
-On top of being able to provide configuration for a single file, you can also use a `marko.json` to define an entire library of components. Similar to the [`marko-tag.json`](#single-component-definition), this file will be discovered if placed within a [tag directory](./custom-tags#tag-directories). It will also be discovered if placed at the root directory of a project, or [within a `node_module` package](./custom-tags.md#publishing-tags-to-npm).
+On top of being able to provide configuration for a single file, you can also use a `marko.json` to define an entire library of components. Similar to the [`marko-tag.json`](#single-component-definition), this file will be discovered if placed within a [tag directory](./custom-tags.md#tag-directories). It will also be discovered if placed at the root directory of a project, or [within a `node_module` package](./custom-tags.md#publishing-tags-to-npm).
 
 ### Options
 
