@@ -138,14 +138,11 @@ ul
 
 See [CHANGELOG.md](CHANGELOG.md)
 
-# Maintainers
+# Contributors
 
-- [Patrick Steele-Idem](https://github.com/patrick-steele-idem) (Twitter: [@psteeleidem](https://twitter.com/psteeleidem))
-- [Michael Rawlings](https://github.com/mlrawlings) (Twitter: [@mlrawlings](https://twitter.com/mlrawlings))
-- [Phillip Gates-Idem](https://github.com/philidem/) (Twitter: [@philidem](https://twitter.com/philidem))
-- [Austin Kelleher](https://github.com/austinkelleher) (Twitter: [@AustinKelleher](https://twitter.com/AustinKelleher))
-- [Dylan Piercey](https://github.com/dylanpiercey) (Twitter: [@dylan_piercey](https://twitter.com/dylan_piercey))
-- [Martin Aberer](https://github.com/tindli) (Twitter: [@metaCoffee](https://twitter.com/metaCoffee))
+<a href="https://github.com/marko-js/marko/graphs/contributors">
+    <img src="https://opencollective.com/marko-js/contributors.svg?width=890&button=false"/>
+</a>
 
 # Code of Conduct
 
