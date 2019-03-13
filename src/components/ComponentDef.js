@@ -62,7 +62,7 @@ ComponentDef.prototype = {
         if (nestedId == null) {
             return id;
         } else {
-            if (nestedId.startsWith("#")) {
+            if (nestedId.indexOf("#") === 0) {
                 id = "#" + id;
                 nestedId = nestedId.substring(1);
             }
