@@ -47,7 +47,8 @@ function finalizeCreateArgs(createArgs, builder) {
 const MAYBE_SVG = {
     a: true,
     script: true,
-    style: true
+    style: true,
+    title: true
 };
 
 const SIMPLE_ATTRS = {
