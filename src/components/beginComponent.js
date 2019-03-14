@@ -5,6 +5,7 @@ const ComponentDef = require("./ComponentDef");
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_BODY_EL = 2;
 // var FLAG_HAS_HEAD_EL = 4;
+var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 module.exports = function beginComponent(
     componentsContext,
@@ -49,6 +50,10 @@ module.exports = function beginComponent(
 
     if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
         componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
+    }
+
+    if (out.global.oldHydrateNoCreate === true) {
+        componentDef.___flags |= FLAG_OLD_HYDRATE_NO_CREATE;
     }
 
     if (ownerComponentDef && key != null) {

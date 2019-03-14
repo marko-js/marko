@@ -114,7 +114,8 @@
         "deprecated": true,
         "code-generator": "./marko-tag",
         "open-tag-only": true,
-        "@no-browser-rerender": "boolean"
+        "@no-browser-rerender": "boolean",
+        "@deprecated-no-create-or-input-lifecycle-for-top-level-hydrate": "boolean"
     },
     "<marko-preserve-whitespace>": {
         "deprecated": true,
