@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.1
+
+- Fix regression for `:no-update` on dynamic tag html attributes. [#1292](https://github.com/marko-js/marko/pull/1292)
+
 ### 4.16.0
 
 - Add `<marko deprecated-no-create-or-input-for-top-level-hydrate />` option to revert to pre `4.9.0` hydrate behavior. [#1289](https://github.com/marko-js/marko/pull/1289)
