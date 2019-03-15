@@ -46,7 +46,7 @@ function render(input, out, __component, component, state) {
 
   out.w("</p></div><span>B</span>");
 
-  marko_dynamicTag(Foo, {}, null, out, __component, "7");
+  marko_dynamicTag(out, Foo, {}, null, null, __component, "7");
 }
 
 marko_template._ = marko_renderer(render, {

@@ -132,10 +132,11 @@ var helpers = {
      * Helper to render a dynamic tag
      */
     d: function dynamicTag(
+        out,
         tag,
         attrs,
         args,
-        out,
+        props,
         componentDef,
         key,
         customEvents
@@ -143,17 +144,21 @@ var helpers = {
         if (tag) {
             var component = componentDef && componentDef.___component;
             if (typeof tag === "string") {
-                var events =
-                    customEvents &&
-                    customEvents.reduce(function(events, eventArray) {
-                        events["on" + eventArray[0]] = componentDef.d(
+                if (customEvents) {
+                    if (!props) {
+                        props = {};
+                    }
+
+                    customEvents.forEach(function(eventArray) {
+                        props["on" + eventArray[0]] = componentDef.d(
                             eventArray[0],
                             eventArray[1],
                             eventArray[2],
                             eventArray[3]
                         );
-                        return events;
-                    }, {});
+                    });
+                }
+
                 if (attrs.renderBody) {
                     var renderBody = attrs.renderBody;
                     var otherAttrs = {};
@@ -169,7 +174,7 @@ var helpers = {
                         component,
                         0,
                         0,
-                        events
+                        props
                     );
                     renderBody(out);
                     out.___endElement();
@@ -181,7 +186,7 @@ var helpers = {
                         component,
                         0,
                         0,
-                        events
+                        props
                     );
                 }
             } else {

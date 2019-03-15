@@ -5,8 +5,8 @@
     </head>
     <body>
         <div#testsTarget>
-            <for(component in input.components)>
-                <include(require(component.template), component.input) key="components[]"/>
+            <for|component| of=input.components>
+                <${require(component.template)} ...component.input key="components[]"/>
             </for>
         </div>
     </body>
