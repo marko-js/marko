@@ -1,0 +1,17 @@
+class {
+    onCreate() {
+        this.state = {
+            className: "initial"
+        }
+    }
+
+    changeClass() {
+        this.state.className = "SHOULD NOT CHANGE";
+    }
+}
+
+$ const tagName = "button";
+
+<div key="root">
+    <${tagName} class:no-update=state.className/>
+</div>

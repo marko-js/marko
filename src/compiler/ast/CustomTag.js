@@ -619,12 +619,23 @@ class CustomTag extends HtmlElement {
                           [].concat(builder.parseExpression(this.argument))
                       )
                     : builder.literalNull();
+                const properties = this.getProperties();
                 tagVar = context.helper("dynamicTag");
                 tagArgs = [
+                    builder.identifierOut(),
                     this.tagNameExpression,
                     inputProps,
                     argumentNode,
-                    builder.identifierOut()
+                    properties
+                        ? builder.objectExpression(
+                              Object.keys(properties).map(propName => {
+                                  return builder.property(
+                                      builder.literal(propName),
+                                      properties[propName]
+                                  );
+                              })
+                          )
+                        : builder.literalNull()
                 ];
             } else {
                 loadTag = builder.functionCall(context.helper("loadTag"), [
