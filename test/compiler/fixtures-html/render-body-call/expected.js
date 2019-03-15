@@ -12,44 +12,44 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  marko_dynamicTag(input, {}, null, out, __component, "0");
+  marko_dynamicTag(out, input, {}, null, null, __component, "0");
 
-  marko_dynamicTag(input.renderThing, {}, null, out, __component, "1");
+  marko_dynamicTag(out, input.renderThing, {}, null, null, __component, "1");
 
-  marko_dynamicTag(input, attrs, null, out, __component, "2");
+  marko_dynamicTag(out, input, attrs, null, null, __component, "2");
 
-  marko_dynamicTag(renderBody, {}, null, out, __component, "3");
+  marko_dynamicTag(out, renderBody, {}, null, null, __component, "3");
 
-  marko_dynamicTag(input.template, {
+  marko_dynamicTag(out, input.template, {
       x: 1
-    }, null, out, __component, "4");
+    }, null, null, __component, "4");
 
-  marko_dynamicTag(input.template, {
+  marko_dynamicTag(out, input.template, {
       y: function() {}
-    }, null, out, __component, "5");
+    }, null, null, __component, "5");
 
-  marko_dynamicTag({
+  marko_dynamicTag(out, {
       render: input.barRenderer
-    }, {}, null, out, __component, "6");
+    }, {}, null, null, __component, "6");
 
-  marko_dynamicTag(function(out) {
+  marko_dynamicTag(out, function(out) {
     input.barRenderer({}, true, out);
-  }, {}, null, out, __component, "7");
+  }, {}, null, null, __component, "7");
 
   if (x) {
-    marko_dynamicTag(renderA, {}, null, out, __component, "8");
+    marko_dynamicTag(out, renderA, {}, null, null, __component, "8");
   } else if (y) {
-    marko_dynamicTag(renderB, {}, null, out, __component, "9");
+    marko_dynamicTag(out, renderB, {}, null, null, __component, "9");
   } else {
-    marko_dynamicTag(renderC, {}, null, out, __component, "10");
+    marko_dynamicTag(out, renderC, {}, null, null, __component, "10");
   }
 
   if (x) {
-    marko_dynamicTag(render, {}, null, out, __component, "11");
+    marko_dynamicTag(out, render, {}, null, null, __component, "11");
   }
 
   if (!x) {
-    marko_dynamicTag(render, {}, null, out, __component, "12");
+    marko_dynamicTag(out, render, {}, null, null, __component, "12");
   }
 
   var for__13 = 0;
@@ -57,17 +57,17 @@ function render(input, out, __component, component, state) {
   marko_forRange(0, 9, null, function(i) {
     var keyscope__14 = "[" + ((for__13++) + "]");
 
-    marko_dynamicTag(input.items[i], {}, null, out, __component, "15" + keyscope__14);
+    marko_dynamicTag(out, input.items[i], {}, null, null, __component, "15" + keyscope__14);
   });
 
   let i = 10;
 
   while (i--) {
-    marko_dynamicTag(input, {}, null, out, __component, "16");
+    marko_dynamicTag(out, input, {}, null, null, __component, "16");
   }
 
   if (z) {
-    marko_dynamicTag(renderD, {}, null, out, __component, "17");
+    marko_dynamicTag(out, renderD, {}, null, null, __component, "17");
   }
 
   // if.test
