@@ -7,10 +7,9 @@ var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-/*
-var FLAG_HAS_BODY_EL = 2;
-var FLAG_HAS_HEAD_EL = 4;
-*/
+// var FLAG_HAS_BODY_EL = 2;
+// var FLAG_HAS_HEAD_EL = 4;
+var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
@@ -106,7 +105,11 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
     // just building it from the server info
     component.___updateQueued = true;
 
-    if (!isLegacy && flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+    if (
+        !isLegacy &&
+        flags & FLAG_WILL_RERENDER_IN_BROWSER &&
+        !(flags & FLAG_OLD_HYDRATE_NO_CREATE)
+    ) {
         if (component.onCreate) {
             component.onCreate(input, { global: global });
         }
