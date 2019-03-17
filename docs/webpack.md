@@ -47,7 +47,7 @@ module.exports = {
     extensions: [".js", ".marko"]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.marko$/,
         loader: "marko-loader"
@@ -92,7 +92,7 @@ _webpack.config.js_
 
 ```js
 //...
-loaders: [
+rules: [
   //...
   {
     test: /\.less$/, // matches style.less { ... } from our template
@@ -127,7 +127,7 @@ module.exports = {
     extensions: [".js", ".marko"]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.marko$/,
         loader: "marko-loader"
