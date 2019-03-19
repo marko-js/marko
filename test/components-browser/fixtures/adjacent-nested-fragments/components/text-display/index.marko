@@ -1,0 +1,11 @@
+<macro|{ type, value }| name="value">
+    ${type}: ${value}
+</macro>
+
+<macro|{ value }| name="display">
+    $ const type = typeof value;
+    <value type=type value=value/>
+    <span>: ${type}</span>
+</macro>
+
+<display value=input.value/>

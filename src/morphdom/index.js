@@ -356,12 +356,28 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             ) {
                                 var content = curFromNodeChild.nodeValue;
                                 if (content == "F#" + curToNodeKeyOriginal) {
-                                    var endNode = curFromNodeChild;
-                                    while (
-                                        endNode.nodeType !== COMMENT_NODE ||
-                                        endNode.nodeValue !== "F/"
-                                    )
+                                    var endNode = curFromNodeChild.nextSibling;
+                                    var depth = 0;
+                                    var nodeValue;
+
+                                    // eslint-disable-next-line no-constant-condition
+                                    while (true) {
+                                        if (endNode.nodeType === COMMENT_NODE) {
+                                            nodeValue = endNode.nodeValue;
+                                            if (nodeValue === "F/") {
+                                                if (depth === 0) {
+                                                    break;
+                                                } else {
+                                                    depth--;
+                                                }
+                                            } else if (
+                                                nodeValue.indexOf("F#") === 0
+                                            ) {
+                                                depth++;
+                                            }
+                                        }
                                         endNode = endNode.nextSibling;
+                                    }
 
                                     var fragment = createFragmentNode(
                                         curFromNodeChild,

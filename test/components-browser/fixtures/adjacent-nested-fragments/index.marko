@@ -1,0 +1,17 @@
+class {
+    onCreate() {
+        this.state = {
+            show: true
+        }
+    }
+
+    hide() {
+        this.state.show = false;
+    }
+}
+
+<div key="root">
+    <if(state.show)>
+        <text-display value=123/>
+    </if>
+</div>
