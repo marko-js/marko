@@ -208,7 +208,7 @@ const forASTNodes = ["ForEach", "ForEachProp", "ForRange", "ForStatement"];
 
 const getParentFor = el => {
     let current = el;
-    while ((current = current.parentNode)) {
+    while ((current = current.parentNode) && current.type !== "Macro") {
         if (current.tagName === "for" || forASTNodes.includes(current.type)) {
             return current;
         }
