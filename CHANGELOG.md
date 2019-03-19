@@ -4,6 +4,11 @@
 
 ## 4.16.x
 
+### 4.16.2
+
+- Fix issue with nested fragments (often as dynamic tags) that were adjacent in the DOM not hydrating properly. [#1294](https://github.com/marko-js/marko/pull/1294)
+- Remove redundant portion of keys for `<macro>` tags within `<for>` loops. [#1295](https://github.com/marko-js/marko/pull/1295)
+
 ### 4.16.1
 
 - Fix regression for `:no-update` on dynamic tag html attributes. [#1292](https://github.com/marko-js/marko/pull/1292)
