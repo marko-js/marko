@@ -302,7 +302,6 @@ Component.prototype = componentProto = {
         root.detached = true;
 
         delete componentLookup[this.id];
-        delete this.___rootNode;
         this.___keyedElements = {};
     },
 
