@@ -517,7 +517,7 @@ The root [HTML element](https://developer.mozilla.org/en-US/docs/Web/API/element
 
 An array of the root [HTML elements](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
 
-> `this.el` and `this.els` are deprecated. Please `this.gelEl()` or `this.getEls()` methods. see [Methods](#getelkey-index)
+> `this.el` and `this.els` are deprecated. Please `this.getEl()` or `this.getEls()` methods. see [Methods](#getelkey-index)
 
 ### `this.id`
 
