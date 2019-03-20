@@ -2,7 +2,7 @@ module.exports = function migrate(el, context) {
     el.forEachAttribute(attr => {
         const value = attr.value;
 
-        if (isWidgetElIdFunctionCall(value)) {
+        if (isWidgetElIdFunctionCall(value) && el.tagName !== "var") {
             context.deprecate(
                 `The "*=widget.elId("someId")" is deprecated. Please use "*:scoped="someId"" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
             );
