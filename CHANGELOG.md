@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.3
+
+- Fix issue with migrating `<var>` and `<assign>` with `widget` properties. [#1298](https://github.com/marko-js/marko/pull/1298)
+
 ### 4.16.2
 
 - Fix issue with nested fragments (often as dynamic tags) that were adjacent in the DOM not hydrating properly. [#1294](https://github.com/marko-js/marko/pull/1294)
