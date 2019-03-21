@@ -182,11 +182,6 @@ function initComponent(componentDef, doc) {
 
     componentLookup[id] = component;
 
-    if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
-        component.___rerender(true);
-        return;
-    }
-
     if (isExisting) {
         component.___removeDOMEventListeners();
     }
@@ -288,29 +283,64 @@ function initServerRendered(renderedComponents, doc) {
         delete window.$MG;
     }
 
-    componentDefs.forEach(function(componentDef) {
-        componentDef = ComponentDef.___deserialize(
-            componentDef,
-            typesArray,
-            serverRenderedGlobals,
-            registry
-        );
+    componentDefs
+        .reverse()
+        .map(function(componentDef) {
+            componentDef = ComponentDef.___deserialize(
+                componentDef,
+                typesArray,
+                serverRenderedGlobals,
+                registry
+            );
 
-        if (!hydrateComponent(componentDef, doc)) {
-            // hydrateComponent will return false if there is not rootNode
-            // for the component.  If this is the case, we'll wait until the
-            // DOM has fully loaded to attempt to init the component again.
-            doc.addEventListener("DOMContentLoaded", function() {
-                if (!hydrateComponent(componentDef, doc)) {
-                    indexServerComponentBoundaries(doc, runtimeId);
-                    hydrateComponent(componentDef, doc);
+            if (hydrateComponent(componentDef, doc)) {
+                if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+                    var component = componentDef.___component;
+                    var id = component.id;
+                    componentLookup[id] = component;
+                    component.___document = doc;
+                    return component.___rerender(component.___input, true);
                 }
-            });
-        }
-    });
+
+                return componentDef;
+            } else {
+                // hydrateComponent will return false if there is not rootNode
+                // for the component.  If this is the case, we'll wait until the
+                // DOM has fully loaded to attempt to init the component again.
+                doc.addEventListener("DOMContentLoaded", function() {
+                    if (!hydrateComponent(componentDef)) {
+                        indexServerComponentBoundaries(doc, runtimeId);
+                        hydrateComponent(componentDef);
+                    }
+                    if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+                        var component = componentDef.___component;
+                        var id = component.id;
+                        componentLookup[id] = component;
+                        component.___document = doc;
+                        component
+                            .___rerender(component.___input, true)
+                            .afterInsert(doc);
+                    } else {
+                        initComponent(componentDef, doc || defaultDocument);
+                    }
+                });
+                return null;
+            }
+        })
+        .reverse()
+        .forEach(function(componentDef) {
+            // mount components from the leaf nodes up
+            if (componentDef !== null) {
+                if (componentDef.afterInsert) {
+                    componentDef.afterInsert(doc);
+                } else {
+                    initComponent(componentDef, doc || defaultDocument);
+                }
+            }
+        });
 }
 
-function hydrateComponent(componentDef, doc) {
+function hydrateComponent(componentDef) {
     var componentId = componentDef.id;
     var component = componentDef.___component;
     var rootNode = serverComponentRootNodes[componentId];
@@ -324,8 +354,6 @@ function hydrateComponent(componentDef, doc) {
             keyedElementsByComponentId[componentId] || {};
 
         delete keyedElementsByComponentId[componentId];
-
-        initComponent(componentDef, doc || defaultDocument);
         return true;
     }
 }

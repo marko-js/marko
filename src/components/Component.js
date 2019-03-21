@@ -473,7 +473,7 @@ Component.prototype = componentProto = {
             // then we should rerender
 
             if (this.shouldUpdate(input, state) !== false) {
-                this.___rerender(false);
+                this.___scheduleRerender();
             }
         }
 
@@ -505,7 +505,7 @@ Component.prototype = componentProto = {
         emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
     },
 
-    ___rerender: function(isRerenderInBrowser) {
+    ___scheduleRerender: function() {
         var self = this;
         var renderer = self.___renderer;
 
@@ -513,36 +513,40 @@ Component.prototype = componentProto = {
             throw TypeError();
         }
 
-        var rootNode = this.___rootNode;
-
-        var doc = self.___document;
         var input = this.___renderInput || this.___input;
-        var globalData = this.___global;
 
         updateManager.___batchUpdate(function() {
-            var createOut = renderer.createOut || defaultCreateOut;
-            var out = createOut(globalData);
-            out.sync();
-            out.___document = self.___document;
-            out[CONTEXT_KEY] = self.___context;
-
-            var componentsContext = getComponentsContext(out);
-            var globalComponentsContext = componentsContext.___globalContext;
-            globalComponentsContext.___rerenderComponent = self;
-            globalComponentsContext.___isRerenderInBrowser = isRerenderInBrowser;
-
-            renderer(input, out);
-
-            var result = new RenderResult(out);
-
-            var targetNode = out.___getOutput().___firstChild;
-
-            morphdom(rootNode, targetNode, doc, componentsContext);
-
-            result.afterInsert(doc);
+            self.___rerender(input, false).afterInsert(self.___document);
         });
 
         this.___reset();
+    },
+
+    ___rerender(input, isHydrate) {
+        var doc = this.___document;
+        var globalData = this.___global;
+        var rootNode = this.___rootNode;
+        var renderer = this.___renderer;
+        var createOut = renderer.createOut || defaultCreateOut;
+        var out = createOut(globalData);
+        out.sync();
+        out.___document = this.___document;
+        out[CONTEXT_KEY] = this.___context;
+
+        var componentsContext = getComponentsContext(out);
+        var globalComponentsContext = componentsContext.___globalContext;
+        globalComponentsContext.___rerenderComponent = this;
+        globalComponentsContext.___isHydrate = isHydrate;
+
+        renderer(input, out);
+
+        var result = new RenderResult(out);
+
+        var targetNode = out.___getOutput().___firstChild;
+
+        morphdom(rootNode, targetNode, doc, componentsContext);
+
+        return result;
     },
 
     ___detach: function() {

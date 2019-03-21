@@ -59,7 +59,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
     if (componentsContext) {
         globalComponentsContext = componentsContext.___globalContext;
-        isRerenderInBrowser = globalComponentsContext.___isRerenderInBrowser;
+        isRerenderInBrowser = globalComponentsContext.___isHydrate;
     }
 
     function insertVirtualNodeBefore(
