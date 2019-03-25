@@ -804,7 +804,7 @@ A Marko component inherits from [`EventEmitter`](https://nodejs.org/api/events.h
 | `eventName` | `String` | the name of the event                                 |
 | `...args`   | `Any`    | all subsequent parameters are passed to the listeners |
 
-Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName|function, ...args)` attribute](#declarative-custom-events) attribute or `targetComponent.on()`.
+Emits a UI component custom event. If a UI component attached a listener with the matching `eventName` then the corresponding event listener method will be automatically invoked. Event listeners can be attached using either the [`on-[event](methodName|function, ...args)`](#declarative-custom-events) attribute or `targetComponent.on()`.
 
 ### `on(eventName, handler)`
 
