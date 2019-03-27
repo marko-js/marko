@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.4
+
+- Fix regression with migrating legacy `<macro>` syntax with a magic `renderBody` variable. [#1300](https://github.com/marko-js/marko/pull/1300)
+
 ### 4.16.3
 
 - Fix issue with migrating `<var>` and `<assign>` with `widget` properties. [#1298](https://github.com/marko-js/marko/pull/1298)
