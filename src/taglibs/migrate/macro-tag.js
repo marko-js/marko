@@ -36,6 +36,24 @@ module.exports = function migrator(elNode, context) {
     elNode.addAttribute({ name: "name", value: builder.literal(name) });
     elNode.removeAttribute(name);
 
+    // Find usage of injected renderBody and add a renderBody param if used
+    const macroWalker = context.createWalker({
+        enter(child) {
+            if (
+                (child.type === "HtmlElement" &&
+                    (child.tagName === null ||
+                        (child.tagString &&
+                            child.tagString.includes("renderBody")))) ||
+                (child.type === "Identifier" && child.name === "renderBody")
+            ) {
+                params.push(builder.identifier("renderBody"));
+                macroWalker.stop();
+            }
+        }
+    });
+
+    macroWalker.walk(elNode);
+
     params
         .slice()
         .reverse()
@@ -56,7 +74,7 @@ module.exports = function migrator(elNode, context) {
         });
 
     // Find all usages of the Macro and migrate the arguments to attributes.
-    const walker = context.createWalker({
+    const templateWalker = context.createWalker({
         enter(child) {
             if (
                 child.type === "HtmlElement" &&
@@ -75,5 +93,5 @@ module.exports = function migrator(elNode, context) {
         }
     });
 
-    walker.walk(context.root);
+    templateWalker.walk(context.root);
 };

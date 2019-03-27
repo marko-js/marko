@@ -13,3 +13,34 @@
     </div>
 </macro>
 <test2>Hello</test2>
+<macro|macroInput| name="test3">
+    $ var renderBody = macroInput.renderBody;
+    <div>
+        <${renderBody}/>
+    </div>
+</macro>
+<macro|macroInput| name="test4">
+    $ var renderBody = macroInput.renderBody;
+    <div>
+        <${renderBody}/>
+    </div>
+</macro>
+<macro|macroInput| name="test5">
+    $ var renderBody = macroInput.renderBody;
+    <div>
+        <${renderBody}/>
+    </div>
+</macro>
+<macro|macroInput| name="test6">
+    $ var renderBody = macroInput.renderBody;
+    <div>
+        <span body=renderBody/>
+    </div>
+</macro>
+<test3>
+    <test4>
+        <test5>
+            <test6>Hello</test6>
+        </test5>
+    </test4>
+</test3>
