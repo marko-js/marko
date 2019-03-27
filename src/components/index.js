@@ -45,7 +45,7 @@ function addComponentsFromContext(
     //     return { id: componentDef.id, type: componentDef.type};
     // }));
 
-    for (var i = len - 1; i >= 0; i--) {
+    for (var i = 0; i < len; i++) {
         var componentDef = components[i];
         var id = componentDef.id;
         var component = componentDef.___component;

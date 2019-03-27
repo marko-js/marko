@@ -283,67 +283,50 @@ function initServerRendered(renderedComponents, doc) {
         delete window.$MG;
     }
 
-    componentDefs
-        .reverse()
-        .map(function(componentDef) {
-            componentDef = ComponentDef.___deserialize(
-                componentDef,
-                typesArray,
-                serverRenderedGlobals,
-                registry
-            );
+    // hydrate components top down (leaf nodes last)
+    // and return an array of functions to mount these components
+    var componentMountFns = componentDefs.map(function(componentDef) {
+        componentDef = ComponentDef.___deserialize(
+            componentDef,
+            typesArray,
+            serverRenderedGlobals,
+            registry
+        );
 
-            if (hydrateComponent(componentDef, doc)) {
-                if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
-                    var component = componentDef.___component;
-                    var id = component.id;
-                    componentLookup[id] = component;
-                    component.___document = doc;
-                    return component.___rerender(component.___input, true);
-                }
+        var mount = hydrateComponentAndGetMount(componentDef, doc);
 
-                return componentDef;
-            } else {
-                // hydrateComponent will return false if there is not rootNode
-                // for the component.  If this is the case, we'll wait until the
-                // DOM has fully loaded to attempt to init the component again.
+        if (!mount) {
+            // hydrateComponentAndGetMount will return false if there is not rootNode
+            // for the component.  If this is the case, we'll wait until the
+            // DOM has fully loaded to attempt to init the component again.
+            mount = function mount() {
                 doc.addEventListener("DOMContentLoaded", function() {
-                    if (!hydrateComponent(componentDef)) {
+                    var mount = hydrateComponentAndGetMount(componentDef, doc);
+
+                    if (!mount) {
                         indexServerComponentBoundaries(doc, runtimeId);
-                        hydrateComponent(componentDef);
+                        mount = hydrateComponentAndGetMount(componentDef, doc);
                     }
-                    if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
-                        var component = componentDef.___component;
-                        var id = component.id;
-                        componentLookup[id] = component;
-                        component.___document = doc;
-                        component
-                            .___rerender(component.___input, true)
-                            .afterInsert(doc);
-                    } else {
-                        initComponent(componentDef, doc || defaultDocument);
-                    }
+
+                    mount();
                 });
-                return null;
-            }
-        })
-        .reverse()
-        .forEach(function(componentDef) {
-            // mount components from the leaf nodes up
-            if (componentDef !== null) {
-                if (componentDef.afterInsert) {
-                    componentDef.afterInsert(doc);
-                } else {
-                    initComponent(componentDef, doc || defaultDocument);
-                }
-            }
-        });
+            };
+        }
+
+        return mount;
+    });
+
+    // mount components bottom up (leaf nodes first)
+    componentMountFns.reverse().forEach(function(mount) {
+        mount();
+    });
 }
 
-function hydrateComponent(componentDef) {
+function hydrateComponentAndGetMount(componentDef, doc) {
     var componentId = componentDef.id;
     var component = componentDef.___component;
     var rootNode = serverComponentRootNodes[componentId];
+    var renderResult;
 
     if (rootNode) {
         delete serverComponentRootNodes[componentId];
@@ -354,7 +337,18 @@ function hydrateComponent(componentDef) {
             keyedElementsByComponentId[componentId] || {};
 
         delete keyedElementsByComponentId[componentId];
-        return true;
+
+        if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+            component.___document = doc;
+            renderResult = component.___rerender(component.___input, true);
+            return function mount() {
+                renderResult.afterInsert(doc);
+            };
+        }
+
+        return function mount() {
+            initComponent(componentDef, doc);
+        };
     }
 }
 
