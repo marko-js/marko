@@ -14,8 +14,41 @@
   </div>
 </macro>
 
-
 <test2>
   Hello
 </test2>
+
+<macro test3()>
+  <div>
+    <${renderBody}/>
+  </div>
+</macro>
+
+<macro test4()>
+  <div>
+    <invoke renderBody(out)/>
+  </div>
+</macro>
+
+<macro test5()>
+  <div>
+    <% renderBody(out) %>
+  </div>
+</macro>
+
+<macro test6()>
+  <div>
+    <span body=renderBody/>
+  </div>
+</macro>
+
+<test3>
+  <test4>
+    <test5>
+      <test6>
+        Hello
+      </test6>
+    </test5>
+  </test4>
+</test3>
 
