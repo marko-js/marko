@@ -19,6 +19,11 @@ function mergeAttrs() {
                     "Passing a string as dynamic attributes ('<div ${string}>' or '<div ...string>') is deprecated, use an object instead."
                 );
             }
+
+            if (source[0] !== " ") {
+                source = " " + source;
+            }
+
             result += attrsHelper(currentAttrs) + source;
             currentAttrs = {};
         } else if (source != null) {
