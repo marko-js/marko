@@ -1,4 +1,5 @@
 exports.verify = function(context, expect) {
     var rootNode = context.rootNode;
-    expect(rootNode.disabled).to.equal(false);
+    var input = rootNode.querySelector("input");
+    expect(input.disabled).to.equal(false);
 };

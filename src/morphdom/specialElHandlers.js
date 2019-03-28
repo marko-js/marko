@@ -19,6 +19,9 @@ SpecialElHandlers.prototype = {
     OPTION: function(fromEl, toEl) {
         syncBooleanAttrProp(fromEl, toEl, "selected");
     },
+    BUTTON: function(fromEl, toEl) {
+        syncBooleanAttrProp(fromEl, toEl, "disabled");
+    },
     /**
      * The "value" attribute is special for the <input> element since it sets
      * the initial value. Changing the "value" attribute without changing the

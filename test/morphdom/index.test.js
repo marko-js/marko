@@ -7,10 +7,12 @@ chai.config.includeStack = true;
 
 var autotest = require("../autotest");
 const fs = require("fs");
+const path = require("path");
 const morphdom = require("marko/morphdom");
 const createBrowser = require("jsdom-context-require");
 
 autotest("fixtures", fixture => {
+    let dir = fixture.dir;
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;
@@ -56,6 +58,10 @@ autotest("fixtures", fixture => {
 
         var actualHTML = serializeNode(fromNode);
         snapshot(actualHTML, ".html");
+
+        if (fs.existsSync(path.join(dir, "index.js"))) {
+            require(dir).verify({ rootNode: fromNode }, chai.expect);
+        }
     });
 });
 
