@@ -200,7 +200,7 @@ The existing syntax will continue to be supported until Marko 5 and will current
 
 ### 4.13.13
 
-- Fix regression: parsing of `if` statments without braces (in scriptlets & otherwise). [#1175](https://github.com/marko-js/marko/pull/1175)
+- Fix regression: parsing of `if` statements without braces (in scriptlets & otherwise). [#1175](https://github.com/marko-js/marko/pull/1175)
 - Fix regression: `<var>` and `<assign>` tags with non-standard placeholders in normal string attributes. [#1176](https://github.com/marko-js/marko/pull/1176)
 
 ### 4.13.12
@@ -294,7 +294,7 @@ components/
 
 ### 4.12.3
 
-- Removes extra parenthesis in output javascript for expressions that Marko does not understand.
+- Removes extra parentheses in output javascript for expressions that Marko does not understand.
 
 ### 4.12.2
 
@@ -546,7 +546,7 @@ Summary of changes across all beta releases for the `4.5.0` release:
 ### 4.4.27
 
 - Add ability to update globals by setting new input.
-- [docs] Remove uneeded command from installation docs
+- [docs] Remove unneeded command from installation docs
 - [docs] Update installing.md
 
 ### 4.4.26
