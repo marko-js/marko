@@ -4,6 +4,11 @@
 
 ## 4.16.x
 
+### 4.16.5
+
+- Fix regression with legacy dynamic attributes when a string without whitespace is used. [#1304](https://github.com/marko-js/marko/pull/1304)
+- The `disabled` property on buttons is now properly synced with the template. [#1303](https://github.com/marko-js/marko/pull/1303)
+
 ### 4.16.4
 
 - Fix regression with migrating legacy `<macro>` syntax with a magic `renderBody` variable. [#1300](https://github.com/marko-js/marko/pull/1300)
