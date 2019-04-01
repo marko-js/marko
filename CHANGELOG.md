@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.6
+
+- Fix issue with hydrating legacy Marko 3 widgets from the server. [#1306](https://github.com/marko-js/marko/pull/1306)
+
 ### 4.16.5
 
 - Fix regression with legacy dynamic attributes when a string without whitespace is used. [#1304](https://github.com/marko-js/marko/pull/1304)
