@@ -90,7 +90,7 @@ function addComponentsFromContext(
             }
         }
 
-        var undefinedPropNames;
+        var undefinedPropNames = undefined;
 
         if (state) {
             // Update state properties with an `undefined` value to have a `null`
