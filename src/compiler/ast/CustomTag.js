@@ -417,7 +417,14 @@ class CustomTag extends HtmlElement {
         }
 
         if (this.argument && !isDynamicTag) {
-            let argExpression = builder.parseExpression(this.argument);
+            let argExpression = builder.parseJavaScriptArgs(this.argument);
+
+            if (argExpression.length === 1) {
+                argExpression = argExpression[0];
+            } else {
+                argExpression = builder.arrayExpression(argExpression);
+            }
+
             inputProps = merge(argExpression, inputProps, context);
             context.deprecate(
                 "Using <tag(attrs)> to pass dynamic attributes is deprecated. use ...attrs instead."
@@ -616,7 +623,7 @@ class CustomTag extends HtmlElement {
             } else if (isDynamicTag) {
                 const argumentNode = this.argument
                     ? builder.arrayExpression(
-                          [].concat(builder.parseExpression(this.argument))
+                          builder.parseJavaScriptArgs(this.argument)
                       )
                     : builder.literalNull();
                 const properties = this.getProperties();
