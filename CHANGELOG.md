@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.7
+
+- Improve parsing of tag arguments (allows for `<${input.renderBody}(...spread)/>`). [#1308](https://github.com/marko-js/marko/pull/1308)
+
 ### 4.16.6
 
 - Fix issue with hydrating legacy Marko 3 widgets from the server. [#1306](https://github.com/marko-js/marko/pull/1306)
