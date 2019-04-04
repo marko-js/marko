@@ -4,6 +4,11 @@
 
 ## 4.16.x
 
+### 4.16.8
+
+- Fixes an issue with hot-reload. [#1282](https://github.com/marko-js/marko/issues/1282)
+- If the require hook is enabled, all templates loaded by marko will now use the require hook, including hot-reloaded templates and tags loaded from compiled templates. [#1310](https://github.com/marko-js/marko/pull/1310)
+
 ### 4.16.7
 
 - Improve parsing of tag arguments (allows for `<${input.renderBody}(...spread)/>`). [#1308](https://github.com/marko-js/marko/pull/1308)
