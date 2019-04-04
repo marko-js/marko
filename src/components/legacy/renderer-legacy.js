@@ -37,7 +37,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
-        var parentComponentDef;
+        var parentComponentDef = componentsContext.___componentDef;
         var ownerComponentDef = out.___assignedComponentDef;
         var ownerComponentId = ownerComponentDef && ownerComponentDef.id;
         var key = out.___assignedKey;
@@ -50,7 +50,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
-            if ((parentComponentDef = componentsContext.___componentDef)) {
+            if (parentComponentDef) {
                 if (key != null) {
                     key = key.toString();
                 }
