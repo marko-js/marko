@@ -92,13 +92,11 @@ function install(options) {
         ? options.require.extensions
         : require.extensions;
 
-    var compilerOptions = options.compilerOptions;
-
-    if (compilerOptions) {
-        require("../compiler").configure(compilerOptions);
-    } else {
-        compilerOptions = {};
-    }
+    var compilerOptions = Object.assign(
+        { requireTemplates: true },
+        options.compilerOptions
+    );
+    require("../compiler").configure(compilerOptions);
 
     var extensions = [];
 
