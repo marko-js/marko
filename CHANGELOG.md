@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.9
+
+- Fixes an issue where legacy widgets could loose a reference to their parent components. [#1311](https://github.com/marko-js/marko/issues/1311)
+
 ### 4.16.8
 
 - Fixes an issue with hot-reload. [#1282](https://github.com/marko-js/marko/issues/1282)
