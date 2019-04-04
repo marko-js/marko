@@ -34,6 +34,10 @@ function tryReloadTemplate(path) {
     path = path.replace(/\.js$/, "");
 
     try {
+        if (require.extensions[".marko"]) {
+            return require(path);
+        }
+
         return marko.load(path);
     } catch (e) {
         return undefined;
