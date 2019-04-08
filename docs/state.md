@@ -1,6 +1,6 @@
 # State
 
-The output of a component is based on input properties passed from it's parent as attributes. However, a component may also maintain internal state that it uses to control its view. If Marko detects a change to either input or to the internal state, the view will automatically be updated.
+The output of a component is based on input properties passed from its parent as attributes. However, a component may also maintain internal state that it uses to control its view. If Marko detects a change to either input or to the internal state, the view will automatically be updated.
 
 > **ProTip:**
 > Only data that is owned and modified by the component should go into its `state`. State should be exclusively used for data that triggers rerenders. Parents control `input` the component controls its own `state`.
