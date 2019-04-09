@@ -79,7 +79,7 @@ Here we can share the logic for `removeFriend` with each `friend` in the list. W
 
 ## Emitting custom events
 
-The recommended way for a [custom tag](./custom-tags.md) to communicate with it's parent is through custom events.
+The recommended way for a [custom tag](./custom-tags.md) to communicate with its parent is through custom events.
 
 All components implement a node.js style [event emitter](https://nodejs.org/api/events.html#events_class_eventemitter) API, which is used to emit events to its parent component.
 
@@ -101,7 +101,7 @@ class {
 <input name=input.name on-change("handleChange")/>
 ```
 
-The above example component is listening to native `change` events from the `<input>` element, and then emitting it's own `email-change` event if it decides that the change was valid.
+The above example component is listening to native `change` events from the `<input>` element, and then emitting its own `email-change` event if it decides that the change was valid.
 
 ```marko
 <form>
