@@ -1,0 +1,15 @@
+class {
+    onMount() {
+        window.mounts = window.mounts || [];
+        window.mounts.push('hello');
+    }
+    onRender() {
+        if (typeof window !== "undefined") {
+            window.renders = window.renders || [];
+            window.renders.push('hello');
+        }
+    }
+}
+
+<h1>Hello ${input.name}</h1>
+<inner/>

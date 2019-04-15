@@ -1,0 +1,14 @@
+class {
+    onMount() {
+        window.mounts = window.mounts || [];
+        window.mounts.push('inner');
+    }
+    onRender() {
+        if (typeof window !== "undefined") {
+            window.renders = window.renders || [];
+            window.renders.push('inner');
+        }
+    }
+}
+
+<h2>Inner</h2>

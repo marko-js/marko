@@ -1,0 +1,15 @@
+class {
+    onMount() {
+        window.mounts = window.mounts || [];
+        window.mounts.push('wrapper');
+    }
+    onRender() {
+        if (typeof window !== "undefined") {
+            window.renders = window.renders || [];
+            window.renders.push('wrapper');
+        }
+    }
+}
+<div>
+    <${input.renderBody}/>
+</div>
