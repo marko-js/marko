@@ -299,18 +299,16 @@ function initServerRendered(renderedComponents, doc) {
             // hydrateComponentAndGetMount will return false if there is not rootNode
             // for the component.  If this is the case, we'll wait until the
             // DOM has fully loaded to attempt to init the component again.
-            mount = function mount() {
-                doc.addEventListener("DOMContentLoaded", function() {
-                    var mount = hydrateComponentAndGetMount(componentDef, doc);
+            doc.addEventListener("DOMContentLoaded", function() {
+                mount = hydrateComponentAndGetMount(componentDef, doc);
 
-                    if (!mount) {
-                        indexServerComponentBoundaries(doc, runtimeId);
-                        mount = hydrateComponentAndGetMount(componentDef, doc);
-                    }
+                if (!mount) {
+                    indexServerComponentBoundaries(doc, runtimeId);
+                    mount = hydrateComponentAndGetMount(componentDef, doc);
+                }
 
-                    mount();
-                });
-            };
+                mount();
+            });
         }
 
         return mount;
@@ -318,7 +316,7 @@ function initServerRendered(renderedComponents, doc) {
 
     // mount components bottom up (leaf nodes first)
     componentMountFns.reverse().forEach(function(mount) {
-        mount();
+        if (mount) mount();
     });
 }
 
