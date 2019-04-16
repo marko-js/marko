@@ -1,6 +1,6 @@
 var complain = "MARKO_DEBUG" && require("complain");
 var defineComponent = require("./defineComponent");
-var loader = require("../loader");
+var loader = require("../../loader");
 
 var registered = {};
 var loaded = {};

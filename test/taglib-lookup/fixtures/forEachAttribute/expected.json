@@ -2,6 +2,12 @@
     "name",
     "age",
     "foo-on-*",
+    "w-bind",
+    "key",
+    "no-update",
+    "no-update-body",
+    "no-update-if",
+    "no-update-body-if",
     "body-only-if",
     "if",
     "else-if",
@@ -22,13 +28,7 @@
     "w-preserve-attrs",
     "w-body",
     "include",
-    "w-bind",
-    "key",
-    "no-update",
-    "no-update-body",
-    "no-update-if",
-    "no-update-body-if",
-    "w-on*",
     "on*",
-    "once*"
+    "once*",
+    "w-on*"
 ]

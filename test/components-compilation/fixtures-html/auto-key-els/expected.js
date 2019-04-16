@@ -3,7 +3,7 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/auto-key-els/index.marko",
     marko_component = require("./component"),
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
     marko_loadTemplate = require("marko/src/runtime/helper-loadTemplate"),
@@ -12,7 +12,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_forEach = marko_helpers.f,
     marko_escapeXml = marko_helpers.x,
     marko_loadTag = marko_helpers.t,
-    _preserve_tag = marko_loadTag(require("marko/src/components/taglib/preserve-tag")),
+    _preserve_tag = marko_loadTag(require("marko/src/core-tags/components/preserve-tag")),
     marko_dynamicTag = marko_helpers.d;
 
 function render(input, out, __component, component, state) {
@@ -60,6 +60,6 @@ marko_template.meta = {
     component: "./",
     tags: [
       "./foo.marko",
-      "marko/src/components/taglib/preserve-tag"
+      "marko/src/core-tags/components/preserve-tag"
     ]
   };

@@ -1,10 +1,9 @@
-var domData = require("../../components/dom-data");
+var domData = require("../components/dom-data");
 var keysByDOMNode = domData.___keyByDOMNode;
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
-var createFragmentNode = require("../../morphdom/fragment")
-    .___createFragmentNode;
+var createFragmentNode = require("./morphdom/fragment").___createFragmentNode;
 
 function VFragment(key, ownerComponent, preserve) {
     this.___VNode(null /* childCount */);

@@ -1,5 +1,5 @@
 /* jshint newcap:false */
-var domData = require("../../components/dom-data");
+var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");

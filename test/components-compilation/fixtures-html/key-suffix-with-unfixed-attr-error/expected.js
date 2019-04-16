@@ -4,7 +4,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_component = {
         onMount: function() {}
       },
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/components-compilation/fixtures-html/key-suffix/index.marko", function() {
       return module.exports;

@@ -1,8 +1,8 @@
 var extend = require("raptor-util/extend");
-var componentsUtil = require("../components/util");
+var componentsUtil = require("./components/util");
 var destroyComponentForNode = componentsUtil.___destroyComponentForNode;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
-var helpers = require("../morphdom/helpers");
+var helpers = require("./vdom/morphdom/helpers");
 
 var insertBefore = helpers.___insertBefore;
 var insertAfter = helpers.___insertAfter;

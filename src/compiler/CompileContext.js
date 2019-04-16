@@ -66,15 +66,15 @@ const helpers = {
     const: "const",
     createElement: "e",
     defineComponent: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "c"
     },
     "defineComponent-legacy": {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "c"
     },
     "defineWidget-legacy": {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "w"
     },
     dynamicTag: "d",
@@ -86,7 +86,7 @@ const helpers = {
     forEachProp: { module: "marko/runtime/helper-forEachProperty" },
     forRange: { module: "marko/runtime/helper-forRange" },
     getWidgetFromOut: {
-        module: "marko/components/legacy/helper-getWidgetFromOut"
+        module: "marko/runtime/components/legacy/helper-getWidgetFromOut"
     },
     include: "i",
     loadNestedTag: { module: "marko/runtime/helper-loadNestedTag" },
@@ -96,15 +96,15 @@ const helpers = {
     merge: { module: "marko/runtime/helper-merge" },
     propsForPreviousNode: "p",
     renderer: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "r"
     },
     rendererLegacy: {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "r"
     },
     registerComponent: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "rc"
     },
     str: "s",

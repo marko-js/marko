@@ -18,6 +18,6 @@ module.exports = function(helpers, done) {
             done();
         });
     } finally {
-        delete require("marko/components/Component").prototype.$;
+        delete require("marko/runtime/components/Component").prototype.$;
     }
 };

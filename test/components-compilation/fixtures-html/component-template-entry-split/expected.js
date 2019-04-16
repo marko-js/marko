@@ -3,7 +3,7 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/component-template-entry-split/component-browser",
     marko_component = require("./component"),
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r;
 
 function render(input, out, __component, component, state) {

@@ -1,6 +1,7 @@
 {
     "taglibImports": [
         "./cache/marko.json",
+        "./components/marko.json",
         "./core/marko.json",
         "./html/marko.json",
         "./migrate/marko.json",

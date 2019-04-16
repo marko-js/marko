@@ -51,7 +51,7 @@ function addDelegatedEventListener(transformHelper, options) {
             transformHelper.context.data[ATTACH_DETACH_KEY] = true;
             transformHelper.context.importModule(
                 null,
-                "marko/components/attach-detach"
+                "marko/runtime/components/attach-detach"
             );
         }
     }

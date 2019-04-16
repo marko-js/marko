@@ -2,7 +2,7 @@
 
 var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_component = {},
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/components-compilation/fixtures-vdom/boundary-html-tag/index.marko", function() {
       return module.exports;
@@ -11,8 +11,8 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_defineComponent = components_helpers.c,
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
     marko_loadTag = marko_helpers.t,
-    component_globals_tag = marko_loadTag(require("marko/src/components/taglib/component-globals-tag")),
-    init_components_tag = marko_loadTag(require("marko/src/components/taglib/init-components-tag")),
+    component_globals_tag = marko_loadTag(require("marko/src/core-tags/components/component-globals-tag")),
+    init_components_tag = marko_loadTag(require("marko/src/core-tags/components/init-components-tag")),
     await_reorderer_tag = marko_loadTag(require("marko/src/core-tags/core/await/reorderer-renderer")),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
@@ -59,8 +59,8 @@ marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-vdom/boundary-html-tag/index.marko",
     component: "./",
     tags: [
-      "marko/src/components/taglib/component-globals-tag",
-      "marko/src/components/taglib/init-components-tag",
+      "marko/src/core-tags/components/component-globals-tag",
+      "marko/src/core-tags/components/init-components-tag",
       "marko/src/core-tags/core/await/reorderer-renderer"
     ]
   };

@@ -22,7 +22,7 @@ module.exports = function(helpers, done) {
 
         expect(helpers.logOutput).to.deep.equal(["$el:click", "$button:click"]);
     } finally {
-        delete require("marko/components/Component").prototype.$;
+        delete require("marko/runtime/components/Component").prototype.$;
     }
 
     done();

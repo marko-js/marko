@@ -8,7 +8,7 @@ chai.config.includeStack = true;
 var autotest = require("../autotest");
 const fs = require("fs");
 const path = require("path");
-const morphdom = require("marko/morphdom");
+const morphdom = require("marko/runtime/vdom/morphdom");
 const createBrowser = require("jsdom-context-require");
 
 autotest("fixtures", fixture => {

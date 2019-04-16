@@ -9,7 +9,7 @@ var VFragment = vdom.___VFragment;
 var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
 var defaultDocument = vdom.___defaultDocument;
-var morphdom = require("../../morphdom");
+var morphdom = require("./morphdom");
 var attrsHelper = require("./helper-attrs");
 
 var EVENT_UPDATE = "update";

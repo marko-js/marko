@@ -3,7 +3,8 @@ var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
 var win = window;
 var defaultDocument = document;
-var createFragmentNode = require("../morphdom/fragment").___createFragmentNode;
+var createFragmentNode = require("../vdom/morphdom/fragment")
+    .___createFragmentNode;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var addComponentRootToKeyedElements =

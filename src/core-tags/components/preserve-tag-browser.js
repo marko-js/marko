@@ -1,4 +1,4 @@
-var componentsUtil = require("../util");
+var componentsUtil = require("../../runtime/components/util");
 var componentLookup = componentsUtil.___componentLookup;
 
 module.exports = function render(input, out) {

@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var domData = require("../../../../src/components/dom-data");
+var domData = require("../../../../src/runtime/components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 
 function isSameNode(virtualEl, realEl) {

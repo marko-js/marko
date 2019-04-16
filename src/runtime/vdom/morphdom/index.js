@@ -1,18 +1,18 @@
 "use strict";
 var specialElHandlers = require("./specialElHandlers");
-var componentsUtil = require("../components/util");
+var componentsUtil = require("../../components/util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var addComponentRootToKeyedElements =
     componentsUtil.___addComponentRootToKeyedElements;
 var normalizeComponentKey = componentsUtil.___normalizeComponentKey;
-var VElement = require("../runtime/vdom/vdom").___VElement;
+var VElement = require("../vdom").___VElement;
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
-var eventDelegation = require("../components/event-delegation");
+var eventDelegation = require("../../components/event-delegation");
 var fragment = require("./fragment");
 var helpers = require("./helpers");
-var domData = require("../components/dom-data");
+var domData = require("../../components/dom-data");
 var keysByDOMNode = domData.___keyByDOMNode;
 var componentByDOMNode = domData.___componentByDOMNode;
 var vElementByDOMNode = domData.___vElementByDOMNode;

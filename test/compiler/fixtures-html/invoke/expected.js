@@ -2,10 +2,10 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/compiler/fixtures-html/invoke/template.marko",
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
-    marko_getWidgetFromOut = require("marko/src/components/legacy/helper-getWidgetFromOut"),
+    marko_getWidgetFromOut = require("marko/src/runtime/components/legacy/helper-getWidgetFromOut"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_dynamicTag = marko_helpers.d;
 

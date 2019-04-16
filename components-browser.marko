@@ -1,6 +1,6 @@
 <module-code(function(require) {
     var isDebug = require('./env').isDebug;
-    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/components");\n`;
+    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/runtime/components");\n`;
 })/>
 
 // What's going on here? We are using Marko to do JavaScript code generation

@@ -13,7 +13,7 @@ exports.load = function(typeName) {
 exports.defineComponent = require("./defineComponent-legacy");
 exports.defineWidget = require("./defineWidget-legacy");
 exports.defineRenderer = require("./defineRenderer-legacy");
-exports.makeRenderable = exports.renderable = require("../../runtime/renderable");
+exports.makeRenderable = exports.renderable = require("../../renderable");
 
 // browser only
 var Widget = (exports.Widget = Component);
@@ -38,7 +38,7 @@ if (Widget) {
     };
 }
 
-var RenderResult = require("../../runtime/RenderResult");
+var RenderResult = require("../../RenderResult");
 
 RenderResult.prototype.getWidget = function() {
     // eslint-disable-next-line no-constant-condition
