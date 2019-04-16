@@ -429,6 +429,7 @@ class TagLoader {
     }
 
     /**
+     * DEPRECATED: use parse-options.preserveWhitespace
      * If the "preserve-whitespace" property is set to true then
      * all whitespace nested below the custom tag in a template
      * will be stripped instead of going through the normal whitespace
@@ -468,6 +469,7 @@ class TagLoader {
     }
 
     /**
+     * DEPRECATED: use tag parameters
      * The "var" property is used to declared nested variables that get
      * added as JavaScript variables at compile time.
      *
@@ -487,6 +489,7 @@ class TagLoader {
         this._handleVar(value, this.dependencyChain.append("var"));
     }
     /**
+     * DEPRECATED: use tag parameters
      * The "vars" property is equivalent to the "var" property
      * except that it expects an array of nested variables.
      */
@@ -501,6 +504,7 @@ class TagLoader {
         }
     }
     /**
+     * DEPRECATED
      * The "body-function" property" allows the nested body content to be mapped
      * to a function at compile time. The body function gets mapped to a property
      * of the tag renderer at render time. The body function can have any number
@@ -548,6 +552,7 @@ class TagLoader {
         tag.setBodyFunction(functionName, params);
     }
     /**
+     * DEPRECATED: use transformer to add additional attributes
      * The "import-var" property can be used to add a property to the
      * input object of the tag renderer whose value is determined by
      * a JavaScript expression.
@@ -631,6 +636,9 @@ class TagLoader {
             }
         });
     }
+    /**
+     * DEPRECATED
+     */
     escapeXmlBody(value) {
         if (value === false) {
             this.tag.escapeXmlBody = false;
@@ -638,6 +646,7 @@ class TagLoader {
     }
 
     /**
+     * DEPRECATED: use parse-options.state instead
      * Sends the body content type. This is used to control how the body
      * content is parsed.
      */
@@ -659,6 +668,9 @@ class TagLoader {
         this.tag.openTagOnly = value;
     }
 
+    /**
+     * DEPRECATED
+     */
     noOutput(value) {
         this.tag.noOutput = value;
     }
@@ -675,6 +687,9 @@ class TagLoader {
         this.tag.deprecated = value;
     }
 
+    /**
+     * DEPRECATED: use parse-options.ignoreAttributes instead
+     */
     parseAttributes(value) {
         this.tag.parseAttributes = value;
     }
