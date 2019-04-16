@@ -182,11 +182,6 @@ function initComponent(componentDef, doc) {
 
     componentLookup[id] = component;
 
-    if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
-        component.___rerender(true);
-        return;
-    }
-
     if (isExisting) {
         component.___removeDOMEventListeners();
     }
@@ -288,7 +283,9 @@ function initServerRendered(renderedComponents, doc) {
         delete window.$MG;
     }
 
-    componentDefs.forEach(function(componentDef) {
+    // hydrate components top down (leaf nodes last)
+    // and return an array of functions to mount these components
+    var componentMountFns = componentDefs.map(function(componentDef) {
         componentDef = ComponentDef.___deserialize(
             componentDef,
             typesArray,
@@ -296,24 +293,38 @@ function initServerRendered(renderedComponents, doc) {
             registry
         );
 
-        if (!hydrateComponent(componentDef, doc)) {
-            // hydrateComponent will return false if there is not rootNode
+        var mount = hydrateComponentAndGetMount(componentDef, doc);
+
+        if (!mount) {
+            // hydrateComponentAndGetMount will return false if there is not rootNode
             // for the component.  If this is the case, we'll wait until the
             // DOM has fully loaded to attempt to init the component again.
             doc.addEventListener("DOMContentLoaded", function() {
-                if (!hydrateComponent(componentDef, doc)) {
+                mount = hydrateComponentAndGetMount(componentDef, doc);
+
+                if (!mount) {
                     indexServerComponentBoundaries(doc, runtimeId);
-                    hydrateComponent(componentDef, doc);
+                    mount = hydrateComponentAndGetMount(componentDef, doc);
                 }
+
+                mount();
             });
         }
+
+        return mount;
+    });
+
+    // mount components bottom up (leaf nodes first)
+    componentMountFns.reverse().forEach(function(mount) {
+        if (mount) mount();
     });
 }
 
-function hydrateComponent(componentDef, doc) {
+function hydrateComponentAndGetMount(componentDef, doc) {
     var componentId = componentDef.id;
     var component = componentDef.___component;
     var rootNode = serverComponentRootNodes[componentId];
+    var renderResult;
 
     if (rootNode) {
         delete serverComponentRootNodes[componentId];
@@ -325,8 +336,17 @@ function hydrateComponent(componentDef, doc) {
 
         delete keyedElementsByComponentId[componentId];
 
-        initComponent(componentDef, doc || defaultDocument);
-        return true;
+        if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+            component.___document = doc;
+            renderResult = component.___rerender(component.___input, true);
+            return function mount() {
+                renderResult.afterInsert(doc);
+            };
+        }
+
+        return function mount() {
+            initComponent(componentDef, doc);
+        };
     }
 }
 

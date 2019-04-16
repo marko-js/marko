@@ -18,9 +18,9 @@ module.exports = function(helpers, done) {
         var componentDefs = renderedComponents.w;
         expect(componentDefs.length).to.equal(3);
 
-        expect(componentDefs[0][0]).to.equal("s0-0-2");
+        expect(componentDefs[0][0]).to.equal("s0-0");
         expect(componentDefs[1][0]).to.equal("s0-0-1");
-        expect(componentDefs[2][0]).to.equal("s0-0");
+        expect(componentDefs[2][0]).to.equal("s0-0-2");
         done();
     });
 };

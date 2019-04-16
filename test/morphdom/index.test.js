@@ -50,7 +50,7 @@ autotest("fixtures", fixture => {
             ___preserved: {},
             ___preservedBodies: {},
             ___globalContext: {
-                ___isRerenderInBrowser: true
+                ___isHydrate: true
             }
         };
 
