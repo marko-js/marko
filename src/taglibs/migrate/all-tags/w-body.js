@@ -47,6 +47,14 @@ module.exports = function migrate(el, context) {
             builder.text(isDefault ? renderBodyValue : bodyValue)
         ])
     ]);
+
+    if (
+        el.hasAttribute("body-only-if") &&
+        el.getAttribute("body-only-if").argument === "true"
+    ) {
+        el.forEachChild(node => el.insertSiblingBefore(node));
+        el.detach();
+    }
 };
 
 function buildTypeOfFunction(node, context) {

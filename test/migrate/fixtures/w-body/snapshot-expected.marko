@@ -6,3 +6,7 @@
     </if>
     <else>${input.renderBody}</else>
 </div>
+<if(typeof input.renderBody === "function")>
+    <${input}/>
+</if>
+<else>${input.renderBody}</else>
