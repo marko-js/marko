@@ -2,9 +2,10 @@
 
 const INIT_COMPONENTS_KEY = Symbol();
 
-const writeInitComponentsCode = require("../").writeInitComponentsCode;
+const writeInitComponentsCode = require("../../runtime/components")
+    .writeInitComponentsCode;
 
-const ComponentsContext = require("../ComponentsContext");
+const ComponentsContext = require("../../runtime/components/ComponentsContext");
 
 function handleAwaitBeforeRender(eventArgs) {
     if (eventArgs.clientReorder) {

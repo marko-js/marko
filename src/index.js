@@ -12,7 +12,7 @@ if (!process.env.BUNDLE) {
     require("./browser-refresh").enable();
 
     // Adds the template.getDependencies() method needed by older versions of lasso-marko
-    require("./components/legacy/dependencies/html");
+    require("./runtime/components/legacy/dependencies/html");
 }
 
 function fixFlush() {

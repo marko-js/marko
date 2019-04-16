@@ -3,7 +3,7 @@
 var ok = require("assert").ok;
 var path = require("path");
 var complain = require("complain");
-var taglibLookup = require("./taglib-lookup");
+var taglib = require("../taglib");
 var charProps = require("char-props");
 
 var UniqueVars = require("./util/UniqueVars");
@@ -66,15 +66,15 @@ const helpers = {
     const: "const",
     createElement: "e",
     defineComponent: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "c"
     },
     "defineComponent-legacy": {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "c"
     },
     "defineWidget-legacy": {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "w"
     },
     dynamicTag: "d",
@@ -86,7 +86,7 @@ const helpers = {
     forEachProp: { module: "marko/runtime/helper-forEachProperty" },
     forRange: { module: "marko/runtime/helper-forRange" },
     getWidgetFromOut: {
-        module: "marko/components/legacy/helper-getWidgetFromOut"
+        module: "marko/runtime/components/legacy/helper-getWidgetFromOut"
     },
     include: "i",
     loadNestedTag: { module: "marko/runtime/helper-loadNestedTag" },
@@ -96,15 +96,15 @@ const helpers = {
     merge: { module: "marko/runtime/helper-merge" },
     propsForPreviousNode: "p",
     renderer: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "r"
     },
     rendererLegacy: {
-        module: "marko/components/legacy/helpers",
+        module: "marko/runtime/components/legacy/helpers",
         method: "r"
     },
     registerComponent: {
-        module: "marko/components/helpers",
+        module: "marko/runtime/components/helpers",
         method: "rc"
     },
     str: "s",
@@ -126,7 +126,7 @@ class CompileContext extends EventEmitter {
         this.builder = builder;
 
         this.dirname = path.dirname(filename);
-        this.taglibLookup = taglibLookup.buildLookup(this.dirname);
+        this.taglibLookup = taglib.buildLookup(this.dirname);
         this.data = {};
         this._dataStacks = {};
         this.meta = {};

@@ -8,6 +8,6 @@ module.exports = function(helpers, done) {
             done();
         });
     } finally {
-        delete require("marko/components/Component").prototype.ready;
+        delete require("marko/runtime/components/Component").prototype.ready;
     }
 };

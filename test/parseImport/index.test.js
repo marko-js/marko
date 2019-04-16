@@ -4,7 +4,7 @@ require("../__util__/test-init");
 
 var chai = require("chai");
 chai.config.includeStack = true;
-var parseFor = require("marko/taglibs/core/util/parseImport.js");
+var parseFor = require("marko/core-tags/core/util/parseImport.js");
 var autotest = require("../autotest");
 var fs = require("fs");
 

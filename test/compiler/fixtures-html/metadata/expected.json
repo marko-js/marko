@@ -9,7 +9,7 @@
     },
     {
         "type": "require",
-        "path": "PROJECT_ROOT/src/components/boot.js",
+        "path": "PROJECT_ROOT/src/runtime/components/boot.js",
         "run": true
     }
 ]

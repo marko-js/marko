@@ -10,7 +10,7 @@ var CompileContext = require("./CompileContext");
 var globalConfig = require("./config");
 var ok = require("assert").ok;
 var fs = require("fs");
-var taglibLoader = require("./taglib-loader");
+var taglib = require("../taglib");
 
 var defaults = extend({}, globalConfig);
 
@@ -177,9 +177,7 @@ function getLastModified(path, options, callback) {
 }
 
 function clearCaches() {
-    exports.taglibLookup.clearCache();
-    exports.taglibFinder.clearCache();
-    exports.taglibLoader.clearCache();
+    taglib.clearCache();
 }
 
 function parseRaw(templateSrc, filename, options) {
@@ -243,52 +241,25 @@ exports.builder = Builder.DEFAULT_BUILDER;
 exports.configure = configure;
 exports.clearCaches = clearCaches;
 
-var taglibLookup = require("./taglib-lookup");
-exports.taglibLookup = taglibLookup;
-exports.taglibLoader = taglibLoader;
-exports.taglibFinder = require("./taglib-finder");
-
-function registerTaglib(taglibProps, taglibPath) {
-    var taglib = taglibLoader.createTaglib(taglibPath);
-    taglibLoader.loadTaglibFromProps(taglib, taglibProps);
-    taglibLookup.registerTaglib(taglib);
-}
+exports.taglibLookup = taglib.lookup;
+exports.taglibLoader = taglib.loader;
+exports.taglibFinder = taglib.finder;
 
 var coreTaglibsRegistered = false;
 
 function registerCoreTaglibs() {
     if (!coreTaglibsRegistered) {
         coreTaglibsRegistered = true;
-        registerTaglib(
-            require("../taglibs/migrate/marko.json"),
-            require.resolve("../taglibs/migrate/marko.json")
-        );
-        registerTaglib(
-            require("../taglibs/core/marko.json"),
-            require.resolve("../taglibs/core/marko.json")
-        );
-        registerTaglib(
-            require("../taglibs/html/marko.json"),
-            require.resolve("../taglibs/html/marko.json")
-        );
-        registerTaglib(
-            require("../taglibs/svg/marko.json"),
-            require.resolve("../taglibs/svg/marko.json")
-        );
-        registerTaglib(
-            require("../taglibs/cache/marko.json"),
-            require.resolve("../taglibs/cache/marko.json")
-        );
-        registerTaglib(
-            require("../components/taglib/marko.json"),
-            require.resolve("../components/taglib/marko.json")
+        taglib.register(
+            require("../core-tags/marko.json"),
+            require.resolve("../core-tags/marko.json")
         );
     }
 }
 
 function buildTaglibLookup(dirname) {
     registerCoreTaglibs();
-    return taglibLookup.buildLookup(dirname);
+    return taglib.buildLookup(dirname);
 }
 
 exports.buildTaglibLookup = buildTaglibLookup;
@@ -297,9 +268,8 @@ exports.registerTaglib = function(filePath) {
     registerCoreTaglibs();
 
     ok(typeof filePath === "string", '"filePath" should be a string');
-    var taglib = taglibLoader.loadTaglibFromFile(filePath);
-    taglibLookup.registerTaglib(taglib);
-    clearCaches();
+    taglib.registerFromFile(filePath);
+    taglib.clearCaches();
 };
 
 exports.isVDOMSupported = true;

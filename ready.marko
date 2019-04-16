@@ -1,7 +1,7 @@
 <module-code(function(require) {
     require("complain")("marko/ready is deprecated.");
     var isDebug = require('./env').isDebug;
-    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/components/ready");\n`;
+    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/runtime/components/ready");\n`;
 })/>
 
 // What's going on here? We are using Marko to do JavaScript code generation

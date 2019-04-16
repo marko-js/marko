@@ -3,8 +3,8 @@
 
 var complain = "MARKO_DEBUG" && require("complain");
 
-var domInsert = require("../runtime/dom-insert");
-var defaultCreateOut = require("../runtime/createOut");
+var domInsert = require("../dom-insert");
+var defaultCreateOut = require("../createOut");
 var getComponentsContext = require("./ComponentsContext")
     .___getComponentsContext;
 var componentsUtil = require("./util");
@@ -12,11 +12,11 @@ var componentLookup = componentsUtil.___componentLookup;
 var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var EventEmitter = require("events-light");
-var RenderResult = require("../runtime/RenderResult");
+var RenderResult = require("../RenderResult");
 var SubscriptionTracker = require("listener-tracker");
 var inherit = require("raptor-util/inherit");
 var updateManager = require("./update-manager");
-var morphdom = require("../morphdom");
+var morphdom = require("../vdom/morphdom");
 var eventDelegation = require("./event-delegation");
 var domData = require("./dom-data");
 var componentsByDOMNode = domData.___componentByDOMNode;

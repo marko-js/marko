@@ -15,7 +15,7 @@ module.exports = function codeGenerator(el, codegen) {
 
     var bindComponentVar = context.importModule(
         "marko_bindComponent",
-        "marko/components/taglib/helpers/bindComponent"
+        "marko/core-tags/components/helpers/bindComponent"
     );
 
     if (context.data[BIND_WIDGET_KEY] == null) {

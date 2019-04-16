@@ -1,6 +1,6 @@
 {
     "dependencies": [
-        "../taglibs/compiler.browser.json",
+        "../core-tags/compiler.browser.json",
         "../components/compiler.browser.json",
         "../runtime/compiler.browser.json"
     ]

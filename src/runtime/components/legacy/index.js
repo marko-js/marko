@@ -4,7 +4,7 @@ var modernMarko = require("../");
 exports.defineComponent = require("./defineComponent-legacy");
 exports.defineWidget = require("./defineWidget-legacy");
 exports.defineRenderer = require("./defineRenderer-legacy");
-exports.makeRenderable = exports.renderable = require("../../runtime/renderable");
+exports.makeRenderable = exports.renderable = require("../../renderable");
 
 // server only
 exports.writeInitWidgetsCode = modernMarko.writeInitComponentsCode;

@@ -5,7 +5,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
         onCreate: function() {}
       },
     marko_componentType = "/marko-test$1.0.0/compiler/fixtures-html/class-tag-withspaces/template.marko",
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c;
 

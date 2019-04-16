@@ -472,7 +472,7 @@ class CustomTag extends HtmlElement {
                 tagDef = this.tagDef = context.getTagDef(fullyQualifiedName);
                 if (!tagDef) {
                     // This nested tag is not declared, but we will allow it to go through
-                    let taglibLoader = require("../taglib-loader");
+                    let taglibLoader = require("../../taglib").loader;
                     tagDef = this.tagDef = taglibLoader.loadTag(
                         {
                             name: fullyQualifiedName,

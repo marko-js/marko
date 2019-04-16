@@ -8,7 +8,7 @@ require("chai").should();
 require("marko/compiler");
 var autotest = require("../autotest");
 
-var taglibFinder = require("marko/compiler/taglib-finder");
+var taglibFinder = require("marko/taglib").finder;
 
 autotest("fixtures", fixture => {
     let test = fixture.test;

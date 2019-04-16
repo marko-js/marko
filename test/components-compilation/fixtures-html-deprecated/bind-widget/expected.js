@@ -2,9 +2,9 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/bind-widget/widget",
-    legacy_helpers = require("marko/src/components/legacy/helpers"),
+    legacy_helpers = require("marko/src/runtime/components/legacy/helpers"),
     marko_rendererLegacy = legacy_helpers.r,
-    marko_keyAttr = require("marko/src/components/taglib/helpers/markoKeyAttr"),
+    marko_keyAttr = require("marko/src/core-tags/components/helpers/markoKeyAttr"),
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_attr = marko_helpers.a;
 

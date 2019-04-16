@@ -3,7 +3,7 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index",
     marko_component = require("./"),
-    legacy_helpers = require("marko/src/components/legacy/helpers"),
+    legacy_helpers = require("marko/src/runtime/components/legacy/helpers"),
     marko_rendererLegacy = legacy_helpers.r,
     marko_helpers = require("marko/src/runtime/html/helpers"),
     marko_dynamicTag = marko_helpers.d,

@@ -3,7 +3,7 @@
 var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_helpers = require("marko/src/runtime/vdom/helpers"),
     marko_classList = marko_helpers.cl,
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/vdom-compiler/fixtures/attr-class-expression/template.marko", function() {
       return module.exports;

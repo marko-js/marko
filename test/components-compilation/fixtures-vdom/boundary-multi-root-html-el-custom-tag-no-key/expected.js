@@ -2,7 +2,7 @@
 
 var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_component = {},
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/components-compilation/fixtures-vdom/boundary-multi-root-html-el-custom-tag-no-key/index.marko", function() {
       return module.exports;

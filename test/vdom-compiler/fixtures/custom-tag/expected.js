@@ -1,7 +1,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/vdom").t(),
-    components_helpers = require("marko/src/components/helpers"),
+    components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/vdom-compiler/fixtures/custom-tag/template.marko", function() {
       return module.exports;

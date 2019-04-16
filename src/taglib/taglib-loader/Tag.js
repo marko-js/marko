@@ -3,10 +3,10 @@ var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var CustomTag;
 var path = require("path");
-var markoModules = require("../modules");
+var markoModules = require("../../compiler/modules");
 
 function createCustomTag(el, tagDef) {
-    CustomTag = CustomTag || require("../ast/CustomTag");
+    CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
     return new CustomTag(el, tagDef);
 }
 
@@ -53,6 +53,9 @@ class Tag {
         // this._nodeFactory = undefined;
     }
 
+    /**
+     * DEPRECATED
+     */
     forEachVariable(callback, thisObj) {
         if (!this.nestedVariables) {
             return;
@@ -61,6 +64,9 @@ class Tag {
         this.nestedVariables.vars.forEach(callback, thisObj);
     }
 
+    /**
+     * DEPRECATED
+     */
     forEachImportedVariable(callback, thisObj) {
         if (!this.importedVariables) {
             return;
@@ -141,6 +147,9 @@ class Tag {
         return this.attributes.hasOwnProperty(attrName);
     }
 
+    /**
+     * DEPRECATED
+     */
     addNestedVariable(nestedVariable) {
         if (!this.nestedVariables) {
             this.nestedVariables = {
@@ -151,6 +160,9 @@ class Tag {
 
         this.nestedVariables.vars.push(nestedVariable);
     }
+    /**
+     * DEPRECATED
+     */
     addImportedVariable(importedVariable) {
         if (!this.importedVariables) {
             this.importedVariables = {};
@@ -163,6 +175,9 @@ class Tag {
         transformer.taglibId = this.taglibId;
         this.transformers[key] = transformer;
     }
+    /**
+     * DEPRECATED
+     */
     setBodyFunction(name, params) {
         this.bodyFunction = {
             __noMerge: true,
@@ -170,6 +185,9 @@ class Tag {
             params: params
         };
     }
+    /**
+     * DEPRECATED
+     */
     setBodyProperty(propertyName) {
         this.bodyProperty = propertyName;
     }

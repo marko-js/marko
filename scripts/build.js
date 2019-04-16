@@ -29,7 +29,7 @@ if (target === "src") {
 
 if (shouldBuildSrc) {
     buildDir("src", "dist", {
-        babelExclude: ["/taglibs/core/async/client-reorder-runtime.min.js"],
+        babelExclude: ["/core-tags/core/async/client-reorder-runtime.min.js"],
         babelOptions
     });
 }

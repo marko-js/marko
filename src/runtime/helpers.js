@@ -1,9 +1,9 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
 var removeDashes = require("../compiler/util/removeDashes");
-var ComponentsContext = require("../components/ComponentsContext");
+var ComponentsContext = require("./components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var ComponentDef = require("../components/ComponentDef");
+var ComponentDef = require("./components/ComponentDef");
 var w10NOOP = require("warp10/constants").NOOP;
 var isArray = Array.isArray;
 var RENDER_BODY_TO_JSON = function() {

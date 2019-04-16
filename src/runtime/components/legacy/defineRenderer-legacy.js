@@ -1,6 +1,6 @@
 var complain = "MARKO_DEBUG" && require("complain");
-var marko = require("../../");
-var makeRenderable = require("../../runtime/renderable");
+var marko = require("../../../");
+var makeRenderable = require("../../renderable");
 var getComponentsContext = require("../ComponentsContext")
     .___getComponentsContext;
 var componentsUtil = require("../util");

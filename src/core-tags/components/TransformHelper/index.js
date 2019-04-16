@@ -77,7 +77,7 @@ class TransformHelper {
             var markoKeyAttrVar = context.importModule(
                 "marko_keyAttr",
                 this.getMarkoComponentsRequirePath(
-                    "marko/components/taglib/helpers/markoKeyAttr"
+                    "marko/core-tags/components/helpers/markoKeyAttr"
                 )
             );
 
