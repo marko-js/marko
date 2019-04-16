@@ -2,7 +2,7 @@
 
 var ok = require("assert").ok;
 var taglibTypes = require("../taglib-loader/types");
-var Text = require("../ast/Text");
+var Text = require("../../compiler/ast/Text");
 var extend = require("raptor-util/extend");
 
 function transformerComparator(a, b) {

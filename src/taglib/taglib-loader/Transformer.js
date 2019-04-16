@@ -1,6 +1,6 @@
 "use strict";
 var nextTransformerId = 0;
-var markoModules = require("../modules");
+var markoModules = require("../../compiler/modules");
 
 class Transformer {
     constructor() {

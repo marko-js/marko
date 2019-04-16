@@ -3,10 +3,10 @@ var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var CustomTag;
 var path = require("path");
-var markoModules = require("../modules");
+var markoModules = require("../../compiler/modules");
 
 function createCustomTag(el, tagDef) {
-    CustomTag = CustomTag || require("../ast/CustomTag");
+    CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
     return new CustomTag(el, tagDef);
 }
 

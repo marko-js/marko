@@ -3,7 +3,7 @@
 var ok = require("assert").ok;
 var path = require("path");
 var complain = require("complain");
-var taglibLookup = require("./taglib-lookup");
+var taglib = require("../taglib");
 var charProps = require("char-props");
 
 var UniqueVars = require("./util/UniqueVars");
@@ -126,7 +126,7 @@ class CompileContext extends EventEmitter {
         this.builder = builder;
 
         this.dirname = path.dirname(filename);
-        this.taglibLookup = taglibLookup.buildLookup(this.dirname);
+        this.taglibLookup = taglib.buildLookup(this.dirname);
         this.data = {};
         this._dataStacks = {};
         this.meta = {};
