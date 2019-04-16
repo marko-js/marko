@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.10
+
+- Hydrating components now consistently render from the top down. [#1317](https://github.com/marko-js/marko/issues/1317)
+
 ### 4.16.9
 
 - Fixes an issue where legacy widgets could loose a reference to their parent components. [#1311](https://github.com/marko-js/marko/issues/1311)
