@@ -522,7 +522,7 @@ Component.prototype = componentProto = {
         this.___reset();
     },
 
-    ___rerender(input, isHydrate) {
+    ___rerender: function(input, isHydrate) {
         var doc = this.___document;
         var globalData = this.___global;
         var rootNode = this.___rootNode;
