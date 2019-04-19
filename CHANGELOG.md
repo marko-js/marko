@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.11
+
+- Fixes a regression (syntax) in IE 11 introduced in 4.16.10
+
 ### 4.16.10
 
 - Hydrating components now consistently render from the top down. [#1317](https://github.com/marko-js/marko/issues/1317)
