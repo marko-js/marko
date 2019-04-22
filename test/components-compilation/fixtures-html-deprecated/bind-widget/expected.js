@@ -27,6 +27,6 @@ marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/bind-widget/widget",
     component: "./widget",
     deps: [
-      "marko/src/components"
+      "marko/src/runtime/components"
     ]
   };
