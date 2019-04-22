@@ -287,9 +287,10 @@ Component.prototype = componentProto = {
         }
 
         var root = this.___rootNode;
-        var nodes = this.___rootNode.nodes;
 
         this.___destroyShallow();
+
+        var nodes = root.nodes;
 
         nodes.forEach(function(node) {
             destroyNodeRecursive(node);
