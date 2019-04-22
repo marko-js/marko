@@ -20,6 +20,6 @@ marko_template.meta = {
     id: "/marko-test$1.0.0/components-compilation/fixtures-html/index-widget-only/component-browser",
     component: "./component-browser",
     deps: [
-      "marko/src/components"
+      "marko/src/runtime/components"
     ]
   };

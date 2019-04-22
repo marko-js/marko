@@ -89,7 +89,9 @@ module.exports = function handleComponentBind(options) {
         }
 
         if (isSplit) {
-            context.addDependency(context.markoModulePrefix + "components");
+            context.addDependency(
+                context.markoModulePrefix + "runtime/components"
+            );
         }
     }
 
