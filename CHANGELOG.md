@@ -4,6 +4,11 @@
 
 ## 4.16.x
 
+### 4.16.12
+
+- fix destorying a component that has already removed some top-level nodes [#1321](https://github.com/marko-js/marko/issues/1321)
+- fix components runtime path after refactor released in 4.16.11 [#1322](https://github.com/marko-js/marko/issues/1322)
+
 ### 4.16.11
 
 - Fixes a regression (syntax) in IE 11 introduced in 4.16.10
