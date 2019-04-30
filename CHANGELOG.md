@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.13
+
+- Fixes a regression with printing nested unary expressions (eg typeof). [#1323](https://github.com/marko-js/marko/issues/1323)
+
 ### 4.16.12
 
 - fix destorying a component that has already removed some top-level nodes [#1321](https://github.com/marko-js/marko/issues/1321)
