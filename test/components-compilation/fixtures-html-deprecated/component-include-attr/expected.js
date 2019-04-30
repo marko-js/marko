@@ -17,7 +17,7 @@ function render(input, out, __component, widget, component) {
     marko_attr("id", __component.elId()) +
     "><h1>Header</h1><div>");
 
-  if (typeof input.renderBody === "function") {
+  if ((typeof input.renderBody) === "function") {
     marko_dynamicTag(out, input, {}, null, null, __component, "2");
   } else {
     out.w(marko_escapeXml(input.renderBody));

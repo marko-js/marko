@@ -1,1 +1,1 @@
-((typeof foo && !i) && delete foo.bar) && typeof (x || y)
+(((typeof foo) && (!i)) && (delete foo.bar)) && (typeof (x || y))
