@@ -47,7 +47,7 @@ class UnaryExpression extends Node {
     }
 
     isCompoundExpression() {
-        return false;
+        return true;
     }
 
     toJSON() {

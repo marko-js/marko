@@ -15,7 +15,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<div><h1>Header</h1><div>");
 
-  if (typeof data.renderBody === "string") {
+  if ((typeof data.renderBody) === "string") {
     out.w(marko_escapeXml(data.renderBody));
   } else {
     marko_dynamicTag(out, data.renderBody, {}, null, null, __component, "3");
