@@ -99,7 +99,7 @@ _fancy-save-button.marko_
 
 Often the above two approaches are enough, and many people [jump to this part far to quickly](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367). Like `<context>`, often anything stored in redux is `global`. This means that it can (if abused) create components that are hard to reuse, reason about and test. However it is important to understand when a tool like `redux` is useful in any UI library.
 
-Redux provides inderection to updating any state that it controls. This is useful if you need the following:
+Redux provides indirection to updating any state that it controls. This is useful if you need the following:
 
 - Single state update, multiple actions (eg: logging, computed data, etc).
 - Time travel debugging and other [redux-specific tooling](https://redux.js.org/introduction/ecosystem).
