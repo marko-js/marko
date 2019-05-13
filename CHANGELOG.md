@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.16.14
+
+- Prevent treating macro usage with parameters as a component. [#1326](https://github.com/marko-js/marko/issues/1326)
+
 ### 4.16.13
 
 - Fixes a regression with printing nested unary expressions (eg typeof). [#1323](https://github.com/marko-js/marko/issues/1323)
