@@ -267,7 +267,6 @@ var helpers = {
             //     props
             // );
             attrs.renderBody(out);
-            out.___endElement();
         }
     },
 
