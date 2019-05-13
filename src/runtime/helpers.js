@@ -257,15 +257,6 @@ var helpers = {
                 }
             }
         } else if (attrs.renderBody) {
-            // out.___beginElementDynamic(
-            //     tag,
-            //     {},
-            //     key,
-            //     component,
-            //     0,
-            //     0,
-            //     props
-            // );
             attrs.renderBody(out);
         }
     },
