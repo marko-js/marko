@@ -1,0 +1,15 @@
+$ if (typeof window !== "undefined") {
+  window.helloImplicitComponentSent = true;
+}
+
+<macro|macroInput| name="add1">
+  <${macroInput}(macroInput.value + 1)/>
+</macro>
+
+<add1|result| value=1>
+  Result: ${result}
+</add1>
+
+<add1|result| value=2>
+  Result: ${result}
+</add1>
