@@ -149,6 +149,7 @@ class Normalizer {
             elNode.params.length &&
             elNode.tagName !== "for" &&
             elNode.tagName !== "macro" &&
+            !context.isMacro(elNode.tagName) &&
             !(
                 (elNode.tagName === "@then" || elNode.tagName === "@catch") &&
                 elNode.parentNode.tagName === "await"
