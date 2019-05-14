@@ -1,13 +1,11 @@
 class {}
 
-<macro renderButton(color)>
-    <button on-click('handleColorClick', color)>
-        ${color}
-    </button>
+<macro|macroInput| name="renderButton">
+    $ var color = macroInput.color;
+    <button on-click("handleColorClick", color)>${color}</button>
 </macro>
-
 <div>
-    <for(color in ['red', 'green', 'blue'])>
-        <renderButton(color)/>
+    <for|color| of=["red", "green", "blue"]>
+        <renderButton color=color/>
     </for>
 </div>

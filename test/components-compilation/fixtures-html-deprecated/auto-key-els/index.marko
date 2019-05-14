@@ -1,13 +1,11 @@
-import Foo from "./foo.marko"
-
 <div>
     <span key="spanA">A</span>
     <ul>
-        <for|color| of=colors>
+        <for(color in colors)>
             <li>${color}</li>
         </for>
     </ul>
     <p key="preservedP" no-update-body>${Date.now()}</p>
 </div>
 <span>B</span>
-<${Foo}/>
+<include('./foo.marko')/>
