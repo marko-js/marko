@@ -8,6 +8,9 @@ var coreAttrHandlers = [
             if (!argument) {
                 return false;
             }
+            // context.deprecate(
+            //     'The "body-only-if" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:(body-only-if)'
+            // );
 
             var test;
             try {

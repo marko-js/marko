@@ -52,10 +52,6 @@ module.exports = function migrate(el, context) {
         el.hasAttribute("body-only-if") &&
         el.getAttribute("body-only-if").argument === "true"
     ) {
-        context.deprecate(
-            'The "body-only-if" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:(body-only-if)'
-        );
-
         el.forEachChild(node => el.insertSiblingBefore(node));
         el.detach();
     }

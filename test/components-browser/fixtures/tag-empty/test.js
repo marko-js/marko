@@ -1,21 +1,28 @@
 const expect = require("chai").expect;
 
 module.exports = function(helpers) {
+    function check(tag, isFirst) {
+        if (!isFirst) {
+            component.input = { comp: tag };
+            component.update();
+        }
+        const openTag = tag ? `<${tag}>` : "";
+        const closeTag = tag ? `</${tag}>` : "";
+        expect(helpers.targetEl.innerHTML).to.contain(
+            `<div>${openTag}${innerHTML}${closeTag}</div>`
+        );
+    }
+
     const component = helpers.mount(require.resolve("./index"), {
         comp: "a"
     });
-    // const innerItem = component.getEl("item");
-    const innerHTML = "Body";
+    const innerHTML = "<span>body text</span>";
 
-    expect(helpers.targetEl.innerHTML).to.contain(`<a>${innerHTML}</a>`);
-    // expect(innerItem).to.equal(component.inner);
-    component.input = {};
-    component.update();
-    expect(helpers.targetEl.innerHTML).to.contain(`<div>${innerHTML}</div>`);
-    // expect(innerItem).to.equal(component.inner);
-
-    component.input = { comp: "span" };
-    component.update();
-    expect(helpers.targetEl.innerHTML).to.contain(`<span>${innerHTML}</span>`);
-    // expect(innerItem).to.equal(component.inner);
+    check("a", true);
+    check(null);
+    check("a");
+    check();
+    check("div");
+    check("");
+    check("a");
 };

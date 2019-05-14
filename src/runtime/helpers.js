@@ -79,6 +79,17 @@ function resolveRenderer(handler) {
     return createDeferredRenderer(handler);
 }
 
+function getFragmentData(componentDef, render) {
+    var flags = componentDef ? componentDef.___flags : 0;
+    var willRerender = flags & FLAG_WILL_RERENDER_IN_BROWSER;
+    var isW10NOOP = render === w10NOOP;
+    var preserve = IS_SERVER ? willRerender : isW10NOOP;
+    return {
+        preserve: preserve,
+        isW10NOOP: isW10NOOP
+    };
+}
+
 var helpers = {
     /**
      * Internal helper method to prevent null/undefined from being written out
@@ -221,13 +232,16 @@ var helpers = {
                     }
 
                     if (isFn) {
-                        var flags = componentDef ? componentDef.___flags : 0;
-                        var willRerender =
-                            flags & FLAG_WILL_RERENDER_IN_BROWSER;
-                        var isW10NOOP = render === w10NOOP;
-                        var preserve = IS_SERVER ? willRerender : isW10NOOP;
-                        out.___beginFragment(key, component, preserve);
-                        if (!isW10NOOP && isFn) {
+                        var fragmentData = getFragmentData(
+                            componentDef,
+                            renderer
+                        );
+                        out.___beginFragment(
+                            key,
+                            component,
+                            fragmentData.preserve
+                        );
+                        if (!fragmentData.isW10NOOP && isFn) {
                             var componentsContext = getComponentsContext(out);
                             var parentComponentDef =
                                 componentsContext.___componentDef;
@@ -257,7 +271,13 @@ var helpers = {
                 }
             }
         } else if (attrs.renderBody) {
+            out.___beginFragment(
+                key,
+                component,
+                getFragmentData(componentDef, renderer).preserve
+            );
             attrs.renderBody(out);
+            out.___endFragment();
         }
     },
 
