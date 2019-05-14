@@ -1,9 +1,12 @@
 ---
-<macro asyncMacro(num)>
+<macro|macroInput| name="asyncMacro">
+    $ var num = macroInput.num;
     ${num}
 </macro>1
-<await(D1 from data.D1)>
-    <asyncMacro num=2/>
+<await(data.D1)>
+    <@then|D1|>
+        <asyncMacro num=2/>
+    </@then>
 </await>
 3
 ---

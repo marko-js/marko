@@ -1,19 +1,21 @@
 ---
 1
-<await(d1 from data.D1)>
-    2
-    <await(d2 from data.D2)>
-        3
-    </await>
-    4
-    <await(d3 from data.D3)>
-        5
-    </await>
-    6
+<await(data.D1)>
+    <@then|d1|>
+        2
+        <await(data.D2)>
+            <@then|d2|>3</@then>
+        </await>
+        4
+        <await(data.D3)>
+            <@then|d3|>5</@then>
+        </await>
+        6
+    </@then>
 </await>
 7
-<await(d4 from data.D4)>
-    8
+<await(data.D4)>
+    <@then|d4|>8</@then>
 </await>
 9
 ---

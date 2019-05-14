@@ -1,16 +1,17 @@
+import Layout from "./layout.marko"
+
 $ var userPromise = new Promise((resolve, reject) => {
     setTimeout(() => {
-        resolve({ name: 'Frank' });
+        resolve({ name: "Frank" });
     }, 1);
 });
-
-<include("./layout.marko")>
+<${Layout}>
     <@title>
-        <await(user from userPromise)>
-            Welcome ${user.name}
+        <await(userPromise)>
+            <@then|user|>Welcome ${user.name}</@then>
         </await>
     </@title>
     <@body>
         <hello/>
     </@body>
-</include>
+</>

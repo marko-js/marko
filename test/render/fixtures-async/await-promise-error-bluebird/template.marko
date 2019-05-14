@@ -1,10 +1,6 @@
-<await(promiseData from data.promiseData)>
-    BEFORE
-    <if(true)>
-        ${promiseData.noprop.value}
-    </if>
-    AFTER
-    <await-error>
-        something went wrong!
-    </await-error>
+<await(data.promiseData)>
+    <@then|promiseData|>
+        BEFORE <if(true)>${promiseData.noprop.value}</if> AFTER
+    </@then>
+    <@catch>something went wrong!</@catch>
 </await>

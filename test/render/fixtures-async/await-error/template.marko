@@ -1,11 +1,8 @@
 ---
 BEFORE
-<await(testData from data.testDataProvider)>
-    Success!
-
-    <await-error>
-        something went wrong!
-    </await-error>
+<await(data.testDataProvider)>
+    <@then|testData|>Success!</@then>
+    <@catch>something went wrong!</@catch>
 </await>
 AFTER
 ---

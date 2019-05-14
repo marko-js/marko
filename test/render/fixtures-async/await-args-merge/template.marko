@@ -1,11 +1,19 @@
 <ul>
-    <li for(userId in [0, 1, 2, 3])>
-        <await(name from data.userInfo) arg={ property:'name' } arg-userId=userId name=("user" + userId)>
-            <ul>
-                <li>
-                    <b>Name:</b> ${name}
-                </li>
-            </ul>
-        </await>
-    </li>
+    <for|userId| of=[0, 1, 2, 3]>
+        <li>
+            $ var arg = {
+                property: "name"
+            };
+            $ arg["userId"] = userId;
+            <await(data.userInfo.bind(null, arg)) name=("user" + userId)>
+                <@then|name|>
+                    <ul>
+                        <li>
+                            <b>Name:</b> ${name}
+                        </li>
+                    </ul>
+                </@then>
+            </await>
+        </li>
+    </for>
 </ul>
