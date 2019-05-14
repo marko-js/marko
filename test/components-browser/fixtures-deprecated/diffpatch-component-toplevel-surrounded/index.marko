@@ -1,0 +1,12 @@
+class  {
+    incrementBar() {
+        this.getComponent('bar').increment();
+        this.getComponent('bar').update();
+    }
+}
+
+<div.root key="root">
+    <foo/>
+    <bar key="bar"/>
+    <foo/>
+</div>

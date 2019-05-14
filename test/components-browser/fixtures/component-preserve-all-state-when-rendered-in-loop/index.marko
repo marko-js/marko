@@ -1,0 +1,26 @@
+class {
+    onCreate() {
+        this.state = { items: [] };
+    }
+
+    addItem(id) {
+        this.state.items = this.state.items.concat(id);
+    }
+
+    removeItem(id) {
+        this.state.items = this.state.items.filter(item => item !== id);
+    }
+}
+
+<div>
+    <for|item| of=state.items>
+        <div key=`loop1:${item}`>
+            <span/>
+        </div>
+    </for>
+    <for|i| from=0 to=(state.items.length - 1)>
+        <div key=`loop2:${state.items[i]}`>
+            <span/>
+        </div>
+    </for>
+</div>

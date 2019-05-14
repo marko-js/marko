@@ -8,6 +8,8 @@ class {
 }
 
 <div>
-    <label for:scoped="abc" if(state.show)/>
+    <if(state.show)>
+        <label for:scoped="abc"/>
+    </if>
     <input id:scoped="abc"/>
 </div>

@@ -1,0 +1,13 @@
+$ var classes = [
+    input.class,
+    "app-button",
+    state.size !== "normal" && "app-button-" + state.size,
+    state.variant !== "primary" && "app-button-" + state.variant
+];
+<button ...input["*"] class=classes onClick("handleClick")>
+    $ var includeTarget = input.label || input.renderBody;
+    <if(typeof includeTarget === "string")>${includeTarget}</if>
+    <else>
+        <${includeTarget}/>
+    </else>
+</button>

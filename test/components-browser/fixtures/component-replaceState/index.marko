@@ -1,0 +1,11 @@
+<div>
+    <h1>${state.heading}</h1>
+    <if(state.message)>
+        <h2>${state.message}</h2>
+    </if>
+    <ul>
+        <for|color| of=state.colors>
+            <li>${color}</li>
+        </for>
+    </ul>
+</div>

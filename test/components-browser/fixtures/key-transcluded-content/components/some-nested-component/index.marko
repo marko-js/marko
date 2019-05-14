@@ -1,3 +1,6 @@
 <div.some-nested-component>
-    <include(input.renderBody)/>
+    <if(typeof input.renderBody === "string")>${input.renderBody}</if>
+    <else>
+        <${input.renderBody}/>
+    </else>
 </div>

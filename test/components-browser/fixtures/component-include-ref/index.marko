@@ -1,0 +1,9 @@
+import barComponent from './components/app-bar'
+
+<div class="app-invoke-component-id">
+    <if(typeof barComponent === "string")>${barComponent}</if>
+    <else>
+        <${barComponent} key="barTest"/>
+    </else>
+    <app-bar key="test"/>
+</div>

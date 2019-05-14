@@ -1,8 +1,8 @@
 class {
     onInput(input) {
         this.state = {
-            size: input.size || 'normal',
-            variant: input.variant || 'primary'
+            size: input.size || "normal",
+            variant: input.variant || "primary"
         };
     }
 
@@ -20,9 +20,16 @@ class {
     }
 }
 
-$ var variantClassName=(state.variant !== 'primary' && 'app-button-' + state.variant)
-$ var sizeClassName=(state.size !== 'normal' && 'app-button-' + state.size)
-
-<button class=['app-button', variantClassName, sizeClassName]>
-    <span include(input.renderBody)/>
+$ {
+    var variantClassName =
+        state.variant !== "primary" && "app-button-" + state.variant;
+}
+$ var sizeClassName = state.size !== "normal" && "app-button-" + state.size;
+<button class=["app-button", variantClassName, sizeClassName]>
+    <span>
+        <if(typeof input.renderBody === "string")>${input.renderBody}</if>
+        <else>
+            <${input.renderBody}/>
+        </else>
+    </span>
 </button>

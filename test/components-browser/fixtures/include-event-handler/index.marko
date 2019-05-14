@@ -1,4 +1,4 @@
-import helloComponent from './components/hello.marko';
+import helloComponent from './components/hello.marko'
 
 class {
     onCreate() {
@@ -11,5 +11,8 @@ class {
 }
 
 <div>
-    <include(helloComponent) on-hello('handleHello')/>
+    <if(typeof helloComponent === "string")>${helloComponent}</if>
+    <else>
+        <${helloComponent} on-hello("handleHello")/>
+    </else>
 </div>

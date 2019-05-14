@@ -1,8 +1,8 @@
-class  {
+class {
     onCreate() {
         this.state = {
             count: 1
-        }
+        };
     }
 
     increment() {
@@ -10,7 +10,6 @@ class  {
     }
 }
 
-
-<for(var i=0; i<state.count; i++)>
+<for|i| from=0 to=(state.count - 1)>
     <div>${i}</div>
 </for>

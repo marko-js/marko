@@ -1,9 +1,10 @@
-class {
-
-}
+class {}
 
 <div class="modal-dialog">
     <div class="modal-content">
-        <include(input.body)/>
+        <if(typeof input.body === "string")>${input.body}</if>
+        <else>
+            <${input.body}/>
+        </else>
     </div>
 </div>

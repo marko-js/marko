@@ -1,20 +1,23 @@
 class {
-  onCreate() {
-    this.array = [0]
-  }
-  onMount() {
-    window.appComponent = this
-  }
+    onCreate() {
+        this.array = [0];
+    }
+    onMount() {
+        window.appComponent = this;
+    }
 }
+
 <div.ArrayModel>
-  ${component.array.length}
-  <hr>
-  <for(value in component.array)>
-      ${value}
-      <for(let i = 0 ; i < value; i++)>
-        <Box-even if( i % 2 == 0)/>
-        <Box-odd else/>
-      </for>
-      <hr>
-  </for>
+    ${component.array.length}<hr/>
+    <for|value| of=component.array>
+        ${value}<for|i| from=0 to=(value - 1)>
+            <if(i % 2 == 0)>
+                <Box-even/>
+            </if>
+            <else>
+                <Box-odd/>
+            </else>
+        </for>
+        <hr/>
+    </for>
 </div>

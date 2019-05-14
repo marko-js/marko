@@ -1,0 +1,19 @@
+class {
+    onMount() {
+        this.numberOfInvocations = 0;
+    }
+
+    handleAttach(color, event, node) {
+        this.numberOfInvocations++;
+    }
+}
+
+<div>
+    <ul>
+        <for(color in input.colors)>
+            <li key=color once-attach('handleAttach', color)>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</div>

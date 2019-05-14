@@ -1,0 +1,14 @@
+class {
+    onMount() {
+        window.helloInstances = window.helloInstances || [];
+        window.helloInstances.push(this);
+    }
+
+    onInput(input) {
+        this.state = {
+            name: input.name
+        }
+    }
+}
+
+<div.hello key="root">Hello ${state.name}</div>

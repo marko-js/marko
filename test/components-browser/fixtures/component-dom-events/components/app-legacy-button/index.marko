@@ -1,0 +1,9 @@
+<button
+    type="button"
+    class="app-legacy-button"
+    onMousedown("handleRootMouseDown")>
+    <if(typeof input.renderBody === "string")>${input.renderBody}</if>
+    <else>
+        <${input.renderBody}/>
+    </else>
+</button>
