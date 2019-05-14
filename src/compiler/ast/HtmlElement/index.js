@@ -13,9 +13,6 @@ function beforeGenerateCode(event) {
 
     var tagDef =
         typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
-    if (tagDef && tagDef.htmlType === "svg") {
-        context.pushFlag("SVG");
-    }
 
     if (tagName === "script") {
         context.pushFlag("SCRIPT_BODY");
@@ -31,10 +28,6 @@ function afterGenerateCode(event) {
 
     var tagDef =
         typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
-
-    if (tagDef && tagDef.htmlType === "svg") {
-        context.popFlag("SVG");
-    }
 
     if (tagName === "script") {
         context.popFlag("SCRIPT_BODY");

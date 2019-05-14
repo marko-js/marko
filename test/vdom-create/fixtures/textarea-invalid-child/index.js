@@ -1,7 +1,6 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var TEXTAREA_FLAGS = 2;
     expect(function() {
         helpers.vdom
             .createElement(
@@ -9,8 +8,7 @@ module.exports = function(helpers) {
                 {},
                 null /* key */,
                 null /* component */,
-                2 /* childCount */,
-                TEXTAREA_FLAGS
+                2 /* childCount */
             )
             .e("div", {}, null /* key */, null /* component */, 0)
             .t("bar");

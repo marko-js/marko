@@ -21,7 +21,7 @@ function render(input, out, __component, component, state) {
   marko_forRange(0, 10, null, function(i) {
     var keyscope__1 = "[" + ((for__0++) + "]");
 
-    out.e("DIV", null, "2" + keyscope__1, component, 1)
+    out.e("div", null, "2" + keyscope__1, component, 1)
       .t(i);
 
     function macro_renderTree(out, node) {
@@ -32,14 +32,14 @@ function render(input, out, __component, component, state) {
       out.t(" Children: ");
 
       if (node.children) {
-        out.be("UL", null, "3", component);
+        out.be("ul", null, "3", component);
 
         var for__4 = 0;
 
         marko_forEach(node.children, function(child) {
           var keyscope__5 = "[" + ((for__4++) + "]");
 
-          out.be("LI", null, "6" + keyscope__5, component);
+          out.be("li", null, "6" + keyscope__5, component);
 
           marko_dynamicTag(out, macro_renderTree, child, null, null, __component, "7" + keyscope__5);
 

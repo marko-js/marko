@@ -14,7 +14,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("cee604"),
-    marko_node0 = marko_createElement("A", {
+    marko_node0 = marko_createElement("a", {
         href: "foo"
       }, null, null, 1, 0, {
         i: marko_const_nextId()
@@ -24,7 +24,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.be("DIV");
+  out.be("div");
 
   test_hello_tag({
       name: "World",

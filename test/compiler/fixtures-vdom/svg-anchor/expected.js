@@ -15,13 +15,13 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_node0 = marko_createElement("svg", {
         width: "140",
         height: "30"
-      }, "0", null, 1, 1, {
+      }, "0", null, 1, 0, {
         i: marko_const_nextId()
       })
       .e("a", {
           "xlink:href": "https://developer.mozilla.org/en-US/docs/SVG",
           target: "_blank"
-        }, null, null, 0, 1);
+        }, null, null, 0);
 
 function render(input, out, __component, component, state) {
   var data = input;

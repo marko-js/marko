@@ -35,7 +35,6 @@ autotest("fixtures", fixture => {
 
         let fromNode = fromDocument.body;
         let realToNode = toDocument.body;
-
         var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
             realToNode
         );

@@ -7,7 +7,7 @@ module.exports = function(helpers) {
             { class: "foo", onclick: "doSomething()" },
             1 /* childCount */
         )
-        .ed(
+        .e(
             "svg",
             {
                 width: "100",

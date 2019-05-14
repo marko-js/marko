@@ -13,11 +13,11 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("H1", {
+  out.e("h1", {
       id: input.myStart
     }, "0", component, 0, 4);
 
-  out.e("DIV", {
+  out.e("div", {
       id: input.myEnd
     }, "1", component, 0, 4);
 }

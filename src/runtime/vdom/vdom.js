@@ -27,6 +27,7 @@ function virtualize(node) {
             return new VComment(node.nodeValue);
         case 11:
             var vdomDocFragment = new VDocumentFragment();
+            vdomDocFragment.___namespaceURI = node.namespaceURI;
             virtualizeChildNodes(node, vdomDocFragment);
             return vdomDocFragment;
     }
