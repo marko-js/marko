@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Marko Components Tests</title>
+    </head>
+    <body>
+        <div id="test"/>
+        <div id="mocha"/>
+        <div id="testsTarget"/>
+        <await(Promise.resolve())>
+            <@then|foo|>
+                <app-foo/>
+            </@then>
+        </await>
+        <await(Promise.resolve())>
+            <@then|foo|>
+                <app-foo/>
+            </@then>
+        </await>
+    </body>
+</html>

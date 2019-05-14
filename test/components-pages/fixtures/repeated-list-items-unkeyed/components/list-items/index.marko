@@ -5,7 +5,9 @@ class {
 }
 
 <ul key="root">
-	<li for(option in input.options)>
-		<a>${option}</a>
-	</li>
+    <for|option| of=input.options>
+        <li>
+            <a>${option}</a>
+        </li>
+    </for>
 </ul>

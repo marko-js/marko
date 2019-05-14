@@ -1,0 +1,34 @@
+static {
+    var markoComponents = require("marko/components");
+    var componentsTemplate = require("./components.marko");
+
+    function componentsDataProvider(callback) {
+        componentsTemplate.renderToString({}, function(err, html, out) {
+            var componentIds = markoComponents.getRenderedComponents(out);
+
+            // Serialize the HTML and the component IDs to the browser
+            callback(null, {
+                html: html,
+                componentIds: componentIds
+            });
+        });
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Marko Components Tests</title>
+    </head>
+    <body>
+        <await(componentsDataProvider)>
+            <@then|components|>
+                <script>window.components = ${JSON.stringify(components)};</script>
+            </@then>
+        </await>
+        <div id="test"/>
+        <div id="mocha"/>
+        <div id="testsTarget"/>
+    </body>
+</html>

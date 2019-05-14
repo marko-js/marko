@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "require: ./components/app-foo",
-        "require: ./components/app-state-watch"
-    ]
-}

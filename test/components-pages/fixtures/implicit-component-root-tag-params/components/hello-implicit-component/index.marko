@@ -1,6 +1,4 @@
 $ if (typeof window !== "undefined") {
-  window.helloImplicitComponentSent = true;
+    window.helloImplicitComponentSent = true;
 }
-<name({ name }) key="name">
-    Hello, ${name}!
-</name>
+<name|{ name }| key="name">Hello, ${name}!</name>

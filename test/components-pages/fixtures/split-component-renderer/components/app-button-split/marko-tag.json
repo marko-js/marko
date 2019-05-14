@@ -1,0 +1,19 @@
+{
+    "attributes": {
+        "label": "string",
+        "href": "string",
+        "variant": {
+            "type": "string",
+            "description": "primary | secondary"
+        },
+        "size": {
+            "type": "string",
+            "description": "small | normal | large"
+        },
+        "class": {
+            "type": "string",
+            "description": "Additional CSS class names"
+        },
+        "*": "string"
+    }
+}

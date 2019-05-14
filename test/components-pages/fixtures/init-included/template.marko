@@ -1,22 +1,20 @@
-import AppBar from "./components/app-bar/index.marko";
+import AppFoo from "./components/app-foo/index.marko"
+import AppBar from "./components/app-bar/index.marko"
 
 <!DOCTYPE html>
-html lang="en"
-    head
-        meta charset="UTF-8"
-        title -- Marko Components Tests
-    body
-
-        div id="test"
-        div id="mocha"
-        div id="testsTarget"
-
-        <include('./components/app-foo/index.marko')/>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Marko Components Tests</title>
+    </head>
+    <body>
+        <div id="test"/>
+        <div id="mocha"/>
+        <div id="testsTarget"/>
+        <${AppFoo}/>
         <${AppBar}/>
-
-        script
-            ---
-            // window.fooComponent should not exist yet, but's store that in a variable to verify
-            window.beforeInitComponentsFooComponent = window.fooComponent;
-            window.beforeInitComponentsBarComponent = window.barComponent;
-            ---
+        <script>// window.fooComponent should not exist yet, but's store that in a variable to verify
+window.beforeInitComponentsFooComponent = window.fooComponent;
+window.beforeInitComponentsBarComponent = window.barComponent;</script>
+    </body>
+</html>

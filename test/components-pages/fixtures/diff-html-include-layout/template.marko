@@ -1,19 +1,21 @@
+import Layout from "./layout.marko"
+
 class {
-    onCreate () {
+    onCreate() {
         this.state = {
             count: 0
-        }
+        };
     }
-    onMount () {
+    onMount() {
         window.app = this;
     }
-    increment () {
+    increment() {
         this.state.count++;
     }
 }
 
-<include('./layout.marko')>
+<${Layout}>
     <@body>
         <span.count>${state.count}</span>
     </@body>
-</include>
+</>

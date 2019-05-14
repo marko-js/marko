@@ -1,0 +1,22 @@
+class {
+    onCreate() {
+        this.state = { items: [] };
+    }
+
+    onMount() {
+        window.component = this;
+    }
+
+    append(item) {
+        this.state.items.push(item);
+        this.setStateDirty("items");
+    }
+}
+
+<ul key="root">
+    <for(item in state.items)>
+        <li id=item no-update>
+            <span>${item}</span>
+        </li>
+    </for>
+</ul>
