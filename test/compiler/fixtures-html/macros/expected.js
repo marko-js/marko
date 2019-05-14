@@ -14,9 +14,9 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   function macro_renderTree(out, macroInput) {
-    var node = macroInput.node
+    var node = macroInput.node;
 
-    out.w("Name: " +
+    out.w(" Name: " +
       marko_escapeXml(node.name) +
       " Children: ");
 

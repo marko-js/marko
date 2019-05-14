@@ -1,3 +1,5 @@
+import Target from "./target.marko"
+
 <test-hello name="World"/>
-<include("./target.marko")/>
+<${Target}/>
 <script-dependency require="./foo"/>
