@@ -11,8 +11,5 @@ class {
 }
 
 <div>
-    <if(typeof helloComponent === "string")>${helloComponent}</if>
-    <else>
-        <${helloComponent} on-hello("handleHello")/>
-    </else>
+    <${helloComponent} on-hello("handleHello")/>
 </div>

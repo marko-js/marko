@@ -27,9 +27,6 @@ $ {
 $ var sizeClassName = state.size !== "normal" && "app-button-" + state.size;
 <div class=["app-button", variantClassName, sizeClassName]>
     <span>
-        <if(typeof input.renderBody === "string")>${input.renderBody}</if>
-        <else>
-            <${input.renderBody}/>
-        </else>
+        <${input.renderBody}/>
     </span>
 </div>

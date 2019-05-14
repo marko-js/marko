@@ -3,8 +3,5 @@ import barComponent from './components/app-bar'
 static var barComponentRef = "myBar";
 
 <div class="app-invoke-component-id">
-    <if(typeof barComponent === "string")>${barComponent}</if>
-    <else>
-        <${barComponent} ...{} key=barComponentRef/>
-    </else>
+    <${barComponent} ...{} key=barComponentRef/>
 </div>

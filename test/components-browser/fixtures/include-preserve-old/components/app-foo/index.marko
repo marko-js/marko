@@ -1,8 +1,7 @@
 class {
     onInput(input) {
         this.state = {
-            name: input.name,
-            body: input.renderBody
+            name: input.name
         };
     }
 }
@@ -10,9 +9,6 @@ class {
 <div.foo>
     <span>Hello ${state.name}!</span>
     <div.body>
-        <if(typeof state.body === "string")>${state.body}</if>
-        <else>
-            <${state.body}/>
-        </else>
+        <${input.renderBody}/>
     </div>
 </div>

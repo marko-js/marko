@@ -1,8 +1,5 @@
 class {}
 
 <div.card key="cardRoot">
-    <if(typeof input.renderBody === "string")>${input.renderBody}</if>
-    <else>
-        <${input.renderBody}/>
-    </else>
+    <${input.renderBody}/>
 </div>
