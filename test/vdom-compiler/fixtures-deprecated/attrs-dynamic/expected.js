@@ -3,7 +3,7 @@
 var marko_template = module.exports = require("marko/src/vdom").t(),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
-    marko_componentType = marko_registerComponent("/marko-test$1.0.0/vdom-compiler/fixtures/attrs-dynamic/template.marko", function() {
+    marko_componentType = marko_registerComponent("/marko-test$1.0.0/vdom-compiler/fixtures-deprecated/attrs-dynamic/template.marko", function() {
       return module.exports;
     }),
     marko_renderer = components_helpers.r,
@@ -17,7 +17,7 @@ function render(input, out, __component, component, state) {
   var attrs = {
     foo: "bar",
     hello: "world"
-};
+  }
 
   out.e("DIV", marko_attrs(attrs), null, null, 3)
     .t("Hello ")
