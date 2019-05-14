@@ -1,6 +1,8 @@
 <ul>
-    <li for(item in input.items)>
-        <h1>${item.title}</h1>
-        <include(item.renderBody)/>
-    </li>
+    <for|item| of=input.items>
+        <li>
+            <h1>${item.title}</h1>
+            <${item.renderBody}/>
+        </li>
+    </for>
 </ul>

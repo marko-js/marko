@@ -1,6 +1,10 @@
 <ul>
-    <li for(item in input.items)>
-        <b>${item.label}</b>
-        <navigation-item items=item.children if(item.children)/>
-    </li>
+    <for|item| of=input.items>
+        <li>
+            <b>${item.label}</b>
+            <if(item.children)>
+                <navigation-item items=item.children/>
+            </if>
+        </li>
+    </for>
 </ul>

@@ -1,18 +1,17 @@
-$ var tabs=input.tabs;
-
+$ var tabs = input.tabs;
 <div class="tabs">
     <ul>
-        <li for(tab in tabs)>
-            ${tab.title}
-        </li>
+        <for|tab| of=tabs>
+            <li>${tab.title}</li>
+        </for>
     </ul>
     <div class="tab-content">
-        <div class="tab" for(tab in tabs)>
-            $ {
-                if (tab.renderBody) {
-                    tab.renderBody(out);
-                }
-            }
-        </div>
+        <for|tab| of=tabs>
+            <div class="tab">
+                <if(tab.renderBody)>
+                    <${tab}/>
+                </if>
+            </div>
+        </for>
     </div>
 </div>
