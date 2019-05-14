@@ -106,10 +106,21 @@ class Normalizer {
             return;
         }
 
+        let tagName = elNode.tagName;
+
+        try {
+            if (elNode.rawTagNameExpression) {
+                tagName = builder.parseExpression(elNode.rawTagNameExpression);
+            }
+        } catch (e) {
+            const type =
+                elNode.rawTagNameExpression === "()" ? "Missing" : "Invalid";
+            context.addError(`${type} dynamic tag name expression`);
+            return;
+        }
+
         var newNode = this.context.createNodeForEl({
-            tagName: elNode.rawTagNameExpression
-                ? builder.parseExpression(elNode.rawTagNameExpression)
-                : elNode.tagName,
+            tagName: tagName,
             argument: elNode.argument,
             params: elNode.params,
             tagString: elNode.tagString,

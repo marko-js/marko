@@ -1,3 +1,10 @@
-<for(name,value in {'foo': 'low', 'bar': 'high'} | status-var=loop)>
-    ${loop.getIndex()}) [${name}=${value}]
+<for|name, loopIndex, loopAll| of=Object.keys({
+    foo: "low",
+    bar: "high"
+})>
+    $ var value = {
+        foo: "low",
+        bar: "high"
+    }[name];
+    ${loopIndex}) [${name}=${value}]
 </for>

@@ -1,1 +1,4 @@
-<include(input.includeTarget) name='Frank' count=20/>
+<if(typeof input.includeTarget === "string")>${input.includeTarget}</if>
+<else>
+    <${input.includeTarget} name="Frank" count=20/>
+</else>

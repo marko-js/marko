@@ -1,0 +1,5 @@
+{
+    "<script>": {
+        "transformer": "./script-nonce-transformer.js"
+    }
+}

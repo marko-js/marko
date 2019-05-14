@@ -1,10 +1,13 @@
-<h1 if(input.showHeader !== false)>
-    <layout-placeholder name="header">
-        DEFAULT TITLE
-    </layout-placeholder>
-</h1>
+<if(input.showHeader !== false)>
+    <h1>
+        <if(input.header)>
+            <${input.header}/>
+        </if>
+        <else>DEFAULT TITLE</else>
+    </h1>
+</if>
 <div>
-    <layout-placeholder name="body"/>
+    <${input.body}/>
 </div>
-<layout-placeholder name="footer"/>
-<layout-placeholder name="empty"/>
+<${input.footer}/>
+<${input.empty}/>

@@ -1,0 +1,6 @@
+{
+    "import-var": {
+        "tabs": "__tabsHelper"
+    },
+    "@title": "string"
+}

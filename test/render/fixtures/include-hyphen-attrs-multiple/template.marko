@@ -1,2 +1,4 @@
-<include("./include-target.marko") first-name='Frank' last-name='Smith'/>
-<include("./include-target.marko") firstName='Jane' lastName='Doe'/>
+import IncludeTarget from "./include-target.marko"
+
+<${IncludeTarget} first-name="Frank" last-name="Smith"/>
+<${IncludeTarget} firstName="Jane" lastName="Doe"/>

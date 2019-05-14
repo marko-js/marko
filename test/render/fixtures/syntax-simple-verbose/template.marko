@@ -4,17 +4,16 @@
         <title>Marko Templating Engine</title>
     </head>
     <body>
-        <h1>
-            Hello ${input.name}!
-        </h1>
-
-        <ul if(input.colors.length)>
-            <li for(color in input.colors)>
-                ${color}
-            </li>
-        </ul>
-        <div else>
-            No colors!
-        </div>
+        <h1>Hello ${input.name}!</h1>
+        <if(input.colors.length)>
+            <ul>
+                <for|color| of=input.colors>
+                    <li>${color}</li>
+                </for>
+            </ul>
+        </if>
+        <else>
+            <div>No colors!</div>
+        </else>
     </body>
 </html>

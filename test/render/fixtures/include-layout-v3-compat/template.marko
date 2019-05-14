@@ -1,18 +1,23 @@
-<include("./layout-default.marko") show-header=false>
+import LayoutDefault from "./layout-default.marko"
+
+<${LayoutDefault} show-header=false>
     <@body>BODY CONTENT</@body>
     <@footer>FOOTER CONTENT</@footer>
-</include>
-<include("./layout-default.marko") show-header=true>
+</>
+<${LayoutDefault} show-header=true>
     <@header>HEADER CONTENT</@header>
     <@body>BODY CONTENT</@body>
     <@footer>FOOTER CONTENT</@footer>
-</include>
-<include("./layout-default.marko") show-header=true>
+</>
+<${LayoutDefault} show-header=true>
     <@header>VALUE HEADER</@header>
     <@body>BODY CONTENT</@body>
     <@footer>FOOTER CONTENT</@footer>
-</include>
-<include(input.layoutDynamic) show-header=true>
-    <@body>BODY CONTENT</@body>
-    <@footer>FOOTER CONTENT</@footer>
-</include>
+</>
+<if(typeof input.layoutDynamic === "string")>${input.layoutDynamic}</if>
+<else>
+    <${input.layoutDynamic} show-header=true>
+        <@body>BODY CONTENT</@body>
+        <@footer>FOOTER CONTENT</@footer>
+    </>
+</else>

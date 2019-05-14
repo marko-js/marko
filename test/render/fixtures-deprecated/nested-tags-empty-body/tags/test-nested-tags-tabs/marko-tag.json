@@ -1,0 +1,7 @@
+{
+    "renderer": "./renderer",
+    "@orientation": "string",
+    "@tabs <tab>[]": {
+        "@title": "string"
+    }
+}

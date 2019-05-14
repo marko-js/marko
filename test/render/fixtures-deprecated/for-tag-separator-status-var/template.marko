@@ -1,0 +1,5 @@
+<for(item in ['red', 'green', 'blue'] | separator=', ' status-var=loop)>
+    <div>
+        ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
+    </div>
+</for>
