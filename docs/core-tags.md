@@ -206,14 +206,14 @@ _HTML Output:_
 
 ## `body-only-if`
 
-If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use the `body-only-if` attribute. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
+If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use a null dynamic tag. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 
 _Marko Source:_
 
 ```marko
-<a href=input.linkUrl body-only-if(!input.linkUrl)>
+<${input.linkUrl ? "a" : null} href=input.linkUrl >
     Some body content
-</a>
+</>
 ```
 
 Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the output would be the following:

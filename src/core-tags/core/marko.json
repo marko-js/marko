@@ -194,6 +194,9 @@
         ]
     },
     "<*>": {
+        "@marko-preserve-whitespace": {
+            "deprecated": true
+        },
         "transformer": {
             "path": "./core-transformer",
             "priority": 0
