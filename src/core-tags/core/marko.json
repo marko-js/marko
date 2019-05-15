@@ -194,18 +194,6 @@
         ]
     },
     "<*>": {
-        "@body-only-if": {
-            "type": "statement",
-            "autocomplete": [
-                {
-                    "snippet": "body-only-if(${1:condition})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
-                },
-                {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#body-only-if"
-                }
-            ]
-        },
         "transformer": {
             "path": "./core-transformer",
             "priority": 0

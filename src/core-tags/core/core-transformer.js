@@ -2,31 +2,6 @@
 
 var coreAttrHandlers = [
     [
-        "body-only-if",
-        function(attr, node, el) {
-            var argument = attr.argument;
-            if (!argument) {
-                return false;
-            }
-            // context.deprecate(
-            //     'The "body-only-if" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:(body-only-if)'
-            // );
-
-            var test;
-            try {
-                test = this.builder.parseExpression(argument);
-            } catch (e) {
-                test = this.builder.literalFalse();
-                this.addError(
-                    "Invalid expression for body-only-if statement:\n" +
-                        e.message
-                );
-            }
-
-            el.setBodyOnlyIf(test);
-        }
-    ],
-    [
         "marko-preserve-whitespace",
         function(attr, node, el) {
             el.setPreserveWhitespace(true);

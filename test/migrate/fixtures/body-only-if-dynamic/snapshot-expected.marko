@@ -1,0 +1,7 @@
+<!-- test/migrate/fixtures/body-only-if-dynamic/template.marko -->
+
+import MyComponent_1 from "PROJECT_ROOT/test/migrate/fixtures/body-only-if-dynamic/components/MyComponent.marko"
+
+<div>
+    <${input.test ? null : MyComponent_1}>Blah</>
+</div>
