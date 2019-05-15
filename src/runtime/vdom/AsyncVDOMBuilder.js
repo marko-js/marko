@@ -424,7 +424,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
             var vdomTree = this.___getOutput();
             // Create the root document fragment node
             doc = doc || this.___document || document;
-            this.___vnode = node = vdomTree.___actualize(doc);
+            this.___vnode = node = vdomTree.___actualize(doc, null);
             morphdom(node, vdomTree, doc, this.___components);
         }
         return node;

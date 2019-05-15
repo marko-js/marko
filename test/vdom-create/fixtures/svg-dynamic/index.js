@@ -15,7 +15,7 @@ module.exports = function(helpers) {
                 xmlns: "http://www.w3.org/2000/svg"
             },
             1
-        ) //NO SVG FLAG, from xmlns
+        )
         .e(
             "circle",
             {

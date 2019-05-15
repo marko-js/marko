@@ -62,10 +62,6 @@ VNode.prototype = {
 
             child.___parentNode = this;
 
-            if (!child.___namespaceURI) {
-                child.___namespaceURI = this.___namespaceURI;
-            }
-
             if (lastChild) {
                 lastChild.___nextSiblingInternal = child;
             } else {

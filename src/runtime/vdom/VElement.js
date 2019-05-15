@@ -150,8 +150,9 @@ VElement.prototype = {
         return this.___finishChild();
     },
 
-    ___actualize: function(doc) {
-        var namespaceURI = this.___namespaceURI || NS_HTML;
+    ___actualize: function(doc, parentNamespaceURI) {
+        var namespaceURI =
+            this.___namespaceURI || parentNamespaceURI || NS_HTML;
         var tagName = this.___nodeName;
 
         var attributes = this.___attributes;

@@ -72,7 +72,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         ownerComponent,
         parentComponent
     ) {
-        var realNode = vNode.___actualize(doc);
+        var realNode = vNode.___actualize(doc, parentEl.namespaceURI);
         insertBefore(realNode, referenceEl, parentEl);
 
         if (
