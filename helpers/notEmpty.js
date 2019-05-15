@@ -1,4 +1,5 @@
-// TODO: deprecate this (and empty).
+require("complain")("marko/helpers is deprecated.");
+
 module.exports = function notEmpty(o) {
     if (o == null) {
         return false;
