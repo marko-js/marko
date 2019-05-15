@@ -11,9 +11,6 @@ function beforeGenerateCode(event) {
     var tagName = event.node.tagName;
     var context = event.context;
 
-    var tagDef =
-        typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
-
     if (tagName === "script") {
         context.pushFlag("SCRIPT_BODY");
     }
@@ -25,9 +22,6 @@ function beforeGenerateCode(event) {
 function afterGenerateCode(event) {
     var tagName = event.node.tagName;
     var context = event.context;
-
-    var tagDef =
-        typeof tagName === "string" ? context.getTagDef(tagName) : undefined;
 
     if (tagName === "script") {
         context.popFlag("SCRIPT_BODY");

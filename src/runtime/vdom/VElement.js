@@ -67,7 +67,6 @@ function VElementClone(other) {
     this.___key = other.___key;
     this.___attributes = other.___attributes;
     this.___properties = other.___properties;
-    this.___namespaceURI = other.___namespaceURI;
     this.___nodeName = other.___nodeName;
     this.___flags = other.___flags;
     this.___valueInternal = other.___valueInternal;
@@ -96,8 +95,6 @@ function VElement(
     this.___ownerComponent = ownerComponent;
     this.___attributes = attrs || EMPTY_OBJECT;
     this.___properties = props || EMPTY_OBJECT;
-    this.___namespaceURI =
-        (attrs && attrs.xmlns) || DEFAULT_NS[tagName] || null;
     this.___nodeName = tagName;
     this.___valueInternal = null;
     this.___constId = constId;
@@ -151,11 +148,14 @@ VElement.prototype = {
     },
 
     ___actualize: function(doc, parentNamespaceURI) {
-        var namespaceURI =
-            this.___namespaceURI || parentNamespaceURI || NS_HTML;
         var tagName = this.___nodeName;
-
         var attributes = this.___attributes;
+        var namespaceURI =
+            (attributes && attributes.xmlns) ||
+            DEFAULT_NS[tagName] ||
+            parentNamespaceURI ||
+            NS_HTML;
+
         var flags = this.___flags;
         var el = doc.createElementNS(namespaceURI, tagName);
 
@@ -259,10 +259,9 @@ function virtualizeElement(node, virtualizeChildNodes) {
         }
     }
 
-    var namespaceURI = node.namespaceURI;
     var tagName = node.nodeName;
 
-    if (namespaceURI === NS_HTML) {
+    if (node.namespaceURI === NS_HTML) {
         tagName = tagName.toLowerCase();
     }
 
@@ -275,10 +274,6 @@ function virtualizeElement(node, virtualizeChildNodes) {
         0 /*flags*/,
         null /*props*/
     );
-
-    if (namespaceURI !== NS_HTML) {
-        vdomEl.___namespaceURI = node.namespaceURI;
-    }
 
     if (vdomEl.___nodeName === "textarea") {
         vdomEl.___valueInternal = node.value;
