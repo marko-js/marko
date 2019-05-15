@@ -16,9 +16,9 @@ var DEFAULT_NS = {
 
 var toString = String;
 
-var FLAG_SIMPLE_ATTRS = 4;
-// var FLAG_PRESERVE = 8;
-var FLAG_CUSTOM_ELEMENT = 16;
+var FLAG_SIMPLE_ATTRS = 1;
+// var FLAG_PRESERVE = 2;
+var FLAG_CUSTOM_ELEMENT = 4;
 
 var defineProperty = Object.defineProperty;
 

@@ -15,11 +15,11 @@ function render(input, out, __component, component, state) {
 
   out.e("h1", {
       id: input.myStart
-    }, "0", component, 0, 4);
+    }, "0", component, 0, 1);
 
   out.e("div", {
       id: input.myEnd
-    }, "1", component, 0, 4);
+    }, "1", component, 0, 1);
 }
 
 marko_template._ = marko_renderer(render, {

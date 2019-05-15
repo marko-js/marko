@@ -15,7 +15,7 @@ function render(input, out, __component, component, state) {
 
   out.e("div", {
       id: input.id
-    }, "0", component, 0, 4);
+    }, "0", component, 0, 1);
 }
 
 marko_template._ = marko_renderer(render, {

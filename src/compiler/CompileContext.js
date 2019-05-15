@@ -22,9 +22,9 @@ const markoPkgVersion = require("../../package.json").version;
 const rootDir = path.join(__dirname, "../");
 const isDebug = require("../build.json").isDebug;
 
-// const FLAG_SIMPLE_ATTRS = 4;
-// const FLAG_PRESERVE = 8;
-const FLAG_CUSTOM_ELEMENT = 16;
+// const FLAG_SIMPLE_ATTRS = 1;
+// const FLAG_PRESERVE = 2;
+const FLAG_CUSTOM_ELEMENT = 4;
 
 const FLAG_PRESERVE_WHITESPACE = "PRESERVE_WHITESPACE";
 

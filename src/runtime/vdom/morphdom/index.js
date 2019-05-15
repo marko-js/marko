@@ -32,9 +32,9 @@ var COMMENT_NODE = 8;
 var COMPONENT_NODE = 2;
 var FRAGMENT_NODE = 12;
 
-// var FLAG_SIMPLE_ATTRS = 4;
-var FLAG_PRESERVE = 8;
-// var FLAG_CUSTOM_ELEMENT = 16;
+// var FLAG_SIMPLE_ATTRS = 1;
+var FLAG_PRESERVE = 2;
+// var FLAG_CUSTOM_ELEMENT = 4;
 
 function isAutoKey(key) {
     return !/^@/.test(key);

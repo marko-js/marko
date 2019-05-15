@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
             baz: false
           }
       ]))
-    }, null, null, 3, 4)
+    }, null, null, 3, 1)
     .t("Hello ")
     .t(name)
     .t("!");
