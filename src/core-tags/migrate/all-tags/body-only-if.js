@@ -30,13 +30,13 @@ module.exports = function migrator(node, context) {
             attributes,
             node.body
         );
-        let tagName =
-            node.rawTagNameExpression || builder.literal(node.tagName);
 
         // If tag is dynamic and not a normal HTML tag, then render dynamic version of tagName
-        if (!tagDef.html) {
-            tagName = importTag(tagDef.renderer || tagDef.template, context);
-        }
+        const tagName =
+            node.rawTagNameExpression ||
+            (!tagDef.html
+                ? importTag(tagDef.renderer || tagDef.template, context)
+                : builder.literal(node.tagName));
 
         dynamicTag.rawTagNameExpression = printJS(
             builder.conditionalExpression(

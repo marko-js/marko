@@ -204,34 +204,6 @@ _HTML Output:_
 
 > **Note:** Use of the while tag is not recommended. You can accomplish the same behavior with an iterable and the `<for>` tag. In the future, mutating values while rendering may be restricted to enable further optimizations of the compiled code.
 
-## `body-only-if`
-
-If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use a null dynamic tag. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
-
-_Marko Source:_
-
-```marko
-<${input.linkUrl ? "a" : null} href=input.linkUrl >
-    Some body content
-</>
-```
-
-Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the output would be the following:
-
-_HTML Output:_
-
-```html
-<a href="http://localhost/"> Some body content </a>
-```
-
-Given a value of `undefined` for the `input.linkUrl` variable: , the output would be the following:
-
-_HTML Output:_
-
-```html
-Some body content
-```
-
 ## `<macro>`
 
 Macros allow for reusable fragments within a template.

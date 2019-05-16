@@ -358,6 +358,33 @@ _HTML Output:_
 <button>Click me!</button>
 ```
 
+> **ProTip:**
+> If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use a null dynamic tag. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
+>
+> _Marko Source:_
+>
+> ```marko
+> <${input.linkUrl ? "a" : null} href=input.linkUrl >
+>    Some body content
+> </>
+> ```
+>
+> Given a value of `"http://localhost/"` for the `input.linkUrl` variable: , the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> <a href="http://localhost/"> Some body content </a>
+> ```
+>
+> Given a value of `undefined` for the `input.linkUrl` variable: , the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> Some body content
+> ```
+
 ### Dynamic components
 
 Instead of just strings, the dynamic tagname can also be a component:
