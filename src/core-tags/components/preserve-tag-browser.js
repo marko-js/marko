@@ -22,9 +22,9 @@ module.exports = function render(input, out) {
                     // but keep track that the node is being preserved so that we can ignore
                     // it while transforming the old DOM
                     if (bodyOnly) {
-                        globalComponentsContext.___preservedElBodies[
-                            key
-                        ] = true;
+                        var preservedBodies = (component.___preservedElBodies =
+                            component.___preservedElBodies || {});
+                        preservedBodies[key] = true;
                     } else {
                         // If we are preserving the entire DOM node (not just the body)
                         // then that means that we have need to render a placeholder to
@@ -38,7 +38,9 @@ module.exports = function render(input, out) {
                             0,
                             8 /* FLAG_PRESERVE */
                         );
-                        globalComponentsContext.___preservedEls[key] = true;
+                        var preservedEls = (component.___preservedEls =
+                            component.___preservedEls || {});
+                        preservedEls[key] = true;
                     }
 
                     return;

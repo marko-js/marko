@@ -658,9 +658,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
                 if (curFromNodeKey) {
                     if (
-                        globalComponentsContext.___preservedEls[
-                            curFromNodeKey
-                        ] === undefined
+                        !parentComponent.___preservedEls ||
+                        parentComponent.___preservedEls[curFromNodeKey] ===
+                            undefined
                     ) {
                         detachNode(curFromNodeChild, fromNode, ownerComponent);
                     }
@@ -755,7 +755,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
         if (
             toElKey &&
-            globalComponentsContext.___preservedElBodies[toElKey] === true
+            parentComponent.___preservedElBodies &&
+            parentComponent.___preservedElBodies[toElKey] === true
         ) {
             // Don't morph the children since they are preserved
             return;
