@@ -1,6 +1,6 @@
-require("complain")("marko/helpers is deprecated.");
-
 module.exports = function notEmpty(o) {
+    require("complain")("notEmpty is deprecated.");
+
     if (o == null) {
         return false;
     } else if (Array.isArray(o)) {
