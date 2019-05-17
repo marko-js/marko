@@ -106,9 +106,12 @@ class Normalizer {
             return;
         }
 
-        var newNode = this.context.createNodeForEl({
+        var newNode = context.createNodeForEl({
             tagName: elNode.rawTagNameExpression
                 ? builder.parseExpression(elNode.rawTagNameExpression)
+                : context.ignoreUnrecognizedTags &&
+                  elNode.parentNode.type === "HtmlElement"
+                ? elNode.tagName.replace(/^@/, "at_")
                 : elNode.tagName,
             argument: elNode.argument,
             params: elNode.params,

@@ -127,7 +127,6 @@ module.exports = function runRenderTest(dir, snapshot, done, options) {
         writeToDisk: main.writeToDisk !== false,
         preserveWhitespace: main.preserveWhitespaceGlobal === true,
         ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true,
-        escapeAtTags: main.escapeAtTags === true,
         autoKeyEnabled: !isVDOM
     };
 
