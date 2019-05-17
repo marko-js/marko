@@ -21,5 +21,3 @@ module.exports = function(helpers) {
         helpers.targetEl.querySelector(".unpreserved-counter").innerHTML
     ).to.equal("1");
 };
-
-module.exports.fails = true;
