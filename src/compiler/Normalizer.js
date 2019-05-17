@@ -109,9 +109,8 @@ class Normalizer {
         var newNode = context.createNodeForEl({
             tagName: elNode.rawTagNameExpression
                 ? builder.parseExpression(elNode.rawTagNameExpression)
-                : context.ignoreUnrecognizedTags &&
-                  elNode.parentNode.type === "HtmlElement"
-                ? elNode.tagName.replace(/^@/, "at_")
+                : context.ignoreUnrecognizedTags && !elNode.parentNode.tagDef
+                ? elNode.tagName.replace(/^@/, "at_") // escapes @tags inside unrecognized tags
                 : elNode.tagName,
             argument: elNode.argument,
             params: elNode.params,
