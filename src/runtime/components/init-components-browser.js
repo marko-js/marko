@@ -328,8 +328,6 @@ function initServerRendered(renderedComponents, doc) {
 }
 
 function hydrateComponentAndGetMount(componentDef, doc) {
-    trackComponent(componentDef);
-
     var componentId = componentDef.id;
     var component = componentDef.___component;
     var rootNode = serverComponentRootNodes[componentId];
@@ -348,9 +346,12 @@ function hydrateComponentAndGetMount(componentDef, doc) {
         if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
             component.___document = doc;
             renderResult = component.___rerender(component.___input, true);
+            trackComponent(componentDef);
             return function mount() {
                 renderResult.afterInsert(doc);
             };
+        } else {
+            trackComponent(componentDef);
         }
 
         return function mount() {
