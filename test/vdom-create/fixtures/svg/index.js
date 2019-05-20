@@ -1,13 +1,11 @@
 module.exports = function(helpers) {
-    var FLAGS = 1;
-
     return helpers.vdom
         .createElement(
             "div",
             { class: "foo", onclick: "doSomething()" },
             1 /* childCount */
         )
-        .e("svg", { width: "100", height: "100" }, 1, FLAGS)
+        .e("svg", { width: "100", height: "100" }, 1)
         .e(
             "circle",
             {
@@ -19,7 +17,6 @@ module.exports = function(helpers) {
                 fill: "yellow",
                 "xlink:href": "http://ebay.com/"
             },
-            0,
-            FLAGS
+            0
         );
 };

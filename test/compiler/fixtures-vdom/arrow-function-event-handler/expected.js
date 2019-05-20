@@ -12,7 +12,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("DIV", null, "0", component, 0, 0, {
+  out.e("div", null, "0", component, 0, 0, {
       onclick: __component.d("click", () => console.log("handled"), false)
     });
 }

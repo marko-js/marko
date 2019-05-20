@@ -15,11 +15,11 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_node0 = marko_createElement("svg", {
         width: "140",
         height: "30"
-      }, "0", null, 1, 1, {
+      }, "0", null, 1, 0, {
         i: marko_const_nextId()
       })
-      .e("g", null, null, null, 1, 1)
-        .e("title", null, null, null, 1, 1)
+      .e("g", null, null, null, 1)
+        .e("title", null, null, null, 1)
           .t("This is a tool tip");
 
 function render(input, out, __component, component, state) {

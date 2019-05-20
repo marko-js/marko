@@ -36,7 +36,7 @@ module.exports = function render(input, out) {
                             key,
                             null,
                             0,
-                            8 /* FLAG_PRESERVE */
+                            2 /* FLAG_PRESERVE */
                         );
                         globalComponentsContext.___preservedEls[
                             component.id + "-" + key

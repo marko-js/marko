@@ -12,7 +12,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("6d8f0e"),
-    marko_node0 = marko_createElement("DIV", {
+    marko_node0 = marko_createElement("div", {
         "class": "hello",
         onclick: "onClick()"
       }, null, null, 1, 0, {
@@ -23,8 +23,8 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("SPAN", null, null, null, 2)
-    .e("H1", null, null, null, 3)
+  out.e("span", null, null, null, 2)
+    .e("h1", null, null, null, 3)
       .t("Hello ")
       .t(input.name)
       .t("!")
