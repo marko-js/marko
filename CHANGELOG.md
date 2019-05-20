@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.17.0
+
+- Element namespaces are now calculated at runtime, fixes some edge cases with the dynamic tag. [#1333](https://github.com/marko-js/marko/issues/1333)
+
 ### 4.16.15
 
 - Fix an issue where nodes may be preserved if another node with the same key was rendered as preserved. [#1334](https://github.com/marko-js/marko/issues/1334)
