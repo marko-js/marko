@@ -150,11 +150,7 @@ VElement.prototype = {
     ___actualize: function(doc, parentNamespaceURI) {
         var tagName = this.___nodeName;
         var attributes = this.___attributes;
-        var namespaceURI =
-            (attributes && attributes.xmlns) ||
-            DEFAULT_NS[tagName] ||
-            parentNamespaceURI ||
-            NS_HTML;
+        var namespaceURI = DEFAULT_NS[tagName] || parentNamespaceURI || NS_HTML;
 
         var flags = this.___flags;
         var el = doc.createElementNS(namespaceURI, tagName);
