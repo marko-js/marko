@@ -4,6 +4,11 @@
 
 ## 4.16.x
 
+### 4.17.1
+
+- Allow emitting events while the parent is mounting. [#1336](https://github.com/marko-js/marko/issues/1336)
+- Fix issue where `component.el` and `component.getEl` could return a marker node. [#1339](https://github.com/marko-js/marko/issues/1339)
+
 ### 4.17.0
 
 - Element namespaces are now calculated at runtime, fixes some edge cases with the dynamic tag. [#1333](https://github.com/marko-js/marko/issues/1333)
