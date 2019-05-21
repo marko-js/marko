@@ -24,7 +24,7 @@ Custom tags can also receive content in the same way. This allows a component to
 
 ## Rendering body content
 
-When a custom tag is passed body content, it is recieved as a special `renderBody` property on the component's `input`. You can include this content anywhere in your component by using the [`<${dynamic}>` syntax](./syntax.md#dynamic-tagname).
+When a custom tag is passed body content, it is received as a special `renderBody` property on the component's `input`. You can include this content anywhere in your component by using the [`<${dynamic}>` syntax](./syntax.md#dynamic-tagname).
 
 _components/fancy-container.marko:_
 
