@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.17.2
+
+- Fix regression with namespaces in nested fragments. [#1340](https://github.com/marko-js/marko/issues/1340)
+
 ### 4.17.1
 
 - Allow emitting events while the parent is mounting. [#1336](https://github.com/marko-js/marko/issues/1336)
