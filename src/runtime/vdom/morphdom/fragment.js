@@ -15,6 +15,9 @@ var fragmentPrototype = {
         var parentNode = this.startNode.parentNode;
         return parentNode === this.detachedContainer ? undefined : parentNode;
     },
+    get namespaceURI() {
+        return this.startNode.parentNode.namespaceURI;
+    },
     get nextSibling() {
         return this.endNode.nextSibling;
     },
