@@ -605,13 +605,6 @@ Component.prototype = componentProto = {
     },
 
     get el() {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-            complain(
-                'The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.'
-            );
-        }
-
         return walkFragments(this.___rootNode);
     },
 
