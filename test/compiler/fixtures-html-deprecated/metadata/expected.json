@@ -1,15 +1,15 @@
 [
     {
         "type": "require",
-        "path": "/Users/mirawlings/Workspace/marko/marko/test/compiler/fixtures-html-deprecated/metadata/foo.js"
+        "path": "PROJECT_ROOT/test/compiler/fixtures-html-deprecated/metadata/foo.js"
     },
     {
         "type": "require",
-        "path": "/Users/mirawlings/Workspace/marko/marko/test/compiler/fixtures-html-deprecated/metadata/tags/test-hello/bar.js"
+        "path": "PROJECT_ROOT/test/compiler/fixtures-html-deprecated/metadata/tags/test-hello/bar.js"
     },
     {
         "type": "require",
-        "path": "/Users/mirawlings/Workspace/marko/marko/src/runtime/components/boot.js",
+        "path": "PROJECT_ROOT/src/runtime/components/boot.js",
         "run": true
     }
 ]
