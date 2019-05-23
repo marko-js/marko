@@ -6,9 +6,9 @@ module.exports = {
         };
     },
     getName: function() {
-        return this.getEl("name").innerHTML;
+        return this.els[0].innerHTML;
     },
     getAge: function() {
-        return this.getEl("age").innerHTML;
+        return this.els[1].innerHTML;
     }
 };

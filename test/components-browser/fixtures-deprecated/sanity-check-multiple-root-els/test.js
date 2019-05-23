@@ -9,7 +9,7 @@ module.exports = function(helpers) {
 
     expect(component.getEl("name").innerHTML).to.equal("Frank");
     expect(component.getEl("age").innerHTML).to.equal("30");
-    expect(component.getEl("link").href).to.equal("http://ebay.com/");
+    expect(component.els[2].href).to.equal("http://ebay.com/");
 
     component.setName("Jane");
     component.setAge(50);
@@ -19,5 +19,5 @@ module.exports = function(helpers) {
 
     expect(component.getEl("name").innerHTML).to.equal("Jane");
     expect(component.getEl("age").innerHTML).to.equal("50");
-    expect(component.getEl("link").href).to.equal("http://ebay.com/search/");
+    expect(component.els[2].href).to.equal("http://ebay.com/search/");
 };

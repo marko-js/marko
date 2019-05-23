@@ -1,5 +1,7 @@
 class {}
 
-<for|letter| of=input.letters>
-    <div id=letter key=letter>${letter}</div>
-</for>
+<if(input.letters)>
+    <for|letter| of=input.letters>
+        <div id=letter key=letter>${letter}</div>
+    </for>
+</if>

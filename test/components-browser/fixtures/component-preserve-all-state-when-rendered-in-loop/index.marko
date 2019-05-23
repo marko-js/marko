@@ -18,9 +18,11 @@ class {
             <span/>
         </div>
     </for>
-    <for|i| from=0 to=(state.items.length - 1)>
-        <div key=`loop2:${state.items[i]}`>
-            <span/>
-        </div>
-    </for>
+    <if(state.items.length)>
+        <for|i| from=0 to=(state.items.length - 1)>
+            <div key=`loop2:${state.items[i]}`>
+                <span/>
+            </div>
+        </for>
+    </if>
 </div>

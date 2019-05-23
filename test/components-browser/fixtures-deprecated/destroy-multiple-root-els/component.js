@@ -5,10 +5,10 @@ module.exports = {
             age: input.age
         };
     },
-    getName: function() {
-        return this.getEl("name").innerHTML;
+    setName: function(newName) {
+        this.setState("name", newName);
     },
-    getAge: function() {
-        return this.getEl("age").innerHTML;
+    setAge: function(newAge) {
+        this.setState("age", newAge);
     }
 };

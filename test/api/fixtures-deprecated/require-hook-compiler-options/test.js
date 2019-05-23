@@ -30,6 +30,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
         expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
         compileAndCheck("./a.marko", true /* should write to disk */);
+        compileAndCheck("./e.xml.marko", true /* should write to disk */);
 
         requireHook.install({
             compilerOptions: {
