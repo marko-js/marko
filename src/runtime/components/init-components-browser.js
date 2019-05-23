@@ -179,9 +179,6 @@ function initComponent(componentDef, doc) {
     component.___document = doc;
 
     var isExisting = componentDef.___isExisting;
-    var id = component.id;
-
-    componentLookup[id] = component;
 
     if (isExisting) {
         component.___removeDOMEventListeners();
@@ -238,8 +235,17 @@ function initClientRendered(componentDefs, doc) {
     eventDelegation.___init(doc);
 
     doc = doc || defaultDocument;
-    for (var i = componentDefs.length - 1; i >= 0; i--) {
-        var componentDef = componentDefs[i];
+    var len = componentDefs.length;
+    var componentDef;
+    var i;
+
+    for (i = len; i--; ) {
+        componentDef = componentDefs[i];
+        trackComponent(componentDef);
+    }
+
+    for (i = len; i--; ) {
+        componentDef = componentDefs[i];
         initComponent(componentDef, doc);
     }
 }
@@ -340,14 +346,24 @@ function hydrateComponentAndGetMount(componentDef, doc) {
         if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
             component.___document = doc;
             renderResult = component.___rerender(component.___input, true);
+            trackComponent(componentDef);
             return function mount() {
                 renderResult.afterInsert(doc);
             };
+        } else {
+            trackComponent(componentDef);
         }
 
         return function mount() {
             initComponent(componentDef, doc);
         };
+    }
+}
+
+function trackComponent(componentDef) {
+    var component = componentDef.___component;
+    if (component) {
+        componentLookup[component.id] = component;
     }
 }
 

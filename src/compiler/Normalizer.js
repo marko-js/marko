@@ -111,6 +111,11 @@ class Normalizer {
         try {
             if (elNode.rawTagNameExpression) {
                 tagName = builder.parseExpression(elNode.rawTagNameExpression);
+            } else if (
+                context.ignoreUnrecognizedTags &&
+                !elNode.parentNode.tagDef
+            ) {
+                tagName = tagName.replace(/^@/, "at_"); // escapes @tags inside unrecognized tags
             }
         } catch (e) {
             const type =

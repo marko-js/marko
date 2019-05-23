@@ -4,6 +4,24 @@
 
 ## 4.16.x
 
+### 4.17.2
+
+- Fix regression with namespaces in nested fragments. [#1340](https://github.com/marko-js/marko/issues/1340)
+
+### 4.17.1
+
+- Allow emitting events while the parent is mounting. [#1336](https://github.com/marko-js/marko/issues/1336)
+- Fix issue where `component.el` and `component.getEl` could return a marker node. [#1339](https://github.com/marko-js/marko/issues/1339)
+
+### 4.17.0
+
+- Element namespaces are now calculated at runtime, fixes some edge cases with the dynamic tag. [#1333](https://github.com/marko-js/marko/issues/1333)
+
+### 4.16.15
+
+- Fix an issue where nodes may be preserved if another node with the same key was rendered as preserved. [#1334](https://github.com/marko-js/marko/issues/1334)
+- Improve the `ignoreUnrecognizedTags` compiler option to ignored nested `@tags` on unrecognized tags (removes the need for the `escapeAtTags` option). [#1335](https://github.com/marko-js/marko/issues/1335)
+
 ### 4.16.14
 
 - Prevent treating macro usage with parameters as a component. [#1326](https://github.com/marko-js/marko/issues/1326)

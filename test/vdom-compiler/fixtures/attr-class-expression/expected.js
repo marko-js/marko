@@ -15,7 +15,7 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("DIV", {
+  out.e("div", {
       "class": marko_classAttr(marko_classList([
         "foo",
         {
@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
             baz: false
           }
       ]))
-    }, null, null, 3, 4)
+    }, null, null, 3, 1)
     .t("Hello ")
     .t(name)
     .t("!");

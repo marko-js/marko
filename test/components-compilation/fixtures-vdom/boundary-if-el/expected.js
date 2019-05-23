@@ -13,10 +13,10 @@ var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("5854ef"),
-    marko_node0 = marko_createElement("H1", null, "1", null, 0, 0, {
+    marko_node0 = marko_createElement("h1", null, "1", null, 0, 0, {
         i: marko_const_nextId()
       }),
-    marko_node1 = marko_createElement("SPAN", null, "0", null, 0, 0, {
+    marko_node1 = marko_createElement("span", null, "0", null, 0, 0, {
         i: marko_const_nextId()
       });
 

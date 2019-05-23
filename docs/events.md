@@ -109,4 +109,4 @@ The above example component is listening to native `change` events from the `<in
 </form>
 ```
 
-> **Note:** Events are not recieved as input (you cannot access `input.onEmailChange`), instead these setup subscriptions.
+> **Note:** Events are not received as input (you cannot access `input.onEmailChange`), instead these setup subscriptions.
