@@ -31,5 +31,5 @@ module.exports = function(helpers) {
     expect(helloElsAfter[0].innerHTML).to.equal("Hello Jane");
     expect(helloElsAfter[1].innerHTML).to.equal("Hello John1");
 
-    delete window.helloInstances;
+    window.helloInstances = undefined;
 };
