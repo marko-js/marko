@@ -1,20 +1,19 @@
-$ var tabs=input.tabs;
-
+$ var tabs = input.tabs;
 <div class="tabs">
     <ul class="nav nav-tabs">
-        <li class=tab.liClass for(tab in tabs)>
-            <a href="#${tab.id}" data-toggle="tab">
-                ${tab.title}
-            </a>
-        </li>
+        <for|tab| of=tabs>
+            <li class=tab.liClass>
+                <a href=`#${tab.id}` data-toggle="tab">${tab.title}</a>
+            </li>
+        </for>
     </ul>
     <div class="tab-content">
-        <div id=tab.id class=tab.divClass for(tab in tabs)>
-            $ {
-                if(tab.renderBody) {
-                    tab.renderBody(out);
-                }
-            }
-        </div>
+        <for|tab| of=tabs>
+            <div id=tab.id class=tab.divClass>
+                <if(tab.renderBody)>
+                    <${tab}/>
+                </if>
+            </div>
+        </for>
     </div>
 </div>

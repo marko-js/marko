@@ -15,7 +15,7 @@ var parser = new Parser(new HtmlJsParser());
 
 compiler.buildTaglibLookup(__dirname);
 
-autotest("fixtures", fixture => {
+autotest("fixtures-deprecated", fixture => {
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;

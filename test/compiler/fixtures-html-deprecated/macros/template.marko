@@ -1,0 +1,12 @@
+<macro renderTree(node)>
+    Name: ${node.name}
+
+    Children:
+    <ul if(node.children)>
+        <li for(child in node.children)>
+            <renderTree(child)/>
+        </li>
+    </ul>
+</macro>
+
+<renderTree(input.node)/>

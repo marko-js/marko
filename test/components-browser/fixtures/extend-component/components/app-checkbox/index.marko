@@ -1,6 +1,9 @@
-<app-button key="button" class=state.className onClick('handleClick')>
+<app-button key="button" class=state.className onClick("handleClick")>
     <span class="app-checkbox-icon"/>
     <span key="checkboxLabel">
-        <include(state.body)/>
+        <if(typeof state.body === "string")>${state.body}</if>
+        <else>
+            <${state.body}/>
+        </else>
     </span>
 </app-button>

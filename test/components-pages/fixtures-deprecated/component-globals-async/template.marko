@@ -1,0 +1,31 @@
+$ {
+    out.global.name = 'Frank';
+    out.global.serializedGlobals = {
+        name: true
+    };
+}
+
+$ var userPromise = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        resolve({});
+    }, 10);
+});
+
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title -- Marko Components Tests
+    body
+        div id="testsTarget"
+
+        <await(user from userPromise)>
+            <app-hello name="hello1"/>
+        </await>
+        <await(user from userPromise)>
+            <app-hello name="hello2"/>
+        </await>
+
+        <app-hello name="hello3"/>
+
+        init-components immediate

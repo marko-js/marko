@@ -1,13 +1,9 @@
-<input type="checkbox" checked=input.checked>
-
+<input type="checkbox" checked=input.checked/>
 <button disabled>Button</button>
-
 <select>
-    <option value="${option.value}"
-        selected=option.selected
-        for(option in input.options)>
-
-        ${option.value}
-
-    </option>
+    <for|option| of=input.options>
+        <option value=`${option.value}` selected=option.selected>
+            ${option.value}
+        </option>
+    </for>
 </select>

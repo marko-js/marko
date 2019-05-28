@@ -17,7 +17,7 @@ function render(input, out, __component, component, state) {
   var attrs = {
     foo: "bar",
     hello: "world"
-  }
+};
 
   out.e("div", marko_attrs(attrs), null, null, 3)
     .t("Hello ")

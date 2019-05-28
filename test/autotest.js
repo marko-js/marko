@@ -6,6 +6,7 @@ const assert = require("assert");
 const callerpath = require("caller-path");
 const projectRoot = path.join(__dirname, "..");
 const updateExpectations = process.env.hasOwnProperty("UPDATE_EXPECTATIONS");
+const complain = require("complain");
 const formatters = {};
 
 module.exports = function autotest(fixturesName, run) {
@@ -51,22 +52,22 @@ module.exports = function autotest(fixturesName, run) {
     });
 };
 
-function runFixtureTest(name, dir, run, mode, context) {
+function runFixtureTest(name, dir, run, mode, context = {}) {
     const resolve = file => path.join(dir, file);
     const mainPath = resolve("test.js");
     const hasMainFile = fs.existsSync(mainPath);
+    const expectDeprecation =
+        /-deprecated|migrate/.test(dir) && !/parser/.test(dir);
     let mochaTestFunction = it;
     let mochaDetails;
 
     if (hasMainFile) {
+        complain.log = function(message) {
+            context.deprecation = context.deprecation || new Error(message);
+        };
         const main = require(mainPath);
         const skip = main.skip || main["skip_" + mode];
-        const fails =
-            main.fails ||
-            main["fails_" + mode] ||
-            (dir.includes("deprecated") &&
-                process.env.EXPECT_DEPRECATED_FAILURES &&
-                "this is deprecated");
+        const fails = main.fails || main["fails_" + mode];
         if (skip) {
             mochaTestFunction = it.skip;
             mochaDetails = skip;
@@ -114,7 +115,46 @@ function runFixtureTest(name, dir, run, mode, context) {
     };
 
     const test = fn => {
-        const test = mochaTestFunction(name, fn);
+        const withDeprecationAssertion = fn => {
+            const assertDeprecation = () => {
+                if (expectDeprecation) {
+                    if (!context.deprecation) {
+                        throw new Error(
+                            "A deprecated test should log a deprecation warning using `complain`"
+                        );
+                    }
+                } else if (context.deprecation) {
+                    throw context.deprecation;
+                }
+            };
+            if (fn.length > 0) {
+                return done => {
+                    complain.log = function(message) {
+                        context.deprecation =
+                            context.deprecation || new Error(message);
+                    };
+                    return fn(err => {
+                        if (err) {
+                            done(err);
+                        } else {
+                            assertDeprecation();
+                            done();
+                        }
+                    });
+                };
+            } else {
+                return () => {
+                    complain.log = function(message) {
+                        context.deprecation =
+                            context.deprecation || new Error(message);
+                    };
+                    return Promise.resolve()
+                        .then(() => fn())
+                        .then(assertDeprecation);
+                };
+            }
+        };
+        const test = mochaTestFunction(name, withDeprecationAssertion(fn));
         test.details = mochaDetails;
         test.file = mainPath;
         return test;

@@ -1,0 +1,15 @@
+class {
+    onMount() {
+        this.purchaseEvents = [];
+    }
+
+    handleItemPurchase(item) {
+        this.purchaseEvents.push(item);
+    }
+}
+
+<div>
+    <for(item in input.items)>
+        <item item=item once-purchase('handleItemPurchase')/>
+    </for>
+</div>

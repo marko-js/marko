@@ -1,7 +1,7 @@
 <div>
     <ul>
-        <li for(color in input.colors) onClick("handleColorClick", color)>
-			${color}
-		</li>
+        <for|color| of=input.colors>
+            <li onClick("handleColorClick", color)>${color}</li>
+        </for>
     </ul>
 </div>

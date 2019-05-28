@@ -1,0 +1,15 @@
+class {
+    onCreate() {
+        this.state = {
+            count: 1
+        }
+    }
+
+    onMount() {
+        window[this.input.name] = this;
+    }
+}
+<div>
+    <span.name>${out.global.name}</span>
+    <span.count>${state.count}</span>
+</div>

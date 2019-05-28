@@ -1,7 +1,11 @@
 class {
     onCreate() {
-        this.state = { hideOwnCounter:false };
+        this.state = { hideOwnCounter: false };
     }
 }
 
-<counter key="counter" if(!state.hideOwnCounter)/><span>|</span><${input}/>
+<if(!state.hideOwnCounter)>
+    <counter key="counter"/>
+</if>
+<span>|</span>
+<${input}/>

@@ -1,0 +1,23 @@
+class {
+    onMount() {
+        this.events = [];
+    }
+
+    handleDetach(color, event, node) {
+        this.events.push({
+            color: color,
+            event: event,
+            node: node
+        });
+    }
+}
+
+<div>
+    <ul>
+        <for(color in input.colors)>
+            <li key=color on-detach('handleDetach', color)>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</div>

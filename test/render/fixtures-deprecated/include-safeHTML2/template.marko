@@ -1,0 +1,7 @@
+$ var html = {
+    safeHTML: "<strong>Hello!</strong>"
+};
+<if(typeof html === "string")>${html}</if>
+<else>
+    <${html}/>
+</else>

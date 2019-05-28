@@ -1,6 +1,6 @@
 static var dataProvider = {
     user: {
-        name: 'Frank'
+        name: "Frank"
     },
 
     getUserInfo() {
@@ -11,10 +11,8 @@ static var dataProvider = {
             }, 20);
         });
     }
-}
+};
 
-
-
-<await(user from dataProvider) method='getUserInfo'>
-    Hello ${user.name}!
+<await(dataProvider["getUserInfo"].bind(dataProvider))>
+    <@then|user|>Hello ${user.name}!</@then>
 </await>

@@ -106,12 +106,26 @@ class Normalizer {
             return;
         }
 
-        var newNode = context.createNodeForEl({
-            tagName: elNode.rawTagNameExpression
-                ? builder.parseExpression(elNode.rawTagNameExpression)
-                : context.ignoreUnrecognizedTags && !elNode.parentNode.tagDef
-                ? elNode.tagName.replace(/^@/, "at_") // escapes @tags inside unrecognized tags
-                : elNode.tagName,
+        let tagName = elNode.tagName;
+
+        try {
+            if (elNode.rawTagNameExpression) {
+                tagName = builder.parseExpression(elNode.rawTagNameExpression);
+            } else if (
+                context.ignoreUnrecognizedTags &&
+                !elNode.parentNode.tagDef
+            ) {
+                tagName = tagName.replace(/^@/, "at_"); // escapes @tags inside unrecognized tags
+            }
+        } catch (e) {
+            const type =
+                elNode.rawTagNameExpression === "()" ? "Missing" : "Invalid";
+            context.addError(`${type} dynamic tag name expression`);
+            return;
+        }
+
+        var newNode = this.context.createNodeForEl({
+            tagName: tagName,
             argument: elNode.argument,
             params: elNode.params,
             tagString: elNode.tagString,

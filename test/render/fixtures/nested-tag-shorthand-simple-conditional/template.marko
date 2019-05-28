@@ -1,8 +1,12 @@
 <test-message>
     <@title>My title</@title>
-    <@body if(false)>My body</@body>
+    <if(false)>
+        <@body>My body</@body>
+    </if>
 </test-message>
 <test-message>
     <@title>My title 2</@title>
-    <@body if(true)>My body 2</@body>
+    <if(true)>
+        <@body>My body 2</@body>
+    </if>
 </test-message>

@@ -1,0 +1,47 @@
+
+static var users = {
+    "0": {
+        name: "John B. Flowers",
+        occupation: "Clock repairer",
+        gender: "Male"
+    },
+    "1": {
+        name: "Pamela R. Rice",
+        occupation: "Cartographer",
+        gender: "Female"
+    },
+    "2": {
+        name: "Barbara C. Rigsby",
+        occupation: "Enrollment specialist",
+        gender: "Female"
+    },
+    "3": {
+        name: "Anthony J. Ward",
+        occupation: "Clinical laboratory technologist",
+        gender: "Male"
+    }
+};
+
+static function userInfo(arg, done) {
+    setTimeout(function() {
+        done(null, users[arg.userId]);
+    }, 100);
+};
+
+<ul>
+    <li for(userId in [0, 1, 2, 3])>
+        <await(userInfo from userInfo) arg={ userId } name=("user" + userId)>
+            <ul>
+                <li>
+                    <b>Name:</b> ${userInfo.name}
+                </li>
+                <li>
+                    <b>Gender:</b> ${userInfo.gender}
+                </li>
+                <li>
+                    <b>Occupation:</b> ${userInfo.occupation}
+                </li>
+            </ul>
+        </await>
+    </li>
+</ul>

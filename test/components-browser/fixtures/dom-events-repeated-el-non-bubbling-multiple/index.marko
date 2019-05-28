@@ -1,17 +1,21 @@
 class {
-	handleColorMouseOver(color) {
-		this.mouseOverColor = color;
-	}
+    handleColorMouseOver(color) {
+        this.mouseOverColor = color;
+    }
 
     handleColorMouseOut(color) {
-		this.mouseOutColor = color;
-	}
+        this.mouseOutColor = color;
+    }
 }
 
 <div>
     <ul>
-        <li for(color in input.colors) onMouseOver("handleColorMouseOver", color) onMouseOut("handleColorMouseOut", color)>
-            ${color}
-        </li>
+        <for|color| of=input.colors>
+            <li
+                onMouseOver("handleColorMouseOver", color)
+                onMouseOut("handleColorMouseOut", color)>
+                ${color}
+            </li>
+        </for>
     </ul>
 </div>

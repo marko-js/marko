@@ -9,13 +9,13 @@ class {
         var self = this;
 
         setTimeout(function() {
-            self.state.error = 'FATAL ERROR';
+            self.state.error = "FATAL ERROR";
         }, 50);
     }
 }
 
-<form on-submit('submit')>
-    <p if(state.error)>
-        FATAL ERROR
-    </p>
+<form on-submit("submit")>
+    <if(state.error)>
+        <p>FATAL ERROR</p>
+    </if>
 </form>

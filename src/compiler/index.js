@@ -54,7 +54,7 @@ function createWalker(options) {
     return new Walker(options);
 }
 
-function shouldIgnoreUnrecognizedTags(path) {
+function isXML(path) {
     return path.endsWith(".xml") || path.endsWith(".xml.marko");
 }
 
@@ -74,7 +74,8 @@ function _compile(src, filename, userOptions, callback) {
 
     var compiler = defaultCompiler;
 
-    if (shouldIgnoreUnrecognizedTags(filename)) {
+    if (isXML(filename)) {
+        require("complain")("Using Marko to build XML is deprecated");
         options.ignoreUnrecognizedTags = true;
     }
 

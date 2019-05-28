@@ -1,8 +1,9 @@
 $ var somePromise = undefined;
-
-<await(promiseData from somePromise) if(somePromise)>
-    ${promiseData}
-</await>
+<if(somePromise)>
+    <await(somePromise)>
+        <@then|promiseData|>${promiseData}</@then>
+    </await>
+</if>
 <else>
     <div>No promise</div>
 </else>

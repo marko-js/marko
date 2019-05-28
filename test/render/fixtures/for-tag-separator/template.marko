@@ -1,5 +1,4 @@
-<for(item in ['red', 'green', 'blue'] | separator=', ') >
-    <b>
-        ${item}
-    </b>
+<for|item, loopIndex, loopAll| of=["red", "green", "blue"]>
+    <b>${item}</b>
+    <if(loopIndex !== loopAll.length - 1)>$!{", "}</if>
 </for>

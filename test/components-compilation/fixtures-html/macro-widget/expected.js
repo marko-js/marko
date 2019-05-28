@@ -15,7 +15,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   function macro_renderButton(out, macroInput) {
-    var color = macroInput.color
+    var color = macroInput.color;
 
     out.w("<button>" +
       marko_escapeXml(color) +

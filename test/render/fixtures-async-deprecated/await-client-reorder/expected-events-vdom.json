@@ -1,0 +1,24 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": false,
+            "finished": true
+        }
+    }
+]

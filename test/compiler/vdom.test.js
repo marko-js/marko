@@ -8,54 +8,64 @@ var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures-vdom", fixture => {
-    let test = fixture.test;
-    let resolve = fixture.resolve;
-    let snapshot = fixture.snapshot;
-    test(done => {
-        var templatePath = resolve("template.marko");
-        var mainPath = resolve("test.js");
-        var main;
+const run = name =>
+    autotest(name, fixture => {
+        let test = fixture.test;
+        let resolve = fixture.resolve;
+        let snapshot = fixture.snapshot;
+        test(done => {
+            var templatePath = resolve("template.marko");
+            var mainPath = resolve("test.js");
+            var main;
 
-        if (fs.existsSync(mainPath)) {
-            main = require(mainPath);
-        }
-
-        var compilerOptions = {
-            writeVersionComment: false,
-            autoKeyEnabled: true
-        };
-
-        if (main && main.checkError) {
-            var e;
-
-            try {
-                compiler.compileFileForBrowser(templatePath, compilerOptions);
-            } catch (_e) {
-                e = _e;
+            if (fs.existsSync(mainPath)) {
+                main = require(mainPath);
             }
 
-            if (!e) {
-                throw new Error("Error expected");
-            }
+            var compilerOptions = {
+                writeVersionComment: false,
+                autoKeyEnabled: true
+            };
 
-            main.checkError(e);
-            done();
-        } else {
-            var compiledTemplate = compiler.compileFileForBrowser(
-                templatePath,
-                Object.assign(compilerOptions, main && main.compilerOptions)
-            );
+            if (main && main.checkError) {
+                var e;
 
-            if (main && main.checkTemplate) {
-                main.checkTemplate(compiledTemplate);
+                try {
+                    compiler.compileFileForBrowser(
+                        templatePath,
+                        compilerOptions
+                    );
+                } catch (_e) {
+                    e = _e;
+                }
+
+                if (!e) {
+                    throw new Error("Error expected");
+                }
+
+                main.checkError(e);
+                done();
             } else {
-                var actualSrc = compiledTemplate.code;
-                actualSrc = actualSrc.replace(/marko\/dist\//g, "marko/src/");
-                snapshot(actualSrc, ".js");
-            }
+                var compiledTemplate = compiler.compileFileForBrowser(
+                    templatePath,
+                    Object.assign(compilerOptions, main && main.compilerOptions)
+                );
 
-            done();
-        }
+                if (main && main.checkTemplate) {
+                    main.checkTemplate(compiledTemplate);
+                } else {
+                    var actualSrc = compiledTemplate.code;
+                    actualSrc = actualSrc.replace(
+                        /marko\/dist\//g,
+                        "marko/src/"
+                    );
+                    snapshot(actualSrc, ".js");
+                }
+
+                done();
+            }
+        });
     });
-});
+
+run("fixtures-vdom");
+run("fixtures-vdom-deprecated");

@@ -1,3 +1,5 @@
-<for(item in ['a', 'b', 'c'] | iterator=input.reverseIterator)>
-    ${item}
-</for>
+$ var iteratorList = [];
+$ input.reverseIterator(["a", "b", "c"], function(item) {
+    iteratorList.push(item);
+});
+<for|item| of=iteratorList>${item}</for>

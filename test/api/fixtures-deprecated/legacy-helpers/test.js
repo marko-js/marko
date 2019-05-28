@@ -1,4 +1,4 @@
-exports.check = function(marko, markoCompiler, expect, done) {
+exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var notEmpty = require("../../../../helpers/notEmpty");
     expect(notEmpty(null)).to.equal(false);
     expect(notEmpty(undefined)).to.equal(false);

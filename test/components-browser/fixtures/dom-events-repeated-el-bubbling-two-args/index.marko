@@ -1,12 +1,12 @@
 <div>
     <ul.primary>
-        <li for(color in input.colors) onClick("handleColorClick", color, 'primary')>
-			${color}
-		</li>
+        <for|color| of=input.colors>
+            <li onClick("handleColorClick", color, "primary")>${color}</li>
+        </for>
     </ul>
     <ul.secondary>
-        <li for(color in input.colors) onClick("handleColorClick", color, 'secondary')>
-			${color}
-		</li>
+        <for|color| of=input.colors>
+            <li onClick("handleColorClick", color, "secondary")>${color}</li>
+        </for>
     </ul>
 </div>

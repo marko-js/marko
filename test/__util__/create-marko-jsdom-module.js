@@ -3,7 +3,6 @@
 const jQuery = require("jquery");
 const createBrowser = require("jsdom-context-require");
 const compiler = require("../../compiler");
-const noop = function() {};
 const globals = [
     "console",
     "__coverage__",
@@ -31,7 +30,8 @@ module.exports = function(dir, html, options) {
         beforeParse(window, browser) {
             window.global = window;
             jQuery(window);
-            browser.require("complain").log = noop;
+            browser.require("complain").log = (...args) =>
+                require("complain").log(...args);
             globals.forEach(function(k) {
                 window[k] = global[k];
             });

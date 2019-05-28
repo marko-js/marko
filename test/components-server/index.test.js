@@ -4,7 +4,10 @@ require("../__util__/test-init");
 
 var autotest = require("../autotest");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", run);
+autotest("fixtures-deprecated", run);
+
+function run(fixture) {
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;
@@ -17,4 +20,4 @@ autotest("fixtures", fixture => {
             testFunc(snapshot, done);
         }
     });
-});
+}

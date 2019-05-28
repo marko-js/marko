@@ -10,12 +10,3 @@ html lang="en"
         div id="testsTarget"
 
         <app/>
-
-        init-components immediate
-
-        script
-            ---
-            // window.fooComponent should not exist yet, but's store that in a variable to verify
-            window.afterInitComponentsFooComponent = window.fooComponent;
-            window.afterInitComponentsBarComponent = window.barComponent;
-            ---

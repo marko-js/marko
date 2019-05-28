@@ -9,7 +9,7 @@ class {
 }
 
 <div>
-    <for(item in input.items)>
-        <item item=item on-purchase('handleItemPurchase')/>
+    <for|item| of=input.items>
+        <item item=item on-purchase("handleItemPurchase")/>
     </for>
 </div>

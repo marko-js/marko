@@ -1,1 +1,6 @@
-<include(input.component, {name: 'Frank'})/>
+<if(typeof input.component === "string")>${input.component}</if>
+<else>
+    <${input.component} ...{
+        name: "Frank"
+    }/>
+</else>

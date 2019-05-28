@@ -5,6 +5,7 @@ const removeDashes = require("../util/removeDashes");
 const safeVarName = require("../util/safeVarName");
 const ok = require("assert").ok;
 const merge = require("../util/mergeProps");
+const complain = require("complain");
 
 const CUSTOM_TAG_KEY = Symbol("CustomTag");
 
@@ -502,6 +503,9 @@ class CustomTag extends HtmlElement {
 
     addNestedVariable(name) {
         ok(name, '"name" is required');
+        complain(
+            "addNestedVariable is deprecated. Use tag parameters instead."
+        );
         this.params.push(name);
     }
 

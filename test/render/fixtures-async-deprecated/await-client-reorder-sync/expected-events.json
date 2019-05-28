@@ -1,0 +1,24 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.userDataProvider",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.userDataProvider",
+            "clientReorder": false
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.userDataProvider",
+            "clientReorder": false,
+            "finished": true
+        }
+    }
+]

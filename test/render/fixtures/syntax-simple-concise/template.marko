@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-html lang="en"
-    head
-        title -- Marko Templating Engine
-    body
-        h1 -- Hello ${input.name}!
-        ul if(input.colors.length)
-            li for(color in input.colors)
-                -- ${color}
-        div else
-            -- No colors!
+<html lang="en">
+    <head>
+        <title>Marko Templating Engine</title>
+    </head>
+    <body>
+        <h1>Hello ${input.name}!</h1>
+        <if(input.colors.length)>
+            <ul>
+                <for|color| of=input.colors>
+                    <li>${color}</li>
+                </for>
+            </ul>
+        </if>
+        <else>
+            <div>No colors!</div>
+        </else>
+    </body>
+</html>

@@ -1,8 +1,16 @@
 <html>
     <head>
-        <title><include(input.title)/></title>
+        <title>
+            <if(typeof input.title === "string")>${input.title}</if>
+            <else>
+                <${input.title}/>
+            </else>
+        </title>
     </head>
     <body>
-        <include(input.body)/>
+        <if(typeof input.body === "string")>${input.body}</if>
+        <else>
+            <${input.body}/>
+        </else>
     </body>
 </html>

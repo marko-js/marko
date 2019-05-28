@@ -1,0 +1,19 @@
+class {
+    onMount() {
+        this.name = 'app-bar';
+
+        var el = this.el;
+
+        this.appendHtml = function(html) {
+            el.innerHTML += html;
+        };
+    }
+
+    emitTestEvent() {
+        this.emit('testEvent', 'a', 'b');
+    }
+}
+
+<div class="bar">
+    ${input.label}
+</div>
