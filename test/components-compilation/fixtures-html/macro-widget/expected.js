@@ -24,18 +24,18 @@ function render(input, out, __component, component, state) {
 
   out.w("<div>");
 
-  var for__2 = 0;
+  var $for$0 = 0;
 
   marko_forEach([
       "red",
       "green",
       "blue"
     ], function(color) {
-    var keyscope__3 = "[" + ((for__2++) + "]");
+    var $keyScope$0 = "[" + (($for$0++) + "]");
 
     marko_dynamicTag(out, macro_renderButton, {
         color: color
-      }, null, null, __component, "4" + keyscope__3);
+      }, null, null, __component, "2" + $keyScope$0);
   });
 
   out.w("</div>");

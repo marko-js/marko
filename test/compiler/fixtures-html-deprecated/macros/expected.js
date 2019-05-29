@@ -23,16 +23,16 @@ function render(input, out, __component, component, state) {
     if (node.children) {
       out.w("<ul>");
 
-      var for__1 = 0;
+      var $for$0 = 0;
 
       marko_forEach(node.children, function(child) {
-        var keyscope__2 = "[" + ((for__1++) + "]");
+        var $keyScope$0 = "[" + (($for$0++) + "]");
 
         out.w("<li>");
 
         marko_dynamicTag(out, macro_renderTree, {
             node: child
-          }, null, null, __component, "4" + keyscope__2);
+          }, null, null, __component, "2" + $keyScope$0);
 
         out.w("</li>");
       });
@@ -43,7 +43,7 @@ function render(input, out, __component, component, state) {
 
   marko_dynamicTag(out, macro_renderTree, {
       node: input.node
-    }, null, null, __component, "5");
+    }, null, null, __component, "3");
 }
 
 marko_template._ = marko_renderer(render, {

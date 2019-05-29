@@ -54,13 +54,17 @@ class TransformHelper {
         );
     }
 
-    nextUniqueId() {
-        var componentNextElId = this.context.data.componentNextElId;
+    nextUniqueId(name) {
+        name = name || "";
+        var lookup = `_${name}UniqueIdCounter`;
+        var componentNextElId = this.context.data[lookup];
         if (componentNextElId == null) {
-            this.context.data.componentNextElId = 0;
+            this.context.data[lookup] = 0;
         }
 
-        return this.context.data.componentNextElId++;
+        var id = this.context.data[lookup]++;
+
+        return name ? `$${name}$${id}` : `${id}`;
     }
 
     serializeKey() {

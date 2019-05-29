@@ -20,10 +20,10 @@ function render(input, out, __component, component, state) {
 
   hello_tag(marko_mergeNestedTagsHelper({
       renderBody: function renderBody(out, hello0) {
-        var for__1 = 0;
+        var $for$0 = 0;
 
         marko_forEach(input.colors, function(color) {
-          var keyscope__2 = "[" + ((for__1++) + "]");
+          var $keyScope$0 = "[" + (($for$0++) + "]");
 
           hello_foo_nested_tag({
               renderBody: function renderBody(out) {

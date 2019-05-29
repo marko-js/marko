@@ -52,22 +52,22 @@ function render(input, out, __component, component, state) {
     marko_dynamicTag(out, render, {}, null, null, __component, "12");
   }
 
-  var for__13 = 0;
+  var $for$0 = 0;
 
   marko_forRange(0, 9, null, function(i) {
-    var keyscope__14 = "[" + ((for__13++) + "]");
+    var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    marko_dynamicTag(out, input.items[i], {}, null, null, __component, "15" + keyscope__14);
+    marko_dynamicTag(out, input.items[i], {}, null, null, __component, "13" + $keyScope$0);
   });
 
   let i = 10;
 
   while (i--) {
-    marko_dynamicTag(out, input, {}, null, null, __component, "16");
+    marko_dynamicTag(out, input, {}, null, null, __component, "14");
   }
 
   if (z) {
-    marko_dynamicTag(out, renderD, {}, null, null, __component, "17");
+    marko_dynamicTag(out, renderD, {}, null, null, __component, "15");
   }
 
   // if.test
