@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.17.3
+
+- Fix issue were `getEls` would not work with repeated keys for split components. [#1343](https://github.com/marko-js/marko/issues/1343)
+
 ### 4.17.2
 
 - Fix regression with namespaces in nested fragments. [#1340](https://github.com/marko-js/marko/issues/1340)
