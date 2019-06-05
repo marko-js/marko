@@ -4,6 +4,10 @@
 
 ## 4.16.x
 
+### 4.17.5
+
+- Fix issue where setting the `value` attribute of a textarea to `false` caused the string `"false"` to be used in the vdom. [#1348](https://github.com/marko-js/marko/issues/1348)
+
 ### 4.17.4
 
 - Updates htmljs-parser to fix an issue with comments inside inline scriptlets.
