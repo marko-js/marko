@@ -4,6 +4,12 @@
 
 ## 4.16.x
 
+### 4.17.4
+
+- Updates htmljs-parser to fix an issue with comments inside inline scriptlets.
+- Fix some issues with for loop auto keying. [#1346](https://github.com/marko-js/marko/issues/1346)
+- Fix error when using a non string as a key (now logs a deprecation). [#1344](https://github.com/marko-js/marko/issues/1344)
+
 ### 4.17.3
 
 - Fix issue were `getEls` would not work with repeated keys for split components. [#1343](https://github.com/marko-js/marko/issues/1343)
