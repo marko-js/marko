@@ -216,7 +216,7 @@ defineProperty(proto, "___value", {
         if (value == null) {
             value = this.___attributes.value;
         }
-        return value != null
+        return value != null && value !== false
             ? toString(value)
             : this.___attributes.type === "checkbox" ||
               this.___attributes.type === "radio"
