@@ -13,11 +13,11 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
     marko_const_nextId = marko_const("295cea"),
-    marko_node0 = marko_createElement("div", null, "4", null, 1, 0, {
+    marko_node0 = marko_createElement("div", null, "2", null, 1, 0, {
         i: marko_const_nextId()
       })
       .t("No colors!"),
-    marko_node1 = marko_createElement("div", null, "9", null, 1, 0, {
+    marko_node1 = marko_createElement("div", null, "5", null, 1, 0, {
         i: marko_const_nextId()
       })
       .t("No colors!");
@@ -34,12 +34,12 @@ function render(input, out, __component, component, state) {
   if (input.colors.length) {
     out.be("ul", null, "0", component);
 
-    var for__1 = 0;
+    var $for$0 = 0;
 
     marko_forEach(input.colors, function(color) {
-      var keyscope__2 = "[" + ((for__1++) + "]");
+      var $keyScope$0 = "[" + (($for$0++) + "]");
 
-      out.e("li", null, "3" + keyscope__2, component, 1)
+      out.e("li", null, "1" + $keyScope$0, component, 1)
         .t(color);
     });
 
@@ -49,14 +49,14 @@ function render(input, out, __component, component, state) {
   }
 
   if (input.colors.length) {
-    out.be("ul", null, "5", component);
+    out.be("ul", null, "3", component);
 
-    var for__6 = 0;
+    var $for$1 = 0;
 
     marko_forEach(input.colors, function(color) {
-      var keyscope__7 = "[" + ((for__6++) + "]");
+      var $keyScope$1 = "[" + (($for$1++) + "]");
 
-      out.e("li", null, "8" + keyscope__7, component, 1)
+      out.e("li", null, "4" + $keyScope$1, component, 1)
         .t(color);
     });
 

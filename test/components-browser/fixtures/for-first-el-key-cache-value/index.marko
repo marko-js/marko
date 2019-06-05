@@ -1,0 +1,35 @@
+class  {
+    onCreate() {
+        this.callCount = 0;
+        this.state = {
+            list: [{
+                id: "foo",
+                text: "Foo Text"
+            }, {
+                id: "bar",
+                text: "Bar Text"
+            }]
+        }
+    }
+
+    calcKey(id) {
+        this.callCount++;
+        return `${id}`;
+    }
+
+    swap() {
+        const [a, b] = this.state.list;
+        this.state.list = [b, a];
+    }
+}
+
+<div.root>
+    <for|item| of=state.list>
+        <div key=component.calcKey(item.id)>
+            ${item.text}
+        </div>
+        <div>
+            Non Keyed ${item.text}
+        </div>
+    </for>
+</div>
