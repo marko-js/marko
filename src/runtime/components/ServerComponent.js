@@ -1,4 +1,5 @@
 "use strict";
+var complain = "MARKO_DEBUG" && require("complain");
 
 class ServerComponent {
     constructor(id, input, out, typeName, customEvents, scope) {
@@ -53,16 +54,28 @@ class ServerComponent {
         return this.___state;
     }
 
-    elId(scopedId, index) {
+    elId(nestedId) {
         var id = this.id;
 
-        var elId = scopedId != null ? id + "-" + scopedId : id;
+        if (nestedId == null) {
+            return id;
+        } else {
+            if (typeof nestedId !== "string") {
+                // eslint-disable-next-line no-constant-condition
+                if ("MARKO_DEBUG") {
+                    complain("Using non strings as keys is deprecated.");
+                }
 
-        if (index != null) {
-            elId += "[" + index + "]";
+                nestedId = String(nestedId);
+            }
+
+            if (nestedId.indexOf("#") === 0) {
+                id = "#" + id;
+                nestedId = nestedId.substring(1);
+            }
+
+            return id + "-" + nestedId;
         }
-
-        return elId;
     }
 }
 

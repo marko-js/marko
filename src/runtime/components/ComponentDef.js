@@ -1,4 +1,5 @@
 "use strict";
+var complain = "MARKO_DEBUG" && require("complain");
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
@@ -50,17 +51,23 @@ ComponentDef.prototype = {
 
     /**
      * This helper method generates a unique and fully qualified DOM element ID
-     * that is unique within the scope of the current component. This method prefixes
-     * the the nestedId with the ID of the current component. If nestedId ends
-     * with `[]` then it is treated as a repeated ID and we will generate
-     * an ID with the current index for the current nestedId.
-     * (e.g. "myParentId-foo[0]", "myParentId-foo[1]", etc.)
+     * that is unique within the scope of the current component.
      */
     elId: function(nestedId) {
         var id = this.id;
+
         if (nestedId == null) {
             return id;
         } else {
+            if (typeof nestedId !== "string") {
+                // eslint-disable-next-line no-constant-condition
+                if ("MARKO_DEBUG") {
+                    complain("Using non strings as keys is deprecated.");
+                }
+
+                nestedId = String(nestedId);
+            }
+
             if (nestedId.indexOf("#") === 0) {
                 id = "#" + id;
                 nestedId = nestedId.substring(1);
