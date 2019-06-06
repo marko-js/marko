@@ -3,11 +3,9 @@
 const Node = require("../../Node");
 const vdomUtil = require("../../../util/vdom");
 
-const FLAG_IS_SVG = 1;
-const FLAG_IS_TEXTAREA = 2;
-const FLAG_SIMPLE_ATTRS = 4;
-// const FLAG_PRESERVE = 8;
-// const FLAG_CUSTOM_ELEMENT = 16;
+const FLAG_SIMPLE_ATTRS = 1;
+// const FLAG_PRESERVE = 2;
+// const FLAG_CUSTOM_ELEMENT = 4;
 
 let CREATE_ARGS_COUNT = 0;
 const INDEX_TAG_NAME = CREATE_ARGS_COUNT++;
@@ -44,13 +42,6 @@ function finalizeCreateArgs(createArgs, builder) {
     return createArgs;
 }
 
-const MAYBE_SVG = {
-    a: true,
-    script: true,
-    style: true,
-    title: true
-};
-
 const SIMPLE_ATTRS = {
     class: true,
     style: true,
@@ -86,8 +77,6 @@ class HtmlElementVDOM extends Node {
         this.runtimeFlags = def.runtimeFlags;
         this.isAutoKeyed = def.isAutoKeyed;
 
-        this.isSVG = false;
-        this.isTextArea = false;
         this.hasAttributes = false;
         this.hasSimpleAttrs = false; // This will be set to true if the HTML element
         // only attributes in the following set:
@@ -105,30 +94,15 @@ class HtmlElementVDOM extends Node {
 
         vdomUtil.registerOptimizer(context);
 
-        let tagName = this.tagName;
+        const tagName = this.tagName;
 
         if (tagName.type === "Literal" && typeof tagName.value === "string") {
-            let tagDef = context.getTagDef(tagName.value);
-            if (tagDef) {
-                if (tagDef.htmlType === "svg") {
-                    this.isSVG = true;
-                } else {
-                    if (MAYBE_SVG[tagName.value] && context.isFlagSet("SVG")) {
-                        this.isSVG = true;
-                    } else {
-                        this.tagName = tagName = builder.literal(
-                            tagName.value.toUpperCase()
-                        );
-
-                        if (tagName.value === "TEXTAREA") {
-                            this.isTextArea = true;
-                        }
-                    }
-                }
-            }
+            const tagDef = context.getTagDef(tagName.value);
             this.isLiteralTag = true;
-        } else if (context.isFlagSet("SVG")) {
-            this.isSVG = true;
+
+            if (tagDef && tagDef.html && !tagDef.htmlType) {
+                tagName.value = tagName.value.toLowerCase();
+            }
         }
 
         let attributes = this.attributes;
@@ -273,14 +247,6 @@ class HtmlElementVDOM extends Node {
 
         var flags = 0;
 
-        if (this.isSVG) {
-            flags |= FLAG_IS_SVG;
-        }
-
-        if (this.isTextArea) {
-            flags |= FLAG_IS_TEXTAREA;
-        }
-
         if (this.hasSimpleAttrs) {
             flags |= FLAG_SIMPLE_ATTRS;
         }
@@ -316,9 +282,7 @@ class HtmlElementVDOM extends Node {
             writer.write(".");
 
             funcCall = builder.functionCall(
-                builder.identifier(
-                    this.isLiteralTag || this.isSVG ? "e" : "ed"
-                ),
+                builder.identifier("e"),
                 createArgs
             );
         } else if (this.isStatic && this.createElementId) {
@@ -326,17 +290,13 @@ class HtmlElementVDOM extends Node {
         } else if (this.isHtmlOnly) {
             writer.write("out.");
             funcCall = builder.functionCall(
-                builder.identifier(
-                    this.isLiteralTag || this.isSVG ? "e" : "ed"
-                ),
+                builder.identifier("e"),
                 createArgs
             );
         } else {
             writer.write("out.");
             funcCall = builder.functionCall(
-                builder.identifier(
-                    this.isLiteralTag || this.isSVG ? "be" : "bed"
-                ),
+                builder.identifier("be"),
                 createArgs
             );
         }

@@ -8,7 +8,7 @@ module.exports = function(helpers) {
 
     var nameEl = component.getEl("name");
     var ageEl = component.getEl("age");
-    var linkEl = component.els[2];
+    var linkEl = component.getEl("link");
 
     expect(nameEl.parentNode != null).to.equal(true);
     expect(ageEl.parentNode != null).to.equal(true);

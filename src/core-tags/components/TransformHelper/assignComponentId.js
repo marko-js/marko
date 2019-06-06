@@ -122,13 +122,13 @@ module.exports = function assignComponentId(isRepeated) {
                 return this.idVarNode;
             }
 
-            let uniqueElId = transformHelper.nextUniqueId();
-            let idVarName = "__key" + uniqueElId;
-            let idVar = builder.identifier(idVarName);
+            const idVar = builder.identifier(
+                transformHelper.nextUniqueId("key")
+            );
 
             this.idVarNode = builder.vars([
                 {
-                    id: idVarName,
+                    id: idVar,
                     init: builder.functionCall(
                         builder.memberExpression(
                             builder.identifier("__component"),
@@ -167,31 +167,78 @@ const getParentForKeyVar = (el, transformHelper) => {
     if (!parentFor) return null;
     if (parentFor.keyVar) return parentFor.keyVar;
 
-    const keyExpression =
-        getChildKey(parentFor) || createIndexKey(parentFor, transformHelper);
-    const bracketedKeyExpression = builder.binaryExpression(
-        builder.literal("["),
-        "+",
-        builder.binaryExpression(keyExpression, "+", builder.literal("]"))
+    const keyScopeIdentifier = builder.identifier(
+        transformHelper.nextUniqueId("keyScope")
     );
-    const varName = "keyscope__" + transformHelper.nextUniqueId();
-    const varDeclaration = builder.var(varName, bracketedKeyExpression);
 
-    parentFor.prependChild(varDeclaration);
+    const vars = builder.vars([]);
+    const firstElement = getFirstElementChild(parentFor);
+    let keyExpression;
+    let firstElementKey;
 
-    return (parentFor.keyVar = builder.identifier(varName));
+    if (firstElement) {
+        const keyValueIdentifier = builder.identifier(
+            transformHelper.nextUniqueId("keyValue")
+        );
+
+        if (firstElement.key) {
+            firstElementKey = firstElement.key;
+            firstElement.key = keyValueIdentifier;
+        } else if (
+            firstElement.hasAttribute &&
+            firstElement.hasAttribute("key")
+        ) {
+            firstElementKey = firstElement.getAttributeValue("key");
+            firstElement.setAttributeValue("key", keyValueIdentifier);
+        }
+
+        if (firstElementKey) {
+            // when the child has a key we need to hoist it up and store it in a variable.
+            keyExpression = keyValueIdentifier;
+            vars.declarations.push(
+                builder.variableDeclarator(keyValueIdentifier, firstElementKey)
+            );
+        }
+
+        // Try to insert before the first node in the loop body.
+        firstElement.insertSiblingBefore(vars);
+    } else {
+        // If the loop has no direct element children, prepend the var.
+        parentFor.prependChild(vars);
+    }
+
+    if (!keyExpression) {
+        keyExpression = createIndexKey(parentFor, transformHelper);
+    }
+
+    vars.declarations.push(
+        builder.variableDeclarator(
+            keyScopeIdentifier,
+            builder.binaryExpression(
+                builder.literal("["),
+                "+",
+                builder.binaryExpression(
+                    keyExpression,
+                    "+",
+                    builder.literal("]")
+                )
+            )
+        )
+    );
+
+    return (parentFor.keyVar = keyScopeIdentifier);
 };
 
 const createIndexKey = (forNode, transformHelper) => {
     const context = transformHelper.context;
     const builder = context.builder;
-    const varName = "for__" + transformHelper.nextUniqueId();
-    const intialize = builder.parseStatement(`var ${varName} = 0;`);
+    const identifier = builder.identifier(transformHelper.nextUniqueId("for"));
+    const initialize = builder.var(identifier, builder.literal(0));
     const parentForKey = getParentForKeyVar(forNode, transformHelper);
 
-    forNode.insertSiblingBefore(intialize);
+    forNode.insertSiblingBefore(initialize);
 
-    let keyExpression = builder.parseExpression(`${varName}++`);
+    let keyExpression = builder.updateExpression(identifier, "++");
 
     if (parentForKey) {
         keyExpression = builder.binaryExpression(
@@ -215,13 +262,15 @@ const getParentFor = el => {
     }
 };
 
-const getChildKey = el => {
+const getFirstElementChild = el => {
     let current = el.firstChild;
-    while (current) {
-        if (current.key) return current.key;
-        if (current.hasAttribute && current.hasAttribute("key")) {
-            return current.getAttributeValue("key");
-        }
+    while (
+        current &&
+        current.type !== "HtmlElement" &&
+        current.type !== "CustomTag"
+    ) {
         current = current.nextSibling;
     }
+
+    return current;
 };

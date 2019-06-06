@@ -9,8 +9,9 @@ class {
         this.clicked = true;
     }
 }
-<div on-click('handleClick')>
+
+<div on-click("handleClick")>
     <span.body>
-        <include(input.renderBody)/>
+        <${input.renderBody}/>
     </span>
 </div>

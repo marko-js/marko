@@ -3,17 +3,22 @@ var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
-var NS_XLINK = "http://www.w3.org/1999/xlink";
 var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
+var NS_XLINK = "http://www.w3.org/1999/xlink";
+var NS_HTML = "http://www.w3.org/1999/xhtml";
+var NS_MATH = "http://www.w3.org/1998/Math/MathML";
+var NS_SVG = "http://www.w3.org/2000/svg";
+var DEFAULT_NS = {
+    svg: NS_SVG,
+    math: NS_MATH
+};
 
 var toString = String;
 
-var FLAG_IS_SVG = 1;
-var FLAG_IS_TEXTAREA = 2;
-var FLAG_SIMPLE_ATTRS = 4;
-// var FLAG_PRESERVE = 8;
-var FLAG_CUSTOM_ELEMENT = 16;
+var FLAG_SIMPLE_ATTRS = 1;
+// var FLAG_PRESERVE = 2;
+var FLAG_CUSTOM_ELEMENT = 4;
 
 var defineProperty = Object.defineProperty;
 
@@ -62,12 +67,10 @@ function VElementClone(other) {
     this.___key = other.___key;
     this.___attributes = other.___attributes;
     this.___properties = other.___properties;
-    this.___namespaceURI = other.___namespaceURI;
     this.___nodeName = other.___nodeName;
     this.___flags = other.___flags;
     this.___valueInternal = other.___valueInternal;
     this.___constId = other.___constId;
-    this.___isTextArea = other.___isTextArea;
 }
 
 function VElement(
@@ -82,31 +85,19 @@ function VElement(
     this.___VNode(childCount);
 
     var constId;
-    var namespaceURI;
-    var isTextArea;
 
     if (props) {
         constId = props.i;
     }
 
-    if ((this.___flags = flags || 0)) {
-        if (flags & FLAG_IS_SVG) {
-            namespaceURI = "http://www.w3.org/2000/svg";
-        }
-        if (flags & FLAG_IS_TEXTAREA) {
-            isTextArea = true;
-        }
-    }
-
     this.___key = key;
+    this.___flags = flags || 0;
     this.___ownerComponent = ownerComponent;
     this.___attributes = attrs || EMPTY_OBJECT;
     this.___properties = props || EMPTY_OBJECT;
-    this.___namespaceURI = namespaceURI;
     this.___nodeName = tagName;
     this.___valueInternal = null;
     this.___constId = constId;
-    this.___isTextArea = isTextArea;
 }
 
 VElement.prototype = {
@@ -144,41 +135,6 @@ VElement.prototype = {
     },
 
     /**
-     * Shorthand method for creating and appending an HTML element with a dynamic namespace
-     *
-     * @param  {String} tagName    The tag name (e.g. "div")
-     * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
-     * @param  {int|null} childCount The number of child nodes (or `null` if not known)
-     */
-    ed: function(
-        tagName,
-        attrs,
-        key,
-        ownerComponent,
-        childCount,
-        flags,
-        props
-    ) {
-        var child = this.___appendChild(
-            VElement.___createElementDynamicTag(
-                tagName,
-                attrs,
-                key,
-                ownerComponent,
-                childCount,
-                flags,
-                props
-            )
-        );
-
-        if (childCount === 0) {
-            return this.___finishChild();
-        } else {
-            return child;
-        }
-    },
-
-    /**
      * Shorthand method for creating and appending a static node. The provided node is automatically cloned
      * using a shallow clone since it will be mutated as a result of setting `nextSibling` and `parentNode`.
      *
@@ -191,17 +147,13 @@ VElement.prototype = {
         return this.___finishChild();
     },
 
-    ___actualize: function(doc) {
-        var namespaceURI = this.___namespaceURI;
+    ___actualize: function(doc, parentNamespaceURI) {
         var tagName = this.___nodeName;
-
         var attributes = this.___attributes;
-        var flags = this.___flags;
+        var namespaceURI = DEFAULT_NS[tagName] || parentNamespaceURI || NS_HTML;
 
-        var el =
-            namespaceURI !== undefined
-                ? doc.createElementNS(namespaceURI, tagName)
-                : doc.createElement(tagName);
+        var flags = this.___flags;
+        var el = doc.createElementNS(namespaceURI, tagName);
 
         if (flags & FLAG_CUSTOM_ELEMENT) {
             assign(el, attributes);
@@ -226,7 +178,7 @@ VElement.prototype = {
                 }
             }
 
-            if (flags & FLAG_IS_TEXTAREA) {
+            if (tagName === "textarea") {
                 el.value = this.___value;
             }
         }
@@ -264,7 +216,7 @@ defineProperty(proto, "___value", {
         if (value == null) {
             value = this.___attributes.value;
         }
-        return value != null
+        return value != null && value !== false
             ? toString(value)
             : this.___attributes.type === "checkbox" ||
               this.___attributes.type === "radio"
@@ -272,30 +224,6 @@ defineProperty(proto, "___value", {
             : "";
     }
 });
-
-VElement.___createElementDynamicTag = function(
-    tagName,
-    attrs,
-    key,
-    ownerComponent,
-    childCount,
-    flags,
-    props
-) {
-    var namespace = attrs && attrs.xmlns;
-    tagName = namespace ? tagName : tagName.toUpperCase();
-    var element = new VElement(
-        tagName,
-        attrs,
-        key,
-        ownerComponent,
-        childCount,
-        flags,
-        props
-    );
-    element.___namespaceURI = namespace;
-    return element;
-};
 
 VElement.___removePreservedAttributes = function(attrs) {
     // By default this static method is a no-op, but if there are any
@@ -327,11 +255,10 @@ function virtualizeElement(node, virtualizeChildNodes) {
         }
     }
 
-    var flags = 0;
-
     var tagName = node.nodeName;
-    if (tagName === "TEXTAREA") {
-        flags |= FLAG_IS_TEXTAREA;
+
+    if (node.namespaceURI === NS_HTML) {
+        tagName = tagName.toLowerCase();
     }
 
     var vdomEl = new VElement(
@@ -340,19 +267,14 @@ function virtualizeElement(node, virtualizeChildNodes) {
         null /*key*/,
         null /*ownerComponent*/,
         0 /*child count*/,
-        flags,
+        0 /*flags*/,
         null /*props*/
     );
-    if (node.namespaceURI !== "http://www.w3.org/1999/xhtml") {
-        vdomEl.___namespaceURI = node.namespaceURI;
-    }
 
-    if (vdomEl.___isTextArea) {
+    if (vdomEl.___nodeName === "textarea") {
         vdomEl.___valueInternal = node.value;
-    } else {
-        if (virtualizeChildNodes) {
-            virtualizeChildNodes(node, vdomEl);
-        }
+    } else if (virtualizeChildNodes) {
+        virtualizeChildNodes(node, vdomEl);
     }
 
     return vdomEl;

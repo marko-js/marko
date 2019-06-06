@@ -6,10 +6,8 @@ class {
 
 <div>
     <ul>
-        <for(color in input.colors)>
-            <li key=color on-detach('handleDetach', color)>
-                ${color}
-            </li>
+        <for|color| of=input.colors>
+            <li key=color on-detach("handleDetach", color)>${color}</li>
         </for>
     </ul>
 </div>

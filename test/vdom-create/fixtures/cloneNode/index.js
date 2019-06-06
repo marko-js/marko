@@ -1,8 +1,6 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var SVG_FLAGS = 1; // SVG
-
     var el = helpers.vdom
         .createElement(
             "div",
@@ -22,9 +20,7 @@ module.exports = function(helpers) {
             },
             null,
             null,
-            1,
-            SVG_FLAGS,
-            null
+            1
         )
         .e(
             "circle",
@@ -39,9 +35,7 @@ module.exports = function(helpers) {
             },
             null,
             null,
-            0,
-            SVG_FLAGS,
-            null
+            0
         );
 
     var clone = el.___cloneNode();

@@ -1,0 +1,13 @@
+$ var dynamic='<Frank>';
+
+<ul>
+    <li>
+        <test-hello name="<World>"/>
+    </li>
+    <li>
+        <test-hello name="${dynamic}" adult=true/>
+    </li>
+    <li>
+        <test-hello name="Foo ${dynamic}" adult=false/>
+    </li>
+</ul>

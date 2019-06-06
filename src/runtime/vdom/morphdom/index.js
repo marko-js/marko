@@ -32,11 +32,9 @@ var COMMENT_NODE = 8;
 var COMPONENT_NODE = 2;
 var FRAGMENT_NODE = 12;
 
-// var FLAG_IS_SVG = 1;
-// var FLAG_IS_TEXTAREA = 2;
-// var FLAG_SIMPLE_ATTRS = 4;
-var FLAG_PRESERVE = 8;
-// var FLAG_CUSTOM_ELEMENT = 16;
+// var FLAG_SIMPLE_ATTRS = 1;
+var FLAG_PRESERVE = 2;
+// var FLAG_CUSTOM_ELEMENT = 4;
 
 function isAutoKey(key) {
     return !/^@/.test(key);
@@ -44,6 +42,10 @@ function isAutoKey(key) {
 
 function compareNodeNames(fromEl, toEl) {
     return fromEl.___nodeName === toEl.___nodeName;
+}
+
+function caseInsensitiveCompare(a, b) {
+    return a.toLowerCase() === b.toLowerCase();
 }
 
 function onNodeAdded(node, componentsContext) {
@@ -70,7 +72,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         ownerComponent,
         parentComponent
     ) {
-        var realNode = vNode.___actualize(doc);
+        var realNode = vNode.___actualize(doc, parentEl.namespaceURI);
         insertBefore(realNode, referenceEl, parentEl);
 
         if (
@@ -329,12 +331,16 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                         if (isRerenderInBrowser === true && curFromNodeChild) {
                             if (
                                 curFromNodeChild.nodeType === ELEMENT_NODE &&
-                                curFromNodeChild.nodeName ===
-                                    curToNodeChild.___nodeName
+                                caseInsensitiveCompare(
+                                    curFromNodeChild.nodeName,
+                                    curToNodeChild.___nodeName || ""
+                                )
                             ) {
                                 curVFromNodeChild = virtualizeElement(
                                     curFromNodeChild
                                 );
+                                curVFromNodeChild.___nodeName =
+                                    curToNodeChild.___nodeName;
                                 keysByDOMNode.set(
                                     curFromNodeChild,
                                     curToNodeKey
@@ -598,6 +604,16 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curVFromNodeChild = virtualizeElement(
                                     curFromNodeChild
                                 );
+
+                                if (
+                                    caseInsensitiveCompare(
+                                        curVFromNodeChild.___nodeName,
+                                        curToNodeChild.___nodeName
+                                    )
+                                ) {
+                                    curVFromNodeChild.___nodeName =
+                                        curToNodeChild.___nodeName;
+                                }
                             } else {
                                 // Skip over nodes that don't look like ours...
                                 curFromNodeChild = fromNextSibling;
@@ -659,7 +675,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 if (curFromNodeKey) {
                     if (
                         globalComponentsContext.___preservedEls[
-                            curFromNodeKey
+                            parentComponent.id + "-" + curFromNodeKey
                         ] === undefined
                     ) {
                         detachNode(curFromNodeChild, fromNode, ownerComponent);
@@ -755,13 +771,15 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
         if (
             toElKey &&
-            globalComponentsContext.___preservedElBodies[toElKey] === true
+            globalComponentsContext.___preservedElBodies[
+                parentComponent.id + "-" + toElKey
+            ] === true
         ) {
             // Don't morph the children since they are preserved
             return;
         }
 
-        if (nodeName !== "TEXTAREA") {
+        if (nodeName !== "textarea") {
             morphChildren(fromEl, toEl, parentComponent);
         }
 

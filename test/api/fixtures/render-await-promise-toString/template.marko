@@ -1,5 +1,5 @@
 <div>
-    <await(user from input.userPromise)>
-        Hello ${user.name}!
+    <await(input.userPromise)>
+        <@then|user|>Hello ${user.name}!</@then>
     </await>
 </div>

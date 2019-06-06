@@ -36,6 +36,22 @@ function removeListener(removeEventListenerHandle) {
     removeEventListenerHandle();
 }
 
+function walkFragments(fragment) {
+    var node;
+
+    while (fragment) {
+        node = fragment.firstChild;
+
+        if (!node) {
+            break;
+        }
+
+        fragment = node.fragment;
+    }
+
+    return node;
+}
+
 function handleCustomEventWithMethodListener(
     component,
     targetMethodName,
@@ -239,7 +255,8 @@ Component.prototype = componentProto = {
                             "Accessing the elements of a child component using 'component.getEl' is deprecated."
                         );
                     }
-                    return keyedComponent.___rootNode.firstChild;
+
+                    return walkFragments(keyedComponent.___rootNode);
                 }
             }
 
@@ -588,13 +605,7 @@ Component.prototype = componentProto = {
     },
 
     get el() {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-            complain(
-                'The "this.el" attribute is deprecated. Please use "this.getEl(key)" instead.'
-            );
-        }
-        return this.___rootNode && this.___rootNode.firstChild;
+        return walkFragments(this.___rootNode);
     },
 
     get els() {

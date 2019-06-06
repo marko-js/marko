@@ -4,6 +4,7 @@ var ok = require("assert").ok;
 var CustomTag;
 var path = require("path");
 var markoModules = require("../../compiler/modules");
+var complain = require("complain");
 
 function createCustomTag(el, tagDef) {
     CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
@@ -151,6 +152,10 @@ class Tag {
      * DEPRECATED
      */
     addNestedVariable(nestedVariable) {
+        complain(
+            "addNestedVariable is deprecated. Use tag parameters instead."
+        );
+
         if (!this.nestedVariables) {
             this.nestedVariables = {
                 __noMerge: true,

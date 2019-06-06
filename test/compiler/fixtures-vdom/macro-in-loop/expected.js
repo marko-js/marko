@@ -16,12 +16,12 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  var for__0 = 0;
+  var $for$0 = 0;
 
   marko_forRange(0, 10, null, function(i) {
-    var keyscope__1 = "[" + ((for__0++) + "]");
+    var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    out.e("DIV", null, "2" + keyscope__1, component, 1)
+    out.e("div", null, "0" + $keyScope$0, component, 1)
       .t(i);
 
     function macro_renderTree(out, node) {
@@ -32,16 +32,16 @@ function render(input, out, __component, component, state) {
       out.t(" Children: ");
 
       if (node.children) {
-        out.be("UL", null, "3", component);
+        out.be("ul", null, "1", component);
 
-        var for__4 = 0;
+        var $for$1 = 0;
 
         marko_forEach(node.children, function(child) {
-          var keyscope__5 = "[" + ((for__4++) + "]");
+          var $keyScope$1 = "[" + (($for$1++) + "]");
 
-          out.be("LI", null, "6" + keyscope__5, component);
+          out.be("li", null, "2" + $keyScope$1, component);
 
-          marko_dynamicTag(out, macro_renderTree, child, null, null, __component, "7" + keyscope__5);
+          marko_dynamicTag(out, macro_renderTree, child, null, null, __component, "3" + $keyScope$1);
 
           out.ee();
         });
@@ -50,7 +50,7 @@ function render(input, out, __component, component, state) {
       }
     }
 
-    marko_dynamicTag(out, macro_renderTree, input.nodes[i], null, null, __component, "8" + keyscope__1);
+    marko_dynamicTag(out, macro_renderTree, input.nodes[i], null, null, __component, "4" + $keyScope$0);
   });
 }
 

@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "require: ./components/**/index.marko",
-        "require: ./components/**/component.js"
-    ]
-}

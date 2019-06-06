@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+html lang="en"
+    head
+        meta charset="UTF-8"
+        title -- Marko Components Tests
+    body
+
+        div id="test"
+        div id="mocha"
+        div id="testsTarget"
+
+        <no-args/>
+        <one-arg colors=['red', 'green', 'blue']/>
+        <one-arg-array colors=['red', 'green', 'blue']/>
+        <two-args colors=['red', 'green', 'blue']/>
+
+        init-components immediate
+
+        script
+            ---
+            // window.fooComponent should not exist yet, but's store that in a variable to verify
+            window.afterInitComponentsFooComponent = window.fooComponent;
+            window.afterInitComponentsBarComponent = window.barComponent;
+            ---

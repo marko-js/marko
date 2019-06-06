@@ -1,1 +1,5 @@
--- test-circular-template-b<test-circular-template-a if(false)/>
+---
+test-circular-template-b<if(false)>
+    <test-circular-template-a/>
+</if>
+---

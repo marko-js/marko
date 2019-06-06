@@ -49,7 +49,7 @@ VNode.prototype = {
     ___appendChild: function(child) {
         this.___childCount++;
 
-        if (this.___isTextArea === true) {
+        if (this.___nodeName === "textarea") {
             if (child.___Text) {
                 var childValue = child.___nodeValue;
                 this.___valueInternal =

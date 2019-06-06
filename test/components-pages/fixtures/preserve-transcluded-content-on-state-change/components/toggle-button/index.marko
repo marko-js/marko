@@ -1,22 +1,31 @@
 class {
-  onCreate(){
-    this.state = {
-      active: false
+    onCreate() {
+        this.state = {
+            active: false
+        };
     }
-  }
-  onMount(){
-    window.component = this;
-  }
-  toggle(evt){
-    this.state.active = !this.state.active
-    this.emit('change')
-  }
-  mousedown(evt){
-    evt.preventDefault()
-  }
+    onMount() {
+        window.component = this;
+    }
+    toggle(evt) {
+        this.state.active = !this.state.active;
+        this.emit("change");
+    }
+    mousedown(evt) {
+        evt.preventDefault();
+    }
 }
 
-div.toggle key="button" class={"toggle--active": state.active} onClick('toggle') onMouseDown('mousedown')
-  include(input.renderBody)
-  if(state.active)
-    -- test
+<div.toggle
+    key="button"
+    class={
+        "toggle--active": state.active
+    }
+    onClick("toggle")
+    onMouseDown("mousedown")>
+    <if(typeof input.renderBody === "string")>${input.renderBody}</if>
+    <else>
+        <${input.renderBody}/>
+    </else>
+    <if(state.active)>test</if>
+</div>

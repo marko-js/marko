@@ -1,13 +1,17 @@
 <div class="overlay">
-    <div class="overlay-header ${input.header.className || ''}" if(input.header)>
-        <invoke input.header.renderBody(out)/>
-    </div>
-
-    <div class="overlay-body ${input.body.className}" if(input.body)>
-        <invoke input.body.renderBody(out)/>
-    </div>
-
-    <div class="overlay-footer ${input.footer.className}" if(input.footer)>
-        <invoke input.footer.renderBody(out)/>
-    </div>
+    <if(input.header)>
+        <div class=`overlay-header ${input.header.className || ""}`>
+            <${input.header}/>
+        </div>
+    </if>
+    <if(input.body)>
+        <div class=`overlay-body ${input.body.className}`>
+            <${input.body}/>
+        </div>
+    </if>
+    <if(input.footer)>
+        <div class=`overlay-footer ${input.footer.className}`>
+            <${input.footer}/>
+        </div>
+    </if>
 </div>

@@ -1,0 +1,27 @@
+---
+Hello ${input.name}!
+
+<ul if(input.colors.length)>
+    <li for(color in input.colors)>
+        ${color}
+    </li>
+</ul>
+<div else>
+    No colors!
+</div>
+
+<if(input.colors.length)>
+    <ul>
+        <for(color in input.colors)>
+            <li>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</if>
+<else>
+    <div>
+        No colors!
+    </div>
+</else>
+---

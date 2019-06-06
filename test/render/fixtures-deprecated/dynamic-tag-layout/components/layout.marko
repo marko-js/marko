@@ -1,0 +1,13 @@
+<h1 if(input.showHeader !== false)>
+    <if(input.header)>
+        <${input.header}/>
+    </if>
+    <else>
+        DEFAULT TITLE
+    </else>
+</h1>
+<div>
+    <${input.body}/>
+</div>
+<${input.footer}/>
+<${input.empty}/>

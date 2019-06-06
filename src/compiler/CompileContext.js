@@ -22,11 +22,9 @@ const markoPkgVersion = require("../../package.json").version;
 const rootDir = path.join(__dirname, "../");
 const isDebug = require("../build.json").isDebug;
 
-// const FLAG_IS_SVG = 1;
-// const FLAG_IS_TEXTAREA = 2;
-// const FLAG_SIMPLE_ATTRS = 4;
-// const FLAG_PRESERVE = 8;
-const FLAG_CUSTOM_ELEMENT = 16;
+// const FLAG_SIMPLE_ATTRS = 1;
+// const FLAG_PRESERVE = 2;
+const FLAG_CUSTOM_ELEMENT = 4;
 
 const FLAG_PRESERVE_WHITESPACE = "PRESERVE_WHITESPACE";
 
@@ -144,7 +142,6 @@ class CompileContext extends EventEmitter {
             writeVersionComment !== "undefined" ? writeVersionComment : true;
         this.ignoreUnrecognizedTags =
             this.options.ignoreUnrecognizedTags === true;
-        this.escapeAtTags = this.options.escapeAtTags === true;
 
         this._vars = {};
         this._uniqueVars = new UniqueVars();
@@ -504,18 +501,12 @@ class CompileContext extends EventEmitter {
         }
 
         var isAtTag = typeof tagName === "string" && tagName.startsWith("@");
-
-        if (isAtTag && this.escapeAtTags) {
-            tagName = tagName.replace(/^@/, "at_");
-            elDef.tagName = tagName;
-        }
-
         var node;
         var tagDef;
 
         var taglibLookup = this.taglibLookup;
 
-        if ((isAtTag && !this.escapeAtTags) || tagName instanceof Node) {
+        if (isAtTag || tagName instanceof Node) {
             // NOTE: The tag definition can't be determined now
             //       For @tags it will be determined by the parent
             //       For dynamic tags we cannot know at compile time

@@ -1,0 +1,33 @@
+static function nameDataProvider(callback) {
+    setTimeout(function() {
+        callback(null, {});
+    }, 20);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Marko Components Tests</title>
+    </head>
+    <body>
+        <div id="test"/>
+        <div id="mocha"/>
+        <div id="testsTarget"/>
+        <app-foo/>
+        <await(nameDataProvider) client-reorder>
+            <@then|name|>
+                <app-bar/>
+            </@then>
+        </await>
+        <init-components/>
+        <script>window.$initComponents();</script>
+        <script>// window.barComponent should not exist yet, but's store that in a variable to verify
+window.afterInitComponents_foo = window.fooComponent;
+window.afterInitComponents_bar = window.barComponent;</script>
+        <await-reorderer/>
+        <script>// window.fooComponent should not exist yet, but's store that in a variable to verify
+window.afterReorderer_foo = window.fooComponent;
+window.afterReorderer_bar = window.barComponent;</script>
+    </body>
+</html>

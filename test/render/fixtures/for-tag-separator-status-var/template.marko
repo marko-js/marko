@@ -1,5 +1,7 @@
-<for(item in ['red', 'green', 'blue'] | separator=', ' status-var=loop)>
+<for|item, loopIndex, loopAll| of=["red", "green", "blue"]>
     <div>
-        ${item} - ${loop.isFirst()} - ${loop.isLast()} - ${loop.getIndex()} - ${loop.getLength()}
+        ${item} - ${loopIndex === 0} - ${loopIndex === loopAll.length - 1} - ${loopIndex}
+        - ${loopAll.length}
     </div>
+    <if(loopIndex !== loopAll.length - 1)>$!{", "}</if>
 </for>

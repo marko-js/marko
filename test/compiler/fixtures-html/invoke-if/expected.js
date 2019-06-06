@@ -10,7 +10,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   if (true) {
-    console.log('hello')
+    console.log("hello");
   }
 }
 

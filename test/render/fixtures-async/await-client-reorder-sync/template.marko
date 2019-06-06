@@ -1,5 +1,6 @@
-<await(user from data.userDataProvider) client-reorder>
-    <div>Hello ${user.name}!</div>
+<await(data.userDataProvider) client-reorder>
+    <@then|user|>
+        <div>Hello ${user.name}!</div>
+    </@then>
 </await>
-
 <await-reorderer/>

@@ -11,6 +11,11 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 module.exports = function defineRenderer(renderingLogic) {
     var renderer = renderingLogic.renderer;
 
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        require("complain")("defineRenderer is deprecated");
+    }
+
     if (renderer && renderer.___isRenderer) {
         return renderer;
     }

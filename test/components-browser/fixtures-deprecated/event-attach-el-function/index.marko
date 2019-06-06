@@ -1,0 +1,19 @@
+static function handleAttach(color, event, node) {
+    window.events.push({
+        color: color,
+        event: event,
+        node: node
+    });
+};
+
+class {}
+
+<div>
+    <ul>
+        <for(color in input.colors)>
+            <li key=color on-attach(handleAttach, color)>
+                ${color}
+            </li>
+        </for>
+    </ul>
+</div>

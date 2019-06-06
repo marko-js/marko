@@ -1,0 +1,14 @@
+$ var classes = [
+    input.class,
+    "app-button",
+    state.size !== "normal" && "app-button-" + state.size,
+    state.variant !== "primary" && "app-button-" + state.variant
+];
+<button ...input["*"] class=classes onClick("handleClick")>
+    <if(input.label)>
+        ${input.label}
+    </if>
+    <else>
+        <${input.renderBody}/>
+    </else>
+</button>

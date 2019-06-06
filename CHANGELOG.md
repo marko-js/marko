@@ -4,6 +4,42 @@
 
 ## 4.16.x
 
+### 4.17.5
+
+- Fix issue where setting the `value` attribute of a textarea to `false` caused the string `"false"` to be used in the vdom. [#1348](https://github.com/marko-js/marko/issues/1348)
+
+### 4.17.4
+
+- Updates htmljs-parser to fix an issue with comments inside inline scriptlets.
+- Fix some issues with for loop auto keying. [#1346](https://github.com/marko-js/marko/issues/1346)
+- Fix error when using a non string as a key (now logs a deprecation). [#1344](https://github.com/marko-js/marko/issues/1344)
+
+### 4.17.3
+
+- Fix issue were `getEls` would not work with repeated keys for split components. [#1343](https://github.com/marko-js/marko/issues/1343)
+
+### 4.17.2
+
+- Fix regression with namespaces in nested fragments. [#1340](https://github.com/marko-js/marko/issues/1340)
+
+### 4.17.1
+
+- Allow emitting events while the parent is mounting. [#1336](https://github.com/marko-js/marko/issues/1336)
+- Fix issue where `component.el` and `component.getEl` could return a marker node. [#1339](https://github.com/marko-js/marko/issues/1339)
+
+### 4.17.0
+
+- Element namespaces are now calculated at runtime, fixes some edge cases with the dynamic tag. [#1333](https://github.com/marko-js/marko/issues/1333)
+
+### 4.16.15
+
+- Fix an issue where nodes may be preserved if another node with the same key was rendered as preserved. [#1334](https://github.com/marko-js/marko/issues/1334)
+- Improve the `ignoreUnrecognizedTags` compiler option to ignored nested `@tags` on unrecognized tags (removes the need for the `escapeAtTags` option). [#1335](https://github.com/marko-js/marko/issues/1335)
+
+### 4.16.14
+
+- Prevent treating macro usage with parameters as a component. [#1326](https://github.com/marko-js/marko/issues/1326)
+
 ### 4.16.13
 
 - Fixes a regression with printing nested unary expressions (eg typeof). [#1323](https://github.com/marko-js/marko/issues/1323)

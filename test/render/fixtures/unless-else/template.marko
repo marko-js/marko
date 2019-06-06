@@ -1,35 +1,16 @@
 ---
-<unless(true)>
-    A
-</unless>
-<else>
-    B
-</else>
-,
-<unless(false)>
-    A
-</unless>
-<else>
-    B
-</else>
-,
-<unless(false)>
-    A
-</unless>
+<if(!true)>A</if>
+<else>B</else> , <if(!false)>A</if>
+<else>B</else> , <if(!false)>A</if>
+<else-if(false)>B</else-if>
+<else>C</else> ,
+<if(!false)>
+    <div>A</div>
+</if>
 <else-if(false)>
-    B
+    <div>B</div>
 </else-if>
 <else>
-    C
+    <div>C</div>
 </else>
-,
-<div unless(false)>
-    A
-</div>
-<div else-if(false)>
-    B
-</div>
-<div else>
-    C
-</div>
 ---

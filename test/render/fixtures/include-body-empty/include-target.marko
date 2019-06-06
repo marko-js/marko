@@ -1,11 +1,11 @@
 <div>
-    <h1>
-        Hello ${input.name}! You have ${input.count} new messages.
-    </h1>
-    <p if(input.renderBody)>
-        $ input.renderBody(out);
-    </p>
-    <p else>
-        No body!
-    </p>
+    <h1>Hello ${input.name}! You have ${input.count} new messages.</h1>
+    <if(input.renderBody)>
+        <p>
+            <${input}/>
+        </p>
+    </if>
+    <else>
+        <p>No body!</p>
+    </else>
 </div>

@@ -12,8 +12,8 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_forEach = marko_helpers.f,
     marko_createElement = marko_helpers.e,
     marko_const = marko_helpers.const,
-    marko_const_nextId = marko_const("9e11e1"),
-    marko_node0 = marko_createElement("DIV", null, null, null, 1, 0, {
+    marko_const_nextId = marko_const("a9baea"),
+    marko_node0 = marko_createElement("div", null, null, null, 1, 0, {
         i: marko_const_nextId()
       })
       .t("No colors!");
@@ -21,16 +21,16 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("H1", null, null, null, 3)
+  out.e("h1", null, null, null, 3)
     .t("Hello ")
     .t(input.name)
     .t("!");
 
   if (input.colors.length) {
-    out.be("UL");
+    out.be("ul");
 
     marko_forEach(input.colors, function(color) {
-      out.e("LI", null, null, null, 1)
+      out.e("li", null, null, null, 1)
         .t(color);
     });
 

@@ -1,0 +1,22 @@
+
+$ function setTimeoutThen(timeout) {
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, timeout);
+    });
+}
+
+<html>
+    <body>
+        <await(user from setTimeoutThen(10)) name="inner">
+            <div.inner>
+                <await(user from setTimeoutThen(10)) name="inner-inner">
+                    <div.inner-inner>
+                        <hello name="inner-inner"/>
+                    </div>
+                </await>
+                <hello name="inner"/>
+            </div>
+        </await>
+        <hello name="outer"/>
+    </body>
+</html>

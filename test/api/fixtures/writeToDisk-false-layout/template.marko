@@ -1,3 +1,5 @@
-<layout-use('./layout.marko')>
-    <layout-put into="body">Hello ${data.name}!</layout-put>
-</layout-use>
+import Layout from "./layout.marko"
+
+<${Layout}>
+    <@body>Hello ${data.name}!</@body>
+</>

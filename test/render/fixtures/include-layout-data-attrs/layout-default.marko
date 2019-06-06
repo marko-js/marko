@@ -1,19 +1,28 @@
-<h1 if(input.showHeader !== false)>
-    <if(input.header)>
-        <include(input.header)/>
-    </if>
-    <else>
-        DEFAULT TITLE
-    </else>
-</h1>
+<if(input.showHeader !== false)>
+    <h1>
+        <if(input.header)>
+            <if(typeof input.header === "string")>${input.header}</if>
+            <else>
+                <${input.header}/>
+            </else>
+        </if>
+        <else>DEFAULT TITLE</else>
+    </h1>
+</if>
 <div>
-    <include(input.body)/>
-</div>
-<h1 if(input.showFooter !== false)>
-    <if(input.footer)>
-        <include(input.footer)/>
-    </if>
+    <if(typeof input.body === "string")>${input.body}</if>
     <else>
-        DEFAULT FOOTER
+        <${input.body}/>
     </else>
-</h1>
+</div>
+<if(input.showFooter !== false)>
+    <h1>
+        <if(input.footer)>
+            <if(typeof input.footer === "string")>${input.footer}</if>
+            <else>
+                <${input.footer}/>
+            </else>
+        </if>
+        <else>DEFAULT FOOTER</else>
+    </h1>
+</if>

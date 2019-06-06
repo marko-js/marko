@@ -1,0 +1,24 @@
+$ var userPromise = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        resolve({ name: 'Frank '})
+    }, 10);
+})
+
+<!DOCTYPE html>
+
+<await(user from userPromise)>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8"/>
+            <title> Marko Test</title>
+        </head>
+        <body>
+            <div id="test"/>
+            <div id="mocha"/>
+            <div id="testsTarget" />
+
+            <app-hello name=user.name />
+            <init-components/>
+        </body>
+    </html>
+</await>

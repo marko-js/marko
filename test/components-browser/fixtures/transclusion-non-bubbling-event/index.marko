@@ -1,7 +1,7 @@
 class {}
 
-<container({ show }) key="container">
+<container|{ show }| key="container">
     <if(show)>
-        <input#eventTarget on-focus('emit', 'eventFired')/>
+        <input#eventTarget on-focus("emit", "eventFired")/>
     </if>
 </container>

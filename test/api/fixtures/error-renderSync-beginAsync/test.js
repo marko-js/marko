@@ -7,11 +7,11 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
 
     try {
         output = template.renderSync({
-            nameDataProvider: function(arg, callback) {
+            nameDataProvider: new Promise(function(resolve) {
                 setTimeout(function() {
-                    callback(null, "John");
+                    resolve(null, "John");
                 }, 100);
-            }
+            })
         });
     } catch (_e) {
         e = _e;

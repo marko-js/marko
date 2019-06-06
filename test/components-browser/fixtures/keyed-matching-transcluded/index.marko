@@ -1,7 +1,9 @@
 class {}
 
-<card for(i in [1,2,3,4])>
-    <div.body key=`transcluded:${i}`>
-      <span>${i}</span>
-    </div>
-</card>
+<for|i| of=[1, 2, 3, 4]>
+    <card>
+        <div.body key=`transcluded:${i}`>
+            <span>${i}</span>
+        </div>
+    </card>
+</for>

@@ -23,7 +23,7 @@ module.exports = function render(input, out) {
                     // it while transforming the old DOM
                     if (bodyOnly) {
                         globalComponentsContext.___preservedElBodies[
-                            key
+                            component.id + "-" + key
                         ] = true;
                     } else {
                         // If we are preserving the entire DOM node (not just the body)
@@ -36,9 +36,11 @@ module.exports = function render(input, out) {
                             key,
                             null,
                             0,
-                            8 /* FLAG_PRESERVE */
+                            2 /* FLAG_PRESERVE */
                         );
-                        globalComponentsContext.___preservedEls[key] = true;
+                        globalComponentsContext.___preservedEls[
+                            component.id + "-" + key
+                        ] = true;
                     }
 
                     return;

@@ -1,12 +1,12 @@
 <test-nested-tags-deep class="nested-tags-deep">
-    <test-nested-tags-deep:item foo="bar">
-        <test-nested-tags-deep:item:body>
+    <@item foo="bar">
+        <@body>
             <b>Deeply nested!</b>
-        </test-nested-tags-deep:item:body>
-    </test-nested-tags-deep:item>
-    <test-nested-tags-deep:item foo="baz">
-        <test-nested-tags-deep:item:body>
+        </@body>
+    </@item>
+    <@item foo="baz">
+        <@body>
             <b>Another deeply nested!</b>
-        </test-nested-tags-deep:item:body>
-    </test-nested-tags-deep:item>
+        </@body>
+    </@item>
 </test-nested-tags-deep>

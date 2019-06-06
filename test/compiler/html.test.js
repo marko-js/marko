@@ -81,3 +81,19 @@ autotest("fixtures-html", fixture => {
         }
     });
 });
+
+autotest("fixtures-html-deprecated", fixture => {
+    let test = fixture.test;
+    let dir = fixture.dir;
+    let snapshot = fixture.snapshot;
+    test(done => {
+        for (let i = 0; i < EXTENSIONS.length; i++) {
+            const extension = EXTENSIONS[i];
+            let complete = runTestForExtension(dir, snapshot, extension, done);
+
+            if (complete) {
+                return;
+            }
+        }
+    });
+});

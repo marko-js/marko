@@ -11,10 +11,10 @@ module.exports = function forRangeHelper(from, to, step, callback) {
 
     step = step == null ? 1 : Math.abs(step);
 
-    if (from < to) {
+    if (from <= to) {
         // eslint-disable-next-line no-constant-condition
         if ("MARKO_DEBUG") {
-            if (isNegative) {
+            if (isNegative && from < to) {
                 complain(
                     '<for> "from" is less than "to" but you supplied a negative step value. This will no longer be supported in future versions of Marko.'
                 );

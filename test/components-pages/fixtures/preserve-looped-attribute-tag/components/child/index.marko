@@ -1,9 +1,12 @@
 class {}
 
 <ul>
-    <for(item in input.items)>
+    <for|item| of=input.items>
         <li>
-            <include(item)/>
+            <if(typeof item === "string")>${item}</if>
+            <else>
+                <${item}/>
+            </else>
         </li>
     </for>
 </ul>

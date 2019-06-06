@@ -1,0 +1,11 @@
+class {
+    onMount() {
+        window.listItemsComponent = this;
+    }
+}
+
+<ul key="root">
+	<li for(option in input.options)>
+		<a>${option}</a>
+	</li>
+</ul>

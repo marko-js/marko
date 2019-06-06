@@ -1,7 +1,8 @@
-<script template-helpers>
-    var state = 'a';
+static var state = "a";
+static {
     var states = {
-        foo: 'b'
+        foo: "b"
     };
-</script>
-<p>${(states['foo'] || state)[0].toUpperCase()}</p>
+}
+
+<p>${(states["foo"] || state)[0].toUpperCase()}</p>

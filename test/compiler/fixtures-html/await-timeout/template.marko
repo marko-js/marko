@@ -1,0 +1,6 @@
+<await(data.userInfo) timeout=100 name="userInfo4">
+    <@then|userInfo|>4</@then>
+    <@catch|err|>
+        <if(err.name === "TimeoutError")>Timeout has occurred!</if>
+    </@catch>
+</await>

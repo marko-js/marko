@@ -1,15 +1,8 @@
-$ var showConditionalTab=input.showConditionalTab;
-
+$ var showConditionalTab = input.showConditionalTab;
 <test-tabs>
-    <test-tab title="Tab 1">
-        Tab 1 content
-    </test-tab>
-
-    <test-tab title="Tab 2">
-        Tab 2 content
-    </test-tab>
-
-    <test-tab title="Tab 3" if(showConditionalTab)>
-        Tab 3 content
-    </test-tab>
+    <test-tab title="Tab 1">Tab 1 content</test-tab>
+    <test-tab title="Tab 2">Tab 2 content</test-tab>
+    <if(showConditionalTab)>
+        <test-tab title="Tab 3">Tab 3 content</test-tab>
+    </if>
 </test-tabs>

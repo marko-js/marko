@@ -106,7 +106,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         flags,
         props
     ) {
-        var element = VElement.___createElementDynamicTag(
+        return this.element(
             tagName,
             attrsHelper(attrs),
             key,
@@ -115,7 +115,6 @@ var proto = (AsyncVDOMBuilder.prototype = {
             flags,
             props
         );
-        return this.___beginNode(element, childCount);
     },
 
     n: function(node, component) {
@@ -196,7 +195,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         flags,
         props
     ) {
-        var element = VElement.___createElementDynamicTag(
+        return this.beginElement(
             tagName,
             attrsHelper(attrs),
             key,
@@ -205,8 +204,6 @@ var proto = (AsyncVDOMBuilder.prototype = {
             flags,
             props
         );
-        this.___beginNode(element, childCount, true);
-        return this;
     },
 
     ___beginFragment: function(key, component, preserve) {
@@ -427,7 +424,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
             var vdomTree = this.___getOutput();
             // Create the root document fragment node
             doc = doc || this.___document || document;
-            this.___vnode = node = vdomTree.___actualize(doc);
+            this.___vnode = node = vdomTree.___actualize(doc, null);
             morphdom(node, vdomTree, doc, this.___components);
         }
         return node;

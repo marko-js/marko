@@ -1,2 +1,5 @@
-var text = '<script>Hello</script>';
-<include(text)/>
+$ var text = "<script>Hello</script>";
+<if(typeof text === "string")>${text}</if>
+<else>
+    <${text}/>
+</else>

@@ -106,10 +106,26 @@ class Normalizer {
             return;
         }
 
+        let tagName = elNode.tagName;
+
+        try {
+            if (elNode.rawTagNameExpression) {
+                tagName = builder.parseExpression(elNode.rawTagNameExpression);
+            } else if (
+                context.ignoreUnrecognizedTags &&
+                !elNode.parentNode.tagDef
+            ) {
+                tagName = tagName.replace(/^@/, "at_"); // escapes @tags inside unrecognized tags
+            }
+        } catch (e) {
+            const type =
+                elNode.rawTagNameExpression === "()" ? "Missing" : "Invalid";
+            context.addError(`${type} dynamic tag name expression`);
+            return;
+        }
+
         var newNode = this.context.createNodeForEl({
-            tagName: elNode.rawTagNameExpression
-                ? builder.parseExpression(elNode.rawTagNameExpression)
-                : elNode.tagName,
+            tagName: tagName,
             argument: elNode.argument,
             params: elNode.params,
             tagString: elNode.tagString,
@@ -149,6 +165,7 @@ class Normalizer {
             elNode.params.length &&
             elNode.tagName !== "for" &&
             elNode.tagName !== "macro" &&
+            !context.isMacro(elNode.tagName) &&
             !(
                 (elNode.tagName === "@then" || elNode.tagName === "@catch") &&
                 elNode.parentNode.tagName === "await"

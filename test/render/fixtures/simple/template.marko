@@ -1,18 +1,16 @@
 $ {
-    var rootClass=input.rootClass,
-         colors=input.colors,
-         message=input.message;
+    var rootClass = input.rootClass,
+        colors = input.colors,
+        message = input.message;
 }
-
-<div class="hello-world ${rootClass}">
-    ${message}
-</div>
-
-<ul if(colors && colors.length)>
-    <li class="color" for(color in colors)>
-        ${color}
-    </li>
-</ul>
-<div else>
-    No colors!
-</div>
+<div class=`hello-world ${rootClass}`>${message}</div>
+<if(colors && colors.length)>
+    <ul>
+        <for|color| of=colors>
+            <li class="color">${color}</li>
+        </for>
+    </ul>
+</if>
+<else>
+    <div>No colors!</div>
+</else>

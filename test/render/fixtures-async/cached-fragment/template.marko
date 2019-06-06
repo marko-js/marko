@@ -1,15 +1,16 @@
-<var count=0/>
-
-<macro foo(cacheName, cacheKey)>
-    <cached-fragment cache-key=cacheKey cache-name=(cacheName+(out.isVDOM ? '-vdom' : ''))>
+$ var count = 0;
+<macro|macroInput| name="foo">
+    $ var cacheName = macroInput.cacheName;
+    $ var cacheKey = macroInput.cacheKey;
+    <cached-fragment
+        cache-key=cacheKey
+        cache-name=(cacheName + (out.isVDOM ? "-vdom" : ""))>
         Count: ${count++}
     </cached-fragment>
 </macro>
-
-<foo('cacheA', 'keyA')/>
-<foo('cacheA', 'keyA')/>
-<foo('cacheA', 'keyB')/>
-
-<foo('cacheB', 'keyA')/>
-<foo('cacheB', 'keyA')/>
-<foo('cacheB', 'keyB')/>
+<foo cacheName="cacheA" cacheKey="keyA"/>
+<foo cacheName="cacheA" cacheKey="keyA"/>
+<foo cacheName="cacheA" cacheKey="keyB"/>
+<foo cacheName="cacheB" cacheKey="keyA"/>
+<foo cacheName="cacheB" cacheKey="keyA"/>
+<foo cacheName="cacheB" cacheKey="keyB"/>

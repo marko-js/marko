@@ -1,0 +1,7 @@
+<div class=input.className
+    class2="$!{input.className}"
+    foo=('a' + input.foo + 'b')
+    bar="a ${input.foo} b"
+    baz="a $!{input.foo} b"
+    nested="a $!{input.foo + 'nested ${input.bar}'} b">
+</div>

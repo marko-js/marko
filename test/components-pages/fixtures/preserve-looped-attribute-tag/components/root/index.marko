@@ -1,7 +1,12 @@
 class {}
 
 <child>
-    <@item for(item in input.items)>
-        <include(item)/>
-    </@item>
+    <for|item| of=input.items>
+        <@item>
+            <if(typeof item === "string")>${item}</if>
+            <else>
+                <${item}/>
+            </else>
+        </@item>
+    </for>
 </child>

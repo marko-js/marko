@@ -63,11 +63,6 @@ if (g.__MARKO_CONFIG) {
         ignoreUnrecognizedTags: false,
 
         /**
-         * Whether <@tags> should error when are used outside a custom component.
-         */
-        escapeAtTags: false,
-
-        /**
          * Controls whether or not a key should be assigned to all HTML
          * and custom tags at compile-time. The default is `true`
          */

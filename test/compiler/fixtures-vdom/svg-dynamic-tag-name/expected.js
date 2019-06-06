@@ -20,7 +20,7 @@ function render(input, out, __component, component, state) {
 
   var isCircle = true;
 
-  out.be("svg", marko_attrs0, "0", component, null, 1);
+  out.be("svg", marko_attrs0, "0", component);
 
   marko_dynamicTag(out, isCircle ? "circle" : "square", {
       width: 200,

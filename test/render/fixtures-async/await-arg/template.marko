@@ -1,4 +1,3 @@
-
 static var users = {
     "0": {
         name: "John B. Flowers",
@@ -21,27 +20,34 @@ static var users = {
         gender: "Male"
     }
 };
-
 static function userInfo(arg, done) {
     setTimeout(function() {
         done(null, users[arg.userId]);
     }, 100);
-};
+}
 
 <ul>
-    <li for(userId in [0, 1, 2, 3])>
-        <await(userInfo from userInfo) arg={ userId } name=("user" + userId)>
-            <ul>
-                <li>
-                    <b>Name:</b> ${userInfo.name}
-                </li>
-                <li>
-                    <b>Gender:</b> ${userInfo.gender}
-                </li>
-                <li>
-                    <b>Occupation:</b> ${userInfo.occupation}
-                </li>
-            </ul>
-        </await>
-    </li>
+    <for|userId| of=[0, 1, 2, 3]>
+        <li>
+            <await(
+                userInfo.bind(null, {
+                    userId: userId
+                })
+            ) name=("user" + userId)>
+                <@then|userInfo|>
+                    <ul>
+                        <li>
+                            <b>Name:</b> ${userInfo.name}
+                        </li>
+                        <li>
+                            <b>Gender:</b> ${userInfo.gender}
+                        </li>
+                        <li>
+                            <b>Occupation:</b> ${userInfo.occupation}
+                        </li>
+                    </ul>
+                </@then>
+            </await>
+        </li>
+    </for>
 </ul>

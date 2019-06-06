@@ -10,6 +10,8 @@ class {
 <div.root>
     [ROOT]
     <span>
-        <hello key="hello" count=state.count if(state.renderHello)/>
+        <if(state.renderHello)>
+            <hello key="hello" count=state.count/>
+        </if>
     </span>
 </div>

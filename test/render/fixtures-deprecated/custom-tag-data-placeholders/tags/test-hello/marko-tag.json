@@ -1,0 +1,5 @@
+{
+    "renderer": "./renderer.js",
+    "@name": "string",
+    "@adult": "boolean"
+}

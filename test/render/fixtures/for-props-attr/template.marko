@@ -1,5 +1,8 @@
 <ul>
-    <li for(name, value in {'foo': 'low', 'bar': 'high'})>
-        [${name}=${value}]
-    </li>
+    <for|name, value| in={
+        foo: "low",
+        bar: "high"
+    }>
+        <li>[${name}=${value}]</li>
+    </for>
 </ul>

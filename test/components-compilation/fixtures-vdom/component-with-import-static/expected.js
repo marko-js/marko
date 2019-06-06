@@ -18,7 +18,7 @@ var counter = 0;
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.e("DIV", null, "0", component, 1)
+  out.e("div", null, "0", component, 1)
     .t(counter++);
 }
 

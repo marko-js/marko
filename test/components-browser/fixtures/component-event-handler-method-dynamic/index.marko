@@ -1,0 +1,13 @@
+<div>
+    <h1>app-macro-events</h1>
+    <macro|macroInput| name="renderButton">
+        $ var id = macroInput.id;
+        $ var label = macroInput.label;
+        $ var handler = macroInput.handler;
+        <button key=`${id}` type="button" onClick($nonstandard`${handler}`)>
+            $label
+        </button>
+    </macro>
+    <renderButton id="foo" label="Foo" handler="handleFooClick"/>
+    <renderButton id="bar" label="Bar" handler="handleBarClick"/>
+</div>

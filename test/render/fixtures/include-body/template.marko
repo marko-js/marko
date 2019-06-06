@@ -1,7 +1,5 @@
-<include("./include-target.marko") name="Frank" count=20>
-    Have a
-    <b>
-        wonderful
-    </b>
-    day!
-</include>
+import IncludeTarget from "./include-target.marko"
+
+<${IncludeTarget} name="Frank" count=20>
+    Have a <b>wonderful</b> day!
+</>
