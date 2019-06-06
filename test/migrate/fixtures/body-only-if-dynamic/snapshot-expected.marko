@@ -1,7 +1,24 @@
 <!-- test/migrate/fixtures/body-only-if-dynamic/template.marko -->
 
-import MyComponent_1 from "PROJECT_ROOT/test/migrate/fixtures/body-only-if-dynamic/components/MyComponent.marko"
+import MyComponent from "./components/MyComponent.marko"
+import SecondComponent_1 from "./components/SecondComponent.marko"
+import ThirdComponent from "./components/ThirdComponent.marko"
+import FourthComponent_1 from "./components/FourthComponent.marko"
+import FifthComponent_3 from "./components/FifthComponent.marko"
 
 <div>
-    <${input.test ? null : MyComponent_1}>Blah</>
+    $ const SecondComponent = "something";
+    $ var FourthComponent = "FourthTest";
+    $ let FifthComponent = "Something";
+    $ var FifthComponent_1 = "Something";
+    $ var Matcher = "FifthComponent_2";
+    <div ThirdComponent=FourthComponent ThirdComponent_1="ThirdComponent">
+        ThirdComponent
+    </div>
+    <${input.test ? null : MyComponent}>There</>
+    <${input.test ? null : SecondComponent_1}>Are</>
+    <${!input.test ? null : MyComponent}>Not</>
+    <${input.test ? null : ThirdComponent}>Lots</>
+    <${input.test ? null : FourthComponent_1}>Of</>
+    <${input.test ? null : FifthComponent_3}>Tests</>
 </div>
