@@ -410,7 +410,7 @@ When a custom tag receives [body content](./body-content.md), it is passed as a 
 
 ## Attribute Tag
 
-As the name implies, `<@attribute-tags>` are special attributes that take the form of tags. They allow you to pass named body sections to a [custom tag](./custom-tag.md).
+As the name implies, `<@attribute-tags>` are special attributes that take the form of tags. They allow you to pass named body sections to a [custom tag](./custom-tags.md).
 
 The core `<await>` tag allows you to pass multiple body sections that it will conditionally render based on the state of the promise.
 
