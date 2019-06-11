@@ -97,7 +97,7 @@ _fancy-save-button.marko_
 
 ### When to use a Redux like pattern
 
-Often the above two approaches are enough, and many people [jump to this part far to quickly](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367). Like `<context>`, often anything stored in redux is `global`. This means that it can (if abused) create components that are hard to reuse, reason about and test. However it is important to understand when a tool like `redux` is useful in any UI library.
+Often the above two approaches are enough, and many people [jump to this part far too quickly](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367). Like `<context>`, often anything stored in redux is `global`. This means that it can (if abused) create components that are hard to reuse, reason about and test. However it is important to understand when a tool like `redux` is useful in any UI library.
 
 Redux provides indirection to updating any state that it controls. This is useful if you need the following:
 
