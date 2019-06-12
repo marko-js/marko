@@ -2,7 +2,11 @@
 
 # 4.x
 
-## 4.16.x
+## 4.18.x
+
+### 4.18.0
+
+- Added dynamic tags to act like body-only-if. If dynamic tags are null then the outer tag will not be rendered. However, the body will be rendered. Deprecated body-only-if [#1332](https://github.com/marko-js/marko/pull/1332)
 
 ### 4.17.5
 
