@@ -2,28 +2,6 @@
 
 var coreAttrHandlers = [
     [
-        "body-only-if",
-        function(attr, node, el) {
-            var argument = attr.argument;
-            if (!argument) {
-                return false;
-            }
-
-            var test;
-            try {
-                test = this.builder.parseExpression(argument);
-            } catch (e) {
-                test = this.builder.literalFalse();
-                this.addError(
-                    "Invalid expression for body-only-if statement:\n" +
-                        e.message
-                );
-            }
-
-            el.setBodyOnlyIf(test);
-        }
-    ],
-    [
         "marko-preserve-whitespace",
         function(attr, node, el) {
             el.setPreserveWhitespace(true);

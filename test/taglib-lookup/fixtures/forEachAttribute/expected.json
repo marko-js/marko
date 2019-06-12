@@ -8,7 +8,7 @@
     "no-update-body",
     "no-update-if",
     "no-update-body-if",
-    "body-only-if",
+    "marko-preserve-whitespace",
     "if",
     "else-if",
     "else",
@@ -28,6 +28,7 @@
     "w-preserve-attrs",
     "w-body",
     "include",
+    "body-only-if",
     "on*",
     "once*",
     "w-on*"

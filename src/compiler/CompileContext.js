@@ -330,6 +330,17 @@ class CompileContext extends EventEmitter {
         return this._errors;
     }
 
+    getRelativePath(importPath) {
+        let newPath = importPath;
+        if (path.isAbsolute(importPath)) {
+            const relativePath = path.relative(this.dirname, importPath);
+            newPath = relativePath.startsWith(".")
+                ? relativePath
+                : `./${relativePath}`;
+        }
+        return newPath;
+    }
+
     getRequirePath(targetFilename) {
         if (targetFilename.startsWith(rootDir)) {
             var deresolved =

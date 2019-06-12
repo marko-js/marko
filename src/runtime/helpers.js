@@ -256,6 +256,17 @@ var helpers = {
                     }
                 }
             }
+        } else if (attrs.renderBody) {
+            var compFlags = componentDef ? componentDef.___flags : 0;
+            out.___beginFragment(
+                key,
+                component,
+                IS_SERVER
+                    ? compFlags & FLAG_WILL_RERENDER_IN_BROWSER
+                    : render === w10NOOP
+            );
+            attrs.renderBody(out);
+            out.___endFragment();
         }
     },
 

@@ -1,4 +1,5 @@
 const commonMigrators = [
+    require("./body-only-if"),
     require("./control-flow-directives"),
     require("./dynamic-attributes"),
     require("./include-directive"),
