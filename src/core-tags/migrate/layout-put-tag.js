@@ -29,5 +29,11 @@ module.exports = function migrator(oldNode, context) {
     }
 
     oldNode.moveChildrenTo(newNode);
-    oldNode.replaceWith(newNode);
+    newNode._normalizeChildTextNodes(context, true, true);
+
+    if (newNode.childCount) {
+        oldNode.replaceWith(newNode);
+    } else {
+        oldNode.detach();
+    }
 };
