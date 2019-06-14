@@ -1,6 +1,6 @@
 const commonMigrators = [
-    require("./body-only-if"),
     require("./control-flow-directives"),
+    require("./body-only-if"),
     require("./dynamic-attributes"),
     require("./include-directive"),
     require("./legacy-nested-tag"),
