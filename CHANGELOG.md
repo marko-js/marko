@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.2
+
+- Fixes an issue where fragments could remove nodes from their siblings [#1359](https://github.com/marko-js/marko/pull/1359)
+
 ### 4.18.1
 
 - Fixes a regression with `body-only-if` and a legacy control flow attribute [#1356](https://github.com/marko-js/marko/pull/1356)
