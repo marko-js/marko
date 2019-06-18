@@ -1,4 +1,4 @@
-var createRendererFunc = require("../../renderer");
+var createRendererFunc = require("../../../runtime/components/renderer");
 
 module.exports = function(componentProps) {
     var renderer = createRendererFunc(
