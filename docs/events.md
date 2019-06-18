@@ -33,7 +33,7 @@ The benefit here is that within the handler you will have access to the current 
 
 ### Function handler
 
-You can provide a function as the first argument of the `on-*` attribute. This function will be called whenever the event is fired. Below we use the [`static syntax`](./syntax.md#static) to define a function and use that.
+You can provide a function as the first argument of the `on-*` attribute. This function will be called whenever the event is fired. Below we use the [`static syntax`](./syntax.md#static-javascript) to define a function and use that.
 
 ```marko
 static function handleClick(event) {
