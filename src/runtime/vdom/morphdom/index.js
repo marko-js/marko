@@ -712,7 +712,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         } else {
             // If curFromNodeChild is non-null then we still have some from nodes
             // left over that need to be removed
-            while (curFromNodeChild) {
+            var fragmentBoundary =
+                fromNode.nodeType === FRAGMENT_NODE ? fromNode.endNode : null;
+
+            while (curFromNodeChild && curFromNodeChild !== fragmentBoundary) {
                 fromNextSibling = nextSibling(curFromNodeChild);
 
                 if (

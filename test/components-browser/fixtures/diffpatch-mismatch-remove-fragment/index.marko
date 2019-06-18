@@ -1,0 +1,21 @@
+class  {
+    onCreate() {
+        this.state = { count: 0 };
+    }
+}
+
+<macro|input| name="fragment">
+    <${input}/>
+</macro>
+
+<div.root key="root">
+    <fragment>
+        <if(state.count === 0)>
+            <span>a</span>
+            <span>b</span>
+        </if>
+        <fragment>
+            <span>c</span>
+        </fragment>
+    </fragment>
+</div>
