@@ -270,7 +270,7 @@ exports.registerTaglib = function(filePath) {
 
     ok(typeof filePath === "string", '"filePath" should be a string');
     taglib.registerFromFile(filePath);
-    taglib.clearCaches();
+    clearCaches();
 };
 
 exports.isVDOMSupported = true;
