@@ -8,6 +8,9 @@ $ {
 $ input.template.render({ x: 1 }, out);
 $ input.template.renderer({ y() {} }, out);
 $ input.barRenderer(null, out);
+$ state.barRenderer(null, out);
+$ data.barRenderer(null, out);
+$ x.barRenderer(null, out);
 
 $ input.barRenderer({}, true, out);
 

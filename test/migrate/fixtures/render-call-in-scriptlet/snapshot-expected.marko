@@ -9,6 +9,17 @@
 <${{
     render: input.barRenderer
 }}/>
+<${{
+    render: state.barRenderer
+}}/>
+<${{
+    render: data.barRenderer
+}}/>
+<${{
+    render: function(_, out) {
+        x.barRenderer(null, out);
+    }
+}}/>
 <${function(out) {
     input.barRenderer({}, true, out);
 }}/>
