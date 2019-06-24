@@ -33,7 +33,7 @@
         "browser-refresh-client": "^1.0.0",
         "camelcase": "^5.0.0",
         "char-props": "~0.1.5",
-        "complain": "^1.4.0",
+        "complain": "^1.6.0",
         "deresolve": "^1.1.2",
         "escodegen": "^1.8.1",
         "esprima": "^4.0.0",

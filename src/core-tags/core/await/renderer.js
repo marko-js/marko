@@ -18,7 +18,8 @@ function requestData(provider, timeout) {
         // eslint-disable-next-line no-constant-condition
         if ("MARKO_DEBUG") {
             complain(
-                "Passing a callback function to the <await> tag has been deprecated, please use a promise instead."
+                "Passing a callback function to the <await> tag has been deprecated, please use a promise instead.",
+                { level: 1 }
             );
         }
 

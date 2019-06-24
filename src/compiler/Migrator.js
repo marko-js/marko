@@ -79,7 +79,9 @@ function migrateTree(ast, context) {
 
 class Migrator {
     migrate(ast, context) {
+        context.stage = "migrate";
         migrateTree(ast, context);
+        delete context.stage;
         return ast;
     }
 }

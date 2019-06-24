@@ -281,14 +281,20 @@ class CompileContext extends EventEmitter {
     deprecate(message, node) {
         var currentNode = node || this._currentNode;
         var location = currentNode && currentNode.pos;
+        var options = { location };
 
         if (location != null) {
-            location = this.getPosInfo(location).toString();
+            options.location = this.getPosInfo(location).toString();
         } else {
-            location = this.filename;
+            options.location = this.filename;
         }
 
-        complain(message, { location });
+        if (this.stage === "migrate") {
+            options.heading = "MIGRATION";
+            options.headingColor = "\x1b[36;1m";
+        }
+
+        complain(message, options);
     }
 
     addError(errorInfo) {
