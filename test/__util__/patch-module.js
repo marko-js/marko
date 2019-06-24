@@ -26,13 +26,7 @@ Module._resolveFilename = function(request, parent, isMain) {
             request === "marko/jquery" ||
             request === "marko/legacy-components" ||
             request === "marko/ready" ||
-            request === "marko/env"
-        ) {
-            request = nodePath.join(
-                rootDir,
-                request.substring("marko/".length)
-            );
-        } else if (
+            request === "marko/env" ||
             request.startsWith("marko/dist/") ||
             request.startsWith("marko/src/") ||
             request.startsWith("marko/helpers/")

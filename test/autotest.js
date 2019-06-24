@@ -62,18 +62,25 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     let mochaDetails;
 
     if (hasMainFile) {
-        complain.log = function(message) {
-            context.deprecation = context.deprecation || new Error(message);
-        };
-        const main = require(mainPath);
-        const skip = main.skip || main["skip_" + mode];
-        const fails = main.fails || main["fails_" + mode];
-        if (skip) {
-            mochaTestFunction = it.skip;
-            mochaDetails = skip;
-        } else if (fails) {
-            mochaTestFunction = it.fails;
-            mochaDetails = fails;
+        try {
+            complain.log = function(message) {
+                context.deprecation = context.deprecation || new Error(message);
+            };
+            const main = require(mainPath);
+            const skip = main.skip || main["skip_" + mode];
+            const fails = main.fails || main["fails_" + mode];
+            if (skip) {
+                mochaTestFunction = it.skip;
+                mochaDetails = skip;
+            } else if (fails) {
+                mochaTestFunction = it.fails;
+                mochaDetails = fails;
+            }
+        } catch (err) {
+            mochaTestFunction(name, () => {
+                throw err;
+            });
+            return;
         }
     }
 
@@ -128,12 +135,14 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
                 }
             };
             if (fn.length > 0) {
-                return done => {
+                return function(done) {
                     complain.log = function(message) {
-                        context.deprecation =
-                            context.deprecation || new Error(message);
+                        if (!/NOTICE/.test(message)) {
+                            context.deprecation =
+                                context.deprecation || new Error(message);
+                        }
                     };
-                    return fn(err => {
+                    return fn.call(this, err => {
                         if (err) {
                             done(err);
                         } else {
@@ -143,13 +152,15 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
                     });
                 };
             } else {
-                return () => {
+                return function() {
                     complain.log = function(message) {
-                        context.deprecation =
-                            context.deprecation || new Error(message);
+                        if (!/NOTICE/.test(message)) {
+                            context.deprecation =
+                                context.deprecation || new Error(message);
+                        }
                     };
                     return Promise.resolve()
-                        .then(() => fn())
+                        .then(() => fn.call(this))
                         .then(assertDeprecation);
                 };
             }
