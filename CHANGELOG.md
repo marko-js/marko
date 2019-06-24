@@ -4,6 +4,14 @@
 
 ## 4.18.x
 
+### 4.18.3
+
+- Fix `registerTaglib`: use correct function call [#1363](https://github.com/marko-js/marko/pull/1363)
+- Fix tryonline: correct paths and no `taglibImports` [#1360](https://github.com/marko-js/marko/pull/1360)
+- Migration fix: [#1364](https://github.com/marko-js/marko/pull/1364)
+- Migration improvement: deprecation warnings that are automatically migratable now have a `MIGRATION` heading [#1364](https://github.com/marko-js/marko/pull/1364) (also included test improvements)
+- Migration improvement: remove empty `<layout-put>` tags [#1355](https://github.com/marko-js/marko/pull/1355)
+
 ### 4.18.2
 
 - Fixes an issue where fragments could remove nodes from their siblings [#1359](https://github.com/marko-js/marko/pull/1359)
