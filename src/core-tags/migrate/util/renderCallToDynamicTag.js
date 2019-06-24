@@ -46,7 +46,21 @@ module.exports = function renderCallToDynamicTag(ast, context) {
                 tagName = callee.object;
             } else {
                 tagName = builder.objectExpression({
-                    render: callee
+                    render:
+                        callee.object &&
+                        callee.object.type === "Identifier" &&
+                        (callee.object.name === "input" ||
+                            callee.object.name === "state" ||
+                            callee.object.name === "data")
+                            ? callee
+                            : builder.functionDeclaration(
+                                  null,
+                                  [
+                                      builder.identifier("_"),
+                                      builder.identifier("out")
+                                  ],
+                                  [ast]
+                              )
                 });
             }
         }
