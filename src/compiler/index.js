@@ -260,8 +260,32 @@ function registerCoreTaglibs() {
     if (!coreTaglibsRegistered) {
         coreTaglibsRegistered = true;
         taglib.register(
-            require("../core-tags/marko.json"),
-            require.resolve("../core-tags/marko.json")
+            require("../core-tags/cache/marko.json"),
+            require.resolve("../core-tags/cache/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/components/marko.json"),
+            require.resolve("../core-tags/components/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/core/marko.json"),
+            require.resolve("../core-tags/core/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/html/marko.json"),
+            require.resolve("../core-tags/html/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/migrate/marko.json"),
+            require.resolve("../core-tags/migrate/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/svg/marko.json"),
+            require.resolve("../core-tags/svg/marko.json")
+        );
+        taglib.register(
+            require("../core-tags/math/marko.json"),
+            require.resolve("../core-tags/math/marko.json")
         );
     }
 }

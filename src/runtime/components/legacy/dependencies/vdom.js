@@ -1,3 +1,3 @@
 var patch = require("./").patch;
-var Template = require("../../../runtime/vdom").Template;
+var Template = require("../../../vdom").Template;
 patch(Template);
