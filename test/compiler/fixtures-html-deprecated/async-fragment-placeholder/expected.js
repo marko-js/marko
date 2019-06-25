@@ -17,14 +17,14 @@ function render(input, out, __component, component, state) {
       _provider: data.userInfo,
       _name: "data.userInfo",
       then: {
-          renderBody: function renderBody(out, userInfo) {
+          renderBody: function(out, userInfo) {
             out.w("Hello " +
               marko_escapeXml(testData.name) +
               "!");
           }
         },
       placeholder: {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Loading name...");
           }
         }

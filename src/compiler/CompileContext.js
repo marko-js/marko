@@ -15,6 +15,7 @@ var extend = require("raptor-util/extend");
 var Walker = require("./Walker");
 var EventEmitter = require("events").EventEmitter;
 var utilFingerprint = require("./util/finger-print");
+var safeVarName = require("./util/safeVarName");
 var htmlElements = require("./util/html-elements");
 var markoModules = require("./modules");
 
@@ -276,6 +277,19 @@ class CompileContext extends EventEmitter {
         }
 
         return this.data[name];
+    }
+
+    nextUniqueId(name) {
+        name = name || "";
+        var lookup = `_${name}UniqueIdCounter`;
+        var componentNextElId = this.data[lookup];
+        if (componentNextElId == null) {
+            this.data[lookup] = 0;
+        }
+
+        var id = this.data[lookup]++;
+
+        return name ? `$${safeVarName(name)}$${id}` : `${id}`;
     }
 
     deprecate(message, node) {

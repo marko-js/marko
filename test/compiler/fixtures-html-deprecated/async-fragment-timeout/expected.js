@@ -18,12 +18,12 @@ function render(input, out, __component, component, state) {
       _provider: data.userInfo,
       _name: "data.userInfo",
       then: {
-          renderBody: function renderBody(out, userInfo) {
+          renderBody: function(out, userInfo) {
             out.w("4");
           }
         },
       catch: {
-          renderBody: function renderBody(out, err) {
+          renderBody: function(out, err) {
             if (err.name === "TimeoutError") {
               out.w("Timeout has occurred!");
             }

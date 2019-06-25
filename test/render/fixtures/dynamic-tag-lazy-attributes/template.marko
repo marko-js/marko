@@ -1,0 +1,8 @@
+$ var i = 0;
+$ var tag = null;
+<${tag} data-index=i++/>
+<${tag} data-index=i++>My nested content</>
+<${!tag && "a"} data-index=i++/>
+<${!tag && "a"} data-index=i++/>
+
+<div>${i}</div>

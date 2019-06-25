@@ -1,3 +1,3 @@
-function renderBody(out) {
+function(out) {
   out.w("Hello World!");
 }

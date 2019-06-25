@@ -16,7 +16,7 @@ function render(input, out, __component, component, state) {
 
   test_tag({
       nested: true && {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Hello");
           }
         }
@@ -24,7 +24,7 @@ function render(input, out, __component, component, state) {
 
   test_tag({
       nested: true && {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Hello");
           }
         }

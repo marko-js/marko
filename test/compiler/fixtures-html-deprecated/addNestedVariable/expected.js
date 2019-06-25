@@ -14,7 +14,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   test_addNestedVariable_tag({
-      renderBody: function renderBody(out, foo) {
+      renderBody: function(out, foo) {
         out.w("Hello " +
           marko_escapeXml(foo) +
           "!");

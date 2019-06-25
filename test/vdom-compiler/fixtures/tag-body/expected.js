@@ -17,7 +17,7 @@ function render(input, out, __component, component, state) {
 
   test_hello_tag({
       name: "World",
-      renderBody: function renderBody(out) {
+      renderBody: function(out) {
         out.t("Body content");
       }
     }, out);

@@ -37,7 +37,6 @@ module.exports = function generateCode(node, codegen) {
     var argument = node.argument;
     var hasBody = body && body.length;
     var openTagOnly = node.openTagOnly;
-    var bodyOnlyIf = node.bodyOnlyIf;
     var selfClosed = node.selfClosed === true;
     var isCustomElement = node.customElement;
 
@@ -45,7 +44,7 @@ module.exports = function generateCode(node, codegen) {
         body = codegen.generateCode(body);
     }
 
-    if (hasBody || bodyOnlyIf) {
+    if (hasBody) {
         openTagOnly = false;
         selfClosed = false;
     } else if (selfClosed) {
@@ -86,21 +85,9 @@ module.exports = function generateCode(node, codegen) {
         );
     }
 
-    if (bodyOnlyIf) {
-        var startIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
-            startTag
-        ]);
-
-        var endIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
-            endTag,
-            propertiesScript
-        ]);
-        return [startIf, body, endIf];
+    if (openTagOnly) {
+        return [codegen.generateCode(startTag), propertiesScript];
     } else {
-        if (openTagOnly) {
-            return [codegen.generateCode(startTag), propertiesScript];
-        } else {
-            return [startTag, body, endTag, propertiesScript];
-        }
+        return [startTag, body, endTag, propertiesScript];
     }
 };

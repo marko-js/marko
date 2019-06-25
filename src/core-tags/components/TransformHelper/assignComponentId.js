@@ -81,7 +81,7 @@ module.exports = function assignComponentId(isRepeated) {
     } else {
         // Case 3 - We need to add a unique auto key
         let parentForKey = getParentForKeyVar(el, this);
-        let uniqueKey = this.nextUniqueId();
+        let uniqueKey = context.nextUniqueId();
 
         el.isAutoKeyed = true;
 
@@ -122,9 +122,7 @@ module.exports = function assignComponentId(isRepeated) {
                 return this.idVarNode;
             }
 
-            const idVar = builder.identifier(
-                transformHelper.nextUniqueId("key")
-            );
+            const idVar = builder.identifier(context.nextUniqueId("key"));
 
             this.idVarNode = builder.vars([
                 {
@@ -168,7 +166,7 @@ const getParentForKeyVar = (el, transformHelper) => {
     if (parentFor.keyVar) return parentFor.keyVar;
 
     const keyScopeIdentifier = builder.identifier(
-        transformHelper.nextUniqueId("keyScope")
+        context.nextUniqueId("keyScope")
     );
 
     const vars = builder.vars([]);
@@ -178,7 +176,7 @@ const getParentForKeyVar = (el, transformHelper) => {
 
     if (firstElement) {
         const keyValueIdentifier = builder.identifier(
-            transformHelper.nextUniqueId("keyValue")
+            context.nextUniqueId("keyValue")
         );
 
         if (firstElement.key) {
@@ -232,7 +230,7 @@ const getParentForKeyVar = (el, transformHelper) => {
 const createIndexKey = (forNode, transformHelper) => {
     const context = transformHelper.context;
     const builder = context.builder;
-    const identifier = builder.identifier(transformHelper.nextUniqueId("for"));
+    const identifier = builder.identifier(context.nextUniqueId("for"));
     const initialize = builder.var(identifier, builder.literal(0));
     const parentForKey = getParentForKeyVar(forNode, transformHelper);
 

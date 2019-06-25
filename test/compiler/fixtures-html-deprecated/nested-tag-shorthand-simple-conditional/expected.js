@@ -16,7 +16,7 @@ function render(input, out, __component, component, state) {
 
   test_message_tag({
       body: someCondition && {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("My body");
           }
         }

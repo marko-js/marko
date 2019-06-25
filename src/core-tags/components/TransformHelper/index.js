@@ -54,19 +54,6 @@ class TransformHelper {
         );
     }
 
-    nextUniqueId(name) {
-        name = name || "";
-        var lookup = `_${name}UniqueIdCounter`;
-        var componentNextElId = this.context.data[lookup];
-        if (componentNextElId == null) {
-            this.context.data[lookup] = 0;
-        }
-
-        var id = this.context.data[lookup]++;
-
-        return name ? `$${name}$${id}` : `${id}`;
-    }
-
     serializeKey() {
         var el = this.el;
         var key = el.key;

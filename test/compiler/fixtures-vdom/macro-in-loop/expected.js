@@ -41,7 +41,9 @@ function render(input, out, __component, component, state) {
 
           out.be("li", null, "2" + $keyScope$1, component);
 
-          marko_dynamicTag(out, macro_renderTree, child, null, null, __component, "3" + $keyScope$1);
+          marko_dynamicTag(out, macro_renderTree, function() {
+            return child;
+          }, null, null, null, __component, "3" + $keyScope$1);
 
           out.ee();
         });
@@ -50,7 +52,9 @@ function render(input, out, __component, component, state) {
       }
     }
 
-    marko_dynamicTag(out, macro_renderTree, input.nodes[i], null, null, __component, "4" + $keyScope$0);
+    marko_dynamicTag(out, macro_renderTree, function() {
+      return input.nodes[i];
+    }, null, null, null, __component, "4" + $keyScope$0);
   });
 }
 

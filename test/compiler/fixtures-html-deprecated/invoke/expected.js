@@ -16,9 +16,11 @@ function render(input, out, __component, component, state) {
       __component = widget,
       component = __component._c;
 
-  marko_dynamicTag(out, input, {
-      x: 1
-    }, null, null, __component, "hi");
+  marko_dynamicTag(out, input, function() {
+    return {
+        x: 1
+      };
+  }, null, null, null, __component, "hi");
 }
 
 marko_template._ = marko_renderer(render, {

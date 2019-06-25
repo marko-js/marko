@@ -134,7 +134,8 @@ var helpers = {
     d: function dynamicTag(
         out,
         tag,
-        attrs,
+        getAttrs,
+        renderBody,
         args,
         props,
         componentDef,
@@ -142,6 +143,7 @@ var helpers = {
         customEvents
     ) {
         if (tag) {
+            var attrs = getAttrs && getAttrs();
             var component = componentDef && componentDef.___component;
             if (typeof tag === "string") {
                 if (customEvents) {
@@ -159,17 +161,10 @@ var helpers = {
                     });
                 }
 
-                if (attrs.renderBody) {
-                    var renderBody = attrs.renderBody;
-                    var otherAttrs = {};
-                    for (var attrKey in attrs) {
-                        if (attrKey !== "renderBody") {
-                            otherAttrs[attrKey] = attrs[attrKey];
-                        }
-                    }
+                if (renderBody) {
                     out.___beginElementDynamic(
                         tag,
-                        otherAttrs,
+                        attrs,
                         key,
                         component,
                         0,
@@ -190,13 +185,14 @@ var helpers = {
                     );
                 }
             } else {
+                var defaultAttrs = renderBody ? { renderBody: renderBody } : {};
                 if (attrs == null) {
-                    attrs = {};
+                    attrs = defaultAttrs;
                 } else if (typeof attrs === "object") {
                     attrs = Object.keys(attrs).reduce(function(r, key) {
                         r[removeDashes(key)] = attrs[key];
                         return r;
-                    }, {});
+                    }, defaultAttrs);
                 }
 
                 if (tag._ || tag.renderer || tag.render) {
@@ -256,7 +252,7 @@ var helpers = {
                     }
                 }
             }
-        } else if (attrs.renderBody) {
+        } else if (renderBody) {
             var compFlags = componentDef ? componentDef.___flags : 0;
             out.___beginFragment(
                 key,
@@ -265,7 +261,7 @@ var helpers = {
                     ? compFlags & FLAG_WILL_RERENDER_IN_BROWSER
                     : render === w10NOOP
             );
-            attrs.renderBody(out);
+            renderBody(out);
             out.___endFragment();
         }
     },

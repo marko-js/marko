@@ -48,8 +48,6 @@ module.exports = function(node, codegen, vdomUtil) {
         );
     }
 
-    var builder = codegen.builder;
-
     var isKeyStatic = vdomUtil.isStaticValue(key);
     var isAttrsStatic = checkAttributesStatic(attributes);
     var isPropsStatic = checkPropertiesStatic(properties, vdomUtil);
@@ -81,11 +79,6 @@ module.exports = function(node, codegen, vdomUtil) {
         }
     }
 
-    var bodyOnlyIf = node.bodyOnlyIf;
-    if (bodyOnlyIf) {
-        isHtmlOnly = false;
-    }
-
     var htmlElVDOM = new HtmlElementVDOM({
         key,
         tagName,
@@ -100,19 +93,7 @@ module.exports = function(node, codegen, vdomUtil) {
         isAutoKeyed
     });
 
-    if (bodyOnlyIf) {
-        htmlElVDOM.body = null;
-
-        var startIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
-            htmlElVDOM
-        ]);
-
-        var endIf = builder.ifStatement(builder.negate(bodyOnlyIf), [
-            new EndElementVDOM()
-        ]);
-
-        return [startIf, body, endIf];
-    } else if (isHtmlOnly) {
+    if (isHtmlOnly) {
         return htmlElVDOM;
     } else {
         htmlElVDOM.body = null;
