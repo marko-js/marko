@@ -16,12 +16,12 @@ function render(input, out, __component, component, state) {
       _provider: data.userInfo,
       _name: "data.userInfo",
       then: {
-          renderBody: function renderBody(out, userInfo) {
+          renderBody: function(out, userInfo) {
             out.w("Success!");
           }
         },
       catch: {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("something went wrong!");
           }
         }

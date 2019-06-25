@@ -490,11 +490,10 @@ class Builder {
     }
 
     renderBodyFunction(body, params) {
-        let name = "renderBody";
         if (!params) {
             params = [new Identifier({ name: "out" })];
         }
-        return new FunctionDeclaration({ name, params, body });
+        return new FunctionDeclaration({ name: null, params, body });
     }
 
     require(path) {

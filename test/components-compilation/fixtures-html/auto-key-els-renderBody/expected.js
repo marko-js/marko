@@ -18,7 +18,7 @@ function render(input, out, __component, component, state) {
   out.w("<div><span>A</span>");
 
   another_component_tag({
-      renderBody: function renderBody(out) {
+      renderBody: function(out) {
         out.w("<div><span>This is <b>static</b></span></div>");
       }
     }, out, __component, "1");

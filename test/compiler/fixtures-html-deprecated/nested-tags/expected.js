@@ -16,13 +16,13 @@ function render(input, out, __component, component, state) {
       header: input.header,
       body: {
           className: "my-body",
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Body content");
           }
         },
       footer: {
           className: "my-footer",
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Footer content");
           }
         }

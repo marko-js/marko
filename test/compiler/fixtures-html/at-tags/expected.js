@@ -16,7 +16,7 @@ function render(input, out, __component, component, state) {
 
   hello_tag({
       foo: {
-          renderBody: function renderBody(out) {
+          renderBody: function(out) {
             out.w("Foo!");
           }
         }

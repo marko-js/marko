@@ -15,9 +15,11 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  marko_dynamicTag(out, IncludeTarget, {
-      foo: "bar"
-    }, null, null, __component, "0");
+  marko_dynamicTag(out, IncludeTarget, function() {
+    return {
+        foo: "bar"
+      };
+  }, null, null, null, __component, "0");
 }
 
 marko_template._ = marko_renderer(render, {

@@ -39,14 +39,14 @@ function render(input, out, __component, component, state) {
   _preserve_tag({
       bodyOnly: true,
       key: $key$0,
-      renderBody: function renderBody(out) {
+      renderBody: function(out) {
         out.w(marko_escapeXml(Date.now()));
       }
     }, out);
 
   out.w("</p></div><span>B</span>");
 
-  marko_dynamicTag(out, Foo, {}, null, null, __component, "4");
+  marko_dynamicTag(out, Foo, null, null, null, null, __component, "4");
 }
 
 marko_template._ = marko_renderer(render, {

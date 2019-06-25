@@ -50,7 +50,6 @@ class HtmlElement extends Node {
 
         this.openTagOnly = def.openTagOnly;
         this.selfClosed = def.selfClosed;
-        this.bodyOnlyIf = undefined;
         this.runtimeFlags = 0; // Runtime flags are used to flag VDOM nodes with important information (flags are OR'd together)
         this.key = undefined;
 
@@ -178,13 +177,8 @@ class HtmlElement extends Node {
             attributes: this._attributes,
             tagString: this.tagString,
             argument: this.argument,
-            body: this.body,
-            bodyOnlyIf: this.bodyOnlyIf
+            body: this.body
         };
-    }
-
-    setBodyOnlyIf(condition) {
-        this.bodyOnlyIf = condition;
     }
 
     walk(walker) {

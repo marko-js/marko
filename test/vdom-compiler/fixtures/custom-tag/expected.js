@@ -28,7 +28,7 @@ function render(input, out, __component, component, state) {
 
   test_hello_tag({
       name: "World",
-      renderBody: function renderBody(out) {
+      renderBody: function(out) {
         out.n(marko_node0, component);
       }
     }, out);

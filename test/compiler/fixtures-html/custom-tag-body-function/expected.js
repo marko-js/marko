@@ -14,7 +14,7 @@ function render(input, out, __component, component, state) {
 
   test_body_function_tag({
       name: "World",
-      myBody: function myBody(foo, bar) {
+      myBody: function(foo, bar) {
         out.w("This is the body content");
       }
     }, out, __component, "0");

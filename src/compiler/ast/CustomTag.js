@@ -2,7 +2,6 @@
 
 const HtmlElement = require("./HtmlElement");
 const removeDashes = require("../util/removeDashes");
-const safeVarName = require("../util/safeVarName");
 const ok = require("assert").ok;
 const merge = require("../util/mergeProps");
 const complain = require("complain");
@@ -128,29 +127,6 @@ function checkIfNestedTagCanBeAddedDirectlyToInput(nestedTag, parentCustomTag) {
     }
 
     return true;
-}
-
-function getNextNestedTagVarName(tagDef, context) {
-    let key = "customTag" + tagDef.name;
-
-    let nestedTagVarInfo =
-        context.data[key] ||
-        (context.data[key] = {
-            next: 0
-        });
-
-    return safeVarName(tagDef.name) + nestedTagVarInfo.next++;
-}
-
-function getNextRenderBodyVar(context) {
-    let key = "CustomTag_renderBodyVar";
-    let nextVarInfo =
-        context.data[key] ||
-        (context.data[key] = {
-            next: 0
-        });
-
-    return "renderBodyConditional" + nextVarInfo.next++;
 }
 
 function processDirectlyNestedTags(node, codegen) {
@@ -549,10 +525,9 @@ class CustomTag extends HtmlElement {
         if (!this._nestedTagVar) {
             let tagDef = this.tagDef;
             let builder = context.builder;
-
-            let nextNestedTagVarName = getNextNestedTagVarName(tagDef, context);
-
-            this._nestedTagVar = builder.identifier(nextNestedTagVarName);
+            this._nestedTagVar = builder.identifier(
+                context.nextUniqueId(`nestedTag${tagDef.name}`)
+            );
         }
 
         return this._nestedTagVar;
@@ -562,7 +537,13 @@ class CustomTag extends HtmlElement {
         return codegen.builder.functionCall(tagVar, tagArgs);
     }
 
-    generateRenderNode(codegen, tagDef, inputProps, parentCustomTag) {
+    generateRenderNode(
+        codegen,
+        tagDef,
+        inputProps,
+        parentCustomTag,
+        renderBody
+    ) {
         let context = codegen.context;
         let builder = context.builder;
         let renderTagNode;
@@ -635,7 +616,15 @@ class CustomTag extends HtmlElement {
                 tagArgs = [
                     builder.identifierOut(),
                     this.tagNameExpression,
-                    inputProps,
+                    inputProps.type === "ObjectExpression" &&
+                    !inputProps.properties.length
+                        ? builder.literalNull()
+                        : builder.functionDeclaration(
+                              null,
+                              null,
+                              builder.returnStatement(inputProps)
+                          ),
+                    renderBody || builder.literalNull(),
                     argumentNode,
                     properties
                         ? builder.objectExpression(
@@ -683,7 +672,6 @@ class CustomTag extends HtmlElement {
         if (hasBody) {
             if (tagDef.bodyFunction) {
                 let bodyFunction = tagDef.bodyFunction;
-                let bodyFunctionName = bodyFunction.name;
                 let bodyFunctionParams = bodyFunction.params.map(function(
                     param
                 ) {
@@ -691,7 +679,7 @@ class CustomTag extends HtmlElement {
                 });
 
                 return builder.functionDeclaration(
-                    bodyFunctionName,
+                    null,
                     bodyFunctionParams,
                     body
                 );
@@ -728,6 +716,7 @@ class CustomTag extends HtmlElement {
         }
 
         let parentCustomTag;
+        let isDynamicTag = tagDef.isDynamicTag;
 
         context.pushData(CUSTOM_TAG_KEY, this);
         processDirectlyNestedTags(this, codegen);
@@ -808,59 +797,22 @@ class CustomTag extends HtmlElement {
             }
         }
 
-        let bodyOnlyIf = this.bodyOnlyIf;
-        // let parentTagVar;
-
         let renderBody = this.generateRenderBodyCode(codegen, body);
-        let renderBodyFunctionVarIdentifier;
-        let renderBodyFunctionVar;
-
-        if (renderBody && bodyOnlyIf) {
-            // Move the renderBody function into a local variable
-            renderBodyFunctionVarIdentifier = builder.identifier(
-                getNextRenderBodyVar(context)
-            );
-            renderBodyFunctionVar = builder.var(
-                renderBodyFunctionVarIdentifier,
-                renderBody
-            );
-            renderBody = renderBodyFunctionVarIdentifier;
-        }
-
-        let additionalAttrs;
-
-        if (renderBody) {
-            if (tagDef.bodyFunction) {
-                let bodyFunctionName = tagDef.bodyFunction.name;
-                additionalAttrs = { [bodyFunctionName]: renderBody };
-            } else {
-                additionalAttrs = { renderBody };
-            }
-        }
-
+        let additionalAttrs = renderBody &&
+            !isDynamicTag && {
+                [(tagDef.bodyFunction && tagDef.bodyFunction.name) ||
+                "renderBody"]: renderBody
+            };
         let inputProps = this.buildInputProps(codegen, additionalAttrs);
         let renderTagNode = this.generateRenderNode(
             codegen,
             tagDef,
             inputProps,
-            parentCustomTag
+            parentCustomTag,
+            renderBody
         );
 
-        if (bodyOnlyIf && renderBodyFunctionVar) {
-            let ifStatement = builder.ifStatement(
-                bodyOnlyIf,
-                [
-                    builder.functionCall(renderBodyFunctionVarIdentifier, [
-                        builder.identifierOut()
-                    ])
-                ],
-                builder.elseStatement([renderTagNode])
-            );
-
-            return [renderBodyFunctionVar, ifStatement];
-        } else {
-            return renderTagNode;
-        }
+        return renderTagNode;
     }
 }
 

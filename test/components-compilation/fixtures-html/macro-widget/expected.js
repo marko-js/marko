@@ -33,9 +33,11 @@ function render(input, out, __component, component, state) {
     ], function(color) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
-    marko_dynamicTag(out, macro_renderButton, {
-        color: color
-      }, null, null, __component, "2" + $keyScope$0);
+    marko_dynamicTag(out, macro_renderButton, function() {
+      return {
+          color: color
+        };
+    }, null, null, null, __component, "2" + $keyScope$0);
   });
 
   out.w("</div>");

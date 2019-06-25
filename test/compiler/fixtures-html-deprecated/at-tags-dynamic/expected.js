@@ -19,17 +19,17 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   hello_tag(marko_mergeNestedTagsHelper({
-      renderBody: function renderBody(out, hello0) {
+      renderBody: function(out, $nestedTaghello$0) {
         var $for$0 = 0;
 
         marko_forEach(input.colors, function(color) {
           var $keyScope$0 = "[" + (($for$0++) + "]");
 
           hello_foo_nested_tag({
-              renderBody: function renderBody(out) {
+              renderBody: function(out) {
                 out.w("Foo!");
               }
-            }, hello0);
+            }, $nestedTaghello$0);
         });
       }
     }), out, __component, "0");

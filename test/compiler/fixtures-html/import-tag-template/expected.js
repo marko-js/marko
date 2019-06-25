@@ -13,7 +13,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  marko_dynamicTag(out, other, {}, null, null, __component, "0");
+  marko_dynamicTag(out, other, null, null, null, null, __component, "0");
 }
 
 marko_template._ = marko_renderer(render, {

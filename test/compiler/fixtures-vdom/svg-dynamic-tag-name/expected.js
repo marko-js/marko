@@ -22,10 +22,12 @@ function render(input, out, __component, component, state) {
 
   out.be("svg", marko_attrs0, "0", component);
 
-  marko_dynamicTag(out, isCircle ? "circle" : "square", {
-      width: 200,
-      height: 200
-    }, null, null, __component, "1");
+  marko_dynamicTag(out, isCircle ? "circle" : "square", function() {
+    return {
+        width: 200,
+        height: 200
+      };
+  }, null, null, null, __component, "1");
 
   out.ee();
 }
