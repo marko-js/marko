@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.4
+
+- Lazily evaluate attributes for dynamic tags [#1365](https://github.com/marko-js/marko/pull/1365)
+
 ### 4.18.3
 
 - Fix `registerTaglib`: use correct function call [#1363](https://github.com/marko-js/marko/pull/1363)
