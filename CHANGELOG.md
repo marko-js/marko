@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.5
+
+- Fix issue with invoke tag migration when a inline control flow is used [#1366](https://github.com/marko-js/marko/pull/1366)
+
 ### 4.18.4
 
 - Lazily evaluate attributes for dynamic tags [#1365](https://github.com/marko-js/marko/pull/1365)
