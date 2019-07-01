@@ -182,7 +182,7 @@ Next, register and config the lasso:
 
 _server.js_
 
-```
+```js
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Configure lasso to control how JS/CSS/etc. is delivered to the browser
@@ -229,7 +229,7 @@ And if `koa`, do:
 
 _server.js_
 
-```
+```js
 const mount = require('koa-mount');
 const serve = require('koa-static');
 
