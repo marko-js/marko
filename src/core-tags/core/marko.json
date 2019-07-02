@@ -134,9 +134,10 @@
     },
     "<static>": {
         "transformer": {
-            "path": "./static-tag",
+            "path": "./static-tag-transformer",
             "priority": -1
         },
+        "code-generator": "./static-tag-code-generator",
         "no-output": true,
         "parse-options": {
             "ignoreAttributes": true
