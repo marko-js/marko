@@ -258,20 +258,23 @@ function normalizeParts(parsed, builder) {
     const update = parsed.update;
     const test = parsed.test;
 
-    if (
-        !init ||
-        !update ||
-        !test ||
-        init.type !== "Vars" ||
-        init.declarations.length !== 1 ||
-        test.type !== "BinaryExpression"
-    ) {
+    if (!init || !update || !test || test.type !== "BinaryExpression") {
         return;
     }
 
-    const declarator = init.declarations[0];
-    const varName = declarator.id;
-    let from = declarator.init;
+    let varName;
+    let from;
+
+    if (init.type === "Vars" && init.declarations.length === 1) {
+        const declarator = init.declarations[0];
+        varName = declarator.id;
+        from = declarator.init;
+    } else if (init.type === "Assignment" && init.operator === "=") {
+        varName = init.left;
+        from = init.right;
+    } else {
+        return;
+    }
 
     if (!from) {
         return;
