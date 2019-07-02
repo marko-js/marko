@@ -217,5 +217,9 @@
     "<script>": {
         "@marko-init": "boolean",
         "@template-helpers": "boolean"
+    },
+    "<class>": {
+        "migrator": "./class-tag",
+        "open-tag-only": true
     }
 }
