@@ -5,12 +5,10 @@ var componentLookup = componentsUtil.___componentLookup;
 var registry = require("../registry");
 var modernRenderer = require("../renderer");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
-var handleBeginAsync = modernRenderer.___handleBeginAsync;
+var trackAsyncComponents = modernRenderer.___trackAsyncComponents;
 var beginComponent = require("../beginComponent");
 var endComponent = require("../endComponent");
 var w10NOOP = require("warp10/constants").NOOP;
-
-var WIDGETS_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
 function createRendererFunc(templateRenderFunc, componentProps) {
     var typeName = componentProps.___type;
@@ -18,12 +16,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
     var isSplit = componentProps.___split === true;
 
     return function renderer(input, out, assignedId, renderingLogic) {
-        var outGlobal = out.global;
-
-        if (!outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY]) {
-            outGlobal[WIDGETS_BEGIN_ASYNC_ADDED_KEY] = true;
-            out.on("beginAsync", handleBeginAsync);
-        }
+        trackAsyncComponents(out);
 
         var widgetBody = input.renderBody;
         var widgetState = input.widgetState;

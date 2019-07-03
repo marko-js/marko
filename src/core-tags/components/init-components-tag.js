@@ -5,17 +5,6 @@ const INIT_COMPONENTS_KEY = Symbol();
 const writeInitComponentsCode = require("../../runtime/components")
     .writeInitComponentsCode;
 
-const ComponentsContext = require("../../runtime/components/ComponentsContext");
-
-function handleAwaitBeforeRender(eventArgs) {
-    if (eventArgs.clientReorder) {
-        const asyncFragmentOut = eventArgs.out;
-        asyncFragmentOut.___components = new ComponentsContext(
-            asyncFragmentOut
-        );
-    }
-}
-
 function handleAwaitFinish(eventArgs) {
     const asyncFragmentOut = eventArgs.out;
     writeInitComponentsCode(asyncFragmentOut, asyncFragmentOut, false);
@@ -26,7 +15,6 @@ module.exports = function render(input, out) {
     if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
         outGlobal[INIT_COMPONENTS_KEY] = true;
 
-        out.on("await:beforeRender", handleAwaitBeforeRender);
         out.on("await:finish", handleAwaitFinish);
 
         if (out.isSync() === true) {
