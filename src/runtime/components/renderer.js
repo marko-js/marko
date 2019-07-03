@@ -20,6 +20,16 @@ function resolveComponentKey(key, parentComponentDef) {
     }
 }
 
+function trackAsyncComponents(out) {
+    if (out.isSync() || out.global[COMPONENT_BEGIN_ASYNC_ADDED_KEY]) {
+        return;
+    }
+
+    out.on("beginAsync", handleBeginAsync);
+    out.on("beginDetachedAsync", handleBeginDetachedAsync);
+    out.global[COMPONENT_BEGIN_ASYNC_ADDED_KEY] = true;
+}
+
 function handleBeginAsync(event) {
     var parentOut = event.parentOut;
     var asyncOut = event.out;
@@ -40,6 +50,13 @@ function handleBeginAsync(event) {
     );
 }
 
+function handleBeginDetachedAsync(event) {
+    var asyncOut = event.out;
+    handleBeginAsync(event);
+    asyncOut.on("beginAsync", handleBeginAsync);
+    asyncOut.on("beginDetachedAsync", handleBeginDetachedAsync);
+}
+
 function createRendererFunc(
     templateRenderFunc,
     componentProps,
@@ -54,14 +71,7 @@ function createRendererFunc(
     var shouldApplySplitMixins = isSplit;
 
     return function renderer(input, out) {
-        var outGlobal = out.global;
-
-        if (out.isSync() === false) {
-            if (!outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY]) {
-                outGlobal[COMPONENT_BEGIN_ASYNC_ADDED_KEY] = true;
-                out.on("beginAsync", handleBeginAsync);
-            }
-        }
+        trackAsyncComponents(out);
 
         var componentsContext = getComponentsContext(out);
         var globalComponentsContext = componentsContext.___globalContext;
@@ -196,7 +206,7 @@ function createRendererFunc(
                 }
             }
 
-            component.___global = outGlobal;
+            component.___global = out.global;
 
             emitLifecycleEvent(component, "render", out);
         }
@@ -231,4 +241,4 @@ module.exports = createRendererFunc;
 
 // exports used by the legacy renderer
 createRendererFunc.___resolveComponentKey = resolveComponentKey;
-createRendererFunc.___handleBeginAsync = handleBeginAsync;
+createRendererFunc.___trackAsyncComponents = trackAsyncComponents;

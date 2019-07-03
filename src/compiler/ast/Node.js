@@ -109,10 +109,10 @@ class Node {
      */
     makeContainer(array) {
         if (array instanceof Container) {
-            return array;
-        }
-
-        if (!Array.isArray(array) && array instanceof Node) {
+            const container = array;
+            array = container.items;
+            container.items = [];
+        } else if (!Array.isArray(array) && array instanceof Node) {
             array = [array];
         }
 
