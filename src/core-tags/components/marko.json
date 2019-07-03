@@ -123,5 +123,13 @@
     "<body>": {
         "transformer": "./body-transformer.js"
     },
+    "<class>": {
+        "node-factory": "./class-tag-node-factory.js",
+        "transformer": {
+            "path": "./class-tag-transformer.js",
+            "priority": -1
+        },
+        "open-tag-only": true
+    },
     "transformer": "./components-transformer.js"
 }
