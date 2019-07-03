@@ -9,6 +9,22 @@ function syncBooleanAttrProp(fromEl, toEl, name) {
     }
 }
 
+function forEachOption(el, fn, i) {
+    var curChild = el.___firstChild;
+
+    while (curChild) {
+        if (curChild.___nodeName === "option") {
+            fn(curChild, ++i);
+        } else {
+            i = forEachOption(curChild, fn, i);
+        }
+
+        curChild = curChild.___nextSibling;
+    }
+
+    return i;
+}
+
 // We use a JavaScript class to benefit from fast property lookup
 function SpecialElHandlers() {}
 SpecialElHandlers.prototype = {
@@ -65,18 +81,16 @@ SpecialElHandlers.prototype = {
     },
     select: function(fromEl, toEl) {
         if (!toEl.___hasAttribute("multiple")) {
-            var i = -1;
             var selected = 0;
-            var curChild = toEl.___firstChild;
-            while (curChild) {
-                if (curChild.___nodeName === "option") {
-                    i++;
-                    if (curChild.___hasAttribute("selected")) {
+            forEachOption(
+                toEl,
+                function(option, i) {
+                    if (option.___hasAttribute("selected")) {
                         selected = i;
                     }
-                }
-                curChild = curChild.___nextSibling;
-            }
+                },
+                -1
+            );
 
             if (fromEl.selectedIndex !== selected) {
                 fromEl.selectedIndex = selected;
