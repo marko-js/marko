@@ -20,7 +20,9 @@ module.exports = function migrate(el, context) {
     el.setAttributeValue("key", attr.value);
     const isHTML = el.tagDef && el.tagDef.html;
     const isDynamic = Boolean(el.rawTagNameExpression);
-    if (!el.hasAttribute("id") && (isHTML || isDynamic))
+    const isRepeated =
+        attr.value.type === "Literal" && /\[\]$/.test(attr.value.value);
+    if (!el.hasAttribute("id") && !isRepeated && (isHTML || isDynamic))
         el.setAttributeValue("id:scoped", attr.value);
     el.removeAttribute(attr.name);
 };
