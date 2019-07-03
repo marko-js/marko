@@ -183,17 +183,17 @@ Next, register and config the lasso:
 _server.js_
 
 ```js
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV === "production";
 
 // Configure lasso to control how JS/CSS/etc. is delivered to the browser
-require('lasso').configure({
-    plugins: [
-        'lasso-marko' // Allow Marko templates to be compiled and transported to the browser
-    ],
-    outputDir: __dirname + '/static', // Place all generated JS/CSS/etc. files into the "static" dir
-    bundlingEnabled: isProduction, // Only enable bundling in production
-    minify: isProduction, // Only minify JS and CSS code in production
-    fingerprintsEnabled: isProduction, // Only add fingerprints to URLs in production
+require("lasso").configure({
+  plugins: [
+    "lasso-marko" // Allow Marko templates to be compiled and transported to the browser
+  ],
+  outputDir: __dirname + "/static", // Place all generated JS/CSS/etc. files into the "static" dir
+  bundlingEnabled: isProduction, // Only enable bundling in production
+  minify: isProduction, // Only minify JS and CSS code in production
+  fingerprintsEnabled: isProduction // Only add fingerprints to URLs in production
 });
 ```
 
@@ -230,10 +230,10 @@ And if `koa`, do:
 _server.js_
 
 ```js
-const mount = require('koa-mount');
-const serve = require('koa-static');
+const mount = require("koa-mount");
+const serve = require("koa-static");
 
-app.use(mount('/static', serve(__dirname + '/static')));
+app.use(mount("/static", serve(__dirname + "/static")));
 ```
 
 For the full application code for the Koa and assets bundling, please see the sample: [Marko + Koa](https://github.com/marko-js-samples/marko-koa).
