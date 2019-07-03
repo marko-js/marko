@@ -4,6 +4,14 @@
 
 ## 4.18.x
 
+### 4.18.6
+
+- Migration does not add `id:scoped` when migrating a repeated `w-id` [#1377](https://github.com/marko-js/marko/pull/1377)
+- Fixes an issue diffing the selected option within an optgroup [#1376](https://github.com/marko-js/marko/pull/1376)
+- Fixes component tracking for client-reorder [#1375](https://github.com/marko-js/marko/pull/1375)
+- Improve the migration for legacy `<for>` syntax [#1374](https://github.com/marko-js/marko/pull/1374)
+- Add migration for named classes in the template [#1372](https://github.com/marko-js/marko/pull/1372)
+
 ### 4.18.5
 
 - Fix issue with invoke tag migration when a inline control flow is used [#1366](https://github.com/marko-js/marko/pull/1366)
