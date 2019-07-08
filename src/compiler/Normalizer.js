@@ -2,6 +2,7 @@
 var ok = require("assert").ok;
 
 var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
+var ROOT_TAGS = ["import", "static", "class"];
 
 function isIEConditionalComment(comment) {
     return ieConditionalCommentRegExp.test(comment);
@@ -69,6 +70,18 @@ class Normalizer {
 
                     switch (node.type) {
                         case "HtmlElement":
+                            if (
+                                node.parentNode !== rootNode &&
+                                ROOT_TAGS.includes(node.tagName)
+                            ) {
+                                context.addError(
+                                    `"${
+                                        node.tagName
+                                    }" can only be used at the root of the template.`,
+                                    node
+                                );
+                            }
+
                             newNode = normalizer.normalizeElement(node);
                             break;
                         case "Comment":
