@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.name = "parent";
+    }
+}
+
+<macro|input| name="fragment">
+    <${input}/>
+</macro>
+
+<div key="root">
+    <fragment>
+        <fragment>
+            <child name="child-a"/>
+        </fragment>
+    </fragment>
+    <div.child-b/>
+    <child name="child-c"/>
+</div>
