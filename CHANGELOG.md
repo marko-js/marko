@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.7
+
+- Fixes a regression from 4.18.6 that could cause some body content to be omitted from the output [#1380](https://github.com/marko-js/marko/pull/1380)
+- Adds deprecated string dynamic attributes to the vdom runtime for improved legacy compatibility [#1378](https://github.com/marko-js/marko/pull/1378)
+
 ### 4.18.6
 
 - Migration does not add `id:scoped` when migrating a repeated `w-id` [#1377](https://github.com/marko-js/marko/pull/1377)
