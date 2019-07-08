@@ -11,14 +11,6 @@ var componentLookup = {};
 var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
-function getParentComponentForEl(node) {
-    while (node && !componentsByDOMNode.get(node)) {
-        node = node.previousSibling || node.parentNode;
-        node = (node && node.fragment) || node;
-    }
-    return node && componentsByDOMNode.get(node);
-}
-
 function getComponentForEl(el, doc) {
     if (el) {
         var node =
@@ -26,7 +18,8 @@ function getComponentForEl(el, doc) {
                 ? (doc || defaultDocument).getElementById(el)
                 : el;
         if (node) {
-            return getParentComponentForEl(node);
+            var vElement = vElementsByDOMNode.get(node);
+            return vElement && vElement.___ownerComponent;
         }
     }
 }
