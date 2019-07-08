@@ -12,6 +12,7 @@ var ok = require("assert").ok;
 var fs = require("fs");
 var taglib = require("../taglib");
 var defaults = extend({}, globalConfig);
+var newCompiler = process.env.hasOwnProperty("NEW_MARKO_COMPILER");
 
 Object.defineProperty(exports, "defaultOptions", {
     get: function() {
@@ -58,7 +59,9 @@ function isXML(path) {
 }
 
 function _compile(src, filename, userOptions, callback) {
-    registerCoreTaglibs();
+    if (!newCompiler) {
+        registerCoreTaglibs();
+    }
 
     ok(filename, '"filename" argument is required');
     ok(typeof filename === "string", '"filename" argument should be a string');
@@ -78,17 +81,26 @@ function _compile(src, filename, userOptions, callback) {
         options.ignoreUnrecognizedTags = true;
     }
 
-    const context = new CompileContext(
-        src,
+    const context =
+        !newCompiler &&
+        new CompileContext(src, filename, compiler.builder, options);
+    const babelOptions = newCompiler && {
+        ast: true,
+        code: true,
+        babelrc: false,
+        configFile: true,
+        sourceMaps: true,
         filename,
-        compiler.builder,
-        options
-    );
+        sourceFileName: filename,
+        plugins: [[require("babel-plugin-marko"), options]]
+    };
 
     let result;
 
     try {
-        const compiled = compiler.compile(src, context);
+        const compiled = newCompiler
+            ? require("@babel/core").transformSync(src, babelOptions)
+            : compiler.compile(src, context);
         result = userOptions.sourceOnly ? compiled.code : compiled;
     } catch (e) {
         if (callback) {

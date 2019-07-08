@@ -6,6 +6,7 @@ const assert = require("assert");
 const callerpath = require("caller-path");
 const projectRoot = path.join(__dirname, "..");
 const updateExpectations = process.env.hasOwnProperty("UPDATE_EXPECTATIONS");
+const newCompiler = process.env.hasOwnProperty("NEW_MARKO_COMPILER");
 const complain = require("complain");
 const formatters = {};
 
@@ -60,6 +61,10 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
         /-deprecated|migrate/.test(dir) && !/parser/.test(dir);
     let mochaTestFunction = it;
     let mochaDetails;
+
+    if (newCompiler && expectDeprecation) {
+        return;
+    }
 
     if (hasMainFile) {
         try {

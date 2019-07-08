@@ -28,6 +28,8 @@
         ]
     },
     "dependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/preset-env": "^7.4.5",
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
         "browser-refresh-client": "^1.0.0",
