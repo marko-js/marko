@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.8
+
+- Fixes an issue where `require("marko/components").getComponentForEl` could return undefined when a component exists, or the wrong component, when nested fragments are present. [#1382](https://github.com/marko-js/marko/pull/1382)
+
 ### 4.18.7
 
 - Fixes a regression from 4.18.6 that could cause some body content to be omitted from the output [#1380](https://github.com/marko-js/marko/pull/1380)
