@@ -42,7 +42,12 @@ module.exports = function defineWidget(def, renderer) {
 
     if (!proto.___isComponent) {
         // Inherit from Component if they didn't already
-        inherit(ComponentClass, BaseComponent);
+        ComponentClass.prototype = Object.create(BaseComponent.prototype);
+        for (var propName in proto) {
+            if (proto.hasOwnProperty(propName)) {
+                ComponentClass.prototype[propName] = proto[propName];
+            }
+        }
     }
 
     // The same prototype will be used by our constructor after
