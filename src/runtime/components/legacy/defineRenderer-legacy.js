@@ -145,6 +145,8 @@ module.exports = function defineRenderer(renderingLogic) {
                 templateData = {};
             }
 
+            templateData.___widgetProps = newProps;
+
             // If we have widget state then pass it to the template
             // so that it is available to the widget tag
             if (widgetState) {

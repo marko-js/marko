@@ -66,6 +66,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 customEvents,
                 ownerComponentId
             );
+            if (input.___widgetProps) {
+                component.input = input.___widgetProps;
+            }
         } else {
             if (!component) {
                 if (isRerender) {
