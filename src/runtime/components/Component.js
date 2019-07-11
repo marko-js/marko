@@ -293,9 +293,11 @@ Component.prototype = componentProto = {
     getComponents: function(key) {
         var lookup = this.___keyedElements[key + "[]"];
         return lookup
-            ? Object.keys(lookup).map(function(key) {
-                  return componentsByDOMNode.get(lookup[key]);
-              })
+            ? Object.keys(lookup)
+                  .map(function(key) {
+                      return componentsByDOMNode.get(lookup[key]);
+                  })
+                  .filter(Boolean)
             : [];
     },
     destroy: function() {
