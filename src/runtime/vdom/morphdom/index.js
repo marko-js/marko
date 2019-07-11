@@ -56,12 +56,12 @@ function onNodeAdded(node, componentsContext) {
 
 function morphdom(fromNode, toNode, doc, componentsContext) {
     var globalComponentsContext;
-    var isRerenderInBrowser = false;
+    var isHydrate = false;
     var keySequences = {};
 
     if (componentsContext) {
         globalComponentsContext = componentsContext.___globalContext;
-        isRerenderInBrowser = globalComponentsContext.___isHydrate;
+        isHydrate = globalComponentsContext.___isHydrate;
     }
 
     function insertVirtualNodeBefore(
@@ -173,7 +173,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     (matchingFromComponent =
                         existingComponentLookup[component.id]) === undefined
                 ) {
-                    if (isRerenderInBrowser === true) {
+                    if (isHydrate === true) {
                         var rootNode = beginFragmentNode(
                             curFromNodeChild,
                             fromNode
@@ -328,7 +328,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 curToNodeKey
                             ]) === undefined
                     ) {
-                        if (isRerenderInBrowser === true && curFromNodeChild) {
+                        if (isHydrate === true && curFromNodeChild) {
                             if (
                                 curFromNodeChild.nodeType === ELEMENT_NODE &&
                                 caseInsensitiveCompare(
@@ -600,7 +600,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             curFromNodeChild
                         );
                         if (curVFromNodeChild === undefined) {
-                            if (isRerenderInBrowser === true) {
+                            if (isHydrate === true) {
                                 curVFromNodeChild = virtualizeElement(
                                     curFromNodeChild
                                 );
@@ -761,7 +761,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     ) {
         var nodeName = toEl.___nodeName;
 
-        if (isRerenderInBrowser === true && toElKey) {
+        if (isHydrate === true && toElKey) {
             ownerComponent.___keyedElements[toElKey] = fromEl;
         }
 
