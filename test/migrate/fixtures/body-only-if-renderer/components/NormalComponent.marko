@@ -1,0 +1,3 @@
+<div>
+    Component
+</div>
