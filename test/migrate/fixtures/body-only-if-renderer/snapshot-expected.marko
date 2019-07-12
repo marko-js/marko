@@ -1,0 +1,13 @@
+<!-- test/migrate/fixtures/body-only-if-renderer/template.marko -->
+
+import NormalComponent from "./components/NormalComponent.marko"
+import Renderer from "./components/RendererComponent/renderer.js"
+
+<div>
+    <${input.test ? null : NormalComponent}>Hello</>
+    <${input.test
+        ? null
+        : {
+              renderer: Renderer
+          }}>World</>
+</div>
