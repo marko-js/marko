@@ -14,9 +14,11 @@ import ExampleH from "../../../hello/example-h/index.marko"
 <!-- Import: duplicated -->
 <${ExampleA} x=1/>
 <!-- Import: with attributes -->
-<${ExampleB} ...{
-    a: 1
-} b=2/>
+<${ExampleB}
+    ...{
+        a: 1
+    }
+    b=2/>
 <!-- Import: index -->
 <${ExampleC}/>
 <!-- Import: name conflict -->
@@ -40,11 +42,14 @@ $ const ExampleD = undefined;
 <!-- Dynamic: with attributes -->
 <if(typeof input.x === "string")>${input.x}</if>
 <else>
-    <${input.x} ...{
-        a: 1
-    } ...{
-        b: 2
-    } c=3/>
+    <${input.x}
+        ...{
+            a: 1
+        }
+        ...{
+            b: 2
+        }
+        c=3/>
 </else>
 <!-- Dynamic: with body -->
 <if(typeof input.x === "string")>${input.x}</if>
