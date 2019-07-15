@@ -75,9 +75,7 @@ class Normalizer {
                                 ROOT_TAGS.includes(node.tagName)
                             ) {
                                 context.addError(
-                                    `"${
-                                        node.tagName
-                                    }" can only be used at the root of the template.`,
+                                    `"${node.tagName}" can only be used at the root of the template.`,
                                     node
                                 );
                             }

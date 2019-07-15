@@ -11,9 +11,7 @@ module.exports = function migrate(el, context) {
 function enableTagParams(el, context) {
     if (el.argument) {
         context.deprecate(
-            `The <${el.tagName}(param)> syntax is deprecated. Please use the <${
-                el.tagName
-            }|param|> syntax instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-paren-params`,
+            `The <${el.tagName}(param)> syntax is deprecated. Please use the <${el.tagName}|param|> syntax instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-paren-params`,
             el
         );
         el.params = context.builder.parseJavaScriptParams(el.argument);
