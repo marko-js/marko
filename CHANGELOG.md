@@ -4,9 +4,13 @@
 
 ## 4.18.x
 
+### 4.18.10
+
+- Improve migration for `getInitialState` with legacy widgets. [#1385](https://github.com/marko-js/marko/pull/1385)
+
 ### 4.18.9
 
-- Legacy compat fixes [#1383](https://github.com/marko-js/marko/pull/1380)
+- Legacy compat fixes [#1383](https://github.com/marko-js/marko/pull/1383)
   - Temporary fix to ensure `getComponents` doesn't return `null` entries - these should really be removed from the `lookup` instead
   - Use a `for...in` loop to extend the `BaseComponent` (doesn't support getters properly) to maintain the same behavior as `marko-widgets`
   - Ensure that the original `input` for a widget is what gets serialized, not the result of `getTemplateData` (which is called again when hydrating)
