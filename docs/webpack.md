@@ -1,15 +1,14 @@
 # Marko + Webpack
 
-The [marko-loader](https://github.com/marko-js/marko-loader) loader for [Webpack](https://webpack.github.io/) will automatically compile all imported Marko templates during bundling. In addition, `marko-loader` will automatically bundle any template dependencies (including required CSS).
+The [@marko/webpack/loader](https://github.com/marko-js/webpack##loader-markowebpackloader) loader for [Webpack](https://webpack.github.io/) will automatically compile all imported Marko templates during bundling. In addition, it will automatically bundle any template dependencies (including required CSS).
 
 > **ProTip**: Want to see it in action? Check out the [`marko-webpack`](https://github.com/marko-js-samples/marko-webpack) demo repository.
 
 ## Installation
 
 ```
-npm install marko --save
-npm install webpack --save
-npm install marko-loader --save
+npm install marko
+npm install webpack @marko/webpack --save-dev
 ```
 
 ## Client rendering
@@ -27,12 +26,12 @@ First, let's create a `client.js` that requires the view and renders it to the b
 _client.js_
 
 ```js
-var myComponent = require("./hello.marko");
+import MyTemplate from "./hello.marko";
 
-myComponent.renderSync({ name: "Marko" }).appendTo(document.body);
+MyTemplate.renderSync({ name: "Marko" }).appendTo(document.body);
 ```
 
-Now, let's configure `webpack` to compile the `client.js` file and use `marko-loader` for any `*.marko` files:
+Now, let's configure `webpack` to compile the `client.js` file and use `@marko/webpack/loader` for any `*.marko` files:
 
 _webpack.config.js_
 
@@ -50,7 +49,7 @@ module.exports = {
     rules: [
       {
         test: /\.marko$/,
-        loader: "marko-loader"
+        loader: "@marko/webpack/loader"
       }
     ]
   }
@@ -92,37 +91,34 @@ _webpack.config.js_
 
 ```js
 //...
-rules: [
-  //...
-  {
-    test: /\.less$/, // matches style.less { ... } from our template
-    loader: "style-loader!css-loader!less-loader!"
-  }
-  //...
-];
+module: {
+  rules: [
+    //...
+    {
+      test: /\.less$/, // matches style.less { ... } from our template
+      use: ["style-loader", "css-loader", "less-loader"]
+    }
+    //...
+  ];
+}
 //...
 ```
 
 ## Extracting CSS
 
-It is recommended to configure the [`ExtractTextPlugin`](https://www.npmjs.com/package/extract-text-webpack-plugin) so that you get a separate css bundle rather than it being included in the JavaScript bundle.
+It is recommended to configure the [`MiniCSSExtractPlugin`](https://webpack.js.org/plugins/mini-css-extract-plugin) so that you get a separate css bundle rather than it being included in the JavaScript bundle.
 
 ```
-npm install extract-text-webpack-plugin --save
+npm install mini-css-extract-plugin --save-dev
 ```
 
 _webpack.config.js_
 
 ```js
-"use strict";
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CSSExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: "./client.js",
-  output: {
-    path: __dirname,
-    filename: "static/bundle.js"
-  },
   resolve: {
     extensions: [".js", ".marko"]
   },
@@ -130,20 +126,19 @@ module.exports = {
     rules: [
       {
         test: /\.marko$/,
-        loader: "marko-loader"
+        loader: "@marko/webpack/loader"
       },
       {
         test: /\.(less|css)$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader!less-loader"
-        })
+        use: [CSSExtractPlugin.loader, "css-loader", "less-loader"]
       }
     ]
   },
   plugins: [
     // Write out CSS bundle to its own file:
-    new ExtractTextPlugin("static/bundle.css", { allChunks: true })
+    new CSSExtractPlugin({
+      filename: "[name].css"
+    })
   ]
 };
 ```
