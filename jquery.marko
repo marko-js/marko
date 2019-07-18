@@ -1,7 +1,9 @@
 <module-code(function(require) {
-    require("complain")("marko/jquery is deprecated.");
     var isDebug = require('./env').isDebug;
-    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/runtime/components/jquery");\n`;
+    return `
+        var jquery = require("./${isDebug ? 'src' : 'dist'}/runtime/components/jquery");
+        module.exports = ${isDebug ? `{ patchComponent: require("complain").fn(jquery.patchComponent, "marko/jquery is deprecated.") }` : "jquery"};
+    `;
 })/>
 
 // What's going on here? We are using Marko to do JavaScript code generation
