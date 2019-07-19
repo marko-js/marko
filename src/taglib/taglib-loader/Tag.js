@@ -153,7 +153,8 @@ class Tag {
      */
     addNestedVariable(nestedVariable) {
         complain(
-            "addNestedVariable is deprecated. Use tag parameters instead."
+            "addNestedVariable is deprecated. Use tag parameters instead.",
+            { location: this.filePath }
         );
 
         if (!this.nestedVariables) {

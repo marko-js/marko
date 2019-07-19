@@ -12,6 +12,7 @@ var markoCompiler = require("../../compiler");
 var createError = require("raptor-util/createError");
 var types = require("./types");
 var loaders = require("./loaders");
+var complain = require("complain");
 
 function exists(path) {
     try {
@@ -486,6 +487,9 @@ class TagLoader {
      * }
      */
     var(value) {
+        complain("var is deprecated. Use tag parameters instead.", {
+            location: this.filePath
+        });
         this._handleVar(value, this.dependencyChain.append("var"));
     }
     /**
@@ -494,6 +498,9 @@ class TagLoader {
      * except that it expects an array of nested variables.
      */
     vars(value) {
+        complain("vars is deprecated. Use tag parameters instead.", {
+            location: this.filePath
+        });
         if (value) {
             value.forEach((v, i) => {
                 this._handleVar(
