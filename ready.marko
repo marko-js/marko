@@ -1,7 +1,10 @@
 <module-code(function(require) {
-    require("complain")("marko/ready is deprecated.");
     var isDebug = require('./env').isDebug;
-    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/runtime/components/ready");\n`;
+    return `
+        var ready = require("./${isDebug ? 'src' : 'dist'}/runtime/components/ready");
+        ${isDebug ? `var deprecatedReady = require("complain").fn(ready, "marko/ready is deprecated."); deprecatedReady.patchComponent = require("complain").fn(ready.patchComponent, "marko/ready is deprecated."); ready = deprecatedReady;` : ""}
+        module.exports = ready;
+    `;
 })/>
 
 // What's going on here? We are using Marko to do JavaScript code generation
