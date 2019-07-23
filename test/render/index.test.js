@@ -24,26 +24,16 @@ autotest("fixtures-deprecated", {
     "html ≅ vdom": compareNormalized
 });
 
-autotest("fixtures-async", {
-    html: testRunnerAsync,
-    vdom: testRunnerAsync,
-    "html ≅ vdom": compareNormalized
-});
-
 autotest("fixtures-async-callback", {
-    html: testRunnerAsync
+    html: testRunner
 });
 
 autotest("fixtures-async-deprecated", {
-    html: testRunnerAsync
+    html: testRunner
 });
 
 function testRunner(fixture) {
-    fixture.test(() => runRenderTest(fixture, false));
-}
-
-function testRunnerAsync(fixture) {
-    fixture.test(() => runRenderTest(fixture, true));
+    fixture.test(() => runRenderTest(fixture));
 }
 
 function compareNormalized({ test, context }) {
@@ -59,7 +49,7 @@ function compareNormalized({ test, context }) {
     });
 }
 
-async function runRenderTest(fixture, checkAsyncEvents) {
+async function runRenderTest(fixture) {
     let dir = fixture.dir;
     let output = fixture.mode || "html";
     let snapshot = fixture.snapshot;
@@ -112,17 +102,13 @@ async function runRenderTest(fixture, checkAsyncEvents) {
             let templateData = Object.assign({}, main.templateData || {});
 
             let out = template.createOut();
-            let asyncEventsVerifier;
-
-            if (checkAsyncEvents) {
-                asyncEventsVerifier = createAsyncVerifier(
-                    main,
-                    snapshot,
-                    out,
-                    main.noFlushComment,
-                    isVDOM
-                );
-            }
+            let asyncEventsVerifier = createAsyncVerifier(
+                main,
+                snapshot,
+                out,
+                main.noFlushComment,
+                isVDOM
+            );
 
             template.render(templateData, out).end();
 
@@ -164,9 +150,7 @@ async function runRenderTest(fixture, checkAsyncEvents) {
                 fixture.context.html = normalizeHtml(html);
             }
 
-            if (checkAsyncEvents) {
-                asyncEventsVerifier.verify();
-            }
+            asyncEventsVerifier.verify();
         }
     } finally {
         require("marko/compiler").configure();
