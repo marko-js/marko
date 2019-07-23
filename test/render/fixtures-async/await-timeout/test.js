@@ -2,16 +2,10 @@ var extend = require("raptor-util/extend");
 var expect = require("chai").expect;
 
 exports.templateData = {
-    userInfoShort: function(done) {
-        setTimeout(function() {
-            done(null, {});
-        }, 50);
-    },
-    userInfoLong: function(done) {
-        setTimeout(function() {
-            done(null, {});
-        }, 200);
-    }
+    getUserInfoShort: () =>
+        new Promise(resolve => setTimeout(() => resolve({}), 50)),
+    getUserInfoLong: () =>
+        new Promise(resolve => setTimeout(() => resolve({}), 200))
 };
 
 exports.checkEvents = function(events, snapshot) {

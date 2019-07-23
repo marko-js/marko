@@ -28,17 +28,20 @@ function runClientTest(fixture) {
         let helpers = new BrowserHelpers();
         let testFile = resolve("test.js");
         let testFunc = browser.require(testFile);
-        let isAsync = testFunc.length > 1;
+        let hasCallback = testFunc.length > 1;
 
-        if (isAsync) {
-            testFunc(helpers, cleanupAndFinish);
-        } else {
-            let err;
-            try {
-                testFunc(helpers);
-            } catch (e) {
-                err = e;
+        try {
+            if (hasCallback) {
+                testFunc(helpers, cleanupAndFinish);
+            } else {
+                const result = testFunc(helpers);
+                if (result && result.then) {
+                    result.then(cleanupAndFinish, cleanupAndFinish);
+                } else {
+                    cleanupAndFinish();
+                }
             }
+        } catch (err) {
             cleanupAndFinish(err);
         }
 
@@ -98,7 +101,7 @@ function runHydrateTest(fixture) {
                 var testFunc = browser.require(testFile);
                 var BrowserHelpers = browser.require(browserHelpersPath);
                 var helpers = new BrowserHelpers();
-                var isAsync = testFunc.length > 1;
+                var hasCallback = testFunc.length > 1;
                 var curInstance = 0;
 
                 browser.window.$initComponents();
@@ -108,11 +111,15 @@ function runHydrateTest(fixture) {
                     return browser.window.components[curInstance++];
                 };
 
-                if (isAsync) {
+                if (hasCallback) {
                     testFunc(helpers, done);
                 } else {
-                    testFunc(helpers);
-                    done();
+                    const result = testFunc(helpers);
+                    if (result && result.then) {
+                        result.then(done, done);
+                    } else {
+                        done();
+                    }
                 }
             })
             .catch(done);

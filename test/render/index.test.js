@@ -30,18 +30,20 @@ autotest("fixtures-async", {
     "html ≅ vdom": compareNormalized
 });
 
+autotest("fixtures-async-callback", {
+    html: testRunnerAsync
+});
+
 autotest("fixtures-async-deprecated", {
-    html: testRunnerAsync,
-    vdom: testRunnerAsync,
-    "html ≅ vdom": compareNormalized
+    html: testRunnerAsync
 });
 
 function testRunner(fixture) {
-    fixture.test(done => runRenderTest(fixture, done, false));
+    fixture.test(() => runRenderTest(fixture, false));
 }
 
 function testRunnerAsync(fixture) {
-    fixture.test(done => runRenderTest(fixture, done, true));
+    fixture.test(() => runRenderTest(fixture, true));
 }
 
 function compareNormalized({ test, context }) {
@@ -57,9 +59,9 @@ function compareNormalized({ test, context }) {
     });
 }
 
-function runRenderTest(fixture, done, checkAsyncEvents) {
+async function runRenderTest(fixture, checkAsyncEvents) {
     let dir = fixture.dir;
-    let output = fixture.mode;
+    let output = fixture.mode || "html";
     let snapshot = fixture.snapshot;
     let isVDOM = output === "vdom";
 
@@ -72,27 +74,16 @@ function runRenderTest(fixture, done, checkAsyncEvents) {
         : require(mainPath);
     let loadOptions = main && main.loadOptions;
 
-    var oldDone = done;
-    done = function(err) {
-        require("marko/compiler").configure();
-
-        if (err) {
-            return oldDone(err);
-        }
-
-        return oldDone();
-    };
-
-    var compilerOptions = {
-        output: output,
-        writeToDisk: main.writeToDisk !== false,
-        preserveWhitespace: main.preserveWhitespaceGlobal === true,
-        ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true
-    };
-
-    require("marko/compiler").configure(compilerOptions);
-
     try {
+        var compilerOptions = {
+            output: output,
+            writeToDisk: main.writeToDisk !== false,
+            preserveWhitespace: main.preserveWhitespaceGlobal === true,
+            ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true
+        };
+
+        require("marko/compiler").configure(compilerOptions);
+
         if (main.checkError) {
             let e;
 
@@ -113,7 +104,7 @@ function runRenderTest(fixture, done, checkAsyncEvents) {
             }
 
             main.checkError(e);
-            return done();
+            return;
         } else {
             let template = isVDOM
                 ? browser.require(templatePath)
@@ -124,61 +115,58 @@ function runRenderTest(fixture, done, checkAsyncEvents) {
             let asyncEventsVerifier;
 
             if (checkAsyncEvents) {
-                asyncEventsVerifier = createAsyncVerifier(main, snapshot, out);
+                asyncEventsVerifier = createAsyncVerifier(
+                    main,
+                    snapshot,
+                    out,
+                    main.noFlushComment,
+                    isVDOM
+                );
             }
 
-            var verifyOutput = function(result) {
-                if (isVDOM) {
-                    let actualNode = result.getNode();
-                    actualNode.normalize();
-                    let vdomString = domToString(actualNode, {
-                        childrenOnly: true
-                    });
-
-                    snapshot(vdomString, {
-                        name: "vdom",
-                        ext: ".html"
-                    });
-
-                    fixture.context.vdom = normalizeHtml(actualNode);
-                } else {
-                    let html = result.getOutput();
-                    if (main.checkHtml) {
-                        fs.writeFileSync(path.join(dir, "actual.html"), html, {
-                            encoding: "utf8"
-                        });
-                        main.checkHtml(html);
-                    } else {
-                        snapshot(html, {
-                            ext: ".html",
-                            format: toDiffableHtml
-                        });
-                    }
-
-                    fixture.context.html = normalizeHtml(html);
-                }
-
-                if (checkAsyncEvents) {
-                    asyncEventsVerifier.verify();
-                }
-
-                done();
-            };
-
-            out.then(
-                function onFulfilled(result) {
-                    process.nextTick(function() {
-                        verifyOutput(result);
-                    });
-                },
-                function onRejected(err) {
-                    process.nextTick(function() {
-                        done(err);
-                    });
-                }
-            );
-
             template.render(templateData, out).end();
+
+            if (isVDOM) {
+                let document = browser.window.document;
+                let actualNode = document.createDocumentFragment();
+                if (out.___state.___finished) {
+                    out.___getResult().replaceChildrenOf(actualNode);
+                } else {
+                    (await out).replaceChildrenOf(actualNode);
+                }
+
+                actualNode.normalize();
+                let vdomString = domToString(actualNode, {
+                    childrenOnly: true
+                });
+
+                snapshot(vdomString, {
+                    name: "vdom",
+                    ext: ".html"
+                });
+
+                fixture.context.vdom = normalizeHtml(actualNode);
+            } else {
+                let html = (await out).getOutput();
+
+                if (main.checkHtml) {
+                    fs.writeFileSync(path.join(dir, "actual.html"), html, {
+                        encoding: "utf8"
+                    });
+                    main.checkHtml(html);
+                } else {
+                    snapshot(html, {
+                        ext: ".html",
+                        format: toDiffableHtml
+                    });
+                }
+
+                fixture.context.html = normalizeHtml(html);
+            }
+
+            if (checkAsyncEvents) {
+                asyncEventsVerifier.verify();
+            }
         }
     } finally {
         require("marko/compiler").configure();
@@ -236,7 +224,7 @@ function isClientReorderFragment(node) {
     return /^af\d+$/.test(node.id);
 }
 
-function createAsyncVerifier(main, snapshot, out) {
+function createAsyncVerifier(main, snapshot, out, noFlushComment, isVDOM) {
     var events = [];
     var eventsByAwaitInstance = {};
 
@@ -261,21 +249,23 @@ function createAsyncVerifier(main, snapshot, out) {
     addEventListener("await:beforeRender");
     addEventListener("await:finish");
 
-    var _flush = out.flush;
-    out.flush = function() {
-        try {
-            out.comment("FLUSH");
-        } catch (e) {
-            // we may try to flush after the out has ended
-            // if this is the case, trying to add a comment
-            // will throw an error.  we can safely ignore this
-        }
-        _flush && _flush.apply(out, arguments);
-    };
+    if (!isVDOM && !noFlushComment) {
+        var _flush = out.flush;
+        out.flush = function() {
+            try {
+                out.comment("FLUSH");
+            } catch (e) {
+                // we may try to flush after the out has ended
+                // if this is the case, trying to add a comment
+                // will throw an error.  we can safely ignore this
+            }
+            _flush && _flush.apply(out, arguments);
+        };
+    }
 
     return {
         verify() {
-            if (main.checkEvents) {
+            if (main.checkEvents && !isVDOM) {
                 main.checkEvents(events, snapshot, out);
             }
 

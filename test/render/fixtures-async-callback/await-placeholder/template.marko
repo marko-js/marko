@@ -1,0 +1,8 @@
+---
+BEFORE
+<await(data.testDataProvider) client-reorder>
+    <@then|testData|>Hello ${testData.name}!</@then>
+    <@placeholder>Loading main...</@placeholder>
+</await>
+AFTER <await-reorderer/>
+---

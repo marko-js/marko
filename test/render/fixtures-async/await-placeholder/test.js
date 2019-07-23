@@ -1,11 +1,7 @@
 var expect = require("chai").expect;
 
 exports.templateData = {
-    testDataProvider: function(done) {
-        setTimeout(function() {
-            done(null, { name: "Frank" });
-        }, 200);
-    }
+    testDataProvider: Promise.resolve({ name: "Frank" })
 };
 
 exports.checkHtml = function(html) {

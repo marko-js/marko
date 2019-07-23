@@ -3,14 +3,20 @@
         "event": "await:begin",
         "arg": {
             "name": "data.userDataProvider",
-            "clientReorder": false
+            "clientReorder": false,
+            "dataProvider": {
+                "name": "Frank"
+            }
         }
     },
     {
         "event": "await:beforeRender",
         "arg": {
             "name": "data.userDataProvider",
-            "clientReorder": false
+            "clientReorder": false,
+            "dataProvider": {
+                "name": "Frank"
+            }
         }
     },
     {
@@ -18,6 +24,9 @@
         "arg": {
             "name": "data.userDataProvider",
             "clientReorder": false,
+            "dataProvider": {
+                "name": "Frank"
+            },
             "finished": true
         }
     }

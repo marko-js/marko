@@ -4,6 +4,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -12,6 +13,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -20,6 +22,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0,
             "finished": true
         }

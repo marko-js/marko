@@ -1,23 +1,23 @@
 ---
-BEFORE<await(data.userInfoShort) timeout=10 name="userInfo1">
+BEFORE<await(data.getUserInfoShort()) timeout=10 name="userInfo1">
     <@then|user|>1</@then>
     <@catch|err|>
         <if(err.name === "TimeoutError")>1-A timeout has occurred!</if>
     </@catch>
 </await>
-<await(data.userInfoShort) timeout=10 name="userInfo2">
+<await(data.getUserInfoShort()) timeout=10 name="userInfo2">
     <@then|user|>2</@then>
     <@catch|err|>
         <if(err.name === "TimeoutError")>2-A timeout has occurred!</if>
     </@catch>
 </await>
-<await(data.userInfoLong) timeout=100 name="userInfo3">
+<await(data.getUserInfoLong()) timeout=100 name="userInfo3">
     <@then|user|>3</@then>
     <@catch|err|>
         <if(err.name === "TimeoutError")>3-A timeout has occurred!</if>
     </@catch>
 </await>
-<await(data.userInfoLong) timeout=100 name="userInfo4">
+<await(data.getUserInfoLong()) timeout=100 name="userInfo4">
     <@then|user|>4</@then>
     <@catch|err|>
         <if(err.name === "TimeoutError")>4-A timeout has occurred!</if>

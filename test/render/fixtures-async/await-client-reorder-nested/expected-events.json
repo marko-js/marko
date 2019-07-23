@@ -4,6 +4,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -12,6 +13,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -20,6 +22,7 @@
         "arg": {
             "name": "data.inner1",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 1
         }
     },
@@ -28,6 +31,7 @@
         "arg": {
             "name": "data.inner2",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 2
         }
     },
@@ -36,6 +40,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0,
             "finished": true
         }
@@ -45,6 +50,7 @@
         "arg": {
             "name": "data.inner1",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 1
         }
     },
@@ -53,6 +59,7 @@
         "arg": {
             "name": "data.inner1",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 1,
             "finished": true
         }
@@ -62,6 +69,7 @@
         "arg": {
             "name": "data.inner2",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 2
         }
     },
@@ -70,6 +78,7 @@
         "arg": {
             "name": "data.inner2",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 2,
             "finished": true
         }

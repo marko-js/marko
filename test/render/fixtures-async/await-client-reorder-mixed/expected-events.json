@@ -4,6 +4,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -12,6 +13,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0
         }
     },
@@ -19,14 +21,16 @@
         "event": "await:begin",
         "arg": {
             "name": "data.inner1",
-            "clientReorder": false
+            "clientReorder": false,
+            "dataProvider": {}
         }
     },
     {
         "event": "await:beforeRender",
         "arg": {
             "name": "data.inner1",
-            "clientReorder": false
+            "clientReorder": false,
+            "dataProvider": {}
         }
     },
     {
@@ -34,6 +38,7 @@
         "arg": {
             "name": "data.inner1",
             "clientReorder": false,
+            "dataProvider": {},
             "finished": true
         }
     },
@@ -42,6 +47,7 @@
         "arg": {
             "name": "data.outer",
             "clientReorder": true,
+            "dataProvider": {},
             "id": 0,
             "finished": true
         }
