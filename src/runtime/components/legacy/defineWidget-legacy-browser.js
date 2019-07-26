@@ -114,6 +114,7 @@ module.exports = function defineWidget(def, renderer) {
         var config = this.widgetConfig;
         if (this.el) {
             Object.defineProperty(this.el, "__widget", {
+                configurable: true,
                 get: function() {
                     // eslint-disable-next-line no-constant-condition
                     if ("MARKO_DEBUG") {
